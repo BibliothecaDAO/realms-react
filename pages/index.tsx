@@ -7,7 +7,6 @@ import {
   isWalletConnected,
   walletAddress,
 } from "../src/wallet";
-import styles from "../styles/Home.module.css"
 
 const Home: NextPage = () => {
   const [isConnected, setIsConnected] = useState(isWalletConnected())
@@ -24,13 +23,13 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="">
       <Head>
         <title>Realms Minigame</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="min-h-screen flex justify-center items-center">
         {isConnected ? (
           <>
             <h3 style={{ margin: 0 }}>
@@ -40,7 +39,7 @@ const Home: NextPage = () => {
           </>
         ) : (
           <>
-            <button className={styles.connect} onClick={handleConnectClick}>
+            <button className=" bg-gradient-to-b from-yellow-400 to-yellow-500 px-8 py-2 rounded-md mr-4" onClick={handleConnectClick}>
               Connect Wallet
             </button>
             <p>First connect wallet to use dapp.</p>
