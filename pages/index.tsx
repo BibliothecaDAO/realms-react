@@ -1,26 +1,22 @@
-import type { NextPage } from "next"
-import Head from "next/head"
-import { useState } from "react"
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useState } from "react";
 
-import {
-  connectWallet,
-  isWalletConnected,
-  walletAddress,
-} from "../src/wallet";
+import { connectWallet, isWalletConnected, walletAddress } from "../src/wallet";
 
 const Home: NextPage = () => {
-  const [isConnected, setIsConnected] = useState(isWalletConnected())
-  const [address, setAddress] = useState<string>()
+  const [isConnected, setIsConnected] = useState(isWalletConnected());
+  const [address, setAddress] = useState<string>();
 
   const handleConnectClick = async () => {
-    try{
-      await connectWallet()
-      setIsConnected(isWalletConnected())
-      setAddress(await walletAddress())
-    } catch(e){
+    try {
+      await connectWallet();
+      setIsConnected(isWalletConnected());
+      setAddress(await walletAddress());
+    } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   return (
     <div className="">
@@ -39,7 +35,10 @@ const Home: NextPage = () => {
           </>
         ) : (
           <>
-            <button className=" bg-gradient-to-b from-yellow-400 to-yellow-500 px-8 py-2 rounded-md mr-4" onClick={handleConnectClick}>
+            <button
+              className="mr-4 bg-gradient-to-b from-yellow-400 to-yellow-500 px-8 py-2 border-2 border-black rounded-md "
+              onClick={handleConnectClick}
+            >
               Connect Wallet
             </button>
             <p>First connect wallet to use dapp.</p>
@@ -47,7 +46,7 @@ const Home: NextPage = () => {
         )}
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
