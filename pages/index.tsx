@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-screen flex justify-center items-center">
+      <main className="flex items-center justify-center min-h-screen">
         {isConnected ? (
           <>
             <h3 style={{ margin: 0 }}>
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         ) : (
           <>
             <button
-              className="mr-4 bg-gradient-to-b from-yellow-400 to-yellow-500 px-8 py-2 border-2 border-black rounded-md "
+              className="px-8 py-2 mr-4 border-2 border-black rounded-md bg-gradient-to-b from-yellow-400 to-yellow-500 "
               onClick={handleConnectClick}
             >
               Connect Wallet
