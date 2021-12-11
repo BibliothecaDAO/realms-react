@@ -5,8 +5,17 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ],
+    "@storybook/addon-essentials",
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        postcssLoaderOptions: {
+          // When using postCSS 8
+          implementation: require('postcss'),
+        },
+      },
+    },
+    ],
   "framework": "@storybook/react",
   "core": {
     "builder": "webpack5"
