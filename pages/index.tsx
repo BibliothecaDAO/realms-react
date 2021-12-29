@@ -6,13 +6,13 @@ import { connectWallet, isWalletConnected, walletAddress } from "../src/wallet";
 
 const Home: NextPage = () => {
   const [isConnected, setIsConnected] = useState(isWalletConnected());
-  const [address, setAddress] = useState<string>();
+  const [l2Address, setL2Address] = useState<string>();
 
   const handleConnectClick = async () => {
     try {
       await connectWallet();
       setIsConnected(isWalletConnected());
-      setAddress(await walletAddress());
+      setL2Address(await walletAddress());
     } catch (e) {
       console.error(e);
     }
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         {isConnected ? (
           <>
             <h3 style={{ margin: 0 }}>
-              Wallet address: <code>{address}</code>
+              StarkNet Wallet address: <code>{l2Address}</code>
             </h3>
             {/* Dapp here */}
           </>
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
               className="px-8 py-2 mr-4 border-2 border-black rounded-md bg-gradient-to-b from-yellow-400 to-yellow-500 "
               onClick={handleConnectClick}
             >
-              Connect Wallet
+              Connect StarkNet Wallet
             </button>
             <p>First connect wallet to use dapp.</p>
           </>
