@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 
 import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
-import { UserAgent } from "@quentin-sommer/react-useragent";
 
 import {
   connectWallet,
@@ -10,13 +9,7 @@ import {
   walletAddress,
 } from "../src/l2wallet";
 import Button from "../src/shared/Button";
-import { walletconnect, injected } from "../src/connectors";
-import { UserAgentProps } from "@quentin-sommer/react-useragent/dist/UserAgent";
-
-type Prop = {
-  layer1Address: string;
-  layer2Address: string;
-};
+import UserAgentConnector from "./shared/UserAgentConnector";
 
 const Bridge: React.FC = () => {
   const [isL2Connected, setIsL2Connected] = useState(isWalletConnected());
@@ -46,21 +39,17 @@ const Bridge: React.FC = () => {
       {web3React.active ? (
         <code>{web3React.account}</code>
       ) : (
-        <UserAgent>
-          {(ua: UserAgentProps) => (
+        <UserAgentConnector>
+          {(connector: any) => (
             <Button
               onClick={() => {
-                if (ua.chrome) {
-                  web3React.activate(injected);
-                } else {
-                  web3React.activate(walletconnect);
-                }
+                web3React.activate(connector);
               }}
             >
               Connect Ethereum
             </Button>
           )}
-        </UserAgent>
+        </UserAgentConnector>
       )}
 
       {isL2Connected ? (
