@@ -6,7 +6,7 @@ import { UserAgentProvider } from "@quentin-sommer/react-useragent";
 
 import "tailwindcss/tailwind.css";
 
-function getLibrary(provider: any, connector: any) {
+function getLibrary(provider: any, connector: any): Web3Provider {
   return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
 }
 

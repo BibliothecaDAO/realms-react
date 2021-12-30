@@ -1,49 +1,41 @@
-import { useState } from "react";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 
 import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
+import { useEffect } from "react";
 
-import {
-  connectWallet,
-  isWalletConnected,
-  walletAddress,
-} from "../src/l2wallet";
+import { useStarknet } from "./hooks/useStarknet";
 import Button from "../src/shared/Button";
 import UserAgentConnector from "./shared/UserAgentConnector";
+import { Web3Provider } from "@ethersproject/providers";
 
 const Bridge: React.FC = () => {
-  const [isL2Connected, setIsL2Connected] = useState(isWalletConnected());
-  const [l2Address, setL2Address] = useState<string>();
+  const starknet = useStarknet();
+  const { error, active, activate, account, library } =
+    useWeb3React<Web3Provider>();
 
-  const web3React = useWeb3React();
-
-  if (web3React.error instanceof UserRejectedRequestError) {
+  if (error instanceof UserRejectedRequestError) {
     console.log("TODO: Handle user rejection");
   }
-  if (web3React.error instanceof UnsupportedChainIdError) {
+  if (error instanceof UnsupportedChainIdError) {
     console.log("TODO: Handle unsupported chain");
   }
 
-  const handleL2ConnectClick = async () => {
-    try {
-      await connectWallet();
-      setIsL2Connected(isWalletConnected());
-      setL2Address(await walletAddress());
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    if (account && library) {
+      // TODO: Load L1 assets and preview what'll be minted on L2
     }
-  };
+  }, [account]);
 
   return (
     <>
-      {web3React.active ? (
-        <code>{web3React.account}</code>
+      {active && library ? (
+        <code>{account}</code>
       ) : (
         <UserAgentConnector>
           {(connector: any) => (
             <Button
               onClick={() => {
-                web3React.activate(connector);
+                activate(connector);
               }}
             >
               Connect Ethereum
@@ -52,14 +44,14 @@ const Bridge: React.FC = () => {
         </UserAgentConnector>
       )}
 
-      {isL2Connected ? (
+      {starknet.active ? (
         <>
-          <code>{l2Address}</code>
+          <code>{starknet.address}</code>
           {/* Dapp here */}
         </>
       ) : (
         <>
-          <Button onClick={handleL2ConnectClick}>Connect StarkNet</Button>
+          <Button onClick={starknet.connect}>Connect StarkNet</Button>
         </>
       )}
 
