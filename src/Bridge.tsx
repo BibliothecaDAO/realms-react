@@ -7,6 +7,7 @@ import { useStarknet } from "./hooks/useStarknet";
 import Button from "../src/shared/Button";
 import UserAgentConnector from "./shared/UserAgentConnector";
 import { Web3Provider } from "@ethersproject/providers";
+import { messageKey } from "./util/messageKey";
 
 const Bridge: React.FC = () => {
   const starknet = useStarknet();
@@ -55,7 +56,27 @@ const Bridge: React.FC = () => {
         </>
       )}
 
-      {web3React.active && isL2Connected ? <div>Ready to bridge</div> : null}
+      {active ? (
+        <Button
+          onClick={() => {
+            library
+              ?.getSigner()
+              .signMessage(messageKey(Date.now().toString()))
+              .then(
+                (res) => {
+                  // TODO: Send to API
+                  console.log(res);
+                },
+                (err) => {
+                  // TODO: Notify user
+                  console.error(err);
+                }
+              );
+          }}
+        >
+          Verify L1 Assets
+        </Button>
+      ) : null}
     </>
   );
 };
