@@ -4,7 +4,7 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 const ETH_MAINNET = 1;
 
 const RPC_URLS: { [chainId: number]: string } = {
-  [ETH_MAINNET]: process.env.RPC_URL_1 as string,
+  [ETH_MAINNET]: process.env.NEXT_PUBLIC_RPC_URL_1 as string,
 };
 
 // Metamask
