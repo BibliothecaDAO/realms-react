@@ -2,6 +2,7 @@ import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 
 import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
 import { useEffect } from "react";
+import axios from "axios";
 
 import { useStarknet } from "./hooks/useStarknet";
 import Button from "../src/shared/Button";
@@ -26,6 +27,17 @@ const Bridge: React.FC = () => {
       // TODO: Load L1 assets and preview what'll be minted on L2
     }
   }, [account]);
+
+  const verifyAndMint = async () => {
+    const sig = await library
+      ?.getSigner()
+      .signMessage(messageKey(starknet.address as string));
+    const res = await axios.post("/api/minigame_alpha_mint", {
+      starknetAddress: starknet.address,
+      sig,
+    });
+    console.log(res);
+  };
 
   return (
     <>
@@ -56,26 +68,8 @@ const Bridge: React.FC = () => {
         </>
       )}
 
-      {active ? (
-        <Button
-          onClick={() => {
-            library
-              ?.getSigner()
-              .signMessage(messageKey(Date.now().toString()))
-              .then(
-                (res) => {
-                  // TODO: Send to API
-                  console.log(res);
-                },
-                (err) => {
-                  // TODO: Notify user
-                  console.error(err);
-                }
-              );
-          }}
-        >
-          Verify L1 Assets
-        </Button>
+      {active && starknet.active ? (
+        <Button onClick={verifyAndMint}>Verify L1 Assets</Button>
       ) : null}
     </>
   );
