@@ -1,5 +1,5 @@
 import React from "react";
-import type { AppProps } from "next/app";
+import { AppProps } from "next/app";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { UserAgentProvider } from "@quentin-sommer/react-useragent";
@@ -11,7 +11,7 @@ function getLibrary(provider: any, connector: any): Web3Provider {
 }
 
 const PageWrapper = (Comp: any) =>
-  class extends React.Component<{ ua: string }> {
+  class InnerPageWrapper extends React.Component<{ ua: string }> {
     /*
      * Need to use args.ctx
      * See https://nextjs.org/docs/advanced-features/custom-document
