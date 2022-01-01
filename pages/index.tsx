@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Bridge from "../src/Bridge";
+import { Bridge } from "components/bridge/Bridge";
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center min-h-screen gap-2">
+      <main className="flex flex-col items-center justify-start">
         <Bridge />
       </main>
     </div>
