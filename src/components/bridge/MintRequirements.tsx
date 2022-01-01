@@ -10,10 +10,6 @@ type Prop = {
 const LORDS_TOKEN = "0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0";
 
 const MintRequirements: React.FC<Prop> = (props) => {
-  if (props.l1Address == undefined) {
-    return <p>Please connect your Ethereum wallet to continue</p>;
-  }
-
   useEffect(() => {
     if (props.l1Address) {
       // TODO: Get ERC20 token balance
