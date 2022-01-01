@@ -106,9 +106,8 @@ export const Bridge: React.FC<Prop> = (props) => {
           <Tab.Panels className={"text-white"}>
             <Tab.Panel className="p-4">
               <p>
-                Let's review the items in your Ethereum wallet to determine the
-                polarity of their <TokenLabel>ELEMENTS</TokenLabel>, and the
-                quantities that your holdings can produce.
+                Let&apos;s review the items in your Ethereum wallet to determine
+                the polarity of their <TokenLabel>ELEMENTS</TokenLabel>.
               </p>
               {account ? (
                 <p className="mt-2">Connected as {account}</p>
@@ -136,6 +135,7 @@ export const Bridge: React.FC<Prop> = (props) => {
               <p>
                 The Realms Tower Defence game is powered using the{" "}
                 <a
+                  rel="noreferrer"
                   className="underline"
                   target={"_blank"}
                   href="https://starkware.co/starknet/"
@@ -146,8 +146,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                 wallet available.
               </p>
               <p>
-                If you haven't already done so, please{" "}
+                If you haven&apos;t already done so, please{" "}
                 <a
+                  rel="noreferrer"
                   target="_blank"
                   className="underline"
                   href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
