@@ -1,7 +1,6 @@
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 
 import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
-import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 
 import { useStarknet } from "hooks/useStarknet";
@@ -16,8 +15,6 @@ import MintRequirements from "./MintRequirements";
 import TokenLabel from "shared/TokenLabel";
 
 type Prop = {};
-
-type TabNames = "connect-ethereum" | "preview-mint" | "connect-starknet";
 
 export const Bridge: React.FC<Prop> = (props) => {
   const starknet = useStarknet();
@@ -39,10 +36,9 @@ export const Bridge: React.FC<Prop> = (props) => {
       starknetAddress: starknet.address,
       sig,
     });
+    // TODO: Do something with mint verification
     console.log(res);
   };
-
-  console.log(error);
 
   const tabBtnClasses = {
     base: "px-4 py-2 my-2 mx-2 text-white rounded-sm hover:bg-gray-200 hover:text-gray-800",
@@ -50,8 +46,8 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   return (
-    <div className="w-full sm:w-1/2">
-      <div className="p-2 mt-2 mb-4 bg-gray-700 rounded-lg ">
+    <div className="w-full">
+      <div className="p-2 mx-2 mt-4 bg-gray-700 border-2 border-black rounded-lg">
         <Tab.Group>
           <Tab.List className="bg-gray-800 rounded-md">
             <Tab as="span">
@@ -110,7 +106,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                 the polarity of their <TokenLabel>ELEMENTS</TokenLabel>.
               </p>
               {account ? (
-                <p className="mt-2">Connected as {account}</p>
+                <p className="mt-2 break-words">Connected as {account}</p>
               ) : (
                 <UserAgentConnector>
                   {(connectors) =>
@@ -133,7 +129,7 @@ export const Bridge: React.FC<Prop> = (props) => {
             <Tab.Panel className="gap-4 p-4">
               <h3 className="text-xl">StarkNet Account</h3>
               <p>
-                The Realms Tower Defence game is powered using the{" "}
+                The Realms Tower Defence game is powered using{" "}
                 <a
                   rel="noreferrer"
                   className="underline"
@@ -141,9 +137,8 @@ export const Bridge: React.FC<Prop> = (props) => {
                   href="https://starkware.co/starknet/"
                 >
                   StarkNet
-                </a>{" "}
-                rollup execution layer. ArgentX is the most secure StarkNet
-                wallet available.
+                </a>
+                , a rollup execution layer verified on Ethereum.
               </p>
               <p>
                 If you haven&apos;t already done so, please{" "}
@@ -159,7 +154,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                 browser.
               </p>
               {starknet.active ? (
-                <p className="mt-2 text-xs">Connected as {starknet.address}</p>
+                <p className="mt-2 break-words">
+                  Connected as {starknet.address}
+                </p>
               ) : (
                 <Button onClick={() => starknet.connect()} className="mt-4">
                   Connect to ArgentX
@@ -169,7 +166,9 @@ export const Bridge: React.FC<Prop> = (props) => {
             <Tab.Panel className="p-4">
               {starknet.active ? (
                 <>
-                  <p>{messageKey(starknet.address as string)}</p>
+                  <p className="break-words">
+                    {messageKey(starknet.address as string)}
+                  </p>
                   <Button className="mt-4" onClick={() => verifyAndMint()}>
                     Sign
                   </Button>
