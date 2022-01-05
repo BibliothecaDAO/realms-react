@@ -30,6 +30,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Storing generated private account keys
+.keys*
+
 # vercel
 .vercel
 
