@@ -56,6 +56,9 @@ export const Bridge: React.FC<Prop> = (props) => {
     active: "text-white bg-gray-600",
   };
 
+  const connectedClassname =
+    "inline-block py-2 mt-4 break-words px-4 bg-green-800 rounded-md";
+
   return (
     <div className="w-full">
       <div className="p-2 mx-2 mt-4 bg-gray-700 border-2 border-black rounded-lg">
@@ -115,7 +118,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                   <ElementsLabel>ELEMENTS</ElementsLabel>.
                 </p>
                 {account ? (
-                  <p className="mt-2 break-words">Connected as {account}</p>
+                  <p className={connectedClassname}>Connected as {account}</p>
                 ) : (
                   <UserAgentConnector>
                     {(connectors) =>
@@ -172,7 +175,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                   browser.
                 </p>
                 {starknet.active ? (
-                  <p className="mt-2 break-words">
+                  <p className={connectedClassname}>
                     Connected as {starknet.address}
                   </p>
                 ) : (
