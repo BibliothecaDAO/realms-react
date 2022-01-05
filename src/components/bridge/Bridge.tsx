@@ -11,8 +11,8 @@ import { getBagsInWallet } from "loot-sdk";
 import { messageKey } from "~/util/messageKey";
 import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
-import TokenLabel from "~/shared/TokenLabel";
-import { useState } from "react";
+import ElementsLabel from "~/shared/ElementsLabel";
+import { useState, useEffect } from "react";
 
 type Prop = {};
 
@@ -24,15 +24,18 @@ type TabName =
 
 export const Bridge: React.FC<Prop> = (props) => {
   const starknet = useStarknet();
-  const { error, active, activate, account, library } =
+  const { error, chainId, active, activate, account, library } =
     useWeb3React<Web3Provider>();
 
   if (error instanceof UserRejectedRequestError) {
     console.log("TODO: Handle user rejection");
   }
-  if (error instanceof UnsupportedChainIdError) {
-    console.log("TODO: Handle unsupported chain");
-  }
+
+  const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
+
+  useEffect(() => {
+    setUnsupportedChain(error instanceof UnsupportedChainIdError);
+  }, [error]);
 
   const [currentTab, setCurrentTab] = useState<TabName>("connect-ethereum");
 
@@ -100,7 +103,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                 currentTab == "mint" ? tabBtnClasses.active : null
               )}
             >
-              4. Mint<TokenLabel>ELEMENTS</TokenLabel>
+              4. Mint<ElementsLabel>ELEMENTS</ElementsLabel>
             </button>
           </nav>
           <div className={"text-white"}>
@@ -109,7 +112,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                 <p>
                   Let&apos;s review the items in your Ethereum wallet to
                   determine the polarity of their{" "}
-                  <TokenLabel>ELEMENTS</TokenLabel>.
+                  <ElementsLabel>ELEMENTS</ElementsLabel>.
                 </p>
                 {account ? (
                   <p className="mt-2 break-words">Connected as {account}</p>
@@ -128,6 +131,11 @@ export const Bridge: React.FC<Prop> = (props) => {
                     }
                   </UserAgentConnector>
                 )}
+                {unsupportedChain ? (
+                  <p className="mt-2">
+                    Wrong Network. Please switch to Ethereum mainnet.
+                  </p>
+                ) : null}
               </div>
             ) : null}
             {currentTab == "mint-requirements" ? (
