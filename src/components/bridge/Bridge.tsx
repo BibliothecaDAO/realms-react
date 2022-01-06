@@ -52,7 +52,7 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const tabBtnClasses = {
-    base: "px-4 py-2 my-2 mx-2 text-white rounded-sm hover:bg-gray-200 hover:text-gray-800",
+    base: "px-4 py-2 my-2 mx-2 text-white text-xs rounded-sm hover:bg-gray-200 hover:text-gray-800",
     active: "text-white bg-gray-600",
   };
 
@@ -60,7 +60,7 @@ export const Bridge: React.FC<Prop> = (props) => {
     "inline-block py-2 mt-4 break-words px-4 bg-green-800 rounded-md";
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-auto sm:w-1/2">
       <div className="p-2 mx-2 mt-4 bg-gray-700 border-2 border-black rounded-lg">
         <div>
           <nav className="bg-gray-800 rounded-md">
@@ -174,7 +174,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                   the ArgentX extension, available now for the Google Chrome web
                   browser.
                 </p>
-                {starknet.active ? (
+                {starknet.active && starknet.address ? (
                   <p className={connectedClassname}>
                     Connected as {starknet.address}
                   </p>
@@ -187,7 +187,7 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab === "mint" ? (
               <div className="p-4">
-                {starknet.active ? (
+                {starknet.active && starknet.address ? (
                   <>
                     <p className="break-words">
                       {messageKey(starknet.address as string)}
