@@ -53,12 +53,12 @@ const MintRequirements: React.FC<Prop> = (props) => {
                 "You have enough LORDS"
               ) : (
                 <a
-                  className="px-2 py-1 text-blue-300 border-2 border-blue-300 rounded-lg hover:text-blue-400 hover:border-blue-400"
+                  className="px-3 py-2 text-blue-300 border-2 border-blue-300 rounded-lg hover:text-blue-400 hover:border-blue-400"
                   target={"_blank"}
                   rel="noreferrer"
                   href="https://app.uniswap.org/#/swap?outputCurrency=0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0"
                 >
-                  Buy LORDS on Uniswap
+                  Get LORDS on Uniswap
                 </a>
               )}
             </Transition.Child>

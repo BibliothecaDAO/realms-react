@@ -13,6 +13,7 @@ import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
 import { useState, useEffect } from "react";
+import StarkNetSetup from "./StarknetSetup";
 
 type Prop = {};
 
@@ -147,42 +148,8 @@ export const Bridge: React.FC<Prop> = (props) => {
               </div>
             ) : null}
             {currentTab == "connect-starknet" ? (
-              <div className="gap-4 p-4">
-                <h3 className="text-xl">StarkNet Account</h3>
-                <p>
-                  The Realms Tower Defence game is powered using{" "}
-                  <a
-                    rel="noreferrer"
-                    className="underline"
-                    target={"_blank"}
-                    href="https://starkware.co/starknet/"
-                  >
-                    StarkNet
-                  </a>
-                  , a rollup execution layer verified on Ethereum.
-                </p>
-                <p>
-                  If you haven&apos;t already done so, please{" "}
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    className="underline"
-                    href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                  >
-                    download and install
-                  </a>{" "}
-                  the ArgentX extension, available now for the Google Chrome web
-                  browser.
-                </p>
-                {starknet.active && starknet.address ? (
-                  <p className={connectedClassname}>
-                    Connected as {starknet.address}
-                  </p>
-                ) : (
-                  <Button onClick={() => starknet.connect()} className="mt-4">
-                    Connect to ArgentX
-                  </Button>
-                )}
+              <div className="p-4">
+                <StarkNetSetup />
               </div>
             ) : null}
             {currentTab === "mint" ? (
