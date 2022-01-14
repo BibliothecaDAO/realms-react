@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { utils } from "ethers";
-import { Provider, ec, Signer, stark } from "starknet";
+import { Provider, ec, Signer, stark, encode } from "starknet";
 import { messageKey } from "~/util/messageKey";
 import { fetchLordsBalance } from "~/util/fetchL1";
 import { MINIMUM_LORDS_REQUIRED } from "~/constants";
@@ -32,7 +32,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     network: "georli-alpha",
   });
 
-  const minterPrivKey = "0x" + process.env.ELEMENTS_MINTER_PRIVATE_KEY;
+  const minterPrivKey = encode.addHexPrefix(
+    process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
+  );
 
   let signer;
   try {
