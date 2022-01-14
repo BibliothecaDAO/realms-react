@@ -26,16 +26,16 @@ function deploy(provider, starkKey) {
   return provider.deployContract(ACCOUNT_CONTRACT, [starkKey.toString()]);
 }
 
-fs.writeFileSync(
-  `.keystore-${ts}`,
-  JSON.stringify({
-    starkKeyHex: starkKeyInt,
-    privateKey: keyPair.getPrivate("hex"),
-  })
-);
-
 deploy(provider, starkKeyInt)
   .then((res) => {
+    fs.writeFileSync(
+      `.keystore-${ts}`,
+      JSON.stringify({
+        starkKeyHex: starkKeyInt,
+        accountAddress: res.address,
+        privateKey: keyPair.getPrivate("hex"),
+      })
+    );
     console.log(res);
   })
   .catch((e) => {
