@@ -20,6 +20,11 @@ module.exports = {
     builder: "webpack5",
   },
   webpackFinal: async (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "~": path.resolve(__dirname, "../src"),
+    };
+
     config.resolve.modules = [
       ...(config.resolve.modules || []),
       path.resolve(__dirname, "../src"),

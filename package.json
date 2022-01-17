@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook",
     "deploy:middleware_minter_account": "node ./account_deployer.js"
   },
@@ -20,6 +20,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.8",
     "axios": "^0.24.0",
+    "bn.js": "^5.2.0",
     "classnames": "^2.3.1",
     "ethers": "^5.5.2",
     "loot-sdk": "^0.1.2",
@@ -38,6 +39,7 @@
     "@storybook/builder-webpack5": "^6.4.9",
     "@storybook/manager-webpack5": "^6.4.9",
     "@storybook/react": "^6.4.9",
+    "@types/bn.js": "^5.1.0",
     "@types/next-auth": "^3.15.0",
     "@types/node": "16.11.9",
     "@types/react": "17.0.36",
@@ -47,9 +49,14 @@
     "eslint": "7",
     "eslint-config-next": "12.0.4",
     "eslint-plugin-storybook": "^0.5.3",
+    "msw": "^0.36.4",
+    "msw-storybook-addon": "^1.5.0",
     "postcss": "^8.3.11",
     "tailwindcss": "^3.0.1",
     "typescript": "4.5.2",
     "webpack": "5"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
