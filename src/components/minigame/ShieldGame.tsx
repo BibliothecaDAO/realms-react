@@ -37,7 +37,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
     <>
       <h3>Current Game Index: {gameIdx}</h3>
       <p>
-        You've chosen the{" "}
+        You&apos;ve chosen the{" "}
         {props.tokenId == ElementToken.Light ? "Light" : "Dark"}
       </p>
 

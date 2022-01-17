@@ -21,16 +21,16 @@ const StarkNetSetup: React.FC = (props) => {
         , a rollup execution layer verified on Ethereum.
       </p>
       <p>
-        You'll now create your "Shadow" Account, which is a private-public key
-        pair that represents you during the game. The private key is stored on
-        your browser, but you can always export it afterwards. This is so that
-        you can easily sign transactions during gameplay without being
-        interrupted by signing requests.
+        You&apos;ll now create your &quot;Shadow&quot; Account, which is a
+        private-public key pair that represents you during the game. The private
+        key is stored on your browser, but you can always export it afterwards.
+        This is so that you can easily sign transactions during gameplay without
+        being interrupted by signing requests.
       </p>
       <p className="p-2 mt-2 text-white bg-yellow-800">
-        Beware! The Shadow Account doesn't last forever. Your browser may decide
-        to clear browser storage, so make sure to transfer any assets to a
-        secure StarkNet wallet, such as ArgentX.
+        Beware! The Shadow Account doesn&apos;t last forever. Your browser may
+        decide to clear browser storage, so make sure to transfer any assets to
+        a secure StarkNet wallet, such as ArgentX.
       </p>
       <Button className="mt-4">Create Shadow Account</Button>
       {/* <p>
