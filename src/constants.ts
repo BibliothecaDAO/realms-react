@@ -4,3 +4,8 @@ export const LORDS_JOURNEY_ADDRESS =
   "0x17963290db8C30552D0cfa2A6453FF20a28C31a2";
 
 export const MINIMUM_LORDS_REQUIRED = 650;
+
+export enum ElementToken {
+  Light = 1,
+  Dark,
+}
