@@ -1,6 +1,9 @@
 import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 
+export const CONTROLLER_ADDRESS = process.env
+  .NEXT_PUBLIC_CONTROLLER_ADDRESS as string;
+
 const TOWER_DEFENCE_STORAGE_ADDRESS =
   "0x0511a73dad0e56422328063cb1b6660ab23bae28c1e956bd17a60c578b9a204b";
 
@@ -52,4 +55,22 @@ export const getShieldValue: (
   });
   const [shieldValue] = res.result;
   return number.toBN(shieldValue);
+};
+
+let moduleAddressCache: Record<string, string> = {};
+
+export const getModuleAddress: (moduleId: string) => Promise<string> = async (
+  moduleId
+) => {
+  if (moduleAddressCache[moduleId]) {
+    return Promise.resolve(moduleAddressCache[moduleId]);
+  }
+
+  const res = await defaultProvider.callContract({
+    contract_address: CONTROLLER_ADDRESS,
+    entry_point_selector: stark.getSelectorFromName("get_module_address"),
+    calldata: [moduleId.toString()],
+  });
+  const [moduleAddress] = res.result;
+  return moduleAddress;
 };
