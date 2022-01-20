@@ -1,0 +1,9 @@
+Minigame->Middleware: Sign Transaction
+Note right of Middleware: Check minimum LORDS
+Middleware->Elements.cairo: invoke `mint_elements`
+Note right of Elements.cairo: Check L1 address not minted before
+Note right of Elements.cairo: Check limit not reached
+Note right of Elements.cairo: Only Middleware signer can mint
+Note right of Elements.cairo: Mint to StarkNet address provided
+Middleware->Minigame: Respond with tx hash
+Note over Minigame: Reload ELEMENT balance
