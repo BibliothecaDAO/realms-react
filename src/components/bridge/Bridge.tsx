@@ -149,7 +149,26 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab == "connect-starknet" ? (
               <div className="p-4">
-                <StarkNetSetup />
+                <p>
+                  If you haven&apos;t already done so, please{" "}
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    className="underline"
+                    href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                  >
+                    download and install
+                  </a>{" "}
+                  the ArgentX extension, available now for the Google Chrome web
+                  browser.
+                </p>
+                {starknet.active && starknet.address ? (
+                  <p className={""}>Connected as {starknet.address}</p>
+                ) : (
+                  <Button onClick={() => starknet.connect()} className="mt-4">
+                    Connect to ArgentX
+                  </Button>
+                )}
               </div>
             ) : null}
             {currentTab === "mint" ? (
