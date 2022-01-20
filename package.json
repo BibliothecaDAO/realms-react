@@ -7,7 +7,7 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o docs-build",
     "deploy:middleware_minter_account": "node ./account_deployer.js"
   },
   "dependencies": {
