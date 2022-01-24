@@ -7,10 +7,11 @@ import {
   StarknetCall,
 } from "~/mocks/starknetMockFactory";
 import { ElementToken } from "~/constants";
-import { stark } from "starknet";
+import { number, stark } from "starknet";
 import { SelectorName } from "~/util/minigameApi";
 import { rest } from "msw";
 const { getSelectorFromName } = stark;
+const { toHex, toBN } = number;
 
 export default {
   title: "ShieldGame",
@@ -47,10 +48,11 @@ Dark.parameters = {
           [getSelectorFromName(SelectorName.getMainHealth)]: "0x10",
           [getSelectorFromName(SelectorName.getShieldValue)]: "0x12",
           [getSelectorFromName("get_module_address")]: "0x123",
-          [getSelectorFromName("balance_of")]: "0x123",
+          [getSelectorFromName("balance_of")]: toHex(toBN(200)),
+          [getSelectorFromName("get_total_reward_alloc")]: toHex(toBN(100)),
+          [getSelectorFromName("get_user_reward_alloc")]: toHex(toBN(10)),
+          [getSelectorFromName("get_token_reward_pool")]: toHex(toBN(10)),
         };
-
-        console.log(responsesBySelector);
 
         if (responsesBySelector[req.body.entry_point_selector]) {
           return res(

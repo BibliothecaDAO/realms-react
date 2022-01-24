@@ -7,6 +7,11 @@ export const CONTROLLER_ADDRESS = process.env
 const TOWER_DEFENCE_STORAGE_ADDRESS =
   "0x0511a73dad0e56422328063cb1b6660ab23bae28c1e956bd17a60c578b9a204b";
 
+export enum ShieldGameRole {
+  Shielder = "0",
+  Attacker = "1",
+}
+
 export enum SelectorName {
   getLatestGameIndex = "get_latest_game_index",
   getMainHealth = "get_main_health",
@@ -73,4 +78,44 @@ export const getModuleAddress: (moduleId: string) => Promise<string> = async (
   });
   const [moduleAddress] = res.result;
   return moduleAddress;
+};
+
+export const getTotalRewardAlloc: (
+  gameIdx: string,
+  side: ShieldGameRole
+) => Promise<BN> = async (gameIdx, side) => {
+  const res = await defaultProvider.callContract({
+    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    entry_point_selector: stark.getSelectorFromName("get_total_reward_alloc"),
+    calldata: [gameIdx, side],
+  });
+  const [totalReward] = res.result;
+  return number.toBN(totalReward);
+};
+
+export const getUserRewardAlloc: (
+  gameIdx: string,
+  user: string,
+  side: ShieldGameRole
+) => Promise<BN> = async (gameIdx, user, side) => {
+  const res = await defaultProvider.callContract({
+    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    entry_point_selector: stark.getSelectorFromName("get_user_reward_alloc"),
+    calldata: [gameIdx, user, side],
+  });
+  const [userReward] = res.result;
+  return number.toBN(userReward);
+};
+
+export const getTokenRewardPool: (
+  gameIdx: string,
+  tokenId: number
+) => Promise<BN> = async (gameIdx, tokenId) => {
+  const res = await defaultProvider.callContract({
+    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    entry_point_selector: stark.getSelectorFromName("get_token_reward_pool"),
+    calldata: [gameIdx, tokenId.toString()],
+  });
+  const [tokenReward] = res.result;
+  return number.toBN(tokenReward);
 };
