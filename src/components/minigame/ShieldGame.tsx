@@ -46,6 +46,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
   const fetchState = async () => {
     const gameIdx = await getLatestGameIndex();
 
+    const chosenSide = ShieldGameRole.Shielder;
+
     const gameQueries = await Promise.all([
       getMainHealth(gameIdx),
       getShieldValue(gameIdx, ElementToken.Light),
@@ -56,12 +58,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
         entry_point_selector: stark.getSelectorFromName("balance_of"),
         calldata: [props.l2AccountAddress, props.tokenId.toString()],
       }),
-      getUserRewardAlloc(
-        gameIdx,
-        props.l2AccountAddress,
-        ShieldGameRole.Shielder
-      ),
-      getTotalRewardAlloc(gameIdx, ShieldGameRole.Shielder),
+      getUserRewardAlloc(gameIdx, props.l2AccountAddress, chosenSide),
+      getTotalRewardAlloc(gameIdx, chosenSide),
       getTokenRewardPool(gameIdx, props.tokenId),
     ]);
 
