@@ -15,13 +15,15 @@ const UserAgentConnector: React.FC<Prop> = (props) => {
   return (
     <UserAgent>
       {(ua: UserAgentProps) => {
-        if (ua.chrome) {
+        // TODO: Remove user-agent based connector filtering
+        //       Since wallets like Frame can inject the providers
+        //       and browser extensions do that also
+        if (true) {
           return props.children([
-            { name: "MetaMask", connector: injected },
+            { name: "Injected", connector: injected },
             wc,
           ]);
         }
-        return props.children([wc]);
       }}
     </UserAgent>
   );
