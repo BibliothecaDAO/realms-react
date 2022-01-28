@@ -1,6 +1,7 @@
 import { addDecorator } from "@storybook/react";
 import { initialize, mswDecorator } from "msw-storybook-addon";
 import { Web3ReactProvider } from "@web3-react/core";
+import { Web3Provider } from "@ethersproject/providers";
 import "../styles/globals.css";
 
 export const parameters = {
