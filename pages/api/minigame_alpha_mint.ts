@@ -6,13 +6,16 @@ import { fetchLordsBalance } from "~/util/fetchL1";
 import { MINIMUM_LORDS_REQUIRED } from "~/constants";
 const { getSelectorFromName } = stark;
 
-// https://gist.github.com/sbauch/a3405609f2fe858c4dff2ffde81c88d3
-
 const ELEMENTS_ADDRESS = process.env
   .NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string;
 
+export type MintingError = {
+  success: false;
+  error: string;
+};
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { sig, starknetAddress } = req.body;
+  const { sig, starknetAddress, chosenSide, gameIdx } = req.body;
 
   const ethAddress = utils.verifyMessage(messageKey(starknetAddress), sig);
 
@@ -46,8 +49,31 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     throw e;
   }
 
+  // The amount includes 2-decimal precision
+  // so multiply by 100
+  // TODO: The starting main health of the tower is dynamic
+  //       consider an intelligent weighting between amount
+  //       minted per user and the tower health
+  const amount = 100 * 100;
+
+  // Elements cannot be re-used between games
+  // so the 1155 token indexes start at a deterministic index
+  // and IDs are offset from there
+  // Ex. light = startIndex + 1, dark = startIndex + 2
+  const INDEX_BASE_FACTOR = 10;
+  const tokenStartIndex = gameIdx * INDEX_BASE_FACTOR;
+
   const selector = getSelectorFromName("mint_elements");
-  const mintArgs = [ethAddress, starknetAddress];
+  const mintArgs = [
+    // TODO: Pass in L1 address to enforce restrictions via contract logic
+    // ethAddress,
+    starknetAddress,
+    1, // Tokens length
+    chosenSide == "light" ? tokenStartIndex + 1 : tokenStartIndex + 2,
+    1, // Amounts length
+    amount, // Amounts
+  ];
+
   try {
     const result = await signer?.invokeFunction(
       ELEMENTS_ADDRESS,
