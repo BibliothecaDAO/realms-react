@@ -144,7 +144,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                 currentTab == "mint" ? tabBtnClasses.active : null
               )}
             >
-              4. Mint<ElementsLabel>ELEMENTS</ElementsLabel>
+              4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
             </button>
           </nav>
           <div className={"text-white"}>

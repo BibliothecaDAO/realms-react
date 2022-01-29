@@ -1,5 +1,6 @@
 import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
+import { toBN } from "starknet/dist/utils/number";
 
 export const CONTROLLER_ADDRESS = process.env
   .NEXT_PUBLIC_CONTROLLER_ADDRESS as string;
@@ -16,6 +17,7 @@ export enum SelectorName {
   getLatestGameIndex = "get_latest_game_index",
   getMainHealth = "get_main_health",
   getShieldValue = "get_shield_value",
+  getGameContextVariables = "get_game_context_variables",
 }
 
 export const getLatestGameIndex: () => Promise<string> = async () => {
@@ -118,4 +120,38 @@ export const getTokenRewardPool: (
   });
   const [tokenReward] = res.result;
   return number.toBN(tokenReward);
+};
+
+type GameContext = {
+  gameIdx: string;
+  blocksPerMinute: number;
+  hoursPerGame: number;
+  currentBlock: string;
+  gameStartBlock: string;
+  mainHealth: string;
+  currentBoost: number; // in basis points
+};
+
+export const getGameContextVariables: () => Promise<GameContext> = async () => {
+  const res = await defaultProvider.callContract({
+    contract_address: "",
+    entry_point_selector: stark.getSelectorFromName(
+      "get_game_context_variables"
+    ),
+    calldata: [],
+  });
+
+  const [varList] = res.result;
+
+  const ctx: GameContext = {
+    gameIdx: toBN(varList[0]).toString(),
+    blocksPerMinute: toBN(varList[1]).toNumber(),
+    hoursPerGame: toBN(varList[2]).toNumber(),
+    currentBlock: varList[3],
+    gameStartBlock: varList[4],
+    mainHealth: varList[5],
+    currentBoost: toBN(varList[6]).toNumber(),
+  };
+
+  return ctx;
 };

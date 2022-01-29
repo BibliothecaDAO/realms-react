@@ -44,14 +44,16 @@ Dark.parameters = {
       buildStarknetUrl("alpha4.starknet.io") + "call_contract",
       (req, res, ctx) => {
         const responsesBySelector = {
-          [getSelectorFromName(SelectorName.getLatestGameIndex)]: "0x1",
-          [getSelectorFromName(SelectorName.getMainHealth)]: "0x10",
-          [getSelectorFromName(SelectorName.getShieldValue)]: "0x12",
-          [getSelectorFromName("get_module_address")]: "0x123",
-          [getSelectorFromName("balance_of")]: toHex(toBN(200)),
-          [getSelectorFromName("get_total_reward_alloc")]: toHex(toBN(100)),
-          [getSelectorFromName("get_user_reward_alloc")]: toHex(toBN(10)),
-          [getSelectorFromName("get_token_reward_pool")]: toHex(toBN(10)),
+          [getSelectorFromName("get_module_address")]: "0x12345",
+          [getSelectorFromName(SelectorName.getGameContextVariables)]: [
+            toHex(toBN(1)), // game index
+            toHex(toBN(4)), // blocks per minute
+            toHex(toBN(36)), // hours per game
+            toHex(toBN(24)), // current block
+            toHex(toBN(1)), // block game started at
+            toHex(toBN(100000)), // main health
+            toHex(toBN(138)), // current boost
+          ],
         };
 
         if (responsesBySelector[req.body.entry_point_selector]) {

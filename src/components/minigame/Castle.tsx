@@ -16,7 +16,7 @@ const Castle: React.FC<Prop> = (props) => {
     }
   }
 
-  return <img style={{ maxWidth: "400px" }} src={variantImg + ".png"} />;
+  return <img style={{ maxWidth: "600px" }} src={variantImg + ".png"} />;
 };
 
 export default Castle;
