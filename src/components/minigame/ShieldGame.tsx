@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BN from "bn.js";
 import { ElementToken } from "~/constants";
-import { getGameContextVariables } from "~/util/minigameApi";
+import { GameContext, getGameContextVariables } from "~/util/minigameApi";
 import Button from "~/shared/Button";
 import ElementLabel from "~/shared/ElementsLabel";
 import { getStarknet } from "@argent/get-starknet/dist";
@@ -10,6 +10,7 @@ import { useModuleAddress } from "~/hooks/useModuleAddress";
 import { waitForTransaction } from "~/hooks/useStarknet";
 import Castle from "./Castle";
 import { toBN } from "starknet/dist/utils/number";
+import GameBlockTimer from "./GameBlockTimer";
 
 const ELEMENT_TOKEN_ADDRESS = process.env
   .NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string;
@@ -26,10 +27,12 @@ const ShieldGame: React.FC<Prop> = (props) => {
   // Contract state
   const [gameIdx, setGameIdx] = useState<string>();
   const [mainHealth, setMainHealth] = useState<BN>();
-  const [_startBlockNum, setStartBlockNum] = useState<string>();
+  const [_startBlockNum, setStartBlockNum] = useState<BN>();
   const [shieldValue, _setShieldValue] = useState<
     Record<ElementToken, string> | undefined
   >();
+
+  const [gameCtx, setGameCtx] = useState<GameContext>();
 
   const [boost, setBoost] = useState<number>();
 
@@ -44,6 +47,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
     setMainHealth(toBN(gameCtx.mainHealth));
     setStartBlockNum(gameCtx.gameStartBlock);
     setBoost(gameCtx.currentBoost);
+    setGameCtx(gameCtx);
   };
 
   // Fetch state on mount
@@ -83,9 +87,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <h3 className="text-2xl text-center">
-        Game # {gameIdx ? toBN(gameIdx).toNumber() : null}
+      <h3 className="text-2xl">
+        Game <span className="text-sm">#</span>
+        {gameIdx ? toBN(gameIdx).toNumber() : null}
       </h3>
+      <div>
+        {gameCtx ? (
+          <>
+            <GameBlockTimer gameCtx={gameCtx} />
+          </>
+        ) : null}
+      </div>
       <div className="flex flex-row justify-between mx-60">
         <div id="game-actions">
           <p className="text-xl">
