@@ -146,7 +146,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
                 gameIsActive ? "bg-green-200" : "bg-red-200"
               )}
             >
-              {gameIsActive ? "ACTIVE" : "EXPIRED"}
+              {gameIsActive
+                ? mainHealth?.lte(toBN(0))
+                  ? "COMPLETE"
+                  : "ACTIVE"
+                : "EXPIRED"}
             </span>
           ) : null}
         </span>

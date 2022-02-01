@@ -26,7 +26,7 @@ Default.parameters = {
     rest.post<StarknetCall>(
       buildStarknetUrl("alpha4.starknet.io") + "call_contract",
       (req, res, ctx) => {
-        const responsesBySelector = {
+        const responsesBySelector: Record<string, string[]> = {
           [getSelectorFromName("get_module_address")]: ["0x12345"],
           [getSelectorFromName("balance_of_batch")]: ["2", "0x23", "0x25"],
           [getSelectorFromName(SelectorName.getGameContextVariables)]: [
