@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import BN from "bn.js";
 import { ElementToken } from "~/constants";
-import { GameContext, getGameContextVariables } from "~/util/minigameApi";
+import {
+  ELEMENTS_ADDRESS,
+  GameContext,
+  getGameContextVariables,
+  getTokenIdsForGame,
+} from "~/util/minigameApi";
 import Button from "~/shared/Button";
 import ElementLabel from "~/shared/ElementsLabel";
 import { getStarknet } from "@argent/get-starknet/dist";
-import { defaultProvider, number, stark } from "starknet";
+import { defaultProvider, stark } from "starknet";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
-import { waitForTransaction } from "~/hooks/useStarknet";
+import { useStarknet, waitForTransaction } from "~/hooks/useStarknet";
 import Castle from "./Castle";
 import { toBN } from "starknet/dist/utils/number";
 import GameBlockTimer from "./GameBlockTimer";
 import AddressIndicator from "~/shared/AddressIndicator";
 import classNames from "classnames";
-
-const ELEMENT_TOKEN_ADDRESS = process.env
-  .NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string;
+import { getSelectorFromName } from "starknet/dist/utils/stark";
 
 type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
+  const starknet = useStarknet();
+
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
 
@@ -31,11 +36,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
     Record<ElementToken, string> | undefined
   >();
 
+  const [tokenBalances, setTokenBalances] = useState<string[]>();
+
   const [gameCtx, setGameCtx] = useState<GameContext>();
 
   const [boost, setBoost] = useState<number>();
-
-  const [tokenBalance, _setTokenBalance] = useState<string>();
 
   const towerDefenceContractAddress = useModuleAddress("1");
 
@@ -49,10 +54,42 @@ const ShieldGame: React.FC<Prop> = (props) => {
     setGameCtx(gameCtx);
   };
 
+  const fetchTokenBalances = async (gameCtx: GameContext) => {
+    // The token IDs change every game
+    const tokenIds = getTokenIdsForGame(parseInt(gameCtx.gameIdx));
+
+    const ownerAddress = starknet.address;
+
+    if (ownerAddress) {
+      const balances = await defaultProvider.callContract({
+        contract_address: ELEMENTS_ADDRESS,
+        entry_point_selector: getSelectorFromName("balance_of_batch"),
+        calldata: [
+          "2", // Owners length
+          ownerAddress, // Owner address
+          ownerAddress, // ... again
+          "2", // Token IDs length
+          ...tokenIds.map((tid) => tid.toString()), // Token IDs
+        ],
+      });
+
+      // Discard the length which is the first value
+      balances.result.shift();
+      setTokenBalances(balances.result);
+    }
+  };
+
   // Fetch state on mount
   useEffect(() => {
     fetchState();
   }, []);
+
+  // Refetch token balances whenever starknet address changes
+  useEffect(() => {
+    if (gameCtx) {
+      fetchTokenBalances(gameCtx);
+    }
+  }, [starknet.address]);
 
   // TODO: Determine role and calculate token index by game idx offset
   const shieldingTokenId = 1;
@@ -124,14 +161,22 @@ const ShieldGame: React.FC<Prop> = (props) => {
       </div>
       <div className="flex flex-row justify-between mx-60">
         <div id="game-actions" className="p-8 bg-gray-900 rounded-2xl">
-          <div className="text-3xl text-center">
+          <div className="text-3xl">
             <p className="mb-8">
               <ElementLabel>ELEMENTS</ElementLabel>
             </p>
 
             <div className="flex w-full gap-4 text-gray-100 row">
               <div className="flex-1">
-                LIGHT
+                <p>
+                  LIGHT{" "}
+                  <ElementLabel>
+                    {tokenBalances && tokenBalances.length > 0
+                      ? tokenBalances[0]
+                      : null}
+                  </ElementLabel>
+                </p>
+
                 <Button
                   className="w-full mt-4"
                   active={action == "shield"}
@@ -141,7 +186,12 @@ const ShieldGame: React.FC<Prop> = (props) => {
                 </Button>
               </div>
               <div className="flex-1">
-                DARK
+                DARK{" "}
+                <ElementLabel>
+                  {tokenBalances && tokenBalances.length > 1
+                    ? tokenBalances[1]
+                    : null}
+                </ElementLabel>
                 <Button
                   className="w-full mt-4"
                   active={action == "attack"}
@@ -169,7 +219,6 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   setActionAmount("");
                 }
               }}
-              max={tokenBalance}
               className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
             />{" "}
             <div className="ml-4">

@@ -1,12 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import ShieldGame from "~/components/minigame/ShieldGame";
-import {
-  buildStarknetUrl,
-  createStarknetNetworkMock,
-  StarknetCall,
-} from "~/mocks/starknetMockFactory";
-import { ElementToken } from "~/constants";
+import { buildStarknetUrl, StarknetCall } from "~/mocks/starknetMockFactory";
 import { number, stark } from "starknet";
 import { SelectorName } from "~/util/minigameApi";
 import { rest } from "msw";
@@ -33,6 +28,7 @@ Default.parameters = {
       (req, res, ctx) => {
         const responsesBySelector = {
           [getSelectorFromName("get_module_address")]: ["0x12345"],
+          [getSelectorFromName("balance_of_batch")]: ["2", "0x23", "0x25"],
           [getSelectorFromName(SelectorName.getGameContextVariables)]: [
             toHex(toBN(1)), // game index
             toHex(toBN(4)), // blocks per minute

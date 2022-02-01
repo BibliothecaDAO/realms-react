@@ -8,6 +8,9 @@ export const CONTROLLER_ADDRESS = process.env
 const TOWER_DEFENCE_STORAGE_ADDRESS =
   "0x0511a73dad0e56422328063cb1b6660ab23bae28c1e956bd17a60c578b9a204b";
 
+export const ELEMENTS_ADDRESS = process.env
+  .NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string;
+
 export enum ShieldGameRole {
   Shielder = "0",
   Attacker = "1",
@@ -154,4 +157,20 @@ export const getGameContextVariables: () => Promise<GameContext> = async () => {
   };
 
   return ctx;
+};
+
+/*
+  Convenience function for getting token IDs per game.
+  Token IDs are deterministic based on the game index,
+  they are offset from gameIdx X 10. They change each game,
+  to prevent element hoarding, encourage usage and provide a
+  fresh game state each time.
+*/
+export const getTokenIdsForGame = (gameIdx: number) => {
+  // Having a multiplier of 10 means that there are max 10
+  // "slots" for token IDs per game. This can be increased
+  // in the future.
+  const mul = 10;
+  const tokenOffset = mul * gameIdx;
+  return [tokenOffset + 1, tokenOffset + 2];
 };
