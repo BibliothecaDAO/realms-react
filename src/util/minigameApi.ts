@@ -141,7 +141,7 @@ export const getGameContextVariables: () => Promise<GameContext> = async () => {
     calldata: [],
   });
 
-  const [varList] = res.result;
+  const varList = res.result;
 
   const ctx: GameContext = {
     gameIdx: toBN(varList[0]).toString(),

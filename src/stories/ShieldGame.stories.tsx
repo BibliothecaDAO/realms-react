@@ -22,29 +22,17 @@ const Template: ComponentStory<typeof ShieldGame> = (args) => (
   <ShieldGame {...args} />
 );
 
-export const Light = Template.bind({});
-Light.args = {
-  tokenId: ElementToken.Light,
-  l2AccountAddress: "0x12345678",
-};
-Light.parameters = {
-  msw: [createStarknetNetworkMock(["0x4"])],
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  tokenId: ElementToken.Dark,
-  l2AccountAddress: "0x12345678",
-};
+export const Default = Template.bind({});
+Default.args = {};
 // Inject msw (mock service worker) with the REST handlers
 // that simulate calls to the StarkNet API based on selector name
-Dark.parameters = {
+Default.parameters = {
   msw: [
     rest.post<StarknetCall>(
       buildStarknetUrl("alpha4.starknet.io") + "call_contract",
       (req, res, ctx) => {
         const responsesBySelector = {
-          [getSelectorFromName("get_module_address")]: "0x12345",
+          [getSelectorFromName("get_module_address")]: ["0x12345"],
           [getSelectorFromName(SelectorName.getGameContextVariables)]: [
             toHex(toBN(1)), // game index
             toHex(toBN(4)), // blocks per minute
@@ -60,7 +48,7 @@ Dark.parameters = {
           return res(
             ctx.status(200),
             ctx.json({
-              result: [responsesBySelector[req.body.entry_point_selector]],
+              result: [...responsesBySelector[req.body.entry_point_selector]],
             })
           );
         }

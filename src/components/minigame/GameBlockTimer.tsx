@@ -28,6 +28,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
     blockTicks.push(
       <span
+        key={i}
         className={classNames(
           "flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline",
           isCurrentHour ? currentBg : i < currentHour ? pastBg : futureBg,
@@ -47,11 +48,11 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
+      <div className="flex gap-1 my-2">{blockTicks}</div>
       <div className="flex justify-between text-xs">
         <span>Started at L2 block {startToNum}</span>
         <span>Ends at L2 block {endBlock}</span>
       </div>
-      <div className="flex gap-1 my-2">{blockTicks}</div>
     </>
   );
 };
