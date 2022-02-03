@@ -5,6 +5,12 @@ import { toBN } from "starknet/dist/utils/number";
 export const CONTROLLER_ADDRESS = process.env
   .NEXT_PUBLIC_CONTROLLER_ADDRESS as string;
 
+if (!CONTROLLER_ADDRESS) {
+  throw new Error(
+    "No controller address set. Please set NEXT_PUBLIC_CONTROLLER_ADDRESS in a .env file"
+  );
+}
+
 const TOWER_DEFENCE_STORAGE_ADDRESS =
   "0x0511a73dad0e56422328063cb1b6660ab23bae28c1e956bd17a60c578b9a204b";
 
@@ -24,9 +30,11 @@ export enum SelectorName {
 }
 
 export const getLatestGameIndex: () => Promise<string> = async () => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   // Get latest game index
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(
       SelectorName.getLatestGameIndex
     ),
@@ -43,8 +51,10 @@ export const getLatestGameIndex: () => Promise<string> = async () => {
 type GamePromise<T> = (gameIndex: string) => Promise<T>;
 
 export const getMainHealth: GamePromise<BN> = async (gameIndex) => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(SelectorName.getMainHealth),
     calldata: [gameIndex],
   });
@@ -56,8 +66,10 @@ export const getShieldValue: (
   gameIndex: string,
   tokenId: number
 ) => Promise<BN> = async (gameIndex, tokenId) => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(
       SelectorName.getShieldValue
     ),
@@ -89,8 +101,10 @@ export const getTotalRewardAlloc: (
   gameIdx: string,
   side: ShieldGameRole
 ) => Promise<BN> = async (gameIdx, side) => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_total_reward_alloc"),
     calldata: [gameIdx, side],
   });
@@ -103,8 +117,10 @@ export const getUserRewardAlloc: (
   user: string,
   side: ShieldGameRole
 ) => Promise<BN> = async (gameIdx, user, side) => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_user_reward_alloc"),
     calldata: [gameIdx, user, side],
   });
@@ -116,8 +132,10 @@ export const getTokenRewardPool: (
   gameIdx: string,
   tokenId: number
 ) => Promise<BN> = async (gameIdx, tokenId) => {
+  const tdStorageAddress = await getModuleAddress("2");
+
   const res = await defaultProvider.callContract({
-    contract_address: TOWER_DEFENCE_STORAGE_ADDRESS,
+    contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_token_reward_pool"),
     calldata: [gameIdx, tokenId.toString()],
   });
@@ -136,8 +154,10 @@ export type GameContext = {
 };
 
 export const getGameContextVariables: () => Promise<GameContext> = async () => {
+  const towerDefenceAddress = await getModuleAddress("1");
+
   const res = await defaultProvider.callContract({
-    contract_address: "",
+    contract_address: towerDefenceAddress,
     entry_point_selector: stark.getSelectorFromName(
       "get_game_context_variables"
     ),
