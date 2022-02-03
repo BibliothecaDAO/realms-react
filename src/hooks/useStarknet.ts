@@ -26,7 +26,22 @@ export const useStarknet = (options?: ConnectOptions) => {
   const [isL2Connected, setIsL2Connected] = useState(isWalletConnected());
   const [l2Address, setL2Address] = useState<string>();
 
-  const ev = new Event(CONNECT_EVENT_NAME);
+  // Listen for other connection events from this same
+  // hook being used in a different component
+  const handleConnect = async () => {
+    if (isL2Connected == false || l2Address == undefined) {
+      try {
+        await getStarknet({ showModal: false }).enable();
+        setIsL2Connected(isWalletConnected());
+        setL2Address(await walletAddress());
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const ev =
+    typeof "window" == undefined ? new Event(CONNECT_EVENT_NAME) : undefined;
 
   useEffect(() => {
     const connectOnMount = async () => {
@@ -34,7 +49,9 @@ export const useStarknet = (options?: ConnectOptions) => {
         await getStarknet({ showModal: false }).enable();
         setIsL2Connected(isWalletConnected());
         setL2Address(await walletAddress());
-        window.dispatchEvent(ev);
+        if (ev) {
+          window.dispatchEvent(ev);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -42,20 +59,6 @@ export const useStarknet = (options?: ConnectOptions) => {
     if (options?.eagerConnect) {
       connectOnMount();
     }
-
-    // Listen for other connection events from this same
-    // hook being used in a different component
-    const handleConnect = async () => {
-      if (isL2Connected == false || l2Address == undefined) {
-        try {
-          await getStarknet({ showModal: false }).enable();
-          setIsL2Connected(isWalletConnected());
-          setL2Address(await walletAddress());
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    };
 
     window.addEventListener(CONNECT_EVENT_NAME, handleConnect);
 
@@ -67,15 +70,6 @@ export const useStarknet = (options?: ConnectOptions) => {
   return {
     address: l2Address,
     active: isL2Connected,
-    connect: async () => {
-      try {
-        await connectWallet();
-        setIsL2Connected(isWalletConnected());
-        setL2Address(await walletAddress());
-        window.dispatchEvent(ev);
-      } catch (e) {
-        console.error(e);
-      }
-    },
+    connect: handleConnect,
   };
 };
