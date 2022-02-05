@@ -69,8 +69,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
         entry_point_selector: getSelectorFromName("balance_of_batch"),
         calldata: [
           "2", // Owners length
-          ownerAddress, // Owner address
-          ownerAddress, // ... again
+          number.toBN(ownerAddress).toString(), // Owner address as an int
+          number.toBN(ownerAddress).toString(), // ... again
           "2", // Token IDs length
           ...tokenIds.map((tid) => tid.toString()), // Token IDs
         ],
