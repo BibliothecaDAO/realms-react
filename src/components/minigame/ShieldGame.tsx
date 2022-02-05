@@ -164,11 +164,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         <AddressIndicator />
       </h3>
       <div>
-        {gameCtx ? (
-          <>
-            <GameBlockTimer gameCtx={gameCtx} />
-          </>
-        ) : null}
+        <GameBlockTimer gameCtx={gameCtx} />
       </div>
       <div className="flex flex-row justify-between mx-60">
         <div id="game-actions" className="p-8 bg-gray-900 rounded-2xl">

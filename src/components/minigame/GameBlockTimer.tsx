@@ -2,10 +2,17 @@ import classNames from "classnames";
 import { GameContext } from "~/util/minigameApi";
 
 type Prop = {
-  gameCtx: GameContext;
+  gameCtx?: GameContext;
 };
 
 const GameBlockTimer: React.FC<Prop> = (props) => {
+  if (props.gameCtx == undefined) {
+    // Present a loading indicator
+    return (
+      <div className="w-full h-6 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
+    );
+  }
+
   const { gameStartBlock, currentBlock, hoursPerGame, blocksPerMinute } =
     props.gameCtx;
 
