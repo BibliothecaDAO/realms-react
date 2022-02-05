@@ -2,8 +2,9 @@ import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 import { toBN } from "starknet/dist/utils/number";
 
-export const CONTROLLER_ADDRESS = process.env
-  .NEXT_PUBLIC_CONTROLLER_ADDRESS as string;
+export const CONTROLLER_ADDRESS =
+  (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
+  "0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e";
 
 if (!CONTROLLER_ADDRESS) {
   throw new Error(
@@ -11,11 +12,9 @@ if (!CONTROLLER_ADDRESS) {
   );
 }
 
-const TOWER_DEFENCE_STORAGE_ADDRESS =
-  "0x0511a73dad0e56422328063cb1b6660ab23bae28c1e956bd17a60c578b9a204b";
-
-export const ELEMENTS_ADDRESS = process.env
-  .NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string;
+export const ELEMENTS_ADDRESS =
+  (process.env.NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string) ||
+  "0x19b9fd86ac5654937d603ce49ba8f1fc326c6446ce1d83510ab480e306be832";
 
 export enum ShieldGameRole {
   Shielder = "0",
