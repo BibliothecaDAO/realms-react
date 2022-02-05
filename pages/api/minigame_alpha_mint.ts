@@ -20,7 +20,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const ethAddress = utils.verifyMessage(messageKey(starknetAddress), sig);
 
   const lordsBalance = await fetchLordsBalance(ethAddress);
-  if (lordsBalance.toNumber() < MINIMUM_LORDS_REQUIRED) {
+
+  const suppressERC20Requirement =
+    process.env.SUPPRESS_TOKEN_REQUIREMENT == "1";
+
+  if (
+    lordsBalance.toNumber() < MINIMUM_LORDS_REQUIRED &&
+    suppressERC20Requirement == false
+  ) {
     res.send(
       JSON.stringify({
         success: false,
