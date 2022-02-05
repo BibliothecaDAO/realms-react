@@ -56,22 +56,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   //       minted per user and the tower health
   const amount = 100 * 100;
 
+  const nextGameIdx = parseInt(gameIdx) + 1;
+
   // Elements cannot be re-used between games
   // so the 1155 token indexes start at a deterministic index
   // and IDs are offset from there
   // Ex. light = startIndex + 1, dark = startIndex + 2
   const INDEX_BASE_FACTOR = 10;
-  const tokenStartIndex = gameIdx * INDEX_BASE_FACTOR;
+  const tokenStartIndex = nextGameIdx * INDEX_BASE_FACTOR;
 
   const selector = getSelectorFromName("mint_elements");
   const mintArgs = [
-    // TODO: Pass in L1 address to enforce restrictions via contract logic
-    // ethAddress,
+    nextGameIdx,
+    ethAddress,
     starknetAddress,
-    1, // Tokens length
     chosenSide == "light" ? tokenStartIndex + 1 : tokenStartIndex + 2,
-    1, // Amounts length
-    amount, // Amounts
+    amount,
   ];
 
   try {
