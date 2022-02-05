@@ -247,20 +247,30 @@ const ShieldGame: React.FC<Prop> = (props) => {
             </div>
           </div>
           <br />
-          <Button
-            color={"primary"}
-            disabled={action == undefined || actionAmount.length == 0}
-            className="w-full mt-2 text-2xl text-white"
-            onClick={() => {
-              if (action == "shield") {
-                handleShield(parseInt(actionAmount));
-              } else if (action == "attack") {
-                handleAttack(parseInt(actionAmount));
-              }
-            }}
-          >
-            Confirm Transaction
-          </Button>
+          {starknet.active ? (
+            <Button
+              color={"primary"}
+              disabled={action == undefined || actionAmount.length == 0}
+              className="w-full mt-2 text-2xl text-white"
+              onClick={() => {
+                if (action == "shield") {
+                  handleShield(parseInt(actionAmount));
+                } else if (action == "attack") {
+                  handleAttack(parseInt(actionAmount));
+                }
+              }}
+            >
+              Confirm Transaction
+            </Button>
+          ) : (
+            <Button
+              className="w-full"
+              color="default"
+              onClick={() => starknet.connect()}
+            >
+              Connect StarkNet
+            </Button>
+          )}
         </div>
         <div id="fortress-container">
           <p className="text-4xl">Fortress</p>

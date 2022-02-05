@@ -14,7 +14,7 @@ const AddressIndicator = () => {
         className="px-4 py-1 text-white rounded-lg bg-cyan-700"
         onClick={() => starknet.connect()}
       >
-        Connect ArgentX
+        Connect StarkNet
       </button>
     );
   }
