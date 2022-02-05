@@ -10,7 +10,8 @@ import {
 import Button from "~/shared/Button";
 import ElementLabel from "~/shared/ElementsLabel";
 import { getStarknet } from "@argent/get-starknet/dist";
-import { defaultProvider, stark } from "starknet";
+import { defaultProvider, number, stark } from "starknet";
+import BridgeModal from "../bridge/Modal";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
 import { useStarknet, waitForTransaction } from "~/hooks/useStarknet";
 import Castle from "./Castle";
@@ -24,6 +25,8 @@ type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
   const starknet = useStarknet();
+
+  const [mintModalOpen, setMintModalOpen] = useState(false);
 
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
@@ -135,6 +138,10 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div>
+      <BridgeModal
+        isOpen={mintModalOpen}
+        toggle={() => setMintModalOpen(false)}
+      />
       <h3 className="flex justify-between">
         <span className="text-2xl">
           Desiege <span className="text-sm"> game #</span>
@@ -166,8 +173,14 @@ const ShieldGame: React.FC<Prop> = (props) => {
       <div className="flex flex-row justify-between mx-60">
         <div id="game-actions" className="p-8 bg-gray-900 rounded-2xl">
           <div className="text-3xl">
-            <p className="mb-8">
-              <ElementLabel>ELEMENTS</ElementLabel>
+            <p className="flex justify-between mb-8">
+              <ElementLabel>ELEMENTS</ElementLabel>{" "}
+              <button
+                onClick={() => setMintModalOpen(true)}
+                className="p-2 text-sm text-white border border-white rounded-md hover:text-gray-200"
+              >
+                Mint Game Assets
+              </button>
             </p>
 
             <div className="flex w-full gap-4 text-gray-100 row">
