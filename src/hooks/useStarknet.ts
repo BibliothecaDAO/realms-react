@@ -40,17 +40,14 @@ export const useStarknet = (options?: ConnectOptions) => {
     }
   };
 
-  const ev =
-    typeof "window" == undefined ? new Event(CONNECT_EVENT_NAME) : undefined;
-
   useEffect(() => {
     const connectOnMount = async () => {
       try {
         await getStarknet({ showModal: false }).enable();
         setIsL2Connected(isWalletConnected());
         setL2Address(await walletAddress());
-        if (ev) {
-          window.dispatchEvent(ev);
+        if (window) {
+          window.dispatchEvent(new Event(CONNECT_EVENT_NAME));
         }
       } catch (e) {
         console.error(e);
@@ -70,6 +67,11 @@ export const useStarknet = (options?: ConnectOptions) => {
   return {
     address: l2Address,
     active: isL2Connected,
-    connect: handleConnect,
+    connect: () => {
+      handleConnect();
+      if (window) {
+        window.dispatchEvent(new Event(CONNECT_EVENT_NAME));
+      }
+    },
   };
 };
