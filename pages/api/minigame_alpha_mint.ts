@@ -47,7 +47,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let signer;
   try {
     const privKey = ec.getKeyPair(minterPrivKey);
-    const account = process.env.ELEMENTS_MINTER_ACCOUNT_ADDRESS as string;
+    const account =
+      (process.env.ELEMENTS_MINTER_ACCOUNT_ADDRESS as string) ||
+      "0x430728b8d6252608f35615191903466284b01e4ae9ecff60de8a6cb99d44a10";
     signer = new Signer(provider, account, privKey);
   } catch (e) {
     console.error("SIGNING ERROR:", e);
