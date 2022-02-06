@@ -18,7 +18,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   const startToNum = gameStartBlock.toNumber();
 
-  const endBlock = startToNum + blocksPerMinute * hoursPerGame;
+  const endBlock = startToNum + blocksPerMinute * 60 * hoursPerGame;
   const currentHour =
     Math.floor(
       (currentBlock.toNumber() - startToNum) / (blocksPerMinute * 60)
