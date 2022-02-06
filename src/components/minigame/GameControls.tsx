@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-
+import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
@@ -24,11 +24,13 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const starknet = useStarknet();
 
-  const [tokenBalances, setTokenBalances] = useState<string[]>();
+  const [tokenBalances, setTokenBalances] = useState<BN[]>();
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
+
+  const [side, setSide] = useState<"light" | "dark">();
 
   // TODO: Determine role and calculate token index by game idx offset
   const shieldingTokenId = 1;
@@ -95,7 +97,21 @@ const GameControls: React.FC<Prop> = (props) => {
 
       // Discard the length which is the first value
       balances.result.shift();
-      setTokenBalances(balances.result);
+
+      const balancesBN = balances.result.map((bs) => number.toBN(bs));
+
+      if (balancesBN.length == 2) {
+        const first = balancesBN[0];
+        const second = balancesBN[1];
+
+        if (first.gt(second)) {
+          setSide("light");
+        } else if (second.gt(first)) {
+          setSide("dark");
+        }
+      }
+
+      setTokenBalances(balancesBN);
     }
   };
   // Refetch token balances whenever starknet address changes
@@ -103,7 +119,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const memoL2Address = useMemo(() => starknet.address, [starknet.address]);
 
   useEffect(() => {
-    if (starknet.address && gameIdx) {
+    if (starknet.address && gameIdx !== undefined) {
       if (gameStatus == "active") {
         // Fetch balances for current game
         fetchTokenBalances(gameIdx);
@@ -115,111 +131,166 @@ const GameControls: React.FC<Prop> = (props) => {
   }, [memoL2Address, gameIdx]);
 
   return (
-    <div id="game-actions" className="p-8 bg-gray-900 rounded-2xl">
+    <div
+      id="game-actions"
+      className="w-1/2 p-10 bg-gradient-to-b to-gray-700 from-gray-900 rounded-2xl"
+    >
       <BridgeModal
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
       <div className="text-3xl">
-        <p className="flex justify-between mb-8">
-          <ElementLabel>ELEMENTS</ElementLabel>{" "}
-          <button
-            onClick={() => setMintModalOpen(true)}
-            className="p-2 text-sm text-white border border-white rounded-md hover:text-gray-200"
-          >
-            Mint Game Assets
-          </button>
+        <p className="text-white">
+          Season 1: <ElementLabel> Divine Eclipse</ElementLabel>{" "}
         </p>
+      </div>
 
-        <div className="flex w-full gap-4 text-gray-100 row">
-          <div className="flex-1">
-            <p>
-              LIGHT{" "}
-              <ElementLabel>
-                {tokenBalances && tokenBalances.length > 0
-                  ? number.toBN(tokenBalances[0]).toString()
+      {gameStatus == "expired" ? (
+        <div className="text-white">
+          {side == undefined ? (
+            <button
+              onClick={() => {
+                if (starknet.active && side == undefined) {
+                  setMintModalOpen(true);
+                } else {
+                  starknet.connect();
+                }
+              }}
+              className="w-full p-2 mt-4 text-lg text-white transition-colors bg-gray-800 border border-white rounded-md hover:bg-gray-700"
+            >
+              {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
+              {starknet.active ? (
+                <>
+                  Choose your <ElementLabel> Elements</ElementLabel>
+                </>
+              ) : (
+                "Connect StarkNet"
+              )}
+            </button>
+          ) : null}
+
+          <p className="mt-8 text-3xl">
+            {side == "light" && tokenBalances ? (
+              <>
+                <ElementLabel side="light">LIGHT</ElementLabel>{" "}
+                {(tokenBalances[0].toNumber() / 100).toFixed(0)}
+              </>
+            ) : null}
+            {side == "dark" && tokenBalances ? (
+              <>
+                <ElementLabel side="dark">DARK</ElementLabel>{" "}
+                {(tokenBalances[1].toNumber() / 100).toFixed(0)}
+              </>
+            ) : null}
+          </p>
+          <p className="my-4 text-xl animate-pulse">
+            Waiting for next game to start...
+          </p>
+          <p className="font-bold">Preparation for Desiege</p>
+          <ul className="list-disc">
+            <li>
+              Read the <a className="underline">game guide</a>
+            </li>
+            <li>
+              Coordinate on <a className="underline"> Discord</a>
+            </li>
+            <li>
+              <a className="underline">Recruit</a> your friends
+            </li>
+            <li>
+              Explore the open-source <a className="underline">front-end</a> and{" "}
+              <a className="underline">StarkNet</a> contracts
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <>
+          <div className="flex w-full gap-4 mt-4 text-gray-100 row">
+            <div className="flex-1">
+              <p>
+                LIGHT{" "}
+                <ElementLabel side="light">
+                  {tokenBalances && tokenBalances.length > 0
+                    ? number.toBN(tokenBalances[0]).toString()
+                    : null}
+                </ElementLabel>
+              </p>
+
+              <Button
+                className="w-full mt-4"
+                active={action == "shield"}
+                onClick={() => setAction("shield")}
+              >
+                Shield
+              </Button>
+            </div>
+            <div className="flex-1">
+              DARK{" "}
+              <ElementLabel side="dark">
+                {tokenBalances && tokenBalances.length > 1
+                  ? number.toBN(tokenBalances[1]).toString()
                   : null}
               </ElementLabel>
-            </p>
-
-            <Button
-              className="w-full mt-4"
-              active={action == "shield"}
-              onClick={() => setAction("shield")}
-            >
-              Shield
-            </Button>
-          </div>
-          <div className="flex-1">
-            DARK{" "}
-            <ElementLabel>
-              {tokenBalances && tokenBalances.length > 1
-                ? number.toBN(tokenBalances[1]).toString()
-                : null}
-            </ElementLabel>
-            <Button
-              className="w-full mt-4"
-              active={action == "attack"}
-              onClick={() => setAction("attack")}
-            >
-              Attack
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <br />
-
-      <div className="flex flex-row justify-center">
-        <input
-          autoFocus
-          type="number"
-          placeholder="Amount"
-          min={0}
-          value={actionAmount}
-          onChange={(e) => {
-            if (parseInt(e.target.value)) {
-              setActionAmount(e.target.value);
-            } else {
-              setActionAmount("");
-            }
-          }}
-          className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
-        />{" "}
-        <div className="ml-4">
-          {currentBoostBips && !isNaN(currentBoostBips) ? (
-            <div className="w-32 p-1 font-semibold text-white bg-blue-900 rounded-md">
-              {`+ ${currentBoostBips / 100}% boost`}
+              <Button
+                className="w-full mt-4"
+                active={action == "attack"}
+                onClick={() => setAction("attack")}
+              >
+                Attack
+              </Button>
             </div>
-          ) : null}
-        </div>
-      </div>
-      <br />
-      {starknet.active ? (
-        <Button
-          color={"primary"}
-          disabled={action == undefined || actionAmount.length == 0}
-          className="w-full mt-2 text-2xl text-white"
-          onClick={() => {
-            if (gameIdx) {
-              if (action == "shield") {
-                handleShield(gameIdx, parseInt(actionAmount));
-              } else if (action == "attack") {
-                handleAttack(gameIdx, parseInt(actionAmount));
-              }
-            }
-          }}
-        >
-          Confirm Transaction
-        </Button>
-      ) : (
-        <Button
-          className="w-full"
-          color="default"
-          onClick={() => starknet.connect()}
-        >
-          Connect StarkNet
-        </Button>
+          </div>
+          <div className="flex flex-row justify-center">
+            <input
+              autoFocus
+              type="number"
+              placeholder="Amount"
+              min={0}
+              value={actionAmount}
+              onChange={(e) => {
+                if (parseInt(e.target.value)) {
+                  setActionAmount(e.target.value);
+                } else {
+                  setActionAmount("");
+                }
+              }}
+              className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
+            />{" "}
+            <div className="ml-4">
+              {currentBoostBips && !isNaN(currentBoostBips) ? (
+                <div className="w-32 p-1 font-semibold text-white bg-blue-900 rounded-md">
+                  {`+ ${currentBoostBips / 100}% boost`}
+                </div>
+              ) : null}
+            </div>
+          </div>
+          {starknet.active ? (
+            <Button
+              color={"primary"}
+              disabled={action == undefined || actionAmount.length == 0}
+              className="w-full mt-2 text-2xl text-white"
+              onClick={() => {
+                if (gameIdx) {
+                  if (action == "shield") {
+                    handleShield(gameIdx, parseInt(actionAmount));
+                  } else if (action == "attack") {
+                    handleAttack(gameIdx, parseInt(actionAmount));
+                  }
+                }
+              }}
+            >
+              Confirm Transaction
+            </Button>
+          ) : (
+            <Button
+              className="w-full"
+              color="default"
+              onClick={() => starknet.connect()}
+            >
+              Connect StarkNet
+            </Button>
+          )}
+        </>
       )}
     </div>
   );

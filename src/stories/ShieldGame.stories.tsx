@@ -17,11 +17,11 @@ const Template: ComponentStory<typeof ShieldGame> = (args) => (
   <ShieldGame {...args} />
 );
 
-export const Default = Template.bind({});
-Default.args = {};
+export const ActiveGame = Template.bind({});
+ActiveGame.args = {};
 // Inject msw (mock service worker) with the REST handlers
 // that simulate calls to the StarkNet API based on selector name
-Default.parameters = {
+ActiveGame.parameters = {
   msw: [
     rest.post<StarknetCall>(
       buildStarknetUrl("alpha4.starknet.io") + "call_contract",
@@ -63,4 +63,12 @@ Default.parameters = {
       }
     ),
   ],
+};
+
+export const PendingGame = Template.bind({});
+PendingGame.args = {};
+// Inject msw (mock service worker) with the REST handlers
+// that simulate calls to the StarkNet API based on selector name
+PendingGame.parameters = {
+  msw: [],
 };
