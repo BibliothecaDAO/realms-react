@@ -20,7 +20,8 @@ export const mockSignAndMint = rest.post(
       ctx.status(200),
       ctx.json({
         code: "TRANSACTION_RECEIVED",
-        transaction_hash: "0xMock...",
+        transaction_hash:
+          "0x278b5eddae0d870c05e8473781cba23571e353d0fa50a8b816a0c2eb225d99b",
       })
     );
   }

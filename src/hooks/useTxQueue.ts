@@ -27,7 +27,11 @@ const useTxQueue = () => {
       setTxStatus((prev) => ({ ...prev, [selector]: "loading" }));
       waitForTx(txHash).then(
         (statusRes) => {
-          if (statusRes.tx_status == "ACCEPTED_ON_L2" && isMounted) {
+          if (
+            (statusRes.tx_status == "ACCEPTED_ON_L2" ||
+              statusRes.tx_status == "ACCEPTED_ON_L1") &&
+            isMounted
+          ) {
             setTxStatus((prev) => ({ ...prev, [selector]: "accepted" }));
           }
         },
