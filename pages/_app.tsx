@@ -4,7 +4,7 @@ import { WalletProvider } from "~/hooks/useWalletContext";
 import { SoundProvider } from '~/context/soundProvider';
 import { UserAgentProvider } from "@quentin-sommer/react-useragent";
 
-import "tailwindcss/tailwind.css";
+import '../styles/index.css'
 
 import {
   ApolloClient,

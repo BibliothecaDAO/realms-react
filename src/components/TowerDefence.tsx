@@ -119,7 +119,7 @@ function TowerDefence() {
         </button>
         <h1 className="mt-8">Double Click the Sheild to attack</h1>
       </div> */}
-      <Canvas linear shadows camera={{ position: [3, 2, -3] }}>
+      <Canvas linear shadows camera={{ position: [3, 2, 10] }}>
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[100, 100, 100]} />

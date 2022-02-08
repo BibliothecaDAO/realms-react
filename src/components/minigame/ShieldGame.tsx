@@ -63,8 +63,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }
 
   return (
-    <div className="">
-      <div className="">
+    <div className="relative">
+      <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between">
           <span className="text-2xl">
             Desiege <span className="text-sm"> game #</span>
@@ -86,13 +86,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <GameBlockTimer gameCtx={gameCtx} />
         </div>
 
-        <div className="flex flex-row justify-between mx-60">
+        <div className="flex flex-row w-full">
           <GameControls
             gameStatus={gameStatus}
             gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
             currentBoostBips={boost}
           />
-          <div id="fortress-container">
+          <div id="fortress-container" >
             <p className="text-4xl">Fortress</p>
             <p className="text-2xl">
               Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}

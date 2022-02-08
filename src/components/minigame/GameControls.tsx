@@ -133,20 +133,20 @@ const GameControls: React.FC<Prop> = (props) => {
   return (
     <div
       id="game-actions"
-      className="w-1/2 p-10 bg-gradient-to-b to-gray-700 from-gray-900 rounded-2xl"
+      className="w-1/3 p-10 bg-white text-black rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
       <div className="text-3xl">
-        <p className="text-white">
+        <p >
           Season 1: <ElementLabel> Divine Eclipse</ElementLabel>{" "}
         </p>
       </div>
 
       {gameStatus == "expired" ? (
-        <div className="text-white">
+        <div>
           {side == undefined ? (
             <button
               onClick={() => {
