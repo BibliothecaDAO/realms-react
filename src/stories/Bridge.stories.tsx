@@ -1,5 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { rest } from "msw";
+import { buildStarknetUrl } from "../mocks/starknetMockFactory";
 
 import Bridge from "~/components/bridge/Bridge";
 import {
@@ -22,7 +24,21 @@ Mint.args = {
   initialTab: "mint",
 };
 Mint.parameters = {
-  msw: [mockGetLatestGameIndex, mockSignAndMint],
+  msw: [
+    mockGetLatestGameIndex,
+    mockSignAndMint,
+    rest.get(
+      buildStarknetUrl("alpha4.starknet.io") + "get_transaction_status",
+      (_req, res, ctx) => {
+        return res(
+          ctx.status(200),
+          ctx.json({
+            tx_status: "ACCEPTED_ON_L2",
+          })
+        );
+      }
+    ),
+  ],
 };
 
 export const MintError = Template.bind({});

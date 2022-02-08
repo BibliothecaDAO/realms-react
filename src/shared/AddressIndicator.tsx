@@ -8,22 +8,24 @@ const AddressIndicator = () => {
 
   const [expanded, setExpanded] = useState(false);
 
-  if (addr == undefined) {
-    return (
-      <button
-        className="px-4 py-1 text-white rounded-lg bg-cyan-700"
-        onClick={() => starknet.connect()}
-      >
-        Connect StarkNet
-      </button>
-    );
-  }
-
-  const first4 = addr.substring(0, 6); // include the 0x
-  const last4 = addr.substring(addr.length - 4);
+  const first4 = addr ? addr.substring(0, 6) : ""; // include the 0x
+  const last4 = addr ? addr.substring(addr.length - 4) : "";
   return (
-    <span onClick={() => setExpanded(true)}>
-      {expanded ? addr : `${first4}...${last4}`}
+    <span
+      className="px-4 py-1 transition-colors border border-gray-800 rounded-md cursor-pointer hover:bg-gray-200"
+      onClick={() => {
+        if (addr == undefined) {
+          starknet.connect();
+        } else {
+          setExpanded(true);
+        }
+      }}
+    >
+      {addr == undefined
+        ? "Connect StarkNet"
+        : expanded
+        ? addr
+        : `${first4}...${last4}`}
     </span>
   );
 };

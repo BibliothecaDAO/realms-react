@@ -13,14 +13,18 @@ import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
 import { useState, useEffect } from "react";
+
 import { useEagerConnect } from "~/hooks/useWeb3";
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
+import useTxQueue from "~/hooks/useTxQueue";
+import { getSelectorFromName } from "starknet/dist/utils/stark";
 
 type Prop = {
   initialTab?: TabName;
+  onReceivedTx?: (txHash: string) => void;
 };
 
 type TabName =
@@ -30,7 +34,8 @@ type TabName =
   | "mint";
 
 export const Bridge: React.FC<Prop> = (props) => {
-  const starknet = useStarknet({ eagerConnect: true });
+
+  const starknet = useStarknet({ eagerConnect: false });
   /*const { error, chainId, active, activate, account, library } =
     useWeb3React<Web3Provider>();
 
@@ -42,6 +47,21 @@ export const Bridge: React.FC<Prop> = (props) => {
   const [mintError, setMintError] = useState<string>();
 
   const [transactionHash, setTransactionHash] = useState<string>();
+
+  const txQueue = useTxQueue();
+
+  useEffect(() => {
+    if (transactionHash) {
+      txQueue.addTransactionToQueue(
+        transactionHash,
+        getSelectorFromName("mint_elements")
+      );
+      // TODO: re-enable once better implementation of loading
+      // if (props.onReceivedTx) {
+      //   props.onReceivedTx(transactionHash);
+      // }
+    }
+  }, [transactionHash]);
 
   useEffect(() => {
     getLatestGameIndex()
@@ -100,6 +120,8 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const connectedClassname =
     "inline-block py-2 mt-4 break-words px-4 backdrop-blur-md bg-white/30 rounded-md";
+
+  const mintTxStatus = txQueue.status[getSelectorFromName("mint_elements")];
 
   return (
     <div className="w-full mx-auto sm:w-1/2 pt-40">
@@ -228,26 +250,50 @@ export const Bridge: React.FC<Prop> = (props) => {
                       Dark
                     </button>
 
-                    {side !== undefined ? (
-                      <>
-                        <p className="mt-4 break-words">
-                          {messageKey(starknet.address as string)}
-                        </p>
-
-                        <Button
-                          className="mt-4"
-                          onClick={() => verifyAndMint()}
-                        >
-                          Sign and Mint
-                        </Button>
-                      </>
+                    {mintTxStatus == "accepted" ? (
+                      <p>Minting succeeded. Please refresh your browser.</p>
                     ) : null}
+
+                    {mintTxStatus == "loading" ? (
+                      <>
+                        <p className="mt-8 text-2xl animate-bounce">
+                          Minting...
+                        </p>
+                        <p>
+                          Please wait, StarkNet is still in alpha. Your
+                          transaction is being executed on the sequencer.
+                        </p>
+                        <a
+                          // TODO: Choose host dynamically here based on network
+                          href={`https://goerli.voyager.online/tx/${transactionHash}/`}
+                          className="underline"
+                          target={"_blank"}
+                          rel="noopener"
+                        >
+                          Check Transaction Status
+                        </a>
+                      </>
+                    ) : (
+                      <>
+                        {side !== undefined && transactionHash == undefined ? (
+                          <>
+                            <p className="mt-4 break-words">
+                              {messageKey(starknet.address as string)}
+                            </p>
+
+                            <Button
+                              className="mt-4"
+                              onClick={() => verifyAndMint()}
+                            >
+                              Sign and Mint
+                            </Button>
+                          </>
+                        ) : null}
+                      </>
+                    )}
                   </>
                 ) : null}
-                {transactionHash !== undefined ? (
-                  <p>Minting succeeded! Transaction hash: {transactionHash}</p>
-                ) : null}
-                {mintError !== undefined ? (
+                {mintError !== undefined || mintTxStatus == "rejected" ? (
                   <p>A minting error occurred: {mintError}</p>
                 ) : null}
               </div>
