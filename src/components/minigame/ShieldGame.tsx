@@ -9,6 +9,7 @@ import AddressIndicator from "~/shared/AddressIndicator";
 import classNames from "classnames";
 import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
+import TowerDefence from "../TowerDefence";
 
 type Prop = {};
 
@@ -42,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const lastBlockOfCurrentGame = gameCtx
     ? gameCtx.gameStartBlock.toNumber() +
-      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
+    gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
     : undefined;
 
   const gameIsActive =
@@ -62,50 +63,54 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }
 
   return (
-    <div>
-      <h3 className="flex justify-between">
-        <span className="text-2xl">
-          Desiege <span className="text-sm"> game #</span>
-          {gameIdx ? toBN(gameIdx).toNumber() : null}
-          {gameCtx ? (
-            <span
-              className={classNames(
-                "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
-                gameIsActive ? "bg-green-200" : "bg-red-200"
-              )}
-            >
-              {gameStatus.toUpperCase()}
-            </span>
-          ) : null}
-        </span>
-        <AddressIndicator />
-      </h3>
-      <div>
-        <GameBlockTimer gameCtx={gameCtx} />
+    <div className="relative">
+      <div className="absolute z-10">
+        <h3 className="flex justify-between">
+          <span className="text-2xl">
+            Desiege <span className="text-sm"> game #</span>
+            {gameIdx ? toBN(gameIdx).toNumber() : null}
+            {gameCtx ? (
+              <span
+                className={classNames(
+                  "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
+                  gameIsActive ? "bg-green-200" : "bg-red-200"
+                )}
+              >
+                {gameStatus.toUpperCase()}
+              </span>
+            ) : null}
+          </span>
+          <AddressIndicator />
+        </h3>
+        {/* <div>
+          <GameBlockTimer gameCtx={gameCtx} />
+        </div> */}
+
+        {/* <div className="flex flex-row justify-between mx-60">
+          <GameControls
+            gameStatus={gameStatus}
+            gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
+            currentBoostBips={boost}
+          />
+          <div id="fortress-container">
+            <p className="text-4xl">Fortress</p>
+            <p className="text-2xl">
+              Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
+            </p>
+            <p>
+              Dark Shield Value:{" "}
+              {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
+            </p>
+            <p>
+              Light Shield Value:{" "}
+              {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
+            </p>
+            {mainHealth ? <Castle health={mainHealth.toNumber()} /> : null}
+          </div>
+        </div> */}
       </div>
 
-      <div className="flex flex-row justify-between mx-60">
-        <GameControls
-          gameStatus={gameStatus}
-          gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
-          currentBoostBips={boost}
-        />
-        <div id="fortress-container">
-          <p className="text-4xl">Fortress</p>
-          <p className="text-2xl">
-            Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
-          </p>
-          <p>
-            Dark Shield Value:{" "}
-            {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
-          </p>
-          <p>
-            Light Shield Value:{" "}
-            {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-          </p>
-          {mainHealth ? <Castle health={mainHealth.toNumber()} /> : null}
-        </div>
-      </div>
+      <TowerDefence />
     </div>
   );
 };

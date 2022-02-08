@@ -5,8 +5,8 @@ import { OrbitControls, useTexture, Cloud, Sky } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useSound } from "~/context/soundProvider";
-import VolumeIcon from "../public/svg/volume-up-solid.svg"
-import VolumeMuteIcon from "../public/svg/volume-mute-solid.svg"
+import VolumeIcon from "../../public/svg/volume-up-solid.svg"
+import VolumeMuteIcon from "../../public/svg/volume-mute-solid.svg"
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -98,7 +98,7 @@ function Box(props: ObjectProps) {
   );
 }
 
-function Scene() {
+function TowerDefence() {
   const [health, setHealth] = useState(100);
   const { isSoundActive, toggleSound } = useSound();
 
@@ -109,7 +109,7 @@ function Scene() {
 
   return (
     <div className="h-screen bg-gradient-to-b from-sky-400 to-sky-200">
-      <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
+      {/* <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
         <h1>Give Energy to the sheild - {health}</h1>
         <button
           onClick={() => setHealth(health + 10)}
@@ -118,7 +118,7 @@ function Scene() {
           Health Tower
         </button>
         <h1 className="mt-8">Double Click the Sheild to attack</h1>
-      </div>
+      </div> */}
       <Canvas linear shadows camera={{ position: [3, 2, -3] }}>
         <Suspense fallback={null}>
           <ambientLight />
@@ -151,11 +151,11 @@ function Scene() {
         {!isSoundActive ? (
           <VolumeMuteIcon className="2-8 h-8" />
         ) : (
-            <VolumeIcon className="2-8 h-8" />
-          )}
+          <VolumeIcon className="2-8 h-8" />
+        )}
       </button>
     </div>
   );
 }
 
-export default Scene;
+export default TowerDefence;

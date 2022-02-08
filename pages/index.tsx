@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="p-4">
+      <div>
         <ShieldGame />
       </div>
     </div>
