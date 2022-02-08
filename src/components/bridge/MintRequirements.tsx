@@ -6,19 +6,22 @@ import { BigNumber, ethers } from "ethers";
 
 import { fetchLordsBalance } from "~/util/fetchL1";
 import { MINIMUM_LORDS_REQUIRED } from "~/constants";
+import { useWalletContext } from "~/hooks/useWalletContext";
 
 type Prop = {
-  l1Address?: string | null;
+  l1Address?: String | null;
 };
 
 const MintRequirements: React.FC<Prop> = (props) => {
-  const [lordsBalance, setLordsBalance] = useState<BigNumber>();
+
+  const { balance } = useWalletContext();
+  /*const [lordsBalance, setLordsBalance] = useState<BigNumber>();
 
   useEffect(() => {
     if (props.l1Address) {
       fetchLordsBalance(props.l1Address).then((bal) => setLordsBalance(bal));
     }
-  }, [props.l1Address]);
+  }, [props.l1Address]);*/
 
   return (
     <div>
@@ -27,7 +30,7 @@ const MintRequirements: React.FC<Prop> = (props) => {
         <Transition
           appear
           as={"li"}
-          show={!!lordsBalance}
+          show={!!balance}
           className="flex items-center justify-between px-4 py-2 bg-gray-600 rounded-lg"
         >
           <span>
@@ -38,18 +41,18 @@ const MintRequirements: React.FC<Prop> = (props) => {
               enterTo="opacity-100 scale-100"
             >
               <span className="text-2xl">
-                {lordsBalance ? ethers.utils.formatEther(lordsBalance) : "-"}
+                {balance || "-"}
               </span>
             </Transition.Child>
           </span>
-          {lordsBalance ? (
+          {balance ? (
             <Transition.Child
               as={"p"}
               enter="duration-300 transition"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              {lordsBalance && lordsBalance.gte(MINIMUM_LORDS_REQUIRED) ? (
+              {balance && balance >= MINIMUM_LORDS_REQUIRED ? (
                 "You have enough LORDS"
               ) : (
                 <a
