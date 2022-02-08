@@ -8,7 +8,7 @@ module.exports = {
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
-        'hero': "url('https://cdna.artstation.com/p/assets/images/images/012/000/438/large/jose-ochoa-dawncathedral-joseochoa.jpg?1541606525')",
+        'hero': "url('/cover.jpg')",
       },
       colors: {
         gray: {
