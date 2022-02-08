@@ -43,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const lastBlockOfCurrentGame = gameCtx
     ? gameCtx.gameStartBlock.toNumber() +
-    gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
+      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
     : undefined;
 
   const gameIsActive =
@@ -66,7 +66,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
     <div className="relative">
       <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between">
-          <span className="text-5xl mb-8">
+          <span className="mb-8 text-5xl">
             <ElementLabel>Desiege game # </ElementLabel>
             {gameIdx !== undefined ? gameIdx : "-"}
             {gameCtx ? (
@@ -86,13 +86,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <GameBlockTimer gameCtx={gameCtx} />
         </div>
 
-        <div className="flex flex-row w-full justify-around">
+        <div className="flex flex-row justify-around w-full">
           <GameControls
             gameStatus={gameStatus}
-            gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
+            gameIdx={gameIdx}
             currentBoostBips={boost}
           />
-          <div id="fortress-container" className="ml-auto text-gray-900 p-8">
+          <div id="fortress-container" className="p-8 ml-auto text-gray-900">
             <p className="text-4xl">Fortress</p>
             <p className="text-2xl">
               Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
