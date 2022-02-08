@@ -66,14 +66,14 @@ const ShieldGame: React.FC<Prop> = (props) => {
     <div className="relative">
       <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between">
-          <span className="text-5xl">
-            <ElementLabel>Desiege game #</ElementLabel>
+          <span className="text-5xl mb-8">
+            <ElementLabel>Desiege game # </ElementLabel>
             {gameIdx ? toBN(gameIdx).toNumber() : null}
             {gameCtx ? (
               <span
                 className={classNames(
                   "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
-                  gameIsActive ? "bg-green-200" : "bg-red-200"
+                  gameIsActive ? "text-green-200" : "text-red-800"
                 )}
               >
                 {gameStatus.toUpperCase()}
@@ -82,17 +82,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
           <AddressIndicator />
         </h3>
-        <div>
+        <div className="mb-8">
           <GameBlockTimer gameCtx={gameCtx} />
         </div>
 
-        <div className="flex flex-row w-full">
+        <div className="flex flex-row w-full justify-around">
           <GameControls
             gameStatus={gameStatus}
             gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
             currentBoostBips={boost}
           />
-          <div id="fortress-container" >
+          <div id="fortress-container" className="ml-auto text-gray-900 p-8">
             <p className="text-4xl">Fortress</p>
             <p className="text-2xl">
               Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}

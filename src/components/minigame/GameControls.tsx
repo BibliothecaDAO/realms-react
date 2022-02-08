@@ -139,10 +139,11 @@ const GameControls: React.FC<Prop> = (props) => {
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
-      <div className="text-3xl">
-        <p >
-          Season 1: <ElementLabel> Divine Eclipse</ElementLabel>{" "}
-        </p>
+      <div>
+        <p className="uppercase text-xl">Season 1</p>
+        <h1 >
+          <ElementLabel> Divine Eclipse</ElementLabel>{" "}
+        </h1>
       </div>
 
       {gameStatus == "expired" ? (
@@ -156,12 +157,12 @@ const GameControls: React.FC<Prop> = (props) => {
                   starknet.connect();
                 }
               }}
-              className="w-full p-2 mt-4 text-lg text-white transition-colors bg-gray-800 border border-white rounded-md hover:bg-gray-700"
+              className="w-full p-2 mt-4 text-lg text-white transition-colors backdrop-blur-lg bg-white/30 border border-white rounded-md hover:bg-white/100"
             >
               {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
               {starknet.active ? (
                 <>
-                  Choose your <ElementLabel> Elements</ElementLabel>
+                  <ElementLabel>Choose your  Elements</ElementLabel>
                 </>
               ) : (
                 "Connect StarkNet"
@@ -187,7 +188,7 @@ const GameControls: React.FC<Prop> = (props) => {
             Waiting for next game to start...
           </p>
           <p className="font-bold">Preparation for Desiege</p>
-          <ul className="list-disc">
+          <ul className="list-none text-xl">
             <li>
               Read the <a className="underline">game guide</a>
             </li>
