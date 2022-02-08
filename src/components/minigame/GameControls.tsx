@@ -162,8 +162,8 @@ const GameControls: React.FC<Prop> = (props) => {
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
-      <div className="text-3xl">
-        <p className="text-white">
+      <div className="mb-4 text-3xl text-white">
+        <p>
           Season 1: <ElementLabel> Divine Eclipse</ElementLabel>{" "}
         </p>
       </div>
@@ -212,7 +212,7 @@ const GameControls: React.FC<Prop> = (props) => {
           <p className="font-bold">Preparation for Desiege</p>
           <ul className="list-disc">
             <li>
-              Read the <a className="underline">game guide</a>
+              Browse the <a className="underline">game guide</a>
             </li>
             <li>
               Coordinate on <a className="underline"> Discord</a>
@@ -221,26 +221,36 @@ const GameControls: React.FC<Prop> = (props) => {
               <a className="underline">Recruit</a> your friends
             </li>
             <li>
-              Explore the open-source <a className="underline">front-end</a> and{" "}
+              See the <a className="underline">front-end</a> and{" "}
               <a className="underline">StarkNet</a> contracts
             </li>
           </ul>
         </div>
       ) : (
         <>
-          <div className="flex w-full gap-4 mt-4 text-gray-100 row">
-            <div className="flex-1">
-              <p>
-                LIGHT{" "}
-                <ElementLabel side="light">
-                  {tokenBalances && tokenBalances.length > 0
-                    ? number.toBN(tokenBalances[0]).toString()
-                    : null}
-                </ElementLabel>
-              </p>
+          <p className="text-3xl text-white">
+            {side == "light" ? (
+              <>
+                <ElementLabel side="light">LIGHT </ElementLabel>
+                {tokenBalances && tokenBalances.length > 0
+                  ? number.toBN(tokenBalances[0]).toString()
+                  : null}
+              </>
+            ) : null}
+            {side == "dark" ? (
+              <>
+                <ElementLabel side="dark">DARK</ElementLabel>{" "}
+                {tokenBalances && tokenBalances.length > 1
+                  ? number.toBN(tokenBalances[1]).toString()
+                  : null}
+              </>
+            ) : null}
+          </p>
 
+          <div className="flex w-full gap-4 text-gray-100 row">
+            <div className="flex-1">
               <Button
-                className="w-full mt-4"
+                className="w-full mt-4 text-black"
                 active={action == "shield"}
                 onClick={() => setAction("shield")}
               >
@@ -248,14 +258,8 @@ const GameControls: React.FC<Prop> = (props) => {
               </Button>
             </div>
             <div className="flex-1">
-              DARK{" "}
-              <ElementLabel side="dark">
-                {tokenBalances && tokenBalances.length > 1
-                  ? number.toBN(tokenBalances[1]).toString()
-                  : null}
-              </ElementLabel>
               <Button
-                className="w-full mt-4"
+                className="w-full mt-4 text-black"
                 active={action == "attack"}
                 onClick={() => setAction("attack")}
               >
@@ -263,7 +267,7 @@ const GameControls: React.FC<Prop> = (props) => {
               </Button>
             </div>
           </div>
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row justify-center my-4">
             <input
               autoFocus
               type="number"

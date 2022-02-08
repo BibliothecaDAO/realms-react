@@ -26,13 +26,11 @@ const Button: React.FC<Prop> = (props) => {
   return (
     <button
       className={classNames(
-        "px-8 py-2 border-2 rounded-md bg-gradient-to-b",
+        "disabled:cursor-not-allowed disabled:opacity-60 px-8 py-2 border border-black rounded-md bg-gradient-to-b",
         props.active ? "from-yellow-400 to-yellow-500" : bgColors,
-        props.disabled
-          ? "text-gray-500 cursor-not-allowed"
-          : "hover:bg-gradient-to-t text-black",
         props.className
       )}
+      disabled={props.disabled}
       onClick={props.onClick}
     >
       {props.children}
