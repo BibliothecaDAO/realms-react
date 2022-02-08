@@ -63,8 +63,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }
 
   return (
-    <div className="relative">
-      <div className="absolute z-10">
+    <div className="">
+      <div className="">
         <h3 className="flex justify-between">
           <span className="text-2xl">
             Desiege <span className="text-sm"> game #</span>
@@ -82,11 +82,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
           <AddressIndicator />
         </h3>
-        {/* <div>
+        <div>
           <GameBlockTimer gameCtx={gameCtx} />
-        </div> */}
+        </div>
 
-        {/* <div className="flex flex-row justify-between mx-60">
+        <div className="flex flex-row justify-between mx-60">
           <GameControls
             gameStatus={gameStatus}
             gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
@@ -105,9 +105,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
               Light Shield Value:{" "}
               {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
             </p>
-            {mainHealth ? <Castle health={mainHealth.toNumber()} /> : null}
+            {/* {mainHealth ? <Castle health={mainHealth.toNumber()} /> : null} */}
           </div>
-        </div> */}
+        </div>
       </div>
 
       <TowerDefence />
