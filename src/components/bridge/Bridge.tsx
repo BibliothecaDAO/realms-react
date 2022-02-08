@@ -13,6 +13,9 @@ import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
 import { useState, useEffect } from "react";
+
+import { useEagerConnect } from "~/hooks/useWeb3";
+import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
@@ -31,9 +34,14 @@ type TabName =
   | "mint";
 
 export const Bridge: React.FC<Prop> = (props) => {
+
   const starknet = useStarknet({ eagerConnect: false });
-  const { error, chainId, active, activate, account, library } =
+  /*const { error, chainId, active, activate, account, library } =
     useWeb3React<Web3Provider>();
+
+  useEagerConnect();*/
+  const { account, signer, connectWallet, isConnected, disconnectWallet, displayName } =
+    useWalletContext();
 
   const [gameIdx, setGameIdx] = useState<string>();
   const [mintError, setMintError] = useState<string>();
@@ -64,61 +72,62 @@ export const Bridge: React.FC<Prop> = (props) => {
       });
   }, []);
 
-  if (error instanceof UserRejectedRequestError) {
+  /*if (error instanceof UserRejectedRequestError) {
     console.log("TODO: Handle user rejection");
-  }
+  }*/
 
   const [side, setSide] = useState<"light" | "dark">();
 
-  const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
+  /*const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
 
   useEffect(() => {
     setUnsupportedChain(error instanceof UnsupportedChainIdError);
-  }, [error]);
+  }, [error]);*/
 
   const [currentTab, setCurrentTab] = useState<TabName>(
     props.initialTab || "connect-ethereum"
   );
 
   const verifyAndMint = async () => {
-    const sig = await library
-      ?.getSigner()
-      .signMessage(messageKey(starknet.address as string));
-    const res = await axios.post<AddTransactionResponse | MintingError>(
-      "/api/minigame_alpha_mint",
-      {
-        starknetAddress: starknet.address,
-        sig,
-        chosenSide: side,
-        gameIdx,
-      }
-    );
+    if (signer) {
+      const sig = await signer
+        .signMessage(messageKey(starknet.address as string));
+      const res = await axios.post<AddTransactionResponse | MintingError>(
+        "/api/minigame_alpha_mint",
+        {
+          starknetAddress: starknet.address,
+          sig,
+          chosenSide: side,
+          gameIdx,
+        }
+      );
 
-    if ("code" in res.data && res.data.code == "TRANSACTION_RECEIVED") {
-      setTransactionHash(res.data.transaction_hash);
-      setMintError(undefined);
-    }
-    if ("error" in res.data) {
-      setMintError(res.data.error);
-      setTransactionHash(undefined);
+      if ("code" in res.data && res.data.code == "TRANSACTION_RECEIVED") {
+        setTransactionHash(res.data.transaction_hash);
+        setMintError(undefined);
+      }
+      if ("error" in res.data) {
+        setMintError(res.data.error);
+        setTransactionHash(undefined);
+      }
     }
   };
 
   const tabBtnClasses = {
-    base: "px-4 py-2 my-2 mx-2 text-white text-xs rounded-sm hover:bg-gray-200 hover:text-gray-800",
+    base: "px-4 py-2 my-2 mx-2 text-gray-800 text-sm rounded-sm hover:bg-gray-100 hover:text-gray-800",
     active: "text-white bg-gray-600",
   };
 
   const connectedClassname =
-    "inline-block py-2 mt-4 break-words px-4 bg-green-800 rounded-md";
+    "inline-block py-2 mt-4 break-words px-4 backdrop-blur-md bg-white/30 rounded-md";
 
   const mintTxStatus = txQueue.status[getSelectorFromName("mint_elements")];
 
   return (
-    <div className="w-full mx-auto sm:w-1/2">
-      <div className="p-2 mx-2 mt-4 bg-gray-700 border-2 border-black rounded-lg">
-        <div>
-          <nav className="bg-gray-800 rounded-md">
+    <div className="w-full mx-auto sm:w-1/2 pt-40">
+      <div className="p-2 mx-2 mt-4 backdrop-blur-md bg-white/30 rounded-lg">
+        <div className="text-gray-800">
+          <nav className="backdrop-blur-md bg-white/30 rounded-md">
             <span>
               <button
                 onClick={() => setCurrentTab("connect-ethereum")}
@@ -164,7 +173,7 @@ export const Bridge: React.FC<Prop> = (props) => {
               4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
             </button>
           </nav>
-          <div className={"text-white"}>
+          <div className="text-xl">
             {currentTab == "connect-ethereum" ? (
               <div className="p-4">
                 <p>
@@ -175,25 +184,17 @@ export const Bridge: React.FC<Prop> = (props) => {
                 {account ? (
                   <p className={connectedClassname}>Connected as {account}</p>
                 ) : (
-                  <UserAgentConnector>
-                    {(connectors) =>
-                      connectors.map((c, i) => (
-                        <Button
-                          key={c.name}
-                          onClick={() => activate(c.connector as any)}
-                          className="mt-4 mr-2 text-black"
-                        >
-                          {c.name}
-                        </Button>
-                      ))
-                    }
-                  </UserAgentConnector>
+                  <button className="mt-4 mr-2 text-black"
+                    onClick={connectWallet}>
+                    Connect to Lootverse
+                  </button>
                 )}
+                {/* TODO
                 {unsupportedChain ? (
                   <p className="mt-2">
                     Wrong Network. Please switch to Ethereum mainnet.
                   </p>
-                ) : null}
+                ) : null} */}
               </div>
             ) : null}
             {currentTab == "mint-requirements" ? (
