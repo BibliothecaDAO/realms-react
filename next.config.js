@@ -7,10 +7,6 @@ const withTM = require("next-transpile-modules")([
 ]);
 const withSvgr = require('next-plugin-svgr');
 
-module.exports = {
-  reactStrictMode: true,
-}
-
 module.exports = withTM({
   reactStrictMode: true,
   images: {
@@ -23,21 +19,14 @@ module.exports = withTM({
         loader: "file-loader",
       },
     },
-    {
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
-    });
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+      });
 
     return config;
   },
 });
 
 module.exports = withSvgr();
-
-
-module.exports = {
-  images: {
-    domains: ['d23fdhqc1jb9no.cloudfront.net'],
-  },
-}

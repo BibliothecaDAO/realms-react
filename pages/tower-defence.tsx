@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import ReactDOM from "react-dom";
 import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useTexture, Cloud, Sky } from "@react-three/drei";
@@ -24,7 +23,7 @@ function Box(props: ObjectProps) {
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
   let [time, setTime] = useState(1.0);
-  const render = (clock) => {
+  const render = (clock: any) => {
     const delta = clock.getDelta();
     setTime((time += delta * 5));
   };
@@ -108,38 +107,23 @@ function Scene() {
     console.log(isSoundActive)
   }, [toggleSound, isSoundActive]);
 
-  const targetObject = new THREE.Object3D();
-  targetObject.position.set(20, 0, 0);
-
   return (
     <div className="h-screen bg-gradient-to-b from-sky-400 to-sky-200">
       <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
-        <h1>Give Energy to the Shield - {health}</h1>
+        <h1>Give Energy to the sheild - {health}</h1>
         <button
           onClick={() => setHealth(health + 10)}
           className="bg-white px-4 rounded py-2 text-black mt-4"
         >
           Health Tower
         </button>
-        <h1 className="mt-8">Double Click the Shield to attack</h1>
+        <h1 className="mt-8">Double Click the Sheild to attack</h1>
       </div>
       <Canvas linear shadows camera={{ position: [3, 2, -3] }}>
         <Suspense fallback={null}>
-          <ambientLight
-            color={0x404040}
-            intensity={2}
-          />
-          <Cloud position={[-4, -2, -25]} speed={0.2} opacity={1} />
-          <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} />
-          {/* <pointLight position={[100, 100, 100]} /> */}
-          <directionalLight
-            color={0xF4E99B}
-            intensity={5}
-            position={[-10, 13, 0]}
-            castShadow
-          />
+          <ambientLight />
+          <pointLight position={[100, 100, 100]} />
+          <directionalLight args={[0xF4E99B, 10]} />
           <Box
             jsx={{
               position: [0, 0, 0],
@@ -148,12 +132,16 @@ function Scene() {
             health={health}
           />
           <OrbitControls autoRotate />
-          <Tower />
+          <Cloud position={[-4, -2, -25]} speed={0.2} opacity={1} />
+          <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
+          <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
+          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} />
+          <Tower receiveShadow />
         </Suspense>
         <Sky
           azimuth={0.2}
-          turbidity={2.3}
-          rayleigh={0.165}
+          turbidity={10}
+          rayleigh={0.5}
           inclination={0.7}
           distance={1000}
         />
@@ -163,8 +151,8 @@ function Scene() {
         {!isSoundActive ? (
           <VolumeMuteIcon className="2-8 h-8" />
         ) : (
-          <VolumeIcon className="2-8 h-8" />
-        )}
+            <VolumeIcon className="2-8 h-8" />
+          )}
       </button>
     </div>
   );
