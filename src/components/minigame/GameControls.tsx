@@ -133,7 +133,7 @@ const GameControls: React.FC<Prop> = (props) => {
   return (
     <div
       id="game-actions"
-      className="w-1/3 p-10 bg-white text-black rounded-2xl"
+      className="w-1/3 p-10 backdrop-blur-md bg-white/30 text-black rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}

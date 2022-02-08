@@ -10,7 +10,7 @@ import classNames from "classnames";
 import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "../TowerDefence";
-
+import ElementLabel from "~/shared/ElementsLabel";
 type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
@@ -66,8 +66,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
     <div className="relative">
       <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between">
-          <span className="text-2xl">
-            Desiege <span className="text-sm"> game #</span>
+          <span className="text-5xl">
+            <ElementLabel>Desiege game #</ElementLabel>
             {gameIdx ? toBN(gameIdx).toNumber() : null}
             {gameCtx ? (
               <span

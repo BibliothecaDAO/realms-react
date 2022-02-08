@@ -94,18 +94,18 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const tabBtnClasses = {
-    base: "px-4 py-2 my-2 mx-2 text-white text-xs rounded-sm hover:bg-gray-200 hover:text-gray-800",
+    base: "px-4 py-2 my-2 mx-2 text-gray-800 text-sm rounded-sm hover:bg-gray-100 hover:text-gray-800",
     active: "text-white bg-gray-600",
   };
 
   const connectedClassname =
-    "inline-block py-2 mt-4 break-words px-4 bg-green-800 rounded-md";
+    "inline-block py-2 mt-4 break-words px-4 backdrop-blur-md bg-white/30 rounded-md";
 
   return (
-    <div className="w-full mx-auto sm:w-1/2">
-      <div className="p-2 mx-2 mt-4 bg-gray-700 border-2 border-black rounded-lg">
-        <div>
-          <nav className="bg-gray-800 rounded-md">
+    <div className="w-full mx-auto sm:w-1/2 pt-40">
+      <div className="p-2 mx-2 mt-4 backdrop-blur-md bg-white/30 rounded-lg">
+        <div className="text-gray-800">
+          <nav className="backdrop-blur-md bg-white/30 rounded-md">
             <span>
               <button
                 onClick={() => setCurrentTab("connect-ethereum")}
@@ -151,7 +151,7 @@ export const Bridge: React.FC<Prop> = (props) => {
               4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
             </button>
           </nav>
-          <div className={"text-white"}>
+          <div className="text-xl">
             {currentTab == "connect-ethereum" ? (
               <div className="p-4">
                 <p>
