@@ -9,7 +9,11 @@ import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
 import { useStarknet } from "~/hooks/useStarknet";
 import BridgeModal from "../bridge/Modal";
-import { getTokenIdsForGame, ELEMENTS_ADDRESS } from "~/util/minigameApi";
+import {
+  getTokenIdsForGame,
+  ELEMENTS_ADDRESS,
+  TOKEN_INDEX_OFFSET_BASE,
+} from "~/util/minigameApi";
 import { GameStatus } from "~/types";
 const { getSelectorFromName } = stark;
 
@@ -32,15 +36,12 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const [side, setSide] = useState<"light" | "dark">();
 
-  // TODO: Determine role and calculate token index by game idx offset
-  const shieldingTokenId = 1;
-  const attackingTokenId = 1;
-
-  const tokenId: number = shieldingTokenId;
-
   const towerDefenceContractAddress = useModuleAddress("1");
 
   const handleAttack = async (gameIndex: number, amount: number) => {
+    const tokenId =
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
+
     await getStarknet().enable();
     const res = await getStarknet().signer?.invokeFunction(
       towerDefenceContractAddress as string,
@@ -55,11 +56,13 @@ const GameControls: React.FC<Prop> = (props) => {
       );
       console.log("attack transaction");
       console.log(status);
-      //   await fetchState();
     }
   };
 
   const handleShield = async (gameIndex: number, amount: number) => {
+    const tokenId =
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
+
     await getStarknet().enable();
     const res = await getStarknet().signer?.invokeFunction(
       towerDefenceContractAddress as string,
@@ -73,7 +76,6 @@ const GameControls: React.FC<Prop> = (props) => {
     );
     await waitForTransaction(res?.transaction_hash as string);
     console.log("shield transaction finished");
-    // await fetchState();
   };
 
   const fetchTokenBalances = async (gameIdx: number) => {

@@ -16,6 +16,8 @@ export const ELEMENTS_ADDRESS =
   (process.env.NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string) ||
   "0x19b9fd86ac5654937d603ce49ba8f1fc326c6446ce1d83510ab480e306be832";
 
+export const TOKEN_INDEX_OFFSET_BASE = 10;
+
 export enum ShieldGameRole {
   Shielder = "0",
   Attacker = "1",
@@ -189,7 +191,6 @@ export const getTokenIdsForGame = (gameIdx: number) => {
   // Having a multiplier of 10 means that there are max 10
   // "slots" for token IDs per game. This can be increased
   // in the future.
-  const mul = 10;
-  const tokenOffset = mul * gameIdx;
+  const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
   return [tokenOffset + 1, tokenOffset + 2];
 };
