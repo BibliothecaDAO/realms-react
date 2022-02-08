@@ -3,7 +3,6 @@ import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
-import { waitForTransaction } from "~/hooks/useStarknet";
 
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
@@ -13,8 +12,10 @@ import {
   getTokenIdsForGame,
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
+  getIsApprovedForAll,
 } from "~/util/minigameApi";
 import { GameStatus } from "~/types";
+import useTxQueue from "~/hooks/useTxQueue";
 const { getSelectorFromName } = stark;
 
 type Prop = {
@@ -27,6 +28,9 @@ const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
   const starknet = useStarknet();
+  const l2Address = useMemo(() => starknet.address, [starknet.address]);
+
+  const txQueue = useTxQueue();
 
   const [tokenBalances, setTokenBalances] = useState<BN[]>();
 
@@ -34,9 +38,25 @@ const GameControls: React.FC<Prop> = (props) => {
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
 
+  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
+
   const [side, setSide] = useState<"light" | "dark">();
 
   const towerDefenceContractAddress = useModuleAddress("1");
+
+  useEffect(() => {
+    const getIsApproved = async (account: string, operator: string) => {
+      const isApproved = await getIsApprovedForAll(account, operator);
+      setIs1155TokenApproved(isApproved ? "1" : "0");
+    };
+    if (
+      is1155TokenApproved == undefined &&
+      l2Address &&
+      towerDefenceContractAddress
+    ) {
+      getIsApproved(l2Address, towerDefenceContractAddress);
+    }
+  }, [towerDefenceContractAddress, l2Address]);
 
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
@@ -50,12 +70,10 @@ const GameControls: React.FC<Prop> = (props) => {
     );
 
     if (res?.transaction_hash) {
-      await waitForTransaction(res?.transaction_hash as string);
-      const status = await defaultProvider.getTransactionStatus(
-        res?.transaction_hash
+      txQueue.addTransactionToQueue(
+        res.transaction_hash,
+        getSelectorFromName("attack_tower")
       );
-      console.log("attack transaction");
-      console.log(status);
     }
   };
 
@@ -74,8 +92,12 @@ const GameControls: React.FC<Prop> = (props) => {
         (amount * 100).toString(),
       ]
     );
-    await waitForTransaction(res?.transaction_hash as string);
-    console.log("shield transaction finished");
+    if (res?.transaction_hash) {
+      txQueue.addTransactionToQueue(
+        res?.transaction_hash,
+        getSelectorFromName("increase_shield")
+      );
+    }
   };
 
   const fetchTokenBalances = async (gameIdx: number) => {
@@ -118,7 +140,6 @@ const GameControls: React.FC<Prop> = (props) => {
   };
   // Refetch token balances whenever starknet address changes
   // Memoize to avoid unnecessary re-renders for same value
-  const memoL2Address = useMemo(() => starknet.address, [starknet.address]);
 
   useEffect(() => {
     if (starknet.address && gameIdx !== undefined) {
@@ -130,7 +151,7 @@ const GameControls: React.FC<Prop> = (props) => {
         fetchTokenBalances(gameIdx + 1);
       }
     }
-  }, [memoL2Address, gameIdx]);
+  }, [l2Address, gameIdx]);
 
   return (
     <div
@@ -266,11 +287,11 @@ const GameControls: React.FC<Prop> = (props) => {
               ) : null}
             </div>
           </div>
-          {starknet.active ? (
+          {starknet.active && is1155TokenApproved == "1" ? (
             <Button
               color={"primary"}
               disabled={action == undefined || actionAmount.length == 0}
-              className="w-full mt-2 text-2xl text-white"
+              className="w-full text-white"
               onClick={() => {
                 if (gameIdx) {
                   if (action == "shield") {
@@ -283,17 +304,52 @@ const GameControls: React.FC<Prop> = (props) => {
             >
               Confirm Transaction
             </Button>
-          ) : (
-            <Button
-              className="w-full"
-              color="default"
-              onClick={() => starknet.connect()}
-            >
-              Connect StarkNet
-            </Button>
-          )}
+          ) : null}
         </>
       )}
+      {starknet.active == false ? (
+        <Button
+          className="w-full mt-4"
+          color="default"
+          onClick={() => starknet.connect()}
+        >
+          Connect StarkNet
+        </Button>
+      ) : null}
+      {is1155TokenApproved == "0" ? (
+        <>
+          <button
+            disabled={
+              txQueue.status[getSelectorFromName("set_approval_for_all")] ==
+              "loading"
+            }
+            onClick={() => {
+              if (towerDefenceContractAddress) {
+                getStarknet()
+                  .signer?.invokeFunction(
+                    ELEMENTS_ADDRESS,
+                    getSelectorFromName("set_approval_for_all"),
+                    [number.toBN(towerDefenceContractAddress).toString(), "1"]
+                  )
+                  .then((res) => {
+                    if (res.transaction_hash) {
+                      txQueue.addTransactionToQueue(
+                        res.transaction_hash,
+                        getSelectorFromName("set_approval_for_all")
+                      );
+                    }
+                  });
+              }
+            }}
+            className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
+          >
+            {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
+            "loading"
+              ? "Approving Contract"
+              : "Approve Elements Token"}
+          </button>
+        </>
+      ) : undefined}
     </div>
   );
 };

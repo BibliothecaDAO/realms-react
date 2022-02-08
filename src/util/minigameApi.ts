@@ -1,6 +1,7 @@
 import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
-import { toBN } from "starknet/dist/utils/number";
+const { toBN } = number;
+const { getSelectorFromName } = stark;
 
 export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
@@ -145,7 +146,7 @@ export const getTokenRewardPool: (
 };
 
 export type GameContext = {
-  gameIdx: string;
+  gameIdx: number;
   blocksPerMinute: number;
   hoursPerGame: number;
   currentBlock: BN;
@@ -168,7 +169,7 @@ export const getGameContextVariables: () => Promise<GameContext> = async () => {
   const varList = res.result;
 
   const ctx: GameContext = {
-    gameIdx: toBN(varList[0]).toString(),
+    gameIdx: toBN(varList[0]).toNumber(),
     blocksPerMinute: toBN(varList[1]).toNumber(),
     hoursPerGame: toBN(varList[2]).toNumber(),
     currentBlock: toBN(varList[3]),
@@ -193,4 +194,17 @@ export const getTokenIdsForGame = (gameIdx: number) => {
   // in the future.
   const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
   return [tokenOffset + 1, tokenOffset + 2];
+};
+
+export const getIsApprovedForAll = async (
+  account: string,
+  operator: string
+) => {
+  const res = await defaultProvider.callContract({
+    contract_address: ELEMENTS_ADDRESS,
+    entry_point_selector: getSelectorFromName("is_approved_for_all"),
+    calldata: [toBN(account).toString(), toBN(operator).toString()],
+  });
+  const [isApproved] = res.result;
+  return isApproved == "0x1";
 };

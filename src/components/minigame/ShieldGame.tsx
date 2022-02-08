@@ -14,7 +14,7 @@ type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
   // Contract state
-  const [gameIdx, setGameIdx] = useState<string>();
+  const [gameIdx, setGameIdx] = useState<number>();
   const [mainHealth, setMainHealth] = useState<BN>();
   const [_startBlockNum, setStartBlockNum] = useState<BN>();
   const [shieldValue, _setShieldValue] = useState<
@@ -66,7 +66,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       <h3 className="flex justify-between">
         <span className="text-2xl">
           Desiege <span className="text-sm"> game #</span>
-          {gameIdx ? toBN(gameIdx).toNumber() : null}
+          {gameIdx !== undefined ? gameIdx : "-"}
           {gameCtx ? (
             <span
               className={classNames(
@@ -87,7 +87,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       <div className="flex flex-row justify-between mx-60">
         <GameControls
           gameStatus={gameStatus}
-          gameIdx={gameIdx ? parseInt(gameIdx) : undefined}
+          gameIdx={gameIdx}
           currentBoostBips={boost}
         />
         <div id="fortress-container">
