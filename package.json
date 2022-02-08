@@ -13,6 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.5.8",
     "@argent/get-starknet": "^0.1.4",
+    "@danmarshall/deckgl-typings": "^4.9.13",
     "@deck.gl/extensions": "^8.6.6",
     "@ethersproject/providers": "^5.5.1",
     "@ethersproject/units": "^5.5.0",
