@@ -7,7 +7,7 @@ import {
   FlyToInterpolator,
   PointLight,
   LightingEffect,
-  _GlobeView as GlobeView,
+  // _GlobeView as GlobeView,
 } from "@deck.gl/core";
 import { FillStyleExtension } from "@deck.gl/extensions";
 import { StaticMap } from "react-map-gl";
