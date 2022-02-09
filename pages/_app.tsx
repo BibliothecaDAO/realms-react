@@ -1,14 +1,23 @@
 import React from "react";
 import { AppProps } from "next/app";
-import { Web3ReactProvider } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
+import { WalletProvider } from "~/hooks/useWalletContext";
+import { SoundProvider } from '~/context/soundProvider';
 import { UserAgentProvider } from "@quentin-sommer/react-useragent";
 
-import "tailwindcss/tailwind.css";
+import '../styles/index.css'
 
-function getLibrary(provider: any, connector: any): Web3Provider {
-  return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
-}
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
+  cache: new InMemoryCache()
+});
 
 const PageWrapper = (Comp: any) =>
   class InnerPageWrapper extends React.Component<{ ua: string }> {
@@ -37,10 +46,13 @@ const PageWrapper = (Comp: any) =>
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Component {...pageProps} />
-    </Web3ReactProvider>
-  );
+    <SoundProvider>
+      <WalletProvider>
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </WalletProvider>
+    </SoundProvider>)
 }
 
 export default PageWrapper(MyApp);

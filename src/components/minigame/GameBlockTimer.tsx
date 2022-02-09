@@ -27,7 +27,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   // Game "ticks" are displayed in hour intervals to fit on one screen
   const blockTicks = [];
   for (var i = 1; i <= hoursPerGame; i++) {
-    const pastBg = "bg-cyan-600";
+    const pastBg = "bg-cyan-200/60";
     const currentBg = "bg-gradient-to-r from-cyan-600 to-gray-700";
     const futureBg = "bg-gray-700";
 
@@ -37,7 +37,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
       <span
         key={i}
         className={classNames(
-          "flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline",
+          "flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline rounded text-blue-900 backdrop-blur-md",
           isCurrentHour ? currentBg : i < currentHour ? pastBg : futureBg,
           isCurrentHour ? "text-gray-100" : "text-transparent"
         )}
@@ -56,7 +56,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   return (
     <>
       <div className="flex gap-1 my-2">{blockTicks}</div>
-      <div className="flex justify-between text-xs">
+      <div className="flex justify-between text-xs text-blue-700">
         <span>Started at L2 block {startToNum}</span>
         <span>Ends at L2 block {endBlock}</span>
       </div>
