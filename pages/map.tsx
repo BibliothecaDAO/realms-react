@@ -37,9 +37,9 @@ const continent_layer = new PolygonLayer({
   filled: true,
   lineWidthMinPixels: 1,
   extruded: true,
-  getPolygon: (d) => d.contour,
+  getPolygon: (d: any) => d.contour,
   getElevation: 1000,
-  getFillColor: (d) => d.color,
+  getFillColor: (d: any) => d.color,
   getLineColor: [141, 121, 91],
   getLineWidth: 4,
   // fillPatternMask: true,
@@ -69,7 +69,7 @@ function App() {
     );
   };
 
-  const addToFilter = (value) => {
+  const addToFilter = (value: any) => {
     const idx = resource.indexOf(value);
     console.log(idx);
     if (idx === -1) {
@@ -83,8 +83,8 @@ function App() {
   const textLayer = new TextLayer({
     id: "text-layer",
     data: filteredData(),
-    getPosition: (d) => d.coordinates,
-    getText: (d) => d.name.toString(),
+    getPosition: (d: any) => d.coordinates,
+    getText: (d: any) => d.name.toString(),
     getSize: 20,
     getColor: [0, 0, 0, 255],
     getAngle: 0,
@@ -103,7 +103,7 @@ function App() {
     extruded: true,
     pickable: true,
     opacity: 1,
-    getPosition: (d) => d.coordinates,
+    getPosition: (d: any) => d.coordinates,
     getRadius: 30000,
     getElevation: 10000,
     lineWidthMinPixels: 1,
@@ -147,7 +147,7 @@ function App() {
   }, []);
 
   const [value, setValue] = useState('1');
-  const onChange = (event) => {
+  const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
       setValue("1");
     }
@@ -191,7 +191,7 @@ function App() {
     <Layout>
       <div>
         <div className="absolute top-0 right-0 bg-white rounded p-4 h-auto w-auto z-10 shadow-2xl bg-black border-double border-4 border-off-200 text-white">
-          <RealmCard data={data} loading={loading} />
+          <RealmCard data={data!} loading={loading} />
         </div>
         <div
           className={`h-screen w-72 bg-black z-20 absolute p-4 top-14 shadow-2xl border-r-4 border-double border-off-200 overflow-auto`}
@@ -222,6 +222,7 @@ function App() {
           layers={layers}
           getTooltip={({ object }) =>
             object && {
+              // @ts-ignore: name not exist on D
               html: `<div class=" w-60 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Realms/${object.name}.svg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2></h2></div></div>  
       
       `,
