@@ -40,17 +40,22 @@ export function useSound() {
     const newValue = !isSoundActive;
     setSound(newValue);
     booleanStorage.setItem(localStorageKey, newValue);
+    if (!newValue) {
+      stop()
+    }
   }, [isSoundActive]);
 
+  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', { soundEnabled: isSoundActive });
 
+  playBackground()
   const [playShield, options] = useSoundLib('/shield.mp3', { soundEnabled: isSoundActive });
 
   const playSound = () => {
-    
+
   }
 
   //return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
-  return {isSoundActive, toggleSound, playShield}
+  return { isSoundActive, toggleSound, playShield, options }
 }
 
 
