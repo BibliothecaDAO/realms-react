@@ -229,7 +229,7 @@ const GameControls: React.FC<Prop> = (props) => {
         </div>
       ) : (
         <>
-          <p className="text-3xl text-white">
+          <p className="text-3xl">
             {side == "light" ? (
               <>
                 <ElementLabel side="light">LIGHT </ElementLabel>

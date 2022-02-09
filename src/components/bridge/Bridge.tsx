@@ -199,7 +199,7 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab == "mint-requirements" ? (
               <div className="p-4">
-                <MintRequirements l1Address={account} />
+                <MintRequirements l1Address={account.toString()} />
               </div>
             ) : null}
             {currentTab == "connect-starknet" ? (
