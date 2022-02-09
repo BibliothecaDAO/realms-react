@@ -9,11 +9,13 @@ import booleanStorage from '../services/booleanStorage';
 const defaultSoundContext = {
   isSoundActive: true,
   toggleSound: () => { },
+  playShield: () => { }
 };
 
 const SoundContext = createContext<{
   isSoundActive: boolean;
   toggleSound: () => void;
+  playShield: () => void;
 }>(defaultSoundContext);
 
 interface SoundProviderProps {
@@ -30,7 +32,7 @@ export const SoundProvider = (props: SoundProviderProps) => {
 
 const localStorageKey = 'SOUND_SETTING_IS_ON';
 
-const initialValue = booleanStorage.getItem(localStorageKey, { defaultValue: true });
+const initialValue = booleanStorage.getItem(localStorageKey, { defaultValue: true }) || false
 //const SoundSettingContext = createContext({isSoundActive: false, toggleSound: () => { }});
 
 export function useSound() {
@@ -55,7 +57,7 @@ export function useSound() {
   }
 
   //return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
-  return { isSoundActive, toggleSound, playShield, options }
+  return { isSoundActive, toggleSound, playShield }
 }
 
 

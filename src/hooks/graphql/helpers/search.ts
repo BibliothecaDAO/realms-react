@@ -1,4 +1,4 @@
-const buildSRealmsWhere = (search) => {
+const buildSRealmsWhere = (search: any) => {
   const predicates: any = {}
 
   if (search?.address) {

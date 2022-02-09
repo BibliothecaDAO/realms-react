@@ -1,4 +1,4 @@
-function getItem(key, { defaultValue = false } = {}) {
+function getItem(key: string, { defaultValue = false } = {}) {
   if (typeof window === 'undefined') {
     return undefined;
   }
@@ -11,7 +11,7 @@ function getItem(key, { defaultValue = false } = {}) {
   return Boolean(Number(value));
 }
 
-function setItem(key, value) {
+function setItem(key: string, value: boolean) {
   if (typeof window === 'undefined') {
     return;
   }
