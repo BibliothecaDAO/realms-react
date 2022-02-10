@@ -230,6 +230,11 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : (
         <>
           <p className="text-3xl">
+            {side == undefined ? (
+              <>
+                Side Not Chosen
+              </>
+            ) : null}
             {side == "light" ? (
               <>
                 <ElementLabel side="light">LIGHT </ElementLabel>

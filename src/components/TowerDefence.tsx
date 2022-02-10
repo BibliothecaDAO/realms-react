@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, useTexture, Cloud, Sky, Html, Text, Billboard } from "@react-three/drei";
+import { OrbitControls, useTexture, Cloud, Stars, Sky, Html, Text, Billboard } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useSound } from "~/context/soundProvider";
@@ -23,9 +23,6 @@ function Box(props: ObjectProps) {
   const { playShield } = useSound();
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
-  const [shieldValue] = useState<
-    Record<ElementToken, string> | undefined
-  >();
   let [time, setTime] = useState(1.0);
   const render = (clock: any) => {
     const delta = clock.getDelta();
@@ -98,23 +95,21 @@ function Box(props: ObjectProps) {
         transparent={true}
         args={[KnotShaderMaterial]}
       />
-      <Html position={[1.5, -0.7, 0]}
-        className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
-        occlude={mesh}
-      >
-        <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">Fortress</p>
-        <p>Vitality: {props.health?.toFixed(2)} </p>
-        <p>Dark Shield: {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}</p>
-        <p>Light Shield: {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}</p>
-      </Html>
     </mesh>
   );
 }
 
 function TowerDefence() {
   const [health, setHealth] = useState(100);
-  const { isSoundActive, toggleSound } = useSound();
+  const [rotate, setRotate] = useState(true);
 
+  const { isSoundActive, toggleSound } = useSound();
+  const tower = useRef<THREE.Group>(null!);
+  const shield = useRef<THREE.Mesh>(null!);
+
+  const [shieldValue] = useState<
+    Record<ElementToken, string> | undefined
+  >();
   const handleClick = useCallback(() => {
     toggleSound();
   }, [toggleSound]);
@@ -131,25 +126,61 @@ function TowerDefence() {
         </button>
         <h1 className="mt-8">Double Click the Sheild to attack</h1>
       </div> */}
-      <Canvas linear shadows camera={{ position: [3, 2, 10] }}>
+      <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xF4E99B, 10]} />
-          <Box
-            jsx={{
-              position: [0, 0, 0],
-              onDoubleClick: () => setHealth(health - 10),
-            }}
-            health={health}
-          />
-          <OrbitControls autoRotate />
+          <group ref={shield}>
+
+            <Box
+              jsx={{
+                position: [0, 0, 0],
+                onDoubleClick: () => setHealth(health - 10),
+              }}
+              health={health}
+            />
+          </group>
+
+          <OrbitControls autoRotate={rotate} />
           <Cloud position={[-4, -2, -25]} speed={0.2} opacity={1} />
-          <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
+          {/* Hide until opacity over tower issue solved
+           <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
           <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} />
-          <Tower receiveShadow />
+          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
+          <group ref={tower}>
+            {!rotate ? (
+              <Text color={''} fillOpacity={0}
+                strokeWidth={'2.5%'}
+                strokeColor="#9333ea"
+                maxWidth={4}
+                anchorX="left" anchorY="top" position={[-1.5, 4.75, 0]} fontSize={0.4}>
+                THE DIVINE CITY
+              </Text>
+            ) : (null)}
+            <Tower
+              onPointerOver={(event) => {
+                setRotate(false);
+              }}
+              receiveShadow
+              onPointerOut={(event) => {
+                setRotate(true);
+              }}
+            />
+            <Html position={[-4.5, -0.5, 2]}
+              className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
+              occlude={[tower, shield]}
+            >
+
+              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">Fortress</p>
+              <p>Vitality: {health?.toFixed(2)} </p>
+              <p>Dark Shield: {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}</p>
+              <p>Light Shield: {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}</p>
+            </Html>
+          </group>
         </Suspense>
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+
         <Sky
           azimuth={0.2}
           turbidity={10}
@@ -166,7 +197,7 @@ function TowerDefence() {
           <VolumeIcon className="2-8 h-8" />
         )}
       </button>
-    </div>
+    </div >
   );
 }
 
