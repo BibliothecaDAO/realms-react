@@ -9,7 +9,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   if (props.gameCtx == undefined) {
     // Present a loading indicator
     return (
-      <div className="w-full h-6 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
+      <div className="w-full z-10 h-6 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
     );
   }
 
@@ -55,10 +55,10 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="flex gap-1 my-2">{blockTicks}</div>
+      <div className="flex gap-1 my-2 relative z-10">{blockTicks}</div>
       <div className="flex justify-between text-xs text-blue-700">
-        <span>Started at L2 block {startToNum}</span>
-        <span>Ends at L2 block {endBlock}</span>
+        <span className="z-10">Started at L2 block {startToNum}</span>
+        <span className="z-10">Ends at L2 block {endBlock}</span>
       </div>
     </>
   );

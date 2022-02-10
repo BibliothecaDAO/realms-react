@@ -12,7 +12,7 @@ const AddressIndicator = () => {
   const last4 = addr ? addr.substring(addr.length - 4) : "";
   return (
     <span
-      className="px-4 py-1 transition-colors border border-gray-800 rounded-md cursor-pointer hover:bg-gray-200"
+      className="z-10 px-4 py-1 transition-colors border border-gray-800 rounded-md cursor-pointer hover:bg-gray-200"
       onClick={() => {
         if (addr == undefined) {
           starknet.connect();
@@ -24,8 +24,8 @@ const AddressIndicator = () => {
       {addr == undefined
         ? "Connect StarkNet"
         : expanded
-        ? addr
-        : `${first4}...${last4}`}
+          ? addr
+          : `${first4}...${last4}`}
     </span>
   );
 };

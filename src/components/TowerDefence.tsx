@@ -1,12 +1,13 @@
 import * as THREE from "three";
 import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, useTexture, Cloud, Sky } from "@react-three/drei";
+import { OrbitControls, useTexture, Cloud, Sky, Html, Text, Billboard } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useSound } from "~/context/soundProvider";
 import VolumeIcon from "../../public/svg/volume-up-solid.svg"
 import VolumeMuteIcon from "../../public/svg/volume-mute-solid.svg"
+import { ElementToken } from "~/constants";
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -22,6 +23,9 @@ function Box(props: ObjectProps) {
   const { playShield } = useSound();
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
+  const [shieldValue] = useState<
+    Record<ElementToken, string> | undefined
+  >();
   let [time, setTime] = useState(1.0);
   const render = (clock: any) => {
     const delta = clock.getDelta();
@@ -94,6 +98,15 @@ function Box(props: ObjectProps) {
         transparent={true}
         args={[KnotShaderMaterial]}
       />
+      <Html position={[1.5, -0.7, 0]}
+        className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
+        occlude={mesh}
+      >
+        <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">Fortress</p>
+        <p>Vitality: {props.health?.toFixed(2)} </p>
+        <p>Dark Shield: {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}</p>
+        <p>Light Shield: {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}</p>
+      </Html>
     </mesh>
   );
 }
@@ -104,11 +117,10 @@ function TowerDefence() {
 
   const handleClick = useCallback(() => {
     toggleSound();
-    console.log(isSoundActive)
-  }, [toggleSound, isSoundActive]);
+  }, [toggleSound]);
 
   return (
-    <div className="h-screen bg-gradient-to-b from-sky-400 to-sky-200">
+    <div className="h-screen bg-gradient-to-b from-sky-400 to-sky-200 z-1">
       {/* <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
         <h1>Give Energy to the sheild - {health}</h1>
         <button

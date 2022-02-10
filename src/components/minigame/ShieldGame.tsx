@@ -43,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const lastBlockOfCurrentGame = gameCtx
     ? gameCtx.gameStartBlock.toNumber() +
-      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
+    gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
     : undefined;
 
   const gameIsActive =
@@ -64,9 +64,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 w-full p-8">
+      <div className="absolute w-full p-8">
         <h3 className="flex justify-between">
-          <span className="mb-8 text-5xl">
+          <span className="z-10 mb-8 text-5xl">
             <ElementLabel>Desiege game # </ElementLabel>
             {gameIdx !== undefined ? gameIdx : "-"}
             {gameCtx ? (
@@ -82,17 +82,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
           <AddressIndicator />
         </h3>
-        <div className="mb-8">
+        <div className="mb-8 z-10">
           <GameBlockTimer gameCtx={gameCtx} />
         </div>
 
-        <div className="flex flex-row justify-around w-full">
+        <div className="flex flex-row w-full">
           <GameControls
             gameStatus={gameStatus}
             gameIdx={gameIdx}
             currentBoostBips={boost}
           />
-          <div id="fortress-container" className="p-8 ml-auto text-gray-900">
+          {/* <div id="fortress-container" className="z-10 p-8 ml-auto text-gray-900">
             <p className="text-4xl">Fortress</p>
             <p className="text-2xl">
               Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
@@ -105,7 +105,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
               Light Shield Value:{" "}
               {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 

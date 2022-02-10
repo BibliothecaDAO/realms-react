@@ -156,7 +156,7 @@ const GameControls: React.FC<Prop> = (props) => {
   return (
     <div
       id="game-actions"
-      className="w-1/3 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
+      className="w-1/3 p-10 z-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}
@@ -349,7 +349,7 @@ const GameControls: React.FC<Prop> = (props) => {
             className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
           >
             {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-            "loading"
+              "loading"
               ? "Approving Contract"
               : "Approve Elements Token"}
           </button>

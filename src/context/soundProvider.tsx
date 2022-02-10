@@ -1,5 +1,5 @@
 import {
-  createContext, useContext, useState, useCallback,
+  createContext, useContext, useState, useCallback, useEffect
 } from 'react';
 import PropTypes from 'prop-types';
 import useSoundLib from 'use-sound';
@@ -7,7 +7,7 @@ import useSoundLib from 'use-sound';
 import booleanStorage from '../services/booleanStorage';
 
 const defaultSoundContext = {
-  isSoundActive: true,
+  isSoundActive: false,
   toggleSound: () => { },
   playShield: () => { }
 };
@@ -42,15 +42,22 @@ export function useSound() {
     const newValue = !isSoundActive;
     setSound(newValue);
     booleanStorage.setItem(localStorageKey, newValue);
-    if (!newValue) {
-      stop()
-    }
+
   }, [isSoundActive]);
 
-  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', { soundEnabled: isSoundActive });
+  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', {
+    soundEnabled: isSoundActive, volume: 0.3, loop: true,
+  });
 
-  playBackground()
-  const [playShield, options] = useSoundLib('/shield.mp3', { soundEnabled: isSoundActive });
+  const [playShield, options] = useSoundLib('/shield.mp3');
+
+  useEffect(() => {
+    if (!isSoundActive) {
+      stop()
+    } else {
+      playBackground()
+    }
+  }, [isSoundActive, playBackground, stop]);
 
   const playSound = () => {
 
