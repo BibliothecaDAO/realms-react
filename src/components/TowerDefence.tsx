@@ -1,12 +1,21 @@
 import * as THREE from "three";
 import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, useTexture, Cloud, Stars, Sky, Html, Text, Billboard } from "@react-three/drei";
+import {
+  OrbitControls,
+  useTexture,
+  Cloud,
+  Stars,
+  Sky,
+  Html,
+  Text,
+  Billboard,
+} from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useSound } from "~/context/soundProvider";
-import VolumeIcon from "../../public/svg/volume-up-solid.svg"
-import VolumeMuteIcon from "../../public/svg/volume-mute-solid.svg"
+import VolumeIcon from "../../public/svg/volume-up-solid.svg";
+import VolumeMuteIcon from "../../public/svg/volume-mute-solid.svg";
 import { ElementToken } from "~/constants";
 
 const Tower = dynamic(() => import("~/components/Model"), {
@@ -71,8 +80,8 @@ function Box(props: ObjectProps) {
       {...props.jsx}
       receiveShadow
       ref={mesh}
-      scale={2.69}
-      position={[0, 1, 0]}
+      scale={2.3}
+      position={[0, 2, 0]}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => {
         setHover(true);
@@ -107,9 +116,7 @@ function TowerDefence() {
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
 
-  const [shieldValue] = useState<
-    Record<ElementToken, string> | undefined
-  >();
+  const [shieldValue] = useState<Record<ElementToken, string> | undefined>();
   const handleClick = useCallback(() => {
     toggleSound();
   }, [toggleSound]);
@@ -130,9 +137,8 @@ function TowerDefence() {
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
-          <directionalLight args={[0xF4E99B, 10]} />
+          <directionalLight args={[0xf4e99b, 10]} />
           <group ref={shield}>
-
             <Box
               jsx={{
                 position: [0, 0, 0],
@@ -150,14 +156,20 @@ function TowerDefence() {
           <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
           <group ref={tower}>
             {!rotate ? (
-              <Text color={''} fillOpacity={0}
-                strokeWidth={'2.5%'}
+              <Text
+                color={""}
+                fillOpacity={0}
+                strokeWidth={"2.5%"}
                 strokeColor="#9333ea"
                 maxWidth={4}
-                anchorX="left" anchorY="top" position={[-1.5, 4.75, 0]} fontSize={0.4}>
+                anchorX="left"
+                anchorY="top"
+                position={[-1.5, 4.75, 0]}
+                fontSize={0.4}
+              >
                 THE DIVINE CITY
               </Text>
-            ) : (null)}
+            ) : null}
             <Tower
               onPointerOver={(event) => {
                 setRotate(false);
@@ -167,19 +179,34 @@ function TowerDefence() {
                 setRotate(true);
               }}
             />
-            <Html position={[-4.5, -0.5, 2]}
+            <Html
+              position={[-4.5, -0.5, 2]}
               className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
               occlude={[tower, shield]}
             >
-
-              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">Fortress</p>
+              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">
+                Fortress
+              </p>
               <p>Vitality: {health?.toFixed(2)} </p>
-              <p>Dark Shield: {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}</p>
-              <p>Light Shield: {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}</p>
+              <p>
+                Dark Shield:{" "}
+                {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
+              </p>
+              <p>
+                Light Shield:{" "}
+                {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
+              </p>
             </Html>
           </group>
         </Suspense>
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
+        <Stars
+          radius={100}
+          depth={50}
+          count={5000}
+          factor={4}
+          saturation={0}
+          fade
+        />
 
         <Sky
           azimuth={0.2}
@@ -189,15 +216,17 @@ function TowerDefence() {
           distance={1000}
         />
       </Canvas>
-      <button className="mute-btn absolute bottom-1 right-1 " onClick={handleClick}>
-
+      <button
+        className="mute-btn absolute bottom-1 right-1 "
+        onClick={handleClick}
+      >
         {!isSoundActive ? (
           <VolumeMuteIcon className="2-8 h-8" />
         ) : (
           <VolumeIcon className="2-8 h-8" />
         )}
       </button>
-    </div >
+    </div>
   );
 }
 
