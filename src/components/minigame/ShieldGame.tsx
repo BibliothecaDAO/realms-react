@@ -43,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const lastBlockOfCurrentGame = gameCtx
     ? gameCtx.gameStartBlock.toNumber() +
-      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
+    gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
     : undefined;
 
   const gameIsActive =
@@ -93,24 +93,15 @@ const ShieldGame: React.FC<Prop> = (props) => {
             gameIdx={gameIdx}
             currentBoostBips={boost}
           /> */}
-          {/* <div id="fortress-container" className="z-10 p-8 ml-auto text-gray-900">
-            <p className="text-4xl">Fortress</p>
-            <p className="text-2xl">
-              Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
-            </p>
-            <p>
-              Dark Shield Value:{" "}
-              {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
-            </p>
-            <p>
-              Light Shield Value:{" "}
-              {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-            </p>
-          </div> */}
+
         </div>
       </div>
 
-      <TowerDefence />
+      <TowerDefence
+        gameStatus={gameStatus}
+        gameIdx={gameIdx}
+        currentBoostBips={boost}
+      />
     </div>
   );
 };

@@ -49,7 +49,9 @@ export function useSound() {
     soundEnabled: isSoundActive, volume: 0.3, loop: true,
   });
 
-  const [playShield, options] = useSoundLib('/shield.mp3');
+  const [playShield, options] = useSoundLib('/shield.mp3', {
+    soundEnabled: !isSoundActive, volume: 1
+  });
 
   useEffect(() => {
     if (!isSoundActive) {

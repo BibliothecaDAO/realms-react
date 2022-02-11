@@ -20,6 +20,8 @@ import Zap from "../../public/svg/zap.svg";
 import Clock from "../../public/svg/clock.svg";
 import Settings from "../../public/svg/settings.svg";
 import { ElementToken } from "~/constants";
+import ShieldAction from "./minigame/ShieldAction";
+import { GameStatus } from "~/types";
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -35,6 +37,7 @@ function Box(props: ObjectProps) {
   const { playShield } = useSound();
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
+
   let [time, setTime] = useState(1.0);
   const render = (clock: any) => {
     const delta = clock.getDelta();
@@ -42,6 +45,7 @@ function Box(props: ObjectProps) {
   };
   // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
   useFrame(({ clock }) => render(clock));
+
 
   const KnotShaderMaterial = {
     uniforms: {
@@ -107,17 +111,21 @@ function Box(props: ObjectProps) {
         transparent={true}
         args={[KnotShaderMaterial]}
       />
+
     </mesh>
   );
 }
 
-function TowerDefence() {
+function TowerDefence(gameStatus: GameStatus, gameIdx: number, currentBoostBips: number) {
   const [health, setHealth] = useState(100);
   const [rotate, setRotate] = useState(true);
 
   const { isSoundActive, toggleSound } = useSound();
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
+  const [showShieldAction, setShowShieldAction] = useState(false);
+  const [showShieldDetail, setShowShieldDetail] = useState(false);
+
 
   const [shieldValue] = useState<Record<ElementToken, string> | undefined>();
   const handleClick = useCallback(() => {
@@ -141,14 +149,39 @@ function TowerDefence() {
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xf4e99b, 10]} />
-          <group ref={shield}>
+          <group ref={shield} position={[0, 0, 0]}>
             <Box
               jsx={{
                 position: [0, 0, 0],
-                onDoubleClick: () => setHealth(health - 10),
+                onDoubleClick: () => { setHealth(health - 10); setShowShieldDetail(true) }
+                ,
               }}
               health={health}
             />
+            {showShieldDetail &&
+              <Html
+                position={[-2.3, 3.5, 0]}
+                className="w-64"
+              >
+                <button
+                  className="border-red border px-4 py-2 bg-white/30 w-48 rounded-xl text-gray-700 hover:bg-white"
+                  onClick={() => { setShowShieldAction(true) }}
+                >
+                  <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300 ">
+                    Attack Shield
+
+                  </span>
+
+                </button>
+                {showShieldAction &&
+                  <ShieldAction
+                    gameStatus={gameStatus}
+                    gameIdx={gameIdx}
+                    currentBoostBips={currentBoostBips}
+                  />
+                }
+              </Html>
+            }
           </group>
 
           <OrbitControls autoRotate={rotate} />
@@ -174,6 +207,7 @@ function TowerDefence() {
               </Text>
             ) : null}
             <Tower
+              position={[0, 1, 0]}
               onPointerOver={(event) => {
                 setRotate(false);
               }}
@@ -183,7 +217,7 @@ function TowerDefence() {
               }}
             />
             <Html
-              position={[-4.5, -0.5, 2]}
+              position={[-4.5, -0.3, 2]}
               className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
               occlude={[tower, shield]}
             >
