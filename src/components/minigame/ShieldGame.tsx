@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BN from "bn.js";
 import { ElementToken } from "~/constants";
 import { GameContext, getGameContextVariables } from "~/util/minigameApi";
-import Castle from "./Castle";
 import { toBN } from "starknet/dist/utils/number";
 import GameBlockTimer from "./GameBlockTimer";
 import AddressIndicator from "~/shared/AddressIndicator";
@@ -11,10 +10,13 @@ import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "../TowerDefence";
 import ElementLabel from "~/shared/ElementsLabel";
+import { useUIContext } from "../../hooks/useUiState";
 type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
+  const { isMenuOpen, toggleMenu } = useUIContext();
   // Contract state
+
   const [gameIdx, setGameIdx] = useState<number>();
   const [mainHealth, setMainHealth] = useState<BN>();
   const [_startBlockNum, setStartBlockNum] = useState<BN>();
@@ -78,14 +80,19 @@ const ShieldGame: React.FC<Prop> = (props) => {
         <h3 className="flex justify-between text-center uppercase font-body text-blue-300 font-semibold">
           <span className="z-10 mb-8 text-5xl mx-auto">
             {/* <ElementLabel> */}
-            Desiege game # {gameIdx !== undefined ? gameIdx : "-"}
+            Desiege game # {isMenuOpen ? "s" : "z"}{" "}
+            {gameIdx !== undefined ? gameIdx : "-"}
             {/* </ElementLabel> */}
           </span>
         </h3>
         <AddressIndicator />
-        <div className="mb-8 z-10">
-          <GameBlockTimer gameCtx={gameCtx} />
-        </div>
+        {/* {showUi.gameBlock ? (
+          <div className="mb-8 z-10">
+            <GameBlockTimer gameCtx={gameCtx} />
+          </div>
+        ) : (
+          <div></div>
+        )} */}
 
         <div className="flex flex-row w-full">
           {/* <GameControls

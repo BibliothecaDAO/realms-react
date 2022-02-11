@@ -18,7 +18,6 @@ import { Realm as RealmCard } from "~/components/realms/Realm";
 import { useQuery } from "@apollo/client";
 
 import { Data } from "~/types";
-import { useUiState } from "~/hooks/useUiState";
 import { getRealmQuery } from "~/hooks/graphql/queries";
 // const arc_pairs = [];
 // for (const x of Array(15).keys()) {
@@ -116,8 +115,9 @@ function App() {
   const list = resources.map((res, index) => (
     <button
       key={index}
-      className={`border-off-200  p-1 w-1/2 h-12 mb-2 rounded-xl border-4 border-double text-off-200 hover:bg-white ${resource.includes(res.trait) ? "bg-white" : "bg-black"
-        } `}
+      className={`border-off-200  p-1 w-1/2 h-12 mb-2 rounded-xl border-4 border-double text-off-200 hover:bg-white ${
+        resource.includes(res.trait) ? "bg-white" : "bg-black"
+      } `}
       onClick={() => addToFilter(res.trait)}
     >
       {res.trait}
@@ -146,15 +146,13 @@ function App() {
     });
   }, []);
 
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState("1");
   const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
       setValue("1");
-    }
-    else if (parseInt(event.target.value) > 8000) {
+    } else if (parseInt(event.target.value) > 8000) {
       setValue("8000");
-    }
-    else {
+    } else {
       setValue(event.target.value);
     }
   };
@@ -186,7 +184,7 @@ function App() {
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: value },
   });
-  const { ui, setUi } = useUiState()
+
   return (
     <Layout>
       <div>
@@ -232,11 +230,13 @@ function App() {
               },
             }
           }
-
         >
           <StaticMap
             mapStyle="mapbox://styles/ponderingdemocritus/ckz12qufp000515r172nb8rod"
-            mapboxApiAccessToken={'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'} />
+            mapboxApiAccessToken={
+              "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
+            }
+          />
         </DeckGL>
       </div>
     </Layout>

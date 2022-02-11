@@ -22,3 +22,8 @@ export interface RealmProps {
     data: Data;
     loading: boolean;
 }
+
+export interface UiState {
+    isMenuOpen: boolean;
+    toggleMenu: Function;
+  }

@@ -1,22 +1,22 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { WalletProvider } from "~/hooks/useWalletContext";
-import { SoundProvider } from '~/context/soundProvider';
+import { SoundProvider } from "~/context/soundProvider";
 import { UserAgentProvider } from "@quentin-sommer/react-useragent";
-
-import '../styles/index.css'
+import { UIContextProvider } from "~/hooks/useUiState";
+import "../styles/index.css";
 
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   useQuery,
-  gql
+  gql,
 } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-  cache: new InMemoryCache()
+  uri: "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
+  cache: new InMemoryCache(),
 });
 
 const PageWrapper = (Comp: any) =>
@@ -49,10 +49,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SoundProvider>
       <WalletProvider>
         <ApolloProvider client={client}>
-          <Component {...pageProps} />
+          <UIContextProvider>
+            <Component {...pageProps} />
+          </UIContextProvider>
         </ApolloProvider>
       </WalletProvider>
-    </SoundProvider>)
+    </SoundProvider>
+  );
 }
 
 export default PageWrapper(MyApp);

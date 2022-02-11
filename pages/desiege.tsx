@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className="">
       <Head>
-        <title>Realms Tower Defence</title>
+        <title>The Lootverse</title>
         <meta
           name="description"
           content="Tower Defence on-chain NFT game on StarkNet"

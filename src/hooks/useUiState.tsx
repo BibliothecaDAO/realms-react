@@ -1,14 +1,29 @@
-import { useState, useCallback } from "react";
-import { FlyToInterpolator } from "@deck.gl/core";
-import { realms_data } from "../continents";
+import { createContext, useContext, useState, useMemo } from "react";
 
-export const useUiState = () => {
-  const [ui, setUi] = useState({resources: false});
+import { UiState } from "~/types";
 
+const UIContext = createContext<UiState>({
+  isMenuOpen: false,
+  toggleMenu: () => {},
+});
 
+export const useUIContext = () => useContext(UIContext);
 
-  return {
-    ui,
-    setUi
-  };
+export const UIContextProvider = ({ children }: { children: any }) => {
+  const [state, setState] = useState({
+    isMenuOpen: false,
+  });
+  const value = useMemo(() => {
+    const toggleMenu = () =>
+      setState({
+        ...state,
+        isMenuOpen: !state.isMenuOpen,
+      });
+    return {
+      ...state,
+      toggleMenu,
+    };
+  }, [state]);
+
+  return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 };

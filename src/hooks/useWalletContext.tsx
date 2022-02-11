@@ -3,7 +3,7 @@ import { BigNumber, ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal";
 import { shortenAddress } from "~/util/formatters";
-import LordsTokenAbi from "~/abi/TheLordsToken.json"
+import LordsTokenAbi from "~/abi/TheLordsToken.json";
 
 const WEB3_MODAL_CONFIG = {
   network: "mainnet",
@@ -14,11 +14,11 @@ const WEB3_MODAL_CONFIG = {
       options: {
         pollingInterval: 20000000,
         rpc: {
-          1: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
-        }
-      }
-    }
-  } // Add other providers here
+          1: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+        },
+      },
+    },
+  }, // Add other providers here
 };
 
 const isServer = typeof window === "undefined";
@@ -27,12 +27,12 @@ const defaultWalletContext = {
   isConnected: false,
   signer: undefined,
   provider: undefined,
-  connectWallet: () => { },
-  disconnectWallet: () => { },
+  connectWallet: () => {},
+  disconnectWallet: () => {},
   account: "",
   displayName: "",
   balance: 0,
-  dao: 0
+  dao: 0,
 };
 
 const WalletContext = createContext<{
@@ -71,7 +71,6 @@ function useWallet() {
     const web3Modal = new Web3Modal(WEB3_MODAL_CONFIG);
     setModal(web3Modal);
     login(web3Modal);
-
   }
 
   async function updateAccount(
@@ -81,14 +80,14 @@ function useWallet() {
     let ensName, balance, lords;
     setAccount(address);
     const lordsContract = new ethers.Contract(
-      '0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0',
+      "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
       LordsTokenAbi.abi,
       provider
-    )
+    );
 
     try {
       ensName = await provider.lookupAddress(address);
-      balance = await lordsContract.balanceOf(address)
+      balance = await lordsContract.balanceOf(address);
       setDisplayName(ensName ?? shortenAddress(address));
       setBalance(
         parseFloat(parseFloat(ethers.utils.formatUnits(balance)).toFixed(4))
@@ -135,7 +134,6 @@ function useWallet() {
     }
   }
 
-
   function disconnectWallet() {
     modal?.clearCachedProvider();
     setModal(undefined);
@@ -148,19 +146,15 @@ function useWallet() {
 
   useEffect(() => {
     async function tryAutoLogin() {
-
       const web3Modal = new Web3Modal(WEB3_MODAL_CONFIG);
 
       if (web3Modal.cachedProvider) {
-
         const isMetaMaskUnlocked = await isMetaMaskAndUnlocked(web3Modal);
         if (isMetaMaskUnlocked) {
-
           setModal(web3Modal);
           login(web3Modal);
         }
       }
-
     }
     if (!isServer) tryAutoLogin();
   }, [isServer]);
@@ -173,7 +167,7 @@ function useWallet() {
     isConnected,
     account,
     displayName,
-    balance
+    balance,
   };
 }
 

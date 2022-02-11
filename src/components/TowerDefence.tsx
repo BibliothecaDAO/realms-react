@@ -96,11 +96,6 @@ function Box(props: ObjectProps) {
       }}
     >
       <sphereBufferGeometry />
-      {/* <meshStandardMaterial
-        color={`rgb(${props.health},${props.health},${props.health})`}
-        opacity={0.5}
-        transparent
-      /> */}
       <shaderMaterial
         opacity={0.2}
         attach="material"
@@ -126,16 +121,6 @@ function TowerDefence() {
 
   return (
     <div className="h-screen z-1">
-      {/* <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
-        <h1>Give Energy to the sheild - {health}</h1>
-        <button
-          onClick={() => setHealth(health + 10)}
-          className="bg-white px-4 rounded py-2 text-black mt-4"
-        >
-          Health Tower
-        </button>
-        <h1 className="mt-8">Double Click the Sheild to attack</h1>
-      </div> */}
       <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
         <Suspense fallback={null}>
           <ambientLight />
@@ -184,21 +169,21 @@ function TowerDefence() {
             />
             <Html
               position={[-4.5, -0.5, 2]}
-              className="text-lg px-4 py-2 bg-white/30 w-44 rounded-xl text-gray-700"
+              className="text-lg p-6 bg-white/30 w-56 rounded-xl text-gray-700"
               occlude={[tower, shield]}
             >
-              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300">
-                Fortress
+              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700">
+                Shield Health
               </p>
-              <p>Vitality: {health?.toFixed(2)} </p>
-              <p>
+              <p className="text-4xl">{health?.toFixed(2)} </p>
+              {/* <p>
                 Dark Shield:{" "}
                 {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
               </p>
               <p>
                 Light Shield:{" "}
                 {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-              </p>
+              </p> */}
             </Html>
           </group>
         </Suspense>
