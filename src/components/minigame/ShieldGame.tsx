@@ -83,9 +83,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3>
         <AddressIndicator />
-        {/* <div className="mb-8 z-10">
+        <div className="mb-8 z-10">
           <GameBlockTimer gameCtx={gameCtx} />
-        </div> */}
+        </div>
 
         <div className="flex flex-row w-full">
           {/* <GameControls
