@@ -42,7 +42,7 @@ function Box(props: ObjectProps) {
 
   const KnotShaderMaterial = {
     uniforms: {
-      time: { value: time * 40 },
+      time: { value: time * 5 },
     },
     vertexShader: `
     varying vec2 vUv;
@@ -55,23 +55,23 @@ function Box(props: ObjectProps) {
     }
     `,
     fragmentShader: `
-    uniform float time;
+			uniform float time;
 
-    varying vec2 vUv;
+			varying vec2 vUv;
 
-    void main( void ) {
+			void main( void ) {
 
-      vec2 position = vUv;
+				vec2 position = vUv;
 
-      float color = 0.0;
-      color += sin( position.x * cos( 2.0 / 15.0 ) * 10.0 ) + cos( position.y * cos( time / 15.0 ) * 100.0 * time );
-      color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 * time);
-      color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 * time);
-      color *= sin( time / 10.0 ) * 0.5;
+				float color = 0.0;
+				color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+				color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+				color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+				color *= sin( time / 10.0 ) * 0.5;
 
-      gl_FragColor = vec4( vec3( color, color * time, sin( color + time / 1.0 ) * 0.25 ), 0.1 );
+				gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 0.1 );
 
-    }
+			}
     `,
   };
 
@@ -122,7 +122,7 @@ function TowerDefence() {
   }, [toggleSound]);
 
   return (
-    <div className="h-screen bg-gradient-to-b from-sky-400 to-sky-200 z-1">
+    <div className="h-screen z-1">
       {/* <div className="top-10 right-10 bg-black h-auto w-96 absolute z-10 rounded-xl p-6 ">
         <h1>Give Energy to the sheild - {health}</h1>
         <button
@@ -216,16 +216,17 @@ function TowerDefence() {
           distance={1000}
         />
       </Canvas>
-      <button
-        className="mute-btn absolute bottom-1 right-1 "
-        onClick={handleClick}
-      >
-        {!isSoundActive ? (
-          <VolumeMuteIcon className="2-8 h-8" />
-        ) : (
-          <VolumeIcon className="2-8 h-8" />
-        )}
-      </button>
+      <div className="w-full  absolute bottom-2 ">
+        <div className="w-96 h-12 rounded-2xl backdrop-blur-md bg-white/30 mx-auto flex justify-between px-4">
+          <button className="mute-btn opacity-50 " onClick={handleClick}>
+            {!isSoundActive ? (
+              <VolumeMuteIcon className="2-8 h-8" />
+            ) : (
+              <VolumeIcon className="2-8 h-8" />
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

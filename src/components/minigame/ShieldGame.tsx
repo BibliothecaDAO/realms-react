@@ -43,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const lastBlockOfCurrentGame = gameCtx
     ? gameCtx.gameStartBlock.toNumber() +
-    gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
+      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
     : undefined;
 
   const gameIsActive =
@@ -65,33 +65,34 @@ const ShieldGame: React.FC<Prop> = (props) => {
   return (
     <div className="relative">
       <div className="absolute w-full p-8">
-        <h3 className="flex justify-between">
-          <span className="z-10 mb-8 text-5xl">
-            <ElementLabel>Desiege game # </ElementLabel>
-            {gameIdx !== undefined ? gameIdx : "-"}
-            {gameCtx ? (
-              <span
-                className={classNames(
-                  "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
-                  gameIsActive ? "text-green-200" : "text-red-800"
-                )}
-              >
-                {gameStatus.toUpperCase()}
-              </span>
-            ) : null}
+        {/* {gameCtx ? (
+          <span
+            className={classNames(
+              "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
+              gameIsActive ? "text-green-200" : "text-red-800"
+            )}
+          >
+            {gameStatus.toUpperCase()}
           </span>
-          <AddressIndicator />
+        ) : null} */}
+        <h3 className="flex justify-between text-center uppercase font-body text-blue-300 font-semibold">
+          <span className="z-10 mb-8 text-5xl mx-auto">
+            {/* <ElementLabel> */}
+            Desiege game # {gameIdx !== undefined ? gameIdx : "-"}
+            {/* </ElementLabel> */}
+          </span>
         </h3>
-        <div className="mb-8 z-10">
+        <AddressIndicator />
+        {/* <div className="mb-8 z-10">
           <GameBlockTimer gameCtx={gameCtx} />
-        </div>
+        </div> */}
 
         <div className="flex flex-row w-full">
-          <GameControls
+          {/* <GameControls
             gameStatus={gameStatus}
             gameIdx={gameIdx}
             currentBoostBips={boost}
-          />
+          /> */}
           {/* <div id="fortress-container" className="z-10 p-8 ml-auto text-gray-900">
             <p className="text-4xl">Fortress</p>
             <p className="text-2xl">
