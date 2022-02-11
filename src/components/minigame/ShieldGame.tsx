@@ -77,11 +77,10 @@ const ShieldGame: React.FC<Prop> = (props) => {
             {gameStatus.toUpperCase()}
           </span>
         ) : null} */}
-        <h3 className="flex justify-between text-center uppercase font-body text-blue-300 font-semibold">
+        <h3 className="flex justify-between text-center uppercase font-body text-blue-300 ">
           <span className="z-10 mb-8 text-5xl mx-auto">
             {/* <ElementLabel> */}
-            Desiege game # {isMenuOpen ? "s" : "z"}{" "}
-            {gameIdx !== undefined ? gameIdx : "-"}
+            Desiege game #{gameIdx !== undefined ? gameIdx : "-"}
             {/* </ElementLabel> */}
           </span>
         </h3>
