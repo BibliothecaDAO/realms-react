@@ -14,7 +14,7 @@ import { useUIContext } from "../../hooks/useUIContext";
 type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
-  const { volume, toggleVolume } = useUIContext();
+  const { powerBar, setup } = useUIContext();
   // Contract state
 
   const [gameIdx, setGameIdx] = useState<number>();
@@ -85,21 +85,24 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3>
         <AddressIndicator />
-        {volume ? (
+        {powerBar ? (
           <div className="mb-8 z-10">
             <GameBlockTimer gameCtx={gameCtx} />
           </div>
         ) : (
           <div></div>
         )}
-
-        <div className="flex flex-row w-full">
-          {/* <GameControls
-            gameStatus={gameStatus}
-            gameIdx={gameIdx}
-            currentBoostBips={boost}
-          /> */}
-        </div>
+        {setup ? (
+          <div className="flex flex-row w-full">
+            <GameControls
+              gameStatus={gameStatus}
+              gameIdx={gameIdx}
+              currentBoostBips={boost}
+            />
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
 
       <TowerDefence

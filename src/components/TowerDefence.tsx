@@ -110,7 +110,7 @@ function Box(props: ObjectProps) {
 }
 
 function TowerDefence(props: TowerProps) {
-  const { volume, toggleVolume } = useUIContext();
+  const { togglePowerBar, toggleSetup } = useUIContext();
   const [health, setHealth] = useState(100);
   const [rotate, setRotate] = useState(true);
 
@@ -245,13 +245,13 @@ function TowerDefence(props: TowerProps) {
           </button>
           <button
             className="mute-btn  self-center hover:text-blue-700"
-            onClick={handleClick}
+            onClick={toggleSetup}
           >
             <Settings className="w-8" />
           </button>
           <button
             className="mute-btn  self-center hover:text-blue-700"
-            onClick={toggleVolume}
+            onClick={togglePowerBar}
           >
             <Zap className="w-8" />
           </button>

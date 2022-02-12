@@ -1,13 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 
 const defaultUIContext = {
-  volume: false,
-  toggleVolume: () => {},
+  powerBar: false,
+  togglePowerBar: () => {},
+  setup: false,
+  toggleSetup: () => {},
 };
 
 const UIContext = createContext<{
-  volume: boolean;
-  toggleVolume: () => void;
+  powerBar: boolean;
+  togglePowerBar: () => void;
+  setup: boolean;
+  toggleSetup: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -21,15 +25,22 @@ export const UIProvider = (props: UIProviderProps) => {
 };
 
 function useUI() {
-  const [volume, setVolume] = useState(false);
+  const [powerBar, setPowerBar] = useState(false);
+  const [setup, setSetup] = useState(false);
 
-  const toggleVolume = () => {
-    return setVolume(!volume);
+  const togglePowerBar = () => {
+    return setPowerBar(!powerBar);
+  };
+
+  const toggleSetup = () => {
+    return setSetup(!setup);
   };
 
   return {
-    volume,
-    toggleVolume,
+    powerBar,
+    togglePowerBar,
+    setup,
+    toggleSetup,
   };
 }
 
