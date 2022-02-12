@@ -9,7 +9,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   if (props.gameCtx == undefined) {
     // Present a loading indicator
     return (
-      <div className="w-full z-10 h-6 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
+      <div className="z-10 h-96 w-12 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
     );
   }
 
@@ -37,7 +37,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
       <span
         key={i}
         className={classNames(
-          "flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline rounded text-blue-900 backdrop-blur-md",
+          "flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline rounded text-blue-900 backdrop-blur-md w-24",
           isCurrentHour ? currentBg : i < currentHour ? pastBg : futureBg,
           isCurrentHour ? "text-gray-100" : "text-transparent"
         )}
@@ -55,10 +55,10 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="flex gap-1 my-2 relative z-10">{blockTicks}</div>
-      <div className="flex justify-between text-xs text-blue-700">
-        <span className="z-10">Started at L2 block {startToNum}</span>
-        <span className="z-10">Ends at L2 block {endBlock}</span>
+      <div className="flex flex-col gap-1 my-2 relative z-10 h-full w-auto">
+        <span>Started at L2 block {startToNum}</span>
+        {blockTicks}
+        <span>Ends at L2 block {endBlock}</span>
       </div>
     </>
   );
