@@ -27,3 +27,10 @@ export interface UiState {
     isMenuOpen: boolean;
     toggleMenu: Function;
   }
+
+export interface TowerProps {
+    gameStatus: GameStatus;
+    gameIdx?: number;
+    currentBoostBips?: number;
+  }
+  

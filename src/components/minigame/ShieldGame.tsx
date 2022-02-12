@@ -10,11 +10,11 @@ import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "../TowerDefence";
 import ElementLabel from "~/shared/ElementsLabel";
-import { useUIContext } from "../../hooks/useUiState";
+import { useUIContext } from "../../hooks/useUIContext";
 type Prop = {};
 
 const ShieldGame: React.FC<Prop> = (props) => {
-  const { isMenuOpen, toggleMenu } = useUIContext();
+  const { volume, toggleVolume } = useUIContext();
   // Contract state
 
   const [gameIdx, setGameIdx] = useState<number>();
@@ -85,13 +85,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3>
         <AddressIndicator />
-        {/* {showUi.gameBlock ? (
+        {volume ? (
           <div className="mb-8 z-10">
             <GameBlockTimer gameCtx={gameCtx} />
           </div>
         ) : (
           <div></div>
-        )} */}
+        )}
 
         <div className="flex flex-row w-full">
           {/* <GameControls
@@ -99,24 +99,14 @@ const ShieldGame: React.FC<Prop> = (props) => {
             gameIdx={gameIdx}
             currentBoostBips={boost}
           /> */}
-          {/* <div id="fortress-container" className="z-10 p-8 ml-auto text-gray-900">
-            <p className="text-4xl">Fortress</p>
-            <p className="text-2xl">
-              Vitality: {mainHealth?.div(toBN(100)).toNumber().toFixed(2)}
-            </p>
-            <p>
-              Dark Shield Value:{" "}
-              {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
-            </p>
-            <p>
-              Light Shield Value:{" "}
-              {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-            </p>
-          </div> */}
         </div>
       </div>
 
-      <TowerDefence />
+      <TowerDefence
+        gameStatus={gameStatus}
+        gameIdx={gameIdx}
+        currentBoostBips={boost}
+      />
     </div>
   );
 };

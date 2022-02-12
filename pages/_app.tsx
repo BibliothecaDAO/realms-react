@@ -3,7 +3,7 @@ import { AppProps } from "next/app";
 import { WalletProvider } from "~/hooks/useWalletContext";
 import { SoundProvider } from "~/context/soundProvider";
 import { UserAgentProvider } from "@quentin-sommer/react-useragent";
-import { UIContextProvider } from "~/hooks/useUiState";
+import { UIProvider } from "~/hooks/useUIContext";
 import "../styles/index.css";
 
 import {
@@ -49,9 +49,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SoundProvider>
       <WalletProvider>
         <ApolloProvider client={client}>
-          <UIContextProvider>
+          <UIProvider>
             <Component {...pageProps} />
-          </UIContextProvider>
+          </UIProvider>
         </ApolloProvider>
       </WalletProvider>
     </SoundProvider>
