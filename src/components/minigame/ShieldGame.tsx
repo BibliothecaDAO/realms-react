@@ -8,7 +8,7 @@ import AddressIndicator from "~/shared/AddressIndicator";
 import classNames from "classnames";
 import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
-import TowerDefence from "../TowerDefence";
+import TowerDefence from "./TowerDefence";
 import ElementLabel from "~/shared/ElementsLabel";
 import { useUIContext } from "../../hooks/useUIContext";
 type Prop = {};
