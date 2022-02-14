@@ -19,6 +19,9 @@ export const ELEMENTS_ADDRESS =
 
 export const TOKEN_INDEX_OFFSET_BASE = 10;
 
+// The minimum amount of tokens to mint
+export const MINIMUM_MINT_AMOUNT = 100;
+
 export enum ShieldGameRole {
   Shielder = "0",
   Attacker = "1",
@@ -194,6 +197,54 @@ export const getTokenIdsForGame = (gameIdx: number) => {
   // in the future.
   const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
   return [tokenOffset + 1, tokenOffset + 2];
+};
+
+export const getTotalElementsMinted = async (gameIdx: number) => {
+  const elementBalancerModule = await getModuleAddress("4");
+
+  const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
+
+  const mintedLight = await defaultProvider.callContract({
+    contract_address: elementBalancerModule,
+    entry_point_selector: getSelectorFromName("get_total_minted"),
+    calldata: [(tokenOffset + 1).toString()],
+  });
+  const mintedDark = await defaultProvider.callContract({
+    contract_address: elementBalancerModule,
+    entry_point_selector: getSelectorFromName("get_total_minted"),
+    calldata: [(tokenOffset + 2).toString()],
+  });
+
+  const [light] = mintedLight.result;
+  const [dark] = mintedDark.result;
+
+  return {
+    light: toBN(light).toNumber(),
+    dark: toBN(dark).toNumber(),
+  };
+};
+
+// To maintain balance next mint divides diff by 2
+export const getNextMintAmount = ({
+  light,
+  dark,
+}: {
+  light: number;
+  dark: number;
+}) => {
+  const baseAmount = MINIMUM_MINT_AMOUNT;
+
+  let diff;
+  if (light > dark) {
+    diff = light - dark;
+  } else if (dark > light) {
+    diff = dark - light;
+  } else {
+    return baseAmount;
+  }
+
+  let balancedNextAmount = Math.round(diff / 2);
+  return Math.max(balancedNextAmount, baseAmount);
 };
 
 export const getIsApprovedForAll = async (
