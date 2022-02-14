@@ -19,6 +19,7 @@ import { StaticMap } from "react-map-gl";
 import { Header } from "~/components/navigation/header";
 import Layout from "~/components/Layout";
 import { Realm as RealmCard } from "~/components/realms/Realm";
+import { ResourceSideBar } from "~/components/map/ResourceSideBar";
 import { useQuery } from "@apollo/client";
 
 import { Data } from "~/types";
@@ -192,6 +193,10 @@ function App() {
   return (
     <Layout>
       <div>
+        <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
+          Lootverse
+        </h1>
+        <ResourceSideBar />
         <button
           className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
           onClick={toggleMapMenu}
