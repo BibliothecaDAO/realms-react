@@ -8,7 +8,8 @@
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs-build",
-    "deploy:middleware_minter_account": "node ./account_deployer.js"
+    "deploy:middleware_minter_account": "node ./account_deployer.js",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
@@ -67,6 +68,7 @@
     "eslint": "8.7.0",
     "eslint-config-next": "12.0.8",
     "eslint-plugin-storybook": "^0.5.3",
+    "jest": "^27.5.1",
     "msw-storybook-addon": "^1.5.0",
     "postcss": "^8.3.11",
     "postcss-preset-env": "^7.2.3",
