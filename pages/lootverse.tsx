@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, PolygonLayer, TextLayer } from "@deck.gl/layers";
+import {
+  ScatterplotLayer,
+  PolygonLayer,
+  TextLayer,
+  IconLayer,
+} from "@deck.gl/layers";
 import { realms_data, contour_data } from "~/continents";
 import { resources } from "~/resources";
 import {
@@ -103,26 +108,32 @@ function App() {
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.coordinates,
-    getRadius: 30000,
+    getRadius: 3000,
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [141, 121, 91],
     onClick: (info, event) => setRealmInformation(true),
   });
+  const ICON_MAPPING = {
+    marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
+  };
+  const layer = new IconLayer({
+    id: "icon-layer",
+    data: filteredData(),
+    pickable: true,
+    // iconAtlas and iconMapping are required
+    // getIcon: return a string
+    iconAtlas:
+      "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
+    iconMapping: ICON_MAPPING,
+    getIcon: (d) => "marker",
 
-  const layers = [realms_layer];
-
-  const list = resources.map((res, index) => (
-    <button
-      key={index}
-      className={`border-off-200  p-1 w-1/2 h-12 mb-2 rounded-xl border-4 border-double text-off-200 hover:bg-white ${
-        resource.includes(res.trait) ? "bg-white" : "bg-black"
-      } `}
-      onClick={() => addToFilter(res.trait)}
-    >
-      {res.trait}
-    </button>
-  ));
+    sizeScale: 5,
+    getPosition: (d: any) => d.coordinates,
+    getSize: (d) => 5,
+    getColor: (d: any) => [255, 255, 255],
+  });
+  const layers = [layer];
 
   const [initialViewState, setInitialViewState] = useState({
     longitude: 0,
@@ -157,61 +168,51 @@ function App() {
     }
   };
 
-  // const mapOutput = () =>{
-  //   const geojson = contour_data.map((a)=>{
-  //     return {
-  //       "type": "Feature",
-  //       "properties": {},
-  //       "geometry": {
-  //           "type": "LineString",
-  //           "coordinates": a.contour
-  //       }
-  //     }
-  //   })
-  //   const fin = {
-  //     "type": "FeatureCollection",
-  //     "features": [...geojson]
-  //   }
-  //   console.log(fin)
-  // }
-  // const sun = new PointLight({
-  //   color: [128, 128, 0],
-  //   intensity: 100.0,
-  //   position: [0, 0, 200]
-  // });
-  // const lightingEffect = new LightingEffect({sun});
-
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: value },
   });
 
+  const list = resources.map((res, index) => (
+    <button
+      key={index}
+      className={` p-1 h-12 mb-2 px-4 rounded-xl text-off-200   ${
+        resource.includes(res.trait)
+          ? "backdrop-blur-md bg-white/90"
+          : "backdrop-blur-md bg-white/50"
+      } `}
+      onClick={() => addToFilter(res.trait)}
+    >
+      {res.trait}
+    </button>
+  ));
+
   return (
     <Layout>
       <div>
-        <div className="absolute top-0 right-0 bg-white rounded p-4 h-auto w-auto z-10 shadow-2xl bg-black border-double border-4 border-off-200 text-white">
+        <div className="absolute bottom-10 right-10 rounded p-4 h-auto w-96 z-10 shadow-2xl bg-black border-double border-4 border-off-200 text-white">
           <RealmCard data={data!} loading={loading} />
         </div>
         <div
-          className={`h-screen w-72 bg-black z-20 absolute p-4 top-14 shadow-2xl border-r-4 border-double border-off-200 overflow-auto`}
+          className={`h-auto w-full z-20 absolute p-4 top-0 border-r-4  overflow-auto`}
         >
-          <h2 className="text-off-100 py-4">Search By Id</h2>
-          <div className=" mb-2 flex w-full">
-            <input
-              placeholder="Type Id"
-              type={"number"}
-              className="text-black p-2 rounded-l border-double border-4"
-              value={value}
-              onChange={onChange}
-            />
-            <button
-              className="px-2 bg-off-200 text-off-100 rounded-r w-full"
-              onClick={() => goToId(parseInt(value))}
-            >
-              Fly
-            </button>
+          <div className="flex flex-wrap space-x-2">
+            <div className=" mb-2 flex shadow">
+              <input
+                placeholder="Type Id"
+                type={"number"}
+                className="text-black p-2 rounded-l-xl border-double border-4 w-2/3"
+                value={value}
+                onChange={onChange}
+              />
+              <button
+                className="px-2 bg-off-200 text-off-100 rounded-r-xl w-1/3"
+                onClick={() => goToId(parseInt(value))}
+              >
+                Fly
+              </button>
+            </div>
+            {list}
           </div>
-          <h2 className="text-off-100 py-4">Toggle Resources</h2>
-          <div className="flex flex-wrap">{list}</div>
         </div>
         <DeckGL
           initialViewState={initialViewState}
@@ -221,18 +222,18 @@ function App() {
           getTooltip={({ object }) =>
             object && {
               // @ts-ignore: name not exist on D
-              html: `<div class=" w-60 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Realms/${object.name}.svg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2></h2></div></div>  
-      
+              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.name}.jpg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2>${object.name}</h2></div></div>  
       `,
               style: {
-                backgroundColor: "#fff",
+                backgroundColor: "black",
                 fontSize: "0.8em",
+                borderRadius: "10px",
               },
             }
           }
         >
           <StaticMap
-            mapStyle="mapbox://styles/ponderingdemocritus/ckz12qufp000515r172nb8rod"
+            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
             mapboxApiAccessToken={
               "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
             }

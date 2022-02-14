@@ -30,3 +30,6 @@ button {
 body {
   @apply font-body text-gray-200;
 }
+#deckgl-wrapper {
+  background: rgb(146, 177, 185);
+}
