@@ -10,7 +10,7 @@ export const walletAddress = async (): Promise<string | undefined> => {
   try {
     const [address] = await getStarknet().enable();
     return address;
-  } catch {}
+  } catch { }
 };
 
 export const waitForTransaction = async (hash: string) =>

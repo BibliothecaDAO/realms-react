@@ -39,7 +39,7 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
-  const [side, setSide] = useState<"light" | "dark">();
+  const side = 'light'
 
   const towerDefenceContractAddress = useModuleAddress("1");
 
@@ -99,58 +99,6 @@ const GameControls: React.FC<Prop> = (props) => {
     }
   };
 
-  const fetchTokenBalances = async (gameIdx: number) => {
-    // The token IDs change every game
-    const tokenIds = getTokenIdsForGame(gameIdx);
-
-    const ownerAddress = starknet.address;
-
-    if (ownerAddress) {
-      const balances = await defaultProvider.callContract({
-        contract_address: ELEMENTS_ADDRESS,
-        entry_point_selector: getSelectorFromName("balance_of_batch"),
-        calldata: [
-          "2", // Owners length
-          number.toBN(ownerAddress).toString(), // Owner address as an int
-          number.toBN(ownerAddress).toString(), // ... again
-          "2", // Token IDs length
-          ...tokenIds.map((tid) => tid.toString()), // Token IDs
-        ],
-      });
-
-      // Discard the length which is the first value
-      balances.result.shift();
-
-      const balancesBN = balances.result.map((bs) => number.toBN(bs));
-
-      if (balancesBN.length == 2) {
-        const first = balancesBN[0];
-        const second = balancesBN[1];
-
-        if (first.gt(second)) {
-          setSide("light");
-        } else if (second.gt(first)) {
-          setSide("dark");
-        }
-      }
-
-      setTokenBalances(balancesBN);
-    }
-  };
-  // Refetch token balances whenever starknet address changes
-  // Memoize to avoid unnecessary re-renders for same value
-
-  useEffect(() => {
-    if (starknet.address && gameIdx !== undefined) {
-      if (gameStatus == "active") {
-        // Fetch balances for current game
-        fetchTokenBalances(gameIdx);
-      } else {
-        // Fetch & show balances for the upcoming game
-        fetchTokenBalances(gameIdx + 1);
-      }
-    }
-  }, [l2Address, gameIdx]);
 
   return (
     <div
@@ -164,30 +112,8 @@ const GameControls: React.FC<Prop> = (props) => {
 
       {gameStatus == "expired" ? (
         <div>
-          {side == undefined ? (
-            <button
-              onClick={() => {
-                if (starknet.active && side == undefined) {
-                  setMintModalOpen(true);
-                } else {
-                  starknet.connect();
-                }
-              }}
-              className="w-full p-2 mt-4 text-lg text-white transition-colors border border-white rounded-md backdrop-blur-lg bg-white/30 hover:bg-white/100"
-            >
-              {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
-              {starknet.active ? (
-                <>
-                  <ElementLabel>Choose your Elements</ElementLabel>
-                </>
-              ) : (
-                "Connect StarkNet"
-              )}
-            </button>
-          ) : null}
-
           <p className="mt-8 text-3xl">
-            {side == "light" && tokenBalances ? (
+            {/*{side == "light" && tokenBalances ? (
               <>
                 <ElementLabel side="light">LIGHT</ElementLabel>{" "}
                 {(tokenBalances[0].toNumber() / 100).toFixed(0)}
@@ -198,32 +124,16 @@ const GameControls: React.FC<Prop> = (props) => {
                 <ElementLabel side="dark">DARK</ElementLabel>{" "}
                 {(tokenBalances[1].toNumber() / 100).toFixed(0)}
               </>
-            ) : null}
+            ) : null}*/}
           </p>
           <p className="my-4 text-xl animate-pulse">
             Waiting for next game to start...
           </p>
-          <p className="font-bold">Preparation for Desiege</p>
-          <ul className="text-xl list-none">
-            <li>
-              Browse the <a className="underline">game guide</a>
-            </li>
-            <li>
-              Coordinate on <a className="underline"> Discord</a>
-            </li>
-            <li>
-              <a className="underline">Recruit</a> your friends
-            </li>
-            <li>
-              See the <a className="underline">front-end</a> and{" "}
-              <a className="underline">StarkNet</a> contracts
-            </li>
-          </ul>
         </div>
       ) : (
         <>
           <p className="text-xl">
-            {side == undefined ? <>Side Not Chosen</> : null}
+            {/*{side == undefined ? <>Side Not Chosen</> : null}
             {side == "light" ? (
               <>
                 <ElementLabel side="light">LIGHT </ElementLabel>
@@ -239,7 +149,7 @@ const GameControls: React.FC<Prop> = (props) => {
                   ? number.toBN(tokenBalances[1]).toString()
                   : null}
               </>
-            ) : null}
+                ) : null}*/}
           </p>
 
           <div className="flex w-full gap-4 text-gray-100 row">
@@ -343,7 +253,7 @@ const GameControls: React.FC<Prop> = (props) => {
             className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
           >
             {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-            "loading"
+              "loading"
               ? "Approving Contract"
               : "Approve Elements Token"}
           </button>
