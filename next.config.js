@@ -10,7 +10,7 @@ const withSvgr = require('next-plugin-svgr');
 module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ['d23fdhqc1jb9no.cloudfront.net'],
+    domains: ['d23fdhqc1jb9no.cloudfront.net']
   },
   webpack(config, options) {
     config.module.rules.push({

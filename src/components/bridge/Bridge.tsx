@@ -1,4 +1,3 @@
-import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 
 import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
 import axios from "axios";
@@ -6,7 +5,6 @@ import axios from "axios";
 import { useStarknet } from "~/hooks/useStarknet";
 import Button from "~/shared/Button";
 import UserAgentConnector from "~/shared/UserAgentConnector";
-import { Web3Provider } from "@ethersproject/providers";
 import { getBagsInWallet } from "loot-sdk";
 import { messageKey } from "~/util/messageKey";
 import classNames from "classnames";
@@ -14,7 +12,6 @@ import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
 import { useState, useEffect } from "react";
 
-import { useEagerConnect } from "~/hooks/useWeb3";
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";

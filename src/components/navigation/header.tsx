@@ -6,11 +6,11 @@ export function Header() {
 
   return (
     <div className="top-0 absolute z-20 p-3 bg-black w-full  border-off-200 text-white border-double border-b-4 flex">
-      <nav className="flex text-2xl font-display mr-auto space-x-5">
-        <a href="">🗺️ World Map</a>
+      <nav className="flex text-2xl mr-auto space-x-5">
+        <a href="">🗺️ Map</a>
       </nav>
-      <nav className="flex space-x-6 text-2xl font-display mx-auto ">
-        <a href="">Hyperverse</a>
+      <nav className="flex space-x-6 text-2xl  mx-auto ">
+        <a href="">Lootverse</a>
       </nav>
 
       <div className="ml-auto">

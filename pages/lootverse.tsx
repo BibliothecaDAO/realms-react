@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, PolygonLayer, TextLayer } from "@deck.gl/layers";
+import {
+  ScatterplotLayer,
+  PolygonLayer,
+  TextLayer,
+  IconLayer,
+} from "@deck.gl/layers";
 import { realms_data, contour_data } from "~/continents";
 import { resources } from "~/resources";
 import {
@@ -11,14 +16,17 @@ import {
 } from "@deck.gl/core";
 import { FillStyleExtension } from "@deck.gl/extensions";
 import { StaticMap } from "react-map-gl";
-import { SideBar } from "~/components/navigation/sidebar";
 import { Header } from "~/components/navigation/header";
 import Layout from "~/components/Layout";
 import { Realm as RealmCard } from "~/components/realms/Realm";
+import { ResourceSideBar } from "~/components/map/ResourceSideBar";
 import { useQuery } from "@apollo/client";
 
 import { Data } from "~/types";
 import { getRealmQuery } from "~/hooks/graphql/queries";
+import { useUIContext } from "~/hooks/useUIContext";
+
+import Menu from "../public/svg/menu.svg";
 // const arc_pairs = [];
 // for (const x of Array(15).keys()) {
 //   for (const j of Array(20).keys()) {
@@ -60,6 +68,7 @@ const continent_layer = new PolygonLayer({
 });
 
 function App() {
+  const { mapMenu, toggleMapMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [realmInformation, setRealmInformation] = useState<boolean>(false);
   const filteredData = () => {
@@ -70,7 +79,6 @@ function App() {
 
   const addToFilter = (value: any) => {
     const idx = resource.indexOf(value);
-    console.log(idx);
     if (idx === -1) {
       return setResource((oldArray) => [value, ...oldArray]);
     } else {
@@ -79,50 +87,44 @@ function App() {
       return setResource(temp);
     }
   };
-  const textLayer = new TextLayer({
-    id: "text-layer",
-    data: filteredData(),
-    getPosition: (d: any) => d.coordinates,
-    getText: (d: any) => d.name.toString(),
-    getSize: 20,
-    getColor: [0, 0, 0, 255],
-    getAngle: 0,
-    sizeMaxPixels: 50,
-    sizeScale: 2,
-    getTextAnchor: "middle",
-    fontFamily: "Monaco, monospace",
-    getAlignmentBaseline: "center",
-    parameters: { depthTest: false },
-  });
+
   const realms_layer = new ScatterplotLayer({
     id: "scatterplot-layer",
-    data: filteredData(),
+    data: realms_data,
     stroked: true,
     filled: true,
     extruded: true,
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.coordinates,
-    getRadius: 30000,
+    getRadius: 1000,
     getElevation: 10000,
     lineWidthMinPixels: 1,
-    getFillColor: [141, 121, 91],
+    getFillColor: [0, 0, 0],
     onClick: (info, event) => setRealmInformation(true),
   });
 
-  const layers = [realms_layer];
+  const ICON_MAPPING = {
+    marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
+  };
 
-  const list = resources.map((res, index) => (
-    <button
-      key={index}
-      className={`border-off-200  p-1 w-1/2 h-12 mb-2 rounded-xl border-4 border-double text-off-200 hover:bg-white ${
-        resource.includes(res.trait) ? "bg-white" : "bg-black"
-      } `}
-      onClick={() => addToFilter(res.trait)}
-    >
-      {res.trait}
-    </button>
-  ));
+  const layer = new IconLayer({
+    id: "icon-layer",
+    data: filteredData(),
+    pickable: true,
+    // iconAtlas and iconMapping are required
+    // getIcon: return a string
+    iconAtlas:
+      "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
+    iconMapping: ICON_MAPPING,
+    getIcon: (d) => "marker",
+
+    sizeScale: 5,
+    getPosition: (d: any) => d.coordinates,
+    getSize: (d) => 5,
+    getColor: (d: any) => [255, 255, 255],
+  });
+  const layers = [realms_layer, layer];
 
   const [initialViewState, setInitialViewState] = useState({
     longitude: 0,
@@ -157,61 +159,72 @@ function App() {
     }
   };
 
-  // const mapOutput = () =>{
-  //   const geojson = contour_data.map((a)=>{
-  //     return {
-  //       "type": "Feature",
-  //       "properties": {},
-  //       "geometry": {
-  //           "type": "LineString",
-  //           "coordinates": a.contour
-  //       }
-  //     }
-  //   })
-  //   const fin = {
-  //     "type": "FeatureCollection",
-  //     "features": [...geojson]
-  //   }
-  //   console.log(fin)
-  // }
-  // const sun = new PointLight({
-  //   color: [128, 128, 0],
-  //   intensity: 100.0,
-  //   position: [0, 0, 200]
-  // });
-  // const lightingEffect = new LightingEffect({sun});
-
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: value },
   });
 
+  const list = resources.map((res, index) => (
+    <button
+      key={index}
+      className={` p-1 h-12 mb-2 px-4 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${
+        resource.includes(res.trait)
+          ? "backdrop-blur-md bg-white/90"
+          : "backdrop-blur-md bg-white/30"
+      } `}
+      onClick={() => addToFilter(res.trait)}
+    >
+      {res.trait}
+    </button>
+  ));
+
   return (
     <Layout>
       <div>
-        <div className="absolute top-0 right-0 bg-white rounded p-4 h-auto w-auto z-10 shadow-2xl bg-black border-double border-4 border-off-200 text-white">
-          <RealmCard data={data!} loading={loading} />
-        </div>
-        <div
-          className={`h-screen w-72 bg-black z-20 absolute p-4 top-14 shadow-2xl border-r-4 border-double border-off-200 overflow-auto`}
+        <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
+          Lootverse
+        </h1>
+        <ResourceSideBar />
+        <button
+          className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+          onClick={toggleMapMenu}
         >
-          <h2 className="text-off-100 py-4">Search By Id</h2>
-          <div className=" mb-2 flex w-full">
+          <Menu />
+        </button>
+        <div
+          className={`h-screen w-1/2 z-20 absolute p-6 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all  ${
+            mapMenu ? "" : "-translate-x-full"
+          }`}
+        >
+          <button
+            className="p-4 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+            onClick={toggleMapMenu}
+          >
+            <Menu />
+          </button>
+          <h3 className="mt-4 mb-2">Search For a Realm</h3>
+          <div className=" mb-2 flex">
             <input
               placeholder="Type Id"
               type={"number"}
-              className="text-black p-2 rounded-l border-double border-4"
+              className="text-black px-4 py-2 rounded-l-xl w-2/3"
               value={value}
               onChange={onChange}
+              min="1"
+              max="8000"
             />
             <button
-              className="px-2 bg-off-200 text-off-100 rounded-r w-full"
+              className="p-1 px-4 rounded-r-xl text-off-200 mr-2 bg-white/20 transition-all duration-300 rounded-r-xl w-1/3"
               onClick={() => goToId(parseInt(value))}
             >
               Fly
             </button>
           </div>
-          <h2 className="text-off-100 py-4">Toggle Resources</h2>
-          <div className="flex flex-wrap">{list}</div>
+
+          <div className="rounded-xl p-4 h-auto  z-10 shadow-2xl bg-black  text-white">
+            <RealmCard data={data!} loading={loading} />
+          </div>
+          <h3 className="mt-8">Filter Resources</h3>
+          <div className="flex flex-wrap mb-8">{list}</div>
         </div>
         <DeckGL
           initialViewState={initialViewState}
@@ -221,18 +234,18 @@ function App() {
           getTooltip={({ object }) =>
             object && {
               // @ts-ignore: name not exist on D
-              html: `<div class=" w-60 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Realms/${object.name}.svg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2></h2></div></div>  
-      
+              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.name}.jpg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2>${object.name}</h2></div></div>  
       `,
               style: {
-                backgroundColor: "#fff",
+                backgroundColor: "black",
                 fontSize: "0.8em",
+                borderRadius: "10px",
               },
             }
           }
         >
           <StaticMap
-            mapStyle="mapbox://styles/ponderingdemocritus/ckz12qufp000515r172nb8rod"
+            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
             mapboxApiAccessToken={
               "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
             }
