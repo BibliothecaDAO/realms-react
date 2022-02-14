@@ -83,8 +83,10 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
   const { nodes, materials } = useGLTF("/Model2.glb") as GLTFResult;
   return (
-    <group ref={group} {...props} dispose={null} scale={1} position={[0, 0, 0]}>
+    <group ref={group} {...props} dispose={null}>
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.island_mass.geometry}
         material={materials.floor}
         position={[0.03, 0.51, 0.05]}
@@ -96,10 +98,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -110,10 +116,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -124,10 +134,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -138,10 +152,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -152,10 +170,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -166,10 +188,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -180,10 +206,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -194,10 +224,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -208,10 +242,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -222,10 +260,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -236,10 +278,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -250,10 +296,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -264,10 +314,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -278,10 +332,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -292,10 +350,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -306,10 +368,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -320,10 +386,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -334,10 +404,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -348,10 +422,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -362,10 +440,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -376,10 +458,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -390,10 +476,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -404,10 +494,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -418,10 +512,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -432,10 +530,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -446,10 +548,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -460,10 +566,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -474,10 +584,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -488,10 +602,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -502,10 +620,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -516,10 +638,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -530,10 +656,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -544,10 +674,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -558,10 +692,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -572,10 +710,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -586,10 +728,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -600,10 +746,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -614,10 +764,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -628,10 +782,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -642,10 +800,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -656,10 +818,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -670,10 +836,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -684,10 +854,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -698,10 +872,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -712,10 +890,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -726,10 +908,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -740,10 +926,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -754,10 +944,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -768,10 +962,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -782,10 +980,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -796,10 +998,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -810,10 +1016,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -824,10 +1034,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -838,10 +1052,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -852,10 +1070,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -866,10 +1088,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -880,10 +1106,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -894,10 +1124,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -908,10 +1142,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -922,10 +1160,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -936,10 +1178,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -950,10 +1196,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -964,10 +1214,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -978,10 +1232,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -992,10 +1250,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1006,10 +1268,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1020,10 +1286,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1034,10 +1304,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1048,10 +1322,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1062,10 +1340,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1076,10 +1358,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1090,10 +1376,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1104,10 +1394,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1118,10 +1412,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1132,10 +1430,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1146,10 +1448,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1160,10 +1466,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1174,10 +1484,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1188,10 +1502,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1202,10 +1520,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1216,10 +1538,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1230,10 +1556,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001.geometry}
           material={nodes.Icosphere001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Icosphere001_1.geometry}
           material={nodes.Icosphere001_1.material}
         />
@@ -1244,10 +1574,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1258,10 +1592,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1272,10 +1610,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1286,10 +1628,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1300,10 +1646,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1314,10 +1664,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1328,10 +1682,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1342,10 +1700,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1356,10 +1718,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1370,10 +1736,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1384,10 +1754,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1398,10 +1772,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1412,10 +1790,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1426,10 +1808,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1440,10 +1826,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1454,10 +1844,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1468,10 +1862,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1482,10 +1880,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1496,10 +1898,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1510,10 +1916,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1524,10 +1934,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1538,10 +1952,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1552,10 +1970,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1566,10 +1988,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1580,10 +2006,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1594,10 +2024,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1608,10 +2042,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1622,10 +2060,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1636,10 +2078,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1650,10 +2096,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1664,10 +2114,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1678,10 +2132,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1692,10 +2150,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1706,10 +2168,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1720,10 +2186,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1734,10 +2204,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1748,10 +2222,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1762,10 +2240,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1776,10 +2258,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1790,10 +2276,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1804,10 +2294,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1818,10 +2312,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1832,10 +2330,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1846,10 +2348,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1860,10 +2366,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1874,10 +2384,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1888,10 +2402,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1902,10 +2420,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1916,10 +2438,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1930,10 +2456,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1944,10 +2474,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1958,10 +2492,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1972,10 +2510,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -1986,10 +2528,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2000,10 +2546,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2014,10 +2564,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2028,10 +2582,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2042,10 +2600,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2056,10 +2618,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2070,10 +2636,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2084,10 +2654,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2098,10 +2672,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2112,10 +2690,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2126,10 +2708,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2140,10 +2726,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2154,10 +2744,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2168,10 +2762,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2182,10 +2780,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2196,10 +2798,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2210,10 +2816,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2224,10 +2834,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2238,10 +2852,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2252,10 +2870,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2266,10 +2888,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2280,10 +2906,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2294,10 +2924,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2308,10 +2942,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2322,10 +2960,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2336,10 +2978,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2350,10 +2996,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2364,10 +3014,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2378,10 +3032,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2392,10 +3050,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2406,10 +3068,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2420,10 +3086,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2434,10 +3104,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2448,10 +3122,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2462,10 +3140,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2476,10 +3158,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2490,10 +3176,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2504,10 +3194,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2518,10 +3212,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2532,10 +3230,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2546,10 +3248,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2560,10 +3266,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2574,10 +3284,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2588,10 +3302,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2602,10 +3320,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2616,10 +3338,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2630,10 +3356,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2644,10 +3374,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2658,10 +3392,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2672,10 +3410,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2686,10 +3428,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2700,10 +3446,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2714,10 +3464,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2728,10 +3482,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2742,10 +3500,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2756,10 +3518,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2770,10 +3536,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2784,10 +3554,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2798,10 +3572,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2812,10 +3590,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2826,10 +3608,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2840,10 +3626,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2854,10 +3644,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2868,10 +3662,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2882,10 +3680,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2896,10 +3698,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.12, 0.12, 0.12]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2910,10 +3716,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2924,10 +3734,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2938,10 +3752,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2952,10 +3770,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2966,10 +3788,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2980,10 +3806,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -2994,10 +3824,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3008,10 +3842,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3022,10 +3860,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3036,10 +3878,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3050,10 +3896,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3064,10 +3914,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3078,10 +3932,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3092,10 +3950,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3106,10 +3968,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3120,10 +3986,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3134,10 +4004,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3148,10 +4022,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3162,10 +4040,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3176,10 +4058,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3190,10 +4076,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3204,10 +4094,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3218,10 +4112,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3232,10 +4130,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.19, 0.19, 0.19]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3246,10 +4148,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3260,10 +4166,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3274,10 +4184,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3288,10 +4202,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3302,10 +4220,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3316,10 +4238,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3330,10 +4256,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3344,10 +4274,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3358,10 +4292,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3372,10 +4310,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3386,10 +4328,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3400,10 +4346,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3414,10 +4364,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3428,10 +4382,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3442,10 +4400,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3456,10 +4418,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3470,10 +4436,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3484,10 +4454,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3498,10 +4472,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3512,10 +4490,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3526,10 +4508,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3540,10 +4526,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3554,10 +4544,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3568,10 +4562,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3582,10 +4580,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3596,10 +4598,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3610,10 +4616,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3624,10 +4634,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3638,10 +4652,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3652,10 +4670,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3666,10 +4688,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3680,10 +4706,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3694,10 +4724,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3708,10 +4742,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3722,10 +4760,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3736,10 +4778,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3750,10 +4796,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3764,10 +4814,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3778,10 +4832,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3792,10 +4850,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.18, 0.18, 0.18]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3806,10 +4868,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3820,10 +4886,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3834,10 +4904,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3848,10 +4922,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3862,10 +4940,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3876,10 +4958,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3890,10 +4976,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3904,10 +4994,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3918,10 +5012,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3932,10 +5030,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3946,10 +5048,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3960,10 +5066,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3974,10 +5084,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -3988,10 +5102,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.1, 0.1, 0.1]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4002,10 +5120,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.19, 0.19, 0.19]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4016,10 +5138,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4030,10 +5156,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4044,10 +5174,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4058,10 +5192,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4072,10 +5210,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4086,10 +5228,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4100,10 +5246,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4114,10 +5264,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4128,10 +5282,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4142,10 +5300,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4156,10 +5318,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4170,10 +5336,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4184,10 +5354,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4198,10 +5372,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4212,10 +5390,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4226,10 +5408,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4240,10 +5426,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4254,10 +5444,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4268,10 +5462,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4282,10 +5480,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4296,10 +5498,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4310,10 +5516,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4324,10 +5534,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4338,10 +5552,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4352,10 +5570,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4366,10 +5588,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4380,10 +5606,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4394,10 +5624,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4408,10 +5642,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4422,10 +5660,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4436,10 +5678,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4450,10 +5696,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4464,10 +5714,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4478,10 +5732,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4492,10 +5750,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4506,10 +5768,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4520,10 +5786,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4534,10 +5804,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4548,10 +5822,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4562,10 +5840,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4576,10 +5858,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4590,10 +5876,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4604,10 +5894,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4618,10 +5912,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4632,10 +5930,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4646,10 +5948,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4660,10 +5966,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011.geometry}
           material={nodes.Cube011.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube011_1.geometry}
           material={nodes.Cube011_1.material}
         />
@@ -4674,10 +5984,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4688,10 +6002,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4702,10 +6020,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4716,10 +6038,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4730,10 +6056,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4744,10 +6074,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4758,10 +6092,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4772,10 +6110,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4786,10 +6128,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4800,10 +6146,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4814,10 +6164,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4828,10 +6182,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4842,10 +6200,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4856,10 +6218,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4870,10 +6236,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4884,10 +6254,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4898,10 +6272,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4912,10 +6290,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4926,10 +6308,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4940,10 +6326,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4954,10 +6344,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4968,10 +6362,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4982,10 +6380,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -4996,10 +6398,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5010,10 +6416,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5024,10 +6434,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5038,10 +6452,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5052,10 +6470,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5066,10 +6488,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5080,10 +6506,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5094,10 +6524,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5108,10 +6542,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5122,10 +6560,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5136,10 +6578,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5150,10 +6596,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5164,10 +6614,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5178,10 +6632,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5192,10 +6650,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5206,10 +6668,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5220,10 +6686,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5234,10 +6704,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5248,10 +6722,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5262,10 +6740,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5276,10 +6758,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5290,10 +6776,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5304,10 +6794,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5318,10 +6812,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5332,10 +6830,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5346,10 +6848,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5360,10 +6866,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5374,10 +6884,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5388,10 +6902,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5402,10 +6920,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5416,10 +6938,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5430,10 +6956,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5444,10 +6974,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5458,10 +6992,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5472,10 +7010,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5486,10 +7028,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5500,10 +7046,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5514,10 +7064,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5528,10 +7082,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5542,10 +7100,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5556,10 +7118,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5570,10 +7136,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5584,10 +7154,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5598,10 +7172,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5612,10 +7190,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5626,10 +7208,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5640,10 +7226,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5654,10 +7244,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5668,10 +7262,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5682,10 +7280,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5696,10 +7298,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5710,10 +7316,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5724,10 +7334,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5738,10 +7352,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5752,10 +7370,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5766,10 +7388,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5780,10 +7406,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5794,10 +7424,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5808,10 +7442,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5822,10 +7460,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5836,10 +7478,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5850,10 +7496,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5864,10 +7514,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5878,10 +7532,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5892,10 +7550,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5906,10 +7568,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5920,10 +7586,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5934,10 +7604,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5948,10 +7622,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5962,10 +7640,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5976,10 +7658,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -5990,10 +7676,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6004,10 +7694,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6018,10 +7712,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6032,10 +7730,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6046,10 +7748,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6060,10 +7766,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6074,10 +7784,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6088,10 +7802,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6102,10 +7820,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6116,10 +7838,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6130,10 +7856,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6144,10 +7874,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6158,10 +7892,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.19, 0.19, 0.19]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6172,10 +7910,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.19, 0.19, 0.19]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6186,10 +7928,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6200,10 +7946,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6214,10 +7964,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6228,10 +7982,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6242,10 +8000,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6256,10 +8018,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6270,10 +8036,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6284,10 +8054,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6298,10 +8072,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6312,10 +8090,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6326,10 +8108,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6340,10 +8126,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6354,10 +8144,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6368,10 +8162,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6382,10 +8180,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6396,10 +8198,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6410,10 +8216,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6424,10 +8234,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6438,10 +8252,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6452,10 +8270,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6466,10 +8288,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6480,10 +8306,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6494,10 +8324,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6508,10 +8342,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6522,10 +8360,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6536,10 +8378,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6550,10 +8396,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6564,10 +8414,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6578,10 +8432,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6592,10 +8450,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6606,10 +8468,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6620,10 +8486,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6634,10 +8504,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6648,10 +8522,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6662,10 +8540,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6676,10 +8558,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6690,10 +8576,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6704,10 +8594,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6718,10 +8612,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6732,10 +8630,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6746,10 +8648,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6760,10 +8666,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6774,10 +8684,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6788,10 +8702,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6802,10 +8720,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6816,10 +8738,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6830,10 +8756,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6844,10 +8774,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6858,10 +8792,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6872,10 +8810,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6886,10 +8828,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6900,10 +8846,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6914,10 +8864,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6928,10 +8882,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6942,10 +8900,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6956,10 +8918,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6970,10 +8936,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6984,10 +8954,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -6998,10 +8972,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7012,10 +8990,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7026,10 +9008,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7040,10 +9026,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.1, 0.1, 0.1]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7054,10 +9044,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7068,10 +9062,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7082,10 +9080,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7096,10 +9098,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7110,10 +9116,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7124,10 +9134,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7138,10 +9152,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7152,10 +9170,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7166,10 +9188,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7180,10 +9206,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7194,10 +9224,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7208,10 +9242,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7222,10 +9260,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7236,10 +9278,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7250,10 +9296,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7264,10 +9314,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7278,10 +9332,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7292,10 +9350,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7306,10 +9368,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7320,10 +9386,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7334,10 +9404,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7348,10 +9422,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7362,10 +9440,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7376,10 +9458,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7390,10 +9476,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7404,10 +9494,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7418,10 +9512,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7432,10 +9530,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7446,10 +9548,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7460,10 +9566,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7474,10 +9584,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7488,10 +9602,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7502,10 +9620,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7516,10 +9638,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7530,10 +9656,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7544,10 +9674,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7558,10 +9692,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7572,10 +9710,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7586,10 +9728,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7600,10 +9746,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7614,10 +9764,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7628,10 +9782,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7642,10 +9800,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7656,10 +9818,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7670,10 +9836,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7684,10 +9854,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7698,10 +9872,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7712,10 +9890,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7726,10 +9908,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7740,10 +9926,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7754,10 +9944,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7768,10 +9962,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7782,10 +9980,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7796,10 +9998,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7810,10 +10016,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7824,10 +10034,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012.geometry}
           material={nodes.Cube012.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube012_1.geometry}
           material={nodes.Cube012_1.material}
         />
@@ -7838,10 +10052,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7852,10 +10070,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7866,10 +10088,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7880,10 +10106,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7894,10 +10124,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7908,10 +10142,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7922,10 +10160,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7936,10 +10178,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7950,10 +10196,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7964,10 +10214,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7978,10 +10232,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -7992,10 +10250,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8006,10 +10268,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8020,10 +10286,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8034,10 +10304,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8048,10 +10322,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8062,10 +10340,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8076,10 +10358,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8090,10 +10376,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8104,10 +10394,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8118,10 +10412,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8132,10 +10430,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8146,10 +10448,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8160,10 +10466,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8174,10 +10484,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8188,10 +10502,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8202,10 +10520,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8216,10 +10538,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8230,10 +10556,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8244,10 +10574,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8258,10 +10592,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8272,10 +10610,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8286,10 +10628,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8300,10 +10646,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8314,10 +10664,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8328,10 +10682,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8342,10 +10700,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8356,10 +10718,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8370,10 +10736,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8384,10 +10754,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8398,10 +10772,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8412,10 +10790,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8426,10 +10808,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8440,10 +10826,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8454,10 +10844,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.16, 0.16, 0.16]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8468,10 +10862,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8482,10 +10880,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8496,10 +10898,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8510,10 +10916,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8524,10 +10934,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8538,10 +10952,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8552,10 +10970,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8566,10 +10988,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8580,10 +11006,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8594,10 +11024,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8608,10 +11042,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8622,10 +11060,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8636,10 +11078,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8650,10 +11096,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8664,10 +11114,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8678,10 +11132,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8692,10 +11150,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8706,10 +11168,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8720,10 +11186,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8734,10 +11204,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8748,10 +11222,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8762,10 +11240,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8776,10 +11258,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8790,10 +11276,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8804,10 +11294,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8818,10 +11312,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8832,10 +11330,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8846,10 +11348,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8860,10 +11366,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8874,10 +11384,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8888,10 +11402,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8902,10 +11420,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8916,10 +11438,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8930,10 +11456,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8944,10 +11474,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8958,10 +11492,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.18, 0.18, 0.18]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8972,10 +11510,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -8986,10 +11528,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9000,10 +11546,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9014,10 +11564,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9028,10 +11582,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9042,10 +11600,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9056,10 +11618,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9070,10 +11636,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9084,10 +11654,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9098,10 +11672,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9112,10 +11690,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9126,10 +11708,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9140,10 +11726,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9154,10 +11744,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9168,10 +11762,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9182,10 +11780,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9196,10 +11798,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9210,10 +11816,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9224,10 +11834,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9238,10 +11852,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9252,10 +11870,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9266,10 +11888,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9280,10 +11906,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9294,10 +11924,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9308,10 +11942,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9322,10 +11960,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9336,10 +11978,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9350,10 +11996,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9364,10 +12014,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9378,10 +12032,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9392,10 +12050,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9406,10 +12068,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9420,10 +12086,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9434,10 +12104,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9448,10 +12122,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9462,10 +12140,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9476,10 +12158,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9490,10 +12176,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9504,10 +12194,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9518,10 +12212,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9532,10 +12230,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9546,10 +12248,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9560,10 +12266,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9574,10 +12284,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9588,10 +12302,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9602,10 +12320,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9616,10 +12338,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9630,10 +12356,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9644,10 +12374,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9658,10 +12392,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9672,10 +12410,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9686,10 +12428,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9700,10 +12446,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9714,10 +12464,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9728,10 +12482,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9742,10 +12500,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9756,10 +12518,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9770,10 +12536,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9784,10 +12554,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9798,10 +12572,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9812,10 +12590,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9826,10 +12608,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9840,10 +12626,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9854,10 +12644,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9868,10 +12662,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9882,10 +12680,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9896,10 +12698,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9910,10 +12716,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.18, 0.18, 0.18]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9924,10 +12734,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.18, 0.18, 0.18]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9938,10 +12752,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9952,10 +12770,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9966,10 +12788,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9980,10 +12806,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -9994,10 +12824,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10008,10 +12842,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10022,10 +12860,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10036,10 +12878,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10050,10 +12896,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.18, 0.18, 0.18]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10064,10 +12914,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10078,10 +12932,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10092,10 +12950,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10106,10 +12968,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10120,10 +12986,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10134,10 +13004,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10148,10 +13022,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10162,10 +13040,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10176,10 +13058,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10190,10 +13076,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10204,10 +13094,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10218,10 +13112,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10232,10 +13130,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10246,10 +13148,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10260,10 +13166,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.22}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10274,10 +13184,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10288,10 +13202,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10302,10 +13220,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10316,10 +13238,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10330,10 +13256,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10344,10 +13274,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10358,10 +13292,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10372,10 +13310,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10386,10 +13328,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10400,10 +13346,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10414,10 +13364,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10428,10 +13382,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10442,10 +13400,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10456,10 +13418,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10470,10 +13436,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10484,10 +13454,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10498,10 +13472,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10512,10 +13490,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10526,10 +13508,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10540,10 +13526,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10554,10 +13544,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10568,10 +13562,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.22, 0.22, 0.22]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013.geometry}
           material={nodes.Cube013.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube013_1.geometry}
           material={nodes.Cube013_1.material}
         />
@@ -10582,10 +13580,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10596,10 +13598,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10610,10 +13616,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10624,10 +13634,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10638,10 +13652,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10652,10 +13670,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10666,10 +13688,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10680,10 +13706,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10694,10 +13724,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10708,10 +13742,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.31, 0.31, 0.31]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10722,10 +13760,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10736,10 +13778,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10750,10 +13796,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.4, 0.4, 0.4]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10764,10 +13814,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10778,10 +13832,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10792,10 +13850,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10806,10 +13868,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.36, 0.36, 0.36]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10820,10 +13886,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.47}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10834,10 +13904,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.48, 0.48, 0.48]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10848,10 +13922,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10862,10 +13940,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10876,10 +13958,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10890,10 +13976,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10904,10 +13994,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10918,10 +14012,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10932,10 +14030,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.29, 0.29, 0.29]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10946,10 +14048,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.04, 0.04, 0.04]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10960,10 +14066,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10974,10 +14084,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -10988,10 +14102,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11002,10 +14120,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11016,10 +14138,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.26, 0.26, 0.26]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11030,10 +14156,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11044,10 +14174,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11058,10 +14192,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11072,10 +14210,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11086,10 +14228,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11100,10 +14246,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.44, 0.44, 0.44]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11114,10 +14264,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.29, 0.29, 0.29]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11128,10 +14282,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.28, 0.28, 0.28]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11142,10 +14300,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11156,10 +14318,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11170,10 +14336,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11184,10 +14354,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11198,10 +14372,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.35, 0.35, 0.35]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11212,10 +14390,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.41, 0.41, 0.41]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11226,10 +14408,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11240,10 +14426,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.48, 0.48, 0.48]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11254,10 +14444,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11268,10 +14462,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11282,10 +14480,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.34, 0.34, 0.34]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11296,10 +14498,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.37, 0.37, 0.37]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11310,10 +14516,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11324,10 +14534,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11338,10 +14552,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.31, 0.31, 0.31]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11352,10 +14570,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.27}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11366,10 +14588,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11380,10 +14606,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11394,10 +14624,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11408,10 +14642,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.48, 0.48, 0.48]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11422,10 +14660,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.4}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11436,10 +14678,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11450,10 +14696,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.4, 0.4, 0.4]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11464,10 +14714,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11478,10 +14732,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11492,10 +14750,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.28}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11506,10 +14768,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11520,10 +14786,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11534,10 +14804,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11548,10 +14822,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0, 0, 0]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11562,10 +14840,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11576,10 +14858,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.23, 0.23, 0.23]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11590,10 +14876,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.11}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11604,10 +14894,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.17}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11618,10 +14912,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11632,10 +14930,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.11, 0.11, 0.11]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11646,10 +14948,14 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010.geometry}
           material={nodes.Cube010.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube010_1.geometry}
           material={nodes.Cube010_1.material}
         />
@@ -11660,18 +14966,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.17, 0.17, 0.17]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11682,18 +14996,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11704,18 +15026,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.39}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11726,18 +15056,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11748,18 +15086,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.08}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11770,18 +15116,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.31, 0.31, 0.31]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11792,18 +15146,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.45}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11814,18 +15176,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11836,18 +15206,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.42, 0.42, 0.42]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11858,18 +15236,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.48}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11880,18 +15266,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11902,18 +15296,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11924,18 +15326,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11946,18 +15356,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11968,18 +15386,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.2, 0.2, 0.2]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -11990,18 +15416,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.35, 0.35, 0.35]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12012,18 +15446,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12034,18 +15476,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.48, 0.48, 0.48]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12056,18 +15506,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.44, 0.44, 0.44]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12078,18 +15536,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.38, 0.38, 0.38]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12100,18 +15566,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12122,18 +15596,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.45}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12144,18 +15626,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.31}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12166,18 +15656,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.3}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12188,18 +15686,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12210,18 +15716,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12232,18 +15746,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12254,18 +15776,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.17}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12276,18 +15806,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.39, 0.39, 0.39]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12298,18 +15836,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12320,18 +15866,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.27, 0.27, 0.27]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12342,18 +15896,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12364,18 +15926,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12386,18 +15956,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.29, 0.29, 0.29]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12408,18 +15986,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.23, 0.23, 0.23]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12430,18 +16016,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12452,18 +16046,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12474,18 +16076,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006.geometry}
           material={nodes.Cube006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_1.geometry}
           material={nodes.Cube006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_2.geometry}
           material={nodes.Cube006_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube006_3.geometry}
           material={nodes.Cube006_3.material}
         />
@@ -12496,18 +16106,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.46}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12518,18 +16136,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.34, 0.34, 0.34]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12540,18 +16166,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.44}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12562,18 +16196,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.36, 0.36, 0.36]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12584,18 +16226,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.37, 0.37, 0.37]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12606,18 +16256,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.47}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12628,18 +16286,26 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.45, 0.45, 0.45]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018.geometry}
           material={nodes.Cube018.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_1.geometry}
           material={nodes.Cube018_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_2.geometry}
           material={nodes.Cube018_2.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube018_3.geometry}
           material={nodes.Cube018_3.material}
         />
@@ -12650,14 +16316,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12668,14 +16340,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12686,14 +16364,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12704,14 +16388,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12722,14 +16412,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12740,14 +16436,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.21, 0.21, 0.21]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12758,14 +16460,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.35, 0.35, 0.35]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12776,14 +16484,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.46}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12794,14 +16508,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12812,14 +16532,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12830,14 +16556,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.17, 0.17, 0.17]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12848,14 +16580,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.35, 0.35, 0.35]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12866,14 +16604,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.19, 0.19, 0.19]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12884,14 +16628,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12902,14 +16652,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.29, 0.29, 0.29]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12920,14 +16676,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.23}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12938,14 +16700,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.47}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12956,14 +16724,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.31}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12974,14 +16748,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -12992,14 +16772,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.29, 0.29, 0.29]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13010,14 +16796,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.46}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13028,14 +16820,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13046,14 +16844,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13064,14 +16868,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13082,14 +16892,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.32}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13100,14 +16916,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.46, 0.46, 0.46]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13118,14 +16940,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13136,14 +16964,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.21}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13154,14 +16988,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.24, 0.24, 0.24]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13172,14 +17012,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13190,14 +17036,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13208,14 +17060,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.47}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13226,14 +17084,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13244,14 +17108,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.28, 0.28, 0.28]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13262,14 +17132,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.24}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13280,14 +17156,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.44}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13298,14 +17180,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.31, 0.31, 0.31]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13316,14 +17204,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.3}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13334,14 +17228,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.31, 0.31, 0.31]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13352,14 +17252,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13370,14 +17276,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009.geometry}
           material={nodes.Cube009.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_1.geometry}
           material={nodes.Cube009_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube009_2.geometry}
           material={nodes.Cube009_2.material}
         />
@@ -13388,14 +17300,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.41, 0.41, 0.41]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13406,14 +17324,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13424,14 +17348,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13442,14 +17372,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.43, 0.43, 0.43]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13460,14 +17396,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.48, 0.48, 0.48]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13478,14 +17420,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.4, 0.4, 0.4]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13496,14 +17444,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.47, 0.47, 0.47]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13514,14 +17468,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.43, 0.43, 0.43]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13532,14 +17492,20 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.39, 0.39, 0.39]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
@@ -13550,33 +17516,47 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.38, 0.38, 0.38]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026.geometry}
           material={nodes.Cube026.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_1.geometry}
           material={nodes.Cube026_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cube026_2.geometry}
           material={nodes.Cube026_2.material}
         />
       </group>
       <group position={[0.03, 3.35, 0.05]} scale={0.33}>
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder006.geometry}
           material={nodes.Cylinder006.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder006_1.geometry}
           material={nodes.Cylinder006_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder006_2.geometry}
           material={nodes.Cylinder006_2.material}
         />
       </group>
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.main_tower_inner.geometry}
         material={nodes.main_tower_inner.material}
         position={[0.03, 3.27, 0.05]}
@@ -13584,21 +17564,29 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
       />
       <group position={[-0.44, 1.41, -0.33]} scale={0.33}>
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Plane001.geometry}
           material={nodes.Plane001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Plane001_1.geometry}
           material={nodes.Plane001_1.material}
         />
       </group>
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower.geometry}
         material={nodes.wall_tower.material}
         position={[-0.03, 1.41, -1.1]}
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower001.geometry}
         material={nodes.wall_tower001.material}
         position={[0.4, 1.41, -1.04]}
@@ -13606,6 +17594,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower002.geometry}
         material={nodes.wall_tower002.material}
         position={[0.79, 1.39, -0.75]}
@@ -13613,6 +17603,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower003.geometry}
         material={nodes.wall_tower003.material}
         position={[1.04, 1.41, -0.45]}
@@ -13620,6 +17612,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower004.geometry}
         material={nodes.wall_tower004.material}
         position={[1.22, 1.36, -0.09]}
@@ -13627,6 +17621,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower005.geometry}
         material={nodes.wall_tower005.material}
         position={[1.19, 1.28, 0.4]}
@@ -13634,6 +17630,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower006.geometry}
         material={nodes.wall_tower006.material}
         position={[1.05, 1.28, 0.72]}
@@ -13641,6 +17639,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower007.geometry}
         material={nodes.wall_tower007.material}
         position={[0.83, 1.35, 1.02]}
@@ -13648,6 +17648,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower008.geometry}
         material={nodes.wall_tower008.material}
         position={[0.35, 1.41, 1.22]}
@@ -13655,6 +17657,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower009.geometry}
         material={nodes.wall_tower009.material}
         position={[-0.19, 1.41, 1.2]}
@@ -13662,6 +17666,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower010.geometry}
         material={nodes.wall_tower010.material}
         position={[-0.59, 1.41, 1.1]}
@@ -13669,6 +17675,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower011.geometry}
         material={nodes.wall_tower011.material}
         position={[-0.9, 1.41, 0.8]}
@@ -13676,6 +17684,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower012.geometry}
         material={nodes.wall_tower012.material}
         position={[-1.03, 1.41, 0.5]}
@@ -13683,6 +17693,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower013.geometry}
         material={nodes.wall_tower013.material}
         position={[-1.16, 1.41, 0.07]}
@@ -13690,6 +17702,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower014.geometry}
         material={nodes.wall_tower014.material}
         position={[-1.14, 1.39, -0.23]}
@@ -13697,6 +17711,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={0.33}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.wall_tower017.geometry}
         material={nodes.wall_tower017.material}
         position={[-0.62, 1.41, -0.96]}
@@ -13709,19 +17725,27 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       >
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder001.geometry}
           material={nodes.Cylinder001.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder001_1.geometry}
           material={nodes.Cylinder001_1.material}
         />
         <mesh
+          castShadow
+          receiveShadow
           geometry={nodes.Cylinder001_2.geometry}
           material={materials.divine_portal_field}
         />
       </group>
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.divine_base.geometry}
         material={nodes.divine_base.material}
         position={[-0.47, 1.64, -0.51]}
@@ -13729,6 +17753,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements["group"]) {
         scale={[0.33, 0.33, 0.33]}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.divine_base001.geometry}
         material={nodes.divine_base001.material}
         position={[-0.46, 1.57, -0.5]}
