@@ -19,6 +19,11 @@ import ShieldAction from "./ShieldAction";
 import { TowerProps } from "~/types";
 import { useUIContext } from "~/hooks/useUIContext";
 import MenuBar from "./MenuBar";
+import Sword from "../../../public/svg/sword.svg";
+import Shield from "../../../public/svg/shield.svg";
+import Book from "../../../public/svg/book.svg";
+
+
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
 });
@@ -128,7 +133,12 @@ function TowerDefence(props: TowerProps) {
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xf4e99b, 10]} />
-          <group ref={shield} position={[0, 0, 0]}>
+          <group ref={shield} position={[0, 0, 0]} onPointerOver={(event) => {
+            setRotate(false);
+          }}
+            onPointerOut={(event) => {
+              setRotate(true);
+            }}>
             <Box
               jsx={{
                 position: [0, 0, 0],
@@ -140,24 +150,43 @@ function TowerDefence(props: TowerProps) {
               health={health}
             />
             {showShieldDetail && (
-              <Html position={[-2.3, 3.5, 0]} className="w-auto">
-                <button
-                  className="border-red border px-4 py-2 bg-white/30 w-48 rounded-xl text-gray-700 hover:bg-white"
-                  onClick={() => {
-                    setShowShieldAction(true);
-                  }}
-                >
-                  <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-300 ">
-                    Attack Shield
-                  </span>
-                </button>
-                {showShieldAction && (
-                  <ShieldAction
-                    gameStatus={props.gameStatus}
-                    gameIdx={props.gameIdx}
-                    currentBoostBips={props.currentBoostBips}
-                  />
-                )}
+              <Html position={[0, 5, 0]}>
+                <div className="w-auto flex">
+                  <div className="w-56 flex">
+                    <button
+                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      onClick={() => {
+                        setShowShieldAction(true);
+                      }}
+                    >
+                      <Book className="w-8 h-8 mx-auto " />
+
+                    </button>
+                    <button
+                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      onClick={() => {
+                        setShowShieldAction(true);
+                      }}
+                    >
+                      <Sword className="w-8 h-8 mx-auto" />
+                    </button>
+                    <button
+                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      onClick={() => {
+                        setShowShieldAction(true);
+                      }}
+                    >
+                      <Shield className="w-8 h-8 mx-auto " />
+                    </button>
+                  </div>
+                  {showShieldAction && (
+                    <ShieldAction
+                      gameStatus={props.gameStatus}
+                      gameIdx={props.gameIdx}
+                      currentBoostBips={props.currentBoostBips}
+                    />
+                  )}
+                </div>
               </Html>
             )}
           </group>
@@ -169,7 +198,7 @@ function TowerDefence(props: TowerProps) {
           <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
           <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
           <group ref={tower}>
-            {!rotate ? (
+            {/*!rotate ? (
               <Text
                 color={""}
                 fillOpacity={0}
@@ -183,7 +212,7 @@ function TowerDefence(props: TowerProps) {
               >
                 THE DIVINE CITY
               </Text>
-            ) : null}
+            ) : null*/}
             <Tower
               position={[0, 1, 0]}
               onPointerOver={(event) => {

@@ -3,7 +3,7 @@ import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
-
+import { useSiegeBalance } from "~/hooks/useSiegeBalance";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
 import { useStarknet } from "~/hooks/useStarknet";
@@ -32,7 +32,7 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const txQueue = useTxQueue();
 
-  const [tokenBalances, setTokenBalances] = useState<BN[]>();
+  const { fetchTokenBalances, tokenBalances } = useSiegeBalance()
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
   const [actionAmount, setActionAmount] = useState<string>("1");
@@ -57,6 +57,18 @@ const GameControls: React.FC<Prop> = (props) => {
       getIsApproved(l2Address, towerDefenceContractAddress);
     }
   }, [towerDefenceContractAddress, l2Address]);
+
+  useEffect(() => {
+    if (starknet.address && gameIdx !== undefined) {
+      if (gameStatus == "active") {
+        // Fetch balances for current game
+        fetchTokenBalances(gameIdx);
+      } else {
+        // Fetch & show balances for the upcoming game
+        fetchTokenBalances(gameIdx + 1);
+      }
+    }
+  }, [l2Address, gameIdx]);
 
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
@@ -100,58 +112,7 @@ const GameControls: React.FC<Prop> = (props) => {
     }
   };
 
-  const fetchTokenBalances = async (gameIdx: number) => {
-    // The token IDs change every game
-    const tokenIds = getTokenIdsForGame(gameIdx);
 
-    const ownerAddress = starknet.address;
-
-    if (ownerAddress) {
-      const balances = await defaultProvider.callContract({
-        contract_address: ELEMENTS_ADDRESS,
-        entry_point_selector: getSelectorFromName("balance_of_batch"),
-        calldata: [
-          "2", // Owners length
-          number.toBN(ownerAddress).toString(), // Owner address as an int
-          number.toBN(ownerAddress).toString(), // ... again
-          "2", // Token IDs length
-          ...tokenIds.map((tid) => tid.toString()), // Token IDs
-        ],
-      });
-
-      // Discard the length which is the first value
-      balances.result.shift();
-
-      const balancesBN = balances.result.map((bs) => number.toBN(bs));
-
-      if (balancesBN.length == 2) {
-        const first = balancesBN[0];
-        const second = balancesBN[1];
-
-        if (first.gt(second)) {
-          setSide("light");
-        } else if (second.gt(first)) {
-          setSide("dark");
-        }
-      }
-
-      setTokenBalances(balancesBN);
-    }
-  };
-  // Refetch token balances whenever starknet address changes
-  // Memoize to avoid unnecessary re-renders for same value
-
-  useEffect(() => {
-    if (starknet.address && gameIdx !== undefined) {
-      if (gameStatus == "active") {
-        // Fetch balances for current game
-        fetchTokenBalances(gameIdx);
-      } else {
-        // Fetch & show balances for the upcoming game
-        fetchTokenBalances(gameIdx + 1);
-      }
-    }
-  }, [l2Address, gameIdx]);
 
   return (
     <div

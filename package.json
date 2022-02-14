@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
-    "@argent/get-starknet": "^0.1.4",
+    "@argent/get-starknet": "^2.1.1",
     "@danmarshall/deckgl-typings": "^4.9.13",
     "@deck.gl/extensions": "^8.6.6",
     "@ethersproject/providers": "^5.5.1",
