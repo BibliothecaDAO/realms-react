@@ -79,7 +79,6 @@ function App() {
 
   const addToFilter = (value: any) => {
     const idx = resource.indexOf(value);
-    console.log(idx);
     if (idx === -1) {
       return setResource((oldArray) => [value, ...oldArray]);
     } else {
@@ -88,39 +87,27 @@ function App() {
       return setResource(temp);
     }
   };
-  const textLayer = new TextLayer({
-    id: "text-layer",
-    data: filteredData(),
-    getPosition: (d: any) => d.coordinates,
-    getText: (d: any) => d.name.toString(),
-    getSize: 20,
-    getColor: [0, 0, 0, 255],
-    getAngle: 0,
-    sizeMaxPixels: 50,
-    sizeScale: 2,
-    getTextAnchor: "middle",
-    fontFamily: "Monaco, monospace",
-    getAlignmentBaseline: "center",
-    parameters: { depthTest: false },
-  });
+
   const realms_layer = new ScatterplotLayer({
     id: "scatterplot-layer",
-    data: filteredData(),
+    data: realms_data,
     stroked: true,
     filled: true,
     extruded: true,
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.coordinates,
-    getRadius: 3000,
+    getRadius: 1000,
     getElevation: 10000,
     lineWidthMinPixels: 1,
-    getFillColor: [141, 121, 91],
+    getFillColor: [0, 0, 0],
     onClick: (info, event) => setRealmInformation(true),
   });
+
   const ICON_MAPPING = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
+
   const layer = new IconLayer({
     id: "icon-layer",
     data: filteredData(),
@@ -137,7 +124,7 @@ function App() {
     getSize: (d) => 5,
     getColor: (d: any) => [255, 255, 255],
   });
-  const layers = [layer];
+  const layers = [realms_layer, layer];
 
   const [initialViewState, setInitialViewState] = useState({
     longitude: 0,
