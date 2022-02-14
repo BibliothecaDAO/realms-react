@@ -16,7 +16,6 @@ import {
 } from "@deck.gl/core";
 import { FillStyleExtension } from "@deck.gl/extensions";
 import { StaticMap } from "react-map-gl";
-import { SideBar } from "~/components/navigation/sidebar";
 import { Header } from "~/components/navigation/header";
 import Layout from "~/components/Layout";
 import { Realm as RealmCard } from "~/components/realms/Realm";
@@ -24,6 +23,9 @@ import { useQuery } from "@apollo/client";
 
 import { Data } from "~/types";
 import { getRealmQuery } from "~/hooks/graphql/queries";
+import { useUIContext } from "~/hooks/useUIContext";
+
+import Menu from "../public/svg/menu.svg";
 // const arc_pairs = [];
 // for (const x of Array(15).keys()) {
 //   for (const j of Array(20).keys()) {
@@ -65,6 +67,7 @@ const continent_layer = new PolygonLayer({
 });
 
 function App() {
+  const { mapMenu, toggleMapMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [realmInformation, setRealmInformation] = useState<boolean>(false);
   const filteredData = () => {
@@ -175,10 +178,10 @@ function App() {
   const list = resources.map((res, index) => (
     <button
       key={index}
-      className={` p-1 h-12 mb-2 px-4 rounded-xl text-off-200   ${
+      className={` p-1 h-12 mb-2 px-4 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${
         resource.includes(res.trait)
           ? "backdrop-blur-md bg-white/90"
-          : "backdrop-blur-md bg-white/50"
+          : "backdrop-blur-md bg-white/30"
       } `}
       onClick={() => addToFilter(res.trait)}
     >
@@ -189,30 +192,47 @@ function App() {
   return (
     <Layout>
       <div>
-        <div className="absolute bottom-10 right-10 rounded p-4 h-auto w-96 z-10 shadow-2xl bg-black border-double border-4 border-off-200 text-white">
-          <RealmCard data={data!} loading={loading} />
-        </div>
-        <div
-          className={`h-auto w-full z-20 absolute p-4 top-0 border-r-4  overflow-auto`}
+        <button
+          className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+          onClick={toggleMapMenu}
         >
-          <div className="flex flex-wrap space-x-2">
-            <div className=" mb-2 flex shadow">
-              <input
-                placeholder="Type Id"
-                type={"number"}
-                className="text-black p-2 rounded-l-xl border-double border-4 w-2/3"
-                value={value}
-                onChange={onChange}
-              />
-              <button
-                className="px-2 bg-off-200 text-off-100 rounded-r-xl w-1/3"
-                onClick={() => goToId(parseInt(value))}
-              >
-                Fly
-              </button>
-            </div>
-            {list}
+          <Menu />
+        </button>
+        <div
+          className={`h-screen w-1/2 z-20 absolute p-6 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all  ${
+            mapMenu ? "" : "-translate-x-full"
+          }`}
+        >
+          <button
+            className="p-4 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+            onClick={toggleMapMenu}
+          >
+            <Menu />
+          </button>
+          <h3 className="mt-4 mb-2">Search For a Realm</h3>
+          <div className=" mb-2 flex">
+            <input
+              placeholder="Type Id"
+              type={"number"}
+              className="text-black px-4 py-2 rounded-l-xl w-2/3"
+              value={value}
+              onChange={onChange}
+              min="1"
+              max="8000"
+            />
+            <button
+              className="p-1 px-4 rounded-r-xl text-off-200 mr-2 bg-white/20 transition-all duration-300 rounded-r-xl w-1/3"
+              onClick={() => goToId(parseInt(value))}
+            >
+              Fly
+            </button>
           </div>
+
+          <div className="rounded-xl p-4 h-auto  z-10 shadow-2xl bg-black  text-white">
+            <RealmCard data={data!} loading={loading} />
+          </div>
+          <h3 className="mt-8">Filter Resources</h3>
+          <div className="flex flex-wrap mb-8">{list}</div>
         </div>
         <DeckGL
           initialViewState={initialViewState}
