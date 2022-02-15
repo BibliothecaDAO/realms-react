@@ -11,6 +11,7 @@ type Props = {
 export const ResourceSideBar = (props: Props) => {
   const { toggleResourceMenu, resourceMenu } = useUIContext();
   const [focusResource, setResource] = useState<number>(0);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
@@ -27,6 +28,7 @@ export const ResourceSideBar = (props: Props) => {
   ));
 
   const changeResource = (value: any) => {
+    setLoaded(false);
     console.log(focusResource);
     if (focusResource === 21 && value > 0) {
       setResource(() => 1);
@@ -76,11 +78,17 @@ export const ResourceSideBar = (props: Props) => {
             </button>
           </div>
         </div>
+        {loaded ? (
+          <div></div>
+        ) : (
+          <div className="h-96 animate-pulse w-full bg-gray-200 rounded-xl"></div>
+        )}
 
         <img
           src={Resources[focusResource]?.img}
           alt=""
-          className="w-full rounded-xl"
+          className={`w-full rounded-xl ${loaded ? "" : "hidden"}`}
+          onLoad={() => setLoaded(true)}
         />
         <div className="py-4">
           <h4>Found on: {Resources[focusResource]?.value} Realms</h4>
