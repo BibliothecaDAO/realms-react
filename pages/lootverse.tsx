@@ -8,12 +8,7 @@ import {
 } from "@deck.gl/layers";
 import { realms_data, contour_data } from "~/continents";
 import { resources } from "~/resources";
-import {
-  FlyToInterpolator,
-  PointLight,
-  LightingEffect,
-  // _GlobeView as GlobeView,
-} from "@deck.gl/core";
+import { FlyToInterpolator, PointLight, LightingEffect } from "@deck.gl/core";
 import { FillStyleExtension } from "@deck.gl/extensions";
 import { StaticMap } from "react-map-gl";
 import { Header } from "~/components/navigation/header";
@@ -36,36 +31,6 @@ import Menu from "../public/svg/menu.svg";
 //     });
 //   }
 // }
-const patterns = ["hatch-cross"];
-const continent_layer = new PolygonLayer({
-  id: "polygon-layer",
-  data: contour_data,
-  stroked: true,
-  filled: true,
-  lineWidthMinPixels: 1,
-  extruded: true,
-  getPolygon: (d: any) => d.contour,
-  getElevation: 1000,
-  getFillColor: (d: any) => d.color,
-  getLineColor: [141, 121, 91],
-  getLineWidth: 4,
-  // fillPatternMask: true,
-  fillPatternAtlas:
-    "https://i.ibb.co/zbSjNXX/topographic-map-seamless-pattern-73378-589.png",
-
-  getFillPattern: {
-    x: 0,
-    y: 0,
-    width: 626,
-    height: 626,
-    mask: true,
-  },
-  getFillPatternScale: 500,
-  getFillPatternOffset: [0, 0],
-
-  // Define extensions
-  extensions: [new FillStyleExtension({ pattern: true })],
-});
 
 function App() {
   const { mapMenu, toggleMapMenu } = useUIContext();
@@ -163,27 +128,13 @@ function App() {
     variables: { id: value },
   });
 
-  const list = resources.map((res, index) => (
-    <button
-      key={index}
-      className={` p-1 h-12 mb-2 px-4 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${
-        resource.includes(res.trait)
-          ? "backdrop-blur-md bg-white/90"
-          : "backdrop-blur-md bg-white/30"
-      } `}
-      onClick={() => addToFilter(res.trait)}
-    >
-      {res.trait}
-    </button>
-  ));
-
   return (
     <Layout>
       <div>
         <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
           Lootverse
         </h1>
-        <ResourceSideBar />
+        <ResourceSideBar onClick={addToFilter} resource={resource} />
         <button
           className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
           onClick={toggleMapMenu}
@@ -223,8 +174,6 @@ function App() {
           <div className="rounded-xl p-4 h-auto  z-10 shadow-2xl bg-black  text-white">
             <RealmCard data={data!} loading={loading} />
           </div>
-          <h3 className="mt-8">Filter Resources</h3>
-          <div className="flex flex-wrap mb-8">{list}</div>
         </div>
         <DeckGL
           initialViewState={initialViewState}
