@@ -1,5 +1,5 @@
 import { useUIContext } from "~/hooks/useUIContext";
-import { resources } from "~/resources";
+import { Resources } from "~/util/resources";
 import { MouseEventHandler } from "react";
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -9,7 +9,7 @@ type Props = {
 export const ResourceSideBar = (props: Props) => {
   const { toggleResourceMenu, resourceMenu } = useUIContext();
 
-  const list = resources.map((res: any, index) => (
+  const list = Resources.map((res: any, index) => (
     <button
       key={index}
       className={` p-1 h-12 mb-2 pl-4 pr-2 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${

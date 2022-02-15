@@ -8,7 +8,7 @@ interface Resources {
   img: String;
 }
 
-export const resources: Array<Resources> = [
+export const Resources: Array<Resources> = [
   {
     trait: "Wood",
     value: 5015,

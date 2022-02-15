@@ -1,19 +1,31 @@
 import { ReactElement } from "react";
 import React from "react";
 import { Realm } from "../../types";
-import { resources } from "~/resources";
+import { Resources } from "~/util/resources";
+import { TheOrders } from "~/util/theOrders";
 import { RealmProps } from "../../types";
 
 export function Realm(props: RealmProps): ReactElement {
   const findResourceName = (value: any) => {
-    return resources.find((e) => e.id === parseInt(value));
+    return Resources.find((e) => e.id === parseInt(value));
+  };
+  const findOrderName = (value: any) => {
+    return TheOrders.find((e) => e.name.includes(value));
   };
   return (
     <div className="">
       {props.loading ? (
         <p className="pt-20 h-48 w-48">Loading...</p>
       ) : (
-        <div className="pt-20">
+        <div>
+          <div
+            className={`w-full text-center rounded-lg py-2 text-xl`}
+            style={{
+              background: `${findOrderName(props.data.realm.order)?.colour}`,
+            }}
+          >
+            Order of {props.data.realm.order}
+          </div>
           <img
             src={`https://d23fdhqc1jb9no.cloudfront.net/_Renders/${props.data.realm.id}.jpg`}
             alt="map"
@@ -21,6 +33,7 @@ export function Realm(props: RealmProps): ReactElement {
           />
           <div className="p-2">
             <h4>Id: {props.data.realm.id}</h4>
+
             <h1 className="mt-2 mb-4">{props.data.realm.name}</h1>
             <div className="flex flex-wrap mb-2">
               {props.data.realm.resourceIds.map((re: any, index) => (
