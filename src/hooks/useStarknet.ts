@@ -4,7 +4,7 @@ import { getStarknet } from "@argent/get-starknet";
 export const isWalletConnected = (): boolean => !!getStarknet()?.isConnected;
 
 export const connectWallet = async () =>
-  await getStarknet({ showModal: true }).enable();
+  await getStarknet().enable();
 
 export const walletAddress = async (): Promise<string | undefined> => {
   try {
@@ -31,7 +31,7 @@ export const useStarknet = (options?: ConnectOptions) => {
   const handleConnect = async () => {
     if (isL2Connected == false || l2Address == undefined) {
       try {
-        await getStarknet({ showModal: false }).enable();
+        await getStarknet().enable();
         setIsL2Connected(isWalletConnected());
         setL2Address(await walletAddress());
       } catch (e) {
@@ -43,7 +43,7 @@ export const useStarknet = (options?: ConnectOptions) => {
   useEffect(() => {
     const connectOnMount = async () => {
       try {
-        await getStarknet({ showModal: false }).enable();
+        await getStarknet().enable();
         setIsL2Connected(isWalletConnected());
         setL2Address(await walletAddress());
         if (window) {

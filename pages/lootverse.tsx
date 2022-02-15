@@ -101,6 +101,7 @@ function App() {
 
   const goToId = useCallback((id) => {
     let realm = realms_data.filter((a) => a.name === id);
+    toggleMapMenu();
     setInitialViewState({
       longitude: realm[0].coordinates[0],
       latitude: realm[0].coordinates[1],
@@ -135,15 +136,32 @@ function App() {
           Lootverse
         </h1>
         <ResourceSideBar onClick={addToFilter} resource={resource} />
-        <button
+        {/* <button
           className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
           onClick={toggleMapMenu}
         >
           <Menu />
-        </button>
+        </button> */}
+        <div className="flex absolute top-10 right-36 z-30 ">
+          <input
+            placeholder="Type Id"
+            type={"number"}
+            className="text-black px-4 py-4 rounded-l-xl w-2/3 bg-white/50"
+            value={value}
+            onChange={onChange}
+            min="1"
+            max="8000"
+          />
+          <button
+            className="p-1 px-4 rounded-r-xl text-off-200 mr-2 bg-white/50 transition-all duration-300 rounded-r-xl w-1/3"
+            onClick={() => goToId(parseInt(value))}
+          >
+            Fly
+          </button>
+        </div>
         <div
-          className={`h-screen w-1/2 z-20 absolute p-6 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all  ${
-            mapMenu ? "" : "-translate-x-full"
+          className={`h-screen w-full sm:w-1/3 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+            mapMenu ? "" : "translate-x-full hidden"
           }`}
         >
           <button
@@ -153,23 +171,6 @@ function App() {
             <Menu />
           </button>
           <h3 className="mt-4 mb-2">Search For a Realm</h3>
-          <div className=" mb-2 flex">
-            <input
-              placeholder="Type Id"
-              type={"number"}
-              className="text-black px-4 py-2 rounded-l-xl w-2/3"
-              value={value}
-              onChange={onChange}
-              min="1"
-              max="8000"
-            />
-            <button
-              className="p-1 px-4 rounded-r-xl text-off-200 mr-2 bg-white/20 transition-all duration-300 rounded-r-xl w-1/3"
-              onClick={() => goToId(parseInt(value))}
-            >
-              Fly
-            </button>
-          </div>
 
           <div className="rounded-xl p-4 h-auto  z-10 shadow-2xl bg-black  text-white">
             <RealmCard data={data!} loading={loading} />
