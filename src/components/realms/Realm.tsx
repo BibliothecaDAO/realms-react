@@ -38,7 +38,7 @@ export function Realm(props: RealmProps): ReactElement {
             <div className="flex flex-wrap mb-2">
               {props.data.realm.resourceIds.map((re: any, index) => (
                 <span
-                  className={`uppercase px-2 py-1 rounded border mr-2 mb-2 ${
+                  className={`uppercase px-2 py-1 rounded border mr-2 mb-2 tracking-wide ${
                     findResourceName(re)?.colourClass
                   }`}
                   key={index}
