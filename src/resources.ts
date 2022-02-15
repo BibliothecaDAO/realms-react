@@ -1,4 +1,14 @@
-export const resources = [
+interface Resources {
+  trait: String;
+  value: Number;
+  colour: String;
+  colourClass: String;
+  id: Number;
+  description: String;
+  img: String;
+}
+
+export const resources: Array<Resources> = [
   {
     trait: "Wood",
     value: 5015,
@@ -66,7 +76,7 @@ export const resources = [
     value: 1179,
     colour: "#b91c1c",
     colourClass: "bg-red-700 border-red-700",
-    id: 6,
+    id: 7,
     description:
       "Metallic minerals drawn from the ironwood’s deep delving roots are the source of its legendary hardness and appearance.",
     img: "",

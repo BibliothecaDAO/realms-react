@@ -35,8 +35,8 @@ export const UIProvider = (props: UIProviderProps) => {
 function useUI() {
   const [powerBar, setPowerBar] = useState(false);
   const [setup, setSetup] = useState(false);
-  const [mapMenu, setMapMenu] = useState(true);
-  const [resourceMenu, setResourceMenu] = useState(true);
+  const [mapMenu, setMapMenu] = useState(false);
+  const [resourceMenu, setResourceMenu] = useState(false);
 
   const togglePowerBar = () => {
     return setPowerBar(!powerBar);

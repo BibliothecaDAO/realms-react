@@ -27,7 +27,7 @@ export const ResourceSideBar = (props: Props) => {
   return (
     <div className="">
       <button
-        className="absolute top-10 right-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+        className="absolute top-10 right-10 bg-white/50 transition-all p-4 z-10 rounded hover:bg-white/70"
         onClick={toggleResourceMenu}
       >
         Resources

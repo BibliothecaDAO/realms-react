@@ -1,36 +1,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
-import {
-  ScatterplotLayer,
-  PolygonLayer,
-  TextLayer,
-  IconLayer,
-} from "@deck.gl/layers";
-import { realms_data, contour_data } from "~/continents";
-import { resources } from "~/resources";
+import { ScatterplotLayer, IconLayer } from "@deck.gl/layers";
+import { realms_data } from "~/continents";
 import { FlyToInterpolator, PointLight, LightingEffect } from "@deck.gl/core";
-import { FillStyleExtension } from "@deck.gl/extensions";
 import { StaticMap } from "react-map-gl";
-import { Header } from "~/components/navigation/header";
 import Layout from "~/components/Layout";
 import { Realm as RealmCard } from "~/components/realms/Realm";
 import { ResourceSideBar } from "~/components/map/ResourceSideBar";
 import { useQuery } from "@apollo/client";
-
 import { Data } from "~/types";
 import { getRealmQuery } from "~/hooks/graphql/queries";
 import { useUIContext } from "~/hooks/useUIContext";
-
 import Menu from "../public/svg/menu.svg";
-// const arc_pairs = [];
-// for (const x of Array(15).keys()) {
-//   for (const j of Array(20).keys()) {
-//     arc_pairs.push({
-//       from: realms_data[j],s
-//       to: realms_data[500 * (x + 1)],
-//     });
-//   }
-// }
 
 function App() {
   const { mapMenu, toggleMapMenu } = useUIContext();
@@ -105,8 +86,8 @@ function App() {
     setInitialViewState({
       longitude: realm[0].coordinates[0],
       latitude: realm[0].coordinates[1],
-      zoom: 10,
-      pitch: 0,
+      zoom: 8,
+      pitch: 20,
       bearing: 0,
       // @ts-ignore: Unreachable code error
       transitionDuration: 8000,
@@ -184,7 +165,7 @@ function App() {
           getTooltip={({ object }) =>
             object && {
               // @ts-ignore: name not exist on D
-              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.name}.jpg"/> <h1 class="text-xl p-2">Realm Id: ${object.name}</h1><div><h2>${object.name}</h2></div></div>  
+              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.name}.jpg"/><div><h2>${object.name}</h2></div></div>  
       `,
               style: {
                 backgroundColor: "black",

@@ -1,10 +1,13 @@
 import { ReactElement } from "react";
 import React from "react";
 import { Realm } from "../../types";
-import Image from "next/image";
+import { resources } from "~/resources";
 import { RealmProps } from "../../types";
 
 export function Realm(props: RealmProps): ReactElement {
+  const findResourceName = (value: any) => {
+    return resources.find((e) => e.id === parseInt(value));
+  };
   return (
     <div className="">
       {props.loading ? (
@@ -17,41 +20,57 @@ export function Realm(props: RealmProps): ReactElement {
             className="w-full"
           />
           <div className="p-2">
-            <h1>{props.data.realm.name}</h1>
-            <div className="flex flex-col w-full text-sm">
-              <span>Regions</span>
+            <h4>Id: {props.data.realm.id}</h4>
+            <h1 className="mt-2 mb-4">{props.data.realm.name}</h1>
+            <div className="flex flex-wrap mb-2">
+              {props.data.realm.resourceIds.map((re: any, index) => (
+                <span
+                  className={`uppercase px-2 py-1 rounded border mr-2 mb-2 ${
+                    findResourceName(re)?.colourClass
+                  }`}
+                  key={index}
+                >
+                  {findResourceName(re)?.trait}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-col w-full text-xl">
+              <span>Regions: {props.data.realm.regions}</span>
               <div className="w-full bg-gray-200 rounded">
                 <div
-                  className="bg-amber-500 h-1"
+                  className="bg-amber-500 h-2 rounded-xl"
                   style={{
-                    width: ((props.data.realm.regions as any) / 7) * 100,
+                    width: `${((props.data.realm.regions as any) / 7) * 100}%`,
                   }}
                 ></div>
               </div>
-              <span className="pt-1 text-sm">Cities</span>
+              <span className="pt-1">Cities: {props.data.realm.cities}</span>
               <div className="w-full bg-gray-200 rounded">
                 <div
-                  className="bg-amber-800 h-1"
+                  className="bg-amber-800 h-2 rounded-xl"
                   style={{
-                    width: ((props.data.realm.cities as any) / 21) * 100,
+                    width: `${((props.data.realm.cities as any) / 21) * 100}%`,
                   }}
                 ></div>
               </div>
-              <span className="pt-1">Harbors</span>
+              <span className="pt-1">Harbors: {props.data.realm.harbours}</span>
               <div className="w-full bg-gray-200 rounded">
                 <div
-                  className="bg-blue-600 h-1"
+                  className="bg-blue-600 h-2 rounded-xl"
                   style={{
-                    width: ((props.data.realm.harbours as any) / 35) * 100,
+                    width: `${
+                      ((props.data.realm.harbours as any) / 35) * 100
+                    }%`,
                   }}
                 ></div>
               </div>
-              <span className="pt-1">Rivers</span>
+              <span className="pt-1">Rivers: {props.data.realm.rivers}</span>
               <div className="w-full bg-gray-200 rounded">
                 <div
-                  className="bg-blue-400 h-1"
+                  className="bg-blue-400 h-2 rounded-xl"
                   style={{
-                    width: ((props.data.realm.rivers as any) / 60) * 100,
+                    width: `${((props.data.realm.rivers as any) / 60) * 100}%`,
                   }}
                 ></div>
               </div>
