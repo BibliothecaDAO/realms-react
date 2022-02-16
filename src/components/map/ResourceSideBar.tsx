@@ -40,13 +40,6 @@ export const ResourceSideBar = (props: Props) => {
   };
   return (
     <div className="">
-      <button
-        className="absolute top-10 right-10 bg-white/50 transition-all p-4 z-10 rounded hover:bg-white/70"
-        onClick={toggleResourceMenu}
-      >
-        Resources
-      </button>
-
       <div
         className={`h-screen w-full sm:w-1/3 z-40 absolute p-6 bottom-0 backdrop-blur-md bg-off-200/30 rounded-r-2xl transform duration-300 transition-all  overflow-x-hidden right-0    ${
           resourceMenu ? "" : "translate-y-full hidden"

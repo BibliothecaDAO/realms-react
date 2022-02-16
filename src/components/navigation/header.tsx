@@ -5,16 +5,9 @@ export function Header() {
     useWalletContext();
 
   return (
-    <div className="top-0 absolute z-20 p-3 bg-black w-full  border-off-200 text-white border-double border-b-4 flex">
-      <nav className="flex text-2xl mr-auto space-x-5">
-        <a href="">🗺️ Map</a>
-      </nav>
-      <nav className="flex space-x-6 text-2xl  mx-auto ">
-        <a href="">Lootverse</a>
-      </nav>
-
+    <div className="top-10 absolute z-20 left-2 flex">
       <div className="ml-auto">
-        <ul className="flex space-x-4 mr-auto">
+        <ul className="flex space-x-4 mr-auto text-xl backdrop-blur-md bg-off-200/20 px-4 py-4 rounded">
           <li className="">
             {isConnected && (
               <span>
@@ -22,7 +15,7 @@ export function Header() {
 
                 <a
                   className={
-                    "cursor-pointer  font-body px-4  bg-off-200 text-off-100 rounded  ml-auto py-1"
+                    "cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded ml-auto py-2"
                   }
                   onClick={disconnectWallet}
                 >
@@ -33,7 +26,7 @@ export function Header() {
             {!isConnected && (
               <button
                 className={
-                  "cursor-pointer  font-body px-4  bg-off-200 text-off-100 rounded  ml-auto py-1"
+                  "cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded  ml-auto py-2"
                 }
                 onClick={connectWallet}
               >

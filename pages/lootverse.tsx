@@ -1,22 +1,26 @@
 import React, { useState, useCallback, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, IconLayer } from "@deck.gl/layers";
-import { realms_data } from "~/continents";
+import { ScatterplotLayer, IconLayer, PolygonLayer } from "@deck.gl/layers";
+import { realms_data, contour_data } from "~/continents";
 import { FlyToInterpolator, PointLight, LightingEffect } from "@deck.gl/core";
 import { StaticMap } from "react-map-gl";
 import Layout from "~/components/Layout";
 import { Realm as RealmCard } from "~/components/realms/Realm";
 import { ResourceSideBar } from "~/components/map/ResourceSideBar";
 import { useQuery } from "@apollo/client";
-import { Data } from "~/types";
+import { Data, Realm } from "~/types";
 import { getRealmQuery } from "~/hooks/graphql/queries";
 import { useUIContext } from "~/hooks/useUIContext";
 import Menu from "../public/svg/menu.svg";
+import { number } from "starknet";
+import { Header } from "~/components/navigation/header";
+import { MenuSideBar } from "~/components/map/MenuSideBar";
 
 function App() {
   const { mapMenu, toggleMapMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
-  const [realmInformation, setRealmInformation] = useState<boolean>(false);
+  const [value, setValue] = useState<number>(1);
+
   const filteredData = () => {
     return realms_data.filter((a) =>
       a.resource.some((b) => resource.includes(b))
@@ -47,7 +51,12 @@ function App() {
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0],
-    onClick: (info, event) => setRealmInformation(true),
+    onClick: (info: any) => {
+      setValue(info.object.name);
+      if (!mapMenu) {
+        toggleMapMenu();
+      }
+    },
   });
 
   const ICON_MAPPING = {
@@ -70,7 +79,6 @@ function App() {
     getSize: (d) => 5,
     getColor: (d: any) => [255, 255, 255],
   });
-  const layers = [realms_layer, layer];
 
   const [initialViewState, setInitialViewState] = useState({
     longitude: 0,
@@ -90,24 +98,23 @@ function App() {
       pitch: 20,
       bearing: 0,
       // @ts-ignore: Unreachable code error
-      transitionDuration: 8000,
+      transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator(),
     });
   }, []);
 
-  const [value, setValue] = useState("1");
   const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
-      setValue("1");
+      setValue(1);
     } else if (parseInt(event.target.value) > 8000) {
-      setValue("8000");
+      setValue(8000);
     } else {
       setValue(event.target.value);
     }
   };
 
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
-    variables: { id: value },
+    variables: { id: value.toString() },
   });
 
   return (
@@ -116,32 +123,28 @@ function App() {
         <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
           Lootverse
         </h1>
+        <Header />
+        <MenuSideBar />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
-        {/* <button
-          className="absolute top-10 left-10 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
-          onClick={toggleMapMenu}
-        >
-          <Menu />
-        </button> */}
-        <div className="flex absolute top-10 right-36 z-30 ">
+        <div className="flex absolute top-10 right-36 z-30 w-96 text-xl">
           <input
             placeholder="Type Id"
             type={"number"}
-            className="text-black px-4 py-4 rounded-l-xl w-2/3 bg-white/50"
+            className="text-black px-4 py-4 rounded-l-xl w-1/2 bg-white/80"
             value={value}
             onChange={onChange}
             min="1"
             max="8000"
           />
           <button
-            className="p-1 px-4 rounded-r-xl text-off-200 mr-2 bg-white/50 transition-all duration-300 rounded-r-xl w-1/3"
-            onClick={() => goToId(parseInt(value))}
+            className="p-1 px-4  text-off-100 mr-2 bg-off-200/20 transition-all duration-300 rounded-r-xl w-1/2 uppercase "
+            onClick={() => goToId(value)}
           >
-            Fly
+            Fly to realm
           </button>
         </div>
         <div
-          className={`h-screen w-full sm:w-1/3 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+          className={`h-screen w-full sm:w-1/2 z-30 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
             mapMenu ? "" : "translate-x-full hidden"
           }`}
         >
@@ -153,15 +156,13 @@ function App() {
           </button>
           <h3 className="mt-4 mb-2">Search For a Realm</h3>
 
-          <div className="rounded-xl p-4 h-auto  z-10 shadow-2xl bg-black  text-white">
-            <RealmCard data={data!} loading={loading} />
-          </div>
+          <RealmCard data={data!} loading={loading} />
         </div>
         <DeckGL
+          getCursor={() => "crosshair"}
           initialViewState={initialViewState}
           controller={true}
-          // effects= {[lightingEffect]}
-          layers={layers}
+          layers={[realms_layer, layer]}
           getTooltip={({ object }) =>
             object && {
               // @ts-ignore: name not exist on D

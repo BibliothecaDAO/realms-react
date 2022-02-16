@@ -1,5 +1,11 @@
 export type GameStatus = "active" | "completed" | "expired";
 
+interface Owner {
+    address: string;
+    realmsHeld: Number;
+    bridgedRealmsHeld: Number;
+}
+
 export interface Realm {
     id: String;
     resourceIds: Array<String>;
@@ -12,6 +18,7 @@ export interface Realm {
     name: String;
     rarityScore: Number;
     rarityRank: Number;
+    currentOwner: Owner;
 }
 
 export interface Data {
