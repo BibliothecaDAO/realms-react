@@ -15,6 +15,7 @@ import {
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
+  EFFECT_BASE_FACTOR,
 } from "~/util/minigameApi";
 import { GameStatus } from "~/types";
 import Elements1155Abi from "~/abi/minigame/ERC1155.json";
@@ -39,10 +40,6 @@ const divineEclipse: TokenNameOffsetMap = {
 
 // The offset is based on the season mapping
 const currentTokenOffset = divineEclipse;
-
-// Contract calculates effects in BIPS
-// so this factor is used to normalize action amounts
-const EFFECT_BASE_FACTOR = 100;
 
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
@@ -178,7 +175,7 @@ const GameControls: React.FC<Prop> = (props) => {
             </button>
           ) : null}
           {loadingTokenBalance ? (
-            <div className="block w-full h-12 mt-4 transition-colors rounded-md bg-slate-400 animate-pulse"></div>
+            <div className="block w-32 h-10 mt-4 transition-colors rounded-md bg-slate-400 animate-pulse"></div>
           ) : null}
 
           <p className="mt-4 text-3xl">
