@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         <title>Desiege S1: Divine Eclipse</title>
         <meta
           name="description"
-          content="Tower Defence on-chain NFT game on StarkNet"
+          content="Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell from within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city."
         />
         <link rel="icon" href="/favicon.ico" />
         {/* Font */}
