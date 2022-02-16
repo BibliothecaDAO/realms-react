@@ -19,6 +19,7 @@ import {
 import { GameStatus } from "~/types";
 import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
+import classNames from "classnames";
 
 type Prop = {
   gameIdx?: number;
@@ -72,7 +73,12 @@ const GameControls: React.FC<Prop> = (props) => {
     method: "attack_tower",
   });
 
-  const { fetchTokenBalances, tokenBalances, side } = useSiegeBalance();
+  const {
+    fetchTokenBalances,
+    tokenBalances,
+    side,
+    loading: loadingTokenBalance,
+  } = useSiegeBalance();
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
   const [actionAmount, setActionAmount] = useState<string>("1");
@@ -148,7 +154,7 @@ const GameControls: React.FC<Prop> = (props) => {
 
       {gameStatus == "expired" ? (
         <div>
-          {side == undefined ? (
+          {side == undefined && loadingTokenBalance == false ? (
             <button
               onClick={() => {
                 if (account != undefined && side == undefined) {
@@ -157,7 +163,9 @@ const GameControls: React.FC<Prop> = (props) => {
                   connectBrowserWallet();
                 }
               }}
-              className="w-full p-2 mt-4 text-lg text-white transition-colors border border-white rounded-md backdrop-blur-lg bg-white/30 hover:bg-white/100"
+              className={classNames(
+                "w-full p-2 mt-4 text-lg text-black  transition-colors border border-white rounded-md backdrop-blur-lg bg-white/30 hover:bg-white/100"
+              )}
             >
               {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
               {account !== undefined ? (
@@ -169,8 +177,11 @@ const GameControls: React.FC<Prop> = (props) => {
               )}
             </button>
           ) : null}
+          {loadingTokenBalance ? (
+            <div className="block w-full h-12 mt-4 transition-colors rounded-md bg-slate-400 animate-pulse"></div>
+          ) : null}
 
-          <p className="mt-8 text-3xl">
+          <p className="mt-4 text-3xl">
             {side == "light" && tokenBalances ? (
               <>
                 <ElementLabel side="light">LIGHT</ElementLabel>{" "}
@@ -184,7 +195,7 @@ const GameControls: React.FC<Prop> = (props) => {
               </>
             ) : null}
           </p>
-          <p className="my-4 text-xl animate-pulse">
+          <p className="my-4 text-xl animate-bounce">
             Waiting for next game to start...
           </p>
           <p className="font-bold">Preparation for Desiege</p>
@@ -290,15 +301,6 @@ const GameControls: React.FC<Prop> = (props) => {
           ) : null}
         </>
       )}
-      {account == undefined ? (
-        <Button
-          className="w-full mt-4"
-          color="default"
-          onClick={connectBrowserWallet}
-        >
-          Connect StarkNet
-        </Button>
-      ) : null}
       {is1155TokenApproved == "0" ? (
         <>
           <button
