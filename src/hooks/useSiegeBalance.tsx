@@ -9,6 +9,7 @@ const { getSelectorFromName } = stark;
 
 export const useSiegeBalance = () => {
   const starknet = useStarknet();
+  const [loading, setLoading] = useState(false);
   const [tokenBalances, setTokenBalances] = useState<BN[]>();
   const [side, setSide] = useState<"light" | "dark">();
 
@@ -19,6 +20,7 @@ export const useSiegeBalance = () => {
     const ownerAddress = starknet.account;
 
     if (ownerAddress) {
+      setLoading(true);
       const balances = await starknet.library.callContract({
         contract_address: ELEMENTS_ADDRESS,
         entry_point_selector: getSelectorFromName("balance_of_batch"),
@@ -47,10 +49,12 @@ export const useSiegeBalance = () => {
       }
 
       setTokenBalances(balancesBN);
+      setLoading(false);
     }
   };
 
   return {
+    loading,
     side,
     tokenBalances,
     fetchTokenBalances,
