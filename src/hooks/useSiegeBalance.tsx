@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import { getStarknet } from "@argent/get-starknet";
+import { useState } from "react";
 import BN from "bn.js";
-import { useStarknet } from "~/hooks/useStarknet";
-import { defaultProvider, number, stark } from "starknet";
+import { useStarknet } from "@starknet-react/core";
+import { number, stark } from "starknet";
 
-import {
-  getTokenIdsForGame,
-  ELEMENTS_ADDRESS,
-  TOKEN_INDEX_OFFSET_BASE,
-  getIsApprovedForAll,
-} from "~/util/minigameApi";
+import { getTokenIdsForGame, ELEMENTS_ADDRESS } from "~/util/minigameApi";
 
 const { getSelectorFromName } = stark;
 
@@ -22,10 +16,10 @@ export const useSiegeBalance = () => {
     // The token IDs change every game
     const tokenIds = getTokenIdsForGame(gameIdx);
 
-    const ownerAddress = starknet.address;
+    const ownerAddress = starknet.account;
 
     if (ownerAddress) {
-      const balances = await defaultProvider.callContract({
+      const balances = await starknet.library.callContract({
         contract_address: ELEMENTS_ADDRESS,
         entry_point_selector: getSelectorFromName("balance_of_batch"),
         calldata: [
@@ -36,7 +30,6 @@ export const useSiegeBalance = () => {
           ...tokenIds.map((tid) => tid.toString()), // Token IDs
         ],
       });
-      console.log(balances)
       // Discard the length which is the first value
       balances.result.shift();
 
@@ -56,14 +49,9 @@ export const useSiegeBalance = () => {
       setTokenBalances(balancesBN);
     }
   };
-  // Refetch token balances whenever starknet address changes
-  // Memoize to avoid unnecessary re-renders for same value
-
-
-
-
 
   return {
+    side,
     tokenBalances,
     fetchTokenBalances,
   };

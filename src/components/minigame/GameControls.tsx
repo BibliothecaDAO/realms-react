@@ -1,6 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import BN from "bn.js";
-import { defaultProvider, number, stark } from "starknet";
+import { useState, useEffect } from "react";
+import { number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
 import { useSiegeBalance } from "~/hooks/useSiegeBalance";
@@ -9,7 +8,6 @@ import Button from "~/shared/Button";
 import { useStarknet } from "~/hooks/useStarknet";
 import BridgeModal from "../bridge/Modal";
 import {
-  getTokenIdsForGame,
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
@@ -31,16 +29,13 @@ const GameControls: React.FC<Prop> = (props) => {
   const l2Address = useMemo(() => starknet.address, [starknet.address]);
 
   const txQueue = useTxQueue();
-
-  const { fetchTokenBalances, tokenBalances } = useSiegeBalance()
+  const { fetchTokenBalances, tokenBalances, side } = useSiegeBalance();
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
 
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
-
-  const [side, setSide] = useState<"light" | "dark">();
 
   const towerDefenceContractAddress = useModuleAddress("1");
 
@@ -191,11 +186,7 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : (
         <>
           <p className="text-3xl">
-            {side == undefined ? (
-              <>
-                Side Not Chosen
-              </>
-            ) : null}
+            {side == undefined ? <>Side Not Chosen</> : null}
             {side == "light" ? (
               <>
                 <ElementLabel side="light">LIGHT </ElementLabel>
