@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
-import { number, stark } from "starknet";
+import { Abi, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
 import { useSiegeBalance } from "~/hooks/useSiegeBalance";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
-import { useStarknet } from "~/hooks/useStarknet";
+import {
+  useStarknet,
+  useStarknetInvoke,
+  useContract,
+} from "@starknet-react/core";
 import BridgeModal from "../bridge/Modal";
 import {
   ELEMENTS_ADDRESS,
@@ -13,8 +17,8 @@ import {
   getIsApprovedForAll,
 } from "~/util/minigameApi";
 import { GameStatus } from "~/types";
-import useTxQueue from "~/hooks/useTxQueue";
-const { getSelectorFromName } = stark;
+import Elements1155Abi from "~/abi/minigame/ERC1155.json";
+import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 
 type Prop = {
   gameIdx?: number;
@@ -22,13 +26,52 @@ type Prop = {
   gameStatus: GameStatus;
 };
 
+type TokenNameOffsetMap = Record<string, number>;
+
+// Maps a token name to an offset index
+// TOKEN_INDEX_OFFSET_BASE = 10
+// means there are 9-10 slots
+const divineEclipse: TokenNameOffsetMap = {
+  light: 1,
+  dark: 2,
+};
+
+// The offset is based on the season mapping
+const currentTokenOffset = divineEclipse;
+
+// Contract calculates effects in BIPS
+// so this factor is used to normalize action amounts
+const EFFECT_BASE_FACTOR = 100;
+
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
-  const starknet = useStarknet();
-  const l2Address = useMemo(() => starknet.address, [starknet.address]);
+  const { account, connectBrowserWallet } = useStarknet();
 
-  const txQueue = useTxQueue();
+  const towerDefenceContractAddress = useModuleAddress("1");
+
+  const { contract: elementsContract } = useContract({
+    abi: Elements1155Abi.abi as Abi[],
+    address: ELEMENTS_ADDRESS,
+  });
+  const { contract: towerDefenceContract } = useContract({
+    // @ts-ignore
+    abi: TowerDefenceAbi.abi as Abi[],
+    address: towerDefenceContractAddress,
+  });
+  const approve1155 = useStarknetInvoke({
+    contract: elementsContract,
+    method: "set_approval_for_all",
+  });
+  const shieldAction = useStarknetInvoke({
+    contract: towerDefenceContract,
+    method: "increase_shield",
+  });
+  const attackAction = useStarknetInvoke({
+    contract: towerDefenceContract,
+    method: "attack_tower",
+  });
+
   const { fetchTokenBalances, tokenBalances, side } = useSiegeBalance();
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
@@ -37,8 +80,6 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
-  const towerDefenceContractAddress = useModuleAddress("1");
-
   useEffect(() => {
     const getIsApproved = async (account: string, operator: string) => {
       const isApproved = await getIsApprovedForAll(account, operator);
@@ -46,15 +87,15 @@ const GameControls: React.FC<Prop> = (props) => {
     };
     if (
       is1155TokenApproved == undefined &&
-      l2Address &&
+      account !== undefined &&
       towerDefenceContractAddress
     ) {
-      getIsApproved(l2Address, towerDefenceContractAddress);
+      getIsApproved(account, towerDefenceContractAddress);
     }
-  }, [towerDefenceContractAddress, l2Address]);
+  }, [towerDefenceContractAddress, account]);
 
   useEffect(() => {
-    if (starknet.address && gameIdx !== undefined) {
+    if (account && gameIdx !== undefined) {
       if (gameStatus == "active") {
         // Fetch balances for current game
         fetchTokenBalances(gameIdx);
@@ -63,56 +104,36 @@ const GameControls: React.FC<Prop> = (props) => {
         fetchTokenBalances(gameIdx + 1);
       }
     }
-  }, [l2Address, gameIdx]);
+  }, [account, gameIdx]);
 
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
-
-    await getStarknet().enable();
-    const res = await getStarknet().signer?.invokeFunction(
-      towerDefenceContractAddress as string,
-      stark.getSelectorFromName("attack_tower"),
-      [gameIndex.toString(), tokenId.toString(), (amount * 100).toString()]
-    );
-
-    if (res?.transaction_hash) {
-      txQueue.addTransactionToQueue(
-        res.transaction_hash,
-        getSelectorFromName("attack_tower")
-      );
-    }
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
+    attackAction.invoke({
+      args: [
+        gameIndex.toString(),
+        tokenId.toString(),
+        (amount * EFFECT_BASE_FACTOR).toString(),
+      ],
+    });
   };
 
   const handleShield = async (gameIndex: number, amount: number) => {
     const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
-
-    await getStarknet().enable();
-    const res = await getStarknet().signer?.invokeFunction(
-      towerDefenceContractAddress as string,
-      stark.getSelectorFromName("increase_shield"),
-      [
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
+    shieldAction.invoke({
+      args: [
         gameIndex.toString(),
         tokenId.toString(),
-        // The boost is automatically processed contract-side
-        (amount * 100).toString(),
-      ]
-    );
-    if (res?.transaction_hash) {
-      txQueue.addTransactionToQueue(
-        res?.transaction_hash,
-        getSelectorFromName("increase_shield")
-      );
-    }
+        (amount * EFFECT_BASE_FACTOR).toString(),
+      ],
+    });
   };
-
-
 
   return (
     <div
       id="game-actions"
-      className="w-1/3 p-10 z-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
+      className="z-10 w-1/3 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}
@@ -130,16 +151,16 @@ const GameControls: React.FC<Prop> = (props) => {
           {side == undefined ? (
             <button
               onClick={() => {
-                if (starknet.active && side == undefined) {
+                if (account != undefined && side == undefined) {
                   setMintModalOpen(true);
                 } else {
-                  starknet.connect();
+                  connectBrowserWallet();
                 }
               }}
               className="w-full p-2 mt-4 text-lg text-white transition-colors border border-white rounded-md backdrop-blur-lg bg-white/30 hover:bg-white/100"
             >
               {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
-              {starknet.active ? (
+              {account !== undefined ? (
                 <>
                   <ElementLabel>Choose your Elements</ElementLabel>
                 </>
@@ -249,7 +270,7 @@ const GameControls: React.FC<Prop> = (props) => {
               ) : null}
             </div>
           </div>
-          {starknet.active && is1155TokenApproved == "1" ? (
+          {account !== undefined && is1155TokenApproved == "1" ? (
             <Button
               color={"primary"}
               disabled={action == undefined || actionAmount.length == 0}
@@ -269,11 +290,11 @@ const GameControls: React.FC<Prop> = (props) => {
           ) : null}
         </>
       )}
-      {starknet.active == false ? (
+      {account == undefined ? (
         <Button
           className="w-full mt-4"
           color="default"
-          onClick={() => starknet.connect()}
+          onClick={connectBrowserWallet}
         >
           Connect StarkNet
         </Button>
@@ -281,34 +302,20 @@ const GameControls: React.FC<Prop> = (props) => {
       {is1155TokenApproved == "0" ? (
         <>
           <button
-            disabled={
-              txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-              "loading"
-            }
+            disabled={approve1155.loading}
             onClick={() => {
               if (towerDefenceContractAddress) {
-                getStarknet()
-                  .signer?.invokeFunction(
-                    ELEMENTS_ADDRESS,
-                    getSelectorFromName("set_approval_for_all"),
-                    [number.toBN(towerDefenceContractAddress).toString(), "1"]
-                  )
-                  .then((res) => {
-                    if (res.transaction_hash) {
-                      txQueue.addTransactionToQueue(
-                        res.transaction_hash,
-                        getSelectorFromName("set_approval_for_all")
-                      );
-                    }
-                  });
+                approve1155.invoke({
+                  args: [
+                    number.toBN(towerDefenceContractAddress).toString(),
+                    "1",
+                  ],
+                });
               }
             }}
-            className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
+            className="w-full p-2 mt-4 text-white transition-colors bg-gray-700 border border-white rounded-md disabled:opacity-80"
           >
-            {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-              "loading"
-              ? "Approving Contract"
-              : "Approve Elements Token"}
+            Approve Elements Token
           </button>
         </>
       ) : undefined}
