@@ -1,15 +1,19 @@
 import {
-  createContext, useContext, useState, useCallback, useEffect
-} from 'react';
-import PropTypes from 'prop-types';
-import useSoundLib from 'use-sound';
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
+import PropTypes from "prop-types";
+import useSoundLib from "use-sound";
 
-import booleanStorage from '../services/booleanStorage';
+import booleanStorage from "../services/booleanStorage";
 
 const defaultSoundContext = {
   isSoundActive: false,
-  toggleSound: () => { },
-  playShield: () => { }
+  toggleSound: () => {},
+  playShield: () => {},
 };
 
 const SoundContext = createContext<{
@@ -30,9 +34,10 @@ export const SoundProvider = (props: SoundProviderProps) => {
   );
 };
 
-const localStorageKey = 'SOUND_SETTING_IS_ON';
+const localStorageKey = "SOUND_SETTING_IS_ON";
 
-const initialValue = booleanStorage.getItem(localStorageKey, { defaultValue: true }) || false
+const initialValue =
+  booleanStorage.getItem(localStorageKey, { defaultValue: true }) || false;
 //const SoundSettingContext = createContext({isSoundActive: false, toggleSound: () => { }});
 
 export function useSound() {
@@ -42,33 +47,32 @@ export function useSound() {
     const newValue = !isSoundActive;
     setSound(newValue);
     booleanStorage.setItem(localStorageKey, newValue);
-
   }, [isSoundActive]);
 
-  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', {
-    soundEnabled: isSoundActive, volume: 0.3, loop: true,
+  const [playBackground, { stop }] = useSoundLib("/Honor_Bound.mp3", {
+    soundEnabled: isSoundActive,
+    volume: 0.3,
+    loop: true,
   });
 
-  const [playShield, options] = useSoundLib('/shield.mp3', {
-    soundEnabled: !isSoundActive, volume: 1
+  const [playShield, options] = useSoundLib("/shield.mp3", {
+    soundEnabled: !isSoundActive,
+    volume: 1,
   });
 
   useEffect(() => {
     if (!isSoundActive) {
-      stop()
+      stop();
     } else {
-      playBackground()
+      // playBackground()
     }
   }, [isSoundActive, playBackground, stop]);
 
-  const playSound = () => {
-
-  }
+  const playSound = () => {};
 
   //return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
-  return { isSoundActive, toggleSound, playShield }
+  return { isSoundActive, toggleSound, playShield };
 }
-
 
 export function useSoundContext() {
   return useContext(SoundContext);

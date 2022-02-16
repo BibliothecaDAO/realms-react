@@ -97,6 +97,7 @@ function App() {
       zoom: 8,
       pitch: 20,
       bearing: 0,
+
       // @ts-ignore: Unreachable code error
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator(),
