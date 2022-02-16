@@ -10,7 +10,8 @@ type Props = {
 };
 
 export const MenuSideBar = () => {
-  const { toggleResourceMenu, resourceMenu } = useUIContext();
+  const { toggleResourceMenu, resourceMenu, toggleTheOrdersMenu } =
+    useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
   const handleClick = useCallback(() => {
@@ -28,7 +29,7 @@ export const MenuSideBar = () => {
       </button>
       <button
         className="p-4  hover:bg-white/30 py-8 text-xl text-off-200"
-        onClick={toggleResourceMenu}
+        onClick={toggleTheOrdersMenu}
       >
         <Box className="mx-auto" />
         Orders

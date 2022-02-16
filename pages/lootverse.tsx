@@ -15,6 +15,7 @@ import Menu from "../public/svg/menu.svg";
 import { number } from "starknet";
 import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
+import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
 function App() {
   const { mapMenu, toggleMapMenu } = useUIContext();
@@ -126,6 +127,7 @@ function App() {
         </h1>
         <Header />
         <MenuSideBar />
+        <TheOrdersSideBar />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <div className="flex absolute top-10 right-36 z-30 w-96 text-xl">
           <input

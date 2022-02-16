@@ -9,6 +9,8 @@ const defaultUIContext = {
   toggleMapMenu: () => {},
   resourceMenu: false,
   toggleResourceMenu: () => {},
+  theOrdersMenu: false,
+  toggleTheOrdersMenu: () => {},
 };
 
 const UIContext = createContext<{
@@ -20,6 +22,8 @@ const UIContext = createContext<{
   toggleMapMenu: () => void;
   resourceMenu: boolean;
   toggleResourceMenu: () => void;
+  theOrdersMenu: boolean;
+  toggleTheOrdersMenu: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -37,6 +41,7 @@ function useUI() {
   const [setup, setSetup] = useState(false);
   const [mapMenu, setMapMenu] = useState(false);
   const [resourceMenu, setResourceMenu] = useState(false);
+  const [theOrdersMenu, setTheOrdersMenu] = useState(false);
 
   const togglePowerBar = () => {
     return setPowerBar(!powerBar);
@@ -49,8 +54,13 @@ function useUI() {
   const toggleMapMenu = () => {
     return setMapMenu(!mapMenu);
   };
+
   const toggleResourceMenu = () => {
     return setResourceMenu(!resourceMenu);
+  };
+
+  const toggleTheOrdersMenu = () => {
+    return setTheOrdersMenu(!theOrdersMenu);
   };
   return {
     powerBar,
@@ -61,6 +71,8 @@ function useUI() {
     mapMenu,
     toggleResourceMenu,
     resourceMenu,
+    toggleTheOrdersMenu,
+    theOrdersMenu,
   };
 }
 
