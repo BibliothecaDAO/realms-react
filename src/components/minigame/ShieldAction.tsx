@@ -5,6 +5,7 @@ import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
+// TODO: Refactor to use react-starknet
 import { useStarknet } from "~/hooks/useStarknet";
 import BridgeModal from "../bridge/Modal";
 import {
@@ -39,7 +40,7 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
-  const side = 'light'
+  const side = "light";
 
   const towerDefenceContractAddress = useModuleAddress("1");
 
@@ -99,11 +100,10 @@ const GameControls: React.FC<Prop> = (props) => {
     }
   };
 
-
   return (
     <div
       id="game-actions"
-      className="p-10 z-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
+      className="z-10 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}
@@ -253,7 +253,7 @@ const GameControls: React.FC<Prop> = (props) => {
             className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
           >
             {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-              "loading"
+            "loading"
               ? "Approving Contract"
               : "Approve Elements Token"}
           </button>

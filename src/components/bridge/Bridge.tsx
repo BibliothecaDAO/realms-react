@@ -1,10 +1,10 @@
-
-import { UserRejectedRequestError } from "@web3-react/walletconnect-connector";
 import axios from "axios";
 
-import { useStarknet } from "~/hooks/useStarknet";
+import {
+  useStarknet,
+  useStarknetTransactionManager,
+} from "@starknet-react/core";
 import Button from "~/shared/Button";
-import UserAgentConnector from "~/shared/UserAgentConnector";
 import { getBagsInWallet } from "loot-sdk";
 import { messageKey } from "~/util/messageKey";
 import classNames from "classnames";
@@ -16,8 +16,6 @@ import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
-import useTxQueue from "~/hooks/useTxQueue";
-import { getSelectorFromName } from "starknet/dist/utils/stark";
 import Check from "../../../public/svg/check.svg";
 
 type Prop = {
@@ -32,11 +30,8 @@ type TabName =
   | "mint";
 
 export const Bridge: React.FC<Prop> = (props) => {
-  const starknet = useStarknet({ eagerConnect: false });
-  /*const { error, chainId, active, activate, account, library } =
-    useWeb3React<Web3Provider>();
-
-  useEagerConnect();*/
+  const starknet = useStarknet();
+  const txManager = useStarknetTransactionManager();
   const {
     account,
     signer,
@@ -51,18 +46,13 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const [transactionHash, setTransactionHash] = useState<string>();
 
-  const txQueue = useTxQueue();
-
   useEffect(() => {
     if (transactionHash) {
-      txQueue.addTransactionToQueue(
+      txManager.addTransaction({
         transactionHash,
-        getSelectorFromName("mint_elements")
-      );
-      // TODO: re-enable once better implementation of loading
-      // if (props.onReceivedTx) {
-      //   props.onReceivedTx(transactionHash);
-      // }
+        address: starknet.account as string,
+        status: "TRANSACTION_RECEIVED",
+      });
     }
   }, [transactionHash]);
 
@@ -94,12 +84,12 @@ export const Bridge: React.FC<Prop> = (props) => {
   const verifyAndMint = async () => {
     if (signer) {
       const sig = await signer.signMessage(
-        messageKey(starknet.address as string)
+        messageKey(starknet.account as string)
       );
       const res = await axios.post<AddTransactionResponse | MintingError>(
         "/api/minigame_alpha_mint",
         {
-          starknetAddress: starknet.address,
+          starknetAddress: starknet.account,
           sig,
           chosenSide: side,
           gameIdx,
@@ -125,21 +115,24 @@ export const Bridge: React.FC<Prop> = (props) => {
   const connectedClassname =
     "inline-block py-2 mt-4 break-words px-4 backdrop-blur-md bg-white/30 rounded-md";
 
-  const mintTxStatus = txQueue.status[getSelectorFromName("mint_elements")];
+  const mintTx = txManager.transactions.find(
+    (s) => s.transactionHash == transactionHash
+  );
+
   useEffect(() => {
-    starknet.connect();
+    starknet.connectBrowserWallet();
     if (account) {
       setCurrentTab("mint-requirements");
     }
   }, []);
   return (
-    <div className="w-full mx-auto sm:w-1/2 pt-40">
-      <div className="p-4 mx-2 mt-4 backdrop-blur-md bg-white/60 rounded-lg">
-        <h1 className="mb-8 px-2 mt-4">
+    <div className="w-full pt-40 mx-auto sm:w-1/2">
+      <div className="p-4 mx-2 mt-4 rounded-lg backdrop-blur-md bg-white/60">
+        <h1 className="px-2 mt-4 mb-8">
           <ElementsLabel>Desiege Setup</ElementsLabel>
         </h1>
-        <div className="text-gray-800 px-2">
-          <nav className="backdrop-blur-md bg-white/70 rounded-md">
+        <div className="px-2 text-gray-800">
+          <nav className="rounded-md backdrop-blur-md bg-white/70">
             <span>
               <button
                 onClick={() => setCurrentTab("connect-ethereum")}
@@ -225,9 +218,9 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab == "connect-starknet" ? (
               <div className="py-4">
-                {starknet.active && starknet.address ? (
+                {!!starknet.account ? (
                   <p className={connectedClassname}>
-                    Connected as {starknet.address}
+                    Connected as {starknet.account}
                   </p>
                 ) : (
                   <div>
@@ -244,7 +237,10 @@ export const Bridge: React.FC<Prop> = (props) => {
                       the ArgentX extension, available now for the Google Chrome
                       web browser.
                     </p>
-                    <Button onClick={() => starknet.connect()} className="mt-4">
+                    <Button
+                      onClick={() => starknet.connectBrowserWallet()}
+                      className="mt-4"
+                    >
                       Connect to ArgentX
                     </Button>
                   </div>
@@ -253,15 +249,15 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab === "mint" ? (
               <div className="py-4">
-                {starknet.active && starknet.address ? (
+                {!!starknet.account ? (
                   <>
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
-                      <div className="relative group w-full">
+                      <div className="relative w-full group">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
                         <button
                           onClick={() => setSide("light")}
-                          className="w-full relative px-7 py-4 bg-white text-pink-400 rounded-lg leading-none items-center divide-x divide-gray-600 text-center uppercase tracking-widest"
+                          className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-lg px-7"
                         >
                           <span className="flex justify-center">
                             {" "}
@@ -272,11 +268,11 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </span>
                         </button>
                       </div>
-                      <div className="relative group w-full">
+                      <div className="relative w-full group">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
                         <button
                           onClick={() => setSide("dark")}
-                          className="w-full relative px-7 py-4 bg-black rounded-lg leading-none text-white items-center divide-x divide-gray-600 text-center uppercase tracking-widest flex justify-center"
+                          className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-lg px-7"
                         >
                           Dark{" "}
                           {side == "dark" ? <Check className="ml-1" /> : null}
@@ -284,11 +280,14 @@ export const Bridge: React.FC<Prop> = (props) => {
                       </div>
                     </div>
 
-                    {mintTxStatus == "accepted" ? (
-                      <p>Minting succeeded. Please refresh your browser.</p>
+                    {mintTx?.status == "ACCEPTED_ON_L2" ? (
+                      <p className="mt-4 text-xl text-green-800">
+                        Minting succeeded. Please refresh your browser.
+                      </p>
                     ) : null}
 
-                    {mintTxStatus == "loading" ? (
+                    {mintTx?.status == "PENDING" ||
+                    mintTx?.status == "RECEIVED" ? (
                       <>
                         <p className="mt-8 text-2xl animate-bounce">
                           Minting...
@@ -311,11 +310,11 @@ export const Bridge: React.FC<Prop> = (props) => {
                       <>
                         {side !== undefined && transactionHash == undefined ? (
                           <>
-                            <p className="mt-8 break-words text-2xl">
-                              {messageKey(starknet.address as string)}
+                            <p className="mt-8 text-2xl break-words">
+                              {messageKey(starknet.account as string)}
                             </p>
                             <p className={connectedClassname}>
-                              {starknet.address}
+                              {starknet.account}
                             </p>
 
                             <Button
@@ -330,8 +329,12 @@ export const Bridge: React.FC<Prop> = (props) => {
                     )}
                   </>
                 ) : null}
-                {mintError !== undefined || mintTxStatus == "rejected" ? (
-                  <p>A minting error occurred: {mintError}</p>
+                {mintError !== undefined || mintTx?.status == "REJECTED" ? (
+                  <p className="mt-4 text-red-500">
+                    A minting error occurred:{" "}
+                    {mintError ||
+                      "Contract reverted. You may have already minted for this round."}
+                  </p>
                 ) : null}
               </div>
             ) : null}
