@@ -4,17 +4,31 @@ import ShieldGame from "~/components/minigame/ShieldGame";
 
 type Prop = {
   title?: string;
+  openGraphUrl?: string;
+  openGraphDescription?: string;
   children: React.ReactElement;
 };
+
+// OpenGraph preview images generated using PostMage (https://postmage.com/)
+
+const defaultDescription =
+  "Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell from within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.";
 
 const Game: NextPage<Prop> = (props) => {
   return (
     <div className="">
       <Head>
         <title>{props.title}</title>
+        <meta name="description" content={defaultDescription} />
         <meta
-          name="description"
-          content="Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell from within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city."
+          name="og:url"
+          content={
+            props.openGraphUrl || "https://lootverse.bibliothecadao.xyz/desiege"
+          }
+        />
+        <meta
+          name="og:description"
+          content={props.openGraphDescription || defaultDescription}
         />
         <meta
           property="og:title"
