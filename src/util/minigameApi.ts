@@ -3,6 +3,10 @@ import { defaultProvider, number, stark } from "starknet";
 const { toBN } = number;
 const { getSelectorFromName } = stark;
 
+// Contract calculates effects in BIPS
+// so this factor is used to normalize action amounts
+export const EFFECT_BASE_FACTOR = 100;
+
 export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
   "0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e";
@@ -232,7 +236,8 @@ export const getNextMintAmount = ({
   light: number;
   dark: number;
 }) => {
-  const baseAmount = MINIMUM_MINT_AMOUNT;
+  // The totals received will be
+  const baseAmount = MINIMUM_MINT_AMOUNT * EFFECT_BASE_FACTOR;
 
   let diff;
   if (light > dark) {

@@ -18,11 +18,9 @@ import { ElementToken } from "~/constants";
 import ShieldAction from "./ShieldAction";
 import { TowerProps } from "~/types";
 import { useUIContext } from "~/hooks/useUIContext";
-import MenuBar from "./MenuBar";
 import Sword from "../../../public/svg/sword.svg";
 import Shield from "../../../public/svg/shield.svg";
 import Book from "../../../public/svg/book.svg";
-
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -133,12 +131,16 @@ function TowerDefence(props: TowerProps) {
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xf4e99b, 10]} />
-          <group ref={shield} position={[0, 0, 0]} onPointerOver={(event) => {
-            setRotate(false);
-          }}
+          <group
+            ref={shield}
+            position={[0, 0, 0]}
+            onPointerOver={(event) => {
+              setRotate(false);
+            }}
             onPointerOut={(event) => {
               setRotate(true);
-            }}>
+            }}
+          >
             <Box
               jsx={{
                 position: [0, 0, 0],
@@ -151,19 +153,18 @@ function TowerDefence(props: TowerProps) {
             />
             {showShieldDetail && (
               <Html position={[0, 5, 0]}>
-                <div className="w-auto flex">
-                  <div className="w-56 flex">
+                <div className="flex w-auto">
+                  <div className="flex w-56">
                     <button
-                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      className="w-12 h-12 mr-4 text-gray-700 border rounded-full bg-white/30 hover:bg-white fill-white hover:fill-blue-300"
                       onClick={() => {
                         setShowShieldAction(true);
                       }}
                     >
                       <Book className="w-8 h-8 mx-auto " />
-
                     </button>
                     <button
-                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      className="w-12 h-12 mr-4 text-gray-700 border rounded-full bg-white/30 hover:bg-white fill-white hover:fill-blue-300"
                       onClick={() => {
                         setShowShieldAction(true);
                       }}
@@ -171,7 +172,7 @@ function TowerDefence(props: TowerProps) {
                       <Sword className="w-8 h-8 mx-auto" />
                     </button>
                     <button
-                      className="rounded-full border mr-4 bg-white/30 w-12 h-12 text-gray-700 hover:bg-white fill-white hover:fill-blue-300"
+                      className="w-12 h-12 mr-4 text-gray-700 border rounded-full bg-white/30 hover:bg-white fill-white hover:fill-blue-300"
                       onClick={() => {
                         setShowShieldAction(true);
                       }}
@@ -225,7 +226,7 @@ function TowerDefence(props: TowerProps) {
             />
             <Html
               position={[-4.5, -0.3, 2]}
-              className="text-lg p-6 bg-white/30 w-56 rounded-xl text-gray-700"
+              className="w-56 p-6 text-lg text-gray-700 bg-white/30 rounded-xl"
               occlude={[tower, shield]}
             >
               <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700">
@@ -260,7 +261,7 @@ function TowerDefence(props: TowerProps) {
           distance={1000}
         />
       </Canvas>
-      <MenuBar />
+      {props.children ? props.children : null}
     </div>
   );
 }

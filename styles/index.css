@@ -28,8 +28,13 @@ button {
 }
 
 body {
-  @apply font-body text-gray-200;
+  @apply text-gray-200 font-body;
 }
 #deckgl-wrapper {
   background: rgb(146, 177, 185);
+}
+
+/* Prevent interference with Bridge modal by setting z-index */
+.web3modal-modal-lightbox {
+  z-index: 11 !important;
 }

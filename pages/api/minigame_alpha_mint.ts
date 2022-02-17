@@ -68,7 +68,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     let totals = await getTotalElementsMinted(gameIndexInt);
     // Dynamic element balancing
-    amountToMint = getNextMintAmount(totals);
+    amountToMint = getNextMintAmount(totals) * 100;
   } catch (e) {
     console.error("CONTRACT CALL ERROR:", e);
     throw e;

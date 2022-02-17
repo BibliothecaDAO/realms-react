@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// TODO: Refactor to use react-starknet
 import { useStarknet } from "~/hooks/useStarknet";
 
 const AddressIndicator = () => {
@@ -24,8 +25,8 @@ const AddressIndicator = () => {
       {addr == undefined
         ? "Connect StarkNet"
         : expanded
-          ? addr
-          : `${first4}...${last4}`}
+        ? addr
+        : `${first4}...${last4}`}
     </span>
   );
 };

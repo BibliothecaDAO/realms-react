@@ -3749,6 +3749,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@starknet-react/core@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.4.5.tgz#82358b568d5003bcd1ba8bbb6c9857ac2e98aea0"
+  integrity sha512-aGyPE+pElC/vHt/RK7al1vzCx2I6S3rXSPKuPAD8GaoHXTB+HpX6Jsay48g3e18yihe0ZV1wdU5Wg7JwSI0IbQ==
+  dependencies:
+    immutable "^4.0.0"
+
 "@storybook/addon-actions@6.4.9", "@storybook/addon-actions@^6.4.9":
   version "6.4.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.4.9.tgz#1d4e8c00ad304efe6722043dac759f4716b515ee"
@@ -11098,6 +11105,11 @@ immer@8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
   integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
+
+immutable@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0.tgz#b86f78de6adef3608395efb269a91462797e2c23"
+  integrity sha512-zIE9hX70qew5qTUjSS7wi1iwj/l7+m54KWU247nhM3v806UdGj1yDndXj+IOYxxtW9zyLI+xqFNZjTuDaLUqFw==
 
 import-cwd@^3.0.0:
   version "3.0.0"

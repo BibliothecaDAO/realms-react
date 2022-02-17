@@ -1,4 +1,5 @@
 import React from "react";
+// TODO: Refactor to use react-starknet
 import { useStarknet } from "~/hooks/useStarknet";
 import Button from "~/shared/Button";
 
