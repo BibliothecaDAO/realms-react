@@ -17,6 +17,7 @@ import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
 import realms from "../src/realms.json";
 import order_highlights from "../src/order_highlights.json";
+import { FlyTo } from "~/components/map/FlyTo";
 
 function App() {
   const {
@@ -83,7 +84,7 @@ function App() {
     filled: true,
     extruded: true,
     pickable: true,
-    pickingRadius: 10000,
+
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1000,
@@ -105,7 +106,7 @@ function App() {
   const resource_layer = new IconLayer({
     id: "icon-layer",
     data: filteredData(),
-    pickable: true,
+    pickable: false,
     iconAtlas:
       "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
     iconMapping: ICON_MAPPING,
@@ -162,31 +163,12 @@ function App() {
 
   return (
     <Layout>
-      <div>
-        <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
-          Lootverse
-        </h1>
+      <div className="">
         <Header />
         <MenuSideBar />
         <TheOrdersSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
-        <div className="flex absolute top-10 right-36 z-30 w-96 text-xl">
-          <input
-            placeholder="Type Id"
-            type={"number"}
-            className="text-black px-4 py-4 rounded-l-xl w-1/2 bg-white/80"
-            value={value}
-            onChange={onChange}
-            min="1"
-            max="8000"
-          />
-          <button
-            className="p-1 px-4  text-off-100 mr-2 bg-off-200/20 transition-all duration-300 rounded-r-xl w-1/2 uppercase "
-            onClick={() => goToId(value)}
-          >
-            Fly to realm
-          </button>
-        </div>
+        <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <div
           className={`h-screen w-full sm:w-1/2 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
             mapMenu ? "" : "translate-x-full hidden"
@@ -198,12 +180,11 @@ function App() {
           >
             <Menu />
           </button>
-          <h3 className="mt-4 mb-2">Search For a Realm</h3>
-
           <RealmCard data={data!} loading={loading} />
         </div>
         <DeckGL
           getCursor={() => "crosshair"}
+          pickingRadius={50}
           initialViewState={initialViewState}
           controller={true}
           layers={[realms_layer, resource_layer]}

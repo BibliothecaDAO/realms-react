@@ -10,11 +10,8 @@ export function Realm(props: RealmProps): ReactElement {
   const findResourceName = (value: any) => {
     return Resources.find((e) => e.id === parseInt(value));
   };
-  const findOrderName = (value: any) => {
-    return TheOrders.find((e) => e.name.includes(value));
-  };
   return (
-    <div className="rounded-xl p-4 h-auto z-10text-white">
+    <div className="rounded-xl p-1 sm:p-4 h-auto z-10text-white">
       {props.loading ? (
         <div>
           <div className="pt-20 h-64 bg-white/40 w-full rounded animate-pulse mb-4" />
@@ -32,13 +29,21 @@ export function Realm(props: RealmProps): ReactElement {
           >
             Order of {props.data.realm.order}
           </div>
+          {props.data.realm?.wonder ? (
+            <div className="w-full text-center bg-white/30 p-4 uppercase text-3xl rounded">
+              {props.data.realm?.wonder}
+            </div>
+          ) : (
+            ""
+          )}
+
           <img
             src={`https://d23fdhqc1jb9no.cloudfront.net/_Renders/${props.data.realm.id}.jpg`}
             alt="map"
             className="w-full rounded-xl mt-4"
           />
           <div className="p-2">
-            <h3 className="mb-4 ">
+            <h3 className="my-4 ">
               👑 {shortenAddress(props.data.realm.currentOwner.address)}
             </h3>
             <h4>Id: {props.data.realm.id}</h4>
@@ -47,7 +52,7 @@ export function Realm(props: RealmProps): ReactElement {
             <div className="flex flex-wrap mb-2">
               {props.data.realm.resourceIds.map((re: any, index) => (
                 <span
-                  className={`uppercase px-4 py-1 rounded mr-2 mb-2 tracking-widest text-xl ${
+                  className={`uppercase px-4 py-1 rounded mr-2 mb-2 tracking-widest sm:text-xl ${
                     findResourceName(re)?.colourClass
                   }`}
                   key={index}
@@ -57,7 +62,7 @@ export function Realm(props: RealmProps): ReactElement {
               ))}
             </div>
 
-            <div className="flex flex-col w-full text-2xl uppercase">
+            <div className="flex flex-col w-full sm:text-2xl uppercase">
               <span>Regions: {props.data.realm.regions} / 7</span>
               <div className="w-full bg-gray-200 rounded my-2">
                 <div
@@ -102,6 +107,19 @@ export function Realm(props: RealmProps): ReactElement {
                   }}
                 ></div>
               </div>
+            </div>
+            <div className="py-4">
+              <a
+                className="text-xl"
+                target={"_blank"}
+                href={
+                  "https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/" +
+                  props.data.realm.id
+                }
+                rel="noreferrer"
+              >
+                View on Opensea
+              </a>
             </div>
           </div>
         </div>

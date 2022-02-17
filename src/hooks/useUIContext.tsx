@@ -12,6 +12,8 @@ const defaultUIContext = {
   theOrdersMenu: false,
   toggleTheOrdersMenu: () => {},
   closeAll: () => {},
+  mainMenu: false,
+  toggleMainMenu: () => {},
 };
 
 const UIContext = createContext<{
@@ -26,6 +28,8 @@ const UIContext = createContext<{
   theOrdersMenu: boolean;
   toggleTheOrdersMenu: () => void;
   closeAll: () => void;
+  mainMenu: boolean;
+  toggleMainMenu: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -38,12 +42,29 @@ export const UIProvider = (props: UIProviderProps) => {
   );
 };
 
+interface UI {
+  main: false;
+}
+
 function useUI() {
   const [powerBar, setPowerBar] = useState(false);
   const [setup, setSetup] = useState(false);
   const [mapMenu, setMapMenu] = useState(false);
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
+  const [mainMenu, setMainMenu] = useState(true);
+
+  const hideOrOpenMainMenu = () => {
+    if (mainMenu) {
+      setMainMenu(() => false);
+    } else {
+      setMainMenu(() => true);
+    }
+  };
+
+  const toggleMainMenu = () => {
+    return setMainMenu(!mainMenu);
+  };
 
   const togglePowerBar = () => {
     return setPowerBar(!powerBar);
@@ -54,19 +75,23 @@ function useUI() {
   };
 
   const toggleMapMenu = () => {
+    // hideOrOpenMainMenu();
     return setMapMenu(!mapMenu);
   };
 
   const toggleResourceMenu = () => {
+    // hideOrOpenMainMenu();
     return setResourceMenu(!resourceMenu);
   };
 
   const toggleTheOrdersMenu = () => {
+    // hideOrOpenMainMenu();
     return setTheOrdersMenu(!theOrdersMenu);
   };
   const closeAll = () => {
     return setTheOrdersMenu(false);
   };
+
   return {
     powerBar,
     togglePowerBar,
@@ -79,6 +104,8 @@ function useUI() {
     toggleTheOrdersMenu,
     theOrdersMenu,
     closeAll,
+    toggleMainMenu,
+    mainMenu,
   };
 }
 
