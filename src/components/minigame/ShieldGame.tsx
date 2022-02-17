@@ -9,12 +9,16 @@ import classNames from "classnames";
 import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "./TowerDefence";
-import ElementLabel from "~/shared/ElementsLabel";
-import { useUIContext } from "../../hooks/useUIContext";
-type Prop = {};
+import MenuBar from "./MenuBar";
+
+export type DesiegeTab = "game-controls" | "boost" | "mint";
+
+type Prop = {
+  initialTab?: DesiegeTab;
+};
 
 const ShieldGame: React.FC<Prop> = (props) => {
-  const { powerBar, setup } = useUIContext();
+  const [view, setView] = useState<DesiegeTab | undefined>(props.initialTab);
   // Contract state
 
   const [gameIdx, setGameIdx] = useState<number>();
@@ -77,22 +81,22 @@ const ShieldGame: React.FC<Prop> = (props) => {
             {gameStatus.toUpperCase()}
           </span>
         ) : null} */}
-        <h3 className="flex justify-between text-center uppercase font-body text-blue-300 ">
-          <span className="z-10 mb-8 text-5xl mx-auto">
+        <h3 className="flex justify-between text-center text-blue-300 uppercase font-body ">
+          <span className="z-10 mx-auto mb-8 text-5xl">
             {/* <ElementLabel> */}
             Desiege game #{gameIdx !== undefined ? gameIdx : "-"}
             {/* </ElementLabel> */}
           </span>
         </h3>
         <AddressIndicator />
-        {powerBar ? (
-          <div className="mb-8 z-10">
+        {view == "boost" ? (
+          <div className="z-10 mb-8">
             <GameBlockTimer gameCtx={gameCtx} />
           </div>
         ) : (
           <div></div>
         )}
-        {setup ? (
+        {view == "game-controls" ? (
           <div className="flex flex-row w-full">
             <GameControls
               gameStatus={gameStatus}
@@ -109,7 +113,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
         gameStatus={gameStatus}
         gameIdx={gameIdx}
         currentBoostBips={boost}
-      />
+      >
+        <MenuBar toggleTab={(tab) => setView(tab)} />
+      </TowerDefence>
     </div>
   );
 };
