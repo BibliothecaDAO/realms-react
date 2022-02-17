@@ -27,7 +27,7 @@ export const TheOrders: Array<Orders> = [
   },
   {
     name: 'Perfection',
-    colour: '#00C3A1',
+    colour: '#8E35FF',
     id: 5,
   },
   {

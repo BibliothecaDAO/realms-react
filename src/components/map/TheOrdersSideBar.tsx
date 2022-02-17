@@ -100,21 +100,15 @@ export const TheOrdersSideBar = (props: Props) => {
           <div className="flex flex-wrap">
             {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
-                <div
-                  className="px-4 py-2 bg-white/20 mr-2 text-xl rounded font-display uppercase mb-2"
+                <a
+                  className="px-4 py-2 hover:bg-white/60 bg-white/20 mr-2 text-xl rounded font-display uppercase mb-2"
+                  target={"_blank"}
+                  href={OrderDetails[focusOrder]?.notable_gas.link[index]}
+                  rel="noreferrer"
                   key={index}
                 >
                   {a}
-                  <span>
-                    <a
-                      target={"_blank"}
-                      href={OrderDetails[focusOrder]?.notable_gas.link[index]}
-                      rel="noreferrer"
-                    >
-                      Link
-                    </a>
-                  </span>
-                </div>
+                </a>
               );
             })}
           </div>
