@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
 import { ScatterplotLayer, IconLayer, PolygonLayer } from "@deck.gl/layers";
-import { realms_data, contour_data } from "~/continents";
 import { FlyToInterpolator, PointLight, LightingEffect } from "@deck.gl/core";
 import { StaticMap } from "react-map-gl";
 import Layout from "~/components/Layout";
@@ -12,19 +11,56 @@ import { Data, Realm } from "~/types";
 import { getRealmQuery } from "~/hooks/graphql/queries";
 import { useUIContext } from "~/hooks/useUIContext";
 import Menu from "../public/svg/menu.svg";
-import { number } from "starknet";
 import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
+import realms from "../src/realms.json";
+import order_highlights from "../src/order_highlights.json";
+
 function App() {
-  const { mapMenu, toggleMapMenu } = useUIContext();
+  const {
+    mapMenu,
+    toggleMapMenu,
+    toggleTheOrdersMenu,
+    theOrdersMenu,
+    closeAll,
+  } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
 
+  // const filteredContinents = () => {
+  //   let c = order_highlights.features.filter(
+  //     (a) => a.properties.order_idx === 9
+  //   );
+  //   console.log(c);
+  //   return c;
+  // };
+  // const continent_layer = new PolygonLayer({
+  //   id: "polygon-layer",
+  //   data: filteredContinents(),
+  //   stroked: true,
+  //   filled: true,
+  //   lineWidthMinPixels: 1,
+  //   extruded: true,
+  //   getPolygon: (d: any) => d.geometry.coordinates,
+  //   getElevation: 1000,
+  //   getFillColor: (d: any) => d.color,
+  //   getLineColor: [141, 121, 91],
+  //   getLineWidth: 4,
+  //   onClick: (info: any) => {
+  //     console.log(info.object.properties.order_idx);
+  //     // setValue(info.object.properties.order_idx);
+  //     // if (!mapMenu) {
+  //     //   toggleMapMenu();
+  //     // }
+  //   },
+  // });
+
   const filteredData = () => {
-    return realms_data.filter((a) =>
-      a.resource.some((b) => resource.includes(b))
+    /* @ts-ignore: name not exist on D */
+    return realms.features.filter((a: any) =>
+      a.properties.resources.some((b: any) => resource.includes(b))
     );
   };
 
@@ -41,19 +77,21 @@ function App() {
 
   const realms_layer = new ScatterplotLayer({
     id: "scatterplot-layer",
-    data: realms_data,
+    /* @ts-ignore: name not exist on D */
+    data: realms.features,
     stroked: true,
     filled: true,
     extruded: true,
     pickable: true,
+    pickingRadius: 10000,
     opacity: 1,
-    getPosition: (d: any) => d.coordinates,
+    getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1000,
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0],
     onClick: (info: any) => {
-      setValue(info.object.name);
+      setValue(info.object.properties.realm_idx);
       if (!mapMenu) {
         toggleMapMenu();
       }
@@ -64,19 +102,16 @@ function App() {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
 
-  const layer = new IconLayer({
+  const resource_layer = new IconLayer({
     id: "icon-layer",
     data: filteredData(),
     pickable: true,
-    // iconAtlas and iconMapping are required
-    // getIcon: return a string
     iconAtlas:
       "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
     iconMapping: ICON_MAPPING,
     getIcon: (d) => "marker",
-
     sizeScale: 5,
-    getPosition: (d: any) => d.coordinates,
+    getPosition: (d: any) => d.geometry.coordinates,
     getSize: (d) => 5,
     getColor: (d: any) => [255, 255, 255],
   });
@@ -89,12 +124,18 @@ function App() {
     bearing: 0,
   });
 
-  const goToId = useCallback((id) => {
-    let realm = realms_data.filter((a) => a.name === id);
+  const goToId = useCallback((id: any) => {
     toggleMapMenu();
+    /* @ts-ignore: name not exist on D */
+    let realm = realms.features.filter(
+      (a: any) => a.properties.realm_idx === id
+    );
+
+    setValue(id);
+
     setInitialViewState({
-      longitude: realm[0].coordinates[0],
-      latitude: realm[0].coordinates[1],
+      longitude: realm[0].geometry.coordinates[0],
+      latitude: realm[0].geometry.coordinates[1],
       zoom: 8,
       pitch: 20,
       bearing: 0,
@@ -111,7 +152,7 @@ function App() {
     } else if (parseInt(event.target.value) > 8000) {
       setValue(8000);
     } else {
-      setValue(event.target.value);
+      setValue(parseInt(event.target.value));
     }
   };
 
@@ -127,7 +168,7 @@ function App() {
         </h1>
         <Header />
         <MenuSideBar />
-        <TheOrdersSideBar />
+        <TheOrdersSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <div className="flex absolute top-10 right-36 z-30 w-96 text-xl">
           <input
@@ -147,7 +188,7 @@ function App() {
           </button>
         </div>
         <div
-          className={`h-screen w-full sm:w-1/2 z-30 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+          className={`h-screen w-full sm:w-1/2 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
             mapMenu ? "" : "translate-x-full hidden"
           }`}
         >
@@ -165,11 +206,11 @@ function App() {
           getCursor={() => "crosshair"}
           initialViewState={initialViewState}
           controller={true}
-          layers={[realms_layer, layer]}
+          layers={[realms_layer, resource_layer]}
           getTooltip={({ object }) =>
             object && {
               // @ts-ignore: name not exist on D
-              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.name}.jpg"/><div><h2>${object.name}</h2></div></div>  
+              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.properties.realm_idx}.jpg"/><div><h2>${object.properties.name}</h2></div></div>  
       `,
               style: {
                 backgroundColor: "black",

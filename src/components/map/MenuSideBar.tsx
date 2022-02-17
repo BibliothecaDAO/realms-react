@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const MenuSideBar = () => {
-  const { toggleResourceMenu, resourceMenu, toggleTheOrdersMenu } =
+  const { toggleResourceMenu, toggleTheOrdersMenu, toggleMapMenu } =
     useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -19,7 +19,14 @@ export const MenuSideBar = () => {
   }, [toggleSound]);
 
   return (
-    <div className="h-screen w-32 bg-white/50 right-0 top-0 z-30 absolute backdrop-blur-md flex flex-col justify-center">
+    <div className="h-screen w-32 bg-white/50 right-0 top-0 z-10 absolute backdrop-blur-md flex flex-col justify-center">
+      <button
+        className="p-4  hover:bg-white/30 py-8 text-xl text-off-200"
+        onClick={toggleMapMenu}
+      >
+        <Box className="mx-auto" />
+        Realm
+      </button>
       <button
         className="p-4  hover:bg-white/30 py-8 text-xl text-off-200"
         onClick={toggleResourceMenu}

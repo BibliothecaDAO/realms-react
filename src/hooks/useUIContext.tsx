@@ -11,6 +11,7 @@ const defaultUIContext = {
   toggleResourceMenu: () => {},
   theOrdersMenu: false,
   toggleTheOrdersMenu: () => {},
+  closeAll: () => {},
 };
 
 const UIContext = createContext<{
@@ -24,6 +25,7 @@ const UIContext = createContext<{
   toggleResourceMenu: () => void;
   theOrdersMenu: boolean;
   toggleTheOrdersMenu: () => void;
+  closeAll: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -62,6 +64,9 @@ function useUI() {
   const toggleTheOrdersMenu = () => {
     return setTheOrdersMenu(!theOrdersMenu);
   };
+  const closeAll = () => {
+    return setTheOrdersMenu(false);
+  };
   return {
     powerBar,
     togglePowerBar,
@@ -73,6 +78,7 @@ function useUI() {
     resourceMenu,
     toggleTheOrdersMenu,
     theOrdersMenu,
+    closeAll,
   };
 }
 

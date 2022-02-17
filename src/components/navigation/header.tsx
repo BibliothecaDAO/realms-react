@@ -5,7 +5,7 @@ export function Header() {
     useWalletContext();
 
   return (
-    <div className="left-10 top-10 absolute z-20 left-2 flex">
+    <div className="left-12 top-10 absolute z-20 left-2 flex">
       <div className="ml-auto">
         <ul className="flex space-x-4 mr-auto text-xl backdrop-blur-md bg-off-200/20 px-4 py-4 rounded">
           <li className="">
