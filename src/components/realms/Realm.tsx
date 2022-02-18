@@ -44,7 +44,7 @@ export function Realm(props: RealmProps): ReactElement {
           )}
 
           <img
-            src={`https://d23fdhqc1jb9no.cloudfront.net/_Renders/${props.realm.id}.jpg`}
+            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.id}.webp`}
             alt="map"
             className="w-full mt-4 rounded-xl"
           />
