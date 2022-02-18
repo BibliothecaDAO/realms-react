@@ -6,7 +6,6 @@ import { TheOrders } from "~/util/theOrders";
 import { RealmProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import { OrderIcon } from "~/shared/OrderIcon";
-import { Indexed } from "ethers/lib/utils";
 
 const variantMaps: any = {
   small: { heading: "lg:text-4xl", regions: "lg:text-xl" },

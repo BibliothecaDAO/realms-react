@@ -30,6 +30,7 @@ export const EmpireSideBar = (props: Props) => {
   });
 
   const addToFilter = (value: any) => {
+    console.log(selectedResource);
     if (value === selectedResource) {
       return setResource(undefined);
     } else {
@@ -40,10 +41,10 @@ export const EmpireSideBar = (props: Props) => {
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
-      className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
-        selectFilter === res.id
-          ? "backdrop-blur-md bg-white/90 text-black"
-          : "backdrop-blur-md bg-white/30 text-off-100"
+      className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/90 transition-all duration-150 uppercase font-body hover:background-animate   ${
+        res.colourClass
+      }   ${
+        selectedResource === res.id ? "background-animate font-semibold " : " "
       } `}
       onClick={() => addToFilter(res.id)}
     >

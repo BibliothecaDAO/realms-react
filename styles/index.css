@@ -39,3 +39,20 @@ body {
 .web3modal-modal-lightbox {
   z-index: 11 !important;
 }
+.background-animate {
+  background-size: 500%;
+
+  -webkit-animation: AnimationName 3s ease infinite;
+  -moz-animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+}
+
+@keyframes AnimationName {
+  0%,
+  100% {
+    background-position: 25% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}

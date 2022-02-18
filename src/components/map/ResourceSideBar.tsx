@@ -15,10 +15,10 @@ export const ResourceSideBar = (props: Props) => {
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
-      className={` p-1 h-12 mb-2 pl-4 pr-2 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${
+      className={`  p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/90 transition-all duration-150 py-2 uppercase font-body hover:background-animate bg-white/30 ${
         props.resource.includes(res.trait)
-          ? "backdrop-blur-md bg-white/90"
-          : "backdrop-blur-md bg-white/30"
+          ? `background-animate ${res.colourClass} `
+          : "text-gray-700"
       } `}
       onClick={() => props.onClick(res.trait)}
     >

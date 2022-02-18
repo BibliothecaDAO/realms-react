@@ -145,7 +145,7 @@ export const Resources: Array<Resources> = [
     trait: "Deep Crystal",
     value: 239,
     colour: "#93c5fd",
-    colourClass: "bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600",
+    colourClass: "bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900",
     id: 14,
     description:
       "Deep crystal was imprisoned from the mortal world by a timeless geode, the source of these formations have confounded scholars for centuries. Strange vibrations can be felt when held.",
@@ -155,7 +155,7 @@ export const Resources: Array<Resources> = [
     trait: "Ignium",
     value: 172,
     colour: "#ef4444",
-    colourClass: "bg-gradient-to-t from-stone-900 via-rose-800 to-red-400",
+    colourClass: "bg-gradient-to-r from-red-900 via-black to-rose-600 text-red-200",
     id: 15,
     description:
       "Some horrible power has irrevocably scarred this ignium stone with an infernal radiation that evaporates water and skin alike.",
