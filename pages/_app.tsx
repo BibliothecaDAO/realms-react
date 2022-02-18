@@ -6,6 +6,8 @@ import { UserAgentProvider } from "@quentin-sommer/react-useragent";
 import { StarknetProvider } from "@starknet-react/core";
 import { UIProvider } from "~/hooks/useUIContext";
 import "../styles/index.css";
+import PageTransition from "~/components/navigation/PageTransition";
+import { animated, Transition } from "@react-spring/web";
 
 import {
   ApolloClient,
@@ -45,14 +47,20 @@ const PageWrapper = (Comp: any) =>
     }
   };
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
+
+
   return (
     <SoundProvider>
       <WalletProvider>
         <ApolloProvider client={client}>
           <StarknetProvider>
             <UIProvider>
-              <Component {...pageProps} />
+              
+       <PageTransition
+        Component={Component}
+        pageProps={pageProps}
+      ></PageTransition>
             </UIProvider>
           </StarknetProvider>
         </ApolloProvider>
