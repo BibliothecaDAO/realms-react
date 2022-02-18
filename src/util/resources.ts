@@ -95,7 +95,7 @@ export const Resources: Array<Resources> = [
     trait: "Gold",
     value: 914,
     colour: "#fcd34d",
-    colourClass: "bg-yellow-300/60 text-yellow-900 border-yellow-300",
+    colourClass: "bg-gradient-to-r from-yellow-200 to-yellow-500 text-yellow-800",
     id: 9,
     description:
       "Ripped from its million-year geological womb within the earth to be hoarded in mortal coffers.",
@@ -195,7 +195,7 @@ export const Resources: Array<Resources> = [
     trait: "Alchemical Silver",
     value: 93,
     colour: "#bdbdbd",
-    colourClass: "bg-gradient-to-l from-sky-200 via-cyan-200 to-blue-500",
+    colourClass: "bg-gradient-to-l from-sky-200 via-cyan-200 to-blue-500 text-blue-800",
     id: 19,
     description:
       "Alchemical Silver is found pooled beneath battlegrounds from a forgotten, lost era. It can retain an almost unlimited amount of potential energy, making it the perfect catalyst for those delving into the mysteries of the universe.",
@@ -215,7 +215,7 @@ export const Resources: Array<Resources> = [
     trait: "Mithral",
     value: 37,
     colour: "#60a5fa",
-    colourClass: "bg-gradient-to-l from-cyan-100 via-stone-200 to-cyan-200",
+    colourClass: "bg-gradient-to-l from-cyan-100 via-stone-200 to-cyan-200 text-blue-500",
     id: 21,
     description:
       "This otherworldly metal has the strength of adamantine but is lighter than air. The pieces are held in place by strange gravitational core. Those who spend much time with it slowly succumb to neurotic delusions of a rapturous, divine apocalypse.",

@@ -184,23 +184,25 @@ function App() {
           )}
         </div>
         <DeckGL
-          getCursor={() => "crosshair"}
-          pickingRadius={50}
+          getCursor={({ isDragging, isHovering }) => {
+            return isHovering ? "pointer" : "grabbing";
+          }}
+          pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
           layers={[realms_layer, resource_layer]}
-          getTooltip={({ object }) =>
-            object && {
-              // @ts-ignore: name not exist on D
-              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.properties.realm_idx}.jpg"/><div><h2>${object.properties.name}</h2></div></div>  
-      `,
-              style: {
-                backgroundColor: "black",
-                fontSize: "0.8em",
-                borderRadius: "10px",
-              },
-            }
-          }
+          //     getTooltip={({ object }) =>
+          //       object && {
+          //         // @ts-ignore: name not exist on D
+          //         html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.properties.realm_idx}.jpg"/><div><h2>${object.properties.name}</h2></div></div>
+          // `,
+          //         style: {
+          //           backgroundColor: "black",
+          //           fontSize: "0.8em",
+          //           borderRadius: "10px",
+          //         },
+          //       }
+          //     }
         >
           <StaticMap
             mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
