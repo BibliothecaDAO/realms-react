@@ -23,7 +23,7 @@
     "@react-spring/types": "^9.4.3",
     "@react-three/drei": "^8.8.1",
     "@react-three/fiber": "^7.0.26",
-    "@starknet-react/core": "^0.4.5",
+    "@starknet-react/core": "^0.4.6",
     "@types/three": "^0.137.0",
     "@walletconnect/web3-provider": "^1.7.1",
     "@web3-react/core": "^6.1.9",

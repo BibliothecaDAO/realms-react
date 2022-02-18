@@ -3835,10 +3835,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@starknet-react/core@^0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.4.5.tgz#82358b568d5003bcd1ba8bbb6c9857ac2e98aea0"
-  integrity sha512-aGyPE+pElC/vHt/RK7al1vzCx2I6S3rXSPKuPAD8GaoHXTB+HpX6Jsay48g3e18yihe0ZV1wdU5Wg7JwSI0IbQ==
+"@starknet-react/core@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.4.6.tgz#fca824d03a767001d60b1e3fc77e64144d5b0d2b"
+  integrity sha512-d0djl3nc7Qt7pLd+giP8iSQoPZp61FooPYfCQ5o8pcCtJy0N/fDh6TEHGiZnLScZFOKRwqrwotNGuLevasIi/Q==
   dependencies:
     immutable "^4.0.0"
 
