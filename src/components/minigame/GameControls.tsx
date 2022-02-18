@@ -153,7 +153,9 @@ const GameControls: React.FC<Prop> = (props) => {
     shieldAction.loading ||
     attackAction.loading ||
     // TODO: Use TX manager as loading is buggy in @starknet-react 0.4.5
-    !!txManager.transactions.find((val) => val.status == "PENDING");
+    !!txManager.transactions.find(
+      (val) => val.status == "PENDING" || val.status == "RECEIVED"
+    );
 
   return (
     <div
