@@ -175,12 +175,14 @@ function App() {
           }`}
         >
           <button
-            className="p-4 bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70"
+            className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
             onClick={toggleMapMenu}
           >
             <Menu />
           </button>
-          <RealmCard data={data!} loading={loading} />
+          {data && data.realm && (
+          <RealmCard realm={data!.realm} loading={loading} />
+          )}
         </div>
         <DeckGL
           getCursor={() => "crosshair"}
