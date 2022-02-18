@@ -9,7 +9,7 @@ interface Owner {
 }
 
 export interface Realm {
-  id: String;
+  id: string;
   resourceIds: Array<String>;
   order: String;
   wonder: String;
