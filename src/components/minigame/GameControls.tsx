@@ -81,6 +81,10 @@ const GameControls: React.FC<Prop> = (props) => {
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
 
+  useEffect(() => {
+    setAction(side == "light" ? "shield" : "attack");
+  }, [side]);
+
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
   useEffect(() => {
@@ -237,8 +241,8 @@ const GameControls: React.FC<Prop> = (props) => {
           <div className="flex w-full gap-4 text-gray-100 row">
             <div className="flex-1">
               <Button
+                disabled={side == "dark"}
                 className="w-full mt-4 text-black"
-                active={action == "shield"}
                 onClick={() => setAction("shield")}
               >
                 Shield
@@ -246,6 +250,7 @@ const GameControls: React.FC<Prop> = (props) => {
             </div>
             <div className="flex-1">
               <Button
+                disabled={side == "light"}
                 className="w-full mt-4 text-black"
                 active={action == "attack"}
                 onClick={() => setAction("attack")}
