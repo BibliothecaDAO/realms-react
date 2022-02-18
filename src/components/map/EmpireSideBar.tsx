@@ -95,12 +95,12 @@ export const EmpireSideBar = (props: Props) => {
     "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
 
   return (
-    <animated.div className="relative z-40" style={animation}>
+    <animated.div className="absolute top-0 z-40 w-full backdrop-blur-md bg-black/80" style={animation}>
       <div
-        className={`h-screen w-full z-40 relative p-6  backdrop-blur-md bg-black/80 rounded-r-2xl overflow-y-scroll`}
+        className={`h-screen w-full relative z-60 top-0 p-6   rounded-r-2xl overflow-y-scroll`}
       >
         <button
-          className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
+          className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleEmpireMenu}
         >
           Close
@@ -171,7 +171,7 @@ export const EmpireSideBar = (props: Props) => {
                     }),
                   })
                 }
-                className="w-full bg-gray-600 p-4 rounded"
+                className="w-full p-4 bg-gray-600 rounded"
               >
                 Load more
               </button>
