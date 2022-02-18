@@ -80,13 +80,13 @@ const { loading, error, data } = useQuery<WalletRealmsData>(getRealmsQuery, {
                     <h2> Unstaked Realms ({data?.wallet?.realmsHeld })</h2>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 xl:gap-6">
                         {data.realms.map((realm, index) => (
-                            <RealmCard className="col-3" realm={realm!} key={realm!.id} loading={loading} />
+                            <RealmCard realm={realm!} key={realm!.id} loading={loading} />
                         ))}
                     </div>
                     <h2> Staked Realms ({data?.wallet?.bridgedRealmsHeld })</h2>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 xl:gap-6">
                     {data.bridgedRealms.map((realm, index) => (
-                        <RealmCard className="col-3" realm={realm!} key={realm!.id} loading={loading} />
+                        <RealmCard realm={realm!} key={realm!.id} loading={loading} />
                     ))}
                     </div>
                     </div>

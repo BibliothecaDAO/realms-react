@@ -47,7 +47,7 @@ const PageWrapper = (Comp: any) =>
     }
   };
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
 
 
   return (
@@ -56,11 +56,12 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <ApolloProvider client={client}>
           <StarknetProvider>
             <UIProvider>
-              
+            {/*<Component {...pageProps} />*/}
+
        <PageTransition
         Component={Component}
         pageProps={pageProps}
-      ></PageTransition>
+       ></PageTransition>
             </UIProvider>
           </StarknetProvider>
         </ApolloProvider>
