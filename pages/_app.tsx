@@ -17,29 +17,9 @@ import {
   gql,
 } from "@apollo/client";
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        feed: {
-          keyArgs: [],
-          merge(existing, incoming, { args: { offset = 0 } }) {
-            // Slicing is necessary because the existing data is
-            // immutable, and frozen in development.
-            const merged = existing ? existing.slice(0) : [];
-            for (let i = 0; i < incoming.length; ++i) {
-              merged[offset + i] = incoming[i];
-            }
-            return merged;
-          },
-        },
-      },
-    },
-  },
-});
 const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
-  cache: cache,
+  cache: new InMemoryCache(),
 });
 
 const PageWrapper = (Comp: any) =>
@@ -68,20 +48,18 @@ const PageWrapper = (Comp: any) =>
   };
 
 function MyApp({ Component, pageProps }: AppProps) {
-
-
   return (
     <SoundProvider>
       <WalletProvider>
         <ApolloProvider client={client}>
           <StarknetProvider>
             <UIProvider>
-            {/*<Component {...pageProps} />*/}
+              {/*<Component {...pageProps} />*/}
 
-       <PageTransition
-        Component={Component}
-        pageProps={pageProps}
-       ></PageTransition>
+              <PageTransition
+                Component={Component}
+                pageProps={pageProps}
+              ></PageTransition>
             </UIProvider>
           </StarknetProvider>
         </ApolloProvider>
