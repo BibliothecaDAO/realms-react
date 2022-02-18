@@ -13,7 +13,7 @@ export const Resources: Array<Resources> = [
     trait: "Wood",
     value: 5015,
     colour: "#78350f",
-    colourClass: "bg-yellow-900/60 border-yellow-900",
+    colourClass: "bg-gradient-to-l from-yellow-900 via-yellow-900 to-orange-500",
     id: 1,
     description:
       "Wood is the backbone of civilization. Fire, industry, and shelter spawned from its sinew and sap.",
@@ -24,7 +24,7 @@ export const Resources: Array<Resources> = [
     trait: "Stone",
     value: 3941,
     colour: "#e0e0e0",
-    colourClass: "bg-gray-500/60 text-gray-300 border-gray-300",
+    colourClass: "bg-gradient-to-r from-neutral-200 via-stone-100 to-stone-400 text-black",
     id: 2,
     description:
       "Stone masonry is a culture bending the bones of the earth itself to their own purpose.",
@@ -34,7 +34,7 @@ export const Resources: Array<Resources> = [
     trait: "Coal",
     value: 3833,
     colour: "#757575",
-    colourClass: "bg-gray-300/60 border-gray-600 text-black",
+    colourClass: "bg-gradient-to-r from-black via-neutral-900 to-black",
     id: 3,
     description:
       "Coal is the only answer when fire is not enough to stave off the gnawing, winter cold or the ravenous demands of iron forges.",
@@ -44,7 +44,7 @@ export const Resources: Array<Resources> = [
     trait: "Copper",
     value: 2643,
     colour: "#f59e0b",
-    colourClass: "bg-yellow-500/60 border-yellow-900 text-yellow-200",
+    colourClass: "bg-gradient-to-b from-orange-400 via-orange-600 to-yellow-500",
     id: 4,
     description:
       "The malleability of copper is a strength. A copper axe will crush a skull as easily as a copper pot sizzles an egg.",
@@ -64,7 +64,7 @@ export const Resources: Array<Resources> = [
     trait: "Silver",
     value: 1741,
     colour: "#eeeeee",
-    colourClass: "bg-gray-300/60 text-gray-50 border-gray-500",
+    colourClass: "bg-gradient-to-t from-slate-200 via-stone-100 to-slate-400 border-gray-500 text-black",
     id: 6,
     description:
       "The luster and rarity of silver draws out the basest instinct of laymen and nobility alike. Greed.",
@@ -75,7 +75,7 @@ export const Resources: Array<Resources> = [
     trait: "Ironwood",
     value: 1179,
     colour: "#b91c1c",
-    colourClass: "bg-red-700/60 border-red-700",
+    colourClass: "bg-gradient-to-r from-orange-900 via-rose-800 to-black",
     id: 7,
     description:
       "Metallic minerals drawn from the ironwood’s deep delving roots are the source of its legendary hardness and appearance.",
@@ -85,7 +85,7 @@ export const Resources: Array<Resources> = [
     trait: "Cold Iron",
     value: 957,
     colour: "#fca5a5",
-    colourClass: "bg-red-300/60 text-red-900 border-red-300",
+    colourClass: "bg-gradient-to-l from-cyan-400 via-cyan-600 to-black",
     id: 8,
     description:
       "Something has infected this metallic ore with a cruel chill and an extraordinary thirst for the warmth of living things.",
@@ -115,7 +115,7 @@ export const Resources: Array<Resources> = [
     trait: "Diamonds",
     value: 300,
     colour: "#ccbcfb",
-    colourClass: "bg-purple-200/60 text-purple-700 border-purple-700",
+    colourClass: "bg-gradient-to-tl from-transparent via-gray-600 to-gray-400",
     id: 11,
     description:
       "Diamonds carry the hardness of obsidian, the strength of cold iron, and the preciousness of gold. Blood is easily spilled in its name.",
@@ -125,7 +125,7 @@ export const Resources: Array<Resources> = [
     trait: "Sapphire",
     value: 247,
     colour: "#3b82f6",
-    colourClass: "bg-blue-500/60 border-blue-500",
+    colourClass: "bg-gradient-to-tl from-cyan-400 via-sky-600 to-gray-400",
     id: 12,
     description:
       "Sapphires are given birth from titanic forces that crush and grind for thousands of years in a hellscape of heat and pressure. The result is a gemstone accustomed to both pain and beauty.",
@@ -135,7 +135,7 @@ export const Resources: Array<Resources> = [
     trait: "Ruby",
     value: 239,
     colour: "#dc2626",
-    colourClass: "bg-red-600/60 border-red-600",
+    colourClass: "bg-gradient-to-tl from-rose-400 via-red-600 to-pink-400",
     id: 13,
     description:
       "Rubies are the chimeric fusion of metal alloys and oxygen. This hybrid of metal and minerals is often scarcer than the lives of those who seek it.",
@@ -145,7 +145,7 @@ export const Resources: Array<Resources> = [
     trait: "Deep Crystal",
     value: 239,
     colour: "#93c5fd",
-    colourClass: "bg-blue-300/60 border-blue-300",
+    colourClass: "bg-gradient-to-tl from-fuchsia-400 via-black to-gray-400",
     id: 14,
     description:
       "Deep crystal was imprisoned from the mortal world by a timeless geode, the source of these formations have confounded scholars for centuries. Strange vibrations can be felt when held.",
@@ -155,7 +155,7 @@ export const Resources: Array<Resources> = [
     trait: "Ignium",
     value: 172,
     colour: "#ef4444",
-    colourClass: "bg-red-500/60 text-yellow-200 border-red-500",
+    colourClass: "bg-gradient-to-t from-stone-900 via-rose-800 to-red-400",
     id: 15,
     description:
       "Some horrible power has irrevocably scarred this ignium stone with an infernal radiation that evaporates water and skin alike.",
@@ -165,7 +165,7 @@ export const Resources: Array<Resources> = [
     trait: "Ethereal Silica",
     value: 162,
     colour: "#10b981",
-    colourClass: "bg-green-500/60 border-green-500",
+    colourClass: "bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400",
     id: 16,
     description:
       "Ethereal silica is a glass that funnels and bends light in ways that deviate from known physics. Those exposed for long periods of time experience an all- consuming lethargic bliss.",
@@ -175,7 +175,7 @@ export const Resources: Array<Resources> = [
     trait: "True Ice",
     value: 139,
     colour: "#ffffff",
-    colourClass: "bg-white/60 text-blue-700 border-blue-700",
+    colourClass: "bg-gradient-to-tl from-cyan-900 via-blue-500 to-sky-300",
     id: 17,
     description:
       "True ice does not melt, it is carved like living stone from frozen abyssal caverns far beneath the earth. Many a careless mason has lost their life when placing this near Ignium.",
@@ -185,7 +185,7 @@ export const Resources: Array<Resources> = [
     trait: "Twilight Quartz",
     value: 111,
     colour: "#6d28d9",
-    colourClass: "bg-purple-700/60 border-purple-700",
+    colourClass: "bg-gradient-to-l from-purple-800 via-purple-300 to-violet-800",
     id: 18,
     description:
       "Fortunately, this gemstone grows deep within the earth, far away from the soft flesh of mortal kind. Its elegance hides a tendency to rapidly engulf organic matter it encounters in a matter of hours.",
@@ -195,7 +195,7 @@ export const Resources: Array<Resources> = [
     trait: "Alchemical Silver",
     value: 93,
     colour: "#bdbdbd",
-    colourClass: "bg-gray-400/60 border-gray-400",
+    colourClass: "bg-gradient-to-l from-sky-200 via-cyan-200 to-blue-500",
     id: 19,
     description:
       "Alchemical Silver is found pooled beneath battlegrounds from a forgotten, lost era. It can retain an almost unlimited amount of potential energy, making it the perfect catalyst for those delving into the mysteries of the universe.",
@@ -215,7 +215,7 @@ export const Resources: Array<Resources> = [
     trait: "Mithral",
     value: 37,
     colour: "#60a5fa",
-    colourClass: "bg-blue-400/60 border-blue-400",
+    colourClass: "bg-gradient-to-l from-cyan-100 via-stone-200 to-cyan-200",
     id: 21,
     description:
       "This otherworldly metal has the strength of adamantine but is lighter than air. The pieces are held in place by strange gravitational core. Those who spend much time with it slowly succumb to neurotic delusions of a rapturous, divine apocalypse.",
@@ -225,7 +225,7 @@ export const Resources: Array<Resources> = [
     trait: "Dragonhide",
     value: 23,
     colour: "#ec4899",
-    colourClass: "bg-pink-500/60 border-pink-500",
+    colourClass: "bg-gradient-to-tr from-purple-300 via-purple-500 to-fuchsia-200",
     id: 22,
     description:
       "Dragons are the hidden guardians of our reality. No mortal can witness their work, lest they be purged by dragonfire. If you find one of these scales, flee. Only death can be found in their presence or by the forces they fight in secret.",
