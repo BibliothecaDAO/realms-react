@@ -106,22 +106,29 @@ export const EmpireSideBar = (props: Props) => {
           Close
         </button>
         <h1 className="mb-4">My Empire</h1>
-        <h4 className="mb-2">filter by resource</h4>
-        <div className="flex flex-wrap mb-8">{list}</div>
-        <h4 className="mb-2">filter by</h4>
-        {filterTypes.map((res: any, index) => (
-          <button
-            key={index}
-            className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
-              selectFilter === res.key
-                ? "backdrop-blur-md bg-white/90 text-black"
-                : "backdrop-blur-md bg-white/30 text-off-100"
-            } `}
-            onClick={() => setFilter(res.key)}
-          >
-            {res.name}
-          </button>
-        ))}
+        {data?.wallet ? (
+          <div>
+            <h4 className="mb-2">filter by resource</h4>
+            <div className="flex flex-wrap mb-8">{list}</div>
+            <h4 className="mb-2">filter by</h4>
+            {filterTypes.map((res: any, index) => (
+              <button
+                key={index}
+                className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
+                  selectFilter === res.key
+                    ? "backdrop-blur-md bg-white/90 text-black"
+                    : "backdrop-blur-md bg-white/30 text-off-100"
+                } `}
+                onClick={() => setFilter(res.key)}
+              >
+                {res.name}
+              </button>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+
         {!data && loading ? (
           <p>Loading</p>
         ) : (
@@ -154,21 +161,23 @@ export const EmpireSideBar = (props: Props) => {
                 </div>
               </div>
             )}
+            {data && (
+              <button
+                onClick={() =>
+                  fetchMore({
+                    variables: defaultVariables({
+                      first: 50,
+                      skip: 50,
+                    }),
+                  })
+                }
+                className="w-full bg-gray-600 p-4 rounded"
+              >
+                Load more
+              </button>
+            )}
           </div>
         )}
-        <button
-          onClick={() =>
-            fetchMore({
-              variables: defaultVariables({
-                first: 50,
-                skip: 50,
-              }),
-            })
-          }
-          className="w-full bg-gray-600 p-4 rounded"
-        >
-          Load more
-        </button>
       </div>
     </animated.div>
   );

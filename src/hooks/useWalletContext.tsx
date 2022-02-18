@@ -8,6 +8,13 @@ import LordsTokenAbi from "~/abi/TheLordsToken.json";
 const WEB3_MODAL_CONFIG = {
   network: "mainnet",
   cacheProvider: true,
+  theme: {
+    background: "rgb(255, 255, 255)",
+    main: "rgb(199, 199, 199)",
+    secondary: "rgb(136, 136, 136)",
+    border: "rgba(195, 195, 195, 0.14)",
+    hover: "rgb(16, 26, 32)",
+  },
   providerOptions: {
     walletconnect: {
       package: WalletConnectProvider,
