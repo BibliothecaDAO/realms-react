@@ -9,6 +9,7 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
+  useStarknetTransactionManager,
 } from "@starknet-react/core";
 import BridgeModal from "../bridge/Modal";
 import {
@@ -21,6 +22,7 @@ import { GameStatus } from "~/types";
 import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 import classNames from "classnames";
+import LoadingSkeleton from "~/shared/LoadingSkeleton";
 
 type Prop = {
   gameIdx?: number;
@@ -137,6 +139,22 @@ const GameControls: React.FC<Prop> = (props) => {
     });
   };
 
+  const primaryBtnClass =
+    "w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md backdrop-blur-lg bg-gray-200 hover:bg-white/100";
+
+  const ConnectStarknetButton = () => (
+    <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
+      Connect StarkNet
+    </button>
+  );
+
+  const txManager = useStarknetTransactionManager();
+  const actionIsLoading =
+    shieldAction.loading ||
+    attackAction.loading ||
+    // TODO: Use TX manager as loading is buggy in @starknet-react 0.4.5
+    !!txManager.transactions.find((val) => val.status == "PENDING");
+
   return (
     <div
       id="game-actions"
@@ -155,32 +173,22 @@ const GameControls: React.FC<Prop> = (props) => {
 
       {gameStatus == "expired" ? (
         <div>
+          {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && loadingTokenBalance == false ? (
             <button
               onClick={() => {
                 if (account != undefined && side == undefined) {
                   setMintModalOpen(true);
-                } else {
-                  connectBrowserWallet();
                 }
               }}
-              className={classNames(
-                "w-full p-2 mt-4 text-lg text-black  transition-colors border border-white rounded-md backdrop-blur-lg bg-white/30 hover:bg-white/100"
-              )}
+              className={primaryBtnClass}
             >
-              {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
-              {account !== undefined ? (
-                <>
-                  <ElementLabel>Choose your Elements</ElementLabel>
-                </>
-              ) : (
-                "Connect StarkNet"
-              )}
+              <ElementLabel>Choose your Elements</ElementLabel>
             </button>
-          ) : null}
-          {loadingTokenBalance ? (
-            <div className="block w-32 h-10 mt-4 transition-colors rounded-md bg-slate-400 animate-pulse"></div>
-          ) : null}
+          ) : (
+            <ConnectStarknetButton />
+          )}
+          {loadingTokenBalance ? <LoadingSkeleton className="mt-4" /> : null}
 
           <p className="mt-4 text-3xl">
             {side == "light" && tokenBalances ? (
@@ -218,25 +226,37 @@ const GameControls: React.FC<Prop> = (props) => {
         </div>
       ) : (
         <>
-          <p className="text-3xl">
-            {side == undefined ? <>Side Not Chosen</> : null}
-            {side == "light" ? (
-              <>
-                <ElementLabel side="light">LIGHT </ElementLabel>
-                {tokenBalances && tokenBalances.length > 0
-                  ? number.toBN(tokenBalances[0]).toString()
-                  : null}
-              </>
-            ) : null}
-            {side == "dark" ? (
-              <>
-                <ElementLabel side="dark">DARK</ElementLabel>{" "}
-                {tokenBalances && tokenBalances.length > 1
-                  ? number.toBN(tokenBalances[1]).toString()
-                  : null}
-              </>
-            ) : null}
-          </p>
+          <div className="text-3xl">
+            {account == undefined ? <ConnectStarknetButton /> : null}
+            {loadingTokenBalance ? (
+              <LoadingSkeleton className="mt-4" />
+            ) : (
+              <div className="mt-4">
+                {side == "light" ? (
+                  <>
+                    <ElementLabel side="light">LIGHT </ElementLabel>
+                    {tokenBalances && tokenBalances.length > 0
+                      ? number
+                          .toBN(tokenBalances[0])
+                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                          .toString()
+                      : null}
+                  </>
+                ) : null}
+                {side == "dark" ? (
+                  <>
+                    <ElementLabel side="dark">DARK</ElementLabel>{" "}
+                    {tokenBalances && tokenBalances.length > 1
+                      ? number
+                          .toBN(tokenBalances[1])
+                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                          .toString()
+                      : null}
+                  </>
+                ) : null}
+              </div>
+            )}
+          </div>
 
           <div className="flex w-full gap-4 text-gray-100 row">
             <div className="flex-1">
@@ -286,8 +306,12 @@ const GameControls: React.FC<Prop> = (props) => {
           {account !== undefined && is1155TokenApproved == "1" ? (
             <Button
               color={"primary"}
-              disabled={action == undefined || actionAmount.length == 0}
-              className="w-full text-white"
+              disabled={
+                action == undefined ||
+                actionAmount.length == 0 ||
+                actionIsLoading
+              }
+              className={primaryBtnClass}
               onClick={() => {
                 if (gameIdx) {
                   if (action == "shield") {
@@ -298,7 +322,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 }
               }}
             >
-              Confirm Transaction
+              {actionIsLoading ? "Casting Tokens" : "Confirm Transaction"}
             </Button>
           ) : null}
         </>
@@ -317,7 +341,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 });
               }
             }}
-            className="w-full p-2 mt-4 text-white transition-colors bg-gray-700 border border-white rounded-md disabled:opacity-80"
+            className={primaryBtnClass}
           >
             Approve Elements Token
           </button>
