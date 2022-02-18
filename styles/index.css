@@ -11,7 +11,7 @@ h6 {
   @apply font-display;
 }
 h1 {
-  @apply text-2xl sm:text-3xl md:text-4xl;
+  @apply text-2xl sm:text-3xl md:text-6xl;
 }
 h2 {
   @apply text-xl sm:text-2xl md:text-3xl;
@@ -32,6 +32,7 @@ body {
 }
 #deckgl-wrapper {
   background: rgb(146, 177, 185);
+  @apply overflow-auto;
 }
 
 /* Prevent interference with Bridge modal by setting z-index */
