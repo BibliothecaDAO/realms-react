@@ -17,6 +17,7 @@ export const MenuSideBar = () => {
     toggleTheOrdersMenu,
     toggleMapMenu,
     toggleMainMenu,
+    toggleEmpireMenu,
     mainMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
@@ -32,6 +33,10 @@ export const MenuSideBar = () => {
         mainMenu ? "" : "translate-y-full hidden"
       }`}
     >
+      <button className={iconClasses} onClick={toggleEmpireMenu}>
+        <Map className="mx-auto" />
+        My Empire
+      </button>
       <button className={iconClasses} onClick={toggleMapMenu}>
         <Map className="mx-auto" />
         Realm
@@ -45,7 +50,7 @@ export const MenuSideBar = () => {
         Orders
       </button>
       {/* <button
-        className="p-4  hover:bg-white/30 py-8 text-xl text-off-200"
+        className="p-4 py-8 text-xl hover:bg-white/30 text-off-200"
         onClick={handleClick}
       >
         {!isSoundActive ? (
