@@ -12,7 +12,7 @@ type Prop = {
 // OpenGraph preview images generated using PostMage (https://postmage.com/)
 const defaultTitle = "Desiege S1: Divine Eclipse";
 const defaultDescription =
-  "Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell from within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.";
+  "Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.";
 
 const Game: NextPage<Prop> = (props) => {
   return (
