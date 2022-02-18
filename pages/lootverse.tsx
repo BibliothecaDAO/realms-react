@@ -165,7 +165,7 @@ function App() {
         <Header />
         <MenuSideBar />
         <TheOrdersSideBar onClick={goToId} />
-        <EmpireSideBar />
+        <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <div
@@ -180,7 +180,7 @@ function App() {
             <Menu />
           </button>
           {data && data.realm && (
-          <RealmCard realm={data!.realm} loading={loading} />
+            <RealmCard realm={data!.realm} loading={loading} />
           )}
         </div>
         <DeckGL

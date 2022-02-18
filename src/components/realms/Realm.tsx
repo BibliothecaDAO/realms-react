@@ -6,12 +6,18 @@ import { TheOrders } from "~/util/theOrders";
 import { RealmProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import { OrderIcon } from "~/shared/OrderIcon";
+import { Indexed } from "ethers/lib/utils";
+
+const variantMaps: any = {
+  small: { heading: "lg:text-4xl", regions: "lg:text-xl" },
+};
+
 export function Realm(props: RealmProps): ReactElement {
   const findResourceName = (value: any) => {
     return Resources.find((e) => e.id === parseInt(value));
   };
   return (
-    <div className="h-auto p-1 rounded-xl sm:p-4 z-10text-white">
+    <div className="h-auto p-1 rounded-xl sm:p-4 z-10 text-white">
       {props.loading ? (
         <div>
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -43,18 +49,24 @@ export function Realm(props: RealmProps): ReactElement {
             className="w-full mt-4 rounded-xl"
           />
           <div className="p-2">
-            { props.realm.currentOwner && (
-            <h3 className="my-4 ">
-              👑 {shortenAddress(props.realm.currentOwner.address)}
-            </h3>
+            {props.realm.currentOwner && (
+              <h3 className="my-3">
+                👑 {shortenAddress(props.realm.currentOwner.address)}
+              </h3>
             )}
-            <h4>Id: {props.realm.id}</h4>
+            <div className="flex justify-between my-4 bg-white/20 px-2 rounded font-semibold">
+              <h4>Id:{props.realm.id}</h4>
+              <h4>Rank:{props.realm.rarityRank}</h4>
+              <h4>Score:{props.realm.rarityScore}</h4>
+            </div>
 
-            <h1 className="mt-2 mb-4">{props.realm.name}</h1>
+            <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}`}>
+              {props.realm.name}
+            </h1>
             <div className="flex flex-wrap mb-2">
               {props.realm.resourceIds.map((re: any, index) => (
                 <span
-                  className={`uppercase px-4 py-1 rounded mr-2 mb-2 tracking-widest sm:text-xl ${
+                  className={`uppercase px-4 py-1 rounded mr-2 mb-2 tracking-widest ${
                     findResourceName(re)?.colourClass
                   }`}
                   key={index}
@@ -64,8 +76,12 @@ export function Realm(props: RealmProps): ReactElement {
               ))}
             </div>
 
+            <div
+              className={`flex flex-col w-full uppercase ${
+                variantMaps[props.size]?.regions
+              } `}
+            >
               <span>Regions: {props.realm.regions} / 7</span>
-            <div className="flex flex-col w-full uppercase sm:text-2xl">
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
                   className="h-2 bg-amber-700/60 rounded-xl"
@@ -74,9 +90,7 @@ export function Realm(props: RealmProps): ReactElement {
                   }}
                 ></div>
               </div>
-              <span className="pt-1">
-                Cities: {props.realm.cities} / 21
-              </span>
+              <span className="pt-1">Cities: {props.realm.cities} / 21</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
                   className="h-2 bg-amber-300/60 rounded-xl"
@@ -85,22 +99,16 @@ export function Realm(props: RealmProps): ReactElement {
                   }}
                 ></div>
               </div>
-              <span className="pt-1">
-                Harbors: {props.realm.harbours} / 35
-              </span>
+              <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
                   className="h-2 bg-blue-700/60 rounded-xl"
                   style={{
-                    width: `${
-                      ((props.realm.harbours as any) / 35) * 100
-                    }%`,
+                    width: `${((props.realm.harbours as any) / 35) * 100}%`,
                   }}
                 ></div>
               </div>
-              <span className="pt-1">
-                Rivers: {props.realm.rivers} / 60
-              </span>
+              <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
                   className="h-2 bg-blue-500/60 rounded-xl"
