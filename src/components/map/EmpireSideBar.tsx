@@ -7,6 +7,7 @@ import { getRealmsQuery } from "~/hooks/graphql/queries";
 import Menu from "../public/svg/menu.svg";
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { Realm as RealmCard } from "~/components/realms/Realm";
+import { animated, useSpring } from '@react-spring/web'
 
 export const EmpireSideBar = () => {
   const { toggleEmpireMenu, empireMenu } = useUIContext();
@@ -15,6 +16,11 @@ export const EmpireSideBar = () => {
     isConnected,
     displayName,
 } = useWalletContext();
+
+const animation = useSpring({
+    opacity: empireMenu ? 1 : 0,
+    transform: empireMenu ? `translateY(0)` : `translateY(-200%)`
+  });
 
 const defaultVariables = (params?: RealmFilters) => {
     return {
@@ -54,11 +60,9 @@ const { loading, error, data } = useQuery<WalletRealmsData>(getRealmsQuery, {
 });
 
   return (
-    <div className="">
-      <div
-        className={`h-screen w-full z-40 absolute p-6 bottom-0 backdrop-blur-md bg-off-200/30 rounded-r-2xl transform duration-300 transition-all  overflow-x-hidden right-0    ${
-            empireMenu ? "" : "translate-y-full hidden"
-        }`}
+    <animated.div className="relative z-40" style={animation}>
+          <div
+        className={`h-screen w-full z-40 relative p-6  backdrop-blur-md bg-off-200/30 rounded-r-2xl overflow-y-scroll`}
       >
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
@@ -92,6 +96,7 @@ const { loading, error, data } = useQuery<WalletRealmsData>(getRealmsQuery, {
             </div>
         )}
       </div>
-    </div>
+    </animated.div>
+
   );
 };
