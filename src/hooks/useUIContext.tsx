@@ -16,6 +16,7 @@ const defaultUIContext = {
   closeAll: () => {},
   mainMenu: false,
   toggleMainMenu: () => {},
+  closeOrdersMenu: () => {},
 };
 
 const UIContext = createContext<{
@@ -34,6 +35,7 @@ const UIContext = createContext<{
   closeAll: () => void;
   mainMenu: boolean;
   toggleMainMenu: () => void;
+  closeOrdersMenu: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -88,7 +90,7 @@ function useUI() {
     // hideOrOpenMainMenu();
     return setEmpireMenu(!empireMenu);
   };
-  
+
   const toggleResourceMenu = () => {
     // hideOrOpenMainMenu();
     return setResourceMenu(!resourceMenu);
@@ -97,6 +99,10 @@ function useUI() {
   const toggleTheOrdersMenu = () => {
     // hideOrOpenMainMenu();
     return setTheOrdersMenu(!theOrdersMenu);
+  };
+  const closeOrdersMenu = () => {
+    // hideOrOpenMainMenu();
+    return setTheOrdersMenu(false);
   };
   const closeAll = () => {
     return setTheOrdersMenu(false);
@@ -118,6 +124,7 @@ function useUI() {
     closeAll,
     toggleMainMenu,
     mainMenu,
+    closeOrdersMenu,
   };
 }
 

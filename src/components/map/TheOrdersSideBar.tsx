@@ -77,9 +77,9 @@ export const TheOrdersSideBar = (props: Props) => {
           <div className="flex flex-wrap">
             {OrderDetails[focusOrder]?.wonders.name.map((a: any, index) => {
               return (
-                <div key={index} className="w-1/2 px-2 mb-2">
+                <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 hover:bg-white/60 bg-white/20 text-xl rounded font-display uppercase"
+                    className="p-4 hover:bg-white/60 bg-white/20 text-xl rounded font-display "
                     onClick={() =>
                       props.onClick(
                         /* @ts-ignore: name not exist on D */
@@ -87,7 +87,13 @@ export const TheOrdersSideBar = (props: Props) => {
                       )
                     }
                   >
-                    {a}
+                    <span className="text-3xl">{a}</span>
+
+                    <br />
+                    <span>
+                      {OrderDetails[focusOrder]?.wonders.realm_name[index]} |{" "}
+                      {OrderDetails[focusOrder]?.wonders.realm_id[index]}
+                    </span>
                   </button>
                 </div>
               );

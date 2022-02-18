@@ -22,7 +22,7 @@ import { FlyTo } from "~/components/map/FlyTo";
 import { number } from "starknet";
 
 function App() {
-  const { mapMenu, toggleMapMenu } = useUIContext();
+  const { mapMenu, toggleMapMenu, closeOrdersMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
 
@@ -125,6 +125,7 @@ function App() {
 
   const goToId = useCallback((id: any) => {
     toggleMapMenu();
+    closeOrdersMenu();
     /* @ts-ignore: name not exist on D */
     let realm = realms.features.filter(
       (a: any) => a.properties.realm_idx === id

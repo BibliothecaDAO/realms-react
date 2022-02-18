@@ -34,7 +34,7 @@ export const Resources: Array<Resources> = [
     trait: "Coal",
     value: 3833,
     colour: "#757575",
-    colourClass: "bg-gradient-to-r from-black via-neutral-900 to-black",
+    colourClass: "bg-gradient-to-b from-gray-900 to-gray-600 bg-gradient-to-r",
     id: 3,
     description:
       "Coal is the only answer when fire is not enough to stave off the gnawing, winter cold or the ravenous demands of iron forges.",
@@ -44,7 +44,7 @@ export const Resources: Array<Resources> = [
     trait: "Copper",
     value: 2643,
     colour: "#f59e0b",
-    colourClass: "bg-gradient-to-b from-orange-400 via-orange-600 to-yellow-500",
+    colourClass: "bg-gradient-to-r from-amber-700 via-orange-300 to-rose-800",
     id: 4,
     description:
       "The malleability of copper is a strength. A copper axe will crush a skull as easily as a copper pot sizzles an egg.",
@@ -85,7 +85,7 @@ export const Resources: Array<Resources> = [
     trait: "Cold Iron",
     value: 957,
     colour: "#fca5a5",
-    colourClass: "bg-gradient-to-l from-cyan-400 via-cyan-600 to-black",
+    colourClass: "bg-gradient-to-r  from-amber-200 via-violet-600 to-sky-900",
     id: 8,
     description:
       "Something has infected this metallic ore with a cruel chill and an extraordinary thirst for the warmth of living things.",
@@ -105,7 +105,7 @@ export const Resources: Array<Resources> = [
     trait: "Hartwood",
     value: 594,
     colour: "#fca5a5",
-    colourClass: "border-red-300/60 bg-gradient-to-r from-red-500 via-purple-100 to-yellow-200 text-red-800",
+    colourClass: "bg-gradient-to-r from-red-800 via-yellow-600 to-yellow-500",
     id: 10,
     description:
       "Revered by the Orders of Cunning, hartwood is only cut in dire circumstance. It bleeds like any mortal and some claim to hear voices from its sap long after being tapped from the trunk.",
@@ -145,7 +145,7 @@ export const Resources: Array<Resources> = [
     trait: "Deep Crystal",
     value: 239,
     colour: "#93c5fd",
-    colourClass: "bg-gradient-to-tl from-fuchsia-400 via-black to-gray-400",
+    colourClass: "bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600",
     id: 14,
     description:
       "Deep crystal was imprisoned from the mortal world by a timeless geode, the source of these formations have confounded scholars for centuries. Strange vibrations can be felt when held.",
