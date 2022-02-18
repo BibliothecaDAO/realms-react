@@ -41,7 +41,7 @@ export const ResourceSideBar = (props: Props) => {
   return (
     <div className="">
       <div
-        className={`h-screen w-full sm:w-1/3 z-40 absolute p-6 bottom-0 backdrop-blur-md bg-off-200/30 rounded-r-2xl transform duration-300 transition-all  overflow-x-hidden right-0    ${
+        className={`h-screen w-full sm:w-1/3 z-40 absolute p-6 bottom-0 backdrop-blur-md bg-off-200/30 rounded-r-2xl transform duration-150 transition-all  overflow-x-hidden right-0    ${
           resourceMenu ? "" : "translate-y-full hidden"
         }`}
       >

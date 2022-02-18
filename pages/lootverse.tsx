@@ -18,15 +18,10 @@ import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 import realms from "../src/realms.json";
 import order_highlights from "../src/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
+import { number } from "starknet";
 
 function App() {
-  const {
-    mapMenu,
-    toggleMapMenu,
-    toggleTheOrdersMenu,
-    theOrdersMenu,
-    closeAll,
-  } = useUIContext();
+  const { mapMenu, toggleMapMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
 
@@ -84,13 +79,15 @@ function App() {
     filled: true,
     extruded: true,
     pickable: true,
-
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: 1000,
+    getRadius: (d: any) => (d.properties.realm_idx === value ? 4000 : 100),
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
     onClick: (info: any) => {
       setValue(info.object.properties.realm_idx);
       if (!mapMenu) {
@@ -170,7 +167,7 @@ function App() {
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <div
-          className={`h-screen w-full sm:w-1/2 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+          className={`h-screen w-full sm:w-5/12 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
             mapMenu ? "" : "translate-x-full hidden"
           }`}
         >
