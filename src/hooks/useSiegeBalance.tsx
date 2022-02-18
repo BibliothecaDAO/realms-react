@@ -12,6 +12,7 @@ export const useSiegeBalance = () => {
   const [loading, setLoading] = useState(false);
   const [tokenBalances, setTokenBalances] = useState<BN[]>();
   const [side, setSide] = useState<"light" | "dark">();
+  const [error, setError] = useState<string>();
 
   const fetchTokenBalances = async (gameIdx: number) => {
     // The token IDs change every game
@@ -57,6 +58,15 @@ export const useSiegeBalance = () => {
     loading,
     side,
     tokenBalances,
-    fetchTokenBalances,
+    error,
+    fetchTokenBalances: (gameIdx: number) => {
+      try {
+        setError(undefined);
+        return fetchTokenBalances(gameIdx);
+      } catch (e) {
+        setError("Error fetching token balance");
+        console.error("Fetch token balances error: ", e);
+      }
+    },
   };
 };
