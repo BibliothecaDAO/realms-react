@@ -15,6 +15,7 @@ import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
 import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
+import { animated, useSpring } from "@react-spring/web";
 
 import realms from "../src/realms.json";
 import order_highlights from "../src/order_highlights.json";
@@ -160,30 +161,37 @@ function App() {
     variables: { id: value.toString() },
   });
 
+  const animation = useSpring({
+    opacity: mapMenu ? 1 : 0,
+    transform: mapMenu ? `translateX(58.3333333333%)` : `translateX(100%)`,
+  });
+
   return (
     <Layout>
-      <div className="">
+      <div className="relative w-screen h-screen overflow-hidden">
         <Header />
         <MenuSideBar />
+        <animated.div className="relative z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
+          <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
+            {/*className={`h-screen w-full sm:w-5/12 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+              mapMenu ? "" : "translate-x-full hidden"
+            }`}
+            >*/}
+            <button
+              className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
+              onClick={toggleMapMenu}
+            >
+              <Menu />
+            </button>
+            {data && data.realm && (
+              <RealmCard realm={data!.realm} loading={loading} />
+            )}
+          </div>
+        </animated.div>
         <TheOrdersSideBar onClick={goToId} />
         <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
-        <div
-          className={`h-screen w-full sm:w-5/12 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
-            mapMenu ? "" : "translate-x-full hidden"
-          }`}
-        >
-          <button
-            className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-            onClick={toggleMapMenu}
-          >
-            <Menu />
-          </button>
-          {data && data.realm && (
-            <RealmCard realm={data!.realm} loading={loading} />
-          )}
-        </div>
         <DeckGL
           getCursor={({ isDragging, isHovering }) => {
             return isHovering ? "pointer" : "grabbing";
