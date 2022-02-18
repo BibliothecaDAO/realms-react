@@ -33,13 +33,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
   const [boost, setBoost] = useState<number>();
 
   const fetchState = async () => {
-    const gameCtx = await getGameContextVariables();
-
-    setGameIdx(gameCtx.gameIdx);
-    setMainHealth(toBN(gameCtx.mainHealth));
-    setStartBlockNum(gameCtx.gameStartBlock);
-    setBoost(gameCtx.currentBoost);
-    setGameCtx(gameCtx);
+    try {
+      const gameCtx = await getGameContextVariables();
+      setGameIdx(gameCtx.gameIdx);
+      setMainHealth(toBN(gameCtx.mainHealth));
+      setStartBlockNum(gameCtx.gameStartBlock);
+      setBoost(gameCtx.currentBoost);
+      setGameCtx(gameCtx);
+    } catch (e) {
+      // TODO: Display error
+      console.error("Error fetching game state: ", e);
+    }
   };
 
   // Fetch state on mount
@@ -93,9 +97,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="z-10 mb-8">
             <GameBlockTimer gameCtx={gameCtx} />
           </div>
-        ) : (
-          <div></div>
-        )}
+        ) : null}
         {view == "game-controls" ? (
           <div className="flex flex-row w-full">
             <GameControls
@@ -104,9 +106,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
               currentBoostBips={boost}
             />
           </div>
-        ) : (
-          <div></div>
-        )}
+        ) : null}
       </div>
 
       <TowerDefence

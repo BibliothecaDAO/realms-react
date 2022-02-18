@@ -10,7 +10,7 @@ type Prop = {
 };
 
 // OpenGraph preview images generated using PostMage (https://postmage.com/)
-
+const defaultTitle = "Desiege S1: Divine Eclipse";
 const defaultDescription =
   "Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell from within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.";
 
@@ -18,7 +18,7 @@ const Game: NextPage<Prop> = (props) => {
   return (
     <div className="">
       <Head>
-        <title>{props.title}</title>
+        <title>{props.title || defaultTitle}</title>
         <meta name="description" content={defaultDescription} />
         <meta
           name="og:url"
@@ -30,10 +30,7 @@ const Game: NextPage<Prop> = (props) => {
           name="og:description"
           content={props.openGraphDescription || defaultDescription}
         />
-        <meta
-          property="og:title"
-          content={props.title || "Desiege S1: Divine Eclipse"}
-        />
+        <meta property="og:title" content={props.title || defaultTitle} />
         <meta
           property="og:image"
           content="https://gen.postmage.com/generate/414f4b87-4d9c-44a8-8877-1437da67003b/f40b6de5-abe4-434f-878d-89ed4f3fcad8/image.png?url=https://lootverse.bibliothecadao.xyz/desiege"

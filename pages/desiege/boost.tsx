@@ -1,14 +1,36 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import ShieldGame from "~/components/minigame/ShieldGame";
+import {
+  EFFECT_BASE_FACTOR,
+  getGameContextVariables,
+} from "~/util/minigameApi";
 import Game from "./index";
 
-// TODO: Use getServerProps to retrieve actual boost for game
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let gameCtx;
+  try {
+    gameCtx = await getGameContextVariables();
+  } catch (e) {
+    return { props: {} };
+  }
 
-export default () => (
+  return {
+    props: {
+      boost: gameCtx.currentBoost,
+    }, // will be passed to the page component as props
+  };
+};
+
+export default (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => (
   <Game
-    title="Boost is 42%"
-    openGraphUrl="http://lootverse.bibliothecadao.xyz/boost"
-    openGraphDescription="Battle actions currently amplified by 42%"
+    title={`Desiege Boost at ${props.boost / EFFECT_BASE_FACTOR}%`}
+    openGraphUrl="http://lootverse.bibliothecadao.xyz/desiege/boost"
+    openGraphDescription={`Desiege actions currently amplified by ${
+      props.boost / EFFECT_BASE_FACTOR
+    }%! Join the siege now.`}
   >
-    <ShieldGame initialTab="boost" />
+    <ShieldGame initialTab="game-controls" />
   </Game>
 );
