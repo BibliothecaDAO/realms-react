@@ -28,8 +28,13 @@ export interface Data {
 }
 
 export interface RealmProps {
-  data: Data;
+  realm: Realm;
   loading: boolean;
+}
+export interface WalletRealmsData {
+  realms: Realm[];
+  bridgedRealms: Realm[]
+  wallet: Owner;
 }
 
 export interface UiState {
@@ -42,4 +47,14 @@ export interface TowerProps {
   gameIdx?: number;
   currentBoostBips?: number;
   children?: React.ReactNode[] | React.ReactNode;
+}
+
+export interface RealmFilters {
+  address: string;
+  resources: number[]
+  orders: string[];
+  first: number,
+  skip: number,
+  orderBy: string,
+  orderDirection: string,
 }

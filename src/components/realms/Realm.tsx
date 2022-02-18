@@ -11,46 +11,48 @@ export function Realm(props: RealmProps): ReactElement {
     return Resources.find((e) => e.id === parseInt(value));
   };
   return (
-    <div className="rounded-xl p-1 sm:p-4 h-auto z-10text-white">
+    <div className="h-auto p-1 rounded-xl sm:p-4 z-10text-white">
       {props.loading ? (
         <div>
-          <div className="pt-20 h-64 bg-white/40 w-full rounded animate-pulse mb-4" />
-          <div className="pt-20 h-32 bg-white/40 w-full rounded animate-pulse mb-4" />
-          <div className="pt-20 h-32 bg-white/40 w-full rounded animate-pulse" />
+          <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
+          <div className="w-full h-32 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
+          <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
         <div>
           <div className="flex justify-center">
-            <OrderIcon order={props.data.realm.order.toLowerCase()} />
+            <OrderIcon order={props.realm.order.toLowerCase()} />
           </div>
 
           <div
             className={`w-full text-center rounded-lg py-2 text-2xl uppercase tracking-widest`}
           >
-            Order of {props.data.realm.order}
+            Order of {props.realm.order}
           </div>
-          {props.data.realm?.wonder ? (
-            <div className="w-full text-center bg-white/30 p-4 uppercase text-3xl rounded">
-              {props.data.realm?.wonder}
+          {props.realm?.wonder ? (
+            <div className="w-full p-4 text-3xl text-center uppercase rounded bg-white/30">
+              {props.realm?.wonder}
             </div>
           ) : (
             ""
           )}
 
           <img
-            src={`https://d23fdhqc1jb9no.cloudfront.net/_Renders/${props.data.realm.id}.jpg`}
+            src={`https://d23fdhqc1jb9no.cloudfront.net/_Renders/${props.realm.id}.jpg`}
             alt="map"
-            className="w-full rounded-xl mt-4"
+            className="w-full mt-4 rounded-xl"
           />
           <div className="p-2">
+            { props.realm.currentOwner && (
             <h3 className="my-4 ">
-              👑 {shortenAddress(props.data.realm.currentOwner.address)}
+              👑 {shortenAddress(props.realm.currentOwner.address)}
             </h3>
-            <h4>Id: {props.data.realm.id}</h4>
+            )}
+            <h4>Id: {props.realm.id}</h4>
 
-            <h1 className="mt-2 mb-4">{props.data.realm.name}</h1>
+            <h1 className="mt-2 mb-4">{props.realm.name}</h1>
             <div className="flex flex-wrap mb-2">
-              {props.data.realm.resourceIds.map((re: any, index) => (
+              {props.realm.resourceIds.map((re: any, index) => (
                 <span
                   className={`uppercase px-4 py-1 rounded mr-2 mb-2 tracking-widest sm:text-xl ${
                     findResourceName(re)?.colourClass
@@ -62,48 +64,48 @@ export function Realm(props: RealmProps): ReactElement {
               ))}
             </div>
 
-            <div className="flex flex-col w-full sm:text-2xl uppercase">
-              <span>Regions: {props.data.realm.regions} / 7</span>
-              <div className="w-full bg-gray-200 rounded my-2">
+              <span>Regions: {props.realm.regions} / 7</span>
+            <div className="flex flex-col w-full uppercase sm:text-2xl">
+              <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="bg-amber-700/60 h-2 rounded-xl"
+                  className="h-2 bg-amber-700/60 rounded-xl"
                   style={{
-                    width: `${((props.data.realm.regions as any) / 7) * 100}%`,
+                    width: `${((props.realm.regions as any) / 7) * 100}%`,
                   }}
                 ></div>
               </div>
               <span className="pt-1">
-                Cities: {props.data.realm.cities} / 21
+                Cities: {props.realm.cities} / 21
               </span>
-              <div className="w-full bg-gray-200 rounded my-2">
+              <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="bg-amber-300/60 h-2 rounded-xl"
+                  className="h-2 bg-amber-300/60 rounded-xl"
                   style={{
-                    width: `${((props.data.realm.cities as any) / 21) * 100}%`,
+                    width: `${((props.realm.cities as any) / 21) * 100}%`,
                   }}
                 ></div>
               </div>
               <span className="pt-1">
-                Harbors: {props.data.realm.harbours} / 35
+                Harbors: {props.realm.harbours} / 35
               </span>
-              <div className="w-full bg-gray-200 rounded my-2">
+              <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="bg-blue-700/60 h-2 rounded-xl"
+                  className="h-2 bg-blue-700/60 rounded-xl"
                   style={{
                     width: `${
-                      ((props.data.realm.harbours as any) / 35) * 100
+                      ((props.realm.harbours as any) / 35) * 100
                     }%`,
                   }}
                 ></div>
               </div>
               <span className="pt-1">
-                Rivers: {props.data.realm.rivers} / 60
+                Rivers: {props.realm.rivers} / 60
               </span>
-              <div className="w-full bg-gray-200 rounded my-2">
+              <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="bg-blue-500/60 h-2 rounded-xl"
+                  className="h-2 bg-blue-500/60 rounded-xl"
                   style={{
-                    width: `${((props.data.realm.rivers as any) / 60) * 100}%`,
+                    width: `${((props.realm.rivers as any) / 60) * 100}%`,
                   }}
                 ></div>
               </div>
@@ -114,7 +116,7 @@ export function Realm(props: RealmProps): ReactElement {
                 target={"_blank"}
                 href={
                   "https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/" +
-                  props.data.realm.id
+                  props.realm.id
                 }
                 rel="noreferrer"
               >
