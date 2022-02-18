@@ -6,7 +6,9 @@ const defaultUIContext = {
   setup: false,
   toggleSetup: () => {},
   mapMenu: false,
+  empireMenu: false,
   toggleMapMenu: () => {},
+  toggleEmpireMenu: () => {},
   resourceMenu: false,
   toggleResourceMenu: () => {},
   theOrdersMenu: false,
@@ -22,7 +24,9 @@ const UIContext = createContext<{
   setup: boolean;
   toggleSetup: () => void;
   mapMenu: boolean;
+  empireMenu: boolean;
   toggleMapMenu: () => void;
+  toggleEmpireMenu: () => void;
   resourceMenu: boolean;
   toggleResourceMenu: () => void;
   theOrdersMenu: boolean;
@@ -50,6 +54,8 @@ function useUI() {
   const [powerBar, setPowerBar] = useState(false);
   const [setup, setSetup] = useState(false);
   const [mapMenu, setMapMenu] = useState(false);
+  const [empireMenu, setEmpireMenu] = useState(false);
+
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
@@ -78,7 +84,11 @@ function useUI() {
     // hideOrOpenMainMenu();
     return setMapMenu(!mapMenu);
   };
-
+  const toggleEmpireMenu = () => {
+    // hideOrOpenMainMenu();
+    return setEmpireMenu(!empireMenu);
+  };
+  
   const toggleResourceMenu = () => {
     // hideOrOpenMainMenu();
     return setResourceMenu(!resourceMenu);
@@ -98,6 +108,8 @@ function useUI() {
     setup,
     toggleSetup,
     toggleMapMenu,
+    empireMenu,
+    toggleEmpireMenu,
     mapMenu,
     toggleResourceMenu,
     resourceMenu,

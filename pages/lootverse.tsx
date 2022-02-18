@@ -13,6 +13,7 @@ import { useUIContext } from "~/hooks/useUIContext";
 import Menu from "../public/svg/menu.svg";
 import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
+import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
 import realms from "../src/realms.json";
@@ -167,6 +168,7 @@ function App() {
         <Header />
         <MenuSideBar />
         <TheOrdersSideBar onClick={goToId} />
+        <EmpireSideBar />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <div
