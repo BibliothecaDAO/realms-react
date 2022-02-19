@@ -39,12 +39,20 @@ body {
 .web3modal-modal-lightbox {
   z-index: 11 !important;
 }
-.background-animate {
+.shimmer.background-animate {
   background-size: 500%;
+}
 
+.fast {
   -webkit-animation: AnimationName 3s ease infinite;
   -moz-animation: AnimationName 3s ease infinite;
   animation: AnimationName 3s ease infinite;
+}
+
+.slow {
+  -webkit-animation: AnimationName 8s ease infinite;
+  -moz-animation: AnimationName 8s ease infinite;
+  animation: AnimationName 8s ease infinite;
 }
 
 @keyframes AnimationName {
@@ -53,6 +61,6 @@ body {
     background-position: 25% 50%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 90% 50%;
   }
 }
