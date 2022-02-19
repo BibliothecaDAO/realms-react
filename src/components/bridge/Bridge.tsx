@@ -78,7 +78,7 @@ export const Bridge: React.FC<Prop> = (props) => {
   }, [error]);*/
 
   const [currentTab, setCurrentTab] = useState<TabName>(
-    props.initialTab || "connect-ethereum"
+    props.initialTab || "mint"
   );
 
   const verifyAndMint = async () => {
@@ -121,9 +121,6 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     starknet.connectBrowserWallet();
-    if (account) {
-      setCurrentTab("mint-requirements");
-    }
   }, []);
   return (
     <div className="w-full pt-40 mx-auto sm:w-1/2">

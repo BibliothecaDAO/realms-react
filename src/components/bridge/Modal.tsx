@@ -41,8 +41,8 @@ const BridgeModal: React.FC<Prop> = (props) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
-              <Dialog.Title className={"hidden"}>Connect Wallet</Dialog.Title>
-              <Bridge />
+              <Dialog.Title className={"hidden"}>Desiege Setup</Dialog.Title>
+              <Bridge initialTab="mint" />
             </div>
           </Transition.Child>
         </div>

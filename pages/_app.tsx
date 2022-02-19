@@ -63,12 +63,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ApolloProvider client={client}>
             <StarknetProvider>
               <UIProvider>
-                {/*<Component {...pageProps} />*/}
+                <Component {...pageProps} />
 
-                <PageTransition
-                  Component={Component}
-                  pageProps={pageProps}
-                ></PageTransition>
+                {/* <PageTransition
+                Component={Component}
+                pageProps={pageProps}
+              ></PageTransition> */}
               </UIProvider>
             </StarknetProvider>
           </ApolloProvider>

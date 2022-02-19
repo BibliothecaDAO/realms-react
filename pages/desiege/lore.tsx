@@ -31,6 +31,6 @@ export default (
       props.boost / EFFECT_BASE_FACTOR
     }%! Join the siege now.`}
   >
-    <ShieldGame initialTab="game-controls" />
+    <ShieldGame initialTab="lore" />
   </Game>
 );
