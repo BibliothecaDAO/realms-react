@@ -39,7 +39,7 @@ const Components = Object.freeze({
 
 export const OrderIcon = (props: Props) => {
   return (
-    <div className="my-4">
+    <div className="my-4 w-12">
       {/* @ts-ignore: name not exist on D */}
       {Components[props.order]}
     </div>

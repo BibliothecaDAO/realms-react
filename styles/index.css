@@ -20,7 +20,7 @@ h3 {
   @apply text-lg sm:text-xl md:text-2xl;
 }
 h4 {
-  @apply text-xl;
+  @apply text-xl font-body uppercase;
 }
 
 button {

@@ -15,19 +15,15 @@ import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
 import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
+import { animated, useSpring } from "@react-spring/web";
 
 import realms from "../src/realms.json";
 import order_highlights from "../src/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
+import { number } from "starknet";
 
 function App() {
-  const {
-    mapMenu,
-    toggleMapMenu,
-    toggleTheOrdersMenu,
-    theOrdersMenu,
-    closeAll,
-  } = useUIContext();
+  const { mapMenu, toggleMapMenu, closeOrdersMenu } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
 
@@ -85,13 +81,15 @@ function App() {
     filled: true,
     extruded: true,
     pickable: true,
-
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: 1000,
+    getRadius: (d: any) => (d.properties.realm_idx === value ? 4000 : 100),
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
     onClick: (info: any) => {
       setValue(info.object.properties.realm_idx);
       if (!mapMenu) {
@@ -128,6 +126,7 @@ function App() {
 
   const goToId = useCallback((id: any) => {
     toggleMapMenu();
+    closeOrdersMenu();
     /* @ts-ignore: name not exist on D */
     let realm = realms.features.filter(
       (a: any) => a.properties.realm_idx === id
@@ -162,48 +161,57 @@ function App() {
     variables: { id: value.toString() },
   });
 
+  const animation = useSpring({
+    opacity: mapMenu ? 1 : 0,
+    transform: mapMenu ? `translateX(58.3333333333%)` : `translateX(100%)`,
+  });
+
   return (
     <Layout>
-      <div className="">
+      <div className="relative w-screen h-screen overflow-hidden">
         <Header />
         <MenuSideBar />
+        <animated.div className="relative z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
+          <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
+            {/*className={`h-screen w-full sm:w-5/12 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
+              mapMenu ? "" : "translate-x-full hidden"
+            }`}
+            >*/}
+            <button
+              className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
+              onClick={toggleMapMenu}
+            >
+              <Menu />
+            </button>
+            {data && data.realm && (
+              <RealmCard realm={data!.realm} loading={loading} />
+            )}
+          </div>
+        </animated.div>
         <TheOrdersSideBar onClick={goToId} />
-        <EmpireSideBar />
+        <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
-        <div
-          className={`h-screen w-full sm:w-1/2 z-20 absolute p-6 pt-10 bottom-0 overflow-auto backdrop-blur-md bg-off-200/20 rounded-r-2xl transform duration-300 transition-all right-0  ${
-            mapMenu ? "" : "translate-x-full hidden"
-          }`}
-        >
-          <button
-            className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-            onClick={toggleMapMenu}
-          >
-            <Menu />
-          </button>
-          {data && data.realm && (
-          <RealmCard realm={data!.realm} loading={loading} />
-          )}
-        </div>
         <DeckGL
-          getCursor={() => "crosshair"}
-          pickingRadius={50}
+          getCursor={({ isDragging, isHovering }) => {
+            return isHovering ? "pointer" : "grabbing";
+          }}
+          pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
           layers={[realms_layer, resource_layer]}
-          getTooltip={({ object }) =>
-            object && {
-              // @ts-ignore: name not exist on D
-              html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.properties.realm_idx}.jpg"/><div><h2>${object.properties.name}</h2></div></div>  
-      `,
-              style: {
-                backgroundColor: "black",
-                fontSize: "0.8em",
-                borderRadius: "10px",
-              },
-            }
-          }
+          //     getTooltip={({ object }) =>
+          //       object && {
+          //         // @ts-ignore: name not exist on D
+          //         html: `<div class=" w-96 text-center"> <img class="w-96" src="https://d23fdhqc1jb9no.cloudfront.net/_Renders/${object.properties.realm_idx}.jpg"/><div><h2>${object.properties.name}</h2></div></div>
+          // `,
+          //         style: {
+          //           backgroundColor: "black",
+          //           fontSize: "0.8em",
+          //           borderRadius: "10px",
+          //         },
+          //       }
+          //     }
         >
           <StaticMap
             mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"

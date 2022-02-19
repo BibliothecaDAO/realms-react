@@ -4,6 +4,8 @@ import { JSXElementConstructor, MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
 import { OrderIcon } from "~/shared/OrderIcon";
+import { animated, useSpring } from "@react-spring/web";
+
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
@@ -25,30 +27,32 @@ export const TheOrdersSideBar = (props: Props) => {
     }
   };
 
+  const animation = useSpring({
+    opacity: theOrdersMenu ? 1 : 0,
+    transform: theOrdersMenu ? `translateX(66.66666667%)` : `translateX(100%)`,
+  });
+
   return (
-    <div className="">
-      <div
-        className={`h-screen w-full sm:w-1/3 z-40 absolute p-6 bottom-0 backdrop-blur-lg bg-off-200/30 rounded-r-2xl transform duration-300 transition-all  overflow-x-hidden right-0    ${
-          theOrdersMenu ? "" : "translate-y-full hidden"
-        }`}
-      >
+    <animated.div className="absolute top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
+
+    <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
         <button
-          className="bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70 mb-8"
+          className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleTheOrdersMenu}
         >
           Close
         </button>
         <div className="flex justify-between">
-          <h4 className="uppercase mb-4 self-center">Order Details</h4>
-          <div className="space-x-2 mb-4">
+          <h4 className="self-center mb-4 uppercase">Order Details</h4>
+          <div className="mb-4 space-x-2">
             <button
-              className="rounded-full bg-white/30 p-2 hover:bg-white/70"
+              className="p-2 rounded-full bg-white/30 hover:bg-white/70"
               onClick={() => changeOrder(-1)}
             >
               <Left />
             </button>
             <button
-              className="rounded-full bg-white/30 p-2 hover:bg-white/70"
+              className="p-2 rounded-full bg-white/30 hover:bg-white/70"
               onClick={() => changeOrder(1)}
             >
               <Right />
@@ -62,24 +66,24 @@ export const TheOrdersSideBar = (props: Props) => {
           <h1 className="mt-2 mb-4 capitalize">
             Order of {OrderDetails[focusOrder]?.order}
           </h1>
-          <h4 className="uppercase font-body my-2 font-semibold">
+          <h4 className="my-2 font-semibold uppercase font-body">
             Attunement: {OrderDetails[focusOrder]?.attunement}
           </h4>
-          <h4 className="uppercase font-body my-2 font-semibold">
+          <h4 className="my-2 font-semibold uppercase font-body">
             Paired Order: {OrderDetails[focusOrder]?.paired_order}
           </h4>
           <p className="text-2xl">{OrderDetails[focusOrder]?.description}</p>
           <hr className="my-4" />
-          <h4 className="uppercase font-body my-2 mt-4 font-semibold">
+          <h4 className="my-2 mt-4 font-semibold uppercase font-body">
             Order Wonders
           </h4>
 
           <div className="flex flex-wrap">
             {OrderDetails[focusOrder]?.wonders.name.map((a: any, index) => {
               return (
-                <div key={index} className="w-1/2 px-2 mb-2">
+                <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 hover:bg-white/60 bg-white/20 text-xl rounded font-display uppercase"
+                    className="p-4 text-xl rounded hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
                         /* @ts-ignore: name not exist on D */
@@ -87,21 +91,27 @@ export const TheOrdersSideBar = (props: Props) => {
                       )
                     }
                   >
-                    {a}
+                    <span className="text-3xl">{a}</span>
+
+                    <br />
+                    <span>
+                      {OrderDetails[focusOrder]?.wonders.realm_name[index]} |{" "}
+                      {OrderDetails[focusOrder]?.wonders.realm_id[index]}
+                    </span>
                   </button>
                 </div>
               );
             })}
           </div>
           <hr className="my-4" />
-          <h4 className="uppercase font-body my-2 mt-4 font-semibold">
+          <h4 className="my-2 mt-4 font-semibold uppercase font-body">
             Order Genesis Adventurers
           </h4>
           <div className="flex flex-wrap">
             {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
                 <a
-                  className="px-4 py-2 hover:bg-white/60 bg-white/20 mr-2 text-xl rounded font-display uppercase mb-2"
+                  className="px-4 py-2 mb-2 mr-2 text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
                   target={"_blank"}
                   href={OrderDetails[focusOrder]?.notable_gas.link[index]}
                   rel="noreferrer"
@@ -114,6 +124,6 @@ export const TheOrdersSideBar = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };

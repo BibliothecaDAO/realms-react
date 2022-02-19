@@ -1,5 +1,5 @@
 import React from "react";
-
+import { MouseEventHandler } from "react";
 export type GameStatus = "active" | "completed" | "expired";
 
 interface Owner {
@@ -9,7 +9,7 @@ interface Owner {
 }
 
 export interface Realm {
-  id: String;
+  id: string;
   resourceIds: Array<String>;
   order: String;
   wonder: String;
@@ -30,6 +30,8 @@ export interface Data {
 export interface RealmProps {
   realm: Realm;
   loading: boolean;
+  size?: any;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export interface WalletRealmsData {
   realms: Realm[];
@@ -50,11 +52,11 @@ export interface TowerProps {
 }
 
 export interface RealmFilters {
-  address: string;
-  resources: number[]
-  orders: string[];
-  first: number,
-  skip: number,
-  orderBy: string,
-  orderDirection: string,
+  address?: string;
+  resources?: number[]
+  orders?: string[];
+  first?: number,
+  skip?: number,
+  orderBy?: string,
+  orderDirection?: string,
 }

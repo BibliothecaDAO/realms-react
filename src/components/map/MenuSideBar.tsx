@@ -6,12 +6,14 @@ import Shield from "../../../public/svg/shieldSmall.svg";
 import VolumeIcon from "../../../public/svg/volume-2.svg";
 import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
 import { useSound } from "~/context/soundProvider";
+import { useWalletContext } from "~/hooks/useWalletContext";
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   resource: Array<String>;
 };
 
 export const MenuSideBar = () => {
+  const { account } = useWalletContext();
   const {
     toggleResourceMenu,
     toggleTheOrdersMenu,
@@ -33,10 +35,12 @@ export const MenuSideBar = () => {
         mainMenu ? "" : "translate-y-full hidden"
       }`}
     >
-      <button className={iconClasses} onClick={toggleEmpireMenu}>
-        <Map className="mx-auto" />
-        My Empire
-      </button>
+      {account && (
+        <button className={iconClasses} onClick={toggleEmpireMenu}>
+          👑 <br /> My Empire
+        </button>
+      )}
+
       <button className={iconClasses} onClick={toggleMapMenu}>
         <Map className="mx-auto" />
         Realm

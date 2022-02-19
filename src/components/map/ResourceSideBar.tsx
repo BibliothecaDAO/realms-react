@@ -3,6 +3,8 @@ import { Resources } from "~/util/resources";
 import { MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
+import { animated, useSpring } from "@react-spring/web";
+
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   resource: Array<String>;
@@ -23,9 +25,15 @@ export const ResourceSideBar = (props: Props) => {
       onClick={() => props.onClick(res.trait)}
     >
       {res.trait}{" "}
-      <span className="p-1 bg-white/30 rounded-lg ml-2">{res.value}</span>
+      <span className="p-1 ml-2 rounded-lg bg-white/30">{res.value}</span>
     </button>
   ));
+
+
+  const animation = useSpring({
+    opacity: resourceMenu ? 1 : 0,
+    transform: resourceMenu ? `translateX(66.66666667%)` : `translateX(100%)`,
+  });
 
   const changeResource = (value: any) => {
     setLoaded(false);
@@ -39,32 +47,30 @@ export const ResourceSideBar = (props: Props) => {
     }
   };
   return (
-    <div className="">
-      <div
-        className={`h-screen w-full sm:w-1/3 z-40 absolute p-6 bottom-0 backdrop-blur-md bg-off-200/30 rounded-r-2xl transform duration-300 transition-all  overflow-x-hidden right-0    ${
-          resourceMenu ? "" : "translate-y-full hidden"
-        }`}
-      >
+      <animated.div className="absolute top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
+
+      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
+
         <button
-          className="bg-white/20 transition-all p-4 z-10 rounded hover:bg-white/70 mb-8"
+          className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}
         >
           Close
         </button>
         <h1 className="mb-4">Resources</h1>
-        <h4 className="uppercase mb-4">Filter</h4>
+        <h4 className="mb-4 uppercase">Filter</h4>
         <div className="flex flex-wrap mb-8">{list}</div>
         <div className="flex justify-between">
-          <h4 className="uppercase mb-4 self-center">Details</h4>
-          <div className="space-x-2 mb-4">
+          <h4 className="self-center mb-4 uppercase">Details</h4>
+          <div className="mb-4 space-x-2">
             <button
-              className="rounded-full bg-white/30 p-2 hover:bg-white/70"
+              className="p-2 rounded-full bg-white/30 hover:bg-white/70"
               onClick={() => changeResource(-1)}
             >
               <Left />
             </button>
             <button
-              className="rounded-full bg-white/30 p-2 hover:bg-white/70"
+              className="p-2 rounded-full bg-white/30 hover:bg-white/70"
               onClick={() => changeResource(1)}
             >
               <Right />
@@ -74,7 +80,7 @@ export const ResourceSideBar = (props: Props) => {
         {loaded ? (
           <div></div>
         ) : (
-          <div className="h-96 animate-pulse w-full bg-gray-200 rounded-xl"></div>
+          <div className="w-full bg-gray-200 h-96 animate-pulse rounded-xl"></div>
         )}
 
         <img
@@ -89,6 +95,6 @@ export const ResourceSideBar = (props: Props) => {
           <p className="text-2xl">{Resources[focusResource]?.description}</p>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
