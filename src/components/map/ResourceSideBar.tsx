@@ -3,9 +3,8 @@ import { Resources } from "~/util/resources";
 import { MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
-import { animated, useSpring } from "@react-spring/web";
 import { BaseSideBar } from "./BaseSideBar";
-
+import Menu from "../../../public/svg/menu.svg";
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   resource: Array<String>;
@@ -18,10 +17,10 @@ export const ResourceSideBar = (props: Props) => {
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
-      className={`  p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/90 transition-all duration-150 py-2 uppercase font-body hover:background-animate bg-white/30 ${
+      className={` text-xs sm:text-lg p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/90 hover:text-black transition-all duration-150 py-2 uppercase font-body hover:background-animate bg-white/30 ${
         props.resource.includes(res.trait)
           ? `background-animate ${res.colourClass} `
-          : "text-gray-700"
+          : "text-gray-200"
       } `}
       onClick={() => props.onClick(res.trait)}
     >
@@ -44,12 +43,12 @@ export const ResourceSideBar = (props: Props) => {
 
   return (
     <BaseSideBar open={resourceMenu}>
-      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
+      <div className="z-20 h-screen p-6 pt-10 overflow-auto w-full sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}
         >
-          Close
+          <Menu />
         </button>
         <h1 className="mb-4">Resources</h1>
         <h4 className="mb-4 uppercase">Filter</h4>
@@ -85,8 +84,8 @@ export const ResourceSideBar = (props: Props) => {
         />
         <div className="py-4">
           <h4>Found on: {Resources[focusResource]?.value} Realms</h4>
-          <h2 className="mt-2 mb-4">{Resources[focusResource]?.trait}</h2>
-          <p className="text-2xl">{Resources[focusResource]?.description}</p>
+          <h1 className="sm:mt-2 sm:mb-4">{Resources[focusResource]?.trait}</h1>
+          <p className="sm:text-2xl">{Resources[focusResource]?.description}</p>
         </div>
       </div>
     </BaseSideBar>

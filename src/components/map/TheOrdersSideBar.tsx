@@ -8,6 +8,7 @@ import {
 } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
+import Menu from "../../../public/svg/menu.svg";
 import { OrderIcon } from "~/shared/OrderIcon";
 import { BaseSideBar } from "./BaseSideBar";
 
@@ -36,7 +37,7 @@ export const TheOrdersSideBar = (props: Props) => {
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleTheOrdersMenu}
         >
-          Close
+          <Menu />
         </button>
         <div className="flex justify-between">
           <h4 className="self-center mb-4 uppercase">Order Details</h4>
@@ -65,10 +66,7 @@ export const TheOrdersSideBar = (props: Props) => {
           <h4 className="my-2 font-semibold uppercase font-body">
             Attunement: {OrderDetails[focusOrder]?.attunement}
           </h4>
-          <h4 className="my-2 font-semibold uppercase font-body">
-            Paired Order: {OrderDetails[focusOrder]?.paired_order}
-          </h4>
-          <p className="text-2xl">{OrderDetails[focusOrder]?.description}</p>
+          <p className="sm:text-2xl">{OrderDetails[focusOrder]?.description}</p>
           <hr className="my-4" />
           <h4 className="my-2 mt-4 font-semibold uppercase font-body">
             Order Wonders
@@ -79,7 +77,7 @@ export const TheOrdersSideBar = (props: Props) => {
               return (
                 <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 text-xl rounded hover:bg-white/60 bg-white/20 font-display "
+                    className="p-4 sm:text-xl rounded hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
                         /* @ts-ignore: name not exist on D */
@@ -87,7 +85,7 @@ export const TheOrdersSideBar = (props: Props) => {
                       )
                     }
                   >
-                    <span className="text-3xl">{a}</span>
+                    <span className="text-xl sm:text-3xl">{a}</span>
 
                     <br />
                     <span>
@@ -107,7 +105,7 @@ export const TheOrdersSideBar = (props: Props) => {
             {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
                 <a
-                  className="px-4 py-2 mb-2 mr-2 text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
+                  className="px-4 py-2 mb-2 mr-2 sm:text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
                   target={"_blank"}
                   href={OrderDetails[focusOrder]?.notable_gas.link[index]}
                   rel="noreferrer"

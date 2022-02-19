@@ -3,14 +3,19 @@ import { BaseSideBar } from "./BaseSideBar";
 import { Realm } from "../realms/Realm";
 import Menu from "../../../public/svg/menu.svg";
 import { Data } from "~/types";
+import { useQuery } from "@apollo/client";
+import { getRealmQuery } from "~/hooks/graphql/queries";
 
 type Props = {
-  data: Data | undefined;
-  loading: boolean;
+  id: number;
 };
 
 export const RealmSideBar = (props: Props) => {
   const { toggleMapMenu, mapMenu } = useUIContext();
+
+  const { loading, error, data } = useQuery<Data>(getRealmQuery, {
+    variables: { id: props.id.toString() },
+  });
 
   return (
     <BaseSideBar open={mapMenu}>
@@ -21,9 +26,7 @@ export const RealmSideBar = (props: Props) => {
         >
           <Menu />
         </button>
-        {props.data && props.data.realm && (
-          <Realm realm={props.data!.realm} loading={props.loading} />
-        )}
+        {data && data.realm && <Realm realm={data!.realm} loading={loading} />}
       </div>
     </BaseSideBar>
   );

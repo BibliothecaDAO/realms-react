@@ -54,7 +54,7 @@ export const Resources: Array<Resources> = [
     trait: "Obsidian",
     value: 2216,
     colour: "#000000",
-    colourClass: "bg-black/60 border-black",
+    colourClass: "bg-gradient-to-r from-gray-700 via-gray-900 to-black",
     id: 5,
     description:
       "Hard and brittle, obsidian can be honed to a razors edge nanometers wide, parting armor on an atomic level. The preferred material of assassins and cheap jewelers.",
@@ -64,7 +64,7 @@ export const Resources: Array<Resources> = [
     trait: "Silver",
     value: 1741,
     colour: "#eeeeee",
-    colourClass: "bg-gradient-to-t from-slate-200 via-stone-100 to-slate-400 border-gray-500 text-black",
+    colourClass: "bg-gradient-to-r from-gray-100 to-gray-300 text-black",
     id: 6,
     description:
       "The luster and rarity of silver draws out the basest instinct of laymen and nobility alike. Greed.",

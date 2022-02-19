@@ -1,21 +1,15 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import DeckGL from "@deck.gl/react";
 import { ScatterplotLayer, IconLayer, PolygonLayer } from "@deck.gl/layers";
-import { FlyToInterpolator, PointLight, LightingEffect } from "@deck.gl/core";
+import { FlyToInterpolator } from "@deck.gl/core";
 import { StaticMap } from "react-map-gl";
 import Layout from "~/components/Layout";
-import { Realm as RealmCard } from "~/components/realms/Realm";
 import { ResourceSideBar } from "~/components/map/ResourceSideBar";
-import { useQuery } from "@apollo/client";
-import { Data, Realm } from "~/types";
-import { getRealmQuery } from "~/hooks/graphql/queries";
 import { useUIContext } from "~/hooks/useUIContext";
-import Menu from "../public/svg/menu.svg";
 import { Header } from "~/components/navigation/header";
 import { MenuSideBar } from "~/components/map/MenuSideBar";
 import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
-import { animated, useSpring } from "@react-spring/web";
 
 import realms from "../src/realms.json";
 import order_highlights from "../src/order_highlights.json";
@@ -157,43 +151,18 @@ function App() {
     }
   };
 
-  const { loading, error, data } = useQuery<Data>(getRealmQuery, {
-    variables: { id: value.toString() },
-  });
-
-  const animation = useSpring({
-    opacity: mapMenu ? 1 : 0,
-    transform: mapMenu ? `translateX(58.3333333333%)` : `translateX(100%)`,
-  });
-
   return (
     <Layout>
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden h-screen">
         <Header />
         <MenuSideBar />
-        {/* <RealmSideBar data={data} loading={loading} /> */}
-        <animated.div
-          className="relative z-20 overflow-x-hidden backdrop-blur-md bg-black/80 "
-          style={animation}
-        >
-          <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
-            <button
-              className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-              onClick={toggleMapMenu}
-            >
-              <Menu />
-            </button>
-            {data && data.realm && (
-              <RealmCard realm={data!.realm} loading={loading} />
-            )}
-          </div>
-        </animated.div>
+        <RealmSideBar id={value} />
         <TheOrdersSideBar onClick={goToId} />
         <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <DeckGL
-          getCursor={({ isDragging, isHovering }) => {
+          getCursor={({ isHovering }) => {
             return isHovering ? "pointer" : "grabbing";
           }}
           pickingRadius={25}
