@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-export default (
+const Balance = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => (
   <Game
@@ -31,3 +31,5 @@ export default (
     <ShieldGame />
   </Game>
 );
+
+export default Balance;

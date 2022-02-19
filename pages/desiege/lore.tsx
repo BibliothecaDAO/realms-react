@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default (
+const Lore = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => (
   <Game
@@ -34,3 +34,5 @@ export default (
     <ShieldGame initialTab="lore" />
   </Game>
 );
+
+export default Lore;

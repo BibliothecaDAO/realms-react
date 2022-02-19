@@ -113,7 +113,7 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const connectedClassname =
-    "inline-block py-2 mt-4 break-words px-4 backdrop-blur-md bg-white/30 rounded-md";
+    "inline-block py-2 mt-4 break-words px-4 bg-white/30 rounded-md";
 
   const mintTx = txManager.transactions.find(
     (s) => s.transactionHash == transactionHash
@@ -123,13 +123,13 @@ export const Bridge: React.FC<Prop> = (props) => {
     starknet.connectBrowserWallet();
   }, []);
   return (
-    <div className="w-full pt-40 mx-auto sm:w-1/2">
-      <div className="p-4 mx-2 mt-4 rounded-lg backdrop-blur-md bg-white/60">
+    <div className="w-full pt-4 sm:w-1/2">
+      <div className="p-4 mx-2 mt-4 rounded-lg bg-white/60">
         <h1 className="px-2 mt-4 mb-8">
           <ElementsLabel>Desiege Setup</ElementsLabel>
         </h1>
         <div className="px-2 text-gray-800">
-          <nav className="rounded-md backdrop-blur-md bg-white/70">
+          <nav className="rounded-md bg-white/70">
             <span>
               <button
                 onClick={() => setCurrentTab("connect-ethereum")}
@@ -251,7 +251,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
                       <div className="relative w-full group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
                         <button
                           onClick={() => setSide("light")}
                           className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-lg px-7"
@@ -266,7 +266,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                         </button>
                       </div>
                       <div className="relative w-full group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-lg opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
                         <button
                           onClick={() => setSide("dark")}
                           className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-lg px-7"
