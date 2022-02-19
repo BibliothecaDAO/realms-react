@@ -23,7 +23,7 @@ function MenuBar(props: Prop) {
 
   return (
     <div className="absolute w-full text-black transition-all bottom-2 ">
-      <div className="flex justify-around h-12 px-4 mx-auto align-middle w-96 rounded-2xl backdrop-blur-md bg-white/40">
+      <div className="flex justify-around h-12 px-4 mx-auto align-middle w-96 rounded-2xl bg-white/40">
         <button
           className="self-center mute-btn hover:scale-105 hover:text-blue-700"
           onClick={() => {
@@ -37,7 +37,7 @@ function MenuBar(props: Prop) {
         <button
           className="self-center mute-btn hover:text-blue-700"
           onClick={() => {
-            props.toggleTab && props.toggleTab("boost");
+            props.toggleTab && props.toggleTab("lore");
             // TODO: Change URL without 3D re-render
             // router.replace("/desiege/boost");
           }}

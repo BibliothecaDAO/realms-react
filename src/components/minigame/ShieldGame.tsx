@@ -11,7 +11,7 @@ import { GameStatus } from "~/types";
 import TowerDefence from "./TowerDefence";
 import MenuBar from "./MenuBar";
 
-export type DesiegeTab = "game-controls" | "boost" | "mint";
+export type DesiegeTab = "game-controls" | "lore" | "mint";
 
 type Prop = {
   initialTab?: DesiegeTab;
@@ -74,6 +74,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
+      {view == "lore" ? (
+        <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
+          <GameBlockTimer gameCtx={gameCtx} />
+        </div>
+      ) : null}
       <div className="absolute w-full p-8">
         {/* {gameCtx ? (
           <span
@@ -92,12 +97,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
             {/* </ElementLabel> */}
           </span>
         </h3>
-        <AddressIndicator />
-        {view == "boost" ? (
-          <div className="z-10 mb-8">
-            <GameBlockTimer gameCtx={gameCtx} />
-          </div>
-        ) : null}
+
         {view == "game-controls" ? (
           <div className="flex flex-row w-full">
             <GameControls
@@ -108,7 +108,6 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </div>
         ) : null}
       </div>
-
       <TowerDefence
         gameStatus={gameStatus}
         gameIdx={gameIdx}

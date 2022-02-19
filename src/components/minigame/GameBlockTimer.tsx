@@ -9,7 +9,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   if (props.gameCtx == undefined) {
     // Present a loading indicator
     return (
-      <div className="z-10 h-96 w-12 my-2 mb-6 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
+      <div className="z-10 w-12 my-2 mb-6 h-96 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
     );
   }
 
@@ -55,10 +55,11 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="flex flex-col gap-1 my-2 relative z-10 h-full w-auto">
-        <span>Started at L2 block {startToNum}</span>
+      <div className="relative z-10 flex flex-col w-auto h-full gap-1 my-2">
+        <p>Dark Portal opened</p>
+        <p>L2 block {startToNum}</p>
         {blockTicks}
-        <span>Ends at L2 block {endBlock}</span>
+        <p>Dark Portal closes at L2 block {endBlock}</p>
       </div>
     </>
   );
