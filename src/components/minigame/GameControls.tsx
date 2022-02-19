@@ -95,8 +95,13 @@ const GameControls: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     const getIsApproved = async (account: string, operator: string) => {
-      const isApproved = await getIsApprovedForAll(account, operator);
-      setIs1155TokenApproved(isApproved ? "1" : "0");
+      try {
+        const isApproved = await getIsApprovedForAll(account, operator);
+        setIs1155TokenApproved(isApproved ? "1" : "0");
+      } catch (e) {
+        // TODO: Handle error
+        console.error("Error fetching token approval", e);
+      }
     };
     if (
       is1155TokenApproved == undefined &&
