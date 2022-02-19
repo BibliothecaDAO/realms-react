@@ -48,6 +48,10 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const { account, connectBrowserWallet } = useStarknet();
 
+  useEffect(() => {
+    connectBrowserWallet(); // on mount
+  }, []);
+
   const towerDefenceContractAddress = useModuleAddress("1");
 
   const { contract: elementsContract } = useContract({
@@ -140,7 +144,7 @@ const GameControls: React.FC<Prop> = (props) => {
   };
 
   const primaryBtnClass =
-    "w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md backdrop-blur-lg bg-gray-200 hover:bg-white/100";
+    "w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md bg-gray-200 hover:bg-white/100";
 
   const ConnectStarknetButton = () => (
     <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
@@ -160,7 +164,7 @@ const GameControls: React.FC<Prop> = (props) => {
   return (
     <div
       id="game-actions"
-      className="z-10 w-1/3 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
+      className="z-10 w-1/3 p-10 text-black bg-white/30 rounded-2xl"
     >
       <BridgeModal
         isOpen={mintModalOpen}
@@ -179,17 +183,13 @@ const GameControls: React.FC<Prop> = (props) => {
           {side == undefined && loadingTokenBalance == false ? (
             <button
               onClick={() => {
-                if (account != undefined && side == undefined) {
-                  setMintModalOpen(true);
-                }
+                setMintModalOpen(true);
               }}
               className={primaryBtnClass}
             >
               <ElementLabel>Choose your Elements</ElementLabel>
             </button>
-          ) : (
-            <ConnectStarknetButton />
-          )}
+          ) : null}
           {loadingTokenBalance ? <LoadingSkeleton className="mt-4" /> : null}
 
           <p className="mt-4 text-3xl">
