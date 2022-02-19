@@ -60,3 +60,11 @@ export interface RealmFilters {
   orderBy?: string,
   orderDirection?: string,
 }
+
+export interface Queries {
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  "2xl": string;
+}

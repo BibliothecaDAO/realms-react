@@ -4,6 +4,7 @@ import { MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
 import { animated, useSpring } from "@react-spring/web";
+import { BaseSideBar } from "./BaseSideBar";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -29,12 +30,6 @@ export const ResourceSideBar = (props: Props) => {
     </button>
   ));
 
-
-  const animation = useSpring({
-    opacity: resourceMenu ? 1 : 0,
-    transform: resourceMenu ? `translateX(66.66666667%)` : `translateX(100%)`,
-  });
-
   const changeResource = (value: any) => {
     setLoaded(false);
     console.log(focusResource);
@@ -46,11 +41,10 @@ export const ResourceSideBar = (props: Props) => {
       setResource(() => focusResource + value);
     }
   };
+
   return (
-      <animated.div className="absolute top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
-
+    <BaseSideBar open={resourceMenu}>
       <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
-
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}
@@ -95,6 +89,6 @@ export const ResourceSideBar = (props: Props) => {
           <p className="text-2xl">{Resources[focusResource]?.description}</p>
         </div>
       </div>
-    </animated.div>
+    </BaseSideBar>
   );
 };

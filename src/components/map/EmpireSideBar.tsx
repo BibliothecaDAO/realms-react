@@ -96,7 +96,10 @@ export const EmpireSideBar = (props: Props) => {
     "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
 
   return (
-    <animated.div className="absolute top-0 z-40 w-full backdrop-blur-md bg-black/80" style={animation}>
+    <animated.div
+      className="absolute top-0 z-40 w-full backdrop-blur-md bg-black/80"
+      style={animation}
+    >
       <div
         className={`h-screen w-full relative z-60 top-0 p-6   rounded-r-2xl overflow-y-scroll`}
       >
