@@ -3,8 +3,10 @@ import Game from "./index";
 
 // TODO: Get real game stats to display in OG preview
 
-export default () => (
+const Controls = () => (
   <Game title="Desiege - Play Now">
     <ShieldGame initialTab="game-controls" />
   </Game>
 );
+
+export default Controls;
