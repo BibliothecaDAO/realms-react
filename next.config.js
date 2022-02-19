@@ -8,7 +8,6 @@ const withTM = require("next-transpile-modules")([
   "drei",
 ]);
 
-
 module.exports = withPlugins([withSvgr, [withTM, {
   reactStrictMode: true,
   images: {
