@@ -1,13 +1,14 @@
 /** @type {import('next').NextConfig} */
 
+const withPlugins = require("next-compose-plugins");
+const withSvgr = require('next-plugin-svgr');
 const withTM = require("next-transpile-modules")([
   "three",
   "react-three-fiber",
   "drei",
 ]);
-const withSvgr = require('next-plugin-svgr');
 
-module.exports = withTM({
+module.exports = withPlugins([withSvgr, [withTM, {
   reactStrictMode: true,
   images: {
     domains: ['d23fdhqc1jb9no.cloudfront.net']
@@ -27,6 +28,4 @@ module.exports = withTM({
 
     return config;
   },
-});
-
-module.exports = withSvgr();
+}]]);

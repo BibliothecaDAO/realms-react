@@ -3,8 +3,8 @@ import { Resources } from "~/util/resources";
 import { MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
-import { animated, useSpring } from "@react-spring/web";
-
+import { BaseSideBar } from "./BaseSideBar";
+import Menu from "../../../public/svg/menu.svg";
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   resource: Array<String>;
@@ -17,23 +17,16 @@ export const ResourceSideBar = (props: Props) => {
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
-      className={` p-1 h-12 mb-2 pl-4 pr-2 rounded-xl text-off-200 mr-2 hover:bg-white/90 transition-all duration-300   ${
+      className={` text-xs sm:text-lg p-1 mb-4 pl-4 px-4 rounded-xl tracking-widest  mr-4 hover:bg-white/90 hover:text-black transition-all duration-150 py-2 uppercase font-body hover:background-animate bg-white/30 ${
         props.resource.includes(res.trait)
-          ? "backdrop-blur-md bg-white/90"
-          : "backdrop-blur-md bg-white/30"
+          ? `background-animate ${res.colourClass} `
+          : "text-gray-200"
       } `}
       onClick={() => props.onClick(res.trait)}
     >
-      {res.trait}{" "}
-      <span className="p-1 ml-2 rounded-lg bg-white/30">{res.value}</span>
+      {res.trait}
     </button>
   ));
-
-
-  const animation = useSpring({
-    opacity: resourceMenu ? 1 : 0,
-    transform: resourceMenu ? `translateX(66.66666667%)` : `translateX(100%)`,
-  });
 
   const changeResource = (value: any) => {
     setLoaded(false);
@@ -46,16 +39,15 @@ export const ResourceSideBar = (props: Props) => {
       setResource(() => focusResource + value);
     }
   };
+
   return (
-      <animated.div className="absolute top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
-
-      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
-
+    <BaseSideBar open={resourceMenu}>
+      <div className="z-20 h-screen p-6 pt-10 overflow-auto w-full sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}
         >
-          Close
+          <Menu />
         </button>
         <h1 className="mb-4">Resources</h1>
         <h4 className="mb-4 uppercase">Filter</h4>
@@ -91,10 +83,10 @@ export const ResourceSideBar = (props: Props) => {
         />
         <div className="py-4">
           <h4>Found on: {Resources[focusResource]?.value} Realms</h4>
-          <h2 className="mt-2 mb-4">{Resources[focusResource]?.trait}</h2>
-          <p className="text-2xl">{Resources[focusResource]?.description}</p>
+          <h1 className="sm:mt-2 sm:mb-4">{Resources[focusResource]?.trait}</h1>
+          <p className="sm:text-2xl">{Resources[focusResource]?.description}</p>
         </div>
       </div>
-    </animated.div>
+    </BaseSideBar>
   );
 };

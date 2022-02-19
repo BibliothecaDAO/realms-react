@@ -16,6 +16,7 @@ import {
   useQuery,
   gql,
 } from "@apollo/client";
+import { BreakpointProvider } from "~/hooks/useBreakPoint";
 
 const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
@@ -46,25 +47,34 @@ const PageWrapper = (Comp: any) =>
       );
     }
   };
+const queries = {
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
+  "2xl": "(min-width: 1536px)",
+};
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SoundProvider>
-      <WalletProvider>
-        <ApolloProvider client={client}>
-          <StarknetProvider>
-            <UIProvider>
-              <Component {...pageProps} />
+    <BreakpointProvider queries={queries}>
+      <SoundProvider>
+        <WalletProvider>
+          <ApolloProvider client={client}>
+            <StarknetProvider>
+              <UIProvider>
+                <Component {...pageProps} />
 
-              {/* <PageTransition
+                {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-            </UIProvider>
-          </StarknetProvider>
-        </ApolloProvider>
-      </WalletProvider>
-    </SoundProvider>
+              </UIProvider>
+            </StarknetProvider>
+          </ApolloProvider>
+        </WalletProvider>
+      </SoundProvider>
+    </BreakpointProvider>
   );
 }
 

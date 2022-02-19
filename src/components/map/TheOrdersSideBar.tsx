@@ -1,10 +1,16 @@
 import { useUIContext } from "~/hooks/useUIContext";
 import { TheOrders, OrderDetails } from "~/util/theOrders";
-import { JSXElementConstructor, MouseEventHandler, useState } from "react";
+import {
+  JSXElementConstructor,
+  MouseEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
+import Menu from "../../../public/svg/menu.svg";
 import { OrderIcon } from "~/shared/OrderIcon";
-import { animated, useSpring } from "@react-spring/web";
+import { BaseSideBar } from "./BaseSideBar";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -13,11 +19,8 @@ type Props = {
 export const TheOrdersSideBar = (props: Props) => {
   const { toggleTheOrdersMenu, theOrdersMenu } = useUIContext();
   const [focusOrder, setOrder] = useState<number>(0);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   const changeOrder = (value: any) => {
-    setLoaded(false);
-    console.log(focusOrder);
     if (focusOrder === 15 && value > 0) {
       setOrder(() => 1);
     } else if (focusOrder === 1 && value === -1) {
@@ -27,20 +30,14 @@ export const TheOrdersSideBar = (props: Props) => {
     }
   };
 
-  const animation = useSpring({
-    opacity: theOrdersMenu ? 1 : 0,
-    transform: theOrdersMenu ? `translateX(66.66666667%)` : `translateX(100%)`,
-  });
-
   return (
-    <animated.div className="absolute top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/20 " style={animation}>
-
-    <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
+    <BaseSideBar open={theOrdersMenu}>
+      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleTheOrdersMenu}
         >
-          Close
+          <Menu />
         </button>
         <div className="flex justify-between">
           <h4 className="self-center mb-4 uppercase">Order Details</h4>
@@ -69,10 +66,7 @@ export const TheOrdersSideBar = (props: Props) => {
           <h4 className="my-2 font-semibold uppercase font-body">
             Attunement: {OrderDetails[focusOrder]?.attunement}
           </h4>
-          <h4 className="my-2 font-semibold uppercase font-body">
-            Paired Order: {OrderDetails[focusOrder]?.paired_order}
-          </h4>
-          <p className="text-2xl">{OrderDetails[focusOrder]?.description}</p>
+          <p className="sm:text-2xl">{OrderDetails[focusOrder]?.description}</p>
           <hr className="my-4" />
           <h4 className="my-2 mt-4 font-semibold uppercase font-body">
             Order Wonders
@@ -83,7 +77,7 @@ export const TheOrdersSideBar = (props: Props) => {
               return (
                 <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 text-xl rounded hover:bg-white/60 bg-white/20 font-display "
+                    className="p-4 sm:text-xl rounded hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
                         /* @ts-ignore: name not exist on D */
@@ -91,7 +85,7 @@ export const TheOrdersSideBar = (props: Props) => {
                       )
                     }
                   >
-                    <span className="text-3xl">{a}</span>
+                    <span className="text-xl sm:text-3xl">{a}</span>
 
                     <br />
                     <span>
@@ -111,7 +105,7 @@ export const TheOrdersSideBar = (props: Props) => {
             {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
                 <a
-                  className="px-4 py-2 mb-2 mr-2 text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
+                  className="px-4 py-2 mb-2 mr-2 sm:text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
                   target={"_blank"}
                   href={OrderDetails[focusOrder]?.notable_gas.link[index]}
                   rel="noreferrer"
@@ -124,6 +118,6 @@ export const TheOrdersSideBar = (props: Props) => {
           </div>
         </div>
       </div>
-    </animated.div>
+    </BaseSideBar>
   );
 };
