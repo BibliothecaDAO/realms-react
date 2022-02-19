@@ -10,6 +10,8 @@ import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "./TowerDefence";
 import MenuBar from "./MenuBar";
+import LoreDevKit from "~/shared/LoreDevKit";
+import DivineSiege from "~/shared/LoreDevKit/desiege.ldk";
 
 export type DesiegeTab = "game-controls" | "lore" | "mint";
 
@@ -76,6 +78,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
     <div className="relative">
       {view == "lore" ? (
         <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
+          <LoreDevKit ldk={DivineSiege} />
           <GameBlockTimer gameCtx={gameCtx} />
         </div>
       ) : null}
