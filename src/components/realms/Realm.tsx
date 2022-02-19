@@ -15,7 +15,7 @@ export function Realm(props: RealmProps): ReactElement {
     return Resources.find((e) => e.id === parseInt(value));
   };
   return (
-    <div className="h-auto p-1 rounded-xl sm:p-4 z-10 text-white">
+    <div className="h-auto p-1 rounded-xl sm:p-4 z-10 text-white w-full">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -40,13 +40,17 @@ export function Realm(props: RealmProps): ReactElement {
           ) : (
             ""
           )}
+          <div className="w-auto">
+            <Image
+              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.id}.webp`}
+              alt="map"
+              className="w-full mt-4 rounded-xl"
+              width={500}
+              height={320}
+              layout={"responsive"}
+            />
+          </div>
 
-          <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.id}.webp`}
-            alt="map"
-            className="w-full mt-4 rounded-xl"
-            layout="fill"
-          />
           <div className="p-2">
             {props.realm.currentOwner && (
               <h3 className="my-3">

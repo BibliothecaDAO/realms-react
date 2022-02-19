@@ -7,6 +7,8 @@ const withTM = require("next-transpile-modules")([
 ]);
 const withSvgr = require('next-plugin-svgr');
 
+module.exports = withSvgr();
+
 module.exports = withTM({
   reactStrictMode: true,
   images: {
@@ -28,5 +30,3 @@ module.exports = withTM({
     return config;
   },
 });
-
-module.exports = withSvgr();

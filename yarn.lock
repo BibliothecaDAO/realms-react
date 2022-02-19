@@ -13487,6 +13487,11 @@ next-auth@*, next-auth@^4.0.6:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+next-compose-plugins@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.1.tgz#020fc53f275a7e719d62521bef4300fbb6fde5ab"
+  integrity sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==
+
 next-plugin-svgr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/next-plugin-svgr/-/next-plugin-svgr-1.1.1.tgz#d0d27ce1a06150264e3e314334406a5bd21563d4"
