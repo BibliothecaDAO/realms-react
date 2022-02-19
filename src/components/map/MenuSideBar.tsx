@@ -18,9 +18,9 @@ export const MenuSideBar = () => {
     toggleResourceMenu,
     toggleTheOrdersMenu,
     toggleMapMenu,
-    toggleMainMenu,
     toggleEmpireMenu,
     mainMenu,
+    toggleCryptsMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -43,7 +43,11 @@ export const MenuSideBar = () => {
 
       <button className={iconClasses} onClick={toggleMapMenu}>
         <Map className="mx-auto" />
-        Realm
+        Realms
+      </button>
+      <button className={iconClasses} onClick={toggleCryptsMenu}>
+        <Map className="mx-auto" />
+        Crypts
       </button>
       <button className={iconClasses} onClick={toggleResourceMenu}>
         <Box className="mx-auto" />

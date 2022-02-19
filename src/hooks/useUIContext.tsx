@@ -17,6 +17,8 @@ const defaultUIContext = {
   mainMenu: false,
   toggleMainMenu: () => {},
   closeOrdersMenu: () => {},
+  toggleCryptsMenu: () => {},
+  cryptsMenu: false,
 };
 
 const UIContext = createContext<{
@@ -36,6 +38,8 @@ const UIContext = createContext<{
   mainMenu: boolean;
   toggleMainMenu: () => void;
   closeOrdersMenu: () => void;
+  toggleCryptsMenu: () => void;
+  cryptsMenu: boolean;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -57,9 +61,9 @@ function useUI() {
   const [setup, setSetup] = useState(false);
   const [mapMenu, setMapMenu] = useState(false);
   const [empireMenu, setEmpireMenu] = useState(false);
-
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
+  const [cryptsMenu, setCryptsMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
 
   const hideOrOpenMainMenu = () => {
@@ -68,6 +72,10 @@ function useUI() {
     } else {
       setMainMenu(() => true);
     }
+  };
+
+  const toggleCryptsMenu = () => {
+    return setCryptsMenu(!cryptsMenu);
   };
 
   const toggleMainMenu = () => {
@@ -125,6 +133,8 @@ function useUI() {
     toggleMainMenu,
     mainMenu,
     closeOrdersMenu,
+    toggleCryptsMenu,
+    cryptsMenu,
   };
 }
 

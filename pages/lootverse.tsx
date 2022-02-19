@@ -12,9 +12,11 @@ import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
 import realms from "../src/realms.json";
+import crypts from "../src/crypts_all.json";
 import order_highlights from "../src/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
 import { RealmSideBar } from "~/components/map/RealmsSideBar";
+import { CryptsSideBar } from "~/components/map/CryptsSideBar";
 
 function App() {
   const { mapMenu, toggleMapMenu, closeOrdersMenu } = useUIContext();
@@ -66,6 +68,31 @@ function App() {
       return setResource(temp);
     }
   };
+
+  const crypts_layer = new ScatterplotLayer({
+    id: "crypts-layer",
+    /* @ts-ignore: name not exist on D */
+    data: crypts.features,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    opacity: 1,
+    getPosition: (d: any) => d.geometry.coordinates,
+    getRadius: (d: any) => (d.properties.realm_idx === value ? 4000 : 100),
+    getElevation: 10000,
+    lineWidthMinPixels: 1,
+    getFillColor: [0, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
+    // onClick: (info: any) => {
+    //   setValue(info.object.properties.id);
+    //   if (!mapMenu) {
+    //     toggleMapMenu();
+    //   }
+    // },
+  });
 
   const realms_layer = new ScatterplotLayer({
     id: "scatterplot-layer",
@@ -160,6 +187,7 @@ function App() {
         <TheOrdersSideBar onClick={goToId} />
         <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
+        <CryptsSideBar id={value} />
         <FlyTo onChange={onChange} onClick={goToId} value={value} />
         <DeckGL
           getCursor={({ isHovering }) => {
@@ -168,7 +196,7 @@ function App() {
           pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
-          layers={[realms_layer, resource_layer]}
+          layers={[realms_layer, resource_layer, crypts_layer]}
         >
           <StaticMap
             attributionControl={false}
