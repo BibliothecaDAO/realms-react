@@ -87,7 +87,7 @@ function App() {
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: (d: any) => (d.properties.id === value ? 4000 : 100),
+    getRadius: (d: any) => (d.properties.tokenId === value ? 4000 : 100),
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0, 0],
@@ -95,7 +95,7 @@ function App() {
       getRadius: value,
     },
     onClick: (info: any) => {
-      setValue(info.object.properties.id);
+      setValue(info.object.properties.tokenId);
       if (!cryptsMenu) {
         toggleCryptsMenu();
       }
