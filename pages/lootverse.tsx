@@ -164,10 +164,18 @@ function App() {
         asset = realms.features.filter(
           (a: any) => a.properties.realm_idx === id
         );
-        toggleMapMenu();
+        if (cryptsMenu) {
+          toggleCryptsMenu();
+        }
+        if (!mapMenu) {
+          toggleMapMenu();
+        }
       } else {
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter((a: any) => a.properties.id === id);
+        if (mapMenu) {
+          toggleMapMenu();
+        }
         toggleCryptsMenu();
       }
 
@@ -184,7 +192,14 @@ function App() {
         transitionInterpolator: new FlyToInterpolator(),
       });
     },
-    [assetSelect, closeOrdersMenu, toggleMapMenu, toggleCryptsMenu]
+    [
+      assetSelect,
+      cryptsMenu,
+      mapMenu,
+      closeOrdersMenu,
+      toggleMapMenu,
+      toggleCryptsMenu,
+    ]
   );
 
   const onChange = (event: any) => {
