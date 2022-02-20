@@ -68,7 +68,7 @@ export const Environments: Array<Environments> = [
    {
       name: 'Ember\'s Glow',
       colours: {
-         main: '#FF1800',
+         main: '#ff422e',
          door: '#FF1800',
          point: '#B75700'
       },
