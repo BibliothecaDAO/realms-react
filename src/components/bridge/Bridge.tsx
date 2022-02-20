@@ -19,6 +19,7 @@ import { MintingError } from "~/../pages/api/minigame_alpha_mint";
 import Check from "../../../public/svg/check.svg";
 import { ExternalLink } from "~/shared/Icons";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
+import useTxCallback from "~/hooks/useTxCallback";
 
 type Prop = {
   initialTab?: TabName;
@@ -45,11 +46,15 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const [gameIdx, setGameIdx] = useState<string>();
   const [mintError, setMintError] = useState<string>();
+  const [middlewareSigning, setMiddlewareSigning] = useState(false);
 
   const [transactionHash, setTransactionHash] = useState<string>();
 
   useEffect(() => {
     if (transactionHash) {
+      // The transaction was executed on a middleware
+      // designed to balance and control game minting
+      // Need to manually track transaction here
       txManager.addTransaction({
         transactionHash,
         address: starknet.account as string,
@@ -86,28 +91,37 @@ export const Bridge: React.FC<Prop> = (props) => {
   const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string));
 
   const verifyAndMint = async () => {
-    if (signer) {
-      const sig = await signer.signMessage(
-        messageKey(starknet.account as string)
-      );
-      const res = await axios.post<AddTransactionResponse | MintingError>(
-        "/api/minigame_alpha_mint",
-        {
-          starknetAddress: starknet.account,
-          sig,
-          chosenSide: side,
-          gameIdx,
-        }
-      );
+    try {
+      setMintError(undefined);
+      if (signer) {
+        setMiddlewareSigning(true);
+        const sig = await signer.signMessage(
+          messageKey(starknet.account as string)
+        );
+        const res = await axios.post<AddTransactionResponse | MintingError>(
+          "/api/minigame_alpha_mint",
+          {
+            starknetAddress: starknet.account,
+            sig,
+            chosenSide: side,
+            gameIdx,
+          }
+        );
 
-      if ("code" in res.data && res.data.code == "TRANSACTION_RECEIVED") {
-        setTransactionHash(res.data.transaction_hash);
-        setMintError(undefined);
+        if ("code" in res.data && res.data.code == "TRANSACTION_RECEIVED") {
+          setTransactionHash(res.data.transaction_hash);
+          setMintError(undefined);
+        }
+        if ("error" in res.data) {
+          setMintError(res.data.error);
+          setTransactionHash(undefined);
+        }
+        setMiddlewareSigning(false);
       }
-      if ("error" in res.data) {
-        setMintError(res.data.error);
-        setTransactionHash(undefined);
-      }
+    } catch (e: any) {
+      setMintError(e.message);
+    } finally {
+      setMiddlewareSigning(false);
     }
   };
 
@@ -119,12 +133,18 @@ export const Bridge: React.FC<Prop> = (props) => {
   const connectedClassname =
     "inline-block py-2 mt-4 break-words px-4 bg-white/30 rounded-md";
 
-  const mintTx = txManager.transactions.find(
-    (s) => s.transactionHash == transactionHash
-  );
+  const txTracker = useTxCallback(transactionHash, () => {
+    // TODO: Close the modal and start next sequence
+  });
 
-  const mintTxLoading =
-    mintTx?.status == "PENDING" || mintTx?.status == "RECEIVED";
+  const mintTxLoading = txTracker.loading;
+
+  useEffect(() => {
+    // Middleware signing and tx status need to be synced carefully
+    if (middlewareSigning) {
+      setMiddlewareSigning(!txTracker.loading);
+    }
+  }, [txTracker.tx?.status]);
 
   useEffect(() => {
     starknet.connectBrowserWallet();
@@ -300,7 +320,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                       </div>
                     </div>
 
-                    {mintTx?.status == "ACCEPTED_ON_L2" ? (
+                    {txTracker.tx?.status == "ACCEPTED_ON_L2" ? (
                       <p className="mt-4 text-2xl text-green-800">
                         Minting succeeded. Please refresh your browser.
                       </p>
@@ -343,13 +363,19 @@ export const Bridge: React.FC<Prop> = (props) => {
                             >
                               Sign and Mint
                             </Button>
+                            {middlewareSigning ? (
+                              <p className="mt-4 text-2xl animate-bounce">
+                                Requesting Signature...
+                              </p>
+                            ) : null}
                           </>
                         ) : null}
                       </>
                     )}
                   </>
                 ) : null}
-                {mintError !== undefined || mintTx?.status == "REJECTED" ? (
+                {mintError !== undefined ||
+                txTracker.tx?.status == "REJECTED" ? (
                   <p className="mt-4 text-xl text-red-500">
                     A minting error occurred:{" "}
                     {mintError ||

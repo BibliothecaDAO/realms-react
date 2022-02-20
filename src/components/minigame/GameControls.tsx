@@ -24,6 +24,7 @@ import classNames from "classnames";
 import LoadingSkeleton from "~/shared/LoadingSkeleton";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 import { ExternalLink } from "~/shared/Icons";
+import useTxCallback from "~/hooks/useTxCallback";
 
 type Prop = {
   gameIdx?: number;
@@ -84,6 +85,13 @@ const GameControls: React.FC<Prop> = (props) => {
     loading: loadingTokenBalance,
   } = useSiegeBalance();
 
+  const txTracker = useTxCallback(
+    shieldAction.data || attackAction.data,
+    () => {
+      fetchTokenBalances(gameIdx as number);
+    }
+  );
+
   const [mintModalOpen, setMintModalOpen] = useState(false);
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
@@ -140,7 +148,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const handleShield = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
-    await shieldAction.invoke({
+    shieldAction.invoke({
       args: [
         gameIndex.toString(),
         tokenId.toString(),
@@ -162,7 +170,8 @@ const GameControls: React.FC<Prop> = (props) => {
     gameIdx == undefined ? 0 : gameIdx + 1
   );
 
-  const actionIsLoading = shieldAction.loading || attackAction.loading;
+  const actionIsLoading =
+    shieldAction.loading || attackAction.loading || txTracker.loading;
 
   return (
     <div
