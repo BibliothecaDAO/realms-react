@@ -44,7 +44,7 @@ export function Realm(props: RealmProps): ReactElement {
             <Image
               src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.id}.webp`}
               alt="map"
-              className="w-full mt-4 rounded-xl"
+              className="w-full mt-4 rounded-xl -scale-x-100"
               width={500}
               height={320}
               layout={"responsive"}
@@ -87,9 +87,8 @@ export function Realm(props: RealmProps): ReactElement {
             <div className="flex flex-wrap mb-2">
               {props.realm.resourceIds.map((re: any, index) => (
                 <span
-                  className={`uppercase px-4 py-1 rounded-lg mr-2 mb-2 tracking-widest ${
-                    findResourceName(re)?.colourClass
-                  }`}
+                  className={`uppercase px-4 py-1 rounded-lg mr-2 mb-2 tracking-widest ${findResourceName(re)?.colourClass
+                    }`}
                   key={index}
                 >
                   {findResourceName(re)?.trait}
@@ -98,9 +97,8 @@ export function Realm(props: RealmProps): ReactElement {
             </div>
 
             <div
-              className={`flex flex-col w-full uppercase ${
-                variantMaps[props.size]?.regions
-              } `}
+              className={`flex flex-col w-full uppercase ${variantMaps[props.size]?.regions
+                } `}
             >
               <span>Regions: {props.realm.regions} / 7</span>
               <div className="w-full my-2 bg-gray-200 rounded">
