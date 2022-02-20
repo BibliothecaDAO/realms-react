@@ -20,11 +20,13 @@ import Check from "../../../public/svg/check.svg";
 import { ExternalLink } from "~/shared/Icons";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 import useTxCallback from "~/hooks/useTxCallback";
+import { XCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 
 type Prop = {
   initialTab?: TabName;
   onReceivedTx?: (txHash: string) => void;
+  toggleModal: () => void;
 };
 
 type TabName =
@@ -94,11 +96,15 @@ export const Bridge: React.FC<Prop> = (props) => {
     setUnsupportedChain(error instanceof UnsupportedChainIdError);
   }, [error]);*/
 
+  // TODO: Dynamically set the current tab based on
+  // - wallet connection state
+  // - previous game states
   const [currentTab, setCurrentTab] = useState<TabName>(
     props.initialTab || "mint"
   );
 
-  const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string));
+  // Add +1 to show for next round
+  const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string) + 1);
 
   const verifyAndMint = async () => {
     try {
@@ -162,8 +168,12 @@ export const Bridge: React.FC<Prop> = (props) => {
   return (
     <div className="w-full pt-4 sm:w-1/2">
       <div className="p-4 mx-2 mt-4 rounded-lg bg-white/60">
-        <h1 className="px-2 mt-4 mb-8">
-          <ElementsLabel>Desiege Setup</ElementsLabel>
+        <h1 className="flex flex-row items-start justify-between px-2 mt-4 mb-8">
+          <ElementsLabel className="h-20">Desiege Setup</ElementsLabel>
+
+          <button onClick={() => props.toggleModal()} className="text-black">
+            <XCircleIcon className="h-8" />
+          </button>
         </h1>
         <div className="px-2 text-gray-800">
           <nav className="rounded-md bg-white/70">

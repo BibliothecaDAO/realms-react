@@ -42,7 +42,7 @@ const BridgeModal: React.FC<Prop> = (props) => {
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
               <Dialog.Title className={"hidden"}>Desiege Setup</Dialog.Title>
-              <Bridge initialTab="mint" />
+              <Bridge toggleModal={props.toggle} initialTab="mint" />
             </div>
           </Transition.Child>
         </div>

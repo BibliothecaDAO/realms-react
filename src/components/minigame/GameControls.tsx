@@ -30,6 +30,7 @@ type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
   gameStatus: GameStatus;
+  setupModalInitialIsOpen?: boolean;
 };
 
 type TokenNameOffsetMap = Record<string, number>;
@@ -92,7 +93,11 @@ const GameControls: React.FC<Prop> = (props) => {
     }
   );
 
-  const [mintModalOpen, setMintModalOpen] = useState(false);
+  const [mintModalOpen, setMintModalOpen] = useState(
+    props.setupModalInitialIsOpen == undefined
+      ? false
+      : props.setupModalInitialIsOpen
+  );
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
 

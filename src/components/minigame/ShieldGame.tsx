@@ -118,6 +118,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
               gameStatus={gameStatus as GameStatus}
               gameIdx={gameIdx}
               currentBoostBips={boost}
+              setupModalInitialIsOpen={view == "setup"}
             />
           </div>
         ) : null}
