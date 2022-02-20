@@ -1,4 +1,4 @@
-const realms = require("./realms.json")
+const realms = require("./crypts_all.json")
 const realms_data = require("./continents.js")
 const fs = require('fs')
 
@@ -13,16 +13,14 @@ const mappedRealms = {
                 "coordinates": a.geometry.coordinates
             },
             "properties": {
-                "name": a.properties.name,
-                "realm_idx": a.properties.realm_idx,
-                "order": a.properties.order,
-                "resources": realms_data.find(b => b.name === a.properties.realm_idx).resource
+                "tokenId": a.properties.tokenId,
+                "environment": a.properties.environment
             }
         }
     })
 }
 
-fs.writeFile('realms.json', JSON.stringify(mappedRealms), err => {
+fs.writeFile('crypts_all.json', JSON.stringify(mappedRealms), err => {
     if (err) {
         console.error(err)
         return

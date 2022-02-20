@@ -53,15 +53,19 @@ module.exports = {
         off: {
           100: '#F9F7F1',
           200: '#8D795B',
-        },
-        minHeight: {
-          0: '0',
-          '1/4': '25vh',
-          '1/2': '50vh',
-          '3/4': '75vh',
-          80: '80px',
-          full: '100vh',
-        }
+        },        
+        height: theme => ({
+          auto: 'auto',
+          ...theme('spacing'),
+          full: '100%',
+          screen: 'calc(var(--vh) * 100)',
+        }),
+        minHeight: theme => ({
+          '0': '0',
+          ...theme('spacing'),
+          full: '100%',
+          screen: 'calc(var(--vh) * 100)',
+        }),
       },
     },
   },

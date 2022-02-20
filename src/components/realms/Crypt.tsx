@@ -43,19 +43,32 @@ export function Crypt(props: CryptProps): ReactElement {
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
             )}
-            <div className="flex justify-between px-2 my-4 font-semibold rounded bg-white/20">
+            <div className="flex justify-between px-2 my-4 font-semibold rounded">
               <h4>Id:{props.crypt.id}</h4>
-              <h4>Enviroment: <span style={{
-              color: `${colours?.main}`
-            }}>{findEnvironment(props.crypt.environment)?.name}</span></h4>
-              <h4>Size: {props.crypt.size}x{props.crypt.size}</h4>
+              <h4>
+                Enviroment:{" "}
+                <span
+                  className="px-4 py-1 rounded"
+                  style={{
+                    backgroundColor: `${colours?.main}`,
+                  }}
+                >
+                  {findEnvironment(props.crypt.environment)?.name}
+                </span>
+              </h4>
+              <h4>
+                Size: {props.crypt.size}x{props.crypt.size}
+              </h4>
             </div>
             <h3></h3>
-            <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
-            ${isLegendary(props.crypt.name) && (
+            <h1
+              className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
+            ${
+              isLegendary(props.crypt.name) &&
               `text-transparent background-animate bg-clip-text bg-radial-at-tl from-yellow-100 via-yellow-400 to-yellow-100 shimmer fast`
-            )}
-            `}>
+            }
+            `}
+            >
               {props.crypt.name}
             </h1>
             <div
@@ -69,7 +82,7 @@ export function Crypt(props: CryptProps): ReactElement {
                   className="h-2 bg-yellow-700/60 rounded-xl"
                   style={{
                     width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
-                    background: `${colours?.door}`
+                    background: `${colours?.door}`,
                   }}
                 ></div>
               </div>
@@ -81,7 +94,7 @@ export function Crypt(props: CryptProps): ReactElement {
                   className="h-2 bg-green-500/60 rounded-xl"
                   style={{
                     width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
-                    background: `${colours?.point}`
+                    background: `${colours?.point}`,
                   }}
                 ></div>
               </div>

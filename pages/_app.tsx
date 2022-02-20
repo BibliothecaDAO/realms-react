@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { WalletProvider } from "~/hooks/useWalletContext";
 import { SoundProvider } from "~/context/soundProvider";
@@ -8,7 +8,7 @@ import { UIProvider } from "~/hooks/useUIContext";
 import "../styles/index.css";
 import PageTransition from "~/components/navigation/PageTransition";
 import { animated, Transition } from "@react-spring/web";
-import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
+import { MultiAPILink } from "@habx/apollo-multi-endpoint-link";
 
 import {
   ApolloClient,
@@ -24,13 +24,14 @@ import { BreakpointProvider } from "~/hooks/useBreakPoint";
 const client = new ApolloClient({
   link: ApolloLink.from([
     new MultiAPILink({
-        endpoints: {
-            realms: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-            crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
-        },
-        httpSuffix: '',
-        createHttpLink: () => createHttpLink(),
-      }),
+      endpoints: {
+        realms:
+          "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
+        crypts: "https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev",
+      },
+      httpSuffix: "",
+      createHttpLink: () => createHttpLink(),
+    }),
   ]),
   cache: new InMemoryCache(),
 });
@@ -68,6 +69,26 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    // only execute all the code below in client side
+    if (typeof window !== "undefined") {
+      // Handler to call on window resize
+      function handleResize() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      }
+
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
   return (
     <BreakpointProvider queries={queries}>
       <SoundProvider>

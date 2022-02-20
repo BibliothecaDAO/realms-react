@@ -101,6 +101,9 @@ function App() {
       if (!cryptsMenu) {
         toggleCryptsMenu();
       }
+      if (mapMenu) {
+        toggleMapMenu();
+      }
     },
   });
 
@@ -125,6 +128,9 @@ function App() {
       setValue(info.object.properties.realm_idx);
       if (!mapMenu) {
         toggleMapMenu();
+      }
+      if (cryptsMenu) {
+        toggleCryptsMenu();
       }
     },
   });
@@ -178,7 +184,7 @@ function App() {
         console.log(asset);
       } else {
         /* @ts-ignore: name not exist on D */
-        asset = crypts.features.filter((a: any) => a.properties.id === id);
+        asset = crypts.features.filter((a: any) => a.properties.tokenId === id);
         if (mapMenu) {
           toggleMapMenu();
         }
