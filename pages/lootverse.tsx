@@ -24,6 +24,8 @@ function App() {
     toggleMapMenu,
     closeOrdersMenu,
     toggleCryptsMenu,
+    toggleEmpireMenu,
+    empireMenu,
     cryptsMenu,
   } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
@@ -156,13 +158,13 @@ function App() {
   const goToId = useCallback(
     (id: any, type?: number) => {
       closeOrdersMenu();
-
+      console.log(id, type);
       let asset;
-      console.log(assetSelect, "ss");
+
       if (assetSelect === "A" || type === 1) {
         /* @ts-ignore: name not exist on D */
         asset = realms.features.filter(
-          (a: any) => a.properties.realm_idx === id
+          (a: any) => a.properties.realm_idx === parseInt(id)
         );
         if (cryptsMenu) {
           toggleCryptsMenu();
@@ -170,6 +172,10 @@ function App() {
         if (!mapMenu) {
           toggleMapMenu();
         }
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+        console.log(asset);
       } else {
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter((a: any) => a.properties.id === id);
@@ -199,6 +205,8 @@ function App() {
       closeOrdersMenu,
       toggleMapMenu,
       toggleCryptsMenu,
+      toggleEmpireMenu,
+      empireMenu,
     ]
   );
 

@@ -44,7 +44,7 @@ export interface RealmProps {
   realm: Realm;
   loading: boolean;
   size?: any;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: any, id: number) => void;
 }
 export interface CryptProps {
   crypt: Crypt;

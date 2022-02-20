@@ -52,20 +52,36 @@ export function Realm(props: RealmProps): ReactElement {
           </div>
 
           <div className="p-2">
-            {props.realm.currentOwner && (
-              <h3 className="my-3">
-                👑 {shortenAddress(props.realm.currentOwner.address)}
-              </h3>
-            )}
-            <div className="flex justify-between my-4  px-2 rounded font-semibold">
+            <div className="flex justify-between">
+              {props.realm.currentOwner && (
+                <h3 className="my-3">
+                  👑 {shortenAddress(props.realm.currentOwner.address)}
+                </h3>
+              )}
+              {!props.realm.currentOwner && (
+                <div>
+                  <button
+                    className={
+                      "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                    }
+                    onClick={() => props.onClick(props.realm.id, 1)}
+                  >
+                    fly to
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-between my-4  px-2 rounded">
               <h4>Id:{props.realm.id}</h4>
               <h4>Rank:{props.realm.rarityRank}</h4>
               <h4>Score:{props.realm.rarityScore}</h4>
             </div>
 
             <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}`}>
-              {props.realm.name}
+              {props.realm.name}{" "}
             </h1>
+
             <div className="flex flex-wrap mb-2">
               {props.realm.resourceIds.map((re: any, index) => (
                 <span

@@ -14,7 +14,7 @@ const filterTypes = [
   { name: "Token Id", key: "tokenId" },
 ];
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: any, id: number) => void;
 };
 
 export const EmpireSideBar = (props: Props) => {
@@ -41,10 +41,8 @@ export const EmpireSideBar = (props: Props) => {
   const list = Resources.map((res: any, index) => (
     <button
       key={index}
-      className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/90 transition-all duration-150 uppercase font-body hover:background-animate   ${
-        res.colourClass
-      }   ${
-        selectedResource === res.id ? "background-animate font-semibold " : " "
+      className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/30 transition-all duration-150 uppercase font-body hover:background-animate bg-white/30 ${
+        selectedResource === res.id ? res.colourClass : " "
       } `}
       onClick={() => addToFilter(res.id)}
     >
@@ -97,44 +95,47 @@ export const EmpireSideBar = (props: Props) => {
 
   return (
     <animated.div
-      className="absolute top-0 z-40 w-full backdrop-blur-md bg-black/80"
+      className="absolute top-0 z-40 w-full backdrop-blur-md bg-off-200/90"
       style={animation}
     >
       <div
         className={`h-screen w-full relative z-60 top-0 p-6   rounded-r-2xl overflow-y-scroll`}
       >
-        <button
-          className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleEmpireMenu}
-        >
-          Close
-        </button>
-        <h1 className="mb-4">My Empire</h1>
-        {data?.wallet ? (
-          <div>
-            <h4 className="mb-2">filter by resource</h4>
-            <div className="flex flex-wrap mb-8">{list}</div>
-            <h4 className="mb-2">filter by</h4>
-            {filterTypes.map((res: any, index) => (
-              <button
-                key={index}
-                className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
-                  selectFilter === res.key
-                    ? "backdrop-blur-md bg-white/90 text-black"
-                    : "backdrop-blur-md bg-white/30 text-off-100"
-                } `}
-                onClick={() => setFilter(res.key)}
-              >
-                {res.name}
-              </button>
-            ))}
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="flex justify-between">
+          <h1 className="mb-4">My Empire</h1>
+          <button
+            className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
+            onClick={toggleEmpireMenu}
+          >
+            Close
+          </button>
+        </div>
 
-        {!data && loading ? (
-          <p>Loading</p>
+        <div>
+          <h4 className="mb-2">filter by resource</h4>
+          <div className="flex flex-wrap mb-8">{list}</div>
+          <h4 className="mb-2">filter by</h4>
+          {filterTypes.map((res: any, index) => (
+            <button
+              key={index}
+              className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
+                selectFilter === res.key
+                  ? "backdrop-blur-md bg-white/90 text-black"
+                  : "backdrop-blur-md bg-white/30 text-off-100"
+              } `}
+              onClick={() => setFilter(res.key)}
+            >
+              {res.name}
+            </button>
+          ))}
+        </div>
+
+        {loading ? (
+          <div className=" my-4">
+            <div className="w-96 h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
+            <div className="w-96 h-32 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
+            <div className="w-96 h-32 pt-20 rounded bg-white/40 animate-pulse" />
+          </div>
         ) : (
           <div>
             {data && (
