@@ -72,6 +72,7 @@ const getCryptsQuery = gql`
   query dungeon($id: String) @api(name: crypts){
     dungeon(id: $id) {
       size
+      id
       environment
       numDoors
       numPoints
