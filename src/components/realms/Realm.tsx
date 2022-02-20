@@ -64,7 +64,9 @@ export function Realm(props: RealmProps): ReactElement {
                     className={
                       "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
                     }
-                    onClick={() => props.onClick(props.realm.id, 1)}
+                    onClick={() => {
+                      if (props.onClick) props.onClick(props.realm.id, 1);
+                    }}
                   >
                     fly to
                   </button>
