@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 import { useSound } from "~/context/soundProvider";
 import VolumeIcon from "../../../public/svg/volume-2.svg";
@@ -19,7 +19,7 @@ function MenuBar(props: Prop) {
     toggleSound();
   }, [toggleSound]);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   return (
     <div className="absolute w-full text-black transition-all bottom-2 ">
@@ -28,8 +28,9 @@ function MenuBar(props: Prop) {
           className="self-center mute-btn hover:scale-105 hover:text-blue-700"
           onClick={() => {
             props.toggleTab && props.toggleTab("game-controls");
-            // TODO: Change URL without 3D re-render
-            // router.replace("/desiege/controls");
+            router.replace("/desiege?tab=game-controls", "/desiege", {
+              shallow: true,
+            });
           }}
         >
           <Settings className="w-8" />
@@ -38,8 +39,9 @@ function MenuBar(props: Prop) {
           className="self-center mute-btn hover:text-blue-700"
           onClick={() => {
             props.toggleTab && props.toggleTab("lore");
-            // TODO: Change URL without 3D re-render
-            // router.replace("/desiege/boost");
+            router.replace("/desiege?tab=lore", "/desiege", {
+              shallow: true,
+            });
           }}
         >
           <Zap className="w-8" />

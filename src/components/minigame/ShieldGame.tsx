@@ -12,15 +12,22 @@ import TowerDefence from "./TowerDefence";
 import MenuBar from "./MenuBar";
 import LoreDevKit from "~/shared/LoreDevKit";
 import DivineSiege from "~/shared/LoreDevKit/desiege.ldk";
+import { useRouter } from "next/router";
 
-export type DesiegeTab = "game-controls" | "lore" | "mint";
+export type DesiegeTab = "game-controls" | "lore" | "setup";
 
 type Prop = {
   initialTab?: DesiegeTab;
 };
 
 const ShieldGame: React.FC<Prop> = (props) => {
-  const [view, setView] = useState<DesiegeTab | undefined>(props.initialTab);
+  const router = useRouter();
+
+  const initialTabFromQuery = router.query["tab"] as string;
+
+  const [view, setView] = useState<DesiegeTab | undefined>(
+    props.initialTab || (initialTabFromQuery as DesiegeTab)
+  );
   // Contract state
 
   const [gameStatus, setGameStatus] = useState<GameStatus>();
@@ -105,7 +112,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3>
 
-        {view == "game-controls" ? (
+        {view == "game-controls" || view == "setup" ? (
           <div className="flex flex-row w-full">
             <GameControls
               gameStatus={gameStatus as GameStatus}

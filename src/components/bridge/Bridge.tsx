@@ -20,6 +20,7 @@ import Check from "../../../public/svg/check.svg";
 import { ExternalLink } from "~/shared/Icons";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 import useTxCallback from "~/hooks/useTxCallback";
+import { useRouter } from "next/router";
 
 type Prop = {
   initialTab?: TabName;
@@ -49,6 +50,15 @@ export const Bridge: React.FC<Prop> = (props) => {
   const [middlewareSigning, setMiddlewareSigning] = useState(false);
 
   const [transactionHash, setTransactionHash] = useState<string>();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // In case the setup page was navigated to directly
+    // replace the routing state so that page refreshes
+    // don't repeatedly open the setup
+    router.replace("/desiege", "/desiege", { shallow: true });
+  }, []);
 
   useEffect(() => {
     if (transactionHash) {
