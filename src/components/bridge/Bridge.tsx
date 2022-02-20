@@ -17,6 +17,8 @@ import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
 import Check from "../../../public/svg/check.svg";
+import { ExternalLink } from "~/shared/Icons";
+import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 
 type Prop = {
   initialTab?: TabName;
@@ -81,6 +83,8 @@ export const Bridge: React.FC<Prop> = (props) => {
     props.initialTab || "mint"
   );
 
+  const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string));
+
   const verifyAndMint = async () => {
     if (signer) {
       const sig = await signer.signMessage(
@@ -118,6 +122,9 @@ export const Bridge: React.FC<Prop> = (props) => {
   const mintTx = txManager.transactions.find(
     (s) => s.transactionHash == transactionHash
   );
+
+  const mintTxLoading =
+    mintTx?.status == "PENDING" || mintTx?.status == "RECEIVED";
 
   useEffect(() => {
     starknet.connectBrowserWallet();
@@ -251,40 +258,55 @@ export const Bridge: React.FC<Prop> = (props) => {
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
                       <div className="relative w-full group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
-                        <button
-                          onClick={() => setSide("light")}
-                          className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-lg px-7"
+                        <div
+                          className={classNames(
+                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            side == "light" ? "opacity-100" : "opacity-50"
+                          )}
                         >
-                          <span className="flex justify-center">
-                            {" "}
-                            Light{" "}
-                            {side == "light" ? (
-                              <Check className="ml-1" />
-                            ) : null}
-                          </span>
-                        </button>
+                          <button
+                            onClick={() => setSide("light")}
+                            className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
+                          >
+                            <span className="flex justify-center">
+                              {" "}
+                              Light{" "}
+                              {/* {side == "light" ? (
+                                <Check className="h-4 ml-1" />
+                              ) : null} */}
+                            </span>
+                          </button>
+                        </div>
+                        {totalMinted.light
+                          ? totalMinted.light + " minted"
+                          : "-"}
                       </div>
                       <div className="relative w-full group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-lg opacity-75 group-hover:opacity-100 transition duration-300 group-hover:duration-200 animate-tilt w-full text-center"></div>
-                        <button
-                          onClick={() => setSide("dark")}
-                          className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-lg px-7"
+                        <div
+                          className={classNames(
+                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            side == "dark" ? "opacity-100" : "opacity-50"
+                          )}
                         >
-                          Dark{" "}
-                          {side == "dark" ? <Check className="ml-1" /> : null}
-                        </button>
+                          <button
+                            onClick={() => setSide("dark")}
+                            className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-md px-7"
+                          >
+                            Dark{" "}
+                            {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
+                          </button>
+                        </div>
+                        {totalMinted.dark ? totalMinted.dark : "-"}
                       </div>
                     </div>
 
                     {mintTx?.status == "ACCEPTED_ON_L2" ? (
-                      <p className="mt-4 text-xl text-green-800">
+                      <p className="mt-4 text-2xl text-green-800">
                         Minting succeeded. Please refresh your browser.
                       </p>
                     ) : null}
 
-                    {mintTx?.status == "PENDING" ||
-                    mintTx?.status == "RECEIVED" ? (
+                    {mintTxLoading ? (
                       <>
                         <p className="mt-8 text-2xl animate-bounce">
                           Minting...
@@ -301,14 +323,15 @@ export const Bridge: React.FC<Prop> = (props) => {
                           rel="noopener noreferrer"
                         >
                           Check Transaction Status
-                        </a>
+                        </a>{" "}
+                        <ExternalLink className="inline-block h-6" />
                       </>
                     ) : (
                       <>
                         {side !== undefined && transactionHash == undefined ? (
                           <>
                             <p className="mt-8 text-2xl break-words">
-                              {messageKey(starknet.account as string)}
+                              {messageKey("")}
                             </p>
                             <p className={connectedClassname}>
                               {starknet.account}
@@ -327,7 +350,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                   </>
                 ) : null}
                 {mintError !== undefined || mintTx?.status == "REJECTED" ? (
-                  <p className="mt-4 text-red-500">
+                  <p className="mt-4 text-xl text-red-500">
                     A minting error occurred:{" "}
                     {mintError ||
                       "Contract reverted. You may have already minted for this round."}

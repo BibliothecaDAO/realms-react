@@ -9,7 +9,6 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
-  useStarknetTransactionManager,
 } from "@starknet-react/core";
 import BridgeModal from "../bridge/Modal";
 import {
@@ -23,6 +22,8 @@ import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 import classNames from "classnames";
 import LoadingSkeleton from "~/shared/LoadingSkeleton";
+import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
+import { ExternalLink } from "~/shared/Icons";
 
 type Prop = {
   gameIdx?: number;
@@ -157,14 +158,11 @@ const GameControls: React.FC<Prop> = (props) => {
     </button>
   );
 
-  const txManager = useStarknetTransactionManager();
-  const actionIsLoading =
-    shieldAction.loading ||
-    attackAction.loading ||
-    // TODO: Use TX manager as loading is buggy in @starknet-react 0.4.5
-    !!txManager.transactions.find(
-      (val) => val.status == "PENDING" || val.status == "RECEIVED"
-    );
+  const totalMinted = useTotalMintedForRound(
+    gameIdx == undefined ? 0 : gameIdx + 1
+  );
+
+  const actionIsLoading = shieldAction.loading || attackAction.loading;
 
   return (
     <div
@@ -214,20 +212,51 @@ const GameControls: React.FC<Prop> = (props) => {
           <p className="my-4 text-xl animate-bounce">
             Waiting for next game to start...
           </p>
-          <p className="font-bold">Preparation for Desiege</p>
+          {totalMinted.loading ? (
+            <LoadingSkeleton />
+          ) : (
+            <>
+              <p>Light: {totalMinted.light}</p>
+              <p>Dark : {totalMinted.dark}</p>
+            </>
+          )}
+          <p className="mt-2 font-bold">Preparation for Desiege</p>
           <ul className="text-xl list-none">
             <li>
               Browse the <a className="underline">game guide</a>
             </li>
             <li>
-              Coordinate on <a className="underline"> Discord</a>
+              Coordinate on{" "}
+              <a
+                target={"_blank"}
+                href="https://discord.gg/YfeZQ3NFB8"
+                className="underline"
+              >
+                Discord
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" />
             </li>
             <li>
               <a className="underline">Recruit</a> your friends
             </li>
             <li>
-              See the <a className="underline">front-end</a> and{" "}
-              <a className="underline">StarkNet</a> contracts
+              Build on the{" "}
+              <a
+                target={"_blank"}
+                href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/src/components/minigame"
+                className="underline"
+              >
+                front-end
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" /> and{" "}
+              <a
+                target={"_blank"}
+                href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/minigame/contracts/l2/minigame"
+                className="underline"
+              >
+                StarkNet
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" /> contracts
             </li>
           </ul>
         </div>
