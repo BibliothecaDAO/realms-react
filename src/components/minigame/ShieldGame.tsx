@@ -23,6 +23,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
   const [view, setView] = useState<DesiegeTab | undefined>(props.initialTab);
   // Contract state
 
+  const [gameStatus, setGameStatus] = useState<GameStatus>();
+
   const [gameIdx, setGameIdx] = useState<number>();
   const [mainHealth, setMainHealth] = useState<BN>();
   const [_startBlockNum, setStartBlockNum] = useState<BN>();
@@ -30,7 +32,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
     Record<ElementToken, string> | undefined
   >();
 
-  const [gameCtx, setGameCtx] = useState<GameContext>();
+  const [gameContext, setGameContext] = useState<GameContext>();
 
   const [boost, setBoost] = useState<number>();
 
@@ -41,7 +43,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       setMainHealth(toBN(gameCtx.mainHealth));
       setStartBlockNum(gameCtx.gameStartBlock);
       setBoost(gameCtx.currentBoost);
-      setGameCtx(gameCtx);
+      setGameContext(gameCtx);
     } catch (e) {
       // TODO: Display error
       console.error("Error fetching game state: ", e);
@@ -53,33 +55,35 @@ const ShieldGame: React.FC<Prop> = (props) => {
     fetchState();
   }, []);
 
-  const lastBlockOfCurrentGame = gameCtx
-    ? gameCtx.gameStartBlock.toNumber() +
-      gameCtx.blocksPerMinute * 60 * gameCtx.hoursPerGame
-    : undefined;
+  useEffect(() => {
+    if (!!gameContext) {
+      const lastBlockOfCurrentGame =
+        gameContext.gameStartBlock.toNumber() +
+        gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
 
-  const gameIsActive =
-    gameCtx &&
-    lastBlockOfCurrentGame !== undefined &&
-    gameCtx.currentBlock.toNumber() < lastBlockOfCurrentGame;
+      const gameIsActive =
+        gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
 
-  let gameStatus: GameStatus;
-  if (gameIsActive) {
-    if (mainHealth?.lte(toBN(0))) {
-      gameStatus = "completed";
-    } else {
-      gameStatus = "active";
+      let gs: GameStatus;
+      if (gameIsActive) {
+        if (mainHealth?.lte(toBN(0))) {
+          gs = "completed";
+        } else {
+          gs = "active";
+        }
+      } else {
+        gs = "expired";
+      }
+      setGameStatus(gs);
     }
-  } else {
-    gameStatus = "expired";
-  }
+  }, [gameContext, mainHealth]);
 
   return (
     <div className="relative">
       {view == "lore" ? (
         <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
           <LoreDevKit ldk={DivineSiege} />
-          <GameBlockTimer gameCtx={gameCtx} />
+          <GameBlockTimer gameCtx={gameContext} />
         </div>
       ) : null}
       <div className="absolute w-full p-8">
@@ -104,7 +108,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         {view == "game-controls" ? (
           <div className="flex flex-row w-full">
             <GameControls
-              gameStatus={gameStatus}
+              gameStatus={gameStatus as GameStatus}
               gameIdx={gameIdx}
               currentBoostBips={boost}
             />
@@ -112,7 +116,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         ) : null}
       </div>
       <TowerDefence
-        gameStatus={gameStatus}
+        gameStatus={gameStatus as GameStatus}
         gameIdx={gameIdx}
         currentBoostBips={boost}
       >

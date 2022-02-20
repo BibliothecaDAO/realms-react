@@ -114,7 +114,7 @@ const GameControls: React.FC<Prop> = (props) => {
   }, [towerDefenceContractAddress, account]);
 
   useEffect(() => {
-    if (account && gameIdx !== undefined) {
+    if (account && gameIdx !== undefined && gameStatus !== undefined) {
       if (gameStatus == "active") {
         // Fetch balances for current game
         fetchTokenBalances(gameIdx);
@@ -123,12 +123,12 @@ const GameControls: React.FC<Prop> = (props) => {
         fetchTokenBalances(gameIdx + 1);
       }
     }
-  }, [account, gameIdx]);
+  }, [account, gameIdx, gameStatus]);
 
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
-    attackAction.invoke({
+    await attackAction.invoke({
       args: [
         gameIndex.toString(),
         tokenId.toString(),
@@ -140,7 +140,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const handleShield = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
-    shieldAction.invoke({
+    await shieldAction.invoke({
       args: [
         gameIndex.toString(),
         tokenId.toString(),
