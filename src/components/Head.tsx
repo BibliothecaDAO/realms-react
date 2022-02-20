@@ -14,7 +14,7 @@ export function Head(): ReactElement {
   return (
     <HTMLHead>
       {/* Primary Meta Tags */}
-      <title>{meta.description}</title>
+      <title>{meta.title}</title>
       <meta name="title" content={meta.description} />
       <meta name="description" content={meta.description} />
 
