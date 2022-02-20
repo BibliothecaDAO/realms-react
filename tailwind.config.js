@@ -53,21 +53,9 @@ module.exports = {
         off: {
           100: '#F9F7F1',
           200: '#8D795B',
-        },        
-        height: (theme) => ({
-          auto: 'auto',
-          ...theme('spacing'),
-          full: '100%',
-          screen: 'calc(var(--vh) * 100)',
-        }),
-        minHeight: (theme) => ({
-          '0': '0',
-          ...theme('spacing'),
-          full: '100%',
-          screen: 'calc(var(--vh) * 100)',
-        }),
+        }       
       },
     },
   },
-  plugins: [],
+  plugins: ["tailwindcss","autoprefixer","postcss-100vh-fix"],
 }
