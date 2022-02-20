@@ -13,7 +13,7 @@ import { OrderIcon } from "~/shared/OrderIcon";
 import { BaseSideBar } from "./BaseSideBar";
 
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: any, id: number) => void;
 };
 
 export const TheOrdersSideBar = (props: Props) => {
@@ -80,8 +80,8 @@ export const TheOrdersSideBar = (props: Props) => {
                     className="p-4 sm:text-xl rounded hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
-                        /* @ts-ignore: name not exist on D */
-                        OrderDetails[focusOrder]?.wonders.realm_id[index]
+                        OrderDetails[focusOrder]?.wonders.realm_id[index],
+                        1
                       )
                     }
                   >

@@ -23,16 +23,36 @@ export interface Realm {
   currentOwner: Owner;
 }
 
+export interface Crypt {
+  id: string;
+  size: Number;
+  environment: Number;
+  numDoors: Number;
+  numPoints: Number;
+  name: String;
+  svg: string;
+  currentOwner: Owner;
+}
+
 export interface Data {
   realm: Realm;
 }
-
+export interface CryptData {
+  dungeon: Crypt;
+}
 export interface RealmProps {
   realm: Realm;
   loading: boolean;
   size?: any;
+  onClick?: (event: any, id: number) => void;
+}
+export interface CryptProps {
+  crypt: Crypt;
+  loading: boolean;
+  size?: any;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
+
 export interface WalletRealmsData {
   realms: Realm[];
   bridgedRealms: Realm[]

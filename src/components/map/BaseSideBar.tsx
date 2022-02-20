@@ -33,13 +33,13 @@ export const BaseSideBar = (props: Props) => {
   };
 
   const animation = useSpring({
-    opacity: props.open ? 1 : 0,
+    opacity: props.open ? 1 : 0.7,
     transform: getMediaQuery(breakpoints),
   });
 
   return (
     <animated.div
-      className="absolute w-full top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-black/80 "
+      className="absolute w-full top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/60"
       style={animation}
     >
       {props.children}
