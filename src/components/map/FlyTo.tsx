@@ -10,7 +10,7 @@ type Props = {
 
 export const FlyTo = (props: Props) => {
   return (
-    <div className="flex absolute bottom-24 sm:top-10 sm:right-36 sm:z-30 sm:w-96 right-0  z-10 text-xl px-4 h-10">
+    <div className="flex absolute bottom-16 sm:top-10 sm:right-36 sm:z-30 sm:w-96 w-full  z-10 text-xl px-4 h-10">
       <input
         placeholder="Type Id"
         type={"number"}

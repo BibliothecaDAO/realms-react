@@ -37,18 +37,20 @@ export function Crypt(props: CryptProps): ReactElement {
             />
           </div>
 
-          <div className="p-2 text-2xl">
+          <div className=" sm:text-2xl">
             {props.crypt.currentOwner && (
               <h3 className="my-3">
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
             )}
-            <div className="flex justify-between px-2 my-4 font-semibold rounded">
-              <h4>Id:{props.crypt.id}</h4>
+            <div className="flex flex-col sm:flex-row flex-wrap justify-between my-4 rounded">
+              <h4>
+                Id: <span className="font-semibold ">{props.crypt.id}</span>
+              </h4>
               <h4>
                 Enviroment:{" "}
                 <span
-                  className="px-4 py-1 rounded"
+                  className="px-4 py-1 rounded font-semibold "
                   style={{
                     backgroundColor: `${colours?.main}`,
                   }}
@@ -57,10 +59,12 @@ export function Crypt(props: CryptProps): ReactElement {
                 </span>
               </h4>
               <h4>
-                Size: {props.crypt.size}x{props.crypt.size}
+                Size:{" "}
+                <span className="font-semibold ">
+                  {props.crypt.size}x{props.crypt.size}
+                </span>
               </h4>
             </div>
-            <h3></h3>
             <h1
               className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${

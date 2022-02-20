@@ -54,7 +54,7 @@ export function Realm(props: RealmProps): ReactElement {
           <div className="p-2">
             <div className="flex justify-between">
               {props.realm.currentOwner && (
-                <h3 className="my-3">
+                <h3 className="my-2">
                   👑 {shortenAddress(props.realm.currentOwner.address)}
                 </h3>
               )}
@@ -74,10 +74,18 @@ export function Realm(props: RealmProps): ReactElement {
               )}
             </div>
 
-            <div className="flex justify-between my-4  px-2 rounded">
-              <h4>Id:{props.realm.id}</h4>
-              <h4>Rank:{props.realm.rarityRank}</h4>
-              <h4>Score:{props.realm.rarityScore}</h4>
+            <div className="flex flex-col sm:flex-row justify-between my-4  rounded">
+              <h4>
+                Id: <span className="font-semibold">{props.realm.id}</span>
+              </h4>
+              <h4>
+                Rank:
+                <span className="font-semibold">{props.realm.rarityRank}</span>
+              </h4>
+              <h4>
+                Score:
+                <span className="font-semibold">{props.realm.rarityScore}</span>
+              </h4>
             </div>
 
             <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}`}>
@@ -98,7 +106,7 @@ export function Realm(props: RealmProps): ReactElement {
             </div>
 
             <div
-              className={`flex flex-col  w-full uppercase font-display text-2xl ${
+              className={`flex flex-col  w-full uppercase font-display sm:text-2xl ${
                 variantMaps[props.size]?.regions
               } `}
             >
