@@ -1,10 +1,10 @@
 import { useUIContext } from "~/hooks/useUIContext";
 import { BaseSideBar } from "./BaseSideBar";
-import { Realm } from "../realms/Realm";
+import { Crypt } from "../realms/Crypt";
 import Menu from "../../../public/svg/menu.svg";
-import { Data } from "~/types";
+import { CryptData } from "~/types";
 import { useQuery } from "@apollo/client";
-import { getRealmQuery } from "~/hooks/graphql/queries";
+import { getCryptsQuery } from "~/hooks/graphql/queries";
 
 type Props = {
   id: number;
@@ -13,7 +13,7 @@ type Props = {
 export const CryptsSideBar = (props: Props) => {
   const { toggleCryptsMenu, cryptsMenu } = useUIContext();
 
-  const { loading, error, data } = useQuery<Data>(getRealmQuery, {
+  const { loading, error, data } = useQuery<CryptData>(getCryptsQuery, {
     variables: { id: props.id.toString() },
   });
 
@@ -26,7 +26,7 @@ export const CryptsSideBar = (props: Props) => {
         >
           <Menu />
         </button>
-        {data && data.realm && <Realm realm={data!.realm} loading={loading} />}
+        {data && data.dungeon && <Crypt crypt={data!.dungeon} loading={loading} />}
       </div>
     </BaseSideBar>
   );

@@ -8,7 +8,7 @@ import { GAdventurerFragment } from './fragments/gadventurer'
 
 const getRealmsQuery = gql`
   ${RealmFragment}
-  query usersRealms(
+  query usersRealms (
     $address: String
     $resources: [Int]
     $orders: [String]
@@ -16,7 +16,7 @@ const getRealmsQuery = gql`
     $skip: Int
     $orderBy: String
     $orderDirection: String
-  ) {
+  ) @api(name: realms) {
     realms(
       first: $first
       skip: $skip
@@ -57,7 +57,7 @@ const getRealmsQuery = gql`
 
 const getRealmQuery = gql`
   ${RealmFragment}
-  query realm($id: String) {
+  query realm($id: String) @api(name: realms){
     realm(id: $id) {
       ...RealmData
       currentOwner {
@@ -68,9 +68,25 @@ const getRealmQuery = gql`
     }
   }
 `
+const getCryptsQuery = gql`
+  query dungeon($id: String) @api(name: crypts){
+    dungeon(id: $id) {
+      size
+      environment
+      numDoors
+      numPoints
+      name
+      svg
+      currentOwner {
+        address
+        dungeonsHeld
+      }
+    }
+  }
+`
 
 const getResourceListQuery = gql`
-  query getResourceListQuery {
+  query getResourceListQuery @api(name: realms){
     resources(first: 25) {
       id
       name
@@ -217,6 +233,7 @@ const lpIncentivesQuery = gql`
 export {
   getRealmQuery,
   getRealmsQuery,
+  getCryptsQuery,
   mintedRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,

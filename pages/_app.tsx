@@ -8,18 +8,30 @@ import { UIProvider } from "~/hooks/useUIContext";
 import "../styles/index.css";
 import PageTransition from "~/components/navigation/PageTransition";
 import { animated, Transition } from "@react-spring/web";
+import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
 
 import {
   ApolloClient,
   InMemoryCache,
+  ApolloLink,
   ApolloProvider,
+  createHttpLink,
   useQuery,
   gql,
 } from "@apollo/client";
 import { BreakpointProvider } from "~/hooks/useBreakPoint";
 
 const client = new ApolloClient({
-  uri: "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
+  link: ApolloLink.from([
+    new MultiAPILink({
+        endpoints: {
+            realms: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
+            crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
+        },
+        httpSuffix: '',
+        createHttpLink: () => createHttpLink(),
+      }),
+  ]),
   cache: new InMemoryCache(),
 });
 
