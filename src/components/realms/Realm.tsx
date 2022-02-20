@@ -57,7 +57,7 @@ export function Realm(props: RealmProps): ReactElement {
                 👑 {shortenAddress(props.realm.currentOwner.address)}
               </h3>
             )}
-            <div className="flex justify-between my-4 bg-white/20 px-2 rounded font-semibold">
+            <div className="flex justify-between my-4  px-2 rounded font-semibold">
               <h4>Id:{props.realm.id}</h4>
               <h4>Rank:{props.realm.rarityRank}</h4>
               <h4>Score:{props.realm.rarityScore}</h4>
