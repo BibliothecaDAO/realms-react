@@ -108,7 +108,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 className="text-xl"
                 target={"_blank"}
                 href={
-                  "https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/" +
+                  "https://opensea.io/assets/0x86f7692569914b5060ef39aab99e62ec96a6ed45/" +
                   props.crypt.id
                 }
                 rel="noreferrer"
