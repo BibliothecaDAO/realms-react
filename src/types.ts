@@ -30,7 +30,7 @@ export interface Crypt {
   numDoors: Number;
   numPoints: Number;
   name: String;
-  svg: String;
+  svg: string;
   currentOwner: Owner;
 }
 
