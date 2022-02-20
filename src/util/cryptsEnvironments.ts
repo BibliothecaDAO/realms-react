@@ -11,39 +11,67 @@ There are six environments:
 
 interface Environments {
    name: String,
-   colour: String,
+   colours: {
+      main: String,
+      door: String,
+      point: String
+   },
    id: Number,
 }
 
 export const Environments: Array<Environments> = [
    {
       name: 'Desert Oasis',
-      colour: '#F3D899',
+      colours: {
+         main: '#F3D899',
+         door: '#00A29D',
+         point: '#FAAA00'
+      },
       id: 0,
    },
    {
       name: 'Stone Temple',
-      colour: '#c7a687',
+      colours: {
+         main: '#c7a687',
+         door: '#006669',
+         point: '#3C2A1A'
+      },
       id: 1,
    },
    {
       name: 'Forest Ruins',
-      colour: '#A98C00',
+      colours: {
+         main: '#A98C00',
+         door: '#C55300',
+         point: '#802F1A'
+      },
       id: 2,
    },
    {
       name: 'Mountain Deep',
-      colour: '#cf9479',
+      colours: {
+         main: '#cf9479',
+         door: '#FFA800',
+         point: '#802F1A'
+      },
       id: 3,
    },
    {
       name: 'Underwater Keep',
-      colour: '#24c2c7',
+      colours: {
+         main: '#24c2c7',
+         door: '#F9B569',
+         point: '#967E67'
+      },
       id: 4,
    },
    {
       name: 'Ember\'s Glow',
-      colour: '#FF1800',
+      colours: {
+         main: '#FF1800',
+         door: '#FF1800',
+         point: '#B75700'
+      },
       id: 5,
    }
 ]
