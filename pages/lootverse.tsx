@@ -233,7 +233,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative overflow-hidden h-screen">
+      <div className="relative overflow-hidden h-full sm:h-screen">
         <Header />
         <MenuSideBar />
         <RealmSideBar id={value} />
