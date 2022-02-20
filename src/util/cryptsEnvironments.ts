@@ -68,10 +68,22 @@ export const Environments: Array<Environments> = [
    {
       name: 'Ember\'s Glow',
       colours: {
-         main: '#FF1800',
+         main: '#ff422e',
          door: '#FF1800',
          point: '#B75700'
       },
       id: 5,
    }
 ]
+
+/* isLegenday - Determines if a dungeon has legendary status (nearly 1/1). These are important events in the crypts and caverns universe (perhaps Lootverse?) Could be an important battle, a cataclysmic event, or the meeting of important people.
+
+input: name of a dungeon
+returns: true (legendary) or false (not legendary) */
+export function isLegendary(name: String) {
+   // Legendary names are the only ones that start with an apostrophe (`)
+   if(name.slice(0, 1) == "'") {
+      return(true)
+   } 
+   return(false);
+}
