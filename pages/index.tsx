@@ -184,10 +184,18 @@ function App() {
         console.log(asset);
       } else {
         /* @ts-ignore: name not exist on D */
-        asset = crypts.features.filter((a: any) => a.properties.tokenId === id);
+        asset = crypts.features.filter(
+          (a: any) => a.properties.tokenId === parseInt(id)
+        );
+
         if (mapMenu) {
           toggleMapMenu();
         }
+
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+
         toggleCryptsMenu();
       }
 

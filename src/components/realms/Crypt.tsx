@@ -65,16 +65,31 @@ export function Crypt(props: CryptProps): ReactElement {
                 </span>
               </h4>
             </div>
-            <h1
-              className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
+            <div className="flex justify-between">
+              <h1
+                className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${
               isLegendary(props.crypt.name) &&
               `text-transparent background-animate bg-clip-text bg-radial-at-tl from-yellow-100 via-yellow-400 to-yellow-100 shimmer fast`
             }
             `}
-            >
-              {props.crypt.name}
-            </h1>
+              >
+                {props.crypt.name}
+              </h1>
+              <div>
+                <button
+                  className={
+                    "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                  }
+                  onClick={() => {
+                    if (props.onClick) props.onClick(props.crypt.id, 2);
+                  }}
+                >
+                  fly to
+                </button>
+              </div>
+            </div>
+
             <div
               className={`flex flex-col w-full uppercase font-display ${
                 variantMaps[props.size]?.regions

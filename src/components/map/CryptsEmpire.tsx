@@ -8,10 +8,12 @@ import { WalletCryptsData, CryptFilters } from "~/types";
 import { useWalletContext } from "~/hooks/useWalletContext";
 const grids =
   "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
+type Props = {
+  onClick?: (event: any, id: number) => void;
+};
 
-export const CryptsEmpire = () => {
-  const { toggleCryptsMenu, cryptsMenu } = useUIContext();
-  const { account, isConnected, displayName } = useWalletContext();
+export const CryptsEmpire = (props: Props) => {
+  const { account, isConnected } = useWalletContext();
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
@@ -29,7 +31,12 @@ export const CryptsEmpire = () => {
     <div className={grids}>
       {data &&
         data.dungeons.map((dungeon, index) => (
-          <Crypt key={index} crypt={dungeon} loading={loading} />
+          <Crypt
+            onClick={props.onClick}
+            key={index}
+            crypt={dungeon}
+            loading={loading}
+          />
         ))}
     </div>
   );

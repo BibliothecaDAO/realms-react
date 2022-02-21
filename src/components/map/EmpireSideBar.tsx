@@ -62,7 +62,7 @@ export const EmpireSideBar = (props: Props) => {
         {tab === "Realms" ? (
           <RealmsEmpire onClick={props.onClick} />
         ) : (
-          <CryptsEmpire />
+          <CryptsEmpire onClick={props.onClick} />
         )}
       </div>
     </animated.div>

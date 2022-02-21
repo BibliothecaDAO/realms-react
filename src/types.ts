@@ -50,7 +50,7 @@ export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
   size?: any;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: (event: any, id: number) => void;
 }
 
 export interface WalletRealmsData {
