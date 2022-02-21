@@ -27,7 +27,7 @@ export const CryptsSideBar = (props: Props) => {
           <Menu />
         </button>
         {data && data.dungeon && (
-          <Crypt crypt={data!.dungeon} loading={loading} />
+          <Crypt flyto={false} crypt={data!.dungeon} loading={loading} />
         )}
       </div>
     </BaseSideBar>

@@ -51,6 +51,7 @@ export interface CryptProps {
   loading: boolean;
   size?: any;
   onClick?: (event: any, id: number) => void;
+  flyto?: boolean;
 }
 
 export interface WalletRealmsData {

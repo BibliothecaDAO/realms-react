@@ -164,10 +164,11 @@ function App() {
   const goToId = useCallback(
     (id: any, type?: number) => {
       closeOrdersMenu();
-      console.log(id, type);
+
       let asset;
 
-      if (assetSelect === "A" || type === 1) {
+      if (type === 1) {
+        console.log(1);
         /* @ts-ignore: name not exist on D */
         asset = realms.features.filter(
           (a: any) => a.properties.realm_idx === parseInt(id)
@@ -181,21 +182,18 @@ function App() {
         if (empireMenu) {
           toggleEmpireMenu();
         }
-        console.log(asset);
       } else {
+        console.log(2);
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter(
           (a: any) => a.properties.tokenId === parseInt(id)
         );
-
         if (mapMenu) {
           toggleMapMenu();
         }
-
         if (empireMenu) {
           toggleEmpireMenu();
         }
-
         toggleCryptsMenu();
       }
 

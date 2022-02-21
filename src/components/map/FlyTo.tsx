@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: any, id: number) => void;
   onChange: (event: any) => void;
   onSelectChange: (event: any) => void;
   value: number;
@@ -18,12 +18,12 @@ export const FlyTo = (props: Props) => {
         value={props.value}
         onChange={props.onChange}
         min="1"
-        max="8000"
+        max={props.select === "B" ? 9000 : 8000}
       />
       <button
         className="p-1 px-4 text-off-100 bg-off-200/20 transition-all duration-300 w-4/12 uppercase hover:bg-off-200/60"
         /* @ts-ignore: name not exist on D */
-        onClick={() => props.onClick(props.value)}
+        onClick={() => props.onClick(props.value, props.select === "B" ? 2 : 1)}
       >
         Fly to
       </button>

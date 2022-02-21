@@ -97,6 +97,7 @@ const getCryptsQuery = gql`
       ) {
       size
       id
+      environment
       numDoors
       numPoints
       name

@@ -1,6 +1,10 @@
 import { ReactElement } from "react";
 import React from "react";
-import { isLegendary, Environments, legendaryColourClass } from "~/util/cryptsEnvironments";
+import {
+  isLegendary,
+  Environments,
+  legendaryColourClass,
+} from "~/util/cryptsEnvironments";
 import { CryptProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import Image from "next/image";
@@ -64,26 +68,25 @@ export function Crypt(props: CryptProps): ReactElement {
             <div className="flex justify-between">
               <h1
                 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
-            ${
-              isLegendary(props.crypt.name) &&
-              legendaryColourClass
-            }
+            ${isLegendary(props.crypt.name) && legendaryColourClass}
             `}
               >
                 {props.crypt.name}
               </h1>
-              <div>
-                <button
-                  className={
-                    "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
-                  }
-                  onClick={() => {
-                    if (props.onClick) props.onClick(props.crypt.id, 2);
-                  }}
-                >
-                  fly to
-                </button>
-              </div>
+              {props.flyto && (
+                <div className="self-center text-lg">
+                  <button
+                    className={
+                      "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                    }
+                    onClick={() => {
+                      if (props.onClick) props.onClick(props.crypt.id, 2);
+                    }}
+                  >
+                    fly to
+                  </button>
+                </div>
+              )}
             </div>
 
             <div

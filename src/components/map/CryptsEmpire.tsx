@@ -36,6 +36,8 @@ export const CryptsEmpire = (props: Props) => {
             key={index}
             crypt={dungeon}
             loading={loading}
+            size={"small"}
+            flyto={true}
           />
         ))}
     </div>
