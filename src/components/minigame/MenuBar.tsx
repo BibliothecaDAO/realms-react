@@ -28,7 +28,7 @@ function MenuBar(props: Prop) {
           className="self-center mute-btn hover:scale-105 hover:text-blue-700"
           onClick={() => {
             props.toggleTab && props.toggleTab("game-controls");
-            router.replace("/desiege?tab=game-controls", "/desiege", {
+            router.replace("/desiege?tab=game-controls", undefined, {
               shallow: true,
             });
           }}
@@ -39,7 +39,7 @@ function MenuBar(props: Prop) {
           className="self-center mute-btn hover:text-blue-700"
           onClick={() => {
             props.toggleTab && props.toggleTab("lore");
-            router.replace("/desiege?tab=lore", "/desiege", {
+            router.replace("/desiege?tab=lore", undefined, {
               shallow: true,
             });
           }}
