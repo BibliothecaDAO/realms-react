@@ -74,21 +74,24 @@ export const EmpireSideBar = (props: Props) => {
             "Reflection",
             "the Twins",
           ],
-      first: 50,
+      first: 12,
       skip: limit,
       orderBy: selectFilter,
       orderDirection: params?.orderDirection || "asc",
     };
   };
 
-  const { loading, error, data, fetchMore } = useQuery<WalletRealmsData>(
+  const { loading, error, data, fetchMore, networkStatus } = useQuery<WalletRealmsData>(
     getRealmsQuery,
     {
       variables: defaultVariables(),
       skip: !isConnected,
       ssr: false,
+      notifyOnNetworkStatusChange: true,
     }
   );
+
+  const isRefetching = networkStatus === 3;
 
   const grids =
     "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
@@ -129,60 +132,62 @@ export const EmpireSideBar = (props: Props) => {
             </button>
           ))}
         </div>
-
-        {loading ? (
-          <div className=" my-4">
-            <div className="w-96 h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
-            <div className="w-96 h-32 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
-            <div className="w-96 h-32 pt-20 rounded bg-white/40 animate-pulse" />
-          </div>
-        ) : (
-          <div>
-            {data && (
-              <div>
-                <h4> Unstaked Realms ({data.wallet?.realmsHeld})</h4>
-                <div className={grids}>
-                  {data.realms.map((realm, index) => (
-                    <RealmCard
-                      realm={realm!}
-                      key={index}
-                      loading={loading}
-                      size="small"
-                      onClick={props.onClick}
-                    />
-                  ))}
-                </div>
-                <h4> Staked Realms ({data.wallet?.bridgedRealmsHeld})</h4>
-                <div className={grids}>
-                  {data.bridgedRealms.map((realm, index) => (
-                    <RealmCard
-                      realm={realm!}
-                      key={index}
-                      loading={loading}
-                      size="small"
-                      onClick={props.onClick}
-                    />
-                  ))}
-                </div>
+          
+        <div>
+            <div>
+              <h4> Unstaked Realms ({data?.wallet?.realmsHeld})</h4>
+              <div className={grids}>
+                {data?.realms?.map((realm, index) => (
+                  <RealmCard
+                    realm={realm!}
+                    key={index}
+                    loading={isRefetching}
+                    size="small"
+                    onClick={props.onClick}
+                  />
+                ))}
               </div>
-            )}
-            {data && (
-              <button
-                onClick={() =>
-                  fetchMore({
-                    variables: defaultVariables({
-                      first: 50,
-                      skip: 50,
-                    }),
-                  })
-                }
-                className="w-full p-4 bg-gray-600 rounded"
-              >
-                Load more
-              </button>
-            )}
-          </div>
-        )}
+              <h4> Staked Realms ({data?.wallet?.bridgedRealmsHeld})</h4>
+              <div className={grids}>
+                {data?.bridgedRealms?.map((realm, index) => (
+                  <RealmCard
+                    realm={realm!}
+                    key={index}
+                    loading={loading}
+                    size="small"
+                    onClick={props.onClick}
+                  />
+                ))}
+              </div>
+              {isRefetching && (
+                <div>
+                              <div className="h-64 pt-20 mb-4 rounded w-96 bg-white/40 animate-pulse" />
+                              <div className="h-64 pt-20 mb-4 rounded w-96 bg-white/40 animate-pulse" />
+                              <div className="h-64 pt-20 mb-4 rounded w-96 bg-white/40 animate-pulse" />
+                              <div className="h-64 pt-20 mb-4 rounded w-96 bg-white/40 animate-pulse" />
+                              </div>
+                          )}
+            </div>
+        
+          <p>{loading}</p>
+
+          {data && (
+            <button
+              onClick={() => {
+                fetchMore({
+                  variables: {
+                    skip: limit + 12,
+                  }
+                });
+                setLimit(limit + 12)
+              }}
+              className="w-full p-4 bg-gray-600 rounded"
+            >
+              Load more
+            </button>
+          )}
+        </div>
+        
       </div>
     </animated.div>
   );
