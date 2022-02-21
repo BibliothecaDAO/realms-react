@@ -5,8 +5,7 @@ import { RealmsEmpire } from "./RealmsEmpire";
 import { useState } from "react";
 import Castle from "../../../public/svg/castle.svg";
 import Danger from "../../../public/svg/danger.svg";
-import Mountain from "../../../public/svg/mountain.svg";
-
+import Menu from "../../../public/svg/menu.svg";
 type Props = {
   onClick?: (event: any, id: number) => void;
 };
@@ -34,7 +33,7 @@ export const EmpireSideBar = (props: Props) => {
             className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
             onClick={toggleEmpireMenu}
           >
-            Close
+            CLOSE
           </button>
         </div>
 

@@ -72,7 +72,7 @@ export const RealmsEmpire = (props: Props) => {
             "Reflection",
             "the Twins",
           ],
-      first: 12,
+      first: 25,
       skip: limit,
       orderBy: selectFilter,
       orderDirection: params?.orderDirection || "asc",
@@ -152,19 +152,21 @@ export const RealmsEmpire = (props: Props) => {
         <p>{loading}</p>
 
         {data && (
-          <button
-            onClick={() => {
-              fetchMore({
-                variables: {
-                  skip: limit + 12,
-                },
-              });
-              setLimit(limit + 12);
-            }}
-            className="w-full p-4 bg-gray-600 rounded"
-          >
-            Load more
-          </button>
+          <div className="flex justify-around">
+            <button
+              onClick={() => {
+                fetchMore({
+                  variables: {
+                    skip: limit + 25,
+                  },
+                });
+                setLimit(limit + 25);
+              }}
+              className="px-4 py-2 bg-gray-600/40 rounded hover:bg-gray-600/60"
+            >
+              {loading ? "Loading" : "Load more"}
+            </button>
+          </div>
         )}
       </div>
     </div>
