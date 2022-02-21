@@ -8,6 +8,7 @@ import Menu from "../public/svg/menu.svg";
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { Realm as RealmCard } from "~/components/realms/Realm";
 import { animated, useSpring } from "@react-spring/web";
+import { CryptsEmpire } from "./CryptsEmpire";
 
 const filterTypes = [
   { name: "Rarity", key: "rarityRank" },
@@ -183,6 +184,7 @@ export const EmpireSideBar = (props: Props) => {
             )}
           </div>
         )}
+        <CryptsEmpire />
       </div>
     </animated.div>
   );

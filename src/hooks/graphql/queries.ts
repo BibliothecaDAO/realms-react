@@ -68,12 +68,35 @@ const getRealmQuery = gql`
     }
   }
 `
-const getCryptsQuery = gql`
+const getCryptQuery = gql`
   query dungeon($id: String) @api(name: crypts){
     dungeon(id: $id) {
       size
       id
       environment
+      numDoors
+      numPoints
+      name
+      svg
+      currentOwner {
+        address
+        dungeonsHeld
+      }
+    }
+  }
+`
+
+const getCryptsQuery = gql`
+  query dungeons(
+    $address: String
+  ) @api(name: crypts){
+    dungeons(      
+      where: {
+        currentOwner_contains: $address
+      }
+      ) {
+      size
+      id
       numDoors
       numPoints
       name
@@ -234,6 +257,7 @@ const lpIncentivesQuery = gql`
 export {
   getRealmQuery,
   getRealmsQuery,
+  getCryptQuery,
   getCryptsQuery,
   mintedRealmsQuery,
   getl1Adventurer,

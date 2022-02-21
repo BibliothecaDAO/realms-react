@@ -3,7 +3,7 @@ import { default as HTMLHead } from "next/head"; // Meta
 import React, { ReactElement, useState } from "react";
 
 const meta = {
-  title: "The Lootverse by Bibliotheca",
+  title: "Atlas by Bibliotheca",
   description:
     "Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.",
   website: "https://lootverse.bibliothecadao.xyz/",

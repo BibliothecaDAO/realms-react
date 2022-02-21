@@ -59,6 +59,10 @@ export interface WalletRealmsData {
   wallet: Owner;
 }
 
+export interface WalletCryptsData {
+  dungeons: Crypt[]
+}
+
 export interface UiState {
   isMenuOpen: boolean;
   toggleMenu: Function;
@@ -87,4 +91,8 @@ export interface Queries {
   lg: string;
   xl: string;
   "2xl": string;
+}
+
+export interface CryptFilters {
+  address?: string;
 }
