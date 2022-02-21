@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import React from "react";
-import { isLegendary, Environments } from "~/util/cryptsEnvironments";
+import { isLegendary, Environments, legendaryColourClass } from "~/util/cryptsEnvironments";
 import { CryptProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import Image from "next/image";
@@ -14,8 +14,7 @@ export function Crypt(props: CryptProps): ReactElement {
   };
 
   const image = props.crypt.svg;
-
-  const colours = findEnvironment(props.crypt.environment)?.colours;
+  const environment = findEnvironment(props.crypt.environment);
 
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
@@ -43,19 +42,16 @@ export function Crypt(props: CryptProps): ReactElement {
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
             )}
-            <div className="flex flex-col sm:flex-row flex-wrap justify-between my-4 rounded">
+            <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
                 Id: <span className="font-semibold ">{props.crypt.id}</span>
               </h4>
               <h4>
-                Enviroment:{" "}
+                Environment:{" "}
                 <span
-                  className="px-4 py-1 rounded font-semibold "
-                  style={{
-                    backgroundColor: `${colours?.main}`,
-                  }}
+                  className={`px-4 py-1 font-semibold rounded ${environment?.colourClass.main}`}
                 >
-                  {findEnvironment(props.crypt.environment)?.name}
+                  {environment?.name}
                 </span>
               </h4>
               <h4>
@@ -70,7 +66,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${
               isLegendary(props.crypt.name) &&
-              `text-transparent background-animate bg-clip-text bg-radial-at-tl from-yellow-100 via-yellow-400 to-yellow-100 shimmer fast`
+              legendaryColourClass
             }
             `}
               >
@@ -98,10 +94,9 @@ export function Crypt(props: CryptProps): ReactElement {
               <span>Doors: {props.crypt.numPoints} / 13</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-yellow-700/60 rounded-xl"
+                  className={`h-2 bg-yellow-700/60 rounded-xl ${environment?.colourClass.door}`}
                   style={{
                     width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
-                    background: `${colours?.door}`,
                   }}
                 ></div>
               </div>
@@ -110,10 +105,9 @@ export function Crypt(props: CryptProps): ReactElement {
               </span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-green-500/60 rounded-xl"
+                  className={`h-2 bg-green-500/60 rounded-xl ${environment?.colourClass.point}`}
                   style={{
                     width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
-                    background: `${colours?.point}`,
                   }}
                 ></div>
               </div>
