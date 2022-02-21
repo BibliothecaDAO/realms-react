@@ -15,7 +15,6 @@ export function Crypt(props: CryptProps): ReactElement {
 
   const image = props.crypt.svg;
   const environment = findEnvironment(props.crypt.environment);
-  // const colours = findEnvironment(props.crypt.environment)?.colours;
 
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
