@@ -9,6 +9,7 @@ import "../styles/index.css";
 import PageTransition from "~/components/navigation/PageTransition";
 import { animated, Transition } from "@react-spring/web";
 import { MultiAPILink } from "@habx/apollo-multi-endpoint-link";
+import { concatPagination } from "@apollo/client/utilities";
 
 import {
   ApolloClient,
@@ -33,7 +34,16 @@ const client = new ApolloClient({
       createHttpLink: () => createHttpLink(),
     }),
   ]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          realms: concatPagination(["where", "orderBy"]),
+          bridgedRealms: concatPagination(["where", "orderBy"]),
+        }
+      }
+    }
+  }),
 });
 
 const PageWrapper = (Comp: any) =>

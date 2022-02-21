@@ -9,6 +9,7 @@ import { useWalletContext } from "~/hooks/useWalletContext";
 import { Realm as RealmCard } from "~/components/realms/Realm";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
+import { RealmsEmpire } from "./RealmsEmpire";
 
 const filterTypes = [
   { name: "Rarity", key: "rarityRank" },
@@ -20,79 +21,12 @@ type Props = {
 
 export const EmpireSideBar = (props: Props) => {
   const { toggleEmpireMenu, empireMenu } = useUIContext();
-  const { account, isConnected, displayName } = useWalletContext();
-  const [limit, setLimit] = useState(0);
-  const [selectedResource, setResource] = useState<number>();
-  const [selectFilter, setFilter] = useState<string>("tokenId");
+  const [tab, setTab] = useState<string>("Realms");
 
   const animation = useSpring({
     opacity: empireMenu ? 1 : 0,
     transform: empireMenu ? `translateY(0)` : `translateY(-200%)`,
   });
-
-  const addToFilter = (value: any) => {
-    console.log(selectedResource);
-    if (value === selectedResource) {
-      return setResource(undefined);
-    } else {
-      return setResource(value);
-    }
-  };
-
-  const list = Resources.map((res: any, index) => (
-    <button
-      key={index}
-      className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/30 transition-all duration-150 uppercase font-body hover:background-animate bg-white/30 ${
-        selectedResource === res.id ? res.colourClass : " "
-      } `}
-      onClick={() => addToFilter(res.id)}
-    >
-      {res.trait}
-    </button>
-  ));
-
-  const defaultVariables = (params?: RealmFilters) => {
-    return {
-      address: params?.address?.toLowerCase() || account.toLowerCase(),
-      resources: selectedResource ? [selectedResource] : [],
-      orders: params?.orders?.length
-        ? params?.orders
-        : [
-            "Power",
-            "Giants",
-            "Titans",
-            "Skill",
-            "Perfection",
-            "Brilliance",
-            "Enlightenment",
-            "Protection",
-            "Anger",
-            "Rage",
-            "Fury",
-            "Vitriol",
-            "the Fox",
-            "Detection",
-            "Reflection",
-            "the Twins",
-          ],
-      first: 50,
-      skip: limit,
-      orderBy: selectFilter,
-      orderDirection: params?.orderDirection || "asc",
-    };
-  };
-
-  const { loading, error, data, fetchMore } = useQuery<WalletRealmsData>(
-    getRealmsQuery,
-    {
-      variables: defaultVariables(),
-      skip: !isConnected,
-      ssr: false,
-    }
-  );
-
-  const grids =
-    "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
 
   return (
     <animated.div
@@ -111,79 +45,12 @@ export const EmpireSideBar = (props: Props) => {
             Close
           </button>
         </div>
-
-        <div>
-          <h4 className="mb-2">filter by resource</h4>
-          <div className="flex flex-wrap mb-8">{list}</div>
-          <h4 className="mb-2">filter by</h4>
-          {filterTypes.map((res: any, index) => (
-            <button
-              key={index}
-              className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
-                selectFilter === res.key
-                  ? "backdrop-blur-md bg-white/90 text-black"
-                  : "backdrop-blur-md bg-white/30 text-off-100"
-              } `}
-              onClick={() => setFilter(res.key)}
-            >
-              {res.name}
-            </button>
-          ))}
+        <div className="flex ">
+          <button>Realms</button>
+          <button>Crypts</button>
         </div>
 
-        {loading ? (
-          <div className=" my-4">
-            <div className="w-96 h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
-            <div className="w-96 h-32 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
-            <div className="w-96 h-32 pt-20 rounded bg-white/40 animate-pulse" />
-          </div>
-        ) : (
-          <div>
-            {data && (
-              <div>
-                <h4> Unstaked Realms ({data.wallet?.realmsHeld})</h4>
-                <div className={grids}>
-                  {data.realms.map((realm, index) => (
-                    <RealmCard
-                      realm={realm!}
-                      key={index}
-                      loading={loading}
-                      size="small"
-                      onClick={props.onClick}
-                    />
-                  ))}
-                </div>
-                <h4> Staked Realms ({data.wallet?.bridgedRealmsHeld})</h4>
-                <div className={grids}>
-                  {data.bridgedRealms.map((realm, index) => (
-                    <RealmCard
-                      realm={realm!}
-                      key={index}
-                      loading={loading}
-                      size="small"
-                      onClick={props.onClick}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {data && (
-              <button
-                onClick={() =>
-                  fetchMore({
-                    variables: defaultVariables({
-                      first: 50,
-                      skip: 50,
-                    }),
-                  })
-                }
-                className="w-full p-4 bg-gray-600 rounded"
-              >
-                Load more
-              </button>
-            )}
-          </div>
-        )}
+        <RealmsEmpire onClick={props.onClick} />
         <CryptsEmpire />
       </div>
     </animated.div>
