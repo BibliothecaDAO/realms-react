@@ -211,7 +211,6 @@ function App() {
       });
     },
     [
-      assetSelect,
       cryptsMenu,
       mapMenu,
       closeOrdersMenu,
@@ -225,8 +224,8 @@ function App() {
   const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
       setValue(1);
-    } else if (parseInt(event.target.value) > 8000) {
-      setValue(8000);
+    } else if (parseInt(event.target.value) > 9000) {
+      setValue(9000);
     } else {
       setValue(parseInt(event.target.value));
     }
