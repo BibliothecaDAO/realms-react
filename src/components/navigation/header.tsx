@@ -7,7 +7,7 @@ export function Header() {
   return (
     <div>
       <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
-        Lootverse
+        Atlas
       </h1>
       <div className="left-14 top-8 absolute z-20 sm:flex hidden">
         <div className="ml-auto">
