@@ -53,6 +53,7 @@ export function Crypt(props: CryptProps): ReactElement {
                   className="px-4 py-1 font-semibold rounded "
                   style={{
                     backgroundColor: `${colours?.main}`,
+                    color: `${colours?.text}`
                   }}
                 >
                   {findEnvironment(props.crypt.environment)?.name}

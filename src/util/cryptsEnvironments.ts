@@ -10,11 +10,13 @@ There are six environments:
 */
 
 interface Environments {
-   name: String,
+   name: String,           // Name of the environment (e.g. Ember's Glow)
+   colourClass: String,    // Class styles for environment 'pills' (e.g. white text on black bg)
    colours: {
       main: String,
       door: String,
-      point: String
+      point: String,
+      text: String
    },
    id: Number,
 }
@@ -22,55 +24,67 @@ interface Environments {
 export const Environments: Array<Environments> = [
    {
       name: 'Desert Oasis',
+      colourClass: ``,
       colours: {
          main: '#F3D899',
          door: '#00A29D',
-         point: '#FAAA00'
+         point: '#FAAA00',
+         text: 'black'
       },
       id: 0,
    },
    {
       name: 'Stone Temple',
+      colourClass: ``,
       colours: {
-         main: '#c7a687',
+         main: '#967E67',
          door: '#006669',
-         point: '#3C2A1A'
+         point: '#3C2A1A',
+         text: 'white'
       },
       id: 1,
    },
    {
       name: 'Forest Ruins',
+      colourClass: ``,
       colours: {
-         main: '#A98C00',
+         main: '#2F590E',
          door: '#C55300',
-         point: '#802F1A'
+         point: '#802F1A',
+         text: 'white'
       },
       id: 2,
    },
    {
       name: 'Mountain Deep',
+      colourClass: ``,
       colours: {
-         main: '#cf9479',
+         main: '#744936',
          door: '#FFA800',
-         point: '#802F1A'
+         point: '#802F1A',
+         text: 'white'
       },
       id: 3,
    },
    {
       name: 'Underwater Keep',
+      colourClass: ``,
       colours: {
-         main: '#24c2c7',
+         main: '#006669',
          door: '#F9B569',
-         point: '#967E67'
+         point: '#967E67',
+         text: 'white'
       },
       id: 4,
    },
    {
       name: 'Ember\'s Glow',
+      colourClass: ``,
       colours: {
-         main: '#ff422e',
+         main: '#5D0503',
          door: '#FF1800',
-         point: '#B75700'
+         point: '#B75700',
+         text: 'white'
       },
       id: 5,
    }
