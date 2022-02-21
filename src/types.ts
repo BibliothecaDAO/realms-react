@@ -80,10 +80,10 @@ export interface RealmFilters {
   address?: string;
   resources?: number[]
   orders?: string[];
-  first?: number,
-  skip?: number,
-  orderBy?: string,
-  orderDirection?: string,
+  first?: number;
+  skip?: number;
+  orderBy?: string;
+  orderDirection?: string;
 }
 
 export interface Queries {
@@ -96,4 +96,6 @@ export interface Queries {
 
 export interface CryptFilters {
   address?: string;
+  first?: number;
+  skip?: number;
 }

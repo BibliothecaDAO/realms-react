@@ -89,11 +89,15 @@ const getCryptQuery = gql`
 const getCryptsQuery = gql`
   query dungeons(
     $address: String
+    $first: Int
+    $skip: Int
   ) @api(name: crypts){
     dungeons(      
       where: {
         currentOwner_contains: $address
       }
+      first: $first
+      skip: $skip
       ) {
       size
       id

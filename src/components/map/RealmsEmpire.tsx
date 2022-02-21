@@ -1,5 +1,5 @@
 import { useUIContext } from "~/hooks/useUIContext";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useState, useRef, useEffect } from "react";
 import { Resources } from "~/util/resources";
 import { useQuery } from "@apollo/client";
 import { WalletRealmsData, RealmFilters } from "~/types";
@@ -9,6 +9,8 @@ import { useWalletContext } from "~/hooks/useWalletContext";
 import { Realm as RealmCard } from "~/components/realms/Realm";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
+
+import useIntersectionObserver from "~/hooks/useIntersectionObserver";
 
 const filterTypes = [
   { name: "Rarity", key: "rarityRank" },
@@ -88,6 +90,20 @@ export const RealmsEmpire = (props: Props) => {
     });
 
   const isRefetching = networkStatus === 3;
+
+  const ref = useRef<HTMLButtonElement | null>(null);
+  const entry = useIntersectionObserver(ref, {});
+  const isVisible = !!entry?.isIntersecting;
+  useEffect(() => {
+    isVisible && !loading && console.log("visible now");
+
+    fetchMore({
+      variables: {
+        skip: limit + 12,
+      },
+    });
+    setLimit(limit + 12);
+  }, [isVisible, fetchMore]);
 
   const grids =
     "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
