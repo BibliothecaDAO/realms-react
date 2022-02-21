@@ -14,8 +14,8 @@ export function Crypt(props: CryptProps): ReactElement {
   };
 
   const image = props.crypt.svg;
-
-  const colours = findEnvironment(props.crypt.environment)?.colours;
+  const environment = findEnvironment(props.crypt.environment);
+  // const colours = findEnvironment(props.crypt.environment)?.colours;
 
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
@@ -50,13 +50,9 @@ export function Crypt(props: CryptProps): ReactElement {
               <h4>
                 Environment:{" "}
                 <span
-                  className="px-4 py-1 font-semibold rounded "
-                  style={{
-                    backgroundColor: `${colours?.main}`,
-                    color: `${colours?.text}`
-                  }}
+                  className={`px-4 py-1 font-semibold rounded ${environment?.colourClass.main}`}
                 >
-                  {findEnvironment(props.crypt.environment)?.name}
+                  {environment?.name}
                 </span>
               </h4>
               <h4>
@@ -84,10 +80,9 @@ export function Crypt(props: CryptProps): ReactElement {
               <span>Doors: {props.crypt.numPoints} / 13</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-yellow-700/60 rounded-xl"
+                  className={`h-2 bg-yellow-700/60 rounded-xl ${environment?.colourClass.door}`}
                   style={{
                     width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
-                    background: `${colours?.door}`,
                   }}
                 ></div>
               </div>
@@ -96,10 +91,9 @@ export function Crypt(props: CryptProps): ReactElement {
               </span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-green-500/60 rounded-xl"
+                  className={`h-2 bg-green-500/60 rounded-xl ${environment?.colourClass.point}`}
                   style={{
                     width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
-                    background: `${colours?.point}`,
                   }}
                 ></div>
               </div>

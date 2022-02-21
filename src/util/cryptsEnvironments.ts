@@ -11,12 +11,10 @@ There are six environments:
 
 interface Environments {
    name: String,           // Name of the environment (e.g. Ember's Glow)
-   colourClass: String,    // Class styles for environment 'pills' (e.g. white text on black bg)
-   colours: {
-      main: String,
+   colourClass: {          // Class styles for environment 'pills' (e.g. white text on black bg)
+      main: String,  
       door: String,
-      point: String,
-      text: String
+      point: String
    },
    id: Number,
 }
@@ -24,67 +22,55 @@ interface Environments {
 export const Environments: Array<Environments> = [
    {
       name: 'Desert Oasis',
-      colourClass: ``,
-      colours: {
-         main: '#F3D899',
-         door: '#00A29D',
-         point: '#FAAA00',
-         text: 'black'
+      colourClass: {
+         main: `bg-desert-main text-black`,  /* Use black text because bg-desert-main is cream so white blends in */
+         door: `bg-desert-door`,
+         point: `bg-desert-point`
       },
       id: 0,
    },
    {
       name: 'Stone Temple',
-      colourClass: ``,
-      colours: {
-         main: '#967E67',
-         door: '#006669',
-         point: '#3C2A1A',
-         text: 'white'
+      colourClass: {
+         main: `bg-temple-main`,
+         door: `bg-temple-door`,
+         point: `bg-temple-point`
       },
       id: 1,
    },
    {
       name: 'Forest Ruins',
-      colourClass: ``,
-      colours: {
-         main: '#2F590E',
-         door: '#C55300',
-         point: '#802F1A',
-         text: 'white'
+      colourClass: {
+         main: `bg-forest-main`,
+         door: `bg-forest-door`,
+         point: `bg-forest-point`
       },
       id: 2,
    },
    {
       name: 'Mountain Deep',
-      colourClass: ``,
-      colours: {
-         main: '#744936',
-         door: '#FFA800',
-         point: '#802F1A',
-         text: 'white'
+      colourClass: {
+         main: `bg-mountain-main`,
+         door: `bg-mountain-door`,
+         point: `bg-mountain-point`
       },
       id: 3,
    },
    {
       name: 'Underwater Keep',
-      colourClass: ``,
-      colours: {
-         main: '#006669',
-         door: '#F9B569',
-         point: '#967E67',
-         text: 'white'
+      colourClass: {
+         main: `bg-underwater-main`,
+         door: `bg-underwater-door`,
+         point: `bg-underwater-point`
       },
       id: 4,
    },
    {
       name: 'Ember\'s Glow',
-      colourClass: ``,
-      colours: {
-         main: '#5D0503',
-         door: '#FF1800',
-         point: '#B75700',
-         text: 'white'
+      colourClass: {
+         main: `bg-ember-main`,
+         door: `bg-ember-door`,
+         point: `bg-ember-point`
       },
       id: 5,
    }
@@ -96,12 +82,8 @@ input: name of a dungeon
 returns: true (legendary) or false (not legendary) */
 export function isLegendary(name: String) {
    // Legendary names are the only ones that start with an apostrophe (`)
-   if(name.slice(0, 1) == "'") {
-      return(true)
-   } 
-   return(false);
+   return(name.slice(0, 1) == "'");
 }
 
 /* legendaryColourClass - Applies css to style legendary map */
-
 export const legendaryColourClass = `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`
