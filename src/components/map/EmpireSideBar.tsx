@@ -1,20 +1,9 @@
 import { useUIContext } from "~/hooks/useUIContext";
-import { MouseEventHandler, useState } from "react";
-import { Resources } from "~/util/resources";
-import { useQuery } from "@apollo/client";
-import { WalletRealmsData, RealmFilters } from "~/types";
-import { getRealmsQuery } from "~/hooks/graphql/queries";
-import Menu from "../public/svg/menu.svg";
-import { useWalletContext } from "~/hooks/useWalletContext";
-import { Realm as RealmCard } from "~/components/realms/Realm";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
 import { RealmsEmpire } from "./RealmsEmpire";
+import { useState } from "react";
 
-const filterTypes = [
-  { name: "Rarity", key: "rarityRank" },
-  { name: "Token Id", key: "tokenId" },
-];
 type Props = {
   onClick?: (event: any, id: number) => void;
 };
@@ -45,13 +34,16 @@ export const EmpireSideBar = (props: Props) => {
             Close
           </button>
         </div>
-        <div className="flex ">
-          <button>Realms</button>
-          <button>Crypts</button>
-        </div>
 
-        <RealmsEmpire onClick={props.onClick} />
-        <CryptsEmpire />
+        <div className="flex">
+          <button onClick={() => setTab("Realms")}>Realms</button>
+          <button onClick={() => setTab("Crypts")}>Crypts</button>
+        </div>
+        {tab === "Realms" ? (
+          <RealmsEmpire onClick={props.onClick} />
+        ) : (
+          <CryptsEmpire />
+        )}
       </div>
     </animated.div>
   );
