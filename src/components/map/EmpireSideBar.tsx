@@ -44,7 +44,7 @@ export const EmpireSideBar = (props: Props) => {
       className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/30 transition-all duration-150 uppercase font-body hover:background-animate bg-white/30 ${
         selectedResource === res.id ? res.colourClass : " "
       } `}
-      onClick={() => addToFilter(res.id)}
+      onClick={() => {setLimit(0); addToFilter(res.id)}}
     >
       {res.trait}
     </button>
