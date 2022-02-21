@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import React from "react";
-import { isLegendary, Environments } from "~/util/cryptsEnvironments";
+import { isLegendary, Environments, legendaryColourClass } from "~/util/cryptsEnvironments";
 import { CryptProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import Image from "next/image";
@@ -69,7 +69,7 @@ export function Crypt(props: CryptProps): ReactElement {
               className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${
               isLegendary(props.crypt.name) &&
-              `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`
+              legendaryColourClass
             }
             `}
             >

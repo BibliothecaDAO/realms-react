@@ -87,3 +87,7 @@ export function isLegendary(name: String) {
    } 
    return(false);
 }
+
+/* legendaryColourClass - Applies css to style legendary map */
+
+export const legendaryColourClass = `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`
