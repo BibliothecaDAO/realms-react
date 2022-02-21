@@ -10,7 +10,7 @@ import { messageKey } from "~/util/messageKey";
 import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
@@ -104,7 +104,8 @@ export const Bridge: React.FC<Prop> = (props) => {
   );
 
   // Add +1 to show for next round
-  const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string) + 1);
+  const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
+  const totalMinted = useTotalMintedForRound(nextGameIdx);
 
   const verifyAndMint = async () => {
     try {
