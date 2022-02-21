@@ -43,14 +43,14 @@ export function Crypt(props: CryptProps): ReactElement {
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
             )}
-            <div className="flex flex-col sm:flex-row flex-wrap justify-between my-4 rounded">
+            <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
                 Id: <span className="font-semibold ">{props.crypt.id}</span>
               </h4>
               <h4>
-                Enviroment:{" "}
+                Environment:{" "}
                 <span
-                  className="px-4 py-1 rounded font-semibold "
+                  className="px-4 py-1 font-semibold rounded "
                   style={{
                     backgroundColor: `${colours?.main}`,
                   }}
