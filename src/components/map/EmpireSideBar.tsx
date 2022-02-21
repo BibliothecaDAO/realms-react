@@ -3,6 +3,9 @@ import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
 import { RealmsEmpire } from "./RealmsEmpire";
 import { useState } from "react";
+import Castle from "../../../public/svg/castle.svg";
+import Danger from "../../../public/svg/danger.svg";
+import Mountain from "../../../public/svg/mountain.svg";
 
 type Props = {
   onClick?: (event: any, id: number) => void;
@@ -35,9 +38,26 @@ export const EmpireSideBar = (props: Props) => {
           </button>
         </div>
 
-        <div className="flex">
-          <button onClick={() => setTab("Realms")}>Realms</button>
-          <button onClick={() => setTab("Crypts")}>Crypts</button>
+        <div className="flex space-x-6 my-8 text-primary">
+          <button
+            className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
+              tab === "Realms" ? "bg-white/30" : "bg-white/10"
+            }`}
+            onClick={() => setTab("Realms")}
+          >
+            {" "}
+            <Castle className="w-8 fill-current mx-auto" />{" "}
+            <span className="self-center ">Realms</span>
+          </button>
+          <button
+            className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
+              tab !== "Realms" ? "bg-white/30" : "bg-white/10"
+            }`}
+            onClick={() => setTab("Crypts")}
+          >
+            {" "}
+            <Danger className="w-8 fill-current mx-auto" /> Crypts
+          </button>
         </div>
         {tab === "Realms" ? (
           <RealmsEmpire onClick={props.onClick} />

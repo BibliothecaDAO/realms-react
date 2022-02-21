@@ -15,7 +15,7 @@ export const CryptsEmpire = () => {
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
-      address: "0xDE7552d2CDa44229f5Ed8feBa334FB91Bd62d9a7".toLowerCase(),
+      address: account.toLowerCase(),
     };
   };
 
