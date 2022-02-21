@@ -69,7 +69,7 @@ export function Crypt(props: CryptProps): ReactElement {
               className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${
               isLegendary(props.crypt.name) &&
-              `text-transparent background-animate bg-clip-text bg-radial-at-tl from-yellow-100 via-yellow-400 to-yellow-100 shimmer fast`
+              `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`
             }
             `}
             >
