@@ -94,16 +94,17 @@ export const RealmsEmpire = (props: Props) => {
   const ref = useRef<HTMLButtonElement | null>(null);
   const entry = useIntersectionObserver(ref, {});
   const isVisible = !!entry?.isIntersecting;
-  useEffect(() => {
+  /*useEffect(() => {
     isVisible && !loading && console.log("visible now");
 
     fetchMore({
       variables: {
-        skip: limit + 12,
+        skip: limit + 25,
+        first: 0,
       },
     });
-    setLimit(limit + 12);
-  }, [isVisible, fetchMore]);
+    setLimit(limit + 25);
+  }, [isVisible]);*/
 
   const grids =
     "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
@@ -178,7 +179,7 @@ export const RealmsEmpire = (props: Props) => {
                 });
                 setLimit(limit + 25);
               }}
-              className="px-4 py-2 bg-gray-600/40 rounded hover:bg-gray-600/60"
+              className="px-4 py-2 rounded bg-gray-600/40 hover:bg-gray-600/60"
             >
               {loading ? "Loading" : "Load more"}
             </button>
