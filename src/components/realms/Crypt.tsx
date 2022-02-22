@@ -1,6 +1,10 @@
 import { ReactElement } from "react";
 import React from "react";
-import { Environments } from "~/util/cryptsEnvironments";
+import {
+  isLegendary,
+  Environments,
+  legendaryColourClass,
+} from "~/util/cryptsEnvironments";
 import { CryptProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import Image from "next/image";
@@ -14,8 +18,7 @@ export function Crypt(props: CryptProps): ReactElement {
   };
 
   const image = props.crypt.svg;
-
-  const colours = findEnvironment(props.crypt.environment)?.colours;
+  const environment = findEnvironment(props.crypt.environment);
 
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
@@ -37,23 +40,55 @@ export function Crypt(props: CryptProps): ReactElement {
             />
           </div>
 
-          <div className="p-2 text-2xl">
+          <div className=" sm:text-2xl">
             {props.crypt.currentOwner && (
               <h3 className="my-3">
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
             )}
-            <div className="flex justify-between px-2 my-4 font-semibold rounded bg-white/20">
-              <h4>Id:{props.crypt.id}</h4>
-              <h4>Enviroment: <span style={{
-              color: `${colours?.main}`
-            }}>{findEnvironment(props.crypt.environment)?.name}</span></h4>
-              <h4>Size: {props.crypt.size}x{props.crypt.size}</h4>
+            <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
+              <h4>
+                Id: <span className="font-semibold ">{props.crypt.id}</span>
+              </h4>
+              <h4>
+                Environment:{" "}
+                <span
+                  className={`px-4 py-1 font-semibold rounded ${environment?.colourClass.main}`}
+                >
+                  {environment?.name}
+                </span>
+              </h4>
+              <h4>
+                Size:{" "}
+                <span className="font-semibold ">
+                  {props.crypt.size}x{props.crypt.size}
+                </span>
+              </h4>
             </div>
-            <h3></h3>
-            <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}`}>
-              {props.crypt.name}
-            </h1>
+            <div className="flex justify-between">
+              <h1
+                className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
+            ${isLegendary(props.crypt.name) && legendaryColourClass}
+            `}
+              >
+                {props.crypt.name}
+              </h1>
+              {props.flyto && (
+                <div className="self-center text-lg">
+                  <button
+                    className={
+                      "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                    }
+                    onClick={() => {
+                      if (props.onClick) props.onClick(props.crypt.id, 2);
+                    }}
+                  >
+                    fly to
+                  </button>
+                </div>
+              )}
+            </div>
+
             <div
               className={`flex flex-col w-full uppercase font-display ${
                 variantMaps[props.size]?.regions
@@ -62,10 +97,9 @@ export function Crypt(props: CryptProps): ReactElement {
               <span>Doors: {props.crypt.numPoints} / 13</span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-yellow-700/60 rounded-xl"
+                  className={`h-2 bg-yellow-700/60 rounded-xl ${environment?.colourClass.door}`}
                   style={{
                     width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
-                    background: `${colours?.door}`
                   }}
                 ></div>
               </div>
@@ -74,10 +108,9 @@ export function Crypt(props: CryptProps): ReactElement {
               </span>
               <div className="w-full my-2 bg-gray-200 rounded">
                 <div
-                  className="h-2 bg-green-500/60 rounded-xl"
+                  className={`h-2 bg-green-500/60 rounded-xl ${environment?.colourClass.point}`}
                   style={{
                     width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
-                    background: `${colours?.point}`
                   }}
                 ></div>
               </div>
@@ -87,7 +120,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 className="text-xl"
                 target={"_blank"}
                 href={
-                  "https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/" +
+                  "https://opensea.io/assets/0x86f7692569914b5060ef39aab99e62ec96a6ed45/" +
                   props.crypt.id
                 }
                 rel="noreferrer"

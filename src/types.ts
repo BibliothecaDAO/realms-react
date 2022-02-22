@@ -50,13 +50,18 @@ export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
   size?: any;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: (event: any, id: number) => void;
+  flyto?: boolean;
 }
 
 export interface WalletRealmsData {
   realms: Realm[];
   bridgedRealms: Realm[]
   wallet: Owner;
+}
+
+export interface WalletCryptsData {
+  dungeons: Crypt[]
 }
 
 export interface UiState {
@@ -75,10 +80,10 @@ export interface RealmFilters {
   address?: string;
   resources?: number[]
   orders?: string[];
-  first?: number,
-  skip?: number,
-  orderBy?: string,
-  orderDirection?: string,
+  first?: number;
+  skip?: number;
+  orderBy?: string;
+  orderDirection?: string;
 }
 
 export interface Queries {
@@ -87,4 +92,10 @@ export interface Queries {
   lg: string;
   xl: string;
   "2xl": string;
+}
+
+export interface CryptFilters {
+  address?: string;
+  first?: number;
+  skip?: number;
 }

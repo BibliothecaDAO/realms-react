@@ -31,8 +31,8 @@ export const MenuSideBar = () => {
   }, [toggleSound]);
 
   const buttonClasses =
-    "p-2 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200";
-  const iconClasses = "mx-auto w-4 sm:w-10 fill-current mb-1";
+    "p-3 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200";
+  const iconClasses = "mx-auto w-6 sm:w-10 fill-current mb-1";
   return (
     <div
       className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all ${
