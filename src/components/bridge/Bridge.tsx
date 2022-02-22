@@ -96,12 +96,23 @@ export const Bridge: React.FC<Prop> = (props) => {
     setUnsupportedChain(error instanceof UnsupportedChainIdError);
   }, [error]);*/
 
-  // TODO: Dynamically set the current tab based on
-  // - wallet connection state
-  // - previous game states
   const [currentTab, setCurrentTab] = useState<TabName>(
     props.initialTab || "mint"
   );
+
+  useEffect(() => {}, [starknet.account]);
+
+  useEffect(() => {
+    if (isConnected == false) {
+      setCurrentTab("connect-ethereum");
+    } else {
+      if (starknet.account) {
+        setCurrentTab("mint");
+      } else {
+        setCurrentTab("connect-starknet");
+      }
+    }
+  }, [isConnected, starknet.account]);
 
   // Add +1 to show for next round
   const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
@@ -231,7 +242,9 @@ export const Bridge: React.FC<Prop> = (props) => {
             >
               <span className="flex">
                 4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
-                {account ? <Check className="ml-1" /> : null}
+                {starknet.account && starknet.hasStarknet ? (
+                  <Check className="ml-1" />
+                ) : null}
               </span>
             </button>
           </nav>
@@ -269,19 +282,37 @@ export const Bridge: React.FC<Prop> = (props) => {
                   </p>
                 ) : (
                   <div>
-                    <p className="text-2xl">
-                      If you haven&apos;t already done so, please{" "}
-                      <a
-                        rel="noreferrer"
-                        target="_blank"
-                        className="underline"
-                        href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                      >
-                        download and install
-                      </a>{" "}
-                      the ArgentX extension, available now for the Google Chrome
-                      web browser.
-                    </p>
+                    <div className="text-2xl">
+                      {starknet.hasStarknet ? (
+                        <div>
+                          If you haven&apos;t already done so, please{" "}
+                          <a
+                            rel="noreferrer"
+                            target="_blank"
+                            className="underline"
+                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                          >
+                            download and install
+                          </a>{" "}
+                          the ArgentX extension, available now for the Google
+                          Chrome web browser.
+                        </div>
+                      ) : (
+                        <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
+                          The ArgentX wallet extension could not be activated.
+                          Please{" "}
+                          <a
+                            rel="noreferrer"
+                            target="_blank"
+                            className="underline"
+                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                          >
+                            install ArgentX
+                          </a>{" "}
+                          on a supported browser and revisit this page.
+                        </div>
+                      )}
+                    </div>
                     <Button
                       onClick={() => starknet.connectBrowserWallet()}
                       className="mt-4"
@@ -394,7 +425,14 @@ export const Bridge: React.FC<Prop> = (props) => {
                       </>
                     )}
                   </>
-                ) : null}
+                ) : (
+                  <p>
+                    No Starknet account connected.{" "}
+                    <Button onClick={() => setCurrentTab("connect-starknet")}>
+                      Connect StarkNet
+                    </Button>
+                  </p>
+                )}
                 {mintError !== undefined ||
                 txTracker.tx?.status == "REJECTED" ? (
                   <p className="mt-4 text-xl text-red-500">
