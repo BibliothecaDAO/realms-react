@@ -10,7 +10,7 @@ import { messageKey } from "~/util/messageKey";
 import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
 import ElementsLabel from "~/shared/ElementsLabel";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
@@ -96,15 +96,27 @@ export const Bridge: React.FC<Prop> = (props) => {
     setUnsupportedChain(error instanceof UnsupportedChainIdError);
   }, [error]);*/
 
-  // TODO: Dynamically set the current tab based on
-  // - wallet connection state
-  // - previous game states
   const [currentTab, setCurrentTab] = useState<TabName>(
     props.initialTab || "mint"
   );
 
+  useEffect(() => {}, [starknet.account]);
+
+  useEffect(() => {
+    if (isConnected == false) {
+      setCurrentTab("connect-ethereum");
+    } else {
+      if (starknet.account) {
+        setCurrentTab("mint");
+      } else {
+        setCurrentTab("connect-starknet");
+      }
+    }
+  }, [isConnected, starknet.account]);
+
   // Add +1 to show for next round
-  const totalMinted = useTotalMintedForRound(parseInt(gameIdx as string) + 1);
+  const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
+  const totalMinted = useTotalMintedForRound(nextGameIdx);
 
   const verifyAndMint = async () => {
     try {
@@ -143,7 +155,7 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const tabBtnClasses = {
     base: "px-4 py-2 my-2 mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800",
-    active: "text-white bg-gray-200",
+    active: "text-white bg-gray-300",
   };
 
   const connectedClassname =
@@ -201,10 +213,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                     : null
                 )}
               >
-                <span className="flex">
-                  2. Lords Balance
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
+                <span className="flex">2. Lords Balance</span>
               </button>
             </span>
             <span>
@@ -230,7 +239,9 @@ export const Bridge: React.FC<Prop> = (props) => {
             >
               <span className="flex">
                 4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
-                {account ? <Check className="ml-1" /> : null}
+                {starknet.account && starknet.hasStarknet ? (
+                  <Check className="ml-1" />
+                ) : null}
               </span>
             </button>
           </nav>
@@ -240,12 +251,12 @@ export const Bridge: React.FC<Prop> = (props) => {
                 {account ? (
                   <p className={connectedClassname}>Connected as {account}</p>
                 ) : (
-                  <button
+                  <Button
                     className="mt-4 mr-2 text-black"
                     onClick={connectWallet}
                   >
                     Connect to Lootverse
-                  </button>
+                  </Button>
                 )}
                 {/* TODO
                 {unsupportedChain ? (
@@ -268,19 +279,37 @@ export const Bridge: React.FC<Prop> = (props) => {
                   </p>
                 ) : (
                   <div>
-                    <p className="text-2xl">
-                      If you haven&apos;t already done so, please{" "}
-                      <a
-                        rel="noreferrer"
-                        target="_blank"
-                        className="underline"
-                        href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                      >
-                        download and install
-                      </a>{" "}
-                      the ArgentX extension, available now for the Google Chrome
-                      web browser.
-                    </p>
+                    <div className="text-2xl">
+                      {starknet.hasStarknet ? (
+                        <div>
+                          If you haven&apos;t already done so, please{" "}
+                          <a
+                            rel="noreferrer"
+                            target="_blank"
+                            className="underline"
+                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                          >
+                            download and install
+                          </a>{" "}
+                          the ArgentX extension, available now for the Google
+                          Chrome web browser.
+                        </div>
+                      ) : (
+                        <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
+                          The ArgentX wallet extension could not be activated.
+                          Please{" "}
+                          <a
+                            rel="noreferrer"
+                            target="_blank"
+                            className="underline"
+                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                          >
+                            install ArgentX
+                          </a>{" "}
+                          on a supported browser and revisit this page.
+                        </div>
+                      )}
+                    </div>
                     <Button
                       onClick={() => starknet.connectBrowserWallet()}
                       className="mt-4"
@@ -297,16 +326,16 @@ export const Bridge: React.FC<Prop> = (props) => {
                   <>
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
-                      <div className="relative w-full group">
+                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
                             side == "light" ? "opacity-100" : "opacity-50"
                           )}
                         >
                           <button
                             onClick={() => setSide("light")}
-                            className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
+                            className="relative items-center w-full py-4 leading-none tracking-widest text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
                           >
                             <span className="flex justify-center">
                               {" "}
@@ -321,10 +350,10 @@ export const Bridge: React.FC<Prop> = (props) => {
                           ? totalMinted.light + " minted"
                           : "-"}
                       </div>
-                      <div className="relative w-full group">
+                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
                             side == "dark" ? "opacity-100" : "opacity-50"
                           )}
                         >
@@ -336,7 +365,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark : "-"}
+                        {totalMinted.dark ? totalMinted.dark + " minted" : "-"}
                       </div>
                     </div>
 
@@ -393,7 +422,14 @@ export const Bridge: React.FC<Prop> = (props) => {
                       </>
                     )}
                   </>
-                ) : null}
+                ) : (
+                  <p>
+                    No Starknet account connected.{" "}
+                    <Button onClick={() => setCurrentTab("connect-starknet")}>
+                      Connect StarkNet
+                    </Button>
+                  </p>
+                )}
                 {mintError !== undefined ||
                 txTracker.tx?.status == "REJECTED" ? (
                   <p className="mt-4 text-xl text-red-500">

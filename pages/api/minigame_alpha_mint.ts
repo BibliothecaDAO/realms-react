@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.SUPPRESS_TOKEN_REQUIREMENT == "1";
 
   if (
-    lordsBalance.toNumber() < MINIMUM_LORDS_REQUIRED &&
+    lordsBalance.lt(MINIMUM_LORDS_REQUIRED) &&
     suppressERC20Requirement == false
   ) {
     res.send(
