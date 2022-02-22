@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import DeckGL from "@deck.gl/react";
 import { ScatterplotLayer, IconLayer, PolygonLayer } from "@deck.gl/layers";
 import { FlyToInterpolator } from "@deck.gl/core";
-import { StaticMap } from "react-map-gl";
+import { Map } from "react-map-gl";
 import Layout from "~/components/Layout";
 import { ResourceSideBar } from "~/components/map/ResourceSideBar";
 import { useUIContext } from "~/hooks/useUIContext";
@@ -238,7 +238,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative overflow-hidden h-full sm:h-screen">
+      <div className="relative h-full overflow-hidden sm:h-screen">
         <Header />
         <MenuSideBar />
         <RealmSideBar id={value} />
@@ -262,10 +262,10 @@ function App() {
           controller={true}
           layers={[realms_layer, resource_layer, crypts_layer]}
         >
-          <StaticMap
+          <Map
             attributionControl={false}
             mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
-            mapboxApiAccessToken={
+            mapboxAccessToken={
               "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
             }
           />
