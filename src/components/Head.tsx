@@ -7,7 +7,7 @@ const meta = {
   description:
     "Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.",
   website: "https://lootverse.bibliothecadao.xyz/",
-  image: "https://lootproject.com/meta.png",
+  image: "https://i.ibb.co/XYPNdCT/Screenshot-2022-02-21-132035.png",
 };
 
 export function Head(): ReactElement {
