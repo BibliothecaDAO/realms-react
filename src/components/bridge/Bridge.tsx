@@ -155,7 +155,7 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const tabBtnClasses = {
     base: "px-4 py-2 my-2 mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800",
-    active: "text-white bg-gray-200",
+    active: "text-white bg-gray-300",
   };
 
   const connectedClassname =
@@ -213,10 +213,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                     : null
                 )}
               >
-                <span className="flex">
-                  2. Lords Balance
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
+                <span className="flex">2. Lords Balance</span>
               </button>
             </span>
             <span>
@@ -254,12 +251,12 @@ export const Bridge: React.FC<Prop> = (props) => {
                 {account ? (
                   <p className={connectedClassname}>Connected as {account}</p>
                 ) : (
-                  <button
+                  <Button
                     className="mt-4 mr-2 text-black"
                     onClick={connectWallet}
                   >
                     Connect to Lootverse
-                  </button>
+                  </Button>
                 )}
                 {/* TODO
                 {unsupportedChain ? (
@@ -329,16 +326,16 @@ export const Bridge: React.FC<Prop> = (props) => {
                   <>
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
-                      <div className="relative w-full group">
+                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
                             side == "light" ? "opacity-100" : "opacity-50"
                           )}
                         >
                           <button
                             onClick={() => setSide("light")}
-                            className="relative items-center w-full py-4 leading-none tracking-widest text-center text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
+                            className="relative items-center w-full py-4 leading-none tracking-widest text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
                           >
                             <span className="flex justify-center">
                               {" "}
@@ -353,10 +350,10 @@ export const Bridge: React.FC<Prop> = (props) => {
                           ? totalMinted.light + " minted"
                           : "-"}
                       </div>
-                      <div className="relative w-full group">
+                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-center text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
+                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
                             side == "dark" ? "opacity-100" : "opacity-50"
                           )}
                         >
@@ -368,7 +365,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark : "-"}
+                        {totalMinted.dark ? totalMinted.dark + " minted" : "-"}
                       </div>
                     </div>
 
