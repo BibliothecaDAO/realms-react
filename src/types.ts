@@ -64,13 +64,6 @@ export interface UiState {
   toggleMenu: Function;
 }
 
-export interface TowerProps {
-  gameStatus: GameStatus;
-  gameIdx?: number;
-  currentBoostBips?: number;
-  children?: React.ReactNode[] | React.ReactNode;
-}
-
 export interface RealmFilters {
   address?: string;
   resources?: number[]

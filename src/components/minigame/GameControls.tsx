@@ -29,8 +29,9 @@ import useTxCallback from "~/hooks/useTxCallback";
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
-  gameStatus: GameStatus;
+  gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
+  towerDefenceContractAddress: string;
 };
 
 type TokenNameOffsetMap = Record<string, number>;
@@ -55,7 +56,7 @@ const GameControls: React.FC<Prop> = (props) => {
     connectBrowserWallet(); // on mount
   }, []);
 
-  const towerDefenceContractAddress = useModuleAddress("1");
+  const towerDefenceContractAddress = props.towerDefenceContractAddress;
 
   const { contract: elementsContract } = useContract({
     abi: Elements1155Abi.abi as Abi[],
@@ -100,12 +101,11 @@ const GameControls: React.FC<Prop> = (props) => {
   );
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
+  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
   useEffect(() => {
     setAction(side == "light" ? "shield" : "attack");
   }, [side]);
-
-  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
   useEffect(() => {
     const getIsApproved = async (account: string, operator: string) => {
@@ -117,14 +117,10 @@ const GameControls: React.FC<Prop> = (props) => {
         console.error("Error fetching token approval", e);
       }
     };
-    if (
-      is1155TokenApproved == undefined &&
-      account !== undefined &&
-      towerDefenceContractAddress
-    ) {
+    if (is1155TokenApproved == undefined && account !== undefined) {
       getIsApproved(account, towerDefenceContractAddress);
     }
-  }, [towerDefenceContractAddress, account]);
+  }, [account]);
 
   useEffect(() => {
     if (account && gameIdx !== undefined && gameStatus !== undefined) {
@@ -141,7 +137,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
-    await attackAction.invoke({
+    attackAction.invoke({
       args: [
         gameIndex.toString(),
         tokenId.toString(),
@@ -179,10 +175,7 @@ const GameControls: React.FC<Prop> = (props) => {
     shieldAction.loading || attackAction.loading || txTracker.loading;
 
   return (
-    <div
-      id="game-actions"
-      className="z-10 w-1/3 p-10 text-black bg-white/30 rounded-2xl"
-    >
+    <>
       <BridgeModal
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
@@ -207,7 +200,9 @@ const GameControls: React.FC<Prop> = (props) => {
               <ElementLabel>Choose your Elements</ElementLabel>
             </button>
           ) : null}
-          {loadingTokenBalance ? <LoadingSkeleton className="mt-4" /> : null}
+          {loadingTokenBalance ? (
+            <LoadingSkeleton className="w-24 h-10 mt-4" />
+          ) : null}
 
           <p className="mt-4 text-3xl">
             {side == "light" && tokenBalances ? (
@@ -279,7 +274,7 @@ const GameControls: React.FC<Prop> = (props) => {
           <div className="text-3xl">
             {account == undefined ? <ConnectStarknetButton /> : null}
             {loadingTokenBalance ? (
-              <LoadingSkeleton className="mt-4" />
+              <LoadingSkeleton className="h-10 mt-4 w-36" />
             ) : (
               <div className="mt-4">
                 {side == "light" ? (
@@ -397,7 +392,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </button>
         </>
       ) : undefined}
-    </div>
+    </>
   );
 };
 export default GameControls;
