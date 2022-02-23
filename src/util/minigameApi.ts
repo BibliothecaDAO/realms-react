@@ -11,7 +11,7 @@ export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
   "0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e";
 
-const starknetNetwork = process.env.DESIEGE_STARKNET_NETWORK as
+const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
   | "mainnet-alpha"
   | "georli-alpha";
 
