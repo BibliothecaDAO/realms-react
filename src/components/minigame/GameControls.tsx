@@ -50,7 +50,11 @@ const currentTokenOffset = divineEclipse;
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
-  const { account, connectBrowserWallet } = useStarknet();
+  const {
+    account,
+    connectBrowserWallet,
+    error: starknetConnectionError,
+  } = useStarknet();
 
   useEffect(() => {
     connectBrowserWallet(); // on mount
@@ -186,8 +190,22 @@ const GameControls: React.FC<Prop> = (props) => {
           <ElementLabel> Divine Eclipse</ElementLabel>{" "}
         </h1>
       </div>
+      {account == undefined ? <ConnectStarknetButton /> : null}
+      {starknetConnectionError ? (
+        <p className="mt-4 text-xl text-center text-red-700">
+          Please install and unlock the{" "}
+          <a
+            className="underline"
+            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+          >
+            {" "}
+            ArgentX browser extension
+          </a>{" "}
+          to continue
+        </p>
+      ) : null}
 
-      {gameStatus == "expired" ? (
+      {gameStatus == "expired" && account ? (
         <div>
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && loadingTokenBalance == false ? (
@@ -269,10 +287,10 @@ const GameControls: React.FC<Prop> = (props) => {
             </li>
           </ul>
         </div>
-      ) : (
+      ) : null}
+      {gameStatus == "active" && account ? (
         <>
           <div className="text-3xl">
-            {account == undefined ? <ConnectStarknetButton /> : null}
             {loadingTokenBalance ? (
               <LoadingSkeleton className="h-10 mt-4 w-36" />
             ) : (
@@ -371,7 +389,7 @@ const GameControls: React.FC<Prop> = (props) => {
             </Button>
           ) : null}
         </>
-      )}
+      ) : null}
       {is1155TokenApproved == "0" ? (
         <>
           <button
