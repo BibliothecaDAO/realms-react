@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Abi, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
 import { useModuleAddress } from "~/hooks/useModuleAddress";
@@ -111,8 +111,8 @@ const GameControls: React.FC<Prop> = (props) => {
     setAction(side == "light" ? "shield" : "attack");
   }, [side]);
 
-  useEffect(() => {
-    const getIsApproved = async (account: string, operator: string) => {
+  const getIsApproved = useCallback(
+    async (account: string, operator: string) => {
       try {
         const isApproved = await getIsApprovedForAll(account, operator);
         setIs1155TokenApproved(isApproved ? "1" : "0");
@@ -120,7 +120,15 @@ const GameControls: React.FC<Prop> = (props) => {
         // TODO: Handle error
         console.error("Error fetching token approval", e);
       }
-    };
+    },
+    [account]
+  );
+
+  const approveTracker = useTxCallback(approve1155.data, () => {
+    getIsApproved(account as string, towerDefenceContractAddress);
+  });
+
+  useEffect(() => {
     if (is1155TokenApproved == undefined && account !== undefined) {
       getIsApproved(account, towerDefenceContractAddress);
     }
@@ -392,22 +400,22 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : null}
       {is1155TokenApproved == "0" ? (
         <>
-          <button
-            disabled={approve1155.loading}
+          <Button
+            disabled={approve1155.loading || approveTracker.loading}
             onClick={() => {
-              if (towerDefenceContractAddress) {
-                approve1155.invoke({
-                  args: [
-                    number.toBN(towerDefenceContractAddress).toString(),
-                    "1",
-                  ],
-                });
-              }
+              approve1155.invoke({
+                args: [
+                  number.toBN(towerDefenceContractAddress).toString(),
+                  "1",
+                ],
+              });
             }}
             className={primaryBtnClass}
           >
-            Approve Elements Token
-          </button>
+            {approve1155.loading || approveTracker.loading
+              ? "Approving..."
+              : "Approve Elements Token"}
+          </Button>
         </>
       ) : undefined}
     </>
