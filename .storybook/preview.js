@@ -1,4 +1,5 @@
 import { addDecorator } from "@storybook/react";
+import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 import { initialize, mswDecorator } from "msw-storybook-addon";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
@@ -6,6 +7,9 @@ import "../styles/index.css";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
 };
 
 function getLibrary(provider, _connector) {

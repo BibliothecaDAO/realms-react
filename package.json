@@ -49,6 +49,7 @@
     "react-map-gl": "^6.1.18",
     "react-spring": "^9.4.3",
     "starknet": "^2.5.0",
+    "storybook-addon-next-router": "^3.1.1",
     "three": "^0.137.5",
     "use-sound": "^4.0.1",
     "web3modal": "^1.9.5"
