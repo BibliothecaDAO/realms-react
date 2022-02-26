@@ -1,4 +1,5 @@
 var path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -30,6 +31,22 @@ module.exports = {
       ...(config.resolve.modules || []),
       path.resolve(__dirname, "../src"),
     ];
+
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      https: require.resolve("https-browserify"),
+      http: require.resolve("stream-http"),
+      crypto: require.resolve("crypto-browserify"),
+      os: require.resolve("os-browserify"),
+      stream: require.resolve("stream-browserify"),
+    };
+
+    config.plugins.push(
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+        Buffer: ["buffer", "Buffer"],
+      })
+    );
 
     return config;
   },
