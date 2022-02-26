@@ -42,6 +42,12 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const [boost, setBoost] = useState<number>();
 
+  useEffect(() => {
+    if (gameContext) {
+      setBoost(gameContext.currentBoost);
+    }
+  }, [gameContext]);
+
   const { contract: tdStorageContract } = useContract({
     // @ts-ignore
     abi: TowerDefenceStorageContract.abi as Abi[],

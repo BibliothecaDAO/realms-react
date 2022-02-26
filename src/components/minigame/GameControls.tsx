@@ -25,6 +25,7 @@ import LoadingSkeleton from "~/shared/LoadingSkeleton";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
+import { LightningBoltIcon } from "@heroicons/react/outline";
 
 type Prop = {
   gameIdx?: number;
@@ -368,8 +369,9 @@ const GameControls: React.FC<Prop> = (props) => {
             />{" "}
             <div className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <div className="w-32 p-1 font-semibold text-white bg-blue-900 rounded-md">
-                  {`+ ${currentBoostBips / 100}% boost`}
+                <div className="p-2 font-semibold text-white align-middle bg-blue-900 rounded-md">
+                  <LightningBoltIcon className="inline-block w-4" />{" "}
+                  {`${currentBoostBips / 100}%`}
                 </div>
               ) : null}
             </div>
