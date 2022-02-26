@@ -56,7 +56,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const getMainHealth = useStarknetCall({
     contract: tdStorageContract,
-    method: "get_main_health",
+    method: gameContext ? "get_main_health" : undefined,
     args: {
       game_idx: gameContext?.gameIdx?.toString() || "1",
     },
@@ -64,7 +64,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   const getShield = useStarknetCall({
     contract: tdStorageContract,
-    method: "get_shield_value",
+    method: gameContext ? "get_shield_value" : undefined,
     args: {
       game_idx: gameContext?.gameIdx.toString() || "0",
       token_id: gameContext
