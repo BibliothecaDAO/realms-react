@@ -58,7 +58,7 @@ const GameControls: React.FC<Prop> = (props) => {
   } = useStarknet();
 
   useEffect(() => {
-    connectBrowserWallet(); // on mount
+    // connectBrowserWallet(); // on mount
   }, []);
 
   const towerDefenceContractAddress = props.towerDefenceContractAddress;

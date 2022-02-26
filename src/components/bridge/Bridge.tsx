@@ -16,7 +16,7 @@ import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
-import Check from "../../../public/svg/check.svg";
+import { CheckIcon as Check } from "@heroicons/react/solid";
 import { ExternalLink } from "~/shared/Icons";
 import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
 import useTxCallback from "~/hooks/useTxCallback";
