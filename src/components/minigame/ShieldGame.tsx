@@ -181,6 +181,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
               {!!gameContext ? (
                 <GameControls
                   towerDefenceContractAddress={props.towerDefenceContractAddr}
+                  towerDefenceStorageContractAddress={
+                    props.towerDefenceStorageAddr
+                  }
                   gameStatus={gs}
                   gameIdx={gameContext?.gameIdx}
                   currentBoostBips={boost}

@@ -22,7 +22,7 @@ import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 import classNames from "classnames";
 import LoadingSkeleton from "~/shared/LoadingSkeleton";
-import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
+import useGameStats from "~/hooks/useGameStats";
 import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
 import { LightningBoltIcon } from "@heroicons/react/outline";
@@ -33,6 +33,7 @@ type Prop = {
   gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
   towerDefenceContractAddress: string;
+  towerDefenceStorageContractAddress: string;
 };
 
 type TokenNameOffsetMap = Record<string, number>;
@@ -180,8 +181,9 @@ const GameControls: React.FC<Prop> = (props) => {
     </button>
   );
 
-  const totalMinted = useTotalMintedForRound(
-    gameIdx == undefined ? 0 : gameIdx + 1
+  const gameStats = useGameStats(
+    gameIdx == undefined ? 0 : gameIdx + 1,
+    props.towerDefenceStorageContractAddress
   );
 
   const actionIsLoading =
@@ -190,6 +192,9 @@ const GameControls: React.FC<Prop> = (props) => {
   return (
     <>
       <BridgeModal
+        towerDefenceStorageContractAddress={
+          props.towerDefenceStorageContractAddress
+        }
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
@@ -248,12 +253,12 @@ const GameControls: React.FC<Prop> = (props) => {
           <p className="my-4 text-xl animate-bounce">
             Waiting for next game to start...
           </p>
-          {totalMinted.loading ? (
+          {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
             <>
-              <p>Light: {totalMinted.light}</p>
-              <p>Dark : {totalMinted.dark}</p>
+              <p>Light: {gameStats.light}</p>
+              <p>Dark : {gameStats.dark}</p>
             </>
           )}
           <p className="mt-2 font-bold">Preparation for Desiege</p>
@@ -326,6 +331,34 @@ const GameControls: React.FC<Prop> = (props) => {
                       : null}
                   </>
                 ) : null}
+                {gameStats.loading ? (
+                  <LoadingSkeleton className="w-full h-4" />
+                ) : (
+                  <>
+                    <div className="w-full h-1 mt-2 bg-cyan-800">
+                      {gameStats.lightUsed !== undefined &&
+                      gameStats.light !== undefined ? (
+                        <div
+                          style={{
+                            width: `${gameStats.lightUsed / gameStats.light}%`,
+                          }}
+                          className="h-1 bg-cyan-400"
+                        ></div>
+                      ) : undefined}
+                    </div>
+                    <div className="w-full h-1 mt-2 bg-purple-800">
+                      {gameStats.darkUsed !== undefined &&
+                      gameStats.dark !== undefined ? (
+                        <div
+                          style={{
+                            width: `${gameStats.darkUsed / gameStats.dark}%`,
+                          }}
+                          className="h-1 bg-purple-400"
+                        ></div>
+                      ) : undefined}
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
