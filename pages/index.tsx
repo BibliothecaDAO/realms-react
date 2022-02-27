@@ -11,9 +11,9 @@ import { MenuSideBar } from "~/components/map/MenuSideBar";
 import { EmpireSideBar } from "~/components/map/EmpireSideBar";
 import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
-import realms from "../src/realms.json";
-import crypts from "../src/crypts_all.json";
-import order_highlights from "../src/order_highlights.json";
+import realms from "../src/geodata/realms.json";
+import crypts from "../src/geodata/crypts_all.json";
+import order_highlights from "../src/geodata/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
 import { RealmSideBar } from "~/components/map/RealmsSideBar";
 import { CryptsSideBar } from "~/components/map/CryptsSideBar";

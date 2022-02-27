@@ -1,10 +1,10 @@
-const realms = require("./crypts_all.json")
-const realms_data = require("./continents.js")
+const realms = require("./geodata/crypts_all.json")
+const realms_data = require("./geodata/continents.js")
 const fs = require('fs')
 
 
 const mappedRealms = {
-    "type": "FeatureCollection", 
+    "type": "FeatureCollection",
     "features": realms.features.map(a => {
         return {
             "type": "Feature",
