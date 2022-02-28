@@ -20,6 +20,7 @@ import Shield from "../../../public/svg/shield.svg";
 import Book from "../../../public/svg/book.svg";
 import { EFFECT_BASE_FACTOR } from "~/util/minigameApi";
 import BN from "bn.js";
+import classNames from "classnames";
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -106,6 +107,41 @@ function Box(props: ObjectProps) {
     </mesh>
   );
 }
+
+type ShieldVitalityDisplayProps = {
+  shield?: BN;
+  health?: BN;
+  className?: string;
+};
+
+export const ShieldVitalityDisplayClassnames =
+  "p-6 text-lg text-gray-700 bg-white/30 rounded-xl";
+
+export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
+  return (
+    <>
+      <p
+        className={classNames(
+          "text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700",
+          props.className
+        )}
+      >
+        Shield
+      </p>
+      <p className="text-4xl">
+        {props.shield
+          ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : "-"}
+      </p>
+      <p>
+        City Vitality:{" "}
+        {props.health
+          ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : "-"}
+      </p>
+    </>
+  );
+};
 
 export interface TowerProps {
   gameStatus?: GameStatus;
@@ -228,29 +264,14 @@ function TowerDefence(props: TowerProps) {
             {props.gameStatus == "active" ? (
               <Html
                 position={[-4.5, -0.3, 2]}
-                className="w-56 p-6 text-lg text-gray-700 bg-white/30 rounded-xl"
+                className={classNames("w-56", ShieldVitalityDisplayClassnames)}
                 occlude={[tower, shield]}
+                zIndexRange={[4, 0]}
               >
-                <>
-                  <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700">
-                    Shield
-                  </p>
-                  <p className="text-4xl">
-                    {props.shield
-                      ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(
-                          2
-                        )
-                      : "-"}
-                  </p>
-                  <p>
-                    City Vitality:{" "}
-                    {props.health
-                      ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(
-                          2
-                        )
-                      : "-"}
-                  </p>
-                </>
+                <ShieldVitalityDisplay
+                  health={props.health}
+                  shield={props.shield}
+                />
               </Html>
             ) : null}
           </group>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Abi, number } from "starknet";
-import Joyride, { STATUS } from "react-joyride";
+import Joyride, { STATUS, ACTIONS } from "react-joyride";
 import { useSiegeBalance } from "~/hooks/useSiegeBalance";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
@@ -26,6 +26,11 @@ import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
 import { LightningBoltIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import {
+  ShieldVitalityDisplay,
+  ShieldVitalityDisplayClassnames,
+} from "./TowerDefence";
+import { toBN } from "starknet/dist/utils/number";
 
 type Prop = {
   gameIdx?: number;
@@ -207,6 +212,19 @@ const GameControls: React.FC<Prop> = (props) => {
 
   return (
     <>
+      <div
+        id="shield-vitality-container"
+        className={classNames(
+          showTutorial ? "" : "hidden",
+          "absolute right-1/3",
+          ShieldVitalityDisplayClassnames
+        )}
+      >
+        <ShieldVitalityDisplay
+          shield={toBN(20 * EFFECT_BASE_FACTOR)}
+          health={toBN(100 * EFFECT_BASE_FACTOR)}
+        />
+      </div>
       <BridgeModal
         towerDefenceStorageContractAddress={
           props.towerDefenceStorageContractAddress
@@ -220,8 +238,11 @@ const GameControls: React.FC<Prop> = (props) => {
           run={showTutorial}
           showProgress
           callback={(data) => {
-            const { status } = data;
-            if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status as any)) {
+            const { status, action } = data;
+            if (
+              [STATUS.FINISHED, STATUS.SKIPPED].includes(status as any) ||
+              action == ACTIONS.CLOSE
+            ) {
               localStorage.setItem(OnboardingTutorials.GameControls, "1");
               setShowTutorial(false);
             }
@@ -270,6 +291,12 @@ const GameControls: React.FC<Prop> = (props) => {
               target: "#action-boost",
               content:
                 "The Dark Portal bends space and time. The effect grows stronger with times passage, affecting ALL spells equally.",
+            },
+            {
+              title: "Shield and Vitality Indicator",
+              target: "#shield-vitality-container",
+              content:
+                "Dark elements diminish the Light shield. When the Shield is gone, the City Vitality can be attacked directly.",
             },
           ]}
         />
