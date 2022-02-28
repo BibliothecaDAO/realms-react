@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { utils } from "ethers";
 import { Provider, ec, Signer, stark, encode } from "starknet";
-import { messageKey } from "~/util/messageKey";
-import { fetchLordsBalance } from "~/util/fetchL1";
+import { messageKey } from "@/util/messageKey";
+import { fetchLordsBalance } from "@/util/fetchL1";
 import { MINIMUM_LORDS_REQUIRED } from "~/constants";
 import {
   getModuleAddress,
   getNextMintAmount,
   getTotalElementsMinted,
-} from "~/util/minigameApi";
+} from "@/util/minigameApi";
 const { getSelectorFromName } = stark;
 
 export type MintingError = {

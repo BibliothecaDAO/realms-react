@@ -1,22 +1,21 @@
-import React, { useState, useCallback } from "react";
-import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, IconLayer, PolygonLayer } from "@deck.gl/layers";
-import { FlyToInterpolator } from "@deck.gl/core";
-import { StaticMap } from "react-map-gl";
-import Layout from "~/components/Layout";
-import { ResourceSideBar } from "~/components/map/ResourceSideBar";
-import { useUIContext } from "~/hooks/useUIContext";
-import { Header } from "~/components/navigation/header";
-import { MenuSideBar } from "~/components/map/MenuSideBar";
-import { EmpireSideBar } from "~/components/map/EmpireSideBar";
-import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
-
-import realms from "../src/realms.json";
-import crypts from "../src/crypts_all.json";
-import order_highlights from "../src/order_highlights.json";
-import { FlyTo } from "~/components/map/FlyTo";
-import { RealmSideBar } from "~/components/map/RealmsSideBar";
-import { CryptsSideBar } from "~/components/map/CryptsSideBar";
+import { FlyToInterpolator } from '@deck.gl/core';
+import { ScatterplotLayer, IconLayer, PolygonLayer } from '@deck.gl/layers';
+import DeckGL from '@deck.gl/react';
+import React, { useState, useCallback } from 'react';
+import { Map } from 'react-map-gl';
+import Layout from '@/components/Layout';
+import { CryptsSideBar } from '@/components/map/CryptsSideBar';
+import { EmpireSideBar } from '@/components/map/EmpireSideBar';
+import { FlyTo } from '@/components/map/FlyTo';
+import { MenuSideBar } from '@/components/map/MenuSideBar';
+import { RealmSideBar } from '@/components/map/RealmsSideBar';
+import { ResourceSideBar } from '@/components/map/ResourceSideBar';
+import { TheOrdersSideBar } from '@/components/map/TheOrdersSideBar';
+import { Header } from '@/components/navigation/header';
+import crypts from '@/data/crypts_all.json';
+import order_highlights from '@/data/order_highlights.json';
+import realms from '@/data/realms.json';
+import { useUIContext } from '@/hooks/useUIContext';
 
 function App() {
   const {
@@ -28,10 +27,10 @@ function App() {
     empireMenu,
     cryptsMenu,
   } = useUIContext();
-  const [resource, setResource] = useState<Array<String>>([]);
+  const [resource, setResource] = useState<Array<string>>([]);
   const [value, setValue] = useState<number>(1);
 
-  const [assetSelect, setAssetSelect] = useState<string>("A");
+  const [assetSelect, setAssetSelect] = useState<string>('A');
 
   // const filteredContinents = () => {
   //   let c = order_highlights.features.filter(
@@ -80,7 +79,7 @@ function App() {
   };
 
   const crypts_layer = new ScatterplotLayer({
-    id: "crypts-layer",
+    id: 'crypts-layer',
     /* @ts-ignore: name not exist on D */
     data: crypts.features,
     stroked: true,
@@ -108,7 +107,7 @@ function App() {
   });
 
   const realms_layer = new ScatterplotLayer({
-    id: "scatterplot-layer",
+    id: 'scatterplot-layer',
     /* @ts-ignore: name not exist on D */
     data: realms.features,
     stroked: true,
@@ -140,13 +139,13 @@ function App() {
   };
 
   const resource_layer = new IconLayer({
-    id: "icon-layer",
+    id: 'icon-layer',
     data: filteredData(),
     pickable: false,
     iconAtlas:
-      "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
+      'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
     iconMapping: ICON_MAPPING,
-    getIcon: (d) => "marker",
+    getIcon: (d) => 'marker',
     sizeScale: 5,
     getPosition: (d: any) => d.geometry.coordinates,
     getSize: (d) => 5,
@@ -238,7 +237,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative overflow-hidden h-full sm:h-screen">
+      <div className="relative h-full overflow-hidden sm:h-screen">
         <Header />
         <MenuSideBar />
         <RealmSideBar id={value} />
@@ -255,18 +254,18 @@ function App() {
         />
         <DeckGL
           getCursor={({ isHovering }) => {
-            return isHovering ? "pointer" : "grabbing";
+            return isHovering ? 'pointer' : 'grabbing';
           }}
           pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
           layers={[realms_layer, resource_layer, crypts_layer]}
         >
-          <StaticMap
+          <Map
             attributionControl={false}
             mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
-            mapboxApiAccessToken={
-              "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
+            mapboxAccessToken={
+              'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
             }
           />
         </DeckGL>

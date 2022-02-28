@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { GameContext } from "~/util/minigameApi";
+import { GameContext } from "@/util/minigameApi";
 
 type Prop = {
   gameCtx?: GameContext;

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { MINIMUM_LORDS_REQUIRED } from "~/constants";
-import { useWalletContext } from "~/hooks/useWalletContext";
+import { useWalletContext } from "@/hooks/useWalletContext";
 
 type Prop = {
   l1Address?: String | null;

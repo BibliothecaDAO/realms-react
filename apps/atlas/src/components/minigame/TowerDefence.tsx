@@ -13,16 +13,16 @@ import {
 } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { useSound } from "~/context/soundProvider";
+import { useSound } from "@/context/soundProvider";
 import { ElementToken } from "~/constants";
 import ShieldAction from "./ShieldAction";
 import { TowerProps } from "~/types";
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import Sword from "../../../public/svg/sword.svg";
 import Shield from "../../../public/svg/shield.svg";
 import Book from "../../../public/svg/book.svg";
 
-const Tower = dynamic(() => import("~/components/Model"), {
+const Tower = dynamic(() => import("@/components/Model"), {
   ssr: false,
 });
 

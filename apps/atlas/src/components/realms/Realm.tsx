@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import React from "react";
 import { Realm } from "../../types";
-import { Resources } from "~/util/resources";
+import { Resources } from "@/util/resources";
 import { RealmProps } from "../../types";
-import { shortenAddress } from "~/util/formatters";
-import { OrderIcon } from "~/shared/OrderIcon";
+import { shortenAddress } from "@/util/formatters";
+import { OrderIcon } from "@/shared/OrderIcon";
 import Image from "next/image";
 const variantMaps: any = {
   small: { heading: "lg:text-4xl", regions: "lg:text-xl" },

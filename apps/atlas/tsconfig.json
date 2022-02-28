@@ -1,0 +1,36 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
+    "incremental": true,
+    "paths": {
+      "@/test-utils": ["../config/jest/test-utils"],
+      "@/abi/*": ["./abi/*"],
+      "@/components/*": ["./components/*"],
+      "@/context/*": ["./context/*"],
+      "@/data/*": ["./data/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/shared/*": ["./shared/*"],
+      "@/types/*": ["./types/*"],
+      "@/util/*": ["./util/*"],
+      "@bibliotheca-dao/ui-lib/*": ["../../../packages/ui-lib/src/*"],
+      "@bibliotheca-dao/ui-lib": ["../../../packages/ui-lib/src/index"],
+      "@bibliotheca-dao/core-lib/*": ["../../../packages/core-lib/src/*"],
+      "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
+    }
+  },
+  "exclude": [".next"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.json"
+  ]
+}

@@ -1,5 +1,5 @@
-import { useUIContext } from "~/hooks/useUIContext";
-import { Resources } from "~/util/resources";
+import { useUIContext } from "@/hooks/useUIContext";
+import { Resources } from "@/util/resources";
 import { MouseEventHandler, useState } from "react";
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";

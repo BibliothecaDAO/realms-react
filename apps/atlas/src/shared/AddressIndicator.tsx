@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // TODO: Refactor to use react-starknet
-import { useStarknet } from "~/hooks/useStarknet";
+import { useStarknet } from "@/hooks/useStarknet";
 
 const AddressIndicator = () => {
   const starknet = useStarknet({ eagerConnect: false });

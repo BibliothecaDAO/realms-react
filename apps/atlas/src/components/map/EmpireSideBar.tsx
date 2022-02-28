@@ -1,4 +1,4 @@
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
 import { RealmsEmpire } from "./RealmsEmpire";

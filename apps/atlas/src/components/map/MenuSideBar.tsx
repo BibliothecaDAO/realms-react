@@ -1,4 +1,4 @@
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import { MouseEventHandler, useCallback, useState } from "react";
 import VolumeIcon from "../../../public/svg/volume-2.svg";
 import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
@@ -7,8 +7,8 @@ import Danger from "../../../public/svg/danger.svg";
 import Mountain from "../../../public/svg/mountain.svg";
 import Library from "../../../public/svg/library.svg";
 import Crown from "../../../public/svg/crown.svg";
-import { useSound } from "~/context/soundProvider";
-import { useWalletContext } from "~/hooks/useWalletContext";
+import { useSound } from "@/context/soundProvider";
+import { useWalletContext } from "@/hooks/useWalletContext";
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   resource: Array<String>;
@@ -41,7 +41,7 @@ export const MenuSideBar = () => {
     >
       {account && (
         <button className={buttonClasses} onClick={toggleEmpireMenu}>
-          <Crown className="mx-auto w-8 sm:w-16 fill-current mb-1" />
+          <Crown className="w-8 mx-auto mb-1 fill-current sm:w-16" />
 
           <span className="hidden sm:block">My Empire</span>
         </button>

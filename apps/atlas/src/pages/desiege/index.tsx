@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import ShieldGame from "~/components/minigame/ShieldGame";
+import ShieldGame from "@/components/minigame/ShieldGame";
 
 type Prop = {
   title?: string;

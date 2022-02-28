@@ -4,22 +4,22 @@ import {
   useStarknet,
   useStarknetTransactionManager,
 } from "@starknet-react/core";
-import Button from "~/shared/Button";
+import Button from "@/shared/Button";
 import { getBagsInWallet } from "loot-sdk";
-import { messageKey } from "~/util/messageKey";
+import { messageKey } from "@/util/messageKey";
 import classNames from "classnames";
 import MintRequirements from "./MintRequirements";
-import ElementsLabel from "~/shared/ElementsLabel";
+import ElementsLabel from "@/shared/ElementsLabel";
 import { useState, useEffect, useMemo } from "react";
 
-import { useWalletContext } from "~/hooks/useWalletContext";
-import { getLatestGameIndex } from "~/util/minigameApi";
+import { useWalletContext } from "@/hooks/useWalletContext";
+import { getLatestGameIndex } from "@/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
 import Check from "../../../public/svg/check.svg";
-import { ExternalLink } from "~/shared/Icons";
-import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
-import useTxCallback from "~/hooks/useTxCallback";
+import { ExternalLink } from "@/shared/Icons";
+import useTotalMintedForRound from "@/hooks/useTotalMintedForRound";
+import useTxCallback from "@/hooks/useTxCallback";
 import { XCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 

@@ -1,19 +1,19 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { BigNumber, ethers } from "ethers";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import Web3Modal from "web3modal";
-import { shortenAddress } from "~/util/formatters";
-import LordsTokenAbi from "~/abi/TheLordsToken.json";
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import { BigNumber, ethers } from 'ethers';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import Web3Modal from 'web3modal';
+import LordsTokenAbi from '@/abi/TheLordsToken.json';
+import { shortenAddress } from '@/util/formatters';
 
 const WEB3_MODAL_CONFIG = {
-  network: "mainnet",
+  network: 'mainnet',
   cacheProvider: true,
   theme: {
-    background: "rgb(255, 255, 255)",
-    main: "rgb(199, 199, 199)",
-    secondary: "rgb(136, 136, 136)",
-    border: "rgba(195, 195, 195, 0.14)",
-    hover: "rgb(16, 26, 32)",
+    background: 'rgb(255, 255, 255)',
+    main: 'rgb(199, 199, 199)',
+    secondary: 'rgb(136, 136, 136)',
+    border: 'rgba(195, 195, 195, 0.14)',
+    hover: 'rgb(16, 26, 32)',
   },
   providerOptions: {
     walletconnect: {
@@ -28,7 +28,7 @@ const WEB3_MODAL_CONFIG = {
   }, // Add other providers here
 };
 
-const isServer = typeof window === "undefined";
+const isServer = typeof window === 'undefined';
 
 const defaultWalletContext = {
   isConnected: false,
@@ -36,8 +36,8 @@ const defaultWalletContext = {
   provider: undefined,
   connectWallet: () => {},
   disconnectWallet: () => {},
-  account: "",
-  displayName: "",
+  account: '',
+  displayName: '',
   balance: 0,
   dao: 0,
 };
@@ -48,9 +48,9 @@ const WalletContext = createContext<{
   provider: ethers.providers.Provider | undefined;
   connectWallet: () => void;
   disconnectWallet: () => void;
-  account: String;
-  displayName: String;
-  balance: Number;
+  account: string;
+  displayName: string;
+  balance: number;
 }>(defaultWalletContext);
 
 interface WalletProviderProps {
@@ -70,8 +70,8 @@ function useWallet() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner>();
   const [provider, setProvider] = useState<ethers.providers.Provider>();
   const [isConnected, setIsConnected] = useState(false);
-  const [account, setAccount] = useState<string>("");
-  const [displayName, setDisplayName] = useState("");
+  const [account, setAccount] = useState<string>('');
+  const [displayName, setDisplayName] = useState('');
   const [balance, setBalance] = useState(0);
 
   async function connectWallet() {
@@ -87,7 +87,7 @@ function useWallet() {
     let ensName, balance, lords;
     setAccount(address);
     const lordsContract = new ethers.Contract(
-      "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+      '0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0',
       LordsTokenAbi.abi,
       provider
     );
@@ -105,7 +105,7 @@ function useWallet() {
   }
 
   async function isMetaMaskAndUnlocked(modal: Web3Modal) {
-    if (modal?.cachedProvider !== "injected" || !window?.ethereum?.isMetaMask) {
+    if (modal?.cachedProvider !== 'injected' || !window?.ethereum?.isMetaMask) {
       return false;
     }
     // Experimental function
@@ -126,13 +126,13 @@ function useWallet() {
       }
 
       if (rawProvider) {
-        rawProvider.on("accountsChanged", async (accounts: string[]) => {
+        rawProvider.on('accountsChanged', async (accounts: string[]) => {
           if (accounts?.length > 0) {
             await updateAccount(provider, accounts[0]);
           }
         });
 
-        rawProvider.on("chainChanged", async () => {
+        rawProvider.on('chainChanged', async () => {
           // TODO: handle chain changes
         });
       }
@@ -146,9 +146,9 @@ function useWallet() {
     setModal(undefined);
     setSigner(undefined);
     setProvider(undefined);
-    setAccount("");
+    setAccount('');
     setIsConnected(false);
-    setDisplayName("");
+    setDisplayName('');
   }
 
   useEffect(() => {

@@ -1,18 +1,53 @@
-const nextJest = require("next/jest");
+// @ts-check
 
-const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: "./",
-});
+const { defaults: tsPreset } = require('ts-jest/presets');
+const { pathsToModuleNameMapper } = require('ts-jest');
 
-// Add any custom config to be passed to Jest
-const customJestConfig = {
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
-  moduleDirectories: ["./node_modules", "./src"],
-  testEnvironment: "jest-environment-jsdom",
+const { getJestCachePath } = require('../../cache.config');
+
+const packageJson = require('./package.json');
+const { compilerOptions: baseTsConfig } = require('./tsconfig.json');
+
+// Take the paths from tsconfig automatically from base tsconfig.json
+// @link https://kulshekhar.github.io/ts-jest/docs/paths-mapping
+const getTsConfigBasePaths = () => {
+  return baseTsConfig.paths
+    ? pathsToModuleNameMapper(baseTsConfig.paths, {
+        prefix: '<rootDir>/',
+      })
+    : {};
 };
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig);
+/** @typedef {import('ts-jest/dist/types')} */
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
+  name: `${packageJson.name}:unit`,
+  cacheDirectory: getJestCachePath(packageJson.name),
+  testEnvironment: 'jsdom',
+  verbose: true,
+  rootDir: './src',
+  transform: {
+    ...tsPreset.transform,
+  },
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  testMatch: ['<rootDir>/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+  moduleNameMapper: {
+    // For @testing-library/react
+    '^@/test-utils$': '<rootDir>/../config/jest/test-utils',
+    '.+\\.(css|styl|less|sass|scss)$': 'jest-css-modules-transform',
+    '\\.svg$': '<rootDir>/../config/jest/__mocks__/react-svgr-mock.js',
+    ...getTsConfigBasePaths(),
+  },
+  // false by default, overrides in cli, ie: yarn test:unit --collect-coverage=true
+  collectCoverage: false,
+  coverageDirectory: '<rootDir>/../coverage',
+  collectCoverageFrom: ['<rootDir>/**/*.{ts,tsx,js,jsx}', '!**/*.test.ts'],
+  globals: {
+    'ts-jest': {
+      diagnostics: true,
+      tsconfig: './tsconfig.jest.json',
+    },
+  },
+};
+
+module.exports = config;

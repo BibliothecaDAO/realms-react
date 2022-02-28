@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import BN from "bn.js";
 import { ElementToken } from "~/constants";
-import { GameContext, getGameContextVariables } from "~/util/minigameApi";
+import { GameContext, getGameContextVariables } from "@/util/minigameApi";
 import { toBN } from "starknet/dist/utils/number";
 import GameBlockTimer from "./GameBlockTimer";
-import AddressIndicator from "~/shared/AddressIndicator";
+import AddressIndicator from "@/shared/AddressIndicator";
 import classNames from "classnames";
 import GameControls from "./GameControls";
 import { GameStatus } from "~/types";
 import TowerDefence from "./TowerDefence";
 import MenuBar from "./MenuBar";
-import LoreDevKit from "~/shared/LoreDevKit";
-import DivineSiege from "~/shared/LoreDevKit/desiege.ldk";
+import LoreDevKit from "@/shared/LoreDevKit";
+import DivineSiege from "@/shared/LoreDevKit/desiege.ldk";
 import { useRouter } from "next/router";
 
 export type DesiegeTab = "game-controls" | "lore" | "setup";

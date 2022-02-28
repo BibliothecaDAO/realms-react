@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import { useSound } from "~/context/soundProvider";
+import { useSound } from "@/context/soundProvider";
 import VolumeIcon from "../../../public/svg/volume-2.svg";
 import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
 import Zap from "../../../public/svg/zap.svg";

@@ -2,20 +2,20 @@ import { useState, useEffect, useMemo } from "react";
 import BN from "bn.js";
 import { defaultProvider, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
-import { useModuleAddress } from "~/hooks/useModuleAddress";
-import ElementLabel from "~/shared/ElementsLabel";
-import Button from "~/shared/Button";
+import { useModuleAddress } from "@/hooks/useModuleAddress";
+import ElementLabel from "@/shared/ElementsLabel";
+import Button from "@/shared/Button";
 // TODO: Refactor to use react-starknet
-import { useStarknet } from "~/hooks/useStarknet";
+import { useStarknet } from "@/hooks/useStarknet";
 import BridgeModal from "../bridge/Modal";
 import {
   getTokenIdsForGame,
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
-} from "~/util/minigameApi";
+} from "@/util/minigameApi";
 import { GameStatus } from "~/types";
-import useTxQueue from "~/hooks/useTxQueue";
+import useTxQueue from "@/hooks/useTxQueue";
 const { getSelectorFromName } = stark;
 
 type Prop = {

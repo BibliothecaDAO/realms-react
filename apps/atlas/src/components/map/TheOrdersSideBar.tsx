@@ -1,5 +1,5 @@
-import { useUIContext } from "~/hooks/useUIContext";
-import { TheOrders, OrderDetails } from "~/util/theOrders";
+import { useUIContext } from "@/hooks/useUIContext";
+import { TheOrders, OrderDetails } from "@/util/theOrders";
 import {
   JSXElementConstructor,
   MouseEventHandler,
@@ -9,7 +9,7 @@ import {
 import Left from "../../../public/svg/chevron-left.svg";
 import Right from "../../../public/svg/chevron-right.svg";
 import Menu from "../../../public/svg/menu.svg";
-import { OrderIcon } from "~/shared/OrderIcon";
+import { OrderIcon } from "@/shared/OrderIcon";
 import { BaseSideBar } from "./BaseSideBar";
 
 type Props = {

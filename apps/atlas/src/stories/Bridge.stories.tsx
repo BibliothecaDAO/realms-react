@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { rest } from "msw";
 import { buildStarknetUrl } from "../mocks/starknetMockFactory";
 
-import Bridge from "~/components/bridge/Bridge";
+import Bridge from "@/components/bridge/Bridge";
 import {
   mockGetLatestGameIndex,
   mockSignAndMint,

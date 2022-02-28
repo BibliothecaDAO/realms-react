@@ -4,9 +4,9 @@ import {
   isLegendary,
   Environments,
   legendaryColourClass,
-} from "~/util/cryptsEnvironments";
+} from "@/util/cryptsEnvironments";
 import { CryptProps } from "../../types";
-import { shortenAddress } from "~/util/formatters";
+import { shortenAddress } from "@/util/formatters";
 import Image from "next/image";
 const variantMaps: any = {
   small: { heading: "lg:text-4xl", regions: "lg:text-xl" },

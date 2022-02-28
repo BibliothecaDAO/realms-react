@@ -1,16 +1,16 @@
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import { MouseEventHandler, useState, useRef, useEffect } from "react";
-import { Resources } from "~/util/resources";
+import { Resources } from "@/util/resources";
 import { useQuery } from "@apollo/client";
 import { WalletRealmsData, RealmFilters } from "~/types";
-import { getRealmsQuery } from "~/hooks/graphql/queries";
+import { getRealmsQuery } from "@/hooks/graphql/queries";
 import Menu from "../public/svg/menu.svg";
-import { useWalletContext } from "~/hooks/useWalletContext";
-import { Realm as RealmCard } from "~/components/realms/Realm";
+import { useWalletContext } from "@/hooks/useWalletContext";
+import { Realm as RealmCard } from "@/components/realms/Realm";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
 
-import useIntersectionObserver from "~/hooks/useIntersectionObserver";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 const filterTypes = [
   { name: "Rarity", key: "rarityRank" },

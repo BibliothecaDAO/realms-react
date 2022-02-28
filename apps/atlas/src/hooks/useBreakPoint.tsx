@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
-import { Queries } from "~/types";
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import type { Queries } from '@/types';
 const defaultValue = {};
 
 const BreakpointContext = createContext(defaultValue);
@@ -29,7 +29,7 @@ const BreakpointProvider = (props: BreakpointProviderProps) => {
     if (window && window.matchMedia) {
       const matches: any = {};
       keys.forEach((media) => {
-        if (typeof props.queries[media as keyof Queries] === "string") {
+        if (typeof props.queries[media as keyof Queries] === 'string') {
           mediaQueryLists[media] = window.matchMedia(
             props.queries[media as keyof Queries]
           );
@@ -41,7 +41,7 @@ const BreakpointProvider = (props: BreakpointProviderProps) => {
       setQueryMatch(matches);
       isAttached = true;
       keys.forEach((media) => {
-        if (typeof props.queries[media as keyof Queries] === "string") {
+        if (typeof props.queries[media as keyof Queries] === 'string') {
           mediaQueryLists[media].addListener(handleQueryListener);
         }
       });
@@ -50,7 +50,7 @@ const BreakpointProvider = (props: BreakpointProviderProps) => {
     return () => {
       if (isAttached) {
         keys.forEach((media) => {
-          if (typeof props.queries[media as keyof Queries] === "string") {
+          if (typeof props.queries[media as keyof Queries] === 'string') {
             mediaQueryLists[media].removeListener(handleQueryListener);
           }
         });
@@ -68,7 +68,7 @@ const BreakpointProvider = (props: BreakpointProviderProps) => {
 function useBreakpoint() {
   const context = useContext(BreakpointContext);
   if (context === defaultValue) {
-    throw new Error("useBreakpoint must be used within BreakpointProvider");
+    throw new Error('useBreakpoint must be used within BreakpointProvider');
   }
   return context;
 }

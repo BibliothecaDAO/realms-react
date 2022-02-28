@@ -1,5 +1,5 @@
-import { animated, useSpring } from "@react-spring/web";
-import { useBreakpoint } from "~/hooks/useBreakPoint";
+import { animated, useSpring } from '@react-spring/web';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 type Props = {
   children: React.ReactNode;
   open: boolean;
@@ -13,12 +13,12 @@ export const BaseSideBar = (props: Props) => {
     md: props.open ? `translateX(0%)` : `translateX(100%)`,
     lg: props.open ? `translateX(58.3333333333%)` : `translateX(100%)`,
     xl: props.open ? `translateX(58.3333333333%)` : `translateX(100%)`,
-    "2xl": props.open ? `translateX(58.3333333333%)` : `translateX(100%)`,
+    '2xl': props.open ? `translateX(58.3333333333%)` : `translateX(100%)`,
   };
 
   const getMediaQuery = (breakpoints: any) => {
-    if (breakpoints["2xl"]) {
-      return responsiveAnimations["2xl"];
+    if (breakpoints['2xl']) {
+      return responsiveAnimations['2xl'];
     } else if (breakpoints.xl) {
       return responsiveAnimations.xl;
     } else if (breakpoints.lg) {
@@ -39,7 +39,7 @@ export const BaseSideBar = (props: Props) => {
 
   return (
     <animated.div
-      className="absolute w-full top-0 bottom-0 right-0 z-20 overflow-x-hidden backdrop-blur-md bg-off-200/60"
+      className="absolute top-0 bottom-0 right-0 z-20 w-full overflow-x-hidden backdrop-blur-md bg-off-200/60"
       style={animation}
     >
       {props.children}

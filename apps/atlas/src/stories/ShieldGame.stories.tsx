@@ -1,9 +1,9 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ShieldGame from "~/components/minigame/ShieldGame";
+import ShieldGame from "@/components/minigame/ShieldGame";
 import { buildStarknetUrl, StarknetCall } from "~/mocks/starknetMockFactory";
 import { number, stark } from "starknet";
-import { SelectorName } from "~/util/minigameApi";
+import { SelectorName } from "@/util/minigameApi";
 import { rest } from "msw";
 const { getSelectorFromName } = stark;
 const { toHex, toBN } = number;

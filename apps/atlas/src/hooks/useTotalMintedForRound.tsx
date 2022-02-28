@@ -6,7 +6,7 @@ import { ElementToken } from "~/constants";
 import {
   EFFECT_BASE_FACTOR,
   TOKEN_INDEX_OFFSET_BASE,
-} from "~/util/minigameApi";
+} from "@/util/minigameApi";
 
 const useTotalMintedForRound = (gameIdx: number) => {
   const { contract: elementsContract } = useContract({

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Abi, number, stark } from "starknet";
 import { getStarknet } from "@argent/get-starknet/dist";
-import { useModuleAddress } from "~/hooks/useModuleAddress";
-import { useSiegeBalance } from "~/hooks/useSiegeBalance";
-import ElementLabel from "~/shared/ElementsLabel";
-import Button from "~/shared/Button";
+import { useModuleAddress } from "@/hooks/useModuleAddress";
+import { useSiegeBalance } from "@/hooks/useSiegeBalance";
+import ElementLabel from "@/shared/ElementsLabel";
+import Button from "@/shared/Button";
 import {
   useStarknet,
   useStarknetInvoke,
@@ -16,15 +16,15 @@ import {
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
   EFFECT_BASE_FACTOR,
-} from "~/util/minigameApi";
+} from "@/util/minigameApi";
 import { GameStatus } from "~/types";
 import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 import classNames from "classnames";
-import LoadingSkeleton from "~/shared/LoadingSkeleton";
-import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
-import { ExternalLink } from "~/shared/Icons";
-import useTxCallback from "~/hooks/useTxCallback";
+import LoadingSkeleton from "@/shared/LoadingSkeleton";
+import useTotalMintedForRound from "@/hooks/useTotalMintedForRound";
+import { ExternalLink } from "@/shared/Icons";
+import useTxCallback from "@/hooks/useTxCallback";
 
 type Prop = {
   gameIdx?: number;
@@ -244,7 +244,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <a
                 target={"_blank"}
                 href="https://discord.gg/YfeZQ3NFB8"
-                className="underline"
+                className="underline" rel="noreferrer"
               >
                 Discord
               </a>
@@ -258,7 +258,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <a
                 target={"_blank"}
                 href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/src/components/minigame"
-                className="underline"
+                className="underline" rel="noreferrer"
               >
                 front-end
               </a>
@@ -266,7 +266,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <a
                 target={"_blank"}
                 href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/minigame/contracts/l2/minigame"
-                className="underline"
+                className="underline" rel="noreferrer"
               >
                 StarkNet
               </a>

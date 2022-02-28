@@ -1,16 +1,3 @@
-import React, { useEffect } from "react";
-import { AppProps } from "next/app";
-import { WalletProvider } from "~/hooks/useWalletContext";
-import { SoundProvider } from "~/context/soundProvider";
-import { UserAgentProvider } from "@quentin-sommer/react-useragent";
-import { StarknetProvider } from "@starknet-react/core";
-import { UIProvider } from "~/hooks/useUIContext";
-import "../styles/index.css";
-import PageTransition from "~/components/navigation/PageTransition";
-import { animated, Transition } from "@react-spring/web";
-import { MultiAPILink } from "@habx/apollo-multi-endpoint-link";
-import { concatPagination } from "@apollo/client/utilities";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -19,18 +6,30 @@ import {
   createHttpLink,
   useQuery,
   gql,
-} from "@apollo/client";
-import { BreakpointProvider } from "~/hooks/useBreakPoint";
+} from '@apollo/client';
+import { concatPagination } from '@apollo/client/utilities';
+import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
+import { UserAgentProvider } from '@quentin-sommer/react-useragent';
+import { StarknetProvider } from '@starknet-react/core';
+import type { AppProps } from 'next/app';
+import React, { useEffect } from 'react';
+import { SoundProvider } from '@/context/soundProvider';
+import { BreakpointProvider } from '@/hooks/useBreakPoint';
+import { UIProvider } from '@/hooks/useUIContext';
+import { WalletProvider } from '@/hooks/useWalletContext';
+import '../styles/global.css';
+/* import PageTransition from '@/components/navigation/PageTransition';
+import { animated, Transition } from '@react-spring/web'; */
 
 const client = new ApolloClient({
   link: ApolloLink.from([
     new MultiAPILink({
       endpoints: {
         realms:
-          "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
-        crypts: "https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev",
+          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
+        crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
       },
-      httpSuffix: "",
+      httpSuffix: '',
       createHttpLink: () => createHttpLink(),
     }),
   ]),
@@ -38,9 +37,9 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          realms: concatPagination(["where", "orderBy"]),
-          bridgedRealms: concatPagination(["where", "orderBy"]),
-          dungeons: concatPagination(["where"]),
+          realms: concatPagination(['where', 'orderBy']),
+          bridgedRealms: concatPagination(['where', 'orderBy']),
+          dungeons: concatPagination(['where']),
         },
       },
     },
@@ -56,7 +55,7 @@ const PageWrapper = (Comp: any) =>
     static async getInitialProps(args: any) {
       return {
         ua: args.ctx.req
-          ? args.ctx.req.headers["user-agent"]
+          ? args.ctx.req.headers['user-agent']
           : navigator.userAgent,
         ...(Comp.getInitialProps ? await Comp.getInitialProps(args) : null),
       };
@@ -72,11 +71,11 @@ const PageWrapper = (Comp: any) =>
     }
   };
 const queries = {
-  sm: "(min-width: 640px)",
-  md: "(min-width: 768px)",
-  lg: "(min-width: 1024px)",
-  xl: "(min-width: 1280px)",
-  "2xl": "(min-width: 1536px)",
+  sm: '(min-width: 640px)',
+  md: '(min-width: 768px)',
+  lg: '(min-width: 1024px)',
+  xl: '(min-width: 1280px)',
+  '2xl': '(min-width: 1536px)',
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

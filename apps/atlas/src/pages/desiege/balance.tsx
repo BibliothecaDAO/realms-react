@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import ShieldGame from "~/components/minigame/ShieldGame";
-import { getLatestGameIndex, getTotalElementsMinted } from "~/util/minigameApi";
+import ShieldGame from "@/components/minigame/ShieldGame";
+import { getLatestGameIndex, getTotalElementsMinted } from "@/util/minigameApi";
 import Game from "./index";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

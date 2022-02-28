@@ -1,10 +1,10 @@
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import { BaseSideBar } from "./BaseSideBar";
 import { Realm } from "../realms/Realm";
 import Menu from "../../../public/svg/menu.svg";
 import { Data } from "~/types";
 import { useQuery } from "@apollo/client";
-import { getRealmQuery } from "~/hooks/graphql/queries";
+import { getRealmQuery } from "@/hooks/graphql/queries";
 
 type Props = {
   id: number;

@@ -1,10 +1,10 @@
-import { useUIContext } from "~/hooks/useUIContext";
+import { useUIContext } from "@/hooks/useUIContext";
 import { BaseSideBar } from "./BaseSideBar";
 import { Crypt } from "../realms/Crypt";
 import Menu from "../../../public/svg/menu.svg";
 import { CryptData } from "~/types";
 import { useQuery } from "@apollo/client";
-import { getCryptQuery } from "~/hooks/graphql/queries";
+import { getCryptQuery } from "@/hooks/graphql/queries";
 
 type Props = {
   id: number;
