@@ -1,17 +1,15 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import ShieldGame from '~/components/minigame/ShieldGame';
-import {
-  buildStarknetUrl,
-  mockGetBlock,
-  StarknetCall,
-} from '~/mocks/starknetMockFactory';
-import { number, stark } from 'starknet';
 import { StarknetProvider } from '@starknet-react/core';
-import { SelectorName } from '~/util/minigameApi';
+import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
+import React from 'react';
+import { number, stark } from 'starknet';
+import ShieldGame from '@/components/minigame/ShieldGame';
+import type { StarknetCall } from '@/mocks/starknetMockFactory';
+import { buildStarknetUrl, mockGetBlock } from '@/mocks/starknetMockFactory';
+import { SelectorName } from '@/util/minigameApi';
 const { getSelectorFromName } = stark;
 const { toHex, toBN } = number;
+const starknetUrl = 'alpha4.starknet.io';
 
 export default {
   title: 'Desiege',
@@ -61,7 +59,7 @@ ActiveGame.parameters = {
   },
   msw: [
     rest.post<StarknetCall>(
-      buildStarknetUrl('alpha4.starknet.io') + 'call_contract',
+      buildStarknetUrl(starknetUrl) + 'call_contract',
       (req, res, ctx) => {
         if (responsesBySelector[req.body.entry_point_selector]) {
           return res(
@@ -74,12 +72,9 @@ ActiveGame.parameters = {
         throw 'Unhandled dynamic mock';
       }
     ),
-    rest.get(
-      buildStarknetUrl('alpha4.starknet.io') + 'get_block',
-      (_req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(mockGetBlock()));
-      }
-    ),
+    rest.get(buildStarknetUrl(starknetUrl) + 'get_block', (_req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(mockGetBlock()));
+    }),
   ],
 };
 
@@ -90,7 +85,7 @@ PendingGame.args = {};
 PendingGame.parameters = {
   msw: [
     rest.post<StarknetCall>(
-      buildStarknetUrl('alpha4.starknet.io') + 'call_contract',
+      buildStarknetUrl(starknetUrl) + 'call_contract',
       (req, res, ctx) => {
         const mockedResponses: Record<string, string[]> = {
           ...responsesBySelector,

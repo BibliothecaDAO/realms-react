@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
+import { useWeb3React } from '@web3-react/core';
+import { useState, useEffect } from 'react';
 
-import { injected } from "../connectors";
+import { injected } from '../connectors';
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React();
@@ -34,39 +34,36 @@ export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React();
 
   useEffect(() => {
-    // @ts-ignore
     const ethereum = window.ethereum;
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleChainChanged = (chainId: number) => {
-        console.log("chainChanged", chainId);
+        console.log('chainChanged', chainId);
         activate(injected);
       };
 
       const handleAccountsChanged = (accounts: string[]) => {
-        console.log("accountsChanged", accounts);
+        console.log('accountsChanged', accounts);
         if (accounts.length > 0) {
           activate(injected);
         }
       };
 
       const handleNetworkChanged = (networkId: any) => {
-        console.log("networkChanged", networkId);
+        console.log('networkChanged', networkId);
         activate(injected);
       };
 
-      ethereum.on("chainChanged", handleChainChanged);
-      ethereum.on("accountsChanged", handleAccountsChanged);
-      ethereum.on("networkChanged", handleNetworkChanged);
+      ethereum.on('chainChanged', handleChainChanged);
+      ethereum.on('accountsChanged', handleAccountsChanged);
+      ethereum.on('networkChanged', handleNetworkChanged);
 
       return () => {
         if (ethereum.removeListener) {
-          ethereum.removeListener("chainChanged", handleChainChanged);
-          ethereum.removeListener("accountsChanged", handleAccountsChanged);
-          ethereum.removeListener("networkChanged", handleNetworkChanged);
+          ethereum.removeListener('chainChanged', handleChainChanged);
+          ethereum.removeListener('accountsChanged', handleAccountsChanged);
+          ethereum.removeListener('networkChanged', handleNetworkChanged);
         }
       };
     }
-
-    return () => {};
   }, [active, error, suppress, activate]);
 }

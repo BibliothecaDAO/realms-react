@@ -1,14 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { utils } from "ethers";
-import { Provider, ec, Signer, stark, encode } from "starknet";
-import { messageKey } from "@/util/messageKey";
-import { fetchLordsBalance } from "@/util/fetchL1";
-import { MINIMUM_LORDS_REQUIRED } from "~/constants";
+import { utils } from 'ethers';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { Provider, ec, Signer, stark, encode } from 'starknet';
+import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
+import { fetchLordsBalance } from '@/util/fetchL1';
+import { messageKey } from '@/util/messageKey';
 import {
   getModuleAddress,
   getNextMintAmount,
   getTotalElementsMinted,
-} from "@/util/minigameApi";
+} from '@/util/minigameApi';
 const { getSelectorFromName } = stark;
 
 export type MintingError = {
@@ -24,16 +24,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const lordsBalance = await fetchLordsBalance(ethAddress);
 
   const suppressERC20Requirement =
-    process.env.SUPPRESS_TOKEN_REQUIREMENT == "1";
+    process.env.SUPPRESS_TOKEN_REQUIREMENT == '1';
 
-  if (
-    lordsBalance.lt(MINIMUM_LORDS_REQUIRED) &&
-    suppressERC20Requirement == false
-  ) {
+  if (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) && !suppressERC20Requirement) {
     res.send(
       JSON.stringify({
         success: false,
-        error: "Insufficient LORDS balance",
+        error: 'Insufficient LORDS balance',
       })
     );
     return;
@@ -41,7 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Mint on StarkNet (testnet)
   const provider = new Provider({
-    network: "georli-alpha",
+    network: 'goerli-alpha',
   });
 
   const minterPrivKey = encode.addHexPrefix(
@@ -53,10 +50,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const privKey = ec.getKeyPair(minterPrivKey);
     const account =
       (process.env.ELEMENTS_MINTER_ACCOUNT_ADDRESS as string) ||
-      "0x430728b8d6252608f35615191903466284b01e4ae9ecff60de8a6cb99d44a10";
+      '0x430728b8d6252608f35615191903466284b01e4ae9ecff60de8a6cb99d44a10';
     signer = new Signer(provider, account, privKey);
   } catch (e) {
-    console.error("SIGNING ERROR:", e);
+    console.error('SIGNING ERROR:', e);
     throw e;
   }
 
@@ -66,11 +63,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   // so multiply by 100
   let amountToMint: number;
   try {
-    let totals = await getTotalElementsMinted(gameIndexInt);
+    const totals = await getTotalElementsMinted(gameIndexInt);
     // Dynamic element balancing
     amountToMint = getNextMintAmount(totals);
   } catch (e) {
-    console.error("CONTRACT CALL ERROR:", e);
+    console.error('CONTRACT CALL ERROR:', e);
     throw e;
   }
 
@@ -80,17 +77,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   // so the 1155 token indexes start at a deterministic index
   // and IDs are offset from there
   // Ex. light = startIndex + 1, dark = startIndex + 2
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const INDEX_BASE_FACTOR = 10;
   const tokenStartIndex = nextGameIdx * INDEX_BASE_FACTOR;
 
-  const elementBalancerModule = await getModuleAddress("4");
+  const elementBalancerModule = await getModuleAddress('4');
 
-  const selector = getSelectorFromName("mint_elements");
+  const selector = getSelectorFromName('mint_elements');
   const mintArgs = [
     nextGameIdx,
     ethAddress,
     starknetAddress,
-    chosenSide == "light" ? tokenStartIndex + 1 : tokenStartIndex + 2,
+    chosenSide == 'light' ? tokenStartIndex + 1 : tokenStartIndex + 2,
     amountToMint,
   ];
 
@@ -103,7 +101,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.send(JSON.stringify(result));
     return;
   } catch (e: any) {
-    console.error("MINTING ERROR:", e);
+    console.error('MINTING ERROR:', e);
     res.send(
       JSON.stringify({
         success: false,

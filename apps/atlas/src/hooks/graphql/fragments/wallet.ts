@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { gql, useQuery } from '@apollo/client';
 export const WalletFragment = gql`
   fragment WalletData on Wallet {
@@ -6,4 +7,4 @@ export const WalletFragment = gql`
     treasuresHeld
     manasHeld
   }
-`
+`;

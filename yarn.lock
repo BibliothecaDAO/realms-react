@@ -1703,7 +1703,7 @@ __metadata:
     "@typescript-eslint/parser": 5.12.1
     cross-env: 7.0.3
     dequal: ^2.0.2
-    eslint: 8.9.0
+    eslint: 8.10.0
     eslint-config-prettier: 8.4.0
     eslint-import-resolver-typescript: 2.5.0
     eslint-plugin-import: 2.25.4
@@ -1771,7 +1771,7 @@ __metadata:
     babel-plugin-polyfill-corejs3: 0.5.2
     core-js: 3.21.1
     cross-env: 7.0.3
-    eslint: 8.9.0
+    eslint: 8.10.0
     eslint-config-prettier: 8.4.0
     eslint-import-resolver-typescript: 2.5.0
     eslint-plugin-import: 2.25.4
@@ -2796,9 +2796,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@eslint/eslintrc@npm:1.1.0"
+"@eslint/eslintrc@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@eslint/eslintrc@npm:1.2.0"
   dependencies:
     ajv: ^6.12.4
     debug: ^4.3.2
@@ -2809,7 +2809,7 @@ __metadata:
     js-yaml: ^4.1.0
     minimatch: ^3.0.4
     strip-json-comments: ^3.1.1
-  checksum: 784aa2157e2808b52bbbaf1d1cfca9a6ba0b2faaa3696eb7a1229d4b357400fbd8a6aa09a16e7ae0868ea075d3a8f365cf5928b6d05a1df47f40a1167423a4fa
+  checksum: a5e51dcf02627363567094456d7880b46b6a14a285d7a057f083ca903bdd862483bb6314cbc9fb6fa2d2c4537d50e0d28bd5e39650840241ae4796faaec65d2e
   languageName: node
   linkType: hard
 
@@ -4578,9 +4578,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-three/drei@npm:^8.8.1":
-  version: 8.10.6
-  resolution: "@react-three/drei@npm:8.10.6"
+"@react-three/drei@npm:^8.11.0":
+  version: 8.11.0
+  resolution: "@react-three/drei@npm:8.11.0"
   dependencies:
     "@babel/runtime": ^7.11.2
     "@react-spring/three": ^9.3.1
@@ -4606,7 +4606,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 04f209ea6755bb220a456de3e409c673f483d669925dab756a1d095c9d4907510294e5ca37334188df33731c2c28d81ef1f54c98fbfbf326918d4fcdef772745
+  checksum: 0de2ea01c0bc8e9289054e19e6465c8b9df2dee610cd54b5dc80ac63d27a5f4178afdca45bc69e1004ae5acf9bc121235d0daeed0a1ff8f9105a58630f289b41
   languageName: node
   linkType: hard
 
@@ -8592,7 +8592,7 @@ __metadata:
     "@playwright/test": 1.19.1
     "@quentin-sommer/react-useragent": 3.1.1
     "@react-spring/types": ^9.4.3
-    "@react-three/drei": ^8.8.1
+    "@react-three/drei": ^8.11.0
     "@react-three/fiber": ^7.0.26
     "@size-limit/file": 7.0.8
     "@starknet-react/core": ^0.4.6
@@ -8622,7 +8622,7 @@ __metadata:
     cross-env: 7.0.3
     deck.gl: ^8.6.0-alpha.0
     es-check: 6.2.1
-    eslint: 8.9.0
+    eslint: 8.10.0
     eslint-config-next: 12.1.0
     eslint-config-prettier: 8.4.0
     eslint-import-resolver-typescript: 2.5.0
@@ -8654,6 +8654,7 @@ __metadata:
     prettier: 2.5.1
     react: 18.0.0-rc.0-next-fa816be7f-20220128
     react-dom: 18.0.0-rc.0-next-fa816be7f-20220128
+    react-joyride: ^2.3.2
     react-map-gl: ^7.0.7
     react-spring: ^9.4.3
     rimraf: 3.0.2
@@ -11457,6 +11458,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deep-diff@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "deep-diff@npm:1.0.2"
+  checksum: 9de8b5eedc1957116e1b47e4c3c4e3dbe23cb741abefc5ec8829a12e77958c689ac46888a3c35320f976cf42fb6de2b016e158facdb24d894ab5b5fdabad9b34
+  languageName: node
+  linkType: hard
+
 "deep-extend@npm:^0.6.0":
   version: 0.6.0
   resolution: "deep-extend@npm:0.6.0"
@@ -12666,11 +12674,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.9.0":
-  version: 8.9.0
-  resolution: "eslint@npm:8.9.0"
+"eslint@npm:8.10.0":
+  version: 8.10.0
+  resolution: "eslint@npm:8.10.0"
   dependencies:
-    "@eslint/eslintrc": ^1.1.0
+    "@eslint/eslintrc": ^1.2.0
     "@humanwhocodes/config-array": ^0.9.2
     ajv: ^6.10.0
     chalk: ^4.0.0
@@ -12707,7 +12715,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: 8efecdb9752ee6cb4d2787a14e00cbeab29562ed95dd71c6f3f8ac410426a067d5aa659416d2290e46ca44bc5607e6a6e6c62f814694d8639f80666f522022a7
+  checksum: 8b31ab3de5b48b6828bf13c09c9e62ee0045fa0afa017efaa73eedcf4dc33bc204ee4c467d4677e37967d1645f73816ddef4271422e691fded352040f8f83093
   languageName: node
   linkType: hard
 
@@ -13196,6 +13204,13 @@ __metadata:
   dependencies:
     clone-regexp: ^2.1.0
   checksum: d98ee3e33f6c9001e80970e927fb9f16c6a121d5e250b2f4d6764d4157974f58cbe88613bbf073db05d5342677012002c5de956f4f0c32d10d092b6ff03a085c
+  languageName: node
+  linkType: hard
+
+"exenv@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "exenv@npm:1.2.2"
+  checksum: a894f3b60ab8419e0b6eec99c690a009c8276b4c90655ccaf7d28faba2de3a6b93b3d92210f9dc5efd36058d44f04098f6bbccef99859151104bfd49939904dc
   languageName: node
   linkType: hard
 
@@ -15920,6 +15935,13 @@ __metadata:
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
   checksum: 93a32f01940220532e5948538699ad610d5924ac86093fcee83022252b363eb0cc99ba53ab084a04e4fb62bf7b5731f55496257a4c38adf87af9c4d352c71c35
+  languageName: node
+  linkType: hard
+
+"is-lite@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "is-lite@npm:0.8.1"
+  checksum: 8d3504b937947599dab9743b961ecef1da81ee5eb1fe6afa4351f19df8e5acdb0ffd872e90b6f256b5b7aab7364883d4960a9eeb174a8b93cc396f97f178e285
   languageName: node
   linkType: hard
 
@@ -18903,6 +18925,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nested-property@npm:1.0.1":
+  version: 1.0.1
+  resolution: "nested-property@npm:1.0.1"
+  checksum: 1985347d20844186f24cfc3863c076641fa58dcf4547a2c369c67158411a45502597c876614eb3db7bee378f5c4fe84d00ae463c6064fb35daf84224c870ed2b
+  languageName: node
+  linkType: hard
+
+"nested-property@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "nested-property@npm:4.0.0"
+  checksum: 9c86f2c722429e167876d5becf276139a6aa4b8732b6d9e32de9aa44dfd017702b60614cc87aec961dea47ae50dae0951d5b5f66fc30288f18bf581c16e42ca2
+  languageName: node
+  linkType: hard
+
 "next-auth@npm:^4.0.6":
   version: 4.2.1
   resolution: "next-auth@npm:4.2.1"
@@ -20296,6 +20332,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"popper.js@npm:^1.16.0":
+  version: 1.16.1
+  resolution: "popper.js@npm:1.16.1"
+  checksum: c56ae5001ec50a77ee297a8061a0221d99d25c7348d2e6bcd3e45a0d0f32a1fd81bca29d46cb0d4bdf13efb77685bd6a0ce93f9eb3c608311a461f945fffedbe
+  languageName: node
+  linkType: hard
+
 "posix-character-classes@npm:^0.1.0":
   version: 0.1.1
   resolution: "posix-character-classes@npm:0.1.1"
@@ -21604,6 +21647,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-floater@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "react-floater@npm:0.7.3"
+  dependencies:
+    deepmerge: ^4.2.2
+    exenv: ^1.2.2
+    is-lite: ^0.8.1
+    popper.js: ^1.16.0
+    react-proptype-conditional-require: ^1.0.4
+    tree-changes: ^0.5.1
+  peerDependencies:
+    prop-types: ^15.7.2
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: cb6d9bc872631e04c4bc344f51346ba2623dab9342f6663e734fe3860b6f8d8a0e6186a468cdfa01e2375f4f4392e64b72fce436db2367c99a1a7ab65d65d9eb
+  languageName: node
+  linkType: hard
+
 "react-helmet-async@npm:^1.0.7":
   version: 1.2.3
   resolution: "react-helmet-async@npm:1.2.3"
@@ -21644,6 +21705,28 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-joyride@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "react-joyride@npm:2.3.2"
+  dependencies:
+    deep-diff: ^1.0.2
+    deepmerge: ^4.2.2
+    exenv: ^1.2.2
+    is-lite: ^0.8.1
+    nested-property: ^4.0.0
+    react-floater: ^0.7.3
+    react-is: ^16.13.1
+    scroll: ^3.0.1
+    scrollparent: ^2.0.1
+    tree-changes: ^0.7.1
+  peerDependencies:
+    prop-types: ^15.0.0
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: ad790a5d74f06fa89ce028e35a3632ecc6191fd9eb600c7e929d79aed4920f4dc9abd88497bafbcd97bfafba1f66be7738016b24258d32cbc37c31cf2e6c5ee9
   languageName: node
   linkType: hard
 
@@ -21690,6 +21773,13 @@ __metadata:
     "@popperjs/core": ^2.0.0
     react: ^16.8.0 || ^17
   checksum: 915fcf08e1da4fd48a200074fcdd936f601ee2173f1e730cfed8a54fd47716aa8bf9cce2392463e3bcbe64a096d0baf463809ed2874b94d3a9d430ae6d817b5d
+  languageName: node
+  linkType: hard
+
+"react-proptype-conditional-require@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "react-proptype-conditional-require@npm:1.0.4"
+  checksum: 78f82d15b2c77c14fd8fbcbbed279850df3a856984aacd519ee6c2162e034b114b8ac47c00157b84ef7c98c0711d933a0177d9d54555629cf381f54341bb0e8f
   languageName: node
   linkType: hard
 
@@ -22889,6 +22979,20 @@ __metadata:
     ajv: ^6.12.5
     ajv-keywords: ^3.5.2
   checksum: fb73f3d759d43ba033c877628fe9751620a26879f6301d3dbeeb48cf2a65baec5cdf99da65d1bf3b4ff5444b2e59cbe4f81c2456b5e0d2ba7d7fd4aed5da29ce
+  languageName: node
+  linkType: hard
+
+"scroll@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "scroll@npm:3.0.1"
+  checksum: e6b045347adace30035073882e6ef2af7e1c81dd611faf3a578ca8cd0d1a3a9da54932dd97ed6fd99c9573351c758fa50e6d8ed4afb5bd3a33794b6c48d25922
+  languageName: node
+  linkType: hard
+
+"scrollparent@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "scrollparent@npm:2.0.1"
+  checksum: 9ff2b29c1233431ebd0910e5f8db4a058836ee0292d1bb18042fbb4d2175c3ed73fa28a71a96074ac6848173185238ad1139bdefc3863be4808df981175cb807
   languageName: node
   linkType: hard
 
@@ -24981,6 +25085,26 @@ __metadata:
   version: 0.0.3
   resolution: "tr46@npm:0.0.3"
   checksum: 726321c5eaf41b5002e17ffbd1fb7245999a073e8979085dacd47c4b4e8068ff5777142fc6726d6ca1fd2ff16921b48788b87225cbc57c72636f6efa8efbffe3
+  languageName: node
+  linkType: hard
+
+"tree-changes@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "tree-changes@npm:0.5.1"
+  dependencies:
+    deep-diff: ^1.0.2
+    nested-property: 1.0.1
+  checksum: 29132f850c5ec5fcedf346b2a2b5182ed7ffb35005baba75a2dcfd72444835fb0a10963f5303fd8f2f38b42f99c6045ab1b7b1f819e99fe279a151489331b755
+  languageName: node
+  linkType: hard
+
+"tree-changes@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "tree-changes@npm:0.7.1"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    is-lite: ^0.8.1
+  checksum: ce8e724a3ed166851150f9a9de418bb026076ced1c4d300846ca5b0a8293e4f007b857328abcc022891061320ff4874086d821c4c018681c7250b8492ede6bbe
   languageName: node
   linkType: hard
 

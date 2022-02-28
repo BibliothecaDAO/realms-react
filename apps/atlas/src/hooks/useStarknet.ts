@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
-import { getStarknet } from "@argent/get-starknet";
+import { getStarknet } from '@argent/get-starknet';
+import { useEffect, useState } from 'react';
 
 export const isWalletConnected = (): boolean => !!getStarknet()?.isConnected;
 
-export const connectWallet = async () =>
-  await getStarknet().enable();
+export const connectWallet = async () => await getStarknet().enable();
 
 export const walletAddress = async (): Promise<string | undefined> => {
   try {
     const [address] = await getStarknet().enable();
     return address;
-  } catch { }
+  } catch {
+    console.log('address error');
+  }
 };
 
 export const waitForTransaction = async (hash: string) =>
@@ -20,7 +21,8 @@ type ConnectOptions = {
   eagerConnect?: boolean;
 };
 
-const CONNECT_EVENT_NAME = "starknet-connection-changed";
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const CONNECT_EVENT_NAME = 'starknet-connection-changed';
 
 export const useStarknet = (options?: ConnectOptions) => {
   const [isL2Connected, setIsL2Connected] = useState(isWalletConnected());
@@ -29,7 +31,7 @@ export const useStarknet = (options?: ConnectOptions) => {
   // Listen for other connection events from this same
   // hook being used in a different component
   const handleConnect = async () => {
-    if (isL2Connected == false || l2Address == undefined) {
+    if (!isL2Connected || l2Address == undefined) {
       try {
         await getStarknet().enable();
         setIsL2Connected(isWalletConnected());

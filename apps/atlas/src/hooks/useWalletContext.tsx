@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import LordsTokenAbi from '@/abi/TheLordsToken.json';

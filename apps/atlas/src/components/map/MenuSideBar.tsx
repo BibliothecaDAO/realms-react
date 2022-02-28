@@ -1,17 +1,18 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { MouseEventHandler, useCallback, useState } from "react";
-import VolumeIcon from "../../../public/svg/volume-2.svg";
-import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
-import Castle from "../../../public/svg/castle.svg";
-import Danger from "../../../public/svg/danger.svg";
-import Mountain from "../../../public/svg/mountain.svg";
-import Library from "../../../public/svg/library.svg";
-import Crown from "../../../public/svg/crown.svg";
-import { useSound } from "@/context/soundProvider";
-import { useWalletContext } from "@/hooks/useWalletContext";
+import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
+import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
+import Mountain from '@bibliotheca-dao/ui-lib/icons/mountain.svg';
+import VolumeIcon from '@bibliotheca-dao/ui-lib/icons/volume-2.svg';
+import VolumeMuteIcon from '@bibliotheca-dao/ui-lib/icons/volume-x.svg';
+import { useCallback, useState } from 'react';
+import type { MouseEventHandler } from 'react';
+import { useSound } from '@/context/soundProvider';
+import { useUIContext } from '@/hooks/useUIContext';
+import { useWalletContext } from '@/hooks/useWalletContext';
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  resource: Array<String>;
+  resource: Array<string>;
 };
 
 export const MenuSideBar = () => {
@@ -31,12 +32,12 @@ export const MenuSideBar = () => {
   }, [toggleSound]);
 
   const buttonClasses =
-    "p-3 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200";
-  const iconClasses = "mx-auto w-6 sm:w-10 fill-current mb-1";
+    'p-3 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200';
+  const iconClasses = 'mx-auto w-6 sm:w-10 fill-current mb-1';
   return (
     <div
       className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all ${
-        mainMenu ? "" : "translate-y-full hidden"
+        mainMenu ? '' : 'translate-y-full hidden'
       }`}
     >
       {account && (

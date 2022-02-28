@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from "react";
+import Settings from '@bibliotheca-dao/ui-lib/icons/settings.svg';
+import VolumeIcon from '@bibliotheca-dao/ui-lib/icons/volume-2.svg';
+import VolumeMuteIcon from '@bibliotheca-dao/ui-lib/icons/volume-x.svg';
+import Zap from '@bibliotheca-dao/ui-lib/icons/zap.svg';
+import { useRouter } from 'next/router';
+import React, { useCallback, useState } from 'react';
 
-import { useRouter } from "next/router";
-
-import { useSound } from "@/context/soundProvider";
-import VolumeIcon from "../../../public/svg/volume-2.svg";
-import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
-import Zap from "../../../public/svg/zap.svg";
-import Settings from "../../../public/svg/settings.svg";
-import { DesiegeTab } from "./ShieldGame";
+import { useSound } from '@/context/soundProvider';
+import type { DesiegeTab } from './ShieldGame';
 
 type Prop = {
   toggleTab?: (tab: DesiegeTab) => void;
@@ -27,8 +26,8 @@ function MenuBar(props: Prop) {
         <button
           className="self-center mute-btn hover:scale-105 hover:text-blue-700"
           onClick={() => {
-            props.toggleTab && props.toggleTab("game-controls");
-            router.replace("/desiege?tab=game-controls", undefined, {
+            props.toggleTab && props.toggleTab('game-controls');
+            router.replace('/desiege?tab=game-controls', undefined, {
               shallow: true,
             });
           }}
@@ -38,8 +37,8 @@ function MenuBar(props: Prop) {
         <button
           className="self-center mute-btn hover:text-blue-700"
           onClick={() => {
-            props.toggleTab && props.toggleTab("lore");
-            router.replace("/desiege?tab=lore", undefined, {
+            props.toggleTab && props.toggleTab('lore');
+            router.replace('/desiege?tab=lore', undefined, {
               shallow: true,
             });
           }}

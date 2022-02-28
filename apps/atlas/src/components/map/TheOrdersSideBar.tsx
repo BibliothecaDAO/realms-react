@@ -1,16 +1,16 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { TheOrders, OrderDetails } from "@/util/theOrders";
+import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
+import Right from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import {
   JSXElementConstructor,
   MouseEventHandler,
   useEffect,
   useState,
-} from "react";
-import Left from "../../../public/svg/chevron-left.svg";
-import Right from "../../../public/svg/chevron-right.svg";
-import Menu from "../../../public/svg/menu.svg";
-import { OrderIcon } from "@/shared/OrderIcon";
-import { BaseSideBar } from "./BaseSideBar";
+} from 'react';
+import { useUIContext } from '@/hooks/useUIContext';
+import { OrderIcon } from '@/shared/OrderIcon';
+import { theOrders, orderDetails } from '@/util/theOrders';
+import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
   onClick: (event: any, id: number) => void;
@@ -57,30 +57,28 @@ export const TheOrdersSideBar = (props: Props) => {
           </div>
         </div>
         <div className="py-4">
-          {/* @ts-ignore: name not exist on D */}
-          <OrderIcon order={OrderDetails[focusOrder]?.order} />
-
+          <OrderIcon order={orderDetails[focusOrder]?.order} />
           <h1 className="mt-2 mb-4 capitalize">
-            Order of {OrderDetails[focusOrder]?.order}
+            Order of {orderDetails[focusOrder]?.order}
           </h1>
           <h4 className="my-2 font-semibold uppercase font-body">
-            Attunement: {OrderDetails[focusOrder]?.attunement}
+            Attunement: {orderDetails[focusOrder]?.attunement}
           </h4>
-          <p className="sm:text-2xl">{OrderDetails[focusOrder]?.description}</p>
+          <p className="sm:text-2xl">{orderDetails[focusOrder]?.description}</p>
           <hr className="my-4" />
           <h4 className="my-2 mt-4 font-semibold uppercase font-body">
             Order Wonders
           </h4>
 
           <div className="flex flex-wrap">
-            {OrderDetails[focusOrder]?.wonders.name.map((a: any, index) => {
+            {orderDetails[focusOrder]?.wonders.name.map((a: any, index) => {
               return (
                 <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 sm:text-xl rounded hover:bg-white/60 bg-white/20 font-display "
+                    className="p-4 rounded sm:text-xl hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
-                        OrderDetails[focusOrder]?.wonders.realm_id[index],
+                        orderDetails[focusOrder]?.wonders.realm_id[index],
                         1
                       )
                     }
@@ -89,8 +87,8 @@ export const TheOrdersSideBar = (props: Props) => {
 
                     <br />
                     <span>
-                      {OrderDetails[focusOrder]?.wonders.realm_name[index]} |{" "}
-                      {OrderDetails[focusOrder]?.wonders.realm_id[index]}
+                      {orderDetails[focusOrder]?.wonders.realm_name[index]} |{' '}
+                      {orderDetails[focusOrder]?.wonders.realm_id[index]}
                     </span>
                   </button>
                 </div>
@@ -102,12 +100,12 @@ export const TheOrdersSideBar = (props: Props) => {
             Order Genesis Adventurers
           </h4>
           <div className="flex flex-wrap">
-            {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
+            {orderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
                 <a
-                  className="px-4 py-2 mb-2 mr-2 sm:text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
-                  target={"_blank"}
-                  href={OrderDetails[focusOrder]?.notable_gas.link[index]}
+                  className="px-4 py-2 mb-2 mr-2 uppercase rounded sm:text-xl hover:bg-white/60 bg-white/20 font-display"
+                  target={'_blank'}
+                  href={orderDetails[focusOrder]?.notable_gas.link[index]}
                   rel="noreferrer"
                   key={index}
                 >

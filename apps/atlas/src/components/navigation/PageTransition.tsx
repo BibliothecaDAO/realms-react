@@ -1,6 +1,6 @@
-import { AppProps } from "next/dist/shared/lib/router/router";
-import { useRouter } from "next/router";
-import { animated, useTransition } from "@react-spring/web";
+import { animated, useTransition } from '@react-spring/web';
+import { AppProps } from 'next/dist/shared/lib/router/router';
+import { useRouter } from 'next/router';
 
 const PageTransition = ({ Component, pageProps }: any) => {
   const router = useRouter();
@@ -16,11 +16,11 @@ const PageTransition = ({ Component, pageProps }: any) => {
     keys: (items) => items.id,
     from: { display: 'none', transform: 'scale(0.9)', opacity: 0 },
     enter: { display: 'block', transform: 'scale(1)', opacity: 1 },
-    leave: { display: 'none' }
+    leave: { display: 'none' },
   });
 
   return transitions((styles, item) => (
-    <animated.div style={{ ...styles, width: "100%" }}>
+    <animated.div style={{ ...styles, width: '100%' }}>
       <Component {...pageProps} />
     </animated.div>
   ));

@@ -1,5 +1,4 @@
-import type { NextPage } from 'next';
-import { GetServerSideProps } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import ShieldGame from '@/components/minigame/ShieldGame';
 import { getModuleAddress } from '@/util/minigameApi';
@@ -11,7 +10,7 @@ type Prop = {
   children: React.ReactElement;
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // It's more efficient to get the module addresses here at this stage
     const towerDefenceAddr = await getModuleAddress('1');

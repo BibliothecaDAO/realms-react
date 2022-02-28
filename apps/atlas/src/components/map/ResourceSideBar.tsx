@@ -1,26 +1,27 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { Resources } from "@/util/resources";
-import { MouseEventHandler, useState } from "react";
-import Left from "../../../public/svg/chevron-left.svg";
-import Right from "../../../public/svg/chevron-right.svg";
-import { BaseSideBar } from "./BaseSideBar";
-import Menu from "../../../public/svg/menu.svg";
+import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
+import Right from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+import type { MouseEventHandler } from 'react';
+import { useState } from 'react';
+import { useUIContext } from '@/hooks/useUIContext';
+import { resources } from '@/util/resources';
+import { BaseSideBar } from './BaseSideBar';
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  resource: Array<String>;
+  resource: Array<string>;
 };
 
 export const ResourceSideBar = (props: Props) => {
   const { toggleResourceMenu, resourceMenu } = useUIContext();
   const [focusResource, setResource] = useState<number>(0);
   const [loaded, setLoaded] = useState<boolean>(false);
-  const list = Resources.map((res: any, index) => (
+  const list = resources.map((res: any, index) => (
     <button
       key={index}
       className={` text-xs sm:text-lg p-1 mb-4 pl-4 px-4 rounded-xl tracking-widest  mr-4 hover:bg-white/90 hover:text-black transition-all duration-150 py-2 uppercase font-body hover:background-animate bg-white/30 ${
         props.resource.includes(res.trait)
           ? `background-animate ${res.colourClass} `
-          : "text-gray-200"
+          : 'text-gray-200'
       } `}
       onClick={() => props.onClick(res.trait)}
     >
@@ -42,7 +43,7 @@ export const ResourceSideBar = (props: Props) => {
 
   return (
     <BaseSideBar open={resourceMenu}>
-      <div className="z-20 h-screen p-6 pt-10 overflow-auto w-full sm:w-5/12 rounded-r-2xl">
+      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}
@@ -76,15 +77,15 @@ export const ResourceSideBar = (props: Props) => {
         )}
 
         <img
-          src={Resources[focusResource]?.img}
+          src={resources[focusResource]?.img}
           alt=""
-          className={`w-full rounded-xl ${loaded ? "" : "hidden"}`}
+          className={`w-full rounded-xl ${loaded ? '' : 'hidden'}`}
           onLoad={() => setLoaded(true)}
         />
         <div className="py-4">
-          <h4>Found on: {Resources[focusResource]?.value} Realms</h4>
-          <h1 className="sm:mt-2 sm:mb-4">{Resources[focusResource]?.trait}</h1>
-          <p className="sm:text-2xl">{Resources[focusResource]?.description}</p>
+          <h4>Found on: {resources[focusResource]?.value} Realms</h4>
+          <h1 className="sm:mt-2 sm:mb-4">{resources[focusResource]?.trait}</h1>
+          <p className="sm:text-2xl">{resources[focusResource]?.description}</p>
         </div>
       </div>
     </BaseSideBar>

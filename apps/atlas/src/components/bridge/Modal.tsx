@@ -1,6 +1,6 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import Bridge from "./Bridge";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import Bridge from './Bridge';
 
 type Prop = {
   isOpen: boolean;
@@ -9,7 +9,7 @@ type Prop = {
 };
 
 const BridgeModal: React.FC<Prop> = (props) => {
-  let isOpen = props.isOpen;
+  const isOpen = props.isOpen;
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -42,7 +42,7 @@ const BridgeModal: React.FC<Prop> = (props) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
-              <Dialog.Title className={"hidden"}>Desiege Setup</Dialog.Title>
+              <Dialog.Title className={'hidden'}>Desiege Setup</Dialog.Title>
               <Bridge
                 towerDefenceStorageContractAddress={
                   props.towerDefenceStorageContractAddress

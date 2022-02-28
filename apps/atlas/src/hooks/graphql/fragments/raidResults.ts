@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { gql, useQuery } from '@apollo/client';
 
 export const RaidResultFragment = gql`
@@ -25,4 +26,4 @@ export const RaidResultFragment = gql`
     unitsCaptured
     timestamp
   }
-`
+`;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { gql, useQuery } from '@apollo/client';
 
 export const ManaFragment = gql`
@@ -7,4 +8,4 @@ export const ManaFragment = gql`
     suffixId
     inventoryId
   }
-`
+`;

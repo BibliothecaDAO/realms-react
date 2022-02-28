@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { gql, useQuery } from '@apollo/client';
 
 export const RealmFragment = gql`
@@ -14,7 +16,7 @@ export const RealmFragment = gql`
     rarityScore
     rarityRank
   }
-`
+`;
 export const SRealmFragment = gql`
   fragment SRealmData on SRealm {
     id
@@ -48,4 +50,4 @@ export const SRealmFragment = gql`
       address
     }
   }
-`
+`;

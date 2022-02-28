@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
+/* eslint-disable @typescript-eslint/naming-convention */
+import { gql } from '@apollo/client';
 
 export const defaultLoot = gql`
   fragment DefaultBagData on Bag {
@@ -12,7 +13,7 @@ export const defaultLoot = gql`
     waist
     foot
   }
-`
+`;
 
 export const BagFragment = gql`
   ${defaultLoot}
@@ -29,4 +30,4 @@ export const BagFragment = gql`
     weaponSuffixId
     manasClaimed
   }
-`
+`;

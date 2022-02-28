@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import type { Queries } from '@/types';
+import type { Queries } from '@/types/index';
 const defaultValue = {};
 
 const BreakpointContext = createContext(defaultValue);
@@ -12,6 +12,7 @@ interface BreakpointProviderProps {
 const BreakpointProvider = (props: BreakpointProviderProps) => {
   const [queryMatch, setQueryMatch] = useState({});
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     const mediaQueryLists: any = {};
     const keys = Object.keys(props.queries);

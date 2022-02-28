@@ -1,20 +1,16 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { MouseEventHandler, useState, useRef, useEffect } from "react";
-import { Resources } from "@/util/resources";
-import { useQuery } from "@apollo/client";
-import { WalletRealmsData, RealmFilters } from "~/types";
-import { getRealmsQuery } from "@/hooks/graphql/queries";
-import Menu from "../public/svg/menu.svg";
-import { useWalletContext } from "@/hooks/useWalletContext";
-import { Realm as RealmCard } from "@/components/realms/Realm";
-import { animated, useSpring } from "@react-spring/web";
-import { CryptsEmpire } from "./CryptsEmpire";
+import { useQuery } from '@apollo/client';
 
-import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { useState, useRef } from 'react';
+import { Realm as RealmCard } from '@/components/realms/Realm';
+import { getRealmsQuery } from '@/hooks/graphql/queries';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import { useWalletContext } from '@/hooks/useWalletContext';
+import type { WalletRealmsData, RealmFilters } from '@/types/index';
+import { resources } from '@/util/resources';
 
 const filterTypes = [
-  { name: "Rarity", key: "rarityRank" },
-  { name: "Token Id", key: "tokenId" },
+  { name: 'Rarity', key: 'rarityRank' },
+  { name: 'Token Id', key: 'tokenId' },
 ];
 type Props = {
   onClick?: (event: any, id: number) => void;
@@ -24,7 +20,7 @@ export const RealmsEmpire = (props: Props) => {
   const { account, isConnected, displayName } = useWalletContext();
   const [limit, setLimit] = useState(0);
   const [selectedResource, setResource] = useState<number>();
-  const [selectFilter, setFilter] = useState<string>("tokenId");
+  const [selectFilter, setFilter] = useState<string>('tokenId');
 
   const addToFilter = (value: any) => {
     console.log(selectedResource);
@@ -35,11 +31,11 @@ export const RealmsEmpire = (props: Props) => {
     }
   };
 
-  const list = Resources.map((res: any, index) => (
+  const list = resources.map((res: any, index) => (
     <button
       key={index}
       className={` p-1 mb-2 pl-4 pr-4 rounded-xl tracking-widest  mr-2 hover:bg-white/30 transition-all duration-150 uppercase font-body hover:background-animate bg-white/30 ${
-        selectedResource === res.id ? res.colourClass : " "
+        selectedResource === res.id ? res.colourClass : ' '
       } `}
       onClick={() => {
         setLimit(0);
@@ -57,27 +53,27 @@ export const RealmsEmpire = (props: Props) => {
       orders: params?.orders?.length
         ? params?.orders
         : [
-            "Power",
-            "Giants",
-            "Titans",
-            "Skill",
-            "Perfection",
-            "Brilliance",
-            "Enlightenment",
-            "Protection",
-            "Anger",
-            "Rage",
-            "Fury",
-            "Vitriol",
-            "the Fox",
-            "Detection",
-            "Reflection",
-            "the Twins",
+            'Power',
+            'Giants',
+            'Titans',
+            'Skill',
+            'Perfection',
+            'Brilliance',
+            'Enlightenment',
+            'Protection',
+            'Anger',
+            'Rage',
+            'Fury',
+            'Vitriol',
+            'the Fox',
+            'Detection',
+            'Reflection',
+            'the Twins',
           ],
       first: 25,
       skip: limit,
       orderBy: selectFilter,
-      orderDirection: params?.orderDirection || "asc",
+      orderDirection: params?.orderDirection || 'asc',
     };
   };
 
@@ -94,7 +90,7 @@ export const RealmsEmpire = (props: Props) => {
   const ref = useRef<HTMLButtonElement | null>(null);
   const entry = useIntersectionObserver(ref, {});
   const isVisible = !!entry?.isIntersecting;
-  /*useEffect(() => {
+  /* useEffect(() => {
     isVisible && !loading && console.log("visible now");
 
     fetchMore({
@@ -104,10 +100,10 @@ export const RealmsEmpire = (props: Props) => {
       },
     });
     setLimit(limit + 25);
-  }, [isVisible]);*/
+  }, [isVisible]); */
 
   const grids =
-    "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
+    'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6';
 
   return (
     <div>
@@ -120,8 +116,8 @@ export const RealmsEmpire = (props: Props) => {
             key={index}
             className={` p-1 h-12 mb-2 pl-4 pr-4 rounded-xl  mr-2 hover:bg-white/90 transition-all duration-300   ${
               selectFilter === res.key
-                ? "backdrop-blur-md bg-white/90 text-black"
-                : "backdrop-blur-md bg-white/30 text-off-100"
+                ? 'backdrop-blur-md bg-white/90 text-black'
+                : 'backdrop-blur-md bg-white/30 text-off-100'
             } `}
             onClick={() => setFilter(res.key)}
           >
@@ -181,7 +177,7 @@ export const RealmsEmpire = (props: Props) => {
               }}
               className="px-4 py-2 rounded bg-gray-600/40 hover:bg-gray-600/60"
             >
-              {loading ? "Loading" : "Load more"}
+              {loading ? 'Loading' : 'Load more'}
             </button>
           </div>
         )}

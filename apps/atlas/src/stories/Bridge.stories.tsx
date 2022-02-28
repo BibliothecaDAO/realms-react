@@ -1,19 +1,19 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { rest } from "msw";
-import { WalletProvider } from "~/hooks/useWalletContext";
-import { buildStarknetUrl } from "../mocks/starknetMockFactory";
+import { StarknetProvider } from '@starknet-react/core';
+import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import { rest } from 'msw';
+import React from 'react';
+import Bridge from '@/components/bridge/Bridge';
+import { WalletProvider } from '@/hooks/useWalletContext';
 
-import Bridge from "@/components/bridge/Bridge";
 import {
   mockGetLatestGameIndex,
   mockSignAndMint,
   mockSignAndMintError,
-} from "~/mocks/gameApi";
-import { StarknetProvider } from "@starknet-react/core";
+} from '@/mocks/gameApi';
+import { buildStarknetUrl } from '@/mocks/starknetMockFactory';
 
 export default {
-  title: "Bridge",
+  title: 'Bridge',
   component: Bridge,
   decorators: [
     (Story) => <StarknetProvider>{Story()}</StarknetProvider>,
@@ -31,18 +31,18 @@ export const Default = Template.bind({});
 
 export const Mint = Template.bind({});
 Mint.args = {
-  initialTab: "mint",
+  initialTab: 'mint',
 };
 Mint.parameters = {
   msw: [
     mockSignAndMint,
     rest.get(
-      buildStarknetUrl("alpha4.starknet.io") + "get_transaction_status",
+      buildStarknetUrl('alpha4.starknet.io') + 'get_transaction_status',
       (_req, res, ctx) => {
         return res(
           ctx.status(200),
           ctx.json({
-            tx_status: "ACCEPTED_ON_L2",
+            tx_status: 'ACCEPTED_ON_L2',
           })
         );
       }
@@ -52,7 +52,7 @@ Mint.parameters = {
 
 export const MintError = Template.bind({});
 MintError.args = {
-  initialTab: "mint",
+  initialTab: 'mint',
 };
 MintError.parameters = {
   msw: [mockGetLatestGameIndex, mockSignAndMintError],

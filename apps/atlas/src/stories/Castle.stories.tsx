@@ -1,9 +1,9 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Castle, { MAX_HEALTH } from "components/minigame/Castle";
+import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import React from 'react';
+import Castle, { MAX_HEALTH } from 'components/minigame/Castle';
 
 export default {
-  title: "Castle",
+  title: 'Castle',
   component: Castle,
 } as ComponentMeta<typeof Castle>;
 

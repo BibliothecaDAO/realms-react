@@ -65,7 +65,7 @@ export interface WalletCryptsData {
 
 export interface UiState {
   isMenuOpen: boolean;
-  toggleMenu: Function;
+  toggleMenu: () => void;
 }
 
 export interface TowerProps {

@@ -1,5 +1,5 @@
-import { useStarknetTransactionManager } from "@starknet-react/core";
-import { useMemo, useState, useEffect } from "react";
+import { useStarknetTransactionManager } from '@starknet-react/core';
+import { useMemo, useState, useEffect } from 'react';
 
 const useTxCallback = (
   transactionHash: string | undefined,
@@ -17,7 +17,7 @@ const useTxCallback = (
       !executed &&
       !!transactionHash &&
       tx?.status &&
-      (tx.status == "ACCEPTED_ON_L1" || tx.status == "ACCEPTED_ON_L2")
+      (tx.status == 'ACCEPTED_ON_L1' || tx.status == 'ACCEPTED_ON_L2')
     ) {
       callback();
       setExecuted(true);
@@ -25,9 +25,9 @@ const useTxCallback = (
   }, [tx?.status, transactionHash]);
 
   const loading =
-    tx?.status == "TRANSACTION_RECEIVED" ||
-    tx?.status == "RECEIVED" ||
-    tx?.status == "PENDING";
+    tx?.status == 'TRANSACTION_RECEIVED' ||
+    tx?.status == 'RECEIVED' ||
+    tx?.status == 'PENDING';
 
   return {
     loading,

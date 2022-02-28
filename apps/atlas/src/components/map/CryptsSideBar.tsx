@@ -1,10 +1,10 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { BaseSideBar } from "./BaseSideBar";
-import { Crypt } from "../realms/Crypt";
-import Menu from "../../../public/svg/menu.svg";
-import { CryptData } from "~/types";
-import { useQuery } from "@apollo/client";
-import { getCryptQuery } from "@/hooks/graphql/queries";
+import { useQuery } from '@apollo/client';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+import { getCryptQuery } from '@/hooks/graphql/queries';
+import { useUIContext } from '@/hooks/useUIContext';
+import type { CryptData } from '@/types/index';
+import { Crypt } from '../realms/Crypt';
+import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
   id: number;

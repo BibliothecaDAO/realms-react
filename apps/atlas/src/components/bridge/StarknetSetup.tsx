@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 // TODO: Refactor to use react-starknet
-import { useStarknet } from "@/hooks/useStarknet";
-import Button from "@/shared/Button";
+import { useStarknet } from '@/hooks/useStarknet';
+import Button from '@/shared/Button';
 
 const StarkNetSetup: React.FC = (props) => {
   const starknet = useStarknet();
@@ -10,11 +10,11 @@ const StarkNetSetup: React.FC = (props) => {
     <>
       <h3 className="mb-2 text-2xl">StarkNet Shadow Account</h3>
       <p>
-        The Realms Tower Defence game is powered using{" "}
+        The Realms Tower Defence game is powered using{' '}
         <a
           rel="noreferrer"
           className="underline"
-          target={"_blank"}
+          target={'_blank'}
           href="https://starkware.co/starknet/"
         >
           StarkNet

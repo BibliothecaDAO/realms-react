@@ -1,6 +1,6 @@
-import * as THREE from "three";
-import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import Book from '@bibliotheca-dao/ui-lib/icons/book.svg';
+import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import {
   OrbitControls,
   useTexture,
@@ -10,25 +10,25 @@ import {
   Html,
   Text,
   Billboard,
-} from "@react-three/drei";
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
-import { useSound } from "@/context/soundProvider";
-import { ElementToken } from "~/constants";
-import ShieldAction from "./ShieldAction";
-import { TowerProps } from "~/types";
-import { useUIContext } from "@/hooks/useUIContext";
-import Sword from "../../../public/svg/sword.svg";
-import Shield from "../../../public/svg/shield.svg";
-import Book from "../../../public/svg/book.svg";
+} from '@react-three/drei';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import dynamic from 'next/dynamic';
+import type { MouseEventHandler } from 'react';
+import React, { useRef, useState, useCallback, Suspense } from 'react';
+import type * as THREE from 'three';
+import type { ElementToken } from '@/constants/index';
+import { useSound } from '@/context/soundProvider';
+import { useUIContext } from '@/hooks/useUIContext';
+import type { TowerProps } from '@/types/index';
+import ShieldAction from './ShieldAction';
 
-const Tower = dynamic(() => import("@/components/Model"), {
+const Tower = dynamic(() => import('@/components/Model'), {
   ssr: false,
 });
 
 interface ObjectProps {
-  jsx: JSX.IntrinsicElements["mesh"];
-  health: Number;
+  jsx: JSX.IntrinsicElements['mesh'];
+  health: number;
   onClick?: MouseEventHandler;
 }
 function Box(props: ObjectProps) {
@@ -37,7 +37,7 @@ function Box(props: ObjectProps) {
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
 
-  let [time, setTime] = useState(1.0);
+  const [time, setTime] = useState(1.0);
   const render = (clock: any) => {
     const delta = clock.getDelta();
     setTime((time += delta * 5));
@@ -199,7 +199,7 @@ function TowerDefence(props: TowerProps) {
           <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
           <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
           <group ref={tower}>
-            {/*!rotate ? (
+            {/*! rotate ? (
               <Text
                 color={""}
                 fillOpacity={0}
@@ -213,7 +213,7 @@ function TowerDefence(props: TowerProps) {
               >
                 THE DIVINE CITY
               </Text>
-            ) : null*/}
+            ) : null */}
             <Tower
               position={[0, 1, 0]}
               onPointerOver={(event) => {

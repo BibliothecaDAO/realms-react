@@ -1,7 +1,8 @@
-import { BigNumber, ethers } from "ethers";
-import { LORDS_TOKEN_ADDRESS, LORDS_JOURNEY_ADDRESS } from "~/constants";
-import LordsERC2OContract from "~/abi/balance.json";
-import JourneyABI from "~/abi/journey.json";
+import type { BigNumber } from 'ethers';
+import { ethers } from 'ethers';
+import LordsERC2OContract from '@/abi/balance.json';
+import JourneyABI from '@/abi/journey.json';
+import { LORDS_TOKEN_ADDRESS, LORDS_JOURNEY_ADDRESS } from '@/constants/index';
 
 export const fetchLordsBalance = async (address: string) => {
   const provider = new ethers.providers.JsonRpcProvider(

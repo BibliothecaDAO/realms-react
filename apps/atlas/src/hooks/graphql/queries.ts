@@ -1,14 +1,14 @@
 import { gql, useQuery } from '@apollo/client';
-import { WalletFragment } from './fragments/wallet'
-import { RealmFragment, SRealmFragment } from './fragments/realmFragments'
-import { RaidResultFragment } from './fragments/raidResults'
-import { BagFragment, defaultLoot } from './fragments/loot'
-import { ManaFragment } from './fragments/mana'
-import { GAdventurerFragment } from './fragments/gadventurer'
+import { GAdventurerFragment } from './fragments/gadventurer';
+import { BagFragment, defaultLoot } from './fragments/loot';
+import { ManaFragment } from './fragments/mana';
+import { RaidResultFragment } from './fragments/raidResults';
+import { RealmFragment, SRealmFragment } from './fragments/realmFragments';
+import { WalletFragment } from './fragments/wallet';
 
 const getRealmsQuery = gql`
   ${RealmFragment}
-  query usersRealms (
+  query usersRealms(
     $address: String
     $resources: [Int]
     $orders: [String]
@@ -53,11 +53,11 @@ const getRealmsQuery = gql`
       bridgedRealmsHeld
     }
   }
-`
+`;
 
 const getRealmQuery = gql`
   ${RealmFragment}
-  query realm($id: String) @api(name: realms){
+  query realm($id: String) @api(name: realms) {
     realm(id: $id) {
       ...RealmData
       currentOwner {
@@ -67,9 +67,9 @@ const getRealmQuery = gql`
       }
     }
   }
-`
+`;
 const getCryptQuery = gql`
-  query dungeon($id: String) @api(name: crypts){
+  query dungeon($id: String) @api(name: crypts) {
     dungeon(id: $id) {
       size
       id
@@ -84,21 +84,15 @@ const getCryptQuery = gql`
       }
     }
   }
-`
+`;
 
 const getCryptsQuery = gql`
-  query dungeons(
-    $address: String
-    $first: Int
-    $skip: Int
-  ) @api(name: crypts){
-    dungeons(      
-      where: {
-        currentOwner_contains: $address
-      }
+  query dungeons($address: String, $first: Int, $skip: Int) @api(name: crypts) {
+    dungeons(
+      where: { currentOwner_contains: $address }
       first: $first
       skip: $skip
-      ) {
+    ) {
       size
       id
       environment
@@ -112,17 +106,17 @@ const getCryptsQuery = gql`
       }
     }
   }
-`
+`;
 
 const getResourceListQuery = gql`
-  query getResourceListQuery @api(name: realms){
+  query getResourceListQuery @api(name: realms) {
     resources(first: 25) {
       id
       name
       totalRealms
     }
   }
-`
+`;
 const getResourceBalancesQuery = gql`
   query getResourceBalancesQuery($address: String) {
     accounts(where: { id: $address }) {
@@ -134,7 +128,7 @@ const getResourceBalancesQuery = gql`
       }
     }
   }
-`
+`;
 
 const getl1Adventurer = gql`
   ${WalletFragment}
@@ -183,7 +177,7 @@ const getl1Adventurer = gql`
       }
     }
   }
-`
+`;
 const getl2Adventurer = gql`
   ${RealmFragment}
   ${SRealmFragment}
@@ -207,7 +201,7 @@ const getl2Adventurer = gql`
       }
     }
   }
-`
+`;
 
 const mintedRealmsQuery = gql`
   query mintedRealmsQuery($lastID: String) {
@@ -220,7 +214,7 @@ const mintedRealmsQuery = gql`
       id
     }
   }
-`
+`;
 
 const lpPositionQuery = gql`
   query lpPositionQuery($address: String) {
@@ -247,7 +241,7 @@ const lpPositionQuery = gql`
       }
     }
   }
-`
+`;
 const lpIncentivesQuery = gql`
   query lpIncentivesQuery($address: String) {
     incentives(where: { pool: $address }, orderBy: "startTime") {
@@ -258,7 +252,7 @@ const lpIncentivesQuery = gql`
       ended
     }
   }
-`
+`;
 export {
   getRealmQuery,
   getRealmsQuery,
@@ -271,4 +265,4 @@ export {
   getResourceBalancesQuery,
   lpPositionQuery,
   lpIncentivesQuery,
-}
+};

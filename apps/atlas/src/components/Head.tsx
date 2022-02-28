@@ -1,13 +1,13 @@
 // Imports
-import { default as HTMLHead } from "next/head"; // Meta
-import React, { ReactElement, useState } from "react";
+import { default as HTMLHead } from 'next/head'; // Meta
+import type { ReactElement } from 'react';
 
 const meta = {
-  title: "Atlas by Bibliotheca",
+  title: 'Atlas by Bibliotheca',
   description:
-    "Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.",
-  website: "https://lootverse.bibliothecadao.xyz/",
-  image: "https://i.ibb.co/XYPNdCT/Screenshot-2022-02-21-132035.png",
+    'Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.',
+  website: 'https://lootverse.bibliothecadao.xyz/',
+  image: 'https://i.ibb.co/XYPNdCT/Screenshot-2022-02-21-132035.png',
 };
 
 export function Head(): ReactElement {

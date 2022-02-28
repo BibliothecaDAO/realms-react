@@ -61,7 +61,6 @@ function App() {
   // });
 
   const filteredData = () => {
-    /* @ts-ignore: name not exist on D */
     return realms.features.filter((a: any) =>
       a.properties.resources.some((b: any) => resource.includes(b))
     );
@@ -80,7 +79,6 @@ function App() {
 
   const crypts_layer = new ScatterplotLayer({
     id: 'crypts-layer',
-    /* @ts-ignore: name not exist on D */
     data: crypts.features,
     stroked: true,
     filled: true,
@@ -108,7 +106,6 @@ function App() {
 
   const realms_layer = new ScatterplotLayer({
     id: 'scatterplot-layer',
-    /* @ts-ignore: name not exist on D */
     data: realms.features,
     stroked: true,
     filled: true,
@@ -158,6 +155,8 @@ function App() {
     zoom: 4,
     pitch: 55,
     bearing: 0,
+    transitionDuration: 0,
+    transitionInterpolator: new FlyToInterpolator(),
   });
 
   const goToId = useCallback(
@@ -168,7 +167,6 @@ function App() {
 
       if (type === 1) {
         console.log(1);
-        /* @ts-ignore: name not exist on D */
         asset = realms.features.filter(
           (a: any) => a.properties.realm_idx === parseInt(id)
         );
@@ -183,7 +181,6 @@ function App() {
         }
       } else {
         console.log(2);
-        /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter(
           (a: any) => a.properties.tokenId === parseInt(id)
         );
@@ -204,7 +201,6 @@ function App() {
         zoom: 8,
         pitch: 20,
         bearing: 0,
-        // @ts-ignore: Unreachable code error
         transitionDuration: 5000,
         transitionInterpolator: new FlyToInterpolator(),
       });

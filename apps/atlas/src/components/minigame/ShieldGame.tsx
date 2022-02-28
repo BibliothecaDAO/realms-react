@@ -1,25 +1,28 @@
-import React, { useEffect, useMemo, useState } from "react";
-import BN from "bn.js";
-import { ElementToken } from "~/constants";
-import { GameContext, getGameContextVariables } from "@/util/minigameApi";
-import { toBN } from "starknet/dist/utils/number";
-import GameBlockTimer from "./GameBlockTimer";
-import AddressIndicator from "@/shared/AddressIndicator";
-import classNames from "classnames";
-import GameControls from "./GameControls";
-import { GameStatus } from "~/types";
-import TowerDefence from "./TowerDefence";
-import MenuBar from "./MenuBar";
-import LoreDevKit from "@/shared/LoreDevKit";
-import DivineSiege from "@/shared/LoreDevKit/desiege.ldk";
-import { useRouter } from "next/router";
-import LoadingSkeleton from "~/shared/LoadingSkeleton";
-import TowerDefenceStorageContract from "~/abi/minigame/02_TowerDefenceStorage.json";
-import { useContract, useStarknetCall } from "@starknet-react/core";
-import { Abi } from "starknet";
-import { TOKEN_INDEX_OFFSET_BASE } from "~/util/minigameApi";
+import { useContract, useStarknetCall } from '@starknet-react/core';
+import BN from 'bn.js';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import React, { useEffect, useMemo, useState } from 'react';
+import type { Abi } from 'starknet';
+import { toBN } from 'starknet/dist/utils/number';
+import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
+import { ElementToken } from '@/constants/index';
+import AddressIndicator from '@/shared/AddressIndicator';
+import LoadingSkeleton from '@/shared/LoadingSkeleton';
+import LoreDevKit from '@/shared/LoreDevKit';
+import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
+import type { GameStatus } from '@/types/index';
+import type { GameContext } from '@/util/minigameApi';
+import {
+  getGameContextVariables,
+  TOKEN_INDEX_OFFSET_BASE,
+} from '@/util/minigameApi';
+import GameBlockTimer from './GameBlockTimer';
+import GameControls from './GameControls';
+import MenuBar from './MenuBar';
+import TowerDefence from './TowerDefence';
 
-export type DesiegeTab = "game-controls" | "lore" | "setup";
+export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
 
 type Prop = {
   initialTab?: DesiegeTab;
@@ -27,10 +30,11 @@ type Prop = {
   towerDefenceStorageAddr?: string;
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const ShieldGame: React.FC<Prop> = (props) => {
   const router = useRouter();
 
-  const initialTabFromQuery = router.query["tab"] as string;
+  const initialTabFromQuery = router.query['tab'] as string;
 
   const [view, setView] = useState<DesiegeTab | undefined>(
     props.initialTab || (initialTabFromQuery as DesiegeTab)
@@ -49,38 +53,37 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }, [gameContext]);
 
   const { contract: tdStorageContract } = useContract({
-    // @ts-ignore
     abi: TowerDefenceStorageContract.abi as Abi[],
     address: props.towerDefenceStorageAddr,
   });
 
   const getMainHealth = useStarknetCall({
     contract: tdStorageContract,
-    method: gameContext ? "get_main_health" : undefined,
+    method: gameContext ? 'get_main_health' : undefined,
     args: {
-      game_idx: gameContext?.gameIdx?.toString() || "1",
+      game_idx: gameContext?.gameIdx?.toString() || '1',
     },
   });
 
   const getShield = useStarknetCall({
     contract: tdStorageContract,
-    method: gameContext ? "get_shield_value" : undefined,
+    method: gameContext ? 'get_shield_value' : undefined,
     args: {
-      game_idx: gameContext?.gameIdx.toString() || "0",
+      game_idx: gameContext?.gameIdx.toString() || '0',
       token_id: gameContext
         ? (
             gameContext.gameIdx * TOKEN_INDEX_OFFSET_BASE +
             ElementToken.Light
           ).toString()
-        : "1",
+        : '1',
     },
   });
 
   const healthStr = getMainHealth.data
-    ? getMainHealth.data["health"]
+    ? getMainHealth.data['health']
     : undefined;
 
-  const shieldStr = getShield.data ? getShield.data["value"] : undefined;
+  const shieldStr = getShield.data ? getShield.data['value'] : undefined;
 
   // Memoize so same values don't cause re-renders
   const health = useMemo(() => {
@@ -100,7 +103,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       setInitialLoadError(undefined);
     } catch (e: any) {
       setInitialLoadError(e.message);
-      console.error("Error fetching game state: ", e);
+      console.error('Error fetching game state: ', e);
     }
   };
 
@@ -125,12 +128,12 @@ const ShieldGame: React.FC<Prop> = (props) => {
     let gs: GameStatus;
     if (gameIsActive) {
       if (gameContext.mainHealth.lte(toBN(0))) {
-        gs = "completed";
+        gs = 'completed';
       } else {
-        gs = "active";
+        gs = 'active';
       }
     } else {
-      gs = "expired";
+      gs = 'expired';
     }
     return gs;
   }, [gameContext]);
@@ -154,7 +157,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
-      {view == "lore" ? (
+      {view == 'lore' ? (
         <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
           <LoreDevKit ldk={DivineSiege} />
           <GameBlockTimer gameCtx={gameContext} />
@@ -163,7 +166,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between text-center text-blue-300 uppercase font-body ">
           <span className="mx-auto mb-8 text-5xl z-11">
-            Desiege game{" "}
+            Desiege game{' '}
             {gameContext !== undefined ? (
               `${gameContext.gameIdx}`
             ) : (
@@ -172,13 +175,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3>
 
-        {view == "game-controls" || view == "setup" ? (
+        {view == 'game-controls' || view == 'setup' ? (
           <div className="flex flex-row w-full">
             <div
               id="game-actions"
               className="w-1/3 p-10 text-black bg-white/30 rounded-2xl"
             >
-              {!!gameContext ? (
+              {gameContext ? (
                 <GameControls
                   towerDefenceContractAddress={props.towerDefenceContractAddr}
                   towerDefenceStorageContractAddress={
@@ -187,7 +190,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   gameStatus={gs}
                   gameIdx={gameContext?.gameIdx}
                   currentBoostBips={boost}
-                  setupModalInitialIsOpen={view == "setup"}
+                  setupModalInitialIsOpen={view == 'setup'}
                 />
               ) : (
                 <p className="text-2xl">Loading...</p>

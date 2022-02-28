@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { gql, useQuery } from '@apollo/client';
 
 export const TreasureFragment = gql`
@@ -12,4 +14,4 @@ export const TreasureFragment = gql`
     asset7
     asset8
   }
-`
+`;

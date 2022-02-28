@@ -1,20 +1,20 @@
-import { ReactElement } from "react";
-import React from "react";
+import Image from 'next/image';
+import type { ReactElement } from 'react';
+import React from 'react';
 import {
   isLegendary,
-  Environments,
+  environments,
   legendaryColourClass,
-} from "@/util/cryptsEnvironments";
-import { CryptProps } from "../../types";
-import { shortenAddress } from "@/util/formatters";
-import Image from "next/image";
+} from '@/util/cryptsEnvironments';
+import { shortenAddress } from '@/util/formatters';
+import type { CryptProps } from '../../types';
 const variantMaps: any = {
-  small: { heading: "lg:text-4xl", regions: "lg:text-xl" },
+  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
 
 export function Crypt(props: CryptProps): ReactElement {
   const findEnvironment = (value: any) => {
-    return Environments.find((e) => e.id === parseInt(value));
+    return environments.find((e) => e.id === parseInt(value));
   };
 
   const image = props.crypt.svg;
@@ -36,7 +36,7 @@ export function Crypt(props: CryptProps): ReactElement {
               alt=""
               width="900"
               height="900"
-              layout={"responsive"}
+              layout={'responsive'}
             />
           </div>
 
@@ -51,7 +51,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 Id: <span className="font-semibold ">{props.crypt.id}</span>
               </h4>
               <h4>
-                Environment:{" "}
+                Environment:{' '}
                 <span
                   className={`px-4 py-1 font-semibold rounded ${environment?.colourClass.main}`}
                 >
@@ -59,7 +59,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 </span>
               </h4>
               <h4>
-                Size:{" "}
+                Size:{' '}
                 <span className="font-semibold ">
                   {props.crypt.size}x{props.crypt.size}
                 </span>
@@ -77,7 +77,7 @@ export function Crypt(props: CryptProps): ReactElement {
                 <div className="self-center text-lg">
                   <button
                     className={
-                      "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                      'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
                       if (props.onClick) props.onClick(props.crypt.id, 2);
@@ -118,9 +118,9 @@ export function Crypt(props: CryptProps): ReactElement {
             <div className="py-4">
               <a
                 className="text-xl"
-                target={"_blank"}
+                target={'_blank'}
                 href={
-                  "https://opensea.io/assets/0x86f7692569914b5060ef39aab99e62ec96a6ed45/" +
+                  'https://opensea.io/assets/0x86f7692569914b5060ef39aab99e62ec96a6ed45/' +
                   props.crypt.id
                 }
                 rel="noreferrer"

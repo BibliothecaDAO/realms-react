@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+import PropTypes from 'prop-types';
 import {
   createContext,
   useContext,
   useState,
   useCallback,
   useEffect,
-} from "react";
-import PropTypes from "prop-types";
-import useSoundLib from "use-sound";
+} from 'react';
+import useSoundLib from 'use-sound';
 
-import booleanStorage from "../services/booleanStorage";
+import booleanStorage from '../services/booleanStorage';
 
 const defaultSoundContext = {
   isSoundActive: false,
@@ -34,11 +35,11 @@ export const SoundProvider = (props: SoundProviderProps) => {
   );
 };
 
-const localStorageKey = "SOUND_SETTING_IS_ON";
+const localStorageKey = 'SOUND_SETTING_IS_ON';
 
 const initialValue =
   booleanStorage.getItem(localStorageKey, { defaultValue: true }) || false;
-//const SoundSettingContext = createContext({isSoundActive: false, toggleSound: () => { }});
+// const SoundSettingContext = createContext({isSoundActive: false, toggleSound: () => { }});
 
 export function useSound() {
   const [isSoundActive, setSound] = useState(initialValue);
@@ -49,13 +50,13 @@ export function useSound() {
     booleanStorage.setItem(localStorageKey, newValue);
   }, [isSoundActive]);
 
-  const [playBackground, { stop }] = useSoundLib("/Honor_Bound.mp3", {
+  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', {
     soundEnabled: isSoundActive,
     volume: 0.3,
     loop: true,
   });
 
-  const [playShield, options] = useSoundLib("/shield.mp3", {
+  const [playShield, options] = useSoundLib('/shield.mp3', {
     soundEnabled: !isSoundActive,
     volume: 1,
   });
@@ -68,9 +69,7 @@ export function useSound() {
     }
   }, [isSoundActive, playBackground, stop]);
 
-  const playSound = () => {};
-
-  //return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
+  // return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
   return { isSoundActive, toggleSound, playShield };
 }
 

@@ -1,21 +1,21 @@
-import { ReactElement } from "react";
-import React from "react";
-import { Realm } from "../../types";
-import { Resources } from "@/util/resources";
-import { RealmProps } from "../../types";
-import { shortenAddress } from "@/util/formatters";
-import { OrderIcon } from "@/shared/OrderIcon";
-import Image from "next/image";
+import Image from 'next/image';
+import type { ReactElement } from 'react';
+import React from 'react';
+import { OrderIcon } from '@/shared/OrderIcon';
+import { shortenAddress } from '@/util/formatters';
+import { resources } from '@/util/resources';
+import { Realm } from '../../types';
+import type { RealmProps } from '../../types';
 const variantMaps: any = {
-  small: { heading: "lg:text-4xl", regions: "lg:text-xl" },
+  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
 
 export function Realm(props: RealmProps): ReactElement {
   const findResourceName = (value: any) => {
-    return Resources.find((e) => e.id === parseInt(value));
+    return resources.find((e) => e.id === parseInt(value));
   };
   return (
-    <div className="h-auto p-1 rounded-xl sm:p-4 z-10 text-white w-full">
+    <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -38,7 +38,7 @@ export function Realm(props: RealmProps): ReactElement {
               {props.realm?.wonder}
             </div>
           ) : (
-            ""
+            ''
           )}
           <div className="w-auto">
             <Image
@@ -47,7 +47,7 @@ export function Realm(props: RealmProps): ReactElement {
               className="w-full mt-4 rounded-xl -scale-x-100"
               width={500}
               height={320}
-              layout={"responsive"}
+              layout={'responsive'}
             />
           </div>
 
@@ -62,7 +62,7 @@ export function Realm(props: RealmProps): ReactElement {
                 <div>
                   <button
                     className={
-                      "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
+                      'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
                       if (props.onClick) props.onClick(props.realm.id, 1);
@@ -74,7 +74,7 @@ export function Realm(props: RealmProps): ReactElement {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between my-4  rounded">
+            <div className="flex flex-col justify-between my-4 rounded sm:flex-row">
               <h4>
                 Id: <span className="font-semibold">{props.realm.id}</span>
               </h4>
@@ -89,7 +89,7 @@ export function Realm(props: RealmProps): ReactElement {
             </div>
 
             <h1 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}`}>
-              {props.realm.name}{" "}
+              {props.realm.name}{' '}
             </h1>
 
             <div className="flex flex-wrap mb-2">
@@ -150,9 +150,9 @@ export function Realm(props: RealmProps): ReactElement {
             <div className="py-4">
               <a
                 className="text-xl"
-                target={"_blank"}
+                target={'_blank'}
                 href={
-                  "https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/" +
+                  'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
                   props.realm.id
                 }
                 rel="noreferrer"

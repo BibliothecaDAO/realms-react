@@ -1,21 +1,21 @@
-import { useState, useEffect, useMemo } from "react";
-import BN from "bn.js";
-import { defaultProvider, number, stark } from "starknet";
-import { getStarknet } from "@argent/get-starknet/dist";
-import { useModuleAddress } from "@/hooks/useModuleAddress";
-import ElementLabel from "@/shared/ElementsLabel";
-import Button from "@/shared/Button";
+import { getStarknet } from '@argent/get-starknet/dist';
+import type BN from 'bn.js';
+import { useState, useEffect, useMemo } from 'react';
+import { defaultProvider, number, stark } from 'starknet';
+import { useModuleAddress } from '@/hooks/useModuleAddress';
+import { useStarknet } from '@/hooks/useStarknet';
+import useTxQueue from '@/hooks/useTxQueue';
+import Button from '@/shared/Button';
+import ElementLabel from '@/shared/ElementsLabel';
 // TODO: Refactor to use react-starknet
-import { useStarknet } from "@/hooks/useStarknet";
-import BridgeModal from "../bridge/Modal";
+import type { GameStatus } from '@/types/index';
 import {
   getTokenIdsForGame,
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
-} from "@/util/minigameApi";
-import { GameStatus } from "~/types";
-import useTxQueue from "@/hooks/useTxQueue";
+} from '@/util/minigameApi';
+import BridgeModal from '../bridge/Modal';
 const { getSelectorFromName } = stark;
 
 type Prop = {
@@ -35,19 +35,19 @@ const GameControls: React.FC<Prop> = (props) => {
   const [tokenBalances, setTokenBalances] = useState<BN[]>();
 
   const [mintModalOpen, setMintModalOpen] = useState(false);
-  const [actionAmount, setActionAmount] = useState<string>("1");
-  const [action, setAction] = useState<"shield" | "attack">();
+  const [actionAmount, setActionAmount] = useState<string>('1');
+  const [action, setAction] = useState<'shield' | 'attack'>();
 
-  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
+  const [is1155TokenApproved, setIs1155TokenApproved] = useState<'1' | '0'>();
 
-  const side = "light";
+  const side = 'light';
 
-  const towerDefenceContractAddress = useModuleAddress("1");
+  const towerDefenceContractAddress = useModuleAddress('1');
 
   useEffect(() => {
     const getIsApproved = async (account: string, operator: string) => {
       const isApproved = await getIsApprovedForAll(account, operator);
-      setIs1155TokenApproved(isApproved ? "1" : "0");
+      setIs1155TokenApproved(isApproved ? '1' : '0');
     };
     if (
       is1155TokenApproved == undefined &&
@@ -60,31 +60,31 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == 'light' ? 1 : 2);
 
     await getStarknet().enable();
     const res = await getStarknet().signer?.invokeFunction(
       towerDefenceContractAddress as string,
-      stark.getSelectorFromName("attack_tower"),
+      stark.getSelectorFromName('attack_tower'),
       [gameIndex.toString(), tokenId.toString(), (amount * 100).toString()]
     );
 
     if (res?.transaction_hash) {
       txQueue.addTransactionToQueue(
         res.transaction_hash,
-        getSelectorFromName("attack_tower")
+        getSelectorFromName('attack_tower')
       );
     }
   };
 
   const handleShield = async (gameIndex: number, amount: number) => {
     const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == "light" ? 1 : 2);
+      gameIndex * TOKEN_INDEX_OFFSET_BASE + (side == 'light' ? 1 : 2);
 
     await getStarknet().enable();
     const res = await getStarknet().signer?.invokeFunction(
       towerDefenceContractAddress as string,
-      stark.getSelectorFromName("increase_shield"),
+      stark.getSelectorFromName('increase_shield'),
       [
         gameIndex.toString(),
         tokenId.toString(),
@@ -95,7 +95,7 @@ const GameControls: React.FC<Prop> = (props) => {
     if (res?.transaction_hash) {
       txQueue.addTransactionToQueue(
         res?.transaction_hash,
-        getSelectorFromName("increase_shield")
+        getSelectorFromName('increase_shield')
       );
     }
   };
@@ -110,10 +110,10 @@ const GameControls: React.FC<Prop> = (props) => {
         toggle={() => setMintModalOpen(false)}
       />
 
-      {gameStatus == "expired" ? (
+      {gameStatus == 'expired' ? (
         <div>
           <p className="mt-8 text-3xl">
-            {/*{side == "light" && tokenBalances ? (
+            {/* {side == "light" && tokenBalances ? (
               <>
                 <ElementLabel side="light">LIGHT</ElementLabel>{" "}
                 {(tokenBalances[0].toNumber() / 100).toFixed(0)}
@@ -124,7 +124,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 <ElementLabel side="dark">DARK</ElementLabel>{" "}
                 {(tokenBalances[1].toNumber() / 100).toFixed(0)}
               </>
-            ) : null}*/}
+            ) : null} */}
           </p>
           <p className="my-4 text-xl animate-pulse">
             Waiting for next game to start...
@@ -133,7 +133,7 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : (
         <>
           <p className="text-xl">
-            {/*{side == undefined ? <>Side Not Chosen</> : null}
+            {/* {side == undefined ? <>Side Not Chosen</> : null}
             {side == "light" ? (
               <>
                 <ElementLabel side="light">LIGHT </ElementLabel>
@@ -149,15 +149,15 @@ const GameControls: React.FC<Prop> = (props) => {
                   ? number.toBN(tokenBalances[1]).toString()
                   : null}
               </>
-                ) : null}*/}
+                ) : null} */}
           </p>
 
           <div className="flex w-full gap-4 text-gray-100 row">
             <div className="flex-1">
               <Button
                 className="w-full mt-4 text-black"
-                active={action == "shield"}
-                onClick={() => setAction("shield")}
+                active={action == 'shield'}
+                onClick={() => setAction('shield')}
               >
                 Shield
               </Button>
@@ -165,8 +165,8 @@ const GameControls: React.FC<Prop> = (props) => {
             <div className="flex-1">
               <Button
                 className="w-full mt-4 text-black"
-                active={action == "attack"}
-                onClick={() => setAction("attack")}
+                active={action == 'attack'}
+                onClick={() => setAction('attack')}
               >
                 Attack
               </Button>
@@ -174,6 +174,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </div>
           <div className="flex flex-row justify-center my-4">
             <input
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               type="number"
               placeholder="Amount"
@@ -183,11 +184,11 @@ const GameControls: React.FC<Prop> = (props) => {
                 if (parseInt(e.target.value)) {
                   setActionAmount(e.target.value);
                 } else {
-                  setActionAmount("");
+                  setActionAmount('');
                 }
               }}
               className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
-            />{" "}
+            />{' '}
             <div className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
                 <div className="w-32 p-1 font-semibold text-white bg-blue-900 rounded-md">
@@ -196,16 +197,16 @@ const GameControls: React.FC<Prop> = (props) => {
               ) : null}
             </div>
           </div>
-          {starknet.active && is1155TokenApproved == "1" ? (
+          {starknet.active && is1155TokenApproved == '1' ? (
             <Button
-              color={"primary"}
+              color={'primary'}
               disabled={action == undefined || actionAmount.length == 0}
               className="w-full text-white"
               onClick={() => {
                 if (gameIdx) {
-                  if (action == "shield") {
+                  if (action == 'shield') {
                     handleShield(gameIdx, parseInt(actionAmount));
-                  } else if (action == "attack") {
+                  } else if (action == 'attack') {
                     handleAttack(gameIdx, parseInt(actionAmount));
                   }
                 }
@@ -216,7 +217,7 @@ const GameControls: React.FC<Prop> = (props) => {
           ) : null}
         </>
       )}
-      {starknet.active == false ? (
+      {!starknet.active ? (
         <Button
           className="w-full mt-4"
           color="default"
@@ -225,26 +226,26 @@ const GameControls: React.FC<Prop> = (props) => {
           Connect StarkNet
         </Button>
       ) : null}
-      {is1155TokenApproved == "0" ? (
+      {is1155TokenApproved == '0' ? (
         <>
           <button
             disabled={
-              txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-              "loading"
+              txQueue.status[getSelectorFromName('set_approval_for_all')] ==
+              'loading'
             }
             onClick={() => {
               if (towerDefenceContractAddress) {
                 getStarknet()
                   .signer?.invokeFunction(
                     ELEMENTS_ADDRESS,
-                    getSelectorFromName("set_approval_for_all"),
-                    [number.toBN(towerDefenceContractAddress).toString(), "1"]
+                    getSelectorFromName('set_approval_for_all'),
+                    [number.toBN(towerDefenceContractAddress).toString(), '1']
                   )
                   .then((res) => {
                     if (res.transaction_hash) {
                       txQueue.addTransactionToQueue(
                         res.transaction_hash,
-                        getSelectorFromName("set_approval_for_all")
+                        getSelectorFromName('set_approval_for_all')
                       );
                     }
                   });
@@ -252,10 +253,10 @@ const GameControls: React.FC<Prop> = (props) => {
             }}
             className="w-full p-2 mt-4 text-white transition-colors border border-white rounded-md disabled:opacity-80 hover:bg-gray-700"
           >
-            {txQueue.status[getSelectorFromName("set_approval_for_all")] ==
-            "loading"
-              ? "Approving Contract"
-              : "Approve Elements Token"}
+            {txQueue.status[getSelectorFromName('set_approval_for_all')] ==
+            'loading'
+              ? 'Approving Contract'
+              : 'Approve Elements Token'}
           </button>
         </>
       ) : undefined}

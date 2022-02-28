@@ -1,10 +1,10 @@
-import { useUIContext } from "@/hooks/useUIContext";
-import { BaseSideBar } from "./BaseSideBar";
-import { Realm } from "../realms/Realm";
-import Menu from "../../../public/svg/menu.svg";
-import { Data } from "~/types";
-import { useQuery } from "@apollo/client";
-import { getRealmQuery } from "@/hooks/graphql/queries";
+import { useQuery } from '@apollo/client';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+import { getRealmQuery } from '@/hooks/graphql/queries';
+import { useUIContext } from '@/hooks/useUIContext';
+import type { Data } from '@/types/index';
+import { Realm } from '../realms/Realm';
+import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
   id: number;

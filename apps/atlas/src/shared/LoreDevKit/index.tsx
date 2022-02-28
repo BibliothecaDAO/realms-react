@@ -1,5 +1,5 @@
-import TokenLabel from "../ElementsLabel";
-import { LDKSchema } from "./lib";
+import TokenLabel from '../ElementsLabel';
+import type { LDKSchema } from './lib';
 
 const LoreDevKit = ({ ldk }: { ldk: LDKSchema }) => {
   return (

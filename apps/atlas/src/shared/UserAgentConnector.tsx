@@ -1,8 +1,10 @@
-import { UserAgent } from "@quentin-sommer/react-useragent";
-import { UserAgentProps } from "@quentin-sommer/react-useragent/dist/UserAgent";
-import { AbstractConnectorArguments } from "@web3-react/types";
+/* eslint-disable no-constant-condition */
+/* eslint-disable sonarjs/no-gratuitous-expressions */
+import { UserAgent } from '@quentin-sommer/react-useragent';
+import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
+import type { AbstractConnectorArguments } from '@web3-react/types';
 
-import { walletconnect, injected } from "../connectors";
+import { walletconnect, injected } from '../connectors';
 
 type Prop = {
   children: (
@@ -11,7 +13,7 @@ type Prop = {
 };
 
 const UserAgentConnector: React.FC<Prop> = (props) => {
-  const wc = { name: "WalletConnect", connector: walletconnect };
+  const wc = { name: 'WalletConnect', connector: walletconnect };
   return (
     <UserAgent>
       {(ua: UserAgentProps) => {
@@ -20,7 +22,7 @@ const UserAgentConnector: React.FC<Prop> = (props) => {
         //       and browser extensions do that also
         if (true) {
           return props.children([
-            { name: "Injected", connector: injected },
+            { name: 'Injected', connector: injected },
             wc,
           ]);
         }

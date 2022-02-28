@@ -1,5 +1,6 @@
-import React, { ReactElement } from "react";
-import { Head } from "./Head";
+import type { ReactElement } from 'react';
+import React from 'react';
+import { Head } from './Head';
 
 export default function Layout({
   children,

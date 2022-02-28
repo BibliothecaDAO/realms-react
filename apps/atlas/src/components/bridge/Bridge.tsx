@@ -1,40 +1,41 @@
-import axios from "axios";
-
+import { CheckIcon as Check, XCircleIcon } from '@heroicons/react/solid';
 import {
   useStarknet,
   useStarknetTransactionManager,
-} from "@starknet-react/core";
-import Button from "@/shared/Button";
-import { getBagsInWallet } from "loot-sdk";
-import { messageKey } from "@/util/messageKey";
-import classNames from "classnames";
-import MintRequirements from "./MintRequirements";
-import ElementsLabel from "@/shared/ElementsLabel";
-import { useState, useEffect, useMemo } from "react";
+} from '@starknet-react/core';
+import axios from 'axios';
 
-import { useWalletContext } from "@/hooks/useWalletContext";
-import { getLatestGameIndex } from "@/util/minigameApi";
-import { AddTransactionResponse } from "starknet";
-import { MintingError } from "~/../pages/api/minigame_alpha_mint";
-import Check from "../../../public/svg/check.svg";
-import { ExternalLink } from "@/shared/Icons";
-import useTotalMintedForRound from "@/hooks/useTotalMintedForRound";
-import useTxCallback from "@/hooks/useTxCallback";
-import { XCircleIcon } from "@heroicons/react/solid";
-import { useRouter } from "next/router";
+import classNames from 'classnames';
+import { getBagsInWallet } from 'loot-sdk';
+import { useRouter } from 'next/router';
+import { useState, useEffect, useMemo } from 'react';
+import type { AddTransactionResponse } from 'starknet';
+import useGameStats from '@/hooks/useGameStats';
+import useTxCallback from '@/hooks/useTxCallback';
+import { useWalletContext } from '@/hooks/useWalletContext';
+import type { MintingError } from '@/pages/api/minigame_alpha_mint';
+import Button from '@/shared/Button';
+import ElementsLabel from '@/shared/ElementsLabel';
+import { ExternalLink } from '@/shared/Icons';
+import { messageKey } from '@/util/messageKey';
+
+import { getLatestGameIndex } from '@/util/minigameApi';
+import MintRequirements from './MintRequirements';
 
 type Prop = {
   initialTab?: TabName;
   onReceivedTx?: (txHash: string) => void;
   toggleModal: () => void;
+  towerDefenceStorageContractAddress: string;
 };
 
 type TabName =
-  | "connect-ethereum"
-  | "mint-requirements"
-  | "connect-starknet"
-  | "mint";
+  | 'connect-ethereum'
+  | 'mint-requirements'
+  | 'connect-starknet'
+  | 'mint';
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const Bridge: React.FC<Prop> = (props) => {
   const starknet = useStarknet();
   const txManager = useStarknetTransactionManager();
@@ -59,7 +60,7 @@ export const Bridge: React.FC<Prop> = (props) => {
     // In case the setup page was navigated to directly
     // replace the routing state so that page refreshes
     // don't repeatedly open the setup
-    router.replace("/desiege", "/desiege", { shallow: true });
+    router.replace('/desiege', '/desiege', { shallow: true });
   }, []);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ export const Bridge: React.FC<Prop> = (props) => {
       txManager.addTransaction({
         transactionHash,
         address: starknet.account as string,
-        status: "TRANSACTION_RECEIVED",
+        status: 'TRANSACTION_RECEIVED',
       });
     }
   }, [transactionHash]);
@@ -84,39 +85,44 @@ export const Bridge: React.FC<Prop> = (props) => {
       });
   }, []);
 
-  /*if (error instanceof UserRejectedRequestError) {
+  /* if (error instanceof UserRejectedRequestError) {
     console.log("TODO: Handle user rejection");
-  }*/
+  } */
 
-  const [side, setSide] = useState<"light" | "dark">();
+  const [side, setSide] = useState<'light' | 'dark'>();
 
-  /*const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
+  /* const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
 
   useEffect(() => {
     setUnsupportedChain(error instanceof UnsupportedChainIdError);
-  }, [error]);*/
+  }, [error]); */
 
   const [currentTab, setCurrentTab] = useState<TabName>(
-    props.initialTab || "mint"
+    props.initialTab || 'mint'
   );
 
-  useEffect(() => {}, [starknet.account]);
+  const ethConnect = 'connect-ethereum';
+  const starkConnect = 'connect-starknet';
+  const mintReq = 'mint-requirements';
 
   useEffect(() => {
-    if (isConnected == false) {
-      setCurrentTab("connect-ethereum");
+    if (!isConnected) {
+      setCurrentTab(ethConnect);
     } else {
       if (starknet.account) {
-        setCurrentTab("mint");
+        setCurrentTab('mint');
       } else {
-        setCurrentTab("connect-starknet");
+        setCurrentTab(starkConnect);
       }
     }
   }, [isConnected, starknet.account]);
 
   // Add +1 to show for next round
   const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
-  const totalMinted = useTotalMintedForRound(nextGameIdx);
+  const totalMinted = useGameStats(
+    nextGameIdx,
+    props.towerDefenceStorageContractAddress
+  );
 
   const verifyAndMint = async () => {
     try {
@@ -127,7 +133,7 @@ export const Bridge: React.FC<Prop> = (props) => {
           messageKey(starknet.account as string)
         );
         const res = await axios.post<AddTransactionResponse | MintingError>(
-          "/api/minigame_alpha_mint",
+          '/api/minigame_alpha_mint',
           {
             starknetAddress: starknet.account,
             sig,
@@ -136,11 +142,11 @@ export const Bridge: React.FC<Prop> = (props) => {
           }
         );
 
-        if ("code" in res.data && res.data.code == "TRANSACTION_RECEIVED") {
+        if ('code' in res.data && res.data.code == 'TRANSACTION_RECEIVED') {
           setTransactionHash(res.data.transaction_hash);
           setMintError(undefined);
         }
-        if ("error" in res.data) {
+        if ('error' in res.data) {
           setMintError(res.data.error);
           setTransactionHash(undefined);
         }
@@ -154,12 +160,12 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const tabBtnClasses = {
-    base: "px-4 py-2 my-2 mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800",
-    active: "text-white bg-gray-300",
+    base: 'px-4 py-2 my-2 flex-grow mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800',
+    active: 'text-white bg-gray-300',
   };
 
   const connectedClassname =
-    "inline-block py-2 mt-4 break-words px-4 bg-white/30 rounded-md";
+    'inline-block py-2 mt-4 break-words px-4 bg-white/30 rounded-md';
 
   const txTracker = useTxCallback(transactionHash, () => {
     // TODO: Close the modal and start next sequence
@@ -173,6 +179,8 @@ export const Bridge: React.FC<Prop> = (props) => {
       setMiddlewareSigning(!txTracker.loading);
     }
   }, [txTracker.tx?.status]);
+
+  const Checkmark = <Check className="inline-block w-6 ml-1" />;
 
   useEffect(() => {
     starknet.connectBrowserWallet();
@@ -188,65 +196,56 @@ export const Bridge: React.FC<Prop> = (props) => {
           </button>
         </h1>
         <div className="px-2 text-gray-800">
-          <nav className="rounded-md bg-white/70">
-            <span>
-              <button
-                onClick={() => setCurrentTab("connect-ethereum")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "connect-ethereum" ? tabBtnClasses.active : null
-                )}
-              >
-                <span className="flex">
-                  1. Connect Ethereum
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
-              </button>
-            </span>
-            <span>
-              <button
-                onClick={() => setCurrentTab("mint-requirements")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "mint-requirements"
-                    ? tabBtnClasses.active
-                    : null
-                )}
-              >
-                <span className="flex">2. Lords Balance</span>
-              </button>
-            </span>
-            <span>
-              <button
-                onClick={() => setCurrentTab("connect-starknet")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "connect-starknet" ? tabBtnClasses.active : null
-                )}
-              >
-                <span className="flex">
-                  3. Connect StarkNet
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
-              </button>
-            </span>
+          <nav className="flex flex-row rounded-md bg-white/70">
             <button
-              onClick={() => setCurrentTab("mint")}
+              onClick={() => setCurrentTab(ethConnect)}
               className={classNames(
                 tabBtnClasses.base,
-                currentTab == "mint" ? tabBtnClasses.active : null
+                currentTab == ethConnect ? tabBtnClasses.active : null
               )}
             >
               <span className="flex">
-                4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
-                {starknet.account && starknet.hasStarknet ? (
-                  <Check className="ml-1" />
-                ) : null}
+                1. Connect Ethereum
+                {account ? Checkmark : null}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab(mintReq)}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == mintReq ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">2. Lords Balance</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab(starkConnect)}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == starkConnect ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">
+                3. Connect StarkNet
+                {account ? Checkmark : null}
+              </span>
+            </button>
+            <button
+              onClick={() => setCurrentTab('mint')}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == 'mint' ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">
+                4. Mint <ElementsLabel className="ml-1">ELEMENTS</ElementsLabel>
               </span>
             </button>
           </nav>
           <div className="text-xl">
-            {currentTab == "connect-ethereum" ? (
+            {currentTab == ethConnect ? (
               <div>
                 {account ? (
                   <p className={connectedClassname}>Connected as {account}</p>
@@ -266,14 +265,14 @@ export const Bridge: React.FC<Prop> = (props) => {
                 ) : null} */}
               </div>
             ) : null}
-            {currentTab == "mint-requirements" ? (
+            {currentTab == mintReq ? (
               <div className="py-4">
                 <MintRequirements l1Address={account.toString()} />
               </div>
             ) : null}
-            {currentTab == "connect-starknet" ? (
+            {currentTab == starkConnect ? (
               <div className="py-4">
-                {!!starknet.account ? (
+                {starknet.account ? (
                   <p className={connectedClassname}>
                     Connected as {starknet.account}
                   </p>
@@ -282,7 +281,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                     <div className="text-2xl">
                       {starknet.hasStarknet ? (
                         <div>
-                          If you haven&apos;t already done so, please{" "}
+                          If you haven&apos;t already done so, please{' '}
                           <a
                             rel="noreferrer"
                             target="_blank"
@@ -290,14 +289,14 @@ export const Bridge: React.FC<Prop> = (props) => {
                             href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                           >
                             download and install
-                          </a>{" "}
+                          </a>{' '}
                           the ArgentX extension, available now for the Google
                           Chrome web browser.
                         </div>
                       ) : (
                         <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
                           The ArgentX wallet extension could not be activated.
-                          Please{" "}
+                          Please{' '}
                           <a
                             rel="noreferrer"
                             target="_blank"
@@ -305,7 +304,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                             href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                           >
                             install ArgentX
-                          </a>{" "}
+                          </a>{' '}
                           on a supported browser and revisit this page.
                         </div>
                       )}
@@ -320,26 +319,26 @@ export const Bridge: React.FC<Prop> = (props) => {
                 )}
               </div>
             ) : null}
-            {currentTab === "mint" ? (
+            {currentTab === 'mint' ? (
               <div className="py-4">
-                {!!starknet.account ? (
+                {starknet.account ? (
                   <>
                     <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
                     <div className="flex w-full space-x-2 ">
                       <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
-                            side == "light" ? "opacity-100" : "opacity-50"
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
+                            side == 'light' ? 'opacity-100' : 'opacity-50'
                           )}
                         >
                           <button
-                            onClick={() => setSide("light")}
+                            onClick={() => setSide('light')}
                             className="relative items-center w-full py-4 leading-none tracking-widest text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
                           >
                             <span className="flex justify-center">
-                              {" "}
-                              Light{" "}
+                              {' '}
+                              Light{' '}
                               {/* {side == "light" ? (
                                 <Check className="h-4 ml-1" />
                               ) : null} */}
@@ -347,29 +346,29 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.light
-                          ? totalMinted.light + " minted"
-                          : "-"}
+                          ? totalMinted.light + ' minted'
+                          : '-'}
                       </div>
                       <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            "w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt",
-                            side == "dark" ? "opacity-100" : "opacity-50"
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
+                            side == 'dark' ? 'opacity-100' : 'opacity-50'
                           )}
                         >
                           <button
-                            onClick={() => setSide("dark")}
+                            onClick={() => setSide('dark')}
                             className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-md px-7"
                           >
-                            Dark{" "}
+                            Dark{' '}
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark + " minted" : "-"}
+                        {totalMinted.dark ? totalMinted.dark + ' minted' : '-'}
                       </div>
                     </div>
 
-                    {txTracker.tx?.status == "ACCEPTED_ON_L2" ? (
+                    {txTracker.tx?.status == 'ACCEPTED_ON_L2' ? (
                       <p className="mt-4 text-2xl text-green-800">
                         Minting succeeded. Please refresh your browser.
                       </p>
@@ -388,11 +387,11 @@ export const Bridge: React.FC<Prop> = (props) => {
                           // TODO: Choose host dynamically here based on network
                           href={`https://goerli.voyager.online/tx/${transactionHash}/`}
                           className="underline"
-                          target={"_blank"}
+                          target={'_blank'}
                           rel="noopener noreferrer"
                         >
                           Check Transaction Status
-                        </a>{" "}
+                        </a>{' '}
                         <ExternalLink className="inline-block h-6" />
                       </>
                     ) : (
@@ -400,7 +399,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                         {side !== undefined && transactionHash == undefined ? (
                           <>
                             <p className="mt-8 text-2xl break-words">
-                              {messageKey("")}
+                              {messageKey('')}
                             </p>
                             <p className={connectedClassname}>
                               {starknet.account}
@@ -424,18 +423,18 @@ export const Bridge: React.FC<Prop> = (props) => {
                   </>
                 ) : (
                   <p>
-                    No Starknet account connected.{" "}
-                    <Button onClick={() => setCurrentTab("connect-starknet")}>
+                    No Starknet account connected.{' '}
+                    <Button onClick={() => setCurrentTab(starkConnect)}>
                       Connect StarkNet
                     </Button>
                   </p>
                 )}
                 {mintError !== undefined ||
-                txTracker.tx?.status == "REJECTED" ? (
+                txTracker.tx?.status == 'REJECTED' ? (
                   <p className="mt-4 text-xl text-red-500">
-                    A minting error occurred:{" "}
+                    A minting error occurred:{' '}
                     {mintError ||
-                      "Contract reverted. You may have already minted for this round."}
+                      'Contract reverted. You may have already minted for this round.'}
                   </p>
                 ) : null}
               </div>

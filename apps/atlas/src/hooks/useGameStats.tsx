@@ -1,13 +1,13 @@
 import { useContract, useStarknetCall } from '@starknet-react/core';
-import { Abi } from 'starknet';
+import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
-import ElementsBalancer from '~/abi/minigame/04_Elements.json';
-import TowerDefenceStorage from '~/abi/minigame/02_TowerDefenceStorage.json';
-import { ElementToken } from '~/constants';
+import TowerDefenceStorage from '@/abi/minigame/02_TowerDefenceStorage.json';
+import ElementsBalancer from '@/abi/minigame/04_Elements.json';
+import { ElementToken } from '@/constants/index';
 import {
   EFFECT_BASE_FACTOR,
   TOKEN_INDEX_OFFSET_BASE,
-} from '~/util/minigameApi';
+} from '@/util/minigameApi';
 
 const useGameStats = (gameIdx: number, towerDefenceStorageAddr: string) => {
   const { contract: elementsContract } = useContract({

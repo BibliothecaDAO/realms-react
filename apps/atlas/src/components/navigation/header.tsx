@@ -1,4 +1,6 @@
-import { useWalletContext } from "../../hooks/useWalletContext";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useWalletContext } from '../../hooks/useWalletContext';
 
 export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
@@ -6,12 +8,12 @@ export function Header() {
 
   return (
     <div>
-      <h1 className="text-6xl top-0 absolute z-10 w-full text-center pt-8">
+      <h1 className="absolute top-0 z-10 w-full pt-8 text-6xl text-center">
         Atlas
       </h1>
-      <div className="left-14 top-8 absolute z-20 sm:flex hidden">
+      <div className="absolute z-20 hidden left-14 top-8 sm:flex">
         <div className="ml-auto">
-          <ul className="flex space-x-4 mr-auto text-xl backdrop-blur-md bg-off-200/20 px-4 py-4 rounded">
+          <ul className="flex px-4 py-4 mr-auto space-x-4 text-xl rounded backdrop-blur-md bg-off-200/20">
             <li className="">
               {isConnected && (
                 <span>
@@ -19,7 +21,7 @@ export function Header() {
 
                   <a
                     className={
-                      "cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded ml-auto py-2"
+                      'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded ml-auto py-2'
                     }
                     onClick={disconnectWallet}
                   >
@@ -30,7 +32,7 @@ export function Header() {
               {!isConnected && (
                 <button
                   className={
-                    "cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded  ml-auto py-2"
+                    'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded  ml-auto py-2'
                   }
                   onClick={connectWallet}
                 >

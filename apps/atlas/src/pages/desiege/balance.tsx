@@ -1,7 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import ShieldGame from "@/components/minigame/ShieldGame";
-import { getLatestGameIndex, getTotalElementsMinted } from "@/util/minigameApi";
-import Game from "./index";
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import ShieldGame from '@/components/minigame/ShieldGame';
+import { getLatestGameIndex, getTotalElementsMinted } from '@/util/minigameApi';
+import Game from './index';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         light,
         dark,
-        primary: light > dark ? "light" : "dark",
+        primary: light > dark ? 'light' : 'dark',
         url: context.resolvedUrl,
       }, // will be passed to the page component as props
     };
