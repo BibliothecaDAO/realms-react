@@ -1,6 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { rest } from "msw";
+import { WalletProvider } from "~/hooks/useWalletContext";
 import { buildStarknetUrl } from "../mocks/starknetMockFactory";
 
 import Bridge from "@/components/bridge/Bridge";
@@ -9,13 +10,22 @@ import {
   mockSignAndMint,
   mockSignAndMintError,
 } from "~/mocks/gameApi";
+import { StarknetProvider } from "@starknet-react/core";
 
 export default {
   title: "Bridge",
   component: Bridge,
+  decorators: [
+    (Story) => <StarknetProvider>{Story()}</StarknetProvider>,
+    (Story) => <WalletProvider>{Story()}</WalletProvider>,
+  ],
 } as ComponentMeta<typeof Bridge>;
 
-const Template: ComponentStory<typeof Bridge> = (args) => <Bridge {...args} />;
+const Template: ComponentStory<typeof Bridge> = (args) => (
+  <div className="p-4 bg-gray-400">
+    <Bridge {...args} />
+  </div>
+);
 
 export const Default = Template.bind({});
 
@@ -25,7 +35,6 @@ Mint.args = {
 };
 Mint.parameters = {
   msw: [
-    mockGetLatestGameIndex,
     mockSignAndMint,
     rest.get(
       buildStarknetUrl("alpha4.starknet.io") + "get_transaction_status",

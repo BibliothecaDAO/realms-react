@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { defaultProvider, number, stark } from "starknet";
+import { defaultProvider, number, Provider, stark } from "starknet";
 const { toBN } = number;
 const { getSelectorFromName } = stark;
 
@@ -10,6 +10,12 @@ export const EFFECT_BASE_FACTOR = 100;
 export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
   "0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e";
+
+const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
+  | "mainnet-alpha"
+  | "georli-alpha";
+
+const provider = new Provider({ network: starknetNetwork });
 
 if (!CONTROLLER_ADDRESS) {
   throw new Error(
@@ -42,7 +48,7 @@ export const getLatestGameIndex: () => Promise<string> = async () => {
   const tdStorageAddress = await getModuleAddress("2");
 
   // Get latest game index
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(
       SelectorName.getLatestGameIndex
@@ -62,7 +68,7 @@ type GamePromise<T> = (gameIndex: string) => Promise<T>;
 export const getMainHealth: GamePromise<BN> = async (gameIndex) => {
   const tdStorageAddress = await getModuleAddress("2");
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(SelectorName.getMainHealth),
     calldata: [gameIndex],
@@ -77,7 +83,7 @@ export const getShieldValue: (
 ) => Promise<BN> = async (gameIndex, tokenId) => {
   const tdStorageAddress = await getModuleAddress("2");
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName(
       SelectorName.getShieldValue
@@ -97,7 +103,7 @@ export const getModuleAddress: (moduleId: string) => Promise<string> = async (
     return Promise.resolve(moduleAddressCache[moduleId]);
   }
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: CONTROLLER_ADDRESS,
     entry_point_selector: stark.getSelectorFromName("get_module_address"),
     calldata: [moduleId.toString()],
@@ -112,7 +118,7 @@ export const getTotalRewardAlloc: (
 ) => Promise<BN> = async (gameIdx, side) => {
   const tdStorageAddress = await getModuleAddress("2");
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_total_reward_alloc"),
     calldata: [gameIdx, side],
@@ -128,7 +134,7 @@ export const getUserRewardAlloc: (
 ) => Promise<BN> = async (gameIdx, user, side) => {
   const tdStorageAddress = await getModuleAddress("2");
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_user_reward_alloc"),
     calldata: [gameIdx, user, side],
@@ -143,7 +149,7 @@ export const getTokenRewardPool: (
 ) => Promise<BN> = async (gameIdx, tokenId) => {
   const tdStorageAddress = await getModuleAddress("2");
 
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: tdStorageAddress,
     entry_point_selector: stark.getSelectorFromName("get_token_reward_pool"),
     calldata: [gameIdx, tokenId.toString()],
@@ -162,11 +168,11 @@ export type GameContext = {
   currentBoost: number; // in basis points
 };
 
-export const getGameContextVariables: () => Promise<GameContext> = async () => {
-  const towerDefenceAddress = await getModuleAddress("1");
-
-  const res = await defaultProvider.callContract({
-    contract_address: towerDefenceAddress,
+export const getGameContextVariables: (
+  towerDefenceAddress: string
+) => Promise<GameContext> = async (tdAddr) => {
+  const res = await provider.callContract({
+    contract_address: tdAddr,
     entry_point_selector: stark.getSelectorFromName(
       "get_game_context_variables"
     ),
@@ -208,12 +214,12 @@ export const getTotalElementsMinted = async (gameIdx: number) => {
 
   const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
 
-  const mintedLight = await defaultProvider.callContract({
+  const mintedLight = await provider.callContract({
     contract_address: elementBalancerModule,
     entry_point_selector: getSelectorFromName("get_total_minted"),
     calldata: [(tokenOffset + 1).toString()],
   });
-  const mintedDark = await defaultProvider.callContract({
+  const mintedDark = await provider.callContract({
     contract_address: elementBalancerModule,
     entry_point_selector: getSelectorFromName("get_total_minted"),
     calldata: [(tokenOffset + 2).toString()],
@@ -256,7 +262,7 @@ export const getIsApprovedForAll = async (
   account: string,
   operator: string
 ) => {
-  const res = await defaultProvider.callContract({
+  const res = await provider.callContract({
     contract_address: ELEMENTS_ADDRESS,
     entry_point_selector: getSelectorFromName("is_approved_for_all"),
     calldata: [toBN(account).toString(), toBN(operator).toString()],
