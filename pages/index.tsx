@@ -13,6 +13,8 @@ import { TheOrdersSideBar } from "~/components/map/TheOrdersSideBar";
 
 import realms from "../src/geodata/realms.json";
 import crypts from "../src/geodata/crypts_all.json";
+import loot_bags from "../src/geodata/loot_bags.json";
+import ga_bags from "../src/geodata/ga_bags.json";
 import order_highlights from "../src/geodata/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
 import { RealmSideBar } from "~/components/map/RealmsSideBar";
@@ -135,6 +137,45 @@ function App() {
     },
   });
 
+  const loot_bag_layer = new ScatterplotLayer({
+    id: "scatterplot-layer",
+    /* @ts-ignore: name not exist on D */
+    data: loot_bags.features,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    opacity: 1,
+    getPosition: (d: any) => d.geometry.coordinates,
+    getRadius: 3000,
+    getElevation: 10000,
+    lineWidthMinPixels: 1,
+    getFillColor: [255, 0, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
+  });
+
+  const ga_bag_layer = new ScatterplotLayer({
+    id: "scatterplot-layer",
+    /* @ts-ignore: name not exist on D */
+    data: ga_bags.features,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    opacity: 1,
+    getPosition: (d: any) => d.geometry.coordinates,
+    getRadius: 3000,
+    getElevation: 10000,
+    lineWidthMinPixels: 1,
+    getFillColor: [0, 255, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
+  });
+
+
   const ICON_MAPPING = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
@@ -159,6 +200,10 @@ function App() {
     zoom: 4,
     pitch: 55,
     bearing: 0,
+    bounds: [
+      [-180, -60], // Southwest coordinates
+      [180, 60] // Northeast coordinates
+    ]
   });
 
   const goToId = useCallback(
@@ -260,7 +305,7 @@ function App() {
           pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
-          layers={[realms_layer, resource_layer, crypts_layer]}
+          layers={[realms_layer, resource_layer, crypts_layer, loot_bag_layer, ga_bag_layer]}
         >
           <StaticMap
             attributionControl={false}
