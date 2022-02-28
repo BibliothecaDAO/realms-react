@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Abi, number, stark } from "starknet";
-import { getStarknet } from "@argent/get-starknet/dist";
-import { useModuleAddress } from "~/hooks/useModuleAddress";
+import { Abi, number } from "starknet";
+import Joyride, { STATUS } from "react-joyride";
 import { useSiegeBalance } from "~/hooks/useSiegeBalance";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
@@ -26,6 +25,7 @@ import useGameStats from "~/hooks/useGameStats";
 import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
 import { LightningBoltIcon } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
 
 type Prop = {
   gameIdx?: number;
@@ -49,8 +49,14 @@ const divineEclipse: TokenNameOffsetMap = {
 // The offset is based on the season mapping
 const currentTokenOffset = divineEclipse;
 
+enum OnboardingTutorials {
+  GameControls = "game-controls-tutorial",
+}
+
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
+
+  const router = useRouter();
 
   const {
     account,
@@ -60,6 +66,16 @@ const GameControls: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     // connectBrowserWallet(); // on mount
+  }, []);
+
+  const [showTutorial, setShowTutorial] = useState(false);
+  useEffect(() => {
+    const previouslyShown = localStorage.getItem(
+      OnboardingTutorials.GameControls
+    );
+    if (!previouslyShown) {
+      setShowTutorial(true);
+    }
   }, []);
 
   const towerDefenceContractAddress = props.towerDefenceContractAddress;
@@ -198,6 +214,66 @@ const GameControls: React.FC<Prop> = (props) => {
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
+      {loadingTokenBalance == false && !!tokenBalances ? (
+        <Joyride
+          continuous
+          run={showTutorial}
+          showProgress
+          callback={(data) => {
+            const { status } = data;
+            if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status as any)) {
+              localStorage.setItem(OnboardingTutorials.GameControls, "1");
+              setShowTutorial(false);
+            }
+          }}
+          showSkipButton
+          steps={[
+            {
+              title: <ElementLabel>Elements</ElementLabel>,
+              target: "#token-balance",
+              content: (
+                <>
+                  The amount of distilled{" "}
+                  <ElementLabel side={side}>{side} elements</ElementLabel> in
+                  your possession.
+                </>
+              ),
+              disableBeacon: true,
+            },
+            {
+              target: "#game-stats",
+              content: (
+                <>
+                  Displays the ratio of total{" "}
+                  <ElementLabel>Elements</ElementLabel> used over the total
+                  amount distilled, for each Element.
+                </>
+              ),
+            },
+            {
+              title: "Available Spells",
+              target: "#action-controls",
+              content: "Light can shield, Dark can attack",
+            },
+            {
+              title: "Spell Power",
+              target: "#action-amount",
+              content: (
+                <>
+                  A proper Mage carefully chooses the right amount of{" "}
+                  <ElementLabel>Elements</ElementLabel> to power their spells.
+                </>
+              ),
+            },
+            {
+              title: "Portal Boost Effect",
+              target: "#action-boost",
+              content:
+                "The Dark Portal bends space and time. The effect grows stronger with times passage, affecting ALL spells equally.",
+            },
+          ]}
+        />
+      ) : null}
       <div>
         <p className="text-xl uppercase">Season 1</p>
         <h1>
@@ -309,32 +385,34 @@ const GameControls: React.FC<Prop> = (props) => {
               <LoadingSkeleton className="h-10 mt-4 w-36" />
             ) : (
               <div className="mt-4">
-                {side == "light" ? (
-                  <>
-                    <ElementLabel side="light">LIGHT </ElementLabel>
-                    {tokenBalances && tokenBalances.length > 0
-                      ? number
-                          .toBN(tokenBalances[0])
-                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                          .toString()
-                      : null}
-                  </>
-                ) : null}
-                {side == "dark" ? (
-                  <>
-                    <ElementLabel side="dark">DARK</ElementLabel>{" "}
-                    {tokenBalances && tokenBalances.length > 1
-                      ? number
-                          .toBN(tokenBalances[1])
-                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                          .toString()
-                      : null}
-                  </>
-                ) : null}
+                <div id="token-balance">
+                  {side == "light" ? (
+                    <>
+                      <ElementLabel side="light">LIGHT </ElementLabel>
+                      {tokenBalances && tokenBalances.length > 0
+                        ? number
+                            .toBN(tokenBalances[0])
+                            .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                            .toString()
+                        : null}
+                    </>
+                  ) : null}
+                  {side == "dark" ? (
+                    <>
+                      <ElementLabel side="dark">DARK</ElementLabel>{" "}
+                      {tokenBalances && tokenBalances.length > 1
+                        ? number
+                            .toBN(tokenBalances[1])
+                            .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                            .toString()
+                        : null}
+                    </>
+                  ) : null}
+                </div>
                 {gameStats.loading ? (
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
-                  <>
+                  <div id="game-stats">
                     <div className="w-full h-1 mt-2 bg-cyan-800">
                       {gameStats.lightUsed !== undefined &&
                       gameStats.light !== undefined ? (
@@ -342,7 +420,7 @@ const GameControls: React.FC<Prop> = (props) => {
                           style={{
                             width: `${gameStats.lightUsed / gameStats.light}%`,
                           }}
-                          className="h-1 bg-cyan-400"
+                          className="h-1 transition-all bg-cyan-400"
                         ></div>
                       ) : undefined}
                     </div>
@@ -357,13 +435,16 @@ const GameControls: React.FC<Prop> = (props) => {
                         ></div>
                       ) : undefined}
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
             )}
           </div>
 
-          <div className="flex w-full gap-4 text-gray-100 row">
+          <div
+            id="action-controls"
+            className="flex w-full gap-4 text-gray-100 row"
+          >
             <div className="flex-1">
               <Button
                 disabled={side == "dark"}
@@ -386,6 +467,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </div>
           <div className="flex flex-row justify-center my-4">
             <input
+              id="action-amount"
               autoFocus
               type="number"
               placeholder="Amount"
@@ -400,12 +482,19 @@ const GameControls: React.FC<Prop> = (props) => {
               }}
               className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
             />{" "}
-            <div className="ml-4">
+            <div id="action-boost" className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <div className="p-2 font-semibold text-white align-middle bg-blue-900 rounded-md">
+                <button
+                  onClick={() => {
+                    router.replace("/desiege?tab=lore", undefined, {
+                      shallow: true,
+                    });
+                  }}
+                  className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800"
+                >
                   <LightningBoltIcon className="inline-block w-4" />{" "}
                   {`${currentBoostBips / 100}%`}
-                </div>
+                </button>
               ) : null}
             </div>
           </div>
@@ -417,7 +506,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 actionAmount.length == 0 ||
                 actionIsLoading
               }
-              className={primaryBtnClass}
+              className={classNames(primaryBtnClass)}
               onClick={() => {
                 if (gameIdx) {
                   if (action == "shield") {
@@ -428,9 +517,15 @@ const GameControls: React.FC<Prop> = (props) => {
                 }
               }}
             >
-              {actionIsLoading ? "Casting Tokens" : "Confirm Transaction"}
+              {actionIsLoading ? "Casting Spell" : "Cast Element Spell"}
             </Button>
           ) : null}
+          <button
+            className="w-full my-2 text-center underline"
+            onClick={() => setShowTutorial(true)}
+          >
+            Show Tutorial
+          </button>
         </>
       ) : null}
       {is1155TokenApproved == "0" ? (

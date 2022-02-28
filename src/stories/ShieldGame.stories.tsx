@@ -34,7 +34,7 @@ const responsesBySelector: Record<string, string[]> = {
   [getSelectorFromName("get_shield_value")]: [toHex(toBN(10000))],
   [getSelectorFromName("balance_of_batch")]: ["2", "0x2323", "0x2"],
   [getSelectorFromName("get_total_minted")]: [toHex(toBN(100 * 100))],
-  [getSelectorFromName("get_token_reward_pool")]: [toHex(toBN(50 * 100))],
+  [getSelectorFromName("get_token_reward_pool")]: [toHex(toBN(30 * 100))],
   [getSelectorFromName(SelectorName.getGameContextVariables)]: [
     toHex(toBN(1)), // game index
     toHex(toBN(4)), // blocks per minute
