@@ -4,7 +4,7 @@
  */
 import { render } from '@testing-library/react';
 import type React from 'react';
-import { AppTestProviders } from './app-test-providers';
+/* import { AppTestProviders } from './app-test-providers';
 
 const customRender = (ui: React.ReactElement, options?: any) =>
   render(ui, { wrapper: AppTestProviders, ...options });
@@ -13,4 +13,4 @@ const customRender = (ui: React.ReactElement, options?: any) =>
 export * from '@testing-library/react';
 
 // override render method
-export { customRender as render };
+export { customRender as render }; */
