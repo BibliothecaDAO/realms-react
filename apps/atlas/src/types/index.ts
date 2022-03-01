@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { BigNumberish } from 'starknet/dist/utils/number';
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 interface Owner {
@@ -69,7 +70,9 @@ export interface UiState {
 }
 
 export interface TowerProps {
-  gameStatus: GameStatus;
+  gameStatus?: GameStatus;
+  health?: BigNumberish;
+  shield?: BigNumberish;
   gameIdx?: number;
   currentBoostBips?: number;
   children?: React.ReactNode[] | React.ReactNode;
