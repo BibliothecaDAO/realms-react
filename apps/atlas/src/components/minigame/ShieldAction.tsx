@@ -1,16 +1,15 @@
 import { getStarknet } from '@argent/get-starknet/dist';
 import type BN from 'bn.js';
 import { useState, useEffect, useMemo } from 'react';
-import { defaultProvider, number, stark } from 'starknet';
+import { number, stark } from 'starknet';
 import { useModuleAddress } from '@/hooks/useModuleAddress';
 import { useStarknet } from '@/hooks/useStarknet';
 import useTxQueue from '@/hooks/useTxQueue';
 import Button from '@/shared/Button';
-import ElementLabel from '@/shared/ElementsLabel';
+
 // TODO: Refactor to use react-starknet
 import type { GameStatus } from '@/types/index';
 import {
-  getTokenIdsForGame,
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
@@ -106,6 +105,7 @@ const GameControls: React.FC<Prop> = (props) => {
       className="z-10 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
     >
       <BridgeModal
+        towerDefenceStorageContractAddress=""
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
