@@ -3,7 +3,10 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   framework: '@storybook/react',
-  stories: ['@/**/*.stories.mdx', '@/**/*.stories.@(ts|tsx|js|jsx)'],
+  core: {
+    builder: "webpack5",
+  },
+  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx|js|jsx)'],
   typescript: {
     check: false,
     checkOptions: {},
@@ -47,6 +50,15 @@ module.exports = {
       require.resolve('@emotion/styled/package.json')
     );
 
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      https: require.resolve("https-browserify"),
+      http: require.resolve("stream-http"),
+      crypto: require.resolve("crypto-browserify"),
+      os: require.resolve("os-browserify"),
+      stream: require.resolve("stream-browserify"),
+    };
+
     return {
       ...config,
       resolve: {
@@ -81,5 +93,6 @@ module.exports = {
         },
       },
     },
+    "storybook-addon-next-router",
   ],
 };
