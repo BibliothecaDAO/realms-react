@@ -37,7 +37,8 @@ function Box(props: ObjectProps) {
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
 
-  const [time, setTime] = useState(1.0);
+  // eslint-disable-next-line prefer-const
+  let [time, setTime] = useState(1.0);
   const render = (clock: any) => {
     const delta = clock.getDelta();
     setTime((time += delta * 5));

@@ -20,7 +20,7 @@ const { getSelectorFromName } = stark;
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
-  gameStatus: GameStatus;
+  gameStatus?: GameStatus;
 };
 
 const GameControls: React.FC<Prop> = (props) => {
