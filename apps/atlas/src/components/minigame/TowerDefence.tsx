@@ -12,6 +12,8 @@ import {
   Billboard,
 } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import type BN from 'bn.js';
+import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import type { MouseEventHandler } from 'react';
 import React, { useRef, useState, useCallback, Suspense } from 'react';
@@ -19,7 +21,8 @@ import type * as THREE from 'three';
 import type { ElementToken } from '@/constants/index';
 import { useSound } from '@/context/soundProvider';
 import { useUIContext } from '@/hooks/useUIContext';
-import type { TowerProps } from '@/types/index';
+import type { GameStatus } from '@/types/index';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 import ShieldAction from './ShieldAction';
 
 const Tower = dynamic(() => import('@/components/Model'), {
@@ -107,6 +110,50 @@ function Box(props: ObjectProps) {
       />
     </mesh>
   );
+}
+
+type ShieldVitalityDisplayProps = {
+  shield?: BN;
+  health?: BN;
+  className?: string;
+};
+
+export const ShieldVitalityDisplayClassnames =
+  'p-6 text-lg text-gray-700 bg-white/30 rounded-xl';
+
+export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
+  return (
+    <>
+      <p
+        className={classNames(
+          'text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700',
+          props.className
+        )}
+      >
+        Shield
+      </p>
+      <p className="text-4xl">
+        {props.shield
+          ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : '-'}
+      </p>
+      <p>
+        City Vitality:{' '}
+        {props.health
+          ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : '-'}
+      </p>
+    </>
+  );
+};
+
+export interface TowerProps {
+  gameStatus?: GameStatus;
+  health?: BN;
+  shield?: BN;
+  gameIdx?: number;
+  currentBoostBips?: number;
+  children?: React.ReactNode[] | React.ReactNode;
 }
 
 function TowerDefence(props: TowerProps) {
@@ -227,21 +274,14 @@ function TowerDefence(props: TowerProps) {
             />
             <Html
               position={[-4.5, -0.3, 2]}
-              className="w-56 p-6 text-lg text-gray-700 bg-white/30 rounded-xl"
+              className={classNames('w-56', ShieldVitalityDisplayClassnames)}
               occlude={[tower, shield]}
+              zIndexRange={[4, 0]}
             >
-              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700">
-                Shield Health
-              </p>
-              <p className="text-4xl">{health?.toFixed(2)} </p>
-              {/* <p>
-                Dark Shield:{" "}
-                {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
-              </p>
-              <p>
-                Light Shield:{" "}
-                {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-              </p> */}
+              <ShieldVitalityDisplay
+                health={props.health}
+                shield={props.shield}
+              />
             </Html>
           </group>
         </Suspense>
