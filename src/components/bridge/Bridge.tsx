@@ -344,7 +344,8 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.light
-                          ? totalMinted.light + " minted"
+                          ? totalMinted.light +
+                            " total distilled for next round"
                           : "-"}
                       </div>
                       <div className="relative w-full text-center group">
@@ -362,7 +363,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark + " minted" : "-"}
+                        {totalMinted.dark
+                          ? totalMinted.dark + " total distilled for next round"
+                          : "-"}
                       </div>
                     </div>
 

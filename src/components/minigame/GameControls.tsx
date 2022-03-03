@@ -360,6 +360,7 @@ const GameControls: React.FC<Prop> = (props) => {
             <LoadingSkeleton />
           ) : (
             <>
+              Total minted for the next game
               <p>Light: {gameStats.light}</p>
               <p>Dark : {gameStats.dark}</p>
             </>
