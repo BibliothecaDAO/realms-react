@@ -142,9 +142,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
     initialLoadError
   ) {
     return (
-      <div className="text-black">
+      <div className="p-8 text-black">
         <h1>You&apos;re Early</h1>
-        <p>
+        <p className="text-xl">
           StarkNet is early too. An error occurred during the loading of
           contract state. Please refresh your browser and try again.
         </p>

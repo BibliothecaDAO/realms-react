@@ -203,7 +203,11 @@ const GameControls: React.FC<Prop> = (props) => {
   );
 
   const gameStats = useGameStats(
-    gameIdx == undefined ? 0 : gameIdx + 1,
+    gameIdx == undefined
+      ? 0
+      : props.gameStatus == "active"
+      ? gameIdx
+      : gameIdx + 1,
     props.towerDefenceStorageContractAddress
   );
 
