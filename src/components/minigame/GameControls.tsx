@@ -548,6 +548,22 @@ const GameControls: React.FC<Prop> = (props) => {
               {actionIsLoading ? "Casting Spell" : "Cast Element Spell"}
             </Button>
           ) : null}
+          {(shieldAction.data || attackAction.data) && actionIsLoading ? (
+            <p className="mt-2">
+              <a
+                // TODO: Choose host dynamically here based on network
+                href={`https://goerli.voyager.online/tx/${
+                  shieldAction.data || attackAction.data
+                }/`}
+                className="underline"
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                Check Transaction Status
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" />
+            </p>
+          ) : null}
           <button
             className="w-full my-2 text-center underline"
             onClick={() => setShowTutorial(true)}
