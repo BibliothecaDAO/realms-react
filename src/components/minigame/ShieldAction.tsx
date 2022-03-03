@@ -106,7 +106,6 @@ const GameControls: React.FC<Prop> = (props) => {
       className="z-10 p-10 text-black backdrop-blur-md bg-white/30 rounded-2xl"
     >
       <BridgeModal
-      {/* This entire file is getting deleted */}
         towerDefenceStorageContractAddress=""
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
