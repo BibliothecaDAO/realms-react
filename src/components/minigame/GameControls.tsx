@@ -329,7 +329,7 @@ const GameControls: React.FC<Prop> = (props) => {
         </p>
       ) : null}
 
-      {gameStatus == "expired" && account ? (
+      {(gameStatus == "expired" || gameStatus == "completed") && account ? (
         <div>
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && loadingTokenBalance == false ? (
