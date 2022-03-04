@@ -77,6 +77,9 @@ export type StarknetCall = {
 export const callContractURL = () => {
   return buildStarknetUrl("alpha4.starknet.io") + "call_contract";
 };
+export const getBlockURL = () => {
+  return buildStarknetUrl("alpha4.starknet.io") + "get_block";
+};
 
 export const mockGetBlock = () => ({
   block_hash:
@@ -91,3 +94,13 @@ export const mockGetBlock = () => ({
   transaction_receipts: [],
   transactions: [],
 });
+
+export const mockBlockResponse = (_blockNumber: number) => {
+  return (
+    _req: RestRequest<StarknetCall, RequestParams>,
+    res: ResponseComposition<any>,
+    ctx: RestContext
+  ) => {
+    return res(ctx.status(200), ctx.json(mockGetBlock()));
+  };
+};

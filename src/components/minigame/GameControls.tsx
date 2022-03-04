@@ -61,8 +61,6 @@ enum OnboardingTutorials {
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
-  const router = useRouter();
-
   const {
     account,
     connectBrowserWallet,
@@ -70,7 +68,7 @@ const GameControls: React.FC<Prop> = (props) => {
   } = useStarknet();
 
   useEffect(() => {
-    // connectBrowserWallet(); // on mount
+    connectBrowserWallet(); // on mount
   }, []);
 
   const [showTutorial, setShowTutorial] = useState(false);
@@ -213,6 +211,11 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const actionIsLoading =
     shieldAction.loading || attackAction.loading || txTracker.loading;
+
+  const noMoreElements =
+    tokenBalances &&
+    tokenBalances.length > 0 &&
+    tokenBalances.every((n) => n.isZero());
 
   return (
     <>
@@ -418,6 +421,19 @@ const GameControls: React.FC<Prop> = (props) => {
             ) : (
               <div className="mt-4">
                 <div id="token-balance">
+                  {noMoreElements ? (
+                    <p>
+                      No <ElementLabel>Elements</ElementLabel> for this game{" "}
+                      <button
+                        onClick={() => {
+                          setMintModalOpen(true);
+                        }}
+                        className={primaryBtnClass}
+                      >
+                        <ElementLabel>Prepare for the next Game</ElementLabel>
+                      </button>
+                    </p>
+                  ) : null}
                   {side == "light" ? (
                     <>
                       <ElementLabel side="light">LIGHT </ElementLabel>
@@ -516,14 +532,7 @@ const GameControls: React.FC<Prop> = (props) => {
             />{" "}
             <div id="action-boost" className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <button
-                  onClick={() => {
-                    router.replace("/desiege?tab=lore", undefined, {
-                      shallow: true,
-                    });
-                  }}
-                  className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800"
-                >
+                <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
                   <LightningBoltIcon className="inline-block w-4" />{" "}
                   {`${currentBoostBips / 100}%`}
                 </button>
@@ -536,7 +545,9 @@ const GameControls: React.FC<Prop> = (props) => {
               disabled={
                 action == undefined ||
                 actionAmount.length == 0 ||
-                actionIsLoading
+                actionIsLoading ||
+                noMoreElements ||
+                gameStats.loading
               }
               className={classNames(primaryBtnClass)}
               onClick={() => {
