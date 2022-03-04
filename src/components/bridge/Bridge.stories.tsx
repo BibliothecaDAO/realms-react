@@ -2,7 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { rest } from "msw";
 import { WalletProvider } from "~/hooks/useWalletContext";
-import { buildStarknetUrl } from "../mocks/starknetMockFactory";
+import { buildStarknetUrl } from "../../mocks/starknetMockFactory";
 
 import Bridge from "~/components/bridge/Bridge";
 import {
