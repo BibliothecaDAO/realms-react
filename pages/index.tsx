@@ -110,7 +110,7 @@ function App() {
   });
 
   const realms_layer = new ScatterplotLayer({
-    id: "scatterplot-layer",
+    id: "realms-layer",
     /* @ts-ignore: name not exist on D */
     data: realms.features,
     stroked: true,
@@ -138,7 +138,7 @@ function App() {
   });
 
   const loot_bag_layer = new ScatterplotLayer({
-    id: "scatterplot-layer",
+    id: "loot-layer",
     /* @ts-ignore: name not exist on D */
     data: loot_bags.features,
     stroked: true,
@@ -147,17 +147,20 @@ function App() {
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: 3000,
+    getRadius: 1,
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [255, 0, 0, 0],
     updateTriggers: {
       getRadius: value,
     },
+    onClick: (info: any) => {
+      console.log(info.object.properties);
+    },
   });
 
   const ga_bag_layer = new ScatterplotLayer({
-    id: "scatterplot-layer",
+    id: "ga-layer",
     /* @ts-ignore: name not exist on D */
     data: ga_bags.features,
     stroked: true,
@@ -166,7 +169,7 @@ function App() {
     pickable: true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: 3000,
+    getRadius: 1,
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 255, 0, 0],
@@ -174,7 +177,6 @@ function App() {
       getRadius: value,
     },
   });
-
 
   const ICON_MAPPING = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
@@ -202,8 +204,8 @@ function App() {
     bearing: 0,
     bounds: [
       [-180, -60], // Southwest coordinates
-      [180, 60] // Northeast coordinates
-    ]
+      [180, 60], // Northeast coordinates
+    ],
   });
 
   const goToId = useCallback(
@@ -305,11 +307,17 @@ function App() {
           pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
-          layers={[realms_layer, resource_layer, crypts_layer, loot_bag_layer, ga_bag_layer]}
+          layers={[
+            realms_layer,
+            resource_layer,
+            crypts_layer,
+            loot_bag_layer,
+            ga_bag_layer,
+          ]}
         >
           <StaticMap
             attributionControl={false}
-            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
+            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
             mapboxApiAccessToken={
               "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
             }

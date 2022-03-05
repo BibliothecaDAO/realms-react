@@ -182,12 +182,17 @@ function TowerDefence(props: TowerProps) {
               setRotate(true);
             }}
           >
-            <Box
-              jsx={{
-                position: [0, 100, 0],
-              }}
-              health={props.health?.toNumber() || 0}
-            />
+            {props.shield?.toNumber() || 0 > 0 ? (
+              <Box
+                jsx={{
+                  position: [0, 100, 0],
+                }}
+                health={props.health?.toNumber() || 0}
+              />
+            ) : (
+              ""
+            )}
+
             {showShieldDetail && (
               <Html position={[0, 5, 0]}>
                 <div className="flex w-auto">

@@ -42,28 +42,27 @@ export const MenuSideBar = () => {
       {account && (
         <button className={buttonClasses} onClick={toggleEmpireMenu}>
           <Crown className="mx-auto w-8 sm:w-16 fill-current mb-1" />
-
           <span className="hidden sm:block">My Empire</span>
         </button>
       )}
-
+      <button className={buttonClasses} onClick={toggleMapMenu}>
+        <Castle className={iconClasses} />
+        <span className="hidden sm:block">Loot</span>
+      </button>
       <button className={buttonClasses} onClick={toggleMapMenu}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Realms</span>
       </button>
       <button className={buttonClasses} onClick={toggleCryptsMenu}>
         <Danger className={iconClasses} />
-
         <span className="hidden sm:block">Crypts</span>
       </button>
       <button className={buttonClasses} onClick={toggleResourceMenu}>
         <Mountain className={iconClasses} />
-
         <span className="hidden sm:block">Resources</span>
       </button>
       <button className={buttonClasses} onClick={toggleTheOrdersMenu}>
         <Library className={iconClasses} />
-
         <span className="hidden sm:block">Orders</span>
       </button>
       {/* <button
