@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { Abi, number, stark } from "starknet";
-import { getStarknet } from "@argent/get-starknet/dist";
-import { useModuleAddress } from "~/hooks/useModuleAddress";
+import { useState, useEffect, useCallback } from "react";
+import { Abi, number } from "starknet";
+import Joyride, { STATUS, ACTIONS } from "react-joyride";
 import { useSiegeBalance } from "~/hooks/useSiegeBalance";
 import ElementLabel from "~/shared/ElementsLabel";
 import Button from "~/shared/Button";
@@ -22,15 +21,24 @@ import Elements1155Abi from "~/abi/minigame/ERC1155.json";
 import TowerDefenceAbi from "~/abi/minigame/01_TowerDefence.json";
 import classNames from "classnames";
 import LoadingSkeleton from "~/shared/LoadingSkeleton";
-import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
+import useGameStats from "~/hooks/useGameStats";
 import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
+import { LightningBoltIcon } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
+import {
+  ShieldVitalityDisplay,
+  ShieldVitalityDisplayClassnames,
+} from "./TowerDefence";
+import { toBN } from "starknet/dist/utils/number";
 
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
-  gameStatus: GameStatus;
+  gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
+  towerDefenceContractAddress: string;
+  towerDefenceStorageContractAddress: string;
 };
 
 type TokenNameOffsetMap = Record<string, number>;
@@ -46,16 +54,34 @@ const divineEclipse: TokenNameOffsetMap = {
 // The offset is based on the season mapping
 const currentTokenOffset = divineEclipse;
 
+enum OnboardingTutorials {
+  GameControls = "game-controls-tutorial",
+}
+
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
-  const { account, connectBrowserWallet } = useStarknet();
+  const {
+    account,
+    connectBrowserWallet,
+    error: starknetConnectionError,
+  } = useStarknet();
 
   useEffect(() => {
     connectBrowserWallet(); // on mount
   }, []);
 
-  const towerDefenceContractAddress = useModuleAddress("1");
+  const [showTutorial, setShowTutorial] = useState(false);
+  useEffect(() => {
+    const previouslyShown = localStorage.getItem(
+      OnboardingTutorials.GameControls
+    );
+    if (!previouslyShown) {
+      setShowTutorial(true);
+    }
+  }, []);
+
+  const towerDefenceContractAddress = props.towerDefenceContractAddress;
 
   const { contract: elementsContract } = useContract({
     abi: Elements1155Abi.abi as Abi[],
@@ -100,15 +126,14 @@ const GameControls: React.FC<Prop> = (props) => {
   );
   const [actionAmount, setActionAmount] = useState<string>("1");
   const [action, setAction] = useState<"shield" | "attack">();
+  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
 
   useEffect(() => {
     setAction(side == "light" ? "shield" : "attack");
   }, [side]);
 
-  const [is1155TokenApproved, setIs1155TokenApproved] = useState<"1" | "0">();
-
-  useEffect(() => {
-    const getIsApproved = async (account: string, operator: string) => {
+  const getIsApproved = useCallback(
+    async (account: string, operator: string) => {
       try {
         const isApproved = await getIsApprovedForAll(account, operator);
         setIs1155TokenApproved(isApproved ? "1" : "0");
@@ -116,15 +141,19 @@ const GameControls: React.FC<Prop> = (props) => {
         // TODO: Handle error
         console.error("Error fetching token approval", e);
       }
-    };
-    if (
-      is1155TokenApproved == undefined &&
-      account !== undefined &&
-      towerDefenceContractAddress
-    ) {
+    },
+    [account]
+  );
+
+  const approveTracker = useTxCallback(approve1155.data, () => {
+    getIsApproved(account as string, towerDefenceContractAddress);
+  });
+
+  useEffect(() => {
+    if (is1155TokenApproved == undefined && account !== undefined) {
       getIsApproved(account, towerDefenceContractAddress);
     }
-  }, [towerDefenceContractAddress, account]);
+  }, [account]);
 
   useEffect(() => {
     if (account && gameIdx !== undefined && gameStatus !== undefined) {
@@ -141,7 +170,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE + currentTokenOffset[side as string];
-    await attackAction.invoke({
+    attackAction.invoke({
       args: [
         gameIndex.toString(),
         tokenId.toString(),
@@ -171,30 +200,136 @@ const GameControls: React.FC<Prop> = (props) => {
     </button>
   );
 
-  const totalMinted = useTotalMintedForRound(
-    gameIdx == undefined ? 0 : gameIdx + 1
+  const gameStats = useGameStats(
+    gameIdx == undefined
+      ? 0
+      : props.gameStatus == "active"
+      ? gameIdx
+      : gameIdx + 1,
+    props.towerDefenceStorageContractAddress
   );
 
   const actionIsLoading =
     shieldAction.loading || attackAction.loading || txTracker.loading;
 
+  const noMoreElements =
+    tokenBalances &&
+    tokenBalances.length > 0 &&
+    tokenBalances.every((n) => n.isZero());
+
   return (
-    <div
-      id="game-actions"
-      className="z-10 w-1/3 p-10 text-black bg-white/30 rounded-2xl"
-    >
+    <>
+      <div
+        id="shield-vitality-container"
+        className={classNames(
+          showTutorial ? "" : "hidden",
+          "absolute right-1/3",
+          ShieldVitalityDisplayClassnames
+        )}
+      >
+        <ShieldVitalityDisplay
+          shield={toBN(20 * EFFECT_BASE_FACTOR)}
+          health={toBN(100 * EFFECT_BASE_FACTOR)}
+        />
+      </div>
       <BridgeModal
+        towerDefenceStorageContractAddress={
+          props.towerDefenceStorageContractAddress
+        }
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
       />
+      {loadingTokenBalance == false && !!tokenBalances ? (
+        <Joyride
+          continuous
+          run={showTutorial}
+          showProgress
+          callback={(data) => {
+            const { status, action } = data;
+            if (
+              [STATUS.FINISHED, STATUS.SKIPPED].includes(status as any) ||
+              action == ACTIONS.CLOSE
+            ) {
+              localStorage.setItem(OnboardingTutorials.GameControls, "1");
+              setShowTutorial(false);
+            }
+          }}
+          showSkipButton
+          steps={[
+            {
+              title: <ElementLabel>Elements</ElementLabel>,
+              target: "#token-balance",
+              content: (
+                <>
+                  The amount of distilled{" "}
+                  <ElementLabel side={side}>{side} elements</ElementLabel> in
+                  your possession.
+                </>
+              ),
+              disableBeacon: true,
+            },
+            {
+              target: "#game-stats",
+              content: (
+                <>
+                  Displays the ratio of total{" "}
+                  <ElementLabel>Elements</ElementLabel> used over the total
+                  amount distilled, for each Element.
+                </>
+              ),
+            },
+            {
+              title: "Available Spells",
+              target: "#action-controls",
+              content: "Light can shield, Dark can attack",
+            },
+            {
+              title: "Spell Power",
+              target: "#action-amount",
+              content: (
+                <>
+                  A proper Mage carefully chooses the right amount of{" "}
+                  <ElementLabel>Elements</ElementLabel> to power their spells.
+                </>
+              ),
+            },
+            {
+              title: "Portal Boost Effect",
+              target: "#action-boost",
+              content:
+                "The Dark Portal bends space and time. The effect grows stronger with times passage, affecting ALL spells equally.",
+            },
+            {
+              title: "Shield and Vitality Indicator",
+              target: "#shield-vitality-container",
+              content:
+                "Dark elements diminish the Light shield. When the Shield is gone, the City Vitality can be attacked directly.",
+            },
+          ]}
+        />
+      ) : null}
       <div>
         <p className="text-xl uppercase">Season 1</p>
         <h1>
           <ElementLabel> Divine Eclipse</ElementLabel>{" "}
         </h1>
       </div>
+      {account == undefined ? <ConnectStarknetButton /> : null}
+      {starknetConnectionError ? (
+        <p className="mt-4 text-xl text-center text-red-700">
+          Please install and unlock the{" "}
+          <a
+            className="underline"
+            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+          >
+            {" "}
+            ArgentX browser extension
+          </a>{" "}
+          to continue
+        </p>
+      ) : null}
 
-      {gameStatus == "expired" ? (
+      {(gameStatus == "expired" || gameStatus == "completed") && account ? (
         <div>
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && loadingTokenBalance == false ? (
@@ -207,7 +342,9 @@ const GameControls: React.FC<Prop> = (props) => {
               <ElementLabel>Choose your Elements</ElementLabel>
             </button>
           ) : null}
-          {loadingTokenBalance ? <LoadingSkeleton className="mt-4" /> : null}
+          {loadingTokenBalance ? (
+            <LoadingSkeleton className="w-24 h-10 mt-4" />
+          ) : null}
 
           <p className="mt-4 text-3xl">
             {side == "light" && tokenBalances ? (
@@ -226,12 +363,13 @@ const GameControls: React.FC<Prop> = (props) => {
           <p className="my-4 text-xl animate-bounce">
             Waiting for next game to start...
           </p>
-          {totalMinted.loading ? (
+          {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
             <>
-              <p>Light: {totalMinted.light}</p>
-              <p>Dark : {totalMinted.dark}</p>
+              Total minted for the next game
+              <p>Light: {gameStats.light}</p>
+              <p>Dark : {gameStats.dark}</p>
             </>
           )}
           <p className="mt-2 font-bold">Preparation for Desiege</p>
@@ -274,41 +412,87 @@ const GameControls: React.FC<Prop> = (props) => {
             </li>
           </ul>
         </div>
-      ) : (
+      ) : null}
+      {gameStatus == "active" && account ? (
         <>
           <div className="text-3xl">
-            {account == undefined ? <ConnectStarknetButton /> : null}
             {loadingTokenBalance ? (
-              <LoadingSkeleton className="mt-4" />
+              <LoadingSkeleton className="h-10 mt-4 w-36" />
             ) : (
               <div className="mt-4">
-                {side == "light" ? (
-                  <>
-                    <ElementLabel side="light">LIGHT </ElementLabel>
-                    {tokenBalances && tokenBalances.length > 0
-                      ? number
-                          .toBN(tokenBalances[0])
-                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                          .toString()
-                      : null}
-                  </>
-                ) : null}
-                {side == "dark" ? (
-                  <>
-                    <ElementLabel side="dark">DARK</ElementLabel>{" "}
-                    {tokenBalances && tokenBalances.length > 1
-                      ? number
-                          .toBN(tokenBalances[1])
-                          .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                          .toString()
-                      : null}
-                  </>
-                ) : null}
+                <div id="token-balance">
+                  {noMoreElements ? (
+                    <p>
+                      No <ElementLabel>Elements</ElementLabel> for this game{" "}
+                      <button
+                        onClick={() => {
+                          setMintModalOpen(true);
+                        }}
+                        className={primaryBtnClass}
+                      >
+                        <ElementLabel>Prepare for the next Game</ElementLabel>
+                      </button>
+                    </p>
+                  ) : null}
+                  {side == "light" ? (
+                    <>
+                      <ElementLabel side="light">LIGHT </ElementLabel>
+                      {tokenBalances && tokenBalances.length > 0
+                        ? number
+                            .toBN(tokenBalances[0])
+                            .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                            .toString()
+                        : null}
+                    </>
+                  ) : null}
+                  {side == "dark" ? (
+                    <>
+                      <ElementLabel side="dark">DARK</ElementLabel>{" "}
+                      {tokenBalances && tokenBalances.length > 1
+                        ? number
+                            .toBN(tokenBalances[1])
+                            .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                            .toString()
+                        : null}
+                    </>
+                  ) : null}
+                </div>
+                {gameStats.loading ? (
+                  <LoadingSkeleton className="w-full h-4" />
+                ) : (
+                  <div id="game-stats">
+                    <div className="w-full h-1 mt-2 bg-cyan-800">
+                      {gameStats.lightUsed !== undefined &&
+                      gameStats.light !== undefined ? (
+                        <div
+                          style={{
+                            width: `${gameStats.lightUsed / gameStats.light}%`,
+                          }}
+                          className="h-1 transition-all bg-cyan-400"
+                        ></div>
+                      ) : undefined}
+                    </div>
+                    <div className="w-full h-1 mt-2 bg-purple-800">
+                      {gameStats.darkUsed !== undefined &&
+                      gameStats.dark !== undefined ? (
+                        <div
+                          style={{
+                            width: `${gameStats.darkUsed / gameStats.dark}%`,
+                          }}
+                          className="h-1 bg-purple-400"
+                        ></div>
+                      ) : undefined}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
-          <div className="flex w-full gap-4 text-gray-100 row">
+          <div
+            id="action-controls"
+            className="flex w-full gap-4 text-gray-100 row"
+          >
             <div className="flex-1">
               <Button
                 disabled={side == "dark"}
@@ -331,6 +515,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </div>
           <div className="flex flex-row justify-center my-4">
             <input
+              id="action-amount"
               autoFocus
               type="number"
               placeholder="Amount"
@@ -345,11 +530,12 @@ const GameControls: React.FC<Prop> = (props) => {
               }}
               className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
             />{" "}
-            <div className="ml-4">
+            <div id="action-boost" className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <div className="w-32 p-1 font-semibold text-white bg-blue-900 rounded-md">
-                  {`+ ${currentBoostBips / 100}% boost`}
-                </div>
+                <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
+                  <LightningBoltIcon className="inline-block w-4" />{" "}
+                  {`${currentBoostBips / 100}%`}
+                </button>
               ) : null}
             </div>
           </div>
@@ -359,9 +545,11 @@ const GameControls: React.FC<Prop> = (props) => {
               disabled={
                 action == undefined ||
                 actionAmount.length == 0 ||
-                actionIsLoading
+                actionIsLoading ||
+                noMoreElements ||
+                gameStats.loading
               }
-              className={primaryBtnClass}
+              className={classNames(primaryBtnClass)}
               onClick={() => {
                 if (gameIdx) {
                   if (action == "shield") {
@@ -372,32 +560,54 @@ const GameControls: React.FC<Prop> = (props) => {
                 }
               }}
             >
-              {actionIsLoading ? "Casting Tokens" : "Confirm Transaction"}
+              {actionIsLoading ? "Casting Spell" : "Cast Element Spell"}
             </Button>
           ) : null}
+          {(shieldAction.data || attackAction.data) && actionIsLoading ? (
+            <p className="mt-2">
+              <a
+                // TODO: Choose host dynamically here based on network
+                href={`https://goerli.voyager.online/tx/${
+                  shieldAction.data || attackAction.data
+                }/`}
+                className="underline"
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                Check Transaction Status
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" />
+            </p>
+          ) : null}
+          <button
+            className="w-full my-2 text-center underline"
+            onClick={() => setShowTutorial(true)}
+          >
+            Show Tutorial
+          </button>
         </>
-      )}
+      ) : null}
       {is1155TokenApproved == "0" ? (
         <>
-          <button
-            disabled={approve1155.loading}
+          <Button
+            disabled={approve1155.loading || approveTracker.loading}
             onClick={() => {
-              if (towerDefenceContractAddress) {
-                approve1155.invoke({
-                  args: [
-                    number.toBN(towerDefenceContractAddress).toString(),
-                    "1",
-                  ],
-                });
-              }
+              approve1155.invoke({
+                args: [
+                  number.toBN(towerDefenceContractAddress).toString(),
+                  "1",
+                ],
+              });
             }}
             className={primaryBtnClass}
           >
-            Approve Elements Token
-          </button>
+            {approve1155.loading || approveTracker.loading
+              ? "Approving..."
+              : "Approve Elements Token"}
+          </Button>
         </>
       ) : undefined}
-    </div>
+    </>
   );
 };
 export default GameControls;

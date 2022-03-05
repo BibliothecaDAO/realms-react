@@ -20,6 +20,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -47,6 +48,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -78,6 +80,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -113,6 +116,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -152,6 +156,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -191,6 +196,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -234,6 +240,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -277,6 +284,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -312,6 +320,7 @@
                     "type": "felt"
                 }
             ],
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -52026,7 +52035,7 @@
             },
             "__main__.get_game_start": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 616,
                 "type": "function"
@@ -52177,7 +52186,7 @@
             },
             "__main__.get_latest_game_index": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 559,
                 "type": "function"
@@ -52308,7 +52317,7 @@
             },
             "__main__.get_main_health": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 679,
                 "type": "function"
@@ -52459,7 +52468,7 @@
             },
             "__main__.get_shield_value": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 742,
                 "type": "function"
@@ -52629,7 +52638,7 @@
             },
             "__main__.get_token_reward_pool": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 809,
                 "type": "function"
@@ -52799,7 +52808,7 @@
             },
             "__main__.get_total_reward_alloc": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 876,
                 "type": "function"
@@ -52969,7 +52978,7 @@
             },
             "__main__.get_tower_attributes": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 1014,
                 "type": "function"
@@ -53139,7 +53148,7 @@
             },
             "__main__.get_tower_count": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 1081,
                 "type": "function"
@@ -53290,7 +53299,7 @@
             },
             "__main__.get_user_reward_alloc": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 943,
                 "type": "function"
@@ -60226,7 +60235,7 @@
             },
             "__wrappers__.get_game_start": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 632,
                 "type": "function"
@@ -60606,7 +60615,7 @@
             },
             "__wrappers__.get_latest_game_index": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 574,
                 "type": "function"
@@ -60948,7 +60957,7 @@
             },
             "__wrappers__.get_main_health": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 695,
                 "type": "function"
@@ -61328,7 +61337,7 @@
             },
             "__wrappers__.get_shield_value": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 759,
                 "type": "function"
@@ -61731,7 +61740,7 @@
             },
             "__wrappers__.get_token_reward_pool": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 826,
                 "type": "function"
@@ -62134,7 +62143,7 @@
             },
             "__wrappers__.get_total_reward_alloc": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 893,
                 "type": "function"
@@ -62537,7 +62546,7 @@
             },
             "__wrappers__.get_tower_attributes": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 1031,
                 "type": "function"
@@ -62940,7 +62949,7 @@
             },
             "__wrappers__.get_tower_count": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 1097,
                 "type": "function"
@@ -63320,7 +63329,7 @@
             },
             "__wrappers__.get_user_reward_alloc": {
                 "decorators": [
-                    "external"
+                    "view"
                 ],
                 "pc": 961,
                 "type": "function"

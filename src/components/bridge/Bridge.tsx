@@ -16,9 +16,9 @@ import { useWalletContext } from "~/hooks/useWalletContext";
 import { getLatestGameIndex } from "~/util/minigameApi";
 import { AddTransactionResponse } from "starknet";
 import { MintingError } from "~/../pages/api/minigame_alpha_mint";
-import Check from "../../../public/svg/check.svg";
+import { CheckIcon as Check } from "@heroicons/react/solid";
 import { ExternalLink } from "~/shared/Icons";
-import useTotalMintedForRound from "~/hooks/useTotalMintedForRound";
+import useGameStats from "~/hooks/useGameStats";
 import useTxCallback from "~/hooks/useTxCallback";
 import { XCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ type Prop = {
   initialTab?: TabName;
   onReceivedTx?: (txHash: string) => void;
   toggleModal: () => void;
+  towerDefenceStorageContractAddress: string;
 };
 
 type TabName =
@@ -116,7 +117,10 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   // Add +1 to show for next round
   const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
-  const totalMinted = useTotalMintedForRound(nextGameIdx);
+  const totalMinted = useGameStats(
+    nextGameIdx,
+    props.towerDefenceStorageContractAddress
+  );
 
   const verifyAndMint = async () => {
     try {
@@ -154,7 +158,7 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const tabBtnClasses = {
-    base: "px-4 py-2 my-2 mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800",
+    base: "px-4 py-2 my-2 flex-grow mx-2 text-gray-800 rounded-sm hover:bg-gray-100 hover:text-gray-800",
     active: "text-white bg-gray-300",
   };
 
@@ -174,6 +178,8 @@ export const Bridge: React.FC<Prop> = (props) => {
     }
   }, [txTracker.tx?.status]);
 
+  const Checkmark = <Check className="inline-block w-6 ml-1" />;
+
   useEffect(() => {
     starknet.connectBrowserWallet();
   }, []);
@@ -188,48 +194,42 @@ export const Bridge: React.FC<Prop> = (props) => {
           </button>
         </h1>
         <div className="px-2 text-gray-800">
-          <nav className="rounded-md bg-white/70">
-            <span>
-              <button
-                onClick={() => setCurrentTab("connect-ethereum")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "connect-ethereum" ? tabBtnClasses.active : null
-                )}
-              >
-                <span className="flex">
-                  1. Connect Ethereum
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
-              </button>
-            </span>
-            <span>
-              <button
-                onClick={() => setCurrentTab("mint-requirements")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "mint-requirements"
-                    ? tabBtnClasses.active
-                    : null
-                )}
-              >
-                <span className="flex">2. Lords Balance</span>
-              </button>
-            </span>
-            <span>
-              <button
-                onClick={() => setCurrentTab("connect-starknet")}
-                className={classNames(
-                  tabBtnClasses.base,
-                  currentTab == "connect-starknet" ? tabBtnClasses.active : null
-                )}
-              >
-                <span className="flex">
-                  3. Connect StarkNet
-                  {account ? <Check className="ml-1" /> : null}
-                </span>
-              </button>
-            </span>
+          <nav className="flex flex-row rounded-md bg-white/70">
+            <button
+              onClick={() => setCurrentTab("connect-ethereum")}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == "connect-ethereum" ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">
+                1. Connect Ethereum
+                {account ? Checkmark : null}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab("mint-requirements")}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == "mint-requirements" ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">2. Lords Balance</span>
+            </button>
+
+            <button
+              onClick={() => setCurrentTab("connect-starknet")}
+              className={classNames(
+                tabBtnClasses.base,
+                currentTab == "connect-starknet" ? tabBtnClasses.active : null
+              )}
+            >
+              <span className="flex">
+                3. Connect StarkNet
+                {account ? Checkmark : null}
+              </span>
+            </button>
             <button
               onClick={() => setCurrentTab("mint")}
               className={classNames(
@@ -238,10 +238,7 @@ export const Bridge: React.FC<Prop> = (props) => {
               )}
             >
               <span className="flex">
-                4. Mint <ElementsLabel>ELEMENTS</ElementsLabel>
-                {starknet.account && starknet.hasStarknet ? (
-                  <Check className="ml-1" />
-                ) : null}
+                4. Mint <ElementsLabel className="ml-1">ELEMENTS</ElementsLabel>
               </span>
             </button>
           </nav>
@@ -347,7 +344,8 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.light
-                          ? totalMinted.light + " minted"
+                          ? totalMinted.light +
+                            " total distilled for next round"
                           : "-"}
                       </div>
                       <div className="relative w-full text-center group">
@@ -365,7 +363,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark + " minted" : "-"}
+                        {totalMinted.dark
+                          ? totalMinted.dark + " total distilled for next round"
+                          : "-"}
                       </div>
                     </div>
 

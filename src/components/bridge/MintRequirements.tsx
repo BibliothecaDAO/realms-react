@@ -11,10 +11,16 @@ const MintRequirements: React.FC<Prop> = (props) => {
 
   return (
     <div>
+      <p className="mb-2 text-xl text-red-600">
+        {/* TODO: Remove this */}
+        Note: This requirement is currently being suppressed during testing. You
+        do not need to have a LORDS balance. Please continue to step 4 and your
+        transaction will succeed.
+      </p>
       <h3>
         LORDS Balance: <span className="text-2xl">{balance || "0.0"}</span>
       </h3>
-      <p className="text-2xl my-4">
+      <p className="my-4 text-2xl">
         You are required to hold {MINIMUM_LORDS_REQUIRED} LORDS. These will not
         be spent when you complete the setup.
       </p>
