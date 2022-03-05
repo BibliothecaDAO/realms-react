@@ -5,6 +5,7 @@ import Bridge from "./Bridge";
 type Prop = {
   isOpen: boolean;
   toggle: () => void;
+  towerDefenceStorageContractAddress: string;
 };
 
 const BridgeModal: React.FC<Prop> = (props) => {
@@ -42,7 +43,12 @@ const BridgeModal: React.FC<Prop> = (props) => {
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
               <Dialog.Title className={"hidden"}>Desiege Setup</Dialog.Title>
-              <Bridge toggleModal={props.toggle} initialTab="mint" />
+              <Bridge
+                towerDefenceStorageContractAddress={
+                  props.towerDefenceStorageContractAddress
+                }
+                toggleModal={props.toggle}
+              />
             </div>
           </Transition.Child>
         </div>

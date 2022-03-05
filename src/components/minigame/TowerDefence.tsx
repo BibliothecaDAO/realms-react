@@ -14,13 +14,13 @@ import {
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { useSound } from "~/context/soundProvider";
-import { ElementToken } from "~/constants";
-import ShieldAction from "./ShieldAction";
-import { TowerProps } from "~/types";
-import { useUIContext } from "~/hooks/useUIContext";
+import { GameStatus } from "~/types";
 import Sword from "../../../public/svg/sword.svg";
 import Shield from "../../../public/svg/shield.svg";
 import Book from "../../../public/svg/book.svg";
+import { EFFECT_BASE_FACTOR } from "~/util/minigameApi";
+import BN from "bn.js";
+import classNames from "classnames";
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -108,9 +108,51 @@ function Box(props: ObjectProps) {
   );
 }
 
+type ShieldVitalityDisplayProps = {
+  shield?: BN;
+  health?: BN;
+  className?: string;
+};
+
+export const ShieldVitalityDisplayClassnames =
+  "p-6 text-lg text-gray-700 bg-white/30 rounded-xl";
+
+export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
+  return (
+    <>
+      <p
+        className={classNames(
+          "text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700",
+          props.className
+        )}
+      >
+        Shield
+      </p>
+      <p className="text-4xl">
+        {props.shield
+          ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : "-"}
+      </p>
+      <p>
+        City Vitality:{" "}
+        {props.health
+          ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          : "-"}
+      </p>
+    </>
+  );
+};
+
+export interface TowerProps {
+  gameStatus?: GameStatus;
+  gameIdx?: number;
+  health?: BN;
+  shield?: BN;
+  currentBoostBips?: number;
+  children?: React.ReactNode[] | React.ReactNode;
+}
+
 function TowerDefence(props: TowerProps) {
-  const { togglePowerBar, toggleSetup } = useUIContext();
-  const [health, setHealth] = useState(100);
   const [rotate, setRotate] = useState(true);
 
   const { isSoundActive, toggleSound } = useSound();
@@ -119,7 +161,6 @@ function TowerDefence(props: TowerProps) {
   const [showShieldAction, setShowShieldAction] = useState(false);
   const [showShieldDetail, setShowShieldDetail] = useState(false);
 
-  const [shieldValue] = useState<Record<ElementToken, string> | undefined>();
   const handleClick = useCallback(() => {
     toggleSound();
   }, [toggleSound]);
@@ -144,12 +185,8 @@ function TowerDefence(props: TowerProps) {
             <Box
               jsx={{
                 position: [0, 0, 0],
-                onDoubleClick: () => {
-                  setHealth(health - 10);
-                  setShowShieldDetail(true);
-                },
               }}
-              health={health}
+              health={props.health?.toNumber() || 0}
             />
             {showShieldDetail && (
               <Html position={[0, 5, 0]}>
@@ -180,13 +217,13 @@ function TowerDefence(props: TowerProps) {
                       <Shield className="w-8 h-8 mx-auto " />
                     </button>
                   </div>
-                  {showShieldAction && (
+                  {/* {showShieldAction && (
                     <ShieldAction
                       gameStatus={props.gameStatus}
                       gameIdx={props.gameIdx}
                       currentBoostBips={props.currentBoostBips}
                     />
-                  )}
+                  )} */}
                 </div>
               </Html>
             )}
@@ -224,24 +261,19 @@ function TowerDefence(props: TowerProps) {
                 setRotate(true);
               }}
             />
-            <Html
-              position={[-4.5, -0.3, 2]}
-              className="w-56 p-6 text-lg text-gray-700 bg-white/30 rounded-xl"
-              occlude={[tower, shield]}
-            >
-              <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700">
-                Shield Health
-              </p>
-              <p className="text-4xl">{health?.toFixed(2)} </p>
-              {/* <p>
-                Dark Shield:{" "}
-                {shieldValue ? shieldValue[ElementToken.Dark].toString() : "-"}
-              </p>
-              <p>
-                Light Shield:{" "}
-                {shieldValue ? shieldValue[ElementToken.Light].toString() : "-"}
-              </p> */}
-            </Html>
+            {props.gameStatus == "active" ? (
+              <Html
+                position={[-4.5, -0.3, 2]}
+                className={classNames("w-56", ShieldVitalityDisplayClassnames)}
+                occlude={[tower, shield]}
+                zIndexRange={[4, 0]}
+              >
+                <ShieldVitalityDisplay
+                  health={props.health}
+                  shield={props.shield}
+                />
+              </Html>
+            ) : null}
           </group>
         </Suspense>
         <Stars

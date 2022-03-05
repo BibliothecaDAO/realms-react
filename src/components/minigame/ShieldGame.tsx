@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BN from "bn.js";
 import { ElementToken } from "~/constants";
 import { GameContext, getGameContextVariables } from "~/util/minigameApi";
@@ -13,11 +13,18 @@ import MenuBar from "./MenuBar";
 import LoreDevKit from "~/shared/LoreDevKit";
 import DivineSiege from "~/shared/LoreDevKit/desiege.ldk";
 import { useRouter } from "next/router";
+import LoadingSkeleton from "~/shared/LoadingSkeleton";
+import TowerDefenceStorageContract from "~/abi/minigame/02_TowerDefenceStorage.json";
+import { useContract, useStarknetCall } from "@starknet-react/core";
+import { Abi } from "starknet";
+import { TOKEN_INDEX_OFFSET_BASE } from "~/util/minigameApi";
 
 export type DesiegeTab = "game-controls" | "lore" | "setup";
 
 type Prop = {
   initialTab?: DesiegeTab;
+  towerDefenceContractAddr?: string;
+  towerDefenceStorageAddr?: string;
 };
 
 const ShieldGame: React.FC<Prop> = (props) => {
@@ -30,60 +37,120 @@ const ShieldGame: React.FC<Prop> = (props) => {
   );
   // Contract state
 
-  const [gameStatus, setGameStatus] = useState<GameStatus>();
-
-  const [gameIdx, setGameIdx] = useState<number>();
-  const [mainHealth, setMainHealth] = useState<BN>();
-  const [_startBlockNum, setStartBlockNum] = useState<BN>();
-  const [shieldValue, _setShieldValue] = useState<
-    Record<ElementToken, string> | undefined
-  >();
-
+  const [initialLoadError, setInitialLoadError] = useState<string>();
   const [gameContext, setGameContext] = useState<GameContext>();
 
   const [boost, setBoost] = useState<number>();
 
+  useEffect(() => {
+    if (gameContext) {
+      setBoost(gameContext.currentBoost);
+    }
+  }, [gameContext]);
+
+  const { contract: tdStorageContract } = useContract({
+    // @ts-ignore
+    abi: TowerDefenceStorageContract.abi as Abi[],
+    address: props.towerDefenceStorageAddr,
+  });
+
+  const getMainHealth = useStarknetCall({
+    contract: tdStorageContract,
+    method: gameContext ? "get_main_health" : undefined,
+    args: {
+      game_idx: gameContext?.gameIdx?.toString() || "1",
+    },
+  });
+
+  const getShield = useStarknetCall({
+    contract: tdStorageContract,
+    method: gameContext ? "get_shield_value" : undefined,
+    args: {
+      game_idx: gameContext?.gameIdx.toString() || "0",
+      token_id: gameContext
+        ? (
+            gameContext.gameIdx * TOKEN_INDEX_OFFSET_BASE +
+            ElementToken.Light
+          ).toString()
+        : "1",
+    },
+  });
+
+  const healthStr = getMainHealth.data
+    ? getMainHealth.data["health"]
+    : undefined;
+
+  const shieldStr = getShield.data ? getShield.data["value"] : undefined;
+
+  // Memoize so same values don't cause re-renders
+  const health = useMemo(() => {
+    return toBN((healthStr as string) || 0);
+  }, [healthStr]);
+
+  const shield = useMemo(() => {
+    return toBN((shieldStr as string) || 0);
+  }, [shieldStr]);
+
   const fetchState = async () => {
     try {
-      const gameCtx = await getGameContextVariables();
-      setGameIdx(gameCtx.gameIdx);
-      setMainHealth(toBN(gameCtx.mainHealth));
-      setStartBlockNum(gameCtx.gameStartBlock);
-      setBoost(gameCtx.currentBoost);
+      const gameCtx = await getGameContextVariables(
+        props.towerDefenceContractAddr as string
+      );
       setGameContext(gameCtx);
-    } catch (e) {
-      // TODO: Display error
+      setInitialLoadError(undefined);
+    } catch (e: any) {
+      setInitialLoadError(e.message);
       console.error("Error fetching game state: ", e);
     }
   };
 
   // Fetch state on mount
   useEffect(() => {
-    fetchState();
+    if (props.towerDefenceContractAddr) {
+      fetchState();
+    }
   }, []);
 
-  useEffect(() => {
-    if (!!gameContext) {
-      const lastBlockOfCurrentGame =
-        gameContext.gameStartBlock.toNumber() +
-        gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
-
-      const gameIsActive =
-        gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
-
-      let gs: GameStatus;
-      if (gameIsActive) {
-        if (mainHealth?.lte(toBN(0))) {
-          gs = "completed";
-        } else {
-          gs = "active";
-        }
-      } else {
-        gs = "expired";
-      }
-      setGameStatus(gs);
+  const gs = useMemo(() => {
+    if (!gameContext) {
+      return undefined;
     }
-  }, [gameContext, mainHealth]);
+    const lastBlockOfCurrentGame =
+      gameContext.gameStartBlock.toNumber() +
+      gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
+
+    const gameIsActive =
+      gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
+
+    let gs: GameStatus;
+    if (gameIsActive) {
+      if (gameContext.mainHealth.lte(toBN(0))) {
+        gs = "completed";
+      } else {
+        gs = "active";
+      }
+    } else {
+      gs = "expired";
+    }
+    return gs;
+  }, [gameContext]);
+
+  // An error occurred server-side and this is not recoverable.
+  if (
+    props.towerDefenceContractAddr == undefined ||
+    props.towerDefenceStorageAddr == undefined ||
+    initialLoadError
+  ) {
+    return (
+      <div className="p-8 text-black">
+        <h1>You&apos;re Early</h1>
+        <p className="text-xl">
+          StarkNet is early too. An error occurred during the loading of
+          contract state. Please refresh your browser and try again.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
@@ -93,39 +160,47 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <GameBlockTimer gameCtx={gameContext} />
         </div>
       ) : null}
-      <div className="absolute w-full p-8">
-        {/* {gameCtx ? (
-          <span
-            className={classNames(
-              "text-sm text-gray-500 p-1 rounded-sm ml-4 font-semibold",
-              gameIsActive ? "text-green-200" : "text-red-800"
-            )}
-          >
-            {gameStatus.toUpperCase()}
-          </span>
-        ) : null} */}
+      <div className="absolute z-10 w-full p-8">
         <h3 className="flex justify-between text-center text-blue-300 uppercase font-body ">
-          <span className="z-10 mx-auto mb-8 text-5xl">
-            {/* <ElementLabel> */}
-            Desiege game #{gameIdx !== undefined ? gameIdx : "-"}
-            {/* </ElementLabel> */}
+          <span className="mx-auto mb-8 text-5xl z-11">
+            Desiege game{" "}
+            {gameContext !== undefined ? (
+              `${gameContext.gameIdx}`
+            ) : (
+              <LoadingSkeleton className="inline-block w-8 h-8" />
+            )}
           </span>
         </h3>
 
         {view == "game-controls" || view == "setup" ? (
           <div className="flex flex-row w-full">
-            <GameControls
-              gameStatus={gameStatus as GameStatus}
-              gameIdx={gameIdx}
-              currentBoostBips={boost}
-              setupModalInitialIsOpen={view == "setup"}
-            />
+            <div
+              id="game-actions"
+              className="w-1/3 p-10 text-black bg-white/30 rounded-2xl"
+            >
+              {!!gameContext ? (
+                <GameControls
+                  towerDefenceContractAddress={props.towerDefenceContractAddr}
+                  towerDefenceStorageContractAddress={
+                    props.towerDefenceStorageAddr
+                  }
+                  gameStatus={gs}
+                  gameIdx={gameContext?.gameIdx}
+                  currentBoostBips={boost}
+                  setupModalInitialIsOpen={view == "setup"}
+                />
+              ) : (
+                <p className="text-2xl">Loading...</p>
+              )}
+            </div>
           </div>
         ) : null}
       </div>
       <TowerDefence
-        gameStatus={gameStatus as GameStatus}
-        gameIdx={gameIdx}
+        gameStatus={gs}
+        health={health}
+        shield={shield}
+        gameIdx={gameContext?.gameIdx}
         currentBoostBips={boost}
       >
         <MenuBar toggleTab={(tab) => setView(tab)} />
