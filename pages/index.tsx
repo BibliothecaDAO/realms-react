@@ -222,12 +222,12 @@ function App() {
   });
 
   const goToId = useCallback(
-    (id: any, type?: number) => {
+    (id: any, type?: string) => {
       closeOrdersMenu();
 
       let asset;
 
-      if (type === 1) {
+      if (type === "A") {
         console.log(1);
         /* @ts-ignore: name not exist on D */
         asset = realms.features.filter(
@@ -245,7 +245,7 @@ function App() {
         if (lootMenu) {
           toggleLootMenu();
         }
-      } else if (type === 2) {
+      } else if (type === "B") {
         console.log(2);
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter(

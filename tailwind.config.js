@@ -1,5 +1,14 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: [
+    'text-[#838383]',
+    'text-[#00DC82]',
+    'text-[#2e82ff]',
+    'text-[#c13cff]',
+    'text-[#f8b73e]',
+    'text-[#ff44b7]'
+    // etc.
+  ],
   theme: {
     extend: {
       fontFamily: {
