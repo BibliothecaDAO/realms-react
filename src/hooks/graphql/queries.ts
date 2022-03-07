@@ -68,6 +68,20 @@ const getRealmQuery = gql`
     }
   }
 `
+const getLootQuery = gql`
+  ${BagFragment}
+  query realm($id: String) @api(name: ecosystem){
+    bag(id: $id) {
+      ...BagData
+      currentOwner {
+        address
+        realmsHeld
+        bridgedRealmsHeld
+        bagsHeld
+      }
+    }
+  }
+`
 const getCryptQuery = gql`
   query dungeon($id: String) @api(name: crypts){
     dungeon(id: $id) {
@@ -262,6 +276,7 @@ const lpIncentivesQuery = gql`
 export {
   getRealmQuery,
   getRealmsQuery,
+  getLootQuery,
   getCryptQuery,
   getCryptsQuery,
   mintedRealmsQuery,

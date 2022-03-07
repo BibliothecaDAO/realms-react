@@ -19,6 +19,7 @@ import order_highlights from "../src/geodata/order_highlights.json";
 import { FlyTo } from "~/components/map/FlyTo";
 import { RealmSideBar } from "~/components/map/RealmsSideBar";
 import { CryptsSideBar } from "~/components/map/CryptsSideBar";
+import { LootSideBar } from "~/components/map/LootSideBar";
 
 function App() {
   const {
@@ -26,9 +27,11 @@ function App() {
     toggleMapMenu,
     closeOrdersMenu,
     toggleCryptsMenu,
+    toggleLootMenu,
     toggleEmpireMenu,
     empireMenu,
     cryptsMenu,
+    lootMenu,
   } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
@@ -155,6 +158,16 @@ function App() {
       getRadius: value,
     },
     onClick: (info: any) => {
+      setValue(info.object.properties.bag_id);
+      if (cryptsMenu) {
+        toggleCryptsMenu();
+      }
+      if (mapMenu) {
+        toggleMapMenu();
+      }
+      if (!lootMenu) {
+        toggleLootMenu();
+      }
       console.log(info.object.properties);
     },
   });
@@ -229,7 +242,10 @@ function App() {
         if (empireMenu) {
           toggleEmpireMenu();
         }
-      } else {
+        if (lootMenu) {
+          toggleLootMenu();
+        }
+      } else if (type === 2) {
         console.log(2);
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter(
@@ -241,7 +257,26 @@ function App() {
         if (empireMenu) {
           toggleEmpireMenu();
         }
+        if (lootMenu) {
+          toggleLootMenu();
+        }
         toggleCryptsMenu();
+      } else {
+        asset = loot_bags.features.filter(
+          (a: any) => a.properties.bag_id === parseInt(id)
+        );
+        if (cryptsMenu) {
+          toggleCryptsMenu();
+        }
+        if (mapMenu) {
+          toggleMapMenu();
+        }
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+        if (!lootMenu) {
+          toggleLootMenu();
+        }
       }
 
       setValue(id);
@@ -265,6 +300,8 @@ function App() {
       toggleCryptsMenu,
       toggleEmpireMenu,
       empireMenu,
+      lootMenu,
+      toggleLootMenu,
     ]
   );
 
@@ -285,7 +322,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative overflow-hidden h-full sm:h-screen">
+      <div className="relative h-full overflow-hidden sm:h-screen">
         <Header />
         <MenuSideBar />
         <RealmSideBar id={value} />
@@ -293,6 +330,7 @@ function App() {
         <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <CryptsSideBar id={value} />
+        <LootSideBar id={value} />
         <FlyTo
           onChange={onChange}
           onClick={goToId}

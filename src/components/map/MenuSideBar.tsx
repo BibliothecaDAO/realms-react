@@ -23,6 +23,7 @@ export const MenuSideBar = () => {
     toggleEmpireMenu,
     mainMenu,
     toggleCryptsMenu,
+    toggleLootMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -41,11 +42,11 @@ export const MenuSideBar = () => {
     >
       {account && (
         <button className={buttonClasses} onClick={toggleEmpireMenu}>
-          <Crown className="mx-auto w-8 sm:w-16 fill-current mb-1" />
+          <Crown className="w-8 mx-auto mb-1 fill-current sm:w-16" />
           <span className="hidden sm:block">My Empire</span>
         </button>
       )}
-      <button className={buttonClasses} onClick={toggleMapMenu}>
+      <button className={buttonClasses} onClick={toggleLootMenu}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Loot</span>
       </button>

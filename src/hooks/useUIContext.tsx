@@ -19,6 +19,8 @@ const defaultUIContext = {
   closeOrdersMenu: () => {},
   toggleCryptsMenu: () => {},
   cryptsMenu: false,
+  toggleLootMenu: () => {},
+  lootMenu: false,
 };
 
 const UIContext = createContext<{
@@ -40,6 +42,8 @@ const UIContext = createContext<{
   closeOrdersMenu: () => void;
   toggleCryptsMenu: () => void;
   cryptsMenu: boolean;
+  toggleLootMenu: () => void;
+  lootMenu: boolean;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -64,6 +68,7 @@ function useUI() {
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
   const [cryptsMenu, setCryptsMenu] = useState(false);
+  const [lootMenu, setLootMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
 
   const hideOrOpenMainMenu = () => {
@@ -76,6 +81,9 @@ function useUI() {
 
   const toggleCryptsMenu = () => {
     return setCryptsMenu(!cryptsMenu);
+  };
+  const toggleLootMenu = () => {
+    return setLootMenu(!lootMenu);
   };
 
   const toggleMainMenu = () => {
@@ -135,6 +143,8 @@ function useUI() {
     closeOrdersMenu,
     toggleCryptsMenu,
     cryptsMenu,
+    toggleLootMenu,
+    lootMenu,
   };
 }
 

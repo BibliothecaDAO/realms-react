@@ -1,33 +1,33 @@
 import { useUIContext } from "~/hooks/useUIContext";
 import { BaseSideBar } from "./BaseSideBar";
-import { Crypt } from "../realms/Crypt";
+import { Loot } from "../realms/Loot";
 import Menu from "../../../public/svg/menu.svg";
-import { CryptData } from "~/types";
+import { LootData } from "~/types";
 import { useQuery } from "@apollo/client";
-import { getCryptQuery } from "~/hooks/graphql/queries";
+import { getLootQuery } from "~/hooks/graphql/queries";
 
 type Props = {
   id: number;
 };
 
-export const CryptsSideBar = (props: Props) => {
-  const { toggleCryptsMenu, cryptsMenu } = useUIContext();
+export const LootSideBar = (props: Props) => {
+  const { toggleLootMenu, lootMenu } = useUIContext();
 
-  const { loading, error, data } = useQuery<CryptData>(getCryptQuery, {
+  const { loading, error, data } = useQuery<LootData>(getLootQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={cryptsMenu}>
+    <BaseSideBar open={lootMenu}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleCryptsMenu}
+          onClick={toggleLootMenu}
         >
           <Menu />
         </button>
-        {data && data.dungeon && (
-          <Crypt flyto={false} crypt={data!.dungeon} loading={loading} />
+        {data && data.bag && (
+          <Loot flyto={false} loot={data!.bag} loading={loading} />
         )}
       </div>
     </BaseSideBar>

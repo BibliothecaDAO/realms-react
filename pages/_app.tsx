@@ -29,6 +29,8 @@ const client = new ApolloClient({
         realms:
           "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
         crypts: "https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev",
+        ecosystem:
+          "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem",
       },
       httpSuffix: "",
       createHttpLink: () => createHttpLink(),

@@ -9796,6 +9796,7 @@ http-signature@~1.2.0:
     sshpk "^1.7.0"
 
 "http@npm:stream-http", stream-http@^3.2.0:
+  name http
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/stream-http/-/stream-http-3.2.0.tgz#1872dfcf24cb15752677e40e5c3f9cc1926028b5"
   integrity sha512-Oq1bLqisTyK3TSCXpPbT4sdeYNdmyZJv1LxpEm2vu1ZhK89kSE5YXwZc3cWk0MagGaKriBh9mCFbVGtO+vY29A==
@@ -11521,6 +11522,13 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+loot-rarity@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/loot-rarity/-/loot-rarity-5.0.1.tgz#4be9d6d20703cb851c6e02250f1f722786639502"
+  integrity sha512-jK79MAy48Z9dZdWQ9ovGmHDa//I24PzPDVCLf1QiB+UYw66R7yKTXGcNRI9HxFjerGuxUOl+kYzH26APQVlBzg==
+  dependencies:
+    cross-fetch "^3.1.4"
 
 loot-sdk@^0.1.2:
   version "0.1.2"
