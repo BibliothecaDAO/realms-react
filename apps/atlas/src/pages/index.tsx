@@ -3,6 +3,7 @@ import { ScatterplotLayer, IconLayer, PolygonLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import React, { useState, useCallback } from 'react';
 import { Map } from 'react-map-gl';
+
 import Layout from '@/components/Layout';
 import { CryptsSideBar } from '@/components/map/CryptsSideBar';
 import { EmpireSideBar } from '@/components/map/EmpireSideBar';

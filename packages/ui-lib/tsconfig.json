@@ -15,5 +15,5 @@
       "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
     }
   },
-  "exclude": ["dist"]
+  "exclude": ["**/node_modules", "**/.*/", "dist"]
 }
