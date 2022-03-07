@@ -1,5 +1,5 @@
 type Props = {
-  onClick: (event: any, id: number) => void;
+  onClick: (event: any, id: string) => void;
   onChange: (event: any) => void;
   onSelectChange: (event: any) => void;
   value: number;

@@ -61,7 +61,7 @@ export function Loot(props: LootProps): ReactElement {
                       "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.loot.id, 2);
+                      if (props.onClick) props.onClick(props.loot.id, "C");
                     }}
                   >
                     fly to

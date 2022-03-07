@@ -15,7 +15,7 @@ export function Realm(props: RealmProps): ReactElement {
     return Resources.find((e) => e.id === parseInt(value));
   };
   return (
-    <div className="h-auto p-1 rounded-xl sm:p-4 z-10 text-white w-full">
+    <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -65,7 +65,7 @@ export function Realm(props: RealmProps): ReactElement {
                       "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.realm.id, 1);
+                      if (props.onClick) props.onClick(props.realm.id, "A");
                     }}
                   >
                     fly to
@@ -74,7 +74,7 @@ export function Realm(props: RealmProps): ReactElement {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between my-4  rounded">
+            <div className="flex flex-col justify-between my-4 rounded sm:flex-row">
               <h4>
                 Id: <span className="font-semibold">{props.realm.id}</span>
               </h4>

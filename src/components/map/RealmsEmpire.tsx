@@ -17,7 +17,7 @@ const filterTypes = [
   { name: "Token Id", key: "tokenId" },
 ];
 type Props = {
-  onClick?: (event: any, id: number) => void;
+  onClick?: (event: any, id: string) => void;
 };
 
 export const RealmsEmpire = (props: Props) => {
