@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import { useSound } from "~/context/soundProvider";
+// import { useSound } from "~/context/soundProvider";
 import VolumeIcon from "../../../public/svg/volume-2.svg";
 import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
 import Zap from "../../../public/svg/zap.svg";
@@ -14,10 +14,10 @@ type Prop = {
 };
 
 function MenuBar(props: Prop) {
-  const { isSoundActive, toggleSound } = useSound();
-  const handleClick = useCallback(() => {
-    toggleSound();
-  }, [toggleSound]);
+  // const { isSoundActive, toggleSound } = useSound();
+  // const handleClick = useCallback(() => {
+  //   toggleSound();
+  // }, [toggleSound]);
 
   const router = useRouter();
 
@@ -47,13 +47,13 @@ function MenuBar(props: Prop) {
           <Zap className="w-8" />
         </button>
 
-        <button className="mute-btn " onClick={handleClick}>
+        {/* <button className="mute-btn " onClick={handleClick}>
           {!isSoundActive ? (
             <VolumeMuteIcon className="w-8 hover:text-blue-700" />
           ) : (
             <VolumeIcon className="w-8 hover:text-blue-700" />
           )}
-        </button>
+        </button> */}
       </div>
     </div>
   );

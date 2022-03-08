@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef, useState, useCallback, MouseEventHandler } from "react";
+import React, { useRef, useState, MouseEventHandler, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -21,6 +21,7 @@ import Book from "../../../public/svg/book.svg";
 import { EFFECT_BASE_FACTOR } from "~/util/minigameApi";
 import BN from "bn.js";
 import classNames from "classnames";
+import { Vector3 } from "three";
 
 const Tower = dynamic(() => import("~/components/Model"), {
   ssr: false,
@@ -149,21 +150,24 @@ export interface TowerProps {
   health?: BN;
   shield?: BN;
   currentBoostBips?: number;
-  children?: React.ReactNode[] | React.ReactNode;
 }
+
+const origin: { position?: Vector3 } = {
+  position: new Vector3(0, 0, 0),
+};
 
 function TowerDefence(props: TowerProps) {
   const [rotate, setRotate] = useState(true);
 
-  const { isSoundActive, toggleSound } = useSound();
+  // const { isSoundActive, toggleSound } = useSound();
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
   const [showShieldAction, setShowShieldAction] = useState(false);
   const [showShieldDetail, setShowShieldDetail] = useState(false);
 
-  const handleClick = useCallback(() => {
-    toggleSound();
-  }, [toggleSound]);
+  const h = useMemo<number>(() => {
+    return props.health?.toNumber() || 0;
+  }, [props.health]);
 
   return (
     <div className="h-screen z-1">
@@ -182,12 +186,7 @@ function TowerDefence(props: TowerProps) {
               setRotate(true);
             }}
           >
-            <Box
-              jsx={{
-                position: [0, 0, 0],
-              }}
-              health={props.health?.toNumber() || 0}
-            />
+            <Box jsx={origin} health={h} />
             {showShieldDetail && (
               <Html position={[0, 5, 0]}>
                 <div className="flex w-auto">
@@ -293,9 +292,10 @@ function TowerDefence(props: TowerProps) {
           distance={1000}
         />
       </Canvas>
-      {props.children ? props.children : null}
     </div>
   );
 }
 
-export default TowerDefence;
+// Wrap in React.memo so the same valued props
+// don't cause a re-render
+export default React.memo(TowerDefence);

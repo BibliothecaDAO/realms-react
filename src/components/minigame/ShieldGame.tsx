@@ -119,11 +119,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
       gameContext.gameStartBlock.toNumber() +
       gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
 
-    const gameIsActive =
+    const gameTimerIsActive =
       gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
 
     let gs: GameStatus;
-    if (gameIsActive) {
+    if (gameTimerIsActive) {
       if (gameContext.mainHealth.lte(toBN(0))) {
         gs = "completed";
       } else {
@@ -202,9 +202,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
         currentBoostBips={boost}
-      >
-        <MenuBar toggleTab={(tab) => setView(tab)} />
-      </TowerDefence>
+      ></TowerDefence>
+      <MenuBar toggleTab={(tab) => setView(tab)} />
     </div>
   );
 };
