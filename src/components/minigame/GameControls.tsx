@@ -223,7 +223,7 @@ const GameControls: React.FC<Prop> = (props) => {
         id="shield-vitality-container"
         className={classNames(
           showTutorial ? "" : "hidden",
-          "absolute right-1/3",
+          "absolute -right-56",
           ShieldVitalityDisplayClassnames
         )}
       >
@@ -273,8 +273,8 @@ const GameControls: React.FC<Prop> = (props) => {
               content: (
                 <>
                   Displays the ratio of total{" "}
-                  <ElementLabel>Elements</ElementLabel> used over the total
-                  amount distilled, for each Element.
+                  <ElementLabel>Elements</ElementLabel> used so far, over the
+                  total amount distilled, for each Element of this game.
                 </>
               ),
             },
