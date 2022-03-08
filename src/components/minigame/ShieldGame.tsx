@@ -155,13 +155,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
   return (
     <div className="relative">
       {view == "lore" ? (
-        <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
+        <div className="z-10 flex flex-row gap-20 p-8 text-white bg-gray-800">
           <LoreDevKit ldk={DivineSiege} />
           <GameBlockTimer gameCtx={gameContext} />
         </div>
       ) : null}
-      <div className="absolute z-10 w-full p-8">
-        <h3 className="flex justify-between text-center text-blue-300 uppercase font-body ">
+      <div className="absolute z-10 p-8">
+        <h3 className="flex justify-between text-blue-600 uppercase font-body">
           <span className="mx-auto mb-8 text-5xl z-11">
             Desiege game{" "}
             {gameContext !== undefined ? (
@@ -173,10 +173,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </h3>
 
         {view == "game-controls" || view == "setup" ? (
-          <div className="flex flex-row w-full">
+          <div
+            className="w-full"
+            style={{ pointerEvents: "none" }} // pointer-events: none needed to passthrough mouse drags to 3D canvas
+          >
             <div
               id="game-actions"
-              className="w-1/3 p-10 text-black bg-white/30 rounded-2xl"
+              className="w-full p-10 text-black bg-white/30 rounded-2xl"
             >
               {!!gameContext ? (
                 <GameControls
