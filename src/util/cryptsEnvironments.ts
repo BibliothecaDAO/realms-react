@@ -10,9 +10,9 @@ There are six environments:
 */
 
 interface Environments {
-   name: String,
-   colours: {
-      main: String,
+   name: String,           // Name of the environment (e.g. Ember's Glow)
+   colourClass: {          // Class styles for environment 'pills' (e.g. white text on black bg)
+      main: String,  
       door: String,
       point: String
    },
@@ -22,56 +22,68 @@ interface Environments {
 export const Environments: Array<Environments> = [
    {
       name: 'Desert Oasis',
-      colours: {
-         main: '#F3D899',
-         door: '#00A29D',
-         point: '#FAAA00'
+      colourClass: {
+         main: `bg-desert-main text-black`,  /* Use black text because bg-desert-main is cream so white blends in */
+         door: `bg-desert-door`,
+         point: `bg-desert-point`
       },
       id: 0,
    },
    {
       name: 'Stone Temple',
-      colours: {
-         main: '#c7a687',
-         door: '#006669',
-         point: '#3C2A1A'
+      colourClass: {
+         main: `bg-temple-main`,
+         door: `bg-temple-door`,
+         point: `bg-temple-point`
       },
       id: 1,
    },
    {
       name: 'Forest Ruins',
-      colours: {
-         main: '#A98C00',
-         door: '#C55300',
-         point: '#802F1A'
+      colourClass: {
+         main: `bg-forest-main`,
+         door: `bg-forest-door`,
+         point: `bg-forest-point`
       },
       id: 2,
    },
    {
       name: 'Mountain Deep',
-      colours: {
-         main: '#cf9479',
-         door: '#FFA800',
-         point: '#802F1A'
+      colourClass: {
+         main: `bg-mountain-main`,
+         door: `bg-mountain-door`,
+         point: `bg-mountain-point`
       },
       id: 3,
    },
    {
       name: 'Underwater Keep',
-      colours: {
-         main: '#24c2c7',
-         door: '#F9B569',
-         point: '#967E67'
+      colourClass: {
+         main: `bg-underwater-main`,
+         door: `bg-underwater-door`,
+         point: `bg-underwater-point`
       },
       id: 4,
    },
    {
       name: 'Ember\'s Glow',
-      colours: {
-         main: '#FF1800',
-         door: '#FF1800',
-         point: '#B75700'
+      colourClass: {
+         main: `bg-ember-main`,
+         door: `bg-ember-door`,
+         point: `bg-ember-point`
       },
       id: 5,
    }
 ]
+
+/* isLegenday - Determines if a dungeon has legendary status (nearly 1/1). These are important events in the crypts and caverns universe (perhaps Lootverse?) Could be an important battle, a cataclysmic event, or the meeting of important people.
+
+input: name of a dungeon
+returns: true (legendary) or false (not legendary) */
+export function isLegendary(name: String) {
+   // Legendary names are the only ones that start with an apostrophe (`)
+   return(name.slice(0, 1) == "'");
+}
+
+/* legendaryColourClass - Applies css to style legendary map */
+export const legendaryColourClass = `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`

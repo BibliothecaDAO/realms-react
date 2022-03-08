@@ -23,6 +23,7 @@ export const MenuSideBar = () => {
     toggleEmpireMenu,
     mainMenu,
     toggleCryptsMenu,
+    toggleLootMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -31,8 +32,8 @@ export const MenuSideBar = () => {
   }, [toggleSound]);
 
   const buttonClasses =
-    "p-2 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200";
-  const iconClasses = "mx-auto w-4 sm:w-10 fill-current mb-1";
+    "p-3 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200";
+  const iconClasses = "mx-auto w-6 sm:w-10 fill-current mb-1";
   return (
     <div
       className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all ${
@@ -41,29 +42,28 @@ export const MenuSideBar = () => {
     >
       {account && (
         <button className={buttonClasses} onClick={toggleEmpireMenu}>
-          <Crown className="mx-auto w-8 sm:w-16 fill-current mb-1" />
-
+          <Crown className="w-8 mx-auto mb-1 fill-current sm:w-16" />
           <span className="hidden sm:block">My Empire</span>
         </button>
       )}
-
+      <button className={buttonClasses} onClick={toggleLootMenu}>
+        <Castle className={iconClasses} />
+        <span className="hidden sm:block">Loot</span>
+      </button>
       <button className={buttonClasses} onClick={toggleMapMenu}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Realms</span>
       </button>
       <button className={buttonClasses} onClick={toggleCryptsMenu}>
         <Danger className={iconClasses} />
-
         <span className="hidden sm:block">Crypts</span>
       </button>
       <button className={buttonClasses} onClick={toggleResourceMenu}>
         <Mountain className={iconClasses} />
-
         <span className="hidden sm:block">Resources</span>
       </button>
       <button className={buttonClasses} onClick={toggleTheOrdersMenu}>
         <Library className={iconClasses} />
-
         <span className="hidden sm:block">Orders</span>
       </button>
       {/* <button

@@ -87,20 +87,20 @@ function Box(props: ObjectProps) {
       receiveShadow
       ref={mesh}
       scale={2.3}
-      position={[0, 2, 0]}
+      position={[0, 3, 0]}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => {
         setHover(true);
-        playShield();
+        // playShield();
       }}
       onPointerOut={(event) => {
         setHover(false);
-        stop();
+        // stop();
       }}
     >
       <sphereBufferGeometry />
       <shaderMaterial
-        opacity={0.2}
+        opacity={1}
         attach="material"
         transparent={true}
         args={[KnotShaderMaterial]}

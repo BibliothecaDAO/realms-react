@@ -383,6 +383,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 target={"_blank"}
                 href="https://discord.gg/YfeZQ3NFB8"
                 className="underline"
+                rel="noreferrer"
               >
                 Discord
               </a>
@@ -397,6 +398,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 target={"_blank"}
                 href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/src/components/minigame"
                 className="underline"
+                rel="noreferrer"
               >
                 front-end
               </a>
@@ -405,6 +407,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 target={"_blank"}
                 href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/minigame/contracts/l2/minigame"
                 className="underline"
+                rel="noreferrer"
               >
                 StarkNet
               </a>
@@ -461,25 +464,25 @@ const GameControls: React.FC<Prop> = (props) => {
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
                   <div id="game-stats">
-                    <div className="w-full h-1 mt-2 bg-cyan-800">
+                    <div className="w-full h-2 mt-2 bg-cyan-800">
                       {gameStats.lightUsed !== undefined &&
                       gameStats.light !== undefined ? (
                         <div
                           style={{
                             width: `${gameStats.lightUsed / gameStats.light}%`,
                           }}
-                          className="h-1 transition-all bg-cyan-400"
+                          className="h-2 transition-all bg-cyan-300"
                         ></div>
                       ) : undefined}
                     </div>
-                    <div className="w-full h-1 mt-2 bg-purple-800">
+                    <div className="w-full h-2 mt-2 bg-purple-800">
                       {gameStats.darkUsed !== undefined &&
                       gameStats.dark !== undefined ? (
                         <div
                           style={{
                             width: `${gameStats.darkUsed / gameStats.dark}%`,
                           }}
-                          className="h-1 bg-purple-400"
+                          className="h-2 bg-purple-300"
                         ></div>
                       ) : undefined}
                     </div>
@@ -493,25 +496,24 @@ const GameControls: React.FC<Prop> = (props) => {
             id="action-controls"
             className="flex w-full gap-4 text-gray-100 row"
           >
-            <div className="flex-1">
-              <Button
-                disabled={side == "dark"}
-                className="w-full mt-4 text-black"
-                onClick={() => setAction("shield")}
-              >
-                Shield
-              </Button>
-            </div>
-            <div className="flex-1">
-              <Button
-                disabled={side == "light"}
-                className="w-full mt-4 text-black"
-                active={action == "attack"}
-                onClick={() => setAction("attack")}
-              >
-                Attack
-              </Button>
-            </div>
+            {/* <div className="flex-1">
+              {side == "light" ? (
+                <Button
+                  className="w-full mt-4 text-black"
+                  onClick={() => setAction("shield")}
+                >
+                  Shield
+                </Button>
+              ) : (
+                <Button
+                  className="w-full mt-4 text-black"
+                  active={action == "attack"}
+                  onClick={() => setAction("attack")}
+                >
+                  Attack
+                </Button>
+              )}
+            </div> */}
           </div>
           <div className="flex flex-row justify-center my-4">
             <input

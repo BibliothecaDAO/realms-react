@@ -1,5 +1,14 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: [
+    'text-[#838383]',
+    'text-[#00DC82]',
+    'text-[#2e82ff]',
+    'text-[#c13cff]',
+    'text-[#f8b73e]',
+    'text-[#ff44b7]'
+    // etc.
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -54,16 +63,39 @@ module.exports = {
           100: '#F9F7F1',
           200: '#8D795B',
         },
-        minHeight: {
-          0: '0',
-          '1/4': '25vh',
-          '1/2': '50vh',
-          '3/4': '75vh',
-          80: '80px',
-          full: '100vh',
-        }
+        /* Crypts and Caverns color styles */
+        desert: { /* Desert Oasis */
+         main: '#F3D899',
+         door: '#00A29D',
+         point: '#FAAA00'
+        },
+        temple: { /* Stone Temple */
+          main: '#967E67',
+          door: '#006669',
+          point: '#3C2A1A'
+        },
+        forest: { /* Forest Ruins */
+          main: '#2F590E',
+          door: '#C55300',
+          point: '#802F1A'
+        },
+        mountain: { /* Mountain Deep */
+          main: '#cf9479',
+          door: '#FFA800',
+          point: '#802F1A'
+        },
+        underwater: { /* Underwater Keep */
+          main: '#006669',
+          door: '#F9B569',
+          point: '#967E67'
+        },
+        ember: { /* Ember's Glow */
+          main: '#5D0503',
+          door: '#FF1800',
+          point: '#B75700',
+        },
       },
     },
   },
-  plugins: [],
+  plugins: ["tailwindcss","autoprefixer","postcss-100vh-fix"],
 }

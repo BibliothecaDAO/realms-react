@@ -29,6 +29,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - Storybook fix (Webpack5 conflicts): add this to `package.json`
 
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Temporary
+
+- Storybook fix (Webpack5 conflicts): add this to `package.json`
+
 ```
     "crypto": "npm:crypto-browserify",
     "stream": "npm:stream-browserify",

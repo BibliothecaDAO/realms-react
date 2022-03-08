@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { WalletProvider } from "~/hooks/useWalletContext";
 import { SoundProvider } from "~/context/soundProvider";
@@ -8,7 +8,8 @@ import { UIProvider } from "~/hooks/useUIContext";
 import "../styles/index.css";
 import PageTransition from "~/components/navigation/PageTransition";
 import { animated, Transition } from "@react-spring/web";
-import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
+import { MultiAPILink } from "@habx/apollo-multi-endpoint-link";
+import { concatPagination } from "@apollo/client/utilities";
 
 import {
   ApolloClient,
@@ -24,15 +25,28 @@ import { BreakpointProvider } from "~/hooks/useBreakPoint";
 const client = new ApolloClient({
   link: ApolloLink.from([
     new MultiAPILink({
-        endpoints: {
-            realms: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-            crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
-        },
-        httpSuffix: '',
-        createHttpLink: () => createHttpLink(),
-      }),
+      endpoints: {
+        realms:
+          "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
+        crypts: "https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev",
+        ecosystem:
+          "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem",
+      },
+      httpSuffix: "",
+      createHttpLink: () => createHttpLink(),
+    }),
   ]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          realms: concatPagination(["where", "orderBy"]),
+          bridgedRealms: concatPagination(["where", "orderBy"]),
+          dungeons: concatPagination(["where"]),
+        },
+      },
+    },
+  }),
 });
 
 const PageWrapper = (Comp: any) =>

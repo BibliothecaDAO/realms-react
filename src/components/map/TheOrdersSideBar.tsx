@@ -13,7 +13,7 @@ import { OrderIcon } from "~/shared/OrderIcon";
 import { BaseSideBar } from "./BaseSideBar";
 
 type Props = {
-  onClick: (event: any, id: number) => void;
+  onClick: (event: any, id: string) => void;
 };
 
 export const TheOrdersSideBar = (props: Props) => {
@@ -77,11 +77,11 @@ export const TheOrdersSideBar = (props: Props) => {
               return (
                 <div key={index} className="px-2 mb-2">
                   <button
-                    className="p-4 sm:text-xl rounded hover:bg-white/60 bg-white/20 font-display "
+                    className="p-4 rounded sm:text-xl hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
                       props.onClick(
                         OrderDetails[focusOrder]?.wonders.realm_id[index],
-                        1
+                        "A"
                       )
                     }
                   >
@@ -105,7 +105,7 @@ export const TheOrdersSideBar = (props: Props) => {
             {OrderDetails[focusOrder]?.notable_gas.name.map((a, index) => {
               return (
                 <a
-                  className="px-4 py-2 mb-2 mr-2 sm:text-xl uppercase rounded hover:bg-white/60 bg-white/20 font-display"
+                  className="px-4 py-2 mb-2 mr-2 uppercase rounded sm:text-xl hover:bg-white/60 bg-white/20 font-display"
                   target={"_blank"}
                   href={OrderDetails[focusOrder]?.notable_gas.link[index]}
                   rel="noreferrer"

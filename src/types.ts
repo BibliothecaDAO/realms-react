@@ -4,59 +4,96 @@ export type GameStatus = "active" | "completed" | "expired";
 
 interface Owner {
   address: string;
-  realmsHeld: Number;
-  bridgedRealmsHeld: Number;
+  realmsHeld: number;
+  bridgedRealmsHeld: number;
 }
 
 export interface Realm {
   id: string;
-  resourceIds: Array<String>;
-  order: String;
-  wonder: String;
-  cities: Number;
-  harbours: Number;
-  rivers: Number;
-  regions: Number;
-  name: String;
-  rarityScore: Number;
-  rarityRank: Number;
+  resourceIds: Array<string>;
+  order: string;
+  wonder: string;
+  cities: number;
+  harbours: number;
+  rivers: number;
+  regions: number;
+  name: string;
+  rarityScore: number;
+  rarityRank: number;
   currentOwner: Owner;
 }
 
 export interface Crypt {
   id: string;
-  size: Number;
-  environment: Number;
-  numDoors: Number;
-  numPoints: Number;
-  name: String;
+  size: number;
+  environment: number;
+  numDoors: number;
+  numPoints: number;
+  name: string;
   svg: string;
   currentOwner: Owner;
 }
-
+export interface Loot {
+  id: string;
+  chest: string;
+  foot: string;
+  hand: string;
+  head: string;
+  neck: string;
+  ring: string;
+  waist: string;
+  weapon: string;
+  chestSuffixId: number;
+  footSuffixId: number;
+  handSuffixId: number;
+  headSuffixId: number;
+  neckSuffixId: number;
+  ringSuffixId: number;
+  waistSuffixId: number;
+  weaponSuffixId: number;
+  currentOwner: Owner;
+  minted: number;
+  manasClaimed: number;
+  itemsClaimed: Boolean;
+}
 export interface Data {
   realm: Realm;
 }
 export interface CryptData {
   dungeon: Crypt;
 }
+export interface LootData {
+  bag: Loot;
+}
 export interface RealmProps {
   realm: Realm;
   loading: boolean;
   size?: any;
-  onClick?: (event: any, id: number) => void;
+  onClick?: (event: any, id: string) => void;
 }
 export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
   size?: any;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: (event: any, id: string) => void;
+  flyto?: boolean;
+}
+export interface LootProps {
+  loot: Loot;
+  loading: boolean;
+  size?: any;
+  onClick?: (event: any, id: string) => void;
+  flyto?: boolean;
 }
 
 export interface WalletRealmsData {
   realms: Realm[];
   bridgedRealms: Realm[]
   wallet: Owner;
+}
+
+export interface WalletCryptsData {
+  dungeons: Crypt[]
 }
 
 export interface UiState {
@@ -68,10 +105,10 @@ export interface RealmFilters {
   address?: string;
   resources?: number[]
   orders?: string[];
-  first?: number,
-  skip?: number,
-  orderBy?: string,
-  orderDirection?: string,
+  first?: number;
+  skip?: number;
+  orderBy?: string;
+  orderDirection?: string;
 }
 
 export interface Queries {
@@ -80,4 +117,10 @@ export interface Queries {
   lg: string;
   xl: string;
   "2xl": string;
+}
+
+export interface CryptFilters {
+  address?: string;
+  first?: number;
+  skip?: number;
 }
