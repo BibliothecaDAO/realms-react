@@ -279,11 +279,6 @@ const GameControls: React.FC<Prop> = (props) => {
               ),
             },
             {
-              title: "Available Spells",
-              target: "#action-controls",
-              content: "Light can shield, Dark can attack",
-            },
-            {
               title: "Spell Power",
               target: "#action-amount",
               content: (
@@ -562,7 +557,9 @@ const GameControls: React.FC<Prop> = (props) => {
                 }
               }}
             >
-              {actionIsLoading ? "Casting Spell" : "Cast Element Spell"}
+              {actionIsLoading
+                ? "Casting Spell"
+                : `Cast ${action == "shield" ? "Shield" : "Dark Attack"} Spell`}
             </Button>
           ) : null}
           {(shieldAction.data || attackAction.data) && actionIsLoading ? (
