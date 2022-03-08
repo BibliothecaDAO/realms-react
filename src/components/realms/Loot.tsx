@@ -69,10 +69,10 @@ export function Loot(props: LootProps): ReactElement {
                 </div>
               )}
             </div>
-            <table className="min-w-full table-auto">
+            <table className="min-w-full rounded table-auto bg-black/70">
               <thead>
                 <tr>
-                  <th className="text-left">Item</th>
+                  <th className="p-2 text-left">Item</th>
                   <th>Rarity</th>
                   <th>Greatness</th>
                 </tr>
@@ -80,8 +80,8 @@ export function Loot(props: LootProps): ReactElement {
               <tbody>
                 {mappedProperties.map((item, index) => (
                   <tr key={index}>
-                    <td>
-                      <p className="pt-2 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                    <td className="pb-2 pl-4">
+                      <p className="text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                         {item}
                       </p>
                       <p>{(props.loot as any)[item]}</p>
