@@ -39,12 +39,12 @@ function Box(props: ObjectProps) {
   const [active, setActive] = useState(false);
 
   let [time, setTime] = useState(1.0);
-  const render = (clock: any) => {
-    const delta = clock.getDelta();
-    setTime((time += delta * 5));
-  };
-  // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
-  useFrame(({ clock }) => render(clock));
+  // const render = (clock: any) => {
+  //   const delta = clock.getDelta();
+  //   setTime((time += delta * 5));
+  // };
+  // // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  // useFrame(({ clock }) => render(clock));
 
   const KnotShaderMaterial = {
     uniforms: {
