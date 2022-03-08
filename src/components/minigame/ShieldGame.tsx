@@ -173,10 +173,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </h3>
 
         {view == "game-controls" || view == "setup" ? (
-          <div
-            className="w-full"
-            style={{ pointerEvents: "none" }} // pointer-events: none needed to passthrough mouse drags to 3D canvas
-          >
+          <div className="w-full">
             <div
               id="game-actions"
               className="w-full p-10 text-black bg-white/30 rounded-2xl"
