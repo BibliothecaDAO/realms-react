@@ -37,7 +37,9 @@ export default {
 } as ComponentMeta<typeof GameControls>;
 
 const Template: ComponentStory<typeof GameControls> = (args) => (
-  <GameControls {...args} />
+  <div className="w-1/3">
+    <GameControls {...args} />
+  </div>
 );
 
 const mockedResponses: MockResponseSelectorMap = {
@@ -74,6 +76,27 @@ ActiveWithoutElements.args = {
   gameStatus: "active",
 };
 ActiveWithoutElements.parameters = {
+  msw: [
+    rest.post<StarknetCall>(callContractURL(), (...args) =>
+      wrappedRequestHandlerWithCount(...args, {
+        ...mockedResponses,
+        // Balance must be 0 for both elements
+        [getSelectorFromName("balance_of_batch")]: ["2", "0x0", "0x0"],
+        [getSelectorFromName("get_total_minted")]: [
+          BigInt(100 * 100).toString(),
+        ],
+        [getSelectorFromName("get_token_reward_pool")]: ["0x244"],
+      })
+    ),
+    rest.get(getBlockURL(), mockBlockResponse(120)),
+  ],
+};
+
+export const CompletedGame = Template.bind({});
+CompletedGame.args = {
+  gameStatus: "completed",
+};
+CompletedGame.parameters = {
   msw: [
     rest.post<StarknetCall>(callContractURL(), (...args) =>
       wrappedRequestHandlerWithCount(...args, {
