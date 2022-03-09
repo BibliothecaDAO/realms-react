@@ -35,6 +35,7 @@ function App() {
     cryptsMenu,
     lootMenu,
     GAMenu,
+    closeAll,
   } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
@@ -106,11 +107,9 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.tokenId);
+      closeAll(["crypts"]);
       if (!cryptsMenu) {
         toggleCryptsMenu();
-      }
-      if (mapMenu) {
-        toggleMapMenu();
       }
     },
   });
@@ -134,11 +133,9 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.realm_idx);
+      closeAll(["realms"]);
       if (!mapMenu) {
         toggleMapMenu();
-      }
-      if (cryptsMenu) {
-        toggleCryptsMenu();
       }
     },
   });
@@ -162,16 +159,10 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.bag_id);
-      if (cryptsMenu) {
-        toggleCryptsMenu();
-      }
-      if (mapMenu) {
-        toggleMapMenu();
-      }
+      closeAll(["loot"]);
       if (!lootMenu) {
         toggleLootMenu();
       }
-      console.log(info.object.properties);
     },
   });
 
@@ -194,8 +185,9 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.ga_id);
+      closeAll(["GA"]);
       if (!GAMenu) {
-        toggleLootMenu();
+        toggleGAMenu();
       }
     },
   });
@@ -235,9 +227,7 @@ function App() {
       closeOrdersMenu();
 
       let asset;
-
       if (type === "A") {
-        console.log(1);
         /* @ts-ignore: name not exist on D */
         asset = realms.features.filter(
           (a: any) => a.properties.realm_idx === parseInt(id)
@@ -254,12 +244,15 @@ function App() {
         if (lootMenu) {
           toggleLootMenu();
         }
+        if (GAMenu) {
+          toggleGAMenu();
+        }
       } else if (type === "B") {
-        console.log(2);
         /* @ts-ignore: name not exist on D */
         asset = crypts.features.filter(
           (a: any) => a.properties.tokenId === parseInt(id)
         );
+        console.log(lootMenu);
         if (mapMenu) {
           toggleMapMenu();
         }
@@ -269,7 +262,12 @@ function App() {
         if (lootMenu) {
           toggleLootMenu();
         }
-        toggleCryptsMenu();
+        if (GAMenu) {
+          toggleGAMenu();
+        }
+        if (!cryptsMenu) {
+          toggleCryptsMenu();
+        }
       } else if (type === "C") {
         asset = loot_bags.features.filter(
           (a: any) => a.properties.bag_id === parseInt(id)
@@ -285,6 +283,9 @@ function App() {
         }
         if (!lootMenu) {
           toggleLootMenu();
+        }
+        if (GAMenu) {
+          toggleGAMenu();
         }
       } else {
         asset = ga_bags.features.filter(
@@ -340,15 +341,14 @@ function App() {
   const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
       setValue(1);
-    } else if (parseInt(event.target.value) > 9000) {
-      setValue(9000);
+    } else if (parseInt(event.target.value) > parseInt(event.target.max)) {
+      setValue(event.target.max);
     } else {
       setValue(parseInt(event.target.value));
     }
   };
 
   const onSelectChange = (event: any) => {
-    console.log(event);
     setAssetSelect(event);
   };
 
