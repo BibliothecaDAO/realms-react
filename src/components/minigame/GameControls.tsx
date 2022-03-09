@@ -29,7 +29,7 @@ import { useRouter } from "next/router";
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
-} from "./TowerDefence";
+} from "./TowerShieldVitality";
 import { toBN } from "starknet/dist/utils/number";
 
 type Prop = {

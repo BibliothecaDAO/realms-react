@@ -18,7 +18,10 @@ import { GameStatus } from "~/types";
 import Sword from "../../../public/svg/sword.svg";
 import Shield from "../../../public/svg/shield.svg";
 import Book from "../../../public/svg/book.svg";
-import { EFFECT_BASE_FACTOR } from "~/util/minigameApi";
+import {
+  ShieldVitalityDisplay,
+  ShieldVitalityDisplayClassnames,
+} from "./TowerShieldVitality";
 import BN from "bn.js";
 import classNames from "classnames";
 import { Vector3 } from "three";
@@ -108,41 +111,6 @@ function Box(props: ObjectProps) {
     </mesh>
   );
 }
-
-type ShieldVitalityDisplayProps = {
-  shield?: BN;
-  health?: BN;
-  className?: string;
-};
-
-export const ShieldVitalityDisplayClassnames =
-  "p-6 text-lg text-gray-700 bg-white/30 rounded-xl";
-
-export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
-  return (
-    <>
-      <p
-        className={classNames(
-          "text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700",
-          props.className
-        )}
-      >
-        Shield
-      </p>
-      <p className="text-4xl">
-        {props.shield
-          ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
-          : "-"}
-      </p>
-      <p>
-        City Vitality:{" "}
-        {props.health
-          ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
-          : "-"}
-      </p>
-    </>
-  );
-};
 
 export interface TowerProps {
   gameStatus?: GameStatus;
