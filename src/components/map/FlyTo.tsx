@@ -1,3 +1,6 @@
+import ga_bags from "~/geodata/ga_bags.json";
+import { useEffect, useState } from "react";
+
 type Props = {
   onClick: (event: any, id: string) => void;
   onChange: (event: any) => void;
@@ -7,6 +10,24 @@ type Props = {
 };
 
 export const FlyTo = (props: Props) => {
+  const [maxID, setMaxID] = useState("8000");
+
+  useEffect(() => {
+    switch (props.select) {
+      case "B":
+        return setMaxID("9000");
+      case "D":
+        return setMaxID(
+          Math.max(
+            ...ga_bags.features.map((feature) =>
+              parseInt(feature.properties.ga_id)
+            )
+          ).toString()
+        );
+      default:
+        return setMaxID("8000");
+    }
+  }, [props.select]);
   return (
     <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-16 sm:top-10 sm:right-36 sm:z-30 sm:w-96">
       <input
@@ -16,7 +37,7 @@ export const FlyTo = (props: Props) => {
         value={props.value}
         onChange={props.onChange}
         min="1"
-        max={props.select === "B" ? "9000" : "8000"}
+        max={maxID}
       />
       <button
         className="w-4/12 p-1 px-4 uppercase transition-all duration-300 text-off-100 bg-off-200/20 hover:bg-off-200/60"
