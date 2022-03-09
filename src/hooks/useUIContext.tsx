@@ -13,7 +13,7 @@ const defaultUIContext = {
   toggleResourceMenu: () => {},
   theOrdersMenu: false,
   toggleTheOrdersMenu: () => {},
-  closeAll: () => {},
+  closeAll: (excludes: string[]) => {},
   mainMenu: false,
   toggleMainMenu: () => {},
   closeOrdersMenu: () => {},
@@ -39,7 +39,7 @@ const UIContext =
     toggleResourceMenu: () => void;
     theOrdersMenu: boolean;
     toggleTheOrdersMenu: () => void;
-    closeAll: () => void;
+    closeAll: (excludes: string[]) => void;
     mainMenu: boolean;
     toggleMainMenu: () => void;
     closeOrdersMenu: () => void;
@@ -128,8 +128,24 @@ function useUI() {
     // hideOrOpenMainMenu();
     return setTheOrdersMenu(false);
   };
-  const closeAll = () => {
-    return setTheOrdersMenu(false);
+  const closeAll = (exclude: string[]) => {
+    if (!exclude.includes("orders")) {
+      setTheOrdersMenu(false);
+    }
+    setEmpireMenu(false);
+    setResourceMenu(false);
+    if (!exclude.includes("crypts")) {
+      setCryptsMenu(false);
+    }
+    if (!exclude.includes("GA")) {
+      setGAMenu(false);
+    }
+    if (!exclude.includes("loot")) {
+      setLootMenu(false);
+    }
+    if (!exclude.includes("realms")) {
+      return setMapMenu(false);
+    }
   };
 
   return {
