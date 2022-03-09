@@ -24,6 +24,7 @@ export const MenuSideBar = () => {
     mainMenu,
     toggleCryptsMenu,
     toggleLootMenu,
+    toggleGAMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -53,6 +54,10 @@ export const MenuSideBar = () => {
       <button className={buttonClasses} onClick={toggleMapMenu}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Realms</span>
+      </button>
+      <button className={buttonClasses} onClick={toggleGAMenu}>
+        <Castle className={iconClasses} />
+        <span className="hidden sm:block">GA</span>
       </button>
       <button className={buttonClasses} onClick={toggleCryptsMenu}>
         <Danger className={iconClasses} />

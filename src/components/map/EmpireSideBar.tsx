@@ -2,6 +2,8 @@ import { useUIContext } from "~/hooks/useUIContext";
 import { animated, useSpring } from "@react-spring/web";
 import { CryptsEmpire } from "./CryptsEmpire";
 import { RealmsEmpire } from "./RealmsEmpire";
+import { LootEmpire } from "./LootEmpire";
+import { GAEmpire } from "./GAEmpire";
 import { useState } from "react";
 import Castle from "../../../public/svg/castle.svg";
 import Danger from "../../../public/svg/danger.svg";
@@ -50,19 +52,36 @@ export const EmpireSideBar = (props: Props) => {
           </button>
           <button
             className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
-              tab !== "Realms" ? "bg-white/30" : "bg-white/10"
+              tab === "Crypts" ? "bg-white/30" : "bg-white/10"
             }`}
             onClick={() => setTab("Crypts")}
           >
             {" "}
             <Danger className="w-8 mx-auto fill-current" /> Crypts
           </button>
+          <button
+            className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
+              tab === "Loot" ? "bg-white/30" : "bg-white/10"
+            }`}
+            onClick={() => setTab("Loot")}
+          >
+            {" "}
+            <Danger className="w-8 mx-auto fill-current" /> Loot
+          </button>
+          <button
+            className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
+              tab === "GA" ? "bg-white/30" : "bg-white/10"
+            }`}
+            onClick={() => setTab("GA")}
+          >
+            {" "}
+            <Danger className="w-8 mx-auto fill-current" /> GA
+          </button>
         </div>
-        {tab === "Realms" ? (
-          <RealmsEmpire onClick={props.onClick} />
-        ) : (
-          <CryptsEmpire onClick={props.onClick} />
-        )}
+        {tab === "Realms" && <RealmsEmpire onClick={props.onClick} />}
+        {tab === "Crypts" && <CryptsEmpire onClick={props.onClick} />}
+        {tab === "Loot" && <LootEmpire onClick={props.onClick} />}
+        {tab === "GA" && <GAEmpire onClick={props.onClick} />}
       </div>
     </animated.div>
   );

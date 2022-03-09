@@ -43,6 +43,7 @@ const client = new ApolloClient({
           realms: concatPagination(["where", "orderBy"]),
           bridgedRealms: concatPagination(["where", "orderBy"]),
           dungeons: concatPagination(["where"]),
+          bags: concatPagination(["where"]),
         },
       },
     },

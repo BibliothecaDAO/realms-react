@@ -70,7 +70,7 @@ const getRealmQuery = gql`
 `
 const getLootQuery = gql`
   ${BagFragment}
-  query realm($id: String) @api(name: ecosystem){
+  query loot($id: String) @api(name: ecosystem){
     bag(id: $id) {
       ...BagData
       currentOwner {
@@ -82,6 +82,67 @@ const getLootQuery = gql`
     }
   }
 `
+
+const getLootsQuery = gql`
+  ${BagFragment}
+  query loots(    
+    $address: String
+    $first: Int
+    $skip: Int
+    ) @api(name: ecosystem){
+    bags(     
+      where: {
+        currentOwner_contains: $address
+      }
+      first: $first
+      skip: $skip
+      ) {
+      ...BagData
+      currentOwner {
+        address
+        bagsHeld
+      }
+    }
+  }
+`
+const getGAQuery = gql`
+  ${GAdventurerFragment}
+  query GA($id: String) @api(name: ecosystem){
+    gadventurer(id: $id) {
+      ...GAdventurerData
+      currentOwner {
+        address
+        realmsHeld
+        bridgedRealmsHeld
+        bagsHeld
+      }
+    }
+  }
+`
+
+const getGAsQuery = gql`
+  ${GAdventurerFragment}
+  query GAs(    
+    $address: String
+    $first: Int
+    $skip: Int
+    ) @api(name: ecosystem){
+      gadventurers(     
+      where: {
+        currentOwner_contains: $address
+      }
+      first: $first
+      skip: $skip
+      ) {
+        ...GAdventurerData
+      currentOwner {
+        address
+        bagsHeld
+      }
+    }
+  }
+`
+
 const getCryptQuery = gql`
   query dungeon($id: String) @api(name: crypts){
     dungeon(id: $id) {
@@ -157,8 +218,14 @@ const getl1Adventurer = gql`
   ${ManaFragment}
   ${GAdventurerFragment}
 
-  query getAdventurer($address: String!) {
-    wallet(id: $address) {
+  query getAdventurer(
+    $address: String!     
+    $first: Int
+    $skip: Int
+  ) @api(name: ecosystem){
+    wallet(
+      id: $address
+    ) {
       id
       realmsHeld
       bridgedRealmsHeld
@@ -171,7 +238,10 @@ const getl1Adventurer = gql`
         tokenURI
       }
       bagsHeld
-      bags(first: 30) {
+      bags(     
+        first: $first
+        skip: $skip
+      ) {
         ...BagData
       }
       mLootsHeld
@@ -277,6 +347,9 @@ export {
   getRealmQuery,
   getRealmsQuery,
   getLootQuery,
+  getLootsQuery,
+  getGAQuery,
+  getGAsQuery,
   getCryptQuery,
   getCryptsQuery,
   mintedRealmsQuery,

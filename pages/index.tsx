@@ -20,6 +20,7 @@ import { FlyTo } from "~/components/map/FlyTo";
 import { RealmSideBar } from "~/components/map/RealmsSideBar";
 import { CryptsSideBar } from "~/components/map/CryptsSideBar";
 import { LootSideBar } from "~/components/map/LootSideBar";
+import { GASideBar } from "~/components/map/GASideBar";
 
 function App() {
   const {
@@ -29,9 +30,11 @@ function App() {
     toggleCryptsMenu,
     toggleLootMenu,
     toggleEmpireMenu,
+    toggleGAMenu,
     empireMenu,
     cryptsMenu,
     lootMenu,
+    GAMenu,
   } = useUIContext();
   const [resource, setResource] = useState<Array<String>>([]);
   const [value, setValue] = useState<number>(1);
@@ -189,6 +192,12 @@ function App() {
     updateTriggers: {
       getRadius: value,
     },
+    onClick: (info: any) => {
+      setValue(info.object.properties.ga_id);
+      if (!GAMenu) {
+        toggleLootMenu();
+      }
+    },
   });
 
   const ICON_MAPPING = {
@@ -261,7 +270,7 @@ function App() {
           toggleLootMenu();
         }
         toggleCryptsMenu();
-      } else {
+      } else if (type === "C") {
         asset = loot_bags.features.filter(
           (a: any) => a.properties.bag_id === parseInt(id)
         );
@@ -277,20 +286,41 @@ function App() {
         if (!lootMenu) {
           toggleLootMenu();
         }
+      } else {
+        asset = ga_bags.features.filter(
+          (a: any) => a.properties.ga_id === id.toString()
+        );
+        if (cryptsMenu) {
+          toggleCryptsMenu();
+        }
+        if (mapMenu) {
+          toggleMapMenu();
+        }
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+        if (lootMenu) {
+          toggleLootMenu();
+        }
+        if (!GAMenu) {
+          toggleGAMenu();
+        }
       }
-
+      console.log(asset);
       setValue(id);
 
-      setInitialViewState({
-        longitude: asset[0].geometry.coordinates[0],
-        latitude: asset[0].geometry.coordinates[1],
-        zoom: 8,
-        pitch: 20,
-        bearing: 0,
-        // @ts-ignore: Unreachable code error
-        transitionDuration: 5000,
-        transitionInterpolator: new FlyToInterpolator(),
-      });
+      if (asset[0]) {
+        setInitialViewState({
+          longitude: asset[0].geometry.coordinates[0],
+          latitude: asset[0].geometry.coordinates[1],
+          zoom: 8,
+          pitch: 20,
+          bearing: 0,
+          // @ts-ignore: Unreachable code error
+          transitionDuration: 5000,
+          transitionInterpolator: new FlyToInterpolator(),
+        });
+      }
     },
     [
       cryptsMenu,
@@ -302,6 +332,8 @@ function App() {
       empireMenu,
       lootMenu,
       toggleLootMenu,
+      GAMenu,
+      toggleGAMenu,
     ]
   );
 
@@ -331,6 +363,7 @@ function App() {
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <CryptsSideBar id={value} />
         <LootSideBar id={value} />
+        <GASideBar id={value} />
         <FlyTo
           onChange={onChange}
           onClick={goToId}

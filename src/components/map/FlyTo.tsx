@@ -35,6 +35,7 @@ export const FlyTo = (props: Props) => {
         <option value={"A"}>Realm</option>
         <option value={"B"}>C&C</option>
         <option value={"C"}>Loot</option>
+        <option value={"D"}>GA</option>
       </select>
     </div>
   );

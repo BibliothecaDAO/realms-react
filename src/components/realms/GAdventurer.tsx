@@ -1,16 +1,17 @@
 import { ReactElement, useState, useEffect } from "react";
 import { rarityDescription, rarityColor } from "loot-rarity";
-import { LootProps } from "../../types";
+import { GAProps } from "../../types";
 import { shortenAddress } from "~/util/formatters";
 import Image from "next/image";
 import getGreatness from "~/services/getGreatness";
+import { OrderIcon } from "~/shared/OrderIcon";
 
 const variantMaps: any = {
   small: { heading: "lg:text-4xl", regions: "lg:text-xl" },
 };
 
-export function Loot(props: LootProps): ReactElement {
-  const image = props.loot.id;
+export function GAdventurer(props: GAProps): ReactElement {
+  const image = props.ga.id;
   const [metaData, setMetaData] = useState(null);
   const mappedProperties = [
     "weapon",
@@ -25,13 +26,13 @@ export function Loot(props: LootProps): ReactElement {
 
   useEffect(() => {
     const getMetadata = async () => {
-      setMetaData(getGreatness(props.loot.id));
+      setMetaData(getGreatness(props.ga.id));
     };
 
-    if (props.loot.id) {
+    if (props.ga.id) {
       getMetadata();
     }
-  }, [props.loot.id]);
+  }, [props.ga.id]);
 
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
@@ -43,15 +44,24 @@ export function Loot(props: LootProps): ReactElement {
         </div>
       ) : (
         <div className="pt-4">
+          <div className="flex justify-center">
+            <OrderIcon order={props.ga.order.toLowerCase()} />
+          </div>
+
+          <div
+            className={`w-full text-center rounded-lg py-2 text-2xl uppercase tracking-widest`}
+          >
+            Order of {props.ga.order}
+          </div>
           <div className=" sm:text-2xl">
-            {props.loot.currentOwner && (
+            {props.ga.currentOwner && (
               <h3 className="my-3">
-                👑 {shortenAddress(props.loot.currentOwner.address)}
+                👑 {shortenAddress(props.ga.currentOwner.address)}
               </h3>
             )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
-                Id: <span className="font-semibold ">{props.loot.id}</span>
+                Id: <span className="font-semibold ">{props.ga.id}</span>
               </h4>
 
               {props.flyto && (
@@ -61,7 +71,7 @@ export function Loot(props: LootProps): ReactElement {
                       "bg-white/20 rounded px-4 uppercase hover:bg-white/40"
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.loot.id, "C");
+                      if (props.onClick) props.onClick(props.ga.id, "C");
                     }}
                   >
                     fly to
@@ -84,16 +94,16 @@ export function Loot(props: LootProps): ReactElement {
                       <p className="text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
                         {item}
                       </p>
-                      <p>{(props.loot as any)[item]}</p>
+                      <p>{(props.ga as any)[item]}</p>
                     </td>
                     <td
                       className={
                         "text-[" +
-                        rarityColor((props.loot as any)[item]) +
+                        rarityColor((props.ga as any)[item]) +
                         "] text-center"
                       }
                     >
-                      {rarityDescription((props.loot as any)[item])}
+                      {rarityDescription((props.ga as any)[item])}
                     </td>
                     <td className="text-center">
                       {metaData
@@ -111,7 +121,7 @@ export function Loot(props: LootProps): ReactElement {
                 target={"_blank"}
                 href={
                   "https://opensea.io/assets/0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7/" +
-                  props.loot.id
+                  props.ga.id
                 }
                 rel="noreferrer"
               >

@@ -21,30 +21,35 @@ const defaultUIContext = {
   cryptsMenu: false,
   toggleLootMenu: () => {},
   lootMenu: false,
+  toggleGAMenu: () => {},
+  GAMenu: false,
 };
 
-const UIContext = createContext<{
-  powerBar: boolean;
-  togglePowerBar: () => void;
-  setup: boolean;
-  toggleSetup: () => void;
-  mapMenu: boolean;
-  empireMenu: boolean;
-  toggleMapMenu: () => void;
-  toggleEmpireMenu: () => void;
-  resourceMenu: boolean;
-  toggleResourceMenu: () => void;
-  theOrdersMenu: boolean;
-  toggleTheOrdersMenu: () => void;
-  closeAll: () => void;
-  mainMenu: boolean;
-  toggleMainMenu: () => void;
-  closeOrdersMenu: () => void;
-  toggleCryptsMenu: () => void;
-  cryptsMenu: boolean;
-  toggleLootMenu: () => void;
-  lootMenu: boolean;
-}>(defaultUIContext);
+const UIContext =
+  createContext<{
+    powerBar: boolean;
+    togglePowerBar: () => void;
+    setup: boolean;
+    toggleSetup: () => void;
+    mapMenu: boolean;
+    empireMenu: boolean;
+    toggleMapMenu: () => void;
+    toggleEmpireMenu: () => void;
+    resourceMenu: boolean;
+    toggleResourceMenu: () => void;
+    theOrdersMenu: boolean;
+    toggleTheOrdersMenu: () => void;
+    closeAll: () => void;
+    mainMenu: boolean;
+    toggleMainMenu: () => void;
+    closeOrdersMenu: () => void;
+    toggleCryptsMenu: () => void;
+    cryptsMenu: boolean;
+    toggleLootMenu: () => void;
+    lootMenu: boolean;
+    toggleGAMenu: () => void;
+    GAMenu: boolean;
+  }>(defaultUIContext);
 
 interface UIProviderProps {
   children: React.ReactNode;
@@ -69,6 +74,7 @@ function useUI() {
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
   const [cryptsMenu, setCryptsMenu] = useState(false);
   const [lootMenu, setLootMenu] = useState(false);
+  const [GAMenu, setGAMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
 
   const hideOrOpenMainMenu = () => {
@@ -85,7 +91,9 @@ function useUI() {
   const toggleLootMenu = () => {
     return setLootMenu(!lootMenu);
   };
-
+  const toggleGAMenu = () => {
+    return setGAMenu(!GAMenu);
+  };
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
@@ -145,6 +153,8 @@ function useUI() {
     cryptsMenu,
     toggleLootMenu,
     lootMenu,
+    toggleGAMenu,
+    GAMenu,
   };
 }
 
