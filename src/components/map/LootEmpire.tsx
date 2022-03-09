@@ -21,8 +21,7 @@ export const LootEmpire = (props: Props) => {
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
-      address:
-        "0x6924686b3dcd04ae8ef91a3feccc262d020f519d" /*account.toLowerCase()*/,
+      address: account.toLowerCase(),
       first: 12,
       skip: limit,
     };
