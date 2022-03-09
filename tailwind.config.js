@@ -6,8 +6,13 @@ module.exports = {
     'text-[#2e82ff]',
     'text-[#c13cff]',
     'text-[#f8b73e]',
-    'text-[#ff44b7]'
-    // etc.
+    'text-[#ff44b7]',
+    'bg-[#838383]',
+    'bg-[#00DC82]',
+    'bg-[#2e82ff]',
+    'bg-[#c13cff]',
+    'bg-[#f8b73e]',
+    'bg-[#ff44b7]'
   ],
   theme: {
     extend: {

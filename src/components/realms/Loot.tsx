@@ -44,16 +44,15 @@ export function Loot(props: LootProps): ReactElement {
       ) : (
         <div className="pt-4">
           <div className=" sm:text-2xl">
-            {props.loot.currentOwner && (
-              <h3 className="my-3">
-                👑 {shortenAddress(props.loot.currentOwner.address)}
-              </h3>
-            )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
-              <h4>
+              <h2>
                 Id: <span className="font-semibold ">{props.loot.id}</span>
-              </h4>
-
+              </h2>
+              {props.loot.currentOwner && (
+                <h3 className="my-3">
+                  👑 {shortenAddress(props.loot.currentOwner.address)}
+                </h3>
+              )}
               {props.flyto && (
                 <div className="self-center text-lg">
                   <button
@@ -69,11 +68,10 @@ export function Loot(props: LootProps): ReactElement {
                 </div>
               )}
             </div>
-            <table className="min-w-full pb-4 rounded table-auto bg-black/70">
+            <table className="min-w-full p-6 rounded table-auto bg-black/70">
               <thead>
                 <tr>
                   <th className="p-4 pl-6 text-left uppercase">Item</th>
-                  <th className="p-4 uppercase">Rarity</th>
                   <th className="p-4 uppercase">Greatness</th>
                 </tr>
               </thead>
@@ -81,19 +79,29 @@ export function Loot(props: LootProps): ReactElement {
                 {mappedProperties.map((item, index) => (
                   <tr key={index}>
                     <td className="pb-5 pl-6">
-                      <p className="text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
-                        {item}
+                      <p className="text-xs sm:text-lg font-medium tracking-wider text-left  uppercase ">
+                        <span className="dark:text-gray-400 text-gray-400">
+                          {item}{" "}
+                        </span>
+                        <span
+                          className={
+                            "px-2 py-1 rounded bg-[" +
+                            rarityColor((props.loot as any)[item]) +
+                            "]"
+                          }
+                        >
+                          {rarityDescription((props.loot as any)[item])}
+                        </span>{" "}
                       </p>
-                      <p>{(props.loot as any)[item]}</p>
-                    </td>
-                    <td
-                      className={
-                        "text-[" +
-                        rarityColor((props.loot as any)[item]) +
-                        "] text-center"
-                      }
-                    >
-                      {rarityDescription((props.loot as any)[item])}
+                      <p
+                        className={
+                          "mt-1 font-semibold text-[" +
+                          rarityColor((props.loot as any)[item]) +
+                          "]"
+                        }
+                      >
+                        {(props.loot as any)[item]}
+                      </p>
                     </td>
                     <td className="text-center">
                       {metaData

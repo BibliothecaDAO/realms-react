@@ -54,16 +54,15 @@ export function GAdventurer(props: GAProps): ReactElement {
             Order of {props.ga.order}
           </div>
           <div className=" sm:text-2xl">
-            {props.ga.currentOwner && (
-              <h3 className="my-3">
-                👑 {shortenAddress(props.ga.currentOwner.address)}
-              </h3>
-            )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
-              <h4>
+              <h2>
                 Id: <span className="font-semibold ">{props.ga.id}</span>
-              </h4>
-
+              </h2>
+              {props.ga.currentOwner && (
+                <h3 className="my-3">
+                  👑 {shortenAddress(props.ga.currentOwner.address)}
+                </h3>
+              )}
               {props.flyto && (
                 <div className="self-center text-lg">
                   <button
@@ -83,7 +82,6 @@ export function GAdventurer(props: GAProps): ReactElement {
               <thead>
                 <tr>
                   <th className="p-4 pl-6 text-left uppercase">Item</th>
-                  <th className="p-4 uppercase">Rarity</th>
                   <th className="p-4 uppercase">Greatness</th>
                 </tr>
               </thead>
@@ -91,20 +89,31 @@ export function GAdventurer(props: GAProps): ReactElement {
                 {mappedProperties.map((item, index) => (
                   <tr key={index}>
                     <td className="pb-5 pl-6">
-                      <p className="text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
-                        {item}
+                      <p className="text-xs sm:text-lg font-medium tracking-wider text-left  uppercase ">
+                        <span className="dark:text-gray-400 text-gray-400">
+                          {item}{" "}
+                        </span>
+                        <span
+                          className={
+                            "px-2 py-1 rounded bg-[" +
+                            rarityColor((props.ga as any)[item]) +
+                            "]"
+                          }
+                        >
+                          {rarityDescription((props.ga as any)[item])}
+                        </span>{" "}
                       </p>
-                      <p>{(props.ga as any)[item]}</p>
+                      <p
+                        className={
+                          "mt-1 font-semibold text-[" +
+                          rarityColor((props.ga as any)[item]) +
+                          "]"
+                        }
+                      >
+                        {(props.ga as any)[item]}
+                      </p>
                     </td>
-                    <td
-                      className={
-                        "text-[" +
-                        rarityColor((props.ga as any)[item]) +
-                        "] text-center"
-                      }
-                    >
-                      {rarityDescription((props.ga as any)[item])}
-                    </td>
+
                     <td className="text-center">
                       {metaData
                         ? (metaData as any).greatness[item.toLowerCase()]

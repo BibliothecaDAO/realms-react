@@ -9,7 +9,7 @@ import { getLootsQuery } from "~/hooks/graphql/queries";
 import { WalletEcosystemData, CryptFilters } from "~/types";
 import { useWalletContext } from "~/hooks/useWalletContext";
 const grids =
-  "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6";
+  "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6";
 type Props = {
   onClick?: (event: any, id: string) => void;
 };

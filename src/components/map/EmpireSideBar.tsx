@@ -7,6 +7,8 @@ import { GAEmpire } from "./GAEmpire";
 import { useState } from "react";
 import Castle from "../../../public/svg/castle.svg";
 import Danger from "../../../public/svg/danger.svg";
+import Bag from "../../../public/svg/bag.svg";
+import Helm from "../../../public/svg/helm.svg";
 import Menu from "../../../public/svg/menu.svg";
 type Props = {
   onClick?: (event: any, id: string) => void;
@@ -47,7 +49,7 @@ export const EmpireSideBar = (props: Props) => {
             onClick={() => setTab("Realms")}
           >
             {" "}
-            <Castle className="w-8 mx-auto fill-current" />{" "}
+            <Castle className="w-8 mx-auto fill-current  mb-1" />{" "}
             <span className="self-center ">Realms</span>
           </button>
           <button
@@ -57,7 +59,7 @@ export const EmpireSideBar = (props: Props) => {
             onClick={() => setTab("Crypts")}
           >
             {" "}
-            <Danger className="w-8 mx-auto fill-current" /> Crypts
+            <Danger className="w-8 mx-auto fill-current  mb-1" /> Crypts
           </button>
           <button
             className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
@@ -66,7 +68,7 @@ export const EmpireSideBar = (props: Props) => {
             onClick={() => setTab("Loot")}
           >
             {" "}
-            <Danger className="w-8 mx-auto fill-current" /> Loot
+            <Bag className="w-10 mx-auto fill-current" /> Loot
           </button>
           <button
             className={`flex flex-col text-2xl  rounded px-8 py-4 hover:bg-white/30 ${
@@ -75,7 +77,7 @@ export const EmpireSideBar = (props: Props) => {
             onClick={() => setTab("GA")}
           >
             {" "}
-            <Danger className="w-8 mx-auto fill-current" /> GA
+            <Helm className="w-5 mx-auto fill-current mb-2" /> GA
           </button>
         </div>
         {tab === "Realms" && <RealmsEmpire onClick={props.onClick} />}
