@@ -32,10 +32,13 @@ import {
 } from "./TowerShieldVitality";
 import { toBN } from "starknet/dist/utils/number";
 import axios from "axios";
+import BN from "bn.js";
 
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
+  health: BN;
+  shield: BN;
   gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
   towerDefenceContractAddress: string;
@@ -134,10 +137,16 @@ const GameControls: React.FC<Prop> = (props) => {
           token_offset: side == "light" ? "1" : "2",
           token_boost: currentBoostBips,
           game_idx: gameIdx,
-          city_health: "100", // TODO: Provide value if needed
-          shield_health: "100", // TODO: Provide value if needed
+          city_health: props.health
+            .div(toBN(EFFECT_BASE_FACTOR))
+            .toNumber()
+            .toFixed(2),
+          shield_health: props.shield
+            .div(toBN(EFFECT_BASE_FACTOR))
+            .toNumber()
+            .toFixed(2),
         })
-        .catch((e) => console.error(e));
+        .catch((e) => console.error(e)); // TODO: Handle error
     }
   );
 
