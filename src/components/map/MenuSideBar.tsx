@@ -1,12 +1,12 @@
 import { useUIContext } from "~/hooks/useUIContext";
 import { MouseEventHandler, useCallback, useState } from "react";
-import VolumeIcon from "../../../public/svg/volume-2.svg";
-import VolumeMuteIcon from "../../../public/svg/volume-x.svg";
 import Castle from "../../../public/svg/castle.svg";
 import Danger from "../../../public/svg/danger.svg";
 import Mountain from "../../../public/svg/mountain.svg";
 import Library from "../../../public/svg/library.svg";
 import Crown from "../../../public/svg/crown.svg";
+import Bag from "../../../public/svg/bag.svg";
+import Helm from "../../../public/svg/helm.svg";
 import { useSound } from "~/context/soundProvider";
 import { useWalletContext } from "~/hooks/useWalletContext";
 type Props = {
@@ -24,6 +24,7 @@ export const MenuSideBar = () => {
     mainMenu,
     toggleCryptsMenu,
     toggleLootMenu,
+    toggleGAMenu,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -46,13 +47,18 @@ export const MenuSideBar = () => {
           <span className="hidden sm:block">My Empire</span>
         </button>
       )}
-      <button className={buttonClasses} onClick={toggleLootMenu}>
-        <Castle className={iconClasses} />
-        <span className="hidden sm:block">Loot</span>
-      </button>
       <button className={buttonClasses} onClick={toggleMapMenu}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Realms</span>
+      </button>
+      <button className={buttonClasses} onClick={toggleLootMenu}>
+        <Bag className={"mx-auto w-8 sm:w-14 fill-current"} />
+        <span className="hidden sm:block">Loot</span>
+      </button>
+
+      <button className={buttonClasses} onClick={toggleGAMenu}>
+        <Helm className={"mx-auto w-8 sm:w-6 fill-current mb-4"} />
+        <span className="hidden sm:block ">GA</span>
       </button>
       <button className={buttonClasses} onClick={toggleCryptsMenu}>
         <Danger className={iconClasses} />

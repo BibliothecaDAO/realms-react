@@ -1,11 +1,14 @@
 import React from "react";
 import { MouseEventHandler } from "react";
+import { number } from "starknet";
 export type GameStatus = "active" | "completed" | "expired";
 
 interface Owner {
   address: string;
   realmsHeld: number;
   bridgedRealmsHeld: number;
+  bagsHeld: number;
+  gAdventurersHeld: number;
 }
 
 export interface Realm {
@@ -56,6 +59,22 @@ export interface Loot {
   manasClaimed: number;
   itemsClaimed: Boolean;
 }
+export interface GAdventurer {
+  id: string;
+  chest: string;
+  foot: string;
+  hand: string;
+  head: string;
+  neck: string;
+  ring: string;
+  waist: string;
+  weapon: string;
+  order: string;
+  orderColor: string;
+  orderCount: string;
+  currentOwner: Owner;
+  minted: number;
+}
 export interface Data {
   realm: Realm;
 }
@@ -64,6 +83,9 @@ export interface CryptData {
 }
 export interface LootData {
   bag: Loot;
+}
+export interface GAData {
+  gadventurer: GAdventurer;
 }
 export interface RealmProps {
   realm: Realm;
@@ -80,6 +102,13 @@ export interface CryptProps {
 }
 export interface LootProps {
   loot: Loot;
+  loading: boolean;
+  size?: any;
+  onClick?: (event: any, id: string) => void;
+  flyto?: boolean;
+}
+export interface GAProps {
+  ga: GAdventurer;
   loading: boolean;
   size?: any;
   onClick?: (event: any, id: string) => void;
@@ -123,4 +152,17 @@ export interface CryptFilters {
   address?: string;
   first?: number;
   skip?: number;
+}
+
+export interface WalletData {
+  wallet: WalletEcosystemData;
+}
+
+export interface WalletEcosystemData {
+  currentOwner: Owner;
+  bags: Loot[];
+}
+export interface GAsData {
+  currentOwner: Owner;
+  gadventurers: GAdventurer[];
 }
