@@ -37,7 +37,7 @@ export const MenuSideBar = () => {
   const iconClasses = "mx-auto w-6 sm:w-10 fill-current mb-1";
   return (
     <div
-      className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all ${
+      className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all overflow-auto py-40 ${
         mainMenu ? "" : "translate-y-full hidden"
       }`}
     >
