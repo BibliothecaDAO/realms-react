@@ -82,7 +82,7 @@ export function GAdventurer(props: GAProps): ReactElement {
               <thead>
                 <tr>
                   <th className="p-4 pl-6 text-left uppercase">Item</th>
-                  <th className="p-4 uppercase">Greatness</th>
+                  {/* <th className="p-4 uppercase">Greatness</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -114,11 +114,11 @@ export function GAdventurer(props: GAProps): ReactElement {
                       </p>
                     </td>
 
-                    <td className="text-center">
+                    {/* <td className="text-center">
                       {metaData
                         ? (metaData as any).greatness[item.toLowerCase()]
                         : 0}
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

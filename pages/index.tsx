@@ -388,7 +388,11 @@ function App() {
         >
           <StaticMap
             attributionControl={false}
-            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+            mapStyle={
+              process.env.DRAFT
+                ? "mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+                : "mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
+            }
             mapboxApiAccessToken={
               "pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A"
             }
