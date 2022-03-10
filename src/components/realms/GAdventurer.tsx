@@ -129,7 +129,7 @@ export function GAdventurer(props: GAProps): ReactElement {
                 className="text-xl"
                 target={"_blank"}
                 href={
-                  "https://opensea.io/assets/0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7/" +
+                  "https://opensea.io/assets/0x8db687aceb92c66f013e1d614137238cc698fedb/" +
                   props.ga.id
                 }
                 rel="noreferrer"
