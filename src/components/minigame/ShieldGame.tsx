@@ -162,7 +162,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
       ) : null}
       <div className="absolute z-10 p-8">
         <h3 className="flex justify-between text-blue-600 uppercase font-body">
-          <span className="mx-auto mb-8 text-5xl z-11">
+          <span className="mb-8 text-5xl  z-11">
             Desiege game{" "}
             {gameContext !== undefined ? (
               `${gameContext.gameIdx}`

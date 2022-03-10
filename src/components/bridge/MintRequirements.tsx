@@ -9,14 +9,18 @@ type Prop = {
 const MintRequirements: React.FC<Prop> = (props) => {
   const { balance } = useWalletContext();
 
+  const isTokenRequirementSuppressed =
+    process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == "1";
+
   return (
     <div>
-      <p className="mb-2 text-xl text-red-600">
-        {/* TODO: Remove this */}
-        Note: This requirement is currently being suppressed during testing. You
-        do not need to have a LORDS balance. Please continue to step 4 and your
-        transaction will succeed.
-      </p>
+      {isTokenRequirementSuppressed ? (
+        <p className="mb-2 text-xl text-red-600">
+          Note: This requirement is currently being suppressed during testing.
+          You do not need to have a LORDS balance. Please continue to step 4 and
+          your transaction will succeed.
+        </p>
+      ) : null}
       <h3>
         LORDS Balance: <span className="text-2xl">{balance || "0.0"}</span>
       </h3>
