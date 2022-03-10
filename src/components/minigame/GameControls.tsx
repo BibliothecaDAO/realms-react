@@ -8,6 +8,7 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
+  useStarknetCall,
 } from "@starknet-react/core";
 import BridgeModal from "../bridge/Modal";
 import {
@@ -25,12 +26,12 @@ import useGameStats from "~/hooks/useGameStats";
 import { ExternalLink } from "~/shared/Icons";
 import useTxCallback from "~/hooks/useTxCallback";
 import { LightningBoltIcon } from "@heroicons/react/outline";
-import { useRouter } from "next/router";
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
 } from "./TowerShieldVitality";
 import { toBN } from "starknet/dist/utils/number";
+import axios from "axios";
 
 type Prop = {
   gameIdx?: number;
@@ -105,6 +106,14 @@ const GameControls: React.FC<Prop> = (props) => {
     method: "attack_tower",
   });
 
+  // const boostEffect = useStarknetCall({
+  //   contract: towerDefenceContract,
+  //   method: "calculate_time_multiplier",
+  //   args: {
+  //     game_idx:
+  //   }
+  // });
+
   const {
     fetchTokenBalances,
     tokenBalances,
@@ -116,6 +125,19 @@ const GameControls: React.FC<Prop> = (props) => {
     shieldAction.data || attackAction.data,
     () => {
       fetchTokenBalances(gameIdx as number);
+
+      // Temp: Post a request to distribute this as a notification
+      // TODO: Replace with StarkNet indexer / real-time events in future
+      axios
+        .post("/api/notify", {
+          token_amount: actionAmount,
+          token_offset: side == "light" ? "1" : "2",
+          token_boost: currentBoostBips,
+          game_idx: gameIdx,
+          city_health: "100", // TODO: Provide value if needed
+          shield_health: "100", // TODO: Provide value if needed
+        })
+        .catch((e) => console.error(e));
     }
   );
 
