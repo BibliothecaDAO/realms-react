@@ -41,13 +41,14 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
         )}
       </p>
       <p>
-        Vitality:{" "}
         {zeroVitality ? (
-          <p className="inline-block px-2 py-1 text-white bg-purple-600 rounded-sm">
-            Depleted
+          <p className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
+            Dark Wins
           </p>
         ) : props.health ? (
-          (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
+          `Vitality: ${(props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(
+            2
+          )}`
         ) : (
           "-"
         )}
