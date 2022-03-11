@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export type LoreNodeType = 'root-contract' | 'branch-narrative';
 
 export interface LDKRoot {
@@ -7,8 +9,8 @@ export interface LDKRoot {
 }
 
 export interface LDKLayer {
-  descriptions: string[];
-  title: string;
+  descriptions: string[] | React.ReactNode[];
+  title: string | React.ReactNode;
 }
 
 export interface LDKSchema {

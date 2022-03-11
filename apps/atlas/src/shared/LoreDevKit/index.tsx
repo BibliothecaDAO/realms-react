@@ -1,38 +1,71 @@
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import TokenLabel from '../ElementsLabel';
 import type { LDKSchema } from './lib';
 
-const LoreDevKit = ({ ldk }: { ldk: LDKSchema }) => {
-  return (
-    <div className="block">
-      <div className="flex flex-row items-center justify-between mb-4">
-        <h1>
-          Desiege S1: <TokenLabel>Divine Eclipse</TokenLabel>
-        </h1>
-        <span className="px-2 py-1 text-sm bg-black rounded-sm">
-          LDK Schema v0.1-alpha
-        </span>
-      </div>
-      {ldk.layers.map((l, i) => (
-        <div className="px-8 py-4 border-t-2 border-gray-400" key={i}>
-          <h3 className="list-disc">{l.title}</h3>
-          <ul>
-            {l.descriptions.map((d, i) => (
-              <li className="list-disc list-inside" key={i}>
-                {d}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+type Prop = {
+  ldk: LDKSchema;
+  initialLayer?: string;
+};
 
-      {/* <h2>Lore Development Kit Principles</h2>
-      <ul>
-        <li>
-          Lore creation flows in the direction from source contracts to
-          community canon.
-        </li>
-        <li>Lore development Layers adhere to the LDK schema.</li>
-      </ul> */}
+const LoreDevKit = (props: Prop) => {
+  const { ldk } = props;
+
+  const initLayerIndex = ldk.layers
+    .map((l) => l.title)
+    .indexOf(props.initialLayer || '');
+
+  const [layerIndex, setLayerIndex] = useState(
+    initLayerIndex == -1 ? 0 : initLayerIndex
+  );
+
+  const currentLayer = ldk.layers[layerIndex];
+
+  const goToParentLore = () => {
+    if (layerIndex > 0) {
+      setLayerIndex((prev) => prev - 1);
+    }
+  };
+
+  const goToLoreBranches = () => {
+    if (layerIndex < props.ldk.layers.length - 1) {
+      setLayerIndex((prev) => prev + 1);
+    }
+  };
+
+  const loreBtnClass =
+    'text-blue-600 hover:text-blue-500 py-2 disabled:text-gray-800';
+
+  return (
+    <div className="block p-8">
+      <div className="flex flex-row items-center justify-between mb-4">
+        <h1>Lore</h1>
+      </div>
+      <button
+        disabled={layerIndex == 0}
+        onClick={() => {
+          goToParentLore();
+        }}
+        className={loreBtnClass}
+      >
+        {' '}
+        <ArrowUpIcon className="inline-block h-4" /> What Lore came before?
+      </button>
+      <h2 className="mb-2">{currentLayer.title}</h2>
+
+      {currentLayer.descriptions.map((d, i) => (
+        <p className="my-2 text-xl" key={i}>
+          {d}
+        </p>
+      ))}
+      <button
+        disabled={layerIndex == ldk.layers.length - 1}
+        onClick={() => goToLoreBranches()}
+        className={loreBtnClass}
+      >
+        {' '}
+        <ArrowDownIcon className="inline-block h-4" /> What Lore comes after?
+      </button>
     </div>
   );
 };

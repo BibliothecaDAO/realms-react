@@ -14,9 +14,10 @@ import {
   getGameContextVariables,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
-import GameBlockTimer from './GameBlockTimer';
+// import GameBlockTimer from './GameBlockTimer';
 import GameControls from './GameControls';
 import MenuBar from './MenuBar';
+import Modal from './Modal';
 import TowerDefence from './TowerDefence';
 
 export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
@@ -135,6 +136,14 @@ const ShieldGame: React.FC<Prop> = (props) => {
     return gs;
   }, [gameContext]);
 
+  const [loreModalOpen, setLoreModalOpen] = useState(view == 'lore');
+
+  useEffect(() => {
+    if (view == 'lore') {
+      setLoreModalOpen(true);
+    }
+  }, [view]);
+
   // An error occurred server-side and this is not recoverable.
   if (
     props.towerDefenceContractAddr == undefined ||
@@ -154,12 +163,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
-      {view == 'lore' ? (
-        <div className="z-10 flex flex-row gap-20 p-8 text-white bg-gray-800">
-          <LoreDevKit ldk={DivineSiege} />
-          <GameBlockTimer gameCtx={gameContext} />
+      <Modal
+        isOpen={loreModalOpen}
+        toggle={() => {
+          setLoreModalOpen(false);
+          setView('game-controls');
+        }}
+      >
+        <div className="w-full bg-gray-900 sm:m-8 sm:w-1/2 rounded-xl">
+          <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
         </div>
-      ) : null}
+      </Modal>
       <div className="absolute z-10 p-8">
         <h3 className="flex justify-between text-blue-600 uppercase font-body">
           <span className="mb-8 text-5xl z-11">
