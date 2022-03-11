@@ -1,5 +1,5 @@
 import { useStarknetTransactionManager } from '@starknet-react/core';
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const useTxCallback = (
   transactionHash: string | undefined,
@@ -11,6 +11,11 @@ const useTxCallback = (
   );
 
   const [executed, setExecuted] = useState(false);
+
+  useEffect(() => {
+    // Reset the execution state when transaction hash changes
+    setExecuted(false);
+  }, [transactionHash]);
 
   useEffect(() => {
     if (

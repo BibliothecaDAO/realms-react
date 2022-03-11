@@ -148,6 +148,7 @@ module.exports = {
       extends: ['plugin:sonarjs/recommended'],
       rules: {
         'sonarjs/no-nested-template-literals': 'off',
+        'sonarjs/no-duplicate-string': 'off',
       },
     },
     {

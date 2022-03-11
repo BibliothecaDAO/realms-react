@@ -1,13 +1,10 @@
 import { useContract, useStarknetCall } from '@starknet-react/core';
-import BN from 'bn.js';
-import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
 import { ElementToken } from '@/constants/index';
-import AddressIndicator from '@/shared/AddressIndicator';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';

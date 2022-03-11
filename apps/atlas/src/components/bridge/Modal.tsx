@@ -1,11 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import Bridge from './Bridge';
 
 type Prop = {
   isOpen: boolean;
   toggle: () => void;
-  towerDefenceStorageContractAddress: string;
+  children?: React.ReactNode;
 };
 
 const BridgeModal: React.FC<Prop> = (props) => {
@@ -15,7 +14,7 @@ const BridgeModal: React.FC<Prop> = (props) => {
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto "
+        className="fixed inset-0 z-20 overflow-y-auto "
         open={isOpen}
         onClose={() => props.toggle()}
       >
@@ -43,12 +42,7 @@ const BridgeModal: React.FC<Prop> = (props) => {
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
               <Dialog.Title className={'hidden'}>Desiege Setup</Dialog.Title>
-              <Bridge
-                towerDefenceStorageContractAddress={
-                  props.towerDefenceStorageContractAddress
-                }
-                toggleModal={props.toggle}
-              />
+              {props.children}
             </div>
           </Transition.Child>
         </div>

@@ -3,7 +3,6 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
-  useStarknetCall,
 } from '@starknet-react/core';
 import axios from 'axios';
 import type BN from 'bn.js';
@@ -29,6 +28,7 @@ import {
   getIsApprovedForAll,
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
+import Bridge from '../bridge/Bridge';
 import BridgeModal from '../bridge/Modal';
 import {
   ShieldVitalityDisplay,
@@ -265,13 +265,25 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       </div>
       <BridgeModal
-        towerDefenceStorageContractAddress={
-          props.towerDefenceStorageContractAddress
-        }
         isOpen={mintModalOpen}
         toggle={() => setMintModalOpen(false)}
-      />
-      {!loadingTokenBalance && !!tokenBalances ? (
+      >
+        <Bridge
+          onComplete={() => {
+            setMintModalOpen(false);
+            // TODO: The balance isn't updated right away for some reason
+            // Make this more robust or implement useStarknetCall in useSiegeBalance hook
+            setTimeout(() => {
+              fetchTokenBalances(gameIdx as number);
+            }, 3000);
+          }}
+          onClose={() => setMintModalOpen(false)}
+          towerDefenceStorageContractAddress={
+            props.towerDefenceStorageContractAddress
+          }
+        />
+      </BridgeModal>
+      {!loadingTokenBalance && tokenBalances ? (
         <Joyride
           continuous
           run={showTutorial}
@@ -545,8 +557,6 @@ const GameControls: React.FC<Prop> = (props) => {
           <div className="flex flex-row justify-center my-4">
             <input
               id="action-amount"
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
               type="number"
               placeholder="Amount"
               min={0}

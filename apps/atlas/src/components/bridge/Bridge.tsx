@@ -1,4 +1,4 @@
-import { CheckIcon as Check, XCircleIcon } from '@heroicons/react/solid';
+import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/solid';
 import {
   useStarknet,
   useStarknetTransactionManager,
@@ -6,8 +6,6 @@ import {
 import axios from 'axios';
 
 import classNames from 'classnames';
-import { getBagsInWallet } from 'loot-sdk';
-import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import type { AddTransactionResponse } from 'starknet';
 import useGameStats from '@/hooks/useGameStats';
@@ -24,8 +22,8 @@ import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
 type Prop = {
   initialTab?: TabName;
-  onReceivedTx?: (txHash: string) => void;
-  toggleModal: () => void;
+  onComplete?: () => void;
+  onClose: () => void;
   towerDefenceStorageContractAddress: string;
 };
 
@@ -39,29 +37,15 @@ type TabName =
 export const Bridge: React.FC<Prop> = (props) => {
   const starknet = useStarknet();
   const txManager = useStarknetTransactionManager();
-  const {
-    account,
-    signer,
-    connectWallet,
-    isConnected,
-    disconnectWallet,
-    displayName,
-  } = useWalletContext();
+  const { account, signer, connectWallet, isConnected } = useWalletContext();
 
   const [gameIdx, setGameIdx] = useState<string>();
   const [mintError, setMintError] = useState<string>();
-  const [middlewareSigning, setMiddlewareSigning] = useState(false);
+  const [middlewareStatus, setMiddlewareStatus] = useState<
+    'signing' | 'pending' | 'completed'
+  >();
 
   const [transactionHash, setTransactionHash] = useState<string>();
-
-  const router = useRouter();
-
-  useEffect(() => {
-    // In case the setup page was navigated to directly
-    // replace the routing state so that page refreshes
-    // don't repeatedly open the setup
-    router.replace('/desiege', '/desiege', { shallow: true });
-  }, []);
 
   useEffect(() => {
     if (transactionHash) {
@@ -78,8 +62,8 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     getLatestGameIndex()
-      .then((val) => setGameIdx(val))
-      .catch((e) => {
+      .then((val: any) => setGameIdx(val))
+      .catch((e: any) => {
         // TODO: Handle error
         console.error(e);
       });
@@ -101,18 +85,14 @@ export const Bridge: React.FC<Prop> = (props) => {
     props.initialTab || 'mint'
   );
 
-  const ethConnect = 'connect-ethereum';
-  const starkConnect = 'connect-starknet';
-  const mintReq = 'mint-requirements';
-
   useEffect(() => {
     if (!isConnected) {
-      setCurrentTab(ethConnect);
+      setCurrentTab('connect-ethereum');
     } else {
       if (starknet.account) {
         setCurrentTab('mint');
       } else {
-        setCurrentTab(starkConnect);
+        setCurrentTab('connect-starknet');
       }
     }
   }, [isConnected, starknet.account]);
@@ -128,10 +108,11 @@ export const Bridge: React.FC<Prop> = (props) => {
     try {
       setMintError(undefined);
       if (signer) {
-        setMiddlewareSigning(true);
+        setMiddlewareStatus('signing');
         const sig = await signer.signMessage(
           messageKey(starknet.account as string)
         );
+        setMiddlewareStatus('pending');
         const res = await axios.post<AddTransactionResponse | MintingError>(
           '/api/minigame_alpha_mint',
           {
@@ -150,12 +131,11 @@ export const Bridge: React.FC<Prop> = (props) => {
           setMintError(res.data.error);
           setTransactionHash(undefined);
         }
-        setMiddlewareSigning(false);
       }
     } catch (e: any) {
       setMintError(e.message);
     } finally {
-      setMiddlewareSigning(false);
+      setMiddlewareStatus(undefined);
     }
   };
 
@@ -165,20 +145,13 @@ export const Bridge: React.FC<Prop> = (props) => {
   };
 
   const connectedClassname =
-    'inline-block py-2 mt-4 break-words px-4 bg-white/30 rounded-md';
+    'inline-block py-2 break-words px-4 bg-white/30 rounded-md';
 
   const txTracker = useTxCallback(transactionHash, () => {
-    // TODO: Close the modal and start next sequence
+    props.onComplete && props.onComplete();
   });
 
   const mintTxLoading = txTracker.loading;
-
-  useEffect(() => {
-    // Middleware signing and tx status need to be synced carefully
-    if (middlewareSigning) {
-      setMiddlewareSigning(!txTracker.loading);
-    }
-  }, [txTracker.tx?.status]);
 
   const Checkmark = <Check className="inline-block w-6 ml-1" />;
 
@@ -188,20 +161,20 @@ export const Bridge: React.FC<Prop> = (props) => {
   return (
     <div className="w-full pt-4 sm:w-1/2">
       <div className="p-4 mx-2 mt-4 rounded-lg bg-white/60">
-        <h1 className="flex flex-row items-start justify-between px-2 mt-4 mb-8">
+        <h1 className="flex flex-row items-start justify-between px-2 mt-4 mb-4">
           <ElementsLabel className="h-20">Desiege Setup</ElementsLabel>
 
-          <button onClick={() => props.toggleModal()} className="text-black">
+          <button onClick={() => props.onClose()} className="text-black">
             <XCircleIcon className="h-8" />
           </button>
         </h1>
         <div className="px-2 text-gray-800">
           <nav className="flex flex-row rounded-md bg-white/70">
             <button
-              onClick={() => setCurrentTab(ethConnect)}
+              onClick={() => setCurrentTab('connect-ethereum')}
               className={classNames(
                 tabBtnClasses.base,
-                currentTab == ethConnect ? tabBtnClasses.active : null
+                currentTab == 'connect-ethereum' ? tabBtnClasses.active : null
               )}
             >
               <span className="flex">
@@ -211,20 +184,20 @@ export const Bridge: React.FC<Prop> = (props) => {
             </button>
 
             <button
-              onClick={() => setCurrentTab(mintReq)}
+              onClick={() => setCurrentTab('mint-requirements')}
               className={classNames(
                 tabBtnClasses.base,
-                currentTab == mintReq ? tabBtnClasses.active : null
+                currentTab == 'mint-requirements' ? tabBtnClasses.active : null
               )}
             >
               <span className="flex">2. Lords Balance</span>
             </button>
 
             <button
-              onClick={() => setCurrentTab(starkConnect)}
+              onClick={() => setCurrentTab('connect-starknet')}
               className={classNames(
                 tabBtnClasses.base,
-                currentTab == starkConnect ? tabBtnClasses.active : null
+                currentTab == 'connect-starknet' ? tabBtnClasses.active : null
               )}
             >
               <span className="flex">
@@ -245,8 +218,8 @@ export const Bridge: React.FC<Prop> = (props) => {
             </button>
           </nav>
           <div className="text-xl">
-            {currentTab == ethConnect ? (
-              <div>
+            {currentTab == 'connect-ethereum' ? (
+              <div className="py-4">
                 {account ? (
                   <p className={connectedClassname}>Connected as {account}</p>
                 ) : (
@@ -265,12 +238,12 @@ export const Bridge: React.FC<Prop> = (props) => {
                 ) : null} */}
               </div>
             ) : null}
-            {currentTab == mintReq ? (
+            {currentTab == 'mint-requirements' ? (
               <div className="py-4">
                 <MintRequirements l1Address={account.toString()} />
               </div>
             ) : null}
-            {currentTab == starkConnect ? (
+            {currentTab == 'connect-starknet' ? (
               <div className="py-4">
                 {starknet.account ? (
                   <p className={connectedClassname}>
@@ -373,7 +346,7 @@ export const Bridge: React.FC<Prop> = (props) => {
 
                     {txTracker.tx?.status == 'ACCEPTED_ON_L2' ? (
                       <p className="mt-4 text-2xl text-green-800">
-                        Minting succeeded. Please refresh your browser.
+                        Element distillation ceremony completed.
                       </p>
                     ) : null}
 
@@ -414,9 +387,15 @@ export const Bridge: React.FC<Prop> = (props) => {
                             >
                               Sign and Mint
                             </Button>
-                            {middlewareSigning ? (
+                            {middlewareStatus == 'signing' ||
+                            middlewareStatus == 'pending' ? (
                               <p className="mt-4 text-2xl animate-bounce">
-                                Requesting Signature...
+                                {middlewareStatus == 'signing'
+                                  ? 'Requesting signature...'
+                                  : ''}
+                                {middlewareStatus == 'pending'
+                                  ? 'Starting Element distillation...'
+                                  : ''}
                               </p>
                             ) : null}
                           </>
@@ -427,7 +406,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                 ) : (
                   <p>
                     No Starknet account connected.{' '}
-                    <Button onClick={() => setCurrentTab(starkConnect)}>
+                    <Button onClick={() => setCurrentTab('connect-starknet')}>
                       Connect StarkNet
                     </Button>
                   </p>
