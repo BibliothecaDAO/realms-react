@@ -18,6 +18,7 @@ export const mockSignAndMint = rest.post(
   (req, res, ctx) => {
     return res(
       ctx.status(200),
+      ctx.delay(2000),
       ctx.json({
         code: 'TRANSACTION_RECEIVED',
         transaction_hash:

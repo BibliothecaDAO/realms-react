@@ -5,7 +5,7 @@
 
 module.exports = {
   root: true,
-  ignorePatterns: ['.next', '**/.out'],
+  ignorePatterns: ['.next', '**/.out', 'src/geodata/*'],
   extends: [
     // Extend the monorepo default configuration
     '../../.eslintrc.base.js',

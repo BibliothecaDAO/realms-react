@@ -3,9 +3,11 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
+  useStarknetCall,
 } from '@starknet-react/core';
+import axios from 'axios';
+import type BN from 'bn.js';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import Joyride, { STATUS, ACTIONS } from 'react-joyride';
 import type { Abi } from 'starknet';
@@ -31,11 +33,13 @@ import BridgeModal from '../bridge/Modal';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
-} from './TowerDefence';
+} from './TowerShieldVitality';
 
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
+  health: BN;
+  shield: BN;
   gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
   towerDefenceContractAddress: string;
@@ -63,8 +67,6 @@ enum OnboardingTutorials {
 const GameControls: React.FC<Prop> = (props) => {
   const { gameIdx, currentBoostBips, gameStatus } = props;
 
-  const router = useRouter();
-
   const {
     account,
     connectBrowserWallet,
@@ -72,7 +74,7 @@ const GameControls: React.FC<Prop> = (props) => {
   } = useStarknet();
 
   useEffect(() => {
-    // connectBrowserWallet(); // on mount
+    connectBrowserWallet(); // on mount
   }, []);
 
   const [showTutorial, setShowTutorial] = useState(false);
@@ -108,6 +110,14 @@ const GameControls: React.FC<Prop> = (props) => {
     method: 'attack_tower',
   });
 
+  // const boostEffect = useStarknetCall({
+  //   contract: towerDefenceContract,
+  //   method: "calculate_time_multiplier",
+  //   args: {
+  //     game_idx:
+  //   }
+  // });
+
   const {
     fetchTokenBalances,
     tokenBalances,
@@ -119,6 +129,25 @@ const GameControls: React.FC<Prop> = (props) => {
     shieldAction.data || attackAction.data,
     () => {
       fetchTokenBalances(gameIdx as number);
+
+      // Temp: Post a request to distribute this as a notification
+      // TODO: Replace with StarkNet indexer / real-time events in future
+      axios
+        .post('/api/notify', {
+          token_amount: actionAmount,
+          token_offset: side == 'light' ? '1' : '2',
+          token_boost: currentBoostBips,
+          game_idx: gameIdx,
+          city_health: props.health
+            .div(toBN(EFFECT_BASE_FACTOR))
+            .toNumber()
+            .toFixed(2),
+          shield_health: props.shield
+            .div(toBN(EFFECT_BASE_FACTOR))
+            .toNumber()
+            .toFixed(2),
+        })
+        .catch((e) => console.error(e)); // TODO: Handle error
     }
   );
 
@@ -204,12 +233,21 @@ const GameControls: React.FC<Prop> = (props) => {
   );
 
   const gameStats = useGameStats(
-    gameIdx == undefined ? 0 : gameIdx,
+    gameIdx == undefined
+      ? 0
+      : props.gameStatus == 'active'
+      ? gameIdx
+      : gameIdx + 1,
     props.towerDefenceStorageContractAddress
   );
 
   const actionIsLoading =
     shieldAction.loading || attackAction.loading || txTracker.loading;
+
+  const noMoreElements =
+    tokenBalances &&
+    tokenBalances.length > 0 &&
+    tokenBalances.every((n) => n.isZero());
 
   return (
     <>
@@ -217,7 +255,7 @@ const GameControls: React.FC<Prop> = (props) => {
         id="shield-vitality-container"
         className={classNames(
           showTutorial ? '' : 'hidden',
-          'absolute right-1/3',
+          'absolute -right-56',
           ShieldVitalityDisplayClassnames
         )}
       >
@@ -267,15 +305,10 @@ const GameControls: React.FC<Prop> = (props) => {
               content: (
                 <>
                   Displays the ratio of total{' '}
-                  <ElementLabel>Elements</ElementLabel> used over the total
-                  amount distilled, for each Element.
+                  <ElementLabel>Elements</ElementLabel> used so far, over the
+                  total amount distilled, for each Element of this game.
                 </>
               ),
-            },
-            {
-              title: 'Available Spells',
-              target: '#action-controls',
-              content: 'Light can shield, Dark can attack',
             },
             {
               title: 'Spell Power',
@@ -323,7 +356,7 @@ const GameControls: React.FC<Prop> = (props) => {
         </p>
       ) : null}
 
-      {gameStatus == 'expired' && account ? (
+      {(gameStatus == 'expired' || gameStatus == 'completed') && account ? (
         <div>
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && !loadingTokenBalance ? (
@@ -361,6 +394,7 @@ const GameControls: React.FC<Prop> = (props) => {
             <LoadingSkeleton />
           ) : (
             <>
+              Total minted for the next game
               <p>Light: {gameStats.light}</p>
               <p>Dark : {gameStats.dark}</p>
             </>
@@ -417,6 +451,19 @@ const GameControls: React.FC<Prop> = (props) => {
             ) : (
               <div className="mt-4">
                 <div id="token-balance">
+                  {noMoreElements ? (
+                    <p>
+                      No <ElementLabel>Elements</ElementLabel> for this game{' '}
+                      <button
+                        onClick={() => {
+                          setMintModalOpen(true);
+                        }}
+                        className={primaryBtnClass}
+                      >
+                        <ElementLabel>Prepare for the next Game</ElementLabel>
+                      </button>
+                    </p>
+                  ) : null}
                   {side == 'light' ? (
                     <>
                       <ElementLabel side="light">LIGHT </ElementLabel>
@@ -444,25 +491,25 @@ const GameControls: React.FC<Prop> = (props) => {
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
                   <div id="game-stats">
-                    <div className="w-full h-1 mt-2 bg-cyan-800">
+                    <div className="w-full h-2 mt-2 bg-cyan-800">
                       {gameStats.lightUsed !== undefined &&
                       gameStats.light !== undefined ? (
                         <div
                           style={{
                             width: `${gameStats.lightUsed / gameStats.light}%`,
                           }}
-                          className="h-1 transition-all bg-cyan-400"
+                          className="h-2 transition-all bg-cyan-300"
                         ></div>
                       ) : undefined}
                     </div>
-                    <div className="w-full h-1 mt-2 bg-purple-800">
+                    <div className="w-full h-2 mt-2 bg-purple-800">
                       {gameStats.darkUsed !== undefined &&
                       gameStats.dark !== undefined ? (
                         <div
                           style={{
                             width: `${gameStats.darkUsed / gameStats.dark}%`,
                           }}
-                          className="h-1 bg-purple-400"
+                          className="h-2 bg-purple-300"
                         ></div>
                       ) : undefined}
                     </div>
@@ -476,25 +523,24 @@ const GameControls: React.FC<Prop> = (props) => {
             id="action-controls"
             className="flex w-full gap-4 text-gray-100 row"
           >
-            <div className="flex-1">
-              <Button
-                disabled={side == 'dark'}
-                className="w-full mt-4 text-black"
-                onClick={() => setAction('shield')}
-              >
-                Shield
-              </Button>
-            </div>
-            <div className="flex-1">
-              <Button
-                disabled={side == 'light'}
-                className="w-full mt-4 text-black"
-                active={action == 'attack'}
-                onClick={() => setAction('attack')}
-              >
-                Attack
-              </Button>
-            </div>
+            {/* <div className="flex-1">
+              {side == "light" ? (
+                <Button
+                  className="w-full mt-4 text-black"
+                  onClick={() => setAction("shield")}
+                >
+                  Shield
+                </Button>
+              ) : (
+                <Button
+                  className="w-full mt-4 text-black"
+                  active={action == "attack"}
+                  onClick={() => setAction("attack")}
+                >
+                  Attack
+                </Button>
+              )}
+            </div> */}
           </div>
           <div className="flex flex-row justify-center my-4">
             <input
@@ -516,14 +562,7 @@ const GameControls: React.FC<Prop> = (props) => {
             />{' '}
             <div id="action-boost" className="ml-4">
               {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <button
-                  onClick={() => {
-                    router.replace('/desiege?tab=lore', undefined, {
-                      shallow: true,
-                    });
-                  }}
-                  className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800"
-                >
+                <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
                   <LightningBoltIcon className="inline-block w-4" />{' '}
                   {`${currentBoostBips / 100}%`}
                 </button>
@@ -536,7 +575,9 @@ const GameControls: React.FC<Prop> = (props) => {
               disabled={
                 action == undefined ||
                 actionAmount.length == 0 ||
-                actionIsLoading
+                actionIsLoading ||
+                noMoreElements ||
+                gameStats.loading
               }
               className={classNames(primaryBtnClass)}
               onClick={() => {
@@ -549,8 +590,26 @@ const GameControls: React.FC<Prop> = (props) => {
                 }
               }}
             >
-              {actionIsLoading ? 'Casting Spell' : 'Cast Element Spell'}
+              {actionIsLoading
+                ? 'Casting Spell'
+                : `Cast ${action == 'shield' ? 'Shield' : 'Dark Attack'} Spell`}
             </Button>
+          ) : null}
+          {(shieldAction.data || attackAction.data) && actionIsLoading ? (
+            <p className="mt-2">
+              <a
+                // TODO: Choose host dynamically here based on network
+                href={`https://goerli.voyager.online/tx/${
+                  shieldAction.data || attackAction.data
+                }/`}
+                className="underline"
+                target={'_blank'}
+                rel="noopener noreferrer"
+              >
+                Check Transaction Status
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" />
+            </p>
           ) : null}
           <button
             className="w-full my-2 text-center underline"

@@ -43,7 +43,7 @@ export const ResourceSideBar = (props: Props) => {
 
   return (
     <BaseSideBar open={resourceMenu}>
-      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
+      <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={toggleResourceMenu}

@@ -122,11 +122,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
       gameContext.gameStartBlock.toNumber() +
       gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
 
-    const gameIsActive =
+    const gameTimerIsActive =
       gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
 
     let gs: GameStatus;
-    if (gameIsActive) {
+    if (gameTimerIsActive) {
       if (gameContext.mainHealth.lte(toBN(0))) {
         gs = 'completed';
       } else {
@@ -145,9 +145,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
     initialLoadError
   ) {
     return (
-      <div className="text-black">
+      <div className="p-8 text-black">
         <h1>You&apos;re Early</h1>
-        <p>
+        <p className="text-xl">
           StarkNet is early too. An error occurred during the loading of
           contract state. Please refresh your browser and try again.
         </p>
@@ -158,14 +158,14 @@ const ShieldGame: React.FC<Prop> = (props) => {
   return (
     <div className="relative">
       {view == 'lore' ? (
-        <div className="z-10 flex flex-row gap-20 p-8 bg-gray-800">
+        <div className="z-10 flex flex-row gap-20 p-8 text-white bg-gray-800">
           <LoreDevKit ldk={DivineSiege} />
           <GameBlockTimer gameCtx={gameContext} />
         </div>
       ) : null}
-      <div className="absolute z-10 w-full p-8">
-        <h3 className="flex justify-between text-center text-blue-300 uppercase font-body ">
-          <span className="mx-auto mb-8 text-5xl z-11">
+      <div className="absolute z-10 p-8">
+        <h3 className="flex justify-between text-blue-600 uppercase font-body">
+          <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
               `${gameContext.gameIdx}`
@@ -176,10 +176,10 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </h3>
 
         {view == 'game-controls' || view == 'setup' ? (
-          <div className="flex flex-row w-full">
+          <div className="w-full">
             <div
               id="game-actions"
-              className="w-1/3 p-10 text-black bg-white/30 rounded-2xl"
+              className="w-full p-10 text-black bg-white/30 rounded-2xl"
             >
               {gameContext ? (
                 <GameControls
@@ -187,6 +187,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   towerDefenceStorageContractAddress={
                     props.towerDefenceStorageAddr
                   }
+                  health={health}
+                  shield={shield}
                   gameStatus={gs}
                   gameIdx={gameContext?.gameIdx}
                   currentBoostBips={boost}
@@ -205,9 +207,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
         currentBoostBips={boost}
-      >
-        <MenuBar toggleTab={(tab) => setView(tab)} />
-      </TowerDefence>
+      ></TowerDefence>
+      <MenuBar toggleTab={(tab) => setView(tab)} />
     </div>
   );
 };

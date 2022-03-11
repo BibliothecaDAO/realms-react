@@ -15,15 +15,16 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import type BN from 'bn.js';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
+import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type { MouseEventHandler } from 'react';
-import React, { useRef, useState, useCallback, Suspense } from 'react';
 import type * as THREE from 'three';
-import type { ElementToken } from '@/constants/index';
+import { Vector3 } from 'three';
 import { useSound } from '@/context/soundProvider';
-import { useUIContext } from '@/hooks/useUIContext';
 import type { GameStatus } from '@/types/index';
-import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
-import ShieldAction from './ShieldAction';
+import {
+  ShieldVitalityDisplay,
+  ShieldVitalityDisplayClassnames,
+} from './TowerShieldVitality';
 
 const Tower = dynamic(() => import('@/components/Model'), {
   ssr: false,
@@ -40,14 +41,13 @@ function Box(props: ObjectProps) {
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
 
-  // eslint-disable-next-line prefer-const
-  let [time, setTime] = useState(1.0);
-  const render = (clock: any) => {
-    const delta = clock.getDelta();
-    setTime((time += delta * 5));
-  };
-  // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
-  useFrame(({ clock }) => render(clock));
+  const [time, setTime] = useState(1.0);
+  // const render = (clock: any) => {
+  //   const delta = clock.getDelta();
+  //   setTime((time += delta * 5));
+  // };
+  // // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  // useFrame(({ clock }) => render(clock));
 
   const KnotShaderMaterial = {
     uniforms: {
@@ -90,20 +90,20 @@ function Box(props: ObjectProps) {
       receiveShadow
       ref={mesh}
       scale={2.3}
-      position={[0, 2, 0]}
+      position={[0, 3, 0]}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => {
         setHover(true);
-        playShield();
+        // playShield();
       }}
       onPointerOut={(event) => {
         setHover(false);
-        stop();
+        // stop();
       }}
     >
       <sphereBufferGeometry />
       <shaderMaterial
-        opacity={0.2}
+        opacity={1}
         attach="material"
         transparent={true}
         args={[KnotShaderMaterial]}
@@ -112,65 +112,30 @@ function Box(props: ObjectProps) {
   );
 }
 
-type ShieldVitalityDisplayProps = {
-  shield?: BN;
-  health?: BN;
-  className?: string;
-};
-
-export const ShieldVitalityDisplayClassnames =
-  'p-6 text-lg text-gray-700 bg-white/30 rounded-xl';
-
-export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
-  return (
-    <>
-      <p
-        className={classNames(
-          'text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700',
-          props.className
-        )}
-      >
-        Shield
-      </p>
-      <p className="text-4xl">
-        {props.shield
-          ? (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
-          : '-'}
-      </p>
-      <p>
-        City Vitality:{' '}
-        {props.health
-          ? (props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
-          : '-'}
-      </p>
-    </>
-  );
-};
-
 export interface TowerProps {
   gameStatus?: GameStatus;
+  gameIdx?: number;
   health?: BN;
   shield?: BN;
-  gameIdx?: number;
   currentBoostBips?: number;
-  children?: React.ReactNode[] | React.ReactNode;
 }
 
+const origin: { position?: Vector3 } = {
+  position: new Vector3(0, 0, 0),
+};
+
 function TowerDefence(props: TowerProps) {
-  const { togglePowerBar, toggleSetup } = useUIContext();
-  const [health, setHealth] = useState(100);
   const [rotate, setRotate] = useState(true);
 
-  const { isSoundActive, toggleSound } = useSound();
+  // const { isSoundActive, toggleSound } = useSound();
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
   const [showShieldAction, setShowShieldAction] = useState(false);
   const [showShieldDetail, setShowShieldDetail] = useState(false);
 
-  const [shieldValue] = useState<Record<ElementToken, string> | undefined>();
-  const handleClick = useCallback(() => {
-    toggleSound();
-  }, [toggleSound]);
+  const h = useMemo<number>(() => {
+    return props.health?.toNumber() || 0;
+  }, [props.health]);
 
   return (
     <div className="h-screen z-1">
@@ -189,16 +154,7 @@ function TowerDefence(props: TowerProps) {
               setRotate(true);
             }}
           >
-            <Box
-              jsx={{
-                position: [0, 0, 0],
-                onDoubleClick: () => {
-                  setHealth(health - 10);
-                  setShowShieldDetail(true);
-                },
-              }}
-              health={health}
-            />
+            <Box jsx={origin} health={h} />
             {showShieldDetail && (
               <Html position={[0, 5, 0]}>
                 <div className="flex w-auto">
@@ -228,13 +184,13 @@ function TowerDefence(props: TowerProps) {
                       <Shield className="w-8 h-8 mx-auto " />
                     </button>
                   </div>
-                  {showShieldAction && (
+                  {/* {showShieldAction && (
                     <ShieldAction
                       gameStatus={props.gameStatus}
                       gameIdx={props.gameIdx}
                       currentBoostBips={props.currentBoostBips}
                     />
-                  )}
+                  )} */}
                 </div>
               </Html>
             )}
@@ -272,17 +228,19 @@ function TowerDefence(props: TowerProps) {
                 setRotate(true);
               }}
             />
-            <Html
-              position={[-4.5, -0.3, 2]}
-              className={classNames('w-56', ShieldVitalityDisplayClassnames)}
-              occlude={[tower, shield]}
-              zIndexRange={[4, 0]}
-            >
-              <ShieldVitalityDisplay
-                health={props.health}
-                shield={props.shield}
-              />
-            </Html>
+            {props.gameStatus == 'active' ? (
+              <Html
+                position={[-4.5, -0.3, 2]}
+                className={classNames('w-56', ShieldVitalityDisplayClassnames)}
+                occlude={[tower, shield]}
+                zIndexRange={[4, 0]}
+              >
+                <ShieldVitalityDisplay
+                  health={props.health}
+                  shield={props.shield}
+                />
+              </Html>
+            ) : null}
           </group>
         </Suspense>
         <Stars
@@ -302,9 +260,10 @@ function TowerDefence(props: TowerProps) {
           distance={1000}
         />
       </Canvas>
-      {props.children ? props.children : null}
     </div>
   );
 }
 
-export default TowerDefence;
+// Wrap in React.memo so the same valued props
+// don't cause a re-render
+export default React.memo(TowerDefence);

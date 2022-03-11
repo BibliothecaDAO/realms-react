@@ -13,14 +13,14 @@ import type { AddTransactionResponse } from 'starknet';
 import useGameStats from '@/hooks/useGameStats';
 import useTxCallback from '@/hooks/useTxCallback';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { MintingError } from '@/pages/api/minigame_alpha_mint';
 import Button from '@/shared/Button';
 import ElementsLabel from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import { messageKey } from '@/util/messageKey';
-
 import { getLatestGameIndex } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
+
+import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
 type Prop = {
   initialTab?: TabName;
@@ -346,7 +346,8 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.light
-                          ? totalMinted.light + ' minted'
+                          ? totalMinted.light +
+                            ' total distilled for next round'
                           : '-'}
                       </div>
                       <div className="relative w-full text-center group">
@@ -364,7 +365,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark ? totalMinted.dark + ' minted' : '-'}
+                        {totalMinted.dark
+                          ? totalMinted.dark + ' total distilled for next round'
+                          : '-'}
                       </div>
                     </div>
 

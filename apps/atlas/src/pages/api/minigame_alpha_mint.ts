@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const lordsBalance = await fetchLordsBalance(ethAddress);
 
   const suppressERC20Requirement =
-    process.env.SUPPRESS_TOKEN_REQUIREMENT == '1';
+    process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == '1';
 
   if (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) && !suppressERC20Requirement) {
     res.send(

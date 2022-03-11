@@ -14,12 +14,16 @@ const defaultUIContext = {
   toggleResourceMenu: () => {},
   theOrdersMenu: false,
   toggleTheOrdersMenu: () => {},
-  closeAll: () => {},
+  closeAll: (excludes: string[]) => {},
   mainMenu: false,
   toggleMainMenu: () => {},
   closeOrdersMenu: () => {},
   toggleCryptsMenu: () => {},
   cryptsMenu: false,
+  toggleLootMenu: () => {},
+  lootMenu: false,
+  toggleGAMenu: () => {},
+  GAMenu: false,
 };
 
 const UIContext = createContext<{
@@ -35,12 +39,16 @@ const UIContext = createContext<{
   toggleResourceMenu: () => void;
   theOrdersMenu: boolean;
   toggleTheOrdersMenu: () => void;
-  closeAll: () => void;
+  closeAll: (excludes: string[]) => void;
   mainMenu: boolean;
   toggleMainMenu: () => void;
   closeOrdersMenu: () => void;
   toggleCryptsMenu: () => void;
   cryptsMenu: boolean;
+  toggleLootMenu: () => void;
+  lootMenu: boolean;
+  toggleGAMenu: () => void;
+  GAMenu: boolean;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -65,6 +73,8 @@ function useUI() {
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
   const [cryptsMenu, setCryptsMenu] = useState(false);
+  const [lootMenu, setLootMenu] = useState(false);
+  const [GAMenu, setGAMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
 
   const hideOrOpenMainMenu = () => {
@@ -78,7 +88,12 @@ function useUI() {
   const toggleCryptsMenu = () => {
     return setCryptsMenu(!cryptsMenu);
   };
-
+  const toggleLootMenu = () => {
+    return setLootMenu(!lootMenu);
+  };
+  const toggleGAMenu = () => {
+    return setGAMenu(!GAMenu);
+  };
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
@@ -113,8 +128,24 @@ function useUI() {
     // hideOrOpenMainMenu();
     return setTheOrdersMenu(false);
   };
-  const closeAll = () => {
-    return setTheOrdersMenu(false);
+  const closeAll = (exclude: string[]) => {
+    if (!exclude.includes('orders')) {
+      setTheOrdersMenu(false);
+    }
+    setEmpireMenu(false);
+    setResourceMenu(false);
+    if (!exclude.includes('crypts')) {
+      setCryptsMenu(false);
+    }
+    if (!exclude.includes('GA')) {
+      setGAMenu(false);
+    }
+    if (!exclude.includes('loot')) {
+      setLootMenu(false);
+    }
+    if (!exclude.includes('realms')) {
+      return setMapMenu(false);
+    }
   };
 
   return {
@@ -136,6 +167,10 @@ function useUI() {
     closeOrdersMenu,
     toggleCryptsMenu,
     cryptsMenu,
+    toggleLootMenu,
+    lootMenu,
+    toggleGAMenu,
+    GAMenu,
   };
 }
 

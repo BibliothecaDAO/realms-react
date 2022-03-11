@@ -18,7 +18,7 @@ import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { UIProvider } from '@/hooks/useUIContext';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
-/* import PageTransition from '@/components/navigation/PageTransition';
+/* import PageTransition from '@/components/navigation/PageTransition'; 
 import { animated, Transition } from '@react-spring/web'; */
 
 const client = new ApolloClient({
@@ -28,6 +28,8 @@ const client = new ApolloClient({
         realms:
           'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
         crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
+        ecosystem:
+          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem',
       },
       httpSuffix: '',
       createHttpLink: () => createHttpLink(),
@@ -40,6 +42,7 @@ const client = new ApolloClient({
           realms: concatPagination(['where', 'orderBy']),
           bridgedRealms: concatPagination(['where', 'orderBy']),
           dungeons: concatPagination(['where']),
+          bags: concatPagination(['where']),
         },
       },
     },

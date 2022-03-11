@@ -65,7 +65,7 @@ export function Realm(props: RealmProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.realm.id, 1);
+                      if (props.onClick) props.onClick(props.realm.id, 'A');
                     }}
                   >
                     fly to

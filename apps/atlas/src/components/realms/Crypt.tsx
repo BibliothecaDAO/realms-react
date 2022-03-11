@@ -80,7 +80,7 @@ export function Crypt(props: CryptProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.crypt.id, 2);
+                      if (props.onClick) props.onClick(props.crypt.id, 'B');
                     }}
                   >
                     fly to

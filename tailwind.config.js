@@ -1,5 +1,19 @@
 module.exports = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  safelist: [
+    'text-[#838383]',
+    'text-[#00DC82]',
+    'text-[#2e82ff]',
+    'text-[#c13cff]',
+    'text-[#f8b73e]',
+    'text-[#ff44b7]',
+    'bg-[#838383]',
+    'bg-[#00DC82]',
+    'bg-[#2e82ff]',
+    'bg-[#c13cff]',
+    'bg-[#f8b73e]',
+    'bg-[#ff44b7]',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -7,7 +21,7 @@ module.exports = {
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
-        'hero': "url('/cover.jpg')",
+        hero: "url('/cover.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
@@ -35,7 +49,7 @@ module.exports = {
         'radial-at-bl':
           'radial-gradient(ellipse at bottom left, var(--tw-gradient-stops))',
         'radial-at-br':
-          'radial-gradient(ellipse at bottom right, var(--tw-gradient-stops))'
+          'radial-gradient(ellipse at bottom right, var(--tw-gradient-stops))',
       },
       colors: {
         gray: {
@@ -55,38 +69,38 @@ module.exports = {
           200: '#8D795B',
         },
         /* Crypts and Caverns color styles */
-        desert: { /* Desert Oasis */
-         main: '#F3D899',
-         door: '#00A29D',
-         point: '#FAAA00'
+        desert: {
+          /* Desert Oasis */ main: '#F3D899',
+          door: '#00A29D',
+          point: '#FAAA00',
         },
-        temple: { /* Stone Temple */
-          main: '#967E67',
+        temple: {
+          /* Stone Temple */ main: '#967E67',
           door: '#006669',
-          point: '#3C2A1A'
+          point: '#3C2A1A',
         },
-        forest: { /* Forest Ruins */
-          main: '#2F590E',
+        forest: {
+          /* Forest Ruins */ main: '#2F590E',
           door: '#C55300',
-          point: '#802F1A'
+          point: '#802F1A',
         },
-        mountain: { /* Mountain Deep */
-          main: '#cf9479',
+        mountain: {
+          /* Mountain Deep */ main: '#cf9479',
           door: '#FFA800',
-          point: '#802F1A'
+          point: '#802F1A',
         },
-        underwater: { /* Underwater Keep */
-          main: '#006669',
+        underwater: {
+          /* Underwater Keep */ main: '#006669',
           door: '#F9B569',
-          point: '#967E67'
+          point: '#967E67',
         },
-        ember: { /* Ember's Glow */
-          main: '#5D0503',
+        ember: {
+          /* Ember's Glow */ main: '#5D0503',
           door: '#FF1800',
           point: '#B75700',
         },
       },
     },
   },
-  plugins: ["tailwindcss","autoprefixer","postcss-100vh-fix"],
-}
+  plugins: ['tailwindcss', 'autoprefixer', 'postcss-100vh-fix'],
+};

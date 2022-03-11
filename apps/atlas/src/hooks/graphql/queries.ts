@@ -68,6 +68,69 @@ const getRealmQuery = gql`
     }
   }
 `;
+const getLootQuery = gql`
+  ${BagFragment}
+  query loot($id: String) @api(name: ecosystem) {
+    bag(id: $id) {
+      ...BagData
+      currentOwner {
+        address
+        realmsHeld
+        bridgedRealmsHeld
+        bagsHeld
+      }
+    }
+  }
+`;
+
+const getLootsQuery = gql`
+  ${BagFragment}
+  query loots($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
+    bags(
+      where: { currentOwner_contains: $address }
+      first: $first
+      skip: $skip
+    ) {
+      ...BagData
+      currentOwner {
+        address
+        bagsHeld
+      }
+    }
+  }
+`;
+const getGAQuery = gql`
+  ${GAdventurerFragment}
+  query GA($id: String) @api(name: ecosystem) {
+    gadventurer(id: $id) {
+      ...GAdventurerData
+      currentOwner {
+        address
+        realmsHeld
+        bridgedRealmsHeld
+        bagsHeld
+      }
+    }
+  }
+`;
+
+const getGAsQuery = gql`
+  ${GAdventurerFragment}
+  query GAs($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
+    gadventurers(
+      where: { currentOwner_contains: $address }
+      first: $first
+      skip: $skip
+    ) {
+      ...GAdventurerData
+      currentOwner {
+        address
+        bagsHeld
+      }
+    }
+  }
+`;
+
 const getCryptQuery = gql`
   query dungeon($id: String) @api(name: crypts) {
     dungeon(id: $id) {
@@ -137,7 +200,8 @@ const getl1Adventurer = gql`
   ${ManaFragment}
   ${GAdventurerFragment}
 
-  query getAdventurer($address: String!) {
+  query getAdventurer($address: String!, $first: Int, $skip: Int)
+  @api(name: ecosystem) {
     wallet(id: $address) {
       id
       realmsHeld
@@ -151,7 +215,7 @@ const getl1Adventurer = gql`
         tokenURI
       }
       bagsHeld
-      bags(first: 30) {
+      bags(first: $first, skip: $skip) {
         ...BagData
       }
       mLootsHeld
@@ -256,6 +320,10 @@ const lpIncentivesQuery = gql`
 export {
   getRealmQuery,
   getRealmsQuery,
+  getLootQuery,
+  getLootsQuery,
+  getGAQuery,
+  getGAsQuery,
   getCryptQuery,
   getCryptsQuery,
   mintedRealmsQuery,

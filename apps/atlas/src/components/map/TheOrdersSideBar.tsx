@@ -13,7 +13,7 @@ import { theOrders, orderDetails } from '@/util/theOrders';
 import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
-  onClick: (event: any, id: number) => void;
+  onClick: (event: any, id: string) => void;
 };
 
 export const TheOrdersSideBar = (props: Props) => {
@@ -58,6 +58,7 @@ export const TheOrdersSideBar = (props: Props) => {
         </div>
         <div className="py-4">
           <OrderIcon order={orderDetails[focusOrder]?.order} />
+
           <h1 className="mt-2 mb-4 capitalize">
             Order of {orderDetails[focusOrder]?.order}
           </h1>
@@ -79,7 +80,7 @@ export const TheOrdersSideBar = (props: Props) => {
                     onClick={() =>
                       props.onClick(
                         orderDetails[focusOrder]?.wonders.realm_id[index],
-                        1
+                        'A'
                       )
                     }
                   >

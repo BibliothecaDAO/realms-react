@@ -11,6 +11,6 @@ export const parameters = {
 };
 
 initialize({
-  onUnhandledRequest: 'bypass',
+  onUnhandledRequest: 'warn',
 });
 addDecorator(mswDecorator);

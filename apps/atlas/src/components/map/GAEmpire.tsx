@@ -1,20 +1,20 @@
 import { useQuery } from '@apollo/client';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 
-import { getCryptsQuery } from '@/hooks/graphql/queries';
+import { getGAsQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { WalletCryptsData, CryptFilters } from '@/types/index';
-import { CryptData } from '@/types/index';
-import { Crypt } from '../realms/Crypt';
+import type { GAsData, CryptFilters } from '@/types/index';
+import { GAdventurer } from '../realms/GAdventurer';
+
 const grids =
-  'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6';
+  'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
 type Props = {
   onClick?: (event: any, id: string) => void;
 };
 
-export const CryptsEmpire = (props: Props) => {
-  const { toggleCryptsMenu, cryptsMenu } = useUIContext();
+export const GAEmpire = (props: Props) => {
   const { account, isConnected, displayName } = useWalletContext();
   const [limit, setLimit] = useState(0);
 
@@ -26,24 +26,21 @@ export const CryptsEmpire = (props: Props) => {
     };
   };
 
-  const { loading, error, data, fetchMore } = useQuery<WalletCryptsData>(
-    getCryptsQuery,
-    {
-      variables: defaultVariables(),
-      skip: !isConnected,
-      ssr: false,
-    }
-  );
+  const { loading, error, data, fetchMore } = useQuery<GAsData>(getGAsQuery, {
+    variables: defaultVariables(),
+    skip: !isConnected,
+    ssr: false,
+  });
 
   return (
     <div>
       <div className={grids}>
         {data &&
-          data.dungeons.map((dungeon, index) => (
-            <Crypt
+          data.gadventurers.map((ga, index) => (
+            <GAdventurer
               onClick={props.onClick}
               key={index}
-              crypt={dungeon}
+              ga={ga}
               loading={loading}
               size={'small'}
               flyto={true}

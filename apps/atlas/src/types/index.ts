@@ -1,11 +1,13 @@
-import type React from 'react';
-import type { BigNumberish } from 'starknet/dist/utils/number';
+import React, { MouseEventHandler } from 'react';
+import { number } from 'starknet';
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 interface Owner {
   address: string;
   realmsHeld: number;
   bridgedRealmsHeld: number;
+  bagsHeld: number;
+  gAdventurersHeld: number;
 }
 
 export interface Realm {
@@ -33,24 +35,82 @@ export interface Crypt {
   svg: string;
   currentOwner: Owner;
 }
-
+export interface Loot {
+  id: string;
+  chest: string;
+  foot: string;
+  hand: string;
+  head: string;
+  neck: string;
+  ring: string;
+  waist: string;
+  weapon: string;
+  chestSuffixId: number;
+  footSuffixId: number;
+  handSuffixId: number;
+  headSuffixId: number;
+  neckSuffixId: number;
+  ringSuffixId: number;
+  waistSuffixId: number;
+  weaponSuffixId: number;
+  currentOwner: Owner;
+  minted: number;
+  manasClaimed: number;
+  itemsClaimed: boolean;
+}
+export interface GAdventurer {
+  id: string;
+  chest: string;
+  foot: string;
+  hand: string;
+  head: string;
+  neck: string;
+  ring: string;
+  waist: string;
+  weapon: string;
+  order: string;
+  orderColor: string;
+  orderCount: string;
+  currentOwner: Owner;
+  minted: number;
+}
 export interface Data {
   realm: Realm;
 }
 export interface CryptData {
   dungeon: Crypt;
 }
+export interface LootData {
+  bag: Loot;
+}
+export interface GAData {
+  gadventurer: GAdventurer;
+}
 export interface RealmProps {
   realm: Realm;
   loading: boolean;
   size?: any;
-  onClick?: (event: any, id: number) => void;
+  onClick?: (event: any, id: string) => void;
 }
 export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
   size?: any;
-  onClick?: (event: any, id: number) => void;
+  onClick?: (event: any, id: string) => void;
+  flyto?: boolean;
+}
+export interface LootProps {
+  loot: Loot;
+  loading: boolean;
+  size?: any;
+  onClick?: (event: any, id: string) => void;
+  flyto?: boolean;
+}
+export interface GAProps {
+  ga: GAdventurer;
+  loading: boolean;
+  size?: any;
+  onClick?: (event: any, id: string) => void;
   flyto?: boolean;
 }
 
@@ -68,6 +128,7 @@ export interface UiState {
   isMenuOpen: boolean;
   toggleMenu: () => void;
 }
+
 export interface RealmFilters {
   address?: string;
   resources?: number[];
@@ -83,6 +144,7 @@ export interface Queries {
   md: string;
   lg: string;
   xl: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   '2xl': string;
 }
 
@@ -90,4 +152,17 @@ export interface CryptFilters {
   address?: string;
   first?: number;
   skip?: number;
+}
+
+export interface WalletData {
+  wallet: WalletEcosystemData;
+}
+
+export interface WalletEcosystemData {
+  currentOwner: Owner;
+  bags: Loot[];
+}
+export interface GAsData {
+  currentOwner: Owner;
+  gadventurers: GAdventurer[];
 }

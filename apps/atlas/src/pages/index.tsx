@@ -3,19 +3,23 @@ import { ScatterplotLayer, IconLayer, PolygonLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import React, { useState, useCallback } from 'react';
 import { Map } from 'react-map-gl';
-
 import Layout from '@/components/Layout';
 import { CryptsSideBar } from '@/components/map/CryptsSideBar';
 import { EmpireSideBar } from '@/components/map/EmpireSideBar';
 import { FlyTo } from '@/components/map/FlyTo';
+import { GASideBar } from '@/components/map/GASideBar';
+import { LootSideBar } from '@/components/map/LootSideBar';
 import { MenuSideBar } from '@/components/map/MenuSideBar';
 import { RealmSideBar } from '@/components/map/RealmsSideBar';
 import { ResourceSideBar } from '@/components/map/ResourceSideBar';
 import { TheOrdersSideBar } from '@/components/map/TheOrdersSideBar';
 import { Header } from '@/components/navigation/header';
-import crypts from '@/data/crypts_all.json';
-import order_highlights from '@/data/order_highlights.json';
-import realms from '@/data/realms.json';
+
+import crypts from '@/geodata/crypts_all.json';
+import ga_bags from '@/geodata/ga_bags.json';
+import loot_bags from '@/geodata/loot_bags.json';
+import order_highlights from '@/geodata/order_highlights.json';
+import realms from '@/geodata/realms.json';
 import { useUIContext } from '@/hooks/useUIContext';
 
 function App() {
@@ -24,9 +28,14 @@ function App() {
     toggleMapMenu,
     closeOrdersMenu,
     toggleCryptsMenu,
+    toggleLootMenu,
     toggleEmpireMenu,
+    toggleGAMenu,
     empireMenu,
     cryptsMenu,
+    lootMenu,
+    GAMenu,
+    closeAll,
   } = useUIContext();
   const [resource, setResource] = useState<Array<string>>([]);
   const [value, setValue] = useState<number>(1);
@@ -62,7 +71,7 @@ function App() {
   // });
 
   const filteredData = () => {
-    return realms.features.filter((a: any) =>
+    return (realms as any).features.filter((a: any) =>
       a.properties.resources.some((b: any) => resource.includes(b))
     );
   };
@@ -96,18 +105,16 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.tokenId);
+      closeAll(['crypts']);
       if (!cryptsMenu) {
         toggleCryptsMenu();
-      }
-      if (mapMenu) {
-        toggleMapMenu();
       }
     },
   });
 
   const realms_layer = new ScatterplotLayer({
-    id: 'scatterplot-layer',
-    data: realms.features,
+    id: 'realms-layer',
+    data: (realms as any).features,
     stroked: true,
     filled: true,
     extruded: true,
@@ -123,11 +130,59 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.realm_idx);
+      closeAll(['realms']);
       if (!mapMenu) {
         toggleMapMenu();
       }
-      if (cryptsMenu) {
-        toggleCryptsMenu();
+    },
+  });
+
+  const loot_bag_layer = new ScatterplotLayer({
+    id: 'loot-layer',
+    data: loot_bags.features,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    opacity: 1,
+    getPosition: (d: any) => d.geometry.coordinates,
+    getRadius: 1,
+    getElevation: 10000,
+    lineWidthMinPixels: 1,
+    getFillColor: [255, 0, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
+    onClick: (info: any) => {
+      setValue(info.object.properties.bag_id);
+      closeAll(['loot']);
+      if (!lootMenu) {
+        toggleLootMenu();
+      }
+    },
+  });
+
+  const ga_bag_layer = new ScatterplotLayer({
+    id: 'ga-layer',
+    data: ga_bags.features,
+    stroked: true,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    opacity: 1,
+    getPosition: (d: any) => d.geometry.coordinates,
+    getRadius: 1,
+    getElevation: 10000,
+    lineWidthMinPixels: 1,
+    getFillColor: [0, 255, 0, 0],
+    updateTriggers: {
+      getRadius: value,
+    },
+    onClick: (info: any) => {
+      setValue(info.object.properties.ga_id);
+      closeAll(['GA']);
+      if (!GAMenu) {
+        toggleGAMenu();
       }
     },
   });
@@ -156,19 +211,22 @@ function App() {
     zoom: 4,
     pitch: 55,
     bearing: 0,
+    bounds: [
+      [-180, -60], // Southwest coordinates
+      [180, 60], // Northeast coordinates
+    ],
     transitionDuration: 0,
     transitionInterpolator: new FlyToInterpolator(),
   });
 
   const goToId = useCallback(
-    (id: any, type?: number) => {
+    // eslint-disable-next-line sonarjs/cognitive-complexity
+    (id: any, type?: string) => {
       closeOrdersMenu();
 
       let asset;
-
-      if (type === 1) {
-        console.log(1);
-        asset = realms.features.filter(
+      if (type === 'A') {
+        asset = (realms as any).features.filter(
           (a: any) => a.properties.realm_idx === parseInt(id)
         );
         if (cryptsMenu) {
@@ -180,31 +238,89 @@ function App() {
         if (empireMenu) {
           toggleEmpireMenu();
         }
-      } else {
-        console.log(2);
+        if (lootMenu) {
+          toggleLootMenu();
+        }
+        if (GAMenu) {
+          toggleGAMenu();
+        }
+      } else if (type === 'B') {
         asset = crypts.features.filter(
           (a: any) => a.properties.tokenId === parseInt(id)
         );
+        console.log(lootMenu);
         if (mapMenu) {
           toggleMapMenu();
         }
         if (empireMenu) {
           toggleEmpireMenu();
         }
-        toggleCryptsMenu();
+        if (lootMenu) {
+          toggleLootMenu();
+        }
+        if (GAMenu) {
+          toggleGAMenu();
+        }
+        if (!cryptsMenu) {
+          toggleCryptsMenu();
+        }
+      } else if (type === 'C') {
+        asset = loot_bags.features.filter(
+          (a: any) => a.properties.bag_id === parseInt(id)
+        );
+        if (cryptsMenu) {
+          toggleCryptsMenu();
+        }
+        if (mapMenu) {
+          toggleMapMenu();
+        }
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+        if (!lootMenu) {
+          toggleLootMenu();
+        }
+        if (GAMenu) {
+          toggleGAMenu();
+        }
+      } else {
+        asset = ga_bags.features.filter(
+          (a: any) => a.properties.ga_id === id.toString()
+        );
+        if (cryptsMenu) {
+          toggleCryptsMenu();
+        }
+        if (mapMenu) {
+          toggleMapMenu();
+        }
+        if (empireMenu) {
+          toggleEmpireMenu();
+        }
+        if (lootMenu) {
+          toggleLootMenu();
+        }
+        if (!GAMenu) {
+          toggleGAMenu();
+        }
       }
-
+      console.log(asset);
       setValue(id);
 
-      setInitialViewState({
-        longitude: asset[0].geometry.coordinates[0],
-        latitude: asset[0].geometry.coordinates[1],
-        zoom: 8,
-        pitch: 20,
-        bearing: 0,
-        transitionDuration: 5000,
-        transitionInterpolator: new FlyToInterpolator(),
-      });
+      if (asset[0]) {
+        setInitialViewState({
+          longitude: asset[0].geometry.coordinates[0],
+          latitude: asset[0].geometry.coordinates[1],
+          zoom: 8,
+          pitch: 20,
+          bearing: 0,
+          bounds: [
+            [-180, -60], // Southwest coordinates
+            [180, 60], // Northeast coordinates
+          ],
+          transitionDuration: 5000,
+          transitionInterpolator: new FlyToInterpolator(),
+        });
+      }
     },
     [
       cryptsMenu,
@@ -214,21 +330,24 @@ function App() {
       toggleCryptsMenu,
       toggleEmpireMenu,
       empireMenu,
+      lootMenu,
+      toggleLootMenu,
+      GAMenu,
+      toggleGAMenu,
     ]
   );
 
   const onChange = (event: any) => {
     if (parseInt(event.target.value) < 1) {
       setValue(1);
-    } else if (parseInt(event.target.value) > 9000) {
-      setValue(9000);
+    } else if (parseInt(event.target.value) > parseInt(event.target.max)) {
+      setValue(event.target.max);
     } else {
       setValue(parseInt(event.target.value));
     }
   };
 
   const onSelectChange = (event: any) => {
-    console.log(event);
     setAssetSelect(event);
   };
 
@@ -242,6 +361,8 @@ function App() {
         <EmpireSideBar onClick={goToId} />
         <ResourceSideBar onClick={addToFilter} resource={resource} />
         <CryptsSideBar id={value} />
+        <LootSideBar id={value} />
+        <GASideBar id={value} />
         <FlyTo
           onChange={onChange}
           onClick={goToId}
@@ -256,11 +377,17 @@ function App() {
           pickingRadius={25}
           initialViewState={initialViewState}
           controller={true}
-          layers={[realms_layer, resource_layer, crypts_layer]}
+          layers={[
+            realms_layer,
+            resource_layer,
+            crypts_layer,
+            loot_bag_layer,
+            ga_bag_layer,
+          ]}
         >
           <Map
             attributionControl={false}
-            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2"
+            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
             mapboxAccessToken={
               'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
             }

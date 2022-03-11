@@ -1,11 +1,10 @@
+// import { useSound } from "@/context/soundProvider";
 import Settings from '@bibliotheca-dao/ui-lib/icons/settings.svg';
 import VolumeIcon from '@bibliotheca-dao/ui-lib/icons/volume-2.svg';
 import VolumeMuteIcon from '@bibliotheca-dao/ui-lib/icons/volume-x.svg';
 import Zap from '@bibliotheca-dao/ui-lib/icons/zap.svg';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
-
-import { useSound } from '@/context/soundProvider';
 import type { DesiegeTab } from './ShieldGame';
 
 type Prop = {
@@ -13,10 +12,10 @@ type Prop = {
 };
 
 function MenuBar(props: Prop) {
-  const { isSoundActive, toggleSound } = useSound();
-  const handleClick = useCallback(() => {
-    toggleSound();
-  }, [toggleSound]);
+  // const { isSoundActive, toggleSound } = useSound();
+  // const handleClick = useCallback(() => {
+  //   toggleSound();
+  // }, [toggleSound]);
 
   const router = useRouter();
 
@@ -46,13 +45,13 @@ function MenuBar(props: Prop) {
           <Zap className="w-8" />
         </button>
 
-        <button className="mute-btn " onClick={handleClick}>
+        {/* <button className="mute-btn " onClick={handleClick}>
           {!isSoundActive ? (
             <VolumeMuteIcon className="w-8 hover:text-blue-700" />
           ) : (
             <VolumeIcon className="w-8 hover:text-blue-700" />
           )}
-        </button>
+        </button> */}
       </div>
     </div>
   );
