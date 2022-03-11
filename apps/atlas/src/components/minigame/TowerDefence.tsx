@@ -8,8 +8,6 @@ import {
   Stars,
   Sky,
   Html,
-  Text,
-  Billboard,
 } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import type BN from 'bn.js';
