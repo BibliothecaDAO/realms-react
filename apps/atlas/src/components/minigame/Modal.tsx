@@ -7,7 +7,7 @@ type Prop = {
   children?: React.ReactNode;
 };
 
-const BridgeModal: React.FC<Prop> = (props) => {
+const Modal: React.FC<Prop> = (props) => {
   const isOpen = props.isOpen;
 
   return (
@@ -28,7 +28,7 @@ const BridgeModal: React.FC<Prop> = (props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-500/75" />
           </Transition.Child>
 
           <Transition.Child
@@ -51,4 +51,4 @@ const BridgeModal: React.FC<Prop> = (props) => {
   );
 };
 
-export default BridgeModal;
+export default Modal;

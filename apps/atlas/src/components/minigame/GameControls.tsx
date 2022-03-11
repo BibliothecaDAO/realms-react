@@ -29,7 +29,7 @@ import {
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
 import Bridge from '../bridge/Bridge';
-import BridgeModal from '../bridge/Modal';
+import BridgeModal from './Modal';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
