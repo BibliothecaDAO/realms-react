@@ -1700,7 +1700,7 @@ __metadata:
     "@tsed/exceptions": ^6.102.7
     "@types/jest": 27.4.0
     "@types/node": 17.0.17
-    "@types/react": 17.0.39
+    "@types/react": 17.0.40
     "@types/react-dom": 17.0.13
     "@typescript-eslint/eslint-plugin": 5.14.0
     "@typescript-eslint/parser": 5.13.0
@@ -1723,8 +1723,8 @@ __metadata:
     microbundle: 0.14.2
     npm-run-all: 4.1.5
     prettier: 2.5.1
-    react: 18.0.0-rc.0-next-fa816be7f-20220128
-    react-dom: 18.0.0-rc.0-next-fa816be7f-20220128
+    react: 18.0.0-rc.1
+    react-dom: 18.0.0-rc.1
     rimraf: 3.0.2
     ts-jest: 27.1.3
     typescript: 4.6.2
@@ -1766,7 +1766,7 @@ __metadata:
     "@testing-library/react-hooks": 7.0.2
     "@types/jest": 27.4.0
     "@types/node": 17.0.17
-    "@types/react": 17.0.39
+    "@types/react": 17.0.40
     "@types/react-dom": 17.0.13
     "@typescript-eslint/eslint-plugin": 5.14.0
     "@typescript-eslint/parser": 5.13.0
@@ -1800,8 +1800,8 @@ __metadata:
     postcss: 8.4.6
     postcss-flexbugs-fixes: 5.0.2
     prettier: 2.5.1
-    react: 18.0.0-rc.0-next-fa816be7f-20220128
-    react-dom: 18.0.0-rc.0-next-fa816be7f-20220128
+    react: 18.0.0-rc.1
+    react-dom: 18.0.0-rc.1
     rimraf: 3.0.2
     rooks: 5.10.0
     stream-browserify: ^3.0.0
@@ -6900,7 +6900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:>=16.9.0":
+"@types/react@npm:*, @types/react@npm:17.0.40, @types/react@npm:>=16, @types/react@npm:>=16.9.0":
   version: 17.0.40
   resolution: "@types/react@npm:17.0.40"
   dependencies:
@@ -6908,17 +6908,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 24d1b210b5bf3c7d49f9a7fe5490db02e005a1d989045a2d67528347557dd0bcb0d7bcf96088152697e97521ac4c9506d1357ee48a2b7d4e701c70d838dc7284
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:17.0.39":
-  version: 17.0.39
-  resolution: "@types/react@npm:17.0.39"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: bf04d3c2894559012710d595553e12b422d3b91cd8f4f7e122d8cb044ba9c2ba17f6e8a4e09581359cc5509ddc59cd8c8fabd6774f3505a40a45393f074d6e6e
   languageName: node
   linkType: hard
 
@@ -8860,7 +8849,7 @@ __metadata:
     "@types/jest": 27.4.0
     "@types/mapbox-gl": 1.12.8
     "@types/node": 17.0.17
-    "@types/react": 17.0.39
+    "@types/react": 17.0.40
     "@types/react-dom": 17.0.13
     "@types/three": ^0.137.0
     "@typescript-eslint/eslint-plugin": 5.14.0
@@ -8909,8 +8898,8 @@ __metadata:
     postcss: 8.4.6
     postcss-100vh-fix: ^1.0.2
     prettier: 2.5.1
-    react: 18.0.0-rc.0-next-fa816be7f-20220128
-    react-dom: 18.0.0-rc.0-next-fa816be7f-20220128
+    react: 18.0.0-rc.1
+    react-dom: 18.0.0-rc.1
     react-joyride: ^2.3.2
     react-map-gl: ^7.0.9
     react-spring: ^9.4.3
@@ -22043,16 +22032,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.0.0-rc.0-next-fa816be7f-20220128":
-  version: 18.0.0-rc.0-next-fa816be7f-20220128
-  resolution: "react-dom@npm:18.0.0-rc.0-next-fa816be7f-20220128"
+"react-dom@npm:18.0.0-rc.1":
+  version: 18.0.0-rc.1
+  resolution: "react-dom@npm:18.0.0-rc.1"
   dependencies:
     loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-    scheduler: 0.21.0-rc.0-next-fa816be7f-20220128
+    scheduler: ^0.21.0-rc.1
   peerDependencies:
-    react: 18.0.0-rc.0-next-fa816be7f-20220128
-  checksum: 7af58a3e9bf3b912f134c058a39937ba89ff378b4d905f1d0b163719bce825bf4c1cb814c3f75c07643873611992c1ee39edf36ac93f026b15d781deb74ea2b6
+    react: ^18.0.0-rc.1
+  checksum: a7c1a7afafb83143db5a7c62ffa1063f30744fd97f20b60495a08b0efad521cb51e212169290952a02895472fad3eeffcf1bc6bbcb1aab5507a0441558c2c970
   languageName: node
   linkType: hard
 
@@ -22368,13 +22356,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.0.0-rc.0-next-fa816be7f-20220128":
-  version: 18.0.0-rc.0-next-fa816be7f-20220128
-  resolution: "react@npm:18.0.0-rc.0-next-fa816be7f-20220128"
+"react@npm:18.0.0-rc.1":
+  version: 18.0.0-rc.1
+  resolution: "react@npm:18.0.0-rc.1"
   dependencies:
     loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-  checksum: a735d18caf501e3a0a0d4690ec14e8637ede8681372bbd32fae7d463be45294b5e5b6d321eb328772d2b995edf452aec7631603b7264fb6b147d75daaac7663d
+  checksum: 2810f1320c3cbf8763cc4a5e644b7d0705aa9797587d8f15f27840dbfb4f7ecbedb11df7c4105d9ff6dc1f9db87d0e2289c5f52a4fb6324aa6132b9458aa04bd
   languageName: node
   linkType: hard
 
@@ -23389,16 +23376,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.21.0-rc.0-next-fa816be7f-20220128":
-  version: 0.21.0-rc.0-next-fa816be7f-20220128
-  resolution: "scheduler@npm:0.21.0-rc.0-next-fa816be7f-20220128"
-  dependencies:
-    loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-  checksum: b87be22e647abbed8020335294fcd15111bd7c88aa7d0dc1eec3bf533c8b7fdb4d43438b4e616b1673a43ea67ee24c0259e2f8d1377d95a6c2710cc37c215236
-  languageName: node
-  linkType: hard
-
 "scheduler@npm:^0.19.1":
   version: 0.19.1
   resolution: "scheduler@npm:0.19.1"
@@ -23416,6 +23393,15 @@ __metadata:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.21.0-rc.1":
+  version: 0.21.0-rc.2-next-b9de50d2f-20220308
+  resolution: "scheduler@npm:0.21.0-rc.2-next-b9de50d2f-20220308"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 760b89623a0589727e7f2ae8eec5f34f3dde60e7fc762f8d86ce7ccccd28991479a2599a02d19f00aecda4b60aafb25f8e32f845c1f2c9dbd9bfbec6f9dea6e7
   languageName: node
   linkType: hard
 
