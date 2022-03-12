@@ -90,11 +90,11 @@ const GameControls: React.FC<Prop> = (props) => {
   const towerDefenceContractAddress = props.towerDefenceContractAddress;
 
   const { contract: elementsContract } = useContract({
-    abi: Elements1155Abi.abi as Abi[],
+    abi: Elements1155Abi.abi as Abi,
     address: ELEMENTS_ADDRESS,
   });
   const { contract: towerDefenceContract } = useContract({
-    abi: TowerDefenceAbi.abi as Abi[],
+    abi: TowerDefenceAbi.abi as Abi,
     address: towerDefenceContractAddress,
   });
   const approve1155 = useStarknetInvoke({

@@ -11,13 +11,13 @@ import {
 
 const useGameStats = (gameIdx: number, towerDefenceStorageAddr: string) => {
   const { contract: elementsContract } = useContract({
-    abi: ElementsBalancer.abi as Abi[],
+    abi: ElementsBalancer.abi as Abi,
     address:
       '0x26fb3d6ae270ee3c2fedd8d6d0576b15edd6abe6afa93c9e847a306648e9e95',
   });
 
   const { contract: towerDefenceStorage } = useContract({
-    abi: TowerDefenceStorage.abi as Abi[],
+    abi: TowerDefenceStorage.abi as Abi,
     address: towerDefenceStorageAddr,
   });
 
@@ -31,53 +31,41 @@ const useGameStats = (gameIdx: number, towerDefenceStorageAddr: string) => {
     ElementToken.Dark
   ).toString();
 
-  const totalLight = useStarknetCall({
+  const totalLight = useStarknetCall<string[]>({
     contract: elementsContract,
     method: 'get_total_minted',
-    args: {
-      token_id: lightTokenId,
-    },
+    args: [lightTokenId],
   });
 
-  const totalLightUtilized = useStarknetCall({
+  const totalLightUtilized = useStarknetCall<string[]>({
     contract: towerDefenceStorage,
     method: 'get_token_reward_pool',
-    args: {
-      game_idx: gameIdx.toString(),
-      token_id: lightTokenId,
-    },
+    args: [gameIdx.toString(), lightTokenId],
   });
 
-  const totalDark = useStarknetCall({
+  const totalDark = useStarknetCall<string[]>({
     contract: elementsContract,
     method: 'get_total_minted',
-    args: {
-      token_id: darkTokenId,
-    },
+    args: [darkTokenId],
   });
 
-  const totalDarkUtilized = useStarknetCall({
+  const totalDarkUtilized = useStarknetCall<string[]>({
     contract: towerDefenceStorage,
     method: 'get_token_reward_pool',
-    args: {
-      game_idx: gameIdx.toString(),
-      token_id: darkTokenId,
-    },
+    args: [gameIdx.toString(), darkTokenId],
   });
 
-  const light = totalLight.data
-    ? (totalLight.data['total'] as string)
-    : undefined;
-  const dark = totalDark.data ? (totalDark.data['total'] as string) : undefined;
+  const light = totalLight.data ? totalLight.data[0] : undefined;
+  const dark = totalDark.data ? totalDark.data[0] : undefined;
 
   return {
     light: light ? toBN(light).toNumber() / EFFECT_BASE_FACTOR : undefined,
     lightUsed: totalLightUtilized.data
-      ? toBN(totalLightUtilized.data['value'] as string).toNumber()
+      ? toBN(totalLightUtilized.data[0]).toNumber()
       : undefined,
     dark: dark ? toBN(dark).toNumber() / EFFECT_BASE_FACTOR : undefined,
     darkUsed: totalDarkUtilized.data
-      ? toBN(totalDarkUtilized.data['value'] as string).toNumber()
+      ? toBN(totalDarkUtilized.data[0]).toNumber()
       : undefined,
     loading: totalLight.loading || totalDark.loading,
   };

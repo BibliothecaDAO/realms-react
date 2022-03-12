@@ -1,6 +1,6 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Provider, ec, Signer, stark, encode } from 'starknet';
+import { Provider, ec, encode, Account } from 'starknet';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import { fetchLordsBalance } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
@@ -9,7 +9,6 @@ import {
   getNextMintAmount,
   getTotalElementsMinted,
 } from '@/util/minigameApi';
-const { getSelectorFromName } = stark;
 
 export type MintingError = {
   success: false;
@@ -45,13 +44,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
   );
 
-  let signer;
+  let signerAccount;
   try {
     const privKey = ec.getKeyPair(minterPrivKey);
     const account =
       (process.env.ELEMENTS_MINTER_ACCOUNT_ADDRESS as string) ||
       '0x430728b8d6252608f35615191903466284b01e4ae9ecff60de8a6cb99d44a10';
-    signer = new Signer(provider, account, privKey);
+    signerAccount = new Account(provider, account, privKey);
   } catch (e) {
     console.error('SIGNING ERROR:', e);
     throw e;
@@ -83,7 +82,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const elementBalancerModule = await getModuleAddress('4');
 
-  const selector = getSelectorFromName('mint_elements');
+  const entrypoint = 'mint_elements';
   const mintArgs = [
     nextGameIdx,
     ethAddress,
@@ -93,11 +92,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   ];
 
   try {
-    const result = await signer?.invokeFunction(
-      elementBalancerModule,
-      selector,
-      mintArgs
-    );
+    const result = await signerAccount.execute({
+      contractAddress: elementBalancerModule,
+      entrypoint,
+      calldata: mintArgs,
+    });
     res.send(JSON.stringify(result));
     return;
   } catch (e: any) {

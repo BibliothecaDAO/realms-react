@@ -51,37 +51,33 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }, [gameContext]);
 
   const { contract: tdStorageContract } = useContract({
-    abi: TowerDefenceStorageContract.abi as Abi[],
+    abi: TowerDefenceStorageContract.abi as Abi,
     address: props.towerDefenceStorageAddr,
   });
 
-  const getMainHealth = useStarknetCall({
+  const getMainHealth = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_main_health' : undefined,
-    args: {
-      game_idx: gameContext?.gameIdx?.toString() || '1',
-    },
+    args: [gameContext?.gameIdx?.toString() || '1'],
   });
 
-  const getShield = useStarknetCall({
+  const getShield = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_shield_value' : undefined,
-    args: {
-      game_idx: gameContext?.gameIdx.toString() || '0',
-      token_id: gameContext
+    args: [
+      gameContext?.gameIdx.toString() || '0',
+      gameContext
         ? (
             gameContext.gameIdx * TOKEN_INDEX_OFFSET_BASE +
             ElementToken.Light
           ).toString()
         : '1',
-    },
+    ],
   });
 
-  const healthStr = getMainHealth.data
-    ? getMainHealth.data['health']
-    : undefined;
+  const healthStr = getMainHealth.data ? getMainHealth.data[0] : undefined;
 
-  const shieldStr = getShield.data ? getShield.data['value'] : undefined;
+  const shieldStr = getShield.data ? getShield.data[0] : undefined;
 
   // Memoize so same values don't cause re-renders
   const health = useMemo(() => {

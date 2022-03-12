@@ -1,11 +1,13 @@
 import { useStarknet } from '@starknet-react/core';
 import type BN from 'bn.js';
 import { useState } from 'react';
-import { number, stark } from 'starknet';
+import { number } from 'starknet';
 
-import { getTokenIdsForGame, ELEMENTS_ADDRESS } from '@/util/minigameApi';
-
-const { getSelectorFromName } = stark;
+import {
+  getTokenIdsForGame,
+  ELEMENTS_ADDRESS,
+  provider,
+} from '@/util/minigameApi';
 
 export const useSiegeBalance = () => {
   const starknet = useStarknet();
@@ -22,9 +24,9 @@ export const useSiegeBalance = () => {
 
     if (ownerAddress) {
       setLoading(true);
-      const balances = await starknet.library.callContract({
-        contract_address: ELEMENTS_ADDRESS,
-        entry_point_selector: getSelectorFromName('balance_of_batch'),
+      const balances = await provider.callContract({
+        contractAddress: ELEMENTS_ADDRESS,
+        entrypoint: 'balance_of_batch',
         calldata: [
           '2', // Owners length
           number.toBN(ownerAddress).toString(), // Owner address as an int

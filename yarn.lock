@@ -4806,16 +4806,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@starknet-react/core@npm:^0.4.6":
-  version: 0.4.6
-  resolution: "@starknet-react/core@npm:0.4.6"
+"@starknet-react/core@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@starknet-react/core@npm:0.5.0"
   dependencies:
     immutable: ^4.0.0
   peerDependencies:
     "@argent/get-starknet": ^2.1
     react: ^16.8 || ^17.0
     starknet: ^2.5
-  checksum: 33009f49a1953f92c7f2bd22451fcc0712f19046621b14b00413cc540a7eec67f69a23fb06ea9781021c0ea942550f51be965b39f89c511a451d30ec28890dc8
+  checksum: 388cd4ec8e85eef7bb6c4fd51f10c38bc06986da9658faebdfc972442a42bdaac11d755dc605f2bfbc648d6eebafc42dd012ea16e234703b1ad93597a9ca87aa
   languageName: node
   linkType: hard
 
@@ -8787,11 +8787,7 @@ __metadata:
     "@react-three/drei": ^8.16.5
     "@react-three/fiber": ^7.0.26
     "@size-limit/file": 7.0.8
-    "@starknet-react/core": ^0.4.6
-    "@storybook/addon-actions": 6.4.19
-    "@storybook/addons": 6.4.19
-    "@storybook/client-api": 6.4.19
-    "@storybook/react": 6.4.19
+    "@starknet-react/core": ^0.5.0
     "@svgr/webpack": 6.2.1
     "@tailwindcss/aspect-ratio": 0.4.0
     "@tailwindcss/forms": 0.4.1
@@ -8861,7 +8857,7 @@ __metadata:
     rimraf: 3.0.2
     sharp: 0.30.1
     size-limit: 7.0.8
-    starknet: ^2.5.0
+    starknet: ^3.5.1
     storybook-addon-next-router: ^3.1.1
     stylelint: 14.5.2
     stylelint-config-prettier: 9.0.3
@@ -24170,9 +24166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"starknet@npm:^2.5.0":
-  version: 2.9.0
-  resolution: "starknet@npm:2.9.0"
+"starknet@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "starknet@npm:3.5.1"
   dependencies:
     axios: ^0.23.0
     bn.js: ^5.2.0
@@ -24184,7 +24180,7 @@ __metadata:
     pako: ^2.0.4
     superstruct: ^0.15.3
     url-join: ^4.0.1
-  checksum: cf2bb37ba401cbf7486ab8161fb95d65f8c7a21ed0ab0c1512b1efe9e19e53c8a0221986fd9e5622d7bc98b28cf2bd968f2acd2822d04fdc6448031cb36a85d8
+  checksum: 76d3b861e47dcc0fa0a7b084b76773b305dab99d3916e0c7f74e1acaa00699a59ddfb1d8befd1c1190462ca3f1776466fd37e1a61f7d8131e7ef8be88c985f41
   languageName: node
   linkType: hard
 
