@@ -86,7 +86,7 @@ const nextConfig = {
     // Rust regexes, the syntax is different from js, see https://docs.rs/regex.
     reactRemoveProperties: { properties: ['^data-test$'] },
     removeConsole: {
-      exclude: ['error'],
+      exclude: ['error', 'log'],
     },
   },
 

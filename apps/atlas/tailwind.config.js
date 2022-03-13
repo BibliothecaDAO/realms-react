@@ -90,7 +90,7 @@ module.exports = {
           point: '#802F1A',
         },
         underwater: {
-          /* Underwater Keep */ main: '#006669',
+          /* Underwater Keeps */ main: '#006669',
           door: '#F9B569',
           point: '#967E67',
         },
