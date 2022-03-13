@@ -15,10 +15,10 @@ type Props = {
 };
 
 export const GAEmpire = (props: Props) => {
-  const { account, isConnected, displayName } = useWalletContext();
+  const { account, isConnected } = useWalletContext();
   const [limit, setLimit] = useState(0);
 
-  const defaultVariables = (params?: CryptFilters) => {
+  const defaultVariables = () => {
     return {
       address: account.toLowerCase(),
       first: 12,

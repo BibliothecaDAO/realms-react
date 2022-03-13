@@ -71,7 +71,7 @@ export function GAdventurer(props: GAProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.ga.id, 'C');
+                      if (props.onClick) props.onClick(props.ga.id, 'D');
                     }}
                   >
                     fly to

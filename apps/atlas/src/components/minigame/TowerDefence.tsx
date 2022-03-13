@@ -24,7 +24,7 @@ import {
   ShieldVitalityDisplayClassnames,
 } from './TowerShieldVitality';
 
-const Tower = dynamic(() => import('@/components/Model'), {
+const Tower = dynamic(() => import('@/components/Divine_city'), {
   ssr: false,
 });
 
