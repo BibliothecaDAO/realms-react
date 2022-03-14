@@ -33,11 +33,11 @@ export const BasicExample: ComponentStory<typeof GradientText> = (args) => (
 );
 
 const titles = [
-  ['Typescript', 'sky'],
-  ['React', 'orange'],
-  ['Nextjs', 'sky'],
-  ['Prisma', 'orange'],
-  ['Emotion', 'green'],
+  ['True Ice', 'sky'],
+  ['Gold', 'orange'],
+  ['Adamantine', 'sky'],
+  ['Mithral', 'orange'],
+  ['Ironwood', 'green'],
 ] as const;
 
 export const AnimatedExample: ComponentStory<typeof GradientText> = (_args) => {
@@ -48,9 +48,7 @@ export const AnimatedExample: ComponentStory<typeof GradientText> = (_args) => {
   return (
     <div className={'overflow-hidden max-w-md rounded shadow-lg m-8 p-16'}>
       <span className={'font-bold text-3xl w-full'}>
-        <span>
-          Picked from the possibles <br /> made with{' '}
-        </span>{' '}
+        <span>+1 </span>{' '}
         <span
           style={{
             position: 'relative',
@@ -75,7 +73,7 @@ export const AnimatedExample: ComponentStory<typeof GradientText> = (_args) => {
             );
           })}
         </span>
-        What do you think?
+        <p>What do you think?</p>
       </span>
     </div>
   );
