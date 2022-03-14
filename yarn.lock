@@ -1739,6 +1739,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@bibliotheca-dao/postcss-100vh-fix@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@bibliotheca-dao/postcss-100vh-fix@npm:1.0.3"
+  checksum: 85e7b0cd3c5b262db447b549c533927723149ad6b2ca6affe1e813b0c2a0175e65b760ce5a467b685d97e7e602b9eaa6211ea329801e1131246286129f420097
+  languageName: node
+  linkType: hard
+
 "@bibliotheca-dao/ui-lib@workspace:^, @bibliotheca-dao/ui-lib@workspace:packages/ui-lib":
   version: 0.0.0-use.local
   resolution: "@bibliotheca-dao/ui-lib@workspace:packages/ui-lib"
@@ -8753,6 +8760,7 @@ __metadata:
     "@argent/get-starknet": ^2.1.1
     "@babel/core": 7.17.5
     "@bibliotheca-dao/core-lib": "workspace:^"
+    "@bibliotheca-dao/postcss-100vh-fix": ^1.0.3
     "@bibliotheca-dao/ui-lib": "workspace:^"
     "@danmarshall/deckgl-typings": ^4.9.15
     "@deck.gl/core": ^8.7.0
@@ -8769,6 +8777,7 @@ __metadata:
     "@habx/apollo-multi-endpoint-link": ^2.6.0
     "@headlessui/react": 1.5.0
     "@heroicons/react": ^1.0.5
+    "@loaders.gl/core": ^3.1.5
     "@next/bundle-analyzer": 12.1.0
     "@next/env": 12.1.0
     "@playwright/test": 1.19.1
@@ -8779,6 +8788,9 @@ __metadata:
     "@react-three/fiber": ^7.0.26
     "@size-limit/file": 7.0.8
     "@starknet-react/core": ^0.4.6
+    "@storybook/addon-actions": 6.4.19
+    "@storybook/addons": 6.4.19
+    "@storybook/client-api": 6.4.19
     "@storybook/react": 6.4.19
     "@svgr/webpack": 6.2.1
     "@tailwindcss/aspect-ratio": 0.4.0
@@ -8823,6 +8835,7 @@ __metadata:
     eslint-plugin-sonarjs: 0.12.0
     eslint-plugin-testing-library: 5.1.0
     ethers: ^5.6.0
+    gl-matrix: ^3.0.0
     graphql: ^16.3.0
     heroicons: ^1.0.6
     jest: 27.5.1
@@ -8837,9 +8850,9 @@ __metadata:
     next-transpile-modules: 9.0.0
     npm-run-all: 4.1.5
     picocolors: 1.0.0
-    postcss: 8.4.6
-    postcss-100vh-fix: ^1.0.2
+    postcss: ^8.4.6
     prettier: 2.5.1
+    prop-types: ^15.0.0
     react: 18.0.0-rc.1
     react-dom: 18.0.0-rc.1
     react-joyride: ^2.3.2
@@ -8862,7 +8875,6 @@ __metadata:
     typescript: 4.6.2
     use-sound: ^4.0.1
     web3modal: ^1.9.5
-    worker-loader: 3.0.8
   languageName: unknown
   linkType: soft
 
@@ -20708,15 +20720,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-100vh-fix@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "postcss-100vh-fix@npm:1.0.2"
-  peerDependencies:
-    postcss: ^8.1.0
-  checksum: 67c2f3433705b79b593782de6f33740877a27221b7d4d7007f5b2c7f8f04a35f501ec482026fe6454885604cf4acf892480f7782356994c9846b8c4180700ac2
-  languageName: node
-  linkType: hard
-
 "postcss-calc@npm:^8.2.3":
   version: 8.2.4
   resolution: "postcss-calc@npm:8.2.4"
@@ -27018,18 +27021,6 @@ __metadata:
   dependencies:
     errno: ~0.1.7
   checksum: eab917530e1feddf157ec749e9c91b73a886142daa7fdf3490bccbf7b548b2576c43ab8d0a98e72ac755cbc101ca8647a7b1ff2485fddb9e8f53c40c77f5a719
-  languageName: node
-  linkType: hard
-
-"worker-loader@npm:3.0.8":
-  version: 3.0.8
-  resolution: "worker-loader@npm:3.0.8"
-  dependencies:
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
-  peerDependencies:
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 84f4a7eeb2a1d8b9704425837e017c91eedfae67ac89e0b866a2dcf283323c1dcabe0258196278b7d5fd0041392da895c8a0c59ddf3a94f1b2e003df68ddfec3
   languageName: node
   linkType: hard
 
