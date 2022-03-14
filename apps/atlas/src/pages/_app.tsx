@@ -13,7 +13,6 @@ import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetProvider } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
-import { SoundProvider } from '@/context/soundProvider';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { UIProvider } from '@/hooks/useUIContext';
 import { WalletProvider } from '@/hooks/useWalletContext';
@@ -84,22 +83,20 @@ const queries = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <BreakpointProvider queries={queries}>
-      <SoundProvider>
-        <WalletProvider>
-          <ApolloProvider client={client}>
-            <StarknetProvider>
-              <UIProvider>
-                <Component {...pageProps} />
+      <WalletProvider>
+        <ApolloProvider client={client}>
+          <StarknetProvider>
+            <UIProvider>
+              <Component {...pageProps} />
 
-                {/* <PageTransition
+              {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-              </UIProvider>
-            </StarknetProvider>
-          </ApolloProvider>
-        </WalletProvider>
-      </SoundProvider>
+            </UIProvider>
+          </StarknetProvider>
+        </ApolloProvider>
+      </WalletProvider>
     </BreakpointProvider>
   );
 }

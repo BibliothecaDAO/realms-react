@@ -66,7 +66,7 @@ const colors = (outline: boolean) => ({
   indigo: outline ? style.color.indigo.outline : style.color.indigo.bg,
 });
 
-const Button = React.forwardRef(
+export const Button = React.forwardRef(
   (
     {
       block = false,
@@ -98,5 +98,3 @@ const Button = React.forwardRef(
 );
 
 Button.displayName = 'Button';
-
-export default Button;

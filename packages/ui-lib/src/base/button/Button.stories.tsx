@@ -2,7 +2,7 @@ import { prototype } from 'stream';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import React from 'react';
 
-import Button from './Button';
+import { Button } from './Button';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
