@@ -1776,6 +1776,7 @@ __metadata:
     babel-plugin-macros: 3.1.0
     babel-plugin-polyfill-corejs3: 0.5.2
     buffer: ^6.0.3
+    clsx: 1.1.1
     core-js: 3.21.1
     cross-env: 7.0.3
     crypto-browserify: ^3.12.0
@@ -2418,7 +2419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@deck.gl/core@npm:8.7.0":
+"@deck.gl/core@npm:8.7.0, @deck.gl/core@npm:^8.7.0":
   version: 8.7.0
   resolution: "@deck.gl/core@npm:8.7.0"
   dependencies:
@@ -2497,7 +2498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@deck.gl/layers@npm:8.7.0":
+"@deck.gl/layers@npm:8.7.0, @deck.gl/layers@npm:^8.7.0":
   version: 8.7.0
   resolution: "@deck.gl/layers@npm:8.7.0"
   dependencies:
@@ -2536,7 +2537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@deck.gl/react@npm:8.7.0":
+"@deck.gl/react@npm:8.7.0, @deck.gl/react@npm:^8.7.0":
   version: 8.7.0
   resolution: "@deck.gl/react@npm:8.7.0"
   dependencies:
@@ -4588,7 +4589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-spring/web@npm:~9.4.4":
+"@react-spring/web@npm:^9.4.4, @react-spring/web@npm:~9.4.4":
   version: 9.4.4
   resolution: "@react-spring/web@npm:9.4.4"
   dependencies:
@@ -7547,7 +7548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-react/types@npm:^6.0.7":
+"@web3-react/types@npm:6.0.7, @web3-react/types@npm:^6.0.7":
   version: 6.0.7
   resolution: "@web3-react/types@npm:6.0.7"
   checksum: 29ae264ae4a126e520a64a4b466ea712ee09b934f3fe13b957e09269249ffc882712cf11fff12c1c19dd66e38503075b4adf5e9d5f588ea0dd31bbedf6fa9a42
@@ -8754,10 +8755,15 @@ __metadata:
     "@bibliotheca-dao/core-lib": "workspace:^"
     "@bibliotheca-dao/ui-lib": "workspace:^"
     "@danmarshall/deckgl-typings": ^4.9.15
+    "@deck.gl/core": ^8.7.0
     "@deck.gl/extensions": ^8.7.0
+    "@deck.gl/layers": ^8.7.0
+    "@deck.gl/react": ^8.7.0
     "@emotion/babel-plugin": 11.7.2
     "@emotion/react": 11.8.1
     "@emotion/styled": 11.8.1
+    "@ethersproject/bignumber": ^5.6.0
+    "@ethersproject/hash": ^5.6.0
     "@ethersproject/providers": ^5.6.0
     "@ethersproject/units": ^5.6.0
     "@habx/apollo-multi-endpoint-link": ^2.6.0
@@ -8768,10 +8774,12 @@ __metadata:
     "@playwright/test": 1.19.1
     "@quentin-sommer/react-useragent": 3.1.1
     "@react-spring/types": ^9.4.4
+    "@react-spring/web": ^9.4.4
     "@react-three/drei": ^8.16.5
     "@react-three/fiber": ^7.0.26
     "@size-limit/file": 7.0.8
     "@starknet-react/core": ^0.4.6
+    "@storybook/react": 6.4.19
     "@svgr/webpack": 6.2.1
     "@tailwindcss/aspect-ratio": 0.4.0
     "@tailwindcss/forms": 0.4.1
@@ -8790,6 +8798,7 @@ __metadata:
     "@walletconnect/web3-provider": ^1.7.4
     "@web3-react/core": ^6.1.9
     "@web3-react/injected-connector": ^6.0.7
+    "@web3-react/types": 6.0.7
     "@web3-react/walletconnect-connector": ^6.2.13
     autoprefixer: 10.4.2
     axios: ^0.24.0
@@ -8848,6 +8857,7 @@ __metadata:
     sync-directory: 4.0.12
     tailwindcss: 3.0.23
     three: ^0.137.5
+    three-stdlib: 2.8.8
     ts-jest: 27.1.3
     typescript: 4.6.2
     use-sound: ^4.0.1
@@ -10466,7 +10476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.1.1":
+"clsx@npm:1.1.1, clsx@npm:^1.1.1":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
@@ -25255,7 +25265,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three-stdlib@npm:^2.8.7":
+"three-stdlib@npm:2.8.8, three-stdlib@npm:^2.8.7":
   version: 2.8.8
   resolution: "three-stdlib@npm:2.8.8"
   dependencies:

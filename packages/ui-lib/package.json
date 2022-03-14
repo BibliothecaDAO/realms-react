@@ -32,7 +32,8 @@
     "build-storybook": "build-storybook --output-dir build/storybook"
   },
   "dependencies": {
-    "@bibliotheca-dao/core-lib": "workspace:^"
+    "@bibliotheca-dao/core-lib": "workspace:^",
+    "clsx": "1.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.17.5",
