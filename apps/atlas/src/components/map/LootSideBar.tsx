@@ -14,7 +14,7 @@ export const LootSideBar = (props: Props) => {
   const { toggleMenuType, selectedMenuType } = useUIContext();
 
   const { loading, error, data } = useQuery<LootData>(getLootQuery, {
-    variables: { id: props.id },
+    variables: { id: props.id.toString() },
   });
 
   return (
