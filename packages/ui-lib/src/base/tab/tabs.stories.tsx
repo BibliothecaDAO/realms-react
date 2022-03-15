@@ -5,7 +5,7 @@ import { Tabs } from './tabs';
 
 export default {
   component: Tabs,
-  title: 'Tabs',
+  title: 'Navigation/Tabs',
 } as Meta;
 
 const Template: Story<TabsProps> = (args) => {
@@ -77,4 +77,7 @@ const Template: Story<TabsProps> = (args) => {
 };
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = { variant: 'primary' };
+
+export const Default = Template.bind({});
+Default.args = {};

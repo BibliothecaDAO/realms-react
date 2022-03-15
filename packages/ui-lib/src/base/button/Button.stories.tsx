@@ -1,51 +1,52 @@
-import { prototype } from 'stream';
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import React from 'react';
-
+import type { Story, Meta } from '@storybook/react';
 import { Button } from './Button';
+import type { ButtonOrLinkProps } from './ButtonOrLink';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Input/Button',
   component: Button,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-} as ComponentMeta<typeof Button>;
+  title: 'Button',
+} as Meta;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => (
-  <Button {...args}>Click Me</Button>
+const Template: Story<ButtonOrLinkProps> = (args) => (
+  <Button size="md" {...args}>
+    Click me!
+  </Button>
 );
 
+export const Default = Template.bind({});
+Default.args = {
+  variant: 'default',
+};
+
 export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  size: 'md',
-  color: 'primary',
-  outline: false,
+  variant: 'primary',
 };
 
-export const Success = Template.bind({});
-Success.args = {
-  size: 'md',
-  color: 'success',
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: 'secondary',
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'lg',
+export const Tertiary = Template.bind({});
+Tertiary.args = {
+  variant: 'tertiary',
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'sm',
+export const Link = Template.bind({});
+Link.args = {
+  variant: 'link',
 };
 
-export const Outline = Template.bind({});
-Outline.args = {
-  size: 'md',
-  outline: true,
-  color: 'primary',
+/* export const Icon = Template.bind({});
+Icon.args = {
+  variant: 'default',
+  leftIcon: <FontAwesomeIcon icon={faFolder} />,
+}; */
+
+export const Loading = Template.bind({});
+Loading.args = {
+  variant: 'default',
+  loadingText: 'Loading...',
+  loading: true,
 };
