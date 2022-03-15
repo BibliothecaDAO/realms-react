@@ -29,7 +29,7 @@ const STYLES = {
     default:
       'text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:text-gray-900 hover:text-gray-900',
     primary:
-      'font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring-blue-700',
+      'font-medium text-white bg-off-200/20 hover:bg-amber-800 active:bg-amber-900 focus-visible:ring-yellow-700',
     secondary:
       'text-gray-700 bg-transparent border-2 border-gray-200 hover:bg-gray-100 active:text-gray-900 hover:text-gray-900 active:bg-gray-200',
     tertiary:

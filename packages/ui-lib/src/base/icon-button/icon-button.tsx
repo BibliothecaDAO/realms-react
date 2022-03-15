@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { forwardRef } from 'react';
-import type { ButtonOrLinkProps } from '../button/Button';
-import { Button } from '../button/Button';
+import type { ButtonOrLinkProps } from '../button';
+import { Button } from '../button';
 
 export interface IconButtonProps
   extends Omit<
