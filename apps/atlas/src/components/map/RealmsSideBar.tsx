@@ -11,18 +11,18 @@ type Props = {
 };
 
 export const RealmSideBar = (props: Props) => {
-  const { toggleMapMenu, mapMenu } = useUIContext();
+  const { closeAllSidebars, openSidebar } = useUIContext();
 
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={mapMenu}>
+    <BaseSideBar open={openSidebar === 'realms'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleMapMenu}
+          onClick={closeAllSidebars}
         >
           <Menu />
         </button>

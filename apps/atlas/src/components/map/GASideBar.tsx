@@ -12,18 +12,18 @@ type Props = {
 };
 
 export const GASideBar = (props: Props) => {
-  const { toggleGAMenu, GAMenu } = useUIContext();
+  const { closeAllSidebars, openSidebar } = useUIContext();
 
   const { loading, error, data } = useQuery<GAData>(getGAQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={GAMenu}>
+    <BaseSideBar open={openSidebar === 'GA'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleGAMenu}
+          onClick={closeAllSidebars}
         >
           <Menu />
         </button>

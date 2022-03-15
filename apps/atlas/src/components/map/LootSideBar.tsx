@@ -11,18 +11,18 @@ type Props = {
 };
 
 export const LootSideBar = (props: Props) => {
-  const { toggleLootMenu, lootMenu } = useUIContext();
+  const { closeAllSidebars, openSidebar } = useUIContext();
 
   const { loading, error, data } = useQuery<LootData>(getLootQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={lootMenu}>
+    <BaseSideBar open={openSidebar === 'loot'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleLootMenu}
+          onClick={closeAllSidebars}
         >
           <Menu />
         </button>

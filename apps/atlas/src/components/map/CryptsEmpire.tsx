@@ -14,7 +14,6 @@ type Props = {
 };
 
 export const CryptsEmpire = (props: Props) => {
-  const { toggleCryptsMenu, cryptsMenu } = useUIContext();
   const { account, isConnected, displayName } = useWalletContext();
   const [limit, setLimit] = useState(0);
 

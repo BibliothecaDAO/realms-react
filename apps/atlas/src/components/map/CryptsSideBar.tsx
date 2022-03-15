@@ -11,18 +11,18 @@ type Props = {
 };
 
 export const CryptsSideBar = (props: Props) => {
-  const { toggleCryptsMenu, cryptsMenu } = useUIContext();
+  const { closeAllSidebars, openSidebar } = useUIContext();
 
   const { loading, error, data } = useQuery<CryptData>(getCryptQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={cryptsMenu}>
+    <BaseSideBar open={openSidebar === 'crypts'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleCryptsMenu}
+          onClick={closeAllSidebars}
         >
           <Menu />
         </button>

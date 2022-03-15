@@ -23,20 +23,7 @@ import realms from '@/geodata/realms.json';
 import { useUIContext } from '@/hooks/useUIContext';
 
 function App() {
-  const {
-    mapMenu,
-    toggleMapMenu,
-    closeOrdersMenu,
-    toggleCryptsMenu,
-    toggleLootMenu,
-    toggleEmpireMenu,
-    toggleGAMenu,
-    empireMenu,
-    cryptsMenu,
-    lootMenu,
-    GAMenu,
-    closeAll,
-  } = useUIContext();
+  const { closeOrdersMenu, toggleOpenSidebar } = useUIContext();
   const [resource, setResource] = useState<Array<string>>([]);
   const [value, setValue] = useState<number>(1);
 
@@ -105,10 +92,7 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.tokenId);
-      closeAll(['crypts']);
-      if (!cryptsMenu) {
-        toggleCryptsMenu();
-      }
+      toggleOpenSidebar('crypts');
     },
   });
 
@@ -130,10 +114,7 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.realm_idx);
-      closeAll(['realms']);
-      if (!mapMenu) {
-        toggleMapMenu();
-      }
+      toggleOpenSidebar('realms');
     },
   });
 
@@ -155,10 +136,7 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.bag_id);
-      closeAll(['loot']);
-      if (!lootMenu) {
-        toggleLootMenu();
-      }
+      toggleOpenSidebar('loot');
     },
   });
 
@@ -180,10 +158,7 @@ function App() {
     },
     onClick: (info: any) => {
       setValue(info.object.properties.ga_id);
-      closeAll(['GA']);
-      if (!GAMenu) {
-        toggleGAMenu();
-      }
+      toggleOpenSidebar('GA');
     },
   });
 
@@ -229,79 +204,22 @@ function App() {
         asset = (realms as any).features.filter(
           (a: any) => a.properties.realm_idx === parseInt(id)
         );
-        if (cryptsMenu) {
-          toggleCryptsMenu();
-        }
-        if (!mapMenu) {
-          toggleMapMenu();
-        }
-        if (empireMenu) {
-          toggleEmpireMenu();
-        }
-        if (lootMenu) {
-          toggleLootMenu();
-        }
-        if (GAMenu) {
-          toggleGAMenu();
-        }
+        toggleOpenSidebar('realms');
       } else if (type === 'B') {
         asset = crypts.features.filter(
           (a: any) => a.properties.tokenId === parseInt(id)
         );
-        console.log(lootMenu);
-        if (mapMenu) {
-          toggleMapMenu();
-        }
-        if (empireMenu) {
-          toggleEmpireMenu();
-        }
-        if (lootMenu) {
-          toggleLootMenu();
-        }
-        if (GAMenu) {
-          toggleGAMenu();
-        }
-        if (!cryptsMenu) {
-          toggleCryptsMenu();
-        }
+        toggleOpenSidebar('crypts');
       } else if (type === 'C') {
         asset = loot_bags.features.filter(
           (a: any) => a.properties.bag_id === parseInt(id)
         );
-        if (cryptsMenu) {
-          toggleCryptsMenu();
-        }
-        if (mapMenu) {
-          toggleMapMenu();
-        }
-        if (empireMenu) {
-          toggleEmpireMenu();
-        }
-        if (!lootMenu) {
-          toggleLootMenu();
-        }
-        if (GAMenu) {
-          toggleGAMenu();
-        }
+        toggleOpenSidebar('loot');
       } else {
         asset = ga_bags.features.filter(
           (a: any) => a.properties.ga_id === id.toString()
         );
-        if (cryptsMenu) {
-          toggleCryptsMenu();
-        }
-        if (mapMenu) {
-          toggleMapMenu();
-        }
-        if (empireMenu) {
-          toggleEmpireMenu();
-        }
-        if (lootMenu) {
-          toggleLootMenu();
-        }
-        if (!GAMenu) {
-          toggleGAMenu();
-        }
+        toggleOpenSidebar('GA');
       }
       console.log(asset);
       setValue(id);
@@ -322,19 +240,7 @@ function App() {
         });
       }
     },
-    [
-      cryptsMenu,
-      mapMenu,
-      closeOrdersMenu,
-      toggleMapMenu,
-      toggleCryptsMenu,
-      toggleEmpireMenu,
-      empireMenu,
-      lootMenu,
-      toggleLootMenu,
-      GAMenu,
-      toggleGAMenu,
-    ]
+    [closeOrdersMenu, toggleOpenSidebar]
   );
 
   const onChange = (event: any) => {

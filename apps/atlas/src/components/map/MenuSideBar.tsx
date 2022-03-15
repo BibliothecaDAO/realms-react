@@ -22,12 +22,8 @@ export const MenuSideBar = () => {
   const {
     toggleResourceMenu,
     toggleTheOrdersMenu,
-    toggleMapMenu,
-    toggleEmpireMenu,
     mainMenu,
-    toggleCryptsMenu,
-    toggleLootMenu,
-    toggleGAMenu,
+    toggleOpenSidebar,
   } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
@@ -48,7 +44,7 @@ export const MenuSideBar = () => {
       <IconButton
         className={buttonClasses}
         aria-label="Realms"
-        onClick={toggleEmpireMenu}
+        onClick={() => toggleOpenSidebar('realms')}
         icon={<Castle className={iconClasses} />}
         size="lg"
       />
@@ -57,7 +53,7 @@ export const MenuSideBar = () => {
       <IconButton
         className={buttonClasses}
         aria-label="Loot"
-        onClick={toggleEmpireMenu}
+        onClick={() => toggleOpenSidebar('loot')}
         icon={<Bag className={'mx-auto w-8 sm:w-16 fill-current'} />}
         size="lg"
       />
@@ -65,7 +61,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={toggleGAMenu}
+        onClick={() => toggleOpenSidebar('GA')}
         aria-label="GA"
         icon={<Helm className={'mx-auto w-8 sm:w-8 fill-current mb-4'} />}
         size="lg"
@@ -74,7 +70,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={toggleEmpireMenu}
+        onClick={() => toggleOpenSidebar('crypts')}
         aria-label="Crypts"
         icon={<Danger className={iconClasses} />}
         size="lg"
@@ -83,7 +79,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={toggleEmpireMenu}
+        onClick={toggleResourceMenu}
         aria-label="Resources"
         icon={<Mountain className={iconClasses} />}
         size="lg"
@@ -93,7 +89,7 @@ export const MenuSideBar = () => {
       <IconButton
         className={buttonClasses}
         aria-label="Orders"
-        onClick={toggleEmpireMenu}
+        onClick={toggleTheOrdersMenu}
         icon={<Library className={iconClasses} />}
         size="lg"
       />

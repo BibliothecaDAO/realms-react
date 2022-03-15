@@ -6,9 +6,7 @@ const defaultUIContext = {
   togglePowerBar: () => {},
   setup: false,
   toggleSetup: () => {},
-  mapMenu: false,
   empireMenu: false,
-  toggleMapMenu: () => {},
   toggleEmpireMenu: () => {},
   resourceMenu: false,
   toggleResourceMenu: () => {},
@@ -18,12 +16,9 @@ const defaultUIContext = {
   mainMenu: false,
   toggleMainMenu: () => {},
   closeOrdersMenu: () => {},
-  toggleCryptsMenu: () => {},
-  cryptsMenu: false,
-  toggleLootMenu: () => {},
-  lootMenu: false,
-  toggleGAMenu: () => {},
-  GAMenu: false,
+  openSidebar: null,
+  toggleOpenSidebar: (sidebar: SidebarName) => {},
+  closeAllSidebars: () => {},
 };
 
 const UIContext = createContext<{
@@ -31,24 +26,18 @@ const UIContext = createContext<{
   togglePowerBar: () => void;
   setup: boolean;
   toggleSetup: () => void;
-  mapMenu: boolean;
   empireMenu: boolean;
-  toggleMapMenu: () => void;
   toggleEmpireMenu: () => void;
   resourceMenu: boolean;
   toggleResourceMenu: () => void;
   theOrdersMenu: boolean;
   toggleTheOrdersMenu: () => void;
-  closeAll: (excludes: string[]) => void;
   mainMenu: boolean;
   toggleMainMenu: () => void;
   closeOrdersMenu: () => void;
-  toggleCryptsMenu: () => void;
-  cryptsMenu: boolean;
-  toggleLootMenu: () => void;
-  lootMenu: boolean;
-  toggleGAMenu: () => void;
-  GAMenu: boolean;
+  openSidebar: SidebarName;
+  toggleOpenSidebar: (sidebar: SidebarName) => void;
+  closeAllSidebars: () => void;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -65,17 +54,25 @@ interface UI {
   main: false;
 }
 
+type SidebarName = 'realms' | 'crypts' | 'loot' | 'GA' | null;
+
 function useUI() {
   const [powerBar, setPowerBar] = useState(false);
   const [setup, setSetup] = useState(false);
-  const [mapMenu, setMapMenu] = useState(false);
   const [empireMenu, setEmpireMenu] = useState(false);
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
-  const [cryptsMenu, setCryptsMenu] = useState(false);
-  const [lootMenu, setLootMenu] = useState(false);
-  const [GAMenu, setGAMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
+
+  const [openSidebar, setOpenSidebar] = useState<SidebarName>(null);
+
+  const closeAllSidebars = () => {
+    setOpenSidebar(null);
+  };
+
+  const toggleOpenSidebar = (sidebar: SidebarName) => {
+    setOpenSidebar(sidebar);
+  };
 
   const hideOrOpenMainMenu = () => {
     if (mainMenu) {
@@ -85,15 +82,6 @@ function useUI() {
     }
   };
 
-  const toggleCryptsMenu = () => {
-    return setCryptsMenu(!cryptsMenu);
-  };
-  const toggleLootMenu = () => {
-    return setLootMenu(!lootMenu);
-  };
-  const toggleGAMenu = () => {
-    return setGAMenu(!GAMenu);
-  };
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
@@ -106,10 +94,6 @@ function useUI() {
     return setSetup(!setup);
   };
 
-  const toggleMapMenu = () => {
-    // hideOrOpenMainMenu();
-    return setMapMenu(!mapMenu);
-  };
   const toggleEmpireMenu = () => {
     // hideOrOpenMainMenu();
     return setEmpireMenu(!empireMenu);
@@ -128,49 +112,24 @@ function useUI() {
     // hideOrOpenMainMenu();
     return setTheOrdersMenu(false);
   };
-  const closeAll = (exclude: string[]) => {
-    if (!exclude.includes('orders')) {
-      setTheOrdersMenu(false);
-    }
-    setEmpireMenu(false);
-    setResourceMenu(false);
-    if (!exclude.includes('crypts')) {
-      setCryptsMenu(false);
-    }
-    if (!exclude.includes('GA')) {
-      setGAMenu(false);
-    }
-    if (!exclude.includes('loot')) {
-      setLootMenu(false);
-    }
-    if (!exclude.includes('realms')) {
-      return setMapMenu(false);
-    }
-  };
 
   return {
     powerBar,
     togglePowerBar,
     setup,
     toggleSetup,
-    toggleMapMenu,
     empireMenu,
     toggleEmpireMenu,
-    mapMenu,
     toggleResourceMenu,
     resourceMenu,
     toggleTheOrdersMenu,
     theOrdersMenu,
-    closeAll,
     toggleMainMenu,
     mainMenu,
     closeOrdersMenu,
-    toggleCryptsMenu,
-    cryptsMenu,
-    toggleLootMenu,
-    lootMenu,
-    toggleGAMenu,
-    GAMenu,
+    openSidebar,
+    toggleOpenSidebar,
+    closeAllSidebars,
   };
 }
 
