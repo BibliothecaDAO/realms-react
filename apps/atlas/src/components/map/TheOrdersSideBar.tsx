@@ -1,23 +1,14 @@
 import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
 import Right from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import {
-  JSXElementConstructor,
-  MouseEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import { useState } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
 import { OrderIcon } from '@/shared/OrderIcon';
-import { theOrders, orderDetails } from '@/util/theOrders';
+import { orderDetails } from '@/util/theOrders';
 import { BaseSideBar } from './BaseSideBar';
 
-type Props = {
-  onClick: (event: any, id: string) => void;
-};
-
-export const TheOrdersSideBar = (props: Props) => {
-  const { toggleTheOrdersMenu, theOrdersMenu } = useUIContext();
+export const TheOrdersSideBar = () => {
+  const { toggleMenuType, selectedMenuType, gotoAssetId } = useUIContext();
   const [focusOrder, setOrder] = useState<number>(0);
 
   const changeOrder = (value: any) => {
@@ -31,11 +22,11 @@ export const TheOrdersSideBar = (props: Props) => {
   };
 
   return (
-    <BaseSideBar open={theOrdersMenu}>
+    <BaseSideBar open={selectedMenuType === 'orders'}>
       <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-1/3 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleTheOrdersMenu}
+          onClick={() => toggleMenuType('orders')}
         >
           <Menu />
         </button>
@@ -78,9 +69,9 @@ export const TheOrdersSideBar = (props: Props) => {
                   <button
                     className="p-4 rounded sm:text-xl hover:bg-white/60 bg-white/20 font-display "
                     onClick={() =>
-                      props.onClick(
+                      gotoAssetId(
                         orderDetails[focusOrder]?.wonders.realm_id[index],
-                        'A'
+                        'realm'
                       )
                     }
                   >

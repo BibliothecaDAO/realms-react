@@ -5,29 +5,14 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Mountain from '@bibliotheca-dao/ui-lib/icons/mountain.svg';
-import type { MouseEventHandler } from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useSound } from '@/context/soundProvider';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
-type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  resource: Array<string>;
-};
-
 export const MenuSideBar = () => {
   const { account } = useWalletContext();
-  const {
-    toggleResourceMenu,
-    toggleTheOrdersMenu,
-    toggleMapMenu,
-    toggleEmpireMenu,
-    mainMenu,
-    toggleCryptsMenu,
-    toggleLootMenu,
-    toggleGAMenu,
-  } = useUIContext();
+  const { toggleMenuType, selectedMenuType } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
   const handleClick = useCallback(() => {
@@ -40,37 +25,46 @@ export const MenuSideBar = () => {
   return (
     <div
       className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all overflow-auto py-40 ${
-        mainMenu ? '' : 'translate-y-full hidden'
+        selectedMenuType === 'main' ? '' : 'translate-y-full hidden'
       }`}
     >
       {account && (
-        <button className={buttonClasses} onClick={toggleEmpireMenu}>
+        <button
+          className={buttonClasses}
+          onClick={() => toggleMenuType('empire')}
+        >
           <Crown className="w-8 mx-auto mb-1 fill-current sm:w-16" />
           <span className="hidden sm:block">My Empire</span>
         </button>
       )}
-      <button className={buttonClasses} onClick={toggleMapMenu}>
+      <button className={buttonClasses} onClick={() => toggleMenuType('realm')}>
         <Castle className={iconClasses} />
         <span className="hidden sm:block">Realms</span>
       </button>
-      <button className={buttonClasses} onClick={toggleLootMenu}>
+      <button className={buttonClasses} onClick={() => toggleMenuType('loot')}>
         <Bag className={'mx-auto w-8 sm:w-14 fill-current'} />
         <span className="hidden sm:block">Loot</span>
       </button>
 
-      <button className={buttonClasses} onClick={toggleGAMenu}>
+      <button className={buttonClasses} onClick={() => toggleMenuType('ga')}>
         <Helm className={'mx-auto w-8 sm:w-6 fill-current mb-4'} />
         <span className="hidden sm:block ">GA</span>
       </button>
-      <button className={buttonClasses} onClick={toggleCryptsMenu}>
+      <button className={buttonClasses} onClick={() => toggleMenuType('crypt')}>
         <Danger className={iconClasses} />
         <span className="hidden sm:block">Crypts</span>
       </button>
-      <button className={buttonClasses} onClick={toggleResourceMenu}>
+      <button
+        className={buttonClasses}
+        onClick={() => toggleMenuType('resources')}
+      >
         <Mountain className={iconClasses} />
         <span className="hidden sm:block">Resources</span>
       </button>
-      <button className={buttonClasses} onClick={toggleTheOrdersMenu}>
+      <button
+        className={buttonClasses}
+        onClick={() => toggleMenuType('orders')}
+      >
         <Library className={iconClasses} />
         <span className="hidden sm:block">Orders</span>
       </button>

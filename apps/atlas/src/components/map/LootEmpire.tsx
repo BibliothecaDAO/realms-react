@@ -2,20 +2,14 @@ import { useQuery } from '@apollo/client';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { CryptData } from '@/types/index';
 
 import type { WalletEcosystemData, CryptFilters } from '@/types/index';
 import { Loot } from '../realms/Loot';
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
-type Props = {
-  onClick?: (event: any, id: string) => void;
-};
 
-export const LootEmpire = (props: Props) => {
-  const { toggleLootMenu, lootMenu } = useUIContext();
+export const LootEmpire = () => {
   const { account, isConnected, displayName } = useWalletContext();
   const [limit, setLimit] = useState(0);
 
@@ -42,7 +36,6 @@ export const LootEmpire = (props: Props) => {
         {data &&
           data.bags.map((bag, index) => (
             <Loot
-              onClick={props.onClick}
               key={index}
               loot={bag}
               loading={loading}
