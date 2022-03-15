@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const ResourceSideBar = (props: Props) => {
-  const { toggleResourceMenu, resourceMenu } = useUIContext();
+  const { toggleMenuType, selectedMenuType } = useUIContext();
   const [focusResource, setResource] = useState<number>(0);
   const [loaded, setLoaded] = useState<boolean>(false);
   const list = resources.map((res: any, index) => (
@@ -42,11 +42,11 @@ export const ResourceSideBar = (props: Props) => {
   };
 
   return (
-    <BaseSideBar open={resourceMenu}>
+    <BaseSideBar open={selectedMenuType === 'resources'}>
       <div className="z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={toggleResourceMenu}
+          onClick={() => toggleMenuType('resources')}
         >
           <Menu />
         </button>

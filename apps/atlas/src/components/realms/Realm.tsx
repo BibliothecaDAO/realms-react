@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
+import { useUIContext } from '@/hooks/useUIContext';
 import { OrderIcon } from '@/shared/OrderIcon';
 import { shortenAddress } from '@/util/formatters';
 import { resources } from '@/util/resources';
@@ -14,6 +15,8 @@ export function Realm(props: RealmProps): ReactElement {
   const findResourceName = (value: any) => {
     return resources.find((e) => e.id === parseInt(value));
   };
+  const { gotoAssetId } = useUIContext();
+
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
       {props.loading ? (
@@ -65,7 +68,7 @@ export function Realm(props: RealmProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.realm.id, 'A');
+                      gotoAssetId(props.realm.id, 'realm');
                     }}
                   >
                     fly to
