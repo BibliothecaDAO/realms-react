@@ -3,8 +3,8 @@ import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
-import { Realm } from '../realms/Realm';
-import { BaseSideBar } from './BaseSideBar';
+import { Realm } from '../cards/Realm';
+import { BaseSideBar } from '../map/BaseSideBar';
 
 type Props = {
   id: number;

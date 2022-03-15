@@ -4,16 +4,17 @@ import DeckGL from '@deck.gl/react';
 import React, { useState, useCallback } from 'react';
 import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
-import { CryptsSideBar } from '@/components/map/CryptsSideBar';
+import { ArtBackground } from '@/components/map/ArtBackground';
 import { EmpireSideBar } from '@/components/map/EmpireSideBar';
 import { FlyTo } from '@/components/map/FlyTo';
-import { GASideBar } from '@/components/map/GASideBar';
-import { LootSideBar } from '@/components/map/LootSideBar';
-import { MenuSideBar } from '@/components/map/MenuSideBar';
-import { RealmSideBar } from '@/components/map/RealmsSideBar';
 import { ResourceSideBar } from '@/components/map/ResourceSideBar';
 import { TheOrdersSideBar } from '@/components/map/TheOrdersSideBar';
 import { Header } from '@/components/navigation/header';
+import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
+import { GASideBar } from '@/components/sidebars/GASideBar';
+import { LootSideBar } from '@/components/sidebars/LootSideBar';
+import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
+import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
@@ -268,6 +269,7 @@ function App() {
         <CryptsSideBar id={value} />
         <LootSideBar id={value} />
         <GASideBar id={value} />
+        <ArtBackground />
         <FlyTo
           onChange={onChange}
           onClick={goToId}

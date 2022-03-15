@@ -6,7 +6,7 @@ import { getGAsQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { GAsData, CryptFilters } from '@/types/index';
-import { GAdventurer } from '../realms/GAdventurer';
+import { GAdventurer } from '../cards/GAdventurer';
 
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';

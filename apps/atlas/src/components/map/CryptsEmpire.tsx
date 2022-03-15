@@ -6,7 +6,7 @@ import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { WalletCryptsData, CryptFilters } from '@/types/index';
 import { CryptData } from '@/types/index';
-import { Crypt } from '../realms/Crypt';
+import { Crypt } from '../cards/Crypt';
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6';
 type Props = {

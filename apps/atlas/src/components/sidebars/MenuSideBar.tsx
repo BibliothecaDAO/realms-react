@@ -20,6 +20,7 @@ type Props = {
 export const MenuSideBar = () => {
   const { account } = useWalletContext();
   const {
+    toggleArtBackground,
     toggleResourceMenu,
     toggleTheOrdersMenu,
     mainMenu,
@@ -79,7 +80,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={toggleResourceMenu}
+        onClick={() => toggleArtBackground()}
         aria-label="Resources"
         icon={<Mountain className={iconClasses} />}
         size="lg"

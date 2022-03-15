@@ -1,24 +1,24 @@
 import { useQuery } from '@apollo/client';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import { getLootQuery } from '@/hooks/graphql/queries';
+import { getCryptQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
-import type { LootData } from '@/types/index';
-import { Loot } from '../realms/Loot';
-import { BaseSideBar } from './BaseSideBar';
+import type { CryptData } from '@/types/index';
+import { Crypt } from '../cards/Crypt';
+import { BaseSideBar } from '../map/BaseSideBar';
 
 type Props = {
   id: number;
 };
 
-export const LootSideBar = (props: Props) => {
+export const CryptsSideBar = (props: Props) => {
   const { closeAllSidebars, openSidebar } = useUIContext();
 
-  const { loading, error, data } = useQuery<LootData>(getLootQuery, {
+  const { loading, error, data } = useQuery<CryptData>(getCryptQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={openSidebar === 'loot'}>
+    <BaseSideBar open={openSidebar === 'crypts'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
@@ -26,8 +26,8 @@ export const LootSideBar = (props: Props) => {
         >
           <Menu />
         </button>
-        {data && data.bag && (
-          <Loot flyto={false} loot={data!.bag} loading={loading} />
+        {data && data.dungeon && (
+          <Crypt flyto={false} crypt={data!.dungeon} loading={loading} />
         )}
       </div>
     </BaseSideBar>

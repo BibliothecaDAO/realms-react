@@ -7,7 +7,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import { CryptData } from '@/types/index';
 
 import type { WalletEcosystemData, CryptFilters } from '@/types/index';
-import { Loot } from '../realms/Loot';
+import { Loot } from '../cards/Loot';
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
 type Props = {

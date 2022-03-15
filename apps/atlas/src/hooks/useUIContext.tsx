@@ -19,6 +19,8 @@ const defaultUIContext = {
   openSidebar: null,
   toggleOpenSidebar: (sidebar: SidebarName) => {},
   closeAllSidebars: () => {},
+  toggleArtBackground: () => {},
+  artBackground: true,
 };
 
 const UIContext = createContext<{
@@ -38,6 +40,8 @@ const UIContext = createContext<{
   openSidebar: SidebarName;
   toggleOpenSidebar: (sidebar: SidebarName) => void;
   closeAllSidebars: () => void;
+  toggleArtBackground: () => void;
+  artBackground: boolean;
 }>(defaultUIContext);
 
 interface UIProviderProps {
@@ -63,6 +67,7 @@ function useUI() {
   const [resourceMenu, setResourceMenu] = useState(false);
   const [theOrdersMenu, setTheOrdersMenu] = useState(false);
   const [mainMenu, setMainMenu] = useState(true);
+  const [artBackground, setArtBackground] = useState(true);
 
   const [openSidebar, setOpenSidebar] = useState<SidebarName>(null);
 
@@ -73,7 +78,9 @@ function useUI() {
   const toggleOpenSidebar = (sidebar: SidebarName) => {
     setOpenSidebar(sidebar);
   };
-
+  const toggleArtBackground = () => {
+    setArtBackground(!artBackground);
+  };
   const hideOrOpenMainMenu = () => {
     if (mainMenu) {
       setMainMenu(() => false);
@@ -130,6 +137,8 @@ function useUI() {
     openSidebar,
     toggleOpenSidebar,
     closeAllSidebars,
+    toggleArtBackground,
+    artBackground,
   };
 }
 

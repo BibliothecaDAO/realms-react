@@ -27,7 +27,7 @@ export const EmpireSideBar = (props: Props) => {
 
   return (
     <animated.div
-      className="absolute top-0 z-40 w-full w-screen h-screen bg-center bg-cover bg-hero"
+      className="absolute top-0 z-40 w-full w-screen h-screen bg-center bg-cover bg-off-200/90"
       style={animation}
     >
       <div
