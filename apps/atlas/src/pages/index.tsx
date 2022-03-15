@@ -353,9 +353,8 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative h-full overflow-hidden sm:h-screen">
+      <div className="relative flex h-full overflow-hidden sm:h-screen">
         <Header />
-        <MenuSideBar />
         <RealmSideBar id={value} />
         <TheOrdersSideBar onClick={goToId} />
         <EmpireSideBar onClick={goToId} />
@@ -370,29 +369,32 @@ function App() {
           value={value}
           select={assetSelect}
         />
-        <DeckGL
-          getCursor={({ isHovering }) => {
-            return isHovering ? 'pointer' : 'grabbing';
-          }}
-          pickingRadius={25}
-          initialViewState={initialViewState}
-          controller={true}
-          layers={[
-            realms_layer,
-            resource_layer,
-            crypts_layer,
-            loot_bag_layer,
-            ga_bag_layer,
-          ]}
-        >
-          <Map
-            attributionControl={false}
-            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-            mapboxAccessToken={
-              'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-            }
-          />
-        </DeckGL>
+        <MenuSideBar />
+        <div className="relative w-full">
+          <DeckGL
+            getCursor={({ isHovering }) => {
+              return isHovering ? 'pointer' : 'grabbing';
+            }}
+            pickingRadius={25}
+            initialViewState={initialViewState}
+            controller={true}
+            layers={[
+              realms_layer,
+              resource_layer,
+              crypts_layer,
+              loot_bag_layer,
+              ga_bag_layer,
+            ]}
+          >
+            <Map
+              attributionControl={false}
+              mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+              mapboxAccessToken={
+                'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+              }
+            />
+          </DeckGL>
+        </div>
       </div>
     </Layout>
   );

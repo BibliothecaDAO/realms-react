@@ -60,7 +60,7 @@ module.exports = {
       stream: require.resolve("stream-browserify"),
     };
 
-    config.resolve.alias['~/icons'] = path.resolve(__dirname, '../src/icons');
+    config.resolve.alias['@/icons'] = path.resolve(__dirname, '../src/icons');
 
     const rules = config.module.rules;
 
