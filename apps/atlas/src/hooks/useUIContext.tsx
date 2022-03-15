@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import crypts from '../geodata/crypts_all.json';
 import ga_bags from '../geodata/ga_bags.json';
@@ -65,49 +72,100 @@ interface UIProviderProps {
   children: React.ReactNode;
 }
 
+function useQueryPOI() {
+  const { query } = useRouter();
+  const validQueries: AssetType[] = ['realm', 'crypt', 'loot', 'ga'];
+  for (const assetType of validQueries) {
+    if (parseInt(query[assetType] as string) > 0) {
+      return {
+        assetType: assetType as string,
+        assetId: query[assetType] as string,
+      };
+    }
+  }
+  return null;
+}
+
+const assetFilterByType = (assetType: AssetType) =>
+  AssetFilters.find(
+    (assetFilter) => assetFilter.value === assetType
+  ) as AssetFilter;
+
 export const UIProvider = (props: UIProviderProps) => {
   return (
     <UIContext.Provider value={useUI()}>{props.children}</UIContext.Provider>
   );
 };
 
-function useUI(): UI {
-  const [selectedId, setSelectedId] = useState('1');
-  const [selectedAssetFilter, setSelectedAssetFilter] = useState(
-    AssetFilters[0]
-  );
-  const [selectedMenuType, setMenuType] = useState<MenuType>('main');
+function useCoordinates() {
   const [coordinates, setCoordinates] = useState<Coordinate>();
+  const getAssetById = useCallback((assetId: string, assetType: AssetType) => {
+    let asset;
+    switch (assetType) {
+      case 'realm':
+        asset = realms.features.filter(
+          (a: any) => a.properties.realm_idx === parseInt(assetId)
+        );
+        break;
+      case 'crypt':
+        asset = crypts.features.filter(
+          (a: any) => a.properties.tokenId === parseInt(assetId)
+        );
+        break;
+      case 'loot':
+        asset = loot_bags.features.filter(
+          (a: any) => a.properties.bag_id === parseInt(assetId)
+        );
+        break;
+      case 'ga':
+        asset = ga_bags.features.filter(
+          (a: any) => parseInt(a.properties.ga_id) === parseInt(assetId)
+        );
+        break;
+    }
+    return asset;
+  }, []);
 
-  const getAssetById = useCallback(
-    (assetId: string, assetType: AssetType) => {
-      let asset;
-      switch (assetType) {
-        case 'realm':
-          asset = realms.features.filter(
-            (a: any) => a.properties.realm_idx === parseInt(assetId)
-          );
-          break;
-        case 'crypt':
-          asset = crypts.features.filter(
-            (a: any) => a.properties.tokenId === parseInt(assetId)
-          );
-          break;
-        case 'loot':
-          asset = loot_bags.features.filter(
-            (a: any) => a.properties.bag_id === parseInt(assetId)
-          );
-          break;
-        case 'ga':
-          asset = ga_bags.features.filter(
-            (a: any) => parseInt(a.properties.ga_id) === parseInt(assetId)
-          );
-          break;
-      }
-      return asset;
-    },
-    [selectedId, selectedAssetFilter]
+  function updateCoordinatesByAsset(assetId: string, assetType: AssetType) {
+    const asset = getAssetById(assetId + '', assetType);
+    if (asset && asset[0]) {
+      setCoordinates({
+        longitude: asset[0].geometry.coordinates[0],
+        latitude: asset[0].geometry.coordinates[1],
+      });
+    }
+  }
+  return {
+    coordinates,
+    updateCoordinatesByAsset,
+  };
+}
+
+function useUI(): UI {
+  const router = useRouter();
+  const query = useQueryPOI();
+  const [selectedId, setSelectedId] = useState(query ? query.assetId : '1');
+  const [selectedAssetFilter, setSelectedAssetFilter] = useState(
+    query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+  const [selectedMenuType, setMenuType] = useState<MenuType>(
+    query ? (query.assetType as AssetType) : 'main'
+  );
+  const { coordinates, updateCoordinatesByAsset } = useCoordinates();
+
+  // Update URL
+  useEffect(() => {
+    router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
+      shallow: true,
+    });
+  }, [selectedId, selectedAssetFilter]);
+
+  // Sync AssetFilter with Menu
+  useEffect(() => {
+    if (selectedAssetFilter.value !== selectedMenuType) {
+      setMenuType(selectedAssetFilter.value);
+    }
+  }, [selectedAssetFilter]);
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
@@ -127,19 +185,9 @@ function useUI(): UI {
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
     setMenuType(assetType);
-    setSelectedAssetFilter(
-      AssetFilters.find(
-        (assetFilter) => assetFilter.value === assetType
-      ) as AssetFilter
-    );
+    setSelectedAssetFilter(assetFilterByType(assetType));
     setSelectedId(assetId + '');
-    const asset = getAssetById(assetId + '', assetType);
-    if (asset && asset[0]) {
-      setCoordinates({
-        longitude: asset[0].geometry.coordinates[0],
-        latitude: asset[0].geometry.coordinates[1],
-      });
-    }
+    updateCoordinatesByAsset(assetId + '', assetType);
   };
 
   return {
