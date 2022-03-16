@@ -6,30 +6,23 @@
   <a aria-label="Build" href="https://github.com/BibliothecaForAdventurers/realms-react/actions?query=workflow%3ACI">
     <img alt="build" src="https://img.shields.io/github/workflow/status/BibliothecaForAdventurers/realms-react/CI-web-app/main?label=CI&logo=github&style=flat-quare&labelColor=000000" />
   </a>
-  <a aria-label="Codefactor grade" href=https://www.codefactor.io/repository/github/BibliothecaForAdventurers/realms-react">
-    <img alt="Codefactor" src="https://img.shields.io/codefactor/grade/github/BibliothecaForAdventurers/realms-react?label=Codefactor&logo=codefactor&style=flat-quare&labelColor=000000" />
-  </a>
-  <a aria-label="CodeClimate maintainability" href="https://codeclimate.com/github/BibliothecaForAdventurers/realms-react">
-    <img alt="Maintainability" src="https://img.shields.io/codeclimate/maintainability/BibliothecaForAdventurers/realms-react?label=Maintainability&logo=code-climate&style=flat-quare&labelColor=000000" />
-  </a>
-  <a aria-label="CodeClimate technical debt" href="https://codeclimate.com/github/BibliothecaForAdventurers/realms-react">
-    <img alt="Techdebt" src="https://img.shields.io/codeclimate/tech-debt/BibliothecaForAdventurers/realms-react?label=TechDebt&logo=code-climate&style=flat-quare&labelColor=000000" />
-  </a>
-  <a aria-label="Codacy grade" href="https://www.codacy.com/gh/BibliothecaForAdventurers/realms-react/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BibliothecaForAdventurers/realms-react&amp;utm_campaign=Badge_Grade">
-    <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dff9c944af284a0fad4e165eb1727467?logo=codacy&style=flat-square&labelColor=000&label=Codacy">
-  </a>
-  <a aria-label="LoC">  
-    <img alt="LoC" src="https://img.shields.io/tokei/lines/github/BibliothecaForAdventurers/realms-react?style=flat-quare&labelColor=000000" />
-  </a>
   <a aria-label="Top language" href="https://github.com/BibliothecaForAdventurers/realms-react/search?l=typescript">
     <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/BibliothecaForAdventurers/realms-react?style=flat-square&labelColor=000&color=blue">
   </a>
-  <a aria-label="Licence" href="https://github.com/BibliothecaForAdventurers/realms-react/blob/main/LICENSE">
-    <img alt="Licence" src="https://img.shields.io/github/license/BibliothecaForAdventurers/realms-react?style=flat-quare&labelColor=000000" />
+  <a aria-label="License" href="https://github.com/BibliothecaForAdventurers/realms-react/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/BibliothecaForAdventurers/realms-react?style=flat-quare&labelColor=000000" />
   </a>
 </p>
 
-## Structure
+## Project Overview
+
+Bibliotheca DAO is a permissionless gaming ecosystem that lives in the Lootverse and is built on Starknet. Our primary focus is on Realms, a settling game lays the foundation for an ever expanding on-chain economy.
+
+For a high level overview, visit the [Realms Master Scroll (whitepaper)](https://docs.bibliothecadao.xyz/lootverse-master-scroll/).
+
+**Note: This repo houses the react frontends for each project listed below. If you're looking for Ethereum/Starknet contracts, visit [realms-contracts]()**
+
+## Repo Structure
 
 [![Open in Gitpod](https://img.shields.io/badge/Open%20In-Gitpod.io-%231966D2?style=for-the-badge&logo=gitpod)](https://gitpod.io/#https://github.com/BibliothecaForAdventurers/realms-react)
 
@@ -38,33 +31,49 @@
 ├── apps
 │   ├── atlas   (nextjs, e2e playwright)
 │   └── desiege    (nextjs, i18n, ssr, e2e playwright)
-└── packages
-    ├── core-lib
-    └── ui-lib     (emotion, storybook)
+├── packages
+│   ├── core-lib
+│   └── ui-lib     (emotion, storybook)
+└── static
 ```
 
-#### Bibliotheca apps
+The repository is split into three main sections:
 
-- [apps/atlas](./apps/atlas): SSR, tailwind v3, emotion, graphQL, rest... [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
-- [apps/desiege](./apps/desiege): Simple nextjs. [README](./apps/desiege/README.md) | [DEMO/Vercel](https://beta.bibliothecadao.xyz/) | [CHANGELOG](./apps/desiege/CHANGELOG.md)
+### Apps
+
+Apps are user-facing sites that typically house gameplay ui. These are the main way users interact with the game. Each App can contain a set of module (for example Atlas contains modules for Crypts and Caverns, Genesis Adventurers, etc).
+
+- [Atlas](./apps/atlas/) - The Realms world map and primary way people interact with the Realms settling game. All Realms react code lives here.
+  - [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
+  - tech: SSR, tailwind v3, emotion, graphQL, rest.
+- [Desiege](./apps/desiege/) - A standalone game where players choose a faction and collaborate to defend or attack a city's shields.
+  - [README](./apps/desiege/README.md) | [DEMO/Vercel](https://beta.bibliothecadao.xyz/) | [CHANGELOG](./apps/desiege/CHANGELOG.md)
+  - tech: Simple next.js.
+- AMM _(coming soon)_
+- Marketplace _(coming soon)_
 
 > Apps should not depend on apps, they can depend on packages
 
-#### Example shared packages
+### Packages
 
-- [packages/core-lib](./packages/core-lib): used by Atlas and Desiege, publishable. [README](./packages/core-lib/README.md) | [CHANGELOG](./packages/core-lib/CHANGELOG.md)
+Packages are common libraries that can be included in apps.
 
-- [packages/ui-lib](./packages/ui-lib): used by Atlas and Desiege, publishable. [README](./packages/ui-lib/README.md) | [CHANGELOG](./packages/ui-lib/CHANGELOG.md)
+- [packages/core-lib](./packages/core-lib): used by Atlas and Desiege, publishable.
 
-> Apps can depend on packages, packages can depend on each others...
+  - [README](./packages/core-lib/README.md) | [CHANGELOG](./packages/core-lib/CHANGELOG.md)
 
-#### Shared static assets
+- [packages/ui-lib](./packages/ui-lib): used by Atlas and Desiege, publishable.
+  - [README](./packages/ui-lib/README.md) | [CHANGELOG](./packages/ui-lib/CHANGELOG.md)
 
-If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
+> Apps can depend on packages, packages can depend on each other.
+
+### Shared static assets
+
+There is a dedicated folder at the root level for statuc asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
 
 - See the global [static](./static) folder.
 
-#### Folder overview
+### Folder overview
 
 <details>
 <summary>Detailed folder structure</summary>
