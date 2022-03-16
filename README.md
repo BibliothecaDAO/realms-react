@@ -43,14 +43,19 @@ The repository is split into three main sections:
 
 Apps are user-facing sites that typically house gameplay ui. These are the main way users interact with the game. Each App can contain a set of module (for example Atlas contains modules for Crypts and Caverns, Genesis Adventurers, etc).
 
-- [Atlas](./apps/atlas/) - The Realms world map and primary way people interact with the Realms settling game. All Realms react code lives here.
-  - [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
-  - tech: SSR, tailwind v3, emotion, graphQL, rest.
-- [Desiege](./apps/desiege/) - A standalone game where players choose a faction and collaborate to defend or attack a city's shields.
-  - [README](./apps/desiege/README.md) | [DEMO/Vercel](https://beta.bibliothecadao.xyz/) | [CHANGELOG](./apps/desiege/CHANGELOG.md)
-  - tech: Simple next.js.
-- AMM _(coming soon)_
-- Marketplace _(coming soon)_
+**[Atlas](./apps/atlas/)** - The Realms world map and primary way people interact with the Realms settling game. All Realms react code lives here.
+
+- [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
+- tech: SSR, tailwind v3, emotion, graphQL, rest.
+
+**[Desiege](./apps/desiege/)** - A standalone game where players choose a faction and collaborate to defend or attack a city's shields.
+
+- [README](./apps/desiege/README.md) | [DEMO/Vercel](https://beta.bibliothecadao.xyz/) | [CHANGELOG](./apps/desiege/CHANGELOG.md)
+- tech: Simple next.js.
+
+AMM _(coming soon)_
+
+Marketplace _(coming soon)_
 
 > Apps should not depend on apps, they can depend on packages
 
@@ -58,20 +63,19 @@ Apps are user-facing sites that typically house gameplay ui. These are the main 
 
 Packages are common libraries that can be included in apps.
 
-- [packages/core-lib](./packages/core-lib): used by Atlas and Desiege, publishable.
+**[packages/core-lib](./packages/core-lib):** used by Atlas and Desiege, publishable.
 
-  - [README](./packages/core-lib/README.md) | [CHANGELOG](./packages/core-lib/CHANGELOG.md)
+- [README](./packages/core-lib/README.md) | [CHANGELOG](./packages/core-lib/CHANGELOG.md)
 
-- [packages/ui-lib](./packages/ui-lib): used by Atlas and Desiege, publishable.
-  - [README](./packages/ui-lib/README.md) | [CHANGELOG](./packages/ui-lib/CHANGELOG.md)
+**[packages/ui-lib](./packages/ui-lib):** used by Atlas and Desiege, publishable.
+
+- [README](./packages/ui-lib/README.md) | [CHANGELOG](./packages/ui-lib/CHANGELOG.md)
 
 > Apps can depend on packages, packages can depend on each other.
 
 ### Shared static assets
 
-There is a dedicated folder at the root level for statuc asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
-
-- See the global [static](./static) folder.
+**[static](./static)** - A dedicated folder at the root level for statuc asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
 
 ### Folder overview
 
