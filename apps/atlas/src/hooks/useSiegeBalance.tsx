@@ -26,7 +26,7 @@ export const useSiegeBalance = () => {
       setLoading(true);
       const balances = await provider.callContract({
         contractAddress: ELEMENTS_ADDRESS,
-        entrypoint: 'balance_of_batch',
+        entrypoint: 'balanceOfBatch',
         calldata: [
           '2', // Owners length
           number.toBN(ownerAddress).toString(), // Owner address as an int

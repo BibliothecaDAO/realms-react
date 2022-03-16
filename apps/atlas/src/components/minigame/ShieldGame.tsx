@@ -51,7 +51,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }, [gameContext]);
 
   const { contract: tdStorageContract } = useContract({
-    abi: TowerDefenceStorageContract.abi as Abi,
+    abi: TowerDefenceStorageContract as Abi,
     address: props.towerDefenceStorageAddr,
   });
 

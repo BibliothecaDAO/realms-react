@@ -12,8 +12,8 @@ import Joyride, { STATUS, ACTIONS } from 'react-joyride';
 import type { Abi } from 'starknet';
 import { number } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
-import Elements1155Abi from '@/abi/minigame/ERC1155.json';
-import TowerDefenceAbi from '@/abi/minigame/TowerDefence.json';
+import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
+import Elements1155Abi from '@/abi/minigame/ERC1155_Mintable_Ownable.json';
 import useGameStats from '@/hooks/useGameStats';
 import { useSiegeBalance } from '@/hooks/useSiegeBalance';
 import useTxCallback from '@/hooks/useTxCallback';
@@ -90,16 +90,16 @@ const GameControls: React.FC<Prop> = (props) => {
   const towerDefenceContractAddress = props.towerDefenceContractAddress;
 
   const { contract: elementsContract } = useContract({
-    abi: Elements1155Abi.abi as Abi,
+    abi: Elements1155Abi as Abi,
     address: ELEMENTS_ADDRESS,
   });
   const { contract: towerDefenceContract } = useContract({
-    abi: TowerDefenceAbi.abi as Abi,
+    abi: TowerDefenceAbi as Abi,
     address: towerDefenceContractAddress,
   });
   const approve1155 = useStarknetInvoke({
     contract: elementsContract,
-    method: 'set_approval_for_all',
+    method: 'setApprovalForAll',
   });
   const shieldAction = useStarknetInvoke({
     contract: towerDefenceContract,

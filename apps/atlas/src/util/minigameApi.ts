@@ -9,7 +9,7 @@ export const EFFECT_BASE_FACTOR = 100;
 
 export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
-  '0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e';
+  '0x29317ae2fccbb5ce0588454b8d13cf690fd7318a983cf72f0c9bf5f02f4a465';
 
 const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
   | 'mainnet-alpha'
@@ -25,7 +25,7 @@ if (!CONTROLLER_ADDRESS) {
 
 export const ELEMENTS_ADDRESS =
   (process.env.NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string) ||
-  '0x19b9fd86ac5654937d603ce49ba8f1fc326c6446ce1d83510ab480e306be832';
+  '0x2d069c47466965b3af9c590d026eb34d4dede0ba64c511ad8945bf13d228429';
 
 export const TOKEN_INDEX_OFFSET_BASE = 10;
 
@@ -258,7 +258,7 @@ export const getIsApprovedForAll = async (
 ) => {
   const res = await provider.callContract({
     contractAddress: ELEMENTS_ADDRESS,
-    entrypoint: 'is_approved_for_all',
+    entrypoint: 'isApprovedForAll',
     calldata: [toBN(account).toString(), toBN(operator).toString()],
   });
   const [isApproved] = res.result;

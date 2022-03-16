@@ -6,7 +6,8 @@ import { LORDS_TOKEN_ADDRESS, LORDS_JOURNEY_ADDRESS } from '@/constants/index';
 
 export const fetchLordsBalance = async (address: string) => {
   const provider = new ethers.providers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_RPC_URL_1
+    process.env.NEXT_PUBLIC_RPC_URL_1,
+    1
   );
   const journeyContract = new ethers.Contract(
     LORDS_JOURNEY_ADDRESS,

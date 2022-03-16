@@ -129,7 +129,6 @@ export const Bridge: React.FC<Prop> = (props) => {
         }
         if ('error' in res.data) {
           setMintError(res.data.error);
-          setTransactionHash(undefined);
         }
       }
     } catch (e: any) {
@@ -147,8 +146,10 @@ export const Bridge: React.FC<Prop> = (props) => {
   const connectedClassname =
     'inline-block py-2 break-words px-4 bg-white/30 rounded-md';
 
-  const txTracker = useTxCallback(transactionHash, () => {
-    props.onComplete && props.onComplete();
+  const txTracker = useTxCallback(transactionHash, (status) => {
+    if (status !== 'REJECTED') {
+      props.onComplete && props.onComplete();
+    }
   });
 
   const mintTxLoading = txTracker.loading;
@@ -349,7 +350,18 @@ export const Bridge: React.FC<Prop> = (props) => {
                         Element distillation ceremony completed.
                       </p>
                     ) : null}
-
+                    {transactionHash ? (
+                      <a
+                        // TODO: Choose host dynamically here based on network
+                        href={`https://goerli.voyager.online/tx/${transactionHash}/`}
+                        className="underline"
+                        target={'_blank'}
+                        rel="noopener noreferrer"
+                      >
+                        Check Transaction Status{' '}
+                        <ExternalLink className="inline-block h-6" />
+                      </a>
+                    ) : null}
                     {mintTxLoading ? (
                       <>
                         <p className="mt-8 text-2xl animate-bounce">
@@ -359,16 +371,6 @@ export const Bridge: React.FC<Prop> = (props) => {
                           Please wait, StarkNet is still in alpha. Your
                           transaction is being executed on the sequencer.
                         </p>
-                        <a
-                          // TODO: Choose host dynamically here based on network
-                          href={`https://goerli.voyager.online/tx/${transactionHash}/`}
-                          className="underline"
-                          target={'_blank'}
-                          rel="noopener noreferrer"
-                        >
-                          Check Transaction Status
-                        </a>{' '}
-                        <ExternalLink className="inline-block h-6" />
                       </>
                     ) : (
                       <>

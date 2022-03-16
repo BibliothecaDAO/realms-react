@@ -11,13 +11,14 @@ import {
 
 const useGameStats = (gameIdx: number, towerDefenceStorageAddr: string) => {
   const { contract: elementsContract } = useContract({
-    abi: ElementsBalancer.abi as Abi,
+    abi: ElementsBalancer as Abi,
     address:
-      '0x26fb3d6ae270ee3c2fedd8d6d0576b15edd6abe6afa93c9e847a306648e9e95',
+      // TODO(uni): Don't hard code this
+      '0x38266cfd0a725682e5ad0a60abd038f3e9df45cbafbe452d6e6b1ac7c96e7b6',
   });
 
   const { contract: towerDefenceStorage } = useContract({
-    abi: TowerDefenceStorage.abi as Abi,
+    abi: TowerDefenceStorage as Abi,
     address: towerDefenceStorageAddr,
   });
 

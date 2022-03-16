@@ -1,9 +1,10 @@
 import { useStarknetTransactionManager } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
+import type { Status } from 'starknet';
 
 const useTxCallback = (
   transactionHash: string | undefined,
-  callback: () => void
+  callback: (status: Status) => void
 ) => {
   const txManager = useStarknetTransactionManager();
   const tx = txManager.transactions.find(
@@ -22,9 +23,11 @@ const useTxCallback = (
       !executed &&
       !!transactionHash &&
       tx?.status &&
-      (tx.status == 'ACCEPTED_ON_L1' || tx.status == 'ACCEPTED_ON_L2')
+      (tx.status == 'ACCEPTED_ON_L1' ||
+        tx.status == 'ACCEPTED_ON_L2' ||
+        tx.status == 'REJECTED')
     ) {
-      callback();
+      callback(tx.status);
       setExecuted(true);
     }
   }, [tx?.status, transactionHash]);
