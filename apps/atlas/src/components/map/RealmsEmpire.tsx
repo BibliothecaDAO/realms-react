@@ -12,11 +12,8 @@ const filterTypes = [
   { name: 'Rarity', key: 'rarityRank' },
   { name: 'Token Id', key: 'tokenId' },
 ];
-type Props = {
-  onClick?: (event: any, id: string) => void;
-};
 
-export const RealmsEmpire = (props: Props) => {
+export const RealmsEmpire = () => {
   const { account, isConnected, displayName } = useWalletContext();
   const [limit, setLimit] = useState(0);
   const [selectedResource, setResource] = useState<number>();
@@ -136,7 +133,6 @@ export const RealmsEmpire = (props: Props) => {
                 key={index}
                 loading={isRefetching}
                 size="small"
-                onClick={props.onClick}
               />
             ))}
           </div>
@@ -148,7 +144,6 @@ export const RealmsEmpire = (props: Props) => {
                 key={index}
                 loading={loading}
                 size="small"
-                onClick={props.onClick}
               />
             ))}
           </div>

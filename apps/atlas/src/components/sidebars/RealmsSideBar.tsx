@@ -4,25 +4,25 @@ import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
 import { Realm } from '../cards/Realm';
-import { BaseSideBar } from '../map/BaseSideBar';
+import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
-  id: number;
+  id: string;
 };
 
 export const RealmSideBar = (props: Props) => {
-  const { closeAllSidebars, openSidebar } = useUIContext();
+  const { toggleMenuType, selectedMenuType } = useUIContext();
 
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={openSidebar === 'realms'}>
+    <BaseSideBar open={selectedMenuType === 'realm'}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-          onClick={closeAllSidebars}
+          onClick={() => toggleMenuType('realm')}
         >
           <Menu />
         </button>

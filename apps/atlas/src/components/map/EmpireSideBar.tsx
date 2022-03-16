@@ -10,19 +10,17 @@ import { CryptsEmpire } from './CryptsEmpire';
 import { GAEmpire } from './GAEmpire';
 import { LootEmpire } from './LootEmpire';
 import { RealmsEmpire } from './RealmsEmpire';
-type Props = {
-  onClick?: (event: any, id: string) => void;
-};
 
-export const EmpireSideBar = (props: Props) => {
-  const { toggleEmpireMenu, empireMenu } = useUIContext();
+export const EmpireSideBar = () => {
+  const { toggleMenuType, selectedMenuType } = useUIContext();
   const [tab, setTab] = useState<string>('Realms');
   const activeBg = 'bg-white/30';
   const inactiveBg = 'bg-white/10';
 
+  const isEmpireMenu = selectedMenuType === 'empire';
   const animation = useSpring({
-    opacity: empireMenu ? 1 : 0,
-    transform: empireMenu ? `translateY(0)` : `translateY(-200%)`,
+    opacity: isEmpireMenu ? 1 : 0,
+    transform: isEmpireMenu ? `translateY(0)` : `translateY(-200%)`,
   });
 
   return (
@@ -37,7 +35,7 @@ export const EmpireSideBar = (props: Props) => {
           <h1 className="mb-4">My Empire</h1>
           <button
             className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
-            onClick={toggleEmpireMenu}
+            onClick={() => toggleMenuType('empire')}
           >
             CLOSE
           </button>
@@ -82,10 +80,10 @@ export const EmpireSideBar = (props: Props) => {
             <Helm className="w-5 mx-auto mb-2 fill-current" /> GA
           </button>
         </div>
-        {tab === 'Realms' && <RealmsEmpire onClick={props.onClick} />}
-        {tab === 'Crypts' && <CryptsEmpire onClick={props.onClick} />}
-        {tab === 'Loot' && <LootEmpire onClick={props.onClick} />}
-        {tab === 'GA' && <GAEmpire onClick={props.onClick} />}
+        {tab === 'Realms' && <RealmsEmpire />}
+        {tab === 'Crypts' && <CryptsEmpire />}
+        {tab === 'Loot' && <LootEmpire />}
+        {tab === 'GA' && <GAEmpire />}
       </div>
     </animated.div>
   );

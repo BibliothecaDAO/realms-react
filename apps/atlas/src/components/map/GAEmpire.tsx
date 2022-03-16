@@ -3,18 +3,14 @@ import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { GAsData, CryptFilters } from '@/types/index';
 import { GAdventurer } from '../cards/GAdventurer';
 
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
-type Props = {
-  onClick?: (event: any, id: string) => void;
-};
 
-export const GAEmpire = (props: Props) => {
+export const GAEmpire = () => {
   const { account, isConnected } = useWalletContext();
   const [limit, setLimit] = useState(0);
 
@@ -38,7 +34,6 @@ export const GAEmpire = (props: Props) => {
         {data &&
           data.gadventurers.map((ga, index) => (
             <GAdventurer
-              onClick={props.onClick}
               key={index}
               ga={ga}
               loading={loading}

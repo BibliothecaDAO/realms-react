@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
+import { useUIContext } from '@/hooks/useUIContext';
 import {
   isLegendary,
   environments,
@@ -16,6 +17,7 @@ export function Crypt(props: CryptProps): ReactElement {
   const findEnvironment = (value: any) => {
     return environments.find((e) => e.id === parseInt(value));
   };
+  const { gotoAssetId } = useUIContext();
 
   const image = props.crypt.svg;
   const environment = findEnvironment(props.crypt.environment);
@@ -80,7 +82,7 @@ export function Crypt(props: CryptProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.crypt.id, 'B');
+                      gotoAssetId(props.crypt.id, 'crypt');
                     }}
                   >
                     fly to

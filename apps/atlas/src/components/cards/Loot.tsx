@@ -2,6 +2,7 @@ import { rarityDescription, rarityColor } from 'loot-rarity';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
+import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
 import { shortenAddress } from '@/util/formatters';
 import type { LootProps } from '../../types';
@@ -13,6 +14,8 @@ const variantMaps: any = {
 export function Loot(props: LootProps): ReactElement {
   const image = props.loot.id;
   const [metaData, setMetaData] = useState(null);
+  const { gotoAssetId } = useUIContext();
+
   const mappedProperties = [
     'weapon',
     'chest',
@@ -61,7 +64,7 @@ export function Loot(props: LootProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      if (props.onClick) props.onClick(props.loot.id, 'C');
+                      gotoAssetId(props.loot.id, 'loot');
                     }}
                   >
                     fly to
