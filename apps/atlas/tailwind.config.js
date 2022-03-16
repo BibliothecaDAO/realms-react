@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   safelist: [
     'text-[#838383]',
     'text-[#00DC82]',
@@ -13,6 +13,9 @@ module.exports = {
     'bg-[#c13cff]',
     'bg-[#f8b73e]',
     'bg-[#ff44b7]',
+    'space-x-10',
+    'border-b-4',
+    'border-transparent',
   ],
   theme: {
     extend: {
@@ -21,7 +24,7 @@ module.exports = {
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
-        hero: "linear-gradient(0deg, rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url('/cover.jpg')",
+        hero: "linear-gradient(0deg, rgba(191,191,191,0.6), rgba(191,191,191,0.6)), url('/cover.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',

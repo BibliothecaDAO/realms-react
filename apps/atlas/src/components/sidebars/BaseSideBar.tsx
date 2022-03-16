@@ -39,7 +39,7 @@ export const BaseSideBar = (props: Props) => {
 
   return (
     <animated.div
-      className="absolute top-0 bottom-0 right-0 z-20 w-full overflow-x-hidden backdrop-blur-md bg-off-200/60"
+      className="absolute top-0 bottom-0 right-0 z-30 w-full overflow-x-hidden backdrop-blur-md bg-off-200/60"
       style={animation}
     >
       {props.children}
