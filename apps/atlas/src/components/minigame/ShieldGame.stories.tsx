@@ -2,7 +2,7 @@ import { StarknetProvider } from '@starknet-react/core';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import React from 'react';
-import { number, stark } from 'starknet';
+import { number, hash } from 'starknet';
 import ShieldGame from '@/components/minigame/ShieldGame';
 import type {
   StarknetCall,
@@ -16,7 +16,7 @@ import {
   wrappedRequestHandlerWithCount as requestHandler,
 } from '@/mocks/starknetMockFactory';
 import { SelectorName } from '@/util/minigameApi';
-const { getSelectorFromName } = stark;
+const { getSelectorFromName } = hash;
 const { toHex, toBN } = number;
 
 export default {
