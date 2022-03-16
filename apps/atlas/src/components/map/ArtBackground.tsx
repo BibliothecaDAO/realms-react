@@ -1,23 +1,21 @@
-import { animated, useTransition } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import { useState } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
 
 export const ArtBackground = () => {
   const { artBackground } = useUIContext();
 
-  const transitions = useTransition(artBackground, {
-    enter: { opacity: 1 },
-    from: { opacity: 0 },
-    leave: { opacity: 0 },
+  const opacityAnimation = useSpring({
+    zIndex: artBackground ? 10 : 0,
+    opacity: artBackground ? 1 : 0,
+    config: { duration: 600 },
+    immediate: (key) => key === 'zIndex',
   });
 
-  return transitions(
-    (styles, item) =>
-      item && (
-        <animated.div
-          className="absolute top-0 z-40 w-full w-screen h-screen bg-center bg-cover bg-hero"
-          style={styles}
-        ></animated.div>
-      )
+  return (
+    <animated.div
+      className="absolute top-0 w-full w-screen h-screen bg-white bg-center bg-cover bg-hero "
+      style={opacityAnimation}
+    ></animated.div>
   );
 };

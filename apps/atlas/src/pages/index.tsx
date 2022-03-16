@@ -8,14 +8,12 @@ import { ArtBackground } from '@/components/map/ArtBackground';
 import { EmpireSideBar } from '@/components/map/EmpireSideBar';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
+import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
-import { ResourceSideBar } from '@/components/sidebars/ResourceSideBar';
-import { TheOrdersSideBar } from '@/components/sidebars/TheOrdersSideBar';
-
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
@@ -216,39 +214,43 @@ function App() {
   return (
     <Layout>
       <div className="relative flex h-full overflow-hidden sm:h-screen">
-        <Header />
         <MenuSideBar />
-        <RealmSideBar id={selectedId} />
-        <TheOrdersSideBar />
-        <EmpireSideBar />
-        <ResourceSideBar onClick={addToFilter} resource={resource} />
-        <CryptsSideBar id={selectedId} />
-        <LootSideBar id={selectedId} />
-        <GASideBar id={selectedId} />
-        <FlyTo />
-        <DeckGL
-          getCursor={({ isHovering }) => {
-            return isHovering ? 'pointer' : 'grabbing';
-          }}
-          pickingRadius={25}
-          initialViewState={initialViewState}
-          controller={true}
-          layers={[
-            realms_layer,
-            resource_layer,
-            crypts_layer,
-            loot_bag_layer,
-            ga_bag_layer,
-          ]}
-        >
-          <Map
-            attributionControl={false}
-            mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-            mapboxAccessToken={
-              'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-            }
-          />
-        </DeckGL>
+        <div className="relative flex flex-col w-full">
+          <Header />
+          <div className="relative w-full h-full">
+            <ArtBackground />
+            <RealmsPanel />
+            <RealmSideBar id={selectedId} />
+            <EmpireSideBar />
+            <CryptsSideBar id={selectedId} />
+            <LootSideBar id={selectedId} />
+            <GASideBar id={selectedId} />
+            <FlyTo />
+            <DeckGL
+              getCursor={({ isHovering }) => {
+                return isHovering ? 'pointer' : 'grabbing';
+              }}
+              pickingRadius={25}
+              initialViewState={initialViewState}
+              controller={true}
+              layers={[
+                realms_layer,
+                resource_layer,
+                crypts_layer,
+                loot_bag_layer,
+                ga_bag_layer,
+              ]}
+            >
+              <Map
+                attributionControl={false}
+                mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+                mapboxAccessToken={
+                  'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+                }
+              />
+            </DeckGL>
+          </div>
+        </div>
       </div>
     </Layout>
   );

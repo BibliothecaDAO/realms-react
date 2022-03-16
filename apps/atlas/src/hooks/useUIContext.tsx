@@ -13,9 +13,11 @@ import ga_bags from '../geodata/ga_bags.json';
 import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 
-export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga';
+export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | null;
 
-export type MenuType = 'main' | 'empire' | 'resources' | 'orders' | AssetType;
+export type MenuType = 'empire' | 'resources' | 'orders' | AssetType;
+
+export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
 
 export type AssetFilter = {
   value: AssetType;
@@ -52,6 +54,12 @@ interface UI {
   closeAll: (exclude?: MenuType) => void;
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
+  toggleArtBackground: () => void;
+  artBackground: boolean;
+  mainMenu: boolean;
+  toggleMainMenu: () => void;
+  togglePanelType: (panelType: PanelType) => void;
+  selectedPanel: PanelType;
 }
 
 const defaultUIContext: UI = {
@@ -59,11 +67,17 @@ const defaultUIContext: UI = {
   setSelectedId: (id: string) => {},
   selectedAssetFilter: AssetFilters[0],
   setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
-  selectedMenuType: 'main',
+  selectedMenuType: null,
   setMenuType: (menuType: MenuType) => {},
   toggleMenuType: (menuType: MenuType) => {},
   closeAll: (exclude?: MenuType) => {},
   gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
+  toggleArtBackground: () => {},
+  artBackground: false,
+  mainMenu: true,
+  toggleMainMenu: () => {},
+  togglePanelType: (panelType: PanelType) => {},
+  selectedPanel: null,
 };
 
 const UIContext = createContext<UI>(defaultUIContext);
@@ -76,7 +90,7 @@ function useQueryPOI() {
   const { query } = useRouter();
   const validQueries: AssetType[] = ['realm', 'crypt', 'loot', 'ga'];
   for (const assetType of validQueries) {
-    if (parseInt(query[assetType] as string) > 0) {
+    if (assetType && parseInt(query[assetType] as string) > 0) {
       return {
         assetType: assetType as string,
         assetId: query[assetType] as string,
@@ -148,9 +162,14 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+  const [artBackground, setArtBackground] = useState(false);
+  const [mainMenu, setMainMenu] = useState(true);
+
   const [selectedMenuType, setMenuType] = useState<MenuType>(
-    query ? (query.assetType as AssetType) : 'main'
+    query ? (query.assetType as AssetType) : null
   );
+  const [selectedPanel, setPanelType] = useState<PanelType>(null);
+
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
   // Update URL
@@ -169,7 +188,7 @@ function useUI(): UI {
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
-      setMenuType('main');
+      setMenuType(null);
     } else if (selectedMenuType !== exclude) {
       setMenuType(exclude);
     }
@@ -177,10 +196,28 @@ function useUI(): UI {
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
-      setMenuType('main');
+      setMenuType(null);
     } else {
       setMenuType(menuType);
     }
+  };
+  const togglePanelType = (panelType: PanelType) => {
+    toggleArtBackground();
+
+    if (selectedPanel === panelType) {
+      setPanelType(null);
+    } else {
+      console.log('toggle panel');
+      setPanelType(panelType);
+    }
+  };
+  const toggleArtBackground = () => {
+    console.log('toggleArtBackground');
+    setArtBackground(!artBackground);
+  };
+
+  const toggleMainMenu = () => {
+    return setMainMenu(!mainMenu);
   };
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
@@ -201,6 +238,12 @@ function useUI(): UI {
     toggleMenuType,
     gotoAssetId,
     coordinates,
+    toggleArtBackground,
+    artBackground,
+    mainMenu,
+    toggleMainMenu,
+    togglePanelType,
+    selectedPanel,
   };
 }
 

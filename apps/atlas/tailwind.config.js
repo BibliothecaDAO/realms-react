@@ -21,7 +21,7 @@ module.exports = {
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
-        hero: "url('/cover.jpg')",
+        hero: "linear-gradient(0deg, rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url('/cover.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',

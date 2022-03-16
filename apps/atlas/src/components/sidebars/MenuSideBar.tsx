@@ -1,3 +1,4 @@
+import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
@@ -12,62 +13,79 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
   const { account } = useWalletContext();
-  const { toggleMenuType, selectedMenuType } = useUIContext();
+  const { toggleMenuType, mainMenu, toggleArtBackground, togglePanelType } =
+    useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
   const handleClick = useCallback(() => {
     toggleSound();
   }, [toggleSound]);
 
-  const buttonClasses =
-    'p-3 sm:p-4 hover:bg-white/30 sm:py-8 sm:text-xl text-off-200';
-  const iconClasses = 'mx-auto w-6 sm:w-10 fill-current mb-1';
+  const buttonClasses = 'hover:bg-gray-600 text-stone-700 mx-7 mt-4 ';
+  const iconClasses = 'w-6 mx-auto sm:w-12 fill-current mb-1';
+  const textClasses =
+    'hidden font-bold text-center text-white uppercase text-shadow-md sm:block';
+
   return (
     <div
-      className={`w-full sm:h-screen bottom-0 sm:w-32 sm:right-0 sm:top-0 sm:justify-center  bg-white/50  z-10 absolute backdrop-blur-md flex sm:flex-col justify-evenly transform duration-300 transition-all overflow-auto py-40 ${
-        selectedMenuType === 'main' ? '' : 'translate-y-full hidden'
+      className={`w-full pt-8 border-r border-gray-800 sm:h-screen bottom-0 sm:w-36 sm:left-0 sm:top-0  bg-gray-400 z-40 backdrop-blur-md flex sm:flex-col transform duration-300 transition-all overflow-auto ${
+        mainMenu ? '' : 'translate-y-full hidden'
       }`}
     >
-      {account && (
-        <button
-          className={buttonClasses}
-          onClick={() => toggleMenuType('empire')}
-        >
-          <Crown className="w-8 mx-auto mb-1 fill-current sm:w-16" />
-          <span className="hidden sm:block">My Empire</span>
-        </button>
-      )}
-      <button className={buttonClasses} onClick={() => toggleMenuType('realm')}>
-        <Castle className={iconClasses} />
-        <span className="hidden sm:block">Realms</span>
-      </button>
-      <button className={buttonClasses} onClick={() => toggleMenuType('loot')}>
-        <Bag className={'mx-auto w-8 sm:w-14 fill-current'} />
-        <span className="hidden sm:block">Loot</span>
-      </button>
+      <IconButton
+        className={buttonClasses}
+        aria-label="Realms"
+        onClick={() => togglePanelType('realm')}
+        icon={<Castle className={iconClasses} />}
+        size="lg"
+      />
 
-      <button className={buttonClasses} onClick={() => toggleMenuType('ga')}>
-        <Helm className={'mx-auto w-8 sm:w-6 fill-current mb-4'} />
-        <span className="hidden sm:block ">GA</span>
-      </button>
-      <button className={buttonClasses} onClick={() => toggleMenuType('crypt')}>
-        <Danger className={iconClasses} />
-        <span className="hidden sm:block">Crypts</span>
-      </button>
-      <button
+      <span className={textClasses}>Realms</span>
+      <IconButton
         className={buttonClasses}
-        onClick={() => toggleMenuType('resources')}
-      >
-        <Mountain className={iconClasses} />
-        <span className="hidden sm:block">Resources</span>
-      </button>
-      <button
+        aria-label="Loot"
+        onClick={() => toggleMenuType('loot')}
+        icon={<Bag className={'mx-auto w-8 sm:w-16 fill-current'} />}
+        size="lg"
+      />
+      <span className={textClasses}>Loot</span>
+
+      <IconButton
         className={buttonClasses}
+        onClick={() => toggleMenuType('ga')}
+        aria-label="GA"
+        icon={<Helm className={'mx-auto w-8 sm:w-8 fill-current mb-4'} />}
+        size="lg"
+      />
+      <span className={textClasses}>GA</span>
+
+      <IconButton
+        className={buttonClasses}
+        onClick={() => toggleMenuType('crypt')}
+        aria-label="Crypts"
+        icon={<Danger className={iconClasses} />}
+        size="lg"
+      />
+      <span className={textClasses}>Crypts</span>
+
+      <IconButton
+        className={buttonClasses}
+        onClick={() => toggleArtBackground()}
+        aria-label="Trade"
+        icon={<Mountain className={iconClasses} />}
+        size="lg"
+      />
+      <span className={textClasses}>Trade</span>
+
+      <IconButton
+        className={buttonClasses}
+        aria-label="Bank"
         onClick={() => toggleMenuType('orders')}
-      >
-        <Library className={iconClasses} />
-        <span className="hidden sm:block">Orders</span>
-      </button>
+        icon={<Library className={iconClasses} />}
+        size="lg"
+      />
+      <span className={textClasses}>Bank</span>
+      {/* <button
       {/* <button
         className="p-4 py-8 text-xl hover:bg-white/30 text-off-200"
         onClick={handleClick}

@@ -7,41 +7,36 @@ export function Header() {
     useWalletContext();
 
   return (
-    <div>
-      <h1 className="absolute top-0 z-10 w-full pt-8 text-6xl text-center">
-        Atlas
-      </h1>
-      <div className="absolute z-20 hidden left-14 top-8 sm:flex">
-        <div className="ml-auto">
-          <ul className="flex px-4 py-4 mr-auto space-x-4 text-xl rounded backdrop-blur-md bg-off-200/20">
-            <li className="">
-              {isConnected && (
-                <span>
-                  <span className="px-4">LORDS: {balance}</span>
+    <div className="top-0 left-0 z-40 hidden bg-gray-400 sm:flex">
+      <div className="ml-auto">
+        <ul className="flex px-4 py-4 mr-auto space-x-4 text-xl rounded backdrop-blur-md bg-off-200/20">
+          <li className="">
+            {isConnected && (
+              <span>
+                <span className="px-4">LORDS: {balance}</span>
 
-                  <a
-                    className={
-                      'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded ml-auto py-2'
-                    }
-                    onClick={disconnectWallet}
-                  >
-                    {displayName} [ disconnect ]
-                  </a>
-                </span>
-              )}
-              {!isConnected && (
-                <button
+                <a
                   className={
-                    'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded  ml-auto py-2'
+                    'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded ml-auto py-2'
                   }
-                  onClick={connectWallet}
+                  onClick={disconnectWallet}
                 >
-                  Connect to Lootverse
-                </button>
-              )}
-            </li>
-          </ul>
-        </div>
+                  {displayName} [ disconnect ]
+                </a>
+              </span>
+            )}
+            {!isConnected && (
+              <button
+                className={
+                  'cursor-pointer  font-body p-4  bg-off-200/20 text-off-100 rounded  ml-auto py-2'
+                }
+                onClick={connectWallet}
+              >
+                Connect to Lootverse
+              </button>
+            )}
+          </li>
+        </ul>
       </div>
     </div>
   );
