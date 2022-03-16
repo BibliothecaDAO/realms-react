@@ -20,6 +20,11 @@ Bibliotheca DAO is a permissionless gaming ecosystem that lives in the Lootverse
 
 For a high level overview, visit the [Realms Master Scroll (whitepaper)](https://docs.bibliothecadao.xyz/lootverse-master-scroll/).
 
+**Quick Links**
+
+- [Atlas](./apps/atlas)
+- [Desiege](./apps/desiege)
+
 **Note: This repo houses the react frontends for each project listed below. If you're looking for Ethereum/Starknet contracts, visit [realms-contracts]()**
 
 ## Repo Structure
