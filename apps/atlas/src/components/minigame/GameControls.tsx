@@ -432,10 +432,10 @@ const GameControls: React.FC<Prop> = (props) => {
               <a className="underline">Recruit</a> your friends
             </li>
             <li>
-              Build on the{' '}
+              Check the{' '}
               <a
                 target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/src/components/minigame"
+                href="https://github.com/BibliothecaForAdventurers/realms-react/tree/feat/desiege/apps/atlas/src/components/minigame"
                 className="underline"
                 rel="noreferrer"
               >
@@ -444,7 +444,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <ExternalLink className="inline-block h-4 ml-1" /> and{' '}
               <a
                 target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/minigame/contracts/l2/minigame"
+                href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/desiege/contracts/desiege"
                 className="underline"
                 rel="noreferrer"
               >
