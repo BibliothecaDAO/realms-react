@@ -8788,6 +8788,10 @@ __metadata:
     "@react-three/fiber": ^7.0.26
     "@size-limit/file": 7.0.8
     "@starknet-react/core": ^0.5.0
+    "@storybook/addon-actions": 6.4.19
+    "@storybook/addons": 6.4.19
+    "@storybook/client-api": 6.4.19
+    "@storybook/react": 6.4.19
     "@svgr/webpack": 6.2.1
     "@tailwindcss/aspect-ratio": 0.4.0
     "@tailwindcss/forms": 0.4.1
