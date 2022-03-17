@@ -7,6 +7,7 @@ module.exports = {
   core: {
     builder: "webpack5",
   },
+  staticDirs: ['../src/static'],
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx|js|jsx)'],
   typescript: {
     check: false,

@@ -32,7 +32,7 @@ export interface SpinnerProps extends ComponentProps<'div'> {
 
 export const Spinner = ({
   size = 'md',
-  scheme = 'blue',
+  scheme = 'black',
   variant = 'bricks',
   srLabel = 'Loading...',
   center = false,

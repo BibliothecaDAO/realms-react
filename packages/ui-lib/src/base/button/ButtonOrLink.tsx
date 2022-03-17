@@ -7,15 +7,15 @@ import { twMerge } from 'tailwind-merge';
 import { Spinner } from '../spinner';
 
 const STYLES = {
-  base: 'relative inline-flex items-center justify-center tracking-wide outline-none select-none font-semibold text-left outline-none rounded-lg transition duration-150 ease-in-out',
+  base: 'relative inline-flex items-center justify-center tracking-wide outline-none select-none border-2 text-left outline-none rounded transition duration-150 ease-in-out font-body uppercase tracking-widest hover:-translate-y-1 active:translate-y-1 active:shadow-inner',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
-  disabled: 'disabled:opacity-60 disabled:pointer-events-none',
+  disabled: 'disabled:opacity-70 disabled:pointer-events-none',
   size: {
     base: {
-      xs: 'py-1 px-2 text-xs',
-      sm: 'py-2 px-3 text-sm',
-      md: 'py-2 px-3 text-md',
+      xs: 'py-1 px-4 text-xs',
+      sm: 'py-2 px-4 text-sm',
+      md: 'py-2 px-4 text-md',
       lg: 'py-2 px-4 text-lg',
     },
     icon: {
@@ -29,9 +29,9 @@ const STYLES = {
     default:
       'text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:text-gray-900 hover:text-gray-900',
     primary:
-      'font-medium text-white bg-off-200/20 hover:bg-amber-800 active:bg-amber-900 focus-visible:ring-yellow-700',
+      'text-white bg-off-200 hover:bg-off-200/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
     secondary:
-      'text-gray-700 bg-transparent border-2 border-gray-200 hover:bg-gray-100 active:text-gray-900 hover:text-gray-900 active:bg-gray-200',
+      'bg-gray-600 text-white border-gray-400 hover:bg-gray-400 active:text-gray-900  active:bg-gray-200 shadow-md ',
     tertiary:
       'text-gray-500 bg-white hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 active:text-gray-900',
     danger:
@@ -111,6 +111,11 @@ export const ButtonOrLink = forwardRef<
         disabled={disabled || loading}
         {...props}
       >
+        <img
+          className="bg-center absolute w-full bg-cover h-full opacity-30"
+          src="/texture-button.png"
+          alt=""
+        />
         {(leftIcon || loading) && (
           <span className="mr-3.5">{loading ? spinner : leftIcon}</span>
         )}

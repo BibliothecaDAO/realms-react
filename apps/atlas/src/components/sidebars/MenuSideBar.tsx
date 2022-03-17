@@ -28,7 +28,7 @@ export const MenuSideBar = () => {
 
   return (
     <div
-      className={`w-full pt-8 border-r border-gray-800 sm:h-screen bottom-0 sm:w-36 sm:left-0 sm:top-0  bg-gray-400 z-40 backdrop-blur-md flex sm:flex-col transform duration-300 transition-all overflow-auto ${
+      className={`w-full pt-8 sm:h-screen bottom-0 sm:w-36 sm:left-0 sm:top-0  bg-gray-400 z-40 shadow-inner flex sm:flex-col transform duration-300 transition-all overflow-auto ${
         mainMenu ? '' : 'translate-y-full hidden'
       }`}
     >
