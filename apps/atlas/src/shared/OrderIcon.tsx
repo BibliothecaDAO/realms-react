@@ -15,8 +15,11 @@ import Titans from '@bibliotheca-dao/ui-lib/icons/orders/titans.svg';
 import Twins from '@bibliotheca-dao/ui-lib/icons/orders/twins.svg';
 import Vitriol from '@bibliotheca-dao/ui-lib/icons/orders/vitriol.svg';
 import type { ReactElement } from 'react';
+import { twMerge } from 'tailwind-merge';
 type Props = {
   order: string;
+  size?: keyof typeof STYLES['size']['md'];
+  className?: string;
 };
 
 const Components: { [key: string]: ReactElement } = Object.freeze({
@@ -38,6 +41,19 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   protection: <Protection />,
 });
 
+const STYLES = {
+  size: {
+    xs: 'w-4 my-4',
+    sm: 'w-6 my-4',
+    md: 'w-8 my-4',
+    lg: 'w-12 my-4',
+  },
+} as const;
+
 export const OrderIcon = (props: Props) => {
-  return <div className="w-12 my-4">{Components[props.order]}</div>;
+  return (
+    <div className={twMerge(STYLES.size[props.size], props.className)}>
+      {Components[props.order]}
+    </div>
+  );
 };

@@ -44,6 +44,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        veryWide: '0.165em',
+      },
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
@@ -88,7 +91,7 @@ module.exports = {
           300: '#e0e0e0',
           400: '#bdbdbd',
           500: '#9e9e9e',
-          600: '#757575',
+          600: '#676767',
           700: '#616161',
           800: '#424242',
           900: '#161619',

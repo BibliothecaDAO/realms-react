@@ -48,7 +48,7 @@ export const RealmsPanel = () => {
       className="absolute top-0 z-30 w-full w-screen h-screen bg-center bg-cover"
       style={animation}
     >
-      <div className={`h-screen w-7/12 relative top-0 p-6 rounded-r-2xl`}>
+      <div className={`h-screen w-8/12 relative top-0 p-6 rounded-r-2xl`}>
         <div className="flex justify-between">
           <h1 className="tex">Realms</h1>
           <button

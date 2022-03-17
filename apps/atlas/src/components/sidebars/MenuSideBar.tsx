@@ -21,31 +21,35 @@ export const MenuSideBar = () => {
     toggleSound();
   }, [toggleSound]);
 
-  const buttonClasses = 'hover:bg-gray-600 text-stone-700 mx-7 mt-4 ';
-  const iconClasses = 'w-6 mx-auto sm:w-12 fill-current mb-1';
+  const buttonClasses =
+    'bg-gray-800 border-none text-gray-300 mx-7 mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner';
+  const iconClasses = 'w-6 mx-auto sm:w-10 fill-current mb-1';
   const textClasses =
-    'hidden font-bold text-center text-white uppercase text-shadow-md sm:block';
+    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5';
 
   return (
     <div
-      className={`w-full pt-8 sm:h-screen bottom-0 sm:w-36 sm:left-0 sm:top-0  bg-gray-400 z-40 shadow-inner flex sm:flex-col transform duration-300 transition-all overflow-auto ${
+      className={`w-full pt-4 sm:h-screen bottom-0 sm:w-36 sm:left-0 sm:top-0  bg-gray-800/80 z-40 shadow-inner flex sm:flex-col transform duration-300 transition-all overflow-auto ${
         mainMenu ? '' : 'translate-y-full hidden'
       }`}
     >
-      <IconButton
-        className={buttonClasses}
-        aria-label="Realms"
-        onClick={() => togglePanelType('realm')}
-        icon={<Castle className={iconClasses} />}
-        size="lg"
-      />
+      <div>
+        <IconButton
+          className={buttonClasses}
+          aria-label="Realms"
+          onClick={() => togglePanelType('realm')}
+          icon={<Castle className={iconClasses} />}
+          size="lg"
+        />
 
-      <span className={textClasses}>Realms</span>
+        <span className={textClasses}>Realms</span>
+      </div>
+
       <IconButton
         className={buttonClasses}
         aria-label="Loot"
         onClick={() => toggleMenuType('loot')}
-        icon={<Bag className={'mx-auto w-8 sm:w-16 fill-current'} />}
+        icon={<Bag className={'mx-auto w-10 fill-current'} />}
         size="lg"
       />
       <span className={textClasses}>Loot</span>
@@ -54,7 +58,7 @@ export const MenuSideBar = () => {
         className={buttonClasses}
         onClick={() => toggleMenuType('ga')}
         aria-label="GA"
-        icon={<Helm className={'mx-auto w-8 sm:w-8 fill-current mb-4'} />}
+        icon={<Helm className={'mx-auto w-8 sm:w-8 fill-current'} />}
         size="lg"
       />
       <span className={textClasses}>GA</span>

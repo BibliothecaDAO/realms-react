@@ -7,7 +7,8 @@ import { twMerge } from 'tailwind-merge';
 import { Spinner } from '../spinner';
 
 const STYLES = {
-  base: 'relative inline-flex items-center justify-center tracking-wide outline-none select-none border-2 text-left outline-none rounded transition duration-150 ease-in-out font-body uppercase tracking-widest hover:-translate-y-1 active:translate-y-1 active:shadow-inner',
+  icon: 'rounded-2xl bg-gray-500 border-gray-600 text-gray-200 ',
+  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none border-2 text-left outline-none rounded transition duration-150 ease-in-out font-body uppercase hover:-translate-y-1 active:translate-y-1 active:shadow-inner font-semibold',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
   disabled: 'disabled:opacity-70 disabled:pointer-events-none',
@@ -31,7 +32,7 @@ const STYLES = {
     primary:
       'text-white bg-off-200 hover:bg-off-200/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
     secondary:
-      'bg-gray-600 text-white border-gray-400 hover:bg-gray-400 active:text-gray-900  active:bg-gray-200 shadow-md ',
+      'bg-gray-600 text-white border-gray-600 hover:bg-gray-400 active:text-gray-900  active:bg-gray-200 shadow-md ',
     tertiary:
       'text-gray-500 bg-white hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 active:text-gray-900',
     danger:
@@ -99,7 +100,7 @@ export const ButtonOrLink = forwardRef<
             STYLES.base,
             STYLES.disabled,
             STYLES.active,
-            STYLES.variant[variant],
+            isIconButton ? STYLES.icon : STYLES.variant[variant],
             isIconButton ? STYLES.size.icon[size] : STYLES.size.base[size],
             fullWidth && 'w-full'
           );
@@ -112,7 +113,11 @@ export const ButtonOrLink = forwardRef<
         {...props}
       >
         <img
-          className="bg-center absolute w-full bg-cover h-full opacity-30"
+          className={`${
+            isIconButton
+              ? 'rounded-2xl bg-center absolute w-full bg-cover h-full opacity-20'
+              : 'bg-center absolute w-full bg-cover h-full opacity-20'
+          }`}
           src="/texture-button.png"
           alt=""
         />

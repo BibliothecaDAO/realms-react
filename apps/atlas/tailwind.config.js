@@ -1,5 +1,8 @@
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
+  ],
   safelist: [
     'text-[#838383]',
     'text-[#00DC82]',
@@ -19,13 +22,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        veryWide: '0.165em',
+      },
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
         texture: "url('/texture-button.png')",
-        hero: "linear-gradient(0deg, rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url('/cover.jpg')",
+        hero: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/cover.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
