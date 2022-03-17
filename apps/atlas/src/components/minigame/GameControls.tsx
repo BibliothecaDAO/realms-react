@@ -82,7 +82,7 @@ const GameControls: React.FC<Prop> = (props) => {
     const previouslyShown = localStorage.getItem(
       OnboardingTutorials.GameControls
     );
-    if (!previouslyShown) {
+    if (!previouslyShown && props.gameStatus == 'active') {
       setShowTutorial(true);
     }
   }, []);
