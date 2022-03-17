@@ -154,11 +154,11 @@ function useUI(): UI {
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
   // Update URL
-  useEffect(() => {
-    router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
-      shallow: true,
-    });
-  }, [selectedId, selectedAssetFilter]);
+  // useEffect(() => {
+  //   router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
+  //     shallow: true,
+  //   });
+  // }, [selectedId, selectedAssetFilter]);
 
   // Sync AssetFilter with Menu
   useEffect(() => {
