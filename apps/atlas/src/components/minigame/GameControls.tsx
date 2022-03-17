@@ -414,7 +414,16 @@ const GameControls: React.FC<Prop> = (props) => {
           <p className="mt-2 font-bold">Preparation for Desiege</p>
           <ul className="text-xl list-none">
             <li>
-              Browse the <a className="underline">game guide</a>
+              Browse the{' '}
+              <a
+                target={'_blank'}
+                href="https://docs.google.com/document/d/1LcT7QiprYOpK_3LfGN6MRBkqgULw7jQT3dIMSSi2vZg/edit?usp=sharing"
+                rel="noreferrer"
+                className="underline"
+              >
+                game guide
+              </a>
+              <ExternalLink className="inline-block h-4 ml-1" />
             </li>
             <li>
               Coordinate on{' '}
@@ -429,7 +438,8 @@ const GameControls: React.FC<Prop> = (props) => {
               <ExternalLink className="inline-block h-4 ml-1" />
             </li>
             <li>
-              <a className="underline">Recruit</a> your friends
+              <a className="underline">Recruit</a> your friends{' '}
+              <span className="p-1 text-xs bg-blue-200">coming soon</span>
             </li>
             <li>
               Check the{' '}
