@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import type { AddTransactionResponse } from 'starknet';
 import useGameStats from '@/hooks/useGameStats';
@@ -73,7 +74,16 @@ export const Bridge: React.FC<Prop> = (props) => {
     console.log("TODO: Handle user rejection");
   } */
 
-  const [side, setSide] = useState<'light' | 'dark'>();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query['initial_side']) {
+      const initialSide = router.query['initial_side'] as string;
+      setSide(initialSide);
+    }
+  });
+
+  const [side, setSide] = useState<string>();
 
   /* const [unsupportedChain, setUnsupportedChain] = useState(chainId !== 1); // 1 is Ethereum Mainnet
 
@@ -384,6 +394,10 @@ export const Bridge: React.FC<Prop> = (props) => {
                             </p>
 
                             <Button
+                              disabled={
+                                middlewareStatus == 'signing' ||
+                                middlewareStatus == 'pending'
+                              }
                               className="mt-4"
                               onClick={() => verifyAndMint()}
                             >
