@@ -13,7 +13,7 @@ module.exports = {
     'bg-[#c13cff]',
     'bg-[#f8b73e]',
     'bg-[#ff44b7]',
-    'space-x-10',
+    'space-x-16',
     'border-b-4',
     'border-transparent',
   ],

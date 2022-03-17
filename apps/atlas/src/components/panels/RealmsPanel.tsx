@@ -8,7 +8,9 @@ import { animated, useSpring } from '@react-spring/web';
 import { useState, useMemo } from 'react';
 import { Realm } from '@/components/cards/Realm';
 import { RealmsEmpire } from '@/components/map/RealmsEmpire';
+import { RealmOverview } from '@/components/tables/RealmOverview';
 import { useUIContext } from '@/hooks/useUIContext';
+
 export const RealmsPanel = () => {
   const { togglePanelType, selectedPanel } = useUIContext();
   const [tab, setTab] = useState<string>('Realms');
@@ -26,12 +28,17 @@ export const RealmsPanel = () => {
       {
         label: 'Your Realms',
         icon: <Castle className="mr-2" />,
-        component: <Bag className="w-48 h-48" />,
+        component: <RealmOverview />,
       },
       {
         label: 'All Realms',
         icon: <Danger className="mr-2" />,
         component: <Helm className="w-48 h-48 fill-black" />,
+      },
+      {
+        label: 'Favourite Realms',
+        icon: <Danger className="mr-2" />,
+        component: <Castle className="w-48 h-48 fill-black" />,
       },
     ],
     []
@@ -41,9 +48,9 @@ export const RealmsPanel = () => {
       className="absolute top-0 z-30 w-full w-screen h-screen bg-center bg-cover"
       style={animation}
     >
-      <div className={`h-screen w-1/2 relative top-0 p-6   rounded-r-2xl`}>
+      <div className={`h-screen w-7/12 relative top-0 p-6 rounded-r-2xl`}>
         <div className="flex justify-between">
-          <h1 className="mb-4 tex">Realms</h1>
+          <h1 className="tex">Realms</h1>
           <button
             className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
             onClick={() => togglePanelType('realm')}
@@ -51,9 +58,8 @@ export const RealmsPanel = () => {
             CLOSE
           </button>
         </div>
-
         <Tabs>
-          <Tabs.List>
+          <Tabs.List className="ml-8">
             {tabs.map((tab) => (
               <Tabs.Tab key={tab.label} className="uppercase">
                 {tab.label}
@@ -66,7 +72,6 @@ export const RealmsPanel = () => {
             ))}
           </Tabs.Panels>
         </Tabs>
-        {tab === 'Realms' && <RealmsEmpire />}
       </div>
     </animated.div>
   );

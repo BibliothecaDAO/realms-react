@@ -13,9 +13,9 @@ export const VARIANTS = {
       base: 'border-b-4 relative inline-flex items-center justify-center px-3 py-2 text text-white text-shadow-md',
       active:
         'border-white focus:outline-none focus:ring-2 font-bold ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
-      inactive: 'border-transparent hover:text-gray-300',
+      inactive: 'border-transparent hover:border-white hover:border-b-2',
     },
-    tabList: 'flex space-x-10',
+    tabList: 'flex space-x-16',
   },
   primary: {
     tab: {
@@ -39,16 +39,14 @@ export const Tabs = ({
   variant = 'default',
 }: TabsProps) => {
   return (
-    <div className="p-8 bg-black/30">
-      <TabProvider variant={variant}>
-        <HeadlessTab.Group
-          as="div"
-          className={clsx('flex flex-1 flex-col', className)}
-        >
-          {children}
-        </HeadlessTab.Group>
-      </TabProvider>
-    </div>
+    <TabProvider variant={variant}>
+      <HeadlessTab.Group
+        as="div"
+        className={clsx('flex flex-1 flex-col', className)}
+      >
+        {children}
+      </HeadlessTab.Group>
+    </TabProvider>
   );
 };
 

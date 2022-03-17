@@ -61,18 +61,20 @@ const Template: Story<TabsProps> = (args) => {
   });
 
   return (
-    <Tabs {...args}>
-      <Tabs.List>
-        {Object.keys(categories).map((category) => (
-          <Tabs.Tab key={category}>{category}</Tabs.Tab>
-        ))}
-      </Tabs.List>
-      <Tabs.Panels className="mt-2">
-        {Object.values(categories).map((_, idx) => (
-          <Tabs.Panel key={idx}>Content here</Tabs.Panel>
-        ))}
-      </Tabs.Panels>
-    </Tabs>
+    <div className="p-8 bg-black/30">
+      <Tabs {...args}>
+        <Tabs.List>
+          {Object.keys(categories).map((category) => (
+            <Tabs.Tab key={category}>{category}</Tabs.Tab>
+          ))}
+        </Tabs.List>
+        <Tabs.Panels className="mt-2">
+          {Object.values(categories).map((_, idx) => (
+            <Tabs.Panel key={idx}>Content here</Tabs.Panel>
+          ))}
+        </Tabs.Panels>
+      </Tabs>
+    </div>
   );
 };
 
