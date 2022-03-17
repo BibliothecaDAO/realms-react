@@ -360,18 +360,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                         Element distillation ceremony completed.
                       </p>
                     ) : null}
-                    {transactionHash ? (
-                      <a
-                        // TODO: Choose host dynamically here based on network
-                        href={`https://goerli.voyager.online/tx/${transactionHash}/`}
-                        className="underline"
-                        target={'_blank'}
-                        rel="noopener noreferrer"
-                      >
-                        Check Transaction Status{' '}
-                        <ExternalLink className="inline-block h-6" />
-                      </a>
-                    ) : null}
+
                     {mintTxLoading ? (
                       <>
                         <p className="mt-8 text-2xl animate-bounce">
@@ -418,6 +407,20 @@ export const Bridge: React.FC<Prop> = (props) => {
                         ) : null}
                       </>
                     )}
+                    {transactionHash ? (
+                      <p className="mt-2">
+                        <a
+                          // TODO: Choose host dynamically here based on network
+                          href={`https://goerli.voyager.online/tx/${transactionHash}/`}
+                          className="underline"
+                          target={'_blank'}
+                          rel="noopener noreferrer"
+                        >
+                          Check Transaction Status{' '}
+                          <ExternalLink className="inline-block h-6" />
+                        </a>
+                      </p>
+                    ) : null}
                   </>
                 ) : (
                   <p>
