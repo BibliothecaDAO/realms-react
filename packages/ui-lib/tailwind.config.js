@@ -50,6 +50,8 @@ module.exports = {
       },
       backgroundImage: {
         hero: "url('/cover.jpg')",
+        texture:
+          "linear-gradient(to right bottom, rgba('#7ed56f',0.8), rgba('#28b485',0.8)), url('/texture-button.png')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
