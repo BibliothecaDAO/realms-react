@@ -13,7 +13,7 @@ import ga_bags from '../geodata/ga_bags.json';
 import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 
-export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | null;
+export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type MenuType = 'empire' | 'resources' | 'orders' | AssetType;
 
@@ -67,7 +67,7 @@ const defaultUIContext: UI = {
   setSelectedId: (id: string) => {},
   selectedAssetFilter: AssetFilters[0],
   setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
-  selectedMenuType: null,
+  selectedMenuType: undefined,
   setMenuType: (menuType: MenuType) => {},
   toggleMenuType: (menuType: MenuType) => {},
   closeAll: (exclude?: MenuType) => {},
@@ -77,7 +77,7 @@ const defaultUIContext: UI = {
   mainMenu: true,
   toggleMainMenu: () => {},
   togglePanelType: (panelType: PanelType) => {},
-  selectedPanel: null,
+  selectedPanel: undefined,
 };
 
 const UIContext = createContext<UI>(defaultUIContext);
@@ -166,9 +166,9 @@ function useUI(): UI {
   const [mainMenu, setMainMenu] = useState(true);
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(
-    query ? (query.assetType as AssetType) : null
+    query ? (query.assetType as AssetType) : undefined
   );
-  const [selectedPanel, setPanelType] = useState<PanelType>(null);
+  const [selectedPanel, setPanelType] = useState<PanelType>(undefined);
 
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
@@ -188,7 +188,7 @@ function useUI(): UI {
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
-      setMenuType(null);
+      setMenuType(undefined);
     } else if (selectedMenuType !== exclude) {
       setMenuType(exclude);
     }
@@ -196,7 +196,7 @@ function useUI(): UI {
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
-      setMenuType(null);
+      setMenuType(undefined);
     } else {
       setMenuType(menuType);
     }
@@ -205,7 +205,7 @@ function useUI(): UI {
     toggleArtBackground();
 
     if (selectedPanel === panelType) {
-      setPanelType(null);
+      setPanelType(undefined);
     } else {
       console.log('toggle panel');
       setPanelType(panelType);
