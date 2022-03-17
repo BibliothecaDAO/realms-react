@@ -136,7 +136,7 @@ function TowerDefence(props: TowerProps) {
   }, [props.health]);
 
   return (
-    <div className="h-screen z-1">
+    <div className="absolute top-0 w-full h-screen z-1">
       <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
         <Suspense fallback={null}>
           <ambientLight />

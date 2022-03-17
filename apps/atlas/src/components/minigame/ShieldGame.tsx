@@ -15,6 +15,7 @@ import {
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
 // import GameBlockTimer from './GameBlockTimer';
+import GameBlockTimer from './GameBlockTimer';
 import GameControls from './GameControls';
 import MenuBar from './MenuBar';
 import Modal from './Modal';
@@ -159,6 +160,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
+      {gameContext && gs == 'active' ? (
+        <GameBlockTimer gameCtx={gameContext} />
+      ) : null}
       <Modal
         isOpen={loreModalOpen}
         toggle={() => {

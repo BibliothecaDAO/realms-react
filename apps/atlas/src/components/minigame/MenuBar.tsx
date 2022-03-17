@@ -10,7 +10,7 @@ function MenuBar(props: Prop) {
   const router = useRouter();
 
   return (
-    <div className="absolute w-full text-black transition-all bottom-2 ">
+    <div className="fixed z-10 w-full text-black transition-all bottom-2">
       <div className="flex justify-around h-12 px-4 mx-auto align-middle w-96 rounded-2xl bg-white/40">
         <button
           className="self-center mute-btn hover:scale-105 hover:text-blue-700"
