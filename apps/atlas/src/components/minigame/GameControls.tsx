@@ -224,7 +224,7 @@ const GameControls: React.FC<Prop> = (props) => {
   };
 
   const primaryBtnClass =
-    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md bg-gray-200 hover:bg-white/100';
+    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md  hover:bg-white/100 font-body tracking-widest';
 
   const ConnectStarknetButton = () => (
     <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
@@ -348,7 +348,7 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       ) : null}
       <div>
-        <p className="text-xl uppercase">Season 1</p>
+        <p className="text-xl uppercase tracking-widest">Season 1</p>
         <h1>
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
@@ -474,7 +474,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <div className="mt-4">
                 <div id="token-balance">
                   {noMoreElements ? (
-                    <p>
+                    <p className="uppercase tracking-widest opacity-60">
                       No <ElementLabel>Elements</ElementLabel> for this game{' '}
                       <button
                         onClick={() => {

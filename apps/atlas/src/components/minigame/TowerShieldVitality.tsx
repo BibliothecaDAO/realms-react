@@ -23,7 +23,7 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
     <>
       <p
         className={classNames(
-          'text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700',
+          'text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l to-red-300 from-yellow-700 uppercase tracking-widest',
           props.className
         )}
       >

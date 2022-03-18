@@ -175,7 +175,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
-        <h3 className="flex justify-between text-blue-600 uppercase font-body">
+        <h3 className="flex justify-between text-blue-600/70 uppercase font-body tracking-widest">
           <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
