@@ -1,6 +1,6 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Provider, ec, encode, Account } from 'starknet';
+import { ec, encode, Account } from 'starknet';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import { fetchLordsBalance } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
@@ -8,6 +8,7 @@ import {
   getModuleAddress,
   getNextMintAmount,
   getTotalElementsMinted,
+  provider,
 } from '@/util/minigameApi';
 
 export type MintingError = {
@@ -34,11 +35,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     return;
   }
-
-  // Mint on StarkNet (testnet)
-  const provider = new Provider({
-    network: 'goerli-alpha',
-  });
 
   const minterPrivKey = encode.addHexPrefix(
     process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
