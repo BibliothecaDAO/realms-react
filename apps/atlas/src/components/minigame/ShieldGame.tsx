@@ -190,7 +190,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-10 text-black bg-white/30 rounded-2xl"
+              className="w-full p-6 text-gray-700 bg-white/70 rounded-2xl shadow-md"
             >
               {gameContext ? (
                 <GameControls
@@ -206,7 +206,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   setupModalInitialIsOpen={view == 'setup'}
                 />
               ) : (
-                <p className="text-2xl">Loading...</p>
+                <p className="animate-pulse text-3xl">
+                  Loading the Dark Portal...
+                </p>
               )}
             </div>
           </div>
@@ -218,7 +220,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
         currentBoostBips={boost}
-      ></TowerDefence>
+      />
       <MenuBar toggleTab={(tab) => setView(tab)} />
     </div>
   );

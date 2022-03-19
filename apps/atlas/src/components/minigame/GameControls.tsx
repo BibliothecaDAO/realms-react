@@ -29,6 +29,7 @@ import {
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
 import Bridge from '../bridge/Bridge';
+import { GamePreparation } from './GamePreparation';
 import BridgeModal from './Modal';
 import {
   ShieldVitalityDisplay,
@@ -386,83 +387,42 @@ const GameControls: React.FC<Prop> = (props) => {
           ) : null}
 
           <p className="mt-4 text-3xl">
+            Your balance:
             {side == 'light' && tokenBalances ? (
               <>
-                <ElementLabel side="light">LIGHT</ElementLabel>{' '}
+                <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
                 {(tokenBalances[0].toNumber() / 100).toFixed(0)}
               </>
             ) : null}
             {side == 'dark' && tokenBalances ? (
               <>
-                <ElementLabel side="dark">DARK</ElementLabel>{' '}
+                <ElementLabel side="dark"> DARK</ElementLabel>{' '}
                 {(tokenBalances[1].toNumber() / 100).toFixed(0)}
               </>
             ) : null}
           </p>
-          <p className="my-4 text-xl animate-bounce">
+          <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
           </p>
           {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
-            <>
-              Total minted for the next game
-              <p>Light: {gameStats.light}</p>
-              <p>Dark : {gameStats.dark}</p>
-            </>
+            <div className="my-4">
+              <h4 className="text-center font-semibold tracking-widest">
+                Total elements minted for the next game
+              </h4>
+              <div className="text-3xl bg-white/90 flex justify-between px-8 rounded-md py-3 shadow-sm tracking-widest">
+                <p>
+                  <ElementLabel side="light">LIGHT</ElementLabel>{' '}
+                  {gameStats.light}
+                </p>
+                <p>
+                  <ElementLabel side="dark">DARK</ElementLabel> {gameStats.dark}
+                </p>
+              </div>
+            </div>
           )}
-          <p className="mt-2 font-bold">Preparation for Desiege</p>
-          <ul className="text-xl list-none">
-            <li>
-              Browse the{' '}
-              <a
-                target={'_blank'}
-                href="https://docs.google.com/document/d/1LcT7QiprYOpK_3LfGN6MRBkqgULw7jQT3dIMSSi2vZg/edit?usp=sharing"
-                rel="noreferrer"
-                className="underline"
-              >
-                game guide
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" />
-            </li>
-            <li>
-              Coordinate on{' '}
-              <a
-                target={'_blank'}
-                href="https://discord.gg/YfeZQ3NFB8"
-                className="underline"
-                rel="noreferrer"
-              >
-                Discord
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" />
-            </li>
-            <li>
-              <a className="underline">Recruit</a> your friends{' '}
-              <span className="p-1 text-xs bg-blue-200">coming soon</span>
-            </li>
-            <li>
-              Check the{' '}
-              <a
-                target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-react/tree/feat/desiege/apps/atlas/src/components/minigame"
-                className="underline"
-                rel="noreferrer"
-              >
-                front-end
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" /> and{' '}
-              <a
-                target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/desiege/contracts/desiege"
-                className="underline"
-                rel="noreferrer"
-              >
-                StarkNet
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" /> contracts
-            </li>
-          </ul>
+          <GamePreparation />
         </div>
       ) : null}
       {gameStatus == 'active' && account ? (
@@ -544,26 +504,7 @@ const GameControls: React.FC<Prop> = (props) => {
           <div
             id="action-controls"
             className="flex w-full gap-4 text-gray-100 row"
-          >
-            {/* <div className="flex-1">
-              {side == "light" ? (
-                <Button
-                  className="w-full mt-4 text-black"
-                  onClick={() => setAction("shield")}
-                >
-                  Shield
-                </Button>
-              ) : (
-                <Button
-                  className="w-full mt-4 text-black"
-                  active={action == "attack"}
-                  onClick={() => setAction("attack")}
-                >
-                  Attack
-                </Button>
-              )}
-            </div> */}
-          </div>
+          ></div>
           <div className="flex flex-row justify-center my-4">
             <input
               id="action-amount"
