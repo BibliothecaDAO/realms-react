@@ -202,7 +202,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   shield={shield}
                   gameStatus={gs}
                   gameIdx={gameContext?.gameIdx}
-                  currentBoostBips={boost}
+                  initialBoostBips={boost}
                   setupModalInitialIsOpen={view == 'setup'}
                 />
               ) : (
@@ -217,7 +217,6 @@ const ShieldGame: React.FC<Prop> = (props) => {
         health={health}
         shield={shield}
         gameIdx={gameContext?.gameIdx}
-        currentBoostBips={boost}
       ></TowerDefence>
       <MenuBar toggleTab={(tab) => setView(tab)} />
     </div>

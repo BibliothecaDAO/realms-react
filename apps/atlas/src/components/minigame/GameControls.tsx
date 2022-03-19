@@ -3,6 +3,7 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
+  useStarknetCall,
 } from '@starknet-react/core';
 import axios from 'axios';
 import type BN from 'bn.js';
@@ -37,7 +38,7 @@ import {
 
 type Prop = {
   gameIdx?: number;
-  currentBoostBips?: number;
+  initialBoostBips?: number;
   health?: BN;
   shield?: BN;
   gameStatus?: GameStatus;
@@ -65,7 +66,7 @@ enum OnboardingTutorials {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const GameControls: React.FC<Prop> = (props) => {
-  const { gameIdx, currentBoostBips, gameStatus } = props;
+  const { gameIdx, gameStatus, initialBoostBips } = props;
 
   const {
     account,
@@ -110,13 +111,14 @@ const GameControls: React.FC<Prop> = (props) => {
     method: 'attack_tower',
   });
 
-  // const boostEffect = useStarknetCall({
-  //   contract: towerDefenceContract,
-  //   method: "calculate_time_multiplier",
-  //   args: {
-  //     game_idx:
-  //   }
-  // });
+  const boostEffect = useStarknetCall({
+    contract: towerDefenceContract,
+    method: 'get_current_boost',
+  });
+
+  const currentBoostBips = boostEffect.data
+    ? (boostEffect.data[0] as string)
+    : initialBoostBips?.toString();
 
   const {
     fetchTokenBalances,
@@ -583,10 +585,10 @@ const GameControls: React.FC<Prop> = (props) => {
               className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
             />{' '}
             <div id="action-boost" className="ml-4">
-              {currentBoostBips && !isNaN(currentBoostBips) ? (
+              {currentBoostBips ? (
                 <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
                   <LightningBoltIcon className="inline-block w-4" />{' '}
-                  {`${currentBoostBips / 100}%`}
+                  {`${parseInt(currentBoostBips) / 100}%`}
                 </button>
               ) : null}
             </div>

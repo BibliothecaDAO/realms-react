@@ -115,7 +115,6 @@ export interface TowerProps {
   gameIdx?: number;
   health?: BN;
   shield?: BN;
-  currentBoostBips?: number;
 }
 
 const origin: { position?: Vector3 } = {
@@ -182,13 +181,6 @@ function TowerDefence(props: TowerProps) {
                       <Shield className="w-8 h-8 mx-auto " />
                     </button>
                   </div>
-                  {/* {showShieldAction && (
-                    <ShieldAction
-                      gameStatus={props.gameStatus}
-                      gameIdx={props.gameIdx}
-                      currentBoostBips={props.currentBoostBips}
-                    />
-                  )} */}
                 </div>
               </Html>
             )}
