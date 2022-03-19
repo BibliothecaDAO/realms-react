@@ -127,27 +127,29 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const txTracker = useTxCallback(
     shieldAction.data || attackAction.data,
-    () => {
+    (status) => {
       fetchTokenBalances(gameIdx as number);
 
       // Temp: Post a request to distribute this as a notification
       // TODO: Replace with StarkNet indexer / real-time events in future
-      axios
-        .post('/api/notify', {
-          token_amount: actionAmount,
-          token_offset: side == 'light' ? '1' : '2',
-          token_boost: currentBoostBips,
-          game_idx: gameIdx,
-          city_health: (props.health as BN)
-            .div(toBN(EFFECT_BASE_FACTOR))
-            .toNumber()
-            .toFixed(2),
-          shield_health: (props.shield as BN)
-            .div(toBN(EFFECT_BASE_FACTOR))
-            .toNumber()
-            .toFixed(2),
-        })
-        .catch((e) => console.error(e)); // TODO: Handle error
+      if (status == 'ACCEPTED_ON_L1' || status == 'ACCEPTED_ON_L2') {
+        axios
+          .post('/api/notify', {
+            token_amount: actionAmount,
+            token_offset: side == 'light' ? '1' : '2',
+            token_boost: currentBoostBips,
+            game_idx: gameIdx,
+            city_health: (props.health as BN)
+              .div(toBN(EFFECT_BASE_FACTOR))
+              .toNumber()
+              .toFixed(2),
+            shield_health: (props.shield as BN)
+              .div(toBN(EFFECT_BASE_FACTOR))
+              .toNumber()
+              .toFixed(2),
+          })
+          .catch((e) => console.error(e)); // TODO: Handle error
+      }
     }
   );
 
