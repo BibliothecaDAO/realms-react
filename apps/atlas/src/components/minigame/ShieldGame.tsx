@@ -82,11 +82,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   // Memoize so same values don't cause re-renders
   const health = useMemo(() => {
-    return toBN((healthStr as string) || 0);
+    return healthStr ? toBN(healthStr as string) : undefined;
   }, [healthStr]);
 
   const shield = useMemo(() => {
-    return toBN((shieldStr as string) || 0);
+    return shieldStr ? toBN(shieldStr as string) : undefined;
   }, [shieldStr]);
 
   const fetchState = async () => {
