@@ -1,3 +1,4 @@
+import { useFrame } from '@react-three/fiber';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type { MouseEventHandler } from 'react';
 import type * as THREE from 'three';
@@ -18,7 +19,7 @@ export function Shield(props: ObjectProps) {
   //   const delta = clock.getDelta();
   //   setTime((time += delta * 5));
   // };
-  // // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
   // useFrame(({ clock }) => render(clock));
 
   const KnotShaderMaterial = {

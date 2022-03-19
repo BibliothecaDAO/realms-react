@@ -353,10 +353,13 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       ) : null}
       <div>
-        <p className="text-xl uppercase tracking-widest">Season 1</p>
+        <p className="text-xl uppercase tracking-widest font-semibold">
+          Season 1
+        </p>
         <h1>
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
+        <hr />
       </div>
       {account == undefined ? <ConnectStarknetButton /> : null}
       {starknetConnectionError ? (
@@ -390,7 +393,7 @@ const GameControls: React.FC<Prop> = (props) => {
             <LoadingSkeleton className="w-full h-10 mt-4" />
           ) : (
             <p className="mt-4 text-3xl">
-              Your balance:
+              Balance:
               {side == 'light' && tokenBalances ? (
                 <>
                   <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
@@ -412,11 +415,11 @@ const GameControls: React.FC<Prop> = (props) => {
           {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
-            <div className="my-4">
+            <div className="mt-8">
               <h4 className="text-center font-semibold tracking-widest">
                 Total elements minted for the next game
               </h4>
-              <div className="text-3xl bg-white/90 flex justify-between px-8 rounded-md py-3 shadow-sm tracking-widest">
+              <div className="text-3xl bg-white/90 flex justify-between px-8 rounded-md py-3 shadow-inner tracking-widest">
                 <p>
                   <ElementLabel side="light">LIGHT</ElementLabel>{' '}
                   {gameStats.light}

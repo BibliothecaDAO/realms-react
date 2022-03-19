@@ -11,7 +11,7 @@ const TokenLabel: React.FC<Prop> = (props) => {
   let gradient = 'to-cyan-400 from-purple-600';
   let gradientDir = 'bg-gradient-to-l';
   if (props.side == 'light') {
-    gradient = 'to-cyan-400 from-cyan-700';
+    gradient = 'to-cyan-200 from-cyan-600';
     gradientDir = 'bg-gradient-to-t';
   } else if (props.side == 'dark') {
     gradient = 'to-purple-600 from-purple-900';

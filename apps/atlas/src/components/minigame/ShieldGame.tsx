@@ -179,7 +179,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
-        <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
+        {/* <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
           <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
@@ -188,13 +188,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
               <LoadingSkeleton className="inline-block w-8 h-8" />
             )}
           </span>
-        </h3>
+        </h3> */}
 
         {view == 'game-controls' || view == 'setup' ? (
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-6 py-10 text-gray-700 bg-white/70 rounded-md shadow-md"
+              className="w-full p-8 pt-10 text-gray-700 bg-white/70 rounded-md shadow-md"
             >
               {gameContext ? (
                 <GameControls
