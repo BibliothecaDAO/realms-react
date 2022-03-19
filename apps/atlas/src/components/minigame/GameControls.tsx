@@ -117,7 +117,7 @@ const GameControls: React.FC<Prop> = (props) => {
   });
 
   const currentBoostBips = boostEffect.data
-    ? (boostEffect.data[0] as string)
+    ? boostEffect.data[0].toString()
     : initialBoostBips?.toString();
 
   const {

@@ -37,6 +37,11 @@ export enum ShieldGameRole {
   Attacker = '1',
 }
 
+export enum GameStatusEnum {
+  Active = 0,
+  Expired = 1,
+}
+
 export enum SelectorName {
   getLatestGameIndex = 'get_latest_game_index',
   getMainHealth = 'get_main_health',

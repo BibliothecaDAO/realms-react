@@ -1,8 +1,10 @@
 import { useContract, useStarknetCall } from '@starknet-react/core';
+import type BN from 'bn.js';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
+import TowerDefenceContract from '@/abi/minigame/01_TowerDefence.json';
 import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
 import { ElementToken } from '@/constants/index';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
@@ -11,6 +13,7 @@ import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 import type { GameStatus } from '@/types/index';
 import type { GameContext } from '@/util/minigameApi';
 import {
+  GameStatusEnum,
   getGameContextVariables,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
@@ -56,6 +59,11 @@ const ShieldGame: React.FC<Prop> = (props) => {
     address: props.towerDefenceStorageAddr,
   });
 
+  const { contract: towerDefenceContract } = useContract({
+    abi: TowerDefenceContract as Abi,
+    address: props.towerDefenceContractAddr,
+  });
+
   const getMainHealth = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_main_health' : undefined,
@@ -74,6 +82,12 @@ const ShieldGame: React.FC<Prop> = (props) => {
           ).toString()
         : '1',
     ],
+  });
+
+  const getGameStatus = useStarknetCall({
+    contract: towerDefenceContract,
+    method: 'get_game_state',
+    args: gameContext ? [gameContext.gameIdx.toString()] : undefined,
   });
 
   const healthStr = getMainHealth.data ? getMainHealth.data[0] : undefined;
@@ -109,29 +123,19 @@ const ShieldGame: React.FC<Prop> = (props) => {
     }
   }, []);
 
-  const gs = useMemo(() => {
-    if (!gameContext) {
-      return undefined;
+  const gs: GameStatus | undefined = useMemo(() => {
+    const status: BN | undefined = getGameStatus?.data
+      ? getGameStatus.data[0]
+      : undefined;
+    if (status && status.eq(toBN(GameStatusEnum.Active))) {
+      return 'active';
     }
-    const lastBlockOfCurrentGame =
-      gameContext.gameStartBlock.toNumber() +
-      gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
-
-    const gameTimerIsActive =
-      gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
-
-    let gs: GameStatus;
-    if (gameTimerIsActive) {
-      if (gameContext.mainHealth.lte(toBN(0))) {
-        gs = 'completed';
-      } else {
-        gs = 'active';
-      }
-    } else {
-      gs = 'expired';
+    if (status && status.eq(toBN(GameStatusEnum.Expired))) {
+      return 'expired';
     }
-    return gs;
-  }, [gameContext]);
+    // Prevent a network error from changing game state
+    return getGameStatus.error ? 'expired' : undefined;
+  }, [getGameStatus.data]);
 
   const [loreModalOpen, setLoreModalOpen] = useState(view == 'lore');
 
