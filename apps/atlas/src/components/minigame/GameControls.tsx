@@ -38,8 +38,8 @@ import {
 type Prop = {
   gameIdx?: number;
   currentBoostBips?: number;
-  health: BN;
-  shield: BN;
+  health?: BN;
+  shield?: BN;
   gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
   towerDefenceContractAddress: string;
@@ -138,11 +138,11 @@ const GameControls: React.FC<Prop> = (props) => {
           token_offset: side == 'light' ? '1' : '2',
           token_boost: currentBoostBips,
           game_idx: gameIdx,
-          city_health: props.health
+          city_health: (props.health as BN)
             .div(toBN(EFFECT_BASE_FACTOR))
             .toNumber()
             .toFixed(2),
-          shield_health: props.shield
+          shield_health: (props.shield as BN)
             .div(toBN(EFFECT_BASE_FACTOR))
             .toNumber()
             .toFixed(2),
