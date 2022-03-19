@@ -179,7 +179,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
-        <h3 className="flex justify-between text-blue-600 uppercase font-body">
+        <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
           <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
@@ -194,7 +194,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-10 text-black bg-white/30 rounded-2xl"
+              className="w-full p-6 text-gray-700 shadow-md bg-white/70 rounded-2xl"
             >
               {gameContext ? (
                 <GameControls
@@ -210,7 +210,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
                   setupModalInitialIsOpen={view == 'setup'}
                 />
               ) : (
-                <p className="text-2xl">Loading...</p>
+                <p className="text-3xl animate-pulse">
+                  Loading the Dark Portal...
+                </p>
               )}
             </div>
           </div>

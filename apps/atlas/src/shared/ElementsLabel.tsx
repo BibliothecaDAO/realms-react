@@ -21,7 +21,7 @@ const TokenLabel: React.FC<Prop> = (props) => {
   return (
     <span
       className={classNames(
-        'font-bold text-transparent rounded-md bg-clip-text',
+        'font-bold text-transparent rounded-md bg-clip-text ',
         gradientDir,
         gradient,
         props.className
