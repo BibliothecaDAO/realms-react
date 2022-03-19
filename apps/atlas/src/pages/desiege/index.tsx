@@ -1,6 +1,7 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import ShieldGame from '@/components/minigame/ShieldGame';
+import { DesiegeHeader } from '@/components/navigation/DesiegeHeader';
 import { getModuleAddress } from '@/util/minigameApi';
 
 type Prop = {
@@ -72,6 +73,7 @@ const Game: NextPage<SSRProps & Prop> = (props) => {
         />
       </Head>
       <div>
+        <DesiegeHeader />
         <ShieldGame
           towerDefenceContractAddr={props.towerDefenceAddr}
           towerDefenceStorageAddr={props.towerDefenceStorageAddr}

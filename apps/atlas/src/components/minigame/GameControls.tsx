@@ -385,24 +385,25 @@ const GameControls: React.FC<Prop> = (props) => {
             </button>
           ) : null}
           {loadingTokenBalance ? (
-            <LoadingSkeleton className="w-24 h-10 mt-4" />
-          ) : null}
+            <LoadingSkeleton className="w-full h-10 mt-4" />
+          ) : (
+            <p className="mt-4 text-3xl">
+              Your balance:
+              {side == 'light' && tokenBalances ? (
+                <>
+                  <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
+                  {(tokenBalances[0].toNumber() / 100).toFixed(0)}
+                </>
+              ) : null}
+              {side == 'dark' && tokenBalances ? (
+                <>
+                  <ElementLabel side="dark"> DARK</ElementLabel>{' '}
+                  {(tokenBalances[1].toNumber() / 100).toFixed(0)}
+                </>
+              ) : null}
+            </p>
+          )}
 
-          <p className="mt-4 text-3xl">
-            Your balance:
-            {side == 'light' && tokenBalances ? (
-              <>
-                <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
-                {(tokenBalances[0].toNumber() / 100).toFixed(0)}
-              </>
-            ) : null}
-            {side == 'dark' && tokenBalances ? (
-              <>
-                <ElementLabel side="dark"> DARK</ElementLabel>{' '}
-                {(tokenBalances[1].toNumber() / 100).toFixed(0)}
-              </>
-            ) : null}
-          </p>
           <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
           </p>

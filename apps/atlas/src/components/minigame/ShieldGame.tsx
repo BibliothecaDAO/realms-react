@@ -190,7 +190,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-6 text-gray-700 bg-white/70 rounded-2xl shadow-md"
+              className="w-full p-6 py-10 text-gray-700 bg-white/70 rounded-md shadow-md"
             >
               {gameContext ? (
                 <GameControls
@@ -221,6 +221,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         gameIdx={gameContext?.gameIdx}
         currentBoostBips={boost}
       />
+      <button className="top-10 right-10 z-50">Login</button>
       <MenuBar toggleTab={(tab) => setView(tab)} />
     </div>
   );
