@@ -15,10 +15,11 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   const startToNum = gameStartBlock.toNumber();
 
   const endBlock = startToNum + blocksPerMinute * 60 * hoursPerGame;
+
+  const currBlock = block.data?.block_number || currentBlock.toNumber();
+
   const currentHour =
-    Math.floor(
-      (currentBlock.toNumber() - startToNum) / (blocksPerMinute * 60)
-    ) + 1; // to match loop index
+    Math.floor((currBlock - startToNum) / (blocksPerMinute * 60)) + 1; // to match loop index
 
   // Game "ticks" are displayed in hour intervals to fit on one screen
   const blockTicks = [];

@@ -23,7 +23,6 @@ export interface TowerProps {
   gameIdx?: number;
   health?: BN;
   shield?: BN;
-  currentBoostBips?: number;
 }
 
 const origin: { position?: Vector3 } = {
