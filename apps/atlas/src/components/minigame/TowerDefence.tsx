@@ -89,32 +89,20 @@ function TowerDefence(props: TowerProps) {
                       }}
                     ></button>
                   </div>
-                  {/* {showShieldAction && (
-                    <ShieldAction
-                      gameStatus={props.gameStatus}
-                      gameIdx={props.gameIdx}
-                      currentBoostBips={props.currentBoostBips}
-                    />
-                  )} */}
                 </div>
               </Html>
             )}
           </group>
-
           <OrbitControls autoRotate={rotate} />
           <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
-          {/* Hide until opacity over tower issue solved
-           <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
           <group ref={tower}>
             <Tower
               position={[0, 1, 0]}
-              onPointerOver={(event) => {
+              onPointerOver={() => {
                 setRotate(false);
               }}
               receiveShadow
-              onPointerOut={(event) => {
+              onPointerOut={() => {
                 setRotate(true);
               }}
             />

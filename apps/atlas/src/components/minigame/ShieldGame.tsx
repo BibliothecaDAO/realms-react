@@ -170,7 +170,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           setView('game-controls');
         }}
       >
-        <div className="w-full bg-gray-900 sm:m-8 sm:w-1/2 rounded-xl">
+        <div className="w-full bg-gray-900/40 sm:m-8 sm:w-1/2 rounded-xl">
           <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
         </div>
       </Modal>
