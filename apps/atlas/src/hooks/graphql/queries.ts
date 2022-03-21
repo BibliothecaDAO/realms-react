@@ -132,7 +132,7 @@ const getGAsQuery = gql`
 `;
 
 const getCryptQuery = gql`
-  query dungeon($id: String) @api(name: crypts) {
+  query dungeon($id: String) @api(name: ecosystem) {
     dungeon(id: $id) {
       size
       id
@@ -150,7 +150,8 @@ const getCryptQuery = gql`
 `;
 
 const getCryptsQuery = gql`
-  query dungeons($address: String, $first: Int, $skip: Int) @api(name: crypts) {
+  query dungeons($address: String, $first: Int, $skip: Int)
+  @api(name: ecosystem) {
     dungeons(
       where: { currentOwner_contains: $address }
       first: $first

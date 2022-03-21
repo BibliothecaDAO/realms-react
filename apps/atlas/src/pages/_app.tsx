@@ -26,7 +26,6 @@ const client = new ApolloClient({
       endpoints: {
         realms:
           'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-        crypts: 'https://api.thegraph.com/subgraphs/name/redbeardeth/lootdev',
         ecosystem:
           'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem',
       },
