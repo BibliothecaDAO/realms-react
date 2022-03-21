@@ -24,7 +24,7 @@ import type { ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
 type Props = {
   resource: string;
-  size?: keyof typeof STYLES['size']['md'];
+  size: keyof typeof STYLES['size'];
   className?: string;
 };
 

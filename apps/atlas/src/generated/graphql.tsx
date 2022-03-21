@@ -172,6 +172,33 @@ export type WalletInput = {
   realms?: InputMaybe<RealmInput>;
 };
 
+export type DesiegeFragmentFragment = {
+  __typename?: 'Desiege';
+  id: string;
+  gameId: number;
+  winner: number;
+  attackedTokens: number;
+  defendedTokens: number;
+  blockIndexed: number;
+};
+
+export type GetDesiegeQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+export type GetDesiegeQuery = {
+  __typename?: 'Query';
+  getDesiege: {
+    __typename?: 'Desiege';
+    id: string;
+    gameId: number;
+    winner: number;
+    attackedTokens: number;
+    defendedTokens: number;
+    blockIndexed: number;
+  };
+};
+
 export type GetRealmQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
@@ -181,6 +208,135 @@ export type GetRealmQuery = {
   getRealm: { __typename?: 'Realm'; id: string; realmId?: number | null };
 };
 
+export type GetRealmsQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+export type GetRealmsQuery = {
+  __typename?: 'Query';
+  getRealms: Array<{
+    __typename?: 'Realm';
+    id: string;
+    owner?: string | null;
+    name?: string | null;
+  }>;
+};
+
+export type RealmFragmentFragment = {
+  __typename?: 'Realm';
+  id: string;
+  owner?: string | null;
+  name?: string | null;
+};
+
+export type ResourceFragmentFragment = {
+  __typename?: 'Resource';
+  id: string;
+  resourceId?: number | null;
+  resourceName?: string | null;
+  realmId: number;
+};
+
+export type GetWalletQueryVariables = Exact<{
+  address: Scalars['String'];
+}>;
+
+export type GetWalletQuery = {
+  __typename?: 'Query';
+  getWallet: {
+    __typename?: 'Wallet';
+    id: string;
+    realms: Array<{
+      __typename?: 'Realm';
+      id: string;
+      owner?: string | null;
+      name?: string | null;
+    }>;
+  };
+};
+
+export const DesiegeFragmentFragmentDoc = gql`
+  fragment DesiegeFragment on Desiege {
+    id
+    gameId
+    winner
+    attackedTokens
+    defendedTokens
+    blockIndexed
+  }
+`;
+export const RealmFragmentFragmentDoc = gql`
+  fragment RealmFragment on Realm {
+    id
+    owner
+    name
+  }
+`;
+export const ResourceFragmentFragmentDoc = gql`
+  fragment ResourceFragment on Resource {
+    id
+    resourceId
+    resourceName
+    realmId
+  }
+`;
+export const GetDesiegeDocument = gql`
+  query GetDesiege($id: Float!) @api(name: starkIndexer) {
+    getDesiege(id: $id) {
+      ...DesiegeFragment
+    }
+  }
+  ${DesiegeFragmentFragmentDoc}
+`;
+
+/**
+ * __useGetDesiegeQuery__
+ *
+ * To run a query within a React component, call `useGetDesiegeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDesiegeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDesiegeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetDesiegeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetDesiegeQuery,
+    GetDesiegeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
+    GetDesiegeDocument,
+    options
+  );
+}
+export function useGetDesiegeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDesiegeQuery,
+    GetDesiegeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
+    GetDesiegeDocument,
+    options
+  );
+}
+export type GetDesiegeQueryHookResult = ReturnType<typeof useGetDesiegeQuery>;
+export type GetDesiegeLazyQueryHookResult = ReturnType<
+  typeof useGetDesiegeLazyQuery
+>;
+export type GetDesiegeQueryResult = Apollo.QueryResult<
+  GetDesiegeQuery,
+  GetDesiegeQueryVariables
+>;
 export const GetRealmDocument = gql`
   query GetRealm($id: Float!) @api(name: starkIndexer) {
     getRealm(id: $id) {
@@ -234,4 +390,115 @@ export type GetRealmLazyQueryHookResult = ReturnType<
 export type GetRealmQueryResult = Apollo.QueryResult<
   GetRealmQuery,
   GetRealmQueryVariables
+>;
+export const GetRealmsDocument = gql`
+  query GetRealms($id: Float!) @api(name: starkIndexer) {
+    getRealms {
+      ...RealmFragment
+    }
+  }
+  ${RealmFragmentFragmentDoc}
+`;
+
+/**
+ * __useGetRealmsQuery__
+ *
+ * To run a query within a React component, call `useGetRealmsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRealmsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRealmsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRealmsQuery(
+  baseOptions: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(
+    GetRealmsDocument,
+    options
+  );
+}
+export function useGetRealmsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmsQuery,
+    GetRealmsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetRealmsQuery, GetRealmsQueryVariables>(
+    GetRealmsDocument,
+    options
+  );
+}
+export type GetRealmsQueryHookResult = ReturnType<typeof useGetRealmsQuery>;
+export type GetRealmsLazyQueryHookResult = ReturnType<
+  typeof useGetRealmsLazyQuery
+>;
+export type GetRealmsQueryResult = Apollo.QueryResult<
+  GetRealmsQuery,
+  GetRealmsQueryVariables
+>;
+export const GetWalletDocument = gql`
+  query GetWallet($address: String!) @api(name: starkIndexer) {
+    getWallet(address: $address) {
+      id
+      realms {
+        ...RealmFragment
+      }
+    }
+  }
+  ${RealmFragmentFragmentDoc}
+`;
+
+/**
+ * __useGetWalletQuery__
+ *
+ * To run a query within a React component, call `useGetWalletQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetWalletQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetWalletQuery({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useGetWalletQuery(
+  baseOptions: Apollo.QueryHookOptions<GetWalletQuery, GetWalletQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetWalletQuery, GetWalletQueryVariables>(
+    GetWalletDocument,
+    options
+  );
+}
+export function useGetWalletLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetWalletQuery,
+    GetWalletQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetWalletQuery, GetWalletQueryVariables>(
+    GetWalletDocument,
+    options
+  );
+}
+export type GetWalletQueryHookResult = ReturnType<typeof useGetWalletQuery>;
+export type GetWalletLazyQueryHookResult = ReturnType<
+  typeof useGetWalletLazyQuery
+>;
+export type GetWalletQueryResult = Apollo.QueryResult<
+  GetWalletQuery,
+  GetWalletQueryVariables
 >;

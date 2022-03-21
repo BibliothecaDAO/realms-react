@@ -1,0 +1,6 @@
+ 
+query GetDesiege($id: Float!) @api(name: starkIndexer) {
+    getDesiege(id: $id) {
+        ...DesiegeFragment
+    }
+}

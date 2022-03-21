@@ -28,7 +28,7 @@ export function Realm(props: RealmProps): ReactElement {
       ) : (
         <div>
           <div className="flex justify-center">
-            <OrderIcon order={props.realm.order.toLowerCase()} />
+            <OrderIcon size="md" order={props.realm.order.toLowerCase()} />
           </div>
 
           <div

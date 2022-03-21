@@ -48,7 +48,7 @@ export const TheOrdersSideBar = () => {
           </div>
         </div>
         <div className="py-4">
-          <OrderIcon order={orderDetails[focusOrder]?.order} />
+          <OrderIcon size="md" order={orderDetails[focusOrder]?.order} />
 
           <h1 className="mt-2 mb-4 capitalize">
             Order of {orderDetails[focusOrder]?.order}

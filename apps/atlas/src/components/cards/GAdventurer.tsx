@@ -49,7 +49,7 @@ export function GAdventurer(props: GAProps): ReactElement {
       ) : (
         <div className="pt-4">
           <div className="flex justify-center">
-            <OrderIcon order={props.ga.order.toLowerCase()} />
+            <OrderIcon size="md" order={props.ga.order.toLowerCase()} />
           </div>
 
           <div
