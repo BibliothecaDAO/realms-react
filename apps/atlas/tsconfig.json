@@ -15,6 +15,7 @@
       "@/context/*": ["./context/*"],
       "@/data/*": ["./data/*"],
       "@/geodata/*": ["./geodata/*"],
+      "@/generated/*": ["./generated/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/mocks/*": ["./mocks/*"],
       "@/pages/*": ["./pages/*"],

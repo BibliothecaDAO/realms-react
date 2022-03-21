@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+import { useGetRealmQuery } from '@/generated/graphql';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
@@ -16,7 +17,11 @@ export const RealmSideBar = (props: Props) => {
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
   });
-
+  const { data: SNData } = useGetRealmQuery({
+    variables: {
+      id: 1, // value for 'id'
+    },
+  });
   return (
     <BaseSideBar open={selectedMenuType === 'realm'}>
       <div className="top-0 bottom-0 right-0 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
@@ -26,6 +31,7 @@ export const RealmSideBar = (props: Props) => {
         >
           <Menu />
         </button>
+        {SNData?.getRealm.id}
         {data && data.realm && <Realm realm={data!.realm} loading={loading} />}
       </div>
     </BaseSideBar>

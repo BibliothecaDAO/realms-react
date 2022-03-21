@@ -42,6 +42,7 @@
     "share-static-hardlink": "rimraf ./public/shared-assets && syncdir ../../static/assets ./public/shared-assets --copy",
     "check-build-size": "size-limit --highlight-less",
     "check-dist": "es-check -v",
+    "codegen": "graphql-codegen --config codegen.yaml",
     "test": "run-s test-unit test-e2e",
     "test-unit": "jest --config jest.config.js",
     "test-e2e": "playwright test",
@@ -53,6 +54,10 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "11.7.2",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
     "@next/bundle-analyzer": "12.1.0",
     "@next/env": "12.1.0",
     "@size-limit/file": "7.0.8",

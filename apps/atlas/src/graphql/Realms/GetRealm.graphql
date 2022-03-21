@@ -1,0 +1,7 @@
+ 
+query GetRealm($id: Float!) @api(name: starkIndexer) {
+    getRealm(id: $id) {
+      id
+      realmId
+    }
+}
