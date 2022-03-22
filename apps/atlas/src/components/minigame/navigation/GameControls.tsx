@@ -23,6 +23,7 @@ import ElementLabel from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import type { GameStatus } from '@/types/index';
+import { applyActionAmount } from '@/util/desiegeLogic';
 import {
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
@@ -74,6 +75,15 @@ const GameControls: React.FC<Prop> = (props) => {
     connectBrowserWallet,
     error: starknetConnectionError,
   } = useStarknet();
+
+  // Values might change by the time callback comes
+  // TODO: Remove when notify events are no longer triggered by client
+  const [appliedAction, setAppliedAction] = useState<{
+    shield: number;
+    health: number;
+    boost: string;
+    amount: string;
+  }>();
 
   useEffect(() => {
     connectBrowserWallet(); // on mount
@@ -135,21 +145,26 @@ const GameControls: React.FC<Prop> = (props) => {
 
       // Temp: Post a request to distribute this as a notification
       // TODO: Replace with StarkNet indexer / real-time events in future
-      if (status == 'ACCEPTED_ON_L1' || status == 'ACCEPTED_ON_L2') {
+      if (
+        (status == 'ACCEPTED_ON_L1' || status == 'ACCEPTED_ON_L2') &&
+        appliedAction
+      ) {
+        // Must use applied action values, not live values,
+        // as live vallues can change between tx submission and callback execution
+        const appliedEffect = applyActionAmount(
+          appliedAction.amount,
+          appliedAction.boost,
+          appliedAction.shield,
+          appliedAction.health
+        );
         axios
           .post('/api/notify', {
-            token_amount: actionAmount,
+            token_amount: appliedEffect.amountPlusBoost,
             token_offset: side == 'light' ? '1' : '2',
-            token_boost: currentBoostBips,
+            token_boost: (parseInt(appliedAction.boost) / 100).toFixed(2),
             game_idx: gameIdx,
-            city_health: (props.health as BN)
-              .div(toBN(EFFECT_BASE_FACTOR))
-              .toNumber()
-              .toFixed(2),
-            shield_health: (props.shield as BN)
-              .div(toBN(EFFECT_BASE_FACTOR))
-              .toNumber()
-              .toFixed(2),
+            city_health: appliedEffect.health,
+            shield_health: appliedEffect.shield,
           })
           .catch((e) => console.error(e)); // TODO: Handle error
       }
@@ -214,6 +229,12 @@ const GameControls: React.FC<Prop> = (props) => {
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
     });
+    setAppliedAction({
+      shield: (props.shield as BN).toNumber() / EFFECT_BASE_FACTOR,
+      health: (props.health as BN).toNumber() / EFFECT_BASE_FACTOR,
+      boost: currentBoostBips,
+      amount: actionAmount,
+    });
   };
 
   const handleShield = async (gameIndex: number, amount: number) => {
@@ -225,6 +246,12 @@ const GameControls: React.FC<Prop> = (props) => {
         tokenId.toString(),
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
+    });
+    setAppliedAction({
+      shield: (props.shield as BN).toNumber() / EFFECT_BASE_FACTOR,
+      health: (props.health as BN).toNumber() / EFFECT_BASE_FACTOR,
+      boost: currentBoostBips,
+      amount: actionAmount,
     });
   };
 
@@ -443,7 +470,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <div className="mt-4">
                 <div id="token-balance">
                   {noMoreElements ? (
-                    <p className="uppercase tracking-widest opacity-60">
+                    <p className="tracking-widest uppercase opacity-60">
                       No <ElementLabel>Elements</ElementLabel> for this game{' '}
                       <Button
                         onClick={() => {

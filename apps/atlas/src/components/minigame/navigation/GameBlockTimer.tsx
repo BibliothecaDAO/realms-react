@@ -22,7 +22,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
     Math.floor((currBlock - startToNum) / (blocksPerMinute * 60)) + 1; // to match loop index
 
   // Game "ticks" are displayed in hour intervals to fit on one screen
-  const blockTicks = [];
+  const blockTicks: any[] = [];
   for (let i = 1; i <= hoursPerGame; i++) {
     const pastBg = 'bg-cyan-400 shadow-inner';
     const currentBg = 'bg-gradient-to-r from-cyan-600 to-gray-700';
