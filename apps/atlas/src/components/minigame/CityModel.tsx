@@ -1,5 +1,5 @@
 import { OrbitControls, Cloud, Stars, Sky, Html } from '@react-three/drei';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import type BN from 'bn.js';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
@@ -11,6 +11,7 @@ import { Shield } from './three/Shield';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
+  CityVitalityDisplay,
 } from './TowerShieldVitality';
 const Tower = dynamic(() => import('@/components/minigame/three/DivineCity'), {
   ssr: false,
@@ -27,7 +28,7 @@ const origin: { position?: Vector3 } = {
   position: new Vector3(0, 0, 0),
 };
 
-function TowerDefence(props: TowerProps) {
+function CityModel(props: TowerProps) {
   const [rotate, setRotate] = useState(true);
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
@@ -35,11 +36,12 @@ function TowerDefence(props: TowerProps) {
   const h = useMemo<number>(() => {
     return props.health?.toNumber() || 0;
   }, [props.health]);
+
   return (
     <div className="absolute top-0 w-full h-screen z-1">
       <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
         <Suspense fallback={null}>
-          <ambientLight />
+          <sphereGeometry args={[10000, 32]} />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xf4e99b, 10]} />
           <group
@@ -87,6 +89,19 @@ function TowerDefence(props: TowerProps) {
                 />
               </Html>
             ) : null}
+            {props.gameStatus == 'active' ? (
+              <Html
+                position={[4.5, 1, 2]}
+                className={classNames('w-56', ShieldVitalityDisplayClassnames)}
+                occlude={[tower, shield]}
+                zIndexRange={[4, 0]}
+              >
+                <CityVitalityDisplay
+                  health={props.health}
+                  shield={props.shield}
+                />
+              </Html>
+            ) : null}
           </group>
         </Suspense>
 
@@ -112,4 +127,4 @@ function TowerDefence(props: TowerProps) {
 
 // Wrap in React.memo so the same valued props
 // don't cause a re-render
-export default React.memo(TowerDefence);
+export default React.memo(CityModel);

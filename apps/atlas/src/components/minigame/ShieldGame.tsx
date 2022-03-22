@@ -17,12 +17,12 @@ import {
   getGameContextVariables,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
-// import GameBlockTimer from './GameBlockTimer';
-import GameBlockTimer from './GameBlockTimer';
-import GameControls from './GameControls';
-import MenuBar from './MenuBar';
-import Modal from './Modal';
-import TowerDefence from './TowerDefence';
+
+import Modal from '../../shared/Modal';
+import TowerDefence from './CityModel';
+import GameBlockTimer from './navigation/GameBlockTimer';
+import GameControls from './navigation/GameControls';
+import MenuBar from './navigation/MenuBar';
 
 export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
 
@@ -164,9 +164,6 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
-      {gameContext && gs == 'active' ? (
-        <GameBlockTimer gameCtx={gameContext} />
-      ) : null}
       <Modal
         isOpen={loreModalOpen}
         toggle={() => {
@@ -194,7 +191,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-8 pt-10 text-gray-700 bg-white/70 rounded-md shadow-md"
+              className="w-full p-8 pt-10 bg-gradient-to-b  from-white/60 rounded-md shadow-inner"
             >
               {gameContext ? (
                 <GameControls
@@ -218,13 +215,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </div>
         ) : null}
       </div>
+
       <TowerDefence
         gameStatus={gs}
         health={health}
         shield={shield}
         gameIdx={gameContext?.gameIdx}
-      ></TowerDefence>
+      />
       <MenuBar toggleTab={(tab) => setView(tab)} />
+      {gameContext && gs == 'active' ? (
+        <GameBlockTimer gameCtx={gameContext} />
+      ) : null}
     </div>
   );
 };

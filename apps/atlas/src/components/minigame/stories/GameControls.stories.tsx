@@ -18,7 +18,7 @@ import {
   OrderedMockResponseDecorator,
 } from '@/mocks/starknetMockFactory';
 
-import GameControls from './GameControls';
+import GameControls from '../navigation/GameControls';
 
 export default {
   title: 'Game Controls',

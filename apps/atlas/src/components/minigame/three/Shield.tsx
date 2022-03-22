@@ -17,9 +17,9 @@ export function Shield(props: ObjectProps) {
   const [time, setTime] = useState(1.0);
   // const render = (clock: any) => {
   //   const delta = clock.getDelta();
-  //   setTime((time += delta * 5));
+  //   setTime(() => time * delta);
   // };
-  // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  // // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
   // useFrame(({ clock }) => render(clock));
 
   const KnotShaderMaterial = {

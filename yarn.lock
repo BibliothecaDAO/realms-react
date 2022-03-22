@@ -2141,17 +2141,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@choojs/findup@npm:^0.2.0":
-  version: 0.2.1
-  resolution: "@choojs/findup@npm:0.2.1"
-  dependencies:
-    commander: ^2.15.1
-  bin:
-    findup: bin/findup.js
-  checksum: 9496321caa276f2a560ebae0e7607ba009012e8eff16db68fb405561ec482606edecf1c5ce1956805d77721c2db34c4bd9e2e95a2be2eec1c5ae8bb289ed5fd2
-  languageName: node
-  linkType: hard
-
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.4
   resolution: "@cnakazawa/watch@npm:1.0.4"
@@ -4573,7 +4562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-spring/three@npm:^9.3.1, @react-spring/three@npm:~9.4.4":
+"@react-spring/three@npm:9.4.4, @react-spring/three@npm:^9.3.1, @react-spring/three@npm:~9.4.4":
   version: 9.4.4
   resolution: "@react-spring/three@npm:9.4.4"
   dependencies:
@@ -8782,6 +8771,7 @@ __metadata:
     "@next/env": 12.1.0
     "@playwright/test": 1.19.1
     "@quentin-sommer/react-useragent": 3.1.1
+    "@react-spring/three": 9.4.4
     "@react-spring/types": ^9.4.4
     "@react-spring/web": ^9.4.4
     "@react-three/drei": ^8.16.5
@@ -8814,7 +8804,6 @@ __metadata:
     "@web3-react/walletconnect-connector": ^6.2.13
     autoprefixer: 10.4.2
     axios: ^0.24.0
-    babel-plugin-glsl: ^1.0.0
     bn.js: ^5.2.0
     classnames: ^2.3.1
     cross-env: 7.0.3
@@ -8843,6 +8832,7 @@ __metadata:
     loot-rarity: ^5.0.1
     loot-sdk: ^0.1.2
     mapbox-gl: ^1.13.2
+    meshline: 2.0.4
     msw: ^0.35.0
     next: 12.1.0
     next-auth: ^4.0.6
@@ -8871,6 +8861,8 @@ __metadata:
     tailwindcss: 3.0.23
     three: ^0.137.5
     three-stdlib: 2.8.8
+    three.meshline: 1.4.0
+    threejs-meshline: 2.0.12
     ts-jest: 27.1.3
     typescript: 4.6.2
     use-sound: ^4.0.1
@@ -9065,27 +9057,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-glsl@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "babel-plugin-glsl@npm:1.0.0"
-  dependencies:
-    babel-plugin-macros: ^2.5.0
-    glsl-token-defines: ^1.0.0
-    glsl-token-depth: ^1.1.1
-    glsl-token-descope: ^1.0.2
-    glsl-token-scope: ^1.1.1
-    glsl-token-string: ^1.0.1
-    glsl-token-whitespace-trim: ^1.0.0
-    glsl-tokenizer: ^2.0.2
-    glslify-bundle: ^5.0.0
-    glslify-deps: ^1.2.5
-    murmurhash-js: ^1.0.0
-    resolve: ^1.1.5
-    shallow-copy: 0.0.1
-  checksum: 37e1c4cc5ee6954484e5feb530b4aa9f7297bc924ae467a40c574b1eb6709d6fef704f486942185b73b0e5c662ef2ad46098b4ca340f3415791e099e9e7c2458
-  languageName: node
-  linkType: hard
-
 "babel-plugin-istanbul@npm:^6.0.0, babel-plugin-istanbul@npm:^6.1.1":
   version: 6.1.1
   resolution: "babel-plugin-istanbul@npm:6.1.1"
@@ -9122,7 +9093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-macros@npm:^2.0.0, babel-plugin-macros@npm:^2.5.0, babel-plugin-macros@npm:^2.6.1, babel-plugin-macros@npm:^2.8.0":
+"babel-plugin-macros@npm:^2.0.0, babel-plugin-macros@npm:^2.6.1, babel-plugin-macros@npm:^2.8.0":
   version: 2.8.0
   resolution: "babel-plugin-macros@npm:2.8.0"
   dependencies:
@@ -10672,7 +10643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:2, commander@npm:^2.15.1, commander@npm:^2.19.0, commander@npm:^2.20.0":
+"commander@npm:2, commander@npm:^2.19.0, commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: ab8c07884e42c3a8dbc5dd9592c606176c7eb5c1ca5ff274bcf907039b2c41de3626f684ea75ccf4d361ba004bbaff1f577d5384c155f3871e456bdf27becf9e
@@ -14765,144 +14736,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glsl-inject-defines@npm:^1.0.1":
-  version: 1.0.3
-  resolution: "glsl-inject-defines@npm:1.0.3"
-  dependencies:
-    glsl-token-inject-block: ^1.0.0
-    glsl-token-string: ^1.0.1
-    glsl-tokenizer: ^2.0.2
-  checksum: 91d707cc4cdc924ec1ea13bcc332357c41754542e3c3d8d95f2331569c339a9cfab37c343e253fea10e56d5a70f930b9027b62431c5c786e34e7d8f785456836
-  languageName: node
-  linkType: hard
-
 "glsl-noise@npm:^0.0.0":
   version: 0.0.0
   resolution: "glsl-noise@npm:0.0.0"
   checksum: 07986663451963c90f8177f0a7d79a897ce27ad47841bfae6833647803ce7b8b65c8c18b8aecc576f1fc8e67ae6c8b5e5e1501b604cf3b1e9855c639e739e2c3
-  languageName: node
-  linkType: hard
-
-"glsl-resolve@npm:0.0.1":
-  version: 0.0.1
-  resolution: "glsl-resolve@npm:0.0.1"
-  dependencies:
-    resolve: ^0.6.1
-    xtend: ^2.1.2
-  checksum: 8bc83f4c56c06d771761c32042fff8fed60f4bcc320d5fc3ec86cf115eb3c0bb5bacf3ca5f80cb88133399734d02c65788845bca9eb90244e08c41e98ddb0275
-  languageName: node
-  linkType: hard
-
-"glsl-token-assignments@npm:^2.0.0":
-  version: 2.0.2
-  resolution: "glsl-token-assignments@npm:2.0.2"
-  checksum: efd6051cfd0e5dc4749cc05530e79c42b2396685345695d1232ab3904011e65f117110a2ef7e92a06bc687abf6182f4e90b6b51cc4ab20147aafcc57f724ecb5
-  languageName: node
-  linkType: hard
-
-"glsl-token-defines@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "glsl-token-defines@npm:1.0.0"
-  dependencies:
-    glsl-tokenizer: ^2.0.0
-  checksum: 79c3738e4c858c1eb400a7d288a372cf275b6aacee4eed2a89f1c4269a9849d3210bbc770123af408bf0a9d8bf909e558154a27f4c976cee287ea9a4bf9b0047
-  languageName: node
-  linkType: hard
-
-"glsl-token-depth@npm:^1.1.0, glsl-token-depth@npm:^1.1.1":
-  version: 1.1.2
-  resolution: "glsl-token-depth@npm:1.1.2"
-  checksum: 97fff701eef20c2ef4552885f060dbf05b307f59b9f1637ddd73c3d5e7d3cc5b4851123706be9f2590042566132f5175ae86a82576bdcfa1edd4625c58d6843c
-  languageName: node
-  linkType: hard
-
-"glsl-token-descope@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "glsl-token-descope@npm:1.0.2"
-  dependencies:
-    glsl-token-assignments: ^2.0.0
-    glsl-token-depth: ^1.1.0
-    glsl-token-properties: ^1.0.0
-    glsl-token-scope: ^1.1.0
-  checksum: a0d578d5e71178cd5679504a94a60e0811980f46fe6b3cb018bb165530faa75ffcb61b62a1984052223cf2455e36c08f9aa72cf3fdce419aac5d8844ec84cf5a
-  languageName: node
-  linkType: hard
-
-"glsl-token-inject-block@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "glsl-token-inject-block@npm:1.1.0"
-  checksum: a08aca0f0684ee00eb9beb44993ab59d6d6330947d282204fe114c09a34fe9b9719f035eda0ed317a5409e5d4118674955c225034bb28c5d8334bcc3f905d7dc
-  languageName: node
-  linkType: hard
-
-"glsl-token-properties@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "glsl-token-properties@npm:1.0.1"
-  checksum: 9b4d1caf02d52f6407479bcd3e780133d6952ba6ae0d85ccd4f3de9ead061a173da0820b0238a0e721ae75370b645152d468bc24eb6f1fd37b5000c500d97cd4
-  languageName: node
-  linkType: hard
-
-"glsl-token-scope@npm:^1.1.0, glsl-token-scope@npm:^1.1.1":
-  version: 1.1.2
-  resolution: "glsl-token-scope@npm:1.1.2"
-  checksum: d62812c81a399d7bdd001ce4414293e508dbd78d480b1984190c8d3243c14817c34109893a71503a50ef09de28e4b0c0124be1979292aba5df3f0207eace1b70
-  languageName: node
-  linkType: hard
-
-"glsl-token-string@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "glsl-token-string@npm:1.0.1"
-  checksum: 3260c1486b620277396ecb92b13434764eddcd59330ffb7a25d0e5fc2750fbd4330899e2acb5ab36408ea7451f3e103418ca0430b4c6a225a7e5f318b5028fda
-  languageName: node
-  linkType: hard
-
-"glsl-token-whitespace-trim@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "glsl-token-whitespace-trim@npm:1.0.0"
-  checksum: ffb0d09118a18fa807a249414762e93835d303f476feae8bbb80320ec850a5aa24fa2760245b374312310ebb0ef099da9a9190ff5b587be45566d2aee1503777
-  languageName: node
-  linkType: hard
-
-"glsl-tokenizer@npm:^2.0.0, glsl-tokenizer@npm:^2.0.2":
-  version: 2.1.5
-  resolution: "glsl-tokenizer@npm:2.1.5"
-  dependencies:
-    through2: ^0.6.3
-  checksum: daf70e91c66a3143fe0b22be18a0f8cc965d7b81f73a58b14d55d08593bdcc3f996996549bda78b4cc822d7fe8c216aaeaab71f2695d802fb79fc9e89fb507d3
-  languageName: node
-  linkType: hard
-
-"glslify-bundle@npm:^5.0.0":
-  version: 5.1.1
-  resolution: "glslify-bundle@npm:5.1.1"
-  dependencies:
-    glsl-inject-defines: ^1.0.1
-    glsl-token-defines: ^1.0.0
-    glsl-token-depth: ^1.1.1
-    glsl-token-descope: ^1.0.2
-    glsl-token-scope: ^1.1.1
-    glsl-token-string: ^1.0.1
-    glsl-token-whitespace-trim: ^1.0.0
-    glsl-tokenizer: ^2.0.2
-    murmurhash-js: ^1.0.0
-    shallow-copy: 0.0.1
-  checksum: e3a5e438dd0ffbdaa72adad23b4eae80258f3f903b3fde3d7022d2f662df1bbb76ce479c2c030ed4aebeb899965e7e3bb7db83748963e0643bbbded3bacdebff
-  languageName: node
-  linkType: hard
-
-"glslify-deps@npm:^1.2.5":
-  version: 1.3.2
-  resolution: "glslify-deps@npm:1.3.2"
-  dependencies:
-    "@choojs/findup": ^0.2.0
-    events: ^3.2.0
-    glsl-resolve: 0.0.1
-    glsl-tokenizer: ^2.0.0
-    graceful-fs: ^4.1.2
-    inherits: ^2.0.1
-    map-limit: 0.0.1
-    resolve: ^1.0.0
-  checksum: 3eb50a26171f66d02582cfa90a9ac7c964ff970d44cd48025af2015fe465be1632cfc7fcec05f5aa4210571ec936c4a26de0e100d9c4d0c2ab655362290a616c
   languageName: node
   linkType: hard
 
@@ -18313,15 +18150,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"map-limit@npm:0.0.1":
-  version: 0.0.1
-  resolution: "map-limit@npm:0.0.1"
-  dependencies:
-    once: ~1.3.0
-  checksum: e7ad9a66037d4168f2e3dbd20654cb0503126911e0e43c8fe95ae1a3ea54b72e84f94f8577a13598708a29a096cc6ecf136622ea6a5d393c227f84f6f1445b83
-  languageName: node
-  linkType: hard
-
 "map-obj@npm:^1.0.0":
   version: 1.0.1
   resolution: "map-obj@npm:1.0.1"
@@ -18661,6 +18489,15 @@ __metadata:
     rlp: ^2.0.0
     semaphore: ">=1.0.1"
   checksum: f6066a16e08190b9e8d3aa28d8e861a3e884ee0be8109c4f5e879965fdfb8181cfc04bae3aaf97c7fb6d07446d94b4f3e1cce502dde4a5699a03acf6df518b12
+  languageName: node
+  linkType: hard
+
+"meshline@npm:2.0.4":
+  version: 2.0.4
+  resolution: "meshline@npm:2.0.4"
+  peerDependencies:
+    three: ">=0.137"
+  checksum: c861f06336ddf2ac038fcb4ad6714bb46763f050451bdfd0b4bbb3b30c528029b2c990992e34f0574cae76a4402b538a27c93c7acc0446062500e7edba2eb180
   languageName: node
   linkType: hard
 
@@ -19920,15 +19757,6 @@ __metadata:
   dependencies:
     wrappy: 1
   checksum: cd0a88501333edd640d95f0d2700fbde6bff20b3d4d9bdc521bdd31af0656b5706570d6c6afe532045a20bb8dc0849f8332d6f2a416e0ba6d3d3b98806c7db68
-  languageName: node
-  linkType: hard
-
-"once@npm:~1.3.0":
-  version: 1.3.3
-  resolution: "once@npm:1.3.3"
-  dependencies:
-    wrappy: 1
-  checksum: 8e832de08b1d73b470e01690c211cb4fcefccab1fd1bd19e706d572d74d3e9b7e38a8bfcdabdd364f9f868757d9e8e5812a59817dc473eaf698ff3bfae2219f2
   languageName: node
   linkType: hard
 
@@ -22370,18 +22198,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:>=1.0.33-1 <1.1.0-0, readable-stream@npm:~1.0.15":
-  version: 1.0.34
-  resolution: "readable-stream@npm:1.0.34"
-  dependencies:
-    core-util-is: ~1.0.0
-    inherits: ~2.0.1
-    isarray: 0.0.1
-    string_decoder: ~0.10.x
-  checksum: 85042c537e4f067daa1448a7e257a201070bfec3dd2706abdbd8ebc7f3418eb4d3ed4b8e5af63e2544d69f88ab09c28d5da3c0b77dc76185fddd189a59863b60
-  languageName: node
-  linkType: hard
-
 "readable-stream@npm:^1.0.33":
   version: 1.1.14
   resolution: "readable-stream@npm:1.1.14"
@@ -22391,6 +22207,18 @@ __metadata:
     isarray: 0.0.1
     string_decoder: ~0.10.x
   checksum: 17dfeae3e909945a4a1abc5613ea92d03269ef54c49288599507fc98ff4615988a1c39a999dcf9aacba70233d9b7040bc11a5f2bfc947e262dedcc0a8b32b5a0
+  languageName: node
+  linkType: hard
+
+"readable-stream@npm:~1.0.15":
+  version: 1.0.34
+  resolution: "readable-stream@npm:1.0.34"
+  dependencies:
+    core-util-is: ~1.0.0
+    inherits: ~2.0.1
+    isarray: 0.0.1
+    string_decoder: ~0.10.x
+  checksum: 85042c537e4f067daa1448a7e257a201070bfec3dd2706abdbd8ebc7f3418eb4d3ed4b8e5af63e2544d69f88ab09c28d5da3c0b77dc76185fddd189a59863b60
   languageName: node
   linkType: hard
 
@@ -22871,14 +22699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^0.6.1":
-  version: 0.6.3
-  resolution: "resolve@npm:0.6.3"
-  checksum: c3b5d34ba79635ffe380eb0e428e0b49259734ad2c86945c6b3238155b0753d8bcf858c6b99966b3fdb536062f6e204675e4542269f065e34210bb3a6f602f9d
-  languageName: node
-  linkType: hard
-
-"resolve@npm:^1.0.0, resolve@npm:^1.1.5, resolve@npm:^1.10.0, resolve@npm:^1.12.0, resolve@npm:^1.13.1, resolve@npm:^1.14.2, resolve@npm:^1.17.0, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2":
+"resolve@npm:^1.10.0, resolve@npm:^1.12.0, resolve@npm:^1.13.1, resolve@npm:^1.14.2, resolve@npm:^1.17.0, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2":
   version: 1.22.0
   resolution: "resolve@npm:1.22.0"
   dependencies:
@@ -22910,14 +22731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^0.6.1#~builtin<compat/resolve>":
-  version: 0.6.3
-  resolution: "resolve@patch:resolve@npm%3A0.6.3#~builtin<compat/resolve>::version=0.6.3&hash=07638b"
-  checksum: fbdc248b89f655da8ff1509c000027702455d36e99943307d6e939bbef8b6f2bf67f82aa82ceb968f121febea128dd9b3e544fc6497c105204b1633bee1efad9
-  languageName: node
-  linkType: hard
-
-"resolve@patch:resolve@^1.0.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.5#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>":
   version: 1.22.0
   resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"
   dependencies:
@@ -23618,13 +23432,6 @@ __metadata:
   dependencies:
     kind-of: ^6.0.2
   checksum: 39b3dd9630a774aba288a680e7d2901f5c0eae7b8387fc5c8ea559918b29b3da144b7bdb990d7ccd9e11be05508ac9e459ce51d01fd65e583282f6ffafcba2e7
-  languageName: node
-  linkType: hard
-
-"shallow-copy@npm:0.0.1":
-  version: 0.0.1
-  resolution: "shallow-copy@npm:0.0.1"
-  checksum: 2d249a5a57a160b439d84fbf9ed7c0a107a3d656d1bda0b73edf9476c6e6ea9d2afa79829bf33fce6677fae35b15c14e5c28f9902dc4d07a302637a225d00634
   languageName: node
   linkType: hard
 
@@ -25288,10 +25095,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"three.meshline@npm:1.4.0":
+  version: 1.4.0
+  resolution: "three.meshline@npm:1.4.0"
+  checksum: 9cf09a4a5c6eb7ca9df493b5337ce21fabe0fb62875535ed7bb51c4aab0560c2153c1a503479d3d2a58288c143d782fbdc1b420ed748d8c784518efa50716d15
+  languageName: node
+  linkType: hard
+
 "three@npm:^0.137.5":
   version: 0.137.5
   resolution: "three@npm:0.137.5"
   checksum: e9fa478f54b50dae2ea745fd97fdec46cea9770292053a80c937ce9549670f4a3dfe238943bd42e535e2d57a10dacb531a51ae12aef42347303270f7f66da8c8
+  languageName: node
+  linkType: hard
+
+"threejs-meshline@npm:2.0.12":
+  version: 2.0.12
+  resolution: "threejs-meshline@npm:2.0.12"
+  checksum: d53b6b9c09cc75a5db24a492a915be5a9fa6cf3bef62c79603bd74a1e6b9477022184ed4e57bd2004b09ffce806e81af1a315b29fdd3aa0fdee414c2d5bad1a1
   languageName: node
   linkType: hard
 
@@ -25306,16 +25127,6 @@ __metadata:
   version: 3.0.1
   resolution: "throttle-debounce@npm:3.0.1"
   checksum: e34ef638e8df3a9154249101b68afcbf2652a139c803415ef8a2f6a8bc577bcd4d79e4bb914ad3cd206523ac78b9fb7e80885bfa049f64fbb1927f99d98b5736
-  languageName: node
-  linkType: hard
-
-"through2@npm:^0.6.3":
-  version: 0.6.5
-  resolution: "through2@npm:0.6.5"
-  dependencies:
-    readable-stream: ">=1.0.33-1 <1.1.0-0"
-    xtend: ">=4.0.0 <4.1.0-0"
-  checksum: dfea228e3134a33219a588448847250897a9994a687807dab52f850fac8b4eb1dc18e3b2c1d3d60dd0d78eb492d2032fdf814ac6576ba5b8d5ba0dade29a3544
   languageName: node
   linkType: hard
 
@@ -27214,17 +27025,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xtend@npm:>=4.0.0 <4.1.0-0, xtend@npm:^4.0.0, xtend@npm:^4.0.1, xtend@npm:^4.0.2, xtend@npm:~4.0.0, xtend@npm:~4.0.1":
+"xtend@npm:^4.0.0, xtend@npm:^4.0.1, xtend@npm:^4.0.2, xtend@npm:~4.0.0, xtend@npm:~4.0.1":
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: ac5dfa738b21f6e7f0dd6e65e1b3155036d68104e67e5d5d1bde74892e327d7e5636a076f625599dc394330a731861e87343ff184b0047fef1360a7ec0a5a36a
-  languageName: node
-  linkType: hard
-
-"xtend@npm:^2.1.2":
-  version: 2.2.0
-  resolution: "xtend@npm:2.2.0"
-  checksum: 9fcd1ddabefdb3c68a698b08177525ad14a6df3423b13bad9a53900d19374e476a43c219b0756d39675776b2326a35fe477c547cfb8a05ae9fea4ba2235bebe2
   languageName: node
   linkType: hard
 
