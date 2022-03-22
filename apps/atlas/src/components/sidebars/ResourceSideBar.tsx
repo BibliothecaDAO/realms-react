@@ -1,4 +1,4 @@
-import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
+/* import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
 import Right from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import type { MouseEventHandler } from 'react';
@@ -91,3 +91,5 @@ export const ResourceSideBar = (props: Props) => {
     </BaseSideBar>
   );
 };
+*/
+export {};

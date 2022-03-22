@@ -1,10 +1,10 @@
+import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityDescription, rarityColor } from 'loot-rarity';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
-import { OrderIcon } from '@/shared/OrderIcon';
 import { shortenAddress } from '@/util/formatters';
 import type { GAProps } from '../../types';
 

@@ -86,7 +86,7 @@ export const MenuSideBar = () => {
       <IconButton
         className={buttonClasses}
         aria-label="Bank"
-        onClick={() => toggleMenuType('orders')}
+        onClick={() => togglePanelType('bank')}
         icon={<Library className={iconClasses} />}
         size="lg"
       />

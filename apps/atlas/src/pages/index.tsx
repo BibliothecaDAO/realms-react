@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { EmpireSideBar } from '@/components/map/EmpireSideBar';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
@@ -221,7 +220,6 @@ function App() {
             <ArtBackground />
             <RealmsPanel />
             <RealmSideBar id={selectedId} />
-            <EmpireSideBar />
             <CryptsSideBar id={selectedId} />
             <LootSideBar id={selectedId} />
             <GASideBar id={selectedId} />

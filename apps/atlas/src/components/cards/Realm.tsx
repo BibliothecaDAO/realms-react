@@ -1,8 +1,8 @@
+import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
-import { OrderIcon } from '@/shared/OrderIcon';
 import { shortenAddress } from '@/util/formatters';
 import { resources } from '@/util/resources';
 import { Realm } from '../../types';

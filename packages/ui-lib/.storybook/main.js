@@ -62,6 +62,7 @@ module.exports = {
     };
 
     config.resolve.alias['@/icons'] = path.resolve(__dirname, '../src/icons');
+    config.resolve.alias['@/icons/orders'] = path.resolve(__dirname, '../src/icons/orders');
 
     const rules = config.module.rules;
 
@@ -78,7 +79,16 @@ module.exports = {
         {
           loader: '@svgr/webpack',
           options: {
-            icon: true,
+            svgo: true,
+            // @link https://github.com/svg/svgo#configuration
+            svgoConfig: {
+              multipass: false,
+              datauri: 'base64',
+              js2svg: {
+                indent: 2,
+                pretty: false,
+              },
+            },
           },
         },
       ],

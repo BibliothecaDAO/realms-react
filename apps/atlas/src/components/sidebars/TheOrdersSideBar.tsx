@@ -1,9 +1,9 @@
+/* import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import Left from '@bibliotheca-dao/ui-lib/icons/chevron-left.svg';
 import Right from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
-import { OrderIcon } from '@/shared/OrderIcon';
 import { orderDetails } from '@/util/theOrders';
 import { BaseSideBar } from './BaseSideBar';
 
@@ -111,3 +111,5 @@ export const TheOrdersSideBar = () => {
     </BaseSideBar>
   );
 };
+*/
+export {};
