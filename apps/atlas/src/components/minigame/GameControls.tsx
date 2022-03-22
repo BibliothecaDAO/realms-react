@@ -161,7 +161,7 @@ const GameControls: React.FC<Prop> = (props) => {
           .post('/api/notify', {
             token_amount: appliedEffect.amountPlusBoost,
             token_offset: side == 'light' ? '1' : '2',
-            token_boost: appliedAction.boost,
+            token_boost: (parseInt(appliedAction.boost) / 100).toFixed(2),
             game_idx: gameIdx,
             city_health: appliedEffect.health,
             shield_health: appliedEffect.shield,
