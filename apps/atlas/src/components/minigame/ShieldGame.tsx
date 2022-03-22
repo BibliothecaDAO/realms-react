@@ -191,7 +191,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-8 pt-10 bg-gradient-to-b  from-white/60 rounded-md shadow-inner"
+              className="w-full p-8 pt-10 bg-gradient-to-b  from-white/80 rounded-md shadow-inner"
             >
               {gameContext ? (
                 <GameControls
@@ -222,7 +222,17 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
       />
-      <MenuBar toggleTab={(tab) => setView(tab)} />
+      <MenuBar
+        towerDefenceContractAddress={props.towerDefenceContractAddr}
+        towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
+        health={health}
+        shield={shield}
+        gameStatus={gs}
+        gameIdx={gameContext?.gameIdx}
+        initialBoostBips={boost}
+        setupModalInitialIsOpen={view == 'setup'}
+        toggleTab={(tab) => setView(tab)}
+      />
       {gameContext && gs == 'active' ? (
         <GameBlockTimer gameCtx={gameContext} />
       ) : null}

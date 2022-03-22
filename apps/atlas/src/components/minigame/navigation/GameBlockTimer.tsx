@@ -24,9 +24,9 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
   // Game "ticks" are displayed in hour intervals to fit on one screen
   const blockTicks: any[] = [];
   for (let i = 1; i <= hoursPerGame; i++) {
-    const pastBg = 'bg-cyan-400 shadow-inner';
-    const currentBg = 'bg-gradient-to-r from-cyan-600 to-gray-700';
-    const futureBg = 'bg-gray-500';
+    const pastBg = 'bg-blue-600';
+    const currentBg = 'bg-gradient-to-r from-blue-600 to-red-500';
+    const futureBg = 'bg-white text-blue-400';
 
     const isCurrentHour = i == currentHour;
 
@@ -34,7 +34,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
       <span
         key={i}
         className={classNames(
-          'flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline rounded-lg text-white font-semibold',
+          'flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline  text-white font-semibold ',
           isCurrentHour ? currentBg : i < currentHour ? pastBg : futureBg,
           isCurrentHour ? 'text-gray-100' : 'text-transparent'
         )}
@@ -52,15 +52,15 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="fixed z-20 gap-1 p-2 bg-black shadow-inner bottom-0 w-full h-auto py-1 font-semibold">
-        <div className="flex gap-1 mt-1">{blockTicks}</div>
+      <div className="fixed z-20 py-4 px-8  bottom-0 w-full h-auto font-semibold">
+        <div className="flex mt-1">{blockTicks}</div>
         <div className="flex justify-between">
           <div>
             <p>Dark Portal opened L2 block {startToNum}</p>
           </div>
           <div>
-            <div className="inline-block w-2 h-2 bg-green-700 rounded-full animate-pulse"></div>{' '}
-            {block.data?.block_number}
+            <div className="inline-block w-2 h-2 bg-green-700 rounded-full animate-pulse "></div>{' '}
+            Current block: {block.data?.block_number}
           </div>
           <div className="text-right">
             <p>Dark Portal closes L2 block {endBlock}</p>

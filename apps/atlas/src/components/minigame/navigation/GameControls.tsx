@@ -403,17 +403,16 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : null}
 
       {(gameStatus == 'expired' || gameStatus == 'completed') && account ? (
-        <div>
+        <div className="my-4">
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && !loadingTokenBalance ? (
-            <button
+            <Button
               onClick={() => {
                 setMintModalOpen(true);
               }}
-              className={primaryBtnClass}
             >
               <ElementLabel>Choose your Elements</ElementLabel>
-            </button>
+            </Button>
           ) : null}
           {loadingTokenBalance ? (
             <LoadingSkeleton className="w-full h-10 mt-4" />
@@ -437,7 +436,7 @@ const GameControls: React.FC<Prop> = (props) => {
           {/* <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
           </p> */}
-          {gameStats.loading ? (
+          {/* {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
             <div className="mt-8">
@@ -457,7 +456,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 </p>
               </div>
             </div>
-          )}
+          )} */}
           <GamePreparation />
         </div>
       ) : null}
@@ -506,7 +505,7 @@ const GameControls: React.FC<Prop> = (props) => {
                   ) : null}
                 </div>
 
-                {gameStats.loading ? (
+                {/* {gameStats.loading ? (
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
                   <div id="game-stats">
@@ -533,7 +532,7 @@ const GameControls: React.FC<Prop> = (props) => {
                       ) : undefined}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             )}
           </div>

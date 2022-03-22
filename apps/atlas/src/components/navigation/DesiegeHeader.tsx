@@ -11,7 +11,7 @@ export function DesiegeHeader() {
   const starknet = useStarknet();
   return (
     <div>
-      <div className="absolute z-20 hidden top-20 md:flex w-full">
+      <div className="absolute z-20 hidden top-6 md:flex w-full">
         <div className="ml-auto px-8">
           <ul className="flex px-4 py-4 mr-auto space-x-4 text-xl rounded backdrop-blur-md  text-black">
             <li className="">
