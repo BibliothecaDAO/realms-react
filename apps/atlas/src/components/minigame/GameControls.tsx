@@ -125,6 +125,7 @@ const GameControls: React.FC<Prop> = (props) => {
   const boostEffect = useStarknetCall({
     contract: towerDefenceContract,
     method: 'get_current_boost',
+    args: [],
   });
 
   const currentBoostBips = boostEffect.data
