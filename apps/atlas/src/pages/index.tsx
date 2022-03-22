@@ -226,6 +226,7 @@ function App() {
             <LootSideBar id={selectedId} />
             <GASideBar id={selectedId} />
             <FlyTo />
+            <ArtBackground />
             <DeckGL
               getCursor={({ isHovering }) => {
                 return isHovering ? 'pointer' : 'grabbing';

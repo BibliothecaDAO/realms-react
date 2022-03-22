@@ -1,6 +1,8 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import { useUIContext } from '@/hooks/useUIContext';
 import { OrderIcon } from '@/shared/OrderIcon';
 import { ResourceIcon } from '@/shared/ResourceIcon';
+
 export function RealmOverview() {
   const testRealm = {
     name: 'Smutmum',
@@ -9,6 +11,14 @@ export function RealmOverview() {
     resources: ['Wood', 'DragonHide', 'Coal', 'Ruby', 'Copper'],
     statistics: ['Happiness', 'Culture', 'Food', 'Population'],
     military: ['Offence', 'Defence', 'Last Attacked'],
+  };
+  const { toggleMenuType, selectedMenuType, setSelectedId } = useUIContext();
+
+  const openRealmDetails = () => {
+    setSelectedId(testRealm.id.toString());
+    if (selectedMenuType !== 'realm') {
+      toggleMenuType('realm');
+    }
   };
   return (
     <div>
@@ -29,14 +39,14 @@ export function RealmOverview() {
           </Button>
         </div>
       </div>
-      <div className="flex w-full h-auto shadow-md justify-evenly border border-gray-500 rounded border-double">
-        <div className="w-full p-8 text-gray-800 bg-white/70 flex   rounded-l">
+      <div className="flex w-full h-auto max-w-full overflow-x-scroll border border-gray-500 border-double rounded shadow-md justify-evenly">
+        <div className="flex w-full p-8 text-gray-800 rounded-l bg-white/70">
           <OrderIcon
             className="self-center"
             size={'md'}
             order={testRealm.order}
           />
-          <div className="pl-6 self-center">
+          <div className="self-center pl-6">
             <h5 className="text-gray-400">{testRealm.id}</h5>
             <h2 className="mb-3">{testRealm.name}</h2>
           </div>
@@ -44,10 +54,10 @@ export function RealmOverview() {
         <div className="w-full p-6 bg-black/70">
           {testRealm.resources.map((a, index) => {
             return (
-              <div className="my-4 flex font-bold " key={index}>
+              <div className="flex my-4 font-bold " key={index}>
                 <ResourceIcon size="sm" resource={a} />{' '}
                 <span className="ml-4 uppercase tracking-veryWide">{a}</span>
-                <span className="uppercase tracking-veryWide self-end ml-auto px-4">
+                <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
                   100
                 </span>
               </div>
@@ -58,9 +68,9 @@ export function RealmOverview() {
           {' '}
           {testRealm.statistics.map((a, index) => {
             return (
-              <div className="my-4 flex font-bold " key={index}>
+              <div className="flex my-4 font-bold " key={index}>
                 <span className="ml-4 uppercase tracking-veryWide">{a}</span>
-                <span className="uppercase tracking-veryWide self-end ml-auto px-4">
+                <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
                   100
                 </span>
               </div>
@@ -71,21 +81,25 @@ export function RealmOverview() {
           {' '}
           {testRealm.military.map((a, index) => {
             return (
-              <div className="my-4 flex font-bold " key={index}>
+              <div className="flex my-4 font-bold " key={index}>
                 <span className="uppercase tracking-veryWide">{a}</span>
-                <span className="uppercase tracking-veryWide self-end ml-auto px-4">
+                <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
                   100
                 </span>
               </div>
             );
           })}
         </div>
-        <div className="w-full p-8 bg-gray-600/70 flex flex-col justify-center space-y-3">
+        <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
           {' '}
-          <Button variant="default" className="uppercase w-full">
+          <Button variant="default" className="w-full uppercase">
             fly to
           </Button>
-          <Button variant="default" className="uppercase w-full">
+          <Button
+            onClick={() => openRealmDetails()}
+            variant="default"
+            className="w-full uppercase"
+          >
             details
           </Button>
         </div>

@@ -15,9 +15,9 @@ import realms from '../geodata/realms.json';
 
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type MenuType = 'empire' | 'resources' | 'orders' | AssetType;
-
 export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
+
+export type MenuType = 'test' | PanelType;
 
 export type AssetFilter = {
   value: AssetType;
@@ -206,9 +206,10 @@ function useUI(): UI {
 
     if (selectedPanel === panelType) {
       setPanelType(undefined);
+      setMenuType(undefined);
     } else {
-      console.log('toggle panel');
       setPanelType(panelType);
+      setMenuType(panelType);
     }
   };
   const toggleArtBackground = () => {

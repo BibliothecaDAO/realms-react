@@ -37,7 +37,9 @@ export const MenuSideBar = () => {
         <IconButton
           className={buttonClasses}
           aria-label="Realms"
-          onClick={() => togglePanelType('realm')}
+          onClick={() => {
+            togglePanelType('realm');
+          }}
           icon={<Castle className={iconClasses} />}
           size="lg"
         />

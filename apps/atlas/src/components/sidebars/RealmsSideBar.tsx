@@ -17,12 +17,7 @@ export const RealmSideBar = (props: Props) => {
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
   });
-  const { data: SNData } = useGetRealmQuery({
-    variables: {
-      id: 1, // value for 'id'
-    },
-  });
-  const { data: DesiegeData } = useGetDesiegeQuery({
+  const { data: IndexerData } = useGetRealmQuery({
     variables: {
       id: 1, // value for 'id'
     },
@@ -37,8 +32,6 @@ export const RealmSideBar = (props: Props) => {
         >
           <Menu />
         </button>
-        {SNData?.getRealm.id}
-        {DesiegeData?.getDesiege.gameId}
         {data && data.realm && <Realm realm={data!.realm} loading={loading} />}
       </div>
     </BaseSideBar>
