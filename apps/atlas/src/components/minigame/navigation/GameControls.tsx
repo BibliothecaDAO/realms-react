@@ -30,13 +30,13 @@ import {
   getIsApprovedForAll,
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
-import Bridge from '../bridge/Bridge';
-import { GamePreparation } from './GamePreparation';
-import BridgeModal from './Modal';
+import BridgeModal from '../../../shared/Modal';
+import Bridge from '../../bridge/Bridge';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
-} from './TowerShieldVitality';
+} from '../TowerShieldVitality';
+import { GamePreparation } from './GamePreparation';
 
 type Prop = {
   gameIdx?: number;
@@ -257,7 +257,7 @@ const GameControls: React.FC<Prop> = (props) => {
   };
 
   const primaryBtnClass =
-    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md  hover:bg-white/100 font-body tracking-widest';
+    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md  hover:bg-white/100 font-body tracking-widest duration-150';
 
   const ConnectStarknetButton = () => (
     <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
@@ -381,7 +381,9 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       ) : null}
       <div>
-        <p className="text-xl tracking-widest uppercase">Season 1</p>
+        <p className="text-xl uppercase tracking-widest font-semibold">
+          Season 1
+        </p>
         <h1>
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
@@ -402,23 +404,21 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : null}
 
       {(gameStatus == 'expired' || gameStatus == 'completed') && account ? (
-        <div>
+        <div className="my-4">
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && !loadingTokenBalance ? (
-            <button
+            <Button
               onClick={() => {
                 setMintModalOpen(true);
               }}
-              className={primaryBtnClass}
             >
               <ElementLabel>Choose your Elements</ElementLabel>
-            </button>
+            </Button>
           ) : null}
           {loadingTokenBalance ? (
             <LoadingSkeleton className="w-full h-10 mt-4" />
           ) : (
-            <p className="mt-4 text-3xl">
-              Your balance:
+            <p className="mt-4 text-3xl font-display">
               {side == 'light' && tokenBalances ? (
                 <>
                   <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
@@ -434,27 +434,30 @@ const GameControls: React.FC<Prop> = (props) => {
             </p>
           )}
 
-          <p className="my-4 text-2xl animate-pulse">
+          {/* <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
-          </p>
-          {gameStats.loading ? (
+          </p> */}
+          {/* {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
-            <div className="my-4">
-              <h4 className="font-semibold tracking-widest text-center">
+            <div className="mt-8">
+              <h4 className="text-center font-semibold tracking-widest text-white">
                 Total elements minted for the next game
               </h4>
-              <div className="flex justify-between px-8 py-3 text-3xl tracking-widest rounded-md shadow-sm bg-white/90">
+              <div className="text-3xl bg-white/40 flex justify-between px-8 rounded-md py-3 shadow-inner font-display">
                 <p>
-                  <ElementLabel side="light">LIGHT</ElementLabel>{' '}
-                  {gameStats.light}
+                  <ElementLabel side="light">
+                    LIGHT: {gameStats.light}
+                  </ElementLabel>{' '}
                 </p>
                 <p>
-                  <ElementLabel side="dark">DARK</ElementLabel> {gameStats.dark}
+                  <ElementLabel side="dark">
+                    DARK: {gameStats.dark}
+                  </ElementLabel>
                 </p>
               </div>
             </div>
-          )}
+          )} */}
           <GamePreparation />
         </div>
       ) : null}
@@ -469,14 +472,14 @@ const GameControls: React.FC<Prop> = (props) => {
                   {noMoreElements ? (
                     <p className="tracking-widest uppercase opacity-60">
                       No <ElementLabel>Elements</ElementLabel> for this game{' '}
-                      <button
+                      <Button
                         onClick={() => {
                           setMintModalOpen(true);
                         }}
                         className={primaryBtnClass}
                       >
                         <ElementLabel>Prepare for the next Game</ElementLabel>
-                      </button>
+                      </Button>
                     </p>
                   ) : null}
                   {side == 'light' ? (
@@ -502,7 +505,8 @@ const GameControls: React.FC<Prop> = (props) => {
                     </>
                   ) : null}
                 </div>
-                {gameStats.loading ? (
+
+                {/* {gameStats.loading ? (
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
                   <div id="game-stats">
@@ -529,21 +533,21 @@ const GameControls: React.FC<Prop> = (props) => {
                       ) : undefined}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             )}
           </div>
 
           <div
             id="action-controls"
-            className="flex w-full gap-4 text-gray-100 row"
-          ></div>
-          <div className="flex flex-row justify-center my-4">
+            className="flex flex-row justify-center my-8"
+          >
             <input
               id="action-amount"
               type="number"
               placeholder="Amount"
               min={0}
+              max={6000}
               value={actionAmount}
               onChange={(e) => {
                 if (parseInt(e.target.value)) {
@@ -552,11 +556,11 @@ const GameControls: React.FC<Prop> = (props) => {
                   setActionAmount('');
                 }
               }}
-              className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
-            />{' '}
+              className="w-40 px-6 py-4 text-4xl bg-white border-2 rounded-md shadow-inner"
+            />
             <div id="action-boost" className="ml-4">
               {currentBoostBips ? (
-                <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
+                <button className="p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900 h-full">
                   <LightningBoltIcon className="inline-block w-4" />{' '}
                   {`${parseInt(currentBoostBips) / 100}%`}
                 </button>
@@ -573,7 +577,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 noMoreElements ||
                 gameStats.loading
               }
-              className={classNames(primaryBtnClass)}
+              active={actionIsLoading}
               onClick={() => {
                 if (gameIdx) {
                   if (action == 'shield') {
@@ -589,6 +593,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 : `Cast ${action == 'shield' ? 'Shield' : 'Dark Attack'} Spell`}
             </Button>
           ) : null}
+
           {(shieldAction.data || attackAction.data) && actionIsLoading ? (
             <p className="mt-2">
               <a
@@ -613,6 +618,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </button>
         </>
       ) : null}
+
       {is1155TokenApproved == '0' ? (
         <>
           <Button

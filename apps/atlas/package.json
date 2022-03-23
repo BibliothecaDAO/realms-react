@@ -135,6 +135,7 @@
     "@loaders.gl/core": "^3.1.5",
     "@playwright/test": "1.19.1",
     "@quentin-sommer/react-useragent": "3.1.1",
+    "@react-spring/three": "9.4.4",
     "@react-spring/types": "^9.4.4",
     "@react-spring/web": "^9.4.4",
     "@react-three/drei": "^8.16.5",
@@ -146,7 +147,6 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.13",
     "axios": "^0.24.0",
-    "babel-plugin-glsl": "^1.0.0",
     "bn.js": "^5.2.0",
     "classnames": "^2.3.1",
     "deck.gl": "^8.7.0",
@@ -157,6 +157,7 @@
     "loot-rarity": "^5.0.1",
     "loot-sdk": "^0.1.2",
     "mapbox-gl": "^1.13.2",
+    "meshline": "2.0.4",
     "msw": "^0.35.0",
     "next": "12.1.0",
     "next-auth": "^4.0.6",
@@ -172,6 +173,8 @@
     "starknet": "^3.5.1",
     "three": "^0.137.5",
     "three-stdlib": "2.8.8",
+    "three.meshline": "1.4.0",
+    "threejs-meshline": "2.0.12",
     "use-sound": "^4.0.1",
     "web3modal": "^1.9.5"
   }

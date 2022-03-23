@@ -17,12 +17,12 @@ import {
   getGameContextVariables,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
-// import GameBlockTimer from './GameBlockTimer';
-import GameBlockTimer from './GameBlockTimer';
-import GameControls from './GameControls';
-import MenuBar from './MenuBar';
-import Modal from './Modal';
-import TowerDefence from './TowerDefence';
+
+import Modal from '../../shared/Modal';
+import TowerDefence from './CityModel';
+import GameBlockTimer from './navigation/GameBlockTimer';
+import GameControls from './navigation/GameControls';
+import MenuBar from './navigation/MenuBar';
 
 export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
 
@@ -164,9 +164,6 @@ const ShieldGame: React.FC<Prop> = (props) => {
 
   return (
     <div className="relative">
-      {gameContext && gs == 'active' ? (
-        <GameBlockTimer gameCtx={gameContext} />
-      ) : null}
       <Modal
         isOpen={loreModalOpen}
         toggle={() => {
@@ -179,7 +176,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
-        <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
+        {/* <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
           <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
@@ -188,13 +185,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
               <LoadingSkeleton className="inline-block w-8 h-8" />
             )}
           </span>
-        </h3>
+        </h3> */}
 
         {view == 'game-controls' || view == 'setup' ? (
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-6 py-10 text-gray-700 bg-white/70 rounded-md shadow-md"
+              className="w-full p-8 pt-10 bg-gradient-to-b  from-white/80 rounded-md shadow-inner"
             >
               {gameContext ? (
                 <GameControls
@@ -218,13 +215,27 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </div>
         ) : null}
       </div>
+
       <TowerDefence
         gameStatus={gs}
         health={health}
         shield={shield}
         gameIdx={gameContext?.gameIdx}
-      ></TowerDefence>
-      <MenuBar toggleTab={(tab) => setView(tab)} />
+      />
+      <MenuBar
+        towerDefenceContractAddress={props.towerDefenceContractAddr}
+        towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
+        health={health}
+        shield={shield}
+        gameStatus={gs}
+        gameIdx={gameContext?.gameIdx}
+        initialBoostBips={boost}
+        setupModalInitialIsOpen={view == 'setup'}
+        toggleTab={(tab) => setView(tab)}
+      />
+      {gameContext && gs == 'active' ? (
+        <GameBlockTimer gameCtx={gameContext} />
+      ) : null}
     </div>
   );
 };
