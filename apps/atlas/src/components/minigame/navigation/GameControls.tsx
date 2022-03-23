@@ -304,11 +304,9 @@ const GameControls: React.FC<Prop> = (props) => {
         <Bridge
           onComplete={() => {
             setMintModalOpen(false);
-            // TODO: The balance isn't updated right away for some reason
-            // Make this more robust or implement useStarknetCall in useSiegeBalance hook
             setTimeout(() => {
-              fetchTokenBalances(gameIdx as number);
-            }, 3000);
+              fetchTokenBalances((gameIdx as number) + 1);
+            }, 5000);
           }}
           onClose={() => setMintModalOpen(false)}
           towerDefenceStorageContractAddress={
@@ -381,7 +379,7 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       ) : null}
       <div>
-        <p className="text-xl uppercase tracking-widest font-semibold">
+        <p className="text-xl font-semibold tracking-widest uppercase">
           Season 1
         </p>
         <h1>
@@ -441,10 +439,10 @@ const GameControls: React.FC<Prop> = (props) => {
             <LoadingSkeleton />
           ) : (
             <div className="mt-8">
-              <h4 className="text-center font-semibold tracking-widest text-white">
+              <h4 className="font-semibold tracking-widest text-center text-white">
                 Total elements minted for the next game
               </h4>
-              <div className="text-3xl bg-white/40 flex justify-between px-8 rounded-md py-3 shadow-inner font-display">
+              <div className="flex justify-between px-8 py-3 text-3xl rounded-md shadow-inner bg-white/40 font-display">
                 <p>
                   <ElementLabel side="light">
                     LIGHT: {gameStats.light}
@@ -560,7 +558,7 @@ const GameControls: React.FC<Prop> = (props) => {
             />
             <div id="action-boost" className="ml-4">
               {currentBoostBips ? (
-                <button className="p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900 h-full">
+                <button className="h-full p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900">
                   <LightningBoltIcon className="inline-block w-4" />{' '}
                   {`${parseInt(currentBoostBips) / 100}%`}
                 </button>
