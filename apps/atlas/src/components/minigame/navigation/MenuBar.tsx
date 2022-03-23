@@ -10,9 +10,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import type { Abi } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
-import useGameStats from '@/hooks/useGameStats';
-import { useSiegeBalance } from '@/hooks/useSiegeBalance';
-import Button from '@/shared/Button';
+import useGameStats from '@/hooks/desiege/useGameStats';
+import { useSiegeBalance } from '@/hooks/desiege/useSiegeBalance';
 import type { GameStatus } from '@/types/index';
 import type { DesiegeTab } from '../ShieldGame';
 import { ManaBall } from './ManaBall';
@@ -84,7 +83,7 @@ function MenuBar(props: Prop) {
     tokenBalances.every((n) => n.isZero());
 
   return (
-    <div className="fixed flex justify-between w-full bottom-24 px-10 z-50  py-2 rounded-t-3xl">
+    <div className="fixed z-50 flex justify-between w-full px-10 py-2 bottom-24 rounded-t-3xl">
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}
@@ -94,9 +93,9 @@ function MenuBar(props: Prop) {
       />
 
       <div className="self-center h-full">
-        <div className="flex px-4 mx-auto align-middle w-96 rounded uppercase p-2 text-2xl h-full space-x-2">
+        <div className="flex h-full p-2 px-4 mx-auto space-x-2 text-2xl uppercase align-middle rounded w-96">
           <button
-            className="w-48 h-24  border bg-white text-blue-400 rounded shadow-inner"
+            className="w-48 h-24 text-blue-400 bg-white border rounded shadow-inner"
             onClick={() => {
               props.toggleTab && props.toggleTab('game-controls');
               router.replace('/desiege?tab=game-controls', undefined, {
@@ -107,7 +106,7 @@ function MenuBar(props: Prop) {
             Action
           </button>
           <button
-            className="w-48 h-24  border bg-white text-blue-400 rounded shadow-inner"
+            className="w-48 h-24 text-blue-400 bg-white border rounded shadow-inner"
             onClick={() => {
               props.toggleTab && props.toggleTab('lore');
               router.replace('/desiege?tab=lore', undefined, {
@@ -119,7 +118,7 @@ function MenuBar(props: Prop) {
           </button>
 
           {/* {currentBoostBips ? (
-            <button className="p-2 font-semibold text-white align-middle transition-colors bg-purple-800 w-48 h-24  rounded-md hover:bg-purple-900 h-full">
+            <button className="w-48 h-24 h-full p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900">
               <LightningBoltIcon className="inline-block w-4" />{' '}
               {`${parseInt(currentBoostBips) / 100}%`}
             </button>
