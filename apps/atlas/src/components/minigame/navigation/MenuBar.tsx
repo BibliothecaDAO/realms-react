@@ -11,9 +11,8 @@ import React, { useEffect } from 'react';
 import type { Abi } from 'starknet';
 import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
-import useGameStats from '@/hooks/useGameStats';
-import { useSiegeBalance } from '@/hooks/useSiegeBalance';
-import Button from '@/shared/Button';
+import useGameStats from '@/hooks/desiege/useGameStats';
+import { useSiegeBalance } from '@/hooks/desiege/useSiegeBalance';
 import type { GameStatus } from '@/types/index';
 import {
   ELEMENTS_ADDRESS,
