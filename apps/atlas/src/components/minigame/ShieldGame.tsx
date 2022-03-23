@@ -67,21 +67,21 @@ const ShieldGame: React.FC<Prop> = (props) => {
   const getMainHealth = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_main_health' : undefined,
-    args: [gameContext?.gameIdx?.toString() || '1'],
+    args: gameContext ? [gameContext?.gameIdx?.toString()] : undefined,
   });
 
   const getShield = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_shield_value' : undefined,
-    args: [
-      gameContext?.gameIdx.toString() || '0',
-      gameContext
-        ? (
+    args: gameContext
+      ? [
+          gameContext.gameIdx.toString(),
+          (
             gameContext.gameIdx * TOKEN_INDEX_OFFSET_BASE +
             ElementToken.Light
-          ).toString()
-        : '1',
-    ],
+          ).toString(),
+        ]
+      : undefined,
   });
 
   const getGameStatus = useStarknetCall({
@@ -191,7 +191,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           <div className="w-full">
             <div
               id="game-actions"
-              className="w-full p-8 pt-10 bg-gradient-to-b  from-white/80 rounded-md shadow-inner"
+              className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
             >
               {gameContext ? (
                 <GameControls
