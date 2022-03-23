@@ -433,10 +433,10 @@ const GameControls: React.FC<Prop> = (props) => {
             </p>
           )}
 
-          {/* <p className="my-4 text-2xl animate-pulse">
+          <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
-          </p> */}
-          {/* {gameStats.loading ? (
+          </p>
+          {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
             <div className="mt-8">
@@ -456,7 +456,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 </p>
               </div>
             </div>
-          )} */}
+          )}
           <GamePreparation />
         </div>
       ) : null}

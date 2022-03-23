@@ -9,11 +9,18 @@ import type BN from 'bn.js';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import type { Abi } from 'starknet';
+import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
 import useGameStats from '@/hooks/useGameStats';
 import { useSiegeBalance } from '@/hooks/useSiegeBalance';
 import Button from '@/shared/Button';
 import type { GameStatus } from '@/types/index';
+import {
+  ELEMENTS_ADDRESS,
+  TOKEN_INDEX_OFFSET_BASE,
+  getIsApprovedForAll,
+  EFFECT_BASE_FACTOR,
+} from '@/util/minigameApi';
 import type { DesiegeTab } from '../ShieldGame';
 import { ManaBall } from './ManaBall';
 type Prop = {
@@ -82,9 +89,10 @@ function MenuBar(props: Prop) {
     tokenBalances &&
     tokenBalances.length > 0 &&
     tokenBalances.every((n) => n.isZero());
-
+  const buttonClasses =
+    'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
   return (
-    <div className="fixed flex justify-between w-full bottom-24 px-10 z-50  py-2 rounded-t-3xl">
+    <div className="fixed flex justify-between w-full bottom-12 px-10 z-50  py-2 rounded-t-3xl">
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}
@@ -92,38 +100,79 @@ function MenuBar(props: Prop) {
         elementAvailable={gameStats.light}
         elementUsed={gameStats.lightUsed}
       />
+      <div className="bg-white/60 rounded w-auto text-blue-700 p-4 flex flex-col outline-double outline-3 outline-offset-2 border-blue-200 justify-between">
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('game-controls');
+            router.replace('/desiege?tab=game-controls', undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          Game
+        </button>
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('lore');
+            router.replace('/desiege?tab=lore', undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          Lore
+        </button>
+        {/* <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('lore');
+            router.replace('/desiege?tab=lore', undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          Game Guide
+        </button> */}
+      </div>
+      <div className="bg-white/60 rounded w-auto text-blue-700 p-4 flex flex-col outline-double outline-3 outline-offset-2 border-blue-200">
+        <div className="text-center uppercase ">
+          <h3>Lord of Light, Your Tokens</h3>
+          <h1 className="text-center py-3">
+            {side == 'light' ? (
+              <>
+                LIGHT
+                {tokenBalances && tokenBalances.length > 0
+                  ? number
+                      .toBN(tokenBalances[0])
+                      .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                      .toString()
+                  : null}
+              </>
+            ) : (
+              '0'
+            )}
+          </h1>
+        </div>
 
-      <div className="self-center h-full">
-        <div className="flex px-4 mx-auto align-middle w-96 rounded uppercase p-2 text-2xl h-full space-x-2">
-          <button
-            className="w-48 h-24  border bg-white text-blue-400 rounded shadow-inner"
-            onClick={() => {
-              props.toggleTab && props.toggleTab('game-controls');
-              router.replace('/desiege?tab=game-controls', undefined, {
-                shallow: true,
-              });
-            }}
-          >
-            Action
-          </button>
-          <button
-            className="w-48 h-24  border bg-white text-blue-400 rounded shadow-inner"
-            onClick={() => {
-              props.toggleTab && props.toggleTab('lore');
-              router.replace('/desiege?tab=lore', undefined, {
-                shallow: true,
-              });
-            }}
-          >
-            Lore
-          </button>
+        <div className="flex-col flex justify-center space-y-1">
+          <div className="flex space-x-2">
+            {currentBoostBips ? (
+              <button className="w-1/2 p-2 font-semibold text-white align-middle transition-colors bg-gradient-to-b from-purple-800 bg-purple-400  h-12  rounded hover:bg-purple-400 w-full">
+                Current boost <LightningBoltIcon className="inline-block w-4" />
+                {`${parseInt(currentBoostBips) / 100}%`}
+              </button>
+            ) : null}
+            <input
+              type="number"
+              placeholder="1"
+              className="w-1/2 text-center h-12  border bg-gradient-to-b bg-white/60  from-white/80 rounded  transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 mb-2 px-8 text-2xl font-semibold"
+            />
+          </div>
 
-          {/* {currentBoostBips ? (
-            <button className="p-2 font-semibold text-white align-middle transition-colors bg-purple-800 w-48 h-24  rounded-md hover:bg-purple-900 h-full">
-              <LightningBoltIcon className="inline-block w-4" />{' '}
-              {`${parseInt(currentBoostBips) / 100}%`}
-            </button>
-          ) : null} */}
+          <button className=" h-12 text-white  bg-gradient-to-l bg-blue-900/90  from-blue-400 rounded hover:-translate-y-1 transform hover:bg-blue-600 uppercase shadow-xl transition-all duration-300">
+            Boost Energy Shield
+          </button>
         </div>
       </div>
       <ManaBall
