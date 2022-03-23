@@ -8,13 +8,14 @@ import {
   EFFECT_BASE_FACTOR,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
+import { useModuleAddress } from '../useModuleAddress';
 
 const useGameStats = (gameIdx: number, towerDefenceStorageAddr: string) => {
+  const elementBalancerDeployment = useModuleAddress('4');
+
   const { contract: elementsContract } = useContract({
     abi: ElementsBalancer as Abi,
-    address:
-      // TODO(uni): Don't hard code this
-      '0x38266cfd0a725682e5ad0a60abd038f3e9df45cbafbe452d6e6b1ac7c96e7b6',
+    address: elementBalancerDeployment,
   });
 
   const { contract: towerDefenceStorage } = useContract({

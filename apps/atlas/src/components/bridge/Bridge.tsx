@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import type { AddTransactionResponse } from 'starknet';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import useGameStats from '@/hooks/useGameStats';
+import useGameStats from '@/hooks/desiege/useGameStats';
 import useTxCallback from '@/hooks/useTxCallback';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
