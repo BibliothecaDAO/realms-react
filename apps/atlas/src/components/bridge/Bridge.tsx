@@ -183,7 +183,7 @@ export const Bridge: React.FC<Prop> = (props) => {
           </button>
         </h1>
         <div className="px-2 text-gray-800">
-          <nav className="flex flex-row rounded-md bg-white/70 uppercase font-body">
+          <nav className="flex flex-row uppercase rounded-md bg-white/70 font-body">
             <button
               onClick={() => setCurrentTab('connect-ethereum')}
               className={classNames(
@@ -208,7 +208,7 @@ export const Bridge: React.FC<Prop> = (props) => {
               )}
             >
               <div className="flex">
-                <Lords className="w-7 fill-current mr-4" />
+                <Lords className="mr-4 fill-current w-7" />
                 <span className="flex">2. Lords Balance</span>
               </div>
               {balance >= MINIMUM_LORDS_REQUIRED ? Checkmark : null}
@@ -381,7 +381,10 @@ export const Bridge: React.FC<Prop> = (props) => {
                         </p>
                         <p>
                           Please wait, StarkNet is still in alpha. Your
-                          transaction is being executed on the sequencer.
+                          transaction is being executed on the sequencer. This
+                          transaction could take anywhere from 2-10 minutes. You
+                          will be automatically redirected when the transaction
+                          is accepted.
                         </p>
                       </>
                     ) : (
