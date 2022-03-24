@@ -19,11 +19,11 @@ export const VARIANTS = {
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-8 py-2 font-body uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded',
+      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body font-bold uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded',
       active: 'bg-gray-600  shadow-md text-white',
-      inactive: 'bg-transparent text-gray-400',
+      inactive: 'bg-transparent text-gray-200',
     },
-    tabList: 'flex p-3 space-x-6 bg-gray-100 rounded shadow-inner',
+    tabList: 'flex py-3 space-x-2',
   },
 };
 

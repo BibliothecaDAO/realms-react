@@ -1,6 +1,5 @@
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
+import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useUIContext } from '@/hooks/useUIContext';
-import { ResourceIcon } from '@/shared/ResourceIcon';
 
 export function RealmOverview() {
   const testRealm = {
