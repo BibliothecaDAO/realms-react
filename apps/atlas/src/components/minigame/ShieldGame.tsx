@@ -1,4 +1,8 @@
-import { useContract, useStarknetCall } from '@starknet-react/core';
+import {
+  useContract,
+  useStarknetCall,
+  useStarknet,
+} from '@starknet-react/core';
 import type BN from 'bn.js';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -7,7 +11,6 @@ import { toBN } from 'starknet/dist/utils/number';
 import TowerDefenceContract from '@/abi/minigame/01_TowerDefence.json';
 import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
 import { ElementToken } from '@/constants/index';
-import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 import type { GameStatus } from '@/types/index';
@@ -34,6 +37,8 @@ type Prop = {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ShieldGame: React.FC<Prop> = (props) => {
+  const { account } = useStarknet();
+
   const router = useRouter();
 
   const initialTabFromQuery = router.query['tab'] as string;
@@ -222,17 +227,20 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
       />
-      <MenuBar
-        towerDefenceContractAddress={props.towerDefenceContractAddr}
-        towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
-        health={health}
-        shield={shield}
-        gameStatus={gs}
-        gameIdx={gameContext?.gameIdx}
-        initialBoostBips={boost}
-        setupModalInitialIsOpen={view == 'setup'}
-        toggleTab={(tab) => setView(tab)}
-      />
+      {account ? (
+        <MenuBar
+          towerDefenceContractAddress={props.towerDefenceContractAddr}
+          towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
+          health={health}
+          shield={shield}
+          gameStatus={gs}
+          gameIdx={gameContext?.gameIdx}
+          initialBoostBips={boost}
+          setupModalInitialIsOpen={view == 'setup'}
+          toggleTab={(tab) => setView(tab)}
+        />
+      ) : null}
+
       {gameContext && gs == 'active' ? (
         <GameBlockTimer gameCtx={gameContext} />
       ) : null}

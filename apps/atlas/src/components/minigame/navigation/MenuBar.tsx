@@ -21,6 +21,7 @@ import {
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
 import type { DesiegeTab } from '../ShieldGame';
+import { ActionsBox } from './ActionsBox';
 import { ManaBall } from './ManaBall';
 type Prop = {
   gameIdx?: number;
@@ -84,10 +85,7 @@ function MenuBar(props: Prop) {
       }
     }
   }, [account, props.gameIdx, props.gameStatus]);
-  const noMoreElements =
-    tokenBalances &&
-    tokenBalances.length > 0 &&
-    tokenBalances.every((n) => n.isZero());
+
   const buttonClasses =
     'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
   return (
@@ -122,58 +120,25 @@ function MenuBar(props: Prop) {
         >
           Lore
         </button>
-        {/* <button
-          className={buttonClasses}
-          onClick={() => {
-            props.toggleTab && props.toggleTab('lore');
-            router.replace('/desiege?tab=lore', undefined, {
-              shallow: true,
-            });
-          }}
-        >
-          Game Guide
-        </button> */}
       </div>
-      <div className="bg-white/60 rounded w-auto text-blue-700 p-4 flex flex-col outline-double outline-3 outline-offset-2 border-blue-200">
-        <div className="text-center uppercase ">
-          <h3>Lord of Light, Your Tokens</h3>
-          <h1 className="text-center py-3">
-            {side == 'light' ? (
-              <>
-                LIGHT
-                {tokenBalances && tokenBalances.length > 0
-                  ? number
-                      .toBN(tokenBalances[0])
-                      .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                      .toString()
-                  : null}
-              </>
-            ) : (
-              '0'
-            )}
-          </h1>
-        </div>
-
-        <div className="flex-col flex justify-center space-y-1">
-          <div className="flex space-x-2">
-            {currentBoostBips ? (
-              <button className="w-1/2 p-2 font-semibold text-white align-middle transition-colors bg-gradient-to-b from-purple-800 bg-purple-400  h-12  rounded hover:bg-purple-400 w-full">
-                Current boost <LightningBoltIcon className="inline-block w-4" />
-                {`${parseInt(currentBoostBips) / 100}%`}
-              </button>
-            ) : null}
-            <input
-              type="number"
-              placeholder="1"
-              className="w-1/2 text-center h-12  border bg-gradient-to-b bg-white/60  from-white/80 rounded  transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 mb-2 px-8 text-2xl font-semibold"
-            />
-          </div>
-
-          <button className=" h-12 text-white  bg-gradient-to-l bg-blue-900/90  from-blue-400 rounded hover:-translate-y-1 transform hover:bg-blue-600 uppercase shadow-xl transition-all duration-300">
-            Boost Energy Shield
-          </button>
-        </div>
-      </div>
+      <ActionsBox
+        currentBoostBips={currentBoostBips}
+        setupModalInitialIsOpen={props.setupModalInitialIsOpen}
+        tokenBalances={tokenBalances}
+        gameIdx={props.gameIdx}
+        initialBoostBips={props.initialBoostBips}
+        loadingTokenBalance={loadingTokenBalance}
+        gameStatus={props.gameStatus}
+        side={'light'}
+        health={props.health}
+        shield={props.shield}
+        elementAvailable={gameStats.dark}
+        elementUsed={gameStats.darkUsed}
+        towerDefenceContractAddress={props.towerDefenceContractAddress}
+        towerDefenceStorageContractAddress={
+          props.towerDefenceStorageContractAddress
+        }
+      />
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}

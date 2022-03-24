@@ -292,10 +292,10 @@ const GameControls: React.FC<Prop> = (props) => {
           ShieldVitalityDisplayClassnames
         )}
       >
-        <ShieldVitalityDisplay
+        {/* <ShieldVitalityDisplay
           shield={toBN(20 * EFFECT_BASE_FACTOR)}
           health={toBN(100 * EFFECT_BASE_FACTOR)}
-        />
+        /> */}
       </div>
       <BridgeModal
         isOpen={mintModalOpen}
@@ -413,7 +413,7 @@ const GameControls: React.FC<Prop> = (props) => {
               <ElementLabel>Choose your Elements</ElementLabel>
             </Button>
           ) : null}
-          {loadingTokenBalance ? (
+          {/* {loadingTokenBalance ? (
             <LoadingSkeleton className="w-full h-10 mt-4" />
           ) : (
             <p className="mt-4 text-3xl font-display">
@@ -430,12 +430,12 @@ const GameControls: React.FC<Prop> = (props) => {
                 </>
               ) : null}
             </p>
-          )}
+          )} */}
 
-          <p className="my-4 text-2xl animate-pulse">
+          {/* <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
-          </p>
-          {gameStats.loading ? (
+          </p> */}
+          {/* {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
             <div className="mt-8">
@@ -455,7 +455,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 </p>
               </div>
             </div>
-          )}
+          )} */}
           <GamePreparation />
         </div>
       ) : null}
@@ -480,7 +480,7 @@ const GameControls: React.FC<Prop> = (props) => {
                       </Button>
                     </p>
                   ) : null}
-                  {side == 'light' ? (
+                  {/* {side == 'light' ? (
                     <>
                       <ElementLabel side="light">LIGHT </ElementLabel>
                       {tokenBalances && tokenBalances.length > 0
@@ -501,7 +501,7 @@ const GameControls: React.FC<Prop> = (props) => {
                             .toString()
                         : null}
                     </>
-                  ) : null}
+                  ) : null} */}
                 </div>
 
                 {/* {gameStats.loading ? (
