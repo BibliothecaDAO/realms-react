@@ -13,9 +13,6 @@ import { useUIContext } from '@/hooks/useUIContext';
 
 export const RealmsPanel = () => {
   const { togglePanelType, selectedPanel } = useUIContext();
-  const [tab, setTab] = useState<string>('Realms');
-  const activeBg = 'bg-white/30';
-  const inactiveBg = 'bg-white/10';
 
   const isEmpireMenu = selectedPanel === 'realm';
   const animation = useSpring({

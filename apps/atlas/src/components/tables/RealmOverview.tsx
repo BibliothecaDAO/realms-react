@@ -1,5 +1,7 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { useGetRealmsQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
+import { useWalletContext } from '@/hooks/useWalletContext';
 
 export function RealmOverview() {
   const testRealm = {
@@ -11,6 +13,14 @@ export function RealmOverview() {
     military: ['Offence', 'Defence', 'Last Attacked'],
   };
   const { toggleMenuType, selectedMenuType, setSelectedId } = useUIContext();
+
+  const { account, isConnected, displayName } = useWalletContext();
+
+  const { data } = useGetRealmsQuery({
+    variables: {
+      address: account.toLowerCase(), // value for 'id'
+    },
+  });
 
   const openRealmDetails = () => {
     setSelectedId(testRealm.id.toString());

@@ -1,7 +1,6 @@
  
 query GetRealm($id: Float!) @api(name: starkIndexer) {
-    getRealm(id: $id) {
-      id
-      realmId
+    getRealm(realmId: $id) {
+        ...RealmFragment
     }
 }

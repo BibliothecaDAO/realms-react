@@ -1,8 +1,10 @@
 fragment DesiegeFragment on Desiege {
     id
     gameId
-    # winner
+    winner
     attackedTokens
     defendedTokens
-    blockIndexed
+    eventIndexed
+    initialHealth
+    startedOn
 }

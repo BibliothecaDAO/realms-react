@@ -26,7 +26,8 @@ const client = new ApolloClient({
       endpoints: {
         realms:
           'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-        starkIndexer: 'http://localhost:3333/graphql',
+        starkIndexer:
+          'https://starknet-indexer-c9bsk.ondigitalocean.app/graphql',
         ecosystem:
           'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem',
       },

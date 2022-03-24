@@ -1,5 +1,22 @@
 fragment RealmFragment on Realm {
-    id
+    realmId
     owner
     name
+    rarityRank
+    rarityScore
+    orderType
+    resources {
+      type
+    }
+    traits {
+      type
+      qty
+    }
+    buildings {
+      type
+    }
+    squads {
+      action
+      type
+    }
   }

@@ -19,60 +19,90 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 /** The Buildings Model */
-export type Buildings = {
-  __typename?: 'Buildings';
-  barracks?: Maybe<Scalars['Float']>;
+export type Building = {
+  __typename?: 'Building';
   id: Scalars['ID'];
+  realm?: Maybe<Realm>;
   realmId: Scalars['Float'];
+  type?: Maybe<Scalars['String']>;
 };
 
-export type BuildingsInput = {
-  barracks: Scalars['Float'];
+/** Building Cost Model */
+export type BuildingCost = {
+  __typename?: 'BuildingCost';
+  buildingType: Scalars['String'];
+  qty: Scalars['Float'];
+  resourceType: Scalars['String'];
+};
+
+export type BuildingCostInput = {
+  buildingType: Scalars['String'];
+  qty: Scalars['Float'];
+  resourceType: Scalars['String'];
+};
+
+export type BuildingInput = {
+  id?: InputMaybe<Scalars['ID']>;
   realmId: Scalars['Float'];
+  type: Scalars['String'];
 };
 
 /** The Desiege Model */
 export type Desiege = {
   __typename?: 'Desiege';
   attackedTokens: Scalars['Float'];
-  blockIndexed: Scalars['Float'];
   defendedTokens: Scalars['Float'];
+  eventIndexed: Scalars['Float'];
   gameId: Scalars['Float'];
   id: Scalars['ID'];
+  initialHealth: Scalars['Float'];
+  startedOn: Scalars['DateTime'];
   winner: Scalars['Float'];
 };
 
-export type DesiegeInput = {
-  attackedTokens: Scalars['Float'];
-  blockIndexed: Scalars['Float'];
-  defendedTokens: Scalars['Float'];
-  gameId: Scalars['Float'];
-  winner: Scalars['Float'];
+/** StarkNet Event Model */
+export type Event = {
+  __typename?: 'Event';
+  chainId: Scalars['String'];
+  contract: Scalars['String'];
+  eventId: Scalars['Float'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parameters: Array<Scalars['Float']>;
+  timestamp: Scalars['DateTime'];
+  txHash: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOrUpdateBuildings: Buildings;
-  createOrUpdateDesiege: Desiege;
+  createOrUpdateBuildingCost: BuildingCost;
+  createOrUpdateBuildings: Building;
   createOrUpdateRealm: Realm;
+  createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
   createOrUpdateWallet: Wallet;
   reindexDesiege: Scalars['Boolean'];
 };
 
-export type MutationCreateOrUpdateBuildingsArgs = {
-  data: BuildingsInput;
+export type MutationCreateOrUpdateBuildingCostArgs = {
+  data: BuildingCostInput;
 };
 
-export type MutationCreateOrUpdateDesiegeArgs = {
-  data: DesiegeInput;
+export type MutationCreateOrUpdateBuildingsArgs = {
+  data: BuildingInput;
 };
 
 export type MutationCreateOrUpdateRealmArgs = {
   data: RealmInput;
+};
+
+export type MutationCreateOrUpdateRealmTraitArgs = {
+  data: RealmTraitInput;
 };
 
 export type MutationCreateOrUpdateResourcesArgs = {
@@ -85,32 +115,60 @@ export type MutationCreateOrUpdateWalletArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getAllBuildings: Array<Buildings>;
-  getAllResources: Array<Resource>;
-  getBuildings: Buildings;
+  getBuilding: Building;
+  getBuildingCosts: Array<BuildingCost>;
+  getBuildings: Array<Building>;
+  getBuildingsByAddress: Array<Building>;
+  getBuildingsByRealm: Array<Building>;
   getDesiege: Desiege;
   getDesiegeGames: Array<Desiege>;
+  getEvent: Event;
+  getEvents: Array<Event>;
   getRealm: Realm;
+  getRealmTraits: Array<RealmTrait>;
   getRealms: Array<Realm>;
+  getRealmsByAddress: Array<Realm>;
   getResource: Resource;
+  getResources: Array<Resource>;
+  getResourcesByAddress: Array<Resource>;
   getWallet: Wallet;
   getWallets: Array<Wallet>;
 };
 
-export type QueryGetBuildingsArgs = {
+export type QueryGetBuildingArgs = {
   id: Scalars['Float'];
+};
+
+export type QueryGetBuildingsByAddressArgs = {
+  address: Scalars['String'];
+};
+
+export type QueryGetBuildingsByRealmArgs = {
+  realmId: Scalars['Float'];
 };
 
 export type QueryGetDesiegeArgs = {
   id: Scalars['Float'];
 };
 
-export type QueryGetRealmArgs = {
+export type QueryGetEventArgs = {
   id: Scalars['Float'];
 };
 
+export type QueryGetRealmArgs = {
+  realmId: Scalars['Float'];
+};
+
+export type QueryGetRealmsByAddressArgs = {
+  address: Scalars['String'];
+};
+
 export type QueryGetResourceArgs = {
-  resourceId: Scalars['Float'];
+  id: Scalars['Float'];
+};
+
+export type QueryGetResourcesByAddressArgs = {
+  address: Scalars['String'];
 };
 
 export type QueryGetWalletArgs = {
@@ -120,43 +178,68 @@ export type QueryGetWalletArgs = {
 /** The Realm Model */
 export type Realm = {
   __typename?: 'Realm';
-  buildings?: Maybe<Buildings>;
-  defenceSquad?: Maybe<Squad>;
-  id: Scalars['ID'];
+  buildings?: Maybe<Array<Building>>;
+  imageUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  offenceSquad?: Maybe<Squad>;
+  orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
-  realmId?: Maybe<Scalars['Float']>;
+  rarityRank: Scalars['Int'];
+  rarityScore: Scalars['Float'];
+  realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
-  wallet: Wallet;
+  squads?: Maybe<Array<Squad>>;
+  traits?: Maybe<Array<RealmTrait>>;
+  wallet?: Maybe<Wallet>;
 };
 
 export type RealmInput = {
+  imageUrl?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
-  owner: Scalars['String'];
+  orderType?: InputMaybe<Scalars['String']>;
+  owner?: InputMaybe<Scalars['String']>;
+  rarityRank?: InputMaybe<Scalars['Int']>;
+  rarityScore?: InputMaybe<Scalars['Float']>;
+  realmId: Scalars['Int'];
+};
+
+/** Realm Trait Model */
+export type RealmTrait = {
+  __typename?: 'RealmTrait';
+  id: Scalars['ID'];
+  qty: Scalars['Float'];
+  realm?: Maybe<Realm>;
   realmId: Scalars['Float'];
+  type: Scalars['String'];
+};
+
+export type RealmTraitInput = {
+  qty: Scalars['Float'];
+  realmId: Scalars['Float'];
+  type: Scalars['String'];
 };
 
 /** The Resource Model */
 export type Resource = {
   __typename?: 'Resource';
   id: Scalars['ID'];
-  realmId: Scalars['Float'];
-  resourceId?: Maybe<Scalars['Float']>;
-  resourceName?: Maybe<Scalars['String']>;
+  realm: Realm;
+  realmId?: Maybe<Scalars['Float']>;
+  type: Scalars['String'];
 };
 
 export type ResourceInput = {
+  id?: InputMaybe<Scalars['ID']>;
   realmId: Scalars['Float'];
-  resourceId?: InputMaybe<Scalars['Float']>;
-  resourceName?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
 };
 
 /** The Squad Model */
 export type Squad = {
   __typename?: 'Squad';
-  id: Scalars['ID'];
-  realmId: Scalars['Float'];
+  action: Scalars['String'];
+  realm?: Maybe<Realm>;
+  realmId: Scalars['Int'];
+  type: Scalars['String'];
 };
 
 /** The Wallet Model */
@@ -179,7 +262,9 @@ export type DesiegeFragmentFragment = {
   winner: number;
   attackedTokens: number;
   defendedTokens: number;
-  blockIndexed: number;
+  eventIndexed: number;
+  initialHealth: number;
+  startedOn: any;
 };
 
 export type GetDesiegeQueryVariables = Exact<{
@@ -195,7 +280,9 @@ export type GetDesiegeQuery = {
     winner: number;
     attackedTokens: number;
     defendedTokens: number;
-    blockIndexed: number;
+    eventIndexed: number;
+    initialHealth: number;
+    startedOn: any;
   };
 };
 
@@ -205,7 +292,27 @@ export type GetRealmQueryVariables = Exact<{
 
 export type GetRealmQuery = {
   __typename?: 'Query';
-  getRealm: { __typename?: 'Realm'; id: string; realmId?: number | null };
+  getRealm: {
+    __typename?: 'Realm';
+    realmId: number;
+    owner?: string | null;
+    name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    squads?: Array<{
+      __typename?: 'Squad';
+      action: string;
+      type: string;
+    }> | null;
+  };
 };
 
 export type GetRealmsQueryVariables = Exact<{
@@ -216,25 +323,50 @@ export type GetRealmsQuery = {
   __typename?: 'Query';
   getRealms: Array<{
     __typename?: 'Realm';
-    id: string;
+    realmId: number;
     owner?: string | null;
     name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    squads?: Array<{
+      __typename?: 'Squad';
+      action: string;
+      type: string;
+    }> | null;
   }>;
 };
 
 export type RealmFragmentFragment = {
   __typename?: 'Realm';
-  id: string;
+  realmId: number;
   owner?: string | null;
   name?: string | null;
+  rarityRank: number;
+  rarityScore: number;
+  orderType: string;
+  resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+  traits?: Array<{
+    __typename?: 'RealmTrait';
+    type: string;
+    qty: number;
+  }> | null;
+  buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+  squads?: Array<{ __typename?: 'Squad'; action: string; type: string }> | null;
 };
 
 export type ResourceFragmentFragment = {
   __typename?: 'Resource';
   id: string;
-  resourceId?: number | null;
-  resourceName?: string | null;
-  realmId: number;
+  type: string;
+  realmId?: number | null;
 };
 
 export type GetWalletQueryVariables = Exact<{
@@ -248,9 +380,27 @@ export type GetWalletQuery = {
     id: string;
     realms: Array<{
       __typename?: 'Realm';
-      id: string;
+      realmId: number;
       owner?: string | null;
       name?: string | null;
+      rarityRank: number;
+      rarityScore: number;
+      orderType: string;
+      resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+      traits?: Array<{
+        __typename?: 'RealmTrait';
+        type: string;
+        qty: number;
+      }> | null;
+      buildings?: Array<{
+        __typename?: 'Building';
+        type?: string | null;
+      }> | null;
+      squads?: Array<{
+        __typename?: 'Squad';
+        action: string;
+        type: string;
+      }> | null;
     }>;
   };
 };
@@ -262,21 +412,39 @@ export const DesiegeFragmentFragmentDoc = gql`
     winner
     attackedTokens
     defendedTokens
-    blockIndexed
+    eventIndexed
+    initialHealth
+    startedOn
   }
 `;
 export const RealmFragmentFragmentDoc = gql`
   fragment RealmFragment on Realm {
-    id
+    realmId
     owner
     name
+    rarityRank
+    rarityScore
+    orderType
+    resources {
+      type
+    }
+    traits {
+      type
+      qty
+    }
+    buildings {
+      type
+    }
+    squads {
+      action
+      type
+    }
   }
 `;
 export const ResourceFragmentFragmentDoc = gql`
   fragment ResourceFragment on Resource {
     id
-    resourceId
-    resourceName
+    type
     realmId
   }
 `;
@@ -339,11 +507,11 @@ export type GetDesiegeQueryResult = Apollo.QueryResult<
 >;
 export const GetRealmDocument = gql`
   query GetRealm($id: Float!) @api(name: starkIndexer) {
-    getRealm(id: $id) {
-      id
-      realmId
+    getRealm(realmId: $id) {
+      ...RealmFragment
     }
   }
+  ${RealmFragmentFragmentDoc}
 `;
 
 /**

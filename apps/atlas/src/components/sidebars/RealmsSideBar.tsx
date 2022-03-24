@@ -19,10 +19,9 @@ export const RealmSideBar = (props: Props) => {
   });
   const { data: IndexerData } = useGetRealmQuery({
     variables: {
-      id: 1, // value for 'id'
+      id: parseInt(props.id), // value for 'id'
     },
   });
-
   return (
     <BaseSideBar open={selectedMenuType === 'realm'}>
       <div className="top-0 bottom-0 right-0 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
