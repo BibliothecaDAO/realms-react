@@ -315,9 +315,7 @@ export type GetRealmQuery = {
   };
 };
 
-export type GetRealmsQueryVariables = Exact<{
-  id: Scalars['Float'];
-}>;
+export type GetRealmsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetRealmsQuery = {
   __typename?: 'Query';
@@ -560,7 +558,7 @@ export type GetRealmQueryResult = Apollo.QueryResult<
   GetRealmQueryVariables
 >;
 export const GetRealmsDocument = gql`
-  query GetRealms($id: Float!) @api(name: starkIndexer) {
+  query GetRealms @api(name: starkIndexer) {
     getRealms {
       ...RealmFragment
     }
@@ -580,12 +578,11 @@ export const GetRealmsDocument = gql`
  * @example
  * const { data, loading, error } = useGetRealmsQuery({
  *   variables: {
- *      id: // value for 'id'
  *   },
  * });
  */
 export function useGetRealmsQuery(
-  baseOptions: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(

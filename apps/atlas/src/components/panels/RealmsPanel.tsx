@@ -30,7 +30,7 @@ export const RealmsPanel = () => {
       {
         label: 'All Realms',
         icon: <Danger className="mr-2" />,
-        component: <Helm className="w-48 h-48 fill-black" />,
+        component: <RealmOverview />,
       },
       {
         label: 'Favourite Realms',
@@ -45,7 +45,9 @@ export const RealmsPanel = () => {
       className="absolute top-0 z-30 w-full h-screen bg-center bg-cover"
       style={animation}
     >
-      <div className={`h-screen w-7/12 relative top-0 p-6 rounded-r-2xl`}>
+      <div
+        className={`h-screen overflow-y-scroll w-7/12 relative top-0 p-6 rounded-r-2xl`}
+      >
         <div className="flex justify-between">
           <h1 className="tex">Realms</h1>
           <button
