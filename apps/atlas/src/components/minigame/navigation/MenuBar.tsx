@@ -89,7 +89,7 @@ function MenuBar(props: Prop) {
   const buttonClasses =
     'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
   return (
-    <div className="fixed flex justify-between w-full bottom-12 px-10 z-50  py-2 rounded-t-3xl">
+    <div className="fixed z-50 flex items-center justify-between w-full px-10 py-2 bottom-12 rounded-t-3xl">
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}
@@ -97,14 +97,11 @@ function MenuBar(props: Prop) {
         elementAvailable={gameStats.light}
         elementUsed={gameStats.lightUsed}
       />
-      <div className="bg-white/60 rounded w-auto text-blue-700 p-4 flex flex-col outline-double outline-3 outline-offset-2 border-blue-200 justify-between">
+      <div className="flex flex-row justify-between w-auto gap-4 p-4 text-blue-700 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
         <button
           className={buttonClasses}
           onClick={() => {
-            props.toggleTab && props.toggleTab('game-controls');
-            router.replace('/desiege?tab=game-controls', undefined, {
-              shallow: true,
-            });
+            // TODO: Take an intelligent action when pressing this important button
           }}
         >
           Game
@@ -113,12 +110,17 @@ function MenuBar(props: Prop) {
           className={buttonClasses}
           onClick={() => {
             props.toggleTab && props.toggleTab('lore');
-            router.replace('/desiege?tab=lore', undefined, {
-              shallow: true,
-            });
           }}
         >
           Lore
+        </button>
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('check-rewards');
+          }}
+        >
+          Rewards
         </button>
       </div>
       <ActionsBox

@@ -15,17 +15,14 @@ const CheckRewards: React.FC<Prop> = (props) => {
     ? parseInt(router.query['game_id'] as string)
     : props.initialGameIndex;
 
-  // If the user does not have any contributions from the winning side, their balance will show as 0
-  // TODO: Get winning side from contract state
-  const winningSide = 'light';
-  const userReward = useUserReward({ gameIdx, account, side: winningSide });
+  const userReward = useUserReward({ gameIdx, account });
 
   useEffect(() => {
     connectBrowserWallet();
   }, []);
 
   return (
-    <div className="text-black">
+    <div>
       <h3>Game {gameIdx}</h3>
       {userReward.loading ? (
         <LoadingSkeleton />

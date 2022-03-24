@@ -1,3 +1,4 @@
+import { XCircleIcon } from '@heroicons/react/solid';
 import {
   useContract,
   useStarknetCall,
@@ -22,12 +23,13 @@ import {
 } from '@/util/minigameApi';
 
 import Modal from '../../shared/Modal';
+import CheckRewards from './CheckRewards';
 import TowerDefence from './CityModel';
 import GameBlockTimer from './navigation/GameBlockTimer';
 import GameControls from './navigation/GameControls';
 import MenuBar from './navigation/MenuBar';
 
-export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
+export type DesiegeTab = 'game-controls' | 'lore' | 'setup' | 'check-rewards';
 
 type Prop = {
   initialTab?: DesiegeTab;
@@ -142,11 +144,13 @@ const ShieldGame: React.FC<Prop> = (props) => {
     return getGameStatus.error ? 'expired' : undefined;
   }, [getGameStatus.data]);
 
-  const [loreModalOpen, setLoreModalOpen] = useState(view == 'lore');
+  const [modalOpen, setModalOpen] = useState(
+    view == 'lore' || view == 'check-rewards'
+  );
 
   useEffect(() => {
-    if (view == 'lore') {
-      setLoreModalOpen(true);
+    if (view == 'lore' || view == 'check-rewards') {
+      setModalOpen(true);
     }
   }, [view]);
 
@@ -170,14 +174,29 @@ const ShieldGame: React.FC<Prop> = (props) => {
   return (
     <div className="relative">
       <Modal
-        isOpen={loreModalOpen}
+        isOpen={modalOpen}
         toggle={() => {
-          setLoreModalOpen(false);
-          setView('game-controls');
+          setModalOpen(false);
         }}
       >
-        <div className="w-full bg-gray-900/40 sm:m-8 sm:w-1/2 rounded-xl">
-          <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
+        <div className="flex-row w-full py-4 text-white bg-gray-900/70 sm:m-8 sm:w-1/2 rounded-xl">
+          <h1 className="flex flex-row items-center justify-between px-8">
+            <span>{view?.toUpperCase()}</span>
+            <button
+              onClick={() => setModalOpen(false)}
+              className="hover:text-gray-400"
+            >
+              <XCircleIcon className="h-8" />
+            </button>
+          </h1>
+          <div className="px-8">
+            {view == 'lore' ? (
+              <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
+            ) : null}
+            {view == 'check-rewards' ? (
+              <CheckRewards initialGameIndex={gameContext?.gameIdx} />
+            ) : null}
+          </div>
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
@@ -192,33 +211,31 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </span>
         </h3> */}
 
-        {view == 'game-controls' || view == 'setup' ? (
-          <div className="w-full">
-            <div
-              id="game-actions"
-              className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
-            >
-              {gameContext ? (
-                <GameControls
-                  towerDefenceContractAddress={props.towerDefenceContractAddr}
-                  towerDefenceStorageContractAddress={
-                    props.towerDefenceStorageAddr
-                  }
-                  health={health}
-                  shield={shield}
-                  gameStatus={gs}
-                  gameIdx={gameContext?.gameIdx}
-                  initialBoostBips={boost}
-                  setupModalInitialIsOpen={view == 'setup'}
-                />
-              ) : (
-                <p className="text-3xl animate-pulse">
-                  Loading the Dark Portal...
-                </p>
-              )}
-            </div>
+        <div className="w-full">
+          <div
+            id="game-actions"
+            className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
+          >
+            {gameContext ? (
+              <GameControls
+                towerDefenceContractAddress={props.towerDefenceContractAddr}
+                towerDefenceStorageContractAddress={
+                  props.towerDefenceStorageAddr
+                }
+                health={health}
+                shield={shield}
+                gameStatus={gs}
+                gameIdx={gameContext?.gameIdx}
+                initialBoostBips={boost}
+                setupModalInitialIsOpen={view == 'setup'}
+              />
+            ) : (
+              <p className="text-3xl animate-pulse">
+                Loading the Dark Portal...
+              </p>
+            )}
           </div>
-        ) : null}
+        </div>
       </div>
 
       <TowerDefence
@@ -227,19 +244,21 @@ const ShieldGame: React.FC<Prop> = (props) => {
         shield={shield}
         gameIdx={gameContext?.gameIdx}
       />
-      {account ? (
-        <MenuBar
-          towerDefenceContractAddress={props.towerDefenceContractAddr}
-          towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
-          health={health}
-          shield={shield}
-          gameStatus={gs}
-          gameIdx={gameContext?.gameIdx}
-          initialBoostBips={boost}
-          setupModalInitialIsOpen={view == 'setup'}
-          toggleTab={(tab) => setView(tab)}
-        />
-      ) : null}
+
+      <MenuBar
+        towerDefenceContractAddress={props.towerDefenceContractAddr}
+        towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
+        health={health}
+        shield={shield}
+        gameStatus={gs}
+        gameIdx={gameContext?.gameIdx}
+        initialBoostBips={boost}
+        setupModalInitialIsOpen={view == 'setup'}
+        toggleTab={(tab) => {
+          setModalOpen(true);
+          setView(tab);
+        }}
+      />
 
       {gameContext && gs == 'active' ? (
         <GameBlockTimer gameCtx={gameContext} />

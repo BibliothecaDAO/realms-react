@@ -38,10 +38,7 @@ const LoreDevKit = (props: Prop) => {
     'text-blue-600 hover:text-blue-300 py-2 disabled:text-gray-800 my-4';
 
   return (
-    <div className="block p-8">
-      <div className="flex flex-row items-center justify-between mb-4">
-        <h1>Lore</h1>
-      </div>
+    <div className="block">
       <Button
         disabled={layerIndex == 0}
         onClick={() => {
