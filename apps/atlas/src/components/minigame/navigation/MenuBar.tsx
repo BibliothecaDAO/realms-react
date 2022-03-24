@@ -9,11 +9,19 @@ import type BN from 'bn.js';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import type { Abi } from 'starknet';
+import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
 import useGameStats from '@/hooks/desiege/useGameStats';
 import { useSiegeBalance } from '@/hooks/desiege/useSiegeBalance';
 import type { GameStatus } from '@/types/index';
+import {
+  ELEMENTS_ADDRESS,
+  TOKEN_INDEX_OFFSET_BASE,
+  getIsApprovedForAll,
+  EFFECT_BASE_FACTOR,
+} from '@/util/minigameApi';
 import type { DesiegeTab } from '../ShieldGame';
+import { ActionsBox } from './ActionsBox';
 import { ManaBall } from './ManaBall';
 type Prop = {
   gameIdx?: number;
@@ -77,13 +85,11 @@ function MenuBar(props: Prop) {
       }
     }
   }, [account, props.gameIdx, props.gameStatus]);
-  const noMoreElements =
-    tokenBalances &&
-    tokenBalances.length > 0 &&
-    tokenBalances.every((n) => n.isZero());
 
+  const buttonClasses =
+    'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
   return (
-    <div className="fixed z-50 flex justify-between w-full px-10 py-2 bottom-24 rounded-t-3xl">
+    <div className="fixed flex justify-between w-full bottom-12 px-10 z-50  py-2 rounded-t-3xl">
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}
@@ -91,40 +97,48 @@ function MenuBar(props: Prop) {
         elementAvailable={gameStats.light}
         elementUsed={gameStats.lightUsed}
       />
-
-      <div className="self-center h-full">
-        <div className="flex h-full p-2 px-4 mx-auto space-x-2 text-2xl uppercase align-middle rounded w-96">
-          <button
-            className="w-48 h-24 text-blue-400 bg-white border rounded shadow-inner"
-            onClick={() => {
-              props.toggleTab && props.toggleTab('game-controls');
-              router.replace('/desiege?tab=game-controls', undefined, {
-                shallow: true,
-              });
-            }}
-          >
-            Action
-          </button>
-          <button
-            className="w-48 h-24 text-blue-400 bg-white border rounded shadow-inner"
-            onClick={() => {
-              props.toggleTab && props.toggleTab('lore');
-              router.replace('/desiege?tab=lore', undefined, {
-                shallow: true,
-              });
-            }}
-          >
-            Lore
-          </button>
-
-          {/* {currentBoostBips ? (
-            <button className="w-48 h-24 h-full p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900">
-              <LightningBoltIcon className="inline-block w-4" />{' '}
-              {`${parseInt(currentBoostBips) / 100}%`}
-            </button>
-          ) : null} */}
-        </div>
+      <div className="bg-white/60 rounded w-auto text-blue-700 p-4 flex flex-col outline-double outline-3 outline-offset-2 border-blue-200 justify-between">
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('game-controls');
+            router.replace('/desiege?tab=game-controls', undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          Game
+        </button>
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('lore');
+            router.replace('/desiege?tab=lore', undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          Lore
+        </button>
       </div>
+      <ActionsBox
+        currentBoostBips={currentBoostBips}
+        setupModalInitialIsOpen={props.setupModalInitialIsOpen}
+        tokenBalances={tokenBalances}
+        gameIdx={props.gameIdx}
+        initialBoostBips={props.initialBoostBips}
+        loadingTokenBalance={loadingTokenBalance}
+        gameStatus={props.gameStatus}
+        side={'light'}
+        health={props.health}
+        shield={props.shield}
+        elementAvailable={gameStats.dark}
+        elementUsed={gameStats.darkUsed}
+        towerDefenceContractAddress={props.towerDefenceContractAddress}
+        towerDefenceStorageContractAddress={
+          props.towerDefenceStorageContractAddress
+        }
+      />
       <ManaBall
         loadingTokenBalance={loadingTokenBalance}
         gameStatus={props.gameStatus}
