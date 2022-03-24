@@ -447,7 +447,7 @@ export const ResourceFragmentFragmentDoc = gql`
   }
 `;
 export const GetDesiegeDocument = gql`
-  query GetDesiege($id: Float!) @api(name: starkIndexer) {
+  query getDesiege($id: Float!) @api(name: starkIndexer) {
     getDesiege(id: $id) {
       ...DesiegeFragment
     }
@@ -504,7 +504,7 @@ export type GetDesiegeQueryResult = Apollo.QueryResult<
   GetDesiegeQueryVariables
 >;
 export const GetRealmDocument = gql`
-  query GetRealm($id: Float!) @api(name: starkIndexer) {
+  query getRealm($id: Float!) @api(name: starkIndexer) {
     getRealm(realmId: $id) {
       ...RealmFragment
     }
@@ -558,7 +558,7 @@ export type GetRealmQueryResult = Apollo.QueryResult<
   GetRealmQueryVariables
 >;
 export const GetRealmsDocument = gql`
-  query GetRealms @api(name: starkIndexer) {
+  query getRealms @api(name: starkIndexer) {
     getRealms {
       ...RealmFragment
     }
@@ -611,7 +611,7 @@ export type GetRealmsQueryResult = Apollo.QueryResult<
   GetRealmsQueryVariables
 >;
 export const GetWalletDocument = gql`
-  query GetWallet($address: String!) @api(name: starkIndexer) {
+  query getWallet($address: String!) @api(name: starkIndexer) {
     getWallet(address: $address) {
       id
       realms {

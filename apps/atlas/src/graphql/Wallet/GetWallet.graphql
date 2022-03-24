@@ -1,5 +1,5 @@
  
-query GetWallet($address: String!) @api(name: starkIndexer) {
+query getWallet($address: String!) @api(name: starkIndexer) {
     getWallet(address: $address) {
       id
       realms {

@@ -1,5 +1,5 @@
  #import "./Realm.fragment.graphql"
-query GetRealms @api(name: starkIndexer) {
+query getRealms @api(name: starkIndexer) {
     getRealms {
         ...RealmFragment
     }
