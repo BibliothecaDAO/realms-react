@@ -12,6 +12,7 @@ export interface SelectProps<T extends unknown = string> {
   onChange: (value: T) => void;
   children: ReactNode;
   className?: string;
+  optionIcons?: boolean;
 }
 
 export const Select = <T extends unknown = string>({
@@ -20,6 +21,7 @@ export const Select = <T extends unknown = string>({
   onChange,
   children,
   className,
+  optionIcons,
   ...props
 }: SelectProps<T>) => {
   return (

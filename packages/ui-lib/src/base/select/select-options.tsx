@@ -22,7 +22,7 @@ export const SelectOptions = ({
     // >
     <Listbox.Options
       className={clsx(
-        'focus:outline-none absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800/80 py-1 text-base shadow-lg',
+        'focus:outline-none absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800/80 py-1 text-white shadow-lg',
         className
       )}
       {...props}

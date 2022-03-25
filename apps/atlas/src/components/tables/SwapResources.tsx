@@ -1,4 +1,4 @@
-import { Button, Select } from '@bibliotheca-dao/ui-lib';
+import { Button, Select, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 
@@ -20,12 +20,19 @@ function ResourceRow(): ReactElement {
   return (
     <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
       <div className="sm:w-1/2">
-        <Select value={selectedResource} onChange={setSelectedResource}>
+        <Select
+          optionIcons={true}
+          value={selectedResource}
+          onChange={setSelectedResource}
+        >
           <Select.Button
             label={selectedResource ? selectedResource.name : 'Select'}
             variant={selectedResource ? 'default' : 'placeholder'}
             icon={
               <ChevronRight className="w-5 h-5 text-white transform -rotate-90" />
+            }
+            labelIcon={
+              <ResourceIcon size="sm" resource={selectedResource.name} />
             }
           />
           <Select.Options>
@@ -35,6 +42,7 @@ function ResourceRow(): ReactElement {
                 value={resource}
                 label={resource.name}
                 selectedIcon={<ChevronRight />}
+                icon={<ResourceIcon size="sm" resource={resource.name} />}
               />
             ))}
           </Select.Options>
