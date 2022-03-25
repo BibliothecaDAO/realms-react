@@ -136,7 +136,7 @@ function Overview(props: RealmProps): ReactElement {
   );
 }
 
-export function Realm(props: RealmProps): ReactElement {
+export function RealmCard(props: RealmProps): ReactElement {
   const { gotoAssetId } = useUIContext();
 
   const tabs = useMemo(

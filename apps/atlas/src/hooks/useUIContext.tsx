@@ -17,7 +17,7 @@ export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
 
-export type MenuType = 'test' | PanelType;
+export type MenuType = 'resourceSwap' | PanelType;
 
 export type AssetFilter = {
   value: AssetType;
@@ -155,6 +155,7 @@ function useCoordinates() {
   };
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function useUI(): UI {
   const router = useRouter();
   const query = useQueryPOI();
@@ -208,8 +209,13 @@ function useUI(): UI {
       setPanelType(undefined);
       setMenuType(undefined);
     } else {
-      setPanelType(panelType);
-      setMenuType(panelType);
+      if (panelType === 'bank') {
+        setPanelType(panelType);
+        setMenuType('resourceSwap');
+      } else {
+        setPanelType(panelType);
+        setMenuType(panelType);
+      }
     }
   };
   const toggleArtBackground = () => {

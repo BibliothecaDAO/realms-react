@@ -6,20 +6,15 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useState, useMemo } from 'react';
-import { Realm } from '@/components/cards/Realm';
+import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmsEmpire } from '@/components/map/RealmsEmpire';
 import { RealmOverview } from '@/components/tables/RealmOverview';
 import { useUIContext } from '@/hooks/useUIContext';
+import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
   const { togglePanelType, selectedPanel } = useUIContext();
 
-  const isEmpireMenu = selectedPanel === 'realm';
-  const animation = useSpring({
-    opacity: isEmpireMenu ? 1 : 0,
-    transform: isEmpireMenu ? `translateY(0)` : `translateY(-200%)`,
-    delay: 200,
-  });
   const tabs = useMemo(
     () => [
       {
@@ -41,37 +36,30 @@ export const RealmsPanel = () => {
     []
   );
   return (
-    <animated.div
-      className="absolute top-0 z-30 w-full h-screen bg-center bg-cover"
-      style={animation}
-    >
-      <div
-        className={`h-screen overflow-y-scroll w-7/12 relative top-0 p-6 rounded-r-2xl`}
-      >
-        <div className="flex justify-between">
-          <h1 className="tex">Realms</h1>
-          <button
-            className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
-            onClick={() => togglePanelType('realm')}
-          >
-            CLOSE
-          </button>
-        </div>
-        <Tabs>
-          <Tabs.List className="ml-8">
-            {tabs.map((tab) => (
-              <Tabs.Tab key={tab.label} className="uppercase">
-                {tab.label}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels className="mt-8">
-            {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
+    <BasePanel open={selectedPanel === 'realm'}>
+      <div className="flex justify-between">
+        <h1 className="tex">Realms</h1>
+        <button
+          className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
+          onClick={() => togglePanelType('realm')}
+        >
+          CLOSE
+        </button>
       </div>
-    </animated.div>
+      <Tabs>
+        <Tabs.List className="ml-8">
+          {tabs.map((tab) => (
+            <Tabs.Tab key={tab.label} className="uppercase">
+              {tab.label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        <Tabs.Panels className="mt-8">
+          {tabs.map((tab) => (
+            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+          ))}
+        </Tabs.Panels>
+      </Tabs>
+    </BasePanel>
   );
 };

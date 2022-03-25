@@ -7,12 +7,14 @@ import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
+import { BankPanel } from '@/components/panels/BankPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
+import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
@@ -219,7 +221,9 @@ function App() {
           <div className="relative w-full h-full">
             <ArtBackground />
             <RealmsPanel />
+            <BankPanel />
             <RealmSideBar id={selectedId} />
+            <ResourceSwapSideBar />
             <CryptsSideBar id={selectedId} />
             <LootSideBar id={selectedId} />
             <GASideBar id={selectedId} />

@@ -4,7 +4,7 @@ import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
-import { Realm } from '../cards/Realm';
+import { RealmCard } from '../cards/RealmCard';
 import { BaseSideBar } from './BaseSideBar';
 
 type Props = {
@@ -27,7 +27,9 @@ export const RealmSideBar = (props: Props) => {
         >
           <Menu />
         </button>
-        {data && data.realm && <Realm realm={data!.realm} loading={loading} />}
+        {data && data.realm && (
+          <RealmCard realm={data!.realm} loading={loading} />
+        )}
       </div>
     </BaseSideBar>
   );
