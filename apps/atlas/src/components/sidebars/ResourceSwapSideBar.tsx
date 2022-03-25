@@ -22,15 +22,15 @@ export const ResourceSwapSideBar = (props: Props) => {
     () => [
       {
         label: 'Swap',
-        component: <SwapResources />,
+        component: <SwapResources key="1" />,
       },
       {
         label: 'LP Merchant',
-        component: <SwapResources />,
+        component: <Menu />,
       },
       {
         label: 'Stake',
-        component: <SwapResources />,
+        component: <Menu />,
       },
     ],
     []

@@ -20,7 +20,7 @@ export const SelectOption = ({
       className={({ active }) =>
         clsx(
           'relative cursor-pointer select-none py-2 pl-10 pr-4',
-          active ? 'bg-gray-100' : 'bg-white'
+          active ? 'bg-gray-600/70' : 'bg-gray-800/70'
         )
       }
       value={value}

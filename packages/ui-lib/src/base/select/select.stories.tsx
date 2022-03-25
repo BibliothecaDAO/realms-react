@@ -9,21 +9,21 @@ export default {
   title: 'Select',
 } as Meta;
 
-const people = [
-  { name: 'Wade Cooper' },
-  { name: 'Arlene Mccoy' },
-  { name: 'Devon Webb' },
-  { name: 'Tom Cook' },
-  { name: 'Tanya Fox' },
-  { name: 'Hellen Schmidt' },
+const resources = [
+  { name: 'Wood' },
+  { name: 'Stone' },
+  { name: 'Coal' },
+  { name: 'Ironwood' },
+  { name: 'Adamantine' },
+  { name: 'Mithral' },
 ];
 
 const Template: Story<SelectProps> = () => {
-  const [value, setValue] = useState(people[0]);
+  const [value, setValue] = useState(resources[0]);
 
   return (
-    <div className="w-48">
-      <Select label="People" value={value} onChange={setValue}>
+    <div className="p-16 sm:w-1/3 bg-gray-800/40">
+      <Select label="Resources" value={value} onChange={setValue}>
         <Select.Button
           label={value ? value.name : 'Select'}
           variant={value ? 'default' : 'placeholder'}
@@ -32,11 +32,11 @@ const Template: Story<SelectProps> = () => {
           }
         />
         <Select.Options>
-          {people.map((person, idx) => (
+          {resources.map((resource, idx) => (
             <Select.Option
               key={idx}
-              value={person}
-              label={person.name}
+              value={resource}
+              label={resource.name}
               selectedIcon={<ChevronRight />}
             />
           ))}

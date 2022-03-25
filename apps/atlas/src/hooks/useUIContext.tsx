@@ -203,12 +203,12 @@ function useUI(): UI {
     }
   };
   const togglePanelType = (panelType: PanelType) => {
-    toggleArtBackground();
-
     if (selectedPanel === panelType) {
       setPanelType(undefined);
       setMenuType(undefined);
+      setArtBackground(false);
     } else {
+      setArtBackground(true);
       if (panelType === 'bank') {
         setPanelType(panelType);
         setMenuType('resourceSwap');

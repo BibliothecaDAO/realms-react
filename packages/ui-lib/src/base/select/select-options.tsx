@@ -13,21 +13,22 @@ export const SelectOptions = ({
   ...props
 }: SelectOptionsProps) => {
   return (
-    <Transition
-      as={Fragment}
-      leave="transition ease-in duration-100"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
+    // TODO trnasition conflict with react spring maybe?
+    // <Transition
+    //   as={Fragment}
+    //   leave="transition ease-in duration-100"
+    //   leaveFrom="opacity-100"
+    //   leaveTo="opacity-0"
+    // >
+    <Listbox.Options
+      className={clsx(
+        'focus:outline-none absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-800/80 py-1 text-base shadow-lg',
+        className
+      )}
+      {...props}
     >
-      <Listbox.Options
-        className={clsx(
-          'focus:outline-none absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </Listbox.Options>
-    </Transition>
+      {children}
+    </Listbox.Options>
+    // </Transition>
   );
 };
