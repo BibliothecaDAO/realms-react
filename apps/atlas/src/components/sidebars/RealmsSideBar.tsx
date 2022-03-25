@@ -20,7 +20,7 @@ export const RealmSideBar = (props: Props) => {
 
   return (
     <BaseSideBar open={selectedMenuType === 'realm'}>
-      <div className="top-0 bottom-0 right-0 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
+      <div className="top-0 bottom-0 right-0 w-full p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
         <button
           className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={() => toggleMenuType('realm')}

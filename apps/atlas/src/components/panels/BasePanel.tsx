@@ -17,11 +17,11 @@ export const BasePanel = (props: Props) => {
 
   return (
     <animated.div
-      className="absolute top-0 z-30 w-full h-screen bg-center bg-cover"
+      className="absolute top-0 z-30 w-full h-full bg-center bg-cover"
       style={animation}
     >
       <div
-        className={`h-screen overflow-y-scroll w-7/12 relative top-0 p-6 rounded-r-2xl`}
+        className={`h-full overflow-y-auto w-7/12 relative top-0 p-6 rounded-r-2xl`}
       >
         {props.children}
       </div>

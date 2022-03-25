@@ -37,7 +37,7 @@ export const ResourceSwapSideBar = (props: Props) => {
   );
   return (
     <BaseSideBar open={selectedMenuType === 'resourceSwap'}>
-      <div className="top-0 bottom-0 right-0 w-full h-screen p-6 pt-10 overflow-auto sm:w-5/12 rounded-r-2xl">
+      <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 sm:w-5/12 rounded-r-2xl">
         <div className="flex justify-between">
           <button
             className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
@@ -48,7 +48,7 @@ export const ResourceSwapSideBar = (props: Props) => {
           <h2 className="uppercase">Resource Swap</h2>
           <div />
         </div>
-        <Tabs variant="primary">
+        <Tabs className="h-full" variant="primary">
           <Tabs.List className="">
             {tabs.map((tab) => (
               <Tabs.Tab key={tab.label} className="uppercase">
@@ -56,7 +56,7 @@ export const ResourceSwapSideBar = (props: Props) => {
               </Tabs.Tab>
             ))}
           </Tabs.List>
-          <Tabs.Panels>
+          <Tabs.Panels className="h-full">
             {tabs.map((tab) => (
               <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
             ))}

@@ -14,7 +14,7 @@ export const ArtBackground = () => {
 
   return (
     <animated.div
-      className="absolute top-0 z-20 w-full w-screen h-screen bg-center bg-cover bg-hero "
+      className="absolute top-0 z-20 w-full h-full bg-center bg-cover bg-hero "
       style={opacityAnimation}
     ></animated.div>
   );
