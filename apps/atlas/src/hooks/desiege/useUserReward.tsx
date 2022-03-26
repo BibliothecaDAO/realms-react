@@ -1,7 +1,6 @@
 import { useContract, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
 import type { Abi } from 'starknet';
-import { toBN } from 'starknet/dist/utils/number';
 import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
 
 import { useModuleAddress } from '../useModuleAddress';
