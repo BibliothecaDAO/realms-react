@@ -86,3 +86,11 @@ body {
     }
   }
 }
+
+.rc-input-number-wrap,
+.rc-input-number-input {
+  background: inherit;
+  width: 100%;
+  text-align: right;
+  font-weight: inherit;
+}

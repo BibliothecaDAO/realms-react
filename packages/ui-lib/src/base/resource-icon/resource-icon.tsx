@@ -7,10 +7,10 @@ import ColdIron from '../../icons/resources/ColdIron.svg';
 import Copper from '../../icons/resources/Copper.svg';
 import DeepCrystal from '../../icons/resources/DeepCrystal.svg';
 import Diamonds from '../../icons/resources/Diamonds.svg';
-import DragonHide from '../../icons/resources/DragonHide.svg';
-import EtheralSilica from '../../icons/resources/EtheralSilica.svg';
+import Dragonhide from '../../icons/resources/Dragonhide.svg';
+import EtherealSilica from '../../icons/resources/EtherealSilica.svg';
 import Gold from '../../icons/resources/Gold.svg';
-import HeartWood from '../../icons/resources/HeartWood.svg';
+import Hartwood from '../../icons/resources/Hartwood.svg';
 import Ignium from '../../icons/resources/Ignium.svg';
 import Ironwood from '../../icons/resources/Ironwood.svg';
 import Mithral from '../../icons/resources/Mithral.svg';
@@ -36,10 +36,10 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   Copper: <Copper />,
   DeepCrystal: <DeepCrystal />,
   Diamonds: <Diamonds />,
-  DragonHide: <DragonHide />,
-  EtheralSilica: <EtheralSilica />,
+  Dragonhide: <Dragonhide />,
+  EtherealSilica: <EtherealSilica />,
   Gold: <Gold />,
-  HeartWood: <HeartWood />,
+  Hartwood: <Hartwood />,
   Ignium: <Ignium />,
   Ironwood: <Ironwood />,
   Mithral: <Mithral />,
