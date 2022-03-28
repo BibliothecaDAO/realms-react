@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type BN from 'bn.js';
 import { number, Provider } from 'starknet';
+import type { GameStatus } from '../types';
 const { toBN } = number;
 
 // Contract calculates effects in BIPS
@@ -78,6 +79,19 @@ export const getMainHealth: GamePromise<BN> = async (gameIndex) => {
   });
   const [mainHealth] = res.result;
   return number.toBN(mainHealth);
+};
+
+export const getGameStatus: GamePromise<GameStatus> = async (gameIndex) => {
+  const tdAddress = await getModuleAddress('1');
+
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_game_state',
+    calldata: [gameIndex],
+  });
+
+  const [state] = res.result;
+  return state == '0x0' ? 'active' : 'expired';
 };
 
 export const getShieldValue: (
@@ -169,11 +183,10 @@ export type GameContext = {
   currentBoost: number; // in basis points
 };
 
-export const getGameContextVariables: (
-  towerDefenceAddress: string
-) => Promise<GameContext> = async (tdAddr) => {
+export const getGameContextVariables: () => Promise<GameContext> = async () => {
+  const tdAddress = await getModuleAddress('1');
   const res = await provider.callContract({
-    contractAddress: tdAddr,
+    contractAddress: tdAddress,
     entrypoint: 'get_game_context_variables',
     calldata: [],
   });
@@ -191,6 +204,17 @@ export const getGameContextVariables: (
   };
 
   return ctx;
+};
+
+export const getCurrentBoost: () => Promise<number> = async () => {
+  const tdAddress = await getModuleAddress('1');
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_current_boost',
+    calldata: [],
+  });
+  const [boostHex] = res.result;
+  return toBN(boostHex).toNumber();
 };
 
 /*
