@@ -2,15 +2,9 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -72,7 +66,7 @@ export enum BuildingType {
   ResourceFacility = 'Resource_Facility',
   RoyalReserve = 'Royal_Reserve',
   School = 'School',
-  Symposium = 'Symposium',
+  Symposium = 'Symposium'
 }
 
 export type BuildingTypeInput = {
@@ -129,25 +123,31 @@ export type Mutation = {
   reindexDesiege: Scalars['Boolean'];
 };
 
+
 export type MutationCreateOrUpdateBuildingCostArgs = {
   data: BuildingCostInput;
 };
+
 
 export type MutationCreateOrUpdateBuildingsArgs = {
   data: BuildingInput;
 };
 
+
 export type MutationCreateOrUpdateRealmArgs = {
   data: RealmInput;
 };
+
 
 export type MutationCreateOrUpdateRealmTraitArgs = {
   data: RealmTraitInput;
 };
 
+
 export type MutationCreateOrUpdateResourcesArgs = {
   data: ResourceInput;
 };
+
 
 export type MutationCreateOrUpdateWalletArgs = {
   data: WalletInput;
@@ -156,7 +156,7 @@ export type MutationCreateOrUpdateWalletArgs = {
 /** Order By Direction */
 export enum OrderByDirectionInput {
   Asc = 'asc',
-  Desc = 'desc',
+  Desc = 'desc'
 }
 
 export enum OrderType {
@@ -175,7 +175,7 @@ export enum OrderType {
   Titans = 'Titans',
   Vitriol = 'Vitriol',
   TheFox = 'the_Fox',
-  TheTwins = 'the_Twins',
+  TheTwins = 'the_Twins'
 }
 
 export type OrderTypeInput = {
@@ -206,42 +206,54 @@ export type Query = {
   getWallets: Array<Wallet>;
 };
 
+
 export type QueryGetBuildingArgs = {
   id: Scalars['Float'];
 };
+
 
 export type QueryGetBuildingsByAddressArgs = {
   address: Scalars['String'];
 };
 
+
 export type QueryGetBuildingsByRealmArgs = {
   realmId: Scalars['Float'];
 };
+
 
 export type QueryGetDesiegeArgs = {
   id: Scalars['Float'];
 };
 
+
 export type QueryGetEventArgs = {
   id: Scalars['Float'];
 };
+
 
 export type QueryGetRealmArgs = {
   realmId: Scalars['Float'];
 };
 
+
 export type QueryGetRealmsArgs = {
   filter?: InputMaybe<RealmFilterInput>;
   orderBy?: InputMaybe<RealmOrderByInput>;
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
 };
+
 
 export type QueryGetResourceArgs = {
   id: Scalars['Float'];
 };
 
+
 export type QueryGetResourcesByAddressArgs = {
   address: Scalars['String'];
 };
+
 
 export type QueryGetWalletArgs = {
   address: Scalars['String'];
@@ -265,6 +277,9 @@ export type Realm = {
 };
 
 export type RealmFilterInput = {
+  AND?: InputMaybe<Array<RealmFilterInput>>;
+  NOT?: InputMaybe<Array<RealmFilterInput>>;
+  OR?: InputMaybe<Array<RealmFilterInput>>;
   buildingType?: InputMaybe<BuildingTypeInput>;
   name?: InputMaybe<StringFilterInput>;
   orderType?: InputMaybe<OrderTypeInput>;
@@ -314,7 +329,7 @@ export enum RealmTraitType {
   City = 'City',
   Harbor = 'Harbor',
   Region = 'Region',
-  River = 'River',
+  River = 'River'
 }
 
 export type RealmTraitTypeInput = {
@@ -362,7 +377,7 @@ export enum ResourceType {
   Stone = 'Stone',
   TrueIce = 'True_Ice',
   TwilightQuartz = 'Twilight_Quartz',
-  Wood = 'Wood',
+  Wood = 'Wood'
 }
 
 export type ResourceTypeInput = {
@@ -383,7 +398,7 @@ export type Squad = {
 
 export enum SquadAction {
   Defence = 'Defence',
-  Offence = 'Offence',
+  Offence = 'Offence'
 }
 
 export type SquadActionInput = {
@@ -412,7 +427,7 @@ export enum SquadType {
   Shaman = 'Shaman',
   Sniper = 'Sniper',
   Squire = 'Squire',
-  Watchman = 'Watchman',
+  Watchman = 'Watchman'
 }
 
 export type SquadTypeInput = {
@@ -449,205 +464,88 @@ export type WalletInput = {
   realms?: InputMaybe<RealmInput>;
 };
 
-export type DesiegeFragmentFragment = {
-  __typename?: 'Desiege';
-  id: string;
-  gameId: number;
-  winner: number;
-  attackedTokens: number;
-  defendedTokens: number;
-  eventIndexed: number;
-  initialHealth: number;
-  startedOn: any;
-};
+export type DesiegeFragmentFragment = { __typename?: 'Desiege', id: string, gameId: number, winner: number, attackedTokens: number, defendedTokens: number, eventIndexed: number, initialHealth: number, startedOn: any };
 
 export type GetDesiegeQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-export type GetDesiegeQuery = {
-  __typename?: 'Query';
-  getDesiege: {
-    __typename?: 'Desiege';
-    id: string;
-    gameId: number;
-    winner: number;
-    attackedTokens: number;
-    defendedTokens: number;
-    eventIndexed: number;
-    initialHealth: number;
-    startedOn: any;
-  };
-};
+
+export type GetDesiegeQuery = { __typename?: 'Query', getDesiege: { __typename?: 'Desiege', id: string, gameId: number, winner: number, attackedTokens: number, defendedTokens: number, eventIndexed: number, initialHealth: number, startedOn: any } };
 
 export type GetRealmQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
 
-export type GetRealmQuery = {
-  __typename?: 'Query';
-  getRealm: {
-    __typename?: 'Realm';
-    realmId: number;
-    owner?: string | null;
-    name?: string | null;
-    rarityRank: number;
-    rarityScore: number;
-    orderType: string;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-    traits?: Array<{
-      __typename?: 'RealmTrait';
-      type: string;
-      qty: number;
-    }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
-    squads?: Array<{
-      __typename?: 'Squad';
-      action: string;
-      type: string;
-    }> | null;
-  };
-};
 
-export type GetRealmsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetRealmQuery = { __typename?: 'Query', getRealm: { __typename?: 'Realm', realmId: number, owner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, resources?: Array<{ __typename?: 'Resource', type: string }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, buildings?: Array<{ __typename?: 'Building', type?: string | null }> | null, squads?: Array<{ __typename?: 'Squad', action: string, type: string }> | null } };
 
-export type GetRealmsQuery = {
-  __typename?: 'Query';
-  getRealms: Array<{
-    __typename?: 'Realm';
-    realmId: number;
-    owner?: string | null;
-    name?: string | null;
-    rarityRank: number;
-    rarityScore: number;
-    orderType: string;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-    traits?: Array<{
-      __typename?: 'RealmTrait';
-      type: string;
-      qty: number;
-    }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
-    squads?: Array<{
-      __typename?: 'Squad';
-      action: string;
-      type: string;
-    }> | null;
-  }>;
-};
+export type GetRealmsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type RealmFragmentFragment = {
-  __typename?: 'Realm';
-  realmId: number;
-  owner?: string | null;
-  name?: string | null;
-  rarityRank: number;
-  rarityScore: number;
-  orderType: string;
-  resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-  traits?: Array<{
-    __typename?: 'RealmTrait';
-    type: string;
-    qty: number;
-  }> | null;
-  buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
-  squads?: Array<{ __typename?: 'Squad'; action: string; type: string }> | null;
-};
 
-export type ResourceFragmentFragment = {
-  __typename?: 'Resource';
-  id: string;
-  type: string;
-  realmId?: number | null;
-};
+export type GetRealmsQuery = { __typename?: 'Query', getRealms: Array<{ __typename?: 'Realm', realmId: number, owner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, resources?: Array<{ __typename?: 'Resource', type: string }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, buildings?: Array<{ __typename?: 'Building', type?: string | null }> | null, squads?: Array<{ __typename?: 'Squad', action: string, type: string }> | null }> };
+
+export type RealmFragmentFragment = { __typename?: 'Realm', realmId: number, owner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, resources?: Array<{ __typename?: 'Resource', type: string }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, buildings?: Array<{ __typename?: 'Building', type?: string | null }> | null, squads?: Array<{ __typename?: 'Squad', action: string, type: string }> | null };
+
+export type ResourceFragmentFragment = { __typename?: 'Resource', id: string, type: string, realmId?: number | null };
 
 export type GetWalletQueryVariables = Exact<{
   address: Scalars['String'];
 }>;
 
-export type GetWalletQuery = {
-  __typename?: 'Query';
-  getWallet: {
-    __typename?: 'Wallet';
-    id: string;
-    realms: Array<{
-      __typename?: 'Realm';
-      realmId: number;
-      owner?: string | null;
-      name?: string | null;
-      rarityRank: number;
-      rarityScore: number;
-      orderType: string;
-      resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-      traits?: Array<{
-        __typename?: 'RealmTrait';
-        type: string;
-        qty: number;
-      }> | null;
-      buildings?: Array<{
-        __typename?: 'Building';
-        type?: string | null;
-      }> | null;
-      squads?: Array<{
-        __typename?: 'Squad';
-        action: string;
-        type: string;
-      }> | null;
-    }>;
-  };
-};
+
+export type GetWalletQuery = { __typename?: 'Query', getWallet: { __typename?: 'Wallet', id: string, realms: Array<{ __typename?: 'Realm', realmId: number, owner?: string | null, name?: string | null, rarityRank: number, rarityScore: number, orderType: string, resources?: Array<{ __typename?: 'Resource', type: string }> | null, traits?: Array<{ __typename?: 'RealmTrait', type: string, qty: number }> | null, buildings?: Array<{ __typename?: 'Building', type?: string | null }> | null, squads?: Array<{ __typename?: 'Squad', action: string, type: string }> | null }> } };
 
 export const DesiegeFragmentFragmentDoc = gql`
-  fragment DesiegeFragment on Desiege {
-    id
-    gameId
-    winner
-    attackedTokens
-    defendedTokens
-    eventIndexed
-    initialHealth
-    startedOn
-  }
-`;
+    fragment DesiegeFragment on Desiege {
+  id
+  gameId
+  winner
+  attackedTokens
+  defendedTokens
+  eventIndexed
+  initialHealth
+  startedOn
+}
+    `;
 export const RealmFragmentFragmentDoc = gql`
-  fragment RealmFragment on Realm {
-    realmId
-    owner
-    name
-    rarityRank
-    rarityScore
-    orderType
-    resources {
-      type
-    }
-    traits {
-      type
-      qty
-    }
-    buildings {
-      type
-    }
-    squads {
-      action
-      type
-    }
-  }
-`;
-export const ResourceFragmentFragmentDoc = gql`
-  fragment ResourceFragment on Resource {
-    id
+    fragment RealmFragment on Realm {
+  realmId
+  owner
+  name
+  rarityRank
+  rarityScore
+  orderType
+  resources {
     type
-    realmId
   }
-`;
+  traits {
+    type
+    qty
+  }
+  buildings {
+    type
+  }
+  squads {
+    action
+    type
+  }
+}
+    `;
+export const ResourceFragmentFragmentDoc = gql`
+    fragment ResourceFragment on Resource {
+  id
+  type
+  realmId
+}
+    `;
 export const GetDesiegeDocument = gql`
-  query getDesiege($id: Float!) @api(name: starkIndexer) {
-    getDesiege(id: $id) {
-      ...DesiegeFragment
-    }
+    query getDesiege($id: Float!) @api(name: starkIndexer) {
+  getDesiege(id: $id) {
+    ...DesiegeFragment
   }
-  ${DesiegeFragmentFragmentDoc}
-`;
+}
+    ${DesiegeFragmentFragmentDoc}`;
 
 /**
  * __useGetDesiegeQuery__
@@ -665,46 +563,24 @@ export const GetDesiegeDocument = gql`
  *   },
  * });
  */
-export function useGetDesiegeQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetDesiegeQuery,
-    GetDesiegeQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
-    GetDesiegeDocument,
-    options
-  );
-}
-export function useGetDesiegeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetDesiegeQuery,
-    GetDesiegeQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(
-    GetDesiegeDocument,
-    options
-  );
-}
+export function useGetDesiegeQuery(baseOptions: Apollo.QueryHookOptions<GetDesiegeQuery, GetDesiegeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(GetDesiegeDocument, options);
+      }
+export function useGetDesiegeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDesiegeQuery, GetDesiegeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDesiegeQuery, GetDesiegeQueryVariables>(GetDesiegeDocument, options);
+        }
 export type GetDesiegeQueryHookResult = ReturnType<typeof useGetDesiegeQuery>;
-export type GetDesiegeLazyQueryHookResult = ReturnType<
-  typeof useGetDesiegeLazyQuery
->;
-export type GetDesiegeQueryResult = Apollo.QueryResult<
-  GetDesiegeQuery,
-  GetDesiegeQueryVariables
->;
+export type GetDesiegeLazyQueryHookResult = ReturnType<typeof useGetDesiegeLazyQuery>;
+export type GetDesiegeQueryResult = Apollo.QueryResult<GetDesiegeQuery, GetDesiegeQueryVariables>;
 export const GetRealmDocument = gql`
-  query getRealm($id: Float!) @api(name: starkIndexer) {
-    getRealm(realmId: $id) {
-      ...RealmFragment
-    }
+    query getRealm($id: Float!) @api(name: starkIndexer) {
+  getRealm(realmId: $id) {
+    ...RealmFragment
   }
-  ${RealmFragmentFragmentDoc}
-`;
+}
+    ${RealmFragmentFragmentDoc}`;
 
 /**
  * __useGetRealmQuery__
@@ -722,43 +598,24 @@ export const GetRealmDocument = gql`
  *   },
  * });
  */
-export function useGetRealmQuery(
-  baseOptions: Apollo.QueryHookOptions<GetRealmQuery, GetRealmQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetRealmQuery, GetRealmQueryVariables>(
-    GetRealmDocument,
-    options
-  );
-}
-export function useGetRealmLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetRealmQuery,
-    GetRealmQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetRealmQuery, GetRealmQueryVariables>(
-    GetRealmDocument,
-    options
-  );
-}
+export function useGetRealmQuery(baseOptions: Apollo.QueryHookOptions<GetRealmQuery, GetRealmQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRealmQuery, GetRealmQueryVariables>(GetRealmDocument, options);
+      }
+export function useGetRealmLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmQuery, GetRealmQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRealmQuery, GetRealmQueryVariables>(GetRealmDocument, options);
+        }
 export type GetRealmQueryHookResult = ReturnType<typeof useGetRealmQuery>;
-export type GetRealmLazyQueryHookResult = ReturnType<
-  typeof useGetRealmLazyQuery
->;
-export type GetRealmQueryResult = Apollo.QueryResult<
-  GetRealmQuery,
-  GetRealmQueryVariables
->;
+export type GetRealmLazyQueryHookResult = ReturnType<typeof useGetRealmLazyQuery>;
+export type GetRealmQueryResult = Apollo.QueryResult<GetRealmQuery, GetRealmQueryVariables>;
 export const GetRealmsDocument = gql`
-  query getRealms @api(name: starkIndexer) {
-    getRealms(filter: {}) {
-      ...RealmFragment
-    }
+    query getRealms @api(name: starkIndexer) {
+  getRealms(filter: {}) {
+    ...RealmFragment
   }
-  ${RealmFragmentFragmentDoc}
-`;
+}
+    ${RealmFragmentFragmentDoc}`;
 
 /**
  * __useGetRealmsQuery__
@@ -775,46 +632,27 @@ export const GetRealmsDocument = gql`
  *   },
  * });
  */
-export function useGetRealmsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(
-    GetRealmsDocument,
-    options
-  );
-}
-export function useGetRealmsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetRealmsQuery,
-    GetRealmsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetRealmsQuery, GetRealmsQueryVariables>(
-    GetRealmsDocument,
-    options
-  );
-}
-export type GetRealmsQueryHookResult = ReturnType<typeof useGetRealmsQuery>;
-export type GetRealmsLazyQueryHookResult = ReturnType<
-  typeof useGetRealmsLazyQuery
->;
-export type GetRealmsQueryResult = Apollo.QueryResult<
-  GetRealmsQuery,
-  GetRealmsQueryVariables
->;
-export const GetWalletDocument = gql`
-  query getWallet($address: String!) @api(name: starkIndexer) {
-    getWallet(address: $address) {
-      id
-      realms {
-        ...RealmFragment
+export function useGetRealmsQuery(baseOptions?: Apollo.QueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRealmsQuery, GetRealmsQueryVariables>(GetRealmsDocument, options);
       }
+export function useGetRealmsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRealmsQuery, GetRealmsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRealmsQuery, GetRealmsQueryVariables>(GetRealmsDocument, options);
+        }
+export type GetRealmsQueryHookResult = ReturnType<typeof useGetRealmsQuery>;
+export type GetRealmsLazyQueryHookResult = ReturnType<typeof useGetRealmsLazyQuery>;
+export type GetRealmsQueryResult = Apollo.QueryResult<GetRealmsQuery, GetRealmsQueryVariables>;
+export const GetWalletDocument = gql`
+    query getWallet($address: String!) @api(name: starkIndexer) {
+  getWallet(address: $address) {
+    id
+    realms {
+      ...RealmFragment
     }
   }
-  ${RealmFragmentFragmentDoc}
-`;
+}
+    ${RealmFragmentFragmentDoc}`;
 
 /**
  * __useGetWalletQuery__
@@ -832,32 +670,14 @@ export const GetWalletDocument = gql`
  *   },
  * });
  */
-export function useGetWalletQuery(
-  baseOptions: Apollo.QueryHookOptions<GetWalletQuery, GetWalletQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetWalletQuery, GetWalletQueryVariables>(
-    GetWalletDocument,
-    options
-  );
-}
-export function useGetWalletLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetWalletQuery,
-    GetWalletQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetWalletQuery, GetWalletQueryVariables>(
-    GetWalletDocument,
-    options
-  );
-}
+export function useGetWalletQuery(baseOptions: Apollo.QueryHookOptions<GetWalletQuery, GetWalletQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetWalletQuery, GetWalletQueryVariables>(GetWalletDocument, options);
+      }
+export function useGetWalletLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetWalletQuery, GetWalletQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetWalletQuery, GetWalletQueryVariables>(GetWalletDocument, options);
+        }
 export type GetWalletQueryHookResult = ReturnType<typeof useGetWalletQuery>;
-export type GetWalletLazyQueryHookResult = ReturnType<
-  typeof useGetWalletLazyQuery
->;
-export type GetWalletQueryResult = Apollo.QueryResult<
-  GetWalletQuery,
-  GetWalletQueryVariables
->;
+export type GetWalletLazyQueryHookResult = ReturnType<typeof useGetWalletLazyQuery>;
+export type GetWalletQueryResult = Apollo.QueryResult<GetWalletQuery, GetWalletQueryVariables>;
