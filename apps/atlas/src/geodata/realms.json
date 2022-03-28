@@ -83,7 +83,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.48, 28.8003]
+        "coordinates": [-90.88, -20.4997]
       },
       "properties": {
         "name": "ta Tin",
@@ -187,7 +187,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.2175, 39.3775]
+        "coordinates": [-102.38, -6.8997]
       },
       "properties": {
         "name": "Qeujqeujwouw",
@@ -454,7 +454,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.78, 30.0003]
+        "coordinates": [-105.48, -5.1997]
       },
       "properties": {
         "name": "Zhusa-Letepo",
@@ -487,7 +487,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.18, -14.8997]
+        "coordinates": [-111.58, 35.7003]
       },
       "properties": {
         "name": "Sn\u00fadusugato",
@@ -812,7 +812,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.6801, 39.8004]
+        "coordinates": [-75.7801, 44.9004]
       },
       "properties": {
         "name": "Siwseysawp",
@@ -838,7 +838,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.5785, 29.993]
+        "coordinates": [-97.2801, 45.1004]
       },
       "properties": {
         "name": "as Oket",
@@ -877,7 +877,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.1801, 43.9004]
+        "coordinates": [-104.7801, 39.3004]
       },
       "properties": {
         "name": "Nriputam",
@@ -916,7 +916,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.2844, 29.0744]
+        "coordinates": [-89.2801, 46.4004]
       },
       "properties": {
         "name": "Syunnan-Tin",
@@ -1092,7 +1092,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.88, -8.3997]
+        "coordinates": [-104.28, -7.7997]
       },
       "properties": {
         "name": "Siosua",
@@ -1131,7 +1131,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.9801, 33.9004]
+        "coordinates": [-88.0758, 45.7623]
       },
       "properties": {
         "name": "Munsmum",
@@ -1183,7 +1183,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.2144, -8.5028]
+        "coordinates": [-90.68, -29.4997]
       },
       "properties": {
         "name": "sh\u00eds T\u00e9ssm\u00e9s",
@@ -1235,7 +1235,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9801, 35.0004]
+        "coordinates": [-93.1801, 49.1004]
       },
       "properties": {
         "name": "Spinkonpin",
@@ -1509,7 +1509,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.3016, 41.7648]
+        "coordinates": [-73.4801, 40.1004]
       },
       "properties": {
         "name": "Purskirkir",
@@ -2211,7 +2211,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.6801, 49.2004]
+        "coordinates": [-107.4524, 44.9418]
       },
       "properties": {
         "name": "Tathamke",
@@ -2419,7 +2419,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.0801, 50.8004]
+        "coordinates": [-97.2801, 47.2004]
       },
       "properties": {
         "name": "Klunklinpun",
@@ -2614,7 +2614,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.5801, 50.0004]
+        "coordinates": [-70.0801, 46.4004]
       },
       "properties": {
         "name": "Luuslumsluum",
@@ -2640,7 +2640,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.7328, 45.9053]
+        "coordinates": [-81.0801, 50.8004]
       },
       "properties": {
         "name": "Aami\u017e",
@@ -2817,7 +2817,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.3455, 45.9465]
+        "coordinates": [-78.8801, 44.0004]
       },
       "properties": {
         "name": "Nainuonuopau",
@@ -3084,7 +3084,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.28, -7.7997]
+        "coordinates": [-108.98, 33.8003]
       },
       "properties": {
         "name": "T\u00e1t\u00edlisum",
@@ -3110,7 +3110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.8666, -7.2487]
+        "coordinates": [-114.38, -31.5997]
       },
       "properties": {
         "name": "Gunungqun",
@@ -3305,7 +3305,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.68, 38.9003]
+        "coordinates": [-103.28, -6.9997]
       },
       "properties": {
         "name": "Nunkonlam",
@@ -3760,7 +3760,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.0224, -15.585]
+        "coordinates": [-111.7403, 36.671]
       },
       "properties": {
         "name": "Nuhnekmuhhok",
@@ -3845,7 +3845,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.5382, 34.0411]
+        "coordinates": [-104.88, 32.0003]
       },
       "properties": {
         "name": "Taupti\u00edmai",
@@ -3897,7 +3897,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.2158, 29.002]
+        "coordinates": [-96.9801, 38.6004]
       },
       "properties": {
         "name": "Ukusun",
@@ -4066,7 +4066,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.28, -4.1997]
+        "coordinates": [-117.38, 36.7003]
       },
       "properties": {
         "name": "Konkon",
@@ -4092,7 +4092,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.68, 38.2003]
+        "coordinates": [-90.48, -21.5997]
       },
       "properties": {
         "name": "Onuhamomom",
@@ -4118,7 +4118,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.634, 42.2865]
+        "coordinates": [-83.5383, 27.9385]
       },
       "properties": {
         "name": "\u00c2m\u00e2n\u00e2me",
@@ -4718,7 +4718,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.5801, 38.9004]
+        "coordinates": [-97.3801, 38.7004]
       },
       "properties": {
         "name": "Toalnuopeam",
@@ -4822,7 +4822,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.7887, 28.8484]
+        "coordinates": [-93.2533, 33.6863]
       },
       "properties": {
         "name": "Nirmu",
@@ -5162,7 +5162,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.3801, 35.1004]
+        "coordinates": [-89.0148, 30.6577]
       },
       "properties": {
         "name": "Tinnu",
@@ -5331,7 +5331,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-82.7801, 47.4004]
+        "coordinates": [-103.3801, 40.7004]
       },
       "properties": {
         "name": "Tusluslustos",
@@ -5403,7 +5403,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.78, 35.9003]
+        "coordinates": [-101.38, -7.4997]
       },
       "properties": {
         "name": "Siningiinnin",
@@ -5572,7 +5572,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.0801, 36.6004]
+        "coordinates": [-68.4477, 41.7842]
       },
       "properties": {
         "name": "Enuhuh",
@@ -5611,7 +5611,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.2078, 47.991]
+        "coordinates": [-97.2801, 46.0004]
       },
       "properties": {
         "name": "Imupon",
@@ -5676,7 +5676,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.5801, 31.0308]
+        "coordinates": [-104.8801, 41.6004]
       },
       "properties": {
         "name": "Kozhdus",
@@ -5728,7 +5728,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.48, -23.2997]
+        "coordinates": [-110.2876, 29.2411]
       },
       "properties": {
         "name": "Hut Nihnat",
@@ -5754,7 +5754,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.38, -6.1997]
+        "coordinates": [-109.9428, -34.9929]
       },
       "properties": {
         "name": "Itik\u00fcn",
@@ -5780,7 +5780,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.78, -21.3997]
+        "coordinates": [-89.68, -31.8997]
       },
       "properties": {
         "name": "me-Ku",
@@ -5897,7 +5897,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.08, 31.9003]
+        "coordinates": [-89.88, -22.0997]
       },
       "properties": {
         "name": "Sunte",
@@ -5949,7 +5949,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-67.9801, 45.2004]
+        "coordinates": [-79.4801, 44.5004]
       },
       "properties": {
         "name": "el-Sort",
@@ -6372,7 +6372,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.1801, 44.2004]
+        "coordinates": [-79.8801, 51.5004]
       },
       "properties": {
         "name": "Tukumo",
@@ -6528,7 +6528,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.28, -19.4997]
+        "coordinates": [-111.08, 34.9003]
       },
       "properties": {
         "name": "Songgen",
@@ -6990,7 +6990,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.5801, 42.8004]
+        "coordinates": [-76.2801, 44.7004]
       },
       "properties": {
         "name": "Nilalni Pe",
@@ -7042,7 +7042,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.1801, 30.2004]
+        "coordinates": [-98.4801, 49.4004]
       },
       "properties": {
         "name": "Pulsilkpelm",
@@ -7107,7 +7107,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.38, -30.7997]
+        "coordinates": [-109.0844, 33.571]
       },
       "properties": {
         "name": "Plimsen",
@@ -7120,7 +7120,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.7801, 46.1004]
+        "coordinates": [-107.6524, 45.1418]
       },
       "properties": {
         "name": "L\u00e9nnunne",
@@ -7133,7 +7133,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.48, -34.6997]
+        "coordinates": [-102.68, -35.8997]
       },
       "properties": {
         "name": "Irma\u017eimil\u017e",
@@ -7406,7 +7406,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.9801, 51.4004]
+        "coordinates": [-70.8246, 41.6281]
       },
       "properties": {
         "name": "Tinkeniimtin",
@@ -7458,7 +7458,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.8824, 44.315]
+        "coordinates": [-71.9801, 37.0004]
       },
       "properties": {
         "name": "Rizhubred",
@@ -7640,7 +7640,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.9602, 30.025]
+        "coordinates": [-94.4793, 34.8164]
       },
       "properties": {
         "name": "Moupkiapiw",
@@ -7757,7 +7757,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.2801, 46.4004]
+        "coordinates": [-99.4607, 39.1164]
       },
       "properties": {
         "name": "Su ij Chu",
@@ -7796,7 +7796,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.7801, 49.8004]
+        "coordinates": [-74.0801, 33.5004]
       },
       "properties": {
         "name": "Meketypa",
@@ -8335,7 +8335,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.8025, 31.9697]
+        "coordinates": [-99.2354, 40.8658]
       },
       "properties": {
         "name": "leil Urelsh",
@@ -8524,7 +8524,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.58, -34.8997]
+        "coordinates": [-90.78, -22.4997]
       },
       "properties": {
         "name": "Slemmop",
@@ -8706,7 +8706,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.1317, 36.1049]
+        "coordinates": [-103.4801, 40.2004]
       },
       "properties": {
         "name": "Muamuis",
@@ -8719,7 +8719,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.38, -6.3997]
+        "coordinates": [-107.9456, -5.6503]
       },
       "properties": {
         "name": "Mimmu Huhi",
@@ -8862,7 +8862,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.5801, 44.1004]
+        "coordinates": [-83.0801, 47.2004]
       },
       "properties": {
         "name": "Plenlim",
@@ -8888,7 +8888,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.2394, 3.0847]
+        "coordinates": [-103.0581, 3.6187]
       },
       "properties": {
         "name": "\u00c9tom\u00edm",
@@ -9278,7 +9278,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.98, -5.0997]
+        "coordinates": [-108.68, -0.8997]
       },
       "properties": {
         "name": "Shetaltdel",
@@ -9766,7 +9766,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.9409, 31.033]
+        "coordinates": [-104.98, 35.5003]
       },
       "properties": {
         "name": "ser Smulszu",
@@ -9870,7 +9870,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.38, -8.1997]
+        "coordinates": [-91.48, -23.2997]
       },
       "properties": {
         "name": "Usipamulam",
@@ -9909,7 +9909,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.3627, 40.7775]
+        "coordinates": [-73.7801, 34.7004]
       },
       "properties": {
         "name": "Klonmon",
@@ -9922,7 +9922,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.9801, 45.9004]
+        "coordinates": [-102.9801, 41.5004]
       },
       "properties": {
         "name": "P\u00edpk\u00edn",
@@ -9935,7 +9935,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.0274, 34.3004]
+        "coordinates": [-101.2199, 42.2727]
       },
       "properties": {
         "name": "Niaspaus",
@@ -9974,7 +9974,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.9701, 39.8863]
+        "coordinates": [-103.9801, 39.0004]
       },
       "properties": {
         "name": "Idichir",
@@ -10013,7 +10013,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.3801, 38.7004]
+        "coordinates": [-84.3297, 28.3318]
       },
       "properties": {
         "name": "\u00c4p\u00e4wazh",
@@ -10039,7 +10039,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.9801, 51.1004]
+        "coordinates": [-83.5801, 46.7004]
       },
       "properties": {
         "name": "Kinonony",
@@ -10104,7 +10104,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.7801, 44.9004]
+        "coordinates": [-104.0254, 43.2363]
       },
       "properties": {
         "name": "Udununudes",
@@ -10150,7 +10150,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.8801, 41.2004]
+        "coordinates": [-97.7801, 38.7004]
       },
       "properties": {
         "name": "paurg \u010cur\u010dur",
@@ -10561,7 +10561,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.38, -26.8997]
+        "coordinates": [-104.38, -35.8997]
       },
       "properties": {
         "name": "key Maykmayk",
@@ -11147,7 +11147,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.5383, 27.9385]
+        "coordinates": [-92.8025, 31.9697]
       },
       "properties": {
         "name": "sek Smisses",
@@ -11186,7 +11186,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.18, -28.6997]
+        "coordinates": [-116.38, 29.7003]
       },
       "properties": {
         "name": "Ortlermurn",
@@ -11316,7 +11316,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.7432, 32.7387]
+        "coordinates": [-104.8168, 38.6203]
       },
       "properties": {
         "name": "Plip\u00fapl\u00famruk",
@@ -11550,7 +11550,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.6767, 29.8602]
+        "coordinates": [-102.28, -4.4997]
       },
       "properties": {
         "name": "Trisnrut",
@@ -11674,7 +11674,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.28, -28.5997]
+        "coordinates": [-107.98, 29.8003]
       },
       "properties": {
         "name": "Kuklup",
@@ -11687,7 +11687,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.2229, 39.5357]
+        "coordinates": [-99.2701, 39.5863]
       },
       "properties": {
         "name": "Mlenkluntlen",
@@ -11713,7 +11713,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.88, 34.1003]
+        "coordinates": [-87.18, -28.6997]
       },
       "properties": {
         "name": "\u2018uwwu\u2018",
@@ -11973,7 +11973,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.1588, -35.4973]
+        "coordinates": [-117.08, 31.9003]
       },
       "properties": {
         "name": "S\u2018onhumpim",
@@ -12103,7 +12103,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.5092, -29.5058]
+        "coordinates": [-88.68, -31.0997]
       },
       "properties": {
         "name": "Pidipitschi",
@@ -12129,7 +12129,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.6801, 50.0004]
+        "coordinates": [-104.5801, 44.1004]
       },
       "properties": {
         "name": "Pudguz",
@@ -12142,7 +12142,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.4306, 35.9498]
+        "coordinates": [-90.9681, -17.8633]
       },
       "properties": {
         "name": "Utmempiksem",
@@ -12181,7 +12181,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 3.0003]
+        "coordinates": [-111.2371, 27.2422]
       },
       "properties": {
         "name": "P\u00fa\u00f3lk\u00faulna\u00faw",
@@ -12194,7 +12194,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.08, -17.2997]
+        "coordinates": [-114.2485, 39.8542]
       },
       "properties": {
         "name": "Tultultul",
@@ -12350,7 +12350,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.4607, 39.3164]
+        "coordinates": [-73.0801, 35.4004]
       },
       "properties": {
         "name": "Kunkunem",
@@ -12363,7 +12363,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.9801, 38.2004]
+        "coordinates": [-94.8801, 50.0004]
       },
       "properties": {
         "name": "Tschokkat",
@@ -12402,7 +12402,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-76.0801, 45.3004]
+        "coordinates": [-86.799, 45.8166]
       },
       "properties": {
         "name": "Liehlaplieh",
@@ -12558,7 +12558,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.3779, 30.8488]
+        "coordinates": [-84.3801, 25.5004]
       },
       "properties": {
         "name": "Siyzhzhiyb",
@@ -12831,7 +12831,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.78, 27.8003]
+        "coordinates": [-91.08, -26.7997]
       },
       "properties": {
         "name": "Dezni",
@@ -13156,7 +13156,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.1844, -7.9789]
+        "coordinates": [-79.48, -22.9997]
       },
       "properties": {
         "name": "Lossoissuot",
@@ -13560,7 +13560,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.0412, 44.3484]
+        "coordinates": [-72.1317, 36.1049]
       },
       "properties": {
         "name": "Dautzhuzhbug",
@@ -13658,7 +13658,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.0581, 3.6187]
+        "coordinates": [-106.1306, 35.9498]
       },
       "properties": {
         "name": "Onesekules",
@@ -13762,7 +13762,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.6595, 30.2816]
+        "coordinates": [-108.5801, 47.7004]
       },
       "properties": {
         "name": "L\u00e9wsorssay\u00edw",
@@ -13892,7 +13892,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.98, -36.2997]
+        "coordinates": [-108.78, 34.3003]
       },
       "properties": {
         "name": "Nepene Zimdo",
@@ -13931,7 +13931,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.0844, 33.571]
+        "coordinates": [-105.5298, 2.6328]
       },
       "properties": {
         "name": "\u2018\u00e1ma\u2018w\u00e1",
@@ -13983,7 +13983,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.08, 30.3003]
+        "coordinates": [-113.6734, -34.3163]
       },
       "properties": {
         "name": "Nlimsonnon",
@@ -14056,7 +14056,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.38, -31.5997]
+        "coordinates": [-118.18, 34.9003]
       },
       "properties": {
         "name": "Punnop",
@@ -14121,7 +14121,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.38, 40.1003]
+        "coordinates": [-102.555, 3.0972]
       },
       "properties": {
         "name": "Urnhum",
@@ -14407,7 +14407,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.2215, -19.0812]
+        "coordinates": [-101.8756, -35.9676]
       },
       "properties": {
         "name": "Nudpu",
@@ -14472,7 +14472,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.0412, 44.1484]
+        "coordinates": [-74.4262, 41.1082]
       },
       "properties": {
         "name": "Rirrirmiykud",
@@ -14635,7 +14635,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.9801, 27.1004]
+        "coordinates": [-97.8801, 39.0004]
       },
       "properties": {
         "name": "Uhik\u00fak",
@@ -14752,7 +14752,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.2201, 44.9164]
+        "coordinates": [-81.6801, 47.0004]
       },
       "properties": {
         "name": "Usl\u00eakoklesek",
@@ -14778,7 +14778,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.08, 34.7003]
+        "coordinates": [-101.68, -7.2997]
       },
       "properties": {
         "name": "Utomomunos",
@@ -14895,7 +14895,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.88, -4.2997]
+        "coordinates": [-90.18, -28.1997]
       },
       "properties": {
         "name": "Ninrun",
@@ -14908,7 +14908,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.9307, 40.9404]
+        "coordinates": [-70.9484, 39.7689]
       },
       "properties": {
         "name": "Tjemtjemtwun",
@@ -15142,7 +15142,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.78, -2.8997]
+        "coordinates": [-108.78, 34.5003]
       },
       "properties": {
         "name": "Oomin",
@@ -15194,7 +15194,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-78.6801, 43.9004]
+        "coordinates": [-75.0801, 43.7004]
       },
       "properties": {
         "name": "Uznazh",
@@ -15376,7 +15376,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.7127, 30.8062]
+        "coordinates": [-81.4801, 47.4004]
       },
       "properties": {
         "name": "Uqubaquq",
@@ -15480,7 +15480,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-95.8801, 49.5004]
+        "coordinates": [-76.0801, 45.3004]
       },
       "properties": {
         "name": "Mekukmuk",
@@ -15584,7 +15584,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.8801, 39.9004]
+        "coordinates": [-89.9801, 46.7004]
       },
       "properties": {
         "name": "Bulgal",
@@ -15688,7 +15688,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.2191, 34.0058]
+        "coordinates": [-107.18, 2.3003]
       },
       "properties": {
         "name": "Tohhlaheh",
@@ -15929,7 +15929,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.5816, 29.74]
+        "coordinates": [-112.68, -35.1997]
       },
       "properties": {
         "name": "Ir\u2018hirwn\u00fcr",
@@ -16039,7 +16039,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.6801, 30.1004]
+        "coordinates": [-73.6801, 34.9004]
       },
       "properties": {
         "name": "Pahkehpuh",
@@ -16052,7 +16052,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.9801, 47.0004]
+        "coordinates": [-92.6801, 32.5004]
       },
       "properties": {
         "name": "Mlinmitmlus",
@@ -16221,7 +16221,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.6801, 47.7004]
+        "coordinates": [-70.6627, 40.5775]
       },
       "properties": {
         "name": "Nomnom",
@@ -16312,7 +16312,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.3801, 45.5004]
+        "coordinates": [-97.8986, 49.9002]
       },
       "properties": {
         "name": "Arpert",
@@ -16351,7 +16351,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.6031, 43.0758]
+        "coordinates": [-88.6801, 45.6004]
       },
       "properties": {
         "name": "Tilsok",
@@ -16403,7 +16403,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.88, -35.7997]
+        "coordinates": [-99.88, -5.9997]
       },
       "properties": {
         "name": "Yaymagyay",
@@ -16846,7 +16846,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.2409, 31.033]
+        "coordinates": [-106.48, 2.3003]
       },
       "properties": {
         "name": "R\u00e1sl\u00fas",
@@ -17035,7 +17035,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.1801, 29.4004]
+        "coordinates": [-103.6801, 39.8004]
       },
       "properties": {
         "name": "Krynkon",
@@ -17166,7 +17166,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.1019, 2.5222]
+        "coordinates": [-108.58, -1.8997]
       },
       "properties": {
         "name": "nlal Osen",
@@ -17374,7 +17374,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.5801, 39.6004]
+        "coordinates": [-97.2801, 46.4004]
       },
       "properties": {
         "name": "Ed Oy",
@@ -17621,7 +17621,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.0474, 28.3118]
+        "coordinates": [-104.48, -5.0997]
       },
       "properties": {
         "name": "Izhiziz",
@@ -17634,7 +17634,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.7801, 41.1004]
+        "coordinates": [-99.6031, 43.0758]
       },
       "properties": {
         "name": "Polilalilone",
@@ -17647,7 +17647,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.2801, 34.7004]
+        "coordinates": [-68.2711, 42.2738]
       },
       "properties": {
         "name": "Muklaksus",
@@ -17803,7 +17803,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.7801, 41.7004]
+        "coordinates": [-102.9801, 37.7004]
       },
       "properties": {
         "name": "Umasupup",
@@ -17842,7 +17842,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.9801, 37.0004]
+        "coordinates": [-80.9801, 49.3004]
       },
       "properties": {
         "name": "Po\u2018upi\u2018\u2018\u00e9h",
@@ -17985,7 +17985,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.08, -26.7997]
+        "coordinates": [-100.38, -39.1997]
       },
       "properties": {
         "name": "Limimlunin",
@@ -18063,7 +18063,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.9801, 31.5004]
+        "coordinates": [-80.7801, 46.1004]
       },
       "properties": {
         "name": "Tukwub",
@@ -18167,7 +18167,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.616, 48.6088]
+        "coordinates": [-89.7887, 28.8484]
       },
       "properties": {
         "name": "kok Sokshtok",
@@ -18323,7 +18323,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.7801, 43.1004]
+        "coordinates": [-94.7801, 35.3004]
       },
       "properties": {
         "name": "S\u00eds\u00e9-Kokun",
@@ -18362,7 +18362,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.1805, 45.9352]
+        "coordinates": [-108.7801, 46.6004]
       },
       "properties": {
         "name": "Ivatus",
@@ -18492,7 +18492,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.4801, 41.2004]
+        "coordinates": [-105.0293, 41.7488]
       },
       "properties": {
         "name": "Shk\u00fcmshk\u00fcm",
@@ -18648,7 +18648,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.2877, 34.7627]
+        "coordinates": [-107.8516, 44.5391]
       },
       "properties": {
         "name": "Ukuyahuy",
@@ -18778,7 +18778,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.5801, 46.1004]
+        "coordinates": [-72.1317, 36.3049]
       },
       "properties": {
         "name": "Tuttutk\u00fat",
@@ -19032,7 +19032,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.18, -3.8997]
+        "coordinates": [-108.08, -3.4997]
       },
       "properties": {
         "name": "M\u00fapasima",
@@ -19507,7 +19507,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.9801, 42.2004]
+        "coordinates": [-67.9801, 45.2004]
       },
       "properties": {
         "name": "Tabbeabsur",
@@ -19611,7 +19611,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.7748, 44.3957]
+        "coordinates": [-70.8723, 43.3703]
       },
       "properties": {
         "name": "Gikgikzazh",
@@ -19630,7 +19630,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.6801, 41.2004]
+        "coordinates": [-98.1031, 48.5383]
       },
       "properties": {
         "name": "Ninun\u0161in",
@@ -19747,7 +19747,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.2586, 26.8317]
+        "coordinates": [-97.6801, 43.7004]
       },
       "properties": {
         "name": "K\u00edn \u00cd\u00ed",
@@ -19786,7 +19786,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.6031, 45.5119]
+        "coordinates": [-103.5801, 42.8004]
       },
       "properties": {
         "name": "Slushluz",
@@ -19903,7 +19903,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.9801, 38.6004]
+        "coordinates": [-104.2801, 40.6004]
       },
       "properties": {
         "name": "Kispin",
@@ -20007,7 +20007,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.1801, 35.1004]
+        "coordinates": [-71.4801, 40.6004]
       },
       "properties": {
         "name": "\u0160undundemkam",
@@ -20183,7 +20183,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-76.2801, 44.7004]
+        "coordinates": [-96.4801, 49.5004]
       },
       "properties": {
         "name": "Smon Nismimi",
@@ -20300,7 +20300,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.18, 27.1003]
+        "coordinates": [-108.58, 0.1003]
       },
       "properties": {
         "name": "Teurros",
@@ -20313,7 +20313,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.8986, 49.9002]
+        "coordinates": [-102.9801, 42.9004]
       },
       "properties": {
         "name": "Nukmu",
@@ -20625,7 +20625,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.88, -5.6997]
+        "coordinates": [-90.88, -16.8997]
       },
       "properties": {
         "name": "Unomi\u2018i\u2018ul",
@@ -20895,7 +20895,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.0801, 41.0004]
+        "coordinates": [-69.6801, 46.8004]
       },
       "properties": {
         "name": "Qakljujgom",
@@ -21077,7 +21077,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.1801, 48.6004]
+        "coordinates": [-93.8801, 49.3004]
       },
       "properties": {
         "name": "Lemmolmol",
@@ -21207,7 +21207,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.28, 29.3003]
+        "coordinates": [-100.6442, -39.049]
       },
       "properties": {
         "name": "Gutschkrul",
@@ -21532,7 +21532,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.6734, -34.3163]
+        "coordinates": [-114.48, 27.1003]
       },
       "properties": {
         "name": "stam-Sosslel",
@@ -21682,7 +21682,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.38, -23.4997]
+        "coordinates": [-116.78, 32.5003]
       },
       "properties": {
         "name": "Sogshisjuj",
@@ -21741,7 +21741,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.18, 38.3003]
+        "coordinates": [-100.6442, -38.749]
       },
       "properties": {
         "name": "Sukmik",
@@ -21761,7 +21761,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.7403, 36.671]
+        "coordinates": [-106.0294, 30.0264]
       },
       "properties": {
         "name": "Shnusshkut",
@@ -22099,7 +22099,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.2793, 35.0164]
+        "coordinates": [-87.5801, 31.0308]
       },
       "properties": {
         "name": "et-Iyp\u00fcq",
@@ -22541,7 +22541,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.9693, 43.6059]
+        "coordinates": [-93.3801, 31.7004]
       },
       "properties": {
         "name": "Ololok",
@@ -22645,7 +22645,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-85.6801, 45.6004]
+        "coordinates": [-91.6801, 47.4004]
       },
       "properties": {
         "name": "Nupflus Slis",
@@ -22782,7 +22782,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.3801, 40.5004]
+        "coordinates": [-104.9824, 44.515]
       },
       "properties": {
         "name": "Tonmot",
@@ -22808,7 +22808,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.1306, 35.9498]
+        "coordinates": [-108.48, 34.7003]
       },
       "properties": {
         "name": "Skomwon",
@@ -22925,7 +22925,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.88, 27.0003]
+        "coordinates": [-89.28, -28.5997]
       },
       "properties": {
         "name": "Irkuk",
@@ -23192,7 +23192,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.08, -7.0997]
+        "coordinates": [-115.0496, -31.9929]
       },
       "properties": {
         "name": "Nunumoymnuk",
@@ -23667,7 +23667,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.28, 26.6003]
+        "coordinates": [-90.0764, -18.2187]
       },
       "properties": {
         "name": "Pumon",
@@ -23771,7 +23771,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.0365, -30.1811]
+        "coordinates": [-107.5382, 34.0411]
       },
       "properties": {
         "name": "Wir\u2018muw\u2018ewuy",
@@ -23927,7 +23927,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.4801, 49.4004]
+        "coordinates": [-85.8801, 28.2004]
       },
       "properties": {
         "name": "Didili",
@@ -24044,7 +24044,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.4801, 44.5004]
+        "coordinates": [-75.6801, 45.3004]
       },
       "properties": {
         "name": "Lupzii",
@@ -24174,7 +24174,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.1801, 30.9004]
+        "coordinates": [-103.1801, 38.1004]
       },
       "properties": {
         "name": "Umumim",
@@ -24651,7 +24651,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.0268, -34.7351]
+        "coordinates": [-90.5681, -17.8633]
       },
       "properties": {
         "name": "Keemkaazh",
@@ -24677,7 +24677,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.8801, 40.4004]
+        "coordinates": [-81.6801, 46.4004]
       },
       "properties": {
         "name": "Neklesmus",
@@ -24989,7 +24989,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.38, 29.9003]
+        "coordinates": [-112.48, -35.4997]
       },
       "properties": {
         "name": "Sosisisiso",
@@ -25061,7 +25061,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.88, -38.9997]
+        "coordinates": [-104.9256, 33.6575]
       },
       "properties": {
         "name": "Tuiuzhizh",
@@ -25185,7 +25185,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.6801, 42.0004]
+        "coordinates": [-89.0154, 45.4965]
       },
       "properties": {
         "name": "Monmuh",
@@ -25797,7 +25797,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.2801, 40.6004]
+        "coordinates": [-94.4801, 30.4004]
       },
       "properties": {
         "name": "Ushom Otonot",
@@ -25836,7 +25836,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.994, -34.2179]
+        "coordinates": [-100.5479, -6.043]
       },
       "properties": {
         "name": "Elnkelnuk",
@@ -25960,7 +25960,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.0764, -18.2187]
+        "coordinates": [-111.48, 28.8003]
       },
       "properties": {
         "name": "Nomtomsoun",
@@ -26038,7 +26038,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.1031, 48.5383]
+        "coordinates": [-90.9877, 29.3203]
       },
       "properties": {
         "name": "Nelusne",
@@ -26331,7 +26331,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.0758, 45.7623]
+        "coordinates": [-80.9801, 51.8004]
       },
       "properties": {
         "name": "Umanun",
@@ -26767,7 +26767,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.18, 29.7003]
+        "coordinates": [-110.352, -34.9466]
       },
       "properties": {
         "name": "S\u00edn\u00edln",
@@ -27242,7 +27242,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.88, -22.0997]
+        "coordinates": [-111.3158, -35.718]
       },
       "properties": {
         "name": "Paste",
@@ -27268,7 +27268,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.2578, -23.7371]
+        "coordinates": [-107.8382, 34.2411]
       },
       "properties": {
         "name": "Zungdididi",
@@ -27281,7 +27281,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.08, -25.8997]
+        "coordinates": [-108.08, 34.7003]
       },
       "properties": {
         "name": "Lemel",
@@ -27333,7 +27333,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.1681, -35.8159]
+        "coordinates": [-103.7015, 3.4235]
       },
       "properties": {
         "name": "Mummuk",
@@ -27847,7 +27847,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.4572, 27.7215]
+        "coordinates": [-101.355, -35.5973]
       },
       "properties": {
         "name": "Amputik",
@@ -28081,7 +28081,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.6801, 46.3004]
+        "coordinates": [-104.6801, 41.5004]
       },
       "properties": {
         "name": "Kinkamelik",
@@ -28159,7 +28159,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.88, 28.1003]
+        "coordinates": [-104.28, -5.0997]
       },
       "properties": {
         "name": "Potlos",
@@ -28419,7 +28419,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.88, 2.2003]
+        "coordinates": [-112.18, 38.3003]
       },
       "properties": {
         "name": "Igimvingim",
@@ -28614,7 +28614,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.6092, -29.8058]
+        "coordinates": [-100.4901, -38.2571]
       },
       "properties": {
         "name": "Raasaal",
@@ -28653,7 +28653,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.7168, 38.3203]
+        "coordinates": [-100.3801, 41.4004]
       },
       "properties": {
         "name": "Gozgazkuz",
@@ -28666,7 +28666,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.88, -26.7997]
+        "coordinates": [-87.48, -28.9997]
       },
       "properties": {
         "name": "Sh\u00e1ni",
@@ -28790,7 +28790,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.7801, 44.7004]
+        "coordinates": [-104.1801, 43.5004]
       },
       "properties": {
         "name": "Ma Mi",
@@ -28920,7 +28920,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.5801, 30.7004]
+        "coordinates": [-69.8801, 46.6004]
       },
       "properties": {
         "name": "Takitah",
@@ -29232,7 +29232,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 32.3003]
+        "coordinates": [-105.0257, 30.8395]
       },
       "properties": {
         "name": "Snaspakisnum",
@@ -29330,7 +29330,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.4625, 49.0281]
+        "coordinates": [-89.6801, 46.7004]
       },
       "properties": {
         "name": "nek Lie\u2018pal",
@@ -29408,7 +29408,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.2856, 45.4271]
+        "coordinates": [-82.6801, 47.7004]
       },
       "properties": {
         "name": "Sijsn\u00fcln\u00fcl",
@@ -29681,7 +29681,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-118.3999, 32.5234]
+        "coordinates": [-91.08, -22.5997]
       },
       "properties": {
         "name": "Tenten",
@@ -29720,7 +29720,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.2801, 50.6004]
+        "coordinates": [-100.7801, 43.1004]
       },
       "properties": {
         "name": "Noyllooynnom",
@@ -29759,7 +29759,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.0294, 30.0264]
+        "coordinates": [-90.0224, -15.585]
       },
       "properties": {
         "name": "Lellel",
@@ -30065,7 +30065,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.08, -3.4997]
+        "coordinates": [-117.88, 35.1003]
       },
       "properties": {
         "name": "Pullirersir",
@@ -30163,7 +30163,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.8801, 46.5004]
+        "coordinates": [-104.0801, 38.6004]
       },
       "properties": {
         "name": "Wossemwot",
@@ -30189,7 +30189,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.6801, 34.7004]
+        "coordinates": [-92.9832, 33.5203]
       },
       "properties": {
         "name": "t\u00e1 L\u00edsu Tup\u00e9",
@@ -30332,7 +30332,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.2801, 46.2004]
+        "coordinates": [-105.9201, 42.898]
       },
       "properties": {
         "name": "Reqving",
@@ -30410,7 +30410,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.2309, 48.2957]
+        "coordinates": [-103.3955, 40.9779]
       },
       "properties": {
         "name": "Uskispusis",
@@ -30514,7 +30514,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.724, 29.1125]
+        "coordinates": [-105.8225, 42.5188]
       },
       "properties": {
         "name": "Sminsminship",
@@ -30670,7 +30670,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.3477, 41.3727]
+        "coordinates": [-103.1801, 37.5004]
       },
       "properties": {
         "name": "Kananinqen",
@@ -30787,7 +30787,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.38, 35.5003]
+        "coordinates": [-107.0144, -8.7028]
       },
       "properties": {
         "name": "Tirghiytir",
@@ -30800,7 +30800,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.0876, 29.0411]
+        "coordinates": [-90.58, -30.6997]
       },
       "properties": {
         "name": "H\u00e4pkumsp\u00fct",
@@ -30878,7 +30878,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.555, 3.0972]
+        "coordinates": [-90.18, -17.8997]
       },
       "properties": {
         "name": "Perkkak",
@@ -31008,7 +31008,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.8801, 40.2004]
+        "coordinates": [-103.7801, 39.4004]
       },
       "properties": {
         "name": "Salsunletnek",
@@ -31151,7 +31151,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.98, -23.8997]
+        "coordinates": [-99.4666, -6.8487]
       },
       "properties": {
         "name": "Shunsigonton",
@@ -31476,7 +31476,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.815, -7.084]
+        "coordinates": [-104.78, -7.9997]
       },
       "properties": {
         "name": "Mipir",
@@ -31678,7 +31678,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.08, 35.2003]
+        "coordinates": [-90.28, -30.9997]
       },
       "properties": {
         "name": "Yukzukyuk",
@@ -31821,7 +31821,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-118.58, 34.3003]
+        "coordinates": [-118.18, 37.2003]
       },
       "properties": {
         "name": "Nanbunmam",
@@ -32003,7 +32003,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.6801, 37.9004]
+        "coordinates": [-85.6801, 45.6004]
       },
       "properties": {
         "name": "Yungyonker",
@@ -32042,7 +32042,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.4607, 39.1164]
+        "coordinates": [-89.3154, 45.6965]
       },
       "properties": {
         "name": "Supipali",
@@ -32081,7 +32081,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.1756, 48.6852]
+        "coordinates": [-72.8969, 39.9611]
       },
       "properties": {
         "name": "\u00d6n\u00fcs\u00fct",
@@ -32159,7 +32159,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.7801, 48.1004]
+        "coordinates": [-100.257, 39.2082]
       },
       "properties": {
         "name": "Chitluzhlig",
@@ -32211,7 +32211,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.68, -0.8997]
+        "coordinates": [-105.88, -8.3997]
       },
       "properties": {
         "name": "Ngoqutuqu",
@@ -32276,7 +32276,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.9801, 43.9004]
+        "coordinates": [-81.2078, 47.991]
       },
       "properties": {
         "name": "Tr\u00edzh",
@@ -32497,7 +32497,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.6919, 32.6922]
+        "coordinates": [-88.8702, -28.6942]
       },
       "properties": {
         "name": "Ropres",
@@ -32556,7 +32556,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.68, 0.4003]
+        "coordinates": [-104.48, -7.9997]
       },
       "properties": {
         "name": "\u00cdwpih pip \u00cd",
@@ -32667,7 +32667,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.6971, 42.658]
+        "coordinates": [-82.4801, 48.0004]
       },
       "properties": {
         "name": "K\u00e1zh\u00ed",
@@ -32791,7 +32791,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.3891, 40.6809]
+        "coordinates": [-106.0801, 43.4004]
       },
       "properties": {
         "name": "Zokweb\u00f3m",
@@ -33012,7 +33012,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.88, -16.8997]
+        "coordinates": [-91.38, -22.7997]
       },
       "properties": {
         "name": "Tiuuliav",
@@ -33038,7 +33038,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.8539, 26.4672]
+        "coordinates": [-109.58, -34.8997]
       },
       "properties": {
         "name": "Ukenumotut",
@@ -33103,7 +33103,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.9801, 43.1004]
+        "coordinates": [-94.1801, 30.9004]
       },
       "properties": {
         "name": "Tatchanichi",
@@ -33142,7 +33142,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.9801, 45.7004]
+        "coordinates": [-92.724, 29.1125]
       },
       "properties": {
         "name": "Mupeptel",
@@ -33233,7 +33233,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.7621, 36.3286]
+        "coordinates": [-102.88, -4.2997]
       },
       "properties": {
         "name": "Kikotek",
@@ -33624,7 +33624,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.0293, 41.7488]
+        "coordinates": [-97.2004, 37.1173]
       },
       "properties": {
         "name": "Ewam\u00edl\u00e1\u2018",
@@ -33715,7 +33715,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.5824, 41.0418]
+        "coordinates": [-103.2801, 34.7004]
       },
       "properties": {
         "name": "Ukukom",
@@ -33741,7 +33741,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.9428, -34.9929]
+        "coordinates": [-105.88, -35.7997]
       },
       "properties": {
         "name": "Mos sus Kup",
@@ -33910,7 +33910,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.28, -35.3997]
+        "coordinates": [-108.08, -5.7997]
       },
       "properties": {
         "name": "T\u00e1nran",
@@ -33936,7 +33936,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.1801, 38.1004]
+        "coordinates": [-105.4201, 45.1164]
       },
       "properties": {
         "name": "Uwchiwluwm",
@@ -34229,7 +34229,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.78, -5.4997]
+        "coordinates": [-91.58, -23.0997]
       },
       "properties": {
         "name": "\u017eo U\u0161u\u0161",
@@ -34411,7 +34411,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.3801, 43.7004]
+        "coordinates": [-104.1801, 37.7004]
       },
       "properties": {
         "name": "Momnas",
@@ -34528,7 +34528,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.4801, 40.1004]
+        "coordinates": [-105.0801, 44.7004]
       },
       "properties": {
         "name": "Naseak",
@@ -34567,7 +34567,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.6801, 39.6004]
+        "coordinates": [-99.235, 43.1754]
       },
       "properties": {
         "name": "Apamokin",
@@ -34684,7 +34684,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.0801, 45.8004]
+        "coordinates": [-95.8801, 49.5004]
       },
       "properties": {
         "name": "Kik mi Kuk",
@@ -35354,7 +35354,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.8801, 45.9004]
+        "coordinates": [-73.9801, 33.9004]
       },
       "properties": {
         "name": "Oytnerpewt",
@@ -35445,7 +35445,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5876, 27.3318]
+        "coordinates": [-102.08, -7.0997]
       },
       "properties": {
         "name": "Guzhnias",
@@ -35777,7 +35777,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2801, 42.9004]
+        "coordinates": [-88.1801, 30.9004]
       },
       "properties": {
         "name": "G\u00e9g\u00e9z tag Um",
@@ -35881,7 +35881,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2801, 45.1004]
+        "coordinates": [-103.7801, 34.8004]
       },
       "properties": {
         "name": "mus L\u00fap",
@@ -35920,7 +35920,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9801, 37.9004]
+        "coordinates": [-89.1801, 29.4004]
       },
       "properties": {
         "name": "Srekkeztuuk",
@@ -36032,7 +36032,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.7801, 43.7004]
+        "coordinates": [-102.9801, 37.9004]
       },
       "properties": {
         "name": "Kinanin",
@@ -36110,7 +36110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.3631, 36.3512]
+        "coordinates": [-83.8801, 25.5004]
       },
       "properties": {
         "name": "Kupnumpummom",
@@ -36442,7 +36442,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.28, -4.4997]
+        "coordinates": [-107.68, -35.8997]
       },
       "properties": {
         "name": "Sr\u00e2nskimnyn",
@@ -36468,7 +36468,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.38, -34.5997]
+        "coordinates": [-110.98, 34.0003]
       },
       "properties": {
         "name": "Gikzhik",
@@ -36598,7 +36598,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.7767, 29.5602]
+        "coordinates": [-90.58, -16.4997]
       },
       "properties": {
         "name": "Slushpazvuz",
@@ -36715,7 +36715,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.8269, -24.5169]
+        "coordinates": [-111.1588, -35.4973]
       },
       "properties": {
         "name": "Ukihut",
@@ -36871,7 +36871,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.8801, 48.5004]
+        "coordinates": [-89.2844, 29.0744]
       },
       "properties": {
         "name": "Lamli",
@@ -36897,7 +36897,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.18, -17.6997]
+        "coordinates": [-109.78, 28.3003]
       },
       "properties": {
         "name": "Nom wo Wune",
@@ -37086,7 +37086,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.5236, 50.4482]
+        "coordinates": [-80.1914, 45.7059]
       },
       "properties": {
         "name": "S\u00e9enp\u00ede",
@@ -37172,7 +37172,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.349, 27.3504]
+        "coordinates": [-91.08, -17.2997]
       },
       "properties": {
         "name": "Lukesnennun",
@@ -37211,7 +37211,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.3801, 46.7004]
+        "coordinates": [-77.1801, 44.9004]
       },
       "properties": {
         "name": "stip Sneslo",
@@ -37224,7 +37224,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.98, 29.8003]
+        "coordinates": [-106.848, -5.9788]
       },
       "properties": {
         "name": "alm Olchchol",
@@ -37341,7 +37341,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.4496, 47.0787]
+        "coordinates": [-81.1801, 48.6004]
       },
       "properties": {
         "name": "Lirkkark",
@@ -37354,7 +37354,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.2801, 40.8004]
+        "coordinates": [-68.3441, 45.3318]
       },
       "properties": {
         "name": "Maommui",
@@ -37380,7 +37380,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.0496, -31.9929]
+        "coordinates": [-114.38, 40.1003]
       },
       "properties": {
         "name": "Soum Miul",
@@ -37452,7 +37452,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.1201, 32.6049]
+        "coordinates": [-106.0955, 45.4441]
       },
       "properties": {
         "name": "Sminursrusru",
@@ -37465,7 +37465,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-67.8801, 44.7004]
+        "coordinates": [-74.2801, 30.7004]
       },
       "properties": {
         "name": "Zok\u017eeb",
@@ -37896,7 +37896,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.88, -20.4997]
+        "coordinates": [-107.6476, -35.0388]
       },
       "properties": {
         "name": "Iqanan",
@@ -38026,7 +38026,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.83, -24.1169]
+        "coordinates": [-90.4224, -16.085]
       },
       "properties": {
         "name": "Reunkolzib",
@@ -38117,7 +38117,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.0215, -20.8928]
+        "coordinates": [-106.7767, 29.5602]
       },
       "properties": {
         "name": "Likali",
@@ -38156,7 +38156,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.3801, 25.5004]
+        "coordinates": [-107.9801, 45.7004]
       },
       "properties": {
         "name": "Leoneos",
@@ -38437,7 +38437,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.8801, 30.1004]
+        "coordinates": [-94.6801, 34.7004]
       },
       "properties": {
         "name": "I\u2018ili\u2018",
@@ -38866,7 +38866,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-85.0836, 28.6259]
+        "coordinates": [-71.2229, 39.5357]
       },
       "properties": {
         "name": "Do Chunche",
@@ -39074,7 +39074,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.8081, -24.3215]
+        "coordinates": [-111.6814, 37.9364]
       },
       "properties": {
         "name": "Mounluonnui",
@@ -39308,7 +39308,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.4748, 44.2957]
+        "coordinates": [-107.2801, 44.1004]
       },
       "properties": {
         "name": "\u2018ok\u2018ok\u2018el\u2018el",
@@ -39620,7 +39620,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.68, 37.7003]
+        "coordinates": [-90.08, -26.6997]
       },
       "properties": {
         "name": "Riirneen-Eer",
@@ -39843,7 +39843,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.3496, 44.1297]
+        "coordinates": [-105.634, 42.2865]
       },
       "properties": {
         "name": "Tudqiwqiw",
@@ -39953,7 +39953,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.1393, 43.9313]
+        "coordinates": [-89.2887, 28.8484]
       },
       "properties": {
         "name": "skil-Kuklus",
@@ -39992,7 +39992,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2801, 30.7004]
+        "coordinates": [-79.9801, 51.0004]
       },
       "properties": {
         "name": "M\u00e4wi-Tuwig",
@@ -40077,7 +40077,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.6801, 28.5004]
+        "coordinates": [-94.0274, 34.0004]
       },
       "properties": {
         "name": "Halwwaa",
@@ -40090,7 +40090,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.6801, 40.4004]
+        "coordinates": [-97.6801, 39.2004]
       },
       "properties": {
         "name": "Zwrawl",
@@ -40103,7 +40103,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.6801, 38.4004]
+        "coordinates": [-104.3801, 37.9004]
       },
       "properties": {
         "name": "ma Mutomu",
@@ -40285,7 +40285,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.48, -5.0997]
+        "coordinates": [-117.3741, 29.8742]
       },
       "properties": {
         "name": "Nonunoni",
@@ -40493,7 +40493,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.9223, 29.6147]
+        "coordinates": [-74.2801, 43.3004]
       },
       "properties": {
         "name": "Ge\u017er\u00f4l",
@@ -40636,7 +40636,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.235, 43.1754]
+        "coordinates": [-81.7801, 49.7004]
       },
       "properties": {
         "name": "Umammammu",
@@ -40735,7 +40735,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.8516, 44.5391]
+        "coordinates": [-86.0246, 45.7221]
       },
       "properties": {
         "name": "Wuhinw\u00fcnging",
@@ -40774,7 +40774,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.4086, -34.6325]
+        "coordinates": [-112.4833, 26.7183]
       },
       "properties": {
         "name": "Maiknuitch",
@@ -40852,7 +40852,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.3297, 28.3318]
+        "coordinates": [-100.9307, 40.9404]
       },
       "properties": {
         "name": "Woomhan",
@@ -40969,7 +40969,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.7801, 39.0004]
+        "coordinates": [-106.7031, 45.5119]
       },
       "properties": {
         "name": "Sn\u00edn-K\u00edml\u00edn",
@@ -41258,7 +41258,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.18, -33.0997]
+        "coordinates": [-99.8666, -7.2487]
       },
       "properties": {
         "name": "Gim gun Tyn",
@@ -41512,7 +41512,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-85.3805, 45.3382]
+        "coordinates": [-71.6801, 37.9004]
       },
       "properties": {
         "name": "Klaankok",
@@ -41603,7 +41603,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.848, -5.9788]
+        "coordinates": [-89.58, -15.3997]
       },
       "properties": {
         "name": "Unah-Onop",
@@ -41642,7 +41642,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.0801, 41.4004]
+        "coordinates": [-101.233, 40.9818]
       },
       "properties": {
         "name": "Ornerp",
@@ -41746,7 +41746,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.8723, 43.3703]
+        "coordinates": [-95.9631, 36.4512]
       },
       "properties": {
         "name": "Qinschandum",
@@ -41785,7 +41785,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.8801, 49.3004]
+        "coordinates": [-94.3279, 49.8633]
       },
       "properties": {
         "name": "Kinlontin",
@@ -41811,7 +41811,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.58, -16.4997]
+        "coordinates": [-105.78, -5.4997]
       },
       "properties": {
         "name": "Pukopa",
@@ -42110,7 +42110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.4224, -16.085]
+        "coordinates": [-111.48, 37.0003]
       },
       "properties": {
         "name": "Soespuus",
@@ -42123,7 +42123,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2801, 42.1004]
+        "coordinates": [-69.6109, 40.8449]
       },
       "properties": {
         "name": "Nulelnotik",
@@ -42676,7 +42676,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.193, 48.4709]
+        "coordinates": [-94.1801, 30.2004]
       },
       "properties": {
         "name": "Surchbuq",
@@ -42715,7 +42715,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.1279, 49.6633]
+        "coordinates": [-74.3891, 40.6809]
       },
       "properties": {
         "name": "Ulopomok",
@@ -42806,7 +42806,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-67.9961, 43.1301]
+        "coordinates": [-72.1074, 39.0834]
       },
       "properties": {
         "name": "Peiwlaul",
@@ -43027,7 +43027,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.98, 30.5003]
+        "coordinates": [-101.5681, -6.0278]
       },
       "properties": {
         "name": "Senpwom",
@@ -43079,7 +43079,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.9639, 44.5127]
+        "coordinates": [-74.3016, 41.7648]
       },
       "properties": {
         "name": "Dogh di Bil",
@@ -43229,7 +43229,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.98, 34.5003]
+        "coordinates": [-105.78, -5.2997]
       },
       "properties": {
         "name": "\u00c2n\u00e2ch\u00e2b",
@@ -43268,7 +43268,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2793, 32.098]
+        "coordinates": [-87.6595, 30.2816]
       },
       "properties": {
         "name": "Nan nu \u2018inan",
@@ -43294,7 +43294,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.0131, 42.4428]
+        "coordinates": [-70.4031, 45.7973]
       },
       "properties": {
         "name": "Biykeybnoyw",
@@ -43580,7 +43580,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.352, -34.9466]
+        "coordinates": [-106.08, -5.9997]
       },
       "properties": {
         "name": "Setet",
@@ -43710,7 +43710,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.9643, 35.0896]
+        "coordinates": [-99.4607, 39.3164]
       },
       "properties": {
         "name": "Kimgumgunpan",
@@ -43991,7 +43991,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.7801, 34.7004]
+        "coordinates": [-104.8824, 44.315]
       },
       "properties": {
         "name": "Skums\u00e2m",
@@ -44134,7 +44134,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.3801, 41.4004]
+        "coordinates": [-101.8801, 41.2004]
       },
       "properties": {
         "name": "Mirpk\u00edrm \u00cdm",
@@ -44160,7 +44160,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.1801, 37.5004]
+        "coordinates": [-68.1393, 43.9313]
       },
       "properties": {
         "name": "Luwwinun",
@@ -44212,7 +44212,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.28, 38.6003]
+        "coordinates": [-104.88, 31.4003]
       },
       "properties": {
         "name": "\u00c2\u017esateztez",
@@ -44225,7 +44225,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.5801, 25.7004]
+        "coordinates": [-94.5801, 30.7004]
       },
       "properties": {
         "name": "Hoton a Hae",
@@ -44277,7 +44277,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.5674, 35.809]
+        "coordinates": [-80.5801, 50.1004]
       },
       "properties": {
         "name": "Pitit",
@@ -44342,7 +44342,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.0801, 41.4004]
+        "coordinates": [-72.7801, 35.6004]
       },
       "properties": {
         "name": "Shyot",
@@ -44394,7 +44394,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-77.5801, 44.7004]
+        "coordinates": [-96.6801, 47.7004]
       },
       "properties": {
         "name": "kom Simi",
@@ -44758,7 +44758,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.4833, 26.7183]
+        "coordinates": [-108.645, -0.1304]
       },
       "properties": {
         "name": "\u2018eum\u2018eumluep",
@@ -44810,7 +44810,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.78, 39.9003]
+        "coordinates": [-113.0268, -34.7351]
       },
       "properties": {
         "name": "Mohuki",
@@ -45506,7 +45506,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.8702, -28.6942]
+        "coordinates": [-106.6767, 29.8602]
       },
       "properties": {
         "name": "Sumummun",
@@ -45597,7 +45597,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.7176, 39.3504]
+        "coordinates": [-74.2793, 32.298]
       },
       "properties": {
         "name": "Sikisesiki",
@@ -45688,7 +45688,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.48, 2.3003]
+        "coordinates": [-114.08, 39.1003]
       },
       "properties": {
         "name": "Terenzemlum",
@@ -45956,7 +45956,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.174, 27.5248]
+        "coordinates": [-117.9066, 37.7335]
       },
       "properties": {
         "name": "Nelngas",
@@ -46112,7 +46112,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.3279, 49.8633]
+        "coordinates": [-103.3801, 40.5004]
       },
       "properties": {
         "name": "Unun \u00d3i",
@@ -46125,7 +46125,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.4801, 41.8004]
+        "coordinates": [-104.7168, 38.3203]
       },
       "properties": {
         "name": "Yinsin",
@@ -46255,7 +46255,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.9256, 33.6575]
+        "coordinates": [-104.88, 31.1003]
       },
       "properties": {
         "name": "kum Chammibu",
@@ -46418,7 +46418,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2004, 37.1173]
+        "coordinates": [-88.3779, 30.8488]
       },
       "properties": {
         "name": "Njiklitnjik",
@@ -46627,7 +46627,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-77.8801, 44.0004]
+        "coordinates": [-84.2586, 26.8317]
       },
       "properties": {
         "name": "\u2018unghing\u2018ung",
@@ -46705,7 +46705,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.9387, 29.8432]
+        "coordinates": [-81.157, 47.6957]
       },
       "properties": {
         "name": "Unpumum",
@@ -46965,7 +46965,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.88, -3.1997]
+        "coordinates": [-88.38, -30.7997]
       },
       "properties": {
         "name": "Ruldilsulb",
@@ -47043,7 +47043,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.4629, 3.6656]
+        "coordinates": [-103.815, -7.084]
       },
       "properties": {
         "name": "Gumtud",
@@ -47727,7 +47727,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.78, 28.3003]
+        "coordinates": [-90.98, -27.6997]
       },
       "properties": {
         "name": "Muzhpuzhku",
@@ -47818,7 +47818,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.88, -5.9997]
+        "coordinates": [-108.3175, -34.8434]
       },
       "properties": {
         "name": "Shalshgesheg",
@@ -47883,7 +47883,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-82.8801, 25.5004]
+        "coordinates": [-71.7801, 37.4004]
       },
       "properties": {
         "name": "ip U\u2018imimok",
@@ -47961,7 +47961,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.3801, 42.9004]
+        "coordinates": [-78.2801, 43.8004]
       },
       "properties": {
         "name": "Fmisimu",
@@ -48026,7 +48026,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.4877, 29.3203]
+        "coordinates": [-105.3408, 42.0166]
       },
       "properties": {
         "name": "Palwul\u2018ulp",
@@ -48078,7 +48078,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.2801, 50.3004]
+        "coordinates": [-77.7801, 44.3004]
       },
       "properties": {
         "name": "Ek\u00e1p\u00e1p",
@@ -48117,7 +48117,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.1393, 43.5313]
+        "coordinates": [-107.6801, 46.2004]
       },
       "properties": {
         "name": "\u00c2kamikik",
@@ -48494,7 +48494,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.4891, 40.8809]
+        "coordinates": [-88.9387, 29.8432]
       },
       "properties": {
         "name": "Y\u00e1rmirghargh",
@@ -48592,7 +48592,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.7154, 42.7926]
+        "coordinates": [-68.9076, 41.3049]
       },
       "properties": {
         "name": "Umopipipek",
@@ -48969,7 +48969,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.0426, 32.99]
+        "coordinates": [-113.28, 38.6003]
       },
       "properties": {
         "name": "Losloit",
@@ -49034,7 +49034,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.1801, 41.5004]
+        "coordinates": [-96.6801, 36.3004]
       },
       "properties": {
         "name": "Mik\u2018raklik",
@@ -49060,7 +49060,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.48, -22.9997]
+        "coordinates": [-105.8831, 2.6066]
       },
       "properties": {
         "name": "Samnlun",
@@ -49099,7 +49099,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.3154, 45.6965]
+        "coordinates": [-92.1756, 48.6852]
       },
       "properties": {
         "name": "Soumeit",
@@ -49112,7 +49112,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.1801, 40.1004]
+        "coordinates": [-88.4231, 45.7574]
       },
       "properties": {
         "name": "Paswasp\u00fak",
@@ -49400,7 +49400,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.9438, 29.8375]
+        "coordinates": [-77.5801, 44.7004]
       },
       "properties": {
         "name": "Sasht\u00edm",
@@ -49426,7 +49426,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.2711, 42.2738]
+        "coordinates": [-68.1867, 42.7857]
       },
       "properties": {
         "name": "Polnhalpuh",
@@ -49576,7 +49576,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.8801, 43.8004]
+        "coordinates": [-71.9219, 39.2068]
       },
       "properties": {
         "name": "Renn\u00fanten",
@@ -49602,7 +49602,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.5504, 35.3488]
+        "coordinates": [-82.8801, 25.5004]
       },
       "properties": {
         "name": "Penschgenpom",
@@ -49719,7 +49719,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-82.6801, 47.7004]
+        "coordinates": [-107.4748, 44.2957]
       },
       "properties": {
         "name": "Mag-Tu",
@@ -49778,7 +49778,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.7801, 39.3004]
+        "coordinates": [-72.2801, 38.4004]
       },
       "properties": {
         "name": "Ng\u00ea ra Vum",
@@ -49817,7 +49817,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.1801, 49.1004]
+        "coordinates": [-107.9801, 46.8004]
       },
       "properties": {
         "name": "Qan lan Qun",
@@ -49960,7 +49960,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.1801, 40.4004]
+        "coordinates": [-80.5236, 50.4482]
       },
       "properties": {
         "name": "Ses\u0161es",
@@ -50038,7 +50038,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.0438, 30.1375]
+        "coordinates": [-70.7154, 42.7926]
       },
       "properties": {
         "name": "Sollolk",
@@ -50110,7 +50110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.98, 35.5003]
+        "coordinates": [-110.0876, 29.0411]
       },
       "properties": {
         "name": "pe-Oktukto",
@@ -50227,7 +50227,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.7801, 45.4004]
+        "coordinates": [-104.7801, 39.0004]
       },
       "properties": {
         "name": "heng Mung",
@@ -50331,7 +50331,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.7801, 46.1004]
+        "coordinates": [-71.0801, 41.0004]
       },
       "properties": {
         "name": "t\u00e1n Tentemam",
@@ -50396,7 +50396,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.2354, 40.8658]
+        "coordinates": [-97.3496, 44.1297]
       },
       "properties": {
         "name": "Sutsag",
@@ -50513,7 +50513,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.08, -5.9997]
+        "coordinates": [-105.0936, 33.3347]
       },
       "properties": {
         "name": "Eyakemep",
@@ -50781,7 +50781,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.9066, 37.7335]
+        "coordinates": [-108.08, -5.0997]
       },
       "properties": {
         "name": "Nlownin",
@@ -50807,7 +50807,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.811, 35.0949]
+        "coordinates": [-114.286, 39.6313]
       },
       "properties": {
         "name": "Sr\u00e1ch",
@@ -50970,7 +50970,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.9801, 38.9004]
+        "coordinates": [-95.1801, 36.3004]
       },
       "properties": {
         "name": "Nosrom",
@@ -51100,7 +51100,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.7801, 45.7004]
+        "coordinates": [-74.1201, 33.2533]
       },
       "properties": {
         "name": "Mulpun",
@@ -51178,7 +51178,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.2656, 38.777]
+        "coordinates": [-103.3801, 38.3004]
       },
       "properties": {
         "name": "Ikohim",
@@ -51321,7 +51321,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.4231, 45.7574]
+        "coordinates": [-81.1801, 45.9004]
       },
       "properties": {
         "name": "Zakkom\u010du\u010dwom",
@@ -51685,7 +51685,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.08, -5.7997]
+        "coordinates": [-111.88, 38.4003]
       },
       "properties": {
         "name": "Smash",
@@ -51835,7 +51835,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.2718, -31.4706]
+        "coordinates": [-90.9578, -23.9371]
       },
       "properties": {
         "name": "Aumhaunen",
@@ -52030,7 +52030,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.1914, 45.7059]
+        "coordinates": [-98.2801, 50.3004]
       },
       "properties": {
         "name": "Pipumpaj",
@@ -52134,7 +52134,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.98, 38.3003]
+        "coordinates": [-111.5876, 27.3318]
       },
       "properties": {
         "name": "Ikigtigtig",
@@ -52147,7 +52147,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.9394, 3.0847]
+        "coordinates": [-88.78, -26.4997]
       },
       "properties": {
         "name": "Dieschweo",
@@ -52232,7 +52232,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.4496, 43.8297]
+        "coordinates": [-75.9639, 44.5127]
       },
       "properties": {
         "name": "Og\u00e9kolok",
@@ -52414,7 +52414,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.9801, 31.0308]
+        "coordinates": [-91.4496, 47.0787]
       },
       "properties": {
         "name": "Ash Sosngash",
@@ -52427,7 +52427,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.08, -28.1997]
+        "coordinates": [-104.88, 31.8003]
       },
       "properties": {
         "name": "Zhodbrezh",
@@ -52713,7 +52713,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.2801, 41.0004]
+        "coordinates": [-94.2793, 35.0164]
       },
       "properties": {
         "name": "Tuschugoge",
@@ -52791,7 +52791,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-78.2801, 43.8004]
+        "coordinates": [-107.3455, 45.9465]
       },
       "properties": {
         "name": "Snyzh",
@@ -52889,7 +52889,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.3801, 29.0004]
+        "coordinates": [-93.5187, 33.8208]
       },
       "properties": {
         "name": "Roqweghleq",
@@ -53032,7 +53032,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.645, -0.1304]
+        "coordinates": [-113.4572, 27.7215]
       },
       "properties": {
         "name": "Amamamaw",
@@ -53058,7 +53058,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.2199, 42.2727]
+        "coordinates": [-84.0801, 45.8004]
       },
       "properties": {
         "name": "Hrimmem",
@@ -53300,7 +53300,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.28, -25.6997]
+        "coordinates": [-90.8081, -24.3215]
       },
       "properties": {
         "name": "Kinen",
@@ -53685,7 +53685,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.7936, 3.4423]
+        "coordinates": [-114.2175, 39.3775]
       },
       "properties": {
         "name": "Kunkin",
@@ -53698,7 +53698,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.2099, -11.0041]
+        "coordinates": [-105.08, -5.1997]
       },
       "properties": {
         "name": "Slungh\u00edng",
@@ -53841,7 +53841,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.0436, 35.1612]
+        "coordinates": [-68.6441, -10.6556]
       },
       "properties": {
         "name": "T\u00fa-Nepke",
@@ -53880,7 +53880,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.3801, 46.7004]
+        "coordinates": [-74.1801, 40.4004]
       },
       "properties": {
         "name": "Uytkoytoy",
@@ -53932,7 +53932,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.68, -7.9997]
+        "coordinates": [-108.18, -3.8997]
       },
       "properties": {
         "name": "Maturnirnir",
@@ -54186,7 +54186,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.6476, -35.0388]
+        "coordinates": [-101.6669, -35.6811]
       },
       "properties": {
         "name": "Iribibim",
@@ -54329,7 +54329,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.924, 29.4125]
+        "coordinates": [-84.6801, 28.5004]
       },
       "properties": {
         "name": "Konukolu",
@@ -54355,7 +54355,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.28, -32.1997]
+        "coordinates": [-108.58, 30.1003]
       },
       "properties": {
         "name": "Tyns\u00easzogzog",
@@ -54433,7 +54433,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.8801, 50.0004]
+        "coordinates": [-85.3805, 45.3382]
       },
       "properties": {
         "name": "N\u00edsusalusu",
@@ -54597,7 +54597,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.6081, 1.3222]
+        "coordinates": [-91.0215, -20.8928]
       },
       "properties": {
         "name": "Nri\u017es\u00edzviz",
@@ -54668,7 +54668,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.18, 2.3003]
+        "coordinates": [-106.1019, 2.5222]
       },
       "properties": {
         "name": "Shitm\u00e1sh",
@@ -54928,7 +54928,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.5799, 48.7178]
+        "coordinates": [-102.7801, 41.7004]
       },
       "properties": {
         "name": "Omulokul",
@@ -54941,7 +54941,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.9578, -23.9371]
+        "coordinates": [-108.98, 30.5003]
       },
       "properties": {
         "name": "Umlom",
@@ -54993,7 +54993,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.1742, 46.1057]
+        "coordinates": [-69.3801, 46.7004]
       },
       "properties": {
         "name": "Loloschpesch",
@@ -55058,7 +55058,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.28, 34.6003]
+        "coordinates": [-88.08, -28.1997]
       },
       "properties": {
         "name": "Br\u00e1ldl\u00edt",
@@ -55084,7 +55084,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.48, 2.3003]
+        "coordinates": [-79.2395, -23.1182]
       },
       "properties": {
         "name": "Um\u00fan P\u00fanuman",
@@ -55201,7 +55201,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.98, 33.8003]
+        "coordinates": [-114.88, 40.4003]
       },
       "properties": {
         "name": "Ununinuk",
@@ -55227,7 +55227,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.711, 35.2949]
+        "coordinates": [-68.98, -10.6997]
       },
       "properties": {
         "name": "Pek Trot",
@@ -55292,7 +55292,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.58, -1.5997]
+        "coordinates": [-101.1681, -35.8159]
       },
       "properties": {
         "name": "\u00c9n k\u00e9n N\u00e9",
@@ -55552,7 +55552,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.48, -7.9997]
+        "coordinates": [-107.68, -7.9997]
       },
       "properties": {
         "name": "Hui Liu",
@@ -55604,7 +55604,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.1801, 49.5004]
+        "coordinates": [-107.7801, 45.4004]
       },
       "properties": {
         "name": "Naknrik",
@@ -55643,7 +55643,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-85.8801, 28.2004]
+        "coordinates": [-98.551, 40.0672]
       },
       "properties": {
         "name": "Pidsuzh",
@@ -55682,7 +55682,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.9801, 40.3004]
+        "coordinates": [-97.5801, 39.6004]
       },
       "properties": {
         "name": "Slonften",
@@ -55708,7 +55708,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.6524, 45.1418]
+        "coordinates": [-107.7748, 44.3957]
       },
       "properties": {
         "name": "Kipkewm",
@@ -55799,7 +55799,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.88, 2.3003]
+        "coordinates": [-91.2578, -23.7371]
       },
       "properties": {
         "name": "Ramtchlunjom",
@@ -56138,7 +56138,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.8801, 41.6004]
+        "coordinates": [-69.2801, 41.0004]
       },
       "properties": {
         "name": "Denshunsoom",
@@ -56307,7 +56307,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.2237, 2.9753]
+        "coordinates": [-102.58, -6.6997]
       },
       "properties": {
         "name": "M\u00f3hm\u00f3h",
@@ -56359,7 +56359,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.58, 28.5003]
+        "coordinates": [-109.38, -34.5997]
       },
       "properties": {
         "name": "Treknlun",
@@ -56775,7 +56775,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.7031, 45.5119]
+        "coordinates": [-90.8604, 46.9635]
       },
       "properties": {
         "name": "\u00daz\u00fazum",
@@ -56788,7 +56788,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9331, -36.0059]
+        "coordinates": [-109.78, 30.0003]
       },
       "properties": {
         "name": "Shkanshkun",
@@ -56860,7 +56860,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.38, -35.8997]
+        "coordinates": [-100.18, -6.0997]
       },
       "properties": {
         "name": "Unkulzholb",
@@ -56873,7 +56873,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.1377, 41.158]
+        "coordinates": [-82.1801, 48.3004]
       },
       "properties": {
         "name": "Wolkpolk",
@@ -56899,7 +56899,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.78, -5.0997]
+        "coordinates": [-90.38, -26.8997]
       },
       "properties": {
         "name": "Stunmitshnuh",
@@ -56912,7 +56912,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.78, 35.7003]
+        "coordinates": [-117.2409, 31.033]
       },
       "properties": {
         "name": "Otelolel",
@@ -57133,7 +57133,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.6801, 43.6004]
+        "coordinates": [-71.6801, 40.4004]
       },
       "properties": {
         "name": "Lapekpek",
@@ -57302,7 +57302,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.4801, 43.2004]
+        "coordinates": [-92.5799, 48.7178]
       },
       "properties": {
         "name": "Hinmuh",
@@ -57406,7 +57406,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.9805, 45.3382]
+        "coordinates": [-96.9801, 47.5004]
       },
       "properties": {
         "name": "Noutou",
@@ -57543,7 +57543,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.3741, 29.8742]
+        "coordinates": [-112.98, -35.0997]
       },
       "properties": {
         "name": "S\u00e1nk\u00edm",
@@ -57641,7 +57641,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.0148, 30.6577]
+        "coordinates": [-101.5824, 41.0418]
       },
       "properties": {
         "name": "Ngueqtuemiu",
@@ -57986,7 +57986,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9801, 37.7004]
+        "coordinates": [-74.2801, 42.1004]
       },
       "properties": {
         "name": "Sisskitspis",
@@ -58019,7 +58019,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.98, 34.0003]
+        "coordinates": [-107.6476, -35.5388]
       },
       "properties": {
         "name": "Luollomkuol",
@@ -58123,7 +58123,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.9801, 49.3004]
+        "coordinates": [-93.8086, 33.858]
       },
       "properties": {
         "name": "Kuknoskok",
@@ -58214,7 +58214,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.68, -31.0997]
+        "coordinates": [-108.18, -2.3997]
       },
       "properties": {
         "name": "Sgugi",
@@ -58351,7 +58351,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.1801, 42.4004]
+        "coordinates": [-81.5801, 46.1004]
       },
       "properties": {
         "name": "Sun-Nlin",
@@ -58398,7 +58398,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.6877, 34.4627]
+        "coordinates": [-75.6801, 43.6004]
       },
       "properties": {
         "name": "Godsadosh",
@@ -58476,7 +58476,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.88, 40.4003]
+        "coordinates": [-108.28, -35.3997]
       },
       "properties": {
         "name": "Ngeroraggum",
@@ -58554,7 +58554,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2801, 43.3004]
+        "coordinates": [-99.809, 41.1152]
       },
       "properties": {
         "name": "Qiiwnutel",
@@ -58632,7 +58632,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.2625, 45.1303]
+        "coordinates": [-101.4869, 42.1303]
       },
       "properties": {
         "name": "Ukamunakanun",
@@ -58790,7 +58790,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.8801, 40.2004]
+        "coordinates": [-76.8801, 44.8004]
       },
       "properties": {
         "name": "Tannin",
@@ -58829,7 +58829,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.18, -15.0997]
+        "coordinates": [-90.1764, -18.7187]
       },
       "properties": {
         "name": "Rintunrin",
@@ -59104,7 +59104,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.8801, 49.5004]
+        "coordinates": [-107.8801, 46.5004]
       },
       "properties": {
         "name": "Pimimiti",
@@ -59298,7 +59298,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.8418, 45.0164]
+        "coordinates": [-72.0801, 36.6004]
       },
       "properties": {
         "name": "il Ii",
@@ -59402,7 +59402,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.38, -7.4997]
+        "coordinates": [-103.4629, 3.6656]
       },
       "properties": {
         "name": "et Imim",
@@ -59740,7 +59740,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.0801, 31.6004]
+        "coordinates": [-90.1822, 46.8525]
       },
       "properties": {
         "name": "Owapiw",
@@ -59773,7 +59773,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.9801, 37.5004]
+        "coordinates": [-82.7801, 47.4004]
       },
       "properties": {
         "name": "Aj\u00edjujt",
@@ -60111,7 +60111,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.8969, 39.9611]
+        "coordinates": [-69.1742, 46.1057]
       },
       "properties": {
         "name": "Uhabazedum",
@@ -60306,7 +60306,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.6627, 40.5775]
+        "coordinates": [-68.1393, 43.5313]
       },
       "properties": {
         "name": "dam Dan",
@@ -60963,7 +60963,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.0254, 43.2363]
+        "coordinates": [-86.9801, 45.9004]
       },
       "properties": {
         "name": "Chokchekdaak",
@@ -61145,7 +61145,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-78.8801, 44.0004]
+        "coordinates": [-81.2801, 50.6004]
       },
       "properties": {
         "name": "nlus Tuyklut",
@@ -61568,7 +61568,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.1867, 42.7857]
+        "coordinates": [-69.1377, 41.158]
       },
       "properties": {
         "name": "Pilhpilhpilh",
@@ -61731,7 +61731,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 31.4003]
+        "coordinates": [-109.68, 33.8003]
       },
       "properties": {
         "name": "Amut Namut",
@@ -61796,7 +61796,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.6801, 39.2004]
+        "coordinates": [-94.5801, 50.0004]
       },
       "properties": {
         "name": "Papalu",
@@ -61887,7 +61887,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.78, 32.5003]
+        "coordinates": [-89.18, -15.0997]
       },
       "properties": {
         "name": "Aapukin",
@@ -61926,7 +61926,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.1027, 43.0154]
+        "coordinates": [-96.3631, 36.3512]
       },
       "properties": {
         "name": "\u00cbkapon",
@@ -61965,7 +61965,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.9801, 51.8004]
+        "coordinates": [-68.8801, 45.9004]
       },
       "properties": {
         "name": "Kon kun Nim",
@@ -62123,7 +62123,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.9914, 45.5059]
+        "coordinates": [-84.5801, 45.4004]
       },
       "properties": {
         "name": "Unnumwup",
@@ -62240,7 +62240,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.58, 35.7003]
+        "coordinates": [-101.18, -7.6997]
       },
       "properties": {
         "name": "Lwdw Zhwsch",
@@ -62318,7 +62318,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.8273, 34.777]
+        "coordinates": [-104.1065, -4.7069]
       },
       "properties": {
         "name": "Zhaobchao",
@@ -62643,7 +62643,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.68, -29.4997]
+        "coordinates": [-90.88, -28.1997]
       },
       "properties": {
         "name": "Aalulelul",
@@ -62799,7 +62799,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.78, 28.2003]
+        "coordinates": [-90.8269, -24.5169]
       },
       "properties": {
         "name": "Ilikak",
@@ -62955,7 +62955,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.6801, 47.9004]
+        "coordinates": [-103.9254, 42.9363]
       },
       "properties": {
         "name": "Nrimtisnrot",
@@ -63144,7 +63144,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.7786, -4.2765]
+        "coordinates": [-99.88, -38.9997]
       },
       "properties": {
         "name": "Tutch",
@@ -63391,7 +63391,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.28, -24.1997]
+        "coordinates": [-115.08, 27.4003]
       },
       "properties": {
         "name": "Susret",
@@ -63612,7 +63612,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.8086, 33.858]
+        "coordinates": [-70.8801, 40.2004]
       },
       "properties": {
         "name": "Milmmitmit",
@@ -63846,7 +63846,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.7814, 38.2364]
+        "coordinates": [-89.18, -14.8997]
       },
       "properties": {
         "name": "Klekhremklek",
@@ -63859,7 +63859,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.4901, -38.4571]
+        "coordinates": [-106.38, -35.1997]
       },
       "properties": {
         "name": "Drez Nesnes",
@@ -63911,7 +63911,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.2693, 43.7059]
+        "coordinates": [-97.4496, 43.8297]
       },
       "properties": {
         "name": "Mimt\u00edn",
@@ -64355,7 +64355,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.2742, 46.4057]
+        "coordinates": [-108.3801, 47.3004]
       },
       "properties": {
         "name": "E\u017eede\u017eas\u00fa\u017e",
@@ -64472,7 +64472,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.9219, 39.2068]
+        "coordinates": [-91.9223, 29.6147]
       },
       "properties": {
         "name": "din Tan",
@@ -64654,7 +64654,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.7801, 31.7004]
+        "coordinates": [-70.6691, 41.9559]
       },
       "properties": {
         "name": "Upulan",
@@ -64693,7 +64693,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.6801, 47.7004]
+        "coordinates": [-103.2955, 41.2779]
       },
       "properties": {
         "name": "Miookmooek",
@@ -64739,7 +64739,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.6669, -35.6811]
+        "coordinates": [-90.68, -20.0997]
       },
       "properties": {
         "name": "Mepkup",
@@ -65006,7 +65006,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.08, 39.1003]
+        "coordinates": [-107.48, 2.3003]
       },
       "properties": {
         "name": "Simslos",
@@ -65019,7 +65019,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.98, -7.1997]
+        "coordinates": [-74.98, -23.8997]
       },
       "properties": {
         "name": "Spulsnolto",
@@ -65045,7 +65045,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.48, 34.7003]
+        "coordinates": [-107.2191, 34.0058]
       },
       "properties": {
         "name": "Muuepiewweow",
@@ -65188,7 +65188,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.0955, 45.4441]
+        "coordinates": [-74.3801, 43.6004]
       },
       "properties": {
         "name": "Uwidikuwuch",
@@ -65728,7 +65728,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.28, 0.2003]
+        "coordinates": [-90.08, -31.1997]
       },
       "properties": {
         "name": "Leomaiqeo",
@@ -65754,7 +65754,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.0801, 33.5004]
+        "coordinates": [-98.9701, 39.8863]
       },
       "properties": {
         "name": "Nirk tur Pi",
@@ -65832,7 +65832,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.9201, 42.898]
+        "coordinates": [-98.2693, 43.7059]
       },
       "properties": {
         "name": "Gubpip",
@@ -65962,7 +65962,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.88, 27.5003]
+        "coordinates": [-90.88, -27.8997]
       },
       "properties": {
         "name": "Teulait",
@@ -66313,7 +66313,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.0801, 35.4004]
+        "coordinates": [-100.0801, 41.4004]
       },
       "properties": {
         "name": "Maemleomaem",
@@ -66417,7 +66417,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.08, -26.6997]
+        "coordinates": [-89.28, -15.2997]
       },
       "properties": {
         "name": "Mussatlaup",
@@ -66495,7 +66495,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.233, 40.9818]
+        "coordinates": [-90.4877, 29.3203]
       },
       "properties": {
         "name": "N\u00fak\u00fak\u00fa",
@@ -66573,7 +66573,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.7208, 35.8786]
+        "coordinates": [-111.78, 35.9003]
       },
       "properties": {
         "name": "Kizhkizhbezh",
@@ -66599,7 +66599,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.6801, 36.3004]
+        "coordinates": [-76.1801, 45.0004]
       },
       "properties": {
         "name": "Zrolkiz",
@@ -66703,7 +66703,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.8246, 41.6281]
+        "coordinates": [-70.2625, 45.1303]
       },
       "properties": {
         "name": "Otalopel",
@@ -66911,7 +66911,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.1065, -4.7069]
+        "coordinates": [-107.2144, -8.5028]
       },
       "properties": {
         "name": "Ketni",
@@ -67132,7 +67132,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.1252, 44.7689]
+        "coordinates": [-94.9691, 35.9572]
       },
       "properties": {
         "name": "Ertnuk",
@@ -67262,7 +67262,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.18, -6.0997]
+        "coordinates": [-105.38, 30.1003]
       },
       "properties": {
         "name": "Zaadduiih",
@@ -67373,7 +67373,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.515, -7.084]
+        "coordinates": [-115.48, 40.1003]
       },
       "properties": {
         "name": "Liklilkals",
@@ -67386,7 +67386,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.5479, -6.043]
+        "coordinates": [-108.38, -2.0997]
       },
       "properties": {
         "name": "Tissois",
@@ -67653,7 +67653,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.88, -27.8997]
+        "coordinates": [-90.68, -29.0997]
       },
       "properties": {
         "name": "\u00cdduyqid",
@@ -67933,7 +67933,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.2485, 39.8542]
+        "coordinates": [-104.8273, 34.777]
       },
       "properties": {
         "name": "Newhul",
@@ -68011,7 +68011,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.3844, 33.571]
+        "coordinates": [-115.28, -32.1997]
       },
       "properties": {
         "name": "Dum ka Miwk",
@@ -68037,7 +68037,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.9801, 47.5004]
+        "coordinates": [-105.9801, 42.7004]
       },
       "properties": {
         "name": "ton Nonon",
@@ -68258,7 +68258,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.68, -31.8997]
+        "coordinates": [-90.28, -25.6997]
       },
       "properties": {
         "name": "I al Aus",
@@ -68336,7 +68336,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.6801, 47.0004]
+        "coordinates": [-79.1801, 44.2004]
       },
       "properties": {
         "name": "Lumlen",
@@ -68479,7 +68479,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.9877, 29.3203]
+        "coordinates": [-72.3674, 36.009]
       },
       "properties": {
         "name": "G\u00f3rerm",
@@ -68531,7 +68531,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.9681, -17.8633]
+        "coordinates": [-106.08, -8.5997]
       },
       "properties": {
         "name": "Sansano",
@@ -68570,7 +68570,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.8801, 39.0004]
+        "coordinates": [-87.7328, 45.9053]
       },
       "properties": {
         "name": "Mietkeuk",
@@ -68648,7 +68648,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.6441, 45.4318]
+        "coordinates": [-74.7801, 43.7004]
       },
       "properties": {
         "name": "Ranminning",
@@ -68700,7 +68700,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.88, -28.1997]
+        "coordinates": [-116.6919, 32.6922]
       },
       "properties": {
         "name": "Skamspunmin",
@@ -68830,7 +68830,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.18, -17.8997]
+        "coordinates": [-114.2718, -31.4706]
       },
       "properties": {
         "name": "tin Shlonkun",
@@ -68934,7 +68934,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.0936, 33.3347]
+        "coordinates": [-104.88, 32.3003]
       },
       "properties": {
         "name": "Pekhekhrik",
@@ -69253,7 +69253,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.4441, -10.8556]
+        "coordinates": [-115.0474, 28.3118]
       },
       "properties": {
         "name": "Zhaegluil",
@@ -69383,7 +69383,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.4801, 40.6004]
+        "coordinates": [-77.8801, 44.0004]
       },
       "properties": {
         "name": "Sosshkangos",
@@ -69500,7 +69500,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.109, 29.2137]
+        "coordinates": [-71.7176, 39.3504]
       },
       "properties": {
         "name": "uun Uqiq",
@@ -69825,7 +69825,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.9666, -7.8433]
+        "coordinates": [-116.9409, 31.033]
       },
       "properties": {
         "name": "Oi Oen",
@@ -70105,7 +70105,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.1294, 27.0106]
+        "coordinates": [-111.9403, 36.271]
       },
       "properties": {
         "name": "Emunpuman",
@@ -70157,7 +70157,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.48, -35.4997]
+        "coordinates": [-68.4441, -10.8556]
       },
       "properties": {
         "name": "Seuneos",
@@ -70677,7 +70677,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.58, 37.4003]
+        "coordinates": [-90.78, -21.3997]
       },
       "properties": {
         "name": "Polp\u00e9nek",
@@ -70716,7 +70716,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.3408, 42.0166]
+        "coordinates": [-87.9801, 31.0308]
       },
       "properties": {
         "name": "Amnum",
@@ -70763,7 +70763,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.98, -5.9997]
+        "coordinates": [-112.18, 26.5003]
       },
       "properties": {
         "name": "Dlontlon",
@@ -70828,7 +70828,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.04, -23.895]
+        "coordinates": [-112.994, -34.2179]
       },
       "properties": {
         "name": "Lag i Al",
@@ -70854,7 +70854,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.3674, 36.009]
+        "coordinates": [-93.9643, 35.0896]
       },
       "properties": {
         "name": "Sipsos\u00f3m\u00f3l",
@@ -70997,7 +70997,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.7801, 37.4004]
+        "coordinates": [-100.6801, 41.2004]
       },
       "properties": {
         "name": "\u00dcnninkum\u00f6n",
@@ -71088,7 +71088,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 31.8003]
+        "coordinates": [-111.28, 34.6003]
       },
       "properties": {
         "name": "Moogkok",
@@ -71257,7 +71257,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.58, 30.1003]
+        "coordinates": [-115.78, 39.9003]
       },
       "properties": {
         "name": "K\u00edkd\u00edn",
@@ -71322,7 +71322,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.0387, 30.3432]
+        "coordinates": [-68.7801, 45.7004]
       },
       "properties": {
         "name": "Chumn\u00e1m",
@@ -71440,7 +71440,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.3801, 47.3004]
+        "coordinates": [-102.1801, 42.6004]
       },
       "properties": {
         "name": "Qjunjuqquj",
@@ -71479,7 +71479,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.48, -21.5997]
+        "coordinates": [-105.1844, -7.9789]
       },
       "properties": {
         "name": "Jojluq",
@@ -71687,7 +71687,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.6801, 46.7004]
+        "coordinates": [-93.6877, 34.4627]
       },
       "properties": {
         "name": "Lake Unle",
@@ -71713,7 +71713,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2801, 49.5004]
+        "coordinates": [-93.7801, 31.7004]
       },
       "properties": {
         "name": "Sviikmorkus",
@@ -71882,7 +71882,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.8382, 34.2411]
+        "coordinates": [-111.58, 37.4003]
       },
       "properties": {
         "name": "Lachash",
@@ -71934,7 +71934,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.58, 0.1003]
+        "coordinates": [-103.515, -7.084]
       },
       "properties": {
         "name": "Imemap",
@@ -72025,7 +72025,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.0801, 43.7004]
+        "coordinates": [-78.6801, 43.9004]
       },
       "properties": {
         "name": "Miltmulm",
@@ -72051,7 +72051,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.157, 47.6957]
+        "coordinates": [-89.3801, 46.7004]
       },
       "properties": {
         "name": "Anronem",
@@ -72071,7 +72071,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.6801, 34.9004]
+        "coordinates": [-81.2309, 48.2957]
       },
       "properties": {
         "name": "Nangnun",
@@ -72097,7 +72097,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.9691, 35.9572]
+        "coordinates": [-98.4801, 48.7004]
       },
       "properties": {
         "name": "Nenkemtumken",
@@ -72416,7 +72416,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.9801, 46.8004]
+        "coordinates": [-108.3801, 47.5004]
       },
       "properties": {
         "name": "Lelpalklel",
@@ -72442,7 +72442,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2801, 46.4004]
+        "coordinates": [-70.2801, 46.2004]
       },
       "properties": {
         "name": "Tjult\u00e2k",
@@ -72481,7 +72481,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-76.8801, 44.8004]
+        "coordinates": [-106.6031, 45.5119]
       },
       "properties": {
         "name": "Konkon-Kom",
@@ -72585,7 +72585,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.58, 29.7003]
+        "coordinates": [-113.174, 27.5248]
       },
       "properties": {
         "name": "Kipkip",
@@ -72715,7 +72715,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.551, 40.0672]
+        "coordinates": [-102.1801, 41.5004]
       },
       "properties": {
         "name": "Onwimninon",
@@ -72780,7 +72780,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.9254, 42.9363]
+        "coordinates": [-81.6801, 50.0004]
       },
       "properties": {
         "name": "Tuegea",
@@ -72918,7 +72918,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.38, -6.8997]
+        "coordinates": [-91.18, -17.6997]
       },
       "properties": {
         "name": "Ittin",
@@ -72983,7 +72983,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.78, 34.3003]
+        "coordinates": [-100.48, -37.8997]
       },
       "properties": {
         "name": "Gualzaexbaux",
@@ -73178,7 +73178,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.9801, 46.7004]
+        "coordinates": [-67.8801, 44.7004]
       },
       "properties": {
         "name": "Zuzisnu",
@@ -73276,7 +73276,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.6801, 46.7004]
+        "coordinates": [-86.9602, 30.025]
       },
       "properties": {
         "name": "go Do",
@@ -73557,7 +73557,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.6801, 47.4004]
+        "coordinates": [-84.5801, 25.7004]
       },
       "properties": {
         "name": "Iltsirtsiln",
@@ -73583,7 +73583,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.68, -30.2997]
+        "coordinates": [-116.88, 32.2003]
       },
       "properties": {
         "name": "Pokpinpit",
@@ -73609,7 +73609,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.78, -28.7997]
+        "coordinates": [-104.8534, 34.4052]
       },
       "properties": {
         "name": "lu Kipa",
@@ -73752,7 +73752,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.2295, 40.0717]
+        "coordinates": [-97.193, 48.4709]
       },
       "properties": {
         "name": "Tammaatmrim",
@@ -73856,7 +73856,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.18, -2.3997]
+        "coordinates": [-109.3844, 33.571]
       },
       "properties": {
         "name": "L\u00e2lmylmylmyl",
@@ -73882,7 +73882,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.6801, 41.5004]
+        "coordinates": [-108.9801, 47.0004]
       },
       "properties": {
         "name": "Lesjes",
@@ -73934,7 +73934,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.3441, 45.3318]
+        "coordinates": [-84.9805, 45.3382]
       },
       "properties": {
         "name": "Itukumum",
@@ -73960,7 +73960,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.08, -22.5997]
+        "coordinates": [-118.3999, 32.5234]
       },
       "properties": {
         "name": "Mrunvyingtis",
@@ -74012,7 +74012,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.6442, -38.749]
+        "coordinates": [-103.18, -6.8997]
       },
       "properties": {
         "name": "Poshtuzh",
@@ -74279,7 +74279,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.8801, 25.5004]
+        "coordinates": [-93.9801, 49.5004]
       },
       "properties": {
         "name": "Sbazsespos",
@@ -74435,7 +74435,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.2395, -23.1182]
+        "coordinates": [-101.9394, 3.0847]
       },
       "properties": {
         "name": "Tiunluitluit",
@@ -74539,7 +74539,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.7801, 51.3004]
+        "coordinates": [-89.0387, 30.3432]
       },
       "properties": {
         "name": "Tyuuk",
@@ -74630,7 +74630,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.5298, 2.6328]
+        "coordinates": [-112.48, 38.2003]
       },
       "properties": {
         "name": "Nilimin",
@@ -74669,7 +74669,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.78, -7.9997]
+        "coordinates": [-105.7208, 35.8786]
       },
       "properties": {
         "name": "Ki\u00e1rlu\u00e1tk\u00faa",
@@ -74708,7 +74708,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.6801, 46.8004]
+        "coordinates": [-104.4801, 39.8004]
       },
       "properties": {
         "name": "Re-ki-Giron",
@@ -75046,7 +75046,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.48, -37.8997]
+        "coordinates": [-102.2394, 3.0847]
       },
       "properties": {
         "name": "Stchyj",
@@ -75261,7 +75261,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.7015, 3.4235]
+        "coordinates": [-116.611, 31.1797]
       },
       "properties": {
         "name": "Set Pun",
@@ -75339,7 +75339,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.28, -6.9997]
+        "coordinates": [-107.68, 0.4003]
       },
       "properties": {
         "name": "Sikron",
@@ -75352,7 +75352,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.8801, 51.5004]
+        "coordinates": [-91.6801, 47.9004]
       },
       "properties": {
         "name": "Gh\u00ef\u00e4w Gho\u00e4",
@@ -75437,7 +75437,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.4801, 47.4004]
+        "coordinates": [-68.0412, 44.3484]
       },
       "properties": {
         "name": "Chupchues",
@@ -75469,7 +75469,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.68, -29.8997]
+        "coordinates": [-107.38, -8.1997]
       },
       "properties": {
         "name": "N\u00e2msym",
@@ -75599,7 +75599,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-113.8994, -34.7511]
+        "coordinates": [-107.6081, 1.3222]
       },
       "properties": {
         "name": "Kiove",
@@ -75788,7 +75788,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.545, -0.5304]
+        "coordinates": [-115.18, 27.1003]
       },
       "properties": {
         "name": "Lusonekulu",
@@ -75879,7 +75879,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.5681, -6.0278]
+        "coordinates": [-104.711, 35.2949]
       },
       "properties": {
         "name": "Lashnlugdot",
@@ -76009,7 +76009,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.58, -23.0997]
+        "coordinates": [-102.7936, 3.4423]
       },
       "properties": {
         "name": "Wemghimo",
@@ -76126,7 +76126,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2801, 47.2004]
+        "coordinates": [-72.6969, 40.0611]
       },
       "properties": {
         "name": "Inunupam",
@@ -76230,7 +76230,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.6262, 29.9539]
+        "coordinates": [-92.3801, 29.0004]
       },
       "properties": {
         "name": "Akunakak",
@@ -76386,7 +76386,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.799, 45.8166]
+        "coordinates": [-97.9693, 43.6059]
       },
       "properties": {
         "name": "Qojvekmogpeq",
@@ -76926,7 +76926,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.7801, 46.6004]
+        "coordinates": [-80.6801, 46.4004]
       },
       "properties": {
         "name": "Wubiwawa",
@@ -77271,7 +77271,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.08, 34.9003]
+        "coordinates": [-111.68, 37.7003]
       },
       "properties": {
         "name": "Uldsuldul",
@@ -77414,7 +77414,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.4801, 30.4004]
+        "coordinates": [-81.6801, 49.2004]
       },
       "properties": {
         "name": "Sotoposo",
@@ -77447,7 +77447,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.2711, 42.5738]
+        "coordinates": [-85.3836, 28.3259]
       },
       "properties": {
         "name": "Ghuwwonuduy",
@@ -77583,7 +77583,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.4869, 42.1303]
+        "coordinates": [-95.1801, 49.9004]
       },
       "properties": {
         "name": "Tichtach",
@@ -77609,7 +77609,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-76.0639, 44.3127]
+        "coordinates": [-81.6801, 46.7004]
       },
       "properties": {
         "name": "Pakrunpron",
@@ -77622,7 +77622,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.0257, 30.8395]
+        "coordinates": [-113.8994, -34.7511]
       },
       "properties": {
         "name": "Ghie un Bun",
@@ -77752,7 +77752,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.4262, 41.1082]
+        "coordinates": [-91.6801, 47.7004]
       },
       "properties": {
         "name": "K\u00eflkukkuk",
@@ -77778,7 +77778,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.286, 39.6313]
+        "coordinates": [-105.0426, 32.99]
       },
       "properties": {
         "name": "Kunnan",
@@ -78271,7 +78271,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.78, -1.0997]
+        "coordinates": [-100.4901, -38.4571]
       },
       "properties": {
         "name": "uk-\u00dcl\u00fcg",
@@ -78499,7 +78499,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.48, -29.2997]
+        "coordinates": [-101.98, -5.9997]
       },
       "properties": {
         "name": "Tinzhim",
@@ -78642,7 +78642,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-82.4801, 48.0004]
+        "coordinates": [-70.6971, 42.658]
       },
       "properties": {
         "name": "Kidijb",
@@ -78746,7 +78746,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.355, -35.5973]
+        "coordinates": [-115.58, 28.6003]
       },
       "properties": {
         "name": "Salnes",
@@ -78975,7 +78975,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.0801, 38.6004]
+        "coordinates": [-79.7418, 45.3164]
       },
       "properties": {
         "name": "Enmus",
@@ -79119,7 +79119,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.7801, 38.7004]
+        "coordinates": [-83.8297, 28.3318]
       },
       "properties": {
         "name": "Dunginmun",
@@ -79322,7 +79322,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-95.1801, 36.3004]
+        "coordinates": [-99.4643, 41.1807]
       },
       "properties": {
         "name": "Ylinyunyun",
@@ -79335,7 +79335,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.7801, 49.7004]
+        "coordinates": [-87.6057, 30.6053]
       },
       "properties": {
         "name": "Akututan",
@@ -79621,7 +79621,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.2801, 44.1004]
+        "coordinates": [-104.4801, 38.1004]
       },
       "properties": {
         "name": "Pol-iw-\u00dalpol",
@@ -79803,7 +79803,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.0801, 44.7004]
+        "coordinates": [-72.4801, 40.1004]
       },
       "properties": {
         "name": "yim Mupnuk",
@@ -79894,7 +79894,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.6057, 30.6053]
+        "coordinates": [-93.2877, 34.7627]
       },
       "properties": {
         "name": "Lutkeyssek",
@@ -79998,7 +79998,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.48, 40.1003]
+        "coordinates": [-87.5092, -29.5058]
       },
       "properties": {
         "name": "Lauttiam",
@@ -80063,7 +80063,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.4436, 45.7383]
+        "coordinates": [-79.9914, 45.5059]
       },
       "properties": {
         "name": "il-Erouler",
@@ -80141,7 +80141,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.8534, 34.4052]
+        "coordinates": [-91.38, -23.4997]
       },
       "properties": {
         "name": "Tinsen",
@@ -80154,7 +80154,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.98, 27.8003]
+        "coordinates": [-90.78, -28.7997]
       },
       "properties": {
         "name": "Tipshiskeske",
@@ -80245,7 +80245,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.6476, -35.5388]
+        "coordinates": [-104.811, 35.0949]
       },
       "properties": {
         "name": "Possdebs\u010dut",
@@ -80727,7 +80727,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.5801, 46.7004]
+        "coordinates": [-92.7432, 32.7387]
       },
       "properties": {
         "name": "Alwolsolb",
@@ -80929,7 +80929,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.18, 39.0003]
+        "coordinates": [-107.78, -2.8997]
       },
       "properties": {
         "name": "Snisbak",
@@ -80981,7 +80981,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.809, 41.1152]
+        "coordinates": [-79.8418, 45.0164]
       },
       "properties": {
         "name": "Liss\u00e4n",
@@ -81007,7 +81007,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.1764, -18.7187]
+        "coordinates": [-107.98, 34.5003]
       },
       "properties": {
         "name": "Tunhuntunhap",
@@ -81052,7 +81052,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.4801, 40.1004]
+        "coordinates": [-83.7801, 46.1004]
       },
       "properties": {
         "name": "Nulul",
@@ -81241,7 +81241,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.6801, 45.6004]
+        "coordinates": [-92.9438, 29.8375]
       },
       "properties": {
         "name": "Sn\u00edng\u00edgsbuz",
@@ -81371,7 +81371,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.3801, 31.7004]
+        "coordinates": [-94.1279, 49.6633]
       },
       "properties": {
         "name": "Pesht\u00e1sh",
@@ -81710,7 +81710,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.9019, 1.3753]
+        "coordinates": [-100.6261, -36.6457]
       },
       "properties": {
         "name": "Kilbkilsqilk",
@@ -81892,7 +81892,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.2793, 32.298]
+        "coordinates": [-72.2656, 38.777]
       },
       "properties": {
         "name": "Sensi",
@@ -81905,7 +81905,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-77.1801, 44.9004]
+        "coordinates": [-109.1801, 47.3004]
       },
       "properties": {
         "name": "neln Wlnlals",
@@ -81996,7 +81996,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.48, -28.9997]
+        "coordinates": [-106.78, 35.7003]
       },
       "properties": {
         "name": "Sdimmig\u0161m\u00fcg",
@@ -82107,7 +82107,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.4801, 39.8004]
+        "coordinates": [-100.4801, 43.2004]
       },
       "properties": {
         "name": "Anow-Pakow",
@@ -82224,7 +82224,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.2876, 29.2411]
+        "coordinates": [-111.88, 27.5003]
       },
       "properties": {
         "name": "Uss\u00efsmasik",
@@ -82237,7 +82237,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.6109, 40.8449]
+        "coordinates": [-76.0639, 44.3127]
       },
       "properties": {
         "name": "vin Yenkon",
@@ -82400,7 +82400,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.4801, 38.1004]
+        "coordinates": [-70.2856, 45.4271]
       },
       "properties": {
         "name": "Uk tus Kek",
@@ -82439,7 +82439,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.68, -29.0997]
+        "coordinates": [-106.88, 2.3003]
       },
       "properties": {
         "name": "Nes\u00e1elult\u00fa",
@@ -82452,7 +82452,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.18, -6.8997]
+        "coordinates": [-108.58, -1.5997]
       },
       "properties": {
         "name": "Shessemrot",
@@ -82556,7 +82556,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.9824, 44.515]
+        "coordinates": [-99.5801, 38.9004]
       },
       "properties": {
         "name": "Tupuuepla",
@@ -82712,7 +82712,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.98, -26.2997]
+        "coordinates": [-111.58, 28.5003]
       },
       "properties": {
         "name": "Dun\u00e1n",
@@ -82830,7 +82830,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 32.0003]
+        "coordinates": [-104.88, 3.0003]
       },
       "properties": {
         "name": "Kauzizh",
@@ -83032,7 +83032,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9801, 41.5004]
+        "coordinates": [-91.7801, 48.2004]
       },
       "properties": {
         "name": "M\u00e2rskalsmils",
@@ -83188,7 +83188,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.88, 31.1003]
+        "coordinates": [-90.83, -24.1169]
       },
       "properties": {
         "name": "Lanlamkrin",
@@ -83305,7 +83305,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.2801, 46.0004]
+        "coordinates": [-92.924, 29.4125]
       },
       "properties": {
         "name": "Lolpisal",
@@ -83487,7 +83487,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.6801, 32.5004]
+        "coordinates": [-86.5785, 29.993]
       },
       "properties": {
         "name": "Kaddun",
@@ -83814,7 +83814,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.08, -5.0997]
+        "coordinates": [-112.18, -35.6997]
       },
       "properties": {
         "name": "sa-Nam\u00eana",
@@ -83885,7 +83885,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.48, 37.0003]
+        "coordinates": [-87.6626, -27.7507]
       },
       "properties": {
         "name": "il-Imik",
@@ -83911,7 +83911,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.78, -22.4997]
+        "coordinates": [-104.78, -5.0997]
       },
       "properties": {
         "name": "Drunbim",
@@ -83937,7 +83937,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.3236, 50.7482]
+        "coordinates": [-93.5504, 35.3488]
       },
       "properties": {
         "name": "Ersulk",
@@ -84009,7 +84009,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.252, 29.3938]
+        "coordinates": [-104.4801, 41.2004]
       },
       "properties": {
         "name": "Swuknus",
@@ -84022,7 +84022,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.3955, 40.9779]
+        "coordinates": [-74.2801, 42.9004]
       },
       "properties": {
         "name": "Zheshchozgu",
@@ -84556,7 +84556,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.2533, 33.6863]
+        "coordinates": [-68.2801, 42.0004]
       },
       "properties": {
         "name": "Okokoket",
@@ -84855,7 +84855,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.8168, 38.6203]
+        "coordinates": [-101.0131, 42.4428]
       },
       "properties": {
         "name": "Kemkesmol",
@@ -85128,7 +85128,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.1801, 37.7004]
+        "coordinates": [-98.2295, 40.0717]
       },
       "properties": {
         "name": "Atimutos",
@@ -85291,7 +85291,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.9801, 41.2004]
+        "coordinates": [-105.2201, 44.9164]
       },
       "properties": {
         "name": "ze Don",
@@ -85343,7 +85343,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.6801, 45.3004]
+        "coordinates": [-73.3801, 35.1004]
       },
       "properties": {
         "name": "Kontinow",
@@ -85395,7 +85395,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.611, 31.1797]
+        "coordinates": [-99.38, -6.3997]
       },
       "properties": {
         "name": "Ypysonesemem",
@@ -85506,7 +85506,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.9801, 39.0004]
+        "coordinates": [-92.109, 29.2137]
       },
       "properties": {
         "name": "Pummem",
@@ -85532,7 +85532,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.1394, -34.2712]
+        "coordinates": [-108.78, -1.0997]
       },
       "properties": {
         "name": "Nosne",
@@ -85584,7 +85584,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.543, 46.8525]
+        "coordinates": [-83.9801, 27.1004]
       },
       "properties": {
         "name": "Kommonmon",
@@ -85662,7 +85662,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.5801, 47.7004]
+        "coordinates": [-84.3801, 45.5004]
       },
       "properties": {
         "name": "Hl\u00e1hkakmlum",
@@ -85740,7 +85740,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.9484, 39.7689]
+        "coordinates": [-70.3627, 40.7775]
       },
       "properties": {
         "name": "N\u00e1nwumwum",
@@ -85805,7 +85805,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-86.0246, 45.7221]
+        "coordinates": [-97.2801, 49.5004]
       },
       "properties": {
         "name": "Kongku",
@@ -85922,7 +85922,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.78, -26.4997]
+        "coordinates": [-107.88, 2.2003]
       },
       "properties": {
         "name": "Du\u00e4zh",
@@ -85987,7 +85987,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.4666, -6.8487]
+        "coordinates": [-88.88, -26.7997]
       },
       "properties": {
         "name": "Uusenzonou",
@@ -86117,7 +86117,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.9403, 36.271]
+        "coordinates": [-90.2215, -19.0812]
       },
       "properties": {
         "name": "Sannglan",
@@ -86221,7 +86221,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.1801, 43.5004]
+        "coordinates": [-79.7801, 44.7004]
       },
       "properties": {
         "name": "H\u00e4hp\u00e4tt\u00e4htun",
@@ -86494,7 +86494,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.3801, 43.6004]
+        "coordinates": [-91.8801, 48.5004]
       },
       "properties": {
         "name": "P\u00fcnp\u00fcnm\u00f6n",
@@ -86572,7 +86572,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.9076, 41.3049]
+        "coordinates": [-93.3801, 30.2004]
       },
       "properties": {
         "name": "Ysmralsrik",
@@ -86702,7 +86702,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.8801, 28.8004]
+        "coordinates": [-103.6801, 37.4004]
       },
       "properties": {
         "name": "kuk Pek",
@@ -86897,7 +86897,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.68, -20.0997]
+        "coordinates": [-109.88, 28.1003]
       },
       "properties": {
         "name": "Noukluontuel",
@@ -87222,7 +87222,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.78, -5.2997]
+        "coordinates": [-111.7814, 38.2364]
       },
       "properties": {
         "name": "Kujm\u010du\u017eiwk",
@@ -87248,7 +87248,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.0144, -8.7028]
+        "coordinates": [-108.545, -0.5304]
       },
       "properties": {
         "name": "Snegnomsnad",
@@ -87261,7 +87261,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.9801, 51.0004]
+        "coordinates": [-80.7801, 49.8004]
       },
       "properties": {
         "name": "Tuzluz",
@@ -87606,7 +87606,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.0593, 28.9987]
+        "coordinates": [-68.2099, -11.0041]
       },
       "properties": {
         "name": "Usdu\u017e Do\u017e",
@@ -87997,7 +87997,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.7801, 34.8004]
+        "coordinates": [-93.8801, 30.1004]
       },
       "properties": {
         "name": "Nolilaluta",
@@ -88108,7 +88108,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.6969, 40.0611]
+        "coordinates": [-87.1805, 45.9352]
       },
       "properties": {
         "name": "Nostolal",
@@ -88212,7 +88212,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.68, -7.2997]
+        "coordinates": [-90.08, -25.8997]
       },
       "properties": {
         "name": "\u2018emi\u2018e\u2018e\u2018en",
@@ -88225,7 +88225,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.18, -28.1997]
+        "coordinates": [-87.6092, -29.8058]
       },
       "properties": {
         "name": "Sapukup\u00e1",
@@ -88355,7 +88355,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.08, 27.7003]
+        "coordinates": [-87.48, -29.2997]
       },
       "properties": {
         "name": "Anip Mirkal",
@@ -88459,7 +88459,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.7801, 35.6004]
+        "coordinates": [-84.8801, 28.8004]
       },
       "properties": {
         "name": "Liuk u Pui",
@@ -88498,7 +88498,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.38, -22.7997]
+        "coordinates": [-111.78, 28.2003]
       },
       "properties": {
         "name": "\u2018okhol",
@@ -88589,7 +88589,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.6801, 46.4004]
+        "coordinates": [-73.8801, 40.2004]
       },
       "properties": {
         "name": "Enitet",
@@ -88810,7 +88810,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.8225, 42.5188]
+        "coordinates": [-74.4891, 40.8809]
       },
       "properties": {
         "name": "Ikk\u00e1sus",
@@ -88908,7 +88908,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.3801, 37.9004]
+        "coordinates": [-81.4801, 50.3004]
       },
       "properties": {
         "name": "Gugklugjluk",
@@ -88934,7 +88934,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.8831, 2.6066]
+        "coordinates": [-117.68, 38.2003]
       },
       "properties": {
         "name": "Uau-ei-Sies",
@@ -88973,7 +88973,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-95.1801, 49.9004]
+        "coordinates": [-104.3801, 40.9004]
       },
       "properties": {
         "name": "Olnnum",
@@ -89195,7 +89195,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.4524, 44.9418]
+        "coordinates": [-81.0801, 48.9004]
       },
       "properties": {
         "name": "S\u00fas\u00faati",
@@ -89247,7 +89247,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.4801, 50.3004]
+        "coordinates": [-96.8801, 38.2004]
       },
       "properties": {
         "name": "Ngu-Versu",
@@ -89299,7 +89299,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.38, 30.2003]
+        "coordinates": [-107.1769, -6.2028]
       },
       "properties": {
         "name": "mul-Talhum",
@@ -89611,7 +89611,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.38, -35.1997]
+        "coordinates": [-108.18, -5.8997]
       },
       "properties": {
         "name": "Kommrikam",
@@ -89702,7 +89702,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.4201, 45.1164]
+        "coordinates": [-86.4436, 45.7383]
       },
       "properties": {
         "name": "Lawki\u2018kipnil",
@@ -89728,7 +89728,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.68, -35.8997]
+        "coordinates": [-105.08, 30.3003]
       },
       "properties": {
         "name": "Iqatikoz",
@@ -90131,7 +90131,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.8297, 28.3318]
+        "coordinates": [-93.0438, 30.1375]
       },
       "properties": {
         "name": "Shzhik",
@@ -90144,7 +90144,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.18, 34.3003]
+        "coordinates": [-106.4306, 35.9498]
       },
       "properties": {
         "name": "Imtaamintan",
@@ -90196,7 +90196,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.98, -10.6997]
+        "coordinates": [-111.8539, 26.4672]
       },
       "properties": {
         "name": "Ooniniham",
@@ -90443,7 +90443,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.08, -5.1997]
+        "coordinates": [-106.38, -6.1997]
       },
       "properties": {
         "name": "Ruma Amanipu",
@@ -90469,7 +90469,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.5801, 50.1004]
+        "coordinates": [-72.5674, 35.809]
       },
       "properties": {
         "name": "Hikini-Hazki",
@@ -90723,7 +90723,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.08, -8.5997]
+        "coordinates": [-88.0365, -30.1811]
       },
       "properties": {
         "name": "Sisiku",
@@ -90879,7 +90879,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.0801, 46.4004]
+        "coordinates": [-71.2801, 40.8004]
       },
       "properties": {
         "name": "Lonnenlunpem",
@@ -91262,7 +91262,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.5681, -17.8633]
+        "coordinates": [-114.1394, -34.2712]
       },
       "properties": {
         "name": "Kakekso-Mol",
@@ -91288,7 +91288,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.2955, 41.2779]
+        "coordinates": [-88.7127, 30.8062]
       },
       "properties": {
         "name": "Kuksnikskak",
@@ -91379,7 +91379,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.2801, 38.4004]
+        "coordinates": [-85.0836, 28.6259]
       },
       "properties": {
         "name": "Nokishosha",
@@ -91405,7 +91405,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.0274, 34.0004]
+        "coordinates": [-97.1252, 44.7689]
       },
       "properties": {
         "name": "Kut Du\u0161",
@@ -91522,7 +91522,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.4801, 48.7004]
+        "coordinates": [-87.6262, 29.9539]
       },
       "properties": {
         "name": "Iyvuy",
@@ -91653,7 +91653,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.4801, 49.2004]
+        "coordinates": [-99.5801, 40.4004]
       },
       "properties": {
         "name": "wur-Ziwurb",
@@ -91959,7 +91959,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.4901, -38.2571]
+        "coordinates": [-114.78, -33.6997]
       },
       "properties": {
         "name": "Maoheutniap",
@@ -92076,7 +92076,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.3801, 38.3004]
+        "coordinates": [-104.3801, 43.8004]
       },
       "properties": {
         "name": "Ososipip",
@@ -92245,7 +92245,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.1801, 42.6004]
+        "coordinates": [-102.9801, 35.0004]
       },
       "properties": {
         "name": "\u00dakhoqoqad",
@@ -92271,7 +92271,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.6148, -35.1446]
+        "coordinates": [-107.2968, 29.6281]
       },
       "properties": {
         "name": "N\u00edken-K\u00e9nme",
@@ -92466,7 +92466,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.3801, 40.9004]
+        "coordinates": [-93.0801, 31.6004]
       },
       "properties": {
         "name": "Raaiir",
@@ -92785,7 +92785,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-85.3836, 28.3259]
+        "coordinates": [-69.2742, 46.4057]
       },
       "properties": {
         "name": "\u2018olalw\u00e9rw\u00e9lh",
@@ -92850,7 +92850,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-95.9631, 36.4512]
+        "coordinates": [-102.4801, 41.8004]
       },
       "properties": {
         "name": "Hirpalwp\u00eflp",
@@ -92889,7 +92889,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.08, 27.4003]
+        "coordinates": [-75.28, -24.1997]
       },
       "properties": {
         "name": "L\u00e9 ni Sim",
@@ -92902,7 +92902,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.7418, 45.3164]
+        "coordinates": [-96.8801, 49.5004]
       },
       "properties": {
         "name": "um Momissheg",
@@ -92954,7 +92954,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.0801, 43.4004]
+        "coordinates": [-96.7801, 48.1004]
       },
       "properties": {
         "name": "L\u00e9nuti",
@@ -93110,7 +93110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.4801, 40.2004]
+        "coordinates": [-74.3477, 41.3727]
       },
       "properties": {
         "name": "Tongsalvol",
@@ -93266,7 +93266,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.0078, 50.2104]
+        "coordinates": [-79.7801, 51.3004]
       },
       "properties": {
         "name": "Tazhanitschu",
@@ -93364,7 +93364,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-69.8801, 46.6004]
+        "coordinates": [-103.6801, 38.4004]
       },
       "properties": {
         "name": "soet Seupkos",
@@ -93904,7 +93904,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.2801, 42.0004]
+        "coordinates": [-103.0801, 41.4004]
       },
       "properties": {
         "name": "Ekiisiijiid",
@@ -93917,7 +93917,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.58, -25.4997]
+        "coordinates": [-111.18, 34.3003]
       },
       "properties": {
         "name": "Sheksmuk",
@@ -94008,7 +94008,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.8604, 46.9635]
+        "coordinates": [-101.9801, 42.2004]
       },
       "properties": {
         "name": "Nuslusko",
@@ -94041,7 +94041,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.1317, 36.3049]
+        "coordinates": [-68.6441, 45.4318]
       },
       "properties": {
         "name": "Lukhshwoqwen",
@@ -94173,7 +94173,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-72.1074, 39.0834]
+        "coordinates": [-68.2711, 42.5738]
       },
       "properties": {
         "name": "Lokanillenil",
@@ -94186,7 +94186,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.28, -5.0997]
+        "coordinates": [-110.18, 29.7003]
       },
       "properties": {
         "name": "Iyqy\u00fawkh",
@@ -94212,7 +94212,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.1769, -6.2028]
+        "coordinates": [-111.28, 26.6003]
       },
       "properties": {
         "name": "Ki\u00e1kk\u00e1\u2018",
@@ -94336,7 +94336,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.68, -35.1997]
+        "coordinates": [-87.38, -27.5997]
       },
       "properties": {
         "name": "Mlismo\u0161",
@@ -94427,7 +94427,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.4643, 41.1807]
+        "coordinates": [-106.3801, 43.7004]
       },
       "properties": {
         "name": "Wwidazww",
@@ -94440,7 +94440,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.5187, 33.8208]
+        "coordinates": [-99.9801, 38.9004]
       },
       "properties": {
         "name": "ruh Ih",
@@ -94617,7 +94617,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.9456, -5.6503]
+        "coordinates": [-108.38, -4.2997]
       },
       "properties": {
         "name": "\u2018emnomhem",
@@ -94630,7 +94630,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.2887, 28.8484]
+        "coordinates": [-80.3236, 50.7482]
       },
       "properties": {
         "name": "Fl\u00faf\u2018\u00fakm\u00fam",
@@ -94682,7 +94682,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.68, -35.8997]
+        "coordinates": [-75.0272, -24.6337]
       },
       "properties": {
         "name": "Totloptotmu",
@@ -94747,7 +94747,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.4793, 34.8164]
+        "coordinates": [-68.6176, 41.4311]
       },
       "properties": {
         "name": "rin Nilunung",
@@ -95124,7 +95124,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-71.492, 39.4172]
+        "coordinates": [-98.0078, 50.2104]
       },
       "properties": {
         "name": "Hauknonlon",
@@ -95566,7 +95566,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.88, 38.4003]
+        "coordinates": [-100.9666, -7.8433]
       },
       "properties": {
         "name": "Geksnes",
@@ -95657,7 +95657,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.9801, 42.9004]
+        "coordinates": [-99.9801, 43.1004]
       },
       "properties": {
         "name": "Waw\u00edliyw",
@@ -95709,7 +95709,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.2968, 29.6281]
+        "coordinates": [-110.6148, -35.1446]
       },
       "properties": {
         "name": "pom Kah",
@@ -95768,7 +95768,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.6176, 41.4311]
+        "coordinates": [-74.2793, 32.098]
       },
       "properties": {
         "name": "Tiutchham",
@@ -95781,7 +95781,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.38, -27.5997]
+        "coordinates": [-116.5816, 29.74]
       },
       "properties": {
         "name": "Nrumnlontun",
@@ -95846,7 +95846,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.3175, -34.8434]
+        "coordinates": [-104.68, -35.8997]
       },
       "properties": {
         "name": "Odzhuoe",
@@ -95976,7 +95976,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-118.18, 34.9003]
+        "coordinates": [-101.98, -5.0997]
       },
       "properties": {
         "name": "Skanskin",
@@ -96002,7 +96002,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.0154, 45.4965]
+        "coordinates": [-93.4801, 49.2004]
       },
       "properties": {
         "name": "Lenuklempin",
@@ -96028,7 +96028,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.3801, 30.2004]
+        "coordinates": [-70.8801, 39.9004]
       },
       "properties": {
         "name": "Bobpizzhas",
@@ -96054,7 +96054,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.6801, 43.7004]
+        "coordinates": [-70.7938, 43.1004]
       },
       "properties": {
         "name": "Mejmijt",
@@ -96132,7 +96132,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-94.7801, 35.3004]
+        "coordinates": [-99.8801, 40.4004]
       },
       "properties": {
         "name": "Sutsut",
@@ -96282,7 +96282,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.8801, 38.2004]
+        "coordinates": [-104.6801, 39.6004]
       },
       "properties": {
         "name": "Koiskakkek",
@@ -96386,7 +96386,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.6441, -10.6556]
+        "coordinates": [-116.0593, 28.9987]
       },
       "properties": {
         "name": "Zullels",
@@ -96542,7 +96542,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-92.9832, 33.5203]
+        "coordinates": [-80.3801, 46.1004]
       },
       "properties": {
         "name": "Olotep",
@@ -96620,7 +96620,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.3801, 47.5004]
+        "coordinates": [-89.2801, 46.0004]
       },
       "properties": {
         "name": "Umap Amum",
@@ -96672,7 +96672,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.38, 36.7003]
+        "coordinates": [-90.68, -29.8997]
       },
       "properties": {
         "name": "Nomnonnonnon",
@@ -96763,7 +96763,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.1801, 30.9004]
+        "coordinates": [-93.6801, 30.1004]
       },
       "properties": {
         "name": "Mlotchmratch",
@@ -96880,7 +96880,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.3158, -35.718]
+        "coordinates": [-114.349, 27.3504]
       },
       "properties": {
         "name": "Snansnan",
@@ -97121,7 +97121,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.58, 28.6003]
+        "coordinates": [-117.4246, 31.9896]
       },
       "properties": {
         "name": "Imkon pun Un",
@@ -97212,7 +97212,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.18, -7.6997]
+        "coordinates": [-89.98, -26.2997]
       },
       "properties": {
         "name": "Mr\u00e9nlip",
@@ -97445,7 +97445,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.18, -5.8997]
+        "coordinates": [-115.78, 28.7003]
       },
       "properties": {
         "name": "Lul Ekullul",
@@ -97523,7 +97523,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.88, 35.1003]
+        "coordinates": [-88.98, -31.2997]
       },
       "properties": {
         "name": "Tulituli",
@@ -97705,7 +97705,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.0109, 40.7449]
+        "coordinates": [-71.492, 39.4172]
       },
       "properties": {
         "name": "Omon-Nosotus",
@@ -97809,7 +97809,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.1801, 45.9004]
+        "coordinates": [-101.6801, 42.0004]
       },
       "properties": {
         "name": "Wrinpin",
@@ -97921,7 +97921,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-91.7801, 48.2004]
+        "coordinates": [-74.1201, 32.6049]
       },
       "properties": {
         "name": "Zhumrozhkel",
@@ -98247,7 +98247,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.6801, 37.4004]
+        "coordinates": [-106.8801, 43.8004]
       },
       "properties": {
         "name": "Urmip",
@@ -98286,7 +98286,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.6442, -39.049]
+        "coordinates": [-107.58, 29.7003]
       },
       "properties": {
         "name": "Silkenmen",
@@ -98377,7 +98377,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.1201, 33.2533]
+        "coordinates": [-67.9961, 43.1301]
       },
       "properties": {
         "name": "Lamnoasnol",
@@ -98442,7 +98442,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-115.78, 28.7003]
+        "coordinates": [-117.18, 39.0003]
       },
       "properties": {
         "name": "pon Snonsnon",
@@ -98481,7 +98481,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.2996, -30.3757]
+        "coordinates": [-108.88, 34.1003]
       },
       "properties": {
         "name": "Meelititi",
@@ -98572,7 +98572,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.68, 33.8003]
+        "coordinates": [-88.2996, -30.3757]
       },
       "properties": {
         "name": "Nanul",
@@ -98676,7 +98676,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.6261, -36.6457]
+        "coordinates": [-107.0436, 35.1612]
       },
       "properties": {
         "name": "Usitikis",
@@ -98988,7 +98988,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.78, 34.5003]
+        "coordinates": [-100.98, -36.2997]
       },
       "properties": {
         "name": "Ekakin Inek",
@@ -99027,7 +99027,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.48, 38.2003]
+        "coordinates": [-112.98, 38.3003]
       },
       "properties": {
         "name": "Skummansmon",
@@ -99248,7 +99248,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.58, -6.6997]
+        "coordinates": [-113.68, 38.9003]
       },
       "properties": {
         "name": "Lal W\u00f3\u00fa\u2018\u2018\u00f3uw",
@@ -99404,7 +99404,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.5801, 40.4004]
+        "coordinates": [-98.4625, 49.0281]
       },
       "properties": {
         "name": "Seljil",
@@ -99594,7 +99594,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.1822, 46.8525]
+        "coordinates": [-71.9801, 38.2004]
       },
       "properties": {
         "name": "Nutneum",
@@ -99757,7 +99757,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.98, -35.0997]
+        "coordinates": [-80.04, -23.895]
       },
       "properties": {
         "name": "Tulslut",
@@ -99822,7 +99822,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.38, -2.0997]
+        "coordinates": [-115.08, 27.7003]
       },
       "properties": {
         "name": "Gagnun",
@@ -100147,7 +100147,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-82.1801, 48.3004]
+        "coordinates": [-101.7801, 41.1004]
       },
       "properties": {
         "name": "Laulzosh",
@@ -100361,7 +100361,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-104.3801, 43.8004]
+        "coordinates": [-74.1801, 42.4004]
       },
       "properties": {
         "name": "suun-Luuet",
@@ -100426,7 +100426,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-107.6801, 46.2004]
+        "coordinates": [-68.0412, 44.1484]
       },
       "properties": {
         "name": "B\u00edabb\u00edebo\u00ed",
@@ -100478,7 +100478,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.7938, 43.1004]
+        "coordinates": [-72.1801, 40.1004]
       },
       "properties": {
         "name": "Sputs\u00fat",
@@ -100556,7 +100556,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.38, -39.1997]
+        "coordinates": [-102.9331, -36.0059]
       },
       "properties": {
         "name": "Jorirng",
@@ -100582,7 +100582,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.48, -5.1997]
+        "coordinates": [-113.78, 27.8003]
       },
       "properties": {
         "name": "Moszek",
@@ -100667,7 +100667,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.28, -15.2997]
+        "coordinates": [-109.38, 30.2003]
       },
       "properties": {
         "name": "Tidtid",
@@ -100758,7 +100758,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-87.6626, -27.7507]
+        "coordinates": [-90.28, -19.4997]
       },
       "properties": {
         "name": "S\u00f6msemum",
@@ -100966,7 +100966,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-110.78, 28.4003]
+        "coordinates": [-90.58, -25.4997]
       },
       "properties": {
         "name": "Musanustusna",
@@ -100979,7 +100979,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.7801, 39.9004]
+        "coordinates": [-68.1027, 43.0154]
       },
       "properties": {
         "name": "nriz \u010cres\u017eep",
@@ -101018,7 +101018,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-99.2701, 39.5863]
+        "coordinates": [-90.543, 46.8525]
       },
       "properties": {
         "name": "Rigrubpeb",
@@ -101083,7 +101083,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.88, 32.2003]
+        "coordinates": [-105.88, -5.6997]
       },
       "properties": {
         "name": "Z\u00e1dbe\u00e1zzuy",
@@ -101148,7 +101148,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.58, -15.3997]
+        "coordinates": [-114.88, 27.0003]
       },
       "properties": {
         "name": "Isaes",
@@ -101356,7 +101356,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-83.0801, 47.2004]
+        "coordinates": [-93.1801, 35.1004]
       },
       "properties": {
         "name": "Vemsmel",
@@ -101520,7 +101520,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.58, -1.8997]
+        "coordinates": [-115.18, -33.0997]
       },
       "properties": {
         "name": "Metmeh",
@@ -101572,7 +101572,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.4477, 41.7842]
+        "coordinates": [-73.8801, 34.4004]
       },
       "properties": {
         "name": "Klinmim",
@@ -101852,7 +101852,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.78, -25.1997]
+        "coordinates": [-111.98, 27.8003]
       },
       "properties": {
         "name": "Heiw Tchout",
@@ -101958,7 +101958,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.48, 27.1003]
+        "coordinates": [-107.48, -34.6997]
       },
       "properties": {
         "name": "Unolel",
@@ -101984,7 +101984,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.6801, 46.4004]
+        "coordinates": [-107.1801, 43.9004]
       },
       "properties": {
         "name": "Op Tut",
@@ -102036,7 +102036,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-118.18, 37.2003]
+        "coordinates": [-118.58, 34.3003]
       },
       "properties": {
         "name": "Primj\u00fah",
@@ -102075,7 +102075,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-89.2801, 46.0004]
+        "coordinates": [-97.616, 48.6088]
       },
       "properties": {
         "name": "tum-Ban-Lan",
@@ -102192,7 +102192,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.4031, 45.7973]
+        "coordinates": [-80.9801, 51.1004]
       },
       "properties": {
         "name": "Otpeptot",
@@ -102395,7 +102395,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-117.4246, 31.9896]
+        "coordinates": [-116.7621, 36.3286]
       },
       "properties": {
         "name": "Ponan",
@@ -102434,7 +102434,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-108.38, -4.2997]
+        "coordinates": [-110.78, 28.4003]
       },
       "properties": {
         "name": "Sitnir",
@@ -102447,7 +102447,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-116.38, 29.7003]
+        "coordinates": [-108.28, 0.2003]
       },
       "properties": {
         "name": "Miusiawuidia",
@@ -102610,7 +102610,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.08, -31.1997]
+        "coordinates": [-108.28, -4.1997]
       },
       "properties": {
         "name": "Musdon",
@@ -102714,7 +102714,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-81.0801, 48.9004]
+        "coordinates": [-97.7801, 39.9004]
       },
       "properties": {
         "name": "Moonqoun",
@@ -102792,7 +102792,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-84.5801, 45.4004]
+        "coordinates": [-102.3801, 42.9004]
       },
       "properties": {
         "name": "hip-Pitaha",
@@ -102818,7 +102818,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.18, -35.6997]
+        "coordinates": [-108.4086, -34.6325]
       },
       "properties": {
         "name": "Nannin",
@@ -102844,7 +102844,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.6691, 41.9559]
+        "coordinates": [-99.9801, 40.3004]
       },
       "properties": {
         "name": "Rem nom Amen",
@@ -102896,7 +102896,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.3801, 40.7004]
+        "coordinates": [-94.0274, 34.3004]
       },
       "properties": {
         "name": "ba Shishishi",
@@ -103001,7 +103001,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-100.257, 39.2082]
+        "coordinates": [-91.252, 29.3938]
       },
       "properties": {
         "name": "Molslummo",
@@ -103066,7 +103066,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.98, -27.6997]
+        "coordinates": [-90.78, -25.1997]
       },
       "properties": {
         "name": "Zhizhgazh",
@@ -103300,7 +103300,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.58, -30.6997]
+        "coordinates": [-111.38, 35.5003]
       },
       "properties": {
         "name": "Zat bag Wodo",
@@ -103586,7 +103586,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-74.0602, 32.9578]
+        "coordinates": [-96.1801, 49.5004]
       },
       "properties": {
         "name": "Mumnup-Uknup",
@@ -103716,7 +103716,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-109.1801, 47.3004]
+        "coordinates": [-80.9801, 51.4004]
       },
       "properties": {
         "name": "Qulx Zursruq",
@@ -103989,7 +103989,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-114.78, -33.6997]
+        "coordinates": [-108.38, 29.9003]
       },
       "properties": {
         "name": "Lukos",
@@ -104165,7 +104165,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-75.0272, -24.6337]
+        "coordinates": [-107.9019, 1.3753]
       },
       "properties": {
         "name": "Iwuwkuwk",
@@ -104230,7 +104230,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-102.68, -35.8997]
+        "coordinates": [-90.68, -30.2997]
       },
       "properties": {
         "name": "\u00c9ltos\u00edlk",
@@ -104308,7 +104308,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.7801, 39.4004]
+        "coordinates": [-108.6801, 46.3004]
       },
       "properties": {
         "name": "Eminlanun",
@@ -104347,7 +104347,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.9801, 42.7004]
+        "coordinates": [-93.9801, 31.5004]
       },
       "properties": {
         "name": "Hlomhromhlik",
@@ -104464,7 +104464,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.38, 30.1003]
+        "coordinates": [-103.7786, -4.2765]
       },
       "properties": {
         "name": "Telispuk",
@@ -104497,7 +104497,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-88.98, -31.2997]
+        "coordinates": [-103.98, -7.1997]
       },
       "properties": {
         "name": "Mintekon",
@@ -104666,7 +104666,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-101.8756, -35.9676]
+        "coordinates": [-111.1294, 27.0106]
       },
       "properties": {
         "name": "\u00c1k\u00e1s\u00e1kg\u00e9k",
@@ -104830,7 +104830,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-80.3801, 46.1004]
+        "coordinates": [-75.9801, 43.9004]
       },
       "properties": {
         "name": "N\u00edkal",
@@ -105038,7 +105038,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-76.1801, 45.0004]
+        "coordinates": [-74.0602, 32.9578]
       },
       "properties": {
         "name": "Ukukatanupuk",
@@ -105142,7 +105142,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-90.28, -30.9997]
+        "coordinates": [-111.08, 35.2003]
       },
       "properties": {
         "name": "Skektukstak",
@@ -105259,7 +105259,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-77.7801, 44.3004]
+        "coordinates": [-103.9801, 37.5004]
       },
       "properties": {
         "name": "ak Siksik",
@@ -105298,7 +105298,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.2371, 27.2422]
+        "coordinates": [-104.2237, 2.9753]
       },
       "properties": {
         "name": "Audebiereizh",
@@ -105337,7 +105337,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.4801, 49.5004]
+        "coordinates": [-99.9801, 41.2004]
       },
       "properties": {
         "name": "Hyam\u2018iwwun",
@@ -105449,7 +105449,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-93.9801, 49.5004]
+        "coordinates": [-70.0109, 40.7449]
       },
       "properties": {
         "name": "Sessraksras",
@@ -105462,7 +105462,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.6814, 37.9364]
+        "coordinates": [-107.88, -3.1997]
       },
       "properties": {
         "name": "Madug",
@@ -105592,7 +105592,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-112.18, 26.5003]
+        "coordinates": [-116.28, 29.3003]
       },
       "properties": {
         "name": "Kanin e Opon",
@@ -105787,7 +105787,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-73.8801, 34.4004]
+        "coordinates": [-86.2158, 29.002]
       },
       "properties": {
         "name": "Mahana",
