@@ -34,7 +34,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
   const isSelected = (option: OrderOption) =>
     selected.indexOf(option.value) > -1;
 
-  const ref = useRef();
+  const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
     setIsOpen(false);
   });

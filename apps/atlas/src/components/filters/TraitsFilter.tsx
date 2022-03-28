@@ -27,7 +27,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
     props.traits ?? { region: 0, city: 0, harbour: 0, river: 0 }
   );
 
-  const ref = useRef();
+  const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
     setIsOpen(false);
   });

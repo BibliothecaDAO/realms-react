@@ -18,7 +18,7 @@ type ResourceOption = {
 
 export function ResourcesFilter(props: ResourcesFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef();
+  const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
     setIsOpen(false);
   });

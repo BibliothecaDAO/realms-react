@@ -24,7 +24,7 @@ export function RarityFilter(props: RarityFilterProps) {
     props.rarity ?? { rarityScore: 0, rarityRank: 0 }
   );
 
-  const ref = useRef();
+  const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
     setIsOpen(false);
   });
