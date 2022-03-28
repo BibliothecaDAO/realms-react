@@ -49,7 +49,37 @@ export type BuildingCostInput = {
 export type BuildingInput = {
   id?: InputMaybe<Scalars['ID']>;
   realmId: Scalars['Float'];
-  type: Scalars['String'];
+  type: BuildingType;
+};
+
+export enum BuildingType {
+  Amphitheater = 'Amphitheater',
+  Carpenter = 'Carpenter',
+  Castle = 'Castle',
+  Dock = 'Dock',
+  ExplorersGuild = 'Explorers_Guild',
+  Fairgrounds = 'Fairgrounds',
+  Farms = 'Farms',
+  Fishmonger = 'Fishmonger',
+  Granary = 'Granary',
+  GrandMarket = 'Grand_Market',
+  Guild = 'Guild',
+  Hamlet = 'Hamlet',
+  Housing = 'Housing',
+  LogisticsOffice = 'Logistics_Office',
+  OfficerAcademy = 'Officer_Academy',
+  ParadeGrounds = 'Parade_Grounds',
+  ResourceFacility = 'Resource_Facility',
+  RoyalReserve = 'Royal_Reserve',
+  School = 'School',
+  Symposium = 'Symposium',
+}
+
+export type BuildingTypeInput = {
+  equals?: InputMaybe<BuildingType>;
+  in?: InputMaybe<Array<BuildingType>>;
+  not?: InputMaybe<Array<BuildingType>>;
+  notIn?: InputMaybe<Array<BuildingType>>;
 };
 
 /** The Desiege Model */
@@ -76,6 +106,16 @@ export type Event = {
   parameters: Array<Scalars['Float']>;
   timestamp: Scalars['DateTime'];
   txHash: Scalars['String'];
+};
+
+export type IntFilterInput = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type Mutation = {
@@ -113,6 +153,38 @@ export type MutationCreateOrUpdateWalletArgs = {
   data: WalletInput;
 };
 
+/** Order By Direction */
+export enum OrderByDirectionInput {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
+export enum OrderType {
+  Anger = 'Anger',
+  Brilliance = 'Brilliance',
+  Detection = 'Detection',
+  Enlightenment = 'Enlightenment',
+  Fury = 'Fury',
+  Giants = 'Giants',
+  Perfection = 'Perfection',
+  Power = 'Power',
+  Protection = 'Protection',
+  Rage = 'Rage',
+  Reflection = 'Reflection',
+  Skill = 'Skill',
+  Titans = 'Titans',
+  Vitriol = 'Vitriol',
+  TheFox = 'the_Fox',
+  TheTwins = 'the_Twins',
+}
+
+export type OrderTypeInput = {
+  equals?: InputMaybe<OrderType>;
+  in?: InputMaybe<Array<OrderType>>;
+  not?: InputMaybe<Array<OrderType>>;
+  notIn?: InputMaybe<Array<OrderType>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getBuilding: Building;
@@ -127,7 +199,6 @@ export type Query = {
   getRealm: Realm;
   getRealmTraits: Array<RealmTrait>;
   getRealms: Array<Realm>;
-  getRealmsByAddress: Array<Realm>;
   getResource: Resource;
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
@@ -159,8 +230,11 @@ export type QueryGetRealmArgs = {
   realmId: Scalars['Float'];
 };
 
-export type QueryGetRealmsByAddressArgs = {
-  address: Scalars['String'];
+export type QueryGetRealmsArgs = {
+  filter?: InputMaybe<RealmFilterInput>;
+  orderBy?: InputMaybe<RealmOrderByInput>;
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
 };
 
 export type QueryGetResourceArgs = {
@@ -192,6 +266,23 @@ export type Realm = {
   wallet?: Maybe<Wallet>;
 };
 
+export type RealmFilterInput = {
+  AND?: InputMaybe<Array<RealmFilterInput>>;
+  NOT?: InputMaybe<Array<RealmFilterInput>>;
+  OR?: InputMaybe<Array<RealmFilterInput>>;
+  buildingType?: InputMaybe<BuildingTypeInput>;
+  name?: InputMaybe<StringFilterInput>;
+  orderType?: InputMaybe<OrderTypeInput>;
+  owner?: InputMaybe<StringFilterInput>;
+  rarityRank?: InputMaybe<IntFilterInput>;
+  rarityScore?: InputMaybe<IntFilterInput>;
+  realmId?: InputMaybe<IntFilterInput>;
+  resourceType?: InputMaybe<ResourceTypeInput>;
+  squadAction?: InputMaybe<SquadActionInput>;
+  squadType?: InputMaybe<SquadTypeInput>;
+  traitType?: InputMaybe<RealmTraitTypeInput>;
+};
+
 export type RealmInput = {
   imageUrl?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -200,6 +291,12 @@ export type RealmInput = {
   rarityRank?: InputMaybe<Scalars['Int']>;
   rarityScore?: InputMaybe<Scalars['Float']>;
   realmId: Scalars['Int'];
+};
+
+export type RealmOrderByInput = {
+  rarityRank?: InputMaybe<OrderByDirectionInput>;
+  rarityScore?: InputMaybe<OrderByDirectionInput>;
+  realmId?: InputMaybe<OrderByDirectionInput>;
 };
 
 /** Realm Trait Model */
@@ -215,7 +312,21 @@ export type RealmTrait = {
 export type RealmTraitInput = {
   qty: Scalars['Float'];
   realmId: Scalars['Float'];
-  type: Scalars['String'];
+  type: RealmTraitType;
+};
+
+export enum RealmTraitType {
+  City = 'City',
+  Harbor = 'Harbor',
+  Region = 'Region',
+  River = 'River',
+}
+
+export type RealmTraitTypeInput = {
+  equals?: InputMaybe<RealmTraitType>;
+  in?: InputMaybe<Array<RealmTraitType>>;
+  not?: InputMaybe<Array<RealmTraitType>>;
+  notIn?: InputMaybe<Array<RealmTraitType>>;
 };
 
 /** The Resource Model */
@@ -230,7 +341,40 @@ export type Resource = {
 export type ResourceInput = {
   id?: InputMaybe<Scalars['ID']>;
   realmId: Scalars['Float'];
-  type: Scalars['String'];
+  type: ResourceType;
+};
+
+/** ResourceType */
+export enum ResourceType {
+  Adamantine = 'Adamantine',
+  AlchemicalSilver = 'Alchemical_Silver',
+  Coal = 'Coal',
+  ColdIron = 'Cold_Iron',
+  Copper = 'Copper',
+  DeepCrystal = 'Deep_Crystal',
+  Diamonds = 'Diamonds',
+  Dragonhide = 'Dragonhide',
+  EtherealSilica = 'Ethereal_Silica',
+  Gold = 'Gold',
+  Hartwood = 'Hartwood',
+  Ignium = 'Ignium',
+  Ironwood = 'Ironwood',
+  Mithral = 'Mithral',
+  Obsidian = 'Obsidian',
+  Ruby = 'Ruby',
+  Sapphire = 'Sapphire',
+  Silver = 'Silver',
+  Stone = 'Stone',
+  TrueIce = 'True_Ice',
+  TwilightQuartz = 'Twilight_Quartz',
+  Wood = 'Wood',
+}
+
+export type ResourceTypeInput = {
+  equals?: InputMaybe<ResourceType>;
+  in?: InputMaybe<Array<ResourceType>>;
+  not?: InputMaybe<Array<ResourceType>>;
+  notIn?: InputMaybe<Array<ResourceType>>;
 };
 
 /** The Squad Model */
@@ -240,6 +384,61 @@ export type Squad = {
   realm?: Maybe<Realm>;
   realmId: Scalars['Int'];
   type: Scalars['String'];
+};
+
+export enum SquadAction {
+  Defence = 'Defence',
+  Offence = 'Offence',
+}
+
+export type SquadActionInput = {
+  equals?: InputMaybe<SquadAction>;
+  in?: InputMaybe<Array<SquadAction>>;
+  not?: InputMaybe<Array<SquadAction>>;
+  notIn?: InputMaybe<Array<SquadAction>>;
+};
+
+export enum SquadType {
+  Apprentice = 'Apprentice',
+  Arcanist = 'Arcanist',
+  Archer = 'Archer',
+  Ballista = 'Ballista',
+  Catapult = 'Catapult',
+  GrandMarshal = 'Grand_Marshal',
+  Guard = 'Guard',
+  GuardCaptain = 'Guard_Captain',
+  Healer = 'Healer',
+  Knight = 'Knight',
+  KnightCommander = 'Knight_Commander',
+  LifeMage = 'Life_Mage',
+  Mage = 'Mage',
+  Scorpio = 'Scorpio',
+  Scout = 'Scout',
+  Shaman = 'Shaman',
+  Sniper = 'Sniper',
+  Squire = 'Squire',
+  Watchman = 'Watchman',
+}
+
+export type SquadTypeInput = {
+  equals?: InputMaybe<SquadType>;
+  in?: InputMaybe<Array<SquadType>>;
+  not?: InputMaybe<Array<SquadType>>;
+  notIn?: InputMaybe<Array<SquadType>>;
+};
+
+export type StringFilterInput = {
+  contains?: InputMaybe<Array<Scalars['String']>>;
+  endsWith?: InputMaybe<Array<Scalars['String']>>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Array<Scalars['String']>>;
+  gte?: InputMaybe<Array<Scalars['String']>>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Array<Scalars['String']>>;
+  lte?: InputMaybe<Array<Scalars['String']>>;
+  not?: InputMaybe<Array<Scalars['String']>>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** The Wallet Model */
