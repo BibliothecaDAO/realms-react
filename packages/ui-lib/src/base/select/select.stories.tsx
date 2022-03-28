@@ -7,7 +7,7 @@ import { Select } from './select';
 
 export default {
   component: Select,
-  title: 'Select',
+  title: 'Base/Select',
 } as Meta;
 
 const resources = [
