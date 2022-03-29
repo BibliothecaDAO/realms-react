@@ -14,49 +14,19 @@ import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { useState, useCallback, useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { useSwapResources } from '@/hooks/useSwapResources';
+import type { ResourceQty, Resource } from '@/hooks/useSwapResources';
 
-const resources = [
-  'Wood',
-  'Stone',
-  'Coal',
-  'Copper',
-  'Obsidian',
-  'Silver',
-  'Ironwood',
-  'Cold Iron',
-  'Gold',
-  'Hartwood',
-  'Diamonds',
-  'Sapphire',
-  'Ruby',
-  'Deep Crystal',
-  'Ignium',
-  'Ethereal Silica',
-  'True Ice',
-  'Twilight Quartz',
-  'Alchemical Silver',
-  'Adamantine',
-  'Mithral',
-  'Dragonhide',
-];
-
-type Resources = typeof resources[number];
-
-type ResourceQty = {
-  name: Resources;
-  qty: string | number;
-};
 type ResourceRowProps = {
   resource: ResourceQty;
-  availableResources: Resources[];
+  availableResources: Resource[];
   onResourceChange: (name: string, newName: string) => void;
   onQtyChange: ({ name, qty }: ResourceQty) => void;
 };
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
-  const [resourceQty, setResourceQty] = useState<string | number>(0);
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
-
+  const { updateSelectedResource } = useSwapResources();
   const validateInputValue = useCallback(
     (value: string | number) => {
       /* return new BigNumber(
@@ -88,15 +58,14 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     }
     let timerId: NodeJS.Timeout | null = null;
     timerId = setTimeout(() => {
-      props.onQtyChange({
-        name: props.resource.name,
-        qty: newValue as number,
-      }); /* updatePercentByValue(newValue); */
+      updateSelectedResource(
+        props.resource.name,
+        newValue
+      ); /* updatePercentByValue(newValue); */
     }, 500);
     setTime(timerId);
   };
-  const handleSelectChange = (newValue: Resources) => {
-    console.log(handleSelectChange);
+  const handleSelectChange = (newValue: Resource) => {
     props.onResourceChange(props.resource.name, newValue);
   };
   return (
@@ -161,71 +130,32 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  const [resourceRows, setResourceRows] = useState<ResourceQty[]>([]);
-  const handleAddRow = () => {
-    setResourceRows((prevRows) => [
-      ...prevRows,
-      {
-        name: availableResources[0],
-        qty: 0, // Random age
-      },
-    ]);
-  };
-  const handleRemoveRow = (name: Resources) => {
-    setResourceRows(resourceRows.filter((item) => item.name !== name));
-  };
-  const [availableResources, setAvailableResources] =
-    useState<Resources[]>(resources);
-
-  useEffect(() => {
-    const resourceRowNames = resourceRows.map((i) => {
-      return i.name;
-    });
-    setAvailableResources(
-      resources.filter(function (el) {
-        return resourceRowNames.indexOf(el) < 0;
-      })
-    );
-  }, [resourceRows]);
-
-  const handleQtyChange = ({ name, qty }: ResourceQty) => {
-    console.log(resourceRows);
-    setResourceRows(
-      resourceRows.map((resourceRow) =>
-        resourceRow.name === name
-          ? { ...resourceRow, qty: qty }
-          : { ...resourceRow }
-      )
-    );
-  };
-  const handleResourceChange = (name: string, newName: string) => {
-    setResourceRows(
-      resourceRows.map((resourceRow) =>
-        resourceRow.name === name
-          ? { ...resourceRow, name: newName, qty: 0 }
-          : { ...resourceRow }
-      )
-    );
-  };
-
+  const {
+    selectedResources,
+    availableResources,
+    addSelectedResources,
+    removeSelectedResource,
+    updateResourceQty,
+    handleResourceChange,
+  } = useSwapResources();
   return (
     <div className="flex flex-col justify-between h-full">
       <div>
-        {resourceRows.map((resourceRow) => (
+        {selectedResources.map((resourceRow) => (
           <div className="relative" key={resourceRow.name}>
             <ResourceRow
               key={resourceRow.name}
               resource={resourceRow}
               availableResources={availableResources}
               onResourceChange={handleResourceChange}
-              onQtyChange={handleQtyChange}
+              onQtyChange={updateResourceQty}
             />
             <IconButton
               className="absolute -top-3 -right-3"
               icon={<Danger className="w-3 h-3" />}
               aria-label="Remove Row"
               size="xs"
-              onClick={() => handleRemoveRow(resourceRow.name)}
+              onClick={() => removeSelectedResource(resourceRow.name)}
             />
           </div>
         ))}
@@ -233,7 +163,7 @@ export function SwapResources(): ReactElement {
           aria-label="Add Row"
           icon={<ChevronRight className="w-8 h-8" />}
           size="lg"
-          onClick={() => handleAddRow()}
+          onClick={() => addSelectedResources()}
         />
       </div>
       <div className="flex justify-end w-full pt-4">

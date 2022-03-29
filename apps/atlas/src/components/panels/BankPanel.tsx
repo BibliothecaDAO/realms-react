@@ -89,7 +89,6 @@ export function BankPanel(): ReactElement {
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
       </div>
-      );
     </BasePanel>
   );
 }
