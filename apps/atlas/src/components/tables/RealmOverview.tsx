@@ -1,11 +1,12 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
-import { useState } from 'react';
 import { OrdersFilter } from '@/components/filters/OrdersFilter';
 import { RarityFilter } from '@/components/filters/RarityFilter';
 import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
+import { useSettlingContext } from '@/context/SettlingContext';
+
 import type {
   QueryGetRealmsArgs,
   GetRealmsQuery,
@@ -53,44 +54,52 @@ export function RealmOverview() {
 
   const { account, isConnected, displayName } = useWalletContext();
 
-  const [filters, setFilters] = useState({
-    rarity: {
-      rarityScore: 0,
-      rarityRank: 0,
-    },
-    traits: {
-      region: 0,
-      city: 0,
-      harbour: 0,
-      river: 0,
-    },
-    selectedOrders: [] as OrderType[],
-    selectedResources: [] as ResourceType[],
-  });
-
-  const variables: QueryGetRealmsArgs = {
-    filter: {
-      rarityRank: {
-        gte: filters.rarity.rarityRank,
-      },
-      rarityScore: {
-        gte: filters.rarity.rarityScore,
-      },
-      orderType:
-        filters.selectedOrders.length > 0
-          ? {
-              in: [...filters.selectedOrders],
-            }
-          : undefined,
-      AND: filters.selectedResources.map((resource) => ({
-        resourceType: { equals: resource },
-      })),
-    },
-  };
+  const settling = useSettlingContext();
 
   const { data } = useRealmsQueryWithArgs({
-    variables,
+    variables: {
+      filter: {
+        rarityRank: { gte: settling.state.rarityFilter.rarityRank },
+        rarityScore: { gte: settling.state.rarityFilter.rarityScore },
+        orderType:
+          settling.state.selectedOrders.length > 0
+            ? { in: [...settling.state.selectedOrders] }
+            : undefined,
+        AND: settling.state.selectedResources.map((resource) => ({
+          resourceType: { equals: resource },
+        })),
+      },
+    },
   });
+
+  // Filter Actions
+  const updateSelectedResources = (values: ResourceType[]) =>
+    settling.dispatch({
+      type: 'updateSelectedResources',
+      payload: [...values],
+    });
+
+  const updateRarityFilter = (value: {
+    rarityScore: number;
+    rarityRank: number;
+  }) =>
+    settling.dispatch({
+      type: 'updateRarityFilter',
+      payload: value,
+    });
+
+  const updateSelectedOrders = (values: OrderType[]) =>
+    settling.dispatch({
+      type: 'updateSelectedOrders',
+      payload: [...values],
+    });
+
+  const updateTraitsFilter = (value: {
+    region: number;
+    city: number;
+    harbour: number;
+    river: number;
+  }) => settling.dispatch({ type: 'updateTraitsFilter', payload: value });
 
   const openRealmDetails = (realmId: number) => {
     setSelectedId(realmId.toString());
@@ -98,34 +107,27 @@ export function RealmOverview() {
       toggleMenuType('realm');
     }
   };
+
   return (
     <div>
       <div className="flex justify-between">
         <div>Search</div>
         <div className="flex mb-4">
           <ResourcesFilter
-            selectedValues={filters.selectedResources}
-            onChange={(values) => {
-              setFilters({ ...filters, selectedResources: [...values] });
-            }}
+            selectedValues={settling.state.selectedResources}
+            onChange={updateSelectedResources}
           />
           <RarityFilter
-            rarity={filters.rarity}
-            onChange={(value) => {
-              setFilters({ ...filters, rarity: { ...value } });
-            }}
+            rarity={settling.state.rarityFilter}
+            onChange={updateRarityFilter}
           />
           <OrdersFilter
-            selectedValues={filters.selectedOrders}
-            onChange={(values) => {
-              setFilters({ ...filters, selectedOrders: [...values] });
-            }}
+            selectedValues={settling.state.selectedOrders}
+            onChange={updateSelectedOrders}
           />
           <TraitsFilter
-            traits={filters.traits}
-            onChange={(value) => {
-              setFilters({ ...filters, traits: { ...value } });
-            }}
+            traits={settling.state.traitsFilter}
+            onChange={updateTraitsFilter}
           />
         </div>
       </div>
