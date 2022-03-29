@@ -9,6 +9,7 @@ import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
 import { BankPanel } from '@/components/panels/BankPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
+import { TradePanel } from '@/components/panels/TradePanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
@@ -224,6 +225,7 @@ function App() {
             <BankPanel />
             <RealmSideBar id={selectedId} />
             <ResourceSwapSideBar />
+            <TradePanel />
             <CryptsSideBar id={selectedId} />
             <LootSideBar id={selectedId} />
             <GASideBar id={selectedId} />

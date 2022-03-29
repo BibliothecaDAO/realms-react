@@ -76,7 +76,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={() => toggleArtBackground()}
+        onClick={() => togglePanelType('trade')}
         aria-label="Trade"
         icon={<Mountain className={iconClasses} />}
         size="lg"
