@@ -1,6 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
 import React, { useRef, useState } from 'react';
+import { RealmTraitType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import { RangeSliderFilter } from './RangeSliderFilter';
 
@@ -10,10 +11,10 @@ const HarbourMax = 35;
 const RiverMax = 60;
 
 type Traits = {
-  region: number;
-  city: number;
-  harbour: number;
-  river: number;
+  [RealmTraitType.Region]: number;
+  [RealmTraitType.City]: number;
+  [RealmTraitType.Harbor]: number;
+  [RealmTraitType.River]: number;
 };
 
 type TraitsFilterProps = {
@@ -24,7 +25,12 @@ type TraitsFilterProps = {
 export function TraitsFilter(props: TraitsFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [traits, setTraits] = useState<Traits>(
-    props.traits ?? { region: 0, city: 0, harbour: 0, river: 0 }
+    props.traits ?? {
+      [RealmTraitType.Region]: 0,
+      [RealmTraitType.City]: 0,
+      [RealmTraitType.Harbor]: 0,
+      [RealmTraitType.River]: 0,
+    }
   );
 
   const ref = useRef(null);
@@ -33,25 +39,25 @@ export function TraitsFilter(props: TraitsFilterProps) {
   });
 
   const onRegionFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, region: value };
+    const updatedTraits = { ...traits, [RealmTraitType.Region]: value };
     setTraits(updatedTraits);
     props.onChange(updatedTraits);
   };
 
   const onCityFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, city: value };
+    const updatedTraits = { ...traits, [RealmTraitType.City]: value };
     setTraits(updatedTraits);
     props.onChange(updatedTraits);
   };
 
   const onHarbourFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, harbour: value };
+    const updatedTraits = { ...traits, [RealmTraitType.Harbor]: value };
     setTraits(updatedTraits);
     props.onChange(updatedTraits);
   };
 
   const onRiverFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, river: value };
+    const updatedTraits = { ...traits, [RealmTraitType.River]: value };
     setTraits(updatedTraits);
     props.onChange(updatedTraits);
   };
@@ -81,28 +87,28 @@ export function TraitsFilter(props: TraitsFilterProps) {
               name="Regions"
               min={0}
               max={RegionMax}
-              defaultValue={traits.region}
+              defaultValue={traits[RealmTraitType.Region]}
               onChange={onRegionFilterChange}
             />
             <RangeSliderFilter
               name="Cities"
               min={0}
               max={CityMax}
-              defaultValue={traits.city}
+              defaultValue={traits[RealmTraitType.City]}
               onChange={onCityFilterChange}
             />
             <RangeSliderFilter
               name="Harbours"
               min={0}
               max={HarbourMax}
-              defaultValue={traits.harbour}
+              defaultValue={traits[RealmTraitType.Harbor]}
               onChange={onHarbourFilterChange}
             />
             <RangeSliderFilter
               name="Rivers"
               min={0}
               max={RiverMax}
-              defaultValue={traits.river}
+              defaultValue={traits[RealmTraitType.River]}
               onChange={onRiverFilterChange}
             />
           </div>

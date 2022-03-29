@@ -7,14 +7,15 @@ import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useSettlingContext } from '@/context/SettlingContext';
 
+import { RealmFragmentFragmentDoc } from '@/generated/graphql';
 import type {
   QueryGetRealmsArgs,
   GetRealmsQuery,
   RealmFragmentFragment,
   ResourceType,
   OrderType,
+  RealmTraitType,
 } from '@/generated/graphql';
-import { RealmFragmentFragmentDoc } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
@@ -56,6 +57,20 @@ export function RealmOverview() {
 
   const settling = useSettlingContext();
 
+  const resourceFilters = settling.state.selectedResources.map((resource) => ({
+    resourceType: { equals: resource },
+  }));
+
+  const traitsFilters = Object.keys(settling.state.traitsFilter)
+    // Filter 0 entries
+    .filter((key: string) => (settling.state.traitsFilter as any)[key])
+    .map((key: string) => ({
+      trait: {
+        type: key as RealmTraitType,
+        qty: { gte: (settling.state.traitsFilter as any)[key] },
+      },
+    }));
+
   const { data } = useRealmsQueryWithArgs({
     variables: {
       filter: {
@@ -65,9 +80,7 @@ export function RealmOverview() {
           settling.state.selectedOrders.length > 0
             ? { in: [...settling.state.selectedOrders] }
             : undefined,
-        AND: settling.state.selectedResources.map((resource) => ({
-          resourceType: { equals: resource },
-        })),
+        AND: [...resourceFilters, ...traitsFilters],
       },
     },
   });
@@ -95,10 +108,10 @@ export function RealmOverview() {
     });
 
   const updateTraitsFilter = (value: {
-    region: number;
-    city: number;
-    harbour: number;
-    river: number;
+    [RealmTraitType.Region]: number;
+    [RealmTraitType.City]: number;
+    [RealmTraitType.Harbor]: number;
+    [RealmTraitType.River]: number;
   }) => settling.dispatch({ type: 'updateTraitsFilter', payload: value });
 
   const openRealmDetails = (realmId: number) => {

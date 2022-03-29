@@ -1,14 +1,15 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import type { ResourceType, OrderType } from '@/generated/graphql';
+import { RealmTraitType } from '@/generated/graphql';
 
 type RarityFilter = { rarityScore: number; rarityRank: number };
 
 type TraitsFilter = {
-  region: number;
-  city: number;
-  harbour: number;
-  river: number;
+  [RealmTraitType.Region]: number;
+  [RealmTraitType.City]: number;
+  [RealmTraitType.Harbor]: number;
+  [RealmTraitType.River]: number;
 };
 
 interface SettlingState {
@@ -48,10 +49,10 @@ const defaultSettlingState = {
     rarityRank: 0,
   },
   traitsFilter: {
-    region: 0,
-    city: 0,
-    harbour: 0,
-    river: 0,
+    [RealmTraitType.Region]: 0,
+    [RealmTraitType.City]: 0,
+    [RealmTraitType.Harbor]: 0,
+    [RealmTraitType.River]: 0,
   },
   selectedOrders: [] as OrderType[],
   selectedResources: [] as ResourceType[],

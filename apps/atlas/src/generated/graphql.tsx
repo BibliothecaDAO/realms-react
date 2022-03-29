@@ -280,7 +280,7 @@ export type RealmFilterInput = {
   resourceType?: InputMaybe<ResourceTypeInput>;
   squadAction?: InputMaybe<SquadActionInput>;
   squadType?: InputMaybe<SquadTypeInput>;
-  traitType?: InputMaybe<RealmTraitTypeInput>;
+  trait?: InputMaybe<RealmTraitFilterInput>;
 };
 
 export type RealmInput = {
@@ -309,6 +309,11 @@ export type RealmTrait = {
   type: Scalars['String'];
 };
 
+export type RealmTraitFilterInput = {
+  qty?: InputMaybe<IntFilterInput>;
+  type: RealmTraitType;
+};
+
 export type RealmTraitInput = {
   qty: Scalars['Float'];
   realmId: Scalars['Float'];
@@ -321,13 +326,6 @@ export enum RealmTraitType {
   Region = 'Region',
   River = 'River',
 }
-
-export type RealmTraitTypeInput = {
-  equals?: InputMaybe<RealmTraitType>;
-  in?: InputMaybe<Array<RealmTraitType>>;
-  not?: InputMaybe<Array<RealmTraitType>>;
-  notIn?: InputMaybe<Array<RealmTraitType>>;
-};
 
 /** The Resource Model */
 export type Resource = {
