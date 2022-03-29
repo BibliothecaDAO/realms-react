@@ -5,10 +5,10 @@ import ColdIron from '@bibliotheca-dao/ui-lib/icons/resources/ColdIron.svg';
 import Copper from '@bibliotheca-dao/ui-lib/icons/resources/Copper.svg';
 import DeepCrystal from '@bibliotheca-dao/ui-lib/icons/resources/DeepCrystal.svg';
 import Diamonds from '@bibliotheca-dao/ui-lib/icons/resources/Diamonds.svg';
-import DragonHide from '@bibliotheca-dao/ui-lib/icons/resources/DragonHide.svg';
-import EtheralSilica from '@bibliotheca-dao/ui-lib/icons/resources/EtheralSilica.svg';
+import Dragonhide from '@bibliotheca-dao/ui-lib/icons/resources/Dragonhide.svg';
+import EtherealSilica from '@bibliotheca-dao/ui-lib/icons/resources/EtherealSilica.svg';
 import Gold from '@bibliotheca-dao/ui-lib/icons/resources/Gold.svg';
-import HeartWood from '@bibliotheca-dao/ui-lib/icons/resources/HeartWood.svg';
+import Hartwood from '@bibliotheca-dao/ui-lib/icons/resources/Hartwood.svg';
 import Ignium from '@bibliotheca-dao/ui-lib/icons/resources/Ignium.svg';
 import Ironwood from '@bibliotheca-dao/ui-lib/icons/resources/Ironwood.svg';
 import Mithral from '@bibliotheca-dao/ui-lib/icons/resources/Mithral.svg';
@@ -36,10 +36,10 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   Copper: <Copper />,
   DeepCrystal: <DeepCrystal />,
   Diamonds: <Diamonds />,
-  DragonHide: <DragonHide />,
-  EtheralSilica: <EtheralSilica />,
+  Dragonhide: <Dragonhide />,
+  EtherealSilica: <EtherealSilica />,
   Gold: <Gold />,
-  HeartWood: <HeartWood />,
+  Hartwood: <Hartwood />,
   Ignium: <Ignium />,
   Ironwood: <Ironwood />,
   Mithral: <Mithral />,
