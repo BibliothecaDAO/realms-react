@@ -4,7 +4,7 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { useMemo } from 'react';
 import { AllRealms } from '@/components/tables/AllRealms';
 import { FavouriteRealms } from '@/components/tables/FavouriteRealms';
-import { MyRealms } from '@/components/tables/MyRealms';
+import { YourRealms } from '@/components/tables/YourRealms';
 import { useUIContext } from '@/hooks/useUIContext';
 import { BasePanel } from './BasePanel';
 
@@ -16,7 +16,7 @@ export const RealmsPanel = () => {
       {
         label: 'Your Realms',
         icon: <Castle className="mr-2" />,
-        component: <MyRealms />,
+        component: <YourRealms />,
       },
       {
         label: 'All Realms',

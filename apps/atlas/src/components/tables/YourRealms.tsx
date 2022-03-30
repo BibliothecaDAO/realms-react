@@ -5,7 +5,7 @@ import type { QueryGetRealmsArgs, GetRealmsQuery } from '@/generated/graphql';
 import { getRealmsQueryV2 } from '@/hooks/graphql/queries';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
-export function MyRealms() {
+export function YourRealms() {
   const { account } = useWalletContext();
 
   const variables = {
