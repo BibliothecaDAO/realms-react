@@ -1,59 +1,57 @@
-import { useContract, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
-import type { Abi } from 'starknet';
-import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
+import { useQuery } from 'react-query';
+import { toBN } from 'starknet/dist/utils/number';
+import { getUserRewardAlloc, ShieldGameRole } from '@/util/minigameApi';
+import useHealth from './useHealth';
 
-import { useModuleAddress } from '../useModuleAddress';
+// https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories
+export const queryKeys = {
+  userRewardAlloc: (account: any, gameIdx: any) => [
+    'desiege-user-reward',
+    account,
+    gameIdx,
+  ],
+};
 
-const useUserReward = ({
-  gameIdx,
-  account,
-}: {
+type UseUserRewardArgs = {
   gameIdx?: number;
   account?: string;
-}) => {
-  const towerDefenceStorageAddr = useModuleAddress('2');
+};
 
-  const { contract } = useContract({
-    address: towerDefenceStorageAddr,
-    abi: TowerDefenceStorageContract as Abi,
+const useUserReward = (args: UseUserRewardArgs) => {
+  const getMainHealth = useHealth({
+    gameIdx: args.gameIdx,
   });
 
-  const getMainHealth = useStarknetCall({
-    contract,
-    method: 'get_main_health',
-    args: gameIdx !== undefined ? [gameIdx] : undefined,
-  });
-
-  const gameFinalHealth: BN | undefined = getMainHealth.data
-    ? getMainHealth.data[0]
-    : undefined;
   let gameWinningSide: string | undefined;
-  if (gameFinalHealth && gameFinalHealth.toNumber() > 0) {
+  if (getMainHealth.data && getMainHealth.data.toNumber() > 0) {
     gameWinningSide = 'light';
   } else {
     gameWinningSide = 'dark';
   }
 
-  const getUserReward = useStarknetCall({
-    contract,
-    method: 'get_user_reward_alloc',
-    args:
-      gameIdx !== undefined &&
-      account &&
-      towerDefenceStorageAddr &&
-      gameWinningSide
-        ? [gameIdx, account, gameWinningSide == 'light' ? 0 : 1]
-        : undefined,
-  });
-
-  const alloc: BN | undefined = getUserReward.data
-    ? getUserReward.data[0]
-    : undefined;
+  const getUserReward = useQuery<BN>(
+    queryKeys.userRewardAlloc(args.account, args.gameIdx),
+    () => {
+      return getUserRewardAlloc(
+        args.gameIdx?.toString() as string,
+        toBN(args.account as string).toString(),
+        gameWinningSide == 'light'
+          ? ShieldGameRole.Shielder
+          : ShieldGameRole.Attacker
+      );
+    },
+    {
+      enabled:
+        args.gameIdx !== undefined &&
+        args.account !== undefined &&
+        gameWinningSide !== undefined,
+    }
+  );
 
   return {
-    loading: getUserReward.loading || getMainHealth.loading,
-    alloc,
+    loading: getUserReward.isLoading || getMainHealth.isLoading,
+    alloc: getUserReward.data,
   };
 };
 
