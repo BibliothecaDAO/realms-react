@@ -13,6 +13,8 @@ import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetProvider } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { UIProvider } from '@/hooks/useUIContext';
 import { WalletProvider } from '@/hooks/useWalletContext';
@@ -47,6 +49,9 @@ const client = new ApolloClient({
     },
   }),
 });
+
+// Create a react-query client
+const queryClient = new QueryClient();
 
 const PageWrapper = (Comp: any) =>
   class InnerPageWrapper extends React.Component<{ ua: string }> {
@@ -86,14 +91,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       <WalletProvider>
         <ApolloProvider client={client}>
           <StarknetProvider>
-            <UIProvider>
-              <Component {...pageProps} />
+            <QueryClientProvider client={queryClient}>
+              <UIProvider>
+                <Component {...pageProps} />
 
-              {/* <PageTransition
+                {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-            </UIProvider>
+              </UIProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
           </StarknetProvider>
         </ApolloProvider>
       </WalletProvider>

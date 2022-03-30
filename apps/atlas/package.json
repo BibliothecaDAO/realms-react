@@ -168,6 +168,7 @@
     "react-dom": "18.0.0-rc.1",
     "react-joyride": "^2.3.2",
     "react-map-gl": "^7.0.9",
+    "react-query": "3.34.18",
     "react-spring": "^9.4.4",
     "sharp": "0.30.1",
     "starknet": "^3.5.1",
