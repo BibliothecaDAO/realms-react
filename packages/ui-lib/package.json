@@ -33,10 +33,9 @@
   },
   "dependencies": {
     "@bibliotheca-dao/core-lib": "workspace:^",
-    "@tanstack/react-table": "8.0.0-alpha.8",
+    "@tanstack/react-table": "8.0.0-alpha.11",
     "clsx": "1.1.1",
-    "rc-input-number": "7.3.4",
-    "react-table": "7.7.0"
+    "rc-input-number": "7.3.4"
   },
   "devDependencies": {
     "@babel/core": "7.17.5",
