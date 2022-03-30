@@ -1857,14 +1857,14 @@ __metadata:
     microbundle: 0.14.2
     npm-run-all: 4.1.5
     prettier: 2.5.1
-    react: 18.0.0-rc.2
-    react-dom: 18.0.0-rc.2
+    react: 18.0.0
+    react-dom: 18.0.0
     rimraf: 3.0.2
     ts-jest: 27.1.3
     typescript: 4.6.2
   peerDependencies:
-    react: ^17.0.2 || >= 18.0.0-rc.0
-    react-dom: ^17.0.2 || >= 18.0.0-rc.0
+    react: ^17.0.2 || >= 18.0.0
+    react-dom: ^17.0.2 || >= 18.0.0
   peerDependenciesMeta:
     react:
       optional: true
@@ -1947,8 +1947,8 @@ __metadata:
     postcss-flexbugs-fixes: 5.0.2
     prettier: 2.5.1
     rc-input-number: 7.3.4
-    react: 18.0.0-rc.2
-    react-dom: 18.0.0-rc.2
+    react: 18.0.0
+    react-dom: 18.0.0
     react-table: 7.7.0
     rimraf: 3.0.2
     rooks: 5.10.0
@@ -1963,8 +1963,8 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.7.0
     "@emotion/styled": ^11.6.0
-    react: ^17.0.2 || >= 18.0.0-rc.0
-    react-dom: ^17.0.2 || >= 18.0.0-rc.0
+    react: ^17.0.2 || >= 18.0.0
+    react-dom: ^17.0.2 || >= 18.0.0
   peerDependenciesMeta:
     "@emotion/react":
       optional: false
@@ -9623,8 +9623,8 @@ __metadata:
     postcss: ^8.4.6
     prettier: 2.5.1
     prop-types: ^15.0.0
-    react: 18.0.0-rc.2
-    react-dom: 18.0.0-rc.2
+    react: 18.0.0
+    react-dom: 18.0.0
     react-joyride: ^2.3.2
     react-map-gl: ^7.0.9
     react-spring: ^9.4.4
@@ -23542,15 +23542,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.0.0-rc.2":
-  version: 18.0.0-rc.2
-  resolution: "react-dom@npm:18.0.0-rc.2"
+"react-dom@npm:18.0.0":
+  version: 18.0.0
+  resolution: "react-dom@npm:18.0.0"
   dependencies:
     loose-envify: ^1.1.0
-    scheduler: ^0.21.0-rc.2
+    scheduler: ^0.21.0
   peerDependencies:
-    react: ^18.0.0-rc.2
-  checksum: d22c2b7c84cb351b30b9d1542f5aafa7e45ab4c7d040dacc0a42f539a2606f92250530aaaffde8828bddf06f0645930ca9b260b932645fc2e824c6cba00b97d7
+    react: ^18.0.0
+  checksum: dd0ba9f2f31dd728076c892a95b2f5a8dfe79136431b0289afb46eec39d0ca6b6f0f40a60fd8aa6ef702c98ce7c26100d3d4dbc35c7c9e87429cd04f84cb58bd
   languageName: node
   linkType: hard
 
@@ -23875,12 +23875,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.0.0-rc.2":
-  version: 18.0.0-rc.2
-  resolution: "react@npm:18.0.0-rc.2"
+"react@npm:18.0.0":
+  version: 18.0.0
+  resolution: "react@npm:18.0.0"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 9f12332e68d87b91bbb4e4cb857b486b04aed321f327a14f440226b6ef0fc8ea2f368ac75b33f4052a97fcb989db9ec7aa83adadd99eb1ad546f3fedc3363c26
+  checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
   languageName: node
   linkType: hard
 
@@ -25003,12 +25003,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.21.0-rc.2":
-  version: 0.21.0-rc.3-next-de516ca5a-20220321
-  resolution: "scheduler@npm:0.21.0-rc.3-next-de516ca5a-20220321"
+"scheduler@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "scheduler@npm:0.21.0"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 8a97fb043fc309c0b5f1b7eded272e4a220eb1c57cbb87af18469afae8f1682faf38aa325eab8bf32ab5203aa02e117ce319b78237f18d2cd89e976b7ba1519e
+  checksum: 4f8285076041ed2c81acdd1faa987f1655fdbd30554bc667c1ea64743fc74fb3a04ca7d27454b3d678735df5a230137a3b84756061b43dc5796e80701b66d124
   languageName: node
   linkType: hard
 
