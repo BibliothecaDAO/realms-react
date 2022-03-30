@@ -1,14 +1,10 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
-import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import { animated, useSpring } from '@react-spring/web';
-import { useState, useMemo } from 'react';
-import { RealmCard } from '@/components/cards/RealmCard';
-import { RealmsEmpire } from '@/components/map/RealmsEmpire';
-import { RealmOverview } from '@/components/tables/RealmOverview';
+import { useMemo } from 'react';
+import { AllRealms } from '@/components/tables/AllRealms';
+import { FavouriteRealms } from '@/components/tables/FavouriteRealms';
+import { YourRealms } from '@/components/tables/YourRealms';
 import { useUIContext } from '@/hooks/useUIContext';
 import { BasePanel } from './BasePanel';
 
@@ -20,17 +16,17 @@ export const RealmsPanel = () => {
       {
         label: 'Your Realms',
         icon: <Castle className="mr-2" />,
-        component: <RealmOverview />,
+        component: <YourRealms />,
       },
       {
         label: 'All Realms',
         icon: <Danger className="mr-2" />,
-        component: <RealmOverview />,
+        component: <AllRealms />,
       },
       {
         label: 'Favourite Realms',
         icon: <Danger className="mr-2" />,
-        component: <Castle className="w-48 h-48 fill-black" />,
+        component: <FavouriteRealms />,
       },
     ],
     []
