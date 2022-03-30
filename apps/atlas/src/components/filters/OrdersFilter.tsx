@@ -88,7 +88,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
                   key={order.value}
                   tabIndex={idx}
                   className={clsx(
-                    'flex items-center justify-center cursor-pointer px-6 rounded-sm',
+                    'flex items-center justify-center cursor-pointer rounded-sm',
                     isSelected(order) ? 'bg-[#515151]' : ''
                   )}
                   onClick={() => handleOnClickOrderOption(order)}

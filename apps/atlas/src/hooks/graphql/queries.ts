@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { RealmFragmentFragmentDoc } from '@/generated/graphql';
 import { GAdventurerFragment } from './fragments/gadventurer';
 import { BagFragment, defaultLoot } from './fragments/loot';
 import { ManaFragment } from './fragments/mana';
@@ -318,6 +319,21 @@ const lpIncentivesQuery = gql`
     }
   }
 `;
+
+const getRealmsQueryV2 = gql`
+  query getRealms(
+    $filter: RealmFilterInput
+    $orderBy: RealmOrderByInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getRealms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+      ...RealmFragment
+    }
+  }
+  ${RealmFragmentFragmentDoc}
+`;
+
 export {
   getRealmQuery,
   getRealmsQuery,
@@ -334,4 +350,5 @@ export {
   getResourceBalancesQuery,
   lpPositionQuery,
   lpIncentivesQuery,
+  getRealmsQueryV2,
 };
