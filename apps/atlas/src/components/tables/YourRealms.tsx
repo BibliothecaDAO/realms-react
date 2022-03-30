@@ -19,7 +19,7 @@ export function YourRealms() {
   return (
     <div>
       <RealmsFilter />
-      <RealmOverview realms={data?.getRealms} />
+      <RealmOverview realms={data?.getRealms ?? []} />
     </div>
   );
 }
