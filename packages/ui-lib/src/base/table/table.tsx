@@ -6,7 +6,7 @@ import {
   columnFilterRowsFn,
   createTable,
   globalFilterRowsFn,
-  ReactTable,
+  useTable,
 } from '@tanstack/react-table';
 import { useReducer, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -31,10 +31,8 @@ type TableProps = {
 export function Table({ data, columns: customColumns, options }: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const table = createTable().RowType<typeof data>();
-  console.log(typeof data);
-
-  const { createColumns, createDataColumn, createGroup, useTable } = table;
+  const table = createTable<typeof data>();
+  const { createColumns, createDataColumn, createGroup } = table;
 
   const defaultColumns = createColumns(
     customColumns?.map((column) => {
@@ -47,10 +45,9 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
 
   const [columns] = useState<typeof defaultColumns>(() => [...defaultColumns]);
 
-  const instance = useTable({
+  const instance = useTable(table, {
     data,
     columns,
-    debug: true,
     state: {
       globalFilter,
     },
@@ -87,7 +84,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
           ))}
         </thead>
         <tbody className="shadow-lg" {...instance.getTableBodyProps()}>
-          {instance.getRows().map((row, index) => (
+          {instance.getRowModel().rows.map((row, index) => (
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped

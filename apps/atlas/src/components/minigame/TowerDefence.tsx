@@ -15,8 +15,8 @@ import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type { MouseEventHandler } from 'react';
-import type * as THREE from 'three';
-import { Vector3 } from 'three';
+import * as THREE from 'three';
+import type { Vector3 } from 'three';
 import { useSound } from '@/context/soundProvider';
 import type { GameStatus } from '@/types/index';
 import {
@@ -119,7 +119,7 @@ export interface TowerProps {
 }
 
 const origin: { position?: Vector3 } = {
-  position: new Vector3(0, 0, 0),
+  position: new THREE.Vector3(0, 0, 0),
 };
 
 function TowerDefence(props: TowerProps) {
@@ -137,8 +137,8 @@ function TowerDefence(props: TowerProps) {
 
   return (
     <div className="h-screen z-1">
-      <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
-        <Suspense fallback={null}>
+      <Suspense fallback={null}>
+        <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
           <ambientLight />
           <pointLight position={[100, 100, 100]} />
           <directionalLight args={[0xf4e99b, 10]} />
@@ -196,10 +196,10 @@ function TowerDefence(props: TowerProps) {
 
           <OrbitControls autoRotate={rotate} />
           <Cloud position={[-4, -2, -25]} speed={0.2} opacity={1} />
-          {/* Hide until opacity over tower issue solved
-           <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
+
+          <Cloud position={[4, 2, -15]} speed={0.2} opacity={0.5} />
           <Cloud position={[4, -2, 25]} speed={0.2} opacity={0.5} />
-          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} /> */}
+          <Cloud position={[4, 2, 10]} speed={0.2} opacity={0.75} />
           <group ref={tower}>
             {/*! rotate ? (
               <Text
@@ -240,24 +240,24 @@ function TowerDefence(props: TowerProps) {
               </Html>
             ) : null}
           </group>
-        </Suspense>
-        <Stars
-          radius={100}
-          depth={50}
-          count={5000}
-          factor={4}
-          saturation={0}
-          fade
-        />
+          <Stars
+            radius={100}
+            depth={50}
+            count={5000}
+            factor={4}
+            saturation={0}
+            fade
+          />
 
-        <Sky
-          azimuth={0.2}
-          turbidity={10}
-          rayleigh={0.5}
-          inclination={0.7}
-          distance={1000}
-        />
-      </Canvas>
+          <Sky
+            azimuth={0.2}
+            turbidity={10}
+            rayleigh={0.5}
+            inclination={0.7}
+            distance={1000}
+          />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }
