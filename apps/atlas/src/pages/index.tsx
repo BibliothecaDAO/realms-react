@@ -227,6 +227,7 @@ function App() {
               <RealmsPanel />
               <BankPanel />
               <RealmSideBar id={selectedId} />
+              <TradePanel />
               <ResourceSwapSideBar />
               <CryptsSideBar id={selectedId} />
               <LootSideBar id={selectedId} />
@@ -257,7 +258,6 @@ function App() {
                 />
               </DeckGL>
             </div>
-
           </div>
         </div>
       </Layout>
