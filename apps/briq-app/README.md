@@ -1,4 +1,4 @@
-# The Atlas Repo
+# The Briq x Realms Repo
 
 <p align="left">
   <a aria-label="Build" href="https://github.com/BibliothecaForAdventurers/realms-react/actions?query=workflow%3ACI">
@@ -11,7 +11,7 @@
 ## Develop
 
 ```bash
-$ cd apps/atlas
+$ cd apps/briq-app
 $ yarn dev
 # Alternatively: yarn workspace webapp run dev -p 3000
 ```
