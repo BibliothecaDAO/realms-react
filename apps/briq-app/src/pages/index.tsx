@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Head } from '@/components/Head';
+import { WithNavMenu } from '@/components/NavMenu';
 
 const Home: NextPage = () => {
   const {
@@ -56,9 +57,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto">
-        <div className="flex gap-x-16">
-          <div className="sm:w-5/12 sm:order-last">
+      <div className="container px-4 mx-auto">
+        <div className="lg:flex lg:gap-x-16">
+          <div className="w-full lg:w-5/12 sm:order-last">
             <div className="sticky top-0 w-full pt-16">
               <Image
                 className="w-full"
@@ -69,26 +70,53 @@ const Home: NextPage = () => {
               />
             </div>
           </div>
-          <div className="sm:w-7/12">
-            <div className="pt-8 text-xl leading-7 prose-xl">
-              <ReactMarkdown>{content[0]}</ReactMarkdown>
-            </div>
-            <div className="py-8 prose-lg">
-              <h2>Comptetition</h2>
-              <ReactMarkdown>{content[1]}</ReactMarkdown>
-            </div>
-            <div className="py-8 prose">
-              <h2>How to Enter</h2>
-              <ReactMarkdown>{content[2]}</ReactMarkdown>
-            </div>
-            <div className="py-8 prose">
-              <h2>The Wonders</h2>
-              <ReactMarkdown>{content[3]}</ReactMarkdown>
-            </div>
-            <div className="py-8 prose-lg">
-              <h2>Voting & Conditions</h2>
-              <ReactMarkdown>{content[4]}</ReactMarkdown>
-            </div>
+          <div className="w-full lg:w-7/12">
+            <WithNavMenu selector="section">
+              <section
+                data-nav-title="Overview"
+                id="section1"
+                data-scrollspy
+                className="pt-8 text-xl leading-7 prose-xl"
+              >
+                <ReactMarkdown>{content[0]}</ReactMarkdown>
+              </section>
+              <section
+                data-nav-title="Competition"
+                id="section2"
+                data-scrollspy
+                className="py-8 prose-lg"
+              >
+                <h2>Competition</h2>
+                <ReactMarkdown>{content[1]}</ReactMarkdown>
+              </section>
+              <section
+                data-nav-title="How to Enter"
+                id="section3"
+                data-scrollspy
+                className="py-8 prose"
+              >
+                <h2>How to Enter</h2>
+                <ReactMarkdown>{content[2]}</ReactMarkdown>
+              </section>
+              <section
+                data-nav-title="The Wonders"
+                id="section4"
+                data-scrollspy
+                className="py-8 prose"
+              >
+                <h2>The Wonders</h2>
+                <ReactMarkdown>{content[3]}</ReactMarkdown>
+              </section>
+              <section
+                data-nav-title="Voting & Conditions"
+                id="section5"
+                data-scrollspy
+                className="py-8 prose-lg"
+              >
+                <h2>Voting & Conditions</h2>
+                <ReactMarkdown>{content[4]}</ReactMarkdown>
+              </section>
+            </WithNavMenu>
           </div>
         </div>
         <div className="pt-8 pb-16">

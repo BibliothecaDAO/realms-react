@@ -9689,6 +9689,7 @@ __metadata:
     react-dom: 18.0.0-rc.1
     react-joyride: ^2.3.2
     react-markdown: 8.0.1
+    react-scroll: 1.8.6
     rimraf: 3.0.2
     sharp: 0.30.1
     size-limit: 7.0.8
@@ -18265,6 +18266,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.throttle@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.throttle@npm:4.1.1"
+  checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
 "lodash.truncate@npm:^4.4.2":
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
@@ -22734,6 +22742,19 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 1a2e7006d4d56bfae8ff11dd5ec15e8049578864dfb2764652510eb0ce4af26a8949790a3732c4f7beb14bcb6500469ea18841b8cfc953e09828e4e4113922f0
+  languageName: node
+  linkType: hard
+
+"react-scroll@npm:1.8.6":
+  version: 1.8.6
+  resolution: "react-scroll@npm:1.8.6"
+  dependencies:
+    lodash.throttle: ^4.1.1
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ^15.5.4 || ^16.0.0 || ^17.0.0
+    react-dom: ^15.5.4 || ^16.0.0 || ^17.0.0
+  checksum: 92bbd56f01db41217c543fe2af4537221228f0e3615beaeb33abc66ae6452598bdde5cfc705db65883b80d3050afd1de5e55890d5330ad4b61774978d8b49fd4
   languageName: node
   linkType: hard
 
