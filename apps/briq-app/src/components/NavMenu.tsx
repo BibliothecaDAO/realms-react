@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ScrollSpy } from '@/util/ScrollSpy';
 
 // Abstracted from ScrollSpy to allow for easier customizations
-const onScrollUpdate = (entry, isInVewPort) => {
+const onScrollUpdate = (entry: any, isInVewPort: any) => {
   const { target, boundingClientRect } = entry;
   const menuItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
   if (boundingClientRect.y <= 0 && isInVewPort) {
@@ -17,7 +17,7 @@ const onScrollUpdate = (entry, isInVewPort) => {
 
 const NavMenu = ({ options }: any) => {
   // control the click event
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     e.preventDefault();
     // Set the hash
     window.location.hash = e.target.hash;
@@ -35,7 +35,7 @@ const NavMenu = ({ options }: any) => {
   return (
     <nav className="sticky top-0 hidden pt-8 pr-8 text-xl sm:block">
       <ul>
-        {options.map((option) => (
+        {options.map((option: any) => (
           <li key={option.hash}>
             <a
               href={`#${option.hash}`}
@@ -51,7 +51,7 @@ const NavMenu = ({ options }: any) => {
   );
 };
 
-export const WithNavMenu = ({ children, selector }) => {
+export const WithNavMenu = ({ children, selector }: any) => {
   const [options, setOptions] = useState<any>([]);
   useEffect(() => {
     const navMenuSections = document.querySelectorAll(selector);
