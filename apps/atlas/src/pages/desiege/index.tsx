@@ -1,6 +1,7 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import ShieldGame from '@/components/minigame/ShieldGame';
+import { DesiegeHeader } from '@/components/navigation/DesiegeHeader';
 import { getModuleAddress } from '@/util/minigameApi';
 
 type Prop = {
@@ -26,7 +27,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
-// OpenGraph preview images generated using PostMage (https://postmage.com/)
 const defaultTitle = 'Desiege S1: Divine Eclipse';
 const defaultDescription =
   'Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.';
@@ -72,6 +72,7 @@ const Game: NextPage<SSRProps & Prop> = (props) => {
         />
       </Head>
       <div>
+        <DesiegeHeader />
         <ShieldGame
           towerDefenceContractAddr={props.towerDefenceAddr}
           towerDefenceStorageAddr={props.towerDefenceStorageAddr}

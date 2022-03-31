@@ -1,26 +1,35 @@
-import { useContract, useStarknetCall } from '@starknet-react/core';
+import { XCircleIcon } from '@heroicons/react/solid';
+import {
+  useContract,
+  useStarknetCall,
+  useStarknet,
+} from '@starknet-react/core';
+import type BN from 'bn.js';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
+import TowerDefenceContract from '@/abi/minigame/01_TowerDefence.json';
 import TowerDefenceStorageContract from '@/abi/minigame/02_TowerDefenceStorage.json';
 import { ElementToken } from '@/constants/index';
-import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 import type { GameStatus } from '@/types/index';
 import type { GameContext } from '@/util/minigameApi';
 import {
+  GameStatusEnum,
   getGameContextVariables,
   TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
-// import GameBlockTimer from './GameBlockTimer';
-import GameControls from './GameControls';
-import MenuBar from './MenuBar';
-import Modal from './Modal';
-import TowerDefence from './TowerDefence';
 
-export type DesiegeTab = 'game-controls' | 'lore' | 'setup';
+import Modal from '../../shared/Modal';
+import CheckRewards from './CheckRewards';
+import TowerDefence from './CityModel';
+import GameBlockTimer from './navigation/GameBlockTimer';
+import GameControls from './navigation/GameControls';
+import MenuBar from './navigation/MenuBar';
+
+export type DesiegeTab = 'game-controls' | 'lore' | 'setup' | 'check-rewards';
 
 type Prop = {
   initialTab?: DesiegeTab;
@@ -30,6 +39,8 @@ type Prop = {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ShieldGame: React.FC<Prop> = (props) => {
+  const { account } = useStarknet();
+
   const router = useRouter();
 
   const initialTabFromQuery = router.query['tab'] as string;
@@ -51,45 +62,52 @@ const ShieldGame: React.FC<Prop> = (props) => {
   }, [gameContext]);
 
   const { contract: tdStorageContract } = useContract({
-    abi: TowerDefenceStorageContract.abi as Abi[],
+    abi: TowerDefenceStorageContract as Abi,
     address: props.towerDefenceStorageAddr,
   });
 
-  const getMainHealth = useStarknetCall({
+  const { contract: towerDefenceContract } = useContract({
+    abi: TowerDefenceContract as Abi,
+    address: props.towerDefenceContractAddr,
+  });
+
+  const getMainHealth = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_main_health' : undefined,
-    args: {
-      game_idx: gameContext?.gameIdx?.toString() || '1',
-    },
+    args: gameContext ? [gameContext?.gameIdx?.toString()] : undefined,
   });
 
-  const getShield = useStarknetCall({
+  const getShield = useStarknetCall<string[]>({
     contract: tdStorageContract,
     method: gameContext ? 'get_shield_value' : undefined,
-    args: {
-      game_idx: gameContext?.gameIdx.toString() || '0',
-      token_id: gameContext
-        ? (
+    args: gameContext
+      ? [
+          gameContext.gameIdx.toString(),
+          (
             gameContext.gameIdx * TOKEN_INDEX_OFFSET_BASE +
             ElementToken.Light
-          ).toString()
-        : '1',
-    },
+          ).toString(),
+        ]
+      : undefined,
   });
 
-  const healthStr = getMainHealth.data
-    ? getMainHealth.data['health']
-    : undefined;
+  const getGameStatus = useStarknetCall({
+    contract: towerDefenceContract,
+    method: 'get_game_state',
+    args: gameContext ? [gameContext.gameIdx.toString()] : undefined,
+  });
 
-  const shieldStr = getShield.data ? getShield.data['value'] : undefined;
+  const healthStr = getMainHealth.data ? getMainHealth.data[0] : undefined;
+
+  const shieldStr = getShield.data ? getShield.data[0] : undefined;
 
   // Memoize so same values don't cause re-renders
   const health = useMemo(() => {
-    return toBN((healthStr as string) || 0);
+    return healthStr ? toBN(healthStr as string) : undefined;
   }, [healthStr]);
 
   const shield = useMemo(() => {
-    return toBN((shieldStr as string) || 0);
+    return shieldStr ? toBN(shieldStr as string) : undefined;
   }, [shieldStr]);
 
   const fetchState = async () => {
@@ -112,35 +130,27 @@ const ShieldGame: React.FC<Prop> = (props) => {
     }
   }, []);
 
-  const gs = useMemo(() => {
-    if (!gameContext) {
-      return undefined;
+  const gs: GameStatus | undefined = useMemo(() => {
+    const status: BN | undefined = getGameStatus?.data
+      ? getGameStatus.data[0]
+      : undefined;
+    if (status && status.eq(toBN(GameStatusEnum.Active))) {
+      return 'active';
     }
-    const lastBlockOfCurrentGame =
-      gameContext.gameStartBlock.toNumber() +
-      gameContext.blocksPerMinute * 60 * gameContext.hoursPerGame;
-
-    const gameTimerIsActive =
-      gameContext.currentBlock.toNumber() < lastBlockOfCurrentGame;
-
-    let gs: GameStatus;
-    if (gameTimerIsActive) {
-      if (gameContext.mainHealth.lte(toBN(0))) {
-        gs = 'completed';
-      } else {
-        gs = 'active';
-      }
-    } else {
-      gs = 'expired';
+    if (status && status.eq(toBN(GameStatusEnum.Expired))) {
+      return 'expired';
     }
-    return gs;
-  }, [gameContext]);
+    // Prevent a network error from changing game state
+    return getGameStatus.error ? 'expired' : undefined;
+  }, [getGameStatus.data]);
 
-  const [loreModalOpen, setLoreModalOpen] = useState(view == 'lore');
+  const [modalOpen, setModalOpen] = useState(
+    view == 'lore' || view == 'check-rewards'
+  );
 
   useEffect(() => {
-    if (view == 'lore') {
-      setLoreModalOpen(true);
+    if (view == 'lore' || view == 'check-rewards') {
+      setModalOpen(true);
     }
   }, [view]);
 
@@ -164,18 +174,33 @@ const ShieldGame: React.FC<Prop> = (props) => {
   return (
     <div className="relative">
       <Modal
-        isOpen={loreModalOpen}
+        isOpen={modalOpen}
         toggle={() => {
-          setLoreModalOpen(false);
-          setView('game-controls');
+          setModalOpen(false);
         }}
       >
-        <div className="w-full bg-gray-900 sm:m-8 sm:w-1/2 rounded-xl">
-          <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
+        <div className="flex-row w-full py-4 text-white bg-gray-900/70 sm:m-8 sm:w-1/2 rounded-xl">
+          <h1 className="flex flex-row items-center justify-between px-8">
+            <span>{view?.toUpperCase()}</span>
+            <button
+              onClick={() => setModalOpen(false)}
+              className="hover:text-gray-400"
+            >
+              <XCircleIcon className="h-8" />
+            </button>
+          </h1>
+          <div className="px-8">
+            {view == 'lore' ? (
+              <LoreDevKit ldk={DivineSiege} initialLayer="Divine Eclipse" />
+            ) : null}
+            {view == 'check-rewards' ? (
+              <CheckRewards initialGameIndex={gameContext?.gameIdx} />
+            ) : null}
+          </div>
         </div>
       </Modal>
       <div className="absolute z-10 p-8">
-        <h3 className="flex justify-between text-blue-600 uppercase font-body">
+        {/* <h3 className="flex justify-between tracking-widest uppercase text-blue-600/70 font-body">
           <span className="mb-8 text-5xl z-11">
             Desiege game{' '}
             {gameContext !== undefined ? (
@@ -184,42 +209,60 @@ const ShieldGame: React.FC<Prop> = (props) => {
               <LoadingSkeleton className="inline-block w-8 h-8" />
             )}
           </span>
-        </h3>
+        </h3> */}
 
-        {view == 'game-controls' || view == 'setup' ? (
-          <div className="w-full">
-            <div
-              id="game-actions"
-              className="w-full p-10 text-black bg-white/30 rounded-2xl"
-            >
-              {gameContext ? (
-                <GameControls
-                  towerDefenceContractAddress={props.towerDefenceContractAddr}
-                  towerDefenceStorageContractAddress={
-                    props.towerDefenceStorageAddr
-                  }
-                  health={health}
-                  shield={shield}
-                  gameStatus={gs}
-                  gameIdx={gameContext?.gameIdx}
-                  currentBoostBips={boost}
-                  setupModalInitialIsOpen={view == 'setup'}
-                />
-              ) : (
-                <p className="text-2xl">Loading...</p>
-              )}
-            </div>
+        <div className="w-full">
+          <div
+            id="game-actions"
+            className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
+          >
+            {gameContext ? (
+              <GameControls
+                towerDefenceContractAddress={props.towerDefenceContractAddr}
+                towerDefenceStorageContractAddress={
+                  props.towerDefenceStorageAddr
+                }
+                health={health}
+                shield={shield}
+                gameStatus={gs}
+                gameIdx={gameContext?.gameIdx}
+                initialBoostBips={boost}
+                setupModalInitialIsOpen={view == 'setup'}
+              />
+            ) : (
+              <p className="text-3xl animate-pulse">
+                Loading the Dark Portal...
+              </p>
+            )}
           </div>
-        ) : null}
+        </div>
       </div>
+
       <TowerDefence
         gameStatus={gs}
         health={health}
         shield={shield}
         gameIdx={gameContext?.gameIdx}
-        currentBoostBips={boost}
-      ></TowerDefence>
-      <MenuBar toggleTab={(tab) => setView(tab)} />
+      />
+
+      <MenuBar
+        towerDefenceContractAddress={props.towerDefenceContractAddr}
+        towerDefenceStorageContractAddress={props.towerDefenceStorageAddr}
+        health={health}
+        shield={shield}
+        gameStatus={gs}
+        gameIdx={gameContext?.gameIdx}
+        initialBoostBips={boost}
+        setupModalInitialIsOpen={view == 'setup'}
+        toggleTab={(tab) => {
+          setModalOpen(true);
+          setView(tab);
+        }}
+      />
+
+      {gameContext && gs == 'active' ? (
+        <GameBlockTimer gameCtx={gameContext} />
+      ) : null}
     </div>
   );
 };

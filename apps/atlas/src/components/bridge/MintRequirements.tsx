@@ -22,7 +22,7 @@ const MintRequirements: React.FC<Prop> = (props) => {
         </p>
       ) : null}
       <h3>
-        LORDS Balance: <span className="text-2xl">{balance || '0.0'}</span>
+        Lords Balance: <span className="text-2xl">{balance || '0.0'}</span>
       </h3>
       <p className="my-4 text-2xl">
         You are required to hold {MINIMUM_LORDS_REQUIRED} LORDS. These will not

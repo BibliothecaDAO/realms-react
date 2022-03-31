@@ -2,8 +2,8 @@ import { StarknetProvider } from '@starknet-react/core';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import React from 'react';
-import { number, stark } from 'starknet';
-const { getSelectorFromName } = stark;
+import { number, hash } from 'starknet';
+const { getSelectorFromName } = hash;
 const { toHex, toBN } = number;
 
 import type {
@@ -18,7 +18,7 @@ import {
   OrderedMockResponseDecorator,
 } from '@/mocks/starknetMockFactory';
 
-import GameControls from './GameControls';
+import GameControls from '../navigation/GameControls';
 
 export default {
   title: 'Game Controls',

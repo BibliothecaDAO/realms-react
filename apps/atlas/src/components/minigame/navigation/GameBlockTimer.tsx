@@ -1,35 +1,32 @@
+import { useStarknetBlock } from '@starknet-react/core';
 import classNames from 'classnames';
 import type { GameContext } from '@/util/minigameApi';
 
 type Prop = {
-  gameCtx?: GameContext;
+  gameCtx: GameContext;
 };
 
 const GameBlockTimer: React.FC<Prop> = (props) => {
-  if (props.gameCtx == undefined) {
-    // Present a loading indicator
-    return (
-      <div className="z-10 w-12 my-2 mb-6 h-96 bg-gradient-to-r from-cyan-600 to-gray-700 animate-pulse"></div>
-    );
-  }
-
   const { gameStartBlock, currentBlock, hoursPerGame, blocksPerMinute } =
     props.gameCtx;
+
+  const block = useStarknetBlock();
 
   const startToNum = gameStartBlock.toNumber();
 
   const endBlock = startToNum + blocksPerMinute * 60 * hoursPerGame;
+
+  const currBlock = block.data?.block_number || currentBlock.toNumber();
+
   const currentHour =
-    Math.floor(
-      (currentBlock.toNumber() - startToNum) / (blocksPerMinute * 60)
-    ) + 1; // to match loop index
+    Math.floor((currBlock - startToNum) / (blocksPerMinute * 60)) + 1; // to match loop index
 
   // Game "ticks" are displayed in hour intervals to fit on one screen
-  const blockTicks = [];
+  const blockTicks: any[] = [];
   for (let i = 1; i <= hoursPerGame; i++) {
-    const pastBg = 'bg-cyan-200/60';
-    const currentBg = 'bg-gradient-to-r from-cyan-600 to-gray-700';
-    const futureBg = 'bg-gray-700';
+    const pastBg = 'bg-blue-600';
+    const currentBg = 'bg-gradient-to-r from-blue-600 to-red-500';
+    const futureBg = 'bg-white text-blue-400';
 
     const isCurrentHour = i == currentHour;
 
@@ -37,7 +34,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
       <span
         key={i}
         className={classNames(
-          'flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline rounded text-blue-900 backdrop-blur-md w-24',
+          'flex-1 inline-block py-1 text-xs text-center hover:text-white align-baseline  text-white font-semibold ',
           isCurrentHour ? currentBg : i < currentHour ? pastBg : futureBg,
           isCurrentHour ? 'text-gray-100' : 'text-transparent'
         )}
@@ -55,11 +52,20 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="relative z-10 flex flex-col w-auto h-full gap-1 my-2">
-        <p>Dark Portal opened</p>
-        <p>L2 block {startToNum}</p>
-        {blockTicks}
-        <p>Dark Portal closes at L2 block {endBlock}</p>
+      <div className="fixed z-20 py-4 px-8  bottom-0 w-full h-auto font-semibold">
+        <div className="flex mt-1">{blockTicks}</div>
+        <div className="flex justify-between">
+          <div>
+            <p>Dark Portal opened L2 block {startToNum}</p>
+          </div>
+          <div>
+            <div className="inline-block w-2 h-2 bg-green-700 rounded-full animate-pulse "></div>{' '}
+            Current block: {block.data?.block_number}
+          </div>
+          <div className="text-right">
+            <p>Dark Portal closes L2 block {endBlock}</p>
+          </div>
+        </div>
       </div>
     </>
   );

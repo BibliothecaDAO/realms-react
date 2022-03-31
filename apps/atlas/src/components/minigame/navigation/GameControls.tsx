@@ -3,6 +3,7 @@ import {
   useStarknet,
   useStarknetInvoke,
   useContract,
+  useStarknetCall,
 } from '@starknet-react/core';
 import axios from 'axios';
 import type BN from 'bn.js';
@@ -12,34 +13,36 @@ import Joyride, { STATUS, ACTIONS } from 'react-joyride';
 import type { Abi } from 'starknet';
 import { number } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
-import Elements1155Abi from '@/abi/minigame/ERC1155.json';
-import TowerDefenceAbi from '@/abi/minigame/TowerDefence.json';
-import useGameStats from '@/hooks/useGameStats';
-import { useSiegeBalance } from '@/hooks/useSiegeBalance';
+import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
+import Elements1155Abi from '@/abi/minigame/ERC1155_Mintable_Ownable.json';
+import useGameStats from '@/hooks/desiege/useGameStats';
+import { useSiegeBalance } from '@/hooks/desiege/useSiegeBalance';
 import useTxCallback from '@/hooks/useTxCallback';
 import Button from '@/shared/Button';
 import ElementLabel from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import type { GameStatus } from '@/types/index';
+import { applyActionAmount } from '@/util/desiegeLogic';
 import {
   ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
   getIsApprovedForAll,
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
-import Bridge from '../bridge/Bridge';
-import BridgeModal from './Modal';
+import BridgeModal from '../../../shared/Modal';
+import Bridge from '../../bridge/Bridge';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
-} from './TowerShieldVitality';
+} from '../TowerShieldVitality';
+import { GamePreparation } from './GamePreparation';
 
 type Prop = {
   gameIdx?: number;
-  currentBoostBips?: number;
-  health: BN;
-  shield: BN;
+  initialBoostBips?: number;
+  health?: BN;
+  shield?: BN;
   gameStatus?: GameStatus;
   setupModalInitialIsOpen?: boolean;
   towerDefenceContractAddress: string;
@@ -65,13 +68,22 @@ enum OnboardingTutorials {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const GameControls: React.FC<Prop> = (props) => {
-  const { gameIdx, currentBoostBips, gameStatus } = props;
+  const { gameIdx, gameStatus, initialBoostBips } = props;
 
   const {
     account,
     connectBrowserWallet,
     error: starknetConnectionError,
   } = useStarknet();
+
+  // Values might change by the time callback comes
+  // TODO: Remove when notify events are no longer triggered by client
+  const [appliedAction, setAppliedAction] = useState<{
+    shield: number;
+    health: number;
+    boost: string;
+    amount: string;
+  }>();
 
   useEffect(() => {
     connectBrowserWallet(); // on mount
@@ -82,7 +94,7 @@ const GameControls: React.FC<Prop> = (props) => {
     const previouslyShown = localStorage.getItem(
       OnboardingTutorials.GameControls
     );
-    if (!previouslyShown) {
+    if (!previouslyShown && props.gameStatus == 'active') {
       setShowTutorial(true);
     }
   }, []);
@@ -90,16 +102,16 @@ const GameControls: React.FC<Prop> = (props) => {
   const towerDefenceContractAddress = props.towerDefenceContractAddress;
 
   const { contract: elementsContract } = useContract({
-    abi: Elements1155Abi.abi as Abi[],
+    abi: Elements1155Abi as Abi,
     address: ELEMENTS_ADDRESS,
   });
   const { contract: towerDefenceContract } = useContract({
-    abi: TowerDefenceAbi.abi as Abi[],
+    abi: TowerDefenceAbi as Abi,
     address: towerDefenceContractAddress,
   });
   const approve1155 = useStarknetInvoke({
     contract: elementsContract,
-    method: 'set_approval_for_all',
+    method: 'setApprovalForAll',
   });
   const shieldAction = useStarknetInvoke({
     contract: towerDefenceContract,
@@ -110,13 +122,15 @@ const GameControls: React.FC<Prop> = (props) => {
     method: 'attack_tower',
   });
 
-  // const boostEffect = useStarknetCall({
-  //   contract: towerDefenceContract,
-  //   method: "calculate_time_multiplier",
-  //   args: {
-  //     game_idx:
-  //   }
-  // });
+  const boostEffect = useStarknetCall({
+    contract: towerDefenceContract,
+    method: 'get_current_boost',
+    args: [],
+  });
+
+  const currentBoostBips = boostEffect.data
+    ? boostEffect.data[0].toString()
+    : initialBoostBips?.toString();
 
   const {
     fetchTokenBalances,
@@ -127,27 +141,34 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const txTracker = useTxCallback(
     shieldAction.data || attackAction.data,
-    () => {
+    (status) => {
       fetchTokenBalances(gameIdx as number);
 
       // Temp: Post a request to distribute this as a notification
       // TODO: Replace with StarkNet indexer / real-time events in future
-      axios
-        .post('/api/notify', {
-          token_amount: actionAmount,
-          token_offset: side == 'light' ? '1' : '2',
-          token_boost: currentBoostBips,
-          game_idx: gameIdx,
-          city_health: props.health
-            .div(toBN(EFFECT_BASE_FACTOR))
-            .toNumber()
-            .toFixed(2),
-          shield_health: props.shield
-            .div(toBN(EFFECT_BASE_FACTOR))
-            .toNumber()
-            .toFixed(2),
-        })
-        .catch((e) => console.error(e)); // TODO: Handle error
+      if (
+        (status == 'ACCEPTED_ON_L1' || status == 'ACCEPTED_ON_L2') &&
+        appliedAction
+      ) {
+        // Must use applied action values, not live values,
+        // as live vallues can change between tx submission and callback execution
+        const appliedEffect = applyActionAmount(
+          appliedAction.amount,
+          appliedAction.boost,
+          appliedAction.shield,
+          appliedAction.health
+        );
+        axios
+          .post('/api/notify', {
+            token_amount: appliedEffect.amountPlusBoost,
+            token_offset: side == 'light' ? '1' : '2',
+            token_boost: (parseInt(appliedAction.boost) / 100).toFixed(2),
+            game_idx: gameIdx,
+            city_health: appliedEffect.health,
+            shield_health: appliedEffect.shield,
+          })
+          .catch((e) => console.error(e)); // TODO: Handle error
+      }
     }
   );
 
@@ -209,6 +230,12 @@ const GameControls: React.FC<Prop> = (props) => {
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
     });
+    setAppliedAction({
+      shield: (props.shield as BN).toNumber() / EFFECT_BASE_FACTOR,
+      health: (props.health as BN).toNumber() / EFFECT_BASE_FACTOR,
+      boost: currentBoostBips,
+      amount: actionAmount,
+    });
   };
 
   const handleShield = async (gameIndex: number, amount: number) => {
@@ -221,10 +248,16 @@ const GameControls: React.FC<Prop> = (props) => {
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
     });
+    setAppliedAction({
+      shield: (props.shield as BN).toNumber() / EFFECT_BASE_FACTOR,
+      health: (props.health as BN).toNumber() / EFFECT_BASE_FACTOR,
+      boost: currentBoostBips,
+      amount: actionAmount,
+    });
   };
 
   const primaryBtnClass =
-    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md bg-gray-200 hover:bg-white/100';
+    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md  hover:bg-white/100 font-body tracking-widest duration-150';
 
   const ConnectStarknetButton = () => (
     <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
@@ -259,10 +292,10 @@ const GameControls: React.FC<Prop> = (props) => {
           ShieldVitalityDisplayClassnames
         )}
       >
-        <ShieldVitalityDisplay
+        {/* <ShieldVitalityDisplay
           shield={toBN(20 * EFFECT_BASE_FACTOR)}
           health={toBN(100 * EFFECT_BASE_FACTOR)}
-        />
+        /> */}
       </div>
       <BridgeModal
         isOpen={mintModalOpen}
@@ -271,11 +304,9 @@ const GameControls: React.FC<Prop> = (props) => {
         <Bridge
           onComplete={() => {
             setMintModalOpen(false);
-            // TODO: The balance isn't updated right away for some reason
-            // Make this more robust or implement useStarknetCall in useSiegeBalance hook
             setTimeout(() => {
-              fetchTokenBalances(gameIdx as number);
-            }, 3000);
+              fetchTokenBalances((gameIdx as number) + 1);
+            }, 5000);
           }}
           onClose={() => setMintModalOpen(false)}
           towerDefenceStorageContractAddress={
@@ -348,7 +379,9 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       ) : null}
       <div>
-        <p className="text-xl uppercase">Season 1</p>
+        <p className="text-xl font-semibold tracking-widest uppercase">
+          Season 1
+        </p>
         <h1>
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
@@ -369,90 +402,61 @@ const GameControls: React.FC<Prop> = (props) => {
       ) : null}
 
       {(gameStatus == 'expired' || gameStatus == 'completed') && account ? (
-        <div>
+        <div className="my-4">
           {/* Side only undefined when token balances are equal, including 0-0 (they havent minted yet) */}
           {side == undefined && !loadingTokenBalance ? (
-            <button
+            <Button
               onClick={() => {
                 setMintModalOpen(true);
               }}
-              className={primaryBtnClass}
             >
               <ElementLabel>Choose your Elements</ElementLabel>
-            </button>
+            </Button>
           ) : null}
-          {loadingTokenBalance ? (
-            <LoadingSkeleton className="w-24 h-10 mt-4" />
-          ) : null}
+          {/* {loadingTokenBalance ? (
+            <LoadingSkeleton className="w-full h-10 mt-4" />
+          ) : (
+            <p className="mt-4 text-3xl font-display">
+              {side == 'light' && tokenBalances ? (
+                <>
+                  <ElementLabel side="light"> LIGHT</ElementLabel>{' '}
+                  {(tokenBalances[0].toNumber() / 100).toFixed(0)}
+                </>
+              ) : null}
+              {side == 'dark' && tokenBalances ? (
+                <>
+                  <ElementLabel side="dark"> DARK</ElementLabel>{' '}
+                  {(tokenBalances[1].toNumber() / 100).toFixed(0)}
+                </>
+              ) : null}
+            </p>
+          )} */}
 
-          <p className="mt-4 text-3xl">
-            {side == 'light' && tokenBalances ? (
-              <>
-                <ElementLabel side="light">LIGHT</ElementLabel>{' '}
-                {(tokenBalances[0].toNumber() / 100).toFixed(0)}
-              </>
-            ) : null}
-            {side == 'dark' && tokenBalances ? (
-              <>
-                <ElementLabel side="dark">DARK</ElementLabel>{' '}
-                {(tokenBalances[1].toNumber() / 100).toFixed(0)}
-              </>
-            ) : null}
-          </p>
-          <p className="my-4 text-xl animate-bounce">
+          {/* <p className="my-4 text-2xl animate-pulse">
             Waiting for next game to start...
-          </p>
-          {gameStats.loading ? (
+          </p> */}
+          {/* {gameStats.loading ? (
             <LoadingSkeleton />
           ) : (
-            <>
-              Total minted for the next game
-              <p>Light: {gameStats.light}</p>
-              <p>Dark : {gameStats.dark}</p>
-            </>
-          )}
-          <p className="mt-2 font-bold">Preparation for Desiege</p>
-          <ul className="text-xl list-none">
-            <li>
-              Browse the <a className="underline">game guide</a>
-            </li>
-            <li>
-              Coordinate on{' '}
-              <a
-                target={'_blank'}
-                href="https://discord.gg/YfeZQ3NFB8"
-                className="underline"
-                rel="noreferrer"
-              >
-                Discord
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" />
-            </li>
-            <li>
-              <a className="underline">Recruit</a> your friends
-            </li>
-            <li>
-              Build on the{' '}
-              <a
-                target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/src/components/minigame"
-                className="underline"
-                rel="noreferrer"
-              >
-                front-end
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" /> and{' '}
-              <a
-                target={'_blank'}
-                href="https://github.com/BibliothecaForAdventurers/realms-contracts/tree/feature/minigame/contracts/l2/minigame"
-                className="underline"
-                rel="noreferrer"
-              >
-                StarkNet
-              </a>
-              <ExternalLink className="inline-block h-4 ml-1" /> contracts
-            </li>
-          </ul>
+            <div className="mt-8">
+              <h4 className="font-semibold tracking-widest text-center text-white">
+                Total elements minted for the next game
+              </h4>
+              <div className="flex justify-between px-8 py-3 text-3xl rounded-md shadow-inner bg-white/40 font-display">
+                <p>
+                  <ElementLabel side="light">
+                    LIGHT: {gameStats.light}
+                  </ElementLabel>{' '}
+                </p>
+                <p>
+                  <ElementLabel side="dark">
+                    DARK: {gameStats.dark}
+                  </ElementLabel>
+                </p>
+              </div>
+            </div>
+          )} */}
+          <GamePreparation />
         </div>
       ) : null}
       {gameStatus == 'active' && account ? (
@@ -464,19 +468,19 @@ const GameControls: React.FC<Prop> = (props) => {
               <div className="mt-4">
                 <div id="token-balance">
                   {noMoreElements ? (
-                    <p>
+                    <p className="tracking-widest uppercase opacity-60">
                       No <ElementLabel>Elements</ElementLabel> for this game{' '}
-                      <button
+                      <Button
                         onClick={() => {
                           setMintModalOpen(true);
                         }}
                         className={primaryBtnClass}
                       >
                         <ElementLabel>Prepare for the next Game</ElementLabel>
-                      </button>
+                      </Button>
                     </p>
                   ) : null}
-                  {side == 'light' ? (
+                  {/* {side == 'light' ? (
                     <>
                       <ElementLabel side="light">LIGHT </ElementLabel>
                       {tokenBalances && tokenBalances.length > 0
@@ -497,9 +501,10 @@ const GameControls: React.FC<Prop> = (props) => {
                             .toString()
                         : null}
                     </>
-                  ) : null}
+                  ) : null} */}
                 </div>
-                {gameStats.loading ? (
+
+                {/* {gameStats.loading ? (
                   <LoadingSkeleton className="w-full h-4" />
                 ) : (
                   <div id="game-stats">
@@ -526,40 +531,21 @@ const GameControls: React.FC<Prop> = (props) => {
                       ) : undefined}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             )}
           </div>
 
           <div
             id="action-controls"
-            className="flex w-full gap-4 text-gray-100 row"
+            className="flex flex-row justify-center my-8"
           >
-            {/* <div className="flex-1">
-              {side == "light" ? (
-                <Button
-                  className="w-full mt-4 text-black"
-                  onClick={() => setAction("shield")}
-                >
-                  Shield
-                </Button>
-              ) : (
-                <Button
-                  className="w-full mt-4 text-black"
-                  active={action == "attack"}
-                  onClick={() => setAction("attack")}
-                >
-                  Attack
-                </Button>
-              )}
-            </div> */}
-          </div>
-          <div className="flex flex-row justify-center my-4">
             <input
               id="action-amount"
               type="number"
               placeholder="Amount"
               min={0}
+              max={6000}
               value={actionAmount}
               onChange={(e) => {
                 if (parseInt(e.target.value)) {
@@ -568,13 +554,13 @@ const GameControls: React.FC<Prop> = (props) => {
                   setActionAmount('');
                 }
               }}
-              className="w-40 px-6 py-4 text-4xl bg-gray-200 border-2 rounded-md"
-            />{' '}
+              className="w-40 px-6 py-4 text-4xl bg-white border-2 rounded-md shadow-inner"
+            />
             <div id="action-boost" className="ml-4">
-              {currentBoostBips && !isNaN(currentBoostBips) ? (
-                <button className="p-2 font-semibold text-white align-middle transition-colors bg-blue-900 rounded-md hover:bg-blue-800">
+              {currentBoostBips ? (
+                <button className="h-full p-2 font-semibold text-white align-middle transition-colors bg-purple-800 rounded-md hover:bg-purple-900">
                   <LightningBoltIcon className="inline-block w-4" />{' '}
-                  {`${currentBoostBips / 100}%`}
+                  {`${parseInt(currentBoostBips) / 100}%`}
                 </button>
               ) : null}
             </div>
@@ -589,7 +575,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 noMoreElements ||
                 gameStats.loading
               }
-              className={classNames(primaryBtnClass)}
+              active={actionIsLoading}
               onClick={() => {
                 if (gameIdx) {
                   if (action == 'shield') {
@@ -605,6 +591,7 @@ const GameControls: React.FC<Prop> = (props) => {
                 : `Cast ${action == 'shield' ? 'Shield' : 'Dark Attack'} Spell`}
             </Button>
           ) : null}
+
           {(shieldAction.data || attackAction.data) && actionIsLoading ? (
             <p className="mt-2">
               <a
@@ -629,6 +616,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </button>
         </>
       ) : null}
+
       {is1155TokenApproved == '0' ? (
         <>
           <Button

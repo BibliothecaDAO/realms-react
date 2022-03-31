@@ -23,12 +23,14 @@ const getTsConfigBasePaths = () => {
 const config = {
   name: `${packageJson.name}:unit`,
   cacheDirectory: getJestCachePath(packageJson.name),
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   verbose: true,
+  testTimeout: 15000,
   rootDir: './src',
   transform: {
     ...tsPreset.transform,
   },
+  setupFiles: ['./setupTestEnv.js'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   testMatch: ['<rootDir>/**/*.{spec,test}.{js,jsx,ts,tsx}'],
   moduleNameMapper: {

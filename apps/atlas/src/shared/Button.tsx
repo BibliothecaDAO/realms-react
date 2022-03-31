@@ -26,7 +26,7 @@ const Button: React.FC<Prop> = (props) => {
   return (
     <button
       className={classNames(
-        'disabled:cursor-not-allowed disabled:opacity-60 px-8 py-2 rounded-md uppercase tracking-wide bg-white',
+        'disabled:cursor-not-allowed disabled:opacity-60 px-8 py-2 rounded-md uppercase tracking-wide bg-white font-body tracking-widest shadow-xl hover:-translate-y-2 transition-all duration-150 hover:bg-white/70 text-gray-600 w-full',
         props.active ? 'from-yellow-400 to-yellow-500' : bgColors,
         props.className
       )}
