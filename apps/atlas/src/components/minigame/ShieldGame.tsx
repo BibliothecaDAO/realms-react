@@ -114,7 +114,10 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <TowerDefence />
+      <TowerDefence
+        gameIdx={getGameVariables.data?.gameIdx}
+        gameStatus={gameStatus.data}
+      />
 
       <MenuBar
         setupModalInitialIsOpen={view == 'setup'}

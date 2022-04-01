@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type * as THREE from 'three';
 import { Vector3 } from 'three';
+import useHealth from '@/hooks/desiege/useHealth';
+import useShield from '@/hooks/desiege/useShield';
 import type { GameStatus } from '@/types/index';
 import { Shield } from './three/Shield';
 import {
@@ -20,8 +22,6 @@ const Tower = dynamic(() => import('@/components/minigame/three/DivineCity'), {
 export interface TowerProps {
   gameStatus?: GameStatus;
   gameIdx?: number;
-  health?: BN;
-  shield?: BN;
 }
 
 const origin: { position?: Vector3 } = {
@@ -33,9 +33,17 @@ function CityModel(props: TowerProps) {
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
 
-  const h = useMemo<number>(() => {
-    return props.health?.toNumber() || 0;
-  }, [props.health]);
+  const shieldValue = useShield({
+    gameIdx: props.gameIdx,
+  });
+
+  const healthValue = useHealth({
+    gameIdx: props.gameIdx,
+  });
+
+  const h = useMemo<number | undefined>(() => {
+    return healthValue?.data?.toNumber();
+  }, [healthValue.data]);
 
   return (
     <div className="absolute top-0 w-full h-screen z-1">
@@ -54,7 +62,11 @@ function CityModel(props: TowerProps) {
               setRotate(true);
             }}
           >
-            {h > 0 ? <Shield jsx={origin} health={h} /> : ''}
+            {healthValue.data && h !== undefined && h > 0 ? (
+              <Shield jsx={origin} health={h} />
+            ) : (
+              ''
+            )}
           </group>
           <OrbitControls
             autoRotate={true}
@@ -84,8 +96,8 @@ function CityModel(props: TowerProps) {
                 zIndexRange={[4, 0]}
               >
                 <ShieldVitalityDisplay
-                  health={props.health}
-                  shield={props.shield}
+                  health={healthValue.data}
+                  shield={shieldValue.data}
                 />
               </Html>
             ) : null}
@@ -97,8 +109,8 @@ function CityModel(props: TowerProps) {
                 zIndexRange={[4, 0]}
               >
                 <CityVitalityDisplay
-                  health={props.health}
-                  shield={props.shield}
+                  health={healthValue.data}
+                  shield={shieldValue.data}
                 />
               </Html>
             ) : null}
