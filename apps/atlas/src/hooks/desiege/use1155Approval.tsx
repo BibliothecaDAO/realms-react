@@ -50,7 +50,11 @@ const use1155Approval = () => {
   });
 
   useEffect(() => {
-    if (is1155TokenApproved == undefined && account !== undefined) {
+    if (
+      is1155TokenApproved == undefined &&
+      account !== undefined &&
+      towerDefenceContractAddress.data !== undefined
+    ) {
       getIsApproved(account, towerDefenceContractAddress.data as string);
     }
   }, [account]);

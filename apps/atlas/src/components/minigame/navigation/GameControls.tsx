@@ -53,8 +53,6 @@ const GameControls: React.FC<Prop> = (props) => {
 
   const contractApproval = use1155Approval();
 
-  console.log(contractApproval);
-
   let gameIdx;
   if (gameVars.data && gameStatus.data) {
     if (gameStatus.data == 'active') {

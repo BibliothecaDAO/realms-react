@@ -6,13 +6,13 @@ import {
 } from '@starknet-react/core';
 import axios from 'axios';
 import type BN from 'bn.js';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import type { Abi } from 'starknet';
 import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
-import Elements1155Abi from '@/abi/minigame/ERC1155_Mintable_Ownable.json';
 import { ElementToken } from '@/constants/index';
+import use1155Approval from '@/hooks/desiege/use1155Approval';
 import useBoost from '@/hooks/desiege/useBoost';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -28,9 +28,7 @@ import useTxCallback from '@/hooks/useTxCallback';
 import { ExternalLink } from '@/shared/Icons';
 import { applyActionAmount } from '@/util/desiegeLogic';
 import {
-  ELEMENTS_ADDRESS,
   TOKEN_INDEX_OFFSET_BASE,
-  getIsApprovedForAll,
   EFFECT_BASE_FACTOR,
 } from '@/util/minigameApi';
 
@@ -86,20 +84,12 @@ export const ActionsBox = (props) => {
 
   const [actionAmount, setActionAmount] = useState<string>('1');
   const [action, setAction] = useState<'shield' | 'attack'>();
-  const [is1155TokenApproved, setIs1155TokenApproved] = useState<'1' | '0'>();
 
-  const { contract: elementsContract } = useContract({
-    abi: Elements1155Abi as Abi,
-    address: ELEMENTS_ADDRESS,
-  });
   const { contract: towerDefenceContract } = useContract({
     abi: TowerDefenceAbi as Abi,
     address: towerDefenceAddr.data,
   });
-  const approve1155 = useStarknetInvoke({
-    contract: elementsContract,
-    method: 'setApprovalForAll',
-  });
+
   const shieldAction = useStarknetInvoke({
     contract: towerDefenceContract,
     method: 'increase_shield',
@@ -108,6 +98,8 @@ export const ActionsBox = (props) => {
     contract: towerDefenceContract,
     method: 'attack_tower',
   });
+
+  const contractApproval = use1155Approval();
 
   const queryClient = useQueryClient();
 
@@ -159,18 +151,6 @@ export const ActionsBox = (props) => {
     setAction(getTokenBalances.side == 'light' ? 'shield' : 'attack');
   }, [getTokenBalances.side]);
 
-  const getIsApproved = useCallback(
-    async (account: string, operator: string) => {
-      try {
-        const isApproved = await getIsApprovedForAll(account, operator);
-        setIs1155TokenApproved(isApproved ? '1' : '0');
-      } catch (e) {
-        // TODO: Handle error
-        console.error('Error fetching token approval', e);
-      }
-    },
-    [account]
-  );
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId =
       gameIndex * TOKEN_INDEX_OFFSET_BASE +
@@ -192,12 +172,6 @@ export const ActionsBox = (props) => {
 
   const actionIsLoading =
     shieldAction.loading || attackAction.loading || txTracker.loading;
-
-  useEffect(() => {
-    if (is1155TokenApproved == undefined && account !== undefined) {
-      getIsApproved(account, towerDefenceAddr.data as string);
-    }
-  }, [account]);
 
   const handleShield = async (gameIndex: number, amount: number) => {
     const tokenId =
@@ -273,11 +247,12 @@ export const ActionsBox = (props) => {
               className="w-1/2 h-12 px-8 mb-2 text-2xl font-semibold text-center text-blue-400 uppercase transition-all duration-300 transform border rounded shadow-xl bg-gradient-to-b bg-white/60 from-white/80 hover:bg-blue-100"
             />
           </div>
-          {account !== undefined && is1155TokenApproved == '1' ? (
+          {contractApproval.approvalStatus == 'approved' ? (
             <button
-              className="h-12 text-white uppercase transition-all duration-300 transform rounded shadow-xl bg-gradient-to-l bg-blue-900/90 from-blue-400 hover:-translate-y-1 hover:bg-blue-600"
+              className="h-12 text-white uppercase transition-all duration-300 transform rounded shadow-xl bg-gradient-to-l bg-blue-900/90 from-blue-400 hover:-translate-y-1 hover:bg-blue-600 disabled:opacity-60 disabled:hover:translate-y-0"
               color={'primary'}
               disabled={
+                account == undefined ||
                 action == undefined ||
                 actionAmount.length == 0 ||
                 actionIsLoading ||
