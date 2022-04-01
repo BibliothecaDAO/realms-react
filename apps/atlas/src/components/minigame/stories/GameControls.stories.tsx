@@ -59,9 +59,7 @@ const mockedResponses: MockResponseSelectorMap = {
 };
 
 export const ActiveWithElements = Template.bind({});
-ActiveWithElements.args = {
-  gameStatus: 'active',
-};
+ActiveWithElements.args = {};
 ActiveWithElements.parameters = {
   msw: [
     rest.post<StarknetCall>(callContractURL(), (...args) =>
@@ -74,9 +72,7 @@ ActiveWithElements.parameters = {
 };
 
 export const ActiveWithoutElements = Template.bind({});
-ActiveWithoutElements.args = {
-  gameStatus: 'active',
-};
+ActiveWithoutElements.args = {};
 ActiveWithoutElements.parameters = {
   msw: [
     rest.post<StarknetCall>(callContractURL(), (...args) =>
@@ -95,9 +91,7 @@ ActiveWithoutElements.parameters = {
 };
 
 export const CompletedGame = Template.bind({});
-CompletedGame.args = {
-  gameStatus: 'completed',
-};
+CompletedGame.args = {};
 CompletedGame.parameters = {
   msw: [
     // eslint-disable-next-line sonarjs/no-identical-functions
