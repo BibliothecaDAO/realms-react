@@ -5,9 +5,8 @@ import { getTokenRewardPool } from '@/util/minigameApi';
 type UseTokenPoolArgs = {
   gameIdx?: number;
   tokenId: number;
+  refetch?: boolean;
 };
-
-export const QUERY_KEY_PREFIX = 'desiege-token-pool';
 
 // https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories
 export const queryKeys = {
@@ -24,6 +23,7 @@ const useTokenPool = (args: UseTokenPoolArgs) => {
     () => getTokenRewardPool(args.gameIdx?.toString() as string, args.tokenId),
     {
       enabled: args.gameIdx !== undefined,
+      refetchInterval: args.refetch ? 1000 * 30 : false, // 30 seconds
     }
   );
 };

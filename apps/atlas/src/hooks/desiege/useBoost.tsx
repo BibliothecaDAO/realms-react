@@ -7,9 +7,12 @@ export const queryKeys = {
 };
 
 const useBoost = () => {
+  const interval = 1000 * 60 * 5;
   return useQuery(queryKeys.boost, () => getCurrentBoost(), {
-    // The boost is supposed to change every hour
-    staleTime: 1000 * 60 * 60, // 1 hour
+    // Fetch the boost automatically every hour
+    refetchInterval: interval,
+    // even if tab is in background
+    refetchIntervalInBackground: true,
   });
 };
 

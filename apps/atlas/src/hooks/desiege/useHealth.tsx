@@ -19,6 +19,7 @@ const useHealth = (args: UseHealthArgs) => {
     },
     {
       enabled: args.gameIdx !== undefined,
+      refetchInterval: 1000 * 30, // 30 seconds
     }
   );
 };

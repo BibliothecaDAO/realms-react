@@ -11,6 +11,7 @@ import {
 
 type UseTokenBalancesArgs = {
   gameIdx?: number;
+  refetch?: boolean;
 };
 
 // https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories
@@ -58,6 +59,7 @@ export const useTokenBalances = (args: UseTokenBalancesArgs) => {
     },
     {
       enabled: args.gameIdx !== undefined && starknet.account !== undefined,
+      refetchInterval: args.refetch ? 1000 * 30 : false, // 30 seconds
     }
   );
 

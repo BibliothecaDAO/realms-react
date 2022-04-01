@@ -23,6 +23,7 @@ const useShield = (args: UseShieldArgs) => {
     },
     {
       enabled: args.gameIdx !== undefined,
+      refetchInterval: 1000 * 30, // 30 seconds
     }
   );
 };
