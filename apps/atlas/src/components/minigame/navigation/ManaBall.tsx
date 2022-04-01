@@ -45,6 +45,9 @@ export const ManaBall = (props: Props) => {
       (getGameVars.data?.gameIdx as number) * TOKEN_INDEX_OFFSET_BASE + offset,
   });
 
+  const totalMinted = getTotalMinted.data ? getTotalMinted.data[props.side] : undefined;
+  const remaining = getTokenPool.data && totalMinted !== undefined ? 100 - getTokenPool.data?.toNumber() / totalMinted : undefined;
+
   return (
     <div
       className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-4 text-white shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
@@ -70,17 +73,10 @@ export const ManaBall = (props: Props) => {
           ) : (
             <span className="self-center text-lg text-center">
               <span className="text-4xl font-bold">
-                {getTokenPool.data && getTotalMinted.data
-                  ? (
-                      100 -
-                      getTokenPool.data.toNumber() /
-                        getTotalMinted.data[props.side]
-                    ).toFixed()
-                  : null}{' '}
-                %
+                {remaining?.toFixed(2)}{' '}%
               </span>
               <br />
-              Light Mana left
+              {props.side?.toUpperCase()} Elements remaining
             </span>
           )}
         </span>
