@@ -3,7 +3,8 @@ import {
   useStarknet,
   useStarknetInvoke,
 } from '@starknet-react/core';
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import Elements1155Abi from '@/abi/minigame/ERC1155_Mintable_Ownable.json';
@@ -11,6 +12,10 @@ import Elements1155Abi from '@/abi/minigame/ERC1155_Mintable_Ownable.json';
 import { ELEMENTS_ADDRESS, getIsApprovedForAll } from '@/util/minigameApi';
 import { useModuleAddress } from '../useModuleAddress';
 import useTxCallback from '../useTxCallback';
+
+export const queryKeys = {
+  isApproved: (operator: any) => ['desiege', 'token-approval', operator],
+};
 
 const use1155Approval = () => {
   const { account } = useStarknet();
@@ -29,35 +34,32 @@ const use1155Approval = () => {
     method: 'setApprovalForAll',
   });
 
-  const getIsApproved = useCallback(
-    async (account: string, operator: string) => {
-      try {
-        const isApproved = await getIsApprovedForAll(account, operator);
-        setIs1155TokenApproved(isApproved ? 'approved' : 'not-approved');
-      } catch (e) {
-        // TODO: Handle error
-        console.error('Error fetching token approval', e);
-      }
+  const approval = useQuery(
+    queryKeys.isApproved(towerDefenceContractAddress.data as string),
+    () => {
+      return getIsApprovedForAll(
+        account as string,
+        towerDefenceContractAddress.data as string
+      );
     },
-    [account]
+    {
+      enabled:
+        towerDefenceContractAddress.data !== undefined && account !== undefined,
+      staleTime: Infinity, // never consider this stale
+    }
   );
 
+  useEffect(() => {
+    setIs1155TokenApproved(approval.data ? 'approved' : 'not-approved');
+  }, [approval]);
+
+  const queryClient = useQueryClient();
+
   const approveTracker = useTxCallback(approve1155.data, () => {
-    getIsApproved(
-      account as string,
-      towerDefenceContractAddress.data as string
+    queryClient.invalidateQueries(
+      queryKeys.isApproved(towerDefenceContractAddress.data)
     );
   });
-
-  useEffect(() => {
-    if (
-      is1155TokenApproved == undefined &&
-      account !== undefined &&
-      towerDefenceContractAddress.data !== undefined
-    ) {
-      getIsApproved(account, towerDefenceContractAddress.data as string);
-    }
-  }, [account]);
 
   return {
     approvalStatus: is1155TokenApproved,
