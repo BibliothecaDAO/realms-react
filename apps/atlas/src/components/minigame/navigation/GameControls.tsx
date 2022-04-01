@@ -74,7 +74,7 @@ const GameControls: React.FC<Prop> = (props) => {
     </button>
   );
   return (
-    <>
+    <div className="text-gray-800">
       <div
         id="shield-vitality-container"
         className={classNames(
@@ -170,7 +170,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </Button>
         </>
       ) : undefined}
-    </>
+    </div>
   );
 };
 export default GameControls;
