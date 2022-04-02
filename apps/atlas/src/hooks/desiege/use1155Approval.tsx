@@ -50,8 +50,10 @@ const use1155Approval = () => {
   );
 
   useEffect(() => {
-    setIs1155TokenApproved(approval.data ? 'approved' : 'not-approved');
-  }, [approval]);
+    if (approval.data !== undefined && account !== undefined) {
+      setIs1155TokenApproved(approval.data ? 'approved' : 'not-approved');
+    }
+  }, [approval.data]);
 
   const queryClient = useQueryClient();
 
