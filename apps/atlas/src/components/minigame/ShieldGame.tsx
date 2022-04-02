@@ -21,8 +21,6 @@ export type DesiegeTab = 'game-controls' | 'lore' | 'setup' | 'check-rewards';
 
 type Prop = {
   initialTab?: DesiegeTab;
-  towerDefenceContractAddr?: string;
-  towerDefenceStorageAddr?: string;
 };
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
