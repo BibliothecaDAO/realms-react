@@ -1,4 +1,5 @@
 import React from 'react';
+import { DocumentText } from '@/shared/Icons';
 import type { DesiegeTab } from '../ShieldGame';
 import { ActionsBox } from './ActionsBox';
 import { ManaBall } from './ManaBall';
@@ -29,6 +30,14 @@ function MenuBar(props: Prop) {
           }}
         >
           Rewards
+        </button>
+        <button
+          className={buttonClasses}
+          onClick={() => {
+            props.toggleTab && props.toggleTab('contracts');
+          }}
+        >
+          <DocumentText className="w-6" />
         </button>
       </div>
       <ActionsBox />

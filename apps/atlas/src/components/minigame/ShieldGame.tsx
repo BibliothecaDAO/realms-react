@@ -13,11 +13,17 @@ import Modal from '../../shared/Modal';
 import Bridge from '../bridge/Bridge';
 import CheckRewards from './CheckRewards';
 import TowerDefence from './CityModel';
+import ContractList from './ContractList';
 import GameBlockTimer from './navigation/GameBlockTimer';
 import GameControls from './navigation/GameControls';
 import MenuBar from './navigation/MenuBar';
 
-export type DesiegeTab = 'game-controls' | 'lore' | 'setup' | 'check-rewards';
+export type DesiegeTab =
+  | 'game-controls'
+  | 'lore'
+  | 'setup'
+  | 'check-rewards'
+  | 'contracts';
 
 type Prop = {
   initialTab?: DesiegeTab;
@@ -80,6 +86,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
             {view == 'check-rewards' && getGameVariables.data !== undefined ? (
               <CheckRewards initialGameIndex={getGameVariables.data.gameIdx} />
             ) : null}
+            {view == 'contracts' ? <ContractList /> : null}
           </div>
         </div>
       </Modal>
@@ -116,7 +123,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
               }}
             />
             {getGameVariables.data == undefined ? (
-              <p className="text-3xl animate-pulse">
+              <p className="text-3xl text-gray-800 animate-pulse">
                 Loading the Dark Portal...
               </p>
             ) : null}
