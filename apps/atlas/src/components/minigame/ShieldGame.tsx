@@ -5,6 +5,7 @@ import { useQueryClient } from 'react-query';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import { queryKeys } from '@/hooks/desiege/useTotalMinted';
+import { useWalletContext } from '@/hooks/useWalletContext';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 
@@ -39,6 +40,8 @@ const ShieldGame: React.FC<Prop> = (props) => {
   const gameStatus = useGameStatus({
     gameIdx: getGameVariables.data?.gameIdx,
   });
+
+  const { isConnected } = useWalletContext();
 
   const [modalOpen, setModalOpen] = useState(
     view == 'lore' || view == 'check-rewards'
@@ -82,7 +85,16 @@ const ShieldGame: React.FC<Prop> = (props) => {
           </div>
         </div>
       </Modal>
-      <Modal isOpen={bridgeModalOpen} toggle={() => setBridgeModalOpen(false)}>
+      <Modal
+        preventClose={() => {
+          // The two modals (web3 and bridge) will have an onClick conflict.
+          // Clicking the web3 modal will also close the bridge. To prevent that,
+          // if the user is not connected, prevent the modal from closing.
+          return !isConnected;
+        }}
+        isOpen={bridgeModalOpen}
+        toggle={() => setBridgeModalOpen(false)}
+      >
         <Bridge
           onComplete={() => {
             setBridgeModalOpen(false);
