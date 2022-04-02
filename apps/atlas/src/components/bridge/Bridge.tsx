@@ -22,6 +22,7 @@ import { ExternalLink } from '@/shared/Icons';
 import { messageKey } from '@/util/messageKey';
 import MintRequirements from './MintRequirements';
 import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 
 type Prop = {
   initialTab?: TabName;
@@ -331,7 +332,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.data
-                          ? totalMinted.data.light +
+                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
                             ' distilled Light for next round'
                           : '-'}
                       </div>
@@ -351,7 +352,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                           </button>
                         </div>
                         {totalMinted.data
-                          ? totalMinted.data.dark +
+                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
                             ' distilled Dark for next round'
                           : '-'}
                       </div>

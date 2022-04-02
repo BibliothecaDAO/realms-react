@@ -72,9 +72,7 @@ const CheckRewards: React.FC<Prop> = (props) => {
       >
         {userReward.alloc && userReward.alloc.toNumber() > 0 ? (
           <>
-            <h2>You have contributed to victory!</h2>A custom {season}.cairo
-            module to the Realms Settling game will be developed allowing you to
-            issue claims for in-game items, as the Lore requires.
+            <h2>You have contributed to victory!</h2> You can claim with this account for something in the future...
             <Button className="mt-2" disabled>
               Claim
             </Button>

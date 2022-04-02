@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
-import { queryKeys } from '@/hooks/desiege/useTokenBalances';
+import { queryKeys } from '@/hooks/desiege/useTotalMinted';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 
@@ -86,9 +86,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
         <Bridge
           onComplete={() => {
             setBridgeModalOpen(false);
-            // Fetch users token balance again
+            // re-fetch total minted to display on the mana balls
             queryClient.invalidateQueries(
-              queryKeys.tokenBalance(getGameVariables.data?.gameIdx)
+              queryKeys.totalMinted(getGameVariables.data?.gameIdx)
             );
           }}
           onClose={() => setBridgeModalOpen(false)}
