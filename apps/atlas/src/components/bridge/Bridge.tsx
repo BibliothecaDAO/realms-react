@@ -9,7 +9,7 @@ import {
 import axios from 'axios';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type { AddTransactionResponse } from 'starknet';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -20,9 +20,9 @@ import Button from '@/shared/Button';
 import ElementsLabel from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import { messageKey } from '@/util/messageKey';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
 import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
-import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 
 type Prop = {
   initialTab?: TabName;
