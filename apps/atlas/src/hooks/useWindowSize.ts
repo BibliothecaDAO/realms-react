@@ -20,7 +20,7 @@ export function useWindowSize(): Size {
           width: window.innerWidth,
           height: window.innerHeight,
         });
-      }, 500);
+      }, 200);
     }
 
     window.addEventListener('resize', handleResize);
