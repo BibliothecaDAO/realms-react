@@ -252,6 +252,7 @@ export type QueryGetWalletArgs = {
 /** The Realm Model */
 export type Realm = {
   __typename?: 'Realm';
+  bridgedOwner?: Maybe<Scalars['String']>;
   buildings?: Maybe<Array<Building>>;
   imageUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -264,12 +265,14 @@ export type Realm = {
   squads?: Maybe<Array<Squad>>;
   traits?: Maybe<Array<RealmTrait>>;
   wallet?: Maybe<Wallet>;
+  wonder: Scalars['String'];
 };
 
 export type RealmFilterInput = {
   AND?: InputMaybe<Array<RealmFilterInput>>;
   NOT?: InputMaybe<Array<RealmFilterInput>>;
   OR?: InputMaybe<Array<RealmFilterInput>>;
+  bridgedOwner?: InputMaybe<StringFilterInput>;
   buildingType?: InputMaybe<BuildingTypeInput>;
   name?: InputMaybe<StringFilterInput>;
   orderType?: InputMaybe<OrderTypeInput>;
@@ -281,9 +284,11 @@ export type RealmFilterInput = {
   squadAction?: InputMaybe<SquadActionInput>;
   squadType?: InputMaybe<SquadTypeInput>;
   trait?: InputMaybe<RealmTraitFilterInput>;
+  wonder?: InputMaybe<StringFilterInput>;
 };
 
 export type RealmInput = {
+  bridgedOwner?: InputMaybe<Scalars['String']>;
   imageUrl?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   orderType?: InputMaybe<Scalars['String']>;
@@ -291,6 +296,7 @@ export type RealmInput = {
   rarityRank?: InputMaybe<Scalars['Int']>;
   rarityScore?: InputMaybe<Scalars['Float']>;
   realmId: Scalars['Int'];
+  wonder?: InputMaybe<Scalars['String']>;
 };
 
 export type RealmOrderByInput = {
@@ -493,10 +499,12 @@ export type GetRealmQuery = {
     __typename?: 'Realm';
     realmId: number;
     owner?: string | null;
+    bridgedOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
+    wonder: string;
     resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -512,7 +520,12 @@ export type GetRealmQuery = {
   };
 };
 
-export type GetRealmsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetRealmsQueryVariables = Exact<{
+  filter?: InputMaybe<RealmFilterInput>;
+  orderBy?: InputMaybe<RealmOrderByInput>;
+  take?: InputMaybe<Scalars['Float']>;
+  skip?: InputMaybe<Scalars['Float']>;
+}>;
 
 export type GetRealmsQuery = {
   __typename?: 'Query';
@@ -520,10 +533,12 @@ export type GetRealmsQuery = {
     __typename?: 'Realm';
     realmId: number;
     owner?: string | null;
+    bridgedOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
+    wonder: string;
     resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -543,10 +558,12 @@ export type RealmFragmentFragment = {
   __typename?: 'Realm';
   realmId: number;
   owner?: string | null;
+  bridgedOwner?: string | null;
   name?: string | null;
   rarityRank: number;
   rarityScore: number;
   orderType: string;
+  wonder: string;
   resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
@@ -577,10 +594,12 @@ export type GetWalletQuery = {
       __typename?: 'Realm';
       realmId: number;
       owner?: string | null;
+      bridgedOwner?: string | null;
       name?: string | null;
       rarityRank: number;
       rarityScore: number;
       orderType: string;
+      wonder: string;
       resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
       traits?: Array<{
         __typename?: 'RealmTrait';
@@ -616,10 +635,12 @@ export const RealmFragmentFragmentDoc = gql`
   fragment RealmFragment on Realm {
     realmId
     owner
+    bridgedOwner
     name
     rarityRank
     rarityScore
     orderType
+    wonder
     resources {
       type
     }
@@ -755,8 +776,13 @@ export type GetRealmQueryResult = Apollo.QueryResult<
   GetRealmQueryVariables
 >;
 export const GetRealmsDocument = gql`
-  query getRealms @api(name: starkIndexer) {
-    getRealms(filter: {}) {
+  query getRealms(
+    $filter: RealmFilterInput
+    $orderBy: RealmOrderByInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getRealms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
       ...RealmFragment
     }
   }
@@ -775,6 +801,10 @@ export const GetRealmsDocument = gql`
  * @example
  * const { data, loading, error } = useGetRealmsQuery({
  *   variables: {
+ *      filter: // value for 'filter'
+ *      orderBy: // value for 'orderBy'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
  *   },
  * });
  */

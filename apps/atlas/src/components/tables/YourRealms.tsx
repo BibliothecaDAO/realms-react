@@ -1,20 +1,21 @@
-import { useQuery } from '@apollo/client';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverview } from '@/components/tables/RealmOverview';
-import type { QueryGetRealmsArgs, GetRealmsQuery } from '@/generated/graphql';
-import { getRealmsQueryV2 } from '@/hooks/graphql/queries';
+import { useGetRealmsQuery } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export function YourRealms() {
   const { account } = useWalletContext();
 
   const variables = {
-    filter: { owner: { equals: account } },
+    filter: {
+      OR: [
+        { owner: { equals: account?.toLowerCase() } },
+        { bridgedOwner: { equals: account?.toLowerCase() } },
+      ],
+    },
   };
-  const { data } = useQuery<GetRealmsQuery, QueryGetRealmsArgs>(
-    getRealmsQueryV2,
-    { variables }
-  );
+
+  const { data } = useGetRealmsQuery({ variables });
 
   return (
     <div>

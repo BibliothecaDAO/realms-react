@@ -1,9 +1,7 @@
-import { useQuery } from '@apollo/client';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverview } from '@/components/tables/RealmOverview';
 import { useSettlingContext } from '@/context/SettlingContext';
-import type { QueryGetRealmsArgs, GetRealmsQuery } from '@/generated/graphql';
-import { getRealmsQueryV2 } from '@/hooks/graphql/queries';
+import { useGetRealmsQuery } from '@/generated/graphql';
 
 export function FavouriteRealms() {
   const { state } = useSettlingContext();
@@ -14,10 +12,7 @@ export function FavouriteRealms() {
     },
   };
 
-  const { data } = useQuery<GetRealmsQuery, QueryGetRealmsArgs>(
-    getRealmsQueryV2,
-    { variables }
-  );
+  const { data } = useGetRealmsQuery({ variables });
 
   return (
     <div>
