@@ -124,47 +124,6 @@ const Home: NextPage = () => {
             </WithNavMenu>
           </div>
         </div>
-        <div className="pt-8 pb-16">
-          {account ? (
-            <Button>Get briqs</Button>
-          ) : (
-            <div>
-              <div className="text-2xl">
-                {hasStarknet ? (
-                  <div>
-                    If you haven&apos;t already done so, please
-                    <a
-                      rel="noreferrer"
-                      target="_blank"
-                      className="underline"
-                      href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                    >
-                      download and install
-                    </a>
-                    the ArgentX extension, available now for the Google Chrome
-                    web browser.
-                  </div>
-                ) : (
-                  <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
-                    The ArgentX wallet extension could not be activated. Please
-                    <a
-                      rel="noreferrer"
-                      target="_blank"
-                      className="underline"
-                      href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                    >
-                      install ArgentX
-                    </a>
-                    on a supported browser and revisit this page.
-                  </div>
-                )}
-              </div>
-              <Button onClick={() => connectBrowserWallet()} className="mt-4">
-                Connect to ArgentX
-              </Button>
-            </div>
-          )}
-        </div>
       </div>
       <div className="relative w-full h-screen bg-center bg-cover bg-hero">
         <div className="z-10 flex justify-center w-full h-full text-3xl text-center align-middle top-16">
