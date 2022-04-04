@@ -50,7 +50,7 @@ export const ManaBall = (props: Props) => {
     : undefined;
   const remaining =
     getTokenPool.data && totalMinted !== undefined
-      ? 100 - getTokenPool.data?.toNumber() / totalMinted
+      ? 100 - (100 * getTokenPool.data?.toNumber()) / totalMinted
       : undefined;
 
   return (
@@ -59,8 +59,8 @@ export const ManaBall = (props: Props) => {
         props.side === 'dark' ? darkColours : lightColours
       }`}
     >
-      {getTotalMinted.isLoading ? (
-        'loading'
+      {getTokenPool.data == undefined && getTotalMinted.data == undefined ? (
+        ''
       ) : (
         <span className="self-center text-lg text-center">
           {getGameStatus.data == 'expired' ||
