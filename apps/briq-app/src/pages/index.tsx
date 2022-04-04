@@ -1,4 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
+import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
 import type { NextPage } from 'next';
 import Image from 'next/image';
@@ -35,48 +37,49 @@ const Home: NextPage = () => {
   return (
     <div className="h-full bg-gray-900">
       <Head />
-      <div className="relative w-full h-screen bg-center bg-cover bg-hero">
-        <div className="z-10 flex justify-center w-full h-full text-3xl text-center align-middle top-16">
-          <div className="flex self-center ">
-            <Image
-              className="rounded"
-              alt="Vercel logo"
-              src="/realms-logo.jpg"
-              width={180}
-              height={80}
-            />
-            <h1 className="mx-8">&</h1>
+      <iframe
+        src="https://test-realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
+        className="h-screen-65 w-full"
+        title="Briqs"
+      ></iframe>
 
-            <Image
-              className="rounded-full"
-              alt="Vercel logo"
-              src="/briq.jpg"
-              width={80}
-              height={80}
-            />
-          </div>
-        </div>
-      </div>
       <div className="container px-4 mx-auto">
         <div className="lg:flex lg:gap-x-16">
           <div className="w-full lg:w-5/12 sm:order-last">
-            <div className="sticky top-0 w-full pt-16">
+            <div className="sticky top-0 w-full pt-16 flex flex-wrap">
+              <Ethereum className="w-12 mx-4" />
+              <StarkNet className="w-12 mr-2" />
+              {/* <Image
+                className="rounded"
+                alt="Vercel logo"
+                src="/realms-logo.jpg"
+                width={180}
+                height={80}
+              />
+
               <Image
+                className="rounded-full"
+                alt="Vercel logo"
+                src="/briq.jpg"
+                width={80}
+                height={80}
+              /> */}
+              {/* <Image
                 className="w-full"
                 alt="Vercel logo"
                 src="/revillo-wonder.png"
                 width={2560}
                 height={1545}
-              />
+              /> */}
             </div>
           </div>
-          <div className="w-full lg:w-7/12">
+          <div className="w-full lg:w-9/12 ">
             <WithNavMenu selector="section">
               <section
                 data-nav-title="Overview"
                 id="section1"
                 data-scrollspy
-                className="pt-8 text-xl leading-7 prose-xl"
+                className="pt-8 text-xl leading-7 prose"
               >
                 <ReactMarkdown>{content[0]}</ReactMarkdown>
               </section>
@@ -84,9 +87,9 @@ const Home: NextPage = () => {
                 data-nav-title="Competition"
                 id="section2"
                 data-scrollspy
-                className="py-8 prose-lg"
+                className="py-8 prose text-xl "
               >
-                <h2>Competition</h2>
+                <h1>The Competition</h1>
                 <ReactMarkdown>{content[1]}</ReactMarkdown>
               </section>
               <section
@@ -95,8 +98,10 @@ const Home: NextPage = () => {
                 data-scrollspy
                 className="py-8 prose"
               >
-                <h2>How to Enter</h2>
-                <ReactMarkdown>{content[2]}</ReactMarkdown>
+                <h1>How to Enter</h1>
+                <ReactMarkdown className="text-xl font-semibold">
+                  {content[2]}
+                </ReactMarkdown>
               </section>
               <section
                 data-nav-title="The Wonders"
@@ -104,16 +109,16 @@ const Home: NextPage = () => {
                 data-scrollspy
                 className="py-8 prose"
               >
-                <h2>The Wonders</h2>
+                <h1>The Wonders</h1>
                 <ReactMarkdown>{content[3]}</ReactMarkdown>
               </section>
               <section
                 data-nav-title="Voting & Conditions"
                 id="section5"
                 data-scrollspy
-                className="py-8 prose-lg"
+                className="py-8 prose"
               >
-                <h2>Voting & Conditions</h2>
+                <h1>Voting & Conditions</h1>
                 <ReactMarkdown>{content[4]}</ReactMarkdown>
               </section>
             </WithNavMenu>
@@ -121,12 +126,7 @@ const Home: NextPage = () => {
         </div>
         <div className="pt-8 pb-16">
           {account ? (
-            <a
-              className="relative inline-flex items-center justify-center px-4 px-8 py-2 font-semibold text-left text-white uppercase transition duration-150 ease-in-out border-2 rounded shadow-md outline-none select-none tracking-veryWide font-body hover:-translate-y-1 active:translate-y-1 active:shadow-inner disabled:opacity-70 disabled:pointer-events-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white bg-off-200 hover:bg-off-200/80 focus-visible:ring-yellow-700 border-off-200 text-md "
-              href={`https://docs.google.com/forms/d/e/1FAIpQLSc66txDM8Ei3w83p3kLJL30VoBS6P7Xep4cIDVACZAbLY05mg/viewform?usp=pp_url&entry.2005620554=${account}`}
-            >
-              Get briqs
-            </a>
+            <Button>Get briqs</Button>
           ) : (
             <div>
               <div className="text-2xl">
@@ -164,6 +164,28 @@ const Home: NextPage = () => {
               </Button>
             </div>
           )}
+        </div>
+      </div>
+      <div className="relative w-full h-screen bg-center bg-cover bg-hero">
+        <div className="z-10 flex justify-center w-full h-full text-3xl text-center align-middle top-16">
+          {/* <div className="flex self-center ">
+              <Image
+                className="rounded"
+                alt="Vercel logo"
+                src="/realms-logo.jpg"
+                width={180}
+                height={80}
+              />
+              <h1 className="mx-8">&</h1>
+
+              <Image
+                className="rounded-full"
+                alt="Vercel logo"
+                src="/briq.jpg"
+                width={80}
+                height={80}
+              />
+            </div> */}
         </div>
       </div>
     </div>

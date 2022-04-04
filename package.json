@@ -51,7 +51,8 @@
     "check:renovate:config": "docker run -v renovate.json5:/usr/src/app/renovate.json5 -it renovate/renovate renovate-config-validator",
     "install:playwright": "npx playwright install",
     "postinstall": "is-ci || yarn husky install",
-    "atlas": "yarn apps/atlas dev"
+    "atlas": "yarn apps/atlas dev",
+    "briq": "yarn apps/briq-app dev"
   },
   "dependencies": {
     "cross-env": "7.0.3"

@@ -1,4 +1,6 @@
-Realms, briq and Oasis present to you the first cross-project, on-chain, collaborative competition for builders and artists on StarkNet - with 48k $LORDS up for grabs!
+# Realms + briq + Oasis + StarkNet
+
+### Realms, briq, Oasis & StarkNet present to you the first cross-project, on-chain, collaborative competition for builders and artists on StarkNet - with 48k $LORDS up for grabs!
 
 **Realms:** 8000 procedurally generated maps with unique names, resources and geographical traits. 50 rare Realms contain a unique Wonder.
 

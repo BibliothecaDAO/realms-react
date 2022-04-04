@@ -16,6 +16,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        'screen-65': '65vh',
+      },
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],

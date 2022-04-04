@@ -1,4 +1,6 @@
-Pick a Wonder, build it with briqs, displayed on Oasis.
+## _Pick a Wonder, build it with briqs, displayed on Oasis._
+
+#### **what is a wonder?**
 
 Wonders are mythical structures, both man-made and naturally formed, scattered throughout the Realmverse.
 

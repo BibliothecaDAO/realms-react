@@ -32,7 +32,7 @@ button {
 }
 
 body {
-  @apply text-gray-200 font-body;
+  @apply text-gray-200 font-body text-lg;
 }
 
 #deckgl-wrapper {

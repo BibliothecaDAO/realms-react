@@ -33,14 +33,15 @@ const NavMenu = ({ options }: any) => {
   };
 
   return (
-    <nav className="sticky top-0 hidden pt-8 pr-8 text-xl sm:block">
+    <nav className="sticky top-0 hidden pt-8 pr-8 text-xl sm:block uppercase tracking-widest">
       <ul>
         {options.map((option: any) => (
-          <li key={option.hash}>
+          <li className="my-2" key={option.hash}>
             <a
               href={`#${option.hash}`}
               onClick={onClick}
               data-scrollspy-id={option.hash}
+              className={`hover:font-semibold`}
             >
               {option.title}
             </a>
