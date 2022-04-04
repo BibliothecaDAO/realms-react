@@ -239,10 +239,7 @@ export const ActionsBox = (props) => {
               placeholder="Spell Strength"
               value={actionAmount}
               onChange={(e) => {
-                const parsedInt = parseInt(e.target.value);
-                if (!isNaN(parsedInt)) {
-                  setActionAmount(parsedInt.toString());
-                }
+                setActionAmount(e.target.value);
               }}
               className="w-1/2 h-12 px-8 mb-2 text-2xl font-semibold text-center text-blue-400 uppercase transition-all duration-300 transform border rounded shadow-xl bg-gradient-to-b bg-white/60 from-white/80 hover:bg-blue-100"
             />
@@ -259,11 +256,12 @@ export const ActionsBox = (props) => {
                 noMoreElements
               }
               onClick={() => {
-                if (gameIdx !== undefined) {
+                const parsedInt = parseInt(actionAmount);
+                if (gameIdx !== undefined && !isNaN(parsedInt)) {
                   if (action == 'shield') {
-                    handleShield(gameIdx, parseInt(actionAmount));
+                    handleShield(gameIdx, parsedInt);
                   } else if (action == 'attack') {
-                    handleAttack(gameIdx, parseInt(actionAmount));
+                    handleAttack(gameIdx, parsedInt);
                   }
                 }
               }}
