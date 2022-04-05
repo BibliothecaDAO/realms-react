@@ -38,6 +38,10 @@ module.exports = {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
       },
+      zIndex: {
+        50: '50',
+        100: '100',
+      },
       backgroundImage: {
         texture: "url('/texture-button.png')",
         hero: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/cover.jpg')",

@@ -23,6 +23,7 @@ export const BaseTabPanel = ({
   return (
     <BasePanel open={selectedPanel === panelType}>
       <div className="flex justify-between">
+        <div className="sm:hidden"></div>
         <h1 className="tex">{panelName}</h1>
         <button
           className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"

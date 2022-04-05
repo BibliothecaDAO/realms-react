@@ -76,6 +76,7 @@ export function BankPanel(): ReactElement {
   return (
     <BasePanel open={selectedPanel === 'bank'}>
       <div className="flex justify-between">
+        <div className="sm:hidden"></div>
         <h1 className="tex">Iron Bank</h1>
         <button
           className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
@@ -84,7 +85,7 @@ export function BankPanel(): ReactElement {
           CLOSE
         </button>
       </div>
-      <div className="p-2">
+      <div className="">
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
