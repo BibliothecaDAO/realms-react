@@ -1,8 +1,8 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ec, encode, Account } from 'starknet';
-import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import { fetchLordsBalance } from '@/util/fetchL1';
+import { ElementToken, MINIMUM_LORDS_REQUIRED } from '@/constants/index';
+import { fetchLordsBalance, fetchNumberRealmsStaked } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
 import {
   getModuleAddress,
@@ -23,14 +23,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const lordsBalance = await fetchLordsBalance(ethAddress);
 
-  const suppressERC20Requirement =
+  const numRealmsStaked = await fetchNumberRealmsStaked(ethAddress);
+
+  const suppressMintRequirement =
     process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == '1';
 
-  if (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) && !suppressERC20Requirement) {
+  if (
+    (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) || numRealmsStaked == 0) &&
+    !suppressMintRequirement
+  ) {
     res.send(
       JSON.stringify({
         success: false,
-        error: 'Insufficient LORDS balance',
+        error: 'Insufficient LORDS balance or staked Realm count',
       })
     );
     return;
@@ -83,7 +88,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     nextGameIdx,
     ethAddress,
     starknetAddress,
-    chosenSide == 'light' ? tokenStartIndex + 1 : tokenStartIndex + 2,
+    chosenSide == 'light'
+      ? tokenStartIndex + ElementToken.Light
+      : tokenStartIndex + ElementToken.Dark,
     amountToMint,
   ];
 
