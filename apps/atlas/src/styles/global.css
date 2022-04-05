@@ -42,7 +42,7 @@ body {
 
 /* Prevent interference with Bridge modal by setting z-index */
 .web3modal-modal-lightbox {
-  z-index: 11 !important;
+  z-index: 51 !important;
 }
 
 .shimmer.background-animate {
