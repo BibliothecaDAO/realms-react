@@ -1,4 +1,4 @@
-# Realms + briq + Oasis + StarkNet
+# Buidl an on-chain voxel Wonder & win
 
 ### Realms, briq, Oasis & StarkNet present to you the first cross-project, on-chain, collaborative competition for builders and artists on StarkNet - with 48k $LORDS up for grabs!
 
