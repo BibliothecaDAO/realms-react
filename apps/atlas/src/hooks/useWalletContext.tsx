@@ -22,7 +22,7 @@ const WEB3_MODAL_CONFIG = {
       options: {
         pollingInterval: 20000000,
         rpc: {
-          1: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+          1: `https://eth-mainnet.alchemyapi.io/jsonrpc/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
         },
       },
     },
