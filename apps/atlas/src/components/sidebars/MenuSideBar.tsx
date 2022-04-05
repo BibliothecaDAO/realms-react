@@ -50,7 +50,7 @@ export const MenuSideBar = () => {
       <IconButton
         className={buttonClasses}
         aria-label="Loot"
-        onClick={() => toggleMenuType('loot')}
+        onClick={() => togglePanelType('loot')}
         icon={<Bag className={'mx-auto w-10 fill-current'} />}
         size="lg"
       />
@@ -58,7 +58,7 @@ export const MenuSideBar = () => {
 
       <IconButton
         className={buttonClasses}
-        onClick={() => toggleMenuType('ga')}
+        onClick={() => togglePanelType('ga')}
         aria-label="GA"
         icon={<Helm className={'mx-auto w-8 sm:w-8 fill-current'} />}
         size="lg"

@@ -1,16 +1,16 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
-import { useSettlingContext } from '@/context/SettlingContext';
+import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
-interface RealmOverviewProps {
+interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
 }
 const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
-export function RealmOverview(props: RealmOverviewProps) {
+export function RealmOverviews(props: RealmOverviewsProps) {
   const testRealm = {
     name: 'Smutmum',
     order: 'anger',
@@ -24,7 +24,7 @@ export function RealmOverview(props: RealmOverviewProps) {
   const {
     state: { favouriteRealms },
     actions,
-  } = useSettlingContext();
+  } = useRealmContext();
 
   const isBridgedViaGalleon = (realm: RealmFragmentFragment) =>
     realm.owner === JOURNEY_1_ADDRESS;

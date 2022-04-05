@@ -3,12 +3,15 @@ import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
+import Compose from '@/components/Compose';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
 import { BankPanel } from '@/components/panels/BankPanel';
-import { RealmsPanel } from '@/components/panels/RealmsPanel';
+import { GaPanel } from '@/components/panels/ga/GaPanel';
+import { LootPanel } from '@/components/panels/loot/LootPanel';
+import { RealmsPanel } from '@/components/panels/realms/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
@@ -16,7 +19,9 @@ import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
-import { SettlingProvider } from '@/context/SettlingContext';
+import { GaProvider } from '@/context/GaContext';
+import { LootProvider } from '@/context/LootContext';
+import { RealmProvider } from '@/context/RealmContext';
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
@@ -216,7 +221,7 @@ function App() {
   }, [coordinates]);
 
   return (
-    <SettlingProvider>
+    <Compose components={[RealmProvider, LootProvider, GaProvider]}>
       <Layout>
         <div className="relative flex h-full overflow-hidden sm:h-screen">
           <MenuSideBar />
@@ -225,6 +230,8 @@ function App() {
             <div className="relative w-full h-full">
               <ArtBackground />
               <RealmsPanel />
+              <LootPanel />
+              <GaPanel />
               <BankPanel />
               <RealmSideBar id={selectedId} />
               <TradePanel />
@@ -261,7 +268,7 @@ function App() {
           </div>
         </div>
       </Layout>
-    </SettlingProvider>
+    </Compose>
   );
 }
 

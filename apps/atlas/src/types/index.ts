@@ -1,5 +1,3 @@
-import React, { MouseEventHandler } from 'react';
-import { number } from 'starknet';
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 interface Owner {

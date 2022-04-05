@@ -1,10 +1,10 @@
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import { RealmOverview } from '@/components/tables/RealmOverview';
-import { useSettlingContext } from '@/context/SettlingContext';
+import { RealmOverviews } from '@/components/tables/RealmOverviews';
+import { useRealmContext } from '@/context/RealmContext';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
 export function FavouriteRealms() {
-  const { state } = useSettlingContext();
+  const { state } = useRealmContext();
 
   const variables = {
     filter: {
@@ -17,7 +17,7 @@ export function FavouriteRealms() {
   return (
     <div>
       <RealmsFilter />
-      <RealmOverview realms={data?.getRealms ?? []} />
+      <RealmOverviews realms={data?.getRealms ?? []} />
     </div>
   );
 }

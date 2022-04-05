@@ -16,7 +16,7 @@ export const GAEmpire = () => {
 
   const defaultVariables = () => {
     return {
-      address: account.toLowerCase(),
+      where: { currentAddress: account.toLowerCase() },
       first: 12,
       skip: limit,
     };

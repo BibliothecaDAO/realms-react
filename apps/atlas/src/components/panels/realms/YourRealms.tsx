@@ -1,5 +1,5 @@
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import { RealmOverview } from '@/components/tables/RealmOverview';
+import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
@@ -20,7 +20,7 @@ export function YourRealms() {
   return (
     <div>
       <RealmsFilter />
-      <RealmOverview realms={data?.getRealms ?? []} />
+      <RealmOverviews realms={data?.getRealms ?? []} />
     </div>
   );
 }
