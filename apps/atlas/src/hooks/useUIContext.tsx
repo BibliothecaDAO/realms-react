@@ -55,7 +55,7 @@ interface UI {
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
   toggleArtBackground: (background?: BackgroundOptions) => void;
-  artBackground: boolean;
+  artBackground: BackgroundOptions;
   mainMenu: boolean;
   toggleMainMenu: () => void;
   togglePanelType: (panelType: PanelType) => void;
@@ -73,7 +73,7 @@ const defaultUIContext: UI = {
   closeAll: (exclude?: MenuType) => {},
   gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
   toggleArtBackground: (background?: BackgroundOptions) => {},
-  artBackground: false,
+  artBackground: undefined,
   mainMenu: true,
   toggleMainMenu: () => {},
   togglePanelType: (panelType: PanelType) => {},
@@ -194,6 +194,9 @@ function useUI(): UI {
       setMenuType(exclude);
     }
   };
+  const toggleArtBackground = (background?: BackgroundOptions) => {
+    setArtBackground(background);
+  };
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
@@ -208,7 +211,7 @@ function useUI(): UI {
     if (selectedPanel === panelType) {
       setPanelType(undefined);
       setMenuType(undefined);
-      setArtBackground(null);
+      setArtBackground(undefined);
     } else {
       setPanelType(panelType);
       if (panelType === 'bank') {
@@ -223,10 +226,6 @@ function useUI(): UI {
         setMenuType(panelType);
       }
     }
-  };
-  const toggleArtBackground = (background: backgroundOptions) => {
-    console.log('toggleArtBackground');
-    setArtBackground(!artBackground);
   };
 
   const toggleMainMenu = () => {
@@ -248,10 +247,10 @@ function useUI(): UI {
     selectedMenuType,
     setMenuType,
     closeAll,
+    toggleArtBackground,
     toggleMenuType,
     gotoAssetId,
     coordinates,
-    toggleArtBackground,
     artBackground,
     mainMenu,
     toggleMainMenu,

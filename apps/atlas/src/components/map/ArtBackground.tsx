@@ -2,7 +2,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { useState } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
 
-export type BackgroundOptions = 'hero' | 'realm' | 'bank' | null;
+export type BackgroundOptions = 'hero' | 'realm' | 'bank' | undefined;
 
 type ArtBackgroundProps = {
   background?: BackgroundOptions;

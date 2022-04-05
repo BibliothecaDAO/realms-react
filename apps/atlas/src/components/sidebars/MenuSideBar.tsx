@@ -14,13 +14,8 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
   const { account } = useWalletContext();
-  const {
-    toggleMenuType,
-    mainMenu,
-    toggleMainMenu,
-    toggleArtBackground,
-    togglePanelType,
-  } = useUIContext();
+  const { toggleMenuType, mainMenu, toggleMainMenu, togglePanelType } =
+    useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
   const handleClick = useCallback(() => {
