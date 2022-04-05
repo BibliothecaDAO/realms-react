@@ -8,11 +8,11 @@ import React, {
   useState,
 } from 'react';
 
+import type { BackgroundOptions } from '@/components/map/ArtBackground';
 import crypts from '../geodata/crypts_all.json';
 import ga_bags from '../geodata/ga_bags.json';
 import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
-
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
@@ -54,7 +54,7 @@ interface UI {
   closeAll: (exclude?: MenuType) => void;
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
-  toggleArtBackground: () => void;
+  toggleArtBackground: (background?: BackgroundOptions) => void;
   artBackground: boolean;
   mainMenu: boolean;
   toggleMainMenu: () => void;
@@ -72,7 +72,7 @@ const defaultUIContext: UI = {
   toggleMenuType: (menuType: MenuType) => {},
   closeAll: (exclude?: MenuType) => {},
   gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
-  toggleArtBackground: () => {},
+  toggleArtBackground: (background?: BackgroundOptions) => {},
   artBackground: false,
   mainMenu: true,
   toggleMainMenu: () => {},
@@ -163,7 +163,7 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
-  const [artBackground, setArtBackground] = useState(false);
+  const [artBackground, setArtBackground] = useState<BackgroundOptions>();
   const [mainMenu, setMainMenu] = useState(true);
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(
@@ -203,22 +203,28 @@ function useUI(): UI {
     }
   };
   const togglePanelType = (panelType: PanelType) => {
+    console.log(selectedPanel);
+    console.log(panelType);
     if (selectedPanel === panelType) {
       setPanelType(undefined);
       setMenuType(undefined);
-      setArtBackground(false);
+      setArtBackground(null);
     } else {
-      setArtBackground(true);
+      setPanelType(panelType);
       if (panelType === 'bank') {
-        setPanelType(panelType);
+        console.log('setting bank background');
+        setArtBackground('bank');
         setMenuType('resourceSwap');
+      } else if (panelType === 'trade') {
+        setArtBackground('realm');
+        setMenuType(panelType);
       } else {
-        setPanelType(panelType);
+        setArtBackground('hero');
         setMenuType(panelType);
       }
     }
   };
-  const toggleArtBackground = () => {
+  const toggleArtBackground = (background: backgroundOptions) => {
     console.log('toggleArtBackground');
     setArtBackground(!artBackground);
   };

@@ -25,6 +25,9 @@ module.exports = {
     'space-x-16',
     'border-b-4',
     'border-transparent',
+    'bg-hero',
+    'bg-bank',
+    'bg-realm',
   ],
   theme: {
     extend: {
@@ -38,6 +41,9 @@ module.exports = {
       backgroundImage: {
         texture: "url('/texture-button.png')",
         hero: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/cover.jpg')",
+        bank: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/bank.jpg')",
+        realm:
+          "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/realm.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
