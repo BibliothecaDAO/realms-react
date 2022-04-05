@@ -7,20 +7,20 @@ import { RangeSliderFilter } from './RangeSliderFilter';
 const ScoreMax = 8095;
 const RankMax = 7992;
 
-type Rarity = {
+type RealmsRarity = {
   rarityScore: number;
   rarityRank: number;
 };
 
-type RarityFilterProps = {
-  rarity: Rarity;
-  onChange(rarity: Rarity): void;
+type RealmsRarityFilterProps = {
+  rarity: RealmsRarity;
+  onChange(rarity: RealmsRarity): void;
 };
 
-export function RarityFilter(props: RarityFilterProps) {
+export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [rarity, setRarity] = useState<Rarity>(
+  const [rarity, setRarity] = useState<RealmsRarity>(
     props.rarity ?? { rarityScore: 0, rarityRank: 0 }
   );
 
@@ -43,17 +43,15 @@ export function RarityFilter(props: RarityFilterProps) {
 
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <Button
-          variant="primary"
-          className="px-4 ml-2 uppercase"
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          Rarity
-        </Button>
-      </Popover.Button>
+      <Button
+        variant="primary"
+        className="px-4 ml-2 uppercase"
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        Rarity
+      </Button>
 
       {isOpen && (
         <Popover.Panel

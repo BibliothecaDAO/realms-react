@@ -60,17 +60,15 @@ export function OrdersFilter(props: OrdersFilterProps) {
 
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <Button
-          variant="primary"
-          className="px-4 ml-2 uppercase"
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          Orders
-        </Button>
-      </Popover.Button>
+      <Button
+        variant="primary"
+        className="px-4 ml-2 uppercase"
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        Orders
+      </Button>
 
       {isOpen && (
         <Popover.Panel

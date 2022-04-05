@@ -12,7 +12,7 @@ type TraitsFilter = {
   [RealmTraitType.River]: number;
 };
 
-interface SettlingState {
+interface RealmState {
   rarityFilter: RarityFilter;
   traitsFilter: TraitsFilter;
   selectedOrders: OrderType[];
@@ -20,7 +20,7 @@ interface SettlingState {
   favouriteRealms: number[];
 }
 
-type SettlingAction =
+type RealmAction =
   | { type: 'updateRarityFilter'; payload: RarityFilter }
   | { type: 'updateTraitsFilter'; payload: TraitsFilter }
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
@@ -29,7 +29,7 @@ type SettlingAction =
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number };
 
-interface SettlingActions {
+interface RealmActions {
   updateRarityFilter(filter: RarityFilter): void;
   updateTraitsFilter(filter: TraitsFilter): void;
   updateSelectedOrders(orders: OrderType[]): void;
@@ -53,15 +53,12 @@ const defaultFilters = {
   selectedOrders: [] as OrderType[],
   selectedResources: [] as ResourceType[],
 };
-const defaultSettlingState = {
+const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
 };
 
-function settlingReducer(
-  state: SettlingState,
-  action: SettlingAction
-): SettlingState {
+function realmReducer(state: RealmState, action: RealmAction): RealmState {
   switch (action.type) {
     case 'updateRarityFilter':
       return { ...state, rarityFilter: action.payload };
@@ -91,7 +88,7 @@ function settlingReducer(
 }
 
 // Actions
-const mapActions = (dispatch: Dispatch<SettlingAction>): SettlingActions => ({
+const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
   updateRarityFilter: (filter: RarityFilter) =>
     dispatch({
       type: 'updateRarityFilter',
@@ -110,34 +107,24 @@ const mapActions = (dispatch: Dispatch<SettlingAction>): SettlingActions => ({
     dispatch({ type: 'removeFavouriteRealm', payload: realmId }),
 });
 
-const SettlingContext = createContext<{
-  state: SettlingState;
-  dispatch: Dispatch<SettlingAction>;
-  actions: SettlingActions;
-}>({
-  state: defaultSettlingState,
-  // noop
-  dispatch: (_: SettlingAction) => {
-    return;
-  },
-  // noop
-  actions: mapActions(() => {
-    return;
-  }),
-});
+const RealmContext = createContext<{
+  state: RealmState;
+  dispatch: Dispatch<RealmAction>;
+  actions: RealmActions;
+}>(null!);
 
-export function useSettlingContext() {
-  return useContext(SettlingContext);
+export function useRealmContext() {
+  return useContext(RealmContext);
 }
 
-export function SettlingProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(settlingReducer, defaultSettlingState);
+export function RealmProvider({ children }: { children: JSX.Element }) {
+  const [state, dispatch] = useReducer(realmReducer, defaultRealmState);
 
   return (
-    <SettlingContext.Provider
+    <RealmContext.Provider
       value={{ state, dispatch, actions: mapActions(dispatch) }}
     >
       {children}
-    </SettlingContext.Provider>
+    </RealmContext.Provider>
   );
 }

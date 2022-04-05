@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { RealmFragmentFragmentDoc } from '@/generated/graphql';
 import { GAdventurerFragment } from './fragments/gadventurer';
 import { BagFragment, defaultLoot } from './fragments/loot';
 import { ManaFragment } from './fragments/mana';
@@ -86,12 +85,9 @@ const getLootQuery = gql`
 
 const getLootsQuery = gql`
   ${BagFragment}
-  query loots($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
-    bags(
-      where: { currentOwner_contains: $address }
-      first: $first
-      skip: $skip
-    ) {
+  query loots($where: Bag_filter, $first: Int, $skip: Int)
+  @api(name: ecosystem) {
+    bags(where: $where, first: $first, skip: $skip) {
       ...BagData
       currentOwner {
         address
@@ -100,6 +96,7 @@ const getLootsQuery = gql`
     }
   }
 `;
+
 const getGAQuery = gql`
   ${GAdventurerFragment}
   query GA($id: String) @api(name: ecosystem) {
@@ -117,12 +114,8 @@ const getGAQuery = gql`
 
 const getGAsQuery = gql`
   ${GAdventurerFragment}
-  query GAs($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
-    gadventurers(
-      where: { currentOwner_contains: $address }
-      first: $first
-      skip: $skip
-    ) {
+  query GAs($where: Bag_filter, $first: Int, $skip: Int) @api(name: ecosystem) {
+    gadventurers(where: $where, first: $first, skip: $skip) {
       ...GAdventurerData
       currentOwner {
         address
@@ -320,20 +313,6 @@ const lpIncentivesQuery = gql`
   }
 `;
 
-const getRealmsQueryV2 = gql`
-  query getRealms(
-    $filter: RealmFilterInput
-    $orderBy: RealmOrderByInput
-    $take: Float
-    $skip: Float
-  ) @api(name: starkIndexer) {
-    getRealms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
-      ...RealmFragment
-    }
-  }
-  ${RealmFragmentFragmentDoc}
-`;
-
 export {
   getRealmQuery,
   getRealmsQuery,
@@ -350,5 +329,4 @@ export {
   getResourceBalancesQuery,
   lpPositionQuery,
   lpIncentivesQuery,
-  getRealmsQueryV2,
 };

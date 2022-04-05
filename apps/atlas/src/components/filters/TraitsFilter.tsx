@@ -64,17 +64,15 @@ export function TraitsFilter(props: TraitsFilterProps) {
 
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <Button
-          variant="primary"
-          className="px-4 ml-2 uppercase"
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          TRAITS
-        </Button>
-      </Popover.Button>
+      <Button
+        variant="primary"
+        className="px-4 ml-2 uppercase"
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        TRAITS
+      </Button>
 
       {isOpen && (
         <Popover.Panel className="absolute right-0 z-10 mt-2 " ref={ref} static>

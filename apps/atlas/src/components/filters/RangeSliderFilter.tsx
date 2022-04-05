@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useWindowSize } from '@/hooks/useWindowSize';
 
 interface Rect {
   x: number;
@@ -24,6 +25,9 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
     translation: { x: 0, y: 0 },
     selectedValue: props.defaultValue ?? props.min,
   });
+
+  // Check for window resizes
+  const windowSize = useWindowSize();
 
   // Utilities
   const getSelectedValue = (x: number) => {
@@ -58,12 +62,15 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
     y: 0,
   });
 
-  const containerRef = useCallback((node) => {
-    if (node !== null) {
-      const { width, height, x, y } = node.getBoundingClientRect();
-      setBoundingRect({ width, height, x, y });
-    }
-  }, []);
+  const containerRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        const { width, height, x, y } = node.getBoundingClientRect();
+        setBoundingRect({ width, height, x, y });
+      }
+    },
+    [windowSize]
+  );
 
   const [boundaries, setBoundaries] = useState<number[]>([]);
   useMemo(() => {
