@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 import { getLootsQuery } from '@/hooks/graphql/queries';
 import { useWalletContext } from '@/hooks/useWalletContext';

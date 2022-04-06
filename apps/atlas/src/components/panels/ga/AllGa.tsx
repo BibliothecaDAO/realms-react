@@ -6,17 +6,19 @@ import { getGAsQuery } from '@/hooks/graphql/queries';
 import type { GAdventurer } from '@/types/index';
 
 export function AllGa() {
-  const gaCtx = useGaContext();
+  const { state } = useGaContext();
 
   const { loading, error, data, fetchMore } = useQuery<{
     gadventurers: GAdventurer[];
   }>(getGAsQuery, {
     variables: {
       first: 10,
-      where: {
-        bagGreatness_gt: gaCtx.state.ratingFilter.bagGreatness,
-        bagRating_gt: gaCtx.state.ratingFilter.bagRating,
-      },
+      where: state.searchIdFilter
+        ? { id: state.searchIdFilter }
+        : {
+            bagGreatness_gt: state.ratingFilter.bagGreatness,
+            bagRating_gt: state.ratingFilter.bagRating,
+          },
       orderBy: 'bagGreatness',
       orderDirection: 'desc',
     },

@@ -1,12 +1,14 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { useMemo } from 'react';
+import { useRealmContext } from '@/context/RealmContext';
 import { BaseTabPanel } from '../BaseTabPanel';
 import { AllRealms } from './AllRealms';
 import { FavouriteRealms } from './FavouriteRealms';
 import { YourRealms } from './YourRealms';
 
 export const RealmsPanel = () => {
+  const realmsCtx = useRealmContext();
   const tabs = useMemo(
     () => [
       {
@@ -27,5 +29,13 @@ export const RealmsPanel = () => {
     ],
     []
   );
-  return <BaseTabPanel panelName="Realms" panelType="realm" tabs={tabs} />;
+  return (
+    <BaseTabPanel
+      panelName="Realms"
+      panelType="realm"
+      tabs={tabs}
+      selectedIndex={realmsCtx.state.selectedTab}
+      onChange={realmsCtx.actions.updateSelectedTab}
+    />
+  );
 };

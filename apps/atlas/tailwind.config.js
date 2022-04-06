@@ -22,6 +22,7 @@ module.exports = {
     'bg-[#74787a]',
     'bg-[#bd9e3a]',
     'bg-[#515151]',
+    'bg-[#3D3D3D]',
     'space-x-16',
     'border-b-4',
     'border-transparent',

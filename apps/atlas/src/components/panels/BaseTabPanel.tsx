@@ -12,12 +12,16 @@ interface BaseTabPanelProps {
     icon: JSX.Element;
     component: JSX.Element;
   }[];
+  selectedIndex: number;
+  onChange: (idx: number) => void;
 }
 
 export const BaseTabPanel = ({
   tabs,
   panelName,
   panelType,
+  selectedIndex,
+  onChange,
 }: BaseTabPanelProps) => {
   const { togglePanelType, selectedPanel } = useUIContext();
 
@@ -34,7 +38,7 @@ export const BaseTabPanel = ({
           <Close />
         </button>
       </div>
-      <Tabs>
+      <Tabs selectedIndex={selectedIndex} onChange={onChange as any}>
         <Tabs.List className="ml-8">
           {tabs.map((tab) => (
             <Tabs.Tab key={tab.label} className="uppercase">

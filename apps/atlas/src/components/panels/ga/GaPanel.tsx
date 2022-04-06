@@ -1,11 +1,13 @@
-import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useMemo } from 'react';
+import { useGaContext } from '@/context/GaContext';
 import { BaseTabPanel } from '../BaseTabPanel';
 import { AllGa } from './AllGa';
 import { FavouriteGa } from './FavouriteGa';
 import { YourGa } from './YourGa';
 
 export const GaPanel = () => {
+  const gaCtx = useGaContext();
+
   const tabs = useMemo(
     () => [
       {
@@ -27,6 +29,12 @@ export const GaPanel = () => {
     []
   );
   return (
-    <BaseTabPanel panelName="Genesis Adventurer" panelType="ga" tabs={tabs} />
+    <BaseTabPanel
+      panelName="Genesis Adventurer"
+      panelType="ga"
+      tabs={tabs}
+      selectedIndex={gaCtx.state.selectedTab}
+      onChange={gaCtx.actions.updateSelectedTab}
+    />
   );
 };

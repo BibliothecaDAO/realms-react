@@ -6,19 +6,25 @@ type RatingFilter = { bagGreatness: number; bagRating: number };
 interface GaState {
   ratingFilter: RatingFilter;
   favouriteGa: string[];
+  searchIdFilter: string;
+  selectedTab: number;
 }
 
 type GaAction =
   | { type: 'updateRatingFilter'; payload: RatingFilter }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteGa'; payload: string }
-  | { type: 'removeFavouriteGa'; payload: string };
+  | { type: 'removeFavouriteGa'; payload: string }
+  | { type: 'updateSearchIdFilter'; payload: string }
+  | { type: 'updateSelectedTab'; payload: number };
 
 interface GaActions {
   updateRatingFilter(filter: RatingFilter): void;
   clearFilters(): void;
   addFavouriteGa(id: string): void;
   removeFavouriteGa(id: string): void;
+  updateSearchIdFilter(id: string): void;
+  updateSelectedTab(tab: number): void;
 }
 
 const defaultFilters = {
@@ -26,16 +32,23 @@ const defaultFilters = {
     bagGreatness: 0,
     bagRating: 0,
   },
+  searchIdFilter: '',
 };
+
 const defaultGaState = {
   ...defaultFilters,
   favouriteGa: [] as string[],
+  selectedTab: 0,
 };
 
 function gaReducer(state: GaState, action: GaAction): GaState {
   switch (action.type) {
     case 'updateRatingFilter':
       return { ...state, ratingFilter: action.payload };
+    case 'updateSearchIdFilter':
+      return { ...state, searchIdFilter: action.payload };
+    case 'updateSelectedTab':
+      return { ...state, selectedTab: action.payload };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteGa':
@@ -62,6 +75,10 @@ const mapActions = (dispatch: Dispatch<GaAction>): GaActions => ({
       type: 'updateRatingFilter',
       payload: filter,
     }),
+  updateSearchIdFilter: (id: string) =>
+    dispatch({ type: 'updateSearchIdFilter', payload: id }),
+  updateSelectedTab: (tab: number) =>
+    dispatch({ type: 'updateSelectedTab', payload: tab }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteGa: (id: string) =>
     dispatch({ type: 'addFavouriteGa', payload: id }),
