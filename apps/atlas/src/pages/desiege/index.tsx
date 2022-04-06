@@ -1,8 +1,7 @@
-import type { NextPage, GetServerSideProps } from 'next';
+import type { NextPage } from 'next';
 import Head from 'next/head';
 import ShieldGame from '@/components/minigame/ShieldGame';
 import { DesiegeHeader } from '@/components/navigation/DesiegeHeader';
-import { getModuleAddress } from '@/util/minigameApi';
 
 type Prop = {
   title?: string;
@@ -11,32 +10,11 @@ type Prop = {
   children: React.ReactElement;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    // It's more efficient to get the module addresses here at this stage
-    const towerDefenceAddr = await getModuleAddress('1');
-    const towerDefenceStorageAddr = await getModuleAddress('2');
-    return {
-      props: {
-        towerDefenceAddr,
-        towerDefenceStorageAddr,
-      }, // will be passed to the page component as props
-    };
-  } catch (e) {
-    return { props: {} };
-  }
-};
-
 const defaultTitle = 'Desiege S1: Divine Eclipse';
 const defaultDescription =
   'Dark elements of chaos descend on the Divine City. The Council of Mages cast an ancient spell within the Citadel to distill Light elements in a desperate attempt to strengthen the shield and protect the city.';
 
-type SSRProps = {
-  towerDefenceAddr?: string;
-  towerDefenceStorageAddr?: string;
-};
-
-const Game: NextPage<SSRProps & Prop> = (props) => {
+const Game: NextPage<Prop> = (props) => {
   return (
     <div className="">
       <Head>
@@ -73,10 +51,7 @@ const Game: NextPage<SSRProps & Prop> = (props) => {
       </Head>
       <div>
         <DesiegeHeader />
-        <ShieldGame
-          towerDefenceContractAddr={props.towerDefenceAddr}
-          towerDefenceStorageAddr={props.towerDefenceStorageAddr}
-        />
+        <ShieldGame />
       </div>
     </div>
   );

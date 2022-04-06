@@ -1,5 +1,8 @@
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
+  ],
   safelist: [
     'text-[#838383]',
     'text-[#00DC82]',
@@ -7,21 +10,45 @@ module.exports = {
     'text-[#c13cff]',
     'text-[#f8b73e]',
     'text-[#ff44b7]',
+    'text-[#74787a]',
+    'text-[#bd9e3a]',
+    'text-[#515151]',
     'bg-[#838383]',
     'bg-[#00DC82]',
     'bg-[#2e82ff]',
     'bg-[#c13cff]',
     'bg-[#f8b73e]',
     'bg-[#ff44b7]',
+    'bg-[#74787a]',
+    'bg-[#bd9e3a]',
+    'bg-[#515151]',
+    'bg-[#3D3D3D]',
+    'space-x-16',
+    'border-b-4',
+    'border-transparent',
+    'bg-hero',
+    'bg-bank',
+    'bg-realm',
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        veryWide: '0.165em',
+      },
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
       },
+      zIndex: {
+        50: '50',
+        100: '100',
+      },
       backgroundImage: {
-        hero: "url('/cover.jpg')",
+        texture: "url('/texture-button.png')",
+        hero: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/cover.jpg')",
+        bank: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/bank.jpg')",
+        realm:
+          "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/realm.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',

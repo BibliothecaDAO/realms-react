@@ -9,17 +9,18 @@ import {
 import axios from 'axios';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type { AddTransactionResponse } from 'starknet';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import useGameStats from '@/hooks/desiege/useGameStats';
+import useGameVariables from '@/hooks/desiege/useGameVariables';
+import useTotalMinted from '@/hooks/desiege/useTotalMinted';
 import useTxCallback from '@/hooks/useTxCallback';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import ElementsLabel from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import { messageKey } from '@/util/messageKey';
-import { getLatestGameIndex } from '@/util/minigameApi';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
 import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
@@ -27,7 +28,6 @@ type Prop = {
   initialTab?: TabName;
   onComplete?: () => void;
   onClose: () => void;
-  towerDefenceStorageContractAddress: string;
 };
 
 type TabName =
@@ -43,7 +43,6 @@ export const Bridge: React.FC<Prop> = (props) => {
   const { account, signer, connectWallet, isConnected, balance } =
     useWalletContext();
 
-  const [gameIdx, setGameIdx] = useState<string>();
   const [mintError, setMintError] = useState<string>();
   const [middlewareStatus, setMiddlewareStatus] = useState<
     'signing' | 'pending' | 'completed'
@@ -63,19 +62,6 @@ export const Bridge: React.FC<Prop> = (props) => {
       });
     }
   }, [transactionHash]);
-
-  useEffect(() => {
-    getLatestGameIndex()
-      .then((val: any) => setGameIdx(val))
-      .catch((e: any) => {
-        // TODO: Handle error
-        console.error(e);
-      });
-  }, []);
-
-  /* if (error instanceof UserRejectedRequestError) {
-    console.log("TODO: Handle user rejection");
-  } */
 
   const router = useRouter();
 
@@ -110,12 +96,15 @@ export const Bridge: React.FC<Prop> = (props) => {
     }
   }, [isConnected, starknet.account]);
 
+  const currentGameVars = useGameVariables();
+
   // Add +1 to show for next round
-  const nextGameIdx = useMemo(() => parseInt(gameIdx as string) + 1, [gameIdx]);
-  const totalMinted = useGameStats(
-    nextGameIdx,
-    props.towerDefenceStorageContractAddress
-  );
+  const currentIndex = currentGameVars.data?.gameIdx;
+  const nextGameIdx = currentIndex !== undefined ? currentIndex + 1 : undefined;
+
+  const totalMinted = useTotalMinted({
+    gameIdx: nextGameIdx,
+  });
 
   const verifyAndMint = async () => {
     try {
@@ -132,7 +121,7 @@ export const Bridge: React.FC<Prop> = (props) => {
             starknetAddress: starknet.account,
             sig,
             chosenSide: side,
-            gameIdx,
+            gameIdx: currentIndex, // The server will +1 this to mint for next round
           }
         );
 
@@ -342,9 +331,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                             </span>
                           </button>
                         </div>
-                        {totalMinted.light
-                          ? totalMinted.light +
-                            ' total distilled for next round'
+                        {totalMinted.data
+                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
+                            ' distilled Light for next round'
                           : '-'}
                       </div>
                       <div className="relative w-full text-center group">
@@ -362,8 +351,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.dark
-                          ? totalMinted.dark + ' total distilled for next round'
+                        {totalMinted.data
+                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
+                            ' distilled Dark for next round'
                           : '-'}
                       </div>
                     </div>

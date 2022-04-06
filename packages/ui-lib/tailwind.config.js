@@ -1,31 +1,9 @@
-const tailwindColors = require('tailwindcss/colors');
-const defaultTheme = require('tailwindcss/defaultTheme');
-
 /**
  * Return tailwind v3 non-deprecated colors
  * PS: code is dirty cause tailwind colors have getters on them
  *     that will log a warning when accessing the object key
  * @type {Record<string, string | Record<string, string>>}
  */
-const tailwindV3Colors = Object.entries(
-  Object.getOwnPropertyDescriptors(tailwindColors)
-)
-  .filter(
-    ([, desc]) =>
-      Object.prototype.hasOwnProperty.call(desc, 'value') &&
-      typeof desc.value !== 'function'
-  )
-  .reduce((acc, [key]) => {
-    if (
-      !['coolGray', 'lightBlue', 'warmGray', 'trueGray', 'blueGray'].includes(
-        key
-      )
-    ) {
-      acc[key] = tailwindColors[key];
-    }
-    return acc;
-  }, {});
-
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   safelist: [
@@ -44,12 +22,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        veryWide: '0.165em',
+      },
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
       },
       backgroundImage: {
         hero: "url('/cover.jpg')",
+        texture:
+          "linear-gradient(to right bottom, rgba('#7ed56f',0.8), rgba('#28b485',0.8)), url('/texture-button.png')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
@@ -86,7 +69,7 @@ module.exports = {
           300: '#e0e0e0',
           400: '#bdbdbd',
           500: '#9e9e9e',
-          600: '#757575',
+          600: '#676767',
           700: '#616161',
           800: '#424242',
           900: '#161619',

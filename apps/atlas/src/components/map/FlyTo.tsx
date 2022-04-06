@@ -21,7 +21,7 @@ export const FlyTo = () => {
   }
 
   return (
-    <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-16 sm:top-10 sm:right-36 sm:z-30 sm:w-96">
+    <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-16 sm:top-10 sm:right-36 sm:w-96">
       <input
         placeholder="Type Id"
         type={'number'}

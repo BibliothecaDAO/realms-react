@@ -52,10 +52,10 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="fixed z-20 py-4 px-8  bottom-0 w-full h-auto font-semibold">
+      <div className="fixed bottom-0 z-20 w-full h-auto px-8 py-4 font-semibold">
         <div className="flex mt-1">{blockTicks}</div>
-        <div className="flex justify-between">
-          <div>
+        <div className="flex justify-between text-purple-900">
+          <div className="">
             <p>Dark Portal opened L2 block {startToNum}</p>
           </div>
           <div>

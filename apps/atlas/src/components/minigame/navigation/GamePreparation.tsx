@@ -1,11 +1,11 @@
 import { ExternalLink } from '@/shared/Icons';
 export const GamePreparation = () => {
   return (
-    <div className="mt-10">
-      <h4 className="font-semibold tracking-widest text-center text-white">
+    <div className="">
+      <h4 className="font-semibold tracking-widest text-center text-gray-800">
         Get Prepared for the next game
       </h4>
-      <div className="p-4 text-gray-500 rounded-md shadow-inner bg-white/40">
+      <div className="p-4 text-gray-700 rounded-md shadow-inner bg-white/40">
         <ul className="text-xl list-none ">
           <li>
             Browse the{' '}

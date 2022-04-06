@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type BN from 'bn.js';
 import { number, Provider } from 'starknet';
+import { ElementToken } from '../constants';
+import type { GameStatus } from '../types';
 const { toBN } = number;
 
 // Contract calculates effects in BIPS
@@ -80,6 +82,19 @@ export const getMainHealth: GamePromise<BN> = async (gameIndex) => {
   return number.toBN(mainHealth);
 };
 
+export const getGameStatus: GamePromise<GameStatus> = async (gameIndex) => {
+  const tdAddress = await getModuleAddress('1');
+
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_game_state',
+    calldata: [gameIndex],
+  });
+
+  const [state] = res.result;
+  return state == '0x0' ? 'active' : 'expired';
+};
+
 export const getShieldValue: (
   gameIndex: string,
   tokenId: number
@@ -131,14 +146,14 @@ export const getTotalRewardAlloc: (
 export const getUserRewardAlloc: (
   gameIdx: string,
   user: string,
-  side: ShieldGameRole
-) => Promise<BN> = async (gameIdx, user, side) => {
+  gameRole: ShieldGameRole
+) => Promise<BN> = async (gameIdx, user, gameRole) => {
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
     contractAddress: tdStorageAddress,
     entrypoint: 'get_user_reward_alloc',
-    calldata: [gameIdx, user, side],
+    calldata: [gameIdx, user, gameRole],
   });
   const [userReward] = res.result;
   return number.toBN(userReward);
@@ -169,11 +184,10 @@ export type GameContext = {
   currentBoost: number; // in basis points
 };
 
-export const getGameContextVariables: (
-  towerDefenceAddress: string
-) => Promise<GameContext> = async (tdAddr) => {
+export const getGameContextVariables: () => Promise<GameContext> = async () => {
+  const tdAddress = await getModuleAddress('1');
   const res = await provider.callContract({
-    contractAddress: tdAddr,
+    contractAddress: tdAddress,
     entrypoint: 'get_game_context_variables',
     calldata: [],
   });
@@ -191,6 +205,17 @@ export const getGameContextVariables: (
   };
 
   return ctx;
+};
+
+export const getCurrentBoost: () => Promise<number> = async () => {
+  const tdAddress = await getModuleAddress('1');
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_current_boost',
+    calldata: [],
+  });
+  const [boostHex] = res.result;
+  return toBN(boostHex).toNumber();
 };
 
 /*
@@ -216,12 +241,12 @@ export const getTotalElementsMinted = async (gameIdx: number) => {
   const mintedLight = await provider.callContract({
     contractAddress: elementBalancerModule,
     entrypoint: 'get_total_minted',
-    calldata: [(tokenOffset + 1).toString()],
+    calldata: [(tokenOffset + ElementToken.Light).toString()],
   });
   const mintedDark = await provider.callContract({
     contractAddress: elementBalancerModule,
     entrypoint: 'get_total_minted',
-    calldata: [(tokenOffset + 2).toString()],
+    calldata: [(tokenOffset + ElementToken.Dark).toString()],
   });
 
   const [light] = mintedLight.result;

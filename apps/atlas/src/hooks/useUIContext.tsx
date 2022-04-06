@@ -7,15 +7,18 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import type { BackgroundOptions } from '@/components/map/ArtBackground';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 import crypts from '../geodata/crypts_all.json';
 import ga_bags from '../geodata/ga_bags.json';
 import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
+export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga';
+export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
 
-export type MenuType = 'main' | 'empire' | 'resources' | 'orders' | AssetType;
+export type MenuType = 'resourceSwap' | PanelType;
 
 export type AssetFilter = {
   value: AssetType;
@@ -52,6 +55,12 @@ interface UI {
   closeAll: (exclude?: MenuType) => void;
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
+  toggleArtBackground: (background?: BackgroundOptions) => void;
+  artBackground: BackgroundOptions;
+  mainMenu: boolean;
+  toggleMainMenu: () => void;
+  togglePanelType: (panelType: PanelType) => void;
+  selectedPanel: PanelType;
 }
 
 const defaultUIContext: UI = {
@@ -59,11 +68,17 @@ const defaultUIContext: UI = {
   setSelectedId: (id: string) => {},
   selectedAssetFilter: AssetFilters[0],
   setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
-  selectedMenuType: 'main',
+  selectedMenuType: undefined,
   setMenuType: (menuType: MenuType) => {},
   toggleMenuType: (menuType: MenuType) => {},
   closeAll: (exclude?: MenuType) => {},
   gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
+  toggleArtBackground: (background?: BackgroundOptions) => {},
+  artBackground: undefined,
+  mainMenu: true,
+  toggleMainMenu: () => {},
+  togglePanelType: (panelType: PanelType) => {},
+  selectedPanel: undefined,
 };
 
 const UIContext = createContext<UI>(defaultUIContext);
@@ -76,7 +91,7 @@ function useQueryPOI() {
   const { query } = useRouter();
   const validQueries: AssetType[] = ['realm', 'crypt', 'loot', 'ga'];
   for (const assetType of validQueries) {
-    if (parseInt(query[assetType] as string) > 0) {
+    if (assetType && parseInt(query[assetType] as string) > 0) {
       return {
         assetType: assetType as string,
         assetId: query[assetType] as string,
@@ -141,6 +156,7 @@ function useCoordinates() {
   };
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function useUI(): UI {
   const router = useRouter();
   const query = useQueryPOI();
@@ -148,9 +164,14 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+  const [artBackground, setArtBackground] = useState<BackgroundOptions>();
+  const [mainMenu, setMainMenu] = useState(true);
+
   const [selectedMenuType, setMenuType] = useState<MenuType>(
-    query ? (query.assetType as AssetType) : 'main'
+    query ? (query.assetType as AssetType) : undefined
   );
+  const [selectedPanel, setPanelType] = useState<PanelType>(undefined);
+
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
   // Update URL
@@ -169,18 +190,54 @@ function useUI(): UI {
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
-      setMenuType('main');
+      setMenuType(undefined);
     } else if (selectedMenuType !== exclude) {
       setMenuType(exclude);
     }
   };
+  const toggleArtBackground = (background?: BackgroundOptions) => {
+    setArtBackground(background);
+  };
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
-      setMenuType('main');
+      setMenuType(undefined);
     } else {
       setMenuType(menuType);
     }
+  };
+
+  const breakpoints: any = useBreakpoint();
+
+  const togglePanelType = (panelType: PanelType) => {
+    setMainMenu(false);
+    if (selectedPanel === panelType) {
+      setPanelType(undefined);
+      setMenuType(undefined);
+      setArtBackground(undefined);
+    } else {
+      setPanelType(panelType);
+      if (panelType === 'bank') {
+        setArtBackground('bank');
+        if (breakpoints.lg) {
+          setMenuType('resourceSwap');
+        }
+      } else if (panelType === 'trade') {
+        setArtBackground('realm');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      } else {
+        setArtBackground('hero');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      }
+    }
+  };
+
+  const toggleMainMenu = () => {
+    return setMainMenu(!mainMenu);
   };
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
@@ -198,9 +255,15 @@ function useUI(): UI {
     selectedMenuType,
     setMenuType,
     closeAll,
+    toggleArtBackground,
     toggleMenuType,
     gotoAssetId,
     coordinates,
+    artBackground,
+    mainMenu,
+    toggleMainMenu,
+    togglePanelType,
+    selectedPanel,
   };
 }
 

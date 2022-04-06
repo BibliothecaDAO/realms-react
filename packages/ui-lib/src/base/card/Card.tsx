@@ -6,8 +6,16 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   loading?: boolean;
 }
 
+const inlineStyle = {
+  boxShadow: '0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%)',
+};
+
 export function Card({ children, className }: Props) {
-  return <div className={`${className} relative rounded-lg`}>{children}</div>;
+  return (
+    <div className={`${className} relative rounded-lg`} style={inlineStyle}>
+      {children}
+    </div>
+  );
 }
 
 export function CardBody({ children, className, loading }: Props) {

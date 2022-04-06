@@ -42,7 +42,7 @@ body {
 
 /* Prevent interference with Bridge modal by setting z-index */
 .web3modal-modal-lightbox {
-  z-index: 11 !important;
+  z-index: 51 !important;
 }
 
 .shimmer.background-animate {
@@ -66,4 +66,31 @@ body {
   50% {
     background-position: 90% 50%;
   }
+}
+@layer utilities {
+  @variants responsive {
+    .text-shadow {
+      text-shadow: 2px 2px 4px black;
+    }
+
+    .text-shadow-md {
+      text-shadow: 4px 4px 8px black;
+    }
+
+    .text-shadow-lg {
+      text-shadow: 15px 15px 30px black;
+    }
+
+    .text-shadow-none {
+      text-shadow: none;
+    }
+  }
+}
+
+.rc-input-number-wrap,
+.rc-input-number-input {
+  background: inherit;
+  width: 100%;
+  text-align: right;
+  font-weight: inherit;
 }

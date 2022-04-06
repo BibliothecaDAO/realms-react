@@ -6,11 +6,11 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
     "noEmit": false,
     "composite": false,
     "incremental": true,
     "paths": {
+      "@/*": ["src/*"],
       "@bibliotheca-dao/core-lib/*": ["../../../packages/core-lib/src/*"],
       "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
     }
