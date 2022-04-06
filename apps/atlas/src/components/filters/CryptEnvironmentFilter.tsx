@@ -3,7 +3,7 @@ import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
-import type { Environments } from '@/util/cryptsEnvironments';
+import type { Environment } from '@/util/cryptsEnvironments';
 import { environments } from '@/util/cryptsEnvironments';
 
 type CryptEnvironmentFilterProps = {
@@ -22,7 +22,7 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
     props.selectedValues ?? []
   );
 
-  const handleOnClickResourceOption = (option: Environments) => {
+  const handleOnClickResourceOption = (option: Environment) => {
     const newValues = selected.filter((value) => value !== option.id);
     if (newValues.length === selected.length) {
       newValues.push(option.id);
@@ -31,7 +31,7 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
     props.onChange([...newValues]);
   };
 
-  const isSelected = (option: Environments) => selected.indexOf(option.id) > -1;
+  const isSelected = (option: Environment) => selected.indexOf(option.id) > -1;
 
   return (
     <Popover className="relative">
