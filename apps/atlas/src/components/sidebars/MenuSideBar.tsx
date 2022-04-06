@@ -1,6 +1,7 @@
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
@@ -35,7 +36,7 @@ export const MenuSideBar = () => {
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-4 left-4"
           onClick={() => toggleMainMenu()}
         >
-          <Menu />
+          {mainMenu ? <Close /> : <Menu />}
         </button>
       </div>
       <div

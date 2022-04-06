@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
+import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
 import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
@@ -40,10 +42,10 @@ export const ResourceSwapSideBar = (props: Props) => {
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 sm:w-5/12 rounded-r-2xl">
         <div className="flex justify-between">
           <button
-            className="z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
-            onClick={() => toggleMenuType('realm')}
+            className="right-0 z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
+            onClick={() => toggleMenuType('resourceSwap')}
           >
-            <Menu />
+            <Close />
           </button>
           <h2 className="uppercase">Resource Swap</h2>
           <div />

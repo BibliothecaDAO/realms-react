@@ -7,8 +7,9 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-
 import type { BackgroundOptions } from '@/components/map/ArtBackground';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
+
 import crypts from '../geodata/crypts_all.json';
 import ga_bags from '../geodata/ga_bags.json';
 import loot_bags from '../geodata/loot_bags.json';
@@ -205,9 +206,11 @@ function useUI(): UI {
       setMenuType(menuType);
     }
   };
+
+  const breakpoints: any = useBreakpoint();
+
   const togglePanelType = (panelType: PanelType) => {
-    console.log(selectedPanel);
-    console.log(panelType);
+    setMainMenu(false);
     if (selectedPanel === panelType) {
       setPanelType(undefined);
       setMenuType(undefined);
@@ -215,15 +218,20 @@ function useUI(): UI {
     } else {
       setPanelType(panelType);
       if (panelType === 'bank') {
-        console.log('setting bank background');
         setArtBackground('bank');
-        setMenuType('resourceSwap');
+        if (breakpoints.lg) {
+          setMenuType('resourceSwap');
+        }
       } else if (panelType === 'trade') {
         setArtBackground('realm');
-        setMenuType(panelType);
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
       } else {
         setArtBackground('hero');
-        setMenuType(panelType);
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
       }
     }
   };

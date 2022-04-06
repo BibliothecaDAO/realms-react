@@ -1,4 +1,5 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import type { ReactElement } from 'react';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -82,7 +83,7 @@ export function BankPanel(): ReactElement {
           className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
           onClick={() => togglePanelType('bank')}
         >
-          CLOSE
+          <Close />
         </button>
       </div>
       <div className="">
