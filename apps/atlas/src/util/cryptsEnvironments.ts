@@ -9,7 +9,7 @@ There are six environments:
 5 - Ember's Glow (3%)
 */
 
-interface Environments {
+export interface Environment {
   name: string; // Name of the environment (e.g. Ember's Glow)
   colourClass: {
     // Class styles for environment 'pills' (e.g. white text on black bg)
@@ -20,7 +20,7 @@ interface Environments {
   id: number;
 }
 
-export const environments: Array<Environments> = [
+export const environments: Array<Environment> = [
   {
     name: 'Desert Oasis',
     colourClass: {

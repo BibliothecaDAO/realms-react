@@ -9,6 +9,7 @@ import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
 import { BankPanel } from '@/components/panels/BankPanel';
+import { CryptsPanel } from '@/components/panels/crypt/CryptsPanel';
 import { GaPanel } from '@/components/panels/ga/GaPanel';
 import { LootPanel } from '@/components/panels/loot/LootPanel';
 import { RealmsPanel } from '@/components/panels/realms/RealmsPanel';
@@ -19,6 +20,7 @@ import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
+import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
@@ -221,7 +223,9 @@ function App() {
   }, [coordinates]);
 
   return (
-    <Compose components={[RealmProvider, LootProvider, GaProvider]}>
+    <Compose
+      components={[RealmProvider, LootProvider, GaProvider, CryptProvider]}
+    >
       <Layout>
         <div className="relative flex h-full overflow-hidden sm:h-screen">
           <MenuSideBar />
@@ -233,6 +237,7 @@ function App() {
               <LootPanel />
               <GaPanel />
               <BankPanel />
+              <CryptsPanel />
               <RealmSideBar id={selectedId} />
               <TradePanel />
               <ResourceSwapSideBar />

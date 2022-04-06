@@ -15,7 +15,7 @@ export const CryptsEmpire = () => {
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
-      address: account.toLowerCase(),
+      where: { currentOwner: account.toLowerCase() },
       first: 12,
       skip: limit,
     };

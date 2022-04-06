@@ -14,7 +14,7 @@ export const LootEmpire = () => {
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
-      filter: { currentOwner: account.toLowerCase() },
+      where: { currentOwner: account.toLowerCase() },
       first: 12,
       skip: limit,
     };

@@ -20,7 +20,13 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     military: ['Offence', 'Defence', 'Last Attacked'],
   };
   const { account } = useWalletContext();
-  const { toggleMenuType, selectedMenuType, setSelectedId } = useUIContext();
+  const {
+    toggleMenuType,
+    selectedMenuType,
+    setSelectedId,
+    gotoAssetId,
+    togglePanelType,
+  } = useUIContext();
   const {
     state: { favouriteRealms },
     actions,
@@ -121,7 +127,13 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             </div>
             <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
               {' '}
-              <Button variant="default" className="w-full uppercase">
+              <Button
+                onClick={() => {
+                  togglePanelType('realm');
+                  gotoAssetId(realm.realmId, 'realm');
+                }}
+                className="w-full uppercase"
+              >
                 fly to
               </Button>
               <Button

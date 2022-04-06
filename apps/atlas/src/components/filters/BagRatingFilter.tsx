@@ -54,11 +54,7 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
       </Button>
 
       {isOpen && (
-        <Popover.Panel
-          className="absolute z-10 mt-2 ml-2 -translate-x-1/2 left-1/2"
-          ref={ref}
-          static
-        >
+        <Popover.Panel className="absolute right-0 z-10 " ref={ref} static>
           <div
             className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white rounded-sm shadow-sm w-60"
             style={{ backgroundColor: '#74787A' }}
