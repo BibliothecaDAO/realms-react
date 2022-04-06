@@ -1,6 +1,6 @@
 import { Tab as HeadlessTab } from '@headlessui/react';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type { ReactNode, SyntheticEvent } from 'react';
 import { Tab } from './tab';
 import { TabList } from './tab-list';
 import { TabPanel } from './tab-panel';
@@ -31,18 +31,24 @@ export interface TabsProps {
   children: ReactNode;
   variant?: keyof typeof VARIANTS;
   className?: string;
+  selectedIndex?: number;
+  onChange?: (index: number | SyntheticEvent) => void;
 }
 
 export const Tabs = ({
   children,
   className,
   variant = 'default',
+  selectedIndex = 0,
+  onChange,
 }: TabsProps) => {
   return (
     <TabProvider variant={variant}>
       <HeadlessTab.Group
         as="div"
         className={clsx('flex flex-1 flex-col', className)}
+        selectedIndex={selectedIndex}
+        onChange={onChange}
       >
         {children}
       </HeadlessTab.Group>

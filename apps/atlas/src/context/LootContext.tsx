@@ -6,19 +6,25 @@ type RatingFilter = { bagGreatness: number; bagRating: number };
 interface LootState {
   ratingFilter: RatingFilter;
   favouriteLoot: string[];
+  searchIdFilter: string;
+  selectedTab: number;
 }
 
 type LootAction =
   | { type: 'updateRatingFilter'; payload: RatingFilter }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteLoot'; payload: string }
-  | { type: 'removeFavouriteLoot'; payload: string };
+  | { type: 'removeFavouriteLoot'; payload: string }
+  | { type: 'updateSearchIdFilter'; payload: string }
+  | { type: 'updateSelectedTab'; payload: number };
 
 interface LootActions {
   updateRatingFilter(filter: RatingFilter): void;
   clearFilters(): void;
   addFavouriteLoot(id: string): void;
   removeFavouriteLoot(id: string): void;
+  updateSearchIdFilter(id: string): void;
+  updateSelectedTab(tab: number): void;
 }
 
 const defaultFilters = {
@@ -26,16 +32,22 @@ const defaultFilters = {
     bagGreatness: 0,
     bagRating: 0,
   },
+  searchIdFilter: '',
 };
 const defaultLootState = {
   ...defaultFilters,
   favouriteLoot: [] as string[],
+  selectedTab: 0,
 };
 
 function lootReducer(state: LootState, action: LootAction): LootState {
   switch (action.type) {
     case 'updateRatingFilter':
       return { ...state, ratingFilter: action.payload };
+    case 'updateSearchIdFilter':
+      return { ...state, searchIdFilter: action.payload };
+    case 'updateSelectedTab':
+      return { ...state, selectedTab: action.payload };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteLoot':
@@ -62,6 +74,10 @@ const mapActions = (dispatch: Dispatch<LootAction>): LootActions => ({
       type: 'updateRatingFilter',
       payload: filter,
     }),
+  updateSearchIdFilter: (id: string) =>
+    dispatch({ type: 'updateSearchIdFilter', payload: id }),
+  updateSelectedTab: (tab: number) =>
+    dispatch({ type: 'updateSelectedTab', payload: tab }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteLoot: (id: string) =>
     dispatch({ type: 'addFavouriteLoot', payload: id }),

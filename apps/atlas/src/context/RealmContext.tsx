@@ -18,6 +18,8 @@ interface RealmState {
   selectedOrders: OrderType[];
   selectedResources: ResourceType[];
   favouriteRealms: number[];
+  searchIdFilter: string;
+  selectedTab: number;
 }
 
 type RealmAction =
@@ -27,7 +29,9 @@ type RealmAction =
   | { type: 'updateSelectedResources'; payload: ResourceType[] }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
-  | { type: 'removeFavouriteRealm'; payload: number };
+  | { type: 'removeFavouriteRealm'; payload: number }
+  | { type: 'updateSearchIdFilter'; payload: string }
+  | { type: 'updateSelectedTab'; payload: number };
 
 interface RealmActions {
   updateRarityFilter(filter: RarityFilter): void;
@@ -37,6 +41,8 @@ interface RealmActions {
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
+  updateSearchIdFilter(realmId: string): void;
+  updateSelectedTab(tab: number): void;
 }
 
 const defaultFilters = {
@@ -52,18 +58,24 @@ const defaultFilters = {
   },
   selectedOrders: [] as OrderType[],
   selectedResources: [] as ResourceType[],
+  searchIdFilter: '',
 };
 const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
+  selectedTab: 0,
 };
 
 function realmReducer(state: RealmState, action: RealmAction): RealmState {
   switch (action.type) {
     case 'updateRarityFilter':
       return { ...state, rarityFilter: action.payload };
+    case 'updateSearchIdFilter':
+      return { ...state, searchIdFilter: action.payload };
     case 'updateTraitsFilter':
       return { ...state, traitsFilter: action.payload };
+    case 'updateSelectedTab':
+      return { ...state, selectedTab: action.payload };
     case 'updateSelectedOrders':
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
@@ -94,6 +106,10 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
       type: 'updateRarityFilter',
       payload: filter,
     }),
+  updateSearchIdFilter: (realmId: string) =>
+    dispatch({ type: 'updateSearchIdFilter', payload: realmId }),
+  updateSelectedTab: (tab: number) =>
+    dispatch({ type: 'updateSelectedTab', payload: tab }),
   updateTraitsFilter: (filter: TraitsFilter) =>
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>

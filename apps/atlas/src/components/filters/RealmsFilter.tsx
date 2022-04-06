@@ -1,31 +1,39 @@
 import { OrdersFilter } from '@/components/filters/OrdersFilter';
 import { RealmsRarityFilter } from '@/components/filters/RealmsRarityFilter';
 import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
+import { SearchFilter } from '@/components/filters/SearchFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
 
 export function RealmsFilter() {
-  const realmCtx = useRealmContext();
-
+  const { state, actions } = useRealmContext();
   return (
     <div className="flex justify-between">
-      <div>Search</div>
+      <div>
+        <SearchFilter
+          placeholder="SEARCH BY ID"
+          onSubmit={(value) => {
+            actions.updateSearchIdFilter(parseInt(value) ? value : '');
+          }}
+          defaultValue={state.searchIdFilter + ''}
+        />
+      </div>
       <div className="flex mb-4">
         <ResourcesFilter
-          selectedValues={realmCtx.state.selectedResources}
-          onChange={realmCtx.actions.updateSelectedResources}
+          selectedValues={state.selectedResources}
+          onChange={actions.updateSelectedResources}
         />
         <RealmsRarityFilter
-          rarity={realmCtx.state.rarityFilter}
-          onChange={realmCtx.actions.updateRarityFilter}
+          rarity={state.rarityFilter}
+          onChange={actions.updateRarityFilter}
         />
         <OrdersFilter
-          selectedValues={realmCtx.state.selectedOrders}
-          onChange={realmCtx.actions.updateSelectedOrders}
+          selectedValues={state.selectedOrders}
+          onChange={actions.updateSelectedOrders}
         />
         <TraitsFilter
-          traits={realmCtx.state.traitsFilter}
-          onChange={realmCtx.actions.updateTraitsFilter}
+          traits={state.traitsFilter}
+          onChange={actions.updateTraitsFilter}
         />
       </div>
     </div>

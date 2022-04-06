@@ -5,32 +5,34 @@ import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
 export function AllRealms() {
-  const realmCtx = useRealmContext();
+  const { state } = useRealmContext();
 
-  const resourceFilters = realmCtx.state.selectedResources.map((resource) => ({
+  const resourceFilters = state.selectedResources.map((resource) => ({
     resourceType: { equals: resource },
   }));
 
-  const traitsFilters = Object.keys(realmCtx.state.traitsFilter)
+  const traitsFilters = Object.keys(state.traitsFilter)
     // Filter 0 entries
-    .filter((key: string) => (realmCtx.state.traitsFilter as any)[key])
+    .filter((key: string) => (state.traitsFilter as any)[key])
     .map((key: string) => ({
       trait: {
         type: key as RealmTraitType,
-        qty: { gte: (realmCtx.state.traitsFilter as any)[key] },
+        qty: { gte: (state.traitsFilter as any)[key] },
       },
     }));
 
   const variables = {
-    filter: {
-      rarityRank: { gte: realmCtx.state.rarityFilter.rarityRank },
-      rarityScore: { gte: realmCtx.state.rarityFilter.rarityScore },
-      orderType:
-        realmCtx.state.selectedOrders.length > 0
-          ? { in: [...realmCtx.state.selectedOrders] }
-          : undefined,
-      AND: [...resourceFilters, ...traitsFilters],
-    },
+    filter: state.searchIdFilter
+      ? { realmId: { equals: parseInt(state.searchIdFilter) } }
+      : {
+          rarityRank: { gte: state.rarityFilter.rarityRank },
+          rarityScore: { gte: state.rarityFilter.rarityScore },
+          orderType:
+            state.selectedOrders.length > 0
+              ? { in: [...state.selectedOrders] }
+              : undefined,
+          AND: [...resourceFilters, ...traitsFilters],
+        },
   };
 
   const { data } = useGetRealmsQuery({ variables });
