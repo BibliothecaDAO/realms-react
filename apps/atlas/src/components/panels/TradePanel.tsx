@@ -62,12 +62,12 @@ export function TradePanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'trade'}>
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-4">
         <div className="sm:hidden"></div>
 
         <h1 className="tex">Biblio Bazaar</h1>
         <button
-          className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
+          className="mb-8 transition-all rounded hover:bg-white/70"
           onClick={() => togglePanelType('trade')}
         >
           <Close />

@@ -39,15 +39,15 @@ export const ResourceSwapSideBar = (props: Props) => {
   );
   return (
     <BaseSideBar open={selectedMenuType === 'resourceSwap'}>
-      <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 sm:w-5/12 rounded-r-2xl">
+      <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-between">
+          <h2 className="uppercase">Resource Swap</h2>
           <button
-            className="right-0 z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70"
+            className="right-0 z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70 shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.25)]"
             onClick={() => toggleMenuType('resourceSwap')}
           >
             <Close />
           </button>
-          <h2 className="uppercase">Resource Swap</h2>
           <div />
         </div>
         <Tabs className="h-full" variant="primary">

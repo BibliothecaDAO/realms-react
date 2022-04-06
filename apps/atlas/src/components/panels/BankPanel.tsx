@@ -76,17 +76,17 @@ export function BankPanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'bank'}>
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-4">
         <div className="sm:hidden"></div>
         <h1 className="tex">Iron Bank</h1>
         <button
-          className="p-4 mb-8 transition-all rounded bg-white/20 hover:bg-white/70"
+          className="mb-8 transition-all rounded "
           onClick={() => togglePanelType('bank')}
         >
           <Close />
         </button>
       </div>
-      <div className="">
+      <div className="overflow-x-auto">
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}

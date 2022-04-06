@@ -15,7 +15,7 @@ export const VARIANTS = {
         'border-current focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
       inactive: 'text-gray-900 border-transparent',
     },
-    tabList: 'flex space-x-16',
+    tabList: 'flex space-x-8 sm:space-x-16',
   },
   primary: {
     tab: {

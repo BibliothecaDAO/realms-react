@@ -27,7 +27,7 @@ export const BaseTabPanel = ({
 
   return (
     <BasePanel open={selectedPanel === panelType}>
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1 className="tex">{panelName}</h1>
 
@@ -48,7 +48,9 @@ export const BaseTabPanel = ({
         </Tabs.List>
         <Tabs.Panels className="mt-8">
           {tabs.map((tab) => (
-            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+            <Tabs.Panel className="overflow-x-auto" key={tab.label}>
+              {tab.component}
+            </Tabs.Panel>
           ))}
         </Tabs.Panels>
       </Tabs>

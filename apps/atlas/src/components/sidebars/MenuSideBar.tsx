@@ -24,7 +24,7 @@ export const MenuSideBar = () => {
   }, [toggleSound]);
 
   const buttonClasses =
-    'bg-gray-800 border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 sm:mx-7 mx-3 mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner';
+    'bg-gray-800 border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner';
   const iconClasses = 'w-6 mx-auto sm:w-10 fill-current mb-1';
   const textClasses =
     'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5';
@@ -33,18 +33,18 @@ export const MenuSideBar = () => {
     <div>
       <div>
         <button
-          className="absolute z-50 p-4 transition-all rounded sm:hidden top-4 left-4"
+          className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2"
           onClick={() => toggleMainMenu()}
         >
           {mainMenu ? <Close /> : <Menu />}
         </button>
       </div>
       <div
-        className={`w-22 absolute sm:relative sm:pt-4 h-full bottom-0 sm:w-36 sm:left-0 pt-24 sm:top-0  bg-gray-800/80 z-40 shadow-inner flex flex-col transform duration-300 transition-all overflow-auto ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full px-2 bottom-0 lg:w-32 sm:left-0 pt-24 sm:top-0  bg-gray-800/80 z-40 shadow-inner flex flex-col transform duration-300 transition-all overflow-auto ${
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             aria-label="Realms"
@@ -57,7 +57,7 @@ export const MenuSideBar = () => {
 
           <span className={textClasses}>Realms</span>
         </div>
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             aria-label="Loot"
@@ -67,7 +67,7 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Loot</span>
         </div>
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             onClick={() => togglePanelType('ga')}
@@ -77,7 +77,7 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>GA</span>
         </div>
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             onClick={() => toggleMenuType('crypt')}
@@ -87,7 +87,7 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Crypts</span>
         </div>
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             onClick={() => togglePanelType('trade')}
@@ -97,7 +97,7 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Trade</span>
         </div>
-        <div>
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             aria-label="Bank"
