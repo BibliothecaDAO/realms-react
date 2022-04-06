@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                 className="py-8 prose"
               >
                 <h1>Voting & Conditions</h1>
-                <ReactMarkdown>{content[4]}</ReactMarkdown>
+                <ReactMarkdown className="text-2xl">{content[4]}</ReactMarkdown>
               </section>
             </WithNavMenu>
           </div>

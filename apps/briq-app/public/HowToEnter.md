@@ -1,3 +1,5 @@
+---
+
 1. Connect your Argent X StarkNet Wallet (create one here if you don’t have one and install the browser extension)
 1. Complete the form
 1. You will be airdropped 20k briqs (within 24 hours)

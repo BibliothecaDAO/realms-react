@@ -24,7 +24,7 @@ h3 {
 }
 
 h4 {
-  @apply text-xl uppercase font-body;
+  @apply text-xl uppercase font-body tracking-widest;
 }
 
 button {
@@ -32,7 +32,7 @@ button {
 }
 
 body {
-  @apply text-gray-200 font-body text-lg;
+  @apply text-gray-100 font-body text-lg;
 }
 
 #deckgl-wrapper {
