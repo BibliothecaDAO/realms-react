@@ -74,7 +74,7 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
 
   const [boundaries, setBoundaries] = useState<number[]>([]);
   useMemo(() => {
-    const boundaries = [];
+    const boundaries: any[] = [];
     const step = (boundingRect.width - sliderSize) / range;
     for (let i = step / 2; i < boundingRect.width - sliderSize; i = i + step) {
       boundaries.push(i);
