@@ -10,7 +10,13 @@ interface LootOverviewsProps {
 
 export function LootOverviews(props: LootOverviewsProps) {
   const { account } = useWalletContext();
-  const { toggleMenuType, selectedMenuType, setSelectedId } = useUIContext();
+  const {
+    toggleMenuType,
+    selectedMenuType,
+    setSelectedId,
+    gotoAssetId,
+    togglePanelType,
+  } = useUIContext();
   const {
     state: { favouriteLoot },
     actions,
@@ -38,7 +44,7 @@ export function LootOverviews(props: LootOverviewsProps) {
           >
             <div className="flex w-full p-8 text-gray-800 rounded-l bg-white/70">
               <div className="self-center pl-6">
-                <h5 className="text-gray-400">{loot.id}</h5>
+                <h2 className="mb-3">Bag #{loot.id}</h2>
                 {!isFavourite(loot) && (
                   <button onClick={() => actions.addFavouriteLoot(loot.id)}>
                     Add
@@ -69,11 +75,16 @@ export function LootOverviews(props: LootOverviewsProps) {
                 );
               })}
             </div>
-            <div className="w-full p-8 bg-gray-800/70"></div>
-            <div className="w-full p-8 bg-gray-700/70"></div>
             <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
               {' '}
-              <Button variant="default" className="w-full uppercase">
+              <Button
+                onClick={() => {
+                  togglePanelType('loot');
+                  gotoAssetId(loot.id, 'loot');
+                }}
+                variant="default"
+                className="w-full uppercase"
+              >
                 fly to
               </Button>
               <Button

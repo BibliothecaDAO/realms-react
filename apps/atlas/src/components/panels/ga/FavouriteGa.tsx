@@ -6,17 +6,16 @@ import { getGAsQuery } from '@/hooks/graphql/queries';
 import type { GAdventurer } from '@/types/index';
 
 export function FavouriteGa() {
-  const gaCtx = useGaContext();
+  const { state } = useGaContext();
 
   const { loading, error, data, fetchMore } = useQuery<{
     gadventurers: GAdventurer[];
   }>(getGAsQuery, {
-    variables: { first: 10, where: { id_in: [...gaCtx.state.favouriteGa] } },
+    variables: { first: 10, where: { id_in: [...state.favouriteGa] } },
   });
 
   return (
     <div>
-      Fav Loot
       <GaFilters />
       <GaOverviews bags={data?.gadventurers ?? []} />
     </div>

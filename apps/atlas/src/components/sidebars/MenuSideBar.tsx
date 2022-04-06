@@ -80,7 +80,7 @@ export const MenuSideBar = () => {
         <div>
           <IconButton
             className={buttonClasses}
-            onClick={() => toggleMenuType('crypt')}
+            onClick={() => togglePanelType('crypt')}
             aria-label="Crypts"
             icon={<Danger className={iconClasses} />}
             size="lg"
