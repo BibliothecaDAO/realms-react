@@ -3,7 +3,7 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import React from 'react';
 
 import { number } from 'starknet';
-import { ShieldVitalityDisplay } from './TowerShieldVitality';
+import { ShieldVitalityDisplay } from '../TowerShieldVitality';
 const { toBN } = number;
 
 export default {

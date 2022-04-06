@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type BN from 'bn.js';
-import { defaultProvider, number, Provider, stark } from 'starknet';
+import { number, Provider } from 'starknet';
+import { ElementToken } from '../constants';
+import type { GameStatus } from '../types';
 const { toBN } = number;
-const { getSelectorFromName } = stark;
 
 // Contract calculates effects in BIPS
 // so this factor is used to normalize action amounts
@@ -10,13 +11,13 @@ export const EFFECT_BASE_FACTOR = 100;
 
 export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
-  '0x32d9463662a6bc407068ae54f7c64cca7fd7b783d71ff263a68c373e3865b2e';
+  '0x29317ae2fccbb5ce0588454b8d13cf690fd7318a983cf72f0c9bf5f02f4a465';
 
 const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
   | 'mainnet-alpha'
   | 'goerli-alpha';
 
-const provider = new Provider({ network: starknetNetwork });
+export const provider = new Provider({ network: starknetNetwork });
 
 if (!CONTROLLER_ADDRESS) {
   throw new Error(
@@ -26,7 +27,7 @@ if (!CONTROLLER_ADDRESS) {
 
 export const ELEMENTS_ADDRESS =
   (process.env.NEXT_PUBLIC_MINIGAME_ELEMENTS_ADDRESS as string) ||
-  '0x19b9fd86ac5654937d603ce49ba8f1fc326c6446ce1d83510ab480e306be832';
+  '0x2d069c47466965b3af9c590d026eb34d4dede0ba64c511ad8945bf13d228429';
 
 export const TOKEN_INDEX_OFFSET_BASE = 10;
 
@@ -36,6 +37,11 @@ export const MINIMUM_MINT_AMOUNT = 100;
 export enum ShieldGameRole {
   Shielder = '0',
   Attacker = '1',
+}
+
+export enum GameStatusEnum {
+  Active = 0,
+  Expired = 1,
 }
 
 export enum SelectorName {
@@ -50,10 +56,8 @@ export const getLatestGameIndex: () => Promise<string> = async () => {
 
   // Get latest game index
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName(
-      SelectorName.getLatestGameIndex
-    ),
+    contractAddress: tdStorageAddress,
+    entrypoint: SelectorName.getLatestGameIndex,
   });
   const [latestIndex] = res.result;
 
@@ -70,12 +74,25 @@ export const getMainHealth: GamePromise<BN> = async (gameIndex) => {
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName(SelectorName.getMainHealth),
+    contractAddress: tdStorageAddress,
+    entrypoint: SelectorName.getMainHealth,
     calldata: [gameIndex],
   });
   const [mainHealth] = res.result;
   return number.toBN(mainHealth);
+};
+
+export const getGameStatus: GamePromise<GameStatus> = async (gameIndex) => {
+  const tdAddress = await getModuleAddress('1');
+
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_game_state',
+    calldata: [gameIndex],
+  });
+
+  const [state] = res.result;
+  return state == '0x0' ? 'active' : 'expired';
 };
 
 export const getShieldValue: (
@@ -85,10 +102,8 @@ export const getShieldValue: (
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName(
-      SelectorName.getShieldValue
-    ),
+    contractAddress: tdStorageAddress,
+    entrypoint: SelectorName.getShieldValue,
     calldata: [gameIndex, tokenId.toString()],
   });
   const [shieldValue] = res.result;
@@ -105,8 +120,8 @@ export const getModuleAddress: (moduleId: string) => Promise<string> = async (
   }
 
   const res = await provider.callContract({
-    contract_address: CONTROLLER_ADDRESS,
-    entry_point_selector: stark.getSelectorFromName('get_module_address'),
+    contractAddress: CONTROLLER_ADDRESS,
+    entrypoint: 'get_module_address',
     calldata: [moduleId.toString()],
   });
   const [moduleAddress] = res.result;
@@ -120,8 +135,8 @@ export const getTotalRewardAlloc: (
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName('get_total_reward_alloc'),
+    contractAddress: tdStorageAddress,
+    entrypoint: 'get_total_reward_alloc',
     calldata: [gameIdx, side],
   });
   const [totalReward] = res.result;
@@ -131,14 +146,14 @@ export const getTotalRewardAlloc: (
 export const getUserRewardAlloc: (
   gameIdx: string,
   user: string,
-  side: ShieldGameRole
-) => Promise<BN> = async (gameIdx, user, side) => {
+  gameRole: ShieldGameRole
+) => Promise<BN> = async (gameIdx, user, gameRole) => {
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName('get_user_reward_alloc'),
-    calldata: [gameIdx, user, side],
+    contractAddress: tdStorageAddress,
+    entrypoint: 'get_user_reward_alloc',
+    calldata: [gameIdx, user, gameRole],
   });
   const [userReward] = res.result;
   return number.toBN(userReward);
@@ -151,8 +166,8 @@ export const getTokenRewardPool: (
   const tdStorageAddress = await getModuleAddress('2');
 
   const res = await provider.callContract({
-    contract_address: tdStorageAddress,
-    entry_point_selector: stark.getSelectorFromName('get_token_reward_pool'),
+    contractAddress: tdStorageAddress,
+    entrypoint: 'get_token_reward_pool',
     calldata: [gameIdx, tokenId.toString()],
   });
   const [tokenReward] = res.result;
@@ -169,14 +184,11 @@ export type GameContext = {
   currentBoost: number; // in basis points
 };
 
-export const getGameContextVariables: (
-  towerDefenceAddress: string
-) => Promise<GameContext> = async (tdAddr) => {
+export const getGameContextVariables: () => Promise<GameContext> = async () => {
+  const tdAddress = await getModuleAddress('1');
   const res = await provider.callContract({
-    contract_address: tdAddr,
-    entry_point_selector: stark.getSelectorFromName(
-      'get_game_context_variables'
-    ),
+    contractAddress: tdAddress,
+    entrypoint: 'get_game_context_variables',
     calldata: [],
   });
 
@@ -193,6 +205,17 @@ export const getGameContextVariables: (
   };
 
   return ctx;
+};
+
+export const getCurrentBoost: () => Promise<number> = async () => {
+  const tdAddress = await getModuleAddress('1');
+  const res = await provider.callContract({
+    contractAddress: tdAddress,
+    entrypoint: 'get_current_boost',
+    calldata: [],
+  });
+  const [boostHex] = res.result;
+  return toBN(boostHex).toNumber();
 };
 
 /*
@@ -216,14 +239,14 @@ export const getTotalElementsMinted = async (gameIdx: number) => {
   const tokenOffset = TOKEN_INDEX_OFFSET_BASE * gameIdx;
 
   const mintedLight = await provider.callContract({
-    contract_address: elementBalancerModule,
-    entry_point_selector: getSelectorFromName('get_total_minted'),
-    calldata: [(tokenOffset + 1).toString()],
+    contractAddress: elementBalancerModule,
+    entrypoint: 'get_total_minted',
+    calldata: [(tokenOffset + ElementToken.Light).toString()],
   });
   const mintedDark = await provider.callContract({
-    contract_address: elementBalancerModule,
-    entry_point_selector: getSelectorFromName('get_total_minted'),
-    calldata: [(tokenOffset + 2).toString()],
+    contractAddress: elementBalancerModule,
+    entrypoint: 'get_total_minted',
+    calldata: [(tokenOffset + ElementToken.Dark).toString()],
   });
 
   const [light] = mintedLight.result;
@@ -264,8 +287,8 @@ export const getIsApprovedForAll = async (
   operator: string
 ) => {
   const res = await provider.callContract({
-    contract_address: ELEMENTS_ADDRESS,
-    entry_point_selector: getSelectorFromName('is_approved_for_all'),
+    contractAddress: ELEMENTS_ADDRESS,
+    entrypoint: 'isApprovedForAll',
     calldata: [toBN(account).toString(), toBN(operator).toString()],
   });
   const [isApproved] = res.result;

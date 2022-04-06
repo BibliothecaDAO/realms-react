@@ -2,7 +2,7 @@ import { StarknetProvider } from '@starknet-react/core';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import React from 'react';
-import { number, stark } from 'starknet';
+import { number, hash } from 'starknet';
 import ShieldGame from '@/components/minigame/ShieldGame';
 import type {
   StarknetCall,
@@ -16,7 +16,7 @@ import {
   wrappedRequestHandlerWithCount as requestHandler,
 } from '@/mocks/starknetMockFactory';
 import { SelectorName } from '@/util/minigameApi';
-const { getSelectorFromName } = stark;
+const { getSelectorFromName } = hash;
 const { toHex, toBN } = number;
 
 export default {
@@ -38,12 +38,7 @@ export default {
 } as ComponentMeta<typeof ShieldGame>;
 
 const Template: ComponentStory<typeof ShieldGame> = (args) => (
-  <ShieldGame
-    // These addresses are just placeholders, they are typically mocked below
-    towerDefenceContractAddr="0x61b9899139e4dc843c9dcc7303127ae499d3f2cb56be9df5702429ba1086585"
-    towerDefenceStorageAddr="0x7d8c4f3527038ea54132dac7bf757fd20c4141010079f982206da7be67f2721"
-    {...args}
-  />
+  <ShieldGame {...args} />
 );
 
 // Can be overridden in each story

@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 type Prop = {
   isOpen: boolean;
   toggle: () => void;
+  preventClose?: () => boolean;
   children?: React.ReactNode;
 };
 
@@ -14,9 +15,17 @@ const Modal: React.FC<Prop> = (props) => {
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-20 overflow-y-auto "
+        className="fixed inset-0 z-50 overflow-y-auto"
         open={isOpen}
-        onClose={() => props.toggle()}
+        onClose={() => {
+          // This is used to prevent conflicts with web3 modal
+          if (props.preventClose && !props.preventClose()) {
+            props.toggle();
+          }
+          if (props.preventClose == undefined) {
+            props.toggle();
+          }
+        }}
       >
         <div className="flex items-start justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -41,7 +50,6 @@ const Modal: React.FC<Prop> = (props) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform sm:align-middle sm:w-full">
-              <Dialog.Title className={'hidden'}>Desiege Setup</Dialog.Title>
               {props.children}
             </div>
           </Transition.Child>
