@@ -1,7 +1,8 @@
+/* eslint-disable no-irregular-whitespace */
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import Button from '../Button';
-import TokenLabel from '../ElementsLabel';
+import { ExternalLink } from '../Icons';
 import type { LDKSchema } from './lib';
 
 type Prop = {
@@ -49,13 +50,19 @@ const LoreDevKit = (props: Prop) => {
         {' '}
         <ArrowUpIcon className="inline-block h-4" /> What Lore came before?
       </Button>
-      <h2 className="mt-8">{currentLayer.title}</h2>
-
-      {currentLayer.descriptions.map((d, i) => (
-        <p className="my-8 text-2xl" key={i}>
-          {d}
-        </p>
-      ))}
+      <h3 className="">
+        {currentLayer.title}{' '}
+        {currentLayer.end ? (
+          <span className="px-2 py-1 text-sm bg-black rounded-md">
+            Lore Extension Prompt
+          </span>
+        ) : null}
+      </h3>
+      <div className="text-lg">
+        {currentLayer.descriptions.map((d, i) =>
+          typeof d == 'string' ? <div key={i}>{d}</div> : d
+        )}
+      </div>
       <Button
         disabled={layerIndex == ldk.layers.length - 1}
         onClick={() => goToLoreBranches()}
@@ -64,6 +71,25 @@ const LoreDevKit = (props: Prop) => {
         {' '}
         <ArrowDownIcon className="inline-block h-4" /> What Lore comes after?
       </Button>
+      {currentLayer.end ? (
+        <div className="p-4 bg-gray-900 rounded-xl">
+          <h3>Loot is an experiment in decentralized world building.</h3>
+          Loot is unique — there is no central team, no central roadmap, no
+          company that backs it. Loot is a decentralized community of builders,
+          creators, artists, writers and players who are building a world,
+          together. The collection of projects that have been built on top of
+          Loot have come to be known collectively as "The Lootverse."
+          <a
+            target={'_blank'}
+            href="https://docs.loot.foundation/welcome-to-loot/the-lootverse#an-experiment-in-decentralized-world-building"
+            className="block w-full py-2"
+            rel="noreferrer"
+          >
+            Read more at docs.loot.foundation{' '}
+            <ExternalLink className="inline-block w-4" />
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 };

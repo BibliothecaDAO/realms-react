@@ -8,9 +8,12 @@ export interface LDKRoot {
   nodeType: 'root-contract';
 }
 
+type LoreDescription = React.ReactElement | string;
+
 export interface LDKLayer {
-  descriptions: string[] | React.ReactNode[];
+  descriptions: LoreDescription[];
   title: string | React.ReactNode;
+  end?: boolean;
 }
 
 export interface LDKSchema {
