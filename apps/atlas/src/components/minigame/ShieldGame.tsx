@@ -123,7 +123,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
               }}
             />
             {getGameVariables.data == undefined ? (
-              <p className="text-3xl text-gray-800 animate-pulse">
+              <p className="mt-2 text-3xl font-bold text-gray-800 animate-pulse">
                 Loading the Dark Portal...
               </p>
             ) : null}

@@ -1,14 +1,13 @@
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
-import Joyride, { STATUS, ACTIONS } from 'react-joyride';
-import { number } from 'starknet';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
 import Button from '@/shared/Button';
 import ElementLabel from '@/shared/ElementsLabel';
+import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
@@ -114,12 +113,15 @@ const GameControls: React.FC<Prop> = (props) => {
       {(gameStatus.data == 'expired' || gameStatus.data == 'completed') &&
       account ? (
         <div className="my-4">
+          <GamePreparation />
+          <br />
           {userBalance.side == undefined && !userBalance.loading ? (
             <Button onClick={props.onChooseElements}>
               <ElementLabel>Choose your Elements</ElementLabel>
             </Button>
-          ) : null}
-          <GamePreparation />
+          ) : (
+            <LoadingSkeleton className="w-full h-10" />
+          )}
         </div>
       ) : null}
       {gameStatus.data == 'active' && account ? (

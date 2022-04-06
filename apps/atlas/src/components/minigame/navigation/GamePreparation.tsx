@@ -1,7 +1,7 @@
 import { ExternalLink } from '@/shared/Icons';
 export const GamePreparation = () => {
   return (
-    <div className="mt-10">
+    <div className="">
       <h4 className="font-semibold tracking-widest text-center text-gray-800">
         Get Prepared for the next game
       </h4>
