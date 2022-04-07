@@ -59,11 +59,8 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
           ref={ref}
           static
         >
-          <div
-            className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white rounded-sm shadow-sm w-60"
-            style={{ backgroundColor: '#74787A' }}
-          >
-            <div className="text-lg text-center uppercase">Rarity</div>
+          <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white rounded shadow-sm w-60 bg-black">
+            <h4 className="text-center">Rarity</h4>
             <RangeSliderFilter
               name="Score"
               min={0}

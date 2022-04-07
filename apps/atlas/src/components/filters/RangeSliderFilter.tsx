@@ -152,8 +152,10 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
   );
 
   return (
-    <div className="relative w-full">
-      <div className="text-sm text-center uppercase">{props.name}</div>
+    <div className="relative w-full my-2">
+      <div className="text-sm text-center uppercase tracking-widest">
+        {props.name}
+      </div>
       <div
         className="relative w-full"
         style={{ height: styles.height }}
@@ -172,12 +174,12 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
           onClick={handleMouseClick}
           aria-hidden="true"
         >
-          <div className="absolute w-full bg-[#bd9e3a] h-[1px] top-1/2"></div>
+          <div className="absolute w-full bg-[#bd9e3a] h-[2px] top-1/2"></div>
         </div>
       </div>
-      <div className="flex justify-between w-full uppercase text-[8px] top-3 select-none">
-        <span>min</span>
-        <span>max</span>
+      <div className="flex justify-between w-full uppercase text-[16px] top-3 select-none mt-2">
+        <span> {state.selectedValue}</span>
+        <span> {props.max}</span>
       </div>
     </div>
   );
