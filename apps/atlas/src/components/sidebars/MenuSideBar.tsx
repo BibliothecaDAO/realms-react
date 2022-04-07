@@ -1,20 +1,22 @@
-import { IconButton } from '@bibliotheca-dao/ui-lib';
+import { IconButton, Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Mountain from '@bibliotheca-dao/ui-lib/icons/mountain.svg';
+import { animated, useSpring } from '@react-spring/web';
 import { useCallback } from 'react';
 import { useSound } from '@/context/soundProvider';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
-  const { account } = useWalletContext();
+  const { account, connectWallet } = useWalletContext();
   const { toggleMenuType, mainMenu, toggleMainMenu, togglePanelType } =
     useUIContext();
   const { isSoundActive, toggleSound } = useSound();
@@ -22,6 +24,10 @@ export const MenuSideBar = () => {
   const handleClick = useCallback(() => {
     toggleSound();
   }, [toggleSound]);
+
+  const animation = useSpring({
+    opacity: mainMenu ? 0.85 : 0,
+  });
 
   const buttonClasses =
     'bg-gray-800 border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner';
@@ -39,8 +45,9 @@ export const MenuSideBar = () => {
           {mainMenu ? <Close /> : <Menu />}
         </button>
       </div>
-      <div
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full px-2 bottom-0 lg:w-32 sm:left-0 pt-24 sm:top-0  bg-gray-800/80 z-40 shadow-inner flex flex-col transform duration-300 transition-all overflow-auto ${
+      <animated.div
+        style={animation}
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0  bg-gray-800 z-40 shadow-inner flex flex-col transform duration-300 transition-all overflow-auto ${
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
@@ -118,7 +125,30 @@ export const MenuSideBar = () => {
           <VolumeIcon className="w-8 mx-auto" />
         )}
       </button> */}
-      </div>
+
+        <div className="grow" />
+        <div className="flex flex-col mb-2 place-items-center sm:mb-2">
+          <Button
+            className="px-0 text-[0.65rem] sm:text-lg sm:px-2"
+            aria-label="Connect Wallet"
+            href="/desiege"
+            variant="secondary"
+            size="xs"
+          >
+            Desiege
+          </Button>
+        </div>
+        <div className="flex flex-col mb-2 sm:hidden place-items-center">
+          <IconButton
+            className={buttonClasses}
+            aria-label="Connect Wallet"
+            onClick={connectWallet}
+            icon={<Eth className={iconClasses} />}
+            size="lg"
+          />
+          <span className={textClasses}></span>
+        </div>
+      </animated.div>
     </div>
   );
 };

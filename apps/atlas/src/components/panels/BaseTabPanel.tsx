@@ -46,11 +46,9 @@ export const BaseTabPanel = ({
             </Tabs.Tab>
           ))}
         </Tabs.List>
-        <Tabs.Panels className="mt-8">
+        <Tabs.Panels className="mt-2">
           {tabs.map((tab) => (
-            <Tabs.Panel className="overflow-x-auto" key={tab.label}>
-              {tab.component}
-            </Tabs.Panel>
+            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
           ))}
         </Tabs.Panels>
       </Tabs>

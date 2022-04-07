@@ -8,7 +8,7 @@ import { useRealmContext } from '@/context/RealmContext';
 export function RealmsFilter() {
   const { state, actions } = useRealmContext();
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between pt-4">
       <div>
         <SearchFilter
           placeholder="SEARCH BY ID"

@@ -101,7 +101,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 pageProps={pageProps}
               ></PageTransition> */}
               </UIProvider>
-              <ReactQueryDevtools initialIsOpen={false} />
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                position="bottom-right"
+              />
             </QueryClientProvider>
           </StarknetProvider>
         </ApolloProvider>
