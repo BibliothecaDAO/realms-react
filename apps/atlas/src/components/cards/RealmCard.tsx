@@ -6,9 +6,9 @@ import { RealmBuildings } from '@/components/tables/RealmBuildings';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmTroops } from '@/components/tables/RealmTroops';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
 import type { RealmProps } from '../../types';
@@ -43,9 +43,9 @@ function Overview(props: RealmProps): ReactElement {
           )}
         </div>
       </div>
-      <div className="flex flex-wrap mb-2 uppercase tracking-widest font-semibold">
+      <div className="flex flex-wrap mb-2 font-semibold tracking-widest uppercase">
         {props.realm.resourceIds.map((re: any, index) => (
-          <div key={index} className="flex text-xl mb-4 mr-4">
+          <div key={index} className="flex mb-4 mr-4 text-xl">
             <ResourceIcon
               resource={findResourceName(re)?.trait?.replace(' ', '') || ''}
               size="md"
@@ -110,7 +110,7 @@ function Overview(props: RealmProps): ReactElement {
 }
 
 export function RealmCard(props: RealmProps): ReactElement {
-  const { gotoAssetId } = useUIContext();
+  const ensData = useEnsResolver(props.realm.currentOwner.address);
 
   const tabs = useMemo(
     () => [
@@ -178,8 +178,8 @@ export function RealmCard(props: RealmProps): ReactElement {
               {props.realm.name}{' '}
             </h2>
             {props.realm.currentOwner && (
-              <h3 className="my-2 self-center ml-auto">
-                {shortenAddress(props.realm.currentOwner.address)}
+              <h3 className="self-center my-2 ml-auto">
+                {ensData.displayName}
               </h3>
             )}
           </div>
