@@ -39,12 +39,12 @@ export function LootOverviews(props: LootOverviewsProps) {
   return (
     <div className="flex flex-wrap">
       {props.bags &&
-        props.bags.slice(0, 10).map((loot: Loot, index) => (
+        props.bags.map((loot: Loot, index) => (
           <div
             key={index}
-            className="flex flex-wrap w-1/2 h-auto justify-evenly rounded"
+            className="flex flex-wrap w-1/2 h-auto rounded justify-evenly"
           >
-            <div className="p-2 w-full rounded">
+            <div className="w-full p-2 rounded">
               <div className="w-full p-2 bg-black/70 font-display">
                 {[
                   loot.weapon,
@@ -57,7 +57,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                   loot.ring,
                 ]?.map((itemName, index) => {
                   return (
-                    <div className="flex my-1 font-bold px-2" key={index}>
+                    <div className="flex px-2 my-1 font-bold" key={index}>
                       <LootItemIcon
                         className="self-center"
                         size="sm"
@@ -77,7 +77,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 })}
               </div>
               <div className="flex w-full p-3 text-white bg-black/60">
-                <div className="self-center flex w-full">
+                <div className="flex self-center w-full">
                   <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
                   <div className="ml-auto">
                     {!isFavourite(loot) && (

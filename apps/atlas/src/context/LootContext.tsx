@@ -1,10 +1,12 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
+import type { OrderType } from '@/generated/graphql';
 
 type RatingFilter = { bagGreatness: number; bagRating: number };
 
 interface LootState {
   ratingFilter: RatingFilter;
+  selectedOrders: OrderType[];
   favouriteLoot: string[];
   searchIdFilter: string;
   selectedTab: number;
@@ -12,6 +14,7 @@ interface LootState {
 
 type LootAction =
   | { type: 'updateRatingFilter'; payload: RatingFilter }
+  | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteLoot'; payload: string }
   | { type: 'removeFavouriteLoot'; payload: string }
@@ -20,6 +23,7 @@ type LootAction =
 
 interface LootActions {
   updateRatingFilter(filter: RatingFilter): void;
+  updateSelectedOrders(orders: OrderType[]): void;
   clearFilters(): void;
   addFavouriteLoot(id: string): void;
   removeFavouriteLoot(id: string): void;
@@ -32,6 +36,7 @@ const defaultFilters = {
     bagGreatness: 0,
     bagRating: 0,
   },
+  selectedOrders: [] as OrderType[],
   searchIdFilter: '',
 };
 const defaultLootState = {
@@ -48,6 +53,8 @@ function lootReducer(state: LootState, action: LootAction): LootState {
       return { ...state, searchIdFilter: action.payload };
     case 'updateSelectedTab':
       return { ...state, selectedTab: action.payload };
+    case 'updateSelectedOrders':
+      return { ...state, selectedOrders: [...action.payload] };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteLoot':
@@ -78,6 +85,8 @@ const mapActions = (dispatch: Dispatch<LootAction>): LootActions => ({
     dispatch({ type: 'updateSearchIdFilter', payload: id }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  updateSelectedOrders: (orders: OrderType[]) =>
+    dispatch({ type: 'updateSelectedOrders', payload: orders }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteLoot: (id: string) =>
     dispatch({ type: 'addFavouriteLoot', payload: id }),

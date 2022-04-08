@@ -39,12 +39,12 @@ export function GaOverviews(props: GaOverviewsProps) {
   return (
     <div className="flex flex-wrap">
       {props.bags &&
-        props.bags.slice(0, 10).map((ga: GAdventurer, index) => (
+        props.bags.map((ga: GAdventurer, index) => (
           <div
             key={index}
-            className="flex flex-wrap sm:w-1/2 h-auto justify-evenly rounded"
+            className="flex flex-wrap h-auto rounded sm:w-1/2 justify-evenly"
           >
-            <div className="p-2 w-full rounded">
+            <div className="w-full p-2 rounded">
               <div className="w-full p-2 bg-black/70 font-display">
                 {[
                   ga.weapon,
@@ -57,7 +57,7 @@ export function GaOverviews(props: GaOverviewsProps) {
                   ga.ring,
                 ]?.map((itemName, index) => {
                   return (
-                    <div className="flex my-1 font-bold px-2" key={index}>
+                    <div className="flex px-2 my-1 font-bold" key={index}>
                       <LootItemIcon
                         className="self-center"
                         size="sm"
@@ -77,14 +77,14 @@ export function GaOverviews(props: GaOverviewsProps) {
                 })}
               </div>
               <div className="flex w-full p-3 text-white bg-black/60">
-                <div className="self-center flex w-full">
+                <div className="flex self-center w-full">
                   <OrderIcon
                     className="self-center mx-3"
                     size={'md'}
                     order={ga.order.toLowerCase()}
                   />
-                  <h3 className="mb-1 self-center ml-4">GA #{ga.id}</h3>
-                  <div className="ml-auto self-center">
+                  <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
+                  <div className="self-center ml-auto">
                     {!isFavourite(ga) && (
                       <Button
                         size="sm"
