@@ -35,37 +35,10 @@ import { useUIContext } from '@/hooks/useUIContext';
 import type { RealmFeatures } from '@/types/index';
 
 function App() {
+  const ITEM_VIEW_LEVEL = 5;
   const { setMenuType, selectedId, setSelectedId, coordinates } =
     useUIContext();
   const [resource] = useState<Array<string>>([]);
-
-  // const filteredContinents = () => {
-  //   let c = order_highlights.features.filter(
-  //     (a) => a.properties.order_idx === 9
-  //   );
-  //   console.log(c);
-  //   return c;
-  // };
-  // const continent_layer = new PolygonLayer({
-  //   id: "polygon-layer",
-  //   data: filteredContinents(),
-  //   stroked: true,
-  //   filled: true,
-  //   lineWidthMinPixels: 1,
-  //   extruded: true,
-  //   getPolygon: (d: any) => d.geometry.coordinates,
-  //   getElevation: 1000,
-  //   getFillColor: (d: any) => d.color,
-  //   getLineColor: [141, 121, 91],
-  //   getLineWidth: 4,
-  //   onClick: (info: any) => {
-  //     console.log(info.object.properties.order_idx);
-  //     // setValue(info.object.properties.order_idx);
-  //     // if (!mapMenu) {
-  //     //   toggleMapMenu();
-  //     // }
-  //   },
-  // });
 
   const filteredData = () => {
     return realms.features.filter((a: RealmFeatures) =>
@@ -73,16 +46,19 @@ function App() {
     );
   };
 
-  /* const addToFilter = (value: any) => {
-    const idx = resource.indexOf(value);
-    if (idx === -1) {
-      return setResource((oldArray) => [value, ...oldArray]);
-    } else {
-      const temp = [...resource];
-      temp.splice(idx, 1);
-      return setResource(temp);
-    }
-  }; */
+  const [initialViewState, setInitialViewState] = useState({
+    longitude: 0,
+    latitude: 0,
+    zoom: 4,
+    pitch: 55,
+    bearing: 0,
+    bounds: [
+      [-180, -60], // Southwest coordinates
+      [180, 60], // Northeast coordinates
+    ],
+    transitionDuration: 0,
+    transitionInterpolator: new FlyToInterpolator(),
+  });
 
   const cryptsLayer = new ScatterplotLayer({
     id: 'crypts-layer',
@@ -92,6 +68,7 @@ function App() {
     extruded: true,
     pickable: true,
     opacity: 1,
+    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.tokenId === parseInt(selectedId) ? 4000 : 100,
@@ -100,6 +77,7 @@ function App() {
     getFillColor: [0, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
+      getVisible: initialViewState,
     },
     onClick: (info: any) => {
       setSelectedId(info.object.properties.tokenId);
@@ -115,6 +93,7 @@ function App() {
     extruded: true,
     pickable: true,
     opacity: 1,
+    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.realm_idx === parseInt(selectedId) ? 4000 : 1,
@@ -123,6 +102,7 @@ function App() {
     getFillColor: [0, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
+      getVisible: initialViewState,
     },
     onClick: (info: any) => {
       setSelectedId(info.object.properties.realm_idx);
@@ -137,6 +117,7 @@ function App() {
     filled: true,
     extruded: true,
     pickable: true,
+    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -145,6 +126,7 @@ function App() {
     getFillColor: [255, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
+      getVisible: initialViewState,
     },
     onClick: (info: any) => {
       setSelectedId(info.object.properties.bag_id);
@@ -159,6 +141,7 @@ function App() {
     filled: true,
     extruded: true,
     pickable: true,
+    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -167,6 +150,7 @@ function App() {
     getFillColor: [0, 255, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
+      getVisible: initialViewState,
     },
     onClick: (info: any) => {
       setSelectedId(info.object.properties.ga_id);
@@ -190,20 +174,6 @@ function App() {
     getPosition: (d: any) => d.geometry.coordinates,
     getSize: (d) => 5,
     getColor: (d: any) => [255, 255, 255],
-  });
-
-  const [initialViewState, setInitialViewState] = useState({
-    longitude: 0,
-    latitude: 0,
-    zoom: 4,
-    pitch: 55,
-    bearing: 0,
-    bounds: [
-      [-180, -60], // Southwest coordinates
-      [180, 60], // Northeast coordinates
-    ],
-    transitionDuration: 0,
-    transitionInterpolator: new FlyToInterpolator(),
   });
 
   useEffect(() => {
@@ -255,6 +225,7 @@ function App() {
                 pickingRadius={25}
                 initialViewState={initialViewState}
                 controller={true}
+                onViewStateChange={(e) => setInitialViewState(e.viewState)}
                 layers={[
                   realmsLayer,
                   resourceLayer,
