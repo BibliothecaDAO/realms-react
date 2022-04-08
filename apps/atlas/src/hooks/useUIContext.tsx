@@ -48,7 +48,7 @@ interface UI {
   selectedId: string;
   setSelectedId: (id: string) => void;
   selectedAssetFilter: AssetFilter;
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => void;
+  setSelectedAssetType: (assetType: AssetType) => void;
   selectedMenuType: MenuType;
   setMenuType: (menuType: MenuType) => void;
   toggleMenuType: (menuType: MenuType) => void;
@@ -67,7 +67,7 @@ const defaultUIContext: UI = {
   selectedId: '1',
   setSelectedId: (id: string) => {},
   selectedAssetFilter: AssetFilters[0],
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
+  setSelectedAssetType: (assetType: AssetType) => {},
   selectedMenuType: undefined,
   setMenuType: (menuType: MenuType) => {},
   toggleMenuType: (menuType: MenuType) => {},
@@ -175,11 +175,11 @@ function useUI(): UI {
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
   // Update URL
-  // useEffect(() => {
-  //   router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
-  //     shallow: true,
-  //   });
-  // }, [selectedId, selectedAssetFilter]);
+  useEffect(() => {
+    router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
+      shallow: true,
+    });
+  }, [selectedId, selectedAssetFilter]);
 
   // Sync AssetFilter with Menu
   useEffect(() => {
@@ -236,13 +236,16 @@ function useUI(): UI {
     }
   };
 
+  const setSelectedAssetType = (assetType: AssetType) =>
+    setSelectedAssetFilter(assetFilterByType(assetType));
+
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
     setMenuType(assetType);
-    setSelectedAssetFilter(assetFilterByType(assetType));
+    setSelectedAssetType(assetType);
     setSelectedId(assetId + '');
     updateCoordinatesByAsset(assetId + '', assetType);
   };
@@ -251,7 +254,7 @@ function useUI(): UI {
     selectedId,
     setSelectedId,
     selectedAssetFilter,
-    setSelectedAssetFilter,
+    setSelectedAssetType,
     selectedMenuType,
     setMenuType,
     closeAll,

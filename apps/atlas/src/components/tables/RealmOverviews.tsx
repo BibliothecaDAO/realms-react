@@ -23,6 +23,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -40,6 +41,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     account && (account === realm.owner || account === realm.bridgedOwner);
 
   const openRealmDetails = (realmId: number) => {
+    setSelectedAssetType('realm');
     setSelectedId(realmId.toString());
     if (selectedMenuType !== 'realm') {
       toggleMenuType('realm');
@@ -64,11 +66,11 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 order={realm.orderType.toLowerCase()}
               />
 
-              <h3 className="mb-1 self-center">
-                <span className="text-gray-400 mr-4">{realm.realmId}</span>
+              <h3 className="self-center mb-1">
+                <span className="mr-4 text-gray-400">{realm.realmId}</span>
                 {realm.name}
               </h3>
-              <div className="ml-auto self-center mr-4">
+              <div className="self-center ml-auto mr-4">
                 {!isFavourite(realm) && (
                   <Button
                     size="sm"

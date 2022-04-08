@@ -16,6 +16,7 @@ export function GaOverviews(props: GaOverviewsProps) {
     toggleMenuType,
     selectedMenuType,
     setSelectedId,
+    setSelectedAssetType,
     gotoAssetId,
     togglePanelType,
   } = useUIContext();
@@ -28,6 +29,7 @@ export function GaOverviews(props: GaOverviewsProps) {
     account && account === ga.currentOwner?.address?.toLowerCase();
 
   const openGaDetails = (id: string) => {
+    setSelectedAssetType('ga');
     setSelectedId(id);
     if (selectedMenuType !== 'ga') {
       toggleMenuType('ga');

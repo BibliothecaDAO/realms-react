@@ -29,12 +29,28 @@ import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useUIContext, UIProvider } from '@/hooks/useUIContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
 function App() {
+  return (
+    <Compose
+      components={[
+        UIProvider,
+        RealmProvider,
+        LootProvider,
+        GaProvider,
+        CryptProvider,
+      ]}
+    >
+      <Atlas />
+    </Compose>
+  );
+}
+
+function Atlas() {
   const ITEM_VIEW_LEVEL = 5;
   const { setMenuType, selectedId, setSelectedId, coordinates } =
     useUIContext();
@@ -195,58 +211,54 @@ function App() {
   }, [coordinates]);
 
   return (
-    <Compose
-      components={[RealmProvider, LootProvider, GaProvider, CryptProvider]}
-    >
-      <Layout>
-        <div className="relative flex h-full overflow-hidden sm:h-screen">
-          <MenuSideBar />
-          <div className="relative flex flex-col w-full">
-            <Header />
-            <div className="relative w-full h-full">
-              <ArtBackground />
-              <RealmsPanel />
-              <LootPanel />
-              <GaPanel />
-              <BankPanel />
-              <CryptsPanel />
-              <RealmSideBar id={selectedId} />
-              <TradePanel />
-              <ResourceSwapSideBar />
-              <CryptsSideBar id={selectedId} />
-              <LootSideBar id={selectedId} />
-              <GASideBar id={selectedId} />
-              <FlyTo />
-              <ArtBackground />
-              <DeckGL
-                getCursor={({ isHovering }) => {
-                  return isHovering ? 'pointer' : 'grabbing';
-                }}
-                pickingRadius={25}
-                initialViewState={initialViewState}
-                controller={true}
-                onViewStateChange={(e) => setInitialViewState(e.viewState)}
-                layers={[
-                  realmsLayer,
-                  resourceLayer,
-                  cryptsLayer,
-                  lootBagLayer,
-                  gaBagLayer,
-                ]}
-              >
-                <Map
-                  attributionControl={false}
-                  mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-                  mapboxAccessToken={
-                    'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-                  }
-                />
-              </DeckGL>
-            </div>
+    <Layout>
+      <div className="relative flex h-full overflow-hidden sm:h-screen">
+        <MenuSideBar />
+        <div className="relative flex flex-col w-full">
+          <Header />
+          <div className="relative w-full h-full">
+            <ArtBackground />
+            <RealmsPanel />
+            <LootPanel />
+            <GaPanel />
+            <BankPanel />
+            <CryptsPanel />
+            <RealmSideBar id={selectedId} />
+            <TradePanel />
+            <ResourceSwapSideBar />
+            <CryptsSideBar id={selectedId} />
+            <LootSideBar id={selectedId} />
+            <GASideBar id={selectedId} />
+            <FlyTo />
+            <ArtBackground />
+            <DeckGL
+              getCursor={({ isHovering }) => {
+                return isHovering ? 'pointer' : 'grabbing';
+              }}
+              pickingRadius={25}
+              initialViewState={initialViewState}
+              controller={true}
+              onViewStateChange={(e) => setInitialViewState(e.viewState)}
+              layers={[
+                realmsLayer,
+                resourceLayer,
+                cryptsLayer,
+                lootBagLayer,
+                gaBagLayer,
+              ]}
+            >
+              <Map
+                attributionControl={false}
+                mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+                mapboxAccessToken={
+                  'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+                }
+              />
+            </DeckGL>
           </div>
         </div>
-      </Layout>
-    </Compose>
+      </div>
+    </Layout>
   );
 }
 

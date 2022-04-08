@@ -29,11 +29,8 @@ const resolveAddress = async (
   lowercaseAddress: string,
   res: NextApiResponse<Data>
 ) => {
-  const address = getAddress(lowercaseAddress);
-  let displayName = address.replace(
-    /^(0x[\dA-F]{3})[\dA-F]+([\dA-F]{4})$/i,
-    '$1…$2'
-  );
+  const address = lowercaseAddress;
+  let displayName = lowercaseAddress;
 
   try {
     const name = await provider.lookupAddress(address);
@@ -64,7 +61,7 @@ const resolveAddress = async (
 const resolveName = async (name: string, res: NextApiResponse<Data>) => {
   const displayName = name;
   try {
-    const address = await provider.resolveName(name);
+    const address = (await provider.resolveName(name))?.toLowerCase() ?? '';
     const avatar = await provider.getAvatar(name);
     res
       .status(200)
