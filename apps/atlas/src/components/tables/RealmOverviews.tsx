@@ -74,7 +74,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                     size="sm"
                     onClick={() => actions.addFavouriteRealm(realm.realmId)}
                   >
-                    Add to favourites
+                    Add
                   </Button>
                 )}{' '}
                 {isFavourite(realm) && (
@@ -83,12 +83,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                     className="w-full uppercase"
                     onClick={() => actions.removeFavouriteRealm(realm.realmId)}
                   >
-                    Remove from favourites
+                    Remove
                   </Button>
                 )}
               </div>
             </div>
-            <div className="flex w-1/3 px-6 bg-black/50 ">
+            <div className="flex w-1/2 sm:w-1/3 px-6 bg-black/50 ">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
                   return (
@@ -108,7 +108,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div>
-            <div className="flex w-1/3 px-6 bg-gray-800/60">
+            <div className="flex w-1/2 sm:w-1/3 px-6 bg-gray-800/60">
               {' '}
               <div className="self-center w-full">
                 {realm.traits?.map((trait, index) => {
@@ -138,7 +138,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className="flex flex-col justify-center w-1/3 px-6 space-y-3 bg-gray-600/70">
+            <div className="flex sm:flex-col justify-center w-full sm:w-1/3 py-4 sm:py-0 px-6 space-x-2 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
@@ -153,7 +153,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               </Button>
               <Button
                 onClick={() => openRealmDetails(realm.realmId)}
-                variant="default"
+                variant="secondary"
                 size="sm"
                 className="w-full uppercase"
               >

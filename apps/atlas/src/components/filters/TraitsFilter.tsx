@@ -66,7 +66,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className="px-4 uppercase my-1"
         onClick={() => {
           setIsOpen(true);
         }}

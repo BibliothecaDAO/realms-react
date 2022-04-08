@@ -9,8 +9,8 @@ export function RealmsFilter() {
   const { state, actions } = useRealmContext();
 
   return (
-    <div className="flex justify-between">
-      <div>
+    <div className="flex justify-between flex-wrap mb-2">
+      <div className="w-full sm:w-auto my-1">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -19,7 +19,7 @@ export function RealmsFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex mb-4">
+      <div className="flex flex-wrap">
         <ResourcesFilter
           selectedValues={state.selectedResources}
           onChange={actions.updateSelectedResources}

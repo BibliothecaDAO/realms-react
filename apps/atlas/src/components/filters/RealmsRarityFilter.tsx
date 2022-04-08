@@ -45,7 +45,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className="px-4  my-1 uppercase mr-2"
         onClick={() => {
           setIsOpen(true);
         }}

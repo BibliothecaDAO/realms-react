@@ -62,7 +62,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className={`px-4 ml-2 uppercase ${isOpen ? 'bg-black/80' : ''}`}
+        className={`px-4  my-1 uppercase mr-2 ${isOpen ? 'bg-black/80' : ''}`}
         onClick={() => {
           setIsOpen(true);
         }}

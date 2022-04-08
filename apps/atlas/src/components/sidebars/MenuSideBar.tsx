@@ -1,13 +1,13 @@
 import { IconButton, Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
+import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import Mountain from '@bibliotheca-dao/ui-lib/icons/mountain.svg';
+import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useCallback } from 'react';
 import { useSound } from '@/context/soundProvider';
@@ -98,7 +98,7 @@ export const MenuSideBar = () => {
             className={buttonClasses}
             onClick={() => togglePanelType('trade')}
             aria-label="Trade"
-            icon={<Mountain className={iconClasses} />}
+            icon={<Scale className={iconClasses} />}
             size="lg"
           />
           <span className={textClasses}>Trade</span>
@@ -108,10 +108,20 @@ export const MenuSideBar = () => {
             className={buttonClasses}
             aria-label="Bank"
             onClick={() => togglePanelType('bank')}
-            icon={<Library className={iconClasses} />}
+            icon={<Bank className={iconClasses} />}
             size="lg"
           />
           <span className={textClasses}>Bank</span>
+        </div>
+        <div className="flex flex-col place-items-center ">
+          <IconButton
+            className={buttonClasses}
+            aria-label="Desiege"
+            href="/desiege"
+            icon={<Bank className={iconClasses} />}
+            size="lg"
+          />
+          <span className={textClasses}>Desiege</span>
         </div>
         {/* <button
       {/* <button
@@ -126,17 +136,6 @@ export const MenuSideBar = () => {
       </button> */}
 
         <div className="grow" />
-        <div className="flex flex-col mb-2 place-items-center sm:mb-2">
-          <Button
-            className="px-0 text-[0.65rem] sm:text-lg sm:px-2"
-            aria-label="Connect Wallet"
-            href="/desiege"
-            variant="secondary"
-            size="xs"
-          >
-            Desiege
-          </Button>
-        </div>
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton
             className={buttonClasses}
