@@ -44,14 +44,23 @@ export const Tabs = ({
 }: TabsProps) => {
   return (
     <TabProvider variant={variant}>
-      <HeadlessTab.Group
-        as="div"
-        className={clsx('flex flex-1 flex-col ', className)}
-        selectedIndex={selectedIndex}
-        onChange={onChange}
-      >
-        {children}
-      </HeadlessTab.Group>
+      {onChange ? (
+        <HeadlessTab.Group
+          as="div"
+          className={clsx('flex flex-1 flex-col ', className)}
+          selectedIndex={selectedIndex}
+          onChange={onChange}
+        >
+          {children}
+        </HeadlessTab.Group>
+      ) : (
+        <HeadlessTab.Group
+          as="div"
+          className={clsx('flex flex-1 flex-col ', className)}
+        >
+          {children}
+        </HeadlessTab.Group>
+      )}
     </TabProvider>
   );
 };
