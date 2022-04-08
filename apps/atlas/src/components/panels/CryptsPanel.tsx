@@ -2,13 +2,14 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
 import { getCryptsQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import Button from '@/shared/Button';
 import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
@@ -17,11 +18,16 @@ export const CryptsPanel = () => {
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
+  const limit = 50;
+  const [page, setPage] = useState(1);
+  const previousPage = () => setPage(page - 1);
+  const nextPage = () => setPage(page + 1);
+
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
-  const where = useMemo(() => {
+  const variables = useMemo(() => {
     if (state.selectedTab === 0) {
-      return { currentOwner: account.toLowerCase() };
+      return { where: { currentOwner: account.toLowerCase() } };
     } else if (state.selectedTab === 1) {
       let where: any = {};
       if (state.searchIdFilter) {
@@ -36,20 +42,25 @@ export const CryptsPanel = () => {
           where.environment_in = [...state.environmentsFilter];
         }
       }
-      return where;
+      return {
+        first: limit,
+        skip: limit * (page - 1),
+        where,
+      };
     } else if (state.selectedTab === 2) {
-      return { id_in: [...state.favouriteCrypt] };
+      return { where: { id_in: [...state.favouriteCrypt] } };
     }
-  }, [account, state]);
+  }, [account, state, page]);
 
   const { loading, data } = useQuery<{
     dungeons: Crypt[];
   }>(getCryptsQuery, {
-    variables: {
-      first: 100,
-      where,
-    },
+    variables,
   });
+
+  const showPagination = () =>
+    state.selectedTab === 1 &&
+    (page > 1 || (data?.dungeons?.length ?? 0) === limit);
 
   return (
     <BasePanel open={selectedPanel === 'crypt'}>
@@ -86,6 +97,20 @@ export const CryptsPanel = () => {
         )}
         <CryptsOverviews dungeons={data?.dungeons ?? []} />
       </div>
+
+      {showPagination() && (
+        <div className="flex gap-2 my-8">
+          <Button onClick={previousPage} disabled={page === 1}>
+            Previous
+          </Button>
+          <Button
+            onClick={nextPage}
+            disabled={data?.dungeons?.length !== limit}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </BasePanel>
   );
 };

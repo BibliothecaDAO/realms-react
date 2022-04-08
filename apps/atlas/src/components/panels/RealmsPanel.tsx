@@ -1,7 +1,7 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { useRealmContext } from '@/context/RealmContext';
@@ -9,12 +9,18 @@ import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import Button from '@/shared/Button';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
   const { togglePanelType, selectedPanel } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useRealmContext();
+
+  const limit = 50;
+  const [page, setPage] = useState(1);
+  const previousPage = () => setPage(page - 1);
+  const nextPage = () => setPage(page + 1);
 
   const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
@@ -58,7 +64,8 @@ export const RealmsPanel = () => {
                   : undefined,
               AND: [...resourceFilters, ...traitsFilters],
             },
-        take: 100,
+        take: limit,
+        skip: limit * (page - 1),
       };
     }
     // Favourite Realms
@@ -70,9 +77,13 @@ export const RealmsPanel = () => {
       };
     }
     return {};
-  }, [account, state]);
+  }, [account, state, page]);
 
   const { data, loading } = useGetRealmsQuery({ variables });
+
+  const showPagination = () =>
+    state.selectedTab === 1 &&
+    (page > 1 || (data?.getRealms?.length ?? 0) === limit);
 
   return (
     <BasePanel open={selectedPanel === 'realm'}>
@@ -109,6 +120,19 @@ export const RealmsPanel = () => {
         )}
         <RealmOverviews realms={data?.getRealms ?? []} />
       </div>
+      {showPagination() && (
+        <div className="flex gap-2 my-8">
+          <Button onClick={previousPage} disabled={page === 1}>
+            Previous
+          </Button>
+          <Button
+            onClick={nextPage}
+            disabled={data?.getRealms?.length !== limit}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </BasePanel>
   );
 };
