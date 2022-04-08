@@ -38,7 +38,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
   return (
     <div>
       {props.dungeons &&
-        props.dungeons.slice(0, 10).map((crypt: Crypt, index) => (
+        props.dungeons.map((crypt: Crypt, index) => (
           <div
             key={index}
             className="flex flex-wrap w-full h-auto max-w-full mb-4 overflow-x-auto rounded justify-evenly"

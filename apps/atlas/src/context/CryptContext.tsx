@@ -1,5 +1,8 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
+import { storage } from '@/util/localStorage';
+
+const CryptFavoriteLocalStorageKey = 'crypt.favourites';
 
 type StatsFilter = { size: number; numDoors: number; numPoints: number };
 
@@ -59,11 +62,18 @@ function cryptReducer(state: CryptState, action: CryptAction): CryptState {
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteCrypt':
+      storage<string[]>(CryptFavoriteLocalStorageKey, []).set([
+        ...state.favouriteCrypt,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteCrypt: [...state.favouriteCrypt, action.payload],
       };
     case 'removeFavouriteCrypt':
+      storage<string[]>(CryptFavoriteLocalStorageKey, []).set(
+        state.favouriteCrypt.filter((id: string) => id !== action.payload)
+      );
       return {
         ...state,
         favouriteCrypt: state.favouriteCrypt.filter(
@@ -106,7 +116,10 @@ export function useCryptContext() {
 }
 
 export function CryptProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(cryptReducer, defaultCryptState);
+  const [state, dispatch] = useReducer(cryptReducer, {
+    ...defaultCryptState,
+    favouriteCrypt: storage<string[]>(CryptFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <CryptContext.Provider

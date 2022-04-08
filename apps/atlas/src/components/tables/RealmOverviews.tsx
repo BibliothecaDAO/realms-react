@@ -52,12 +52,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   return (
     <div>
       {props.realms &&
-        props.realms.slice(0, 10).map((realm: RealmFragmentFragment, index) => (
+        props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex w-full h-auto max-w-full overflow-x-auto rounded  justify-evenly flex-wrap mb-2"
+            className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-evenly"
           >
-            <div className="flex w-full p-2 rounded-t-l bg-black/60 text-white">
+            <div className="flex w-full p-2 text-white rounded-t-l bg-black/60">
               <OrderIcon
                 className="self-center mx-3"
                 size={'md'}
@@ -88,7 +88,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 )}
               </div>
             </div>
-            <div className="w-1/3 px-6 bg-black/50 flex ">
+            <div className="flex w-1/3 px-6 bg-black/50 ">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
                   return (
@@ -108,7 +108,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div>
-            <div className="w-1/3 px-6 bg-gray-800/60 flex">
+            <div className="flex w-1/3 px-6 bg-gray-800/60">
               {' '}
               <div className="self-center w-full">
                 {realm.traits?.map((trait, index) => {
@@ -138,7 +138,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className=" w-1/3 flex flex-col justify-center w-full px-6 space-y-3 bg-gray-600/70">
+            <div className="flex flex-col justify-center w-1/3 w-full px-6 space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {

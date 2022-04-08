@@ -10,10 +10,10 @@ import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
 import { BankPanel } from '@/components/panels/BankPanel';
-import { CryptsPanel } from '@/components/panels/crypt/CryptsPanel';
-import { GaPanel } from '@/components/panels/ga/GaPanel';
-import { LootPanel } from '@/components/panels/loot/LootPanel';
-import { RealmsPanel } from '@/components/panels/realms/RealmsPanel';
+import { CryptsPanel } from '@/components/panels/CryptsPanel';
+import { GaPanel } from '@/components/panels/GaPanel';
+import { LootPanel } from '@/components/panels/LootPanel';
+import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
@@ -29,7 +29,8 @@ import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useUIContext, UIProvider } from '@/hooks/useUIContext';
+
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
@@ -225,7 +226,13 @@ function App() {
 
   return (
     <Compose
-      components={[RealmProvider, LootProvider, GaProvider, CryptProvider]}
+      components={[
+        UIProvider,
+        RealmProvider,
+        LootProvider,
+        GaProvider,
+        CryptProvider,
+      ]}
     >
       <Layout>
         <div className="relative flex h-full overflow-hidden sm:h-screen">
