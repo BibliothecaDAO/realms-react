@@ -12,7 +12,7 @@ export const BasePanel = (props: Props) => {
   const animation = useSpring({
     opacity: props.open ? 1 : 0,
     transform: props.open ? `translateY(0)` : `translateY(-200%)`,
-    delay: 200,
+    delay: 150,
   });
 
   return (

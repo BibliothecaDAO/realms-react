@@ -29,7 +29,7 @@ export const BaseTabPanel = ({
     <BasePanel open={selectedPanel === panelType}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
-        <h1 className="tex">{panelName}</h1>
+        <h1>{panelName}</h1>
 
         <button
           className="z-50 transition-all rounded sm:hidden top-4"
@@ -39,7 +39,7 @@ export const BaseTabPanel = ({
         </button>
       </div>
       <Tabs selectedIndex={selectedIndex} onChange={onChange as any}>
-        <Tabs.List className="ml-8">
+        <Tabs.List>
           {tabs.map((tab) => (
             <Tabs.Tab key={tab.label} className="uppercase">
               {tab.label}
