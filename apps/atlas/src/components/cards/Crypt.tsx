@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
+import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import {
   isLegendary,
   environments,
@@ -43,11 +44,11 @@ export function Crypt(props: CryptProps): ReactElement {
           </div>
 
           <div className=" sm:text-2xl">
-            {props.crypt.currentOwner && (
+            {/* {props.crypt.currentOwner && (
               <h3 className="my-3">
                 👑 {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
-            )}
+            )} */}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
                 Id: <span className="font-semibold ">{props.crypt.id}</span>
@@ -68,13 +69,13 @@ export function Crypt(props: CryptProps): ReactElement {
               </h4>
             </div>
             <div className="flex justify-between">
-              <h1
+              <h3
                 className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
             ${isLegendary(props.crypt.name) && legendaryColourClass}
             `}
               >
                 {props.crypt.name}
-              </h1>
+              </h3>
               {props.flyto && (
                 <div className="self-center text-lg">
                   <button
@@ -117,19 +118,10 @@ export function Crypt(props: CryptProps): ReactElement {
                 ></div>
               </div>
             </div>
-            <div className="py-4">
-              <a
-                className="text-xl"
-                target={'_blank'}
-                href={
-                  'https://opensea.io/assets/0x86f7692569914b5060ef39aab99e62ec96a6ed45/' +
-                  props.crypt.id
-                }
-                rel="noreferrer"
-              >
-                View on Opensea
-              </a>
-            </div>
+            <MarketplaceByPanel
+              id={props.crypt.id}
+              address={'0x86f7692569914b5060ef39aab99e62ec96a6ed45'}
+            />
           </div>
         </div>
       )}
