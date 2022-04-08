@@ -85,9 +85,20 @@ const getLootQuery = gql`
 
 const getLootsQuery = gql`
   ${BagFragment}
-  query loots($where: Bag_filter, $first: Int, $skip: Int)
-  @api(name: ecosystem) {
-    bags(where: $where, first: $first, skip: $skip) {
+  query loots(
+    $where: Bag_filter
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) @api(name: ecosystem) {
+    bags(
+      where: $where
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
       ...BagData
       currentOwner {
         address
@@ -114,8 +125,20 @@ const getGAQuery = gql`
 
 const getGAsQuery = gql`
   ${GAdventurerFragment}
-  query GAs($where: Bag_filter, $first: Int, $skip: Int) @api(name: ecosystem) {
-    gadventurers(where: $where, first: $first, skip: $skip) {
+  query GAs(
+    $where: GAdventurer_filter
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) @api(name: ecosystem) {
+    gadventurers(
+      where: $where
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
       ...GAdventurerData
       currentOwner {
         address

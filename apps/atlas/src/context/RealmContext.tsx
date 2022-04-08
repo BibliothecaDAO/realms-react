@@ -2,6 +2,9 @@ import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import type { ResourceType, OrderType } from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
+import { storage } from '@/util/localStorage';
+
+const RealmFavoriteLocalStorageKey = 'realm.favourites';
 
 type RarityFilter = { rarityScore: number; rarityRank: number };
 
@@ -83,11 +86,20 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteRealm':
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set([
+        ...state.favouriteRealms,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteRealms: [...state.favouriteRealms, action.payload],
       };
     case 'removeFavouriteRealm':
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set(
+        state.favouriteRealms.filter(
+          (realmId: number) => realmId !== action.payload
+        )
+      );
       return {
         ...state,
         favouriteRealms: state.favouriteRealms.filter(
@@ -134,7 +146,10 @@ export function useRealmContext() {
 }
 
 export function RealmProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(realmReducer, defaultRealmState);
+  const [state, dispatch] = useReducer(realmReducer, {
+    ...defaultRealmState,
+    favouriteRealms: storage<number[]>(RealmFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <RealmContext.Provider
