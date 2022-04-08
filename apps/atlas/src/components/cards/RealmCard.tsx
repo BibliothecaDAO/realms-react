@@ -165,7 +165,7 @@ export function RealmCard(props: RealmProps): ReactElement {
     []
   );
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
+    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -191,9 +191,9 @@ export function RealmCard(props: RealmProps): ReactElement {
               layout={'responsive'}
             />
           </div>
-          <p className="text-lg font-semibold text-gray-400">
+          {/* <p className="text-lg font-semibold text-gray-400">
             {props.realm.id}
-          </p>
+          </p> */}
           <div className="flex">
             <h1 className={`mb-4 mr-4 ${variantMaps[props.size]?.heading}`}>
               {props.realm.name}{' '}
