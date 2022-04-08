@@ -73,7 +73,14 @@ export function TradePanel(): ReactElement {
           <Close />
         </button>
       </div>
-      <div className="p-2">{data && <p>test</p>}</div>
+      <div className="relative">
+        <div className="p-2">{data && <div className="w-full h-48"></div>}</div>
+        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+          <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
+            Coming Soon!
+          </div>
+        </div>
+      </div>
     </BasePanel>
   );
 }

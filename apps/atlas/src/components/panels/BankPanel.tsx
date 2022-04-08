@@ -86,10 +86,15 @@ export function BankPanel(): ReactElement {
           <Close />
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
+        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+          <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
+            Coming Soon!
+          </div>
+        </div>
       </div>
     </BasePanel>
   );
