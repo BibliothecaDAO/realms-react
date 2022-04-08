@@ -1,13 +1,12 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
-import { rarityDescription, rarityColor } from 'loot-rarity';
-import Image from 'next/image';
+import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import { shortenAddress } from '@/util/formatters';
 import type { GAProps } from '../../types';
 
 const variantMaps: any = {
@@ -15,9 +14,10 @@ const variantMaps: any = {
 };
 
 export function GAdventurer(props: GAProps): ReactElement {
-  const image = props.ga.id;
   const [metaData, setMetaData] = useState(null);
   const { gotoAssetId } = useUIContext();
+
+  const ensData = useEnsResolver(props.ga.currentOwner.address);
 
   const mappedProperties = [
     'weapon',
@@ -49,7 +49,7 @@ export function GAdventurer(props: GAProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 bg-black/60 rounded">
+        <div className="px-4 py-2 rounded bg-black/60">
           <div className="flex justify-center">
             <OrderIcon size="lg" order={props.ga.order.toLowerCase()} />
           </div>
@@ -65,9 +65,7 @@ export function GAdventurer(props: GAProps): ReactElement {
                 Genesis Adventurer #{' '}
                 <span className="font-semibold ">{props.ga.id}</span>
               </h3>
-              {props.ga.currentOwner && (
-                <h3>{shortenAddress(props.ga.currentOwner.address)}</h3>
-              )}
+              {props.ga.currentOwner && <h3>{ensData.displayName}</h3>}
               {props.flyto && (
                 <div className="self-center text-lg">
                   <button
@@ -86,10 +84,10 @@ export function GAdventurer(props: GAProps): ReactElement {
             <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="p-4 text-left uppercase tracking-widest text-lg">
+                  <th className="p-4 text-lg tracking-widest text-left uppercase">
                     Item
                   </th>
-                  <th className="p-4 uppercase tracking-widest text-lg">
+                  <th className="p-4 text-lg tracking-widest uppercase">
                     Greatness
                   </th>
                 </tr>
