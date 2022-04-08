@@ -2,13 +2,14 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
@@ -17,11 +18,16 @@ export const LootPanel = () => {
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
+  const limit = 50;
+  const [page, setPage] = useState(1);
+  const previousPage = () => setPage(page - 1);
+  const nextPage = () => setPage(page + 1);
+
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
-  const where = useMemo(() => {
+  const variables = useMemo(() => {
     if (state.selectedTab === 0) {
-      return { currentOwner: account?.toLowerCase() };
+      return { where: { currentOwner: account?.toLowerCase() } };
     } else if (state.selectedTab === 1) {
       let where: any = {};
       if (state.searchIdFilter) {
@@ -32,20 +38,25 @@ export const LootPanel = () => {
           bagRating_gt: state.ratingFilter.bagRating,
         };
       }
-      return where;
+      return {
+        first: limit,
+        skip: limit * (page - 1),
+        where,
+        orderBy: 'minted',
+        orderDirection: 'asc',
+      };
     } else if (state.selectedTab === 2) {
-      return { id_in: [...state.favouriteLoot] };
+      return { where: { id_in: [...state.favouriteLoot] } };
     }
-  }, [account, state]);
-
+  }, [account, state, page]);
+  console.log(getLootsQuery);
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
-    variables: {
-      first: 100,
-      where,
-      orderBy: 'minted',
-      orderDirection: 'asc',
-    },
+    variables,
   });
+
+  const showPagination = () =>
+    state.selectedTab === 1 &&
+    (page > 1 || (data?.bags?.length ?? 0) === limit);
 
   return (
     <BasePanel open={selectedPanel === 'loot'}>
@@ -82,6 +93,17 @@ export const LootPanel = () => {
         )}
         <LootOverviews bags={data?.bags ?? []} />
       </div>
+
+      {showPagination() && (
+        <div className="flex gap-2 my-8">
+          <Button onClick={previousPage} disabled={page === 1}>
+            Previous
+          </Button>
+          <Button onClick={nextPage} disabled={data?.bags?.length !== limit}>
+            Next
+          </Button>
+        </div>
+      )}
     </BasePanel>
   );
 };

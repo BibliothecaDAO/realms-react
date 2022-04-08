@@ -138,7 +138,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className="flex flex-col justify-center w-1/3 w-full px-6 space-y-3 bg-gray-600/70">
+            <div className="flex flex-col justify-center w-1/3 px-6 space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
