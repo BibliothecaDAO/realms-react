@@ -1,4 +1,4 @@
-import { OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import { OrderIcon, Tabs, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
@@ -7,8 +7,9 @@ import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmTroops } from '@/components/tables/RealmTroops';
 import { useUIContext } from '@/hooks/useUIContext';
+import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { shortenAddress } from '@/util/formatters';
-import { resources } from '@/util/resources';
+import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
 import type { RealmProps } from '../../types';
 
@@ -22,18 +23,10 @@ const variantMaps: any = {
 function Overview(props: RealmProps): ReactElement {
   const { gotoAssetId } = useUIContext();
 
-  const findResourceName = (value: any) => {
-    return resources.find((e) => e.id === parseInt(value));
-  };
   return (
     <div>
       <div className="p-2">
         <div className="flex justify-between">
-          {props.realm.currentOwner && (
-            <h3 className="my-2">
-              👑 {shortenAddress(props.realm.currentOwner.address)}
-            </h3>
-          )}
           {!props.realm.currentOwner && (
             <div>
               <button
@@ -49,37 +42,25 @@ function Overview(props: RealmProps): ReactElement {
             </div>
           )}
         </div>
-
-        <div className="flex flex-col justify-between my-4 rounded sm:flex-row">
-          <h4>
-            Id: <span className="font-semibold">{props.realm.id}</span>
-          </h4>
-          <h4>
-            Rank:
-            <span className="font-semibold">{props.realm.rarityRank}</span>
-          </h4>
-          <h4>
-            Score:
-            <span className="font-semibold">{props.realm.rarityScore}</span>
-          </h4>
-        </div>
       </div>
-      <div className="flex flex-wrap mb-2">
+      <div className="flex flex-wrap mb-2 uppercase tracking-widest font-semibold">
         {props.realm.resourceIds.map((re: any, index) => (
-          <span
-            className={`uppercase px-4 py-1 rounded-lg mr-2 mb-2 tracking-widest ${
-              findResourceName(re)?.colourClass
-            }`}
-            key={index}
-          >
-            {findResourceName(re)?.trait}
-          </span>
+          <div key={index} className="flex text-xl mb-4 mr-4">
+            <ResourceIcon
+              resource={findResourceName(re)?.trait || ''}
+              size="md"
+            />
+
+            <span className="self-center ml-4">
+              {findResourceName(re)?.trait}
+            </span>
+          </div>
         ))}
       </div>
 
       <div
         className={
-          `flex flex-col  w-full uppercase font-display sm:text-2xl ` +
+          `flex flex-col  w-full uppercase font-display ` +
           (props.size ? variantMaps[props.size]?.regions : '')
         }
       >
@@ -95,7 +76,7 @@ function Overview(props: RealmProps): ReactElement {
         <span className="pt-1">Cities: {props.realm.cities} / 21</span>
         <div className="w-full my-2 bg-gray-200 rounded">
           <div
-            className="h-2 bg-amber-300/60 rounded-xl"
+            className="h-2 bg-amber-300/60"
             style={{
               width: `${((props.realm.cities as any) / 21) * 100}%`,
             }}
@@ -104,7 +85,7 @@ function Overview(props: RealmProps): ReactElement {
         <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
         <div className="w-full my-2 bg-gray-200 rounded">
           <div
-            className="h-2 bg-blue-700/60 rounded-xl"
+            className="h-2 bg-blue-700/60"
             style={{
               width: `${((props.realm.harbours as any) / 35) * 100}%`,
             }}
@@ -113,26 +94,17 @@ function Overview(props: RealmProps): ReactElement {
         <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
         <div className="w-full my-2 bg-gray-200 rounded">
           <div
-            className="h-2 bg-blue-500/60 rounded-xl"
+            className="h-2 bg-blue-500/60 "
             style={{
               width: `${((props.realm.rivers as any) / 60) * 100}%`,
             }}
           ></div>
         </div>
       </div>
-      <div className="py-4">
-        <a
-          className="text-xl"
-          target={'_blank'}
-          href={
-            'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-            props.realm.id
-          }
-          rel="noreferrer"
-        >
-          View on Opensea
-        </a>
-      </div>
+      <MarketplaceByPanel
+        id="props.realm.id"
+        address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
+      />
     </div>
   );
 }
@@ -148,20 +120,20 @@ export function RealmCard(props: RealmProps): ReactElement {
       },
       {
         label: 'Resources',
-        component: <RealmResources />,
+        component: <RealmResources {...props} />,
       },
-      {
-        label: 'Troops',
-        component: <RealmTroops />,
-      },
-      {
-        label: 'Buildings',
-        component: <RealmBuildings />,
-      },
-      {
-        label: 'History',
-        component: <RealmHistory />,
-      },
+      // {
+      //   label: 'Troops',
+      //   component: <RealmTroops />,
+      // },
+      // {
+      //   label: 'Buildings',
+      //   component: <RealmBuildings />,
+      // },
+      // {
+      //   label: 'History',
+      //   component: <RealmHistory />,
+      // },
     ],
     []
   );
@@ -196,15 +168,33 @@ export function RealmCard(props: RealmProps): ReactElement {
             {props.realm.id}
           </p> */}
           <div className="flex">
-            <h1
+            <OrderIcon size="md" order={props.realm.order.toLowerCase()} />
+            <h2
               className={
-                `mb-4 mr-4 ` +
+                `ml-4 self-center` +
                 (props.size ? variantMaps[props.size]?.heading : '')
               }
             >
               {props.realm.name}{' '}
-            </h1>
-            <OrderIcon size="lg" order={props.realm.order.toLowerCase()} />
+            </h2>
+            {props.realm.currentOwner && (
+              <h3 className="my-2 self-center ml-auto">
+                {shortenAddress(props.realm.currentOwner.address)}
+              </h3>
+            )}
+          </div>
+          <div className="flex flex-col justify-between my-4 rounded sm:flex-row">
+            <h4>
+              Id: <span className="font-semibold">{props.realm.id}</span>
+            </h4>
+            <h4>
+              Rank:
+              <span className="font-semibold">{props.realm.rarityRank}</span>
+            </h4>
+            <h4>
+              Score:
+              <span className="font-semibold">{props.realm.rarityScore}</span>
+            </h4>
           </div>
           <Tabs variant="primary">
             <Tabs.List className="">

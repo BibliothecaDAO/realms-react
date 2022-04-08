@@ -10,7 +10,7 @@ const WEB3_MODAL_CONFIG = {
   network: 'mainnet',
   cacheProvider: true,
   theme: {
-    background: 'rgb(0, 0, 0)',
+    background: 'rgb(255, 255, 255)',
     main: 'rgb(199, 199, 199)',
     secondary: 'rgb(136, 136, 136)',
     border: 'rgba(195, 195, 195, 0.14)',

@@ -64,10 +64,10 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 order={realm.orderType.toLowerCase()}
               />
 
-              <h2 className="mb-1 self-center">
+              <h3 className="mb-1 self-center">
                 <span className="text-gray-400 mr-4">{realm.realmId}</span>
                 {realm.name}
-              </h2>
+              </h3>
               <div className="ml-auto self-center mr-4">
                 {!isFavourite(realm) && (
                   <Button
