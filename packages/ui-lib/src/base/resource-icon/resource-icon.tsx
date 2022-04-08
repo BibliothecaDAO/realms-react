@@ -2,10 +2,13 @@ import type { ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Adamantine from '../../icons/resources/Adamantine.svg';
 import AlchemicalSilver from '../../icons/resources/AlchemicalSilver.svg';
+import Cloth from '../../icons/resources/Cloth.svg';
 import Coal from '../../icons/resources/Coal.svg';
 import ColdIron from '../../icons/resources/ColdIron.svg';
 import Copper from '../../icons/resources/Copper.svg';
 import DeepCrystal from '../../icons/resources/DeepCrystal.svg';
+import DemonHide from '../../icons/resources/DemonHide.svg';
+import DesertGlass from '../../icons/resources/DesertGlass.svg';
 import Diamonds from '../../icons/resources/Diamonds.svg';
 import Dragonhide from '../../icons/resources/Dragonhide.svg';
 import EtherealSilica from '../../icons/resources/EtherealSilica.svg';
@@ -15,13 +18,17 @@ import Ignium from '../../icons/resources/Ignium.svg';
 import Ironwood from '../../icons/resources/Ironwood.svg';
 import Mithral from '../../icons/resources/Mithral.svg';
 import Obsidian from '../../icons/resources/Obsidian.svg';
+import Ore from '../../icons/resources/Ore.svg';
 import Ruby from '../../icons/resources/Ruby.svg';
 import Sapphire from '../../icons/resources/Sapphire.svg';
+import Shekels from '../../icons/resources/Shekels.svg';
 import Silver from '../../icons/resources/Silver.svg';
+import Spores from '../../icons/resources/Spores.svg';
 import Stone from '../../icons/resources/Stone.svg';
 import TrueIce from '../../icons/resources/TrueIce.svg';
 import TwilightQuartz from '../../icons/resources/TwilightQuartz.svg';
 import Wood from '../../icons/resources/Wood.svg';
+
 export type Props = {
   resource: string;
   size: keyof typeof STYLES['size'];
@@ -51,6 +58,12 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   TrueIce: <TrueIce />,
   TwilightQuartz: <TwilightQuartz />,
   Wood: <Wood />,
+  EmbersGlow: <DemonHide />,
+  StoneTemple: <Cloth />,
+  DesertOasis: <DesertGlass />,
+  MountainDeep: <Ore />,
+  UnderwaterKeep: <Shekels />,
+  ForestRuins: <Spores />,
 });
 
 const STYLES = {

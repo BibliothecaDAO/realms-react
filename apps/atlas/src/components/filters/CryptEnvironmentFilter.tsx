@@ -1,4 +1,4 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
@@ -47,11 +47,11 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
 
       {isOpen && (
         <Popover.Panel
-          className="absolute z-10 mt-2 w-[300px] ml-2 left-1/2 -translate-x-1/2"
+          className="absolute z-10 mt-2 w-[300px] ml-2 left-1/2 -translate-x-1/2  rounded"
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded-sm shadow-lg bg-[#74787A]">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded-sm shadow-lg bg-black">
             <div className="text-lg text-center uppercase">Environments</div>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">
@@ -67,6 +67,10 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
                   onClick={() => handleOnClickResourceOption(env)}
                   aria-hidden="true"
                 >
+                  <ResourceIcon
+                    resource={env.name.replace(' ', '').replace("'", '')}
+                    size="md"
+                  />{' '}
                   <span>{env.name}</span>
                 </div>
               ))}
