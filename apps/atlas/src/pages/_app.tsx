@@ -4,15 +4,13 @@ import {
   ApolloLink,
   ApolloProvider,
   createHttpLink,
-  useQuery,
-  gql,
 } from '@apollo/client';
 import { concatPagination } from '@apollo/client/utilities';
 import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetProvider } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
@@ -43,8 +41,8 @@ const client = new ApolloClient({
         fields: {
           realms: concatPagination(['where', 'orderBy']),
           bridgedRealms: concatPagination(['where', 'orderBy']),
-          dungeons: concatPagination(['where']),
-          bags: concatPagination(['where']),
+          // dungeons: concatPagination(['where']),
+          // bags: concatPagination(['where']),
         },
       },
     },
@@ -54,12 +52,14 @@ const client = new ApolloClient({
 // Create a react-query client
 const queryClient = new QueryClient();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PageWrapper = (Comp: any) =>
   class InnerPageWrapper extends React.Component<{ ua: string }> {
     /*
      * Need to use args.ctx
      * See https://nextjs.org/docs/advanced-features/custom-document
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async getInitialProps(args: any) {
       return {
         ua: args.ctx.req
@@ -95,13 +95,15 @@ function MyApp({ Component, pageProps }: AppProps) {
             <QueryClientProvider client={queryClient}>
               <UIProvider>
                 <Component {...pageProps} />
-
                 {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
               </UIProvider>
-              <ReactQueryDevtools initialIsOpen={false} />
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                position="bottom-right"
+              />
             </QueryClientProvider>
           </StarknetProvider>
         </ApolloProvider>

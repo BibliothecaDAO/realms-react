@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
@@ -23,12 +22,11 @@ export const RealmSideBar = (props: Props) => {
     <BaseSideBar open={selectedMenuType === 'realm'}>
       <div className="top-0 bottom-0 right-0 w-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end">
-          <button
-            className="right-0 z-10 p-2 transition-all rounded bg-white/20 hover:bg-white/70 shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.25)]"
-            onClick={() => toggleMenuType('realm')}
-          >
-            <Close />
-          </button>
+          <div className="flex justify-end mb-2 mr-1">
+            <Button size="sm" onClick={() => toggleMenuType('realm')}>
+              <Close />
+            </Button>
+          </div>
         </div>
         {data && data.realm && (
           <RealmCard realm={data!.realm} loading={loading} />

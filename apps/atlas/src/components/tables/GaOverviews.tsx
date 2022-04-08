@@ -1,7 +1,9 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
+import { rarityColor } from 'loot-rarity';
 import { useGaContext } from '@/context/GaContext';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
 
 interface GaOverviewsProps {
@@ -35,65 +37,95 @@ export function GaOverviews(props: GaOverviewsProps) {
   const isFavourite = (ga: GAdventurer) => favouriteGa.indexOf(ga.id) > -1;
 
   return (
-    <div>
+    <div className="flex flex-wrap">
       {props.bags &&
-        props.bags.slice(0, 10).map((ga: GAdventurer, index) => (
+        props.bags.map((ga: GAdventurer, index) => (
           <div
             key={index}
-            className="flex w-full h-auto max-w-full mb-4 overflow-x-scroll border border-gray-500 border-double rounded shadow-md justify-evenly"
+            className="flex flex-wrap h-auto rounded sm:w-1/2 justify-evenly"
           >
-            <div className="flex w-full p-8 text-gray-800 rounded-l bg-white/70">
-              <div className="self-center pl-6">
-                <h5 className="text-gray-400">{ga.order}</h5>
-                <h2 className="mb-3">Genesis Adventurer #{ga.id}</h2>
-                {!isFavourite(ga) && (
-                  <button onClick={() => actions.addFavouriteGa(ga.id)}>
-                    Add
-                  </button>
-                )}
-                {isFavourite(ga) && (
-                  <button onClick={() => actions.removeFavouriteGa(ga.id)}>
-                    Remove
-                  </button>
-                )}
+            <div className="w-full p-2 rounded">
+              <div className="w-full p-2 bg-black/70 font-display">
+                {[
+                  ga.weapon,
+                  ga.chest,
+                  ga.head,
+                  ga.waist,
+                  ga.foot,
+                  ga.hand,
+                  ga.neck,
+                  ga.ring,
+                ]?.map((itemName, index) => {
+                  return (
+                    <div className="flex px-2 my-1 font-bold" key={index}>
+                      <LootItemIcon
+                        className="self-center"
+                        size="sm"
+                        item={index.toString()}
+                      />{' '}
+                      <span
+                        className={
+                          'mt-1 flex self-center ml-4  font-display text-[' +
+                          rarityColor(itemName) +
+                          ']'
+                        }
+                      >
+                        {itemName}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
-            <div className="w-full p-6 bg-black/70">
-              {[
-                ga.weapon,
-                ga.chest,
-                ga.head,
-                ga.waist,
-                ga.foot,
-                ga.hand,
-                ga.neck,
-                ga.ring,
-              ]?.map((itemName, index) => {
-                return (
-                  <div className="flex my-4 font-bold " key={index}>
-                    <span className="ml-4">{itemName}</span>
+              <div className="flex w-full p-3 text-white bg-black/60">
+                <div className="flex self-center w-full">
+                  <OrderIcon
+                    className="self-center mx-3"
+                    size={'md'}
+                    order={ga.order.toLowerCase()}
+                  />
+                  <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
+                  <div className="self-center ml-auto">
+                    {!isFavourite(ga) && (
+                      <Button
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => actions.addFavouriteGa(ga.id)}
+                      >
+                        Add
+                      </Button>
+                    )}
+                    {isFavourite(ga) && (
+                      <Button
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => actions.removeFavouriteGa(ga.id)}
+                      >
+                        Remove
+                      </Button>
+                    )}
                   </div>
-                );
-              })}
-            </div>
-            <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
-              <Button
-                onClick={() => {
-                  togglePanelType('ga');
-                  gotoAssetId(ga.id, 'ga');
-                }}
-                variant="default"
-                className="w-full uppercase"
-              >
-                fly to
-              </Button>
-              <Button
-                onClick={() => openGaDetails(ga.id)}
-                variant="default"
-                className="w-full uppercase"
-              >
-                details
-              </Button>
+                </div>
+              </div>
+              <div className="flex justify-center w-full p-2 space-x-2 bg-gray-600/70">
+                {' '}
+                <Button
+                  onClick={() => {
+                    togglePanelType('ga');
+                    gotoAssetId(ga.id, 'ga');
+                  }}
+                  variant="primary"
+                  className="w-full uppercase"
+                >
+                  fly to
+                </Button>
+                <Button
+                  onClick={() => openGaDetails(ga.id)}
+                  variant="default"
+                  className="w-full uppercase"
+                >
+                  details
+                </Button>
+              </div>
             </div>
           </div>
         ))}

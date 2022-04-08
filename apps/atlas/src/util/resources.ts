@@ -8,6 +8,10 @@ interface Resources {
   img: string;
 }
 
+export const findResourceName = (value: string) => {
+  return resources.find((e) => e.id === parseInt(value));
+};
+
 export const resources: Array<Resources> = [
   {
     trait: 'Wood',

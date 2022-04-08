@@ -59,9 +59,9 @@ const LoreDevKit = (props: Prop) => {
         ) : null}
       </h3>
       <div className="text-lg">
-        {currentLayer.descriptions.map((d, i) =>
-          typeof d == 'string' ? <div key={i}>{d}</div> : d
-        )}
+        {currentLayer.descriptions.map((d, i) => (
+          <div key={i}>{d}</div>
+        ))}
       </div>
       <Button
         disabled={layerIndex == ldk.layers.length - 1}

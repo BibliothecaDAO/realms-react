@@ -102,6 +102,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
     res.send(JSON.stringify(result));
     return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     console.error('MINTING ERROR:', e);
     res.send(

@@ -1,5 +1,4 @@
 import { animated, useSpring } from '@react-spring/web';
-import { useUIContext } from '@/hooks/useUIContext';
 
 type Props = {
   children: React.ReactNode;
@@ -7,12 +6,10 @@ type Props = {
 };
 
 export const BasePanel = (props: Props) => {
-  const { togglePanelType, selectedPanel } = useUIContext();
-
   const animation = useSpring({
     opacity: props.open ? 1 : 0,
     transform: props.open ? `translateY(0)` : `translateY(-200%)`,
-    delay: 200,
+    delay: 150,
   });
 
   return (

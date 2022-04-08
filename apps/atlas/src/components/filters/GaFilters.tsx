@@ -1,5 +1,6 @@
 import { BagRatingFilter } from '@/components/filters/BagRatingFilter';
 import { useGaContext } from '@/context/GaContext';
+import { OrdersFilter } from './OrdersFilter';
 import { SearchFilter } from './SearchFilter';
 
 export function GaFilters() {
@@ -18,6 +19,10 @@ export function GaFilters() {
         />
       </div>
       <div className="flex mb-4">
+        <OrdersFilter
+          selectedValues={state.selectedOrders}
+          onChange={actions.updateSelectedOrders}
+        />
         <BagRatingFilter
           rating={state.ratingFilter}
           onChange={actions.updateRatingFilter}

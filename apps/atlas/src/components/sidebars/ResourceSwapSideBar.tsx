@@ -50,20 +50,27 @@ export const ResourceSwapSideBar = (props: Props) => {
           </button>
           <div />
         </div>
-        <Tabs className="h-full" variant="primary">
-          <Tabs.List className="">
-            {tabs.map((tab) => (
-              <Tabs.Tab key={tab.label} className="uppercase">
-                {tab.label}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels className="h-full">
-            {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
+        <div className="relative">
+          <Tabs className="h-full" variant="primary">
+            <Tabs.List className="">
+              {tabs.map((tab) => (
+                <Tabs.Tab key={tab.label} className="uppercase">
+                  {tab.label}
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
+            <Tabs.Panels className="h-full">
+              {tabs.map((tab) => (
+                <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+              ))}
+            </Tabs.Panels>
+          </Tabs>
+          <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+            <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
+              Coming Soon!
+            </div>
+          </div>
+        </div>
       </div>
     </BaseSideBar>
   );

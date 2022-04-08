@@ -76,11 +76,8 @@ export function TraitsFilter(props: TraitsFilterProps) {
 
       {isOpen && (
         <Popover.Panel className="absolute right-0 z-10 mt-2 " ref={ref} static>
-          <div
-            className="flex flex-col px-8 py-4 pb-6 font-medium text-white rounded-sm shadow-sm w-60"
-            style={{ backgroundColor: '#74787A' }}
-          >
-            <div className="mb-3 text-lg text-center uppercase">Traits</div>
+          <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white rounded-sm shadow-sm w-60 bg-black">
+            <h4 className="text-center">Traits</h4>
             <RangeSliderFilter
               name="Regions"
               min={0}

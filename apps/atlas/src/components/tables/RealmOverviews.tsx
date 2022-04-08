@@ -52,67 +52,80 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   return (
     <div>
       {props.realms &&
-        props.realms.slice(0, 10).map((realm: RealmFragmentFragment, index) => (
+        props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex w-full h-auto max-w-full mb-4 overflow-x-scroll border border-gray-500 border-double rounded shadow-md justify-evenly"
+            className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-evenly"
           >
-            <div className="flex w-full p-8 text-gray-800 rounded-l bg-white/70">
+            <div className="flex w-full p-2 text-white rounded-t-l bg-black/60">
               <OrderIcon
-                className="self-center"
+                className="self-center mx-3"
                 size={'md'}
-                order={realm.orderType}
+                order={realm.orderType.toLowerCase()}
               />
-              <div className="self-center pl-6">
-                <h5 className="text-gray-400">{realm.realmId}</h5>
-                <h2 className="mb-3">{realm.name}</h2>
+
+              <h3 className="mb-1 self-center">
+                <span className="text-gray-400 mr-4">{realm.realmId}</span>
+                {realm.name}
+              </h3>
+              <div className="ml-auto self-center mr-4">
                 {!isFavourite(realm) && (
-                  <button
+                  <Button
+                    size="sm"
                     onClick={() => actions.addFavouriteRealm(realm.realmId)}
                   >
-                    Add
-                  </button>
-                )}
+                    Add to favourites
+                  </Button>
+                )}{' '}
                 {isFavourite(realm) && (
-                  <button
+                  <Button
+                    size="sm"
+                    className="w-full uppercase"
                     onClick={() => actions.removeFavouriteRealm(realm.realmId)}
                   >
-                    Remove
-                  </button>
+                    Remove from favourites
+                  </Button>
                 )}
               </div>
             </div>
-            <div className="w-full p-6 bg-black/70">
-              {realm.resources?.map((resource, index) => {
-                return (
-                  <div className="flex my-4 font-bold " key={index}>
-                    <ResourceIcon size="sm" resource={resource.type} />{' '}
-                    <span className="ml-4 uppercase tracking-veryWide">
-                      {resource.type}
-                    </span>
-                    <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
+            <div className="flex w-1/3 px-6 bg-black/50 ">
+              <div className="self-center">
+                {realm.resources?.map((resource, index) => {
+                  return (
+                    <div className="flex my-4 font-bold " key={index}>
+                      <ResourceIcon
+                        size="sm"
+                        resource={resource.type.replace('_', '')}
+                      />{' '}
+                      <span className="ml-4 uppercase tracking-veryWide">
+                        {resource.type.replace('_', ' ')}
+                      </span>
+                      {/* <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
                       100
-                    </span>
-                  </div>
-                );
-              })}
+                    </span> */}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="w-full p-8 bg-gray-800/70">
+            <div className="flex w-1/3 px-6 bg-gray-800/60">
               {' '}
-              {realm.traits?.map((trait, index) => {
-                return (
-                  <div className="flex my-4 font-bold " key={index}>
-                    <span className="ml-4 uppercase tracking-veryWide">
-                      {trait.type}
-                    </span>
-                    <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
-                      {trait.qty}
-                    </span>
-                  </div>
-                );
-              })}
+              <div className="self-center w-full">
+                {realm.traits?.map((trait, index) => {
+                  return (
+                    <div className="flex my-4 font-bold " key={index}>
+                      <span className="ml-4 uppercase tracking-veryWide">
+                        {trait.type}
+                      </span>
+                      <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
+                        {trait.qty}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="w-full p-8 bg-gray-700/70">
+            {/* <div className="w-1/4 p-8 bg-gray-700/70">
               {' '}
               {testRealm.military.map((a, index) => {
                 return (
@@ -124,14 +137,16 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   </div>
                 );
               })}
-            </div>
-            <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
+            </div> */}
+            <div className="flex flex-col justify-center w-1/3 px-6 space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
                   togglePanelType('realm');
                   gotoAssetId(realm.realmId, 'realm');
                 }}
+                variant="primary"
+                size="sm"
                 className="w-full uppercase"
               >
                 fly to
@@ -139,6 +154,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               <Button
                 onClick={() => openRealmDetails(realm.realmId)}
                 variant="default"
+                size="sm"
                 className="w-full uppercase"
               >
                 details

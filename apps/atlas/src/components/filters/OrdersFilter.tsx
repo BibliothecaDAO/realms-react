@@ -62,7 +62,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className={`px-4 ml-2 uppercase ${isOpen ? 'bg-black/80' : ''}`}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -72,12 +72,12 @@ export function OrdersFilter(props: OrdersFilterProps) {
 
       {isOpen && (
         <Popover.Panel
-          className="absolute z-10 mt-2 w-[260px] ml-2 left-1/2 -translate-x-1/2"
+          className="absolute z-10 mt-2 w-[280px] ml-2 left-1/2 -translate-x-1/2 shadow-2xl"
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded-sm shadow-sm bg-[#74787a]">
-            <div className="text-lg text-center uppercase">Orders</div>
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded shadow-sm bg-black">
+            <h4>Search by Orders</h4>
 
             <div className="relative grid items-center justify-center grid-cols-4 gap-6">
               {orders.map((order, idx) => (
@@ -86,8 +86,8 @@ export function OrdersFilter(props: OrdersFilterProps) {
                   key={order.value}
                   tabIndex={idx}
                   className={clsx(
-                    'flex items-center justify-center cursor-pointer rounded-sm',
-                    isSelected(order) ? 'bg-[#515151]' : ''
+                    'flex items-center justify-center cursor-pointer rounded-sm px-6 hover:bg-gray-200/20 duration-150 transition-all',
+                    isSelected(order) ? 'bg-gray-200/20' : ''
                   )}
                   onClick={() => handleOnClickOrderOption(order)}
                   aria-hidden="true"

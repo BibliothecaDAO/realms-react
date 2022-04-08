@@ -87,24 +87,24 @@ export interface GAData {
 export interface RealmProps {
   realm: Realm;
   loading: boolean;
-  size?: any;
+  size?: string;
 }
 export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
-  size?: any;
+  size?: string;
   flyto?: boolean;
 }
 export interface LootProps {
   loot: Loot;
   loading: boolean;
-  size?: any;
+  size?: string;
   flyto?: boolean;
 }
 export interface GAProps {
   ga: GAdventurer;
   loading: boolean;
-  size?: any;
+  size?: string;
   flyto?: boolean;
 }
 
@@ -160,3 +160,20 @@ export interface GAsData {
   currentOwner: Owner;
   gadventurers: GAdventurer[];
 }
+
+export type RealmFeatures = {
+  type: string;
+  geometry: RealmFeatureGeometry;
+  properties: RealmFeatureProperties;
+};
+export type RealmFeatureGeometry = {
+  type: string;
+  coordinates: number[];
+};
+export type RealmFeatureProperties = {
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  realm_idx: number;
+  order: string;
+  resources: string[];
+};

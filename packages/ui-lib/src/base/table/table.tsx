@@ -66,7 +66,10 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
           {instance.getHeaderGroups().map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((header) => (
-                <th className="text-sm" {...header.getHeaderProps()}>
+                <th
+                  className="text-md tracking-wider py-2"
+                  {...header.getHeaderProps()}
+                >
                   {header.isPlaceholder ? null : header.renderHeader()}
                 </th>
               ))}

@@ -5,6 +5,8 @@ import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
 import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
+import { LootItemIcon } from '@/shared/LootItemIcon';
+import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { shortenAddress } from '@/util/formatters';
 import type { GAProps } from '../../types';
 
@@ -39,7 +41,7 @@ export function GAdventurer(props: GAProps): ReactElement {
   }, [props.ga.id]);
 
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
+    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -47,9 +49,9 @@ export function GAdventurer(props: GAProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="pt-4">
+        <div className="px-4 py-2 bg-black/60 rounded">
           <div className="flex justify-center">
-            <OrderIcon size="md" order={props.ga.order.toLowerCase()} />
+            <OrderIcon size="lg" order={props.ga.order.toLowerCase()} />
           </div>
 
           <div
@@ -59,13 +61,12 @@ export function GAdventurer(props: GAProps): ReactElement {
           </div>
           <div className=" sm:text-2xl">
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
-              <h2>
-                Id: <span className="font-semibold ">{props.ga.id}</span>
-              </h2>
+              <h3>
+                Genesis Adventurer #{' '}
+                <span className="font-semibold ">{props.ga.id}</span>
+              </h3>
               {props.ga.currentOwner && (
-                <h3 className="my-3">
-                  👑 {shortenAddress(props.ga.currentOwner.address)}
-                </h3>
+                <h3>{shortenAddress(props.ga.currentOwner.address)}</h3>
               )}
               {props.flyto && (
                 <div className="self-center text-lg">
@@ -82,43 +83,39 @@ export function GAdventurer(props: GAProps): ReactElement {
                 </div>
               )}
             </div>
-            <table className="min-w-full pb-4 rounded table-auto bg-black/70">
+            <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="p-4 pl-6 text-left uppercase">Item</th>
-                  <th className="p-4 uppercase">Greatness</th>
+                  <th className="p-4 text-left uppercase tracking-widest text-lg">
+                    Item
+                  </th>
+                  <th className="p-4 uppercase tracking-widest text-lg">
+                    Greatness
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {mappedProperties.map((item, index) => (
                   <tr key={index}>
-                    <td className="pb-5 pl-6">
-                      <p className="text-xs font-medium tracking-wider text-left uppercase sm:text-lg ">
-                        <span className="text-gray-400 dark:text-gray-400">
-                          {item}{' '}
-                        </span>
-                        <span
-                          className={
-                            'px-2 py-1 rounded bg-[' +
-                            rarityColor((props.ga as any)[item]) +
-                            ']'
-                          }
-                        >
-                          {rarityDescription((props.ga as any)[item])}
-                        </span>{' '}
-                      </p>
+                    <td className="pb-2">
                       <p
                         className={
-                          'mt-1 font-semibold text-[' +
+                          'mt-1 flex  font-display text-[' +
                           rarityColor((props.ga as any)[item]) +
                           ']'
                         }
                       >
-                        {(props.ga as any)[item]}
+                        <LootItemIcon
+                          className="self-center mr-4"
+                          size="sm"
+                          item={index.toString()}
+                        />{' '}
+                        <span className="self-center">
+                          {(props.ga as any)[item]}
+                        </span>
                       </p>
                     </td>
-
-                    <td className="text-center">
+                    <td className="text-center font-display">
                       {metaData
                         ? (metaData as any).greatness[item.toLowerCase()]
                         : 0}
@@ -127,20 +124,11 @@ export function GAdventurer(props: GAProps): ReactElement {
                 ))}
               </tbody>
             </table>
-            <div className="text-xl"></div>
-            <div className="py-4">
-              <a
-                className="text-xl"
-                target={'_blank'}
-                href={
-                  'https://opensea.io/assets/0x8db687aceb92c66f013e1d614137238cc698fedb/' +
-                  props.ga.id
-                }
-                rel="noreferrer"
-              >
-                View on Opensea
-              </a>
-            </div>
+            <MarketplaceByPanel
+              id={props.ga.id}
+              collection="genesisadventurer"
+              address="0x8db687aceb92c66f013e1d614137238cc698fedb"
+            />
           </div>
         </div>
       )}

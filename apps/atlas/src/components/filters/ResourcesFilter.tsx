@@ -78,12 +78,12 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
 
       {isOpen && (
         <Popover.Panel
-          className="absolute z-10 mt-2 w-[400px] ml-2 left-1/2 -translate-x-1/2"
+          className="absolute z-10 mt-2 w-[420px] ml-2 left-1/2 -translate-x-1/2"
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded-sm shadow-lg bg-[#74787A]">
-            <div className="text-lg text-center uppercase">Resources</div>
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white rounded shadow-lg bg-black">
+            <h4 className="text-center">Resources</h4>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">
               {resources.map((resource, idx) => (
@@ -92,8 +92,8 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                   key={resource.value}
                   tabIndex={idx}
                   className={clsx(
-                    'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1',
-                    isSelected(resource) ? 'bg-[#515151]' : ''
+                    'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-wide',
+                    isSelected(resource) ? 'bg-gray-200/20' : ''
                   )}
                   onClick={() => handleOnClickResourceOption(resource)}
                   aria-hidden="true"
