@@ -10,12 +10,12 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-4 py-1 text-md font-body uppercase tracking-widest transition-all duration-150 font-semibold  rounded hover:bg-white/80 hover:text-gray-600',
+      base: ' relative inline-flex items-center px-4 py-1 text-md font-body uppercase tracking-widest transition-all duration-150 font-semibold rounded hover:bg-white/80 hover:text-gray-600 hover:shadow',
       active:
-        ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-white ring-opacity-20 text-gray-600 bg-white/80',
+        ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-white ring-opacity-20 text-gray-600 bg-white/80 shadow',
       inactive: 'text-white border-transparent',
     },
-    tabList: 'flex space-x-8 sm:space-x-2 bg-white/20 p-2 rounded my-4 ',
+    tabList: 'flex space-x-8 sm:space-x-2 bg-white/50 p-2 rounded my-4  ',
   },
   primary: {
     tab: {
@@ -44,14 +44,23 @@ export const Tabs = ({
 }: TabsProps) => {
   return (
     <TabProvider variant={variant}>
-      <HeadlessTab.Group
-        as="div"
-        className={clsx('flex flex-1 flex-col ', className)}
-        selectedIndex={selectedIndex}
-        onChange={onChange}
-      >
-        {children}
-      </HeadlessTab.Group>
+      {onChange ? (
+        <HeadlessTab.Group
+          as="div"
+          className={clsx('flex flex-1 flex-col ', className)}
+          selectedIndex={selectedIndex}
+          onChange={onChange}
+        >
+          {children}
+        </HeadlessTab.Group>
+      ) : (
+        <HeadlessTab.Group
+          as="div"
+          className={clsx('flex flex-1 flex-col ', className)}
+        >
+          {children}
+        </HeadlessTab.Group>
+      )}
     </TabProvider>
   );
 };

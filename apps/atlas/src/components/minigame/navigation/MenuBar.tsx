@@ -1,5 +1,6 @@
-import React from 'react';
-import { DocumentText } from '@/shared/Icons';
+import React, { useState } from 'react';
+import useSound from 'use-sound';
+import { DocumentText, VolumeOff, VolumeUp } from '@/shared/Icons';
 import type { DesiegeTab } from '../ShieldGame';
 import { ActionsBox } from './ActionsBox';
 import { ManaBall } from './ManaBall';
@@ -9,6 +10,14 @@ type Prop = {
   toggleTab?: (tab: DesiegeTab) => void;
 };
 function MenuBar(props: Prop) {
+  const [soundOn, setSoundOn] = useState(false);
+  const [play, { stop }] = useSound(
+    '/music/scott-buckley-i-walk-with-ghosts.mp3',
+    {
+      volume: 1,
+    }
+  );
+
   const buttonClasses =
     'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
   return (
@@ -38,6 +47,23 @@ function MenuBar(props: Prop) {
           }}
         >
           <DocumentText className="w-6" />
+        </button>
+        <button
+          className="text-blue-600 hover:scale-110 hover:text-blue-800"
+          onClick={() => {
+            if (soundOn) {
+              stop();
+            } else {
+              play();
+            }
+            setSoundOn((prev) => !prev);
+          }}
+        >
+          {soundOn ? (
+            <VolumeUp className="w-6" />
+          ) : (
+            <VolumeOff className="w-6" />
+          )}
         </button>
       </div>
       <ActionsBox />

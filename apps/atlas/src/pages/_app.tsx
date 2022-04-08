@@ -51,12 +51,14 @@ const client = new ApolloClient({
 // Create a react-query client
 const queryClient = new QueryClient();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PageWrapper = (Comp: any) =>
   class InnerPageWrapper extends React.Component<{ ua: string }> {
     /*
      * Need to use args.ctx
      * See https://nextjs.org/docs/advanced-features/custom-document
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async getInitialProps(args: any) {
       return {
         ua: args.ctx.req

@@ -78,9 +78,10 @@ function Overview(props: RealmProps): ReactElement {
       </div>
 
       <div
-        className={`flex flex-col  w-full uppercase font-display sm:text-2xl ${
-          variantMaps[props.size]?.regions
-        } `}
+        className={
+          `flex flex-col  w-full uppercase font-display sm:text-2xl ` +
+          (props.size ? variantMaps[props.size]?.regions : '')
+        }
       >
         <span>Regions: {props.realm.regions} / 7</span>
         <div className="w-full my-2 bg-gray-200 rounded">
@@ -165,7 +166,7 @@ export function RealmCard(props: RealmProps): ReactElement {
     []
   );
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl sm:p-4">
+    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -191,11 +192,16 @@ export function RealmCard(props: RealmProps): ReactElement {
               layout={'responsive'}
             />
           </div>
-          <p className="text-lg font-semibold text-gray-400">
+          {/* <p className="text-lg font-semibold text-gray-400">
             {props.realm.id}
-          </p>
+          </p> */}
           <div className="flex">
-            <h1 className={`mb-4 mr-4 ${variantMaps[props.size]?.heading}`}>
+            <h1
+              className={
+                `mb-4 mr-4 ` +
+                (props.size ? variantMaps[props.size]?.heading : '')
+              }
+            >
               {props.realm.name}{' '}
             </h1>
             <OrderIcon size="lg" order={props.realm.order.toLowerCase()} />

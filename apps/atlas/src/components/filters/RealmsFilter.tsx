@@ -9,7 +9,7 @@ export function RealmsFilter() {
   const { state, actions } = useRealmContext();
 
   return (
-    <div className="flex justify-between pt-4">
+    <div className="flex justify-between">
       <div>
         <SearchFilter
           placeholder="SEARCH BY ID"

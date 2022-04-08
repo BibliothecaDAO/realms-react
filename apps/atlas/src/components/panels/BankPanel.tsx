@@ -76,7 +76,7 @@ export function BankPanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'bank'}>
-      <div className="flex justify-between pt-4">
+      <div className="flex justify-between">
         <div className="sm:hidden"></div>
         <h1 className="tex">Iron Bank</h1>
         <button

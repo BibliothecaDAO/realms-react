@@ -4,27 +4,30 @@ import { StringValueNode } from 'graphql';
 interface Props {
   id: string;
   address: string;
-  collection: string;
+  collection?: string;
 }
 
 export const MarketplaceByPanel = (props: Props) => {
   return (
     <div className="flex space-x-2 bg-black/20 p-2 rounded">
-      <Button
-        className="text-xl w-full text-xs"
-        target={'_blank'}
-        size="xs"
-        variant="primary"
-        href={
-          'https://www.loot.exchange/collections/' +
-          props.collection +
-          '/' +
-          props.id
-        }
-        rel="noreferrer"
-      >
-        Loot Exchange
-      </Button>
+      {props.collection && (
+        <Button
+          className="text-xl w-full text-xs"
+          target={'_blank'}
+          size="xs"
+          variant="primary"
+          href={
+            'https://www.loot.exchange/collections/' +
+            props.collection +
+            '/' +
+            props.id
+          }
+          rel="noreferrer"
+        >
+          Loot Exchange
+        </Button>
+      )}
+
       <Button
         className="text-xl w-full text-xs"
         target={'_blank'}

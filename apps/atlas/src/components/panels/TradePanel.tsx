@@ -62,7 +62,7 @@ export function TradePanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'trade'}>
-      <div className="flex justify-between pt-4">
+      <div className="flex justify-between">
         <div className="sm:hidden"></div>
 
         <h1 className="tex">Biblio Bazaar</h1>

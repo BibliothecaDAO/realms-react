@@ -98,7 +98,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
+              <div className="flex justify-center w-full p-2 space-x-2 bg-gray-600/70">
                 {' '}
                 <Button
                   onClick={() => {
@@ -107,15 +107,15 @@ export function LootOverviews(props: LootOverviewsProps) {
                   }}
                   variant="primary"
                   size="sm"
-                  className="w-full uppercase"
+                  className="uppercase w-full"
                 >
                   fly to
                 </Button>
                 <Button
                   onClick={() => openLootDetails(loot.id)}
-                  variant="default"
+                  variant="secondary"
                   size="sm"
-                  className="w-full uppercase"
+                  className="uppercase w-full"
                 >
                   details
                 </Button>
