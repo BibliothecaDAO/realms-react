@@ -49,7 +49,7 @@ export const LootPanel = () => {
       return { where: { id_in: [...state.favouriteLoot] } };
     }
   }, [account, state, page]);
-  console.log(getLootsQuery);
+
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
     variables,
   });
