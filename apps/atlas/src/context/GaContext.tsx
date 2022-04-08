@@ -1,6 +1,9 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import type { OrderType } from '@/generated/graphql';
+import { storage } from '@/util/localStorage';
+
+const GAFavoriteLocalStorageKey = 'ga.favourites';
 
 type RatingFilter = { bagGreatness: number; bagRating: number };
 
@@ -59,11 +62,18 @@ function gaReducer(state: GaState, action: GaAction): GaState {
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteGa':
+      storage<string[]>(GAFavoriteLocalStorageKey, []).set([
+        ...state.favouriteGa,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteGa: [...state.favouriteGa, action.payload],
       };
     case 'removeFavouriteGa':
+      storage<string[]>(GAFavoriteLocalStorageKey, []).set(
+        state.favouriteGa.filter((id: string) => id !== action.payload)
+      );
       return {
         ...state,
         favouriteGa: state.favouriteGa.filter(
@@ -106,7 +116,10 @@ export function useGaContext() {
 }
 
 export function GaProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(gaReducer, defaultGaState);
+  const [state, dispatch] = useReducer(gaReducer, {
+    ...defaultGaState,
+    favouriteGa: storage<string[]>(GAFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <GaContext.Provider
