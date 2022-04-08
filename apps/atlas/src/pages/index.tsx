@@ -28,7 +28,7 @@ import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useUIContext, UIProvider } from '@/hooks/useUIContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
 
@@ -224,7 +224,13 @@ function App() {
 
   return (
     <Compose
-      components={[RealmProvider, LootProvider, GaProvider, CryptProvider]}
+      components={[
+        UIProvider,
+        RealmProvider,
+        LootProvider,
+        GaProvider,
+        CryptProvider,
+      ]}
     >
       <Layout>
         <div className="relative flex h-full overflow-hidden sm:h-screen">

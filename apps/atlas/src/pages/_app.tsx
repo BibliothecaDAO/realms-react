@@ -4,19 +4,16 @@ import {
   ApolloLink,
   ApolloProvider,
   createHttpLink,
-  useQuery,
-  gql,
 } from '@apollo/client';
 import { concatPagination } from '@apollo/client/utilities';
 import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetProvider } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
-import { UIProvider } from '@/hooks/useUIContext';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 /* import PageTransition from '@/components/navigation/PageTransition'; 
@@ -93,14 +90,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ApolloProvider client={client}>
           <StarknetProvider>
             <QueryClientProvider client={queryClient}>
-              <UIProvider>
-                <Component {...pageProps} />
-
-                {/* <PageTransition
+              <Component {...pageProps} />
+              {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-              </UIProvider>
               <ReactQueryDevtools
                 initialIsOpen={false}
                 position="bottom-right"
