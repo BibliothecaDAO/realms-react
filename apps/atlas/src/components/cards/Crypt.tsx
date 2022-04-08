@@ -15,8 +15,8 @@ const variantMaps: any = {
 };
 
 export function Crypt(props: CryptProps): ReactElement {
-  const findEnvironment = (value: any) => {
-    return environments.find((e) => e.id === parseInt(value));
+  const findEnvironment = (value: number) => {
+    return environments.find((e) => e.id === value);
   };
   const { gotoAssetId } = useUIContext();
 
@@ -70,9 +70,11 @@ export function Crypt(props: CryptProps): ReactElement {
             </div>
             <div className="flex justify-between">
               <h3
-                className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
-            ${isLegendary(props.crypt.name) && legendaryColourClass}
-            `}
+                className={
+                  `mt-2 mb-4 ` +
+                    (props.size ? variantMaps[props.size].heading : '') +
+                    isLegendary(props.crypt.name) && legendaryColourClass
+                }
               >
                 {props.crypt.name}
               </h3>
@@ -93,9 +95,10 @@ export function Crypt(props: CryptProps): ReactElement {
             </div>
 
             <div
-              className={`flex flex-col w-full uppercase font-display ${
-                variantMaps[props.size]?.regions
-              } `}
+              className={
+                `flex flex-col w-full uppercase font-display ` +
+                (props.size ? variantMaps[props.size]?.regions : '')
+              }
             >
               <span>Doors: {props.crypt.numPoints} / 13</span>
               <div className="w-full my-2 bg-gray-200 rounded">

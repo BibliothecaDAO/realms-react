@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from '@ethersproject/bignumber';
 import { id } from '@ethersproject/hash';
-import { ethers } from 'ethers';
 
 const items: any = {};
 

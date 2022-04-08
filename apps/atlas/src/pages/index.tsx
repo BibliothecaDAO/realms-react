@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
@@ -29,13 +30,13 @@ import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
 import { useUIContext } from '@/hooks/useUIContext';
-
 // import order_highlights from '@/geodata/order_highlights.json';
+import type { RealmFeatures } from '@/types/index';
 
 function App() {
   const { setMenuType, selectedId, setSelectedId, coordinates } =
     useUIContext();
-  const [resource, setResource] = useState<Array<string>>([]);
+  const [resource] = useState<Array<string>>([]);
 
   // const filteredContinents = () => {
   //   let c = order_highlights.features.filter(
@@ -66,12 +67,12 @@ function App() {
   // });
 
   const filteredData = () => {
-    return realms.features.filter((a: any) =>
-      a.properties.resources.some((b: any) => resource.includes(b))
+    return realms.features.filter((a: RealmFeatures) =>
+      a.properties.resources.some((b: string) => resource.includes(b))
     );
   };
 
-  const addToFilter = (value: any) => {
+  /* const addToFilter = (value: any) => {
     const idx = resource.indexOf(value);
     if (idx === -1) {
       return setResource((oldArray) => [value, ...oldArray]);
@@ -80,9 +81,9 @@ function App() {
       temp.splice(idx, 1);
       return setResource(temp);
     }
-  };
+  }; */
 
-  const crypts_layer = new ScatterplotLayer({
+  const cryptsLayer = new ScatterplotLayer({
     id: 'crypts-layer',
     data: crypts.features,
     stroked: true,
@@ -105,7 +106,7 @@ function App() {
     },
   });
 
-  const realms_layer = new ScatterplotLayer({
+  const realmsLayer = new ScatterplotLayer({
     id: 'realms-layer',
     data: (realms as any).features,
     stroked: true,
@@ -128,7 +129,7 @@ function App() {
     },
   });
 
-  const loot_bag_layer = new ScatterplotLayer({
+  const lootBagLayer = new ScatterplotLayer({
     id: 'loot-layer',
     data: loot_bags.features,
     stroked: true,
@@ -150,7 +151,7 @@ function App() {
     },
   });
 
-  const ga_bag_layer = new ScatterplotLayer({
+  const gaBagLayer = new ScatterplotLayer({
     id: 'ga-layer',
     data: ga_bags.features,
     stroked: true,
@@ -172,17 +173,17 @@ function App() {
     },
   });
 
-  const ICON_MAPPING = {
+  const iconMapping = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
 
-  const resource_layer = new IconLayer({
+  const resourceLayer = new IconLayer({
     id: 'icon-layer',
     data: filteredData(),
     pickable: false,
     iconAtlas:
       'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
-    iconMapping: ICON_MAPPING,
+    iconMapping: iconMapping,
     getIcon: (d) => 'marker',
     sizeScale: 5,
     getPosition: (d: any) => d.geometry.coordinates,
@@ -254,11 +255,11 @@ function App() {
                 initialViewState={initialViewState}
                 controller={true}
                 layers={[
-                  realms_layer,
-                  resource_layer,
-                  crypts_layer,
-                  loot_bag_layer,
-                  ga_bag_layer,
+                  realmsLayer,
+                  resourceLayer,
+                  cryptsLayer,
+                  lootBagLayer,
+                  gaBagLayer,
                 ]}
               >
                 <Map

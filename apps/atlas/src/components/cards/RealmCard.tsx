@@ -78,9 +78,10 @@ function Overview(props: RealmProps): ReactElement {
       </div>
 
       <div
-        className={`flex flex-col  w-full uppercase font-display sm:text-2xl ${
-          variantMaps[props.size]?.regions
-        } `}
+        className={
+          `flex flex-col  w-full uppercase font-display sm:text-2xl ` +
+          (props.size ? variantMaps[props.size]?.regions : '')
+        }
       >
         <span>Regions: {props.realm.regions} / 7</span>
         <div className="w-full my-2 bg-gray-200 rounded">
@@ -195,7 +196,12 @@ export function RealmCard(props: RealmProps): ReactElement {
             {props.realm.id}
           </p> */}
           <div className="flex">
-            <h1 className={`mb-4 mr-4 ${variantMaps[props.size]?.heading}`}>
+            <h1
+              className={
+                `mb-4 mr-4 ` +
+                (props.size ? variantMaps[props.size]?.heading : '')
+              }
+            >
               {props.realm.name}{' '}
             </h1>
             <OrderIcon size="lg" order={props.realm.order.toLowerCase()} />
