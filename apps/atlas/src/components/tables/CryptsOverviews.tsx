@@ -88,9 +88,9 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
               </div>
               <div className="font-bold  my-1">Size</div>
               <div>{crypt.size}</div>
-              <div className="font-bold my-1">Num Doors</div>
+              <div className="font-bold my-1">Doors</div>
               <div>{crypt.numDoors}</div>
-              <div className="font-bold my-1">Num Points</div>
+              <div className="font-bold my-1">Points</div>
               <div>{crypt.numPoints}</div>
             </div>
             <div className="flex flex-col justify-center w-1/3 p-8 space-y-3 bg-gray-600/70">

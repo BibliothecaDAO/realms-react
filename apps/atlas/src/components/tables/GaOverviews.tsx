@@ -106,7 +106,7 @@ export function GaOverviews(props: GaOverviewsProps) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
+              <div className="flex justify-center w-full p-2 space-x-2 bg-gray-600/70">
                 {' '}
                 <Button
                   onClick={() => {
