@@ -45,7 +45,7 @@ const defaultFilters = {
 const defaultLootState = {
   ...defaultFilters,
   favouriteLoot: [] as string[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function lootReducer(state: LootState, action: LootAction): LootState {

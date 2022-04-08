@@ -47,7 +47,7 @@ function Overview(props: RealmProps): ReactElement {
         {props.realm.resourceIds.map((re: any, index) => (
           <div key={index} className="flex text-xl mb-4 mr-4">
             <ResourceIcon
-              resource={findResourceName(re)?.trait || ''}
+              resource={findResourceName(re)?.trait?.replace(' ', '') || ''}
               size="md"
             />
 

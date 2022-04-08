@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -30,6 +31,12 @@ export const RealmSideBar = (props: Props) => {
         </div>
         {data && data.realm && (
           <RealmCard realm={data!.realm} loading={loading} />
+        )}
+        {loading && (
+          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+            <Castle className="block w-20 fill-current" />
+            <h2>Loading</h2>
+          </div>
         )}
       </div>
     </BaseSideBar>

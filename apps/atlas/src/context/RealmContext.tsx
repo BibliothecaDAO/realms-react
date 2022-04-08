@@ -66,7 +66,7 @@ const defaultFilters = {
 const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function realmReducer(state: RealmState, action: RealmAction): RealmState {

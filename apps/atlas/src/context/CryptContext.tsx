@@ -46,7 +46,7 @@ const defaultFilters = {
 const defaultCryptState = {
   ...defaultFilters,
   favouriteCrypt: [] as string[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function cryptReducer(state: CryptState, action: CryptAction): CryptState {

@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { getCryptQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { CryptData } from '@/types/index';
 import { Crypt } from '../cards/Crypt';
 import { BaseSideBar } from './BaseSideBar';
-
 type Props = {
   id: string;
 };
@@ -30,6 +30,12 @@ export const CryptsSideBar = (props: Props) => {
         </div>
         {data && data.dungeon && (
           <Crypt flyto={false} crypt={data!.dungeon} loading={loading} />
+        )}
+        {loading && (
+          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+            <Danger className="block w-20 fill-current" />
+            <h2>Loading</h2>
+          </div>
         )}
       </div>
     </BaseSideBar>

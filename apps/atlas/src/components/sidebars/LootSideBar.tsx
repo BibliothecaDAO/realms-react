@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { getLootQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -27,6 +28,12 @@ export const LootSideBar = (props: Props) => {
         </div>
         {data && data.bag && (
           <Loot flyto={false} loot={data!.bag} loading={loading} />
+        )}
+        {loading && (
+          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+            <Bag className="block w-20 fill-current" />
+            <h2>Loading</h2>
+          </div>
         )}
       </div>
     </BaseSideBar>

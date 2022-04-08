@@ -32,7 +32,7 @@ export function Header() {
           )}
           {!isConnected && (
             <Button variant="primary" onClick={connectWallet}>
-              <Ethereum className="w-4 mx-4" /> Connect to Lootverse
+              <Ethereum className="w-4 mr-4" /> Connect
             </Button>
           )}
         </span>
