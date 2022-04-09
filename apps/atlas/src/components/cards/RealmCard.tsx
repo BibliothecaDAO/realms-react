@@ -155,12 +155,10 @@ export function RealmCard(props: RealmProps): ReactElement {
         </div>
       ) : (
         <div>
-          {props.realm?.wonder ? (
-            <div className="w-full p-4 text-3xl text-center uppercase rounded bg-white/30">
+          {props.realm?.wonder && (
+            <div className="text-gray-200 w-full p-4 tracking-veryWide shadow-inner text-2xl text-center uppercase rounded bg-white/10 font-semibold border-4 border-gray-500">
               {props.realm?.wonder}
             </div>
-          ) : (
-            ''
           )}
           <div className="w-auto">
             <Image

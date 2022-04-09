@@ -61,6 +61,7 @@ export type ButtonOrLinkProps = {
   loading?: boolean;
   loadingText?: string;
   spinner?: ReactElement;
+  texture?: boolean;
 } & ComponentPropsWithRef<'button'> &
   ComponentPropsWithRef<'a'> &
   Styles;
@@ -82,6 +83,7 @@ export const ButtonOrLink = forwardRef<
       loadingText,
       spinner = <Spinner variant="circle" size="sm" />,
       className,
+      texture = true,
       children,
       leftIcon,
       rightIcon,
@@ -114,15 +116,18 @@ export const ButtonOrLink = forwardRef<
         disabled={disabled || loading}
         {...props}
       >
-        <img
-          className={`${
-            isIconButton
-              ? 'rounded-2xl bg-center absolute w-full bg-cover h-full opacity-20'
-              : 'bg-center absolute w-full bg-cover h-full opacity-20'
-          }`}
-          src="/texture-button.png"
-          alt=""
-        />
+        {texture && (
+          <img
+            className={`${
+              isIconButton
+                ? 'rounded-2xl bg-center absolute w-full bg-cover h-full opacity-20'
+                : 'bg-center absolute w-full bg-cover h-full opacity-20'
+            }`}
+            src="/texture-button.png"
+            alt=""
+          />
+        )}
+
         {(leftIcon || loading) && (
           <span className="mr-3.5">{loading ? spinner : leftIcon}</span>
         )}
