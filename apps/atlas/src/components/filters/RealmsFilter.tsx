@@ -21,17 +21,18 @@ export function RealmsFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex flex-wrap md:flex-nowrap">
-        <Button
-          variant="primary"
-          className={clsx(
-            'px-4 my-1 mr-2 uppercasee',
-            state.hasWonderFilter ? 'bg-black' : ''
-          )}
-          onClick={actions.toggleHasWonderFilter}
-        >
-          Wonder
-        </Button>
+      <div className="flex flex-wrap md:flex-nowrap self-center">
+        <div>
+          <Button
+            variant="primary"
+            size="sm"
+            className={clsx('', state.hasWonderFilter ? 'bg-black' : '')}
+            onClick={actions.toggleHasWonderFilter}
+          >
+            Wonder
+          </Button>
+        </div>
+
         <ResourcesFilter
           selectedValues={state.selectedResources}
           onChange={actions.updateSelectedResources}

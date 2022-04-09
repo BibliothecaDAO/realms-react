@@ -41,8 +41,8 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
+          size="sm"
           className={clsx(
-            'px-4 ml-2 uppercase',
             props.rating.bagGreatness > 0 || props.rating.bagRating > 0
               ? 'bg-black'
               : ''

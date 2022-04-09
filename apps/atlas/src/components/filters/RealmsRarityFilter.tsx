@@ -44,10 +44,8 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
-          className={clsx(
-            'px-4 my-1 mr-2 uppercase',
-            hasSelectedFilters ? 'bg-black' : ''
-          )}
+          size="sm"
+          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);
           }}

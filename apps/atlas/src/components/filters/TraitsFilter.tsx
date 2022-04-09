@@ -62,10 +62,8 @@ export function TraitsFilter(props: TraitsFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
-          className={clsx(
-            'px-4 my-1 uppercase',
-            hasSelectedFilters ? 'bg-black' : ''
-          )}
+          size="sm"
+          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);
           }}

@@ -107,7 +107,7 @@ export const CryptsPanel = () => {
           ))}
         </Tabs.List>
       </Tabs>
-      <div className="mt-2">
+      <div>
         <CryptFilter />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">

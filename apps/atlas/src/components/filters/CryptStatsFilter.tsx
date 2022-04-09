@@ -53,11 +53,8 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
-          // className="px-4 ml-2 uppercase"
-          className={clsx(
-            'px-4 ml-2 uppercase',
-            hasSelectedFilters ? 'bg-black' : ''
-          )}
+          size="sm"
+          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);
           }}

@@ -9,8 +9,8 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
 import { animated, useSpring } from '@react-spring/web';
-import { useCallback } from 'react';
-import { useSound } from '@/context/soundProvider';
+import { useCallback, useState } from 'react';
+import useSound from 'use-sound';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
@@ -23,11 +23,13 @@ export const MenuSideBar = () => {
     togglePanelType,
     selectedPanel,
   } = useUIContext();
-  const { isSoundActive, toggleSound } = useSound();
-
-  const handleClick = useCallback(() => {
-    toggleSound();
-  }, [toggleSound]);
+  const [soundOn, setSoundOn] = useState(false);
+  const [play, { stop }] = useSound(
+    '/music/scott-buckley-i-walk-with-ghosts.mp3',
+    {
+      volume: 1,
+    }
+  );
 
   const animation = useSpring({
     opacity: mainMenu ? 0.85 : 0,
@@ -51,7 +53,7 @@ export const MenuSideBar = () => {
       </div>
       <animated.div
         style={animation}
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0  bg-gray-800 z-40 shadow-inner flex flex-col transform duration-300 transition-all overflow-auto ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0  bg-gray-800 z-40 shadow-inner shadow-2xl flex flex-col transform duration-300 transition-all overflow-auto ${
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
@@ -142,7 +144,8 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Bank</span>
         </div>
-        {/* <div className="flex flex-col place-items-center ">
+
+        <div className="flex flex-col place-items-center ">
           <IconButton
             className={buttonClasses}
             aria-label="Desiege"
@@ -151,19 +154,7 @@ export const MenuSideBar = () => {
             size="lg"
           />
           <span className={textClasses}>Desiege</span>
-        </div> */}
-        {/* <button
-      {/* <button
-        className="p-4 py-8 text-xl hover:bg-white/30 text-off-200"
-        onClick={handleClick}
-      >
-        {!isSoundActive ? (
-          <VolumeMuteIcon className="w-8 mx-auto" />
-        ) : (
-          <VolumeIcon className="w-8 mx-auto" />
-        )}
-      </button> */}
-
+        </div>
         <div className="grow" />
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton

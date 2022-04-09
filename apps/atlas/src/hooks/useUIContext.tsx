@@ -214,7 +214,12 @@ function useUI(): UI {
     } else {
       setShowDetails(true);
       setPanelType(panelType);
-      if (panelType === 'bank') {
+      if (panelType === 'crypt') {
+        setArtBackground('crypt');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      } else if (panelType === 'bank') {
         setArtBackground('bank');
         if (breakpoints.lg) {
           setMenuType('resourceSwap');

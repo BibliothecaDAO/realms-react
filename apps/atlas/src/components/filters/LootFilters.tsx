@@ -16,7 +16,7 @@ export function LootFilters() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex">
+      <div className="flex self-center">
         <BagRatingFilter
           rating={state.ratingFilter}
           onChange={actions.updateRatingFilter}

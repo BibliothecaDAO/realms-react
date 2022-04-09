@@ -20,16 +20,17 @@ export function CryptFilter() {
         />
       </div>
       <div className="flex flex-wrap items-center gap-2 md:flex-nowrap">
-        <Button
-          variant="primary"
-          className={clsx(
-            'px-4 ml-2 uppercase',
-            state.isLegendaryFilter ? 'bg-black' : ''
-          )}
-          onClick={actions.toggleIsLegendaryFilter}
-        >
-          Legendary
-        </Button>
+        <div>
+          <Button
+            variant="primary"
+            size="sm"
+            className={clsx(state.isLegendaryFilter ? 'bg-black' : '')}
+            onClick={actions.toggleIsLegendaryFilter}
+          >
+            Legendary
+          </Button>
+        </div>
+
         <CryptEnvironmentFilter
           selectedValues={state.environmentsFilter}
           onChange={actions.updateEnvironmentsFilter}

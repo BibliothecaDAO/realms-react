@@ -65,10 +65,8 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
-          className={clsx(
-            'px-4 my-1 mr-2 uppercase',
-            props.selectedValues.length > 0 ? 'bg-black' : ''
-          )}
+          size="sm"
+          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);
           }}
