@@ -150,8 +150,12 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+
   const [artBackground, setArtBackground] = useState<BackgroundOptions>();
-  const [mainMenu, setMainMenu] = useState(true);
+  const [mainMenu, setMainMenu] = useState(
+    // default closed on small screens
+    typeof window !== 'undefined' && window.innerWidth >= 768
+  );
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(
     query ? (query.assetType as AssetType) : undefined
