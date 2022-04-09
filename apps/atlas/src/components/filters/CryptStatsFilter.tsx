@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
+import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import { RangeSliderFilter } from './RangeSliderFilter';
@@ -42,11 +43,20 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
     props.onChange(updatedStats);
   };
 
+  const hasSelectedFilters =
+    props.stats.numDoors > 0 ||
+    props.stats.numPoints > 0 ||
+    props.stats.size > 0;
+
   return (
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        // className="px-4 ml-2 uppercase"
+        className={clsx(
+          'px-4 ml-2 uppercase',
+          hasSelectedFilters ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}

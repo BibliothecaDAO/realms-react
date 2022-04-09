@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface SearchFilterProps {
   placeholder?: string;
@@ -9,6 +9,9 @@ interface SearchFilterProps {
 export function SearchFilter(props: SearchFilterProps) {
   const [value, setValue] = useState(props.defaultValue ?? '');
 
+  useEffect(() => {
+    setValue(props.defaultValue ?? '');
+  }, [props.defaultValue]);
   function doSubmit() {
     if (!props.onSubmit) {
       return;

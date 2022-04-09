@@ -40,6 +40,10 @@ export const CryptsPanel = () => {
       where.id_in = [...state.favouriteCrypt];
     }
 
+    if (state.selectedTab === 0) {
+      where.currentOwner = account?.toLowerCase();
+    }
+
     where.numDoors_gt = state.statsFilter.numDoors;
     where.numPoints_gt = state.statsFilter.numPoints;
     where.size_gt = state.statsFilter.size;

@@ -7,7 +7,7 @@ import type { Environment } from '@/util/cryptsEnvironments';
 import { environments } from '@/util/cryptsEnvironments';
 
 type CryptEnvironmentFilterProps = {
-  selectedValues?: number[];
+  selectedValues: number[];
   onChange(selected: number[]): void;
 };
 
@@ -18,26 +18,27 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
     setIsOpen(false);
   });
 
-  const [selected, setSelected] = useState<number[]>(
-    props.selectedValues ?? []
-  );
-
   const handleOnClickResourceOption = (option: Environment) => {
-    const newValues = selected.filter((value) => value !== option.id);
-    if (newValues.length === selected.length) {
+    const newValues = props.selectedValues.filter(
+      (value) => value !== option.id
+    );
+    if (newValues.length === props.selectedValues.length) {
       newValues.push(option.id);
     }
-    setSelected([...newValues]);
     props.onChange([...newValues]);
   };
 
-  const isSelected = (option: Environment) => selected.indexOf(option.id) > -1;
+  const isSelected = (option: Environment) =>
+    props.selectedValues.indexOf(option.id) > -1;
 
   return (
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className={clsx(
+          'px-4 ml-2 uppercase',
+          props.selectedValues.length > 0 ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -51,7 +52,7 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded-sm shadow-lg bg-black">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded-sm shadow-lg">
             <div className="text-lg text-center uppercase">Environments</div>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">

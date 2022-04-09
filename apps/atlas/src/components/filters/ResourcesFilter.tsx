@@ -1,6 +1,5 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
-
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { ResourceType } from '@/generated/graphql';
@@ -65,7 +64,10 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 my-1 mr-2 uppercase"
+        className={clsx(
+          'px-4 my-1 mr-2 uppercase',
+          props.selectedValues.length > 0 ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}

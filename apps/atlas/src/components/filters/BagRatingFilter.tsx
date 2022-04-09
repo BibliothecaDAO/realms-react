@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
+import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import { RangeSliderFilter } from './RangeSliderFilter';
@@ -39,7 +40,12 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className={clsx(
+          'px-4 ml-2 uppercase',
+          props.rating.bagGreatness > 0 || props.rating.bagRating > 0
+            ? 'bg-black'
+            : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}

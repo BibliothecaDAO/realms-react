@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
+import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { RealmTraitType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
@@ -50,11 +51,20 @@ export function TraitsFilter(props: TraitsFilterProps) {
     props.onChange(updatedTraits);
   };
 
+  const hasSelectedFilters =
+    props.traits.River > 0 ||
+    props.traits.City > 0 ||
+    props.traits.Harbor > 0 ||
+    props.traits.Region > 0;
+
   return (
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 my-1 uppercase"
+        className={clsx(
+          'px-4 my-1 uppercase',
+          hasSelectedFilters ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
