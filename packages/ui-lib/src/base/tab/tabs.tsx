@@ -10,12 +10,12 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-4 py-1 text-md font-body uppercase tracking-widest transition-all duration-150 font-semibold rounded hover:bg-black/20  hover:shadow text-gray-700',
+      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs md:text-md font-body uppercase tracking-widest transition-all duration-150 font-semibold rounded hover:bg-black/20  hover:shadow text-gray-700',
       active:
         ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-white ring-opacity-20 text-white bg-black/20 shadow',
       inactive: 'text-white border-transparent',
     },
-    tabList: 'flex space-x-8 sm:space-x-2 bg-black/40 p-2 rounded my-4  ',
+    tabList: 'flex space-x-1 sm:space-x-2 bg-black/40 p-2 rounded my-4  ',
   },
   primary: {
     tab: {

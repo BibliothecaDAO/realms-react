@@ -55,28 +55,6 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 <h3 className={`px-2 rounded py-1`}>
                   <span>{crypt.id}</span> | {crypt.name}
                 </h3>
-                <div className="ml-auto">
-                  {!isFavourite(crypt) && (
-                    <Button
-                      size="sm"
-                      className="text-xs"
-                      variant="secondary"
-                      onClick={() => actions.addFavouriteCrypt(crypt.id)}
-                    >
-                      Add
-                    </Button>
-                  )}
-                  {isFavourite(crypt) && (
-                    <Button
-                      size="sm"
-                      className="text-xs"
-                      variant="secondary"
-                      onClick={() => actions.removeFavouriteCrypt(crypt.id)}
-                    >
-                      Remove
-                    </Button>
-                  )}
-                </div>
               </div>
             </div>
             <div className="flex w-1/3 px-6 sm:w-3/12 bg-black/40 ">
@@ -117,19 +95,37 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                   gotoAssetId(crypt.id, 'crypt');
                 }}
                 variant="primary"
-                size="sm"
-                className="w-full text-xs uppercase"
+                size="xs"
+                className="w-full "
               >
                 fly to
               </Button>
               <Button
                 onClick={() => openCryptDetails(crypt.id)}
                 variant="secondary"
-                size="sm"
-                className="w-full text-xs uppercase"
+                size="xs"
+                className="w-full "
               >
                 details
               </Button>
+              {!isFavourite(crypt) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.addFavouriteCrypt(crypt.id)}
+                >
+                  Add
+                </Button>
+              )}
+              {isFavourite(crypt) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.removeFavouriteCrypt(crypt.id)}
+                >
+                  Remove
+                </Button>
+              )}
             </div>
           </div>
         ))}
