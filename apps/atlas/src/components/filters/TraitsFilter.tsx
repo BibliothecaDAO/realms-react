@@ -59,54 +59,56 @@ export function TraitsFilter(props: TraitsFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        className={clsx(
-          'px-4 my-1 uppercase',
-          hasSelectedFilters ? 'bg-black' : ''
-        )}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        TRAITS
-      </Button>
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          className={clsx(
+            'px-4 my-1 uppercase',
+            hasSelectedFilters ? 'bg-black' : ''
+          )}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          TRAITS
+        </Button>
 
-      {isOpen && (
-        <Popover.Panel className="absolute right-0 z-10 mt-2 " ref={ref} static>
-          <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
-            <h4 className="text-center">Traits</h4>
-            <RangeSliderFilter
-              name="Regions"
-              min={0}
-              max={RegionMax}
-              defaultValue={props.traits[RealmTraitType.Region]}
-              onChange={onRegionFilterChange}
-            />
-            <RangeSliderFilter
-              name="Cities"
-              min={0}
-              max={CityMax}
-              defaultValue={props.traits[RealmTraitType.City]}
-              onChange={onCityFilterChange}
-            />
-            <RangeSliderFilter
-              name="Harbours"
-              min={0}
-              max={HarbourMax}
-              defaultValue={props.traits[RealmTraitType.Harbor]}
-              onChange={onHarbourFilterChange}
-            />
-            <RangeSliderFilter
-              name="Rivers"
-              min={0}
-              max={RiverMax}
-              defaultValue={props.traits[RealmTraitType.River]}
-              onChange={onRiverFilterChange}
-            />
-          </div>
-        </Popover.Panel>
-      )}
+        {isOpen && (
+          <Popover.Panel className="absolute right-0 z-10 mt-2 " static>
+            <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
+              <h4 className="text-center">Traits</h4>
+              <RangeSliderFilter
+                name="Regions"
+                min={0}
+                max={RegionMax}
+                defaultValue={props.traits[RealmTraitType.Region]}
+                onChange={onRegionFilterChange}
+              />
+              <RangeSliderFilter
+                name="Cities"
+                min={0}
+                max={CityMax}
+                defaultValue={props.traits[RealmTraitType.City]}
+                onChange={onCityFilterChange}
+              />
+              <RangeSliderFilter
+                name="Harbours"
+                min={0}
+                max={HarbourMax}
+                defaultValue={props.traits[RealmTraitType.Harbor]}
+                onChange={onHarbourFilterChange}
+              />
+              <RangeSliderFilter
+                name="Rivers"
+                min={0}
+                max={RiverMax}
+                defaultValue={props.traits[RealmTraitType.River]}
+                onChange={onRiverFilterChange}
+              />
+            </div>
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }

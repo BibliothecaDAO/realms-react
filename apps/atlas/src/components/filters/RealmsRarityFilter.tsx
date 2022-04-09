@@ -41,44 +41,45 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        className={clsx(
-          'px-4 my-1 mr-2 uppercase',
-          hasSelectedFilters ? 'bg-black' : ''
-        )}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        Rarity
-      </Button>
-
-      {isOpen && (
-        <Popover.Panel
-          className="absolute z-10 mt-2 ml-2 -translate-x-1/2 left-1/2"
-          ref={ref}
-          static
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          className={clsx(
+            'px-4 my-1 mr-2 uppercase',
+            hasSelectedFilters ? 'bg-black' : ''
+          )}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
         >
-          <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
-            <h4 className="text-center">Rarity</h4>
-            <RangeSliderFilter
-              name="Score"
-              min={0}
-              max={ScoreMax}
-              defaultValue={props.rarity.rarityScore}
-              onChange={onScoreFilterChange}
-            />
-            <RangeSliderFilter
-              name="Rank"
-              min={0}
-              max={RankMax}
-              defaultValue={props.rarity.rarityRank}
-              onChange={onRankFilterChange}
-            />
-          </div>
-        </Popover.Panel>
-      )}
+          Rarity
+        </Button>
+
+        {isOpen && (
+          <Popover.Panel
+            className="absolute z-10 mt-2 ml-2 sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2"
+            static
+          >
+            <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+              <h4 className="text-center">Rarity</h4>
+              <RangeSliderFilter
+                name="Score"
+                min={0}
+                max={ScoreMax}
+                defaultValue={props.rarity.rarityScore}
+                onChange={onScoreFilterChange}
+              />
+              <RangeSliderFilter
+                name="Rank"
+                min={0}
+                max={RankMax}
+                defaultValue={props.rarity.rarityRank}
+                onChange={onRankFilterChange}
+              />
+            </div>
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }

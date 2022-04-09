@@ -38,42 +38,47 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        className={clsx(
-          'px-4 ml-2 uppercase',
-          props.rating.bagGreatness > 0 || props.rating.bagRating > 0
-            ? 'bg-black'
-            : ''
-        )}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        Rating
-      </Button>
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          className={clsx(
+            'px-4 ml-2 uppercase',
+            props.rating.bagGreatness > 0 || props.rating.bagRating > 0
+              ? 'bg-black'
+              : ''
+          )}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          Rating
+        </Button>
 
-      {isOpen && (
-        <Popover.Panel className="absolute right-0 z-10 mt-4" ref={ref} static>
-          <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
-            <div className="text-lg text-center uppercase">Rating</div>
-            <RangeSliderFilter
-              name="Greatness"
-              min={0}
-              max={GreatnessMax}
-              defaultValue={props.rating.bagGreatness}
-              onChange={onGreatnessFilterChange}
-            />
-            <RangeSliderFilter
-              name="Rating"
-              min={0}
-              max={RatingMax}
-              defaultValue={props.rating.bagRating}
-              onChange={onRatingFilterChange}
-            />
-          </div>
-        </Popover.Panel>
-      )}
+        {isOpen && (
+          <Popover.Panel
+            className="absolute z-10 m-auto mt-4 md:right-0"
+            static
+          >
+            <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+              <div className="text-lg text-center uppercase">Rating</div>
+              <RangeSliderFilter
+                name="Greatness"
+                min={0}
+                max={GreatnessMax}
+                defaultValue={props.rating.bagGreatness}
+                onChange={onGreatnessFilterChange}
+              />
+              <RangeSliderFilter
+                name="Rating"
+                min={0}
+                max={RatingMax}
+                defaultValue={props.rating.bagRating}
+                onChange={onRatingFilterChange}
+              />
+            </div>
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }

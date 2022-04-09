@@ -21,7 +21,7 @@ export function RealmsFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex">
+      <div className="flex flex-wrap md:flex-nowrap">
         <Button
           variant="primary"
           className={clsx(
@@ -36,13 +36,13 @@ export function RealmsFilter() {
           selectedValues={state.selectedResources}
           onChange={actions.updateSelectedResources}
         />
-        <RealmsRarityFilter
-          rarity={state.rarityFilter}
-          onChange={actions.updateRarityFilter}
-        />
         <OrdersFilter
           selectedValues={state.selectedOrders}
           onChange={actions.updateSelectedOrders}
+        />
+        <RealmsRarityFilter
+          rarity={state.rarityFilter}
+          onChange={actions.updateRarityFilter}
         />
         <TraitsFilter
           traits={state.traitsFilter}

@@ -33,52 +33,53 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        className={clsx(
-          'px-4 ml-2 uppercase',
-          props.selectedValues.length > 0 ? 'bg-black' : ''
-        )}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        Environments
-      </Button>
-
-      {isOpen && (
-        <Popover.Panel
-          className="absolute z-10 mt-2 w-[300px] ml-2 left-1/2 -translate-x-1/2  rounded"
-          ref={ref}
-          static
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          className={clsx(
+            'px-4 ml-2 uppercase',
+            props.selectedValues.length > 0 ? 'bg-black' : ''
+          )}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded-sm shadow-lg">
-            <div className="text-lg text-center uppercase">Environments</div>
+          Environments
+        </Button>
 
-            <div className="relative grid items-center justify-center grid-cols-2 gap-4">
-              {environments.map((env, idx) => (
-                <div
-                  role="button"
-                  key={env.id}
-                  tabIndex={idx}
-                  className={clsx(
-                    'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1',
-                    isSelected(env) ? 'bg-[#515151]' : ''
-                  )}
-                  onClick={() => handleOnClickResourceOption(env)}
-                  aria-hidden="true"
-                >
-                  <ResourceIcon
-                    resource={env.name.replace(' ', '').replace("'", '')}
-                    size="md"
-                  />{' '}
-                  <span>{env.name}</span>
-                </div>
-              ))}
+        {isOpen && (
+          <Popover.Panel
+            className="absolute z-10 mt-2 w-[300px] ml-2 left-1/2 -translate-x-1/2  rounded"
+            static
+          >
+            <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded-sm shadow-lg">
+              <div className="text-lg text-center uppercase">Environments</div>
+
+              <div className="relative grid items-center justify-center grid-cols-2 gap-4">
+                {environments.map((env, idx) => (
+                  <div
+                    role="button"
+                    key={env.id}
+                    tabIndex={idx}
+                    className={clsx(
+                      'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1',
+                      isSelected(env) ? 'bg-[#515151]' : ''
+                    )}
+                    onClick={() => handleOnClickResourceOption(env)}
+                    aria-hidden="true"
+                  >
+                    <ResourceIcon
+                      resource={env.name.replace(' ', '').replace("'", '')}
+                      size="md"
+                    />{' '}
+                    <span>{env.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </Popover.Panel>
-      )}
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }
