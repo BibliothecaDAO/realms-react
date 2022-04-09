@@ -8,6 +8,7 @@ import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
+import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useState } from 'react';
 import useSound from 'use-sound';
@@ -147,10 +148,14 @@ export const MenuSideBar = () => {
 
         <div className="flex flex-col place-items-center ">
           <IconButton
-            className={buttonClasses}
+            className={`${buttonClasses} ${
+              selectedPanel === 'bank' ? 'bg-gray-700' : ''
+            }`}
             aria-label="Desiege"
             href="/desiege"
-            icon={<Bank className={iconClasses} />}
+            variant="unstyled"
+            texture={false}
+            icon={<Shield className={'w-10 mx-auto mt-4 fill-current'} />}
             size="lg"
           />
           <span className={textClasses}>Desiege</span>

@@ -69,7 +69,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 <span className="text-gray-400 mr-4">{realm.realmId} | </span>
                 {realm.name}
               </h3>
-              <h4 className="px-4 mx-auto self-center p-1 border-gray-400 text-gray-400 text-xs rounded border">
+              <h4 className="hidden sm:block px-4 mx-auto self-center p-1 border-gray-400 text-gray-400 text-xs rounded border">
                 rank: {realm.rarityRank}
               </h4>
               <div className=" ml-auto flex">
