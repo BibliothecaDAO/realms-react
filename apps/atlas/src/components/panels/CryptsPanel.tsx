@@ -44,6 +44,10 @@ export const CryptsPanel = () => {
       where.currentOwner = account?.toLowerCase();
     }
 
+    if (state.isLegendaryFilter) {
+      where.name_starts_with = "'";
+    }
+
     where.numDoors_gt = state.statsFilter.numDoors;
     where.numPoints_gt = state.statsFilter.numPoints;
     where.size_gt = state.statsFilter.size;

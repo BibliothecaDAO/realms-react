@@ -1,3 +1,5 @@
+import { Button } from '@bibliotheca-dao/ui-lib';
+import clsx from 'clsx';
 import { OrdersFilter } from '@/components/filters/OrdersFilter';
 import { RealmsRarityFilter } from '@/components/filters/RealmsRarityFilter';
 import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
@@ -9,8 +11,8 @@ export function RealmsFilter() {
   const { state, actions } = useRealmContext();
 
   return (
-    <div className="flex justify-between flex-wrap mb-2">
-      <div className="w-full sm:w-auto my-1">
+    <div className="flex flex-wrap justify-between mb-2">
+      <div className="w-full my-1 sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -19,7 +21,17 @@ export function RealmsFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex">
+        <Button
+          variant="primary"
+          className={clsx(
+            'px-4 my-1 mr-2 uppercasee',
+            state.hasWonderFilter ? 'bg-black' : ''
+          )}
+          onClick={actions.toggleHasWonderFilter}
+        >
+          Wonder
+        </Button>
         <ResourcesFilter
           selectedValues={state.selectedResources}
           onChange={actions.updateSelectedResources}

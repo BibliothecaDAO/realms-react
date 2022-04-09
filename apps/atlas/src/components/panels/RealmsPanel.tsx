@@ -61,6 +61,12 @@ export const RealmsPanel = () => {
       ];
     }
 
+    if (state.hasWonderFilter) {
+      filter.NOT = {
+        wonder: { equals: null },
+      };
+    }
+
     filter.rarityRank = { gte: state.rarityFilter.rarityRank };
     filter.rarityScore = { gte: state.rarityFilter.rarityScore };
     filter.orderType =
