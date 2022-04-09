@@ -1,4 +1,3 @@
-import { BagRatingFilter } from '@/components/filters/BagRatingFilter';
 import { useCryptContext } from '@/context/CryptContext';
 import { CryptEnvironmentFilter } from './CryptEnvironmentFilter';
 import { CryptStatsFilter } from './CryptStatsFilter';
@@ -8,8 +7,8 @@ export function CryptFilter() {
   const { state, actions } = useCryptContext();
 
   return (
-    <div className="flex justify-between">
-      <div>
+    <div className="flex justify-between  my-2">
+      <div className="w-full sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -18,7 +17,7 @@ export function CryptFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex mb-4">
+      <div className="flex ">
         <CryptEnvironmentFilter
           selectedValues={state.environmentsFilter}
           onChange={actions.updateEnvironmentsFilter}
