@@ -33,58 +33,47 @@ export const RealmsPanel = () => {
   const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
   const variables = useMemo(() => {
-    // Your Realms
-    if (state.selectedTab === 0) {
-      return {
-        filter: {
-          OR: [
-            { owner: { equals: account?.toLowerCase() } },
-            { bridgedOwner: { equals: account?.toLowerCase() } },
-          ],
+    const resourceFilters = state.selectedResources.map((resource) => ({
+      resourceType: { equals: resource },
+    }));
+
+    const traitsFilters = Object.keys(state.traitsFilter)
+      // Filter 0 entries
+      .filter((key: string) => (state.traitsFilter as any)[key])
+      .map((key: string) => ({
+        trait: {
+          type: key as RealmTraitType,
+          qty: { gte: (state.traitsFilter as any)[key] },
         },
-      };
-    }
-    // All Realms
-    else if (state.selectedTab === 1) {
-      const resourceFilters = state.selectedResources.map((resource) => ({
-        resourceType: { equals: resource },
       }));
 
-      const traitsFilters = Object.keys(state.traitsFilter)
-        // Filter 0 entries
-        .filter((key: string) => (state.traitsFilter as any)[key])
-        .map((key: string) => ({
-          trait: {
-            type: key as RealmTraitType,
-            qty: { gte: (state.traitsFilter as any)[key] },
-          },
-        }));
+    const filter = {} as any;
+    if (state.searchIdFilter) {
+      filter.realmId = { equals: parseInt(state.searchIdFilter) };
+    } else if (state.selectedTab === 2) {
+      filter.realmId = { in: [...state.favouriteRealms] };
+    }
 
-      return {
-        filter: state.searchIdFilter
-          ? { realmId: { equals: parseInt(state.searchIdFilter) } }
-          : {
-              rarityRank: { gte: state.rarityFilter.rarityRank },
-              rarityScore: { gte: state.rarityFilter.rarityScore },
-              orderType:
-                state.selectedOrders.length > 0
-                  ? { in: [...state.selectedOrders] }
-                  : undefined,
-              AND: [...resourceFilters, ...traitsFilters],
-            },
-        take: limit,
-        skip: limit * (page - 1),
-      };
+    if (state.selectedTab === 0) {
+      filter.OR = [
+        { owner: { equals: account?.toLowerCase() } },
+        { bridgedOwner: { equals: account?.toLowerCase() } },
+      ];
     }
-    // Favourite Realms
-    else if (state.selectedTab === 2) {
-      return {
-        filter: {
-          realmId: { in: [...state.favouriteRealms] },
-        },
-      };
-    }
-    return {};
+
+    filter.rarityRank = { gte: state.rarityFilter.rarityRank };
+    filter.rarityScore = { gte: state.rarityFilter.rarityScore };
+    filter.orderType =
+      state.selectedOrders.length > 0
+        ? { in: [...state.selectedOrders] }
+        : undefined;
+    filter.AND = [...resourceFilters, ...traitsFilters];
+
+    return {
+      filter,
+      take: limit,
+      skip: limit * (page - 1),
+    };
   }, [account, state, page]);
 
   const { data, loading } = useGetRealmsQuery({

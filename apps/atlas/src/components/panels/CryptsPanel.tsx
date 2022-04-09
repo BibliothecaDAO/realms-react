@@ -33,30 +33,25 @@ export const CryptsPanel = () => {
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
   const variables = useMemo(() => {
-    if (state.selectedTab === 0) {
-      return { where: { currentOwner: account.toLowerCase() } };
-    } else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          numDoors_gt: state.statsFilter.numDoors,
-          numPoints_gt: state.statsFilter.numPoints,
-          size_gt: state.statsFilter.size,
-        };
-        if (state.environmentsFilter.length > 0) {
-          where.environment_in = [...state.environmentsFilter];
-        }
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-      };
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
     } else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteCrypt] } };
+      where.id_in = [...state.favouriteCrypt];
     }
+
+    where.numDoors_gt = state.statsFilter.numDoors;
+    where.numPoints_gt = state.statsFilter.numPoints;
+    where.size_gt = state.statsFilter.size;
+    if (state.environmentsFilter.length > 0) {
+      where.environment_in = [...state.environmentsFilter];
+    }
+
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{

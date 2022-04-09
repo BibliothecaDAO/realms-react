@@ -12,7 +12,7 @@ interface RangeSliderFilterProps {
   name: string;
   min: number;
   max: number;
-  defaultValue?: number;
+  defaultValue: number;
   onChange(value: number): void;
 }
 
@@ -23,12 +23,8 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
     animate: true,
     origin: { x: 0, y: 0 },
     translation: { x: 0, y: 0 },
-    selectedValue: 0,
+    selectedValue: props.defaultValue ?? props.min,
   });
-
-  useEffect(() => {
-    setState({ ...state, selectedValue: props.defaultValue ?? props.min });
-  }, [props.defaultValue, props.min]);
 
   // Check for window resizes
   const windowSize = useWindowSize();
@@ -48,6 +44,7 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
           : Math.min(clientX - boundingRect.x, boundingRect.width - sliderSize),
       y: 0,
     };
+
     return {
       ...state,
       translation,
@@ -92,9 +89,13 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
         step * props.defaultValue + boundingRect.x,
         false
       );
-      setState({ ...updatedState, isDragging: false });
+      setState({
+        ...updatedState,
+        isDragging: false,
+        selectedValue: props.defaultValue,
+      });
     }
-  }, [boundingRect]);
+  }, [boundingRect, props.defaultValue]);
 
   // Handle Mouse Events
   const handleMouseDown = useCallback(({ clientX, clientY }) => {

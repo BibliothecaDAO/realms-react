@@ -33,41 +33,32 @@ export const GaPanel = () => {
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
-    // Your GA
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
+    } else if (state.selectedTab === 2) {
+      where.id_in = [...state.favouriteGa];
+    }
+
     if (state.selectedTab === 0) {
-      return { where: { currentOwner: account.toLowerCase() } };
+      where.currentOwner = account?.toLowerCase();
     }
-    // All GA
-    else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          bagGreatness_gt: state.ratingFilter.bagGreatness,
-          bagRating_gt: state.ratingFilter.bagRating,
-        };
-        if (state.selectedOrders.length > 0) {
-          where.order_in = [
-            ...state.selectedOrders.map((orderType) =>
-              orderType.replace('_', ' ')
-            ),
-          ];
-        }
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-        orderBy: 'minted',
-        orderDirection: 'asc',
-      };
+    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
+    where.bagRating_gt = state.ratingFilter.bagRating;
+
+    if (state.selectedOrders.length > 0) {
+      where.order_in = [
+        ...state.selectedOrders.map((orderType) => orderType.replace('_', ' ')),
+      ];
     }
-    // Favourite GA
-    else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteGa] } };
-    }
-    return {};
+
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+      orderBy: 'minted',
+      orderDirection: 'asc',
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{

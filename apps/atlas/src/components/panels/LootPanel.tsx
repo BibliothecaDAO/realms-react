@@ -33,28 +33,25 @@ export const LootPanel = () => {
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
-    if (state.selectedTab === 0) {
-      return { where: { currentOwner: account?.toLowerCase() } };
-    } else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          bagGreatness_gt: state.ratingFilter.bagGreatness,
-          bagRating_gt: state.ratingFilter.bagRating,
-        };
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-        orderBy: 'minted',
-        orderDirection: 'asc',
-      };
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
     } else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteLoot] } };
+      where.id_in = [...state.favouriteLoot];
     }
+
+    if (state.selectedTab === 0) {
+      where.currentOwner = account?.toLowerCase();
+    }
+    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
+    where.bagRating_gt = state.ratingFilter.bagRating;
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+      orderBy: 'minted',
+      orderDirection: 'asc',
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
