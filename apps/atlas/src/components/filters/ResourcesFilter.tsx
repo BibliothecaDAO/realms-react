@@ -1,13 +1,12 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
-
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { ResourceType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 
 type ResourcesFilterProps = {
-  selectedValues?: ResourceType[];
+  selectedValues: ResourceType[];
   onChange(selected: ResourceType[]): void;
 };
 
@@ -23,21 +22,18 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
     setIsOpen(false);
   });
 
-  const [selected, setSelected] = useState<ResourceType[]>(
-    props.selectedValues ?? []
-  );
-
   const handleOnClickResourceOption = (option: ResourceOption) => {
-    const newValues = selected.filter((value) => value !== option.value);
-    if (newValues.length === selected.length) {
+    const newValues = props.selectedValues.filter(
+      (value) => value !== option.value
+    );
+    if (newValues.length === props.selectedValues.length) {
       newValues.push(option.value);
     }
-    setSelected([...newValues]);
     props.onChange([...newValues]);
   };
 
   const isSelected = (option: ResourceOption) =>
-    selected.indexOf(option.value) > -1;
+    props.selectedValues.indexOf(option.value) > -1;
 
   const resources = [
     { name: 'Adamantine', value: ResourceType.Adamantine },
@@ -68,7 +64,10 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4  my-1 uppercase mr-2"
+        className={clsx(
+          'px-4 my-1 mr-2 uppercase',
+          props.selectedValues.length > 0 ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -82,7 +81,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white rounded shadow-lg bg-black">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white bg-black rounded shadow-lg">
             <h4 className="text-center">Resources</h4>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">

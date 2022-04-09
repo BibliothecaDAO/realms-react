@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
+import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { RealmTraitType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
@@ -24,14 +25,6 @@ type TraitsFilterProps = {
 
 export function TraitsFilter(props: TraitsFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [traits, setTraits] = useState<Traits>(
-    props.traits ?? {
-      [RealmTraitType.Region]: 0,
-      [RealmTraitType.City]: 0,
-      [RealmTraitType.Harbor]: 0,
-      [RealmTraitType.River]: 0,
-    }
-  );
 
   const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
@@ -39,34 +32,39 @@ export function TraitsFilter(props: TraitsFilterProps) {
   });
 
   const onRegionFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, [RealmTraitType.Region]: value };
-    setTraits(updatedTraits);
+    const updatedTraits = { ...props.traits, [RealmTraitType.Region]: value };
     props.onChange(updatedTraits);
   };
 
   const onCityFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, [RealmTraitType.City]: value };
-    setTraits(updatedTraits);
+    const updatedTraits = { ...props.traits, [RealmTraitType.City]: value };
     props.onChange(updatedTraits);
   };
 
   const onHarbourFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, [RealmTraitType.Harbor]: value };
-    setTraits(updatedTraits);
+    const updatedTraits = { ...props.traits, [RealmTraitType.Harbor]: value };
     props.onChange(updatedTraits);
   };
 
   const onRiverFilterChange = (value: number) => {
-    const updatedTraits = { ...traits, [RealmTraitType.River]: value };
-    setTraits(updatedTraits);
+    const updatedTraits = { ...props.traits, [RealmTraitType.River]: value };
     props.onChange(updatedTraits);
   };
+
+  const hasSelectedFilters =
+    props.traits.River > 0 ||
+    props.traits.City > 0 ||
+    props.traits.Harbor > 0 ||
+    props.traits.Region > 0;
 
   return (
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 uppercase my-1"
+        className={clsx(
+          'px-4 my-1 uppercase',
+          hasSelectedFilters ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -76,34 +74,34 @@ export function TraitsFilter(props: TraitsFilterProps) {
 
       {isOpen && (
         <Popover.Panel className="absolute right-0 z-10 mt-2 " ref={ref} static>
-          <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white rounded-sm shadow-sm w-60 bg-black">
+          <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
             <h4 className="text-center">Traits</h4>
             <RangeSliderFilter
               name="Regions"
               min={0}
               max={RegionMax}
-              defaultValue={traits[RealmTraitType.Region]}
+              defaultValue={props.traits[RealmTraitType.Region]}
               onChange={onRegionFilterChange}
             />
             <RangeSliderFilter
               name="Cities"
               min={0}
               max={CityMax}
-              defaultValue={traits[RealmTraitType.City]}
+              defaultValue={props.traits[RealmTraitType.City]}
               onChange={onCityFilterChange}
             />
             <RangeSliderFilter
               name="Harbours"
               min={0}
               max={HarbourMax}
-              defaultValue={traits[RealmTraitType.Harbor]}
+              defaultValue={props.traits[RealmTraitType.Harbor]}
               onChange={onHarbourFilterChange}
             />
             <RangeSliderFilter
               name="Rivers"
               min={0}
               max={RiverMax}
-              defaultValue={traits[RealmTraitType.River]}
+              defaultValue={props.traits[RealmTraitType.River]}
               onChange={onRiverFilterChange}
             />
           </div>

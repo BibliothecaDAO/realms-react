@@ -83,7 +83,6 @@ input: name of a dungeon
 returns: true (legendary) or false (not legendary) */
 export function isLegendary(name: string) {
   // Legendary names are the only ones that start with an apostrophe (`)
-  console.log(name.slice(0, 1));
   return name.slice(0, 1);
 }
 

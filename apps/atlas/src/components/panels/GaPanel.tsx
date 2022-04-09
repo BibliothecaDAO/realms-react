@@ -33,41 +33,32 @@ export const GaPanel = () => {
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
-    // Your GA
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
+    } else if (state.selectedTab === 2) {
+      where.id_in = [...state.favouriteGa];
+    }
+
     if (state.selectedTab === 0) {
-      return { where: { currentOwner: account.toLowerCase() } };
+      where.currentOwner = account?.toLowerCase();
     }
-    // All GA
-    else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          bagGreatness_gt: state.ratingFilter.bagGreatness,
-          bagRating_gt: state.ratingFilter.bagRating,
-        };
-        if (state.selectedOrders.length > 0) {
-          where.order_in = [
-            ...state.selectedOrders.map((orderType) =>
-              orderType.replace('_', ' ')
-            ),
-          ];
-        }
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-        orderBy: 'minted',
-        orderDirection: 'asc',
-      };
+    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
+    where.bagRating_gt = state.ratingFilter.bagRating;
+
+    if (state.selectedOrders.length > 0) {
+      where.order_in = [
+        ...state.selectedOrders.map((orderType) => orderType.replace('_', ' ')),
+      ];
     }
-    // Favourite GA
-    else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteGa] } };
-    }
-    return {};
+
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+      orderBy: 'minted',
+      orderDirection: 'asc',
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{
@@ -87,6 +78,9 @@ export const GaPanel = () => {
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.gadventurers?.length ?? 0) === limit);
+
+  const hasNoResults = () =>
+    !loading && (data?.gadventurers?.length ?? 0) === 0;
 
   return (
     <BasePanel open={isGaPanel}>
@@ -123,6 +117,28 @@ export const GaPanel = () => {
         )}
         <GaOverviews bags={data?.gadventurers ?? []} />
       </div>
+
+      {hasNoResults() && (
+        <div className="flex flex-col items-center justify-center gap-8 my-8">
+          <h2>No results.</h2>
+          <div className="flex gap-4">
+            <Button
+              className="whitespace-nowrap"
+              onClick={actions.clearFilters}
+            >
+              Clear Filters
+            </Button>
+            {state.selectedTab !== 1 && (
+              <Button
+                className="whitespace-nowrap"
+                onClick={() => actions.updateSelectedTab(1)}
+              >
+                See All GA
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPagination() && (
         <div className="flex gap-2 my-8">

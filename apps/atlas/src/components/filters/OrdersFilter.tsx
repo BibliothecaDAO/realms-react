@@ -6,7 +6,7 @@ import { OrderType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 
 type OrdersFilterProps = {
-  selectedValues?: OrderType[];
+  selectedValues: OrderType[];
   onChange(selected: OrderType[]): void;
 };
 
@@ -18,21 +18,19 @@ type OrderOption = {
 export function OrdersFilter(props: OrdersFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [selected, setSelected] = useState<OrderType[]>(
-    props.selectedValues ?? []
-  );
-
   const handleOnClickOrderOption = (option: OrderOption) => {
-    const newValues = selected.filter((value) => value !== option.value);
-    if (newValues.length === selected.length) {
+    const newValues = props.selectedValues.filter(
+      (value) => value !== option.value
+    );
+    if (newValues.length === props.selectedValues.length) {
       newValues.push(option.value);
     }
-    setSelected([...newValues]);
+    // setSelected([...newValues]);
     props.onChange([...newValues]);
   };
 
   const isSelected = (option: OrderOption) =>
-    selected.indexOf(option.value) > -1;
+    props.selectedValues.indexOf(option.value) > -1;
 
   const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
@@ -62,7 +60,10 @@ export function OrdersFilter(props: OrdersFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className={`px-4 my-1 mr-2 uppercase ${isOpen ? 'bg-black/80' : ''}`}
+        className={clsx(
+          `px-4 my-1 mr-2 uppercase`,
+          props.selectedValues.length > 0 ? 'bg-black' : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -76,7 +77,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
           ref={ref}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded shadow-sm bg-black">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded shadow-sm">
             <h4>Search by Orders</h4>
 
             <div className="relative grid items-center justify-center grid-cols-4 gap-6">

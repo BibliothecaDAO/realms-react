@@ -23,6 +23,7 @@ interface RealmState {
   favouriteRealms: number[];
   searchIdFilter: string;
   selectedTab: number;
+  hasWonderFilter: boolean;
 }
 
 type RealmAction =
@@ -30,6 +31,7 @@ type RealmAction =
   | { type: 'updateTraitsFilter'; payload: TraitsFilter }
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'updateSelectedResources'; payload: ResourceType[] }
+  | { type: 'toggleHasWonderFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
@@ -41,6 +43,7 @@ interface RealmActions {
   updateTraitsFilter(filter: TraitsFilter): void;
   updateSelectedOrders(orders: OrderType[]): void;
   updateSelectedResources(resources: ResourceType[]): void;
+  toggleHasWonderFilter(): void;
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
@@ -62,6 +65,7 @@ const defaultFilters = {
   selectedOrders: [] as OrderType[],
   selectedResources: [] as ResourceType[],
   searchIdFilter: '',
+  hasWonderFilter: false,
 };
 const defaultRealmState = {
   ...defaultFilters,
@@ -79,6 +83,8 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, traitsFilter: action.payload };
     case 'updateSelectedTab':
       return { ...state, selectedTab: action.payload };
+    case 'toggleHasWonderFilter':
+      return { ...state, hasWonderFilter: !state.hasWonderFilter };
     case 'updateSelectedOrders':
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
@@ -122,6 +128,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateSearchIdFilter', payload: realmId }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
   updateTraitsFilter: (filter: TraitsFilter) =>
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>

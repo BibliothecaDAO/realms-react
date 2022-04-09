@@ -12,11 +12,13 @@ interface CryptState {
   favouriteCrypt: string[];
   searchIdFilter: string;
   selectedTab: number;
+  isLegendaryFilter: boolean;
 }
 
 type CryptAction =
   | { type: 'updateStatsFilter'; payload: StatsFilter }
   | { type: 'updateEnvironmentsFilter'; payload: number[] }
+  | { type: 'toggleIsLegendaryFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteCrypt'; payload: string }
   | { type: 'removeFavouriteCrypt'; payload: string }
@@ -31,6 +33,7 @@ interface CryptActions {
   removeFavouriteCrypt(id: string): void;
   updateSearchIdFilter(id: string): void;
   updateSelectedTab(tab: number): void;
+  toggleIsLegendaryFilter(): void;
 }
 
 const defaultFilters = {
@@ -41,6 +44,7 @@ const defaultFilters = {
   },
   environmentsFilter: [],
   searchIdFilter: '',
+  isLegendaryFilter: false,
 };
 
 const defaultCryptState = {
@@ -61,6 +65,9 @@ function cryptReducer(state: CryptState, action: CryptAction): CryptState {
       return { ...state, selectedTab: action.payload };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
+    case 'toggleIsLegendaryFilter':
+      return { ...state, isLegendaryFilter: !state.isLegendaryFilter };
+      break;
     case 'addFavouriteCrypt':
       storage<string[]>(CryptFavoriteLocalStorageKey, []).set([
         ...state.favouriteCrypt,
@@ -80,6 +87,7 @@ function cryptReducer(state: CryptState, action: CryptAction): CryptState {
           (id: string) => id !== action.payload
         ),
       };
+
     default:
       return state;
   }
@@ -98,6 +106,7 @@ const mapActions = (dispatch: Dispatch<CryptAction>): CryptActions => ({
     dispatch({ type: 'updateEnvironmentsFilter', payload: envs }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  toggleIsLegendaryFilter: () => dispatch({ type: 'toggleIsLegendaryFilter' }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteCrypt: (id: string) =>
     dispatch({ type: 'addFavouriteCrypt', payload: id }),

@@ -33,28 +33,25 @@ export const LootPanel = () => {
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
-    if (state.selectedTab === 0) {
-      return { where: { currentOwner: account?.toLowerCase() } };
-    } else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          bagGreatness_gt: state.ratingFilter.bagGreatness,
-          bagRating_gt: state.ratingFilter.bagRating,
-        };
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-        orderBy: 'minted',
-        orderDirection: 'asc',
-      };
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
     } else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteLoot] } };
+      where.id_in = [...state.favouriteLoot];
     }
+
+    if (state.selectedTab === 0) {
+      where.currentOwner = account?.toLowerCase();
+    }
+    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
+    where.bagRating_gt = state.ratingFilter.bagRating;
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+      orderBy: 'minted',
+      orderDirection: 'asc',
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
@@ -72,6 +69,8 @@ export const LootPanel = () => {
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.bags?.length ?? 0) === limit);
+
+  const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
 
   return (
     <BasePanel open={isLootPanel}>
@@ -108,6 +107,28 @@ export const LootPanel = () => {
         )}
         <LootOverviews bags={data?.bags ?? []} />
       </div>
+
+      {hasNoResults() && (
+        <div className="flex flex-col items-center justify-center gap-8 my-8">
+          <h2>No results.</h2>
+          <div className="flex gap-4">
+            <Button
+              className="whitespace-nowrap"
+              onClick={actions.clearFilters}
+            >
+              Clear Filters
+            </Button>
+            {state.selectedTab !== 1 && (
+              <Button
+                className="whitespace-nowrap"
+                onClick={() => actions.updateSelectedTab(1)}
+              >
+                See All Loot
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPagination() && (
         <div className="flex gap-2 my-8">

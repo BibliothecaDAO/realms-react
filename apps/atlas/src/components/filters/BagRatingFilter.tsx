@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
+import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import { RangeSliderFilter } from './RangeSliderFilter';
@@ -20,24 +21,18 @@ type BagRatingFilterProps = {
 export function BagRatingFilter(props: BagRatingFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [rating, setRating] = useState<BagRating>(
-    props.rating ?? { bagGreatness: 0, bagRating: 0 }
-  );
-
   const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
     setIsOpen(false);
   });
 
   const onGreatnessFilterChange = (value: number) => {
-    const updatedRating = { ...rating, bagGreatness: value };
-    setRating(updatedRating);
+    const updatedRating = { ...props.rating, bagGreatness: value };
     props.onChange(updatedRating);
   };
 
   const onRatingFilterChange = (value: number) => {
-    const updatedRating = { ...rating, bagRating: value };
-    setRating(updatedRating);
+    const updatedRating = { ...props.rating, bagRating: value };
     props.onChange(updatedRating);
   };
 
@@ -45,7 +40,12 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
     <Popover className="relative">
       <Button
         variant="primary"
-        className="px-4 ml-2 uppercase"
+        className={clsx(
+          'px-4 ml-2 uppercase',
+          props.rating.bagGreatness > 0 || props.rating.bagRating > 0
+            ? 'bg-black'
+            : ''
+        )}
         onClick={() => {
           setIsOpen(true);
         }}
@@ -55,20 +55,20 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
 
       {isOpen && (
         <Popover.Panel className="absolute right-0 z-10 mt-4" ref={ref} static>
-          <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white rounded shadow-sm w-60 bg-black">
+          <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
             <div className="text-lg text-center uppercase">Rating</div>
             <RangeSliderFilter
               name="Greatness"
               min={0}
               max={GreatnessMax}
-              defaultValue={rating.bagGreatness}
+              defaultValue={props.rating.bagGreatness}
               onChange={onGreatnessFilterChange}
             />
             <RangeSliderFilter
               name="Rating"
               min={0}
               max={RatingMax}
-              defaultValue={rating.bagRating}
+              defaultValue={props.rating.bagRating}
               onChange={onRatingFilterChange}
             />
           </div>
