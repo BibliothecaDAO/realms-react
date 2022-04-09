@@ -78,7 +78,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
 
       {isOpen && (
         <Popover.Panel
-          className="absolute z-10 mt-2 w-[420px] ml-2 left-1/2 -translate-x-1/2"
+          className="absolute z-10 mt-2 w-[420px] ml-2 left-0 sm:left-1/2 sm:-translate-x-1/2"
           ref={ref}
           static
         >
