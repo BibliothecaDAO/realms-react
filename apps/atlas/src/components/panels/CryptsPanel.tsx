@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
@@ -14,7 +14,12 @@ import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const CryptsPanel = () => {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const {
+    togglePanelType,
+    selectedPanel,
+    setSelectedAssetType,
+    setSelectedId,
+  } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -22,6 +27,8 @@ export const CryptsPanel = () => {
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
+
+  const isCryptPanel = selectedPanel === 'crypt';
 
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
@@ -56,14 +63,22 @@ export const CryptsPanel = () => {
     dungeons: Crypt[];
   }>(getCryptsQuery, {
     variables,
+    skip: !isCryptPanel,
   });
+
+  useEffect(() => {
+    if (page === 1 && (data?.dungeons?.length ?? 0) > 0) {
+      setSelectedAssetType('crypt');
+      setSelectedId(data?.dungeons[0].id as string);
+    }
+  }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.dungeons?.length ?? 0) === limit);
 
   return (
-    <BasePanel open={selectedPanel === 'crypt'}>
+    <BasePanel open={isCryptPanel}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Crypts</h1>

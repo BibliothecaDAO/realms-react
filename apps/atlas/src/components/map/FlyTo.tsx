@@ -1,10 +1,10 @@
-import type { AssetFilter } from '@/hooks/useUIContext';
+import type { AssetType } from '@/hooks/useUIContext';
 import { AssetFilters, useUIContext } from '@/hooks/useUIContext';
 
 export const FlyTo = () => {
   const {
     selectedAssetFilter,
-    setSelectedAssetFilter,
+    setSelectedAssetType,
     selectedId,
     setSelectedId,
     gotoAssetId,
@@ -42,12 +42,7 @@ export const FlyTo = () => {
         className="w-5/12 p-1 px-4 mr-2 uppercase transition-all duration-300 cursor-pointer text-off-100 bg-off-200/50 rounded-r font-display"
         value={selectedAssetFilter.value}
         onChange={(event) =>
-          setSelectedAssetFilter(
-            AssetFilters.find(
-              (assetFilter: AssetFilter) =>
-                assetFilter.value === event.target.value
-            ) as AssetFilter
-          )
+          setSelectedAssetType(event.target.value as AssetType)
         }
       >
         {AssetFilters.map((assetFilter) => (

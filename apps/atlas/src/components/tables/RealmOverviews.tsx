@@ -23,6 +23,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -40,6 +41,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     account && (account === realm.owner || account === realm.bridgedOwner);
 
   const openRealmDetails = (realmId: number) => {
+    setSelectedAssetType('realm');
     setSelectedId(realmId.toString());
     if (selectedMenuType !== 'realm') {
       toggleMenuType('realm');

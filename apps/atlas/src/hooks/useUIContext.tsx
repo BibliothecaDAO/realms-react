@@ -47,8 +47,10 @@ export const AssetFilters: AssetFilter[] = [
 interface UI {
   selectedId: string;
   setSelectedId: (id: string) => void;
+  showDetails: boolean;
+  setShowDetails: (show: boolean) => void;
   selectedAssetFilter: AssetFilter;
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => void;
+  setSelectedAssetType: (assetType: AssetType) => void;
   selectedMenuType: MenuType;
   setMenuType: (menuType: MenuType) => void;
   toggleMenuType: (menuType: MenuType) => void;
@@ -63,25 +65,7 @@ interface UI {
   selectedPanel: PanelType;
 }
 
-const defaultUIContext: UI = {
-  selectedId: '1',
-  setSelectedId: (id: string) => {},
-  selectedAssetFilter: AssetFilters[0],
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
-  selectedMenuType: undefined,
-  setMenuType: (menuType: MenuType) => {},
-  toggleMenuType: (menuType: MenuType) => {},
-  closeAll: (exclude?: MenuType) => {},
-  gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
-  toggleArtBackground: (background?: BackgroundOptions) => {},
-  artBackground: undefined,
-  mainMenu: true,
-  toggleMainMenu: () => {},
-  togglePanelType: (panelType: PanelType) => {},
-  selectedPanel: undefined,
-};
-
-const UIContext = createContext<UI>(defaultUIContext);
+const UIContext = createContext<UI>(null!);
 
 interface UIProviderProps {
   children: React.ReactNode;
@@ -160,7 +144,8 @@ function useCoordinates() {
 function useUI(): UI {
   const router = useRouter();
   const query = useQueryPOI();
-  const [selectedId, setSelectedId] = useState(query ? query.assetId : '1');
+  const [selectedId, setSelectedId] = useState(query ? query.assetId : '');
+  const [showDetails, setShowDetails] = useState(false);
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
@@ -176,7 +161,14 @@ function useUI(): UI {
 
   // Update URL
   // useEffect(() => {
-  //   router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
+  //   if (!selectedId) {
+  //     return;
+  //   }
+  //   const path = selectedId
+  //     ? `?${selectedAssetFilter.value}=${selectedId}`
+  //     : '/';
+
+  //   router.push(path, undefined, {
   //     shallow: true,
   //   });
   // }, [selectedId, selectedAssetFilter]);
@@ -190,6 +182,7 @@ function useUI(): UI {
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
+      setShowDetails(false);
       setMenuType(undefined);
     } else if (selectedMenuType !== exclude) {
       setMenuType(exclude);
@@ -201,8 +194,10 @@ function useUI(): UI {
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
+      setShowDetails(false);
       setMenuType(undefined);
     } else {
+      setShowDetails(true);
       setMenuType(menuType);
     }
   };
@@ -212,10 +207,12 @@ function useUI(): UI {
   const togglePanelType = (panelType: PanelType) => {
     setMainMenu(false);
     if (selectedPanel === panelType) {
+      setShowDetails(false);
       setPanelType(undefined);
       setMenuType(undefined);
       setArtBackground(undefined);
     } else {
+      setShowDetails(true);
       setPanelType(panelType);
       if (panelType === 'bank') {
         setArtBackground('bank');
@@ -236,13 +233,17 @@ function useUI(): UI {
     }
   };
 
+  const setSelectedAssetType = (assetType: AssetType) =>
+    setSelectedAssetFilter(assetFilterByType(assetType));
+
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
     setMenuType(assetType);
-    setSelectedAssetFilter(assetFilterByType(assetType));
+    setShowDetails(true);
+    setSelectedAssetType(assetType);
     setSelectedId(assetId + '');
     updateCoordinatesByAsset(assetId + '', assetType);
   };
@@ -250,8 +251,10 @@ function useUI(): UI {
   return {
     selectedId,
     setSelectedId,
+    showDetails,
+    setShowDetails,
     selectedAssetFilter,
-    setSelectedAssetFilter,
+    setSelectedAssetType,
     selectedMenuType,
     setMenuType,
     closeAll,

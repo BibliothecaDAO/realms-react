@@ -58,7 +58,7 @@ export const MenuSideBar = () => {
         <div className="flex flex-col place-items-center ">
           <IconButton
             className={`${buttonClasses} ${
-              selectedPanel === 'Realms' ? 'bg-green-50' : ''
+              selectedPanel === 'realm' ? 'bg-green-50' : ''
             }`}
             aria-label="Realms"
             onClick={() => {

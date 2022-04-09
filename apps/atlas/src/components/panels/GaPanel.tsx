@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
@@ -14,7 +14,12 @@ import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const GaPanel = () => {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const {
+    togglePanelType,
+    selectedPanel,
+    setSelectedId,
+    setSelectedAssetType,
+  } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -22,6 +27,8 @@ export const GaPanel = () => {
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
+
+  const isGaPanel = selectedPanel === 'ga';
 
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
@@ -67,14 +74,22 @@ export const GaPanel = () => {
     gadventurers: GAdventurer[];
   }>(getGAsQuery, {
     variables,
+    skip: !isGaPanel,
   });
+
+  useEffect(() => {
+    if (page === 1 && (data?.gadventurers?.length ?? 0) > 0) {
+      setSelectedAssetType('ga');
+      setSelectedId(data?.gadventurers[0].id as string);
+    }
+  }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.gadventurers?.length ?? 0) === limit);
 
   return (
-    <BasePanel open={selectedPanel === 'ga'}>
+    <BasePanel open={isGaPanel}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Genesis Adventurers</h1>

@@ -15,6 +15,7 @@ export function LootOverviews(props: LootOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -29,6 +30,8 @@ export function LootOverviews(props: LootOverviewsProps) {
 
   const openLootDetails = (id: string) => {
     setSelectedId(id);
+    setSelectedAssetType('loot');
+
     if (selectedMenuType !== 'loot') {
       toggleMenuType('loot');
     }
