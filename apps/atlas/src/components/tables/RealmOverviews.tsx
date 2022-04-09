@@ -57,35 +57,21 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             key={index}
             className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-evenly"
           >
-            <div className="flex w-full p-2 text-white rounded-t-l bg-black/60">
-              <OrderIcon
-                className="self-center mx-3"
-                size={'md'}
-                order={realm.orderType.toLowerCase()}
-              />
-
-              <h3 className="mb-1 self-center">
-                <span className="text-gray-400 mr-4">{realm.realmId}</span>
+            <div className="flex w-full p-2 text-white rounded-t-l bg-black/80">
+              <h3 className="ml-4 mb-1 self-center">
+                <span className="text-gray-400 mr-4">{realm.realmId} | </span>
                 {realm.name}
               </h3>
-              <div className="ml-auto self-center mr-4">
-                {!isFavourite(realm) && (
-                  <Button
-                    size="sm"
-                    onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                  >
-                    Add
-                  </Button>
-                )}{' '}
-                {isFavourite(realm) && (
-                  <Button
-                    size="sm"
-                    className="w-full uppercase"
-                    onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                  >
-                    Remove
-                  </Button>
-                )}
+              <div className=" ml-auto flex">
+                <span className="self-center uppercase tracking-widest">
+                  {realm.orderType.toLowerCase().replace('_', ' ')}
+                </span>
+
+                <OrderIcon
+                  className="self-center mx-3"
+                  size={'md'}
+                  order={realm.orderType.toLowerCase()}
+                />
               </div>
             </div>
             <div className="flex w-1/2 sm:w-1/3 px-6 bg-black/50 ">
@@ -146,7 +132,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   gotoAssetId(realm.realmId, 'realm');
                 }}
                 variant="primary"
-                size="sm"
+                size="xs"
                 className="w-full uppercase"
               >
                 fly to
@@ -154,11 +140,30 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               <Button
                 onClick={() => openRealmDetails(realm.realmId)}
                 variant="secondary"
-                size="sm"
-                className="w-full uppercase"
+                size="xs"
+                className="w-full "
               >
                 details
               </Button>
+              {!isFavourite(realm) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
+                >
+                  Add
+                </Button>
+              )}{' '}
+              {isFavourite(realm) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  className="w-full"
+                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                >
+                  Remove
+                </Button>
+              )}
             </div>
           </div>
         ))}
