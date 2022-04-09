@@ -160,15 +160,18 @@ function useUI(): UI {
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
   // Update URL
-  useEffect(() => {
-    const path = selectedId
-      ? `?${selectedAssetFilter.value}=${selectedId}`
-      : '/';
+  // useEffect(() => {
+  //   if (!selectedId) {
+  //     return;
+  //   }
+  //   const path = selectedId
+  //     ? `?${selectedAssetFilter.value}=${selectedId}`
+  //     : '/';
 
-    router.push(path, undefined, {
-      shallow: true,
-    });
-  }, [selectedId, selectedAssetFilter]);
+  //   router.push(path, undefined, {
+  //     shallow: true,
+  //   });
+  // }, [selectedId, selectedAssetFilter]);
 
   // Sync AssetFilter with Menu
   useEffect(() => {
