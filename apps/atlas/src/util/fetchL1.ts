@@ -1,5 +1,5 @@
-import type { BigNumber } from 'ethers';
 import { ethers } from 'ethers';
+import type { BigNumber } from 'ethers';
 import LordsERC2OContract from '@/abi/balance.json';
 import JourneyABI from '@/abi/journey.json';
 import {
@@ -52,9 +52,13 @@ export const fetchNumberRealmsStaked: (string) => Promise<number> = async (
   );
 
   try {
-    const stakedInJourneyV1 = await journeyContract.getNumberRealms(account);
-    const stakedInJourneyV2 = await journeyContractV2.getNumberRealms(account);
-    return stakedInJourneyV1[0] + stakedInJourneyV2[0];
+    const stakedInJourneyV1: BigNumber = await journeyContract.getNumberRealms(
+      account
+    );
+    const stakedInJourneyV2: BigNumber =
+      await journeyContractV2.getNumberRealms(account);
+
+    return stakedInJourneyV1.toNumber() + stakedInJourneyV2.toNumber();
   } catch (e: any) {
     throw `Could not fetch numberRealmStaked: ${e.message}`;
   }
