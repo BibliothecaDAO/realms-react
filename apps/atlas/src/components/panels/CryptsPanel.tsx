@@ -14,12 +14,7 @@ import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const CryptsPanel = () => {
-  const {
-    togglePanelType,
-    selectedPanel,
-    setSelectedAssetType,
-    setSelectedId,
-  } = useUIContext();
+  const { togglePanelType, selectedPanel, openDetails } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -71,8 +66,7 @@ export const CryptsPanel = () => {
 
   useEffect(() => {
     if (page === 1 && (data?.dungeons?.length ?? 0) > 0) {
-      setSelectedAssetType('crypt');
-      setSelectedId(data?.dungeons[0].id as string);
+      openDetails('crypt', data?.dungeons[0].id as string);
     }
   }, [data, page]);
 
