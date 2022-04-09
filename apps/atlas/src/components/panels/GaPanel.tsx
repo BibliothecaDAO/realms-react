@@ -14,12 +14,7 @@ import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const GaPanel = () => {
-  const {
-    togglePanelType,
-    selectedPanel,
-    setSelectedId,
-    setSelectedAssetType,
-  } = useUIContext();
+  const { togglePanelType, openDetails, selectedPanel } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -70,8 +65,7 @@ export const GaPanel = () => {
 
   useEffect(() => {
     if (page === 1 && (data?.gadventurers?.length ?? 0) > 0) {
-      setSelectedAssetType('ga');
-      setSelectedId(data?.gadventurers[0].id as string);
+      openDetails('ga', data?.gadventurers[0].id as string);
     }
   }, [data, page]);
 

@@ -54,6 +54,7 @@ interface UI {
   selectedMenuType: MenuType;
   setMenuType: (menuType: MenuType) => void;
   toggleMenuType: (menuType: MenuType) => void;
+  openDetails: (menuType: MenuType, assetId: string) => void;
   closeAll: (exclude?: MenuType) => void;
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
@@ -233,6 +234,12 @@ function useUI(): UI {
     }
   };
 
+  const openDetails = (menuType: MenuType, assetId: string) => {
+    setShowDetails(true);
+    setMenuType(menuType);
+    setSelectedId(assetId);
+  };
+
   const setSelectedAssetType = (assetType: AssetType) =>
     setSelectedAssetFilter(assetFilterByType(assetType));
 
@@ -257,6 +264,7 @@ function useUI(): UI {
     setSelectedAssetType,
     selectedMenuType,
     setMenuType,
+    openDetails,
     closeAll,
     toggleArtBackground,
     toggleMenuType,

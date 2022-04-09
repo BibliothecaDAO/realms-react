@@ -13,13 +13,7 @@ import Button from '@/shared/Button';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
-  const {
-    togglePanelType,
-    selectedPanel,
-    setSelectedAssetType,
-    setMenuType,
-    setSelectedId,
-  } = useUIContext();
+  const { togglePanelType, selectedPanel, openDetails } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useRealmContext();
 
@@ -89,8 +83,7 @@ export const RealmsPanel = () => {
 
   useEffect(() => {
     if (page === 1 && (data?.getRealms?.length ?? 0) > 0) {
-      setSelectedAssetType('realm');
-      setSelectedId(data?.getRealms[0].realmId + '');
+      openDetails('realm', data?.getRealms[0].realmId + '');
     }
   }, [data, page]);
 
