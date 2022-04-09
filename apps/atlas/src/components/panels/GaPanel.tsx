@@ -23,8 +23,19 @@ export const GaPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
-  const isGaPanel = selectedPanel === 'ga';
+  // Reset page on filter change. UseEffect doesn't do a deep compare
+  useEffect(() => {
+    setPage(1);
+  }, [
+    state.favouriteGa,
+    state.selectedOrders,
+    state.searchIdFilter,
+    state.ratingFilter.bagGreatness,
+    state.ratingFilter.bagRating,
+    state.selectedTab,
+  ]);
 
+  const isGaPanel = selectedPanel === 'ga';
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {

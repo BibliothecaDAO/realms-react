@@ -22,8 +22,24 @@ export const RealmsPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
-  const isRealmPanel = selectedPanel === 'realm';
+  // Reset page on filter change. UseEffect doesn't do a deep compare
+  useEffect(() => {
+    setPage(1);
+  }, [
+    state.favouriteRealms,
+    state.selectedOrders,
+    state.searchIdFilter,
+    state.hasWonderFilter,
+    state.rarityFilter.rarityRank,
+    state.rarityFilter.rarityScore,
+    state.traitsFilter.City,
+    state.traitsFilter.Harbor,
+    state.traitsFilter.Region,
+    state.traitsFilter.River,
+    state.selectedTab,
+  ]);
 
+  const isRealmPanel = selectedPanel === 'realm';
   const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
   const variables = useMemo(() => {
