@@ -52,8 +52,7 @@ function App() {
 
 function Atlas() {
   const ITEM_VIEW_LEVEL = 5;
-  const { setMenuType, selectedId, setSelectedId, coordinates } =
-    useUIContext();
+  const { openDetails, selectedId, coordinates } = useUIContext();
   const [resource] = useState<Array<string>>([]);
 
   const filteredData = () => {
@@ -96,8 +95,7 @@ function Atlas() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.tokenId);
-      setMenuType('crypt');
+      openDetails('crypt', info.object.properties.tokenId);
     },
   });
 
@@ -121,8 +119,7 @@ function Atlas() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.realm_idx);
-      setMenuType('realm');
+      openDetails('realm', info.object.properties.realm_idx);
     },
   });
 
@@ -145,8 +142,7 @@ function Atlas() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.bag_id);
-      setMenuType('loot');
+      openDetails('loot', info.object.properties.bag_id);
     },
   });
 
@@ -169,8 +165,7 @@ function Atlas() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.ga_id);
-      setMenuType('ga');
+      openDetails('ga', info.object.properties.ga_id);
     },
   });
 
