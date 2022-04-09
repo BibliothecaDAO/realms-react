@@ -119,9 +119,10 @@ const GameControls: React.FC<Prop> = (props) => {
             <Button onClick={props.onChooseElements}>
               <ElementLabel>Choose your Elements</ElementLabel>
             </Button>
-          ) : (
+          ) : null}
+          {userBalance.loading ? (
             <LoadingSkeleton className="w-full h-10" />
-          )}
+          ) : null}
         </div>
       ) : null}
       {gameStatus.data == 'active' && account ? (
