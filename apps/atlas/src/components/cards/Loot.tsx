@@ -54,7 +54,7 @@ export function Loot(props: LootProps): ReactElement {
               <h3>
                 Bag # <span className="font-semibold ">{props.loot.id}</span>
               </h3>
-              {props.loot.currentOwner && <h3>👑 {ensData.displayName}</h3>}
+              {props.loot.currentOwner && <h3>{ensData.displayName}</h3>}
               {props.flyto && (
                 <div className="self-center text-lg">
                   <Button

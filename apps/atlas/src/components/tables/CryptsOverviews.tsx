@@ -3,7 +3,12 @@ import { useCryptContext } from '@/context/CryptContext';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
-import { environments } from '@/util/cryptsEnvironments';
+import {
+  environments,
+  findEnvironment,
+  isLegendary,
+  legendaryColourClass,
+} from '@/util/cryptsEnvironments';
 
 interface CryptOverviewsProps {
   dungeons: Crypt[];
@@ -45,15 +50,15 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
           >
             <div className="flex w-full p-2  bg-black/50">
               <div className="self-center flex w-full">
-                <h3 className=" ml-4">
-                  <span className="text-gray-400">{crypt.id}</span> |{' '}
-                  {crypt.name}
+                <h3 className={`px-2 rounded py-1`}>
+                  <span>{crypt.id}</span> | {crypt.name}
                 </h3>
                 <div className="ml-auto">
                   {!isFavourite(crypt) && (
                     <Button
                       size="sm"
                       className="text-xs"
+                      variant="secondary"
                       onClick={() => actions.addFavouriteCrypt(crypt.id)}
                     >
                       Add
@@ -63,6 +68,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                     <Button
                       size="sm"
                       className="text-xs"
+                      variant="secondary"
                       onClick={() => actions.removeFavouriteCrypt(crypt.id)}
                     >
                       Remove
@@ -71,29 +77,37 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 </div>
               </div>
             </div>
-            <div className="w-2/3 grid items-center justify-between w-full grid-cols-2 p-6 bg-black/70">
-              <div className="font-bold my-1">Environment</div>
-              <div className="flex my-1">
-                {' '}
-                {environments[crypt.environment]?.name}
-              </div>
-              <div className="font-bold my-1">Resource</div>
-              <div className="flex my-1">
+            <div className="flex w-1/3 sm:w-3/12 px-6 bg-black/40 ">
+              <div className="my-1 self-center">
                 <ResourceIcon
-                  resource={environments[crypt.environment]?.name
-                    .replace(' ', '')
-                    .replace("'", '')}
-                  size="sm"
-                />{' '}
+                  resource={environments[crypt.environment]?.name}
+                  size="md"
+                  label
+                />
+              </div>
+            </div>
+            <div className="w-2/3 sm:w-6/12 grid items-center justify-between grid-cols-2 p-6 bg-black/70">
+              <div className="font-bold my-1">Environment</div>
+              <div
+                className={`px-2 rounded py-0.5 ${
+                  findEnvironment(crypt.environment)?.colourClass.main
+                }`}
+              >
+                {' '}
+                {findEnvironment(crypt.environment)?.name}
               </div>
               <div className="font-bold  my-1">Size</div>
-              <div>{crypt.size}</div>
+              <div>
+                {crypt.size} x {crypt.size}
+              </div>
               <div className="font-bold my-1">Doors</div>
               <div>{crypt.numDoors}</div>
               <div className="font-bold my-1">Points</div>
               <div>{crypt.numPoints}</div>
+              {/* <div className="font-bold my-1">Legendary</div>
+              <div>{crypt}</div> */}
             </div>
-            <div className="flex flex-col justify-center w-1/3 p-8 space-y-3 bg-gray-600/70">
+            <div className="flex sm:flex-col justify-center w-full sm:w-3/12 py-4 sm:py-0 px-6 space-x-2 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
@@ -108,7 +122,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
               </Button>
               <Button
                 onClick={() => openCryptDetails(crypt.id)}
-                variant="default"
+                variant="secondary"
                 size="sm"
                 className="w-full uppercase text-xs"
               >

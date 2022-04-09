@@ -16,8 +16,13 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
   const { account, connectWallet } = useWalletContext();
-  const { toggleMenuType, mainMenu, toggleMainMenu, togglePanelType } =
-    useUIContext();
+  const {
+    toggleMenuType,
+    mainMenu,
+    toggleMainMenu,
+    togglePanelType,
+    selectedPanel,
+  } = useUIContext();
   const { isSoundActive, toggleSound } = useSound();
 
   const handleClick = useCallback(() => {
@@ -52,12 +57,14 @@ export const MenuSideBar = () => {
       >
         <div className="flex flex-col place-items-center ">
           <IconButton
-            className={buttonClasses}
+            className={`${buttonClasses} ${
+              selectedPanel === 'Realms' ? 'bg-green-50' : ''
+            }`}
             aria-label="Realms"
             onClick={() => {
               togglePanelType('realm');
             }}
-            icon={<Castle className={iconClasses} />}
+            icon={<Castle className={`${iconClasses}`} />}
             size="lg"
           />
 
@@ -68,7 +75,7 @@ export const MenuSideBar = () => {
             className={buttonClasses}
             aria-label="Loot"
             onClick={() => togglePanelType('loot')}
-            icon={<Bag className={'mx-auto w-10 fill-current'} />}
+            icon={<Bag className={`${iconClasses}`} />}
             size="lg"
           />
           <span className={textClasses}>Loot</span>

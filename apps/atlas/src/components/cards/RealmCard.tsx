@@ -60,45 +60,53 @@ function Overview(props: RealmProps): ReactElement {
 
       <div
         className={
-          `flex flex-col  w-full uppercase font-display ` +
+          `grid grid-cols-2 gap-4  w-full uppercase font-display ` +
           (props.size ? variantMaps[props.size]?.regions : '')
         }
       >
-        <span>Regions: {props.realm.regions} / 7</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-amber-700/60 rounded-xl"
-            style={{
-              width: `${((props.realm.regions as any) / 7) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span>Regions: {props.realm.regions} / 7</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-amber-700/60 rounded-xl"
+              style={{
+                width: `${((props.realm.regions as any) / 7) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Cities: {props.realm.cities} / 21</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-amber-300/60"
-            style={{
-              width: `${((props.realm.cities as any) / 21) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Cities: {props.realm.cities} / 21</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-amber-300/60"
+              style={{
+                width: `${((props.realm.cities as any) / 21) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-blue-700/60"
-            style={{
-              width: `${((props.realm.harbours as any) / 35) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-blue-700/60"
+              style={{
+                width: `${((props.realm.harbours as any) / 35) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-blue-500/60 "
-            style={{
-              width: `${((props.realm.rivers as any) / 60) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-blue-500/60 "
+              style={{
+                width: `${((props.realm.rivers as any) / 60) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
       </div>
       <MarketplaceByPanel

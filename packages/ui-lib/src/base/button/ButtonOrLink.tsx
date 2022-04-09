@@ -32,12 +32,14 @@ const STYLES = {
     primary:
       'text-white bg-off-200 hover:bg-off-200/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
     secondary:
-      'bg-gray-600 text-white border-gray-600 hover:bg-gray-400 active:text-gray-900  active:bg-gray-200 shadow-md ',
+      'bg-gray-600 text-white border-gray-600 hover:bg-gray-400 hover:text-gray-800 active:text-gray-900  active:bg-gray-200 shadow-md ',
     tertiary:
       'text-gray-500 bg-white hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 active:text-gray-900',
     danger:
       'text-red-600 focus-visible:bg-red-100 focus-visible:ring-red-600 active:bg-red-200 hover:bg-red-100',
     link: '!p-0 font-semibold text-green-600 focus-visible:ring-transparent focus:underline hover:underline',
+    outline:
+      'text-gray-500 hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 active:text-gray-900',
     unstyled: '',
   },
 } as const;
