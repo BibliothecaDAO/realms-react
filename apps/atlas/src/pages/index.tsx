@@ -204,6 +204,7 @@ function Atlas() {
       transitionInterpolator: new FlyToInterpolator(),
     });
   }, [coordinates]);
+  const [loaded, setLoaded] = useState<boolean>();
 
   return (
     <Layout>
@@ -226,6 +227,7 @@ function Atlas() {
             <GASideBar id={selectedId} />
             <FlyTo />
             <ArtBackground />
+
             <DeckGL
               getCursor={({ isHovering }) => {
                 return isHovering ? 'pointer' : 'grabbing';
@@ -233,6 +235,7 @@ function Atlas() {
               pickingRadius={25}
               initialViewState={initialViewState}
               controller={true}
+              onLoad={() => setLoaded(true)}
               onViewStateChange={(e) => setInitialViewState(e.viewState)}
               layers={[
                 realmsLayer,
@@ -242,13 +245,19 @@ function Atlas() {
                 gaBagLayer,
               ]}
             >
-              <Map
-                attributionControl={false}
-                mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-                mapboxAccessToken={
-                  'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-                }
-              />
+              {loaded ? (
+                <Map
+                  attributionControl={false}
+                  mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+                  mapboxAccessToken={
+                    'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+                  }
+                />
+              ) : (
+                <div className={'w-full h-full flex justify-center'}>
+                  <h1 className={'self-center'}>Loading Atlas...</h1>
+                </div>
+              )}
             </DeckGL>
           </div>
         </div>

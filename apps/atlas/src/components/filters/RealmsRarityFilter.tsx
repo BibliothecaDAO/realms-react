@@ -63,7 +63,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
               <RangeSliderFilter
                 name="Score"
                 min={0}
-                max={ScoreMax}
+                max={400}
                 defaultValue={props.rarity.rarityScore}
                 onChange={onScoreFilterChange}
               />
