@@ -23,8 +23,12 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
     animate: true,
     origin: { x: 0, y: 0 },
     translation: { x: 0, y: 0 },
-    selectedValue: props.defaultValue ?? props.min,
+    selectedValue: 0,
   });
+
+  useEffect(() => {
+    setState({ ...state, selectedValue: props.defaultValue ?? props.min });
+  }, [props.defaultValue, props.min]);
 
   // Check for window resizes
   const windowSize = useWindowSize();
@@ -153,7 +157,7 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
 
   return (
     <div className="relative w-full my-2">
-      <div className="text-sm text-center uppercase tracking-widest">
+      <div className="text-sm tracking-widest text-center uppercase">
         {props.name}
       </div>
       <div

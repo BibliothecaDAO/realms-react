@@ -73,6 +73,8 @@ export const LootPanel = () => {
     state.selectedTab === 1 &&
     (page > 1 || (data?.bags?.length ?? 0) === limit);
 
+  const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
+
   return (
     <BasePanel open={isLootPanel}>
       <div className="flex justify-between pt-2">
@@ -108,6 +110,28 @@ export const LootPanel = () => {
         )}
         <LootOverviews bags={data?.bags ?? []} />
       </div>
+
+      {hasNoResults() && (
+        <div className="flex flex-col items-center justify-center gap-8 my-8">
+          <h2>No results.</h2>
+          <div className="flex gap-4">
+            <Button
+              className="whitespace-nowrap"
+              onClick={actions.clearFilters}
+            >
+              Clear Filters
+            </Button>
+            {state.selectedTab !== 1 && (
+              <Button
+                className="whitespace-nowrap"
+                onClick={() => actions.updateSelectedTab(1)}
+              >
+                See All Loot
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPagination() && (
         <div className="flex gap-2 my-8">
