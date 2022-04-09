@@ -1,4 +1,4 @@
-import type { AssetFilter, AssetType } from '@/hooks/useUIContext';
+import type { AssetType } from '@/hooks/useUIContext';
 import { AssetFilters, useUIContext } from '@/hooks/useUIContext';
 
 export const FlyTo = () => {

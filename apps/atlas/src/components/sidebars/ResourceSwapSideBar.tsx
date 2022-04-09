@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType } = useUIContext();
+  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
 
   /* const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
@@ -38,7 +38,7 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={selectedMenuType === 'resourceSwap'}>
+    <BaseSideBar open={selectedMenuType === 'resourceSwap' && showDetails}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-between">
           <h2 className="uppercase">Resource Swap</h2>

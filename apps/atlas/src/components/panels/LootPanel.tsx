@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
@@ -14,7 +14,13 @@ import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const LootPanel = () => {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const {
+    togglePanelType,
+    selectedPanel,
+    // selectedMenuType,
+    setSelectedAssetType,
+    setSelectedId,
+  } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -23,6 +29,7 @@ export const LootPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
+  const isLootPanel = selectedPanel === 'loot';
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
@@ -52,14 +59,22 @@ export const LootPanel = () => {
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
     variables,
+    skip: !isLootPanel,
   });
+
+  useEffect(() => {
+    if (page === 1 && (data?.bags?.length ?? 0) > 0) {
+      setSelectedAssetType('loot');
+      setSelectedId(data?.bags[0].id as string);
+    }
+  }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.bags?.length ?? 0) === limit);
 
   return (
-    <BasePanel open={selectedPanel === 'loot'}>
+    <BasePanel open={isLootPanel}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Loot</h1>

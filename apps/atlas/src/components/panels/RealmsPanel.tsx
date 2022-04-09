@@ -1,7 +1,7 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { useRealmContext } from '@/context/RealmContext';
@@ -13,7 +13,13 @@ import Button from '@/shared/Button';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const {
+    togglePanelType,
+    selectedPanel,
+    setSelectedAssetType,
+    setMenuType,
+    setSelectedId,
+  } = useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useRealmContext();
 
@@ -21,6 +27,8 @@ export const RealmsPanel = () => {
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
+
+  const isRealmPanel = selectedPanel === 'realm';
 
   const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
@@ -79,14 +87,24 @@ export const RealmsPanel = () => {
     return {};
   }, [account, state, page]);
 
-  const { data, loading } = useGetRealmsQuery({ variables });
+  const { data, loading } = useGetRealmsQuery({
+    variables,
+    skip: !isRealmPanel,
+  });
+
+  useEffect(() => {
+    if (page === 1 && (data?.getRealms?.length ?? 0) > 0) {
+      setSelectedAssetType('realm');
+      setSelectedId(data?.getRealms[0].realmId + '');
+    }
+  }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.getRealms?.length ?? 0) === limit);
 
   return (
-    <BasePanel open={selectedPanel === 'realm'}>
+    <BasePanel open={isRealmPanel}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Realms</h1>

@@ -13,14 +13,14 @@ type Props = {
 };
 
 export const RealmSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType } = useUIContext();
+  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
 
   const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
   });
 
   return (
-    <BaseSideBar open={selectedMenuType === 'realm'}>
+    <BaseSideBar open={selectedMenuType === 'realm' && showDetails}>
       <div className="top-0 bottom-0 right-0 w-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end">
           <div className="flex justify-end mb-2 mr-1">
