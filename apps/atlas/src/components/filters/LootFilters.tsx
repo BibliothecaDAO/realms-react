@@ -6,8 +6,8 @@ export function LootFilters() {
   const { state, actions } = useLootContext();
 
   return (
-    <div className="flex justify-between my-2">
-      <div className="w-full sm:w-auto">
+    <div className="flex flex-wrap justify-between gap-2 mb-2">
+      <div className="w-full my-1 sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {

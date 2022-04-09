@@ -50,48 +50,53 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        // className="px-4 ml-2 uppercase"
-        className={clsx(
-          'px-4 ml-2 uppercase',
-          hasSelectedFilters ? 'bg-black' : ''
-        )}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        STATS
-      </Button>
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          // className="px-4 ml-2 uppercase"
+          className={clsx(
+            'px-4 ml-2 uppercase',
+            hasSelectedFilters ? 'bg-black' : ''
+          )}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          STATS
+        </Button>
 
-      {isOpen && (
-        <Popover.Panel className="absolute right-0 z-10 mt-2 " ref={ref} static>
-          <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
-            <div className="mb-3 text-lg text-center uppercase">Stats</div>
-            <RangeSliderFilter
-              name="Size"
-              min={0}
-              max={SizeMax}
-              defaultValue={props.stats.size}
-              onChange={onSizeFilterChange}
-            />
-            <RangeSliderFilter
-              name="Num Doors"
-              min={0}
-              max={NumDoorsMax}
-              defaultValue={props.stats.numDoors}
-              onChange={onNumDoorsFilterChange}
-            />
-            <RangeSliderFilter
-              name="Num Points"
-              min={0}
-              max={NumPointsMax}
-              defaultValue={props.stats.numPoints}
-              onChange={onNumPointsFilterChange}
-            />
-          </div>
-        </Popover.Panel>
-      )}
+        {isOpen && (
+          <Popover.Panel
+            className="absolute z-10 m-auto mt-2 md:right-0 "
+            static
+          >
+            <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
+              <div className="mb-3 text-lg text-center uppercase">Stats</div>
+              <RangeSliderFilter
+                name="Size"
+                min={0}
+                max={SizeMax}
+                defaultValue={props.stats.size}
+                onChange={onSizeFilterChange}
+              />
+              <RangeSliderFilter
+                name="Num Doors"
+                min={0}
+                max={NumDoorsMax}
+                defaultValue={props.stats.numDoors}
+                onChange={onNumDoorsFilterChange}
+              />
+              <RangeSliderFilter
+                name="Num Points"
+                min={0}
+                max={NumPointsMax}
+                defaultValue={props.stats.numPoints}
+                onChange={onNumPointsFilterChange}
+              />
+            </div>
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }
