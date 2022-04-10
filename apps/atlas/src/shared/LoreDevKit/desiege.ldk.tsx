@@ -1,4 +1,25 @@
 /* eslint-disable react/jsx-key */
+
+import {
+  Anger,
+  Brilliance,
+  Detection,
+  Enlightenment,
+  Fox,
+  Fury,
+  Giants,
+  Perfection,
+  Power,
+  Protection,
+  Rage,
+  Reflection,
+  Skill,
+  Titans,
+  Twins,
+  Vitriol,
+} from '@bibliotheca-dao/ui-lib/icons/orders';
+
+import classNames from 'classnames';
 import type { LDKSchema } from './lib';
 
 const LoreLink = (props: { children: any; href: string }) => (
@@ -8,6 +29,63 @@ const LoreLink = (props: { children: any; href: string }) => (
     </a>
   </>
 );
+
+const OrderIcon = (props: {
+  className?: string;
+  order: string;
+  style?: HTMLStyleElement;
+}) => {
+  const iconClassName = 'h-4 w-4 inline-block -mr-1';
+
+  switch (props.order) {
+    case 'anger':
+      return <Anger className={classNames(iconClassName, props.className)} />;
+    case 'brilliance':
+      return (
+        <Brilliance className={classNames(iconClassName, props.className)} />
+      );
+    case 'detection':
+      return (
+        <Detection className={classNames(iconClassName, props.className)} />
+      );
+    case 'enlightenment':
+      return (
+        <Enlightenment className={classNames(iconClassName, props.className)} />
+      );
+    case 'fox':
+      return <Fox className={classNames(iconClassName, props.className)} />;
+    case 'fury':
+      return <Fury className={classNames(iconClassName, props.className)} />;
+    case 'giants':
+      return <Giants className={classNames(iconClassName, props.className)} />;
+    case 'perfection':
+      return (
+        <Perfection className={classNames(iconClassName, props.className)} />
+      );
+    case 'power':
+      return <Power className={classNames(iconClassName, props.className)} />;
+    case 'protection':
+      return (
+        <Protection className={classNames(iconClassName, props.className)} />
+      );
+    case 'rage':
+      return <Rage className={classNames(iconClassName, props.className)} />;
+    case 'reflection':
+      return (
+        <Reflection className={classNames(iconClassName, props.className)} />
+      );
+    case 'skill':
+      return <Skill className={classNames(iconClassName, props.className)} />;
+    case 'titans':
+      return <Titans className={classNames(iconClassName, props.className)} />;
+    case 'twins':
+      return <Twins className={classNames(iconClassName, props.className)} />;
+    case 'vitriol':
+      return <Vitriol className={classNames(iconClassName, props.className)} />;
+    default:
+      return null;
+  }
+};
 
 const divineSiege: LDKSchema = {
   root: {
@@ -62,10 +140,34 @@ const divineSiege: LDKSchema = {
           others, its existence is an affront to a free society and its
           treasures must be restored to their rightful Orders.
         </p>,
-        'Inside: Adventurers of the Light, determined to support and defend the City.',
-        'Armed with Power, Skill, and Brilliance, backed by an army of Giants and Titans, driven by a need for Perfection, the Adventurers of the Light band together on a mission of Protection.',
-        'Outside: Adventurers of the Dark, ready to lay siege to the Divine City and claim the treasures within.',
-        'Fueled by Anger, Rage, Fury and Vitriol, with the power of the Twins and the Fox at their side, channeling the dark magic of Reflection and Detection, the Adventurers of the Dark work together to lay siege to the City and restore the treasures to their rightful place across the Realms.',
+        <p>
+          Inside: Adventurers of the Light, determined to support and defend the
+          City.
+        </p>,
+        <p>
+          Armed with <OrderIcon order="power" /> Power,{' '}
+          <OrderIcon order="skill" /> Skill, and{' '}
+          <OrderIcon order="brilliance" /> Brilliance, backed by an army of{' '}
+          <OrderIcon order="giants" /> Giants and <OrderIcon order="titans" />{' '}
+          Titans, driven by a need for <OrderIcon order="perfection" />{' '}
+          Perfection, the Adventurers of the Light band together on a mission of{' '}
+          <OrderIcon order="protection" className="opacity-40" /> Protection.
+        </p>,
+        <p>
+          Outside: Adventurers of the Dark, ready to lay siege to the Divine
+          City and claim the treasures within.
+        </p>,
+        <p>
+          Fueled by <OrderIcon order="anger" /> Anger,{' '}
+          <OrderIcon order="rage" /> Rage, <OrderIcon order="fury" /> Fury and{' '}
+          <OrderIcon order="vitriol" /> Vitriol, with the power of the{' '}
+          <OrderIcon order="twins" /> Twins and the <OrderIcon order="fox" />{' '}
+          Fox at their side, channeling the dark magic of{' '}
+          <OrderIcon order="reflection" /> Reflection and{' '}
+          <OrderIcon order="detection" /> Detection, the Adventurers of the Dark
+          work together to lay siege to the City and restore the treasures to
+          their rightful place across the Realms.
+        </p>,
       ],
     },
     {
