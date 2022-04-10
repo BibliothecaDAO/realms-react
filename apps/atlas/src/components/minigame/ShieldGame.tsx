@@ -59,6 +59,15 @@ const ShieldGame: React.FC<Prop> = (props) => {
     }
   }, [view]);
 
+  useEffect(() => {
+    // Reset query string so that refreshes don't keep the same tab open
+    if (initialTabFromQuery !== undefined) {
+      router.replace({
+        query: undefined,
+      });
+    }
+  }, [view]);
+
   const queryClient = useQueryClient();
 
   return (
