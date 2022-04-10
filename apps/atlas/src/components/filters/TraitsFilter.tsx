@@ -72,7 +72,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
         </Button>
 
         {isOpen && (
-          <Popover.Panel className="absolute  z-10 mt-2 " static>
+          <Popover.Panel className="absolute z-10 mt-2 md:right-0" static>
             <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
               <h4 className="text-center">Traits</h4>
               <RangeSliderFilter
