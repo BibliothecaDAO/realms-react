@@ -23,6 +23,17 @@ export const LootPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
+  // Reset page on filter change. UseEffect doesn't do a deep compare
+  useEffect(() => {
+    setPage(1);
+  }, [
+    state.favouriteLoot,
+    state.searchIdFilter,
+    state.ratingFilter.bagGreatness,
+    state.ratingFilter.bagRating,
+    state.selectedTab,
+  ]);
+
   const isLootPanel = selectedPanel === 'loot';
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 

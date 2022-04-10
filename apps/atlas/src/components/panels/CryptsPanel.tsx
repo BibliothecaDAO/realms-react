@@ -23,8 +23,21 @@ export const CryptsPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
-  const isCryptPanel = selectedPanel === 'crypt';
+  // Reset page on filter change. UseEffect doesn't do a deep compare
+  useEffect(() => {
+    setPage(1);
+  }, [
+    state.favouriteCrypt,
+    state.isLegendaryFilter,
+    state.searchIdFilter,
+    state.environmentsFilter,
+    state.statsFilter.numDoors,
+    state.statsFilter.numPoints,
+    state.statsFilter.size,
+    state.selectedTab,
+  ]);
 
+  const isCryptPanel = selectedPanel === 'crypt';
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
   const variables = useMemo(() => {

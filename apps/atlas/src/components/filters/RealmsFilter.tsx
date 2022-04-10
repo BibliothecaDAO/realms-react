@@ -21,7 +21,7 @@ export function RealmsFilter() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex flex-wrap md:flex-nowrap self-center">
+      <div className="flex flex-wrap self-center gap-2 md:flex-nowrap">
         <div>
           <Button
             variant="primary"

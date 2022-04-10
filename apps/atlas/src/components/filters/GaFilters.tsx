@@ -17,7 +17,7 @@ export function GaFilters() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-2">
         <OrdersFilter
           selectedValues={state.selectedOrders}
           onChange={actions.updateSelectedOrders}
