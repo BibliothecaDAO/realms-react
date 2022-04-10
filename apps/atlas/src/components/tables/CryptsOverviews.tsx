@@ -3,7 +3,12 @@ import { useCryptContext } from '@/context/CryptContext';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
-import { environments } from '@/util/cryptsEnvironments';
+import {
+  environments,
+  findEnvironment,
+  isLegendary,
+  legendaryColourClass,
+} from '@/util/cryptsEnvironments';
 
 interface CryptOverviewsProps {
   dungeons: Crypt[];
@@ -14,6 +19,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -28,6 +34,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
 
   const openCryptDetails = (id: string) => {
     setSelectedId(id);
+    setSelectedAssetType('crypt');
     if (selectedMenuType !== 'crypt') {
       toggleMenuType('crypt');
     }
@@ -38,62 +45,49 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
   return (
     <div>
       {props.dungeons &&
-        props.dungeons.slice(0, 10).map((crypt: Crypt, index) => (
+        props.dungeons.map((crypt: Crypt, index) => (
           <div
             key={index}
             className="flex flex-wrap w-full h-auto max-w-full mb-4 overflow-x-auto rounded justify-evenly"
           >
-            <div className="flex w-full p-2  bg-black/50">
-              <div className="self-center flex w-full">
-                <h3 className=" ml-4">
-                  <span className="text-gray-400">{crypt.id}</span> |{' '}
-                  {crypt.name}
+            <div className="flex w-full p-2 bg-black/50">
+              <div className="flex self-center w-full">
+                <h3 className={`px-2 rounded py-1`}>
+                  <span>{crypt.id}</span> | {crypt.name}
                 </h3>
-                <div className="ml-auto">
-                  {!isFavourite(crypt) && (
-                    <Button
-                      size="sm"
-                      className="text-xs"
-                      onClick={() => actions.addFavouriteCrypt(crypt.id)}
-                    >
-                      Add
-                    </Button>
-                  )}
-                  {isFavourite(crypt) && (
-                    <Button
-                      size="sm"
-                      className="text-xs"
-                      onClick={() => actions.removeFavouriteCrypt(crypt.id)}
-                    >
-                      Remove
-                    </Button>
-                  )}
-                </div>
               </div>
             </div>
-            <div className="w-2/3 grid items-center justify-between w-full grid-cols-2 p-6 bg-black/70">
-              <div className="font-bold my-1">Environment</div>
-              <div className="flex my-1">
-                {' '}
-                {environments[crypt.environment]?.name}
-              </div>
-              <div className="font-bold my-1">Resource</div>
-              <div className="flex my-1">
+            <div className="flex w-1/3 px-6 sm:w-3/12 bg-black/40 ">
+              <div className="self-center my-1">
                 <ResourceIcon
-                  resource={environments[crypt.environment]?.name
-                    .replace(' ', '')
-                    .replace("'", '')}
-                  size="sm"
-                />{' '}
+                  resource={environments[crypt.environment]?.name}
+                  size="md"
+                  label
+                />
               </div>
-              <div className="font-bold  my-1">Size</div>
-              <div>{crypt.size}</div>
-              <div className="font-bold my-1">Num Doors</div>
-              <div>{crypt.numDoors}</div>
-              <div className="font-bold my-1">Num Points</div>
-              <div>{crypt.numPoints}</div>
             </div>
-            <div className="flex flex-col justify-center w-1/3 p-8 space-y-3 bg-gray-600/70">
+            <div className="grid items-center justify-between w-2/3 grid-cols-2 p-6 sm:w-6/12 bg-black/70">
+              <div className="my-1 font-bold">Environment</div>
+              <div
+                className={`px-2 rounded py-0.5 ${
+                  findEnvironment(crypt.environment)?.colourClass.main
+                }`}
+              >
+                {' '}
+                {findEnvironment(crypt.environment)?.name}
+              </div>
+              <div className="my-1 font-bold">Size</div>
+              <div>
+                {crypt.size} x {crypt.size}
+              </div>
+              <div className="my-1 font-bold">Doors</div>
+              <div>{crypt.numDoors}</div>
+              <div className="my-1 font-bold">Points</div>
+              <div>{crypt.numPoints}</div>
+              {/* <div className="my-1 font-bold">Legendary</div>
+              <div>{crypt}</div> */}
+            </div>
+            <div className="flex justify-center w-full px-6 py-4 space-x-2 sm:flex-col sm:w-3/12 sm:py-0 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
@@ -101,19 +95,37 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                   gotoAssetId(crypt.id, 'crypt');
                 }}
                 variant="primary"
-                size="sm"
-                className="w-full uppercase text-xs"
+                size="xs"
+                className="w-full "
               >
                 fly to
               </Button>
               <Button
                 onClick={() => openCryptDetails(crypt.id)}
-                variant="default"
-                size="sm"
-                className="w-full uppercase text-xs"
+                variant="secondary"
+                size="xs"
+                className="w-full "
               >
                 details
               </Button>
+              {!isFavourite(crypt) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.addFavouriteCrypt(crypt.id)}
+                >
+                  Add
+                </Button>
+              )}
+              {isFavourite(crypt) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.removeFavouriteCrypt(crypt.id)}
+                >
+                  Remove
+                </Button>
+              )}
             </div>
           </div>
         ))}

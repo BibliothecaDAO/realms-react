@@ -23,6 +23,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -40,6 +41,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     account && (account === realm.owner || account === realm.bridgedOwner);
 
   const openRealmDetails = (realmId: number) => {
+    setSelectedAssetType('realm');
     setSelectedId(realmId.toString());
     if (selectedMenuType !== 'realm') {
       toggleMenuType('realm');
@@ -52,43 +54,37 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   return (
     <div>
       {props.realms &&
-        props.realms.slice(0, 10).map((realm: RealmFragmentFragment, index) => (
+        props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex w-full h-auto max-w-full overflow-x-auto rounded  justify-evenly flex-wrap mb-2"
+            className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-evenly"
           >
-            <div className="flex w-full p-2 rounded-t-l bg-black/60 text-white">
-              <OrderIcon
-                className="self-center mx-3"
-                size={'md'}
-                order={realm.orderType.toLowerCase()}
-              />
-
-              <h2 className="mb-1 self-center">
-                <span className="text-gray-400 mr-4">{realm.realmId}</span>
+            {realm?.wonder && (
+              <div className="text-gray-200 w-full p-2 tracking-veryWide shadow-inner text-xl text-center uppercase rounded-t bg-black/30 font-semibold border-gray-500">
+                {realm?.wonder}
+              </div>
+            )}
+            <div className="flex w-full p-2 text-white rounded-t-l bg-black/80 shadow-inner">
+              <h3 className="ml-4 mb-1 self-center">
+                <span className="text-gray-400 mr-4">{realm.realmId} | </span>
                 {realm.name}
-              </h2>
-              <div className="ml-auto self-center mr-4">
-                {!isFavourite(realm) && (
-                  <Button
-                    size="sm"
-                    onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                  >
-                    Add to favourites
-                  </Button>
-                )}{' '}
-                {isFavourite(realm) && (
-                  <Button
-                    size="sm"
-                    className="w-full uppercase"
-                    onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                  >
-                    Remove from favourites
-                  </Button>
-                )}
+              </h3>
+              <h4 className="hidden sm:block px-4 mx-auto self-center p-1 border-gray-400 text-gray-400 text-xs rounded border">
+                rank: {realm.rarityRank}
+              </h4>
+              <div className=" ml-auto flex">
+                <span className="self-center uppercase tracking-widest">
+                  {realm.orderType.toLowerCase().replace('_', ' ')}
+                </span>
+
+                <OrderIcon
+                  className="self-center mx-3"
+                  size={'md'}
+                  order={realm.orderType.toLowerCase()}
+                />
               </div>
             </div>
-            <div className="w-1/3 px-6 bg-black/50 flex ">
+            <div className="flex w-1/2 sm:w-1/3 px-6 bg-black/50 shadow-inner">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
                   return (
@@ -108,7 +104,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div>
-            <div className="w-1/3 px-6 bg-gray-800/60 flex">
+            <div className="flex w-1/2 sm:w-1/3 px-6 bg-gray-800/60 shadow-inner">
               {' '}
               <div className="self-center w-full">
                 {realm.traits?.map((trait, index) => {
@@ -138,7 +134,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className=" w-1/3 flex flex-col justify-center w-full px-6 space-y-3 bg-gray-600/70">
+            <div className="flex sm:flex-col justify-center w-full sm:w-1/3 py-4 sm:py-0 px-6 space-x-2 sm:space-x-0 sm:space-y-3 bg-gray-600/70 shadow-inner">
               {' '}
               <Button
                 onClick={() => {
@@ -146,19 +142,38 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   gotoAssetId(realm.realmId, 'realm');
                 }}
                 variant="primary"
-                size="sm"
+                size="xs"
                 className="w-full uppercase"
               >
                 fly to
               </Button>
               <Button
                 onClick={() => openRealmDetails(realm.realmId)}
-                variant="default"
-                size="sm"
-                className="w-full uppercase"
+                variant="secondary"
+                size="xs"
+                className="w-full "
               >
                 details
               </Button>
+              {!isFavourite(realm) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
+                >
+                  Add
+                </Button>
+              )}{' '}
+              {isFavourite(realm) && (
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  className="w-full"
+                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                >
+                  Remove
+                </Button>
+              )}
             </div>
           </div>
         ))}

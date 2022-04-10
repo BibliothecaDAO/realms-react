@@ -62,18 +62,25 @@ export function TradePanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'trade'}>
-      <div className="flex justify-between pt-4">
+      <div className="flex justify-between">
         <div className="sm:hidden"></div>
 
-        <h1 className="tex">Biblio Bazaar</h1>
-        <button
-          className="mb-8 transition-all rounded hover:bg-white/70"
-          onClick={() => togglePanelType('trade')}
-        >
-          <Close />
-        </button>
+        <h1 className="tex">Bibliotheca NFT Marketplace</h1>
+        <div>
+          <Button variant="secondary" onClick={() => togglePanelType('trade')}>
+            <Close />
+          </Button>
+        </div>
       </div>
-      <div className="p-2">{data && <p>test</p>}</div>
+      <div className="relative">
+        <div className="p-2">{data && <div className="w-full h-48"></div>}</div>
+        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+          <div className="mt-8">
+            <h4>A place to trade Realms, Crypts and Loot Items...</h4>
+            <h4>Coming soon to StarkNet</h4>
+          </div>
+        </div>
+      </div>
     </BasePanel>
   );
 }

@@ -54,7 +54,7 @@ const STYLES = {
 export const OrderIcon = (props: Props) => {
   return (
     <div className={twMerge(STYLES.size[props.size], props.className)}>
-      {Components[props.order]}
+      {Components[props.order.replace('_', ' ')]}
     </div>
   );
 };

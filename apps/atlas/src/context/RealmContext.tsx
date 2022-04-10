@@ -2,6 +2,9 @@ import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import type { ResourceType, OrderType } from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
+import { storage } from '@/util/localStorage';
+
+const RealmFavoriteLocalStorageKey = 'realm.favourites';
 
 type RarityFilter = { rarityScore: number; rarityRank: number };
 
@@ -20,6 +23,7 @@ interface RealmState {
   favouriteRealms: number[];
   searchIdFilter: string;
   selectedTab: number;
+  hasWonderFilter: boolean;
 }
 
 type RealmAction =
@@ -27,6 +31,7 @@ type RealmAction =
   | { type: 'updateTraitsFilter'; payload: TraitsFilter }
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'updateSelectedResources'; payload: ResourceType[] }
+  | { type: 'toggleHasWonderFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
@@ -38,6 +43,7 @@ interface RealmActions {
   updateTraitsFilter(filter: TraitsFilter): void;
   updateSelectedOrders(orders: OrderType[]): void;
   updateSelectedResources(resources: ResourceType[]): void;
+  toggleHasWonderFilter(): void;
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
@@ -59,11 +65,12 @@ const defaultFilters = {
   selectedOrders: [] as OrderType[],
   selectedResources: [] as ResourceType[],
   searchIdFilter: '',
+  hasWonderFilter: false,
 };
 const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function realmReducer(state: RealmState, action: RealmAction): RealmState {
@@ -76,6 +83,8 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, traitsFilter: action.payload };
     case 'updateSelectedTab':
       return { ...state, selectedTab: action.payload };
+    case 'toggleHasWonderFilter':
+      return { ...state, hasWonderFilter: !state.hasWonderFilter };
     case 'updateSelectedOrders':
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
@@ -83,11 +92,20 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteRealm':
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set([
+        ...state.favouriteRealms,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteRealms: [...state.favouriteRealms, action.payload],
       };
     case 'removeFavouriteRealm':
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set(
+        state.favouriteRealms.filter(
+          (realmId: number) => realmId !== action.payload
+        )
+      );
       return {
         ...state,
         favouriteRealms: state.favouriteRealms.filter(
@@ -110,6 +128,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateSearchIdFilter', payload: realmId }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
   updateTraitsFilter: (filter: TraitsFilter) =>
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>
@@ -134,7 +153,10 @@ export function useRealmContext() {
 }
 
 export function RealmProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(realmReducer, defaultRealmState);
+  const [state, dispatch] = useReducer(realmReducer, {
+    ...defaultRealmState,
+    favouriteRealms: storage<number[]>(RealmFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <RealmContext.Provider

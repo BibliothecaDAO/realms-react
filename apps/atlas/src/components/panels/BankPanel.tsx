@@ -76,7 +76,7 @@ export function BankPanel(): ReactElement {
   });
   return (
     <BasePanel open={selectedPanel === 'bank'}>
-      <div className="flex justify-between pt-4">
+      <div className="flex justify-between">
         <div className="sm:hidden"></div>
         <h1 className="tex">Iron Bank</h1>
         <button
@@ -86,10 +86,15 @@ export function BankPanel(): ReactElement {
           <Close />
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
+        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+          <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
+            Coming Soon!
+          </div>
+        </div>
       </div>
     </BasePanel>
   );

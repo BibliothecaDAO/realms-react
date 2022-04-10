@@ -1,17 +1,23 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
+import type { OrderType } from '@/generated/graphql';
+import { storage } from '@/util/localStorage';
+
+const GAFavoriteLocalStorageKey = 'ga.favourites';
 
 type RatingFilter = { bagGreatness: number; bagRating: number };
 
 interface GaState {
   ratingFilter: RatingFilter;
   favouriteGa: string[];
+  selectedOrders: OrderType[];
   searchIdFilter: string;
   selectedTab: number;
 }
 
 type GaAction =
   | { type: 'updateRatingFilter'; payload: RatingFilter }
+  | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteGa'; payload: string }
   | { type: 'removeFavouriteGa'; payload: string }
@@ -20,6 +26,7 @@ type GaAction =
 
 interface GaActions {
   updateRatingFilter(filter: RatingFilter): void;
+  updateSelectedOrders(orders: OrderType[]): void;
   clearFilters(): void;
   addFavouriteGa(id: string): void;
   removeFavouriteGa(id: string): void;
@@ -32,13 +39,14 @@ const defaultFilters = {
     bagGreatness: 0,
     bagRating: 0,
   },
+  selectedOrders: [] as OrderType[],
   searchIdFilter: '',
 };
 
 const defaultGaState = {
   ...defaultFilters,
   favouriteGa: [] as string[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function gaReducer(state: GaState, action: GaAction): GaState {
@@ -47,16 +55,25 @@ function gaReducer(state: GaState, action: GaAction): GaState {
       return { ...state, ratingFilter: action.payload };
     case 'updateSearchIdFilter':
       return { ...state, searchIdFilter: action.payload };
+    case 'updateSelectedOrders':
+      return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedTab':
       return { ...state, selectedTab: action.payload };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteGa':
+      storage<string[]>(GAFavoriteLocalStorageKey, []).set([
+        ...state.favouriteGa,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteGa: [...state.favouriteGa, action.payload],
       };
     case 'removeFavouriteGa':
+      storage<string[]>(GAFavoriteLocalStorageKey, []).set(
+        state.favouriteGa.filter((id: string) => id !== action.payload)
+      );
       return {
         ...state,
         favouriteGa: state.favouriteGa.filter(
@@ -79,6 +96,8 @@ const mapActions = (dispatch: Dispatch<GaAction>): GaActions => ({
     dispatch({ type: 'updateSearchIdFilter', payload: id }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  updateSelectedOrders: (orders: OrderType[]) =>
+    dispatch({ type: 'updateSelectedOrders', payload: orders }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteGa: (id: string) =>
     dispatch({ type: 'addFavouriteGa', payload: id }),
@@ -97,7 +116,10 @@ export function useGaContext() {
 }
 
 export function GaProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(gaReducer, defaultGaState);
+  const [state, dispatch] = useReducer(gaReducer, {
+    ...defaultGaState,
+    favouriteGa: storage<string[]>(GAFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <GaContext.Provider

@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType } = useUIContext();
+  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
 
   /* const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
@@ -38,7 +38,7 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={selectedMenuType === 'resourceSwap'}>
+    <BaseSideBar open={selectedMenuType === 'resourceSwap' && showDetails}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-between">
           <h2 className="uppercase">Resource Swap</h2>
@@ -50,20 +50,27 @@ export const ResourceSwapSideBar = (props: Props) => {
           </button>
           <div />
         </div>
-        <Tabs className="h-full" variant="primary">
-          <Tabs.List className="">
-            {tabs.map((tab) => (
-              <Tabs.Tab key={tab.label} className="uppercase">
-                {tab.label}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels className="h-full">
-            {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
+        <div className="relative">
+          <Tabs className="h-full" variant="primary">
+            <Tabs.List className="">
+              {tabs.map((tab) => (
+                <Tabs.Tab key={tab.label} className="uppercase">
+                  {tab.label}
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
+            <Tabs.Panels className="h-full">
+              {tabs.map((tab) => (
+                <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+              ))}
+            </Tabs.Panels>
+          </Tabs>
+          <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
+            <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
+              Coming Soon!
+            </div>
+          </div>
+        </div>
       </div>
     </BaseSideBar>
   );

@@ -7,20 +7,19 @@ import {
   isLegendary,
   environments,
   legendaryColourClass,
+  findEnvironment,
 } from '@/util/cryptsEnvironments';
 import { shortenAddress } from '@/util/formatters';
 import type { CryptProps } from '../../types';
 const variantMaps: any = {
-  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
+  small: { heading: 'lg:text-2xl', regions: 'lg:text-xl' },
 };
 
 export function Crypt(props: CryptProps): ReactElement {
-  const findEnvironment = (value: any) => {
-    return environments.find((e) => e.id === parseInt(value));
-  };
   const { gotoAssetId } = useUIContext();
 
   const image = props.crypt.svg;
+
   const environment = findEnvironment(props.crypt.environment);
 
   return (
@@ -43,39 +42,43 @@ export function Crypt(props: CryptProps): ReactElement {
             />
           </div>
 
-          <div className=" sm:text-2xl">
-            {/* {props.crypt.currentOwner && (
+          <div className="mt-8">
+            <h2
+              className={
+                `mt-2 mb-4 ` +
+                  (props.size ? variantMaps[props.size].heading : '') +
+                  isLegendary(props.crypt.name) ===
+                "'"
+                  ? legendaryColourClass
+                  : ''
+              }
+            >
+              {props.crypt.name}
+            </h2>
+            {props.crypt.currentOwner && (
               <h3 className="my-3">
-                👑 {shortenAddress(props.crypt.currentOwner.address)}
+                {shortenAddress(props.crypt.currentOwner.address)}
               </h3>
-            )} */}
+            )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
-                Id: <span className="font-semibold ">{props.crypt.id}</span>
+                Id: <span className="">{props.crypt.id}</span>
               </h4>
               <h4>
-                Environment:{' '}
                 <span
-                  className={`px-4 py-1 font-semibold rounded ${environment?.colourClass.main}`}
+                  className={`px-4 py-1 rounded ${environment?.colourClass.main}`}
                 >
                   {environment?.name}
                 </span>
               </h4>
               <h4>
                 Size:{' '}
-                <span className="font-semibold ">
+                <span>
                   {props.crypt.size}x{props.crypt.size}
                 </span>
               </h4>
             </div>
             <div className="flex justify-between">
-              <h3
-                className={`mt-2 mb-4 ${variantMaps[props.size]?.heading}
-            ${isLegendary(props.crypt.name) && legendaryColourClass}
-            `}
-              >
-                {props.crypt.name}
-              </h3>
               {props.flyto && (
                 <div className="self-center text-lg">
                   <button
@@ -93,29 +96,32 @@ export function Crypt(props: CryptProps): ReactElement {
             </div>
 
             <div
-              className={`flex flex-col w-full uppercase font-display ${
-                variantMaps[props.size]?.regions
-              } `}
+              className={
+                `grid grid-cols-2 gap-4 w-full uppercase font-display` +
+                (props.size ? variantMaps[props.size]?.regions : '')
+              }
             >
-              <span>Doors: {props.crypt.numPoints} / 13</span>
-              <div className="w-full my-2 bg-gray-200 rounded">
-                <div
-                  className={`h-2 bg-yellow-700/60 rounded-xl ${environment?.colourClass.door}`}
-                  style={{
-                    width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
-                  }}
-                ></div>
+              <div>
+                <span>Doors: {props.crypt.numPoints} / 13</span>
+                <div className="w-full my-2 bg-gray-200 rounded">
+                  <div
+                    className={`h-2 bg-yellow-700/60 rounded-xl ${environment?.colourClass.door}`}
+                    style={{
+                      width: `${((props.crypt.numPoints as any) / 13) * 100}%`,
+                    }}
+                  ></div>
+                </div>
               </div>
-              <span className="pt-1">
-                Points of Interest: {props.crypt.numDoors} / 12
-              </span>
-              <div className="w-full my-2 bg-gray-200 rounded">
-                <div
-                  className={`h-2 bg-green-500/60 rounded-xl ${environment?.colourClass.point}`}
-                  style={{
-                    width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
-                  }}
-                ></div>
+              <div>
+                <span className="pt-1">POI: {props.crypt.numDoors} / 12</span>
+                <div className="w-full my-2 bg-gray-200 rounded">
+                  <div
+                    className={`h-2 bg-green-500/60 rounded-xl ${environment?.colourClass.point}`}
+                    style={{
+                      width: `${((props.crypt.numDoors as any) / 12) * 100}%`,
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
             <MarketplaceByPanel

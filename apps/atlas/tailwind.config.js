@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
@@ -29,6 +31,7 @@ module.exports = {
     'bg-hero',
     'bg-bank',
     'bg-realm',
+    'bg-crypt',
   ],
   theme: {
     extend: {
@@ -45,10 +48,12 @@ module.exports = {
       },
       backgroundImage: {
         texture: "url('/texture-button.png')",
-        hero: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/cover.jpg')",
-        bank: "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/bank.jpg')",
+        hero: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/cover.jpg')",
+        bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/bank.jpg')",
         realm:
-          "linear-gradient(0deg, rgba(184,184,184,0.68), rgba(184,184,184,0.68)), url('/realm.jpg')",
+          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/realm.jpg')",
+        crypt:
+          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/crypt.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
@@ -129,5 +134,29 @@ module.exports = {
       },
     },
   },
-  plugins: ['tailwindcss', 'autoprefixer', 'postcss-100vh-fix'],
+  plugins: [
+    'tailwindcss',
+    'autoprefixer',
+    'postcss-100vh-fix',
+
+    plugin(function ({ addVariant, e, postcss }) {
+      addVariant('firefox', ({ container, separator }) => {
+        const isFirefoxRule = postcss.atRule({
+          name: '-moz-document',
+
+          params: 'url-prefix()',
+        });
+
+        isFirefoxRule.append(container.nodes);
+
+        container.append(isFirefoxRule);
+
+        isFirefoxRule.walkRules((rule) => {
+          rule.selector = `.${e(
+            `firefox${separator}${rule.selector.slice(1)}`
+          )}`;
+        });
+      });
+    }),
+  ],
 };

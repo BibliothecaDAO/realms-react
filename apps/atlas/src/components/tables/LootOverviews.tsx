@@ -15,6 +15,7 @@ export function LootOverviews(props: LootOverviewsProps) {
   const {
     toggleMenuType,
     selectedMenuType,
+    setSelectedAssetType,
     setSelectedId,
     gotoAssetId,
     togglePanelType,
@@ -29,6 +30,8 @@ export function LootOverviews(props: LootOverviewsProps) {
 
   const openLootDetails = (id: string) => {
     setSelectedId(id);
+    setSelectedAssetType('loot');
+
     if (selectedMenuType !== 'loot') {
       toggleMenuType('loot');
     }
@@ -37,89 +40,86 @@ export function LootOverviews(props: LootOverviewsProps) {
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 
   return (
-    <div className="flex flex-wrap">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
       {props.bags &&
-        props.bags.slice(0, 10).map((loot: Loot, index) => (
-          <div
-            key={index}
-            className="flex flex-wrap w-1/2 h-auto justify-evenly rounded"
-          >
-            <div className="p-2 w-full rounded">
-              <div className="w-full p-2 bg-black/70 font-display">
-                {[
-                  loot.weapon,
-                  loot.chest,
-                  loot.head,
-                  loot.waist,
-                  loot.foot,
-                  loot.hand,
-                  loot.neck,
-                  loot.ring,
-                ]?.map((itemName, index) => {
-                  return (
-                    <div className="flex my-1 font-bold px-2" key={index}>
-                      <LootItemIcon
-                        className="self-center"
-                        size="sm"
-                        item={index.toString()}
-                      />{' '}
-                      <span
-                        className={
-                          'mt-1 flex self-center ml-4  font-display text-[' +
-                          rarityColor(itemName) +
-                          ']'
-                        }
-                      >
-                        {itemName}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex w-full p-3 text-white bg-black/60">
-                <div className="self-center flex w-full">
-                  <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
-                  <div className="ml-auto">
-                    {!isFavourite(loot) && (
-                      <Button
-                        className="text-xs"
-                        onClick={() => actions.addFavouriteLoot(loot.id)}
-                      >
-                        save
-                      </Button>
-                    )}
-                    {isFavourite(loot) && (
-                      <Button
-                        onClick={() => actions.removeFavouriteLoot(loot.id)}
-                      >
-                        Remove
-                      </Button>
-                    )}
+        props.bags.map((loot: Loot, index) => (
+          <div key={index} className="w-full rounded">
+            <div className="w-full p-2 bg-black/70 font-display rounded-t">
+              {[
+                loot.weapon,
+                loot.chest,
+                loot.head,
+                loot.waist,
+                loot.foot,
+                loot.hand,
+                loot.neck,
+                loot.ring,
+              ]?.map((itemName, index) => {
+                return (
+                  <div className="flex px-2 my-1 font-bold" key={index}>
+                    <LootItemIcon
+                      className="self-center"
+                      size="sm"
+                      item={index.toString()}
+                    />{' '}
+                    <span
+                      className={
+                        'mt-1 flex self-center ml-4  font-display text-[' +
+                        rarityColor(itemName) +
+                        ']'
+                      }
+                    >
+                      {itemName}
+                    </span>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+            <div className="flex w-full p-3 text-white bg-black/60">
+              <div className="flex self-center w-full">
+                <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
+                <div className="ml-auto"></div>
               </div>
-              <div className="flex flex-col justify-center w-full p-8 space-y-3 bg-gray-600/70">
-                {' '}
+            </div>
+            <div className="rounded-b flex justify-center w-full p-2 space-x-2 bg-gray-600/70">
+              {' '}
+              <Button
+                onClick={() => {
+                  togglePanelType('loot');
+                  gotoAssetId(loot.id, 'loot');
+                }}
+                variant="primary"
+                size="sm"
+                className="uppercase w-full"
+              >
+                fly to
+              </Button>
+              <Button
+                onClick={() => openLootDetails(loot.id)}
+                variant="secondary"
+                size="sm"
+                className="uppercase w-full"
+              >
+                details
+              </Button>
+              {!isFavourite(loot) && (
                 <Button
-                  onClick={() => {
-                    togglePanelType('loot');
-                    gotoAssetId(loot.id, 'loot');
-                  }}
-                  variant="primary"
-                  size="sm"
-                  className="w-full uppercase"
+                  className="text-xs"
+                  variant="secondary"
+                  onClick={() => actions.addFavouriteLoot(loot.id)}
                 >
-                  fly to
+                  add
                 </Button>
+              )}
+              {isFavourite(loot) && (
                 <Button
-                  onClick={() => openLootDetails(loot.id)}
-                  variant="default"
-                  size="sm"
-                  className="w-full uppercase"
+                  className="text-xs"
+                  variant="secondary"
+                  onClick={() => actions.removeFavouriteLoot(loot.id)}
                 >
-                  details
+                  Remove
                 </Button>
-              </div>
+              )}
             </div>
           </div>
         ))}

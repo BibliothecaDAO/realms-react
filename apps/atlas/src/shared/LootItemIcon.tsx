@@ -36,8 +36,8 @@ const STYLES = {
 
 export const LootItemIcon = (props: Props) => {
   return (
-    <div className={twMerge(STYLES.size[props.size], props.className)}>
+    <span className={twMerge(STYLES.size[props.size], props.className)}>
       {Components[props.item]}
-    </div>
+    </span>
   );
 };

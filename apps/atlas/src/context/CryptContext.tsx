@@ -1,5 +1,8 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
+import { storage } from '@/util/localStorage';
+
+const CryptFavoriteLocalStorageKey = 'crypt.favourites';
 
 type StatsFilter = { size: number; numDoors: number; numPoints: number };
 
@@ -9,11 +12,13 @@ interface CryptState {
   favouriteCrypt: string[];
   searchIdFilter: string;
   selectedTab: number;
+  isLegendaryFilter: boolean;
 }
 
 type CryptAction =
   | { type: 'updateStatsFilter'; payload: StatsFilter }
   | { type: 'updateEnvironmentsFilter'; payload: number[] }
+  | { type: 'toggleIsLegendaryFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteCrypt'; payload: string }
   | { type: 'removeFavouriteCrypt'; payload: string }
@@ -28,6 +33,7 @@ interface CryptActions {
   removeFavouriteCrypt(id: string): void;
   updateSearchIdFilter(id: string): void;
   updateSelectedTab(tab: number): void;
+  toggleIsLegendaryFilter(): void;
 }
 
 const defaultFilters = {
@@ -38,12 +44,13 @@ const defaultFilters = {
   },
   environmentsFilter: [],
   searchIdFilter: '',
+  isLegendaryFilter: false,
 };
 
 const defaultCryptState = {
   ...defaultFilters,
   favouriteCrypt: [] as string[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function cryptReducer(state: CryptState, action: CryptAction): CryptState {
@@ -58,18 +65,29 @@ function cryptReducer(state: CryptState, action: CryptAction): CryptState {
       return { ...state, selectedTab: action.payload };
     case 'clearFilfters':
       return { ...state, ...defaultFilters };
+    case 'toggleIsLegendaryFilter':
+      return { ...state, isLegendaryFilter: !state.isLegendaryFilter };
+      break;
     case 'addFavouriteCrypt':
+      storage<string[]>(CryptFavoriteLocalStorageKey, []).set([
+        ...state.favouriteCrypt,
+        action.payload,
+      ]);
       return {
         ...state,
         favouriteCrypt: [...state.favouriteCrypt, action.payload],
       };
     case 'removeFavouriteCrypt':
+      storage<string[]>(CryptFavoriteLocalStorageKey, []).set(
+        state.favouriteCrypt.filter((id: string) => id !== action.payload)
+      );
       return {
         ...state,
         favouriteCrypt: state.favouriteCrypt.filter(
           (id: string) => id !== action.payload
         ),
       };
+
     default:
       return state;
   }
@@ -88,6 +106,7 @@ const mapActions = (dispatch: Dispatch<CryptAction>): CryptActions => ({
     dispatch({ type: 'updateEnvironmentsFilter', payload: envs }),
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
+  toggleIsLegendaryFilter: () => dispatch({ type: 'toggleIsLegendaryFilter' }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteCrypt: (id: string) =>
     dispatch({ type: 'addFavouriteCrypt', payload: id }),
@@ -106,7 +125,10 @@ export function useCryptContext() {
 }
 
 export function CryptProvider({ children }: { children: JSX.Element }) {
-  const [state, dispatch] = useReducer(cryptReducer, defaultCryptState);
+  const [state, dispatch] = useReducer(cryptReducer, {
+    ...defaultCryptState,
+    favouriteCrypt: storage<string[]>(CryptFavoriteLocalStorageKey, []).get(),
+  });
 
   return (
     <CryptContext.Provider
