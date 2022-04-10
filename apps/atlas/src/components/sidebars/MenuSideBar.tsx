@@ -98,7 +98,7 @@ export const MenuSideBar = () => {
             aria-label="GA"
             variant="unstyled"
             texture={false}
-            icon={<Helm className={'mx-auto w-7  fill-current'} />}
+            icon={<Helm className={iconClasses} />}
             size="lg"
           />
           <span className={textClasses}>GA</span>

@@ -72,7 +72,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
 
         {isOpen && (
           <Popover.Panel
-            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto md:left-1/2 md:-translate-x-1/2 shadow-2xl"
+            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 shadow-2xl"
             static
           >
             <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded shadow-sm">
