@@ -6,8 +6,8 @@ export function LootFilters() {
   const { state, actions } = useLootContext();
 
   return (
-    <div className="flex justify-between">
-      <div>
+    <div className="flex flex-wrap justify-between gap-2 mb-2">
+      <div className="w-full my-1 sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -16,7 +16,7 @@ export function LootFilters() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex mb-4">
+      <div className="flex self-center">
         <BagRatingFilter
           rating={state.ratingFilter}
           onChange={actions.updateRatingFilter}

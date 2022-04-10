@@ -1,12 +1,12 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { rarityDescription, rarityColor } from 'loot-rarity';
+import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import { shortenAddress } from '@/util/formatters';
 import type { LootProps } from '../../types';
 
 const variantMaps: any = {
@@ -14,9 +14,9 @@ const variantMaps: any = {
 };
 
 export function Loot(props: LootProps): ReactElement {
-  const image = props.loot.id;
   const [metaData, setMetaData] = useState(null);
   const { gotoAssetId } = useUIContext();
+  const ensData = useEnsResolver(props.loot.currentOwner.address);
 
   const mappedProperties = [
     'weapon',
@@ -48,15 +48,13 @@ export function Loot(props: LootProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 bg-black/60 rounded">
+        <div className="px-4 py-2 rounded bg-black/60">
           <div className=" sm:text-2xl">
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row ">
               <h3>
                 Bag # <span className="font-semibold ">{props.loot.id}</span>
               </h3>
-              {props.loot.currentOwner && (
-                <h3>👑 {shortenAddress(props.loot.currentOwner.address)}</h3>
-              )}
+              {props.loot.currentOwner && <h3>{ensData.displayName}</h3>}
               {props.flyto && (
                 <div className="self-center text-lg">
                   <Button
@@ -75,10 +73,10 @@ export function Loot(props: LootProps): ReactElement {
             <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="p-4 text-left uppercase tracking-widest text-lg">
+                  <th className="p-4 text-lg tracking-widest text-left uppercase">
                     Item
                   </th>
-                  <th className="p-4 uppercase tracking-widest text-lg">
+                  <th className="p-4 text-lg tracking-widest uppercase">
                     Greatness
                   </th>
                 </tr>

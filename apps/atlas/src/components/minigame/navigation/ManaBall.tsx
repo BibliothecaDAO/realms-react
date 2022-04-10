@@ -1,4 +1,5 @@
 import { LightningBoltIcon } from '@heroicons/react/outline';
+import { useSpring, animated, config } from 'react-spring';
 import { ElementToken } from '@/constants/index';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -53,6 +54,12 @@ export const ManaBall = (props: Props) => {
       ? 100 - (100 * getTokenPool.data?.toNumber()) / totalMinted
       : undefined;
 
+  const { number: totalMintedSpring } = useSpring({
+    from: { number: 0 },
+    number: totalMinted !== undefined ? totalMinted / EFFECT_BASE_FACTOR : 0,
+    config: config.molasses,
+  });
+
   return (
     <div
       className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-4 text-white shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
@@ -67,10 +74,14 @@ export const ManaBall = (props: Props) => {
           getGameStatus.data == 'completed' ? (
             <span className="self-center text-lg text-center capitalize">
               <span className="text-4xl font-bold">
-                {getTotalMinted.data
-                  ? getTotalMinted.data[props.side] / EFFECT_BASE_FACTOR
-                  : null}
-                <LightningBoltIcon className="inline-block h-6 ml-1" />
+                {totalMinted !== undefined ? (
+                  <>
+                    <LightningBoltIcon className="inline-block h-6 ml-1" />
+                    <animated.div className={'inline-block'}>
+                      {totalMintedSpring.to((n) => n.toFixed(0))}
+                    </animated.div>
+                  </>
+                ) : null}
               </span>
               <br />
               {props.side} minted for next game

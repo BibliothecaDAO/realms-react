@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface SearchFilterProps {
   placeholder?: string;
@@ -9,6 +9,9 @@ interface SearchFilterProps {
 export function SearchFilter(props: SearchFilterProps) {
   const [value, setValue] = useState(props.defaultValue ?? '');
 
+  useEffect(() => {
+    setValue(props.defaultValue ?? '');
+  }, [props.defaultValue]);
   function doSubmit() {
     if (!props.onSubmit) {
       return;
@@ -17,9 +20,9 @@ export function SearchFilter(props: SearchFilterProps) {
   }
 
   return (
-    <div className="bg-[#3D3D3D] p-1 rounded flex gap-1 justify-center items-center">
+    <div className="bg-black/40 p-1.5 rounded flex gap-1 justify-center items-center">
       <input
-        className="w-full px-3 py-2 h-9 leading-tight text-white font-bold text-sm uppercase focus:outline-none rounded appearance-none bg-[#515151] hover:bg-gray-300/20 tracking-widest"
+        className="w-full px-3 py-2 h-9 leading-tight text-white font-bold text-sm uppercase focus:outline-none rounded appearance-none bg-gray-800/80 hover:bg-gray-300/20 tracking-widest"
         type="text"
         value={value}
         onChange={(e) => {
@@ -34,7 +37,7 @@ export function SearchFilter(props: SearchFilterProps) {
       />
 
       <button
-        className="bg-[#515151] flex justify-center items-center p-2 h-9 cursor-pointer hover:bg-gray-300/20"
+        className="bg-900/80 rounded flex justify-center items-center p-2 h-9 cursor-pointer hover:bg-gray-300/20"
         onClick={doSubmit}
       >
         <svg

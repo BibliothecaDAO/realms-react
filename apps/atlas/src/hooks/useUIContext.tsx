@@ -47,11 +47,14 @@ export const AssetFilters: AssetFilter[] = [
 interface UI {
   selectedId: string;
   setSelectedId: (id: string) => void;
+  showDetails: boolean;
+  setShowDetails: (show: boolean) => void;
   selectedAssetFilter: AssetFilter;
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => void;
+  setSelectedAssetType: (assetType: AssetType) => void;
   selectedMenuType: MenuType;
   setMenuType: (menuType: MenuType) => void;
   toggleMenuType: (menuType: MenuType) => void;
+  openDetails: (menuType: MenuType, assetId: string) => void;
   closeAll: (exclude?: MenuType) => void;
   gotoAssetId: (assetId: string | number, assetType: AssetType) => void;
   coordinates?: Coordinate;
@@ -61,27 +64,10 @@ interface UI {
   toggleMainMenu: () => void;
   togglePanelType: (panelType: PanelType) => void;
   selectedPanel: PanelType;
+  isDisplayLarge: boolean;
 }
 
-const defaultUIContext: UI = {
-  selectedId: '1',
-  setSelectedId: (id: string) => {},
-  selectedAssetFilter: AssetFilters[0],
-  setSelectedAssetFilter: (AssetFilter: AssetFilter) => {},
-  selectedMenuType: undefined,
-  setMenuType: (menuType: MenuType) => {},
-  toggleMenuType: (menuType: MenuType) => {},
-  closeAll: (exclude?: MenuType) => {},
-  gotoAssetId: (assetId: string | number, assetType: AssetType) => {},
-  toggleArtBackground: (background?: BackgroundOptions) => {},
-  artBackground: undefined,
-  mainMenu: true,
-  toggleMainMenu: () => {},
-  togglePanelType: (panelType: PanelType) => {},
-  selectedPanel: undefined,
-};
-
-const UIContext = createContext<UI>(defaultUIContext);
+const UIContext = createContext<UI>(null!);
 
 interface UIProviderProps {
   children: React.ReactNode;
@@ -160,12 +146,20 @@ function useCoordinates() {
 function useUI(): UI {
   const router = useRouter();
   const query = useQueryPOI();
-  const [selectedId, setSelectedId] = useState(query ? query.assetId : '1');
+  const [selectedId, setSelectedId] = useState(query ? query.assetId : '');
+  const [showDetails, setShowDetails] = useState(false);
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+
+  const isDisplayLarge =
+    typeof window !== 'undefined' && window.innerWidth >= 768;
+
   const [artBackground, setArtBackground] = useState<BackgroundOptions>();
-  const [mainMenu, setMainMenu] = useState(true);
+  const [mainMenu, setMainMenu] = useState(
+    // default closed on small screens
+    isDisplayLarge
+  );
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(
     query ? (query.assetType as AssetType) : undefined
@@ -176,7 +170,14 @@ function useUI(): UI {
 
   // Update URL
   // useEffect(() => {
-  //   router.push(`?${selectedAssetFilter.value}=${selectedId}`, undefined, {
+  //   if (!selectedId) {
+  //     return;
+  //   }
+  //   const path = selectedId
+  //     ? `?${selectedAssetFilter.value}=${selectedId}`
+  //     : '/';
+
+  //   router.push(path, undefined, {
   //     shallow: true,
   //   });
   // }, [selectedId, selectedAssetFilter]);
@@ -190,6 +191,7 @@ function useUI(): UI {
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
+      setShowDetails(false);
       setMenuType(undefined);
     } else if (selectedMenuType !== exclude) {
       setMenuType(exclude);
@@ -201,8 +203,10 @@ function useUI(): UI {
 
   const toggleMenuType = (menuType: MenuType) => {
     if (selectedMenuType === menuType) {
+      setShowDetails(false);
       setMenuType(undefined);
     } else {
+      setShowDetails(true);
       setMenuType(menuType);
     }
   };
@@ -217,7 +221,12 @@ function useUI(): UI {
       setArtBackground(undefined);
     } else {
       setPanelType(panelType);
-      if (panelType === 'bank') {
+      if (panelType === 'crypt') {
+        setArtBackground('crypt');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      } else if (panelType === 'bank') {
         setArtBackground('bank');
         if (breakpoints.lg) {
           setMenuType('resourceSwap');
@@ -236,13 +245,23 @@ function useUI(): UI {
     }
   };
 
+  const openDetails = (menuType: MenuType, assetId: string) => {
+    setShowDetails(true);
+    setMenuType(menuType);
+    setSelectedId(assetId);
+  };
+
+  const setSelectedAssetType = (assetType: AssetType) =>
+    setSelectedAssetFilter(assetFilterByType(assetType));
+
   const toggleMainMenu = () => {
     return setMainMenu(!mainMenu);
   };
 
   const gotoAssetId = (assetId: string | number, assetType: AssetType) => {
     setMenuType(assetType);
-    setSelectedAssetFilter(assetFilterByType(assetType));
+    setShowDetails(true);
+    setSelectedAssetType(assetType);
     setSelectedId(assetId + '');
     updateCoordinatesByAsset(assetId + '', assetType);
   };
@@ -250,10 +269,13 @@ function useUI(): UI {
   return {
     selectedId,
     setSelectedId,
+    showDetails,
+    setShowDetails,
     selectedAssetFilter,
-    setSelectedAssetFilter,
+    setSelectedAssetType,
     selectedMenuType,
     setMenuType,
+    openDetails,
     closeAll,
     toggleArtBackground,
     toggleMenuType,
@@ -264,6 +286,7 @@ function useUI(): UI {
     toggleMainMenu,
     togglePanelType,
     selectedPanel,
+    isDisplayLarge,
   };
 }
 

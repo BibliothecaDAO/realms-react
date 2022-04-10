@@ -7,9 +7,8 @@ export function GaFilters() {
   const { state, actions } = useGaContext();
 
   return (
-    <div className="flex justify-between">
-      <div>
-        {' '}
+    <div className="flex flex-wrap justify-between mb-2">
+      <div className="w-full my-1 sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -18,7 +17,7 @@ export function GaFilters() {
           defaultValue={state.searchIdFilter + ''}
         />
       </div>
-      <div className="flex mb-4">
+      <div className="flex items-center justify-center gap-2">
         <OrdersFilter
           selectedValues={state.selectedOrders}
           onChange={actions.updateSelectedOrders}

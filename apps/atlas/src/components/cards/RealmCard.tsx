@@ -6,9 +6,9 @@ import { RealmBuildings } from '@/components/tables/RealmBuildings';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmTroops } from '@/components/tables/RealmTroops';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
 import type { RealmProps } from '../../types';
@@ -43,11 +43,11 @@ function Overview(props: RealmProps): ReactElement {
           )}
         </div>
       </div>
-      <div className="flex flex-wrap mb-2 uppercase tracking-widest font-semibold">
+      <div className="flex flex-wrap mb-2 font-semibold tracking-widest uppercase">
         {props.realm.resourceIds.map((re: any, index) => (
-          <div key={index} className="flex text-xl mb-4 mr-4">
+          <div key={index} className="flex mb-4 mr-4 text-xl">
             <ResourceIcon
-              resource={findResourceName(re)?.trait || ''}
+              resource={findResourceName(re)?.trait?.replace(' ', '') || ''}
               size="md"
             />
 
@@ -60,49 +60,57 @@ function Overview(props: RealmProps): ReactElement {
 
       <div
         className={
-          `flex flex-col  w-full uppercase font-display ` +
+          `grid grid-cols-2 gap-4  w-full uppercase font-display ` +
           (props.size ? variantMaps[props.size]?.regions : '')
         }
       >
-        <span>Regions: {props.realm.regions} / 7</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-amber-700/60 rounded-xl"
-            style={{
-              width: `${((props.realm.regions as any) / 7) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span>Regions: {props.realm.regions} / 7</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-amber-700/60 rounded-xl"
+              style={{
+                width: `${((props.realm.regions as any) / 7) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Cities: {props.realm.cities} / 21</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-amber-300/60"
-            style={{
-              width: `${((props.realm.cities as any) / 21) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Cities: {props.realm.cities} / 21</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-amber-300/60"
+              style={{
+                width: `${((props.realm.cities as any) / 21) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-blue-700/60"
-            style={{
-              width: `${((props.realm.harbours as any) / 35) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Harbors: {props.realm.harbours} / 35</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-blue-700/60"
+              style={{
+                width: `${((props.realm.harbours as any) / 35) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-        <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
-        <div className="w-full my-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-blue-500/60 "
-            style={{
-              width: `${((props.realm.rivers as any) / 60) * 100}%`,
-            }}
-          ></div>
+        <div>
+          <span className="pt-1">Rivers: {props.realm.rivers} / 60</span>
+          <div className="w-full my-2 bg-gray-200 rounded">
+            <div
+              className="h-2 bg-blue-500/60 "
+              style={{
+                width: `${((props.realm.rivers as any) / 60) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
       </div>
       <MarketplaceByPanel
-        id="props.realm.id"
+        id={props.realm.id}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
     </div>
@@ -110,7 +118,7 @@ function Overview(props: RealmProps): ReactElement {
 }
 
 export function RealmCard(props: RealmProps): ReactElement {
-  const { gotoAssetId } = useUIContext();
+  const ensData = useEnsResolver(props.realm.currentOwner.address);
 
   const tabs = useMemo(
     () => [
@@ -135,7 +143,7 @@ export function RealmCard(props: RealmProps): ReactElement {
       //   component: <RealmHistory />,
       // },
     ],
-    []
+    [props.realm?.id]
   );
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
@@ -147,12 +155,10 @@ export function RealmCard(props: RealmProps): ReactElement {
         </div>
       ) : (
         <div>
-          {props.realm?.wonder ? (
-            <div className="w-full p-4 text-3xl text-center uppercase rounded bg-white/30">
+          {props.realm?.wonder && (
+            <div className="w-full p-4 text-2xl font-semibold text-center text-gray-200 uppercase border-4 border-gray-500 rounded shadow-inner tracking-veryWide bg-white/10">
               {props.realm?.wonder}
             </div>
-          ) : (
-            ''
           )}
           <div className="w-auto">
             <Image
@@ -178,8 +184,8 @@ export function RealmCard(props: RealmProps): ReactElement {
               {props.realm.name}{' '}
             </h2>
             {props.realm.currentOwner && (
-              <h3 className="my-2 self-center ml-auto">
-                {shortenAddress(props.realm.currentOwner.address)}
+              <h3 className="self-center my-2 ml-auto">
+                {ensData.displayName}
               </h3>
             )}
           </div>

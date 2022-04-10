@@ -6,7 +6,7 @@ import { OrderType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 
 type OrdersFilterProps = {
-  selectedValues?: OrderType[];
+  selectedValues: OrderType[];
   onChange(selected: OrderType[]): void;
 };
 
@@ -18,21 +18,19 @@ type OrderOption = {
 export function OrdersFilter(props: OrdersFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [selected, setSelected] = useState<OrderType[]>(
-    props.selectedValues ?? []
-  );
-
   const handleOnClickOrderOption = (option: OrderOption) => {
-    const newValues = selected.filter((value) => value !== option.value);
-    if (newValues.length === selected.length) {
+    const newValues = props.selectedValues.filter(
+      (value) => value !== option.value
+    );
+    if (newValues.length === props.selectedValues.length) {
       newValues.push(option.value);
     }
-    setSelected([...newValues]);
+    // setSelected([...newValues]);
     props.onChange([...newValues]);
   };
 
   const isSelected = (option: OrderOption) =>
-    selected.indexOf(option.value) > -1;
+    props.selectedValues.indexOf(option.value) > -1;
 
   const ref = useRef(null);
   useOnClickOutsideElement(ref, () => {
@@ -60,45 +58,47 @@ export function OrdersFilter(props: OrdersFilterProps) {
 
   return (
     <Popover className="relative">
-      <Button
-        variant="primary"
-        className={`px-4 ml-2 uppercase ${isOpen ? 'bg-black/80' : ''}`}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      >
-        Orders
-      </Button>
-
-      {isOpen && (
-        <Popover.Panel
-          className="absolute z-10 mt-2 w-[280px] ml-2 left-1/2 -translate-x-1/2 shadow-2xl"
-          ref={ref}
-          static
+      <div ref={ref}>
+        <Button
+          variant="primary"
+          size="sm"
+          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white rounded shadow-sm bg-black">
-            <h4>Search by Orders</h4>
+          Orders
+        </Button>
 
-            <div className="relative grid items-center justify-center grid-cols-4 gap-6">
-              {orders.map((order, idx) => (
-                <div
-                  role="button"
-                  key={order.value}
-                  tabIndex={idx}
-                  className={clsx(
-                    'flex items-center justify-center cursor-pointer rounded-sm px-6 hover:bg-gray-200/20 duration-150 transition-all',
-                    isSelected(order) ? 'bg-gray-200/20' : ''
-                  )}
-                  onClick={() => handleOnClickOrderOption(order)}
-                  aria-hidden="true"
-                >
-                  <OrderIcon order={order.name.toLowerCase()} size="md" />
-                </div>
-              ))}
+        {isOpen && (
+          <Popover.Panel
+            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 shadow-2xl"
+            static
+          >
+            <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded shadow-sm">
+              <h4>Search by Orders</h4>
+
+              <div className="relative grid items-center justify-center grid-cols-4 gap-6">
+                {orders.map((order, idx) => (
+                  <div
+                    role="button"
+                    key={order.value}
+                    tabIndex={idx}
+                    className={clsx(
+                      'flex items-center justify-center cursor-pointer rounded-sm px-6 hover:bg-gray-200/20 duration-150 transition-all',
+                      isSelected(order) ? 'bg-gray-200/20' : ''
+                    )}
+                    onClick={() => handleOnClickOrderOption(order)}
+                    aria-hidden="true"
+                  >
+                    <OrderIcon order={order.name.toLowerCase()} size="md" />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </Popover.Panel>
-      )}
+          </Popover.Panel>
+        )}
+      </div>
     </Popover>
   );
 }

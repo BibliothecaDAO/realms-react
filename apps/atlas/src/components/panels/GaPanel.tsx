@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
@@ -14,7 +14,8 @@ import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const GaPanel = () => {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { isDisplayLarge, togglePanelType, openDetails, selectedPanel } =
+    useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -23,58 +24,72 @@ export const GaPanel = () => {
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
 
+  // Reset page on filter change. UseEffect doesn't do a deep compare
+  useEffect(() => {
+    setPage(1);
+  }, [
+    state.favouriteGa,
+    state.selectedOrders,
+    state.searchIdFilter,
+    state.ratingFilter.bagGreatness,
+    state.ratingFilter.bagRating,
+    state.selectedTab,
+  ]);
+
+  const isGaPanel = selectedPanel === 'ga';
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
-    // Your GA
+    const where: any = {};
+    if (state.searchIdFilter) {
+      where.id = state.searchIdFilter;
+    } else if (state.selectedTab === 2) {
+      where.id_in = [...state.favouriteGa];
+    }
+
     if (state.selectedTab === 0) {
-      return { where: { currentOwner: account.toLowerCase() } };
+      where.currentOwner = account?.toLowerCase();
     }
-    // All GA
-    else if (state.selectedTab === 1) {
-      let where: any = {};
-      if (state.searchIdFilter) {
-        where = { id: state.searchIdFilter };
-      } else {
-        where = {
-          bagGreatness_gt: state.ratingFilter.bagGreatness,
-          bagRating_gt: state.ratingFilter.bagRating,
-        };
-        if (state.selectedOrders.length > 0) {
-          where.order_in = [
-            ...state.selectedOrders.map((orderType) =>
-              orderType.replace('_', ' ')
-            ),
-          ];
-        }
-      }
-      return {
-        first: limit,
-        skip: limit * (page - 1),
-        where,
-        orderBy: 'minted',
-        orderDirection: 'asc',
-      };
+    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
+    where.bagRating_gt = state.ratingFilter.bagRating;
+
+    if (state.selectedOrders.length > 0) {
+      where.order_in = [
+        ...state.selectedOrders.map((orderType) => orderType.replace('_', ' ')),
+      ];
     }
-    // Favourite GA
-    else if (state.selectedTab === 2) {
-      return { where: { id_in: [...state.favouriteGa] } };
-    }
-    return {};
+
+    return {
+      first: limit,
+      skip: limit * (page - 1),
+      where,
+      orderBy: 'minted',
+      orderDirection: 'asc',
+    };
   }, [account, state, page]);
 
   const { loading, data } = useQuery<{
     gadventurers: GAdventurer[];
   }>(getGAsQuery, {
     variables,
+    skip: !isGaPanel,
   });
+
+  useEffect(() => {
+    if (isDisplayLarge && page === 1 && (data?.gadventurers?.length ?? 0) > 0) {
+      openDetails('ga', data?.gadventurers[0].id as string);
+    }
+  }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
     (page > 1 || (data?.gadventurers?.length ?? 0) === limit);
 
+  const hasNoResults = () =>
+    !loading && (data?.gadventurers?.length ?? 0) === 0;
+
   return (
-    <BasePanel open={selectedPanel === 'ga'}>
+    <BasePanel open={isGaPanel}>
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Genesis Adventurers</h1>
@@ -98,7 +113,7 @@ export const GaPanel = () => {
           ))}
         </Tabs.List>
       </Tabs>
-      <div className="mt-2">
+      <div>
         <GaFilters />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
@@ -108,6 +123,28 @@ export const GaPanel = () => {
         )}
         <GaOverviews bags={data?.gadventurers ?? []} />
       </div>
+
+      {hasNoResults() && (
+        <div className="flex flex-col items-center justify-center gap-8 my-8">
+          <h2>No results.</h2>
+          <div className="flex gap-4">
+            <Button
+              className="whitespace-nowrap"
+              onClick={actions.clearFilters}
+            >
+              Clear Filters
+            </Button>
+            {state.selectedTab !== 1 && (
+              <Button
+                className="whitespace-nowrap"
+                onClick={() => actions.updateSelectedTab(1)}
+              >
+                See All GA
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPagination() && (
         <div className="flex gap-2 my-8">

@@ -17,7 +17,7 @@ export function RealmResources(props: RealmProps): ReactElement {
       resource: (
         <span className="flex">
           <ResourceIcon
-            resource={findResourceName(re)?.trait || ''}
+            resource={findResourceName(re)?.trait.replace(' ', '') || ''}
             size="md"
             className="mr-4"
           />

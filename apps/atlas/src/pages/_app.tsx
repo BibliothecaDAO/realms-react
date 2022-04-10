@@ -14,7 +14,6 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
-import { UIProvider } from '@/hooks/useUIContext';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 /* import PageTransition from '@/components/navigation/PageTransition'; 
@@ -93,13 +92,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ApolloProvider client={client}>
           <StarknetProvider>
             <QueryClientProvider client={queryClient}>
-              <UIProvider>
-                <Component {...pageProps} />
-                {/* <PageTransition
+              <Component {...pageProps} />
+              {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-              </UIProvider>
               <ReactQueryDevtools
                 initialIsOpen={false}
                 position="bottom-right"

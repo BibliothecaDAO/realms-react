@@ -46,7 +46,7 @@ const defaultFilters = {
 const defaultGaState = {
   ...defaultFilters,
   favouriteGa: [] as string[],
-  selectedTab: 0,
+  selectedTab: 1,
 };
 
 function gaReducer(state: GaState, action: GaAction): GaState {

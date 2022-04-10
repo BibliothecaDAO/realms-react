@@ -29,15 +29,30 @@ import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useUIContext, UIProvider } from '@/hooks/useUIContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
 function App() {
+  return (
+    <Compose
+      components={[
+        UIProvider,
+        RealmProvider,
+        LootProvider,
+        GaProvider,
+        CryptProvider,
+      ]}
+    >
+      <Atlas />
+    </Compose>
+  );
+}
+
+function Atlas() {
   const ITEM_VIEW_LEVEL = 5;
-  const { setMenuType, selectedId, setSelectedId, coordinates } =
-    useUIContext();
+  const { openDetails, selectedId, coordinates } = useUIContext();
   const [resource] = useState<Array<string>>([]);
 
   const filteredData = () => {
@@ -80,8 +95,7 @@ function App() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.tokenId);
-      setMenuType('crypt');
+      openDetails('crypt', info.object.properties.tokenId);
     },
   });
 
@@ -105,8 +119,7 @@ function App() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.realm_idx);
-      setMenuType('realm');
+      openDetails('realm', info.object.properties.realm_idx);
     },
   });
 
@@ -129,8 +142,7 @@ function App() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.bag_id);
-      setMenuType('loot');
+      openDetails('loot', info.object.properties.bag_id);
     },
   });
 
@@ -153,8 +165,7 @@ function App() {
       getVisible: initialViewState,
     },
     onClick: (info: any) => {
-      setSelectedId(info.object.properties.ga_id);
-      setMenuType('ga');
+      openDetails('ga', info.object.properties.ga_id);
     },
   });
 
@@ -193,47 +204,48 @@ function App() {
       transitionInterpolator: new FlyToInterpolator(),
     });
   }, [coordinates]);
+  const [loaded, setLoaded] = useState<boolean>();
 
   return (
-    <Compose
-      components={[RealmProvider, LootProvider, GaProvider, CryptProvider]}
-    >
-      <Layout>
-        <div className="relative flex h-full overflow-hidden sm:h-screen">
-          <MenuSideBar />
-          <div className="relative flex flex-col w-full">
-            <Header />
-            <div className="relative w-full h-full">
-              <ArtBackground />
-              <RealmsPanel />
-              <LootPanel />
-              <GaPanel />
-              <BankPanel />
-              <CryptsPanel />
-              <RealmSideBar id={selectedId} />
-              <TradePanel />
-              <ResourceSwapSideBar />
-              <CryptsSideBar id={selectedId} />
-              <LootSideBar id={selectedId} />
-              <GASideBar id={selectedId} />
-              <FlyTo />
-              <ArtBackground />
-              <DeckGL
-                getCursor={({ isHovering }) => {
-                  return isHovering ? 'pointer' : 'grabbing';
-                }}
-                pickingRadius={25}
-                initialViewState={initialViewState}
-                controller={true}
-                onViewStateChange={(e) => setInitialViewState(e.viewState)}
-                layers={[
-                  realmsLayer,
-                  resourceLayer,
-                  cryptsLayer,
-                  lootBagLayer,
-                  gaBagLayer,
-                ]}
-              >
+    <Layout>
+      <div className="relative flex h-full overflow-hidden sm:h-screen">
+        <MenuSideBar />
+        <div className="relative flex flex-col w-full">
+          <Header />
+          <div className="relative w-full h-full">
+            <ArtBackground />
+            <RealmsPanel />
+            <LootPanel />
+            <GaPanel />
+            <BankPanel />
+            <CryptsPanel />
+            <RealmSideBar id={selectedId} />
+            <TradePanel />
+            <ResourceSwapSideBar />
+            <CryptsSideBar id={selectedId} />
+            <LootSideBar id={selectedId} />
+            <GASideBar id={selectedId} />
+            <FlyTo />
+            <ArtBackground />
+
+            <DeckGL
+              getCursor={({ isHovering }) => {
+                return isHovering ? 'pointer' : 'grabbing';
+              }}
+              pickingRadius={25}
+              initialViewState={initialViewState}
+              controller={true}
+              onLoad={() => setLoaded(true)}
+              onViewStateChange={(e) => setInitialViewState(e.viewState)}
+              layers={[
+                realmsLayer,
+                resourceLayer,
+                cryptsLayer,
+                lootBagLayer,
+                gaBagLayer,
+              ]}
+            >
+              {loaded ? (
                 <Map
                   attributionControl={false}
                   mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
@@ -241,12 +253,16 @@ function App() {
                     'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
                   }
                 />
-              </DeckGL>
-            </div>
+              ) : (
+                <div className={'w-full h-full flex justify-center'}>
+                  <h1 className={'self-center'}>Loading Atlas...</h1>
+                </div>
+              )}
+            </DeckGL>
           </div>
         </div>
-      </Layout>
-    </Compose>
+      </div>
+    </Layout>
   );
 }
 

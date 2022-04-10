@@ -12,7 +12,7 @@ interface RangeSliderFilterProps {
   name: string;
   min: number;
   max: number;
-  defaultValue?: number;
+  defaultValue: number;
   onChange(value: number): void;
 }
 
@@ -44,6 +44,7 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
           : Math.min(clientX - boundingRect.x, boundingRect.width - sliderSize),
       y: 0,
     };
+
     return {
       ...state,
       translation,
@@ -88,9 +89,13 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
         step * props.defaultValue + boundingRect.x,
         false
       );
-      setState({ ...updatedState, isDragging: false });
+      setState({
+        ...updatedState,
+        isDragging: false,
+        selectedValue: props.defaultValue,
+      });
     }
-  }, [boundingRect]);
+  }, [boundingRect, props.defaultValue]);
 
   // Handle Mouse Events
   const handleMouseDown = useCallback(({ clientX, clientY }) => {
@@ -153,7 +158,7 @@ export function RangeSliderFilter(props: RangeSliderFilterProps) {
 
   return (
     <div className="relative w-full my-2">
-      <div className="text-sm text-center uppercase tracking-widest">
+      <div className="text-sm tracking-widest text-center uppercase">
         {props.name}
       </div>
       <div

@@ -33,37 +33,46 @@ export type Props = {
   resource: string;
   size: keyof typeof STYLES['size'];
   className?: string;
+  label?: boolean;
 };
 
-const Components: { [key: string]: ReactElement } = Object.freeze({
-  Adamantine: <Adamantine />,
-  AlchemicalSilver: <AlchemicalSilver />,
-  Coal: <Coal />,
-  ColdIron: <ColdIron />,
-  Copper: <Copper />,
-  DeepCrystal: <DeepCrystal />,
-  Diamonds: <Diamonds />,
-  Dragonhide: <Dragonhide />,
-  EtherealSilica: <EtherealSilica />,
-  Gold: <Gold />,
-  Hartwood: <Hartwood />,
-  Ignium: <Ignium />,
-  Ironwood: <Ironwood />,
-  Mithral: <Mithral />,
-  Obsidian: <Obsidian />,
-  Ruby: <Ruby />,
-  Sapphire: <Sapphire />,
-  Silver: <Silver />,
-  Stone: <Stone />,
-  TrueIce: <TrueIce />,
-  TwilightQuartz: <TwilightQuartz />,
-  Wood: <Wood />,
-  EmbersGlow: <DemonHide />,
-  StoneTemple: <Cloth />,
-  DesertOasis: <DesertGlass />,
-  MountainDeep: <Ore />,
-  UnderwaterKeep: <Shekels />,
-  ForestRuins: <Spores />,
+type Resource = {
+  component: ReactElement;
+  name: string;
+};
+
+const Components: { [key: string]: Resource } = Object.freeze({
+  Adamantine: { component: <Adamantine />, name: 'Adamantine' },
+  AlchemicalSilver: {
+    component: <AlchemicalSilver />,
+    name: 'Alchemical Silver',
+  },
+  Coal: { component: <Coal />, name: 'Coal' },
+  ColdIron: { component: <ColdIron />, name: 'Cold Iron' },
+  Copper: { component: <Copper />, name: 'Copper' },
+  DeepCrystal: { component: <DeepCrystal />, name: 'Deep Crystal' },
+  Diamonds: { component: <Diamonds />, name: 'Diamonds' },
+  Dragonhide: { component: <Dragonhide />, name: 'Dragonhide' },
+  EtherealSilica: { component: <EtherealSilica />, name: 'Ethereal Silica' },
+  Gold: { component: <Gold />, name: 'Gold' },
+  Hartwood: { component: <Hartwood />, name: 'Hartwood' },
+  Ignium: { component: <Ignium />, name: 'Ignium' },
+  Ironwood: { component: <Ironwood />, name: 'Ironwood' },
+  Mithral: { component: <Mithral />, name: 'Mithral' },
+  Obsidian: { component: <Obsidian />, name: 'Obsidian' },
+  Ruby: { component: <Ruby />, name: 'Ruby' },
+  Sapphire: { component: <Sapphire />, name: 'Sapphire' },
+  Silver: { component: <Silver />, name: 'Silver' },
+  Stone: { component: <Stone />, name: 'Stone' },
+  TrueIce: { component: <TrueIce />, name: 'TrueIce' },
+  TwilightQuartz: { component: <TwilightQuartz />, name: 'Twilight Quartz' },
+  Wood: { component: <Wood />, name: 'Wood' },
+  EmbersGlow: { component: <DemonHide />, name: 'Demon Hide' },
+  StoneTemple: { component: <Cloth />, name: 'Cloth' },
+  DesertOasis: { component: <DesertGlass />, name: 'Desert Glass' },
+  MountainDeep: { component: <Ore />, name: 'Ore' },
+  UnderwaterKeep: { component: <Shekels />, name: 'Shekels' },
+  ForestRuins: { component: <Spores />, name: 'Spores' },
 });
 
 const STYLES = {
@@ -77,8 +86,16 @@ const STYLES = {
 
 export const ResourceIcon = (props: Props) => {
   return (
-    <div className={twMerge(STYLES.size[props.size], props.className)}>
-      {Components[props.resource]}
+    <div className={`flex flex-col`}>
+      <span className={`${twMerge(STYLES.size[props.size], props.className)} `}>
+        {Components[props.resource.replace(' ', '').replace("'", '')].component}
+      </span>
+
+      {props.label && (
+        <span className="mt-4 uppercase font-body tracking-widest font-semibold">
+          {Components[props.resource.replace(' ', '').replace("'", '')].name}
+        </span>
+      )}
     </div>
   );
 };

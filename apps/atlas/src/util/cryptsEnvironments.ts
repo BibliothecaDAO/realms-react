@@ -83,8 +83,12 @@ input: name of a dungeon
 returns: true (legendary) or false (not legendary) */
 export function isLegendary(name: string) {
   // Legendary names are the only ones that start with an apostrophe (`)
-  return name.slice(0, 1) == "'";
+  return name.slice(0, 1);
 }
 
 /* legendaryColourClass - Applies css to style legendary map */
 export const legendaryColourClass = `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`;
+
+export const findEnvironment = (value: number) => {
+  return environments.find((e) => e.id === value);
+};
