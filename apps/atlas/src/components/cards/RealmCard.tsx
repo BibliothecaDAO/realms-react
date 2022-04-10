@@ -110,7 +110,7 @@ function Overview(props: RealmProps): ReactElement {
         </div>
       </div>
       <MarketplaceByPanel
-        id="props.realm.id"
+        id={props.realm.id}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
     </div>
