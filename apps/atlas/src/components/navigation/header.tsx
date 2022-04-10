@@ -26,11 +26,6 @@ export function Header() {
   return (
     <div className="top-0 left-0 z-40 hidden bg-gray-800 sm:flex justify-end shadow-inner">
       <div className="ml-auto flex px-4 py-4 mr-auto space-x-4 w-full justify-end">
-        {/* <span>
-          <Button variant="primary" onClick={connectWallet}>
-            claim Resources
-          </Button>
-        </span> */}
         <div className="self-center mt-2">
           <IconButton
             aria-label="Bank"
@@ -55,6 +50,11 @@ export function Header() {
             size="lg"
           />
         </div>
+        <span>
+          <Button disabled variant="primary">
+            claim Resources [soon]
+          </Button>
+        </span>
         <span>
           <Button variant="primary" onClick={connectWallet}>
             <Lords className="w-6" /> <span className="px-4">{balance}</span>
