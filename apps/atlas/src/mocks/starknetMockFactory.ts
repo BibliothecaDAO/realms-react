@@ -15,7 +15,7 @@ let _cachedResponseCount: Record<StarknetSelector, number> = {};
 // The Storybook decorator is called every time the story is rendered
 // It's a good place to reset the cache of response counts
 // Else, the counts will stay the same as the user changes stories
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any
 export const OrderedMockResponseDecorator = (Story: any) => {
   _cachedResponseCount = {};
   return Story();
@@ -48,6 +48,7 @@ export const delayedResponse = createResponseComposition(undefined, [
 // that corresponds to the order
 export const wrappedRequestHandlerWithCount = (
   req: RestRequest<StarknetCall, RequestParams>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   res: ResponseComposition<any>,
   ctx: RestContext,
   responseMap: MockResponseSelectorMap
@@ -100,6 +101,7 @@ export const mockGetBlock = () => ({
 export const mockBlockResponse = (_blockNumber: number) => {
   return (
     _req: RestRequest<StarknetCall, RequestParams>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     res: ResponseComposition<any>,
     ctx: RestContext
   ) => {

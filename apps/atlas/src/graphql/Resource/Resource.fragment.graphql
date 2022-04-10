@@ -1,0 +1,5 @@
+fragment ResourceFragment on Resource {
+    id
+    type
+    realmId
+  }

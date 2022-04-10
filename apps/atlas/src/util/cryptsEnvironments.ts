@@ -9,7 +9,7 @@ There are six environments:
 5 - Ember's Glow (3%)
 */
 
-interface Environments {
+export interface Environment {
   name: string; // Name of the environment (e.g. Ember's Glow)
   colourClass: {
     // Class styles for environment 'pills' (e.g. white text on black bg)
@@ -20,7 +20,7 @@ interface Environments {
   id: number;
 }
 
-export const environments: Array<Environments> = [
+export const environments: Array<Environment> = [
   {
     name: 'Desert Oasis',
     colourClass: {
@@ -83,8 +83,12 @@ input: name of a dungeon
 returns: true (legendary) or false (not legendary) */
 export function isLegendary(name: string) {
   // Legendary names are the only ones that start with an apostrophe (`)
-  return name.slice(0, 1) == "'";
+  return name.slice(0, 1);
 }
 
 /* legendaryColourClass - Applies css to style legendary map */
 export const legendaryColourClass = `text-transparent background-animate bg-clip-text bg-gradient-to-br from-orange-300 via-yellow-400 to-orange-100 shimmer fast`;
+
+export const findEnvironment = (value: number) => {
+  return environments.find((e) => e.id === value);
+};

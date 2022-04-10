@@ -7,6 +7,7 @@
     "module": "esnext",
     "jsx": "preserve",
     "incremental": true,
+    "noImplicitAny": false,
     "paths": {
       "@/test-utils": ["../config/jest/test-utils"],
       "@/abi/*": ["./abi/*"],
@@ -15,6 +16,7 @@
       "@/context/*": ["./context/*"],
       "@/data/*": ["./data/*"],
       "@/geodata/*": ["./geodata/*"],
+      "@/generated/*": ["./generated/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/mocks/*": ["./mocks/*"],
       "@/pages/*": ["./pages/*"],
@@ -28,9 +30,11 @@
       "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
     }
   },
+
   "exclude": ["**/node_modules", "**/.*/", ".next"],
   "include": [
     "next-env.d.ts",
+    "custom.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",

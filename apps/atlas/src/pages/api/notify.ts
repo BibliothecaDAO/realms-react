@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await axios.post(
-      'https://desiege-bot-o7dw3.ondigitalocean.app/action',
+      'https://squire-25q7c.ondigitalocean.app/action',
       req.body
     );
   } catch (e) {

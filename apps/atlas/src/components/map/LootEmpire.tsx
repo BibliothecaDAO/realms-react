@@ -1,11 +1,10 @@
 import { useQuery } from '@apollo/client';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useState } from 'react';
 import { getLootsQuery } from '@/hooks/graphql/queries';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 import type { WalletEcosystemData, CryptFilters } from '@/types/index';
-import { Loot } from '../realms/Loot';
+import { Loot } from '../cards/Loot';
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
 
@@ -15,7 +14,7 @@ export const LootEmpire = () => {
 
   const defaultVariables = (params?: CryptFilters) => {
     return {
-      address: account.toLowerCase(),
+      where: { currentOwner: account.toLowerCase() },
       first: 12,
       skip: limit,
     };

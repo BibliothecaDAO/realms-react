@@ -7,10 +7,7 @@ type TabPanelProps = ComponentProps<'div'>;
 export const TabPanel = ({ className, children, ...props }: TabPanelProps) => {
   return (
     <Tab.Panel
-      className={clsx(
-        'outline-none mt-3 w-full rounded-xl bg-white',
-        className
-      )}
+      className={clsx('outline-none mt-3 w-full', className)}
       {...props}
     >
       {children}

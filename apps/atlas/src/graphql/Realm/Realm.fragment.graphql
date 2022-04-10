@@ -1,0 +1,24 @@
+fragment RealmFragment on Realm {
+  realmId
+  owner
+  bridgedOwner
+  name
+  rarityRank
+  rarityScore
+  orderType
+  wonder
+  resources {
+    type
+  }
+  traits {
+    type
+    qty
+  }
+  buildings {
+    type
+  }
+  squads {
+    action
+    type
+  }
+}

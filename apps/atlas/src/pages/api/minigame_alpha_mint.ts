@@ -1,15 +1,15 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Provider, ec, Signer, stark, encode } from 'starknet';
-import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import { fetchLordsBalance } from '@/util/fetchL1';
+import { ec, encode, Account } from 'starknet';
+import { ElementToken, MINIMUM_LORDS_REQUIRED } from '@/constants/index';
+import { fetchLordsBalance, fetchNumberRealmsStaked } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
 import {
   getModuleAddress,
   getNextMintAmount,
   getTotalElementsMinted,
+  provider,
 } from '@/util/minigameApi';
-const { getSelectorFromName } = stark;
 
 export type MintingError = {
   success: false;
@@ -23,35 +23,35 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const lordsBalance = await fetchLordsBalance(ethAddress);
 
-  const suppressERC20Requirement =
+  const numRealmsStaked = await fetchNumberRealmsStaked(ethAddress);
+
+  const suppressMintRequirement =
     process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == '1';
 
-  if (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) && !suppressERC20Requirement) {
+  if (
+    (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) || numRealmsStaked == 0) &&
+    !suppressMintRequirement
+  ) {
     res.send(
       JSON.stringify({
         success: false,
-        error: 'Insufficient LORDS balance',
+        error: 'Insufficient LORDS balance or staked Realm count',
       })
     );
     return;
   }
 
-  // Mint on StarkNet (testnet)
-  const provider = new Provider({
-    network: 'goerli-alpha',
-  });
-
   const minterPrivKey = encode.addHexPrefix(
     process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
   );
 
-  let signer;
+  let signerAccount;
   try {
     const privKey = ec.getKeyPair(minterPrivKey);
     const account =
       (process.env.ELEMENTS_MINTER_ACCOUNT_ADDRESS as string) ||
-      '0x430728b8d6252608f35615191903466284b01e4ae9ecff60de8a6cb99d44a10';
-    signer = new Signer(provider, account, privKey);
+      '0x75e3a462923e8863e5b57d42754156753c9ebc8f0ac4423b120abf96868dfe8';
+    signerAccount = new Account(provider, account, privKey);
   } catch (e) {
     console.error('SIGNING ERROR:', e);
     throw e;
@@ -83,23 +83,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const elementBalancerModule = await getModuleAddress('4');
 
-  const selector = getSelectorFromName('mint_elements');
+  const entrypoint = 'mint_elements';
   const mintArgs = [
     nextGameIdx,
     ethAddress,
     starknetAddress,
-    chosenSide == 'light' ? tokenStartIndex + 1 : tokenStartIndex + 2,
+    chosenSide == 'light'
+      ? tokenStartIndex + ElementToken.Light
+      : tokenStartIndex + ElementToken.Dark,
     amountToMint,
   ];
 
   try {
-    const result = await signer?.invokeFunction(
-      elementBalancerModule,
-      selector,
-      mintArgs
-    );
+    const result = await signerAccount.execute({
+      contractAddress: elementBalancerModule,
+      entrypoint,
+      calldata: mintArgs,
+    });
     res.send(JSON.stringify(result));
     return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     console.error('MINTING ERROR:', e);
     res.send(
