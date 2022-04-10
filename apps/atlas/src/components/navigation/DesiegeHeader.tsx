@@ -7,7 +7,7 @@ import { MapIcon } from '@heroicons/react/outline';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { shortenAddress } from '@/util/formatters';
+import { shortenAddressWidth } from '@/util/formatters';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function DesiegeHeader() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
@@ -68,7 +68,7 @@ export function DesiegeHeader() {
                 onClick={starknet.connectBrowserWallet}
               >
                 <StarkNet className="w-5 mr-2" />
-                {shortenAddress(starknet?.account)}
+                {shortenAddressWidth(starknet?.account, 4)}
               </span>
             ) : (
               <button
