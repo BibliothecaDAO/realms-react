@@ -8,6 +8,7 @@ import axios from 'axios';
 import type BN from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { useSpring, animated, config } from 'react-spring';
 import type { Abi } from 'starknet';
 import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
@@ -37,9 +38,6 @@ const divineEclipse: TokenNameOffsetMap = {
   light: 1,
   dark: 2,
 };
-// The offset is based on the season mapping
-const currentTokenOffset = divineEclipse;
-
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const ActionsBox = (props) => {
   const { account } = useStarknet();
@@ -60,6 +58,14 @@ export const ActionsBox = (props) => {
   const getTokenBalances = useTokenBalances({
     gameIdx,
   });
+  const tokenOffset = divineEclipse[getTokenBalances.side as string];
+  const tokenBalance: BN | undefined =
+    getTokenBalances.side &&
+    getTokenBalances.tokenBalances &&
+    tokenOffset !== undefined
+      ? getTokenBalances.tokenBalances[tokenOffset - 1] // to account for 0-indexing
+      : undefined;
+
   const getShield = useShield({
     gameIdx,
   });
@@ -151,10 +157,17 @@ export const ActionsBox = (props) => {
     setAction(getTokenBalances.side == 'light' ? 'shield' : 'attack');
   }, [getTokenBalances.side]);
 
+  const { number: elementTokenBalanceSpring } = useSpring({
+    from: { number: 0 },
+    number:
+      tokenBalance !== undefined
+        ? tokenBalance.toNumber() / EFFECT_BASE_FACTOR
+        : 0,
+    config: config.molasses,
+  });
+
   const handleAttack = async (gameIndex: number, amount: number) => {
-    const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE +
-      currentTokenOffset[getTokenBalances.side as string];
+    const tokenId = gameIndex * TOKEN_INDEX_OFFSET_BASE + tokenOffset;
     attackAction.invoke({
       args: [
         gameIndex.toString(),
@@ -174,9 +187,7 @@ export const ActionsBox = (props) => {
     shieldAction.loading || attackAction.loading || txTracker.loading;
 
   const handleShield = async (gameIndex: number, amount: number) => {
-    const tokenId =
-      gameIndex * TOKEN_INDEX_OFFSET_BASE +
-      currentTokenOffset[getTokenBalances.side as string];
+    const tokenId = gameIndex * TOKEN_INDEX_OFFSET_BASE + tokenOffset;
     shieldAction.invoke({
       args: [
         gameIndex.toString(),
@@ -201,27 +212,14 @@ export const ActionsBox = (props) => {
         </h3>
         <h1 className="py-3 text-center">
           <div id="token-balance">
-            {getTokenBalances.side == 'light' ? (
-              <>
-                {getTokenBalances.tokenBalances &&
-                getTokenBalances.tokenBalances.length > 0
-                  ? number
-                      .toBN(getTokenBalances.tokenBalances[0])
-                      .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                      .toString()
-                  : null}
-              </>
-            ) : (
-              <>
-                {getTokenBalances.tokenBalances &&
-                getTokenBalances.tokenBalances.length > 1
-                  ? number
-                      .toBN(getTokenBalances.tokenBalances[1])
-                      .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                      .toString()
-                  : null}
-              </>
-            )}
+            <animated.div>
+              {elementTokenBalanceSpring.to((n) => n.toFixed(0))}
+            </animated.div>
+            {/* {tokenBalance !== undefined
+              ? tokenBalance
+                  .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
+                  .toString()
+              : "0"} */}
           </div>
         </h1>
       </div>
