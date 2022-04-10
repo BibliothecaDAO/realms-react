@@ -146,7 +146,7 @@ export const MenuSideBar = () => {
           <span className={textClasses}>Bank</span>
         </div>
 
-        <div className="flex flex-col place-items-center ">
+        {/* <div className="flex flex-col place-items-center ">
           <IconButton
             className={`${buttonClasses} ${
               selectedPanel === 'bank' ? 'bg-gray-700' : ''
@@ -159,7 +159,7 @@ export const MenuSideBar = () => {
             size="lg"
           />
           <span className={textClasses}>Desiege</span>
-        </div>
+        </div> */}
         <div className="grow" />
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton
