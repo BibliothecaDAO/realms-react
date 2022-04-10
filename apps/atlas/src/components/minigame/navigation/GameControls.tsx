@@ -1,3 +1,5 @@
+import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
@@ -65,7 +67,7 @@ const GameControls: React.FC<Prop> = (props) => {
   });
 
   const primaryBtnClass =
-    'w-full p-2 mt-4 text-lg text-black transition-colors border border-white rounded-md  hover:bg-white/100 font-body tracking-widest duration-150';
+    'w-full p-2 my-4 text-lg bg-white text-black transition-colors border border-white rounded-md  hover:bg-gray-200 font-body tracking-widest duration-150';
 
   const ConnectStarknetButton = () => (
     <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
@@ -97,24 +99,43 @@ const GameControls: React.FC<Prop> = (props) => {
       </div>
       {account == undefined ? <ConnectStarknetButton /> : null}
       {starknetConnectionError ? (
-        <p className="mt-4 text-xl text-center text-red-700">
-          Please install and unlock the{' '}
-          <a
-            className="underline"
-            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-          >
-            {' '}
-            ArgentX browser extension
-          </a>{' '}
-          to continue
-        </p>
+        <div className="p-4 text-xl text-center text-gray-800 bg-orange-100 rounded-md">
+          <UserAgent chrome>
+            {(uaIsChrome) =>
+              uaIsChrome ? (
+                <>
+                  Please install and unlock the{' '}
+                  <a
+                    className="underline"
+                    href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                  >
+                    {' '}
+                    ArgentX browser extension
+                  </a>{' '}
+                  to continue
+                </>
+              ) : (
+                <p className="text-base text-orange-800">
+                  {' '}
+                  <ExclamationCircleIcon className="inline-block w-4 text-orange-800" />{' '}
+                  A StarkNet compatible wallet is not available on your browser
+                </p>
+              )
+            }
+          </UserAgent>
+        </div>
       ) : null}
-
+      {gameStatus.data == 'expired' ||
+      gameStatus.data == 'completed' ||
+      gameStatus.data == undefined ? (
+        <>
+          <br />
+          <GamePreparation />
+        </>
+      ) : null}
       {(gameStatus.data == 'expired' || gameStatus.data == 'completed') &&
       account ? (
         <div className="my-4">
-          <GamePreparation />
-          <br />
           {userBalance.side == undefined && !userBalance.loading ? (
             <Button onClick={props.onChooseElements}>
               <ElementLabel>Choose your Elements</ElementLabel>
