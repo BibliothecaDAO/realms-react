@@ -14,7 +14,8 @@ import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const LootPanel = () => {
-  const { togglePanelType, selectedPanel, openDetails } = useUIContext();
+  const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
+    useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -65,7 +66,7 @@ export const LootPanel = () => {
   });
 
   useEffect(() => {
-    if (page === 1 && (data?.bags?.length ?? 0) > 0) {
+    if (isDisplayLarge && page === 1 && (data?.bags?.length ?? 0) > 0) {
       openDetails('loot', data?.bags[0].id as string);
     }
   }, [data, page]);
