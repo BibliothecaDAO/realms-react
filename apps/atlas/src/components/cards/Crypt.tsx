@@ -1,15 +1,14 @@
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import {
   isLegendary,
-  environments,
   legendaryColourClass,
   findEnvironment,
 } from '@/util/cryptsEnvironments';
-import { shortenAddress } from '@/util/formatters';
 import type { CryptProps } from '../../types';
 const variantMaps: any = {
   small: { heading: 'lg:text-2xl', regions: 'lg:text-xl' },
@@ -17,6 +16,8 @@ const variantMaps: any = {
 
 export function Crypt(props: CryptProps): ReactElement {
   const { gotoAssetId } = useUIContext();
+
+  const ensData = useEnsResolver(props.crypt.currentOwner.address);
 
   const image = props.crypt.svg;
 
@@ -56,9 +57,7 @@ export function Crypt(props: CryptProps): ReactElement {
               {props.crypt.name}
             </h2>
             {props.crypt.currentOwner && (
-              <h3 className="my-3">
-                {shortenAddress(props.crypt.currentOwner.address)}
-              </h3>
+              <h3 className="my-3">{ensData.displayName}</h3>
             )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
