@@ -25,20 +25,20 @@ export const EntryCTA = () => {
           <div>
             {hasStarknet ? (
               <div>
-                If you haven&apos;t already done so, please
+                If you haven't already done so, please{' '}
                 <a
                   rel="noreferrer"
                   target="_blank"
                   className="underline"
                   href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                 >
-                  download and install
+                  download and install{' '}
                 </a>
                 the ArgentX extension, available now for the Google Chrome web
                 browser.
               </div>
             ) : (
-              <div className="p-4 text-red-800 bg-red-100/80 border-red-700 rounded-md mb-2">
+              <div className="p-4 text-red-800 bg-red-100/30 border-red-700 rounded-md mb-2">
                 The ArgentX wallet extension could not be activated. Please{' '}
                 <a
                   rel="noreferrer"

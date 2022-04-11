@@ -111,8 +111,8 @@ function Home() {
           <div className="my-20">
             <h4 className="mb-8">Voting</h4>
             <p className="text-3xl sm:text-5xl font-display mb-8">
-              After two weeks of submissions, the 16 winners will be chosen by
-              Realm Holders via quadratic voting.
+              Submissions close on the 30th of April at midnight,then the 16
+              winners will be chosen by Realm Holders via quadratic voting.
             </p>
             <p className="sm:text-2xl">
               There will be 16 separate snapshots to decide the winner from each
@@ -135,7 +135,7 @@ function Home() {
             </p>
           </div>
         </div>
-        <div className="w-full sm:w-1/2 px-20">
+        <div className="w-full sm:w-1/2 px-8 sm:px-12">
           <div className=" sticky top-10">
             <h4>
               Time left in <br /> competition submission
