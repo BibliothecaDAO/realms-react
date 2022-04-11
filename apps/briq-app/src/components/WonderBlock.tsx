@@ -3,9 +3,9 @@ import type { Wonder } from '@/data/Orders';
 
 export const WonderBlock = (props: Wonder) => {
   return (
-    <div className="flex flex-col border rounded-2xl border-yellow-200 p-2 sm:p-6 text-center">
+    <div className="flex flex-col border rounded-2xl border-yellow-100/20 p-2 sm:p-6 text-center hover:bg-gray-800/40 transition-all duration-300 transform hover:-translate-y-1">
       <OrderIcon className="mx-auto" order={props.order} size="lg" />
-      <h4>Order of {props.order}</h4>
+      <h4 className="text-gray-500">Order of {props.order}</h4>
       <h2>{props.name}</h2>
       <div className="flex space-x-2 pt-6 justify-around w-full mt-auto">
         <Button

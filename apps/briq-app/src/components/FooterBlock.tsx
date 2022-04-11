@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { projects } from '@/data/Projects';
 
+const footerLinkStyles = 'hover:underline transition-all duration-300';
+
 export const FooterBlock = () => {
   return (
     <div className="container grid gap-2 grid-cols-2 sm:grid-cols-4 mx-auto p-10 sm:p-20">
@@ -14,11 +16,11 @@ export const FooterBlock = () => {
         />
       </div>
       <div className="">
-        <h4>Websites</h4>
+        <h4 className="mb-6">Websites</h4>
         <ul>
           {projects.map((a, index) => {
             return (
-              <li key={index}>
+              <li className={footerLinkStyles} key={index}>
                 {' '}
                 <a href={a.website}>{a.name}</a>{' '}
               </li>
@@ -27,11 +29,11 @@ export const FooterBlock = () => {
         </ul>
       </div>
       <div className="">
-        <h4>Discords</h4>
+        <h4 className="mb-6">Discords</h4>
         <ul>
           {projects.map((a, index) => {
             return (
-              <li key={index}>
+              <li className={footerLinkStyles} key={index}>
                 {' '}
                 <a href={a.discord}>{a.name}</a>{' '}
               </li>
@@ -40,11 +42,11 @@ export const FooterBlock = () => {
         </ul>
       </div>
       <div className="">
-        <h4>Twitters</h4>
+        <h4 className="mb-6">Twitters</h4>
         <ul>
           {projects.map((a, index) => {
             return (
-              <li key={index}>
+              <li className={footerLinkStyles} key={index}>
                 {' '}
                 <a href={a.twitter}>{a.name}</a>{' '}
               </li>

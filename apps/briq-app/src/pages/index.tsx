@@ -38,9 +38,7 @@ function Home() {
   return (
     <div className="h-full bg-black">
       <Head />
-      <div className="relative w-full h-screen-30 bg-cover bg-hero bg-bottom ">
-        <div className="z-10 flex justify-center w-fulltext-3xl text-center align-middle top-16"></div>
-      </div>
+      <div className="relative w-full h-screen-30 bg-cover bg-hero bg-bottom "></div>
       <div className="container flex mx-auto flex-wrap">
         <div className="w-full sm:w-1/2 p-8 sm:py-20">
           <h4>A starknet nft competition</h4>
@@ -192,9 +190,17 @@ function Home() {
           <EntryCTA />
         </div>
       </div>
-      <div className="w-full py-8 text-center mt-20">
-        <h1>The Wonders</h1>
+      <div className="flex justify-center">
+        <div className="w-1/2 py-8 text-center mt-20">
+          <h1 className="mb-4">The Wonders</h1>
+          <p className="sm:text-2xl">
+            While they have been admired and worshipped for eons, their true
+            beauty and image have never been transcribed to share with the wider
+            world.{' '}
+          </p>
+        </div>
       </div>
+
       <div className="grid gap-2 grid-cols-2 sm:grid-cols-4 px-2">
         {wonders.map((a, index) => {
           return (
@@ -203,8 +209,9 @@ function Home() {
         })}
       </div>
       <FaqBlock />
-      <hr className="my-20" />
+      <hr className="mt-10" />
       <FooterBlock />
+      <div className="relative w-full h-screen-30 bg-cover bg-hero bg-bottom "></div>
     </div>
   );
 }
