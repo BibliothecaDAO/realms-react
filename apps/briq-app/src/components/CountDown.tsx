@@ -6,7 +6,7 @@ interface DateProps {
 
 const useCountdown = (props: DateProps) => {
   const countDownDate = new Date(props.date).getTime();
-  console.log(countDownDate);
+  console.log(new Date().getTime());
   const [countDown, setCountDown] = useState(
     countDownDate - new Date().getTime()
   );

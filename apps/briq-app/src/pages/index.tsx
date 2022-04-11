@@ -29,11 +29,12 @@ function Home() {
   useEffect(() => {
     connectBrowserWallet(); // on mount
   }, []);
+  const END = 1651327190;
 
-  const THREE_DAYS_IN_MS = 1692378 * 1000;
   const NOW_IN_MS = new Date().getTime();
+  const MS_UNTIL = (END - NOW_IN_MS / 1000) * 1000;
 
-  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+  const dateTimeAfterThreeDays = NOW_IN_MS + MS_UNTIL;
 
   return (
     <div className="h-full bg-black">
