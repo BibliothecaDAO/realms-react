@@ -8,13 +8,15 @@ import { useEffect, useState } from 'react';
 
 import ReactMarkdown from 'react-markdown';
 import CountdownTimer from '@/components/CountDown';
+import { EntryCTA } from '@/components/EntryCTA';
 import { FaqBlock } from '@/components/Faqs';
 import { FooterBlock } from '@/components/FooterBlock';
 import { Head } from '@/components/Head';
 import { WithNavMenu } from '@/components/NavMenu';
+import { ProjectBlock } from '@/components/ProjectBlock';
 import { WonderBlock } from '@/components/WonderBlock';
 import { wonders } from '@/data/Orders';
-const Home: NextPage = () => {
+function Home() {
   const {
     account,
     connectBrowserWallet,
@@ -27,48 +29,20 @@ const Home: NextPage = () => {
   useEffect(() => {
     connectBrowserWallet(); // on mount
   }, []);
-  useEffect(() => {
-    Promise.all([
-      fetch('Overview.md'),
-      fetch('Competition.md'),
-      fetch('HowToEnter.md'),
-      fetch('Wonders.md'),
-      fetch('Voting.md'),
-    ])
-      .then((results) => Promise.all(results.map((result) => result.text())))
-      .then((text) => setContent(text));
-  }, []);
+
   const THREE_DAYS_IN_MS = 1692378 * 1000;
   const NOW_IN_MS = new Date().getTime();
 
   const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+
   return (
     <div className="h-full bg-black">
       <Head />
       <div className="relative w-full h-screen-30 bg-cover bg-hero bg-bottom ">
-        <div className="z-10 flex justify-center w-fulltext-3xl text-center align-middle top-16">
-          {/* <div className="flex self-center ">
-              <Image
-                className="rounded"
-                alt="Vercel logo"
-                src="/realms-logo.jpg"
-                width={180}
-                height={80}
-              />
-              <h1 className="mx-8">&</h1>
-
-              <Image
-                className="rounded-full"
-                alt="Vercel logo"
-                src="/briq.jpg"
-                width={80}
-                height={80}
-              />
-            </div> */}
-        </div>
+        <div className="z-10 flex justify-center w-fulltext-3xl text-center align-middle top-16"></div>
       </div>
-      <div className="container flex mx-auto">
-        <div className="w-1/2 p-8 py-20">
+      <div className="container flex mx-auto flex-wrap">
+        <div className="w-full sm:w-1/2 p-8 sm:py-20">
           <h4>A starknet nft competition</h4>
           <h1>Build a Wonder & Win</h1>
           <p className="font-display sm:text-2xl mt-8">
@@ -77,73 +51,30 @@ const Home: NextPage = () => {
             artists on StarkNet.
           </p>
         </div>
-        <div className="w-1/2 text-center p-10 bg-gray-800/10 rounded self-center">
+        <div className="w-full  sm:w-1/2 text-center p-10 bg-gray-800/10 rounded self-center">
           <h2>
             16 Winners <br /> 48k $LORDS <br />& 1.6 ETH in prizes
           </h2>
         </div>
       </div>
-      <div className="w-full h-auto bg-off-200 py-8 flex shadow-inner">
+      <div className="w-full h-auto bg-off-200 py-8 flex shadow-inner px-20">
         <h3 className="mx-auto uppercase">
           the lore, the builder, the marketplace, the chain
         </h3>
       </div>
       <div className="container mx-auto flex flex-wrap text-center py-20">
-        <div className="w-1/2 p-10 px-14">
-          <h3>Realms</h3>
-          <p>
-            8000 procedurally generated maps with unique names, resources and
-            geographical traits. 50 ultra rare Realms contain a unique Wonder.
-          </p>
-          <div className="flex mx-auto gap-2 w-full justify-center my-4">
-            <Button
-              size="sm"
-              href="https://atlas.bibliothecadao.xyz"
-              variant="secondary"
-            >
-              Atlas
-            </Button>
-            <Button
-              size="sm"
-              href="https://atlas.bibliothecadao.xyz"
-              variant="secondary"
-            >
-              Discord
-            </Button>
-          </div>
-        </div>
-        <div className="w-1/2 p-10 px-14">
-          <h3>Realms</h3>
-          <p>
-            8000 procedurally generated maps with unique names, resources and
-            geographical traits. 50 ultra rare Realms contain a unique Wonder.
-          </p>
-        </div>
-        <div className="w-1/2 p-10 px-14">
-          <h3>Realms</h3>
-          <p>
-            8000 procedurally generated maps with unique names, resources and
-            geographical traits. 50 ultra rare Realms contain a unique Wonder.
-          </p>
-        </div>
-        <div className="w-1/2 p-10 px-14">
-          <h3>Realms</h3>
-          <p>
-            8000 procedurally generated maps with unique names, resources and
-            geographical traits. 50 ultra rare Realms contain a unique Wonder.
-          </p>
-        </div>
+        <ProjectBlock />
       </div>
       <iframe
         src="https://test-realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
         className="h-screen-65 w-full"
         title="Briqs"
       ></iframe>
-      <div className="container py-20 mx-auto px-20 flex flex-wrap">
-        <div className="w-2/3">
+      <div className="container p-10 sm:p-20 mx-auto flex flex-wrap">
+        <div className="w-full sm:w-2/3">
           <div className="mb-20">
             <h4 className="mb-8">the competition</h4>
-            <ol className="text-5xl font-display list-decimal list-inside">
+            <ol className="text-3xl sm:text-5xl font-display list-decimal list-inside">
               <li>Pick a Wonder</li>
               <li>Build and mint it with briqs</li>
               <li>Showcase it on PlayOasis</li>
@@ -151,8 +82,8 @@ const Home: NextPage = () => {
           </div>
           <hr />
           <div className="my-20">
-            <h4 className="mb-8">what is a wondeR?</h4>
-            <p className="text-5xl font-display mb-8">
+            <h4 className="mb-8">what is a wonder?</h4>
+            <p className="text-3xl sm:text-5xl font-display mb-8">
               Wonders are mythical structures, both man-made and naturally
               formed, scattered throughout the Realmverse.
             </p>
@@ -165,7 +96,7 @@ const Home: NextPage = () => {
           <hr />
           <div className="my-20">
             <h4 className="mb-8">Calling all builders & artists</h4>
-            <p className="text-5xl font-display mb-8">
+            <p className="text-3xl sm:text-5xl font-display mb-8">
               We are calling on all builders, artists and layer 2 trailblazers
               to create their own visual representation of these sacred sites
               with briqs, directly on StarkNet.
@@ -180,8 +111,8 @@ const Home: NextPage = () => {
           </div>
           <hr />
           <div className="my-20">
-            <h4 className="mb-8">Prizes</h4>
-            <p className="text-5xl font-display mb-8">
+            <h4 className="mb-8">Voting</h4>
+            <p className="text-3xl sm:text-5xl font-display mb-8">
               After two weeks of submissions, the 16 winners will be chosen by
               Realm Holders via quadratic voting.
             </p>
@@ -193,7 +124,7 @@ const Home: NextPage = () => {
           <hr />
           <div className="my-20">
             <h4 className="mb-8">Prizes</h4>
-            <p className="text-5xl font-display mb-8">
+            <p className="text-3xl sm:text-5xl font-display mb-8">
               There is a total prize pool of 48k $LORDS and 1.6 ETH split evenly
               across the 16 winners.
             </p>
@@ -206,13 +137,11 @@ const Home: NextPage = () => {
             </p>
           </div>
         </div>
-        <div className="w-1/3 px-20">
+        <div className="w-full sm:w-1/3 px-20">
           <div className=" sticky top-10">
             <h4>Time left in competition</h4>
             <CountdownTimer date={dateTimeAfterThreeDays} />
-            <Button className="mt-8" variant="primary">
-              Enlist to Build
-            </Button>
+            <EntryCTA />
           </div>
         </div>
       </div>
@@ -221,7 +150,7 @@ const Home: NextPage = () => {
       </div>
       <div className="container mx-auto justify-center">
         <div className="sm:w-2/3 p-16 self-start mx-auto">
-          <ol className="text-3xl font-display list-decimal list-inside leading-loose">
+          <ol className="text-xl sm:text-3xl font-display list-decimal list-inside leading-loose">
             <li>
               Connect your Argent X StarkNet Wallet (create one here if you
               don’t have one and install the browser extension)
@@ -238,14 +167,27 @@ const Home: NextPage = () => {
             </li>
             <li> View your entry on PlayOasis</li>
           </ol>
-          <p>
-            Terms: Unlimted Entry, you must mint the NFT with the specific name
-          </p>
+          <hr className="my-10" />
+          <h3 className="my-4">Voting</h3>
+          <ul>
+            <li>
+              Voting will be done via a quadratic snapshot vote by the Realm
+              holders
+            </li>
+            <li>
+              There will be a snapshot per 16 submissions (one from each Order)
+            </li>
+            <li>Voting will be open for 7 days</li>
+          </ul>
+          <h3 className="my-4">Conditions</h3>
+          <ul>
+            <li>Open to everyone</li>
+            <li>Unlimited entries</li>
+            <li>One creator can win more than once with multiple entries</li>
+          </ul>
         </div>
         <div className="w-full flex justify-center">
-          <Button className="mx-auto" variant="primary">
-            Enter now
-          </Button>
+          <EntryCTA />
         </div>
       </div>
       <div className="w-full py-8 text-center mt-20">
@@ -345,6 +287,6 @@ const Home: NextPage = () => {
       </div> */}
     </div>
   );
-};
+}
 
 export default Home;

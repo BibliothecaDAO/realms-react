@@ -55,8 +55,7 @@
     "briq": "yarn apps/briq-app dev"
   },
   "dependencies": {
-    "cross-env": "7.0.3",
-    "react-countdown": "2.3.2"
+    "cross-env": "7.0.3"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.3",

@@ -42,11 +42,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StarknetProvider>
       <Component {...pageProps} />
-
-      {/* <PageTransition
-                Component={Component}
-                pageProps={pageProps}
-              ></PageTransition> */}
     </StarknetProvider>
   );
 }

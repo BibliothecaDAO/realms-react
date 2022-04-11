@@ -1,6 +1,6 @@
 export const FooterBlock = () => {
   return (
-    <div className="container grid gap-2 grid-cols-2 sm:grid-cols-3 mx-auto py-20">
+    <div className="container grid gap-2 grid-cols-2 sm:grid-cols-3 mx-auto p-10 sm:p-20">
       <div className="">
         <h3>Bibliotheca Links</h3>
         <ul>
