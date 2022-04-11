@@ -7,7 +7,7 @@ const faqs = [
   },
   {
     title: 'I need more briqs to build my wonders, what should I do?',
-    text: 'Drop us a message in Discord and we’ll what we can do.',
+    text: 'Drop us a message in Discord and we’ll see what we can do.',
   },
   {
     title:

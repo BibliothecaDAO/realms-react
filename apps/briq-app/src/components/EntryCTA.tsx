@@ -38,7 +38,7 @@ export const EntryCTA = () => {
                 browser.
               </div>
             ) : (
-              <div className="p-4 text-red-800 bg-red-100/30 border-red-700 rounded-md mb-2">
+              <div className="p-4 bg-red-100/30 border-red-700 rounded-md mb-2 text-white">
                 The ArgentX wallet extension could not be activated. Please{' '}
                 <a
                   rel="noreferrer"
