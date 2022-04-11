@@ -1,28 +1,55 @@
+import Image from 'next/image';
+import { projects } from '@/data/Projects';
+
 export const FooterBlock = () => {
   return (
-    <div className="container grid gap-2 grid-cols-2 sm:grid-cols-3 mx-auto p-10 sm:p-20">
+    <div className="container grid gap-2 grid-cols-2 sm:grid-cols-4 mx-auto p-10 sm:p-20">
       <div className="">
-        <h3>Bibliotheca Links</h3>
+        <Image
+          className="rounded mb-10"
+          alt="Vercel logo"
+          src="/bibliotheca-logo.jpg"
+          width={200}
+          height={200}
+        />
+      </div>
+      <div className="">
+        <h4>Websites</h4>
         <ul>
-          <li>Atlas</li>
+          {projects.map((a, index) => {
+            return (
+              <li key={index}>
+                {' '}
+                <a href={a.website}>{a.name}</a>{' '}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="">
-        <h3>Project Links</h3>
+        <h4>Discords</h4>
         <ul>
-          <li>Atlas</li>
-          <li>Atlas</li>
-          <li>Atlas</li>
-          <li>Atlas</li>
+          {projects.map((a, index) => {
+            return (
+              <li key={index}>
+                {' '}
+                <a href={a.discord}>{a.name}</a>{' '}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="">
-        <h3>Discords</h3>
+        <h4>Twitters</h4>
         <ul>
-          <li>Bibliotheca DAO</li>
-          <li>Briqs</li>
-          <li>Oasis</li>
-          <li>StarkWare</li>
+          {projects.map((a, index) => {
+            return (
+              <li key={index}>
+                {' '}
+                <a href={a.twitter}>{a.name}</a>{' '}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

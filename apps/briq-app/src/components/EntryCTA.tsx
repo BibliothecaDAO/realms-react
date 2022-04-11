@@ -21,7 +21,7 @@ export const EntryCTA = () => {
           Get briqs & buidl
         </a>
       ) : (
-        <div className="w-48">
+        <div>
           <div>
             {hasStarknet ? (
               <div>
