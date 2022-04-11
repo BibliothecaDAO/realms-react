@@ -28,7 +28,7 @@ h4 {
 }
 
 button {
-  @apply font-display;
+  @apply font-display tracking-widest;
 }
 
 body {

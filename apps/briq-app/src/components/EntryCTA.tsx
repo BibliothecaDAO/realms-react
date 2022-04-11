@@ -15,7 +15,7 @@ export const EntryCTA = () => {
         <a
           target={'_blank'}
           href={`https://docs.google.com/forms/d/e/1FAIpQLSc66txDM8Ei3w83p3kLJL30VoBS6P7Xep4cIDVACZAbLY05mg/viewform?usp=pp_url&entry.2005620554=${account}`}
-          className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00] font-display"
+          className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00] font-body uppercase"
           rel="noreferrer"
         >
           Get briqs & buidl
@@ -53,7 +53,7 @@ export const EntryCTA = () => {
             )}
           </div>
           <button
-            className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00]"
+            className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00]  font-body uppercase"
             onClick={() => connectBrowserWallet()}
           >
             Connect to ArgentX

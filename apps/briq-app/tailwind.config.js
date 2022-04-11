@@ -20,6 +20,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        veryWide: '0.165em',
+      },
       height: {
         'screen-65': '65vh',
         'screen-30': '30vh',

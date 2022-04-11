@@ -41,12 +41,12 @@ export const FaqBlock = () => {
   return (
     <div className="container justify-center flex mx-auto my-20">
       <div className="sm:w-1/2">
-        <h2 className="mb-8 text-center">Faqs</h2>
+        <h2 className="mb-8 text-center">FAQs</h2>
 
         {faqs.map((a, index) => {
           return (
             <Disclosure key={index}>
-              <Disclosure.Button className="w-full my-2 py-2 bg-gray-900 rounded px-8 hover:bg-gray-600">
+              <Disclosure.Button className="w-full my-2 py-2 bg-gray-1000 rounded px-8 hover:bg-gray-900 transition-all duration-300">
                 {a.title}
               </Disclosure.Button>
               <Disclosure.Panel className="text-gray-200 py-4 px-4">

@@ -56,14 +56,15 @@ function Home() {
         </div>
       </div>
       <div className="w-full h-auto bg-off-200 py-8 flex shadow-inner px-20">
-        <h3 className="mx-auto uppercase">
-          the lore, the builder, the marketplace, the chain
-        </h3>
+        <h4 className="mx-auto uppercase font-semibold">
+          the lore, the builder, the marketplace, the roll-up
+        </h4>
       </div>
       <div className="container mx-auto flex flex-wrap text-center py-20">
         <ProjectBlock />
       </div>
       <iframe
+        scrolling="no"
         src="https://test-realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
         className="h-screen-65 w-full"
         title="Briqs"
@@ -149,7 +150,7 @@ function Home() {
         </div>
       </div>
       <div className="w-full h-auto bg-off-200 py-8 flex shadow-inner">
-        <h3 className="mx-auto uppercase">how to enter</h3>
+        <h4 className="mx-auto uppercase tracking-widest">how to enter</h4>
       </div>
       <div className="container mx-auto justify-center">
         <div className="sm:w-2/3 p-16 self-start mx-auto">
