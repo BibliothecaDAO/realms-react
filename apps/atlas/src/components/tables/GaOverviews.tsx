@@ -74,7 +74,7 @@ export function GaOverviews(props: GaOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex w-full p-3 text-white bg-black/60">
+            <div className="flex flex-wrap w-full p-3 text-white bg-black/60">
               <div className="flex self-center w-full">
                 <OrderIcon
                   className="self-center mx-3"
@@ -82,7 +82,10 @@ export function GaOverviews(props: GaOverviewsProps) {
                   order={ga.order.toLowerCase()}
                 />
                 <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
-                <div className="self-center ml-auto"></div>
+                <div className="ml-auto self-center uppercase tracking-widest">
+                  <div className=" ml-auto">Greatness: {ga.bagGreatness}</div>
+                  <div className="ml-auto">Rating: {ga.bagRating}</div>
+                </div>
               </div>
             </div>
             <div className="rounded-b flex justify-center w-full p-2 space-x-2 bg-gray-600/70">

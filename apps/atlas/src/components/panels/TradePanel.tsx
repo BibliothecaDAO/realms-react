@@ -74,11 +74,10 @@ export function TradePanel(): ReactElement {
       </div>
       <div className="relative">
         <div className="p-2">{data && <div className="w-full h-48"></div>}</div>
-        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-          <div className="mt-8">
-            <h4>A place to trade Realms, Crypts and Loot Items...</h4>
-            <h4>Coming soon to StarkNet</h4>
-          </div>
+
+        <div className="mt-8 text-3xl">
+          <h4>A place to trade Realms, Crypts and Loot Items...</h4>
+          <h4>Coming soon to StarkNet</h4>
         </div>
       </div>
     </BasePanel>

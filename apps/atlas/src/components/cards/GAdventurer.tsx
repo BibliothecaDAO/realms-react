@@ -49,7 +49,7 @@ export function GAdventurer(props: GAProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 rounded bg-black/60">
+        <div className="px-4 py-2 pb-4 rounded bg-black/60">
           <div className="flex justify-center">
             <OrderIcon size="lg" order={props.ga.order.toLowerCase()} />
           </div>
@@ -81,14 +81,15 @@ export function GAdventurer(props: GAProps): ReactElement {
                 </div>
               )}
             </div>
+            <div className="flex justify-between border-t border-b border-gray-500 py-1 text-sm uppercase tracking-widest">
+              <div>Rating: {props.ga.bagRating}</div>
+              <div>Greatness: {props.ga.bagGreatness}</div>
+            </div>
             <table className="min-w-full table-auto">
               <thead>
                 <tr>
                   <th className="p-4 text-lg tracking-widest text-left uppercase">
                     Item
-                  </th>
-                  <th className="p-4 text-lg tracking-widest uppercase">
-                    Greatness
                   </th>
                 </tr>
               </thead>
@@ -112,11 +113,6 @@ export function GAdventurer(props: GAProps): ReactElement {
                           {(props.ga as any)[item]}
                         </span>
                       </p>
-                    </td>
-                    <td className="text-center font-display">
-                      {metaData
-                        ? (metaData as any).greatness[item.toLowerCase()]
-                        : 0}
                     </td>
                   </tr>
                 ))}
