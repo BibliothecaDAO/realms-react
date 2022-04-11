@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { GAdventurerFragment } from './fragments/gadventurer';
 import { BagFragment, defaultLoot } from './fragments/loot';
 import { ManaFragment } from './fragments/mana';
@@ -85,11 +85,19 @@ const getLootQuery = gql`
 
 const getLootsQuery = gql`
   ${BagFragment}
-  query loots($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
+  query loots(
+    $where: Bag_filter
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) @api(name: ecosystem) {
     bags(
-      where: { currentOwner_contains: $address }
+      where: $where
       first: $first
       skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
     ) {
       ...BagData
       currentOwner {
@@ -99,6 +107,7 @@ const getLootsQuery = gql`
     }
   }
 `;
+
 const getGAQuery = gql`
   ${GAdventurerFragment}
   query GA($id: String) @api(name: ecosystem) {
@@ -116,11 +125,19 @@ const getGAQuery = gql`
 
 const getGAsQuery = gql`
   ${GAdventurerFragment}
-  query GAs($address: String, $first: Int, $skip: Int) @api(name: ecosystem) {
+  query GAs(
+    $where: GAdventurer_filter
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) @api(name: ecosystem) {
     gadventurers(
-      where: { currentOwner_contains: $address }
+      where: $where
       first: $first
       skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
     ) {
       ...GAdventurerData
       currentOwner {
@@ -132,7 +149,7 @@ const getGAsQuery = gql`
 `;
 
 const getCryptQuery = gql`
-  query dungeon($id: String) @api(name: crypts) {
+  query dungeon($id: String) @api(name: ecosystem) {
     dungeon(id: $id) {
       size
       id
@@ -150,12 +167,9 @@ const getCryptQuery = gql`
 `;
 
 const getCryptsQuery = gql`
-  query dungeons($address: String, $first: Int, $skip: Int) @api(name: crypts) {
-    dungeons(
-      where: { currentOwner_contains: $address }
-      first: $first
-      skip: $skip
-    ) {
+  query dungeons($where: Dungeon_filter, $first: Int, $skip: Int)
+  @api(name: ecosystem) {
+    dungeons(where: $where, first: $first, first: $first, skip: $skip) {
       size
       id
       environment
@@ -317,6 +331,7 @@ const lpIncentivesQuery = gql`
     }
   }
 `;
+
 export {
   getRealmQuery,
   getRealmsQuery,

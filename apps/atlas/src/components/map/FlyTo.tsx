@@ -1,10 +1,10 @@
-import type { AssetFilter } from '@/hooks/useUIContext';
+import type { AssetType } from '@/hooks/useUIContext';
 import { AssetFilters, useUIContext } from '@/hooks/useUIContext';
 
 export const FlyTo = () => {
   const {
     selectedAssetFilter,
-    setSelectedAssetFilter,
+    setSelectedAssetType,
     selectedId,
     setSelectedId,
     gotoAssetId,
@@ -21,11 +21,11 @@ export const FlyTo = () => {
   }
 
   return (
-    <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-16 sm:top-10 sm:right-36 sm:z-30 sm:w-96">
+    <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-4 sm:top-10 sm:right-2 sm:w-96">
       <input
         placeholder="Type Id"
         type={'number'}
-        className="w-3/12 px-4 py-4 text-black rounded-l-xl bg-white/80"
+        className="w-3/12 px-4 py-4 text-black rounded-l bg-white/80"
         value={selectedId}
         onChange={onChangeId}
         min="1"
@@ -39,15 +39,10 @@ export const FlyTo = () => {
       </button>
 
       <select
-        className="w-5/12 p-1 px-4 mr-2 uppercase transition-all duration-300 cursor-pointer text-off-100 bg-off-200/50 rounded-r-xl font-display"
+        className="w-5/12 p-1 px-4 mr-2 uppercase transition-all duration-300 cursor-pointer text-off-100 bg-off-200/50 rounded-r font-display"
         value={selectedAssetFilter.value}
         onChange={(event) =>
-          setSelectedAssetFilter(
-            AssetFilters.find(
-              (assetFilter: AssetFilter) =>
-                assetFilter.value === event.target.value
-            ) as AssetFilter
-          )
+          setSelectedAssetType(event.target.value as AssetType)
         }
       >
         {AssetFilters.map((assetFilter) => (

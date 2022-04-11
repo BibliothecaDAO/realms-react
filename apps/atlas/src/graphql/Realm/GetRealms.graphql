@@ -1,0 +1,11 @@
+#import "./Realm.fragment.graphql"
+query getRealms(
+  $filter: RealmFilterInput
+  $orderBy: RealmOrderByInput
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  getRealms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+    ...RealmFragment
+  }
+}

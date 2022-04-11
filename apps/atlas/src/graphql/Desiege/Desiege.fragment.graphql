@@ -1,0 +1,10 @@
+fragment DesiegeFragment on Desiege {
+    id
+    gameId
+    winner
+    attackedTokens
+    defendedTokens
+    eventIndexed
+    initialHealth
+    startedOn
+}

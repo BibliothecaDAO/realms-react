@@ -1,0 +1,9 @@
+overwrite: true
+schema: 'https://starknet-indexer-c9bsk.ondigitalocean.app/graphql'
+documents: 'src/graphql/**/*.graphql'
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

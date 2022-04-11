@@ -16,6 +16,7 @@ const UserAgentConnector: React.FC<Prop> = (props) => {
   const wc = { name: 'WalletConnect', connector: walletconnect };
   return (
     <UserAgent>
+      {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
       {(ua: UserAgentProps) => {
         // TODO: Remove user-agent based connector filtering
         //       Since wallets like Frame can inject the providers

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getGAsQuery } from '@/hooks/graphql/queries';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { GAsData, CryptFilters } from '@/types/index';
-import { GAdventurer } from '../realms/GAdventurer';
+import { GAdventurer } from '../cards/GAdventurer';
 
 const grids =
   'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-6';
@@ -16,7 +16,7 @@ export const GAEmpire = () => {
 
   const defaultVariables = () => {
     return {
-      address: account.toLowerCase(),
+      where: { currentAddress: account.toLowerCase() },
       first: 12,
       skip: limit,
     };

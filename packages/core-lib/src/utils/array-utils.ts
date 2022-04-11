@@ -12,4 +12,12 @@ export class ArrayUtils {
     }
     return arr;
   }
+
+  /**
+   * Tests if this given value is even.
+   * @returns {boolean}
+   */
+  static isEven(value: number) {
+    return (value & 1) === 0;
+  }
 }

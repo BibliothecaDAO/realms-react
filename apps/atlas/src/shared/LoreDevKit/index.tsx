@@ -1,6 +1,8 @@
+/* eslint-disable no-irregular-whitespace */
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
-import TokenLabel from '../ElementsLabel';
+import Button from '../Button';
+import { ExternalLink } from '../Icons';
 import type { LDKSchema } from './lib';
 
 type Prop = {
@@ -34,14 +36,11 @@ const LoreDevKit = (props: Prop) => {
   };
 
   const loreBtnClass =
-    'text-blue-600 hover:text-blue-500 py-2 disabled:text-gray-800';
+    'text-blue-600 hover:text-blue-300 py-2 disabled:text-gray-800 my-4';
 
   return (
-    <div className="block p-8">
-      <div className="flex flex-row items-center justify-between mb-4">
-        <h1>Lore</h1>
-      </div>
-      <button
+    <div className="block">
+      <Button
         disabled={layerIndex == 0}
         onClick={() => {
           goToParentLore();
@@ -50,22 +49,47 @@ const LoreDevKit = (props: Prop) => {
       >
         {' '}
         <ArrowUpIcon className="inline-block h-4" /> What Lore came before?
-      </button>
-      <h2 className="mb-2">{currentLayer.title}</h2>
-
-      {currentLayer.descriptions.map((d, i) => (
-        <p className="my-2 text-xl" key={i}>
-          {d}
-        </p>
-      ))}
-      <button
+      </Button>
+      <h3 className="">
+        {currentLayer.title}{' '}
+        {currentLayer.end ? (
+          <span className="px-2 py-1 text-sm bg-black rounded-md">
+            Lore Extension Prompt
+          </span>
+        ) : null}
+      </h3>
+      <div className="text-lg">
+        {currentLayer.descriptions.map((d, i) => (
+          <div key={i}>{d}</div>
+        ))}
+      </div>
+      <Button
         disabled={layerIndex == ldk.layers.length - 1}
         onClick={() => goToLoreBranches()}
         className={loreBtnClass}
       >
         {' '}
         <ArrowDownIcon className="inline-block h-4" /> What Lore comes after?
-      </button>
+      </Button>
+      {currentLayer.end ? (
+        <div className="p-4 bg-gray-900 rounded-xl">
+          <h3>Loot is an experiment in decentralized world building.</h3>
+          Loot is unique — there is no central team, no central roadmap, no
+          company that backs it. Loot is a decentralized community of builders,
+          creators, artists, writers and players who are building a world,
+          together. The collection of projects that have been built on top of
+          Loot have come to be known collectively as "The Lootverse."
+          <a
+            target={'_blank'}
+            href="https://docs.loot.foundation/welcome-to-loot/the-lootverse#an-experiment-in-decentralized-world-building"
+            className="block w-full py-2"
+            rel="noreferrer"
+          >
+            Read more at docs.loot.foundation{' '}
+            <ExternalLink className="inline-block w-4" />
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 };

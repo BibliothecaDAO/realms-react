@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { Head } from '@/components/Head';
-import ShieldGame from '@/components/minigame/ShieldGame';
 
 const Home: NextPage = () => {
   return (

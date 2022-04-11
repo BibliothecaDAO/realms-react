@@ -1,11 +1,13 @@
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const pathToInlineSvg = path.resolve(__dirname, '../src/icons');
 
 module.exports = {
   framework: '@storybook/react',
   core: {
     builder: "webpack5",
   },
+  staticDirs: ['../src/static'],
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx|js|jsx)'],
   typescript: {
     check: false,
@@ -59,6 +61,40 @@ module.exports = {
       stream: require.resolve("stream-browserify"),
     };
 
+    config.resolve.alias['@/icons'] = path.resolve(__dirname, '../src/icons');
+    config.resolve.alias['@/icons/orders'] = path.resolve(__dirname, '../src/icons/orders');
+
+    const rules = config.module.rules;
+
+    // modify storybook's file-loader rule to avoid conflicts with svgr
+    const fileLoaderRule = rules.find(
+      (rule) => rule.test && rule.test.test('.svg')
+    );
+    fileLoaderRule.exclude = pathToInlineSvg;
+
+    rules.push({
+      test: /\.svg$/,
+      include: pathToInlineSvg,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgo: true,
+            // @link https://github.com/svg/svgo#configuration
+            svgoConfig: {
+              multipass: false,
+              datauri: 'base64',
+              js2svg: {
+                indent: 2,
+                pretty: false,
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    config.module.rules = [...rules];
     return {
       ...config,
       resolve: {

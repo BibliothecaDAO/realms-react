@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 
 import { useState, useRef } from 'react';
-import { Realm as RealmCard } from '@/components/realms/Realm';
+import { RealmCard } from '@/components/cards/RealmCard';
 import { getRealmsQuery } from '@/hooks/graphql/queries';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { useWalletContext } from '@/hooks/useWalletContext';

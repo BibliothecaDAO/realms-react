@@ -12,6 +12,8 @@ export const defaultLoot = gql`
     weapon
     waist
     foot
+    bagGreatness
+    bagLevel
   }
 `;
 
