@@ -77,17 +77,17 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
                 onChange={onSizeFilterChange}
               />
               <RangeSliderFilter
-                name="Num Doors"
-                min={0}
-                max={NumDoorsMax}
-                defaultValue={props.stats.numDoors}
-                onChange={onNumDoorsFilterChange}
-              />
-              <RangeSliderFilter
-                name="Num Points"
+                name="Doors"
                 min={0}
                 max={NumPointsMax}
                 defaultValue={props.stats.numPoints}
+                onChange={onNumDoorsFilterChange}
+              />
+              <RangeSliderFilter
+                name="Points"
+                min={0}
+                max={NumDoorsMax}
+                defaultValue={props.stats.numDoors}
                 onChange={onNumPointsFilterChange}
               />
             </div>
