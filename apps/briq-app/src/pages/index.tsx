@@ -8,9 +8,12 @@ import { useEffect, useState } from 'react';
 
 import ReactMarkdown from 'react-markdown';
 import CountdownTimer from '@/components/CountDown';
+import { FaqBlock } from '@/components/Faqs';
+import { FooterBlock } from '@/components/FooterBlock';
 import { Head } from '@/components/Head';
 import { WithNavMenu } from '@/components/NavMenu';
-
+import { WonderBlock } from '@/components/WonderBlock';
+import { wonders } from '@/data/Orders';
 const Home: NextPage = () => {
   const {
     account,
@@ -213,6 +216,51 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+      <div className="w-full h-auto bg-off-200 py-8 flex shadow-inner">
+        <h3 className="mx-auto uppercase">how to enter</h3>
+      </div>
+      <div className="container mx-auto justify-center">
+        <div className="sm:w-2/3 p-16 self-start mx-auto">
+          <ol className="text-3xl font-display list-decimal list-inside leading-loose">
+            <li>
+              Connect your Argent X StarkNet Wallet (create one here if you
+              don’t have one and install the browser extension)
+            </li>
+            <li>Complete the form</li>
+            <li>Briqs will be airdropped 20k briqs (within 24 hours)</li>
+            <li>Choose one of the 16 Wonders</li>
+            <li>Build your chosen Wonder on briq</li>
+            <li>Mint your masterpiece on briq (no fees)</li>
+            <li>
+              Tweet your masterpiece with the following text: "I built the
+              @lootrealms Wonder [NAME] with @briqNFT. We’re trailblazing the
+              way to layer 2 #StarkNet @starkwareLTD.”
+            </li>
+            <li> View your entry on PlayOasis</li>
+          </ol>
+          <p>
+            Terms: Unlimted Entry, you must mint the NFT with the specific name
+          </p>
+        </div>
+        <div className="w-full flex justify-center">
+          <Button className="mx-auto" variant="primary">
+            Enter now
+          </Button>
+        </div>
+      </div>
+      <div className="w-full py-8 text-center mt-20">
+        <h1>The Wonders</h1>
+      </div>
+      <div className="grid gap-2 grid-cols-2 sm:grid-cols-4 px-2">
+        {wonders.map((a, index) => {
+          return (
+            <WonderBlock key={index} name={a.name} id={a.id} order={a.order} />
+          );
+        })}
+      </div>
+      <FaqBlock />
+      <hr className="my-20" />
+      <FooterBlock />
       {/* <div className="container px-4 mx-auto">
         <div className="lg:flex lg:gap-x-16">
           <div className="w-full lg:w-5/12 sm:order-last">

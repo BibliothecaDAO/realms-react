@@ -3,7 +3,7 @@ import { default as HTMLHead } from 'next/head'; // Meta
 import type { ReactElement } from 'react';
 
 const meta = {
-  title: 'Realms x briq',
+  title: 'Realms x briq x PlayOasis',
   description:
     'A competion run by leading gaming and nft platforms operating on StarkNet.',
   website: 'https://bibliothecadao.xyz/',
@@ -31,7 +31,7 @@ export function Head(): ReactElement {
       <meta property="twitter:title" content={meta.title} />
       <meta property="twitter:description" content={meta.description} />
       <meta property="twitter:image" content={meta.image} />
-
+      <link rel="icon" type="image/png" href="/favicon.ico"></link>
       {/* Font */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link
