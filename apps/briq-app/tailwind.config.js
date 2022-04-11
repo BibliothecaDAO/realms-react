@@ -1,5 +1,9 @@
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
+  ],
   safelist: [
     'text-[#838383]',
     'text-[#00DC82]',
@@ -18,6 +22,7 @@ module.exports = {
     extend: {
       height: {
         'screen-65': '65vh',
+        'screen-30': '30vh',
       },
       fontFamily: {
         display: ['EB Garamond', 'serif'],

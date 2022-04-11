@@ -32,7 +32,7 @@ button {
 }
 
 body {
-  @apply text-gray-100 font-body text-lg;
+  @apply text-gray-200 font-body text-lg leading-loose;
 }
 
 #deckgl-wrapper {
