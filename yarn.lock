@@ -7621,13 +7621,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:17.0.21":
-  version: 17.0.21
-  resolution: "@types/node@npm:17.0.21"
-  checksum: 89dcd2fe82f21d3634266f8384e9c865cf8af49685639fbdbd799bdd1040480fb1e8eeda2d3b9fce41edbe704d2a4be9f427118c4ae872e8d9bb7cbeb3c41a94
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^12.7.1":
   version: 12.20.47
   resolution: "@types/node@npm:12.20.47"
@@ -7779,17 +7772,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:17.0.40":
-  version: 17.0.40
-  resolution: "@types/react@npm:17.0.40"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 24d1b210b5bf3c7d49f9a7fe5490db02e005a1d989045a2d67528347557dd0bcb0d7bcf96088152697e97521ac4c9506d1357ee48a2b7d4e701c70d838dc7284
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:17.0.44, @types/react@npm:^17":
   version: 17.0.44
   resolution: "@types/react@npm:17.0.44"
@@ -7798,6 +7780,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: ebee02778ca08f954c316dc907802264e0121c87b8fa2e7e0156ab0ef2a1b0a09d968c016a3600ec4c9a17dc09b4274f292d9b15a1a5369bb7e4072def82808f
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.1":
+  version: 18.0.1
+  resolution: "@types/react@npm:18.0.1"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: ede927ed3766fef5fec513fe75e79180bb3c97d21ca7707321e969193c596bc4a531160238546a845e4131df02ec9be7803277a268bc270156362d16b29b4ffb
   languageName: node
   linkType: hard
 
@@ -10846,8 +10839,8 @@ __metadata:
     "@testing-library/react": 12.1.3
     "@testing-library/react-hooks": 7.0.2
     "@types/jest": 27.4.0
-    "@types/node": 17.0.21
-    "@types/react": 17.0.40
+    "@types/node": 17.0.23
+    "@types/react": 18.0.1
     "@types/react-dom": 17.0.13
     "@types/three": ^0.137.0
     "@typescript-eslint/eslint-plugin": 5.14.0
@@ -10887,8 +10880,8 @@ __metadata:
     postcss: ^8.4.6
     prettier: 2.5.1
     prop-types: ^15.0.0
-    react: 18.0.0-rc.1
-    react-dom: 18.0.0-rc.1
+    react: 18.0.0
+    react-dom: 18.0.0
     react-joyride: ^2.3.2
     react-markdown: 8.0.1
     react-scroll: 1.8.6
@@ -10904,7 +10897,7 @@ __metadata:
     sync-directory: 4.0.12
     tailwindcss: 3.0.23
     ts-jest: 27.1.3
-    typescript: 4.6.2
+    typescript: 4.6.3
   languageName: unknown
   linkType: soft
 
@@ -24832,18 +24825,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.0.0-rc.1":
-  version: 18.0.0-rc.1
-  resolution: "react-dom@npm:18.0.0-rc.1"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.21.0-rc.1
-  peerDependencies:
-    react: ^18.0.0-rc.1
-  checksum: a7c1a7afafb83143db5a7c62ffa1063f30744fd97f20b60495a08b0efad521cb51e212169290952a02895472fad3eeffcf1bc6bbcb1aab5507a0441558c2c970
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:^16.8.6":
   version: 16.14.0
   resolution: "react-dom@npm:16.14.0"
@@ -25211,15 +25192,6 @@ __metadata:
   dependencies:
     loose-envify: ^1.1.0
   checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
-  languageName: node
-  linkType: hard
-
-"react@npm:18.0.0-rc.1":
-  version: 18.0.0-rc.1
-  resolution: "react@npm:18.0.0-rc.1"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 2810f1320c3cbf8763cc4a5e644b7d0705aa9797587d8f15f27840dbfb4f7ecbedb11df7c4105d9ff6dc1f9db87d0e2289c5f52a4fb6324aa6132b9458aa04bd
   languageName: node
   linkType: hard
 
@@ -26355,7 +26327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.21.0, scheduler@npm:^0.21.0-rc.1":
+"scheduler@npm:^0.21.0":
   version: 0.21.0
   resolution: "scheduler@npm:0.21.0"
   dependencies:
@@ -29218,16 +29190,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.2":
-  version: 4.6.2
-  resolution: "typescript@npm:4.6.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
-  languageName: node
-  linkType: hard
-
 "typescript@npm:4.6.3, typescript@npm:^4.1.3, typescript@npm:^4.4.3":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
@@ -29235,16 +29197,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 255bb26c8cb846ca689dd1c3a56587af4f69055907aa2c154796ea28ee0dea871535b1c78f85a6212c77f2657843a269c3a742d09d81495b97b914bf7920415b
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@4.6.2#~builtin<compat/typescript>":
-  version: 4.6.2
-  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
