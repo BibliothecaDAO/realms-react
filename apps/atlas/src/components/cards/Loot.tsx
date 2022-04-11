@@ -29,8 +29,27 @@ export function Loot(props: LootProps): ReactElement {
     'ring',
   ];
 
+  const isManaUnClaimed = (itemIdx: number) => {
+    const numOrders = mappedProperties.filter(
+      (item) => props.loot[item + 'SuffixId'] > 0
+    ).length;
+    if (
+      numOrders == 0 ||
+      numOrders === props.loot.manas.length ||
+      props.loot[mappedProperties[itemIdx] + 'SuffixId'] === 0
+    ) {
+      return false;
+    }
+    return !props.loot.manas.find((mana) => mana.inventoryId === itemIdx);
+  };
+
   useEffect(() => {
     const getMetadata = async () => {
+      const meta = getGreatness(props.loot.id);
+      meta.unclaimedMana = mappedProperties.reduce((acc, item, idx) => {
+        acc[item] = isManaUnClaimed(idx);
+        return acc;
+      }, {} as any);
       setMetaData(getGreatness(props.loot.id));
     };
 
@@ -99,6 +118,10 @@ export function Loot(props: LootProps): ReactElement {
                         />{' '}
                         <span className="self-center">
                           {(props.loot as any)[item]}
+                          {metaData &&
+                            (metaData as any).unclaimedMana[item] && (
+                              <span className="ml-2 text-white">*</span>
+                            )}
                         </span>
                       </p>
                     </td>
