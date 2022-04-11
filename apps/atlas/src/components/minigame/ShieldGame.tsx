@@ -114,7 +114,9 @@ const ShieldGame: React.FC<Prop> = (props) => {
             setBridgeModalOpen(false);
             // re-fetch total minted to display on the mana balls
             queryClient.invalidateQueries(
-              queryKeys.totalMinted(getGameVariables.data?.gameIdx)
+              queryKeys.totalMinted(
+                (getGameVariables.data?.gameIdx as number) + 1
+              )
             );
           }}
           onClose={() => setBridgeModalOpen(false)}

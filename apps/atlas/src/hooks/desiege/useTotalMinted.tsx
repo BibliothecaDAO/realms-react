@@ -5,7 +5,6 @@ type UseTotalMintedArgs = {
   gameIdx?: number;
 };
 
-export const QUERY_KEY_PREFIX = 'desiege-minted-sum';
 // https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories
 export const queryKeys = {
   totalMinted: (gameIdx: any) => ['desiege-tokens-minted-sum', gameIdx],
