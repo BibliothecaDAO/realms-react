@@ -57,9 +57,9 @@ export const CryptsPanel = () => {
       where.name_starts_with = "'";
     }
 
-    where.numDoors_gt = state.statsFilter.numDoors;
-    where.numPoints_gt = state.statsFilter.numPoints;
-    where.size_gt = state.statsFilter.size;
+    where.numDoors_gte = state.statsFilter.numDoors;
+    where.numPoints_gte = state.statsFilter.numPoints;
+    where.size_gte = state.statsFilter.size;
     if (state.environmentsFilter.length > 0) {
       where.environment_in = [...state.environmentsFilter];
     }
