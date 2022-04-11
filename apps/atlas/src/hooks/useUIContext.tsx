@@ -64,6 +64,7 @@ interface UI {
   toggleMainMenu: () => void;
   togglePanelType: (panelType: PanelType) => void;
   selectedPanel: PanelType;
+  isDisplayLarge: boolean;
 }
 
 const UIContext = createContext<UI>(null!);
@@ -151,10 +152,13 @@ function useUI(): UI {
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
 
+  const isDisplayLarge =
+    typeof window !== 'undefined' && window.innerWidth >= 768;
+
   const [artBackground, setArtBackground] = useState<BackgroundOptions>();
   const [mainMenu, setMainMenu] = useState(
     // default closed on small screens
-    typeof window !== 'undefined' && window.innerWidth >= 768
+    isDisplayLarge
   );
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(
@@ -212,12 +216,10 @@ function useUI(): UI {
   const togglePanelType = (panelType: PanelType) => {
     setMainMenu(false);
     if (selectedPanel === panelType) {
-      setShowDetails(false);
       setPanelType(undefined);
       setMenuType(undefined);
       setArtBackground(undefined);
     } else {
-      setShowDetails(true);
       setPanelType(panelType);
       if (panelType === 'crypt') {
         setArtBackground('crypt');
@@ -284,6 +286,7 @@ function useUI(): UI {
     toggleMainMenu,
     togglePanelType,
     selectedPanel,
+    isDisplayLarge,
   };
 }
 

@@ -13,7 +13,8 @@ import Button from '@/shared/Button';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
-  const { togglePanelType, selectedPanel, openDetails } = useUIContext();
+  const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
+    useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useRealmContext();
 
@@ -98,7 +99,7 @@ export const RealmsPanel = () => {
   });
 
   useEffect(() => {
-    if (page === 1 && (data?.getRealms?.length ?? 0) > 0) {
+    if (isDisplayLarge && page === 1 && (data?.getRealms?.length ?? 0) > 0) {
       openDetails('realm', data?.getRealms[0].realmId + '');
     }
   }, [data, page]);

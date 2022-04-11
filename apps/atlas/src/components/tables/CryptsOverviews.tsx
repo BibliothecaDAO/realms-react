@@ -81,9 +81,9 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 {crypt.size} x {crypt.size}
               </div>
               <div className="my-1 font-bold">Doors</div>
-              <div>{crypt.numDoors}</div>
-              <div className="my-1 font-bold">Points</div>
               <div>{crypt.numPoints}</div>
+              <div className="my-1 font-bold">Points</div>
+              <div>{crypt.numDoors}</div>
               {/* <div className="my-1 font-bold">Legendary</div>
               <div>{crypt}</div> */}
             </div>

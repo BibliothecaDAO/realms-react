@@ -14,7 +14,8 @@ import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const CryptsPanel = () => {
-  const { togglePanelType, selectedPanel, openDetails } = useUIContext();
+  const { togglePanelType, selectedPanel, openDetails, isDisplayLarge } =
+    useUIContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -56,9 +57,9 @@ export const CryptsPanel = () => {
       where.name_starts_with = "'";
     }
 
-    where.numDoors_gt = state.statsFilter.numDoors;
-    where.numPoints_gt = state.statsFilter.numPoints;
-    where.size_gt = state.statsFilter.size;
+    where.numDoors_gte = state.statsFilter.numDoors;
+    where.numPoints_gte = state.statsFilter.numPoints;
+    where.size_gte = state.statsFilter.size;
     if (state.environmentsFilter.length > 0) {
       where.environment_in = [...state.environmentsFilter];
     }
@@ -78,7 +79,7 @@ export const CryptsPanel = () => {
   });
 
   useEffect(() => {
-    if (page === 1 && (data?.dungeons?.length ?? 0) > 0) {
+    if (isDisplayLarge && page === 1 && (data?.dungeons?.length ?? 0) > 0) {
       openDetails('crypt', data?.dungeons[0].id as string);
     }
   }, [data, page]);

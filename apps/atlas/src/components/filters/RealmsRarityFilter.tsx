@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import { RangeSliderFilter } from './RangeSliderFilter';
 
-const ScoreMax = 8095;
+const ScoreMax = 400;
 const RankMax = 7992;
 
 type RealmsRarity = {
@@ -63,7 +63,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
               <RangeSliderFilter
                 name="Score"
                 min={0}
-                max={400}
+                max={ScoreMax}
                 defaultValue={props.rarity.rarityScore}
                 onChange={onScoreFilterChange}
               />

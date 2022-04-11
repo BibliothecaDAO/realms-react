@@ -76,7 +76,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
 
         {isOpen && (
           <Popover.Panel
-            className="absolute z-10 mt-2 w-[420px] ml-2 left-1/2 -translate-x-1/3"
+            className="absolute z-10 mt-2 w-[420px] ml-2 -translate-x-1/3"
             static
           >
             <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white bg-black rounded shadow-lg">

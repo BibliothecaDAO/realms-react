@@ -10,8 +10,6 @@ import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
 import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import { animated, useSpring } from '@react-spring/web';
-import { useCallback, useState } from 'react';
-import useSound from 'use-sound';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
@@ -24,13 +22,6 @@ export const MenuSideBar = () => {
     togglePanelType,
     selectedPanel,
   } = useUIContext();
-  const [soundOn, setSoundOn] = useState(false);
-  const [play, { stop }] = useSound(
-    '/music/scott-buckley-i-walk-with-ghosts.mp3',
-    {
-      volume: 1,
-    }
-  );
 
   const animation = useSpring({
     opacity: mainMenu ? 0.85 : 0,
@@ -98,7 +89,7 @@ export const MenuSideBar = () => {
             aria-label="GA"
             variant="unstyled"
             texture={false}
-            icon={<Helm className={'mx-auto w-7  fill-current'} />}
+            icon={<Helm className={iconClasses} />}
             size="lg"
           />
           <span className={textClasses}>GA</span>

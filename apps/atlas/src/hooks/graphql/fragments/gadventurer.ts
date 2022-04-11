@@ -16,5 +16,8 @@ export const GAdventurerFragment = gql`
     order
     orderColor
     orderCount
+    bagGreatness
+    bagLevel
+    bagRating
   }
 `;

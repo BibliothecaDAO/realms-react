@@ -110,7 +110,7 @@ function Overview(props: RealmProps): ReactElement {
         </div>
       </div>
       <MarketplaceByPanel
-        id="props.realm.id"
+        id={props.realm.id}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
     </div>
@@ -143,7 +143,7 @@ export function RealmCard(props: RealmProps): ReactElement {
       //   component: <RealmHistory />,
       // },
     ],
-    []
+    [props.realm?.id]
   );
   return (
     <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
@@ -156,7 +156,7 @@ export function RealmCard(props: RealmProps): ReactElement {
       ) : (
         <div>
           {props.realm?.wonder && (
-            <div className="text-gray-200 w-full p-4 tracking-veryWide shadow-inner text-2xl text-center uppercase rounded bg-white/10 font-semibold border-4 border-gray-500">
+            <div className="w-full p-4 text-2xl font-semibold text-center text-gray-200 uppercase border-4 border-gray-500 rounded shadow-inner tracking-veryWide bg-white/10">
               {props.realm?.wonder}
             </div>
           )}

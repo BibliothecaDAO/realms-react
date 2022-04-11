@@ -1,3 +1,5 @@
+import { number } from 'starknet';
+
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 interface Owner {
@@ -53,8 +55,6 @@ export interface Loot {
   weaponSuffixId: number;
   currentOwner: Owner;
   minted: number;
-  manasClaimed: number;
-  itemsClaimed: boolean;
 }
 export interface GAdventurer {
   id: string;
@@ -71,6 +71,11 @@ export interface GAdventurer {
   orderCount: string;
   currentOwner: Owner;
   minted: number;
+  bagGreatness: number;
+  bagLevel: number;
+  bagRating: number;
+  manasClaimed: number;
+  itemsClaimed: boolean;
 }
 export interface Data {
   realm: Realm;
