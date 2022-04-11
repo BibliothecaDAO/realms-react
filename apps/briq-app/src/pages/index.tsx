@@ -126,12 +126,15 @@ function Home() {
               There is a total prize pool of 48k $LORDS and 1.6 ETH split evenly
               across the 16 winners.
             </p>
+            <p className="sm:text-2xl mb-4">
+              Bibliotheca DAO will award 3000 $LORDS and StarkWare 0.1 eth to
+              each of the winners. The winning NFTs will be minted on StarkNet
+              mainnet and transferred to the winners free of cost. There are no
+              prerequisites; everyone is welcome to participate.
+            </p>
             <p className="sm:text-2xl">
-              Bibliotheca DAO will award 3000 $LORDS and StarkNet 0.1 eth to
-              each of the winners. There are no prerequisites; everyone is
-              welcome to participate. <br /> You can submit as many as you like
-              and, if voted by the DAO, can win multiple across the different
-              Wonders of the Orders.
+              You can submit as many as you like and, if voted by the DAO, can
+              win multiple across the different Wonders of the Orders.
             </p>
           </div>
         </div>
@@ -150,20 +153,70 @@ function Home() {
       </div>
       <div className="container mx-auto justify-center">
         <div className="sm:w-2/3 p-16 self-start mx-auto">
-          <ol className="text-xl sm:text-3xl font-display list-decimal list-inside leading-loose">
+          <ol className="leading-loose text-xl sm:text-3xl font-display list-decimal list-inside space-y-4">
             <li>
-              Connect your Argent X StarkNet Wallet (create one here if you
-              don’t have one and install the browser extension)
+              Connect your Argent X StarkNet Wallet <br />{' '}
+              <span className="text-gray-700 text-lg sm:text-2xl">
+                (create one{' '}
+                <a
+                  className="underline"
+                  href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                >
+                  here
+                </a>{' '}
+                if you don’t have one and install the browser extension)
+              </span>
             </li>
-            <li>Complete the form</li>
-            <li>Briqs will be airdropped 20k briqs (within 24 hours)</li>
-            <li>Choose one of the 16 Wonders</li>
-            <li>Build your chosen Wonder on briq</li>
+            <li>
+              Complete the form <br />{' '}
+              <span className="text-gray-700 text-lg sm:text-2xl">
+                {account ? (
+                  <a
+                    target={'_blank'}
+                    href={`https://docs.google.com/forms/d/e/1FAIpQLSc66txDM8Ei3w83p3kLJL30VoBS6P7Xep4cIDVACZAbLY05mg/viewform?usp=pp_url&entry.2005620554=${account}`}
+                    className=" underline"
+                    rel="noreferrer"
+                  >
+                    Sign up and & buidl
+                  </a>
+                ) : (
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    className="underline"
+                    href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+                  >
+                    First download and install Argent
+                  </a>
+                )}
+              </span>
+            </li>
+            <li>
+              20k Briqs will be airdropped to your address (within 24 hours)
+            </li>
+            <li>
+              Choose one of the{' '}
+              <a className="underline" href="#wonders">
+                16 Wonders
+              </a>{' '}
+            </li>
+            <li>
+              Build you chosen Wonder with briq <br />
+              <a
+                className="underline text-gray-700 text-lg sm:text-2xl"
+                href="https://briqnft.notion.site/Help-center-4a4958337970483dbfc2c1184290b42f"
+              >
+                (how to build guide)
+              </a>{' '}
+            </li>
             <li>Mint your masterpiece on briq (no fees)</li>
             <li>
-              Tweet your masterpiece with the following text: "I built the
-              @lootrealms Wonder [NAME] with @briqNFT. We’re trailblazing the
-              way to layer 2 #StarkNet @starkwareLTD.”
+              Tweet your masterpiece with the following text: <br />{' '}
+              <div className="py-8">
+                "I built the @lootrealms Wonder [NAME] with @briqNFT. We’re
+                trailblazing the way to layer 2 #StarkNet @starkwareLTD. View it
+                on @PlayOasisXYZ.”
+              </div>
             </li>
             <li> View your entry on PlayOasis</li>
           </ol>
@@ -182,6 +235,7 @@ function Home() {
           <h3 className="my-4">Conditions</h3>
           <ul>
             <li>Open to everyone</li>
+            <li>Should you need more briqs send a DM to the team</li>
             <li>Unlimited entries</li>
             <li>One creator can win more than once with multiple entries</li>
           </ul>
@@ -190,7 +244,7 @@ function Home() {
           <EntryCTA />
         </div>
       </div>
-      <div className="flex justify-center">
+      <div id="wonders" className="flex justify-center">
         <div className="w-1/2 py-8 text-center mt-20">
           <h1 className="mb-4">The Wonders</h1>
           <p className="sm:text-2xl">

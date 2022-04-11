@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { projects } from '@/data/Projects';
 export const ProjectBlock = () => {
   return (
-    <div className="grid gap-8 sm:grid-cols-2">
+    <div className="grid gap-8 sm:grid-cols-2 sm:text-2xl">
       <div className="p-10 px-14">
         <Image
           className="rounded mb-10"
