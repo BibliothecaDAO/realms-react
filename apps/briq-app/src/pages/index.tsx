@@ -68,7 +68,7 @@ function Home() {
       </div>
       <iframe
         scrolling="no"
-        src="https://test-realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
+        src="https://realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
         className="h-screen-65 w-full"
         title="Briqs"
       ></iframe>
