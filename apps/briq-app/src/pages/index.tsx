@@ -163,7 +163,7 @@ function Home() {
               <span className="text-gray-700 text-lg sm:text-2xl">
                 (create one{' '}
                 <a
-                  className="underline"
+                  className="hover:underline"
                   href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                 >
                   here
@@ -178,7 +178,7 @@ function Home() {
                   <a
                     target={'_blank'}
                     href={`https://docs.google.com/forms/d/e/1FAIpQLSc66txDM8Ei3w83p3kLJL30VoBS6P7Xep4cIDVACZAbLY05mg/viewform?usp=pp_url&entry.2005620554=${account}`}
-                    className=" underline"
+                    className=" hover:underline"
                     rel="noreferrer"
                   >
                     Sign up and & build
@@ -187,7 +187,7 @@ function Home() {
                   <a
                     rel="noreferrer"
                     target="_blank"
-                    className="underline"
+                    className="hover:underline"
                     href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                   >
                     First download and install Argent
@@ -205,9 +205,18 @@ function Home() {
               </a>{' '}
             </li>
             <li>
-              Build your chosen Wonder with briq <br />
+              Head to{' '}
               <a
-                className="underline text-gray-700 text-lg sm:text-2xl"
+                className="hover:underline text-[#eb5600]"
+                href="https://briq.construction/"
+              >
+                briq
+              </a>{' '}
+            </li>
+            <li>
+              Build your chosen Wonder with briqs <br />
+              <a
+                className="hover:underline text-gray-700 text-lg sm:text-2xl"
                 target={'_blank'}
                 href="https://briqnft.notion.site/Help-center-4a4958337970483dbfc2c1184290b42f"
                 rel="noreferrer"
