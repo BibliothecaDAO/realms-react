@@ -29,12 +29,14 @@ function Home() {
   useEffect(() => {
     connectBrowserWallet(); // on mount
   }, []);
-  const END = 1651327190;
 
-  const NOW_IN_MS = new Date().getTime();
-  const MS_UNTIL = (END - NOW_IN_MS / 1000) * 1000;
+  const time = () => {
+    const END = 1651327190000;
+    const NOW_IN_MS = new Date().getTime();
+    const MS_UNTIL = END - NOW_IN_MS;
 
-  const dateTimeAfterThreeDays = NOW_IN_MS + MS_UNTIL;
+    return (NOW_IN_MS + MS_UNTIL).toString();
+  };
 
   return (
     <div className="h-full bg-black">
@@ -145,7 +147,7 @@ function Home() {
             <h4>
               Time left in <br /> competition submission
             </h4>
-            <CountdownTimer date={dateTimeAfterThreeDays} />
+            <CountdownTimer date={time()} />
             <EntryCTA />
           </div>
         </div>
@@ -203,10 +205,12 @@ function Home() {
               </a>{' '}
             </li>
             <li>
-              Build you chosen Wonder with briq <br />
+              Build your chosen Wonder with briq <br />
               <a
                 className="underline text-gray-700 text-lg sm:text-2xl"
+                target={'_blank'}
                 href="https://briqnft.notion.site/Help-center-4a4958337970483dbfc2c1184290b42f"
+                rel="noreferrer"
               >
                 (how to build guide)
               </a>{' '}

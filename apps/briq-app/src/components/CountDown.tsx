@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 interface DateProps {
-  date: number;
+  date: string;
 }
 
 const useCountdown = (props: DateProps) => {
-  const countDownDate = new Date(props.date).getTime();
-  console.log(new Date().getTime());
+  const countDownDate = new Date(parseInt(props.date)).getTime();
+
   const [countDown, setCountDown] = useState(
     countDownDate - new Date().getTime()
   );
