@@ -181,7 +181,7 @@ function Home() {
                     className=" underline"
                     rel="noreferrer"
                   >
-                    Sign up and & buidl
+                    Sign up and & build
                   </a>
                 ) : (
                   <a

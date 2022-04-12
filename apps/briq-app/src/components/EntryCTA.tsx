@@ -18,7 +18,7 @@ export const EntryCTA = () => {
           className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00] font-body uppercase"
           rel="noreferrer"
         >
-          Get briqs & buidl
+          Get briqs & build
         </a>
       ) : (
         <div>
