@@ -29,8 +29,27 @@ export function Loot(props: LootProps): ReactElement {
     'ring',
   ];
 
+  const isManaUnClaimed = (itemIdx: number) => {
+    const numOrders = mappedProperties.filter(
+      (item) => props.loot[item + 'SuffixId'] > 0
+    ).length;
+    if (
+      numOrders == 0 ||
+      numOrders === props.loot.manas.length ||
+      props.loot[mappedProperties[itemIdx] + 'SuffixId'] === 0
+    ) {
+      return false;
+    }
+    return !props.loot.manas.find((mana) => mana.inventoryId === itemIdx);
+  };
+
   useEffect(() => {
     const getMetadata = async () => {
+      const meta = getGreatness(props.loot.id);
+      meta.unclaimedMana = mappedProperties.reduce((acc, item, idx) => {
+        acc[item] = isManaUnClaimed(idx);
+        return acc;
+      }, {} as any);
       setMetaData(getGreatness(props.loot.id));
     };
 
@@ -48,7 +67,7 @@ export function Loot(props: LootProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 rounded bg-black/60">
+        <div className="px-4 py-2 pb-4 rounded bg-black/60">
           <div className=" sm:text-2xl">
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row ">
               <h3>
@@ -69,6 +88,10 @@ export function Loot(props: LootProps): ReactElement {
                   </Button>
                 </div>
               )}
+            </div>
+            <div className="flex justify-between py-1 text-sm tracking-widest uppercase border-t border-b border-gray-500">
+              <div>Manas claimed: {props.loot.manasClaimed}</div>
+              <div>* mana available</div>
             </div>
             <table className="min-w-full table-auto">
               <thead>
@@ -99,8 +122,22 @@ export function Loot(props: LootProps): ReactElement {
                         />{' '}
                         <span className="self-center">
                           {(props.loot as any)[item]}
+                          {metaData &&
+                            (metaData as any).unclaimedMana[item] && (
+                              <span className="ml-2 text-white text-green-200">
+                                *
+                              </span>
+                            )}
                         </span>
                       </p>
+                      {metaData && (metaData as any).unclaimedMana[item] && (
+                        <a
+                          href="https://app.genesisproject.xyz/claim"
+                          className="text-xs uppercase border px-3 py-1 rounded hover:bg-white/40 transition-all duration-300"
+                        >
+                          distill
+                        </a>
+                      )}
                     </td>
                     <td className="text-center font-display">
                       {metaData
