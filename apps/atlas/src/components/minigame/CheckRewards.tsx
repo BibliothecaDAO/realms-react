@@ -2,6 +2,7 @@ import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useUserReward from '@/hooks/desiege/useUserReward';
 import Button from '@/shared/Button';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
@@ -20,6 +21,8 @@ const CheckRewards: React.FC<Prop> = (props) => {
 
   const [gameIdx, setGameIdx] = useState<number | undefined>(initialGameIndex);
 
+  const gameStatus = useGameStatus({ gameIdx });
+
   const userReward = useUserReward({ gameIdx, account });
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const CheckRewards: React.FC<Prop> = (props) => {
 
   return (
     <div className="text-2xl">
-      <h3>
+      <h3 className="my-2">
         Contribution for Game{' '}
         {editingGameNumber ? (
           <input
@@ -52,42 +55,51 @@ const CheckRewards: React.FC<Prop> = (props) => {
           {editingGameNumber ? 'Close' : 'Edit'}
         </button>
       </h3>
-      {userReward.loading ? (
-        <LoadingSkeleton className="h-10" />
+      {gameStatus.data == 'active' ? (
+        <p>
+          This game is currently active. Check back later when the game
+          finishes.
+        </p>
       ) : (
         <>
-          <p>
-            Siege contribution allocation:{' '}
-            <span className="text-4xl">{userReward.alloc?.toString()}</span>
-          </p>
-          <p>{account}</p>
+          {userReward.loading ? (
+            <LoadingSkeleton className="h-10" />
+          ) : (
+            <>
+              <p>
+                Siege contribution allocation:{' '}
+                <span className="text-4xl">{userReward.alloc?.toString()}</span>
+              </p>
+              <p>Your StarkNet account: {account}</p>
+            </>
+          )}
+
+          <div
+            className={classNames(
+              'p-4 mt-2 text-gray-800 bg-gray-100/70 rounded-lg',
+              userReward.loading ? 'animate-pulse' : null
+            )}
+          >
+            {userReward.alloc && userReward.alloc.toNumber() > 0 ? (
+              <>
+                <h2>You have contributed to victory!</h2> You can claim with
+                this account for something in the future...
+                <Button className="mt-2" disabled>
+                  Claim
+                </Button>
+              </>
+            ) : null}
+
+            {userReward.alloc && userReward.alloc.toNumber() == 0 ? (
+              <>
+                <h2>Forces were too strong...</h2>
+                You have cast your spells valiantly but the Elemental forces
+                were too overwhelming.
+              </>
+            ) : null}
+          </div>
         </>
       )}
-
-      <div
-        className={classNames(
-          'p-4 mt-2 text-gray-800 bg-gray-100/70 rounded-lg',
-          userReward.loading ? 'animate-pulse' : null
-        )}
-      >
-        {userReward.alloc && userReward.alloc.toNumber() > 0 ? (
-          <>
-            <h2>You have contributed to victory!</h2> You can claim with this
-            account for something in the future...
-            <Button className="mt-2" disabled>
-              Claim
-            </Button>
-          </>
-        ) : null}
-
-        {userReward.alloc && userReward.alloc.toNumber() == 0 ? (
-          <>
-            <h2>Forces were too strong...</h2>
-            You have cast your spells valiantly but the Elemental forces were
-            too overwhelming.
-          </>
-        ) : null}
-      </div>
     </div>
   );
 };
