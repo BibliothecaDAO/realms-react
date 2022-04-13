@@ -225,21 +225,25 @@ export const ActionsBox = (props) => {
       </div>
       {getGameStatus.data == 'active' ? (
         <div className="flex flex-col justify-center space-y-1">
-          <div className="flex space-x-2">
+          <div className="flex mb-2 space-x-2">
             {getBoost.data !== undefined ? (
-              <button className="w-1/2 h-12 p-2 font-semibold text-white align-middle transition-colors bg-purple-400 rounded bg-gradient-to-b from-purple-800 hover:bg-purple-400">
-                Current boost <LightningBoltIcon className="inline-block w-4" />
+              <div
+                id="action-boost"
+                className="w-1/2 h-12 p-2 text-xl font-semibold text-center text-white transition-colors rounded to-purple-400 bg-gradient-to-b from-purple-800"
+              >
+                Boost <LightningBoltIcon className="inline-block w-4" />
                 {`${getBoost.data / 100}%`}
-              </button>
+              </div>
             ) : null}
             <input
+              id="action-amount"
               type="number"
               placeholder="Spell Strength"
               value={actionAmount}
               onChange={(e) => {
                 setActionAmount(e.target.value);
               }}
-              className="w-1/2 h-12 px-8 mb-2 text-2xl font-semibold text-center text-blue-400 uppercase transition-all duration-300 transform border rounded shadow-xl bg-gradient-to-b bg-white/60 from-white/80 hover:bg-blue-100"
+              className="w-1/2 h-12 px-8 text-2xl font-semibold text-center text-blue-400 uppercase transition-all duration-300 transform border rounded shadow-xl bg-gradient-to-b bg-white/60 from-white/80 hover:bg-blue-100"
             />
           </div>
           {contractApproval.approvalStatus == 'approved' ? (

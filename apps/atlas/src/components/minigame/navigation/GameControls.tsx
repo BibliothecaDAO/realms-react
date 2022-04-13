@@ -3,6 +3,7 @@ import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -10,11 +11,14 @@ import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
 import Button from '@/shared/Button';
 import ElementLabel from '@/shared/ElementsLabel';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
+
 import {
+  CityVitalityDisplay,
   ShieldVitalityDisplay,
-  ShieldVitalityDisplayClassnames,
 } from '../TowerShieldVitality';
 import { GamePreparation } from './GamePreparation';
+import Tutorial from './Onboarding/GameActions';
 
 type Prop = {
   onChooseElements: () => void;
@@ -76,18 +80,34 @@ const GameControls: React.FC<Prop> = (props) => {
   );
   return (
     <div className="text-gray-800">
+      <Tutorial
+        didShowTutorial={() => setShowTutorial(true)}
+        onCloseTutorial={() => setShowTutorial(false)}
+        showTutorial={showTutorial}
+      />
       <div
-        id="shield-vitality-container"
+        id="shield-indicator"
         className={classNames(
           showTutorial ? '' : 'hidden',
-          'absolute -right-56',
-          ShieldVitalityDisplayClassnames
+          'absolute -right-full'
         )}
       >
-        {/* <ShieldVitalityDisplay
-          shield={toBN(20 * EFFECT_BASE_FACTOR)}
+        <ShieldVitalityDisplay
+          shield={toBN(100 * EFFECT_BASE_FACTOR)}
           health={toBN(100 * EFFECT_BASE_FACTOR)}
-        /> */}
+        />
+      </div>
+      <div
+        id="vitality-indicator"
+        className={classNames(
+          showTutorial ? '' : 'hidden',
+          'absolute -right-64'
+        )}
+      >
+        <CityVitalityDisplay
+          shield={toBN(100 * EFFECT_BASE_FACTOR)}
+          health={toBN(100 * EFFECT_BASE_FACTOR)}
+        />
       </div>
       <div className="font-bold">
         <p className="text-xl tracking-widest text-gray-800 uppercase">
@@ -172,12 +192,9 @@ const GameControls: React.FC<Prop> = (props) => {
             )}
           </div> */}
 
-          <button
-            className="w-full my-2 text-center underline"
-            onClick={() => setShowTutorial(true)}
-          >
+          <Button className="mt-4" onClick={() => setShowTutorial(true)}>
             Show Tutorial
-          </button>
+          </Button>
         </>
       ) : null}
 
