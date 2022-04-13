@@ -16,7 +16,7 @@ export type MintingError = {
   error: string;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
   const { sig, starknetAddress, chosenSide, gameIdx } = req.body;
 
   const ethAddress = utils.verifyMessage(messageKey(starknetAddress), sig);
@@ -107,5 +107,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     );
     return;
+  }
+};
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    handleMint(req, res);
+  } catch (e: any) {
+    res.send(
+      JSON.stringify({
+        success: false,
+        error: e.message,
+      })
+    );
   }
 };
