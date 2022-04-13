@@ -2,7 +2,7 @@ import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ec, encode, Account } from 'starknet';
 import { ElementToken, MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import { fetchLordsBalance, fetchNumberRealmsStaked } from '@/util/fetchL1';
+import { fetchLordsBalance } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
 import {
   getModuleAddress,
@@ -23,15 +23,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const lordsBalance = await fetchLordsBalance(ethAddress);
 
-  const numRealmsStaked = await fetchNumberRealmsStaked(ethAddress);
-
   const suppressMintRequirement =
     process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == '1';
 
-  if (
-    (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) || numRealmsStaked == 0) &&
-    !suppressMintRequirement
-  ) {
+  if (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) && !suppressMintRequirement) {
     res.send(
       JSON.stringify({
         success: false,
