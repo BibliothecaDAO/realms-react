@@ -9,7 +9,7 @@ export const projects = [
     name: 'Briqs',
     discord: 'https://discord.gg/7X9gJQ3ed9',
     twitter: 'https://twitter.com/briqNFT',
-    website: 'https://briq.construction/',
+    website: 'https://realms.briq.construction/',
   },
   {
     name: 'Play Oasis',
