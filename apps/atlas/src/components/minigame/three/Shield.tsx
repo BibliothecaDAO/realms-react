@@ -1,7 +1,8 @@
+import { Sparkles } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type { MouseEventHandler } from 'react';
-import type * as THREE from 'three';
+import * as THREE from 'three';
 
 interface ObjectProps {
   jsx: JSX.IntrinsicElements['mesh'];
@@ -57,6 +58,8 @@ export function Shield(props: ObjectProps) {
     `,
   };
 
+  const color = new THREE.Color('#F1ECFF');
+
   return (
     <mesh
       {...props.jsx}
@@ -74,6 +77,7 @@ export function Shield(props: ObjectProps) {
         // stop();
       }}
     >
+      <Sparkles count={60} color={color} scale={2.2} size={8} speed={0.4} />
       <sphereBufferGeometry />
       <shaderMaterial
         opacity={1}
