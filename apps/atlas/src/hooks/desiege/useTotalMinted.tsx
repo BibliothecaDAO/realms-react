@@ -15,7 +15,7 @@ const useTotalMinted = (args: UseTotalMintedArgs) => {
   const gameStatus = useGameStatus({ gameIdx: args.gameIdx });
 
   const waitingInLobby =
-    gameStatus.data == 'active' || gameStatus.data == 'completed';
+    gameStatus.data == 'expired' || gameStatus.data == 'completed';
 
   return useQuery<{ light: number; dark: number }>(
     queryKeys.totalMinted(args.gameIdx),
