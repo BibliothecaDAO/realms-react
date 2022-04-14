@@ -25,7 +25,7 @@ export interface TowerProps {
 }
 
 const origin: { position?: Vector3 } = {
-  position: new Vector3(0, 0, 0),
+  position: new Vector3(0, -2, 0),
 };
 
 function CityModel(props: TowerProps) {
@@ -47,11 +47,12 @@ function CityModel(props: TowerProps) {
 
   return (
     <div className="absolute top-0 w-full h-screen z-1">
-      <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
+      <Canvas linear shadows camera={{ position: [3, 7, 10] }}>
         <Suspense fallback={null}>
           <sphereGeometry args={[10000, 32]} />
           <pointLight position={[100, 100, 100]} />
-          <directionalLight args={[0xf4e99b, 10]} />
+          <hemisphereLight args={[0xfcfaeb, 0x080820, 1]} />
+          <directionalLight castShadow={true} args={[0xf7efb9, 10]} />
           <group
             ref={shield}
             position={[0, 0, 0]}
@@ -79,7 +80,7 @@ function CityModel(props: TowerProps) {
           <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
           <group ref={tower}>
             <Tower
-              position={[0, 1, 0]}
+              position={[0, -0.5, 0]}
               onPointerOver={() => {
                 setRotate(false);
               }}
