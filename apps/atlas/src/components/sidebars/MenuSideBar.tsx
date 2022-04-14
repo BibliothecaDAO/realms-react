@@ -145,6 +145,20 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Bank</span>
         </div>
+        <div className="flex flex-col place-items-center ">
+          <IconButton
+            className={`${buttonClasses} ${
+              selectedPanel === 'lore' ? 'bg-gray-700' : ''
+            }`}
+            aria-label="Lore"
+            variant="unstyled"
+            texture={false}
+            onClick={() => togglePanelType('lore')}
+            icon={<Bank className={iconClasses} />}
+            size="lg"
+          />
+          <span className={textClasses}>Lore</span>
+        </div>
 
         {/* <div className="flex flex-col place-items-center ">
           <IconButton

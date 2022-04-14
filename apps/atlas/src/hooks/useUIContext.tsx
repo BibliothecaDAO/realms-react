@@ -16,7 +16,7 @@ import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
+export type PanelType = 'trade' | 'bank' | 'lore' | AssetType;
 
 export type MenuType = 'resourceSwap' | PanelType;
 
@@ -233,6 +233,11 @@ function useUI(): UI {
         }
       } else if (panelType === 'trade') {
         setArtBackground('realm');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      } else if (panelType === 'lore') {
+        setArtBackground('lore');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
