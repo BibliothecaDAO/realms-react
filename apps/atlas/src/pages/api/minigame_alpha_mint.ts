@@ -9,6 +9,7 @@ import {
   getNextMintAmount,
   getTotalElementsMinted,
   provider,
+  TOKEN_INDEX_OFFSET_BASE,
 } from '@/util/minigameApi';
 
 export type MintingError = {
@@ -58,12 +59,13 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const gameIndexInt = parseInt(gameIdx);
+  const nextGameIdx = gameIndexInt + 1;
 
   // The amount includes 2-decimal precision
   // so multiply by 100
   let amountToMint: number;
   try {
-    const totals = await getTotalElementsMinted(gameIndexInt);
+    const totals = await getTotalElementsMinted(nextGameIdx);
     // Dynamic element balancing
     amountToMint = getNextMintAmount(totals);
   } catch (e) {
@@ -71,14 +73,12 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
     throw e;
   }
 
-  const nextGameIdx = gameIndexInt + 1;
-
   // Elements cannot be re-used between games
   // so the 1155 token indexes start at a deterministic index
   // and IDs are offset from there
   // Ex. light = startIndex + 1, dark = startIndex + 2
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const INDEX_BASE_FACTOR = 10;
+  const INDEX_BASE_FACTOR = TOKEN_INDEX_OFFSET_BASE;
   const tokenStartIndex = nextGameIdx * INDEX_BASE_FACTOR;
 
   const elementBalancerModule = await getModuleAddress('4');
