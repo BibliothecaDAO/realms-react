@@ -1,4 +1,5 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import clsx from 'clsx';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -6,6 +7,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
+  isBridge?: boolean;
 }
 const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
@@ -28,7 +30,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     togglePanelType,
   } = useUIContext();
   const {
-    state: { favouriteRealms },
+    state: { favouriteRealms, selectedRealms },
     actions,
   } = useRealmContext();
 
@@ -48,6 +50,22 @@ export function RealmOverviews(props: RealmOverviewsProps) {
 
   const isFavourite = (realm: RealmFragmentFragment) =>
     favouriteRealms.indexOf(realm.realmId) > -1;
+
+  if (props.isBridge) {
+    return (
+      <div>
+        {props.realms &&
+          props.realms.map((realm: RealmFragmentFragment, index) => (
+            <SelectableRealm
+              key={index}
+              realm={realm}
+              actions={actions}
+              isSelected={selectedRealms.indexOf(realm.realmId) > -1}
+            />
+          ))}
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -176,5 +194,46 @@ export function RealmOverviews(props: RealmOverviewsProps) {
           </div>
         ))}
     </div>
+  );
+}
+
+type SelectableRealmProps = {
+  realm: RealmFragmentFragment;
+  isSelected: boolean;
+  actions: any;
+};
+
+function SelectableRealm(props: SelectableRealmProps) {
+  const { realm, actions, isSelected } = props;
+
+  function selectRealm() {
+    actions.toggleRealmSelection(realm.realmId);
+  }
+
+  return (
+    <button
+      className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-between cursor-pointer"
+      onClick={selectRealm}
+    >
+      <div
+        className={clsx(
+          `flex w-full p-2 text-white shadow-inner rounded-t-l`,
+          isSelected ? `bg-black/60` : `bg-black/40`
+        )}
+      >
+        <div
+          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-black rounded border-2 border-gray-900`}
+        >
+          {isSelected ? `✔️` : ``}
+        </div>
+        <h3 className="self-center mb-1 ml-4">
+          <span className="mr-4 text-gray-400">{realm.realmId} | </span>
+          {realm.name}
+        </h3>
+        <h4 className="self-center hidden p-1 justify-end px-4 text-xs text-gray-400 rounded sm:block">
+          Location: L1 (Ethereum MainNet)
+        </h4>
+      </div>
+    </button>
   );
 }
