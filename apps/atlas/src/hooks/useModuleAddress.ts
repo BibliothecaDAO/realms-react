@@ -13,6 +13,7 @@ export const useModuleAddress = (moduleId: string) => {
     {
       // The module addresses won't change
       staleTime: Infinity,
+      refetchOnWindowFocus: false,
     }
   );
 };
