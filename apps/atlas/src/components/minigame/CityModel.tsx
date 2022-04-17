@@ -1,5 +1,7 @@
+import { IconButton } from '@bibliotheca-dao/ui-lib';
+import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
 import { OrbitControls, Cloud, Stars, Sky, Html } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import type BN from 'bn.js';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
@@ -10,6 +12,7 @@ import useHealth from '@/hooks/desiege/useHealth';
 import useShield from '@/hooks/desiege/useShield';
 import type { GameStatus } from '@/types/index';
 import { Shield } from './three/Shield';
+
 import {
   ShieldVitalityDisplay,
   ShieldVitalityDisplayClassnames,
@@ -25,14 +28,20 @@ export interface TowerProps {
 }
 
 const origin: { position?: Vector3 } = {
-  position: new Vector3(0, 0, 0),
+  position: new Vector3(0, -2, 0),
 };
 
 function CityModel(props: TowerProps) {
   const [rotate, setRotate] = useState(true);
   const tower = useRef<THREE.Group>(null!);
   const shield = useRef<THREE.Mesh>(null!);
+  const orbitControlsRef = useRef<any>();
 
+  function resetCamera() {
+    if (orbitControlsRef) {
+      orbitControlsRef.current.reset();
+    }
+  }
   const shieldValue = useShield({
     gameIdx: props.gameIdx,
   });
@@ -47,11 +56,23 @@ function CityModel(props: TowerProps) {
 
   return (
     <div className="absolute top-0 w-full h-screen z-1">
-      <Canvas linear shadows camera={{ position: [3, 4, 10] }}>
+      <IconButton
+        aria-label="Bank"
+        variant="unstyled"
+        className="absolute z-30 h-full text-blue-700 fill-current right-8 "
+        texture={false}
+        onClick={resetCamera}
+        icon={<ZoomReset className="w-6" />}
+        size="lg"
+      />
+      <Canvas linear shadows camera={{ position: [3, 7, 10] }}>
         <Suspense fallback={null}>
           <sphereGeometry args={[10000, 32]} />
-          <pointLight position={[100, 100, 100]} />
-          <directionalLight args={[0xf4e99b, 10]} />
+          <pointLight position={[100, 100, 50]} />
+          <pointLight position={[-40, 50, 50]} />
+
+          <ambientLight intensity={0.45} />
+          <directionalLight args={[0xf7efb9, 8]} />
           <group
             ref={shield}
             position={[0, 0, 0]}
@@ -72,14 +93,15 @@ function CityModel(props: TowerProps) {
             autoRotate={true}
             enablePan={false}
             minZoom={90}
-            maxZoom={80}
+            maxZoom={20}
             maxPolarAngle={Math.PI / 2 - 0.1}
             minPolarAngle={0}
+            ref={orbitControlsRef}
           />
           <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
           <group ref={tower}>
             <Tower
-              position={[0, 1, 0]}
+              position={[0, -0.5, 0]}
               onPointerOver={() => {
                 setRotate(false);
               }}

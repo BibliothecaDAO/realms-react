@@ -66,7 +66,7 @@ export function Shield(props: ObjectProps) {
       receiveShadow
       ref={mesh}
       scale={2.3}
-      position={[0, 3, 0]}
+      position={[0, 1.3, 0]}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => {
         setHover(true);
