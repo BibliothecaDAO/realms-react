@@ -59,10 +59,10 @@ function CityModel(props: TowerProps) {
       <IconButton
         aria-label="Bank"
         variant="unstyled"
-        className="absolute z-30 h-full text-blue-700 fill-current right-8 "
+        className="absolute z-30 h-8 text-blue-700 fill-current top-1/2 right-8"
         texture={false}
         onClick={resetCamera}
-        icon={<ZoomReset className="w-6" />}
+        icon={<ZoomReset className="w-8" />}
         size="lg"
       />
       <Canvas linear shadows camera={{ position: [3, 7, 10] }}>
