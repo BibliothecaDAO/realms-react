@@ -39,7 +39,7 @@ export const GamePreparation = () => {
             Check the{' '}
             <a
               target={'_blank'}
-              href="https://github.com/BibliothecaForAdventurers/realms-react/tree/feat/desiege/apps/atlas/src/components/minigame"
+              href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/apps/atlas/src/components/minigame"
               className="underline"
               rel="noreferrer"
             >
