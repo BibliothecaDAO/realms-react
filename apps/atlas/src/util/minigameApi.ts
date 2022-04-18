@@ -271,7 +271,8 @@ export const getNextMintAmount = ({
 
   let diff;
   if (light > dark) {
-    diff = light - dark;
+    // Don't autobalance if the light side is ahead.
+    return baseAmount;
   } else if (dark > light) {
     diff = dark - light;
   } else {
