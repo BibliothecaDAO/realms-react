@@ -30,7 +30,8 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.NEXT_PUBLIC_SUPPRESS_TOKEN_REQUIREMENT == '1';
 
   if (
-    (lordsBalance.lt(MINIMUM_LORDS_REQUIRED) || numRealmsStaked == 0) &&
+    lordsBalance.lt(MINIMUM_LORDS_REQUIRED) &&
+    numRealmsStaked == 0 &&
     !suppressMintRequirement
   ) {
     res.send(
