@@ -72,7 +72,7 @@ export function DesiegeHeader() {
               </span>
             ) : (
               <button
-                className={navItemClass}
+                className={navItemClassBtn}
                 onClick={starknet.connectBrowserWallet}
               >
                 Connect to StarkNet

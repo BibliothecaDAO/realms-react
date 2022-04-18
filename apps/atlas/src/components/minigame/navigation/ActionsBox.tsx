@@ -204,7 +204,7 @@ export const ActionsBox = (props) => {
   };
 
   return (
-    <div className="flex flex-col w-auto p-4 mb-6 text-blue-700 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
+    <div className="flex flex-col w-auto p-4 mb-6 text-gray-900 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
       <div className="text-center uppercase">
         <h3>
           {getTokenBalances.side ? getTokenBalances.side.toUpperCase() : 'My'}{' '}
@@ -215,11 +215,6 @@ export const ActionsBox = (props) => {
             <animated.div>
               {elementTokenBalanceSpring.to((n) => n.toFixed(0))}
             </animated.div>
-            {/* {tokenBalance !== undefined
-              ? tokenBalance
-                  .div(number.toBN(EFFECT_BASE_FACTOR)) // Normalize units
-                  .toString()
-              : "0"} */}
           </div>
         </h1>
       </div>

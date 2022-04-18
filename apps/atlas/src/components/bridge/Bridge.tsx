@@ -17,7 +17,10 @@ import useTotalMinted from '@/hooks/desiege/useTotalMinted';
 import useTxCallback from '@/hooks/useTxCallback';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
-import ElementsLabel from '@/shared/ElementsLabel';
+import ElementsLabel, {
+  DarkGradient,
+  LightGradient,
+} from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
 import { messageKey } from '@/util/messageKey';
 import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
@@ -309,18 +312,25 @@ export const Bridge: React.FC<Prop> = (props) => {
               <div className="py-4">
                 {starknet.account ? (
                   <>
-                    <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
+                    <h1 className="my-2 text-4xl">Pick Polarity</h1>
                     <div className="flex w-full space-x-2 ">
                       <div className="relative w-full text-center group">
+                        {totalMinted.data
+                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
+                            ' distilled Light for next round'
+                          : '-'}
                         <div
                           className={classNames(
-                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
-                            side == 'light' ? 'opacity-100' : 'opacity-50'
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r group-hover:opacity-100 group-hover:duration-200',
+                            LightGradient
                           )}
                         >
                           <button
                             onClick={() => setSide('light')}
-                            className="relative items-center w-full py-4 leading-none tracking-widest text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
+                            className={classNames(
+                              'relative items-center w-full py-4 leading-none tracking-widest text-white hover:text-cyan-700 uppercase hover:bg-white divide-x divide-gray-600 rounded-md px-7',
+                              side == 'light' ? 'bg-white text-cyan-800' : null
+                            )}
                           >
                             <span className="flex justify-center">
                               {' '}
@@ -331,30 +341,47 @@ export const Bridge: React.FC<Prop> = (props) => {
                             </span>
                           </button>
                         </div>
-                        {totalMinted.data
-                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
-                            ' distilled Light for next round'
-                          : '-'}
-                      </div>
-                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
-                            side == 'dark' ? 'opacity-100' : 'opacity-50'
+                            'transition-opacity group-hover:opacity-100',
+                            side == 'light' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        >
+                          “Join us, defend the city, preserve the Divine Order,
+                          and protect our ancient stories from destruction!”
+                        </div>
+                      </div>
+                      <div className="relative w-full text-center group">
+                        {totalMinted.data
+                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
+                            ' distilled Dark for next round'
+                          : '-'}
+                        <div
+                          className={classNames(
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r group-hover:opacity-100 group-hover:duration-200 animate-tilt',
+                            DarkGradient
                           )}
                         >
                           <button
                             onClick={() => setSide('dark')}
-                            className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-md px-7"
+                            className={classNames(
+                              'relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase divide-x divide-gray-600 rounded-md hover:bg-gray-900 px-7',
+                              side == 'dark' ? 'bg-gray-900 text-white' : null
+                            )}
                           >
                             Dark{' '}
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.data
-                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
-                            ' distilled Dark for next round'
-                          : '-'}
+                        <div
+                          className={classNames(
+                            'transition-opacity group-hover:opacity-100',
+                            side == 'dark' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        >
+                          “Join us, let us desiege this city so that we can live
+                          free of their chains…”
+                        </div>
                       </div>
                     </div>
 

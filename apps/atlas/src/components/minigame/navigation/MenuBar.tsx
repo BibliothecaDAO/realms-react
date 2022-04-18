@@ -49,7 +49,7 @@ function MenuBar(props: Prop) {
           <DocumentText className="w-6" />
         </button>
         <button
-          className="text-blue-600 hover:scale-110 hover:text-blue-800"
+          className="text-blue-400 hover:scale-110 hover:text-blue-800"
           onClick={() => {
             if (soundOn) {
               stop();
