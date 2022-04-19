@@ -1,8 +1,7 @@
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
 import { OrbitControls, Cloud, Stars, Sky, Html } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import type BN from 'bn.js';
+import { Canvas } from '@react-three/fiber';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
@@ -11,6 +10,7 @@ import { Vector3 } from 'three';
 import useHealth from '@/hooks/desiege/useHealth';
 import useShield from '@/hooks/desiege/useShield';
 import type { GameStatus } from '@/types/index';
+import DarkPortal from './three/DarkPortal';
 import { Shield } from './three/Shield';
 
 import {
@@ -18,6 +18,7 @@ import {
   ShieldVitalityDisplayClassnames,
   CityVitalityDisplay,
 } from './TowerShieldVitality';
+
 const Tower = dynamic(() => import('@/components/minigame/three/DivineCity'), {
   ssr: false,
 });
@@ -90,7 +91,6 @@ function CityModel(props: TowerProps) {
             )}
           </group>
           <OrbitControls
-            autoRotate={true}
             enablePan={false}
             minZoom={90}
             maxZoom={20}
@@ -98,6 +98,7 @@ function CityModel(props: TowerProps) {
             minPolarAngle={0}
             ref={orbitControlsRef}
           />
+          <DarkPortal />
           <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
           <group ref={tower}>
             <Tower

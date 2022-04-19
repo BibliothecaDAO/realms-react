@@ -14,6 +14,7 @@ import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
 import { ElementToken } from '@/constants/index';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
+import { useBattleContext } from '@/hooks/desiege/useBattleContext';
 import useBoost from '@/hooks/desiege/useBoost';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -109,6 +110,8 @@ export const ActionsBox = (props) => {
 
   const queryClient = useQueryClient();
 
+  const battle = useBattleContext();
+
   const txTracker = useTxCallback(
     shieldAction.data || attackAction.data,
     (status) => {
@@ -125,10 +128,15 @@ export const ActionsBox = (props) => {
         )
       );
 
+      battle.setDarkAttacking(false);
+      battle.setLightShielding(false);
+
       // Temp: Post a request to distribute this as a notification
       // TODO: Replace with StarkNet indexer / real-time events in future
       if (
-        (status == 'ACCEPTED_ON_L1' || status == 'ACCEPTED_ON_L2') &&
+        (status == 'ACCEPTED_ON_L1' ||
+          status == 'ACCEPTED_ON_L2' ||
+          status == 'PENDING') &&
         appliedAction
       ) {
         // Must use applied action values, not live values,
@@ -175,6 +183,8 @@ export const ActionsBox = (props) => {
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
     });
+    // Trigger the dark shadow
+    battle.setDarkAttacking(true);
     setAppliedAction({
       shield: (getShield.data as BN).toNumber() / EFFECT_BASE_FACTOR,
       health: (getMainHealth.data as BN).toNumber() / EFFECT_BASE_FACTOR,

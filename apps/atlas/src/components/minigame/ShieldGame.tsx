@@ -2,6 +2,7 @@ import { XCircleIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { BattleContextProvider } from '@/hooks/desiege/useBattleContext';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import { queryKeys as userBalanceQueryKeys } from '@/hooks/desiege/useTokenBalances';
@@ -147,18 +148,19 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <TowerDefence
-        gameIdx={getGameVariables.data?.gameIdx}
-        gameStatus={gameStatus.data}
-      />
-
-      <MenuBar
-        setupModalInitialIsOpen={view == 'setup'}
-        toggleTab={(tab) => {
-          setModalOpen(true);
-          setView(tab);
-        }}
-      />
+      <BattleContextProvider>
+        <TowerDefence
+          gameIdx={getGameVariables.data?.gameIdx}
+          gameStatus={gameStatus.data}
+        />
+        <MenuBar
+          setupModalInitialIsOpen={view == 'setup'}
+          toggleTab={(tab) => {
+            setModalOpen(true);
+            setView(tab);
+          }}
+        />
+      </BattleContextProvider>
 
       {gameStatus.data &&
       gameStatus.data == 'active' &&
