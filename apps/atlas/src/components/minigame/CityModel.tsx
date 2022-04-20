@@ -1,12 +1,20 @@
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
-import { OrbitControls, Cloud, Stars, Sky, Html } from '@react-three/drei';
+import {
+  OrbitControls,
+  Cloud,
+  Stars,
+  Sky,
+  Html,
+  useContextBridge,
+} from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import React, { useRef, useState, useMemo, Suspense } from 'react';
 import type * as THREE from 'three';
 import { Vector3 } from 'three';
+import { BattleContext } from '@/hooks/desiege/useBattleContext';
 import useHealth from '@/hooks/desiege/useHealth';
 import useShield from '@/hooks/desiege/useShield';
 import type { GameStatus } from '@/types/index';
@@ -55,6 +63,11 @@ function CityModel(props: TowerProps) {
     return healthValue?.data?.toNumber();
   }, [healthValue.data]);
 
+  // Contexts must be bridged because react-three renders in a separate DOM element outside
+  // of the main DOM element tree.
+  // https://docs.pmnd.rs/react-three-fiber/advanced/gotchas#consuming-context-from-a-foreign-provider
+  const ContextBridge = useContextBridge(BattleContext);
+
   return (
     <div className="absolute top-0 w-full h-screen z-1">
       <IconButton
@@ -67,94 +80,102 @@ function CityModel(props: TowerProps) {
         size="lg"
       />
       <Canvas linear shadows camera={{ position: [3, 7, 10] }}>
-        <Suspense fallback={null}>
-          <sphereGeometry args={[10000, 32]} />
-          <pointLight position={[100, 100, 50]} />
-          <pointLight position={[-40, 50, 50]} />
+        <ContextBridge>
+          <Suspense fallback={null}>
+            <sphereGeometry args={[10000, 32]} />
+            <pointLight position={[100, 100, 50]} />
+            <pointLight position={[-40, 50, 50]} />
 
-          <ambientLight intensity={0.45} />
-          <directionalLight args={[0xf7efb9, 8]} />
-          <group
-            ref={shield}
-            position={[0, 0, 0]}
-            onPointerOver={() => {
-              setRotate(false);
-            }}
-            onPointerOut={() => {
-              setRotate(true);
-            }}
-          >
-            {healthValue.data && h !== undefined && h > 0 ? (
-              <Shield jsx={origin} health={h} />
-            ) : (
-              ''
-            )}
-          </group>
-          <OrbitControls
-            enablePan={false}
-            minZoom={90}
-            maxZoom={20}
-            maxPolarAngle={Math.PI / 2 - 0.1}
-            minPolarAngle={0}
-            ref={orbitControlsRef}
-          />
-          <DarkPortal />
-          <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
-          <group ref={tower}>
-            <Tower
-              position={[0, -0.5, 0]}
+            <ambientLight intensity={0.45} />
+            <directionalLight args={[0xf7efb9, 8]} />
+            <group
+              ref={shield}
+              position={[0, 0, 0]}
               onPointerOver={() => {
                 setRotate(false);
               }}
-              receiveShadow
               onPointerOut={() => {
                 setRotate(true);
               }}
+            >
+              {healthValue.data && h !== undefined && h > 0 ? (
+                <Shield jsx={origin} health={h} />
+              ) : (
+                ''
+              )}
+            </group>
+            <OrbitControls
+              enablePan={false}
+              minZoom={90}
+              maxZoom={20}
+              maxPolarAngle={Math.PI / 2 - 0.1}
+              minPolarAngle={0}
+              ref={orbitControlsRef}
             />
-            {props.gameStatus == 'active' ? (
-              <Html
-                position={[-4.5, -0.3, 2]}
-                className={classNames('w-56', ShieldVitalityDisplayClassnames)}
-                occlude={[tower, shield]}
-                zIndexRange={[4, 0]}
-              >
-                <ShieldVitalityDisplay
-                  health={healthValue.data}
-                  shield={shieldValue.data}
-                />
-              </Html>
-            ) : null}
-            {props.gameStatus == 'active' ? (
-              <Html
-                position={[4.5, 1, 2]}
-                className={classNames('w-56', ShieldVitalityDisplayClassnames)}
-                occlude={[tower, shield]}
-                zIndexRange={[4, 0]}
-              >
-                <CityVitalityDisplay
-                  health={healthValue.data}
-                  shield={shieldValue.data}
-                />
-              </Html>
-            ) : null}
-          </group>
-        </Suspense>
+            <DarkPortal />
+            <Cloud position={[-4, -2, -25]} speed={0.8} opacity={1} />
+            <group ref={tower}>
+              <Tower
+                position={[0, -0.5, 0]}
+                onPointerOver={() => {
+                  setRotate(false);
+                }}
+                receiveShadow
+                onPointerOut={() => {
+                  setRotate(true);
+                }}
+              />
+              {props.gameStatus == 'active' ? (
+                <Html
+                  position={[-4.5, -0.3, 2]}
+                  className={classNames(
+                    'w-56',
+                    ShieldVitalityDisplayClassnames
+                  )}
+                  occlude={[tower, shield]}
+                  zIndexRange={[4, 0]}
+                >
+                  <ShieldVitalityDisplay
+                    health={healthValue.data}
+                    shield={shieldValue.data}
+                  />
+                </Html>
+              ) : null}
+              {props.gameStatus == 'active' ? (
+                <Html
+                  position={[4.5, 1, 2]}
+                  className={classNames(
+                    'w-56',
+                    ShieldVitalityDisplayClassnames
+                  )}
+                  occlude={[tower, shield]}
+                  zIndexRange={[4, 0]}
+                >
+                  <CityVitalityDisplay
+                    health={healthValue.data}
+                    shield={shieldValue.data}
+                  />
+                </Html>
+              ) : null}
+            </group>
+          </Suspense>
 
-        <Stars
-          radius={100}
-          depth={50}
-          count={5000}
-          factor={4}
-          saturation={0}
-          fade
-        />
-        <Sky
-          azimuth={0.3}
-          turbidity={2}
-          rayleigh={0.3}
-          inclination={0.8}
-          distance={1000}
-        />
+          <Stars
+            radius={100}
+            depth={50}
+            count={5000}
+            factor={4}
+            saturation={0}
+            fade
+          />
+          <Sky
+            azimuth={0.3}
+            turbidity={2}
+            rayleigh={0.3}
+            inclination={0.8}
+            distance={1000}
+          />
+        </ContextBridge>
       </Canvas>
     </div>
   );
@@ -162,4 +183,4 @@ function CityModel(props: TowerProps) {
 
 // Wrap in React.memo so the same valued props
 // don't cause a re-render
-export default React.memo(CityModel);
+export default CityModel;

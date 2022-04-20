@@ -174,6 +174,12 @@ export const ActionsBox = (props) => {
     config: config.molasses,
   });
 
+  useEffect(() => {
+    if (!attackAction.loading && attackAction.error) {
+      battle.setDarkAttacking(false);
+    }
+  }, [attackAction.error, attackAction.loading]);
+
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId = gameIndex * TOKEN_INDEX_OFFSET_BASE + tokenOffset;
     attackAction.invoke({

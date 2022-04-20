@@ -1,48 +1,47 @@
-import { useContext, createContext, useState } from 'react';
+import React, { useContext, useState, createContext } from 'react';
 
 type BattleContextProps = {
   isDarkAttacking: boolean;
   isLightShielding: boolean;
-  setDarkAttacking: (boolean) => void;
-  setLightShielding: (boolean) => void;
+  setDarkAttacking: (is: boolean) => void;
+  setLightShielding: (is: boolean) => void;
 };
 
-const BattleContext = createContext<BattleContextProps | undefined>({
+const defaultValue = {
   isDarkAttacking: false,
   isLightShielding: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setDarkAttacking: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setLightShielding: () => {},
-});
+};
 
-const useBattleContext = () => {
-  const context = useContext(BattleContext);
+export const BattleContext = createContext<BattleContextProps>(defaultValue);
 
-  if (context === undefined) {
+const BattleContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isDarkAttacking, setDarkAttacking] = useState(false);
+  const [isLightShielding, setLightShielding] = useState(false);
+
+  const val = {
+    isDarkAttacking,
+    isLightShielding,
+    setDarkAttacking,
+    setLightShielding,
+  };
+
+  return (
+    <BattleContext.Provider value={val}>{children}</BattleContext.Provider>
+  );
+};
+
+function useBattleContext() {
+  const ctx = useContext(BattleContext);
+  if (ctx == undefined) {
     throw new Error(
       'useBattleContext must be used within a BattleContextProvider'
     );
   }
-  return context;
-};
-
-function BattleContextProvider({ children }) {
-  const [isDarkAttacking, setDarkAttacking] = useState(false);
-  const [isLightShielding, setLightShielding] = useState(false);
-
-  return (
-    <BattleContext.Provider
-      value={{
-        isDarkAttacking,
-        isLightShielding,
-        setDarkAttacking,
-        setLightShielding,
-      }}
-    >
-      {children}
-    </BattleContext.Provider>
-  );
+  return ctx;
 }
 
 export { BattleContextProvider, useBattleContext };
