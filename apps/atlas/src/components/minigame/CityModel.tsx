@@ -98,8 +98,8 @@ function CityModel(props: TowerProps) {
                 setRotate(true);
               }}
             >
-              {healthValue.data && h !== undefined && h > 0 ? (
-                <Shield jsx={origin} health={h} />
+              {shieldValue.data ? (
+                <Shield jsx={origin} health={shieldValue.data.toNumber()} />
               ) : (
                 ''
               )}

@@ -67,20 +67,11 @@ export function Shield(props: ObjectProps) {
       ref={mesh}
       scale={2.3}
       position={[0, 1.3, 0]}
-      onClick={(event) => setActive(!active)}
-      onPointerOver={(event) => {
-        setHover(true);
-        // playShield();
-      }}
-      onPointerOut={(event) => {
-        setHover(false);
-        // stop();
-      }}
     >
       <Sparkles count={60} color={color} scale={2.2} size={8} speed={0.4} />
       <sphereBufferGeometry />
       <shaderMaterial
-        opacity={1}
+        visible={props.health > 0}
         attach="material"
         transparent={true}
         args={[KnotShaderMaterial]}
