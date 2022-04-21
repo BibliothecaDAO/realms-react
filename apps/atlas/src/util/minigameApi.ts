@@ -259,28 +259,22 @@ export const getTotalElementsMinted = async (gameIdx: number) => {
 };
 
 // To maintain balance next mint divides diff by 2
-export const getNextMintAmount = ({
-  light,
-  dark,
-}: {
-  light: number;
-  dark: number;
-}) => {
-  // The totals received will be
+export const getNextMintAmount = (
+  totals: {
+    light: number;
+    dark: number;
+  },
+  side: 'light' | 'dark'
+) => {
   const baseAmount = MINIMUM_MINT_AMOUNT * EFFECT_BASE_FACTOR;
 
-  let diff;
-  if (light > dark) {
-    // Don't autobalance if the light side is ahead.
-    return baseAmount;
-  } else if (dark > light) {
-    diff = dark - light;
-  } else {
-    return baseAmount;
+  let diff: undefined | number;
+  if (totals.light > totals.dark && side === 'dark') {
+    diff = totals.light - totals.dark;
+    const balancedNextAmount = Math.round(diff / 2);
+    return Math.max(balancedNextAmount, baseAmount);
   }
-
-  const balancedNextAmount = Math.round(diff / 2);
-  return Math.max(balancedNextAmount, baseAmount);
+  return baseAmount;
 };
 
 export const getIsApprovedForAll = async (

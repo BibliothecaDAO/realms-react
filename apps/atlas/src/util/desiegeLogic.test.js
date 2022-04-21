@@ -19,6 +19,14 @@ describe('Apply action amount', () => {
     expect(res.health).toBe((health - 10.8).toFixed(2));
   });
 
+  test('with 0 shield', () => {
+    const health = 100;
+    const shield = 0;
+    const res = applyActionAmount('40', '200', shield, health);
+    expect(res.shield).toBe('0');
+    expect(res.health).toBe((health - 40.8).toFixed(2));
+  });
+
   test('massive damage bringing health to 0', () => {
     const health = 20;
     const shield = 0;

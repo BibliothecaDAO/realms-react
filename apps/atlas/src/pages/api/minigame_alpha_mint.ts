@@ -68,7 +68,7 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const totals = await getTotalElementsMinted(nextGameIdx);
     // Dynamic element balancing
-    amountToMint = getNextMintAmount(totals);
+    amountToMint = getNextMintAmount(totals, chosenSide);
   } catch (e) {
     console.error('CONTRACT CALL ERROR:', e);
     throw e;
