@@ -2,7 +2,12 @@ import { toBN } from 'starknet/dist/utils/number';
 import { useModuleAddress } from '@/hooks/useModuleAddress';
 import { ExternalLink } from '@/shared/Icons';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
-import { CONTROLLER_ADDRESS, ELEMENTS_ADDRESS } from '@/util/minigameApi';
+import { getHostname } from '@/util/blockExplorer';
+import {
+  CONTROLLER_ADDRESS,
+  ELEMENTS_ADDRESS,
+  starknetNetwork,
+} from '@/util/minigameApi';
 import { moduleIds } from './constants';
 import type { ModuleSpec } from './constants';
 
@@ -21,7 +26,9 @@ export const ContractListItem = (props: { name: string; address?: string }) => {
           <a
             target={'_blank'}
             className="underline"
-            href={`https://goerli.voyager.online/contract/${props.address}#readContract`}
+            href={`https://${getHostname(starknetNetwork)}/contract/${
+              props.address
+            }#readContract`}
             rel="noreferrer"
           >
             {props.address?.substring(0, 8) || '-'}...

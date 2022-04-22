@@ -22,8 +22,9 @@ import ElementsLabel, {
   LightGradient,
 } from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
+import { getHostname } from '@/util/blockExplorer';
 import { messageKey } from '@/util/messageKey';
-import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
+import { EFFECT_BASE_FACTOR, starknetNetwork } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
 import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
@@ -443,8 +444,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                     {transactionHash ? (
                       <p className="mt-2">
                         <a
-                          // TODO: Choose host dynamically here based on network
-                          href={`https://goerli.voyager.online/tx/${transactionHash}/`}
+                          href={`https://${getHostname(
+                            starknetNetwork
+                          )}/tx/${transactionHash}/`}
                           className="underline"
                           target={'_blank'}
                           rel="noopener noreferrer"

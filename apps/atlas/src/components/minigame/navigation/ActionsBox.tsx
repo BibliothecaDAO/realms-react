@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useSpring, animated, config } from 'react-spring';
 import type { Abi } from 'starknet';
-import { number } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
 import { ElementToken } from '@/constants/index';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
@@ -28,10 +27,12 @@ import { queryKeys as poolBalanceQueries } from '@/hooks/desiege/useTokenPool';
 import { useModuleAddress } from '@/hooks/useModuleAddress';
 import useTxCallback from '@/hooks/useTxCallback';
 import { ExternalLink } from '@/shared/Icons';
+import { getHostname } from '@/util/blockExplorer';
 import { applyActionAmount } from '@/util/desiegeLogic';
 import {
   TOKEN_INDEX_OFFSET_BASE,
   EFFECT_BASE_FACTOR,
+  starknetNetwork,
 } from '@/util/minigameApi';
 
 type TokenNameOffsetMap = Record<string, number>;
@@ -287,8 +288,7 @@ export const ActionsBox = (props) => {
           {(shieldAction.data || attackAction.data) && actionIsLoading ? (
             <p className="mt-2">
               <a
-                // TODO: Choose host dynamically here based on network
-                href={`https://goerli.voyager.online/tx/${
+                href={`https://${getHostname(starknetNetwork)}/tx/${
                   shieldAction.data || attackAction.data
                 }/`}
                 className="underline"

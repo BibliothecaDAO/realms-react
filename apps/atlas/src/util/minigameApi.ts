@@ -13,9 +13,10 @@ export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
   '0x29317ae2fccbb5ce0588454b8d13cf690fd7318a983cf72f0c9bf5f02f4a465';
 
-const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
-  | 'mainnet-alpha'
-  | 'goerli-alpha';
+export const starknetNetwork =
+  (process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
+    | 'mainnet-alpha'
+    | 'goerli-alpha') || 'goerli-alpha';
 
 export const provider = new Provider({ network: starknetNetwork });
 
