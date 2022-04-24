@@ -20,7 +20,7 @@ export const GamePreparation = () => {
             <ExternalLink className="inline-block h-4 ml-1" />
           </li>
           <li>
-            Coordinate on{' '}
+            Whisper through the LoreBox or on{' '}
             <a
               target={'_blank'}
               href="https://discord.gg/YfeZQ3NFB8"

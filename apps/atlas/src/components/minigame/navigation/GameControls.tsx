@@ -2,6 +2,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
@@ -19,6 +20,8 @@ import {
 } from '../TowerShieldVitality';
 import { GamePreparation } from './GamePreparation';
 import Tutorial from './Onboarding/GameActions';
+
+const ChatComponent = dynamic(() => import('../realtime/Chat'), { ssr: false });
 
 type Prop = {
   onChooseElements: () => void;
@@ -211,6 +214,8 @@ const GameControls: React.FC<Prop> = (props) => {
           </Button>
         </>
       ) : undefined}
+
+      <ChatComponent channelName="desiege-chat" />
     </div>
   );
 };
