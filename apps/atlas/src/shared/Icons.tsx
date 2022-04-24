@@ -1,3 +1,4 @@
+import { AnnotationIcon } from '@heroicons/react/outline';
 import {
   ExternalLinkIcon,
   DocumentTextIcon,
@@ -11,3 +12,5 @@ export const DocumentText = DocumentTextIcon;
 export const VolumeUp = VolumeUpIcon;
 export const VolumeOff = VolumeOffIcon;
 export const CheckCircle = CheckCircleIcon;
+
+export const Annotation = AnnotationIcon;
