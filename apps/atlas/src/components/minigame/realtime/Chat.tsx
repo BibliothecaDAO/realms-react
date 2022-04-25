@@ -1,34 +1,35 @@
+import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
+import type { Types } from 'ably';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
-import { useChannel } from '@/hooks/useAbly';
 import { Annotation } from '@/shared/Icons';
 
 type ChatComponentProps = {
   channelName: string;
 };
 
-interface BaseMessageType {
-  connectionId: string;
-  data: string;
-}
+configureAbly({
+  authUrl: '/api/createAblyTokenRequest',
+});
 
-const ChatComponent = <MT extends BaseMessageType>(
-  props: ChatComponentProps
-) => {
+const ChatComponent = (props: ChatComponentProps) => {
   const inputBox = useRef<HTMLTextAreaElement>(null);
   const messageEnd = useRef<HTMLDivElement>(null);
 
   const [messageText, setMessageText] = useState('');
-  const [receivedMessages, setMessages] = useState<MT[]>([]);
+  const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  const [channel, ably] = useChannel<MT>(props.channelName, (message) => {
-    // Here we're computing the state that'll be drawn into the message history
-    // We do that by slicing the last 199 messages from the receivedMessages buffer
+  const [messagesFilter, setMessagesFilter] = useState<'light' | 'dark' | '*'>(
+    '*'
+  );
 
-    const history = receivedMessages.slice(-199);
-    setMessages([...history, message]);
+  const [channel] = useChannel(props.channelName, (message) => {
+    // 200 is the max number of messages to keep in the chat
+    setMessages((msgs) => [...msgs.slice(-199), message]);
   });
+
+  const [presenceData, updateStatus] = usePresence(props.channelName);
 
   useEffect(() => {
     if (messageEnd.current) {
@@ -62,15 +63,8 @@ const ChatComponent = <MT extends BaseMessageType>(
   };
 
   const messages = receivedMessages.map((message, index) => {
-    const author = message.connectionId === ably.connection.id ? 'me' : 'other';
     return (
-      <p
-        key={index}
-        className={classNames(
-          author == 'me' ? 'text-blue-800' : 'text-gray-900'
-        )}
-        data-author={author}
-      >
+      <p key={index} className={classNames('text-gray-900')}>
         {message.data}
       </p>
     );
@@ -82,6 +76,7 @@ const ChatComponent = <MT extends BaseMessageType>(
         <span>
           <Annotation className="inline-block w-4 h-4 mr-1" />
           LoreBox
+          <span className="text-xs text-gray-600">({presenceData.length})</span>
         </span>{' '}
         <span className="text-xs">
           {' '}

@@ -12,7 +12,9 @@ export default async function handler(_req, res) {
 
   const client = new Ably.Realtime(ablyApiKey);
   const tokenRequestData = await client.auth.createTokenRequest({
-    clientId: 'ably-nextjs',
+    // Use apiKey as the clientId to manage multiple clientIds in the Ably API.
+    // https://ably.com/docs/realtime/presence#presence-multiple-client-id
+    clientId: ablyApiKey,
   });
   res.status(200).json(tokenRequestData);
 }
