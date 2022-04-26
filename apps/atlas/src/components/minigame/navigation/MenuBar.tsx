@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import useSound from 'use-sound';
 import { DocumentText, VolumeOff, VolumeUp } from '@/shared/Icons';
 import type { DesiegeTab } from '../ShieldGame';
-import { ActionsBox } from './ActionsBox';
 import { ManaBall } from './ManaBall';
+
+// Must not be loaded on server as uses client-side only components (websockets)
+const ActionsBox = dynamic(() => import('./ActionsBox'), { ssr: false });
+
 type Prop = {
   gameIdx?: number;
   setupModalInitialIsOpen?: boolean;

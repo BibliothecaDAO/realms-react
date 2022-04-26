@@ -1,5 +1,12 @@
 import React, { useContext, useState, createContext } from 'react';
 
+export const battleChannelName = 'desiege-battle';
+
+export enum BattleAction {
+  DarkAttack = 'dark-attack',
+  LightShield = 'light-shield',
+}
+
 type BattleContextProps = {
   isDarkAttacking: boolean;
   isLightShielding: boolean;

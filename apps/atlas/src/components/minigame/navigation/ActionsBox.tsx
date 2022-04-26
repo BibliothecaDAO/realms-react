@@ -1,3 +1,4 @@
+import { useChannel } from '@ably-labs/react-hooks';
 import { LightningBoltIcon } from '@heroicons/react/outline';
 import {
   useStarknet,
@@ -13,7 +14,11 @@ import type { Abi } from 'starknet';
 import TowerDefenceAbi from '@/abi/minigame/01_TowerDefence.json';
 import { ElementToken } from '@/constants/index';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
-import { useBattleContext } from '@/hooks/desiege/useBattleContext';
+import {
+  BattleAction,
+  battleChannelName,
+  useBattleContext,
+} from '@/hooks/desiege/useBattleContext';
 import useBoost from '@/hooks/desiege/useBoost';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -41,7 +46,7 @@ const divineEclipse: TokenNameOffsetMap = {
   dark: 2,
 };
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export const ActionsBox = (props) => {
+const ActionsBox = (props) => {
   const { account } = useStarknet();
 
   const getGameVars = useGameVariables();
@@ -181,6 +186,10 @@ export const ActionsBox = (props) => {
     }
   }, [attackAction.error, attackAction.loading]);
 
+  const [channel] = useChannel(battleChannelName, (message) => {
+    // Empty. Messages from battle channel are handled in useBattleContext
+  });
+
   const handleAttack = async (gameIndex: number, amount: number) => {
     const tokenId = gameIndex * TOKEN_INDEX_OFFSET_BASE + tokenOffset;
     attackAction.invoke({
@@ -190,8 +199,10 @@ export const ActionsBox = (props) => {
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
     });
-    // Trigger the dark shadow
-    battle.setDarkAttacking(true);
+    // Trigger the dark shadow on all connected clients
+    channel.publish({
+      data: BattleAction.DarkAttack,
+    });
     setAppliedAction({
       shield: (getShield.data as BN).toNumber() / EFFECT_BASE_FACTOR,
       health: (getMainHealth.data as BN).toNumber() / EFFECT_BASE_FACTOR,
@@ -314,3 +325,5 @@ export const ActionsBox = (props) => {
     </div>
   );
 };
+
+export default ActionsBox;

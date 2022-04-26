@@ -1,4 +1,5 @@
 import { XCircleIcon } from '@heroicons/react/solid';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -19,6 +20,12 @@ import ContractList from './ContractList';
 import GameBlockTimer from './navigation/GameBlockTimer';
 import GameControls from './navigation/GameControls';
 import MenuBar from './navigation/MenuBar';
+
+// Must not be loaded on server as uses client-side only components (websockets)
+const BattleListenerComponent = dynamic(
+  () => import('./realtime/BattleListener'),
+  { ssr: false }
+);
 
 export type DesiegeTab =
   | 'game-controls'
@@ -160,6 +167,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
             setView(tab);
           }}
         />
+        <BattleListenerComponent />
       </BattleContextProvider>
 
       {gameStatus.data &&
