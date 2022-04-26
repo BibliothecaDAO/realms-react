@@ -195,9 +195,12 @@ const GameControls: React.FC<Prop> = (props) => {
             )}
           </div> */}
 
-          <Button className="mt-4" onClick={() => setShowTutorial(true)}>
+          <button
+            className="mb-2 text-center underline cursor-pointer"
+            onClick={() => setShowTutorial(true)}
+          >
             Show Tutorial
-          </Button>
+          </button>
         </>
       ) : null}
 

@@ -54,7 +54,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
     <>
       <div
         id="portal-timer"
-        className="fixed bottom-0 z-20 w-full h-auto px-8 py-4 font-semibold"
+        className="fixed bottom-0 z-20 w-full h-auto px-8 font-semibold"
       >
         <div className="flex mt-1">{blockTicks}</div>
         <div className="flex justify-between text-purple-900">

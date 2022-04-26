@@ -241,19 +241,17 @@ const ActionsBox = (props) => {
   };
 
   return (
-    <div className="flex flex-col w-auto p-4 mb-6 text-gray-900 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
-      <div className="text-center uppercase">
-        <h3>
+    <div className="flex flex-col w-auto p-2 mb-6 text-gray-900 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
+      <div className="mb-2 uppercase">
+        <h3 className="text-center text-gray-800">
           {getTokenBalances.side ? getTokenBalances.side.toUpperCase() : 'My'}{' '}
-          Lord, Your Tokens
-        </h3>
-        <h1 className="py-3 text-center">
-          <div id="token-balance">
+          Tokens:{' '}
+          <div className="inline-block ml-2 text-3xl" id="token-balance">
             <animated.div>
               {elementTokenBalanceSpring.to((n) => n.toFixed(0))}
             </animated.div>
           </div>
-        </h1>
+        </h3>
       </div>
       {getGameStatus.data == 'active' ? (
         <div className="flex flex-col justify-center space-y-1">

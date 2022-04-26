@@ -128,7 +128,7 @@ function CityModel(props: TowerProps) {
               />
               {props.gameStatus == 'active' ? (
                 <Html
-                  position={[-4.5, -0.3, 2]}
+                  position={[-4.5, 3, 2]}
                   className={classNames(
                     'w-56',
                     ShieldVitalityDisplayClassnames
@@ -144,7 +144,7 @@ function CityModel(props: TowerProps) {
               ) : null}
               {props.gameStatus == 'active' ? (
                 <Html
-                  position={[4.5, 1, 2]}
+                  position={[4.5, 3, 0]}
                   className={classNames(
                     'w-56',
                     ShieldVitalityDisplayClassnames

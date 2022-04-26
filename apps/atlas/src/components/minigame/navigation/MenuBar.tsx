@@ -23,11 +23,11 @@ function MenuBar(props: Prop) {
   );
 
   const buttonClasses =
-    'w-full h-16  border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300 px-8';
+    'w-full p-4 xl:p-6 border bg-gradient-to-b bg-white/60  from-white/80 rounded hover:-translate-y-1 transform hover:bg-blue-100 uppercase text-blue-400 shadow-xl transition-all duration-300';
   return (
     <div className="fixed z-50 flex items-center justify-between w-full px-10 py-2 bottom-12 rounded-t-3xl">
       <ManaBall side={'light'} />
-      <div className="flex flex-row justify-between w-auto gap-4 p-4 text-blue-700 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
+      <div className="flex flex-row justify-between w-auto gap-4 p-2 text-blue-700 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
         <button
           className={buttonClasses}
           onClick={() => {

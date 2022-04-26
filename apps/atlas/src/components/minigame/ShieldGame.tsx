@@ -139,7 +139,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
         <div className="w-full">
           <div
             id="game-actions"
-            className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
+            className="w-full px-6 py-2 rounded-md shadow-inner bg-gradient-to-b from-white/80"
           >
             <GameControls
               onChooseElements={() => {

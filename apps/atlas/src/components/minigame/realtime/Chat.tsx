@@ -76,12 +76,9 @@ const ChatComponent = (props: ChatComponentProps) => {
         <span>
           <Annotation className="inline-block w-4 h-4 mr-1" />
           LoreBox
-          <span className="text-xs text-gray-600">({presenceData.length})</span>
-        </span>{' '}
-        <span className="text-xs">
-          {' '}
-          <span className="inline-block w-2 h-2 border border-gray-600 rounded-full"></span>{' '}
-          Not Recording
+        </span>
+        <span className="text-xs text-gray-600">
+          ({presenceData.length} online)
         </span>
       </div>
       <div className="h-32 p-2 overflow-y-scroll bg-gray-200 rounded-md max-h-32">
