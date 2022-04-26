@@ -241,7 +241,7 @@ const ActionsBox = (props) => {
   };
 
   return (
-    <div className="flex flex-col w-auto p-2 mb-6 text-gray-900 border-blue-200 rounded bg-white/60 outline-double outline-3 outline-offset-2">
+    <div className="flex flex-col p-2 mb-6 text-gray-900 border-blue-200 rounded w-80 bg-white/60 outline-double outline-3 outline-offset-2">
       <div className="mb-2 uppercase">
         <h3 className="text-center text-gray-800">
           {getTokenBalances.side ? getTokenBalances.side.toUpperCase() : 'My'}{' '}
@@ -255,11 +255,11 @@ const ActionsBox = (props) => {
       </div>
       {getGameStatus.data == 'active' ? (
         <div className="flex flex-col justify-center space-y-1">
-          <div className="flex mb-2 space-x-2">
+          <div className="flex items-center mb-2 space-x-2">
             {getBoost.data !== undefined ? (
               <div
                 id="action-boost"
-                className="w-1/2 h-12 p-2 text-xl font-semibold text-center text-white transition-colors rounded to-purple-400 bg-gradient-to-b from-purple-800"
+                className="w-1/2 p-1 text-sm font-semibold text-center text-white transition-colors to-gray-900 bg-gradient-to-r from-purple-900"
               >
                 Boost <LightningBoltIcon className="inline-block w-4" />
                 {`${getBoost.data / 100}%`}
