@@ -106,6 +106,7 @@ function CityModel(props: TowerProps) {
             </group>
             <OrbitControls
               enablePan={false}
+              autoRotate
               minZoom={90}
               maxZoom={20}
               maxPolarAngle={Math.PI / 2 - 0.1}

@@ -186,6 +186,12 @@ const ActionsBox = (props) => {
     }
   }, [attackAction.error, attackAction.loading]);
 
+  useEffect(() => {
+    if (!shieldAction.loading && shieldAction.error) {
+      battle.setLightShielding(false);
+    }
+  }, [shieldAction.error, shieldAction.loading]);
+
   const [channel] = useChannel(battleChannelName, (message) => {
     // Empty. Messages from battle channel are handled in useBattleContext
   });
@@ -222,6 +228,9 @@ const ActionsBox = (props) => {
         tokenId.toString(),
         (amount * EFFECT_BASE_FACTOR).toString(),
       ],
+    });
+    channel.publish({
+      data: BattleAction.LightShield,
     });
     setAppliedAction({
       shield: (getShield.data as BN).toNumber() / EFFECT_BASE_FACTOR,

@@ -1,31 +1,16 @@
-import { Sparkles } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import React, { useRef, useState, useMemo, Suspense } from 'react';
-import type { MouseEventHandler } from 'react';
-import * as THREE from 'three';
+import React, { useRef } from 'react';
+import type * as THREE from 'three';
+import { useBattleContext } from '@/hooks/desiege/useBattleContext';
 
-interface ObjectProps {
-  jsx: JSX.IntrinsicElements['mesh'];
-  health: number;
-  onClick?: MouseEventHandler;
-}
+export function Shield(props) {
+  const mesh = useRef<THREE.ShaderMaterial>();
 
-export function Shield(props: ObjectProps) {
-  const mesh = useRef<THREE.Mesh>(null!);
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
-
-  const [time, setTime] = useState(1.0);
-  // const render = (clock: any) => {
-  //   const delta = clock.getDelta();
-  //   setTime(() => time * delta);
-  // };
-  // // useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
-  // useFrame(({ clock }) => render(clock));
+  const battle = useBattleContext();
 
   const KnotShaderMaterial = {
     uniforms: {
-      time: { value: time * 5 },
+      time: { value: 0 },
     },
     vertexShader: `
     varying vec2 vUv;
@@ -58,20 +43,18 @@ export function Shield(props: ObjectProps) {
     `,
   };
 
-  const color = new THREE.Color('#F1ECFF');
+  useFrame(({ clock }) => {
+    if (mesh.current && battle.isLightShielding) {
+      mesh.current.uniforms.time.value = clock.oldTime * 0.001;
+    }
+  });
 
   return (
-    <mesh
-      {...props.jsx}
-      receiveShadow
-      ref={mesh}
-      scale={2.3}
-      position={[0, 1.3, 0]}
-    >
-      <Sparkles count={60} color={color} scale={2.2} size={8} speed={0.4} />
+    <mesh {...props.jsx} receiveShadow scale={2.3} position={[0, 1.3, 0]}>
       <sphereBufferGeometry />
       <shaderMaterial
-        visible={props.health > 0}
+        ref={mesh}
+        visible={props.health > 0 || battle.isLightShielding}
         attach="material"
         transparent={true}
         args={[KnotShaderMaterial]}
