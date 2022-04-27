@@ -9,6 +9,7 @@ import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
+import { AccountPanel } from '@/components/panels/AccountPanel';
 import { BankPanel } from '@/components/panels/BankPanel';
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
@@ -23,6 +24,7 @@ import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
+import { JourneyProvider } from '@/context/JourneyContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
 import crypts from '@/geodata/crypts_all.json';
@@ -43,6 +45,7 @@ function App() {
         LootProvider,
         GaProvider,
         CryptProvider,
+        JourneyProvider,
       ]}
     >
       <Atlas />
@@ -213,6 +216,7 @@ function Atlas() {
         <div className="relative flex flex-col w-full">
           <Header />
           <div className="relative w-full h-full">
+            <AccountPanel />
             <ArtBackground />
             <RealmsPanel />
             <LootPanel />
