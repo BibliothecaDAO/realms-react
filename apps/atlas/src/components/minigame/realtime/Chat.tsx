@@ -1,7 +1,15 @@
 import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
+import { useStarknet } from '@starknet-react/core';
 import type { Types } from 'ably';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
+import useGameVariables from '@/hooks/desiege/useGameVariables';
+import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
+
+import TokenLabel, {
+  DarkGradient,
+  LightGradient,
+} from '@/shared/ElementsLabel';
 import { Annotation } from '@/shared/Icons';
 
 type ChatComponentProps = {
@@ -24,7 +32,15 @@ const ChatComponent = (props: ChatComponentProps) => {
     '*'
   );
 
-  const [channel] = useChannel(props.channelName, (message) => {
+  const { account } = useStarknet();
+
+  const gameVars = useGameVariables();
+
+  const tokenBalance = useTokenBalances({
+    gameIdx: gameVars.data?.gameIdx,
+  });
+
+  const [channel] = useChannel(resolvedChannelName, (message) => {
     // 200 is the max number of messages to keep in the chat
     setMessages((msgs) => [...msgs.slice(-199), message]);
   });
@@ -42,7 +58,14 @@ const ChatComponent = (props: ChatComponentProps) => {
   }, [receivedMessages]);
 
   const sendChatMessage = (messageText) => {
-    channel.publish({ name: 'chat-message', data: messageText });
+    channel.publish({
+      name: 'chat-message',
+      data: {
+        side: tokenBalance.side,
+        body: messageText,
+        account,
+      },
+    });
     setMessageText('');
     if (inputBox.current) {
       inputBox.current.focus();
@@ -64,8 +87,15 @@ const ChatComponent = (props: ChatComponentProps) => {
 
   const messages = receivedMessages.map((message, index) => {
     return (
-      <p key={index} className={classNames('text-gray-900')}>
-        {message.data}
+      <p key={index}>
+        <TokenLabel side={message.data.side as 'light' | 'dark' | undefined}>
+          {message.data.account
+            ? `0x${message.data.account.substring(
+                message.data.account.length - 4
+              )}: `
+            : 'anon: '}
+        </TokenLabel>
+        {message.data.body}
       </p>
     );
   });
