@@ -14,7 +14,7 @@ import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
-  const starknet = useStarknet();
+  const { account, connect, connectors } = useStarknet();
 
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
@@ -24,8 +24,8 @@ export function Header() {
     }
   );
   return (
-    <div className="top-0 left-0 z-40 hidden bg-gray-800 sm:flex justify-end shadow-inner">
-      <div className="ml-auto flex px-4 py-4 mr-auto space-x-4 w-full justify-end">
+    <div className="top-0 left-0 z-40 justify-end hidden bg-gray-800 shadow-inner sm:flex">
+      <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mt-2">
           <IconButton
             aria-label="Bank"
@@ -73,13 +73,13 @@ export function Header() {
           )}
         </span>
         <span>
-          {starknet?.account ? (
-            <Button variant="secondary" onClick={starknet.connectBrowserWallet}>
+          {account ? (
+            <Button variant="secondary" onClick={() => connect(connectors[0])}>
               <StarkNet className="w-5 mr-2" />
-              {shortenAddress(starknet?.account)}
+              {shortenAddress(account)}
             </Button>
           ) : (
-            <Button variant="primary" onClick={starknet.connectBrowserWallet}>
+            <Button variant="primary" onClick={() => connect(connectors[0])}>
               <StarkNet className="w-5 mr-2" />
               Connect to StarkNet
             </Button>

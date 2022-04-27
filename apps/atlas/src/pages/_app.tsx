@@ -8,7 +8,7 @@ import {
 import { concatPagination } from '@apollo/client/utilities';
 import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
-import { StarknetProvider } from '@starknet-react/core';
+import { StarknetProvider, InjectedConnector } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -86,11 +86,13 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const connectors = [new InjectedConnector()];
+
   return (
     <BreakpointProvider queries={queries}>
       <WalletProvider>
         <ApolloProvider client={client}>
-          <StarknetProvider>
+          <StarknetProvider autoConnect connectors={connectors}>
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
               {/* <PageTransition

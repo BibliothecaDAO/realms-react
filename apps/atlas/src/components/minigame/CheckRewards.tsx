@@ -12,7 +12,7 @@ type Prop = {
 };
 
 const CheckRewards: React.FC<Prop> = (props) => {
-  const { account, connectBrowserWallet } = useStarknet();
+  const { account } = useStarknet();
   const [editingGameNumber, setEditingGameNumber] = useState(false);
   const router = useRouter();
   const initialGameIndex = router.query['game_id']
@@ -24,10 +24,6 @@ const CheckRewards: React.FC<Prop> = (props) => {
   const gameStatus = useGameStatus({ gameIdx });
 
   const userReward = useUserReward({ gameIdx, account });
-
-  useEffect(() => {
-    connectBrowserWallet();
-  }, []);
 
   const season = 'DivineEclipse';
 

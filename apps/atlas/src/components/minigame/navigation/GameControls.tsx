@@ -35,13 +35,10 @@ enum OnboardingTutorials {
 const GameControls: React.FC<Prop> = (props) => {
   const {
     account,
-    connectBrowserWallet,
     error: starknetConnectionError,
+    connect,
+    connectors,
   } = useStarknet();
-
-  useEffect(() => {
-    connectBrowserWallet(); // on mount
-  }, []);
 
   const gameVars = useGameVariables();
 
@@ -77,7 +74,7 @@ const GameControls: React.FC<Prop> = (props) => {
     'w-full p-2 my-4 text-lg bg-white text-black transition-colors border border-white rounded-md  hover:bg-gray-200 font-body tracking-widest duration-150';
 
   const ConnectStarknetButton = () => (
-    <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
+    <button className={primaryBtnClass} onClick={() => connect(connectors[0])}>
       Connect StarkNet
     </button>
   );
