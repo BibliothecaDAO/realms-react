@@ -40,7 +40,7 @@ const ChatComponent = (props: ChatComponentProps) => {
     gameIdx: gameVars.data?.gameIdx,
   });
 
-  const [channel] = useChannel(resolvedChannelName, (message) => {
+  const [channel] = useChannel(props.channelName, (message) => {
     // 200 is the max number of messages to keep in the chat
     setMessages((msgs) => [...msgs.slice(-199), message]);
   });
