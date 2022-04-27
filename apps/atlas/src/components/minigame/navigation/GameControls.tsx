@@ -113,10 +113,10 @@ const GameControls: React.FC<Prop> = (props) => {
         />
       </div>
       <div className="font-bold">
-        <p className="text-xl tracking-widest text-gray-800 uppercase">
+        <p className="mt-1 text-xl tracking-widest text-gray-800 uppercase">
           Season 1
         </p>
-        <h1>
+        <h1 className="text-5xl">
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
       </div>

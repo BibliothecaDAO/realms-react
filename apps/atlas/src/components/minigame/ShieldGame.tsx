@@ -136,10 +136,10 @@ const ShieldGame: React.FC<Prop> = (props) => {
         />
       </Modal>
       <div className="absolute z-10 p-8">
-        <div className="w-full">
+        <div className="">
           <div
             id="game-actions"
-            className="w-full px-6 py-2 rounded-md shadow-inner bg-gradient-to-b from-white/80"
+            className="px-6 py-2 rounded-md shadow-inner w-96 max-w-96 bg-gradient-to-b from-white/80"
           >
             <GameControls
               onChooseElements={() => {
