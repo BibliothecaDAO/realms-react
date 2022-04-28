@@ -1,10 +1,14 @@
-import { useChannel } from '@ably-labs/react-hooks';
+import { useChannel, configureAbly } from '@ably-labs/react-hooks';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   BattleAction,
   battleChannelName,
   useBattleContext,
 } from '@/hooks/desiege/useBattleContext';
+
+configureAbly({
+  authUrl: '/api/createAblyTokenRequest',
+});
 
 const BattleHandler = () => {
   const darkResetTimer = useRef<NodeJS.Timeout>();
