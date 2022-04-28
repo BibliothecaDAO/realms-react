@@ -126,6 +126,8 @@ export const getModuleAddress: (moduleId: string) => Promise<string> = async (
     calldata: [moduleId.toString()],
   });
   const [moduleAddress] = res.result;
+  // Cache the result for the future
+  moduleAddressCache[moduleId] = moduleAddress;
   return moduleAddress;
 };
 

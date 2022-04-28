@@ -17,6 +17,10 @@ const useGameStatus = (args: UseGameStatusArgs) => {
     () => getGameStatus(args.gameIdx?.toString() as string),
     {
       enabled: args.gameIdx !== undefined,
+      refetchOnMount: false,
+      // When game starts, we need to poll the server for the game status
+      // to change the UI. 1 minute is short enough and long enough to not hit the gateway too often.
+      staleTime: 1000 * 60 * 1, // 1 minute
     }
   );
 };
