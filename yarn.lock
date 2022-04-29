@@ -3919,6 +3919,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@headlessui/react@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@headlessui/react@npm:1.6.0"
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+    react-dom: ^16 || ^17 || ^18
+  checksum: ee12b13dd2e98fc2f6ccebda78c6bbc4ca00e8f3cbb670cb330334591b317448fdaa250b250795c643833c344a7cbc8ceca1a13ff0a7655e28bd05e742ac8599
+  languageName: node
+  linkType: hard
+
 "@heroicons/react@npm:^1.0.5":
   version: 1.0.6
   resolution: "@heroicons/react@npm:1.0.6"
@@ -9840,7 +9850,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": 2.3.5
     "@graphql-codegen/typescript-react-apollo": 3.2.11
     "@habx/apollo-multi-endpoint-link": ^2.6.0
-    "@headlessui/react": 1.5.0
+    "@headlessui/react": 1.6.0
     "@heroicons/react": ^1.0.5
     "@loaders.gl/core": ^3.1.5
     "@next/bundle-analyzer": 12.1.5

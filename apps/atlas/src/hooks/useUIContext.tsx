@@ -151,9 +151,9 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+  const breakpoints: any = useBreakpoint();
 
-  const isDisplayLarge =
-    typeof window !== 'undefined' && window.innerWidth >= 768;
+  const isDisplayLarge = breakpoints.md;
 
   const [artBackground, setArtBackground] = useState<BackgroundOptions>();
   const [mainMenu, setMainMenu] = useState(
@@ -210,8 +210,6 @@ function useUI(): UI {
       setMenuType(menuType);
     }
   };
-
-  const breakpoints: any = useBreakpoint();
 
   const togglePanelType = (panelType: PanelType) => {
     setMainMenu(false);
