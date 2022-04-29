@@ -31,5 +31,9 @@ export const BagFragment = gql`
     waistSuffixId
     weaponSuffixId
     manasClaimed
+    manas {
+      id
+      inventoryId
+    }
   }
 `;

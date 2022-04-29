@@ -32,7 +32,21 @@ export function GAdventurer(props: GAProps): ReactElement {
 
   useEffect(() => {
     const getMetadata = async () => {
-      setMetaData(getGreatness(props.ga.id));
+      const items: any[] = [];
+      for (const tokenId of props.ga.lootTokenIds) {
+        items.push(getGreatness(tokenId + ''));
+      }
+
+      const meta: any = {
+        items: {},
+        scores: { score: props.ga.bagGreatness },
+        greatness: items.reduce((acc, cur, idx) => {
+          const item = mappedProperties[idx];
+          acc[item] = cur.greatness[item];
+          return acc;
+        }, {}),
+      };
+      setMetaData(meta);
     };
 
     if (props.ga.id) {
@@ -81,7 +95,7 @@ export function GAdventurer(props: GAProps): ReactElement {
                 </div>
               )}
             </div>
-            <div className="flex justify-between border-t border-b border-gray-500 py-1 text-sm uppercase tracking-widest">
+            <div className="flex justify-between py-1 text-sm tracking-widest uppercase border-t border-b border-gray-500">
               <div>Rating: {props.ga.bagRating}</div>
               <div>Greatness: {props.ga.bagGreatness}</div>
             </div>
@@ -90,6 +104,9 @@ export function GAdventurer(props: GAProps): ReactElement {
                 <tr>
                   <th className="p-4 text-lg tracking-widest text-left uppercase">
                     Item
+                  </th>
+                  <th className="p-4 text-lg tracking-widest uppercase">
+                    Greatness
                   </th>
                 </tr>
               </thead>
@@ -113,6 +130,11 @@ export function GAdventurer(props: GAProps): ReactElement {
                           {(props.ga as any)[item]}
                         </span>
                       </p>
+                    </td>
+                    <td className="text-center font-display">
+                      {metaData
+                        ? (metaData as any).greatness[item.toLowerCase()]
+                        : 0}
                     </td>
                   </tr>
                 ))}

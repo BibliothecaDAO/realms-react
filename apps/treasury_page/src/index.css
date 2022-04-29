@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #161619;
+  border-style: double;
+  border-width: 4px;
+  border-color: #8d795b;
+}
+
+body::-webkit-scrollbar {
+  width: 1rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: white;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #8d795b;
+}
+
+.nft_asset::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.nft_asset::-webkit-scrollbar-thumb {
+  background-color: #303033;
+  border-radius: 30px;
+}
+
+.nft_asset_imgs::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.nft_asset_imgs::-webkit-scrollbar-thumb {
+  background-color: #303033;
+  border-radius: 30px;
+}
+
+.open {
+  width: 45%;
+}
+
+/* Hari styling */
+
+@media only screen and (min-width: 501px) {
+  .scrolling::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  .scrolling::-webkit-scrollbar-thumb {
+    background-color: #303033;
+    border-radius: 30px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .table_head,
+  .table_row {
+    width: 30rem;
+  }
+}
+
+@media only screen and(max-width:500px) {
+  .scrolling::-webkit-scrollbar {
+    width: 3px;
+  }
+}

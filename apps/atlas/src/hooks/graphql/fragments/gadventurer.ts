@@ -19,5 +19,6 @@ export const GAdventurerFragment = gql`
     bagGreatness
     bagLevel
     bagRating
+    lootTokenIds
   }
 `;
