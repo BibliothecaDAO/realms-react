@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@bibliotheca-dao/core-lib": "workspace:^",
-    "@tanstack/react-table": "8.0.0-alpha.11",
+    "@tanstack/react-table": "8.0.0-alpha.58",
     "clsx": "1.1.1",
     "rc-input-number": "7.3.4"
   },
@@ -42,7 +42,7 @@
     "@emotion/babel-preset-css-prop": "11.2.0",
     "@emotion/react": "11.8.1",
     "@emotion/styled": "11.8.1",
-    "@headlessui/react": "1.5.0",
+    "@headlessui/react": "1.6.0",
     "@mdx-js/react": "2.0.0",
     "@storybook/addon-actions": "6.4.19",
     "@storybook/addon-docs": "6.4.19",
@@ -62,7 +62,7 @@
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.4.1",
     "@types/node": "17.0.23",
-    "@types/react": "17.0.44",
+    "@types/react": "18.0.8",
     "@types/react-dom": "17.0.15",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",

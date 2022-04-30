@@ -4,7 +4,7 @@ import type * as THREE from 'three';
 import { useBattleContext } from '@/hooks/desiege/useBattleContext';
 
 export function Shield(props) {
-  const mesh = useRef<THREE.ShaderMaterial>();
+  const mesh = useRef<THREE.ShaderMaterial>(null);
 
   const battle = useBattleContext();
 

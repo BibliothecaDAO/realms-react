@@ -3,10 +3,11 @@ import { ArrayUtils } from '@bibliotheca-dao/core-lib';
 import type { AccessorFn } from '@tanstack/react-table';
 import {
   Column,
-  columnFilterRowsFn,
+  getColumnFilteredRowModelSync,
   createTable,
-  globalFilterRowsFn,
-  useTable,
+  getCoreRowModelSync,
+  getGlobalFilteredRowModelSync,
+  useTableInstance,
 } from '@tanstack/react-table';
 import { useReducer, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -31,7 +32,7 @@ type TableProps = {
 export function Table({ data, columns: customColumns, options }: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const table = createTable<typeof data>();
+  const table = createTable().setRowType<typeof data>();
   const { createColumns, createDataColumn, createGroup } = table;
 
   const defaultColumns = createColumns(
@@ -45,14 +46,15 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
 
   const [columns] = useState<typeof defaultColumns>(() => [...defaultColumns]);
 
-  const instance = useTable(table, {
+  const instance = useTableInstance(table, {
     data,
     columns,
     state: {
       globalFilter,
     },
+    getCoreRowModel: getCoreRowModelSync(),
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterRowsFn: globalFilterRowsFn,
+    getGlobalFilteredRowModel: getGlobalFilteredRowModelSync(),
   });
 
   return (
@@ -77,7 +79,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="text-md tracking-wider py-2"
+                  className="py-2 tracking-wider text-md"
                   {...header.getHeaderProps()}
                 >
                   {header.isPlaceholder ? null : header.renderHeader()}

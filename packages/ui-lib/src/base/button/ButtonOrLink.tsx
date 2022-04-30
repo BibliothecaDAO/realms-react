@@ -1,7 +1,12 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import type { ComponentPropsWithRef, ReactElement } from 'react';
+import type {
+  ComponentPropsWithRef,
+  ReactElement,
+  ReactNode,
+  PropsWithChildren,
+} from 'react';
 import { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Spinner } from '../spinner';
@@ -68,7 +73,7 @@ export type ButtonOrLinkProps = {
 
 export const ButtonOrLink = forwardRef<
   HTMLButtonElement & HTMLAnchorElement,
-  ButtonOrLinkProps
+  PropsWithChildren<ButtonOrLinkProps>
 >(
   (
     {

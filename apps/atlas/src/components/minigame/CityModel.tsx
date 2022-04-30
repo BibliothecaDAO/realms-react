@@ -43,7 +43,7 @@ const origin: { position?: Vector3 } = {
 function CityModel(props: TowerProps) {
   const [rotate, setRotate] = useState(true);
   const tower = useRef<THREE.Group>(null!);
-  const shield = useRef<THREE.Mesh>(null!);
+  const shield = useRef<THREE.Group>(null!);
   const orbitControlsRef = useRef<any>();
 
   function resetCamera() {
