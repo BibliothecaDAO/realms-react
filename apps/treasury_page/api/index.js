@@ -73,9 +73,13 @@ app.get('/api/tableapi', async function (req, res) {
     .get(url)
     .then(function (response) {
       const data = response.data;
-      let result = tableDestruct(data);
-      chklord(result) ? null : result.unshift(lordsdata);
-      res.send(result);
+      let result = tableDestruct(data, lordsdata.total);
+      lordsdata.percent = new Intl.NumberFormat().format(
+        ((lordsdata.total / result.total) * 100).toFixed(3)
+      );
+
+      chklord(result.tokArr) ? null : result.tokArr.unshift(lordsdata);
+      res.send(result.tokArr);
     })
     .catch(function (error) {
       console.log(error);
@@ -98,7 +102,7 @@ app.get('/api/totalassest', async function (req, res) {
     .then(function (response) {
       const data = response.data;
       result = tableDestruct(data);
-      let total = TotalAssest(result);
+      let total = TotalAssest(result.tokArr);
       total = total[0] + lordsprice;
       var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
