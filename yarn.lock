@@ -1824,7 +1824,7 @@ __metadata:
     "@emotion/babel-preset-css-prop": 11.2.0
     "@emotion/react": 11.9.0
     "@emotion/styled": 11.8.1
-    "@headlessui/react": 1.6.0
+    "@headlessui/react": 1.5.0
     "@mdx-js/react": 2.1.1
     "@storybook/addon-actions": 6.4.22
     "@storybook/addon-docs": 6.4.22
@@ -4000,13 +4000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:1.6.0":
-  version: 1.6.0
-  resolution: "@headlessui/react@npm:1.6.0"
+"@headlessui/react@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@headlessui/react@npm:1.5.0"
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: ee12b13dd2e98fc2f6ccebda78c6bbc4ca00e8f3cbb670cb330334591b317448fdaa250b250795c643833c344a7cbc8ceca1a13ff0a7655e28bd05e742ac8599
+  checksum: e3373dfb73936950d659a87718fb9fdedc599b344b30cb0d8b1ef0a2ec13d6f405c653fa51284236788658840ece82c6a8538a5a5931e595274e9590b2020079
   languageName: node
   linkType: hard
 
@@ -10493,7 +10493,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": 2.3.5
     "@graphql-codegen/typescript-react-apollo": 3.2.11
     "@habx/apollo-multi-endpoint-link": ^2.7.0
-    "@headlessui/react": 1.6.0
+    "@headlessui/react": 1.5.0
     "@heroicons/react": ^1.0.6
     "@loaders.gl/core": ^3.1.8
     "@next/bundle-analyzer": 12.1.5
@@ -11519,7 +11519,7 @@ __metadata:
     "@emotion/babel-plugin": 11.9.2
     "@emotion/react": 11.9.0
     "@emotion/styled": 11.8.1
-    "@headlessui/react": 1.6.0
+    "@headlessui/react": 1.5.0
     "@heroicons/react": ^1.0.6
     "@loaders.gl/core": ^3.1.8
     "@next/bundle-analyzer": 12.1.5
