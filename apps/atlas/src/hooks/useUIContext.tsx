@@ -44,6 +44,11 @@ export const AssetFilters: AssetFilter[] = [
   },
 ];
 
+export type ModalType = {
+  type: 'lore-entity';
+  props?: object;
+} | null;
+
 interface UI {
   selectedId: string;
   setSelectedId: (id: string) => void;
@@ -65,6 +70,8 @@ interface UI {
   togglePanelType: (panelType: PanelType) => void;
   selectedPanel: PanelType;
   isDisplayLarge: boolean;
+  selectedModal: ModalType;
+  setModal: (ModalType) => void;
 }
 
 const UIContext = createContext<UI>(null!);
@@ -168,6 +175,8 @@ function useUI(): UI {
 
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
 
+  const [selectedModal, setSelectedModal] = useState<ModalType>(null);
+
   // Update URL
   // useEffect(() => {
   //   if (!selectedId) {
@@ -237,7 +246,7 @@ function useUI(): UI {
           setMenuType(panelType);
         }
       } else if (panelType === 'lore') {
-        setArtBackground('lore');
+        setArtBackground('bank');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
@@ -271,6 +280,14 @@ function useUI(): UI {
     updateCoordinatesByAsset(assetId + '', assetType);
   };
 
+  const setModal = (args: ModalType) => {
+    if (args === null) {
+      setSelectedModal(null);
+    } else {
+      setSelectedModal(args);
+    }
+  };
+
   return {
     selectedId,
     setSelectedId,
@@ -292,6 +309,8 @@ function useUI(): UI {
     togglePanelType,
     selectedPanel,
     isDisplayLarge,
+    selectedModal,
+    setModal,
   };
 }
 
