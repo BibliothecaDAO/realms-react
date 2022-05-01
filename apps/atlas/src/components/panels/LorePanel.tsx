@@ -2,14 +2,18 @@ import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useEffect, useMemo, useState } from 'react';
-import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import { RealmOverviews } from '@/components/tables/RealmOverviews';
+// import { RealmsFilter } from '@/components/filters/RealmsFilter';
+import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import { useRealmContext } from '@/context/RealmContext';
-import type { RealmTraitType } from '@/generated/graphql';
-import { useGetRealmsQuery } from '@/generated/graphql';
+import {
+  RealmTraitType,
+  useGetLoreEntitiesQuery,
+  useGetRealmsQuery,
+} from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
+import { CreateLoreEntity } from '../modules/Lore/CreateLoreEntity';
 import { BasePanel } from './BasePanel';
 
 export const LorePanel = () => {
@@ -27,64 +31,65 @@ export const LorePanel = () => {
   useEffect(() => {
     setPage(1);
   }, [
-    state.favouriteRealms,
-    state.selectedOrders,
-    state.searchIdFilter,
-    state.hasWonderFilter,
-    state.rarityFilter.rarityRank,
-    state.rarityFilter.rarityScore,
-    state.traitsFilter.City,
-    state.traitsFilter.Harbor,
-    state.traitsFilter.Region,
-    state.traitsFilter.River,
+    // state.favouriteRealms,
+    // state.selectedPOIs,
+    // // state.selectedPOIs,
+    // state.searchIdFilter,
+    // state.hasWonderFilter,
+    // state.rarityFilter.rarityRank,
+    // state.rarityFilter.rarityScore,
+    // state.traitsFilter.City,
+    // state.traitsFilter.Harbor,
+    // state.traitsFilter.Region,
+    // state.traitsFilter.River,
     state.selectedTab,
   ]);
 
   const isLorePanel = selectedPanel === 'lore';
-  const tabs = ['All Scrolls', 'Your Scrolls', 'Favourite Realms'];
+  const tabs = ['All Scrolls', 'Your Scrolls', 'Favourited Scrolls', 'Create'];
 
   const variables = useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
       resourceType: { equals: resource },
     }));
 
-    const traitsFilters = Object.keys(state.traitsFilter)
-      // Filter 0 entries
-      .filter((key: string) => (state.traitsFilter as any)[key])
-      .map((key: string) => ({
-        trait: {
-          type: key as RealmTraitType,
-          qty: { gte: (state.traitsFilter as any)[key] },
-        },
-      }));
+    // const traitsFilters = Object.keys(state.traitsFilter)
+    //   // Filter 0 entries
+    //   .filter((key: string) => (state.traitsFilter as any)[key])
+    //   .map((key: string) => ({
+    //     trait: {
+    //       type: key as RealmTraitType,
+    //       qty: { gte: (state.traitsFilter as any)[key] },
+    //     },
+    //   }));
 
     const filter = {} as any;
-    if (state.searchIdFilter) {
-      filter.realmId = { equals: parseInt(state.searchIdFilter) };
-    } else if (state.selectedTab === 2) {
-      filter.realmId = { in: [...state.favouriteRealms] };
-    }
+    // if (state.searchIdFilter) {
+    //   filter.realmId = { equals: parseInt(state.searchIdFilter) };
+    // } else if (state.selectedTab === 2) {
+    //   filter.realmId = { in: [...state.favouriteRealms] };
+    // }
 
-    if (state.selectedTab === 0) {
-      filter.OR = [
-        { owner: { equals: account?.toLowerCase() } },
-        { bridgedOwner: { equals: account?.toLowerCase() } },
-      ];
-    }
+    // if (state.selectedTab === 0) {
+    //   filter.OR = [
+    //     { owner: { equals: account?.toLowerCase() } },
+    //     { bridgedOwner: { equals: account?.toLowerCase() } },
+    //   ];
+    // }
 
-    if (state.hasWonderFilter) {
-      filter.NOT = {
-        wonder: { equals: null },
-      };
-    }
+    // if (state.hasWonderFilter) {
+    //   filter.NOT = {
+    //     wonder: { equals: null },
+    //   };
+    // }
 
-    filter.rarityRank = { gte: state.rarityFilter.rarityRank };
-    filter.rarityScore = { gte: state.rarityFilter.rarityScore };
-    filter.orderType =
-      state.selectedOrders.length > 0
-        ? { in: [...state.selectedOrders] }
-        : undefined;
-    filter.AND = [...resourceFilters, ...traitsFilters];
+    // filter.rarityRank = { gte: state.rarityFilter.rarityRank };
+    // filter.rarityScore = { gte: state.rarityFilter.rarityScore };
+    // filter.orderType =
+    //   state.selectedOrders.length > 0
+    //     ? { in: [...state.selectedOrders] }
+    //     : undefined;
+    // filter.AND = [...resourceFilters, ...traitsFilters];
 
     return {
       filter,
@@ -93,22 +98,27 @@ export const LorePanel = () => {
     };
   }, [account, state, page]);
 
-  const { data, loading } = useGetRealmsQuery({
-    variables,
+  const { data, loading } = useGetLoreEntitiesQuery({
+    // variables,
     skip: !isLorePanel,
   });
 
-  useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.getRealms?.length ?? 0) > 0) {
-      openDetails('realm', data?.getRealms[0].realmId + '');
-    }
-  }, [data, page]);
+  // useEffect(() => {
+  //   if (
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.getLoreEntities?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('realm', data?.getRealms[0].realmId + '');
+  //   }
+  // }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
-    (page > 1 || (data?.getRealms?.length ?? 0) === limit);
+    (page > 1 || (data?.getLoreEntities?.length ?? 0) === limit);
 
-  const hasNoResults = () => !loading && (data?.getRealms?.length ?? 0) === 0;
+  const hasNoResults = () =>
+    !loading && (data?.getLoreEntities?.length ?? 0) === 0;
 
   return (
     <BasePanel open={isLorePanel}>
@@ -136,14 +146,18 @@ export const LorePanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <RealmsFilter />
+        {/* <RealmsFilter /> */}
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        <RealmOverviews realms={data?.getRealms ?? []} />
+        {state.selectedTab === 3 ? (
+          <CreateLoreEntity />
+        ) : (
+          <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
+        )}
       </div>
 
       {hasNoResults() && (
@@ -175,7 +189,7 @@ export const LorePanel = () => {
           </Button>
           <Button
             onClick={nextPage}
-            disabled={data?.getRealms?.length !== limit}
+            disabled={data?.getLoreEntities?.length !== limit}
           >
             Next
           </Button>
