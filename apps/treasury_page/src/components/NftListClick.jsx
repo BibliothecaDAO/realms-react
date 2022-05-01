@@ -3,7 +3,7 @@ async function NftListClick(clickedList) {
     list: clickedList,
   };
 
-  const response = await fetch('/listclicked', {
+  const response = await fetch('/api/listclicked', {
     method: 'POST',
     body: JSON.stringify(query),
     headers: { 'Content-Type': 'application/json' },

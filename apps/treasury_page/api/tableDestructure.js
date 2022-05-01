@@ -9,7 +9,7 @@ var formatter = new Intl.NumberFormat('en-US', {
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
-function tableDestruct(tableData) {
+function tableDestruct(tableData, lordsTotal) {
   // Eth calcultion
   const ethPrice = tableData.ETH.price.rate;
   const ethBalance = tableData.ETH.balance;
@@ -17,7 +17,7 @@ function tableDestruct(tableData) {
 
   ({ address, ETH, countTxs, tokens } = tableData);
   tokArr = [];
-
+  console.log(lordsTotal);
   let total = 0;
   tokens.forEach((token) => {
     ({ tokenInfo, balance } = token);
@@ -28,6 +28,8 @@ function tableDestruct(tableData) {
     total = total + inUSD;
   });
   total += ethInUSD;
+  total += lordsTotal;
+  console.log(total);
 
   tokens.forEach((token) => {
     ({ tokenInfo, balance } = token);
@@ -37,7 +39,7 @@ function tableDestruct(tableData) {
     RateOfCoin = tokenInfo.price.rate;
     inUSD = Balance * RateOfCoin;
 
-    percentage = Math.round((inUSD / total) * 100).toFixed(2);
+    percentage = ((inUSD / total) * 100).toFixed(3);
 
     tok = {};
     tok.name = tokenName;
@@ -59,12 +61,13 @@ function tableDestruct(tableData) {
   tokArr.sort((a, b) => {
     return b.percent - a.percent;
   });
-  return tokArr;
+  return { tokArr, total };
 }
 
 function TotalAssest(data) {
   const tablebalances = data;
   let sum = 0;
+  console.log(tablebalances);
 
   tablebalances.forEach((balance) => {
     value = balance.inUsd;
@@ -74,8 +77,6 @@ function TotalAssest(data) {
     let val = parseFloat(value);
     sum += val;
   });
-  // sum=sum+price;//by hari
-  sum = formatter.format(sum);
   return [sum];
 }
 

@@ -7,6 +7,7 @@ import right_arrow_icon from './resources/arrow-right.png';
 import Address from './components/address';
 import Nft_list from './components/Nft_list';
 import Nft_img from './components/Nft_img';
+import Footer from './components/footer';
 import Close_icon from './resources/Close-444.png';
 
 const walletaddress = '0xef3155450bAA054ffE7950509CE2042613EE6586';
@@ -25,28 +26,28 @@ function App() {
 
   useEffect(() => {
     const getnft = async () => {
-      const response = await fetch('/nftsapi');
+      const response = await fetch('/api/nftsapi');
       const data = await response.json();
       // console.log(data); //logging nfts data
       setnfts(data);
     };
 
     const getnftlist = async () => {
-      const response = await fetch('/nftslistapi');
+      const response = await fetch('/api/nftslistapi');
       const data = await response.json();
       // console.log(data); //logging nftlist data
       setnftlist(data);
     };
 
     const gettable = async () => {
-      const response = await fetch('/tableapi');
+      const response = await fetch('/api/tableapi');
       const data = await response.json();
       // console.log(data); //logging table data
       settable(data);
     };
 
     const gettotalassest = async () => {
-      const response = await fetch('/totalassest');
+      const response = await fetch('/api/totalassest');
       const data = await response.json();
       // console.log(data);
       settotalassest(data);
@@ -59,13 +60,13 @@ function App() {
   }, []);
 
   return (
-    <div className="py-[4rem] px-[8rem] tablet:px-[4rem] smphone:px-[2rem]">
-      <h1 className="text-center text-white title tracking-[4px] laptop:mb-[5rem] tablet:mb-[2.5rem] font-EB_Garamond standard:text-[6.5rem] desktop:text-[5.5rem] laptop:text-[4rem] minilap:text-[2.7rem] tablet:text-[1.8rem] phone:text-[1.5rem] smphone:text-[1.3rem] smphone:mb-[2rem]">
+    <div className="">
+      <h1 className="pt-[4rem] text-center text-white title tracking-[4px] laptop:mb-[5rem] tablet:mb-[2.5rem] font-EB_Garamond standard:text-[6.5rem] desktop:text-[5.5rem] laptop:text-[4rem] minilap:text-[2.7rem] tablet:text-[1.8rem] phone:text-[1.5rem] smphone:text-[1.3rem] smphone:mb-[2rem]">
         Bibliotheca <span className="text-[#8D795B] inline-block">DAO</span>{' '}
         <span className="inline-block">Treasury</span>
       </h1>
 
-      <div className="font-Inconsolata flex items-center justify-between mb-[5rem] tablet:flex-col-reverse laptop:flex-row phone:flex-col-reverse smphone:flex-col-reverse desktop:px-[2.5rem]">
+      <div className="tablet:px-[4rem] smphone:px-[2rem] font-Inconsolata flex items-center justify-between mb-[6rem] tablet:flex-col-reverse laptop:flex-row phone:flex-col-reverse smphone:flex-col-reverse desktop:px-[5rem]">
         <div className="text-white font-light laptop:w-[62%] tablet:w-[100%] tracking-[2px] standard:text-[1.5rem] desktop:text-[1.4rem] desktop:text-[1.3rem] minilap:text-[1rem] tablet:text-[1.2rem] phone:text-[1rem] smphone:text-[0.8rem] phone:mt-[1rem] smphone:mt-[2rem]">
           The treasury funds managed by community members will be used to enable
           the DAO's mission, vision and goals.
@@ -87,24 +88,26 @@ function App() {
 
       <Address address={walletaddress} />
 
-      <div className="mb-[4rem] border-double border-4 border-[#8D795B] py-[2rem]">
-        <TotalAssets total={totalassest} />
-        <div className="tablescroll max-h-[30rem] overflow-auto overflow-x-scroll scrolling max-w-full">
-          <Tablehead></Tablehead>
-          {table.map((TableRowData, index) => (
-            <TableRow
-              key={TableRowData.name}
-              id={index + 1}
-              token={TableRowData.name}
-              usdValue={TableRowData.inUsd}
-              percentage={TableRowData.percent}
-              tokenValue={TableRowData.balance}
-            />
-          ))}
+      <div className="tablet:px-[4rem] smphone:px-[2rem]">
+        <div className="border-double border-4 border-[#8D795B] py-[2rem]">
+          <TotalAssets total={totalassest} />
+          <div className="tablescroll max-h-[30rem] overflow-auto overflow-x-scroll scrolling max-w-full">
+            <Tablehead></Tablehead>
+            {table.map((TableRowData, index) => (
+              <TableRow
+                key={TableRowData.name}
+                id={index + 1}
+                token={TableRowData.name}
+                usdValue={TableRowData.inUsd}
+                percentage={TableRowData.percent}
+                tokenValue={TableRowData.balance}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="text-white">
+      <div className="py-[4rem] tablet:px-[4rem] smphone:px-[2rem] text-white mb-[4rem]">
         <h1 className="font-EB_Garamond tracking-[2px] smphone:mb-[1rem] smphone:text-[1.3rem] laptop:mb-[1rem] laptop:text-[1.5rem] standard:mb-[2rem] standard:text-[2rem]">
           NFT Assets
         </h1>
@@ -114,7 +117,7 @@ function App() {
               {/* nfts assets names */}
 
               <div className="flex justify-between items-center mb-[.1rem] hover:bg-[#202023] px-[.5rem] py-[.3rem] hover:cursor-pointer">
-                <p className="font-Inconsolata text-lg">All</p>
+                <p className="text-lg font-Inconsolata">All</p>
                 <img src={right_arrow_icon} alt="icon" className="w-6 h-6" />
               </div>
 
@@ -147,7 +150,7 @@ function App() {
               {/* nfts assets names*/}
 
               <div className="flex justify-between items-center mb-[.1rem] hover:bg-[#202023] px-[.5rem] py-[.3rem] hover:cursor-pointer">
-                <p className="font-Inconsolata text-lg">All</p>
+                <p className="text-lg font-Inconsolata">All</p>
                 <img src={right_arrow_icon} alt="icon" className="w-6 h-6" />
               </div>
 
@@ -179,6 +182,8 @@ function App() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
