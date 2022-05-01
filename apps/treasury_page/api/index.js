@@ -74,7 +74,9 @@ app.get('/api/tableapi', async function (req, res) {
     .then(function (response) {
       const data = response.data;
       let result = tableDestruct(data, lordsdata.total);
-      lordsdata.percent = (lordsdata.total / result.total) * 100;
+      lordsdata.percent = new Intl.NumberFormat().format(
+        ((lordsdata.total / result.total) * 100).toFixed(3)
+      );
 
       chklord(result.tokArr) ? null : result.tokArr.unshift(lordsdata);
       res.send(result.tokArr);

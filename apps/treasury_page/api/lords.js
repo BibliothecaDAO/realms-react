@@ -17,7 +17,7 @@ function lords() {
         let formatPrice = formatter.format(price.toFixed(2));
         let lords = {
           name: 'LORDS',
-          balance: daoBalance.toString(),
+          balance: new Intl.NumberFormat().format(daoBalance).toString(),
           inUsd: formatPrice,
           total: price,
           percent: '',

@@ -17,7 +17,6 @@ function tableDestruct(tableData, lordsTotal) {
 
   ({ address, ETH, countTxs, tokens } = tableData);
   tokArr = [];
-  console.log(lordsTotal);
   let total = 0;
   tokens.forEach((token) => {
     ({ tokenInfo, balance } = token);
@@ -29,7 +28,6 @@ function tableDestruct(tableData, lordsTotal) {
   });
   total += ethInUSD;
   total += lordsTotal;
-  console.log(total);
 
   tokens.forEach((token) => {
     ({ tokenInfo, balance } = token);
@@ -67,7 +65,6 @@ function tableDestruct(tableData, lordsTotal) {
 function TotalAssest(data) {
   const tablebalances = data;
   let sum = 0;
-  console.log(tablebalances);
 
   tablebalances.forEach((balance) => {
     value = balance.inUsd;
