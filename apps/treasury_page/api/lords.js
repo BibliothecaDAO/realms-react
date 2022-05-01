@@ -12,7 +12,7 @@ function lords() {
           style: 'currency',
           currency: 'USD',
         });
-        const daoBalance = 112500000;
+        const daoBalance = 100000000;
         let price = data.price.rate * daoBalance;
         let formatPrice = formatter.format(price.toFixed(2));
         let lords = {
