@@ -52,7 +52,7 @@ function tableDestruct(tableData, lordsTotal) {
   tokEth.name = 'ETH';
   tokEth.balance = formatter.format(ethBalance.toFixed(2)).substring(1);
   tokEth.inUsd = formatter.format(ethInUSD.toFixed(2));
-  const ethPercentage = Math.round((ethInUSD / total) * 100).toFixed(2);
+  const ethPercentage = ((ethInUSD / total) * 100).toFixed(3);
   tokEth.percent = ethPercentage;
   tokArr.push(tokEth);
 
