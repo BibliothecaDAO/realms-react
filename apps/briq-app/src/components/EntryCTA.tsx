@@ -1,12 +1,7 @@
-import { useStarknet } from '@starknet-react/core';
+import { useStarknet, ConnectorNotFoundError } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
 export const EntryCTA = () => {
-  const {
-    account,
-    connectBrowserWallet,
-    error: starknetConnectionError,
-    hasStarknet,
-  } = useStarknet();
+  const { account, connect, connectors, error } = useStarknet();
   const [options, setOptions] = useState<any>([]);
 
   return (
@@ -23,22 +18,18 @@ export const EntryCTA = () => {
       ) : (
         <div>
           <div>
-            {hasStarknet ? (
-              <div>
-                If you haven't already done so, please{' '}
-                <a
-                  rel="noreferrer"
-                  target="_blank"
-                  className="underline"
-                  href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                >
-                  download and install{' '}
-                </a>
-                the ArgentX extension, available now for the Google Chrome web
-                browser.
-              </div>
-            ) : (
-              <div className="p-4 bg-red-100/30 border-red-700 rounded-md mb-2 text-white">
+            {!account && !error && (
+              <button
+                className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00]  font-body uppercase"
+                onClick={() => {
+                  connect(connectors[0]);
+                }}
+              >
+                Connect to ArgentX
+              </button>
+            )}
+            {error instanceof ConnectorNotFoundError && (
+              <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
                 The ArgentX wallet extension could not be activated. Please{' '}
                 <a
                   rel="noreferrer"
@@ -46,18 +37,12 @@ export const EntryCTA = () => {
                   className="underline"
                   href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
                 >
-                  install ArgentX{' '}
-                </a>
+                  install ArgentX
+                </a>{' '}
                 on a supported browser and revisit this page.
               </div>
             )}
           </div>
-          <button
-            className="border px-4 py-2 rounded w-full bg-[#eb5600] hover:bg-[#c94a00]  font-body uppercase"
-            onClick={() => connectBrowserWallet()}
-          >
-            Connect to ArgentX
-          </button>
         </div>
       )}
     </div>

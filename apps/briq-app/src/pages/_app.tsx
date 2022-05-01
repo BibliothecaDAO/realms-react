@@ -1,5 +1,5 @@
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
-import { StarknetProvider } from '@starknet-react/core';
+import { StarknetProvider, InjectedConnector } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import '../styles/global.css';
@@ -37,10 +37,11 @@ const queries = {
   xl: '(min-width: 1280px)',
   '2xl': '(min-width: 1536px)',
 };
+const connectors = [new InjectedConnector()];
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <StarknetProvider>
+    <StarknetProvider autoConnect connectors={connectors}>
       <Component {...pageProps} />
     </StarknetProvider>
   );
