@@ -1,0 +1,309 @@
+[
+  {
+    "members": [
+      {
+        "name": "Part1",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "Part2",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "EntityContentLink",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "asset_id",
+        "offset": 1,
+        "type": "Uint256"
+      }
+    ],
+    "name": "EntityPOI",
+    "size": 3,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "value",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "EntityProp",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "is_whitelisted",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "WhitelistElem",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "id",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "entity_created",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "module_controller_addr",
+        "type": "felt"
+      }
+    ],
+    "name": "constructor",
+    "outputs": [],
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "name": "content_link",
+        "type": "EntityContentLink"
+      },
+      {
+        "name": "kind",
+        "type": "felt"
+      },
+      {
+        "name": "pois_len",
+        "type": "felt"
+      },
+      {
+        "name": "pois",
+        "type": "EntityPOI*"
+      },
+      {
+        "name": "props_len",
+        "type": "felt"
+      },
+      {
+        "name": "props",
+        "type": "EntityProp*"
+      }
+    ],
+    "name": "create_entity",
+    "outputs": [
+      {
+        "name": "id",
+        "type": "felt"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "entity_id",
+        "type": "felt"
+      },
+      {
+        "name": "content",
+        "type": "EntityContentLink"
+      },
+      {
+        "name": "pois_len",
+        "type": "felt"
+      },
+      {
+        "name": "pois",
+        "type": "EntityPOI*"
+      },
+      {
+        "name": "props_len",
+        "type": "felt"
+      },
+      {
+        "name": "props",
+        "type": "EntityProp*"
+      }
+    ],
+    "name": "add_revision",
+    "outputs": [
+      {
+        "name": "revision_id",
+        "type": "felt"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_address",
+        "type": "felt"
+      }
+    ],
+    "name": "update_validator",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_address",
+        "type": "felt"
+      }
+    ],
+    "name": "update_restrictor",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "kinds_len",
+        "type": "felt"
+      },
+      {
+        "name": "kinds",
+        "type": "WhitelistElem*"
+      }
+    ],
+    "name": "whitelist_kinds",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "pois_len",
+        "type": "felt"
+      },
+      {
+        "name": "pois",
+        "type": "WhitelistElem*"
+      }
+    ],
+    "name": "whitelist_pois",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "props_len",
+        "type": "felt"
+      },
+      {
+        "name": "props",
+        "type": "WhitelistElem*"
+      }
+    ],
+    "name": "whitelist_props",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "get_last_id",
+    "outputs": [
+      {
+        "name": "res",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "entity_id",
+        "type": "felt"
+      },
+      {
+        "name": "revision_id",
+        "type": "felt"
+      }
+    ],
+    "name": "get_entity",
+    "outputs": [
+      {
+        "name": "owner",
+        "type": "felt"
+      },
+      {
+        "name": "content",
+        "type": "EntityContentLink"
+      },
+      {
+        "name": "kind",
+        "type": "felt"
+      },
+      {
+        "name": "pois_len",
+        "type": "felt"
+      },
+      {
+        "name": "pois",
+        "type": "EntityPOI*"
+      },
+      {
+        "name": "props_len",
+        "type": "felt"
+      },
+      {
+        "name": "props",
+        "type": "EntityProp*"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
