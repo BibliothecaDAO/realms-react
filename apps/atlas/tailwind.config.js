@@ -138,6 +138,7 @@ module.exports = {
     'tailwindcss',
     'autoprefixer',
     'postcss-100vh-fix',
+    require('@tailwindcss/typography'),
 
     plugin(function ({ addVariant, e, postcss }) {
       addVariant('firefox', ({ container, separator }) => {
