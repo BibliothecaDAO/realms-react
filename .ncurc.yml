@@ -8,4 +8,10 @@ reject: [
     'execa',
     # Too early cause in esm
     'is-port-reachable',
+    # until supportes by ts-jest
+    'jest',
+    #next getServerSnapshot (fixed next apollo release)
+    '@apollo/client',
+    # SSR iissue with tabs
+    '@headlessui/react',
   ]
