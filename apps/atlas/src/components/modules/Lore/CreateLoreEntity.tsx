@@ -46,8 +46,8 @@ export const CreateLoreEntity = () => {
     CREATING_STEPS.INITIAL
   );
 
-  const [arweaveTxID, setArweaveTxID] = useState(null);
-  const [starknetTxID, setStarknetTxID] = useState(null);
+  const [arweaveTxID, setArweaveTxID] = useState<string | null>(null);
+  const [starknetTxID, setStarknetTxID] = useState<string | null>(null);
 
   const wait = async (milliseconds: number) => {
     return new Promise((resolve, _) => {
@@ -55,12 +55,35 @@ export const CreateLoreEntity = () => {
     });
   };
 
+  // Arweave can stuck and then throw timeout error after 20 second
+  // Doesn't mean that it's not working - just need a different approach here
+  const waitForArweave = async (arweaveId: string) => {
+    try {
+      let arweaveStatus = await arweave.transactions.getStatus(arweaveId);
+      console.log(arweaveStatus);
+
+      while (
+        arweaveStatus.confirmed === null ||
+        (arweaveStatus.confirmed &&
+          arweaveStatus.confirmed.number_of_confirmations < 1)
+      ) {
+        await wait(5000);
+        arweaveStatus = await arweave.transactions.getStatus(arweaveId);
+        console.log(arweaveStatus);
+      }
+    } catch (error) {
+      await waitForArweave(arweaveId);
+    }
+  };
+
   const createEntity = async () => {
-    // setIsCreating(true);
+    // Clearing
+    setArweaveTxID(null);
+    setStarknetTxID(null);
 
     const data = {
       title: entityTitle,
-      body: editorValue,
+      markdown: editorValue,
       pois: extractPOIs(editorValue),
     };
 
@@ -79,18 +102,7 @@ export const CreateLoreEntity = () => {
       setArweaveTxID(arweaveId);
 
       // Wait for Arweave tx to be mined
-      let arweaveStatus = await arweave.transactions.getStatus(arweaveId);
-      console.log(arweaveStatus);
-
-      while (
-        arweaveStatus.confirmed === null ||
-        (arweaveStatus.confirmed &&
-          arweaveStatus.confirmed.number_of_confirmations < 1)
-      ) {
-        await wait(5000);
-        arweaveStatus = await arweave.transactions.getStatus(arweaveId);
-        console.log(arweaveStatus);
-      }
+      await waitForArweave(arweaveId);
 
       // Starknet
       setCreatingStep(CREATING_STEPS.ADDING_TO_STARKNET);
@@ -131,13 +143,7 @@ export const CreateLoreEntity = () => {
 
       await defaultProvider.waitForTransaction(starknetTx.transaction_hash);
 
-      // console.log(starknetTx.transaction_hash);
-
       setCreatingStep(CREATING_STEPS.DONE);
-
-      // Clearing
-      setArweaveTxID(null);
-      setStarknetTxID(null);
     } catch (error) {
       // setIsCreating(false);
       setCreatingStep(CREATING_STEPS.INITIAL);
@@ -150,7 +156,7 @@ export const CreateLoreEntity = () => {
       <div className="bg-black/40 p-2 rounded flex flex-col gap-1 mb-4">
         <div className={`text-white text-sm uppercase pl-1`}>Title</div>
         <input
-          className="w-full px-4 py-4 leading-tight text-white font-bold text-xl uppercase focus:outline-none rounded appearance-none bg-gray-800/80 tracking-widest"
+          className="w-full px-4 py-4 leading-tight text-white font-bold text-xl focus:outline-none rounded appearance-none bg-gray-800/80 tracking-widest"
           type="text"
           value={entityTitle}
           onChange={(ev) => setEntityTitle(ev.target.value)}
