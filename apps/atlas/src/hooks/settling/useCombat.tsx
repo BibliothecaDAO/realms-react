@@ -33,9 +33,9 @@ const useCombat = (args: useCombatArgs): Combat => {
         args: [troop_ids_len, troop_ids, args.token_id, slot],
       });
     },
-    initiateCombat: () => {
-      claimTaxAction.invoke({
-        args: [args.token_id],
+    initiateCombat: (defending_realm_id, attack_type) => {
+      initiateCombatAction.invoke({
+        args: [args.token_id, defending_realm_id, attack_type],
       });
     },
   };
