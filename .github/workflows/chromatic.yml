@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - dev
-      - monorepo
+      - settling
       - main
 # List of jobs
 jobs:
