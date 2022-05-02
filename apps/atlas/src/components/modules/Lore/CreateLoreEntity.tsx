@@ -22,7 +22,8 @@ enum CREATING_STEPS {
   UPLOADING_TO_ARWEAVE = 1,
   WAITING_FOR_ARWEAVE = 2,
   ADDING_TO_STARKNET = 3,
-  DONE = 4,
+  WAITING_FOR_STARKNET = 4,
+  DONE = 5,
 }
 
 const arweave = Arweave.init({
@@ -44,6 +45,9 @@ export const CreateLoreEntity = () => {
   const [creatingStep, setCreatingStep] = useState<CREATING_STEPS>(
     CREATING_STEPS.INITIAL
   );
+
+  const [arweaveTxID, setArweaveTxID] = useState(null);
+  const [starknetTxID, setStarknetTxID] = useState(null);
 
   const wait = async (milliseconds: number) => {
     return new Promise((resolve, _) => {
@@ -72,16 +76,18 @@ export const CreateLoreEntity = () => {
 
       // Waiting for Arweave to mine
       setCreatingStep(CREATING_STEPS.WAITING_FOR_ARWEAVE);
+      setArweaveTxID(arweaveId);
 
       // Wait for Arweave tx to be mined
       let arweaveStatus = await arweave.transactions.getStatus(arweaveId);
       console.log(arweaveStatus);
 
       while (
-        arweaveStatus.confirmed &&
-        arweaveStatus.confirmed.number_of_confirmations > 10
+        arweaveStatus.confirmed === null ||
+        (arweaveStatus.confirmed &&
+          arweaveStatus.confirmed.number_of_confirmations < 1)
       ) {
-        await wait(2000);
+        await wait(5000);
         arweaveStatus = await arweave.transactions.getStatus(arweaveId);
         console.log(arweaveStatus);
       }
@@ -120,11 +126,18 @@ export const CreateLoreEntity = () => {
         [] // props
       );
 
+      setCreatingStep(CREATING_STEPS.WAITING_FOR_STARKNET);
+      setStarknetTxID(starknetTx.transaction_hash);
+
       await defaultProvider.waitForTransaction(starknetTx.transaction_hash);
 
       // console.log(starknetTx.transaction_hash);
 
-      setCreatingStep(CREATING_STEPS.INITIAL);
+      setCreatingStep(CREATING_STEPS.DONE);
+
+      // Clearing
+      setArweaveTxID(null);
+      setStarknetTxID(null);
     } catch (error) {
       // setIsCreating(false);
       setCreatingStep(CREATING_STEPS.INITIAL);
@@ -173,7 +186,9 @@ export const CreateLoreEntity = () => {
           })}
         >
           <div className={`border-b border-white absolute top-2 w-full`}></div>
-          <div className={`grid grid-cols-4 gap-2 text-center leading-none`}>
+          <div
+            className={`grid grid-cols-5 gap-2 text-center leading-none mb-2`}
+          >
             <div
               className={clsx({
                 'text-gray-500':
@@ -209,6 +224,17 @@ export const CreateLoreEntity = () => {
             </div>
             <div
               className={clsx({
+                'text-gray-500':
+                  creatingStep !== CREATING_STEPS.WAITING_FOR_STARKNET,
+              })}
+            >
+              <div
+                className={`bg-white w-4 h-4 rounded-full mx-auto mb-2`}
+              ></div>
+              Waiting for StarkNet
+            </div>
+            <div
+              className={clsx({
                 'text-gray-500': creatingStep !== CREATING_STEPS.DONE,
               })}
             >
@@ -219,7 +245,32 @@ export const CreateLoreEntity = () => {
             </div>
           </div>
 
-          {/* {creatingStep === CREATING_STEPS.WAITING_FOR_ARWEAVE ? <div>ArweaveID: {}</div>} */}
+          {arweaveTxID ? (
+            <div>
+              Arweave Transaction:{' '}
+              <a
+                href={`https://viewblock.io/arweave/tx/${arweaveTxID}`}
+                target="_blank"
+                rel="noreferrer"
+                className={`underline`}
+              >
+                {arweaveTxID}
+              </a>
+            </div>
+          ) : null}
+          {starknetTxID ? (
+            <div>
+              StarkNet Transaction:{' '}
+              <a
+                href={`https://goerli.voyager.online/tx/${starknetTxID}`}
+                target="_blank"
+                rel="noreferrer"
+                className={`underline`}
+              >
+                {starknetTxID}
+              </a>
+            </div>
+          ) : null}
         </div>
       </div>
 
