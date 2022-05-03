@@ -16,7 +16,7 @@ import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
+export type PanelType = 'account' | 'trade' | 'bank' | 'library' | AssetType;
 
 export type MenuType = 'resourceSwap' | PanelType;
 
