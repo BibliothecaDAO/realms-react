@@ -41,7 +41,7 @@ export const RealmsPanel = () => {
   ]);
 
   const isRealmPanel = selectedPanel === 'realm';
-  const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
+  const tabs = ['Your Realms', 'All Realms', 'Favourite Realms', 'Bridge'];
 
   const variables = useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
@@ -65,7 +65,7 @@ export const RealmsPanel = () => {
       filter.realmId = { in: [...state.favouriteRealms] };
     }
 
-    if (state.selectedTab === 0) {
+    if (state.selectedTab === 0 || state.selectedTab === 3) {
       filter.OR = [
         { owner: { equals: account?.toLowerCase() } },
         { bridgedOwner: { equals: account?.toLowerCase() } },
@@ -110,6 +110,11 @@ export const RealmsPanel = () => {
 
   const hasNoResults = () => !loading && (data?.getRealms?.length ?? 0) === 0;
 
+  const toggleSelectAllRealms = () =>
+    actions.toggleSelectAllRealms(
+      (data?.getRealms || []).map((realm) => realm.realmId)
+    );
+
   return (
     <BasePanel open={isRealmPanel}>
       <div className="flex justify-between pt-2">
@@ -136,14 +141,20 @@ export const RealmsPanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <RealmsFilter />
+        <RealmsFilter
+          isBridge={state.selectedTab === 3}
+          toggleSelectAllRealms={toggleSelectAllRealms}
+        />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        <RealmOverviews realms={data?.getRealms ?? []} />
+        <RealmOverviews
+          realms={data?.getRealms ?? []}
+          isBridge={state.selectedTab === 3}
+        />
       </div>
 
       {hasNoResults() && (

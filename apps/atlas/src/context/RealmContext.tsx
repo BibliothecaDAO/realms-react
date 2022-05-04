@@ -1,6 +1,10 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
-import type { ResourceType, OrderType } from '@/generated/graphql';
+import type {
+  ResourceType,
+  OrderType,
+  RealmFragmentFragment,
+} from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
 import { storage } from '@/util/localStorage';
 
@@ -24,6 +28,7 @@ interface RealmState {
   searchIdFilter: string;
   selectedTab: number;
   hasWonderFilter: boolean;
+  selectedRealms: number[];
 }
 
 type RealmAction =
@@ -36,7 +41,9 @@ type RealmAction =
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
   | { type: 'updateSearchIdFilter'; payload: string }
-  | { type: 'updateSelectedTab'; payload: number };
+  | { type: 'updateSelectedTab'; payload: number }
+  | { type: 'toggleRealmSelection'; payload: number }
+  | { type: 'toggleSelectAllRealms'; payload: number[] };
 
 interface RealmActions {
   updateRarityFilter(filter: RarityFilter): void;
@@ -49,6 +56,8 @@ interface RealmActions {
   removeFavouriteRealm(realmId: number): void;
   updateSearchIdFilter(realmId: string): void;
   updateSelectedTab(tab: number): void;
+  toggleRealmSelection(realmId: number): void;
+  toggleSelectAllRealms(realmIds: number[]): void;
 }
 
 const defaultFilters = {
@@ -67,9 +76,11 @@ const defaultFilters = {
   searchIdFilter: '',
   hasWonderFilter: false,
 };
+
 const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
+  selectedRealms: [] as number[],
   selectedTab: 1,
 };
 
@@ -112,6 +123,19 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
           (realmId: number) => realmId !== action.payload
         ),
       };
+    case 'toggleRealmSelection':
+      return {
+        ...state,
+        selectedRealms:
+          state.selectedRealms.indexOf(action.payload) > -1
+            ? state.selectedRealms.filter((x) => x !== action.payload)
+            : [...state.selectedRealms, action.payload],
+      };
+    case 'toggleSelectAllRealms':
+      return {
+        ...state,
+        selectedRealms: state.selectedRealms.length > 0 ? [] : action.payload,
+      };
     default:
       return state;
   }
@@ -140,6 +164,10 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'addFavouriteRealm', payload: realmId }),
   removeFavouriteRealm: (realmId: number) =>
     dispatch({ type: 'removeFavouriteRealm', payload: realmId }),
+  toggleRealmSelection: (realmId: number) =>
+    dispatch({ type: 'toggleRealmSelection', payload: realmId }),
+  toggleSelectAllRealms: (realmIds: number[]) =>
+    dispatch({ type: 'toggleSelectAllRealms', payload: realmIds }),
 });
 
 const RealmContext = createContext<{
