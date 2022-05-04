@@ -23,7 +23,7 @@ For a high level overview, visit the [Realms Master Scroll (whitepaper)](https:/
 **Quick Links**
 
 - [Atlas](./apps/atlas)
-- [Desiege](./apps/desiege)
+- [UI Lib](./packages/ui-lib)
 
 **Note: This repo houses the react frontends for each project listed below. If you're looking for Ethereum/Starknet contracts, visit [realms-contracts]()**
 
@@ -35,7 +35,8 @@ For a high level overview, visit the [Realms Master Scroll (whitepaper)](https:/
 .
 ├── apps
 │   ├── atlas   (nextjs, e2e playwright)
-│   └── desiege    (nextjs, i18n, ssr, e2e playwright)
+│   ├── briq-app   (nextjs, e2e playwright)
+│   └── treasury_page    (CRA, e2e playwright)
 ├── packages
 │   ├── core-lib
 │   └── ui-lib     (emotion, storybook)
@@ -48,15 +49,21 @@ The repository is split into three main sections:
 
 Apps are user-facing sites that typically house gameplay ui. These are the main way users interact with the game. Each App can contain a set of module (for example Atlas contains modules for Crypts and Caverns, Genesis Adventurers, etc).
 
-**[Atlas](./apps/atlas/)** - The Realms world map and primary way people interact with the Realms settling game. All Realms react code lives here.
+**[Atlas + Desiege](./apps/atlas/)** - Atlas is the Realms world map and primary way people interact with the Realms settling game. All Realms react code lives here. This app also contains Desiege - a standalone game where players choose a faction and collaborate to defend or attack a city's shields
 
 - [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
-- tech: SSR, tailwind v3, emotion, graphQL, rest.
+- tech: SSR, tailwind v3, Three.js, Mapbox, Deck.gl, emotion, graphQL, rest, Web3 + StarkNet,
 
-**[Desiege](./apps/desiege/)** - A standalone game where players choose a faction and collaborate to defend or attack a city's shields.
 
-- [README](./apps/desiege/README.md) | [DEMO/Vercel](https://beta.bibliothecadao.xyz/) | [CHANGELOG](./apps/desiege/CHANGELOG.md)
-- tech: Simple next.js.
+**[Briq App](./apps/briq-app/)** - A marketing page for the Realms + Briq Wonder building competition (now completed), linking a StarkNet address to a Google form
+
+- [README](./apps/briq-app/README.md) | [Vercel](https://wonder.bibliothecadao.xyz/) | [CHANGELOG](./apps/briq-app/CHANGELOG.md)
+- tech: SSR, tailwind v3, emotion
+
+**[Treasury Page](./apps/treasury_page/)** - A page showing the Bibliotheca DAO treasury assets, including token balances and NFTs (special thanks to @hari, @kalaiy & @neoTINS)
+
+- [README](./apps/treasury_page/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) 
+- tech: Create React AOo, tailwind v3, emotion, rest.
 
 AMM _(coming soon)_
 
