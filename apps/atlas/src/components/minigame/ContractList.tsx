@@ -13,8 +13,8 @@ import type { ModuleSpec } from './constants';
 
 export const ModuleListItem = (props: ModuleSpec) => {
   const moduleIdInt = toBN(props.id).toString();
-  const module = useModuleAddress(moduleIdInt);
-  return <ContractListItem name={props.name} address={module.data} />;
+  const moduleAddress = useModuleAddress(moduleIdInt);
+  return <ContractListItem name={props.name} address={moduleAddress.data} />;
 };
 
 export const ContractListItem = (props: { name: string; address?: string }) => {
