@@ -16,6 +16,7 @@ import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
+import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
@@ -224,6 +225,7 @@ function Atlas() {
             <BankPanel />
             <CryptsPanel />
             <RealmSideBar id={selectedId} />
+            <BridgeRealmsSideBar />
             <TradePanel />
             <ResourceSwapSideBar />
             <CryptsSideBar id={selectedId} />

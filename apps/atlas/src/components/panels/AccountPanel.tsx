@@ -17,7 +17,7 @@ export function AccountPanel() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { account, connect, connectors, disconnect } = useStarknet();
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { toggleMenuType, selectedPanel } = useUIContext();
   const resourceIds = [
     { id: 1, amount: 120 },
     { id: 3, amount: 90 },
@@ -76,7 +76,7 @@ export function AccountPanel() {
               variant="primary"
               className="ml-8"
               size="sm"
-              onClick={() => connect(connectors[0])}
+              onClick={() => toggleMenuType('bridgeRealms')}
             >
               Bridge Realms
             </Button>

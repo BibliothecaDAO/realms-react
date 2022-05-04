@@ -1,5 +1,6 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import clsx from 'clsx';
+import { SelectableRealm } from '@/components/tables/SelectableRealm';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -194,46 +195,5 @@ export function RealmOverviews(props: RealmOverviewsProps) {
           </div>
         ))}
     </div>
-  );
-}
-
-type SelectableRealmProps = {
-  realm: RealmFragmentFragment;
-  isSelected: boolean;
-  actions: any;
-};
-
-function SelectableRealm(props: SelectableRealmProps) {
-  const { realm, actions, isSelected } = props;
-
-  function selectRealm() {
-    actions.toggleRealmSelection(realm.realmId);
-  }
-
-  return (
-    <button
-      className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-between cursor-pointer"
-      onClick={selectRealm}
-    >
-      <div
-        className={clsx(
-          `flex w-full p-2 text-white shadow-inner rounded-t-l`,
-          isSelected ? `bg-black/60` : `bg-black/40`
-        )}
-      >
-        <div
-          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-black rounded border-2 border-gray-900`}
-        >
-          {isSelected ? `✔️` : ``}
-        </div>
-        <h3 className="self-center mb-1 ml-4">
-          <span className="mr-4 text-gray-400">{realm.realmId} | </span>
-          {realm.name}
-        </h3>
-        <h4 className="self-center hidden p-1 justify-end px-4 text-xs text-gray-400 rounded sm:block">
-          Location: L1 (Ethereum MainNet)
-        </h4>
-      </div>
-    </button>
   );
 }
