@@ -1,5 +1,5 @@
 import { Menu as HeadlessMenu } from '@headlessui/react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 
 interface MenuItemRenderProps {
   active: boolean;
@@ -7,7 +7,7 @@ interface MenuItemRenderProps {
 }
 
 export interface MenuItemProps {
-  children({ active, disabled }: MenuItemRenderProps): ReactNode;
+  children({ active, disabled }: MenuItemRenderProps): ReactElement;
 }
 
 export const MenuItem = ({ children }: MenuItemProps) => {

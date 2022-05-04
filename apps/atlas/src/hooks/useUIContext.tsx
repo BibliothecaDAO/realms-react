@@ -16,7 +16,7 @@ import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type PanelType = 'trade' | 'bank' | 'library' | AssetType;
+export type PanelType = 'account' | 'trade' | 'bank' | 'library' | AssetType;
 
 export type MenuType = 'resourceSwap' | PanelType;
 
@@ -151,9 +151,9 @@ function useUI(): UI {
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     query ? assetFilterByType(query.assetType as AssetType) : AssetFilters[0]
   );
+  const breakpoints: any = useBreakpoint();
 
-  const isDisplayLarge =
-    typeof window !== 'undefined' && window.innerWidth >= 768;
+  const isDisplayLarge = breakpoints.md;
 
   const [artBackground, setArtBackground] = useState<BackgroundOptions>();
   const [mainMenu, setMainMenu] = useState(
@@ -210,8 +210,6 @@ function useUI(): UI {
       setMenuType(menuType);
     }
   };
-
-  const breakpoints: any = useBreakpoint();
 
   const togglePanelType = (panelType: PanelType) => {
     setMainMenu(false);

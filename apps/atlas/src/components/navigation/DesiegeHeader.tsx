@@ -12,7 +12,7 @@ import { useWalletContext } from '../../hooks/useWalletContext';
 export function DesiegeHeader() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
-  const starknet = useStarknet();
+  const { account, connect, connectors } = useStarknet();
 
   const router = useRouter();
 
@@ -62,18 +62,22 @@ export function DesiegeHeader() {
                 Connect to Lootverse
               </button>
             )}
-            {starknet?.account ? (
+            {account ? (
               <span
                 className={navItemClass}
-                onClick={starknet.connectBrowserWallet}
+                onClick={() => {
+                  connect(connectors[0]);
+                }}
               >
                 <StarkNet className="w-5 mr-2" />
-                {shortenAddressWidth(starknet?.account, 4)}
+                {shortenAddressWidth(account, 4)}
               </span>
             ) : (
               <button
                 className={navItemClassBtn}
-                onClick={starknet.connectBrowserWallet}
+                onClick={() => {
+                  connect(connectors[0]);
+                }}
               >
                 Connect to StarkNet
               </button>

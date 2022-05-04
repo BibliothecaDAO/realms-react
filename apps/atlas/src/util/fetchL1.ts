@@ -17,7 +17,7 @@ const provider = new ethers.providers.JsonRpcProvider(
 
 const journeyContract = new ethers.Contract(
   LORDS_JOURNEY_ADDRESS,
-  JourneyABI.abi,
+  JourneyABI,
   provider
 );
 
@@ -47,7 +47,7 @@ export const fetchNumberRealmsStaked: (string) => Promise<number> = async (
 ) => {
   const journeyContractV2 = new ethers.Contract(
     LORDS_JOURNEY_V2_ADDRESS,
-    JourneyABI.abi,
+    JourneyABI,
     provider
   );
 

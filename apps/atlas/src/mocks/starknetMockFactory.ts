@@ -1,5 +1,5 @@
 import type {
-  RequestParams,
+  PathParams,
   ResponseComposition,
   RestContext,
   RestRequest,
@@ -47,7 +47,7 @@ export const delayedResponse = createResponseComposition(undefined, [
 // for the selector and return the response
 // that corresponds to the order
 export const wrappedRequestHandlerWithCount = (
-  req: RestRequest<StarknetCall, RequestParams>,
+  req: RestRequest<StarknetCall, PathParams>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   res: ResponseComposition<any>,
   ctx: RestContext,
@@ -100,7 +100,7 @@ export const mockGetBlock = () => ({
 
 export const mockBlockResponse = (_blockNumber: number) => {
   return (
-    _req: RestRequest<StarknetCall, RequestParams>,
+    _req: RestRequest<StarknetCall, PathParams>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     res: ResponseComposition<any>,
     ctx: RestContext

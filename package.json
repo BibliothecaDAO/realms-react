@@ -51,21 +51,22 @@
     "check:renovate:config": "docker run -v renovate.json5:/usr/src/app/renovate.json5 -it renovate/renovate renovate-config-validator",
     "install:playwright": "npx playwright install",
     "postinstall": "is-ci || yarn husky install",
-    "atlas": "yarn apps/atlas dev"
+    "atlas": "yarn apps/atlas dev",
+    "briq": "yarn apps/briq-app dev"
   },
   "dependencies": {
     "cross-env": "7.0.3"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.4.3",
-    "@changesets/cli": "2.21.0",
-    "@commitlint/cli": "16.2.1",
-    "@commitlint/config-conventional": "16.2.1",
-    "@types/prettier": "2.4.4",
+    "@changesets/changelog-github": "0.4.4",
+    "@changesets/cli": "2.22.0",
+    "@commitlint/cli": "16.2.4",
+    "@commitlint/config-conventional": "16.2.4",
+    "@types/prettier": "2.6.0",
     "@types/shell-quote": "1.7.1",
     "husky": "7.0.4",
     "is-ci": "3.0.1",
-    "lint-staged": "12.3.4",
+    "lint-staged": "12.4.1",
     "npm-run-all": "4.1.5",
     "prettier": "2.6.2",
     "rimraf": "3.0.2",
@@ -76,5 +77,5 @@
     "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@4.0.0-rc.4"
 }

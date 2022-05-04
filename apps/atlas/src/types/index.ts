@@ -53,6 +53,8 @@ export interface Loot {
   ringSuffixId: number;
   waistSuffixId: number;
   weaponSuffixId: number;
+  manasClaimed: string;
+  manas: { id: string; inventoryId: number }[];
   currentOwner: Owner;
   minted: number;
 }
@@ -76,6 +78,7 @@ export interface GAdventurer {
   bagRating: number;
   manasClaimed: number;
   itemsClaimed: boolean;
+  lootTokenIds: number[];
 }
 export interface Data {
   realm: Realm;

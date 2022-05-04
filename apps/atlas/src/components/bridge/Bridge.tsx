@@ -5,6 +5,7 @@ import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/solid';
 import {
   useStarknet,
   useStarknetTransactionManager,
+  ConnectorNotFoundError,
 } from '@starknet-react/core';
 import axios from 'axios';
 import classNames from 'classnames';
@@ -42,7 +43,7 @@ type TabName =
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const Bridge: React.FC<Prop> = (props) => {
-  const starknet = useStarknet();
+  const { account: starkAccount, connect, connectors, error } = useStarknet();
   const txManager = useStarknetTransactionManager();
   const { account, signer, connectWallet, isConnected, balance } =
     useWalletContext();
@@ -61,7 +62,7 @@ export const Bridge: React.FC<Prop> = (props) => {
       // Need to manually track transaction here
       txManager.addTransaction({
         transactionHash,
-        address: starknet.account as string,
+        address: starkAccount as string,
         status: 'TRANSACTION_RECEIVED',
       });
     }
@@ -92,13 +93,13 @@ export const Bridge: React.FC<Prop> = (props) => {
     if (!isConnected) {
       setCurrentTab('connect-ethereum');
     } else {
-      if (starknet.account) {
+      if (starkAccount) {
         setCurrentTab('mint');
       } else {
         setCurrentTab('connect-starknet');
       }
     }
-  }, [isConnected, starknet.account]);
+  }, [isConnected, starkAccount]);
 
   const currentGameVars = useGameVariables();
 
@@ -116,13 +117,13 @@ export const Bridge: React.FC<Prop> = (props) => {
       if (signer) {
         setMiddlewareStatus('signing');
         const sig = await signer.signMessage(
-          messageKey(starknet.account as string)
+          messageKey(starkAccount as string)
         );
         setMiddlewareStatus('pending');
         const res = await axios.post<AddTransactionResponse | MintingError>(
           '/api/minigame_alpha_mint',
           {
-            starknetAddress: starknet.account,
+            starknetAddress: starkAccount,
             sig,
             chosenSide: side,
             gameIdx: currentIndex, // The server will +1 this to mint for next round
@@ -162,9 +163,6 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const Checkmark = <Check className="inline-block w-6 ml-1" />;
 
-  useEffect(() => {
-    starknet.connectBrowserWallet();
-  }, []);
   return (
     <div className="w-full pt-4 sm:w-2/3">
       <div className="p-4 mx-2 mt-4 rounded-lg bg-white/60">
@@ -262,28 +260,24 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab == 'connect-starknet' ? (
               <div className="py-4">
-                {starknet.account ? (
+                {starkAccount ? (
                   <p className={connectedClassname}>
-                    Connected as {starknet.account}
+                    Connected as {starkAccount}
                   </p>
                 ) : (
                   <div>
                     <div className="text-2xl">
-                      {starknet.hasStarknet ? (
-                        <div>
-                          If you haven&apos;t already done so, please{' '}
-                          <a
-                            rel="noreferrer"
-                            target="_blank"
-                            className="underline"
-                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                          >
-                            download and install
-                          </a>{' '}
-                          the ArgentX extension, available now for the Google
-                          Chrome web browser.
-                        </div>
-                      ) : (
+                      {!starkAccount && !error && (
+                        <Button
+                          onClick={() => {
+                            connect(connectors[0]);
+                          }}
+                          className="mt-4"
+                        >
+                          Connect to ArgentX
+                        </Button>
+                      )}
+                      {error instanceof ConnectorNotFoundError && (
                         <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
                           The ArgentX wallet extension could not be activated.
                           Please{' '}
@@ -299,19 +293,13 @@ export const Bridge: React.FC<Prop> = (props) => {
                         </div>
                       )}
                     </div>
-                    <Button
-                      onClick={() => starknet.connectBrowserWallet()}
-                      className="mt-4"
-                    >
-                      Connect to ArgentX
-                    </Button>
                   </div>
                 )}
               </div>
             ) : null}
             {currentTab === 'mint' ? (
               <div className="py-4">
-                {starknet.account ? (
+                {starkAccount ? (
                   <>
                     <h1 className="my-2 text-4xl">Pick Polarity</h1>
                     <div className="flex w-full space-x-2 ">
@@ -412,9 +400,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                             <p className="mt-8 text-2xl break-words">
                               {messageKey('')}
                             </p>
-                            <p className={connectedClassname}>
-                              {starknet.account}
-                            </p>
+                            <p className={connectedClassname}>{starkAccount}</p>
 
                             <Button
                               disabled={
