@@ -227,7 +227,7 @@ function useUI(): UI {
       } else if (panelType === 'bank') {
         setArtBackground('bank');
         if (breakpoints.lg) {
-          setMenuType('resourceSwap');
+          openDetails('resourceSwap', '1');
         }
       } else if (panelType === 'trade') {
         setArtBackground('realm');

@@ -7,6 +7,7 @@ import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
+import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
 /**
  * Load the Realms Settling contract.
@@ -64,5 +65,17 @@ export function useCombatContract(): UseContract {
     abi: Combat as Abi,
     address:
       '0x0000000000000000000000000000000000000000000000000000000000000000',
+  });
+}
+
+/**
+ * Load the Realms Resources 1155 contract.
+ * @returns The `Resources` contract or undefined.
+ */
+export function useResources1155Contract(): UseContract {
+  return useContract({
+    abi: Resources1155 as Abi,
+    address:
+      '0x073f484a7e9ea443933bb2a2b086f68bd11e4ade422640cebebac5fe3e41e2c9',
   });
 }

@@ -33,16 +33,14 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const table = createTable().setRowType<typeof data>();
-  const { createColumns, createDataColumn, createGroup } = table;
+  const { createDataColumn, createGroup } = table;
 
-  const defaultColumns = createColumns(
-    customColumns?.map((column) => {
-      return createDataColumn(column.accessor, {
-        header: column.Header,
-        footer: (props: { column: { id: any } }) => props.column.id,
-      });
-    })
-  );
+  const defaultColumns = customColumns?.map((column) => {
+    return createDataColumn(column.accessor, {
+      header: column.Header,
+      footer: (props: { column: { id: any } }) => props.column.id,
+    });
+  });
 
   const [columns] = useState<typeof defaultColumns>(() => [...defaultColumns]);
 
@@ -70,17 +68,15 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
         </div>
       )}
       <div className="h-2" />
-      <table
-        className="w-full text-left text-white -striped"
-        {...instance.getTableProps()}
-      >
+      <table className="w-full text-left text-white -striped">
         <thead className="uppercase">
           {instance.getHeaderGroups().map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   className="py-2 tracking-wider text-md"
-                  {...header.getHeaderProps()}
+                  key={header.id}
+                  colSpan={header.colSpan}
                 >
                   {header.isPlaceholder ? null : header.renderHeader()}
                 </th>
@@ -88,7 +84,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             </tr>
           ))}
         </thead>
-        <tbody className="shadow-lg" {...instance.getTableBodyProps()}>
+        <tbody className="shadow-lg">
           {instance.getRowModel().rows.map((row, index) => (
             <tr
               className={`${
@@ -96,10 +92,10 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
                   ? 'bg-gray-900/70'
                   : 'bg-gray-800/70'
               } border-b-2 border-gray-900 hover:bg-gray-600/90`}
-              {...row.getRowProps()}
+              key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
-                <td className="px-2 py-1.5" {...cell.getCellProps()}>
+                <td className="px-2 py-1.5" key={cell.id}>
                   {cell.renderCell()}
                 </td>
               ))}

@@ -28,6 +28,7 @@ import { GaProvider } from '@/context/GaContext';
 import { JourneyProvider } from '@/context/JourneyContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
+import { ResourceProvider } from '@/context/ResourcesContext';
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
@@ -47,6 +48,7 @@ function App() {
         GaProvider,
         CryptProvider,
         JourneyProvider,
+        ResourceProvider,
       ]}
     >
       <Atlas />

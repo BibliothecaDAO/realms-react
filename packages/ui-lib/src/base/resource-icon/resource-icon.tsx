@@ -92,7 +92,7 @@ export const ResourceIcon = (props: Props) => {
       </span>
 
       {props.label && (
-        <span className="mt-4 uppercase font-body tracking-widest font-semibold">
+        <span className="mt-4 font-semibold tracking-widest uppercase font-body">
           {Components[props.resource.replace(' ', '').replace("'", '')].name}
         </span>
       )}

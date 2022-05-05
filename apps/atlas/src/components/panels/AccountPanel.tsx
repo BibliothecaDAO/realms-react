@@ -17,7 +17,7 @@ export function AccountPanel() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { account, connect, connectors, disconnect } = useStarknet();
-  const { toggleMenuType, selectedPanel } = useUIContext();
+  const { togglePanelType, toggleMenuType, selectedPanel } = useUIContext();
   const resourceIds = [
     { id: 1, amount: 120 },
     { id: 3, amount: 90 },

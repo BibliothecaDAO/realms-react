@@ -5,7 +5,6 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
   isBridge?: boolean;

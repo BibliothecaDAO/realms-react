@@ -40,7 +40,7 @@ export const ResourceSwapSideBar = (props: Props) => {
   return (
     <BaseSideBar open={selectedMenuType === 'resourceSwap' && showDetails}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
-        <div className="flex justify-between">
+        <div className="flex justify-between w-full">
           <h2 className="uppercase">Resource Swap</h2>
           <button
             className="right-0 z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70 shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.25)]"
@@ -48,7 +48,6 @@ export const ResourceSwapSideBar = (props: Props) => {
           >
             <Close />
           </button>
-          <div />
         </div>
         <div className="relative">
           <Tabs className="h-full" variant="primary">
@@ -65,11 +64,6 @@ export const ResourceSwapSideBar = (props: Props) => {
               ))}
             </Tabs.Panels>
           </Tabs>
-          <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-            <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
-              Coming Soon!
-            </div>
-          </div>
         </div>
       </div>
     </BaseSideBar>
