@@ -10,6 +10,10 @@ const faqs = [
     text: 'Drop us a message in Discord and we’ll see what we can do.',
   },
   {
+    title: 'Can I use other voxel builders like Magica Voxel?',
+    text: 'Yes! Build your wonder in Magica Voxel then save the .vox file. Go to realms.briq.construction, click on "Manage sets", then click on "import file" and select the .vox file.',
+  },
+  {
     title:
       'Are there any costs involved in receiving briqs, building or minting the NFT entry?',
     text: 'Nope! All free',

@@ -208,7 +208,7 @@ function Home() {
               Head to{' '}
               <a
                 className="hover:underline text-[#eb5600]"
-                href="https://briq.construction/"
+                href="https://realms.briq.construction/"
               >
                 briq
               </a>{' '}
