@@ -10,6 +10,4 @@ reject: [
     'is-port-reachable',
     #next getServerSnapshot (fixed next apollo release)
     '@apollo/client',
-    # SSR iissue with tabs
-    '@headlessui/react',
   ]

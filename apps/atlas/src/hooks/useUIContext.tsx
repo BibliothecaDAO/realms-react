@@ -18,7 +18,11 @@ export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType = 'account' | 'trade' | 'bank' | 'library' | AssetType;
 
-export type MenuType = 'bridgeRealms' | 'resourceSwap' | PanelType;
+export type MenuType =
+  | 'settleRealms'
+  | 'bridgeRealms'
+  | 'resourceSwap'
+  | PanelType;
 
 export type AssetFilter = {
   value: AssetType;

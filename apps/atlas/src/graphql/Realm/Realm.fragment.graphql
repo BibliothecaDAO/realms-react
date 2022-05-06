@@ -2,6 +2,8 @@ fragment RealmFragment on Realm {
   realmId
   owner
   bridgedOwner
+  ownerL2
+  settledOwner
   name
   rarityRank
   rarityScore

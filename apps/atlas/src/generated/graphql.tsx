@@ -23,6 +23,20 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AffectedRowsOutput = {
+  __typename?: 'AffectedRowsOutput';
+  count: Scalars['Int'];
+};
+
+export type AggregateEvent = {
+  __typename?: 'AggregateEvent';
+  _avg?: Maybe<EventAvgAggregate>;
+  _count?: Maybe<EventCountAggregate>;
+  _max?: Maybe<EventMaxAggregate>;
+  _min?: Maybe<EventMinAggregate>;
+  _sum?: Maybe<EventSumAggregate>;
+};
+
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
@@ -82,6 +96,35 @@ export type BuildingTypeInput = {
   notIn?: InputMaybe<Array<BuildingType>>;
 };
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type DateTimeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedDateTimeFilter>;
+  _min?: InputMaybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
 /** The Desiege Model */
 export type Desiege = {
   __typename?: 'Desiege';
@@ -95,17 +138,342 @@ export type Desiege = {
   winner: Scalars['Float'];
 };
 
-/** StarkNet Event Model */
 export type Event = {
   __typename?: 'Event';
+  blockNumber: Scalars['Int'];
   chainId: Scalars['String'];
   contract: Scalars['String'];
-  eventId: Scalars['Float'];
-  id: Scalars['ID'];
+  eventId: Scalars['String'];
+  id: Scalars['Int'];
+  keys: Array<Scalars['String']>;
   name: Scalars['String'];
-  parameters: Array<Scalars['Float']>;
+  parameters: Array<Scalars['String']>;
+  status: Scalars['Int'];
   timestamp: Scalars['DateTime'];
+  transactionNumber: Scalars['Int'];
   txHash: Scalars['String'];
+};
+
+export type EventAvgAggregate = {
+  __typename?: 'EventAvgAggregate';
+  blockNumber?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['Float']>;
+  transactionNumber?: Maybe<Scalars['Float']>;
+};
+
+export type EventAvgOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+};
+
+export type EventCountAggregate = {
+  __typename?: 'EventCountAggregate';
+  _all: Scalars['Int'];
+  blockNumber: Scalars['Int'];
+  chainId: Scalars['Int'];
+  contract: Scalars['Int'];
+  eventId: Scalars['Int'];
+  id: Scalars['Int'];
+  keys: Scalars['Int'];
+  name: Scalars['Int'];
+  parameters: Scalars['Int'];
+  status: Scalars['Int'];
+  timestamp: Scalars['Int'];
+  transactionNumber: Scalars['Int'];
+  txHash: Scalars['Int'];
+};
+
+export type EventCountOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  chainId?: InputMaybe<SortOrder>;
+  contract?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  parameters?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+  txHash?: InputMaybe<SortOrder>;
+};
+
+export type EventCreateInput = {
+  blockNumber?: InputMaybe<Scalars['Int']>;
+  chainId: Scalars['String'];
+  contract: Scalars['String'];
+  eventId: Scalars['String'];
+  keys?: InputMaybe<EventCreatekeysInput>;
+  name: Scalars['String'];
+  parameters?: InputMaybe<EventCreateparametersInput>;
+  status?: InputMaybe<Scalars['Int']>;
+  timestamp: Scalars['DateTime'];
+  transactionNumber?: InputMaybe<Scalars['Int']>;
+  txHash: Scalars['String'];
+};
+
+export type EventCreateManyInput = {
+  blockNumber?: InputMaybe<Scalars['Int']>;
+  chainId: Scalars['String'];
+  contract: Scalars['String'];
+  eventId: Scalars['String'];
+  id?: InputMaybe<Scalars['Int']>;
+  keys?: InputMaybe<EventCreatekeysInput>;
+  name: Scalars['String'];
+  parameters?: InputMaybe<EventCreateparametersInput>;
+  status?: InputMaybe<Scalars['Int']>;
+  timestamp: Scalars['DateTime'];
+  transactionNumber?: InputMaybe<Scalars['Int']>;
+  txHash: Scalars['String'];
+};
+
+export type EventCreatekeysInput = {
+  set: Array<Scalars['String']>;
+};
+
+export type EventCreateparametersInput = {
+  set: Array<Scalars['String']>;
+};
+
+export type EventGroupBy = {
+  __typename?: 'EventGroupBy';
+  _avg?: Maybe<EventAvgAggregate>;
+  _count?: Maybe<EventCountAggregate>;
+  _max?: Maybe<EventMaxAggregate>;
+  _min?: Maybe<EventMinAggregate>;
+  _sum?: Maybe<EventSumAggregate>;
+  blockNumber: Scalars['Int'];
+  chainId: Scalars['String'];
+  contract: Scalars['String'];
+  eventId: Scalars['String'];
+  id: Scalars['Int'];
+  keys?: Maybe<Array<Scalars['String']>>;
+  name: Scalars['String'];
+  parameters?: Maybe<Array<Scalars['String']>>;
+  status: Scalars['Int'];
+  timestamp: Scalars['DateTime'];
+  transactionNumber: Scalars['Int'];
+  txHash: Scalars['String'];
+};
+
+export type EventMaxAggregate = {
+  __typename?: 'EventMaxAggregate';
+  blockNumber?: Maybe<Scalars['Int']>;
+  chainId?: Maybe<Scalars['String']>;
+  contract?: Maybe<Scalars['String']>;
+  eventId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  timestamp?: Maybe<Scalars['DateTime']>;
+  transactionNumber?: Maybe<Scalars['Int']>;
+  txHash?: Maybe<Scalars['String']>;
+};
+
+export type EventMaxOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  chainId?: InputMaybe<SortOrder>;
+  contract?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+  txHash?: InputMaybe<SortOrder>;
+};
+
+export type EventMinAggregate = {
+  __typename?: 'EventMinAggregate';
+  blockNumber?: Maybe<Scalars['Int']>;
+  chainId?: Maybe<Scalars['String']>;
+  contract?: Maybe<Scalars['String']>;
+  eventId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  timestamp?: Maybe<Scalars['DateTime']>;
+  transactionNumber?: Maybe<Scalars['Int']>;
+  txHash?: Maybe<Scalars['String']>;
+};
+
+export type EventMinOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  chainId?: InputMaybe<SortOrder>;
+  contract?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+  txHash?: InputMaybe<SortOrder>;
+};
+
+export type EventOrderByWithAggregationInput = {
+  _avg?: InputMaybe<EventAvgOrderByAggregateInput>;
+  _count?: InputMaybe<EventCountOrderByAggregateInput>;
+  _max?: InputMaybe<EventMaxOrderByAggregateInput>;
+  _min?: InputMaybe<EventMinOrderByAggregateInput>;
+  _sum?: InputMaybe<EventSumOrderByAggregateInput>;
+  blockNumber?: InputMaybe<SortOrder>;
+  chainId?: InputMaybe<SortOrder>;
+  contract?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  parameters?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+  txHash?: InputMaybe<SortOrder>;
+};
+
+export type EventOrderByWithRelationInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  chainId?: InputMaybe<SortOrder>;
+  contract?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  parameters?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+  txHash?: InputMaybe<SortOrder>;
+};
+
+export enum EventScalarFieldEnum {
+  BlockNumber = 'blockNumber',
+  ChainId = 'chainId',
+  Contract = 'contract',
+  EventId = 'eventId',
+  Id = 'id',
+  Keys = 'keys',
+  Name = 'name',
+  Parameters = 'parameters',
+  Status = 'status',
+  Timestamp = 'timestamp',
+  TransactionNumber = 'transactionNumber',
+  TxHash = 'txHash',
+}
+
+export type EventScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<EventScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<EventScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<EventScalarWhereWithAggregatesInput>>;
+  blockNumber?: InputMaybe<IntWithAggregatesFilter>;
+  chainId?: InputMaybe<StringWithAggregatesFilter>;
+  contract?: InputMaybe<StringWithAggregatesFilter>;
+  eventId?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<IntWithAggregatesFilter>;
+  keys?: InputMaybe<StringNullableListFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  parameters?: InputMaybe<StringNullableListFilter>;
+  status?: InputMaybe<IntWithAggregatesFilter>;
+  timestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
+  transactionNumber?: InputMaybe<IntWithAggregatesFilter>;
+  txHash?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type EventSumAggregate = {
+  __typename?: 'EventSumAggregate';
+  blockNumber?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Int']>;
+  transactionNumber?: Maybe<Scalars['Int']>;
+};
+
+export type EventSumOrderByAggregateInput = {
+  blockNumber?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  transactionNumber?: InputMaybe<SortOrder>;
+};
+
+export type EventUpdateInput = {
+  blockNumber?: InputMaybe<IntFieldUpdateOperationsInput>;
+  chainId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  contract?: InputMaybe<StringFieldUpdateOperationsInput>;
+  eventId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  keys?: InputMaybe<EventUpdatekeysInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parameters?: InputMaybe<EventUpdateparametersInput>;
+  status?: InputMaybe<IntFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  transactionNumber?: InputMaybe<IntFieldUpdateOperationsInput>;
+  txHash?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type EventUpdateManyMutationInput = {
+  blockNumber?: InputMaybe<IntFieldUpdateOperationsInput>;
+  chainId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  contract?: InputMaybe<StringFieldUpdateOperationsInput>;
+  eventId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  keys?: InputMaybe<EventUpdatekeysInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parameters?: InputMaybe<EventUpdateparametersInput>;
+  status?: InputMaybe<IntFieldUpdateOperationsInput>;
+  timestamp?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  transactionNumber?: InputMaybe<IntFieldUpdateOperationsInput>;
+  txHash?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type EventUpdatekeysInput = {
+  push?: InputMaybe<Array<Scalars['String']>>;
+  set?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type EventUpdateparametersInput = {
+  push?: InputMaybe<Array<Scalars['String']>>;
+  set?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type EventWhereInput = {
+  AND?: InputMaybe<Array<EventWhereInput>>;
+  NOT?: InputMaybe<Array<EventWhereInput>>;
+  OR?: InputMaybe<Array<EventWhereInput>>;
+  blockNumber?: InputMaybe<IntFilter>;
+  chainId?: InputMaybe<StringFilter>;
+  contract?: InputMaybe<StringFilter>;
+  eventId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  keys?: InputMaybe<StringNullableListFilter>;
+  name?: InputMaybe<StringFilter>;
+  parameters?: InputMaybe<StringNullableListFilter>;
+  status?: InputMaybe<IntFilter>;
+  timestamp?: InputMaybe<DateTimeFilter>;
+  transactionNumber?: InputMaybe<IntFilter>;
+  txHash?: InputMaybe<StringFilter>;
+};
+
+export type EventWhereUniqueInput = {
+  eventId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+};
+
+export type IntFieldUpdateOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']>;
+  divide?: InputMaybe<Scalars['Int']>;
+  increment?: InputMaybe<Scalars['Int']>;
+  multiply?: InputMaybe<Scalars['Int']>;
+  set?: InputMaybe<Scalars['Int']>;
+};
+
+export type IntFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type IntFilterInput = {
@@ -118,15 +486,93 @@ export type IntFilterInput = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
+export type IntWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedIntFilter>;
+  _min?: InputMaybe<NestedIntFilter>;
+  _sum?: InputMaybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+/** Lore Entity */
+export type LoreEntity = {
+  __typename?: 'LoreEntity';
+  id: Scalars['ID'];
+  kind: Scalars['Float'];
+  owner: Scalars['String'];
+  revisions: Array<LoreEntityRevision>;
+};
+
+/** Lore Entity Revision */
+export type LoreEntityRevision = {
+  __typename?: 'LoreEntityRevision';
+  createdAt: Scalars['DateTime'];
+  excerpt?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  markdown?: Maybe<Scalars['String']>;
+  pois: Array<LorePoisOnEntityRevisions>;
+  props: Array<LorePropsOnEntityRevisions>;
+  revisionNumber: Scalars['Float'];
+  title?: Maybe<Scalars['String']>;
+};
+
+/** Lore POI */
+export type LorePoi = {
+  __typename?: 'LorePoi';
+  assetType?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+/** Lore Entity Revision */
+export type LorePoisOnEntityRevisions = {
+  __typename?: 'LorePoisOnEntityRevisions';
+  assetId?: Maybe<Scalars['String']>;
+  entityRevisionId: Scalars['ID'];
+  poiId: Scalars['ID'];
+};
+
+/** Lore Entity Revision */
+export type LorePropsOnEntityRevisions = {
+  __typename?: 'LorePropsOnEntityRevisions';
+  entityRevisionId: Scalars['ID'];
+  propId: Scalars['ID'];
+  value?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createEvent: Event;
+  createManyEvent: AffectedRowsOutput;
   createOrUpdateBuildingCost: BuildingCost;
   createOrUpdateBuildings: Building;
   createOrUpdateRealm: Realm;
   createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
   createOrUpdateWallet: Wallet;
+  deleteEvent?: Maybe<Event>;
+  deleteManyEvent: AffectedRowsOutput;
   reindexDesiege: Scalars['Boolean'];
+  updateEvent?: Maybe<Event>;
+  updateManyEvent: AffectedRowsOutput;
+  upsertEvent: Event;
+};
+
+export type MutationCreateEventArgs = {
+  data: EventCreateInput;
+};
+
+export type MutationCreateManyEventArgs = {
+  data: Array<EventCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type MutationCreateOrUpdateBuildingCostArgs = {
@@ -151,6 +597,124 @@ export type MutationCreateOrUpdateResourcesArgs = {
 
 export type MutationCreateOrUpdateWalletArgs = {
   data: WalletInput;
+};
+
+export type MutationDeleteEventArgs = {
+  where: EventWhereUniqueInput;
+};
+
+export type MutationDeleteManyEventArgs = {
+  where?: InputMaybe<EventWhereInput>;
+};
+
+export type MutationUpdateEventArgs = {
+  data: EventUpdateInput;
+  where: EventWhereUniqueInput;
+};
+
+export type MutationUpdateManyEventArgs = {
+  data: EventUpdateManyMutationInput;
+  where?: InputMaybe<EventWhereInput>;
+};
+
+export type MutationUpsertEventArgs = {
+  create: EventCreateInput;
+  update: EventUpdateInput;
+  where: EventWhereUniqueInput;
+};
+
+export type NestedDateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedDateTimeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedDateTimeFilter>;
+  _min?: InputMaybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedFloatFilter = {
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type NestedIntFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type NestedIntWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedIntFilter>;
+  _min?: InputMaybe<NestedIntFilter>;
+  _sum?: InputMaybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type NestedStringFilter = {
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type NestedStringWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedStringFilter>;
+  _min?: InputMaybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 /** Order By Direction */
@@ -187,6 +751,10 @@ export type OrderTypeInput = {
 
 export type Query = {
   __typename?: 'Query';
+  aggregateEvent: AggregateEvent;
+  event?: Maybe<Event>;
+  events: Array<Event>;
+  findFirstEvent?: Maybe<Event>;
   getBuilding: Building;
   getBuildingCosts: Array<BuildingCost>;
   getBuildings: Array<Building>;
@@ -194,8 +762,9 @@ export type Query = {
   getBuildingsByRealm: Array<Building>;
   getDesiege: Desiege;
   getDesiegeGames: Array<Desiege>;
-  getEvent: Event;
-  getEvents: Array<Event>;
+  getLoreEntities: Array<LoreEntity>;
+  getLoreEntity: LoreEntity;
+  getLorePois: Array<LorePoi>;
   getRealm: Realm;
   getRealmTraits: Array<RealmTrait>;
   getRealms: Array<Realm>;
@@ -204,6 +773,37 @@ export type Query = {
   getResourcesByAddress: Array<Resource>;
   getWallet: Wallet;
   getWallets: Array<Wallet>;
+  groupByEvent: Array<EventGroupBy>;
+};
+
+export type QueryAggregateEventArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<EventOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EventWhereInput>;
+};
+
+export type QueryEventArgs = {
+  where: EventWhereUniqueInput;
+};
+
+export type QueryEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EventScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EventOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EventWhereInput>;
+};
+
+export type QueryFindFirstEventArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EventScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EventOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EventWhereInput>;
 };
 
 export type QueryGetBuildingArgs = {
@@ -222,8 +822,18 @@ export type QueryGetDesiegeArgs = {
   id: Scalars['Float'];
 };
 
-export type QueryGetEventArgs = {
-  id: Scalars['Float'];
+export type QueryGetLoreEntitiesArgs = {
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
+};
+
+export type QueryGetLoreEntityArgs = {
+  entityId: Scalars['Float'];
+};
+
+export type QueryGetLorePoisArgs = {
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
 };
 
 export type QueryGetRealmArgs = {
@@ -249,6 +859,20 @@ export type QueryGetWalletArgs = {
   address: Scalars['String'];
 };
 
+export type QueryGroupByEventArgs = {
+  by: Array<EventScalarFieldEnum>;
+  having?: InputMaybe<EventScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<EventOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EventWhereInput>;
+};
+
+export enum QueryMode {
+  Default = 'default',
+  Insensitive = 'insensitive',
+}
+
 /** The Realm Model */
 export type Realm = {
   __typename?: 'Realm';
@@ -258,14 +882,16 @@ export type Realm = {
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
+  ownerL2?: Maybe<Scalars['String']>;
   rarityRank: Scalars['Int'];
   rarityScore: Scalars['Float'];
   realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
+  settledOwner?: Maybe<Scalars['String']>;
   squads?: Maybe<Array<Squad>>;
   traits?: Maybe<Array<RealmTrait>>;
   wallet?: Maybe<Wallet>;
-  wonder: Scalars['String'];
+  wonder?: Maybe<Scalars['String']>;
 };
 
 export type RealmFilterInput = {
@@ -277,10 +903,12 @@ export type RealmFilterInput = {
   name?: InputMaybe<StringFilterInput>;
   orderType?: InputMaybe<OrderTypeInput>;
   owner?: InputMaybe<StringFilterInput>;
+  ownerL2?: InputMaybe<StringFilterInput>;
   rarityRank?: InputMaybe<IntFilterInput>;
   rarityScore?: InputMaybe<IntFilterInput>;
   realmId?: InputMaybe<IntFilterInput>;
   resourceType?: InputMaybe<ResourceTypeInput>;
+  settledOwner?: InputMaybe<StringFilterInput>;
   squadAction?: InputMaybe<SquadActionInput>;
   squadType?: InputMaybe<SquadTypeInput>;
   trait?: InputMaybe<RealmTraitFilterInput>;
@@ -293,9 +921,11 @@ export type RealmInput = {
   name: Scalars['String'];
   orderType?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<Scalars['String']>;
+  ownerL2?: InputMaybe<Scalars['String']>;
   rarityRank?: InputMaybe<Scalars['Int']>;
   rarityScore?: InputMaybe<Scalars['Float']>;
   realmId: Scalars['Int'];
+  settledOwner?: InputMaybe<Scalars['String']>;
   wonder?: InputMaybe<Scalars['String']>;
 };
 
@@ -381,6 +1011,11 @@ export type ResourceTypeInput = {
   notIn?: InputMaybe<Array<ResourceType>>;
 };
 
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
 /** The Squad Model */
 export type Squad = {
   __typename?: 'Squad';
@@ -431,6 +1066,25 @@ export type SquadTypeInput = {
   notIn?: InputMaybe<Array<SquadType>>;
 };
 
+export type StringFieldUpdateOperationsInput = {
+  set?: InputMaybe<Scalars['String']>;
+};
+
+export type StringFilter = {
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
 export type StringFilterInput = {
   contains?: InputMaybe<Array<Scalars['String']>>;
   endsWith?: InputMaybe<Array<Scalars['String']>>;
@@ -443,6 +1097,32 @@ export type StringFilterInput = {
   not?: InputMaybe<Array<Scalars['String']>>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type StringNullableListFilter = {
+  equals?: InputMaybe<Array<Scalars['String']>>;
+  has?: InputMaybe<Scalars['String']>;
+  hasEvery?: InputMaybe<Array<Scalars['String']>>;
+  hasSome?: InputMaybe<Array<Scalars['String']>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type StringWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedStringFilter>;
+  _min?: InputMaybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 /** The Wallet Model */
@@ -500,11 +1180,13 @@ export type GetRealmQuery = {
     realmId: number;
     owner?: string | null;
     bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
-    wonder: string;
+    wonder?: string | null;
     resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -534,11 +1216,13 @@ export type GetRealmsQuery = {
     realmId: number;
     owner?: string | null;
     bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
-    wonder: string;
+    wonder?: string | null;
     resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -559,11 +1243,13 @@ export type RealmFragmentFragment = {
   realmId: number;
   owner?: string | null;
   bridgedOwner?: string | null;
+  ownerL2?: string | null;
+  settledOwner?: string | null;
   name?: string | null;
   rarityRank: number;
   rarityScore: number;
   orderType: string;
-  wonder: string;
+  wonder?: string | null;
   resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
@@ -595,11 +1281,13 @@ export type GetWalletQuery = {
       realmId: number;
       owner?: string | null;
       bridgedOwner?: string | null;
+      ownerL2?: string | null;
+      settledOwner?: string | null;
       name?: string | null;
       rarityRank: number;
       rarityScore: number;
       orderType: string;
-      wonder: string;
+      wonder?: string | null;
       resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
       traits?: Array<{
         __typename?: 'RealmTrait';
@@ -636,6 +1324,8 @@ export const RealmFragmentFragmentDoc = gql`
     realmId
     owner
     bridgedOwner
+    ownerL2
+    settledOwner
     name
     rarityRank
     rarityScore

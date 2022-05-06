@@ -17,7 +17,7 @@ export function useSettlingContract(): UseContract {
   return useContract({
     abi: Settling as Abi,
     address:
-      '0x062fa531fdfb05032c255431cfc9985e068c3a23fe097d419859013625e7a3ab',
+      '0x07416e6b5d7470a75ffe1eb7a3b6aa6174a4bec2d8598cddfc3a9c7d2d9457bc',
   });
 }
 /**
@@ -28,7 +28,7 @@ export function useResourcesContract(): UseContract {
   return useContract({
     abi: Resources as Abi,
     address:
-      '0x066acbb4b47a627be57fef643b922fdb7522a971a4ce5b902fa6a3b71106869a',
+      '0x04603ff9190233c0b7b52844b31c5f3f028dd906f5be1bab164d8d7ca144aa9a',
   });
 }
 
@@ -40,7 +40,7 @@ export function useBuildingContract(): UseContract {
   return useContract({
     abi: Building as Abi,
     address:
-      '0x04cca1baec31d699e6c8a84cc1c2ddec98f5c2d6cf2823f5aa13cde7d7df26f4',
+      '0x07f2efce72148758611e132e72f3ba36b5be28081d7f742df96f1d0295e3fa29',
   });
 }
 
@@ -52,7 +52,7 @@ export function useWonderContract(): UseContract {
   return useContract({
     abi: Wonder as Abi,
     address:
-      '0x0720e3f966182b5d901e562b6f6cac8e404f4701bbd97725db3a5652c0e70376',
+      '0x061a93b3e16efee381e7cd1532893bf79c4812d217548576900bb236a182b539',
   });
 }
 
@@ -64,7 +64,7 @@ export function useCombatContract(): UseContract {
   return useContract({
     abi: Combat as Abi,
     address:
-      '0x0000000000000000000000000000000000000000000000000000000000000000',
+      '0x01f1a7ce51bfd55b74c00cab5113a70f673c5a5cd47e6bc60a8879e69ec8ea1c',
   });
 }
 

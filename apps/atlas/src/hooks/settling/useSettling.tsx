@@ -1,5 +1,6 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core';
-
+import { toBN } from 'starknet/dist/utils/number';
+import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { useSettlingContract } from '@/hooks/settling/stark-contracts';
 
 type Settling = {
@@ -8,8 +9,6 @@ type Settling = {
 };
 
 const useSettling = (): Settling => {
-  const { account } = useStarknet();
-
   const { contract: settlingContract } = useSettlingContract();
 
   const settleRealmAction = useStarknetInvoke({
@@ -25,12 +24,12 @@ const useSettling = (): Settling => {
   return {
     settleRealm: (tokenId: number) => {
       settleRealmAction.invoke({
-        args: [tokenId],
+        args: [bnToUint256(toBN(tokenId))],
       });
     },
     unsettleRealm: (tokenId: number) => {
       unsettleRealmAction.invoke({
-        args: [tokenId],
+        args: [bnToUint256(toBN(tokenId))],
       });
     },
   };

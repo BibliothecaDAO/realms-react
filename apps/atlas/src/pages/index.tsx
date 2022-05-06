@@ -23,6 +23,7 @@ import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { JourneyProvider } from '@/context/JourneyContext';
@@ -228,6 +229,7 @@ function Atlas() {
             <CryptsPanel />
             <RealmSideBar id={selectedId} />
             <BridgeRealmsSideBar />
+            <SettleRealmsSideBar />
             <TradePanel />
             <ResourceSwapSideBar />
             <CryptsSideBar id={selectedId} />

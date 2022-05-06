@@ -87,7 +87,7 @@ export function AccountPanel() {
               className="ml-8"
               variant="primary"
               size="sm"
-              onClick={() => connect(connectors[0])}
+              onClick={() => toggleMenuType('settleRealms')}
             >
               Settle Realms
             </Button>
