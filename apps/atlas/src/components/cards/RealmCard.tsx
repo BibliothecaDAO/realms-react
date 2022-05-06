@@ -130,18 +130,18 @@ export function RealmCard(props: RealmProps): ReactElement {
         label: 'Resources',
         component: <RealmResources {...props} />,
       },
-      // {
-      //   label: 'Troops',
-      //   component: <RealmTroops />,
-      // },
-      // {
-      //   label: 'Buildings',
-      //   component: <RealmBuildings />,
-      // },
-      // {
-      //   label: 'History',
-      //   component: <RealmHistory />,
-      // },
+      {
+        label: 'Troops',
+        component: <RealmTroops />,
+      },
+      {
+        label: 'Buildings',
+        component: <RealmBuildings />,
+      },
+      {
+        label: 'History',
+        component: <RealmHistory />,
+      },
     ],
     [props.realm?.id]
   );
