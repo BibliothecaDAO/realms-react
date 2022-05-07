@@ -2,7 +2,6 @@ import type { LorePoiFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 
 const pois = {
-  0: { name: 'Unlinked', class: '' },
   1: { name: 'Scrolls', class: 'bg-red-500' },
   1000: { name: 'Realms', class: 'bg-indigo-500', openDetailsName: 'realm' },
   1001: { name: 'Realms Orders', class: 'bg-indigo-500' },
@@ -30,12 +29,7 @@ export const LorePOI = ({
   // pois,
   poisLoading,
 }: LorePOIProps) => {
-  const { openDetails } = useUIContext();
-
-  // if poiId does not exist, set it to the default case
-  if (!pois[poiId]) {
-    poiId = '0';
-  }
+  const { openDetails, getPoiName } = useUIContext();
 
   const openSideBar = () => {
     const openDetailsName = pois[poiId].openDetailsName;
@@ -53,8 +47,9 @@ export const LorePOI = ({
       className={`rounded-md font-normal underline inline-flex mb-1`}
       onClick={openSideBar}
     >
-      {pois ? pois[poiId].name : null}
+      {pois ? pois[poiId]?.name : null}
       {assetId ? `[${assetId}]` : null}
+      {getPoiName(poiId, assetId)}
     </button>
   );
 };
