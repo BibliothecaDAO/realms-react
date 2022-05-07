@@ -4,18 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
-body{
+body {
   background-color: #161619;
   border-style: double;
   border-width: 4px;
-  border-color: #8D795B;
+  border-color: #8d795b;
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   width: 1rem;
 }
 
@@ -24,61 +20,53 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #8D795B ;
+  background-color: #8d795b;
 }
 
-.nft_asset::-webkit-scrollbar{
-  width: .5rem;
+.nft_asset::-webkit-scrollbar {
+  width: 0.5rem;
 }
 
-.nft_asset::-webkit-scrollbar-thumb{
-  background-color: #303033;
-  border-radius: 30px;
-} 
-
-
-.nft_asset_imgs::-webkit-scrollbar{
-  width: .5rem;
-}
-
-.nft_asset_imgs::-webkit-scrollbar-thumb{
+.nft_asset::-webkit-scrollbar-thumb {
   background-color: #303033;
   border-radius: 30px;
 }
 
-.open{
+.nft_asset_imgs::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.nft_asset_imgs::-webkit-scrollbar-thumb {
+  background-color: #303033;
+  border-radius: 30px;
+}
+
+.open {
   width: 45%;
 }
 
-
-
 /* Hari styling */
 
-
-@media only screen and (min-width:501px) {
-  .scrolling::-webkit-scrollbar{
-    width: .5rem;
+@media only screen and (min-width: 501px) {
+  .scrolling::-webkit-scrollbar {
+    width: 0.5rem;
   }
-  
-  .scrolling::-webkit-scrollbar-thumb{
+
+  .scrolling::-webkit-scrollbar-thumb {
     background-color: #303033;
     border-radius: 30px;
   }
-  
 }
 
-@media only screen and (max-width:550px) {
-  .table_head,.table_row{
+@media only screen and (max-width: 550px) {
+  .table_head,
+  .table_row {
     width: 30rem;
   }
-  
 }
 
-
-  @media only screen and(max-width:500px){
-    .scrolling::-webkit-scrollbar{
-      width: 3px;
-    }
+@media only screen and(max-width:500px) {
+  .scrolling::-webkit-scrollbar {
+    width: 3px;
   }
-    
-
+}
