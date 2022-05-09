@@ -1,5 +1,10 @@
+import { useLazyQuery } from '@apollo/client';
+import { useEffect } from 'react';
 import type { LorePoiFragmentFragment } from '@/generated/graphql';
+import { getRealmQuery, getCryptQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
+import { resources } from '../../../util/resources';
+import { theOrders } from '../../../util/theOrders';
 
 const pois = {
   1: { name: 'Scrolls', class: 'bg-red-500' },
@@ -29,10 +34,10 @@ export const LorePOI = ({
   // pois,
   poisLoading,
 }: LorePOIProps) => {
-  const { openDetails, getPoiName } = useUIContext();
+  const { openDetails } = useUIContext();
 
   const openSideBar = () => {
-    const openDetailsName = pois[poiId].openDetailsName;
+    const openDetailsName = pois[poiId]?.openDetailsName;
     if (assetId && openDetailsName) {
       openDetails(openDetailsName, assetId);
     }
@@ -42,14 +47,58 @@ export const LorePOI = ({
   //   return null;
   // }
 
+  let poiName;
+  let loadQuery = false;
+  let query = getRealmQuery;
+  let variablesParams = { id: assetId };
+
+  // change the useLazyQuery params if needed
+  if (poiId == ('2000' || 'crypt')) {
+    query = getCryptQuery;
+    variablesParams = { id: assetId };
+  }
+
+  const [load, { data }] = useLazyQuery(query, {
+    variables: variablesParams,
+  });
+
+  // actually set the poiName
+  switch (poiId) {
+    case '1000' || 'realm':
+      loadQuery = true;
+      poiName = data?.realm?.name;
+      break;
+    case '1001' || 'order':
+      poiName = 'the Order of ' + theOrders[parseInt(assetId)]?.name;
+      break;
+    case '1002' || 'resource':
+      poiName = resources[parseInt(assetId)]?.trait;
+      break;
+    case '1003' || 'wonder':
+      loadQuery = true;
+      poiName = data?.realm?.wonder ? data?.realm?.wonder : 'unlinked wonder';
+      break;
+    case '2000' || 'crypt':
+      loadQuery = true;
+      poiName = data?.dungeon?.name;
+      break;
+  }
+
+  // only call useLazyQuery if needed
+  useEffect(() => {
+    if (loadQuery) {
+      load();
+    }
+  }, []);
+
   return (
     <button
       className={`rounded-md font-normal underline inline-flex mb-1`}
       onClick={openSideBar}
     >
-      {pois ? pois[poiId]?.name : null}
+      {pois && !poiName ? pois[poiId]?.name : null}
+      {poiName}
       {assetId ? `[${assetId}]` : null}
-      {getPoiName(poiId, assetId)}
     </button>
   );
 };

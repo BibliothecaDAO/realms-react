@@ -72,7 +72,6 @@ interface UI {
   isDisplayLarge: boolean;
   selectedModal: ModalType;
   setModal: (ModalType) => void;
-  getPoiName: (poiId: string, id: string) => string;
 }
 
 const UIContext = createContext<UI>(null!);
@@ -266,25 +265,6 @@ function useUI(): UI {
     setSelectedId(assetId);
   };
 
-  const getPoiName = (poiId: string, id: string) => {
-    let intId;
-    if (poiId == '1000') {
-      intId = parseInt(id);
-      if (intId > 0 && intId < 8001) {
-        return ' - ' + realms.features[intId].properties.name;
-      }
-    } else if (poiId == '2000') {
-      intId = parseInt(id);
-      if (intId > 0 && intId < 8784) {
-        const res = crypts.features.filter(
-          (c) => c.properties.tokenId == intId
-        );
-        return ' - ' + res[0].properties.environment;
-      }
-    }
-    return '';
-  };
-
   const setSelectedAssetType = (assetType: AssetType) =>
     setSelectedAssetFilter(assetFilterByType(assetType));
 
@@ -331,7 +311,6 @@ function useUI(): UI {
     isDisplayLarge,
     selectedModal,
     setModal,
-    getPoiName,
   };
 }
 
