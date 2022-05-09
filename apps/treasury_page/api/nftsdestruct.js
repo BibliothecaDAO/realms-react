@@ -30,22 +30,28 @@ function destructList(data) {
     newnftlist.push(map);
   }
 
-  return newnftlist;
+  const finalList = newnftlist.filter(
+    (nfts) => nfts.name === 'Realms (for Adventurers)'
+  );
+
+  return finalList;
 }
 
 function nftitems(data) {
   result = data.result;
   arr = [];
   result.forEach((res) => {
-    token_id = res.token_id;
-    token_name = res.name;
-    meta = res.metadata;
-    nft = {};
-    obj = JSON.parse(meta);
-    nft.nftname = obj.name;
-    nft.tokenid = token_id;
-    nft.tokenname = token_name;
-    arr.push(nft);
+    if (res.name === 'Realms (for Adventurers)') {
+      token_id = res.token_id;
+      token_name = res.name;
+      meta = res.metadata;
+      nft = {};
+      obj = JSON.parse(meta);
+      nft.nftname = obj?.name;
+      nft.tokenid = token_id;
+      nft.tokenname = token_name;
+      arr.push(nft);
+    }
   });
   return arr;
 }
