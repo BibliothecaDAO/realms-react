@@ -64,21 +64,26 @@ export const LorePOI = ({
 
   // actually set the poiName
   switch (poiId) {
-    case '1000' || 'realm':
+    case '1000':
+    case 'realm':
       loadQuery = true;
       poiName = data?.realm?.name;
       break;
-    case '1001' || 'order':
+    case '1001':
+    case 'order':
       poiName = 'the Order of ' + theOrders[parseInt(assetId)]?.name;
       break;
-    case '1002' || 'resource':
+    case '1002':
+    case 'resource':
       poiName = resources[parseInt(assetId)]?.trait;
       break;
-    case '1003' || 'wonder':
+    case '1003':
+    case 'wonder':
       loadQuery = true;
       poiName = data?.realm?.wonder ? data?.realm?.wonder : 'unlinked wonder';
       break;
-    case '2000' || 'crypt':
+    case '2000':
+    case 'crypt':
       loadQuery = true;
       poiName = data?.dungeon?.name;
       break;
