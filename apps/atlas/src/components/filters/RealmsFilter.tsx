@@ -6,43 +6,14 @@ import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
+import { useUIContext } from '@/hooks/useUIContext';
 
 type RealmsFilterProps = {
-  isBridge: boolean;
-  toggleSelectAllRealms: () => void;
+  isYourRealms: boolean;
 };
 
 export function RealmsFilter(props: RealmsFilterProps) {
   const { state, actions } = useRealmContext();
-
-  let bridgeRow;
-
-  if (props.isBridge) {
-    bridgeRow = (
-      <div className={`flex justify-between mb-3`}>
-        <div>
-          <Button
-            variant="primary"
-            size="sm"
-            className={clsx('')}
-            onClick={props.toggleSelectAllRealms}
-          >
-            Start bridging to StarkNet
-          </Button>
-        </div>
-        <div>
-          <Button
-            variant="secondary"
-            size="sm"
-            className={clsx('')}
-            onClick={props.toggleSelectAllRealms}
-          >
-            {state.selectedRealms.length > 0 ? `Deselect All` : `Select All`}
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -86,7 +57,6 @@ export function RealmsFilter(props: RealmsFilterProps) {
           />
         </div>
       </div>
-      {bridgeRow}
     </div>
   );
 }

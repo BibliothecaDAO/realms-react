@@ -1,13 +1,13 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
-import { SelectableRealm } from '@/components/tables/SelectableRealm';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
-  isBridge?: boolean;
+  isYourRealms?: boolean;
 }
 const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
@@ -22,6 +22,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     military: ['Offence', 'Defence', 'Last Attacked'],
   };
   const { account } = useWalletContext();
+  const { account: starkAccount } = useStarknet();
   const {
     openDetails,
     toggleMenuType,
@@ -30,7 +31,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     togglePanelType,
   } = useUIContext();
   const {
-    state: { favouriteRealms, selectedRealms },
+    state: { favouriteRealms },
     actions,
   } = useRealmContext();
 
@@ -39,7 +40,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const isBridgedViaCarrack = (realm: RealmFragmentFragment) =>
     realm.owner === JOURNEY_2_ADDRESS;
   const isYourRealm = (realm: RealmFragmentFragment) =>
-    account && (account === realm.owner || account === realm.bridgedOwner);
+    (account &&
+      (account.toLowerCase() === realm.owner ||
+        account.toLowerCase() === realm.bridgedOwner)) ||
+    (starkAccount &&
+      (starkAccount.toLowerCase() === realm.ownerL2 ||
+        starkAccount.toLowerCase() === realm.settledOwner));
 
   const openRealmDetails = (realmId: number) => {
     openDetails('realm', realmId.toString());
@@ -48,27 +54,56 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     }
   };
 
+  const realmStatus = (realm: RealmFragmentFragment) => {
+    if (realm.bridgedOwner) {
+      return 'Bridge Pending';
+    }
+    if (realm.settledOwner) {
+      return 'Settled L2';
+    }
+    if (realm.ownerL2) {
+      return 'Unsettled L2';
+    } else {
+      return 'Layer 1';
+    }
+  };
+
   const isFavourite = (realm: RealmFragmentFragment) =>
     favouriteRealms.indexOf(realm.realmId) > -1;
+  let bridgeRow;
 
-  if (props.isBridge) {
-    return (
-      <div>
-        {props.realms &&
-          props.realms.map((realm: RealmFragmentFragment, index) => (
-            <SelectableRealm
-              key={index}
-              realm={realm}
-              actions={actions}
-              isSelected={selectedRealms.indexOf(realm.realmId) > -1}
-            />
-          ))}
+  if (props.isYourRealms) {
+    bridgeRow = (
+      <div className={`justify-between mb-3`}>
+        <div className="flex">
+          You have X Realms on L1 (Ethereum)
+          <Button
+            variant="primary"
+            size="sm"
+            className={clsx('')}
+            onClick={() => toggleMenuType('bridgeRealms')}
+          >
+            Bridge L1 {'><'} L2
+          </Button>
+        </div>
+        <div className="flex">
+          You have X unsettled Realms
+          <Button
+            variant="primary"
+            size="sm"
+            className=""
+            onClick={() => toggleMenuType('settleRealms')}
+          >
+            Settle Realms
+          </Button>
+        </div>
       </div>
     );
   }
-
   return (
     <div>
+      {bridgeRow}
+
       {props.realms &&
         props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
@@ -88,6 +123,10 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
               </h4>
+              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-blue-400 rounded sm:block">
+                {realmStatus(realm)}
+              </h4>
+
               <div className="flex ml-auto ">
                 <span className="self-center tracking-widest uppercase">
                   {realm.orderType.toLowerCase().replace('_', ' ')}
@@ -163,6 +202,30 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               >
                 fly to
               </Button>
+              {isYourRealm(realm) && (
+                <div>
+                  {realmStatus(realm) === 'Layer 1' && (
+                    <Button
+                      size="xs"
+                      variant="secondary"
+                      className="w-full uppercase"
+                      onClick={() => toggleMenuType('bridgeRealms')}
+                    >
+                      Bridge Realm
+                    </Button>
+                  )}
+                  {realmStatus(realm) === 'Unsettled L2' && (
+                    <Button
+                      size="xs"
+                      variant="secondary"
+                      className="w-full uppercase"
+                      onClick={() => toggleMenuType('settleRealms')}
+                    >
+                      Settle Realm
+                    </Button>
+                  )}
+                </div>
+              )}
               <Button
                 onClick={() => openRealmDetails(realm.realmId)}
                 variant="secondary"

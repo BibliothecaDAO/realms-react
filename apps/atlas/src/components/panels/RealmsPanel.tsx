@@ -1,6 +1,7 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import { useStarknet } from '@starknet-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
@@ -16,6 +17,7 @@ export const RealmsPanel = () => {
   const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
     useUIContext();
   const { account } = useWalletContext();
+  const { account: starkAccount } = useStarknet();
   const { state, actions } = useRealmContext();
 
   const limit = 50;
@@ -41,7 +43,7 @@ export const RealmsPanel = () => {
   ]);
 
   const isRealmPanel = selectedPanel === 'realm';
-  const tabs = ['Your Realms', 'All Realms', 'Favourite Realms', 'Bridge'];
+  const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
   const variables = useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
@@ -65,10 +67,12 @@ export const RealmsPanel = () => {
       filter.realmId = { in: [...state.favouriteRealms] };
     }
 
-    if (state.selectedTab === 0 || state.selectedTab === 3) {
+    if (state.selectedTab === 0) {
       filter.OR = [
         { owner: { equals: account?.toLowerCase() } },
         { bridgedOwner: { equals: account?.toLowerCase() } },
+        { ownerL2: { equals: starkAccount?.toLowerCase() } },
+        { settledOwner: { equals: starkAccount?.toLowerCase() } },
       ];
     }
 
@@ -110,11 +114,6 @@ export const RealmsPanel = () => {
 
   const hasNoResults = () => !loading && (data?.getRealms?.length ?? 0) === 0;
 
-  const toggleSelectAllRealms = () =>
-    actions.toggleSelectAllRealms(
-      (data?.getRealms || []).map((realm) => realm.realmId)
-    );
-
   return (
     <BasePanel open={isRealmPanel}>
       <div className="flex justify-between pt-2">
@@ -141,10 +140,7 @@ export const RealmsPanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <RealmsFilter
-          isBridge={state.selectedTab === 3}
-          toggleSelectAllRealms={toggleSelectAllRealms}
-        />
+        <RealmsFilter isYourRealms={state.selectedTab === 0} />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
@@ -153,7 +149,7 @@ export const RealmsPanel = () => {
         )}
         <RealmOverviews
           realms={data?.getRealms ?? []}
-          isBridge={state.selectedTab === 3}
+          isYourRealms={state.selectedTab === 0}
         />
       </div>
 

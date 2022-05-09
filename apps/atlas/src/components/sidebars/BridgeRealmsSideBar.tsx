@@ -42,6 +42,12 @@ export const BridgeRealmsSideBar = () => {
     state: { selectedRealms },
     actions,
   } = useRealmContext();
+
+  const toggleSelectAllRealms = () =>
+    actions.toggleSelectAllRealms(
+      (data?.getRealms || []).map((realm) => realm.realmId)
+    );
+
   return (
     <BaseSideBar open={selectedMenuType === 'bridgeRealms' && showDetails}>
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
@@ -54,7 +60,15 @@ export const BridgeRealmsSideBar = () => {
               </Button>
             </div>
           </div>
-
+          <div className="flex justify-end mb-6">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={toggleSelectAllRealms}
+            >
+              {selectedRealms.length > 0 ? `Deselect All` : `Select All`}
+            </Button>
+          </div>
           {data &&
             data.getRealms &&
             data.getRealms.map((realm: RealmFragmentFragment, index) => (
