@@ -153,10 +153,10 @@ export const CreateLoreEntity = () => {
 
   return (
     <div>
-      <div className="bg-black/40 p-2 rounded flex flex-col gap-1 mb-4">
+      <div className="flex flex-col gap-1 p-2 mb-4 rounded bg-black/40">
         <div className={`text-white text-sm uppercase pl-1`}>Title</div>
         <input
-          className="w-full px-4 py-4 leading-tight text-white font-bold text-xl focus:outline-none rounded appearance-none bg-gray-800/80 tracking-widest"
+          className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-800/80"
           type="text"
           value={entityTitle}
           onChange={(ev) => setEntityTitle(ev.target.value)}
@@ -164,6 +164,10 @@ export const CreateLoreEntity = () => {
         />
         <div className={`text-white text-sm uppercase pl-1 mt-2`}>Content</div>
 
+        <p className={`bg-gray-800/80 text-white text-xs pl-1 mt-2`}>
+          supported 🔗: 1/(scroll), 1000/realm, 1001/order, 1002/resource,
+          1003/wonder, 2000/crypt, 3000/(lord/lady)
+        </p>
         <CodeMirror
           value={editorValue}
           height="auto"
