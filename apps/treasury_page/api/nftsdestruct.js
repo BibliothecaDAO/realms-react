@@ -30,7 +30,11 @@ function destructList(data) {
     newnftlist.push(map);
   }
 
-  return newnftlist;
+  const finalList = newnftlist.filter(
+    (nfts) => nfts.name === 'Realms (for Adventurers)'
+  );
+
+  return finalList;
 }
 
 function nftitems(data) {
@@ -42,7 +46,7 @@ function nftitems(data) {
     meta = res.metadata;
     nft = {};
     obj = JSON.parse(meta);
-    nft.nftname = obj.name;
+    nft.nftname = obj?.name;
     nft.tokenid = token_id;
     nft.tokenname = token_name;
     arr.push(nft);
