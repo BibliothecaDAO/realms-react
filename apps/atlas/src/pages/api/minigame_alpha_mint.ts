@@ -1,5 +1,6 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { AccountInterface } from 'starknet';
 import { ec, encode, Account } from 'starknet';
 import { ElementToken, MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import { fetchLordsBalance, fetchNumberRealmsStaked } from '@/util/fetchL1';
@@ -47,7 +48,7 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
   );
 
-  let signerAccount;
+  let signerAccount: AccountInterface;
   try {
     const privKey = ec.getKeyPair(minterPrivKey);
     const account =
@@ -96,11 +97,17 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
   ];
 
   try {
-    const result = await signerAccount.execute({
-      contractAddress: elementBalancerModule,
-      entrypoint,
-      calldata: mintArgs,
-    });
+    const result = await signerAccount.execute(
+      {
+        contractAddress: elementBalancerModule,
+        entrypoint,
+        calldata: mintArgs,
+      },
+      undefined,
+      {
+        maxFee: 0,
+      }
+    );
     res.send(JSON.stringify(result));
     return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,7 +125,7 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    handleMint(req, res);
+    await handleMint(req, res);
   } catch (e: any) {
     res.send(
       JSON.stringify({
