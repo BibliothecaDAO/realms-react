@@ -6,6 +6,7 @@ export const poiRemarkPlugin = () => {
 
     for (const k in children) {
       const elem = children[k] as any;
+      console.log(elem);
 
       // Recursive
       if (elem.children) {
@@ -14,6 +15,8 @@ export const poiRemarkPlugin = () => {
         continue;
       }
 
+      console.log(newChildren);
+
       // Pass non-text
       if (elem.type !== 'text') {
         continue;
@@ -21,15 +24,19 @@ export const poiRemarkPlugin = () => {
 
       const allFound = elem.value.match(rule);
 
+      console.log(allFound);
+
       if (allFound) {
         let tempTail = elem.value;
 
         // Split string into POIs and text
         for (const j in allFound) {
           const found = allFound[j];
-
-          const [head, tail] = tempTail.split(found);
-          tempTail = tail;
+          console.log(found);
+          const [head, ...tail] = tempTail.split(found);
+          // edge case: two same `found` strings in the same elem can break the splitting
+          // fix: the `join` operation introduces the second `found` again
+          tempTail = tail.join(found);
 
           const poiSpl = found
             .replace('$', '')
