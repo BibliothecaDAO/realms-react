@@ -13,7 +13,7 @@ export const LoreScrollEntity = ({ entity }) => {
   const { data: pois, loading: poisLoading } = useGetLorePoisQuery();
 
   return (
-    <div className={`p-6 my-4 mb-12 bg-black rounded-md`}>
+    <div className={`p-6 my-2 mb-1 bg-black rounded-md`}>
       <h1 className={`text-6xl font-bold mb-6`}>{entity.revisions[0].title}</h1>
 
       {/* {JSON.stringify(loreEntity?.revisions[0])} */}

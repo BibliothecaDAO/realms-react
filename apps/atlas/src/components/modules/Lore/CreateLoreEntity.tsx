@@ -153,10 +153,10 @@ export const CreateLoreEntity = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-1 p-2 mb-4 rounded bg-black/40">
-        <div className={`text-white text-sm uppercase pl-1`}>Title</div>
+      <div className="flex flex-col gap-1 p-2 mb-2 rounded bg-black/40">
+        <div className={`text-white text-sm uppercase pl-1 mt-1`}>Title</div>
         <input
-          className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-800/80"
+          className="w-full px-4 py-4 mt-2 text-xl font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-800/80"
           type="text"
           value={entityTitle}
           onChange={(ev) => setEntityTitle(ev.target.value)}
@@ -177,18 +177,6 @@ export const CreateLoreEntity = () => {
             setEditorValue(value);
           }}
         />
-
-        <div className={`mt-2`}>
-          <Button
-            variant="primary"
-            size="sm"
-            disabled={creatingStep > 0 || !starknet.account}
-            onClick={createEntity}
-            loading={creatingStep > 0}
-          >
-            Create Scroll
-          </Button>
-        </div>
 
         <div
           className={clsx(`mt-4 relative`, {
@@ -284,12 +272,28 @@ export const CreateLoreEntity = () => {
         </div>
       </div>
 
-      <div className={`mt-8`}>
-        <LoreScrollEntity
-          entity={{
-            revisions: [{ title: entityTitle, markdown: editorValue }],
-          }}
-        />
+      <div className="flex flex-col gap-1 p-2 mb-4 rounded bg-black/40">
+        <div className={`text-white text-sm uppercase pl-1 mt-1`}>Preview</div>
+        <div>
+          <LoreScrollEntity
+            entity={{
+              revisions: [{ title: entityTitle, markdown: editorValue }],
+            }}
+          />
+        </div>
+        <div>
+          <Button
+            variant={
+              creatingStep > 0 || !starknet.account ? 'secondary' : 'primary'
+            }
+            size="sm"
+            disabled={creatingStep > 0 || !starknet.account}
+            onClick={createEntity}
+            loading={creatingStep > 0}
+          >
+            {starknet.account ? 'Create scroll' : 'Connect starknet wallet'}
+          </Button>
+        </div>
       </div>
     </div>
   );
