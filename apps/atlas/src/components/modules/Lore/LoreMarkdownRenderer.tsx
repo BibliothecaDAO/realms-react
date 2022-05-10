@@ -26,7 +26,7 @@ export const LoreMarkdownRenderer = ({
           return <LorePOI {...props} pois={pois} poisLoading={poisLoading} />;
         },
       }}
-      className={`prose dark:prose-invert prose-sm text-2xl `}
+      className={`prose prose-stone prose-sm text-2xl brightness-200`}
     >
       {children}
     </ReactMarkdown>
