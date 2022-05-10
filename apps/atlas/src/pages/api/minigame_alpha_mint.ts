@@ -1,7 +1,7 @@
 import { utils } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { AccountInterface } from 'starknet';
-import { ec, encode, Account } from 'starknet';
+import { ec, Account } from 'starknet';
 import { ElementToken, MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import { fetchLordsBalance, fetchNumberRealmsStaked } from '@/util/fetchL1';
 import { messageKey } from '@/util/messageKey';
@@ -44,9 +44,7 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const minterPrivKey = encode.addHexPrefix(
-    process.env.ELEMENTS_MINTER_PRIVATE_KEY as string
-  );
+  const minterPrivKey = process.env.ELEMENTS_MINTER_PRIVATE_KEY as string;
 
   let signerAccount: AccountInterface;
   try {
