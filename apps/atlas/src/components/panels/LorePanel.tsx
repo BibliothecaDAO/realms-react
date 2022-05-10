@@ -160,7 +160,8 @@ export const LorePanel = () => {
         )}
       </div>
 
-      {hasNoResults() && (
+      {/* don't show feedback and menu at the "create" tab */}
+      {hasNoResults() && state.selectedTab != 3 && (
         <div className="flex flex-col items-center justify-center gap-8 my-8">
           <h2>No results.</h2>
           <div className="flex gap-4">
