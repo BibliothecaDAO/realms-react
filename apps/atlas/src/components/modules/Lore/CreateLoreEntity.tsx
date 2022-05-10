@@ -166,7 +166,7 @@ export const CreateLoreEntity = () => {
 
         <p className={`bg-gray-800/80 text-white text-xs pl-1 mt-2`}>
           supported 🔗: 1/(scroll), 1000/realm, 1001/order, 1002/resource,
-          1003/wonder, 2000/crypt, 3000/(lord/lady)
+          1003/wonder, 1004/(AMM), 2000/crypt, 3000/(lord/lady)
         </p>
         <CodeMirror
           value={editorValue}
