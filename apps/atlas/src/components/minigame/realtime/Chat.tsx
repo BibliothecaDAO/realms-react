@@ -3,6 +3,7 @@ import { useStarknet } from '@starknet-react/core';
 import type { Types } from 'ably';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
+import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
 
@@ -35,9 +36,23 @@ const ChatComponent = (props: ChatComponentProps) => {
   const { account } = useStarknet();
 
   const gameVars = useGameVariables();
+  const getGameStatus = useGameStatus({
+    gameIdx: gameVars.data?.gameIdx,
+  });
+
+  // If the game is active, use the current game index.
+  // Else the balls should show the total minted for the next game
+  let gameIdx;
+  if (gameVars.data && getGameStatus.data) {
+    if (getGameStatus.data == 'active') {
+      gameIdx = gameVars.data.gameIdx;
+    } else {
+      gameIdx = gameVars.data.gameIdx + 1;
+    }
+  }
 
   const tokenBalance = useTokenBalances({
-    gameIdx: gameVars.data?.gameIdx,
+    gameIdx,
   });
 
   const [channel] = useChannel(props.channelName, (message) => {
@@ -65,6 +80,7 @@ const ChatComponent = (props: ChatComponentProps) => {
   }, [receivedMessages]);
 
   const sendChatMessage = (messageText) => {
+    console.log('Sending chat message for side', tokenBalance.side);
     channel.publish({
       name: 'chat-message',
       data: {
