@@ -45,6 +45,13 @@ const ChatComponent = (props: ChatComponentProps) => {
     setMessages((msgs) => [...msgs.slice(-199), message]);
   });
 
+  useEffect(() => {
+    channel.history({ limit: 20 }, (err, result) => {
+      if (result?.items) {
+        setMessages(result.items);
+      }
+    });
+  }, [channel]);
   const [presenceData, updateStatus] = usePresence(props.channelName);
 
   useEffect(() => {
