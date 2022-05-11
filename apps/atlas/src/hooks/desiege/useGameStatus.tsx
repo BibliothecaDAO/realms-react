@@ -20,7 +20,8 @@ const useGameStatus = (args: UseGameStatusArgs) => {
       refetchOnMount: false,
       // When game starts, we need to poll the server for the game status
       // to change the UI. 1 minute is short enough and long enough to not hit the gateway too often.
-      staleTime: 1000 * 60 * 1, // 1 minute
+      refetchInterval: 1000 * 60,
+      staleTime: 1000 * 60, // 1 minute
     }
   );
 };
