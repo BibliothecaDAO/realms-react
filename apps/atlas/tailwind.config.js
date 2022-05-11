@@ -132,6 +132,34 @@ module.exports = {
           point: '#B75700',
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#616161',
+            h1: {
+              color: '#616161',
+            },
+            h2: {
+              color: '#616161',
+            },
+            h3: {
+              color: '#616161',
+            },
+            h4: {
+              color: '#616161',
+            },
+            button: {
+              color: '#74787a',
+              '&:hover': {
+                color: '#2e82ff',
+              },
+            },
+            strong: {
+              color: '#74787a',
+            },
+          },
+        },
+      },
     },
   },
   plugins: [
