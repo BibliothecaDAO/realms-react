@@ -1,4 +1,6 @@
 import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
+import { CheckCircleIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import type { Types } from 'ably';
 import classNames from 'classnames';
@@ -29,9 +31,8 @@ const ChatComponent = (props: ChatComponentProps) => {
   const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  const [messagesFilter, setMessagesFilter] = useState<'light' | 'dark' | '*'>(
-    '*'
-  );
+  const [messagesFilterOnlySide, setMessagesFilterOnlySide] =
+    useState<boolean>(false);
 
   const { account } = useStarknet();
 
@@ -54,14 +55,18 @@ const ChatComponent = (props: ChatComponentProps) => {
   const tokenBalance = useTokenBalances({
     gameIdx,
   });
-
-  const [channel] = useChannel(props.channelName, (message) => {
+  const resolvedChannelName =
+    messagesFilterOnlySide && tokenBalance.side
+      ? `${props.channelName}-${tokenBalance.side}`
+      : props.channelName;
+  ``;
+  const [channel] = useChannel(resolvedChannelName, (message) => {
     // 200 is the max number of messages to keep in the chat
     setMessages((msgs) => [...msgs.slice(-199), message]);
   });
 
   useEffect(() => {
-    channel.history({ limit: 20 }, (err, result) => {
+    channel.history({ limit: 40 }, (err, result) => {
       if (result?.items) {
         setMessages(result.items);
       }
@@ -132,6 +137,27 @@ const ChatComponent = (props: ChatComponentProps) => {
         </span>
         <span className="text-xs text-gray-600">
           ({presenceData.length} online)
+          {tokenBalance.side && (
+            <button
+              onClick={() => setMessagesFilterOnlySide((prev) => !prev)}
+              className={classNames(
+                'bg-gradient-to-t ml-2 rounded-sm px-1 text-sm',
+                messagesFilterOnlySide && tokenBalance.side == 'light'
+                  ? LightGradient
+                  : null,
+                messagesFilterOnlySide && tokenBalance.side == 'dark'
+                  ? DarkGradient
+                  : null
+              )}
+            >
+              {messagesFilterOnlySide ? (
+                <SolidCircleIcon className="inline-block w-3" />
+              ) : (
+                <CheckCircleIcon className="inline-block w-3" />
+              )}{' '}
+              {tokenBalance.side?.toUpperCase()} Only
+            </button>
+          )}
         </span>
       </div>
       <div className="h-32 p-2 overflow-y-scroll bg-gray-200 rounded-md max-h-32">
