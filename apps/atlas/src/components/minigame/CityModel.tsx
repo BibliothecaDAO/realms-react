@@ -142,7 +142,7 @@ function CityModel(props: TowerProps) {
                   />
                 </Html>
               ) : null}
-              {props.gameStatus == 'active' ? (
+              {props.gameStatus == 'active' || props.gameStatus == 'expired' ? (
                 <Html
                   position={[4.5, 3, 0]}
                   className={classNames(
