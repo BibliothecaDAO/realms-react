@@ -21,7 +21,11 @@ export const BaseModal = () => {
   let component;
 
   if (selectedModal.type === 'lore-entity') {
-    component = <LoreEntityModal entityId={parseInt(selectedModal.props.id)} />;
+    const props: any = selectedModal.props;
+    if (!props) {
+      return null;
+    }
+    component = <LoreEntityModal entityId={parseInt(props.id)} />;
   }
 
   return (

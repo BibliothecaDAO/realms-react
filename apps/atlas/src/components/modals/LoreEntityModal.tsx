@@ -1,24 +1,6 @@
-import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useEffect, useMemo, useState } from 'react';
-// import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import ReactMarkdown from 'react-markdown';
-import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
-import { useRealmContext } from '@/context/RealmContext';
-import type { LoreEntityFragmentFragment } from '@/generated/graphql';
-import {
-  useGetLoreEntityQuery,
-  RealmTraitType,
-  useGetLoreEntitiesQuery,
-  useGetRealmsQuery,
-} from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
-import { LoreMarkdownRenderer } from '../modules/Lore/LoreMarkdownRenderer';
-import { LorePOI } from '../modules/Lore/LorePOI';
+import { useGetLoreEntityQuery } from '@/generated/graphql';
 import { LoreScrollEntity } from '../modules/Lore/LoreScrollEntity';
-import { BaseModal } from './BaseModal';
 
 export const LoreEntityModal = ({ entityId }) => {
   const { data, loading } = useGetLoreEntityQuery({
