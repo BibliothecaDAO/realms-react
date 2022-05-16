@@ -6,6 +6,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
+import useSettling from '@/hooks/settling/useSettling';
 import { useUIContext } from '@/hooks/useUIContext';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
@@ -16,6 +17,7 @@ export function AccountPanel() {
   const { state, actions } = useJourneyContext();
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
+  const { mintRealm } = useSettling();
   const { account, connect, connectors, disconnect } = useStarknet();
   const { togglePanelType, toggleMenuType, selectedPanel } = useUIContext();
   const resourceIds = [
@@ -27,6 +29,7 @@ export function AccountPanel() {
     { id: 18, amount: 20 },
     { id: 22, amount: 10 },
   ];
+  const [selectedId, setSelectedId] = useState(0);
   useEffect(() => {
     console.log(state);
   }, [state]);
@@ -93,6 +96,26 @@ export function AccountPanel() {
             </Button>
           </p>
           <p>L2 Realms Settled: 10</p>
+          <h4>Mint Realms</h4>
+          <input
+            placeholder="Type Id"
+            type={'number'}
+            className="w-3/12 px-4 py-4 text-black rounded-l bg-white/80"
+            value={selectedId}
+            onChange={(e) => {
+              setSelectedId(parseInt(e.target.value));
+            }}
+            min="1"
+            max="8000"
+          />
+          <Button
+            className="ml-8"
+            variant="primary"
+            size="sm"
+            onClick={() => mintRealm(selectedId)}
+          >
+            Settle Realms
+          </Button>
           <h2 className="mt-12">Claims</h2>
           <h3>Resources</h3>
           <div className="flex flex-wrap font-semibold tracking-widest uppercase">
@@ -123,7 +146,6 @@ export function AccountPanel() {
             Claim Resources
           </Button>
           <h3 className="mt-6 mb-3">Lords</h3>
-
           <div className="flex align-items-center">
             <span className="flex px-4 text-4xl text-center">
               <Lords className="w-12 mr-4" />

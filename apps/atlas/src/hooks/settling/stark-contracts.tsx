@@ -7,6 +7,7 @@ import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
+import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
 /**
@@ -17,7 +18,7 @@ export function useSettlingContract(): UseContract {
   return useContract({
     abi: Settling as Abi,
     address:
-      '0x07416e6b5d7470a75ffe1eb7a3b6aa6174a4bec2d8598cddfc3a9c7d2d9457bc',
+      '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356',
   });
 }
 /**
@@ -28,7 +29,7 @@ export function useResourcesContract(): UseContract {
   return useContract({
     abi: Resources as Abi,
     address:
-      '0x04603ff9190233c0b7b52844b31c5f3f028dd906f5be1bab164d8d7ca144aa9a',
+      '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd',
   });
 }
 
@@ -40,7 +41,7 @@ export function useBuildingContract(): UseContract {
   return useContract({
     abi: Building as Abi,
     address:
-      '0x07f2efce72148758611e132e72f3ba36b5be28081d7f742df96f1d0295e3fa29',
+      '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
   });
 }
 
@@ -52,7 +53,7 @@ export function useWonderContract(): UseContract {
   return useContract({
     abi: Wonder as Abi,
     address:
-      '0x061a93b3e16efee381e7cd1532893bf79c4812d217548576900bb236a182b539',
+      '0x05c292e4f4ea5ab160647ef2ce002e702f149af7370774839c0822a6c9b29361',
   });
 }
 
@@ -64,7 +65,7 @@ export function useCombatContract(): UseContract {
   return useContract({
     abi: Combat as Abi,
     address:
-      '0x01f1a7ce51bfd55b74c00cab5113a70f673c5a5cd47e6bc60a8879e69ec8ea1c',
+      '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',
   });
 }
 
@@ -76,6 +77,17 @@ export function useResources1155Contract(): UseContract {
   return useContract({
     abi: Resources1155 as Abi,
     address:
-      '0x073f484a7e9ea443933bb2a2b086f68bd11e4ade422640cebebac5fe3e41e2c9',
+      '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70',
+  });
+}
+/**
+ * Load the Realms Resources 721 contract.
+ * @returns The `Realms` contract or undefined.
+ */
+export function useRealms721Contract(): UseContract {
+  return useContract({
+    abi: Realms721 as Abi,
+    address:
+      '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
   });
 }
