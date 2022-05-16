@@ -6,7 +6,7 @@ import { useResourcesContract } from '@/hooks/settling/stark-contracts';
 
 type Resources = {
   claim: () => void;
-  upgrade: () => void;
+  upgrade: (resourceId: number) => void;
   availableResources: AvailabeResources;
 };
 type AvailabeResources = {
@@ -62,9 +62,9 @@ const useResources = (args: useResourcesArgs): Resources => {
         args: [bnToUint256(toBN(args.token_id))],
       });
     },
-    upgrade: () => {
+    upgrade: (resourceId: number) => {
       upgradeResourcesAction.invoke({
-        args: [bnToUint256(toBN(args.token_id))],
+        args: [bnToUint256(toBN(args.token_id)), resourceId],
       });
     },
   };

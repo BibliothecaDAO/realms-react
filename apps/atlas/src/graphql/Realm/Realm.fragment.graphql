@@ -11,6 +11,7 @@ fragment RealmFragment on Realm {
   wonder
   resources {
     type
+    level
   }
   traits {
     type

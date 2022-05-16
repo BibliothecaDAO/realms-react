@@ -557,7 +557,6 @@ export type Mutation = {
   createOrUpdateRealm: Realm;
   createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
-  createOrUpdateWallet: Wallet;
   deleteEvent?: Maybe<Event>;
   deleteManyEvent: AffectedRowsOutput;
   reindexDesiege: Scalars['Boolean'];
@@ -593,10 +592,6 @@ export type MutationCreateOrUpdateRealmTraitArgs = {
 
 export type MutationCreateOrUpdateResourcesArgs = {
   data: ResourceInput;
-};
-
-export type MutationCreateOrUpdateWalletArgs = {
-  data: WalletInput;
 };
 
 export type MutationDeleteEventArgs = {
@@ -772,7 +767,6 @@ export type Query = {
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
   getWallet: Wallet;
-  getWallets: Array<Wallet>;
   groupByEvent: Array<EventGroupBy>;
 };
 
@@ -967,9 +961,11 @@ export enum RealmTraitType {
 export type Resource = {
   __typename?: 'Resource';
   id: Scalars['ID'];
+  level: Scalars['Int'];
   realm: Realm;
   realmId?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
+  upgrades: Array<Scalars['String']>;
 };
 
 export type ResourceInput = {
@@ -1129,13 +1125,10 @@ export type StringWithAggregatesFilter = {
 export type Wallet = {
   __typename?: 'Wallet';
   address: Scalars['String'];
-  id: Scalars['ID'];
-  realms: Array<Realm>;
-};
-
-export type WalletInput = {
-  address: Scalars['String'];
-  realms?: InputMaybe<RealmInput>;
+  realmsBridgedHeld: Scalars['Int'];
+  realmsL1Held: Scalars['Int'];
+  realmsL2Held: Scalars['Int'];
+  realmsSettledHeld: Scalars['Int'];
 };
 
 export type DesiegeFragmentFragment = {
@@ -1187,7 +1180,11 @@ export type GetRealmQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    resources?: Array<{
+      __typename?: 'Resource';
+      type: string;
+      level: number;
+    }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
@@ -1223,7 +1220,11 @@ export type GetRealmsQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    resources?: Array<{
+      __typename?: 'Resource';
+      type: string;
+      level: number;
+    }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
@@ -1250,7 +1251,11 @@ export type RealmFragmentFragment = {
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
-  resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+  resources?: Array<{
+    __typename?: 'Resource';
+    type: string;
+    level: number;
+  }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
     type: string;
@@ -1275,35 +1280,11 @@ export type GetWalletQuery = {
   __typename?: 'Query';
   getWallet: {
     __typename?: 'Wallet';
-    id: string;
-    realms: Array<{
-      __typename?: 'Realm';
-      realmId: number;
-      owner?: string | null;
-      bridgedOwner?: string | null;
-      ownerL2?: string | null;
-      settledOwner?: string | null;
-      name?: string | null;
-      rarityRank: number;
-      rarityScore: number;
-      orderType: string;
-      wonder?: string | null;
-      resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-      traits?: Array<{
-        __typename?: 'RealmTrait';
-        type: string;
-        qty: number;
-      }> | null;
-      buildings?: Array<{
-        __typename?: 'Building';
-        type?: string | null;
-      }> | null;
-      squads?: Array<{
-        __typename?: 'Squad';
-        action: string;
-        type: string;
-      }> | null;
-    }>;
+    address: string;
+    realmsL1Held: number;
+    realmsL2Held: number;
+    realmsSettledHeld: number;
+    realmsBridgedHeld: number;
   };
 };
 
@@ -1333,6 +1314,7 @@ export const RealmFragmentFragmentDoc = gql`
     wonder
     resources {
       type
+      level
     }
     traits {
       type
@@ -1530,13 +1512,13 @@ export type GetRealmsQueryResult = Apollo.QueryResult<
 export const GetWalletDocument = gql`
   query getWallet($address: String!) @api(name: starkIndexer) {
     getWallet(address: $address) {
-      id
-      realms {
-        ...RealmFragment
-      }
+      address
+      realmsL1Held
+      realmsL2Held
+      realmsSettledHeld
+      realmsBridgedHeld
     }
   }
-  ${RealmFragmentFragmentDoc}
 `;
 
 /**

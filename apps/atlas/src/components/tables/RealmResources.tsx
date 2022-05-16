@@ -13,7 +13,7 @@ type Row = {
 };
 
 export function RealmResources(props: RealmProps): ReactElement {
-  const { availableResources, claim } = useResources({
+  const { availableResources, claim, upgrade } = useResources({
     token_id: parseInt(props.realm.id),
   });
   // TODO - update live output
@@ -37,8 +37,12 @@ export function RealmResources(props: RealmProps): ReactElement {
       // totalOutput: 122,
       level: 1,
       build: (
-        <Button disabled variant="secondary" size="xs">
-          Upgrade [soon]
+        <Button
+          variant="secondary"
+          onClick={() => upgrade(parseInt(re))}
+          size="xs"
+        >
+          Upgrade
         </Button>
       ),
     };
