@@ -2,7 +2,8 @@ import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import useResources from '@/hooks/settling/useResources';
 import { findResourceName } from '@/util/resources';
-import type { RealmProps } from '../../types';
+
+import type { RealmsCardProps } from '../../types';
 type Row = {
   resource: ReactElement;
   baseOutput: number;
@@ -12,41 +13,43 @@ type Row = {
   build: ReactElement;
 };
 
-export function RealmResources(props: RealmProps): ReactElement {
+export function RealmResources(props: RealmsCardProps): ReactElement {
   const { availableResources, claim, upgrade } = useResources({
-    token_id: parseInt(props.realm.id),
+    token_id: props.realm.realmId,
   });
   // TODO - update live output
   const totalOutput = 120;
-  const mappedRowData: Row[] = props.realm.resourceIds.map((re, index) => {
-    return {
-      resource: (
-        <span className="flex">
-          <ResourceIcon
-            resource={findResourceName(re)?.trait.replace(' ', '') || ''}
-            size="md"
-            className="mr-4"
-          />
-          <span className="self-center font-semibold tracking-widest uppercase">
-            {findResourceName(re)?.trait || ''}
+  const mappedRowData: Row[] = (props.realm.resources as any).map(
+    (re, index) => {
+      return {
+        resource: (
+          <span className="flex">
+            <ResourceIcon
+              resource={re.type.replace(' ', '') || ''}
+              size="md"
+              className="mr-4"
+            />
+            <span className="self-center font-semibold tracking-widest uppercase">
+              {re.type || ''}
+            </span>
           </span>
-        </span>
-      ),
-      baseOutput: 100,
-      claimableResources: availableResources.daysAccrued * 120,
-      // totalOutput: 122,
-      level: 1,
-      build: (
-        <Button
-          variant="secondary"
-          onClick={() => upgrade(parseInt(re))}
-          size="xs"
-        >
-          Upgrade
-        </Button>
-      ),
-    };
-  });
+        ),
+        baseOutput: 100,
+        claimableResources: availableResources.daysAccrued * 120,
+        // totalOutput: 122,
+        level: re.level,
+        build: (
+          <Button
+            variant="secondary"
+            onClick={() => upgrade(parseInt(re))}
+            size="xs"
+          >
+            Upgrade
+          </Button>
+        ),
+      };
+    }
+  );
 
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
