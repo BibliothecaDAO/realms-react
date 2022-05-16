@@ -70,7 +70,8 @@ export const SettleRealmsSideBar = () => {
   const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
   const { account } = useStarknet();
   const [selectedResource, setResource] = useState<number>();
-  const { settleRealm, unsettleRealm } = useSettling();
+  const { settleRealm, unsettleRealm, isRealmsApproved, approveRealms } =
+    useSettling();
   const {
     state: { selectedRealms },
   } = useRealmContext();
@@ -157,17 +158,28 @@ export const SettleRealmsSideBar = () => {
           </Tabs>
         </div>
         <div className="w-full">
-          <Button
-            className="w-full"
-            variant="primary"
-            onClick={() =>
-              selectedTab === 0
-                ? settleRealm(selectedRealms[0])
-                : unsettleRealm(selectedRealms[0])
-            }
-          >
-            {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
-          </Button>
+          {isRealmsApproved != 'approved' && (
+            <Button
+              className="w-full"
+              variant="primary"
+              onClick={() => approveRealms()}
+            >
+              Approve Realms for Settling
+            </Button>
+          )}
+          {isRealmsApproved == 'approved' && (
+            <Button
+              className="w-full"
+              variant="primary"
+              onClick={() =>
+                selectedTab === 0
+                  ? settleRealm(selectedRealms[0])
+                  : unsettleRealm(selectedRealms[0])
+              }
+            >
+              {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
+            </Button>
+          )}
         </div>
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
