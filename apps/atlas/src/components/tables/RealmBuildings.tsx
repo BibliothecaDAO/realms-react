@@ -1,50 +1,33 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import build from 'next/dist/build';
 import type { ReactElement } from 'react';
-
+import { buildings } from '@/util/buildings';
 type Row = {
   building: string;
   requirements: string;
-  build: ReactElement;
+  built: number;
+  buildAction: ReactElement;
 };
 
-const defaultData: Row[] = [
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number"></input>,
-  },
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number"></input>,
-  },
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number"></input>,
-  },
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number"></input>,
-  },
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number"></input>,
-  },
-  {
-    building: 'Castle',
-    requirements: '1 Region',
-    build: <input type="number" placeholder="Enter Qty"></input>,
-  },
-];
+const defaultData: Row[] = buildings.map((building) => {
+  return {
+    building: building.name,
+    requirements: building.limit,
+    built: 3,
+    buildAction: (
+      <Button variant="primary" type="button">
+        Build
+      </Button>
+    ),
+  };
+});
 
 export function RealmBuildings(): ReactElement {
   const columns = [
     { Header: 'Building', id: 1, accessor: 'building' },
     { Header: 'Requirements', id: 2, accessor: 'requirements' },
-    { Header: 'Build', id: 3, accessor: 'build' },
+    { Header: 'Built', id: 3, accessor: 'built' },
+    { Header: 'Build', id: 3, accessor: 'buildAction' },
   ];
   const tableOptions = { is_striped: true };
   return (

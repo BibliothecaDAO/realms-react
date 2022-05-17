@@ -1,7 +1,7 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import useResources from '@/hooks/settling/useResources';
-import { findResourceName } from '@/util/resources';
+import { resources } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
 type Row = {
@@ -14,13 +14,16 @@ type Row = {
 };
 
 export function RealmResources(props: RealmsCardProps): ReactElement {
-  const { availableResources, claim, upgrade } = useResources({
+  const { availableResources, claim, upgrade, allOutput } = useResources({
     token_id: props.realm.realmId,
+    resources: props.realm.resources,
   });
-  // TODO - update live output
+  // TODO - update live total output
   const totalOutput = 120;
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
+      const resourceId =
+        resources.find((res) => res.trait === re.type)?.id || 0;
       return {
         resource: (
           <span className="flex">
@@ -35,13 +38,13 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           </span>
         ),
         baseOutput: 100,
-        claimableResources: availableResources.daysAccrued * 120,
+        claimableResources: availableResources.daysAccrued * totalOutput,
         // totalOutput: 122,
         level: re.level,
         build: (
           <Button
             variant="secondary"
-            onClick={() => upgrade(parseInt(re))}
+            onClick={() => upgrade(resourceId)}
             size="xs"
           >
             Upgrade
