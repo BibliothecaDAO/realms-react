@@ -8,6 +8,7 @@ import { toBN } from 'starknet/dist/utils/number';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
+import useHealth from '@/hooks/desiege/useHealth';
 import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
 import Button from '@/shared/Button';
 import ElementLabel from '@/shared/ElementsLabel';
@@ -18,6 +19,7 @@ import {
   CityVitalityDisplay,
   ShieldVitalityDisplay,
 } from '../TowerShieldVitality';
+import VictoryDisplay from '../VictoryDisplay';
 import { GamePreparation } from './GamePreparation';
 import Tutorial from './Onboarding/GameActions';
 
@@ -69,6 +71,8 @@ const GameControls: React.FC<Prop> = (props) => {
   const userBalance = useTokenBalances({
     gameIdx,
   });
+
+  const health = useHealth({ gameIdx });
 
   const primaryBtnClass =
     'w-full p-2 my-4 text-lg bg-white text-black transition-colors border border-white rounded-md  hover:bg-gray-200 font-body tracking-widest duration-150';
@@ -214,7 +218,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </Button>
         </>
       ) : undefined}
-
+      <VictoryDisplay health={health.data} />
       <ChatComponent channelName="desiege-chat" />
     </div>
   );
