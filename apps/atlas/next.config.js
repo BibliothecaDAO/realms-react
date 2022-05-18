@@ -25,13 +25,12 @@ const disableSourceMaps = trueEnv.includes(
 );
 
 if (disableSourceMaps) {
-  console.info(
-    `${pc.green(
+  console.warn(
+    `${pc.yellow(
       'notice'
     )}- Sourcemaps generation have been disabled through NEXT_DISABLE_SOURCEMAPS`
   );
 }
-
 // Tell webpack to compile those packages
 // @link https://www.npmjs.com/package/next-transpile-modules
 const tmModules = [
@@ -51,11 +50,6 @@ const tmModules = [
     // ie: newer versions of https://github.com/sindresorhus packages
   ],
 ];
-
-const withNextTranspileModules = require('next-transpile-modules')(tmModules, {
-  resolveSymlinks: true,
-  debug: false,
-});
 
 if (disableSourceMaps) {
   console.info(
@@ -117,6 +111,7 @@ const nextConfig = {
 
   typescript: {
     ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
+    tsconfigPath: './tsconfig.json',
   },
 
   eslint: {
@@ -152,9 +147,9 @@ const nextConfig = {
     domains: ['d23fdhqc1jb9no.cloudfront.net'],
   },
 
-  webpack: (config, { isServer }) => {
+  webpack: (config, { webpack, isServer }) => {
     if (isServer) {
-      // Add specific config for server mode
+      config.resolve.fallback = { ...config.resolve.fallback, fs: false };
     }
 
     config.module.rules.push(
@@ -195,9 +190,28 @@ const nextConfig = {
     APP_VERSION: packageJson.version,
     BUILD_TIME: new Date().getTime().toString(10),
   },
+  serverRuntimeConfig: {
+    // to bypass https://github.com/zeit/next.js/issues/8251
+    PROJECT_ROOT: __dirname,
+  },
 };
 
-const config = withNextTranspileModules(nextConfig);
+let config = nextConfig;
+
+if (tmModules.length > 0) {
+  console.info(
+    `${pc.green('notice')}- Will transpile [${tmModules.join(',')}]`
+  );
+
+  const withNextTranspileModules = require('next-transpile-modules')(
+    tmModules,
+    {
+      resolveSymlinks: true,
+      debug: false,
+    }
+  );
+  config = withNextTranspileModules(config);
+}
 
 if (process.env.ANALYZE === 'true') {
   // @ts-ignore

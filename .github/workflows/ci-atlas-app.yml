@@ -86,7 +86,7 @@ jobs:
       - name: Unit tests
         working-directory: apps/atlas
         run: |
-          yarn test-unit --runInBand --color
+          yarn test-unit
 
       - name: Build atlas
         working-directory: apps/atlas

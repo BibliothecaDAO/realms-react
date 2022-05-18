@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-key */
 import { ArrayUtils } from '@bibliotheca-dao/core-lib';
 import type { AccessorFn } from '@tanstack/react-table';
 import {
   Column,
-  getColumnFilteredRowModelSync,
   createTable,
-  getCoreRowModelSync,
-  getGlobalFilteredRowModelSync,
+  getCoreRowModel,
   useTableInstance,
 } from '@tanstack/react-table';
 import { useReducer, useState } from 'react';
@@ -33,11 +32,12 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const table = createTable().setRowType<typeof data>();
-  const { createDataColumn, createGroup } = table;
+  const { createDataColumn } = table;
 
   const defaultColumns = customColumns?.map((column) => {
     return createDataColumn(column.accessor, {
       header: column.Header,
+      cell: (info) => info.getValue(),
       footer: (props: { column: { id: any } }) => props.column.id,
     });
   });
@@ -50,9 +50,8 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
     state: {
       globalFilter,
     },
-    getCoreRowModel: getCoreRowModelSync(),
+    getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
-    getGlobalFilteredRowModel: getGlobalFilteredRowModelSync(),
   });
 
   return (
