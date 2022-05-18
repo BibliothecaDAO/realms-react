@@ -8,6 +8,7 @@ import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmTroops } from '@/components/tables/RealmTroops';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
+import { DownloadAssets } from '@/shared/DownloadAssets';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
@@ -113,6 +114,7 @@ function Overview(props: RealmProps): ReactElement {
         id={props.realm.id}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
+      <DownloadAssets id={props.realm.id}></DownloadAssets>
     </div>
   );
 }
