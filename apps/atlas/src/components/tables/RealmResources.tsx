@@ -1,5 +1,6 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
 import useResources from '@/hooks/settling/useResources';
 import { resources } from '@/util/resources';
 
@@ -14,12 +15,16 @@ type Row = {
 };
 
 export function RealmResources(props: RealmsCardProps): ReactElement {
-  const { availableResources, claim, upgrade, allOutput } = useResources({
+  const {
+    availableResources,
+    claim,
+    upgrade,
+    claimableLords,
+    claimableResources,
+  } = useResources({
     token_id: props.realm.realmId,
     resources: props.realm.resources,
   });
-  // TODO - update live total output
-  const totalOutput = 120;
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
       const resourceId =
@@ -38,7 +43,9 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           </span>
         ),
         baseOutput: 100,
-        claimableResources: availableResources.daysAccrued * totalOutput,
+        claimableResources:
+          (claimableResources && claimableResources[index]?.low.toNumber()) ||
+          0,
         // totalOutput: 122,
         level: re.level,
         build: (
@@ -65,6 +72,13 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
   const tableOptions = { is_striped: true };
   return (
     <div>
+      <div className="flex justify-between">
+        <span>Claimable Lords: {claimableLords}</span>
+        <span>
+          Accrued: {availableResources.daysAccrued}D{' '}
+          {availableResources.remainder}m
+        </span>
+      </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
       <Button className="mt-3 ml-2" variant="primary" onClick={() => claim()}>
         Harvest Resources

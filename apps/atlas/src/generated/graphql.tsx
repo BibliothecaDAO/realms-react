@@ -54,24 +54,13 @@ export type BuildingCost = {
   resourceType: Scalars['String'];
 };
 
-export type BuildingCostInput = {
-  buildingType: Scalars['String'];
-  qty: Scalars['Float'];
-  resourceType: Scalars['String'];
-};
-
-export type BuildingInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  realmId: Scalars['Float'];
-  type: BuildingType;
-};
-
 export enum BuildingType {
   Amphitheater = 'Amphitheater',
-  Carpenter = 'Carpenter',
+  ArcherTower = 'Archer_Tower',
+  Architect = 'Architect',
+  Barracks = 'Barracks',
   Castle = 'Castle',
   Dock = 'Dock',
-  ExplorersGuild = 'Explorers_Guild',
   Fairgrounds = 'Fairgrounds',
   Farms = 'Farms',
   Fishmonger = 'Fishmonger',
@@ -80,13 +69,12 @@ export enum BuildingType {
   Guild = 'Guild',
   Hamlet = 'Hamlet',
   Housing = 'Housing',
-  LogisticsOffice = 'Logistics_Office',
+  MageTower = 'Mage_Tower',
   OfficerAcademy = 'Officer_Academy',
   ParadeGrounds = 'Parade_Grounds',
-  ResourceFacility = 'Resource_Facility',
   RoyalReserve = 'Royal_Reserve',
   School = 'School',
-  Symposium = 'Symposium',
+  TradeOffice = 'Trade_Office',
 }
 
 export type BuildingTypeInput = {
@@ -552,8 +540,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   createEvent: Event;
   createManyEvent: AffectedRowsOutput;
-  createOrUpdateBuildingCost: BuildingCost;
-  createOrUpdateBuildings: Building;
   createOrUpdateRealm: Realm;
   createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
@@ -572,14 +558,6 @@ export type MutationCreateEventArgs = {
 export type MutationCreateManyEventArgs = {
   data: Array<EventCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type MutationCreateOrUpdateBuildingCostArgs = {
-  data: BuildingCostInput;
-};
-
-export type MutationCreateOrUpdateBuildingsArgs = {
-  data: BuildingInput;
 };
 
 export type MutationCreateOrUpdateRealmArgs = {
@@ -1190,7 +1168,11 @@ export type GetRealmQuery = {
       type: string;
       qty: number;
     }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      type?: string | null;
+      id: string;
+    }> | null;
     squads?: Array<{
       __typename?: 'Squad';
       action: string;
@@ -1230,7 +1212,11 @@ export type GetRealmsQuery = {
       type: string;
       qty: number;
     }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      type?: string | null;
+      id: string;
+    }> | null;
     squads?: Array<{
       __typename?: 'Squad';
       action: string;
@@ -1261,7 +1247,11 @@ export type RealmFragmentFragment = {
     type: string;
     qty: number;
   }> | null;
-  buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+  buildings?: Array<{
+    __typename?: 'Building';
+    type?: string | null;
+    id: string;
+  }> | null;
   squads?: Array<{ __typename?: 'Squad'; action: string; type: string }> | null;
 };
 
@@ -1322,6 +1312,7 @@ export const RealmFragmentFragmentDoc = gql`
     }
     buildings {
       type
+      id
     }
     squads {
       action

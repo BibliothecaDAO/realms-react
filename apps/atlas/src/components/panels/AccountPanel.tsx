@@ -114,7 +114,7 @@ export function AccountPanel() {
             size="sm"
             onClick={() => mintRealm(selectedId)}
           >
-            Settle Realms
+            Mint Realms
           </Button>
           <h2 className="mt-12">Claims</h2>
           <h3>Resources</h3>

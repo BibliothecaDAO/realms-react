@@ -9,7 +9,8 @@ type Resources = {
   claim: () => void;
   upgrade: (resourceId: number) => void;
   availableResources: AvailabeResources;
-  allOutput: any;
+  claimableLords?: number;
+  claimableResources?: any;
 };
 type AvailabeResources = {
   daysAccrued: number;
@@ -32,6 +33,17 @@ const useResources = (args: useResourcesArgs): Resources => {
     contract: resourcesContract,
     method: 'upgrade_resource',
   });
+
+  const {
+    data: allOutputData,
+    loading: outputLoading,
+    error: outputError,
+  } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'get_all_resource_claimable',
+    args: [bnToUint256(toBN(args.token_id))],
+  });
+
   const {
     data: availableResourcesData,
     loading,
@@ -45,29 +57,8 @@ const useResources = (args: useResourcesArgs): Resources => {
     ],
   });
 
-  const resourceIds = args.resources.map(
-    (resource) => resources.find((res) => res.trait === resource.type)?.id
-  );
-  const {
-    data: allOutputData,
-    loading: outputLoading,
-    error: outputError,
-  } = useStarknetCall({
-    contract: resourcesContract,
-    method: 'get_all_resource_output',
-    args: [
-      bnToUint256(toBN(args.token_id)),
-      ...resourceIds,
-      0,
-      0,
-      0,
-      // Token IDs],
-    ],
-  });
-  console.log(allOutputData?.map((resource) => resource.toNumber()));
-  console.log(outputError);
   let availableResources: AvailabeResources;
-  if (availableResourcesData && availableResourcesData[0]) {
+  if (availableResourcesData) {
     availableResources = {
       daysAccrued: availableResourcesData[0].toNumber(),
       remainder: availableResourcesData[1].toNumber(),
@@ -81,7 +72,8 @@ const useResources = (args: useResourcesArgs): Resources => {
 
   return {
     availableResources,
-    allOutput: allOutputData?.map((resource) => resource.toNumber()),
+    claimableLords: allOutputData && uint256ToBN(allOutputData[1]).toNumber(),
+    claimableResources: allOutputData && allOutputData[0],
     claim: () => {
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id))],

@@ -142,7 +142,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       },
       {
         label: 'Buildings',
-        component: <RealmBuildings />,
+        component: <RealmBuildings {...props} />,
       },
       {
         label: 'History',
