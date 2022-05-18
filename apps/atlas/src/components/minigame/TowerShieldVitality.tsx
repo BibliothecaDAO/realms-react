@@ -1,10 +1,7 @@
-import { useStarknetBlock } from '@starknet-react/core';
 import type BN from 'bn.js';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { toBN } from 'starknet/dist/utils/number';
-import useGameVariables from '@/hooks/desiege/useGameVariables';
-import { DarkGradient, LightGradient } from '@/shared/ElementsLabel';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
 
@@ -66,32 +63,6 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
 export const CityVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
   const zeroVitality = props.health !== undefined && props.health.lte(toBN(0));
 
-  const [displayVictory, setDisplayVictory] = useState(false);
-
-  // The amount of blocks to display the victory message.
-  const winningDisplayThreshold = 160;
-
-  const gameVars = useGameVariables();
-  const block = useStarknetBlock();
-
-  useEffect(() => {
-    if (gameVars.data && block.data) {
-      const { gameStartBlock, blocksPerMinute, hoursPerGame } = gameVars.data;
-      const endBlock =
-        gameStartBlock.toNumber() + blocksPerMinute * 60 * hoursPerGame;
-
-      if (
-        (block.data.block_number >= endBlock &&
-          block.data.block_number < endBlock + winningDisplayThreshold) ||
-        zeroVitality
-      ) {
-        setDisplayVictory(true);
-      } else {
-        setDisplayVictory(false);
-      }
-    }
-  }, [gameVars.data, block.data]);
-
   return (
     <>
       <p
@@ -107,14 +78,9 @@ export const CityVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
           <LoadingSkeleton className="w-full h-6 mt-2" />
         ) : (
           <>
-            {displayVictory ? (
-              <span
-                className={classNames(
-                  'inline-block px-2 py-1 text-white rounded-sm bg-gradient-to-r',
-                  zeroVitality ? DarkGradient : LightGradient
-                )}
-              >
-                {zeroVitality ? 'Dark' : 'Light'} Wins
+            {zeroVitality ? (
+              <span className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
+                Dark Wins
               </span>
             ) : (
               `${(props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)}`
