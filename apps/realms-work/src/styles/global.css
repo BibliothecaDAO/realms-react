@@ -23,17 +23,22 @@ h3 {
 }
 
 h4 {
-  @apply text-xl uppercase font-body tracking-widest mb-4 font-semibold;
+  @apply mb-4 text-xl font-semibold tracking-widest uppercase font-body;
 }
 
 button {
-  @apply font-display tracking-widest;
+  @apply tracking-widest font-lords;
 }
 
 body {
-  @apply text-gray-200 font-body text-lg leading-loose;
+  @apply text-lg leading-loose text-gray-200 font-body;
 }
 
 hr {
   @apply my-8;
+}
+
+@font-face {
+  font-family: Lords;
+  src: url('fontforlordsn.otf');
 }

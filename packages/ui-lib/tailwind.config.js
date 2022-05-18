@@ -50,6 +50,7 @@ module.exports = {
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
+        lords: ['Lords', 'serif'],
       },
       backgroundImage: {
         hero: "url('/cover.jpg')",

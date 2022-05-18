@@ -2,7 +2,7 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './src/**/*.{js,ts,jsx,tsx}',
-    '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx,otf}',
   ],
   safelist: [
     'text-[#838383]',
@@ -30,6 +30,7 @@ module.exports = {
       fontFamily: {
         display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
+        lords: ['Lords', 'serif'],
       },
       typography: (theme) => ({
         DEFAULT: {

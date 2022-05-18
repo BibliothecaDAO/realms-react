@@ -15,23 +15,6 @@ import { JobCard } from '@/components/JobCard';
 import Layout from '@/components/Layout';
 import { WithNavMenu } from '@/components/NavMenu';
 function Home() {
-  const {
-    account,
-    connectBrowserWallet,
-    error: starknetConnectionError,
-    hasStarknet,
-  } = useStarknet();
-
-  const [content, setContent] = useState<string[]>([]);
-
-  const time = () => {
-    const END = 1651327190000;
-    const NOW_IN_MS = new Date().getTime();
-    const MS_UNTIL = END - NOW_IN_MS;
-
-    return (NOW_IN_MS + MS_UNTIL).toString();
-  };
-
   const jobs = [
     { location: 'Realms', title: 'Creative Director', skills: ['creative'] },
   ];
@@ -39,18 +22,92 @@ function Home() {
   return (
     <Layout>
       <div className="h-full bg-black">
-        <div className="relative w-full h-screen-30 bg-cover bg-hero bg-bottom "></div>
-        <div className="container flex mx-auto flex-wrap">
-          <div className="sm:w-1/2 p-8 sm:py-20">
-            <h1>Bibliotheca DAO Jobs</h1>
-            <p className="sm:text-2xl mt-8">
-              We are building the games on the bleeding edge of technology. We
-              look at your past work history. If you like working hard problems
-              in a decentralised enviroment.
-            </p>
+        <div className="relative w-full h-screen bg-bottom bg-cover bg-hero ">
+          {' '}
+          <div className="container flex flex-col justify-center h-full mx-auto ">
+            <div className="self-center p-8 mt-auto text-center sm:w-1/2 sm:py-20">
+              <h1 className="mb-10 font-lords">Realms</h1>
+              <div className="space-x-4">
+                <Button size="sm" variant="primary">
+                  the atlas
+                </Button>
+                <Button size="sm" variant="primary">
+                  the discord
+                </Button>
+              </div>
+            </div>
+            <div className="py-20 mx-auto mt-auto">
+              <Button size="sm" variant="secondary">
+                discover
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="container grid gap-2 sm:gap-4 grid-cols-2 sm:grid-cols-3 mx-auto px-4">
+        <div className="container px-10 py-20 mx-auto">
+          <div className="flex">
+            <div className="self-center w-1/2">
+              <h1 className="font-lords">
+                founded in Loot, <br></br> a vision beyond{' '}
+              </h1>
+              <p className="mt-10 text-2xl">
+                8000 procedurally generated maps with unique names, resources
+                and geographical traits. 50 ultra rare Realms contain a unique
+                Wonder.
+              </p>
+              <div className="mt-10 space-x-4">
+                <Button size="sm" variant="primary">
+                  the atlas
+                </Button>
+                <Button size="sm" variant="primary">
+                  the discord
+                </Button>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <Image
+                src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/2.webp`}
+                alt="map"
+                className="w-full mt-4 rounded-xl -scale-x-100"
+                width={500}
+                height={320}
+                layout={'responsive'}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="container px-10 py-20 mx-auto">
+          <div className="flex">
+            <div className="self-center w-1/2 ">
+              <h1 className="font-lords">
+                DAO owned & <br></br> open source
+              </h1>
+              <p className="mt-10 text-2xl">
+                8000 procedurally generated maps with unique names, resources
+                and geographical traits. 50 ultra rare Realms contain a unique
+                Wonder.
+              </p>
+              <div className="mt-10 space-x-4">
+                <Button size="sm" variant="primary">
+                  the atlas
+                </Button>
+                <Button size="sm" variant="primary">
+                  the discord
+                </Button>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <Image
+                src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/2.webp`}
+                alt="map"
+                className="w-full mt-4 rounded-xl -scale-x-100"
+                width={500}
+                height={320}
+                layout={'responsive'}
+              />
+            </div>
+          </div>
+        </div>
+        {/* <div className="container grid grid-cols-2 gap-2 px-4 mx-auto sm:gap-4 sm:grid-cols-3">
           {jobs.map((a, index) => {
             return (
               <JobCard
@@ -61,7 +118,7 @@ function Home() {
               />
             );
           })}
-        </div>
+        </div> */}
       </div>
     </Layout>
   );
