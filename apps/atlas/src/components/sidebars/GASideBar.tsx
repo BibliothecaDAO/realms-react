@@ -13,13 +13,14 @@ type Props = {
 
 export const GASideBar = (props: Props) => {
   const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
-
+  const isGASelected = selectedMenuType === 'ga' && showDetails;
   const { loading, error, data } = useQuery<GAData>(getGAQuery, {
     variables: { id: props.id },
+    skip: !isGASelected,
   });
 
   return (
-    <BaseSideBar open={selectedMenuType === 'ga' && showDetails}>
+    <BaseSideBar open={isGASelected}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end mb-2 mr-1">
           <Button size="sm" onClick={() => toggleMenuType('ga')}>

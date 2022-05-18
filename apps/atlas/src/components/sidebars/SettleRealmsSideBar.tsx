@@ -70,6 +70,8 @@ export const SettleRealmsSideBar = () => {
   const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
   const { account } = useStarknet();
   const [selectedResource, setResource] = useState<number>();
+  const isSettleRealms = selectedMenuType === 'settleRealms' && showDetails;
+
   const { settleRealm, unsettleRealm, isRealmsApproved, approveRealms } =
     useSettling();
   const {
@@ -99,6 +101,7 @@ export const SettleRealmsSideBar = () => {
 
   const { data, loading, refetch } = useGetRealmsQuery({
     variables,
+    skip: !isSettleRealms,
   });
 
   const tabs = useMemo(
@@ -126,7 +129,7 @@ export const SettleRealmsSideBar = () => {
   );
 
   return (
-    <BaseSideBar open={selectedMenuType === 'settleRealms' && showDetails}>
+    <BaseSideBar open={isSettleRealms}>
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div>
           <div className="flex justify-between mb-2">

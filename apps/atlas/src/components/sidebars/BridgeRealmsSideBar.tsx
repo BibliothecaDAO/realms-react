@@ -19,7 +19,7 @@ export const BridgeRealmsSideBar = () => {
   const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
   const { account } = useWalletContext();
   const [selectedResource, setResource] = useState<number>();
-
+  const isBridgeRealms = selectedMenuType === 'bridgeRealms' && showDetails;
   const limit = 50;
   const [page, setPage] = useState(1);
 
@@ -37,6 +37,7 @@ export const BridgeRealmsSideBar = () => {
 
   const { data, loading } = useGetRealmsQuery({
     variables,
+    skip: !isBridgeRealms,
   });
   const {
     state: { selectedRealms },
@@ -49,7 +50,7 @@ export const BridgeRealmsSideBar = () => {
     );
 
   return (
-    <BaseSideBar open={selectedMenuType === 'bridgeRealms' && showDetails}>
+    <BaseSideBar open={isBridgeRealms}>
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div>
           <div className="flex justify-between mb-2">
