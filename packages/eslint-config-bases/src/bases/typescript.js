@@ -76,7 +76,7 @@ module.exports = {
         'ts-check': false,
       },
     ],
-    '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: false }],
+    /* '@typescript-eslint/no-explicit-any': ['warning', { ignoreRestArgs: false }], */
     '@typescript-eslint/no-empty-function': [
       'error',
       { allow: ['private-constructors'] },

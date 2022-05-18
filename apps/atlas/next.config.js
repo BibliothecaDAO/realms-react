@@ -188,7 +188,7 @@ const nextConfig = {
   env: {
     APP_NAME: packageJson.name,
     APP_VERSION: packageJson.version,
-    BUILD_TIME: new Date().getTime().toString(10),
+    BUILD_TIME: new Date().toISOString(),
   },
   serverRuntimeConfig: {
     // to bypass https://github.com/zeit/next.js/issues/8251
@@ -218,7 +218,7 @@ if (process.env.ANALYZE === 'true') {
   const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: true,
   });
-  module.exports = withBundleAnalyzer(config);
-} else {
-  module.exports = config;
+  config = withBundleAnalyzer(config);
 }
+
+module.exports = config;
