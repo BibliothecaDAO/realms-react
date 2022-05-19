@@ -4,7 +4,6 @@ import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
-import Compose from '@/components/Compose';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
@@ -39,25 +38,99 @@ import { useUIContext, UIProvider } from '@/hooks/useUIContext';
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
-function App() {
+function Atlas() {
   return (
-    <Compose
-      components={[
-        UIProvider,
-        RealmProvider,
-        LootProvider,
-        GaProvider,
-        CryptProvider,
-        JourneyProvider,
-        ResourceProvider,
-      ]}
-    >
-      <Atlas />
-    </Compose>
+    <UIProvider>
+      <Layout>
+        <div className="relative flex h-full overflow-hidden sm:h-screen">
+          <MenuSideBar />
+          <div className="relative flex flex-col w-full">
+            <Header />
+            <div className="relative w-full h-full">
+              <ArtBackground />
+              <AccountModule />
+              <LootModule />
+              <GaModule />
+              <RealmsModule />
+              <CryptModule />
+              <BankModule />
+              <TradePanel />
+              <ResourceSwapSideBar />
+              <FlyTo />
+              <MapModule />
+            </div>
+          </div>
+        </div>
+      </Layout>
+    </UIProvider>
   );
 }
 
-function Atlas() {
+function RealmsModule() {
+  return (
+    <RealmProvider>
+      <>
+        <RealmsPanel />
+        <RealmSideBar />
+        <BridgeRealmsSideBar />
+        <SettleRealmsSideBar />
+      </>
+    </RealmProvider>
+  );
+}
+
+function GaModule() {
+  return (
+    <GaProvider>
+      <>
+        <GaPanel />
+        <GASideBar />
+      </>
+    </GaProvider>
+  );
+}
+
+function CryptModule() {
+  return (
+    <CryptProvider>
+      <>
+        <CryptsPanel />
+        <CryptsSideBar />
+      </>
+    </CryptProvider>
+  );
+}
+
+function BankModule() {
+  return (
+    <ResourceProvider>
+      <BankPanel />
+    </ResourceProvider>
+  );
+}
+
+function LootModule() {
+  const { selectedId } = useUIContext();
+
+  return (
+    <LootProvider>
+      <>
+        <LootPanel />
+        <LootSideBar id={selectedId} />
+      </>
+    </LootProvider>
+  );
+}
+
+function AccountModule() {
+  return (
+    <JourneyProvider>
+      <AccountPanel />
+    </JourneyProvider>
+  );
+}
+
+function MapModule() {
   const ITEM_VIEW_LEVEL = 5;
   const { openDetails, selectedId, coordinates } = useUIContext();
   const [resource] = useState<Array<string>>([]);
@@ -198,6 +271,7 @@ function Atlas() {
     if (!coordinates) {
       return;
     }
+
     setInitialViewState({
       ...coordinates,
       zoom: 8,
@@ -214,66 +288,43 @@ function Atlas() {
   const [loaded, setLoaded] = useState<boolean>();
 
   return (
-    <Layout>
-      <div className="relative flex h-full overflow-hidden sm:h-screen">
-        <MenuSideBar />
-        <div className="relative flex flex-col w-full">
-          <Header />
-          <div className="relative w-full h-full">
-            <AccountPanel />
-            <ArtBackground />
-            <RealmsPanel />
-            <LootPanel />
-            <GaPanel />
-            <BankPanel />
-            <CryptsPanel />
-            <RealmSideBar id={selectedId} />
-            <BridgeRealmsSideBar />
-            <SettleRealmsSideBar />
-            <TradePanel />
-            <ResourceSwapSideBar />
-            <CryptsSideBar id={selectedId} />
-            <LootSideBar id={selectedId} />
-            <GASideBar id={selectedId} />
-            <FlyTo />
-            <ArtBackground />
-
-            <DeckGL
-              getCursor={({ isHovering }) => {
-                return isHovering ? 'pointer' : 'grabbing';
-              }}
-              pickingRadius={25}
-              initialViewState={initialViewState}
-              controller={true}
-              onLoad={() => setLoaded(true)}
-              onViewStateChange={(e) => setInitialViewState(e.viewState)}
-              layers={[
-                realmsLayer,
-                resourceLayer,
-                cryptsLayer,
-                lootBagLayer,
-                gaBagLayer,
-              ]}
-            >
-              {loaded ? (
-                <Map
-                  attributionControl={false}
-                  mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-                  mapboxAccessToken={
-                    'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-                  }
-                />
-              ) : (
-                <div className={'w-full h-full flex justify-center'}>
-                  <h1 className={'self-center'}>Loading Atlas...</h1>
-                </div>
-              )}
-            </DeckGL>
-          </div>
+    <DeckGL
+      getCursor={({ isHovering }) => {
+        return isHovering ? 'pointer' : 'grabbing';
+      }}
+      pickingRadius={25}
+      initialViewState={initialViewState}
+      controller={true}
+      onLoad={() => {
+        setLoaded(true);
+        console.log('onload');
+      }}
+      onViewStateChange={(e) => {
+        /* separate out view state from initial state */
+      }}
+      layers={[
+        realmsLayer,
+        resourceLayer,
+        cryptsLayer,
+        lootBagLayer,
+        gaBagLayer,
+      ]}
+    >
+      {loaded ? (
+        <Map
+          attributionControl={false}
+          mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+          mapboxAccessToken={
+            'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+          }
+        />
+      ) : (
+        <div className={'w-full h-full flex justify-center'}>
+          <h1 className={'self-center'}>Loading Atlas...</h1>
         </div>
-      </div>
-    </Layout>
+      )}
+    </DeckGL>
   );
 }
 
-export default App;
+export default Atlas;
