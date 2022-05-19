@@ -141,7 +141,7 @@ function MapModule() {
     );
   };
 
-  const [initialViewState, setInitialViewState] = useState({
+  const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
     zoom: 4,
@@ -163,7 +163,7 @@ function MapModule() {
     extruded: true,
     pickable: true,
     opacity: 1,
-    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.tokenId === parseInt(selectedId) ? 4000 : 100,
@@ -172,7 +172,7 @@ function MapModule() {
     getFillColor: [0, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
-      getVisible: initialViewState,
+      getVisible: viewState,
     },
     onClick: (info: any) => {
       openDetails('crypt', info.object.properties.tokenId);
@@ -187,7 +187,7 @@ function MapModule() {
     extruded: true,
     pickable: true,
     opacity: 1,
-    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.realm_idx === parseInt(selectedId) ? 4000 : 1,
@@ -196,7 +196,7 @@ function MapModule() {
     getFillColor: [0, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
-      getVisible: initialViewState,
+      getVisible: viewState,
     },
     onClick: (info: any) => {
       openDetails('realm', info.object.properties.realm_idx);
@@ -210,7 +210,7 @@ function MapModule() {
     filled: true,
     extruded: true,
     pickable: true,
-    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -219,7 +219,7 @@ function MapModule() {
     getFillColor: [255, 0, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
-      getVisible: initialViewState,
+      getVisible: viewState,
     },
     onClick: (info: any) => {
       openDetails('loot', info.object.properties.bag_id);
@@ -233,7 +233,7 @@ function MapModule() {
     filled: true,
     extruded: true,
     pickable: true,
-    visible: initialViewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -242,7 +242,7 @@ function MapModule() {
     getFillColor: [0, 255, 0, 0],
     updateTriggers: {
       getRadius: parseInt(selectedId),
-      getVisible: initialViewState,
+      getVisible: viewState,
     },
     onClick: (info: any) => {
       openDetails('ga', info.object.properties.ga_id);
@@ -272,7 +272,7 @@ function MapModule() {
       return;
     }
 
-    setInitialViewState({
+    setViewState({
       ...coordinates,
       zoom: 8,
       pitch: 20,
@@ -293,15 +293,10 @@ function MapModule() {
         return isHovering ? 'pointer' : 'grabbing';
       }}
       pickingRadius={25}
-      initialViewState={initialViewState}
+      viewState={viewState}
       controller={true}
-      onLoad={() => {
-        setLoaded(true);
-        console.log('onload');
-      }}
-      onViewStateChange={(e) => {
-        /* separate out view state from initial state */
-      }}
+      onLoad={() => setLoaded(true)}
+      onViewStateChange={(e) => setViewState(e.viewState)}
       layers={[
         realmsLayer,
         resourceLayer,
