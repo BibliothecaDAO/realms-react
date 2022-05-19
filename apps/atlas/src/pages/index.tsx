@@ -8,12 +8,14 @@ import Compose from '@/components/Compose';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
+import { BaseModal } from '@/components/modals/BaseModal';
 import { Header } from '@/components/navigation/header';
 import { AccountPanel } from '@/components/panels/AccountPanel';
 import { BankPanel } from '@/components/panels/BankPanel';
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
+import { LorePanel } from '@/components/panels/LorePanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
@@ -217,8 +219,11 @@ function Atlas() {
           <Header />
           <div className="relative w-full h-full">
             <AccountPanel />
+            <BaseModal />
             <ArtBackground />
             <RealmsPanel />
+            <LorePanel />
+            {/* <LoreEntityPanel /> */}
             <LootPanel />
             <GaPanel />
             <BankPanel />
@@ -231,7 +236,6 @@ function Atlas() {
             <GASideBar id={selectedId} />
             <FlyTo />
             <ArtBackground />
-
             <DeckGL
               getCursor={({ isHovering }) => {
                 return isHovering ? 'pointer' : 'grabbing';

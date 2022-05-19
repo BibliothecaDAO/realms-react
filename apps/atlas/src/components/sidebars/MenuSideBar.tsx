@@ -6,6 +6,7 @@ import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
 import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
@@ -135,6 +136,20 @@ export const MenuSideBar = () => {
             size="lg"
           />
           <span className={textClasses}>Bank</span>
+        </div>
+        <div className="flex flex-col place-items-center ">
+          <IconButton
+            className={`${buttonClasses} ${
+              selectedPanel === 'lore' ? 'bg-gray-700' : ''
+            }`}
+            aria-label="Lore"
+            variant="unstyled"
+            texture={false}
+            onClick={() => togglePanelType('lore')}
+            icon={<Library className={iconClasses} />}
+            size="lg"
+          />
+          <span className={textClasses}>Lore</span>
         </div>
 
         {/* <div className="flex flex-col place-items-center ">
