@@ -1,11 +1,12 @@
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useUserReward from '@/hooks/desiege/useUserReward';
 import Button from '@/shared/Button';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
+import VictoryDisplay from './VictoryDisplay';
 
 type Prop = {
   initialGameIndex?: number;
@@ -24,8 +25,6 @@ const CheckRewards: React.FC<Prop> = (props) => {
   const gameStatus = useGameStatus({ gameIdx });
 
   const userReward = useUserReward({ gameIdx, account });
-
-  const season = 'DivineEclipse';
 
   return (
     <div className="text-2xl">
@@ -62,6 +61,7 @@ const CheckRewards: React.FC<Prop> = (props) => {
             <LoadingSkeleton className="h-10" />
           ) : (
             <>
+              <VictoryDisplay gameIdx={gameIdx} />
               <p>
                 Siege contribution allocation:{' '}
                 <span className="text-4xl">{userReward.alloc?.toString()}</span>
