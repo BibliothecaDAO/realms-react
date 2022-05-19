@@ -61,7 +61,7 @@ const VictoryDisplay: React.FC<Prop> = (props) => {
           {props.children ? (
             props.children(zeroVitality)
           ) : (
-            <>{zeroVitality ? 'Dark' : 'Light'} Victory</>
+            <>{zeroVitality ? 'Dark Prevails' : 'Light Endures'}</>
           )}
         </span>
       ) : null}
