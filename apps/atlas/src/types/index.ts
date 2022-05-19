@@ -1,4 +1,5 @@
 import { number } from 'starknet';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
 
@@ -94,6 +95,11 @@ export interface GAData {
 }
 export interface RealmProps {
   realm: Realm;
+  loading: boolean;
+  size?: string;
+}
+export interface RealmsCardProps {
+  realm: RealmFragmentFragment;
   loading: boolean;
   size?: string;
 }

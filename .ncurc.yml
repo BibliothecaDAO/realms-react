@@ -8,8 +8,6 @@ reject: [
     'execa',
     # Too early cause in esm
     'is-port-reachable',
-    #next getServerSnapshot (fixed next apollo release)
-    '@apollo/client',
-    # SSR iissue with tabs
-    '@headlessui/react',
+    # Until get-starknet library merged https://github.com/apibara/starknet-react/pull/77
+    '@argent/get-starknet',
   ]

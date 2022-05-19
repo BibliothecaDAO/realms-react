@@ -88,12 +88,15 @@ export const ResourceIcon = (props: Props) => {
   return (
     <div className={`flex flex-col`}>
       <span className={`${twMerge(STYLES.size[props.size], props.className)} `}>
-        {Components[props.resource.replace(' ', '').replace("'", '')].component}
+        {
+          Components[props.resource.replace(' ', '').replace("'", '')]
+            ?.component
+        }
       </span>
 
       {props.label && (
-        <span className="mt-4 uppercase font-body tracking-widest font-semibold">
-          {Components[props.resource.replace(' ', '').replace("'", '')].name}
+        <span className="mt-4 font-semibold tracking-widest uppercase font-body">
+          {Components[props.resource.replace(' ', '').replace("'", '')]?.name}
         </span>
       )}
     </div>

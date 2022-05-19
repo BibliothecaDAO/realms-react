@@ -1,5 +1,6 @@
 import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
-
+import { toBN } from 'starknet/dist/utils/number';
+import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { useBuildingContract } from '@/hooks/settling/stark-contracts';
 
 type Building = {
@@ -8,10 +9,10 @@ type Building = {
   loading: boolean;
 };
 type useBuildingArgs = {
-  token_id?: number;
+  token_id: number;
 };
 
-const useBuilding = (args: useBuildingArgs): Building => {
+const useBuildings = (args: useBuildingArgs): Building => {
   const { contract: buildingContract } = useBuildingContract();
 
   const buildAction = useStarknetInvoke({
@@ -22,7 +23,7 @@ const useBuilding = (args: useBuildingArgs): Building => {
   const { data, loading, error } = useStarknetCall({
     contract: buildingContract,
     method: 'fetch_buildings_by_type',
-    args: [args.token_id],
+    args: [bnToUint256(toBN(args.token_id))],
   });
 
   let realmBuildings: any = undefined;
@@ -33,7 +34,7 @@ const useBuilding = (args: useBuildingArgs): Building => {
   return {
     build: (building_id: number) => {
       buildAction.invoke({
-        args: [args.token_id, building_id],
+        args: [bnToUint256(toBN(args.token_id)), building_id],
       });
     },
     realmBuildings,
@@ -41,4 +42,4 @@ const useBuilding = (args: useBuildingArgs): Building => {
   };
 };
 
-export default useBuilding;
+export default useBuildings;

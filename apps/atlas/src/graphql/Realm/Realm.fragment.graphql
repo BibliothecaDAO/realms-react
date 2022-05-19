@@ -2,6 +2,8 @@ fragment RealmFragment on Realm {
   realmId
   owner
   bridgedOwner
+  ownerL2
+  settledOwner
   name
   rarityRank
   rarityScore
@@ -9,6 +11,7 @@ fragment RealmFragment on Realm {
   wonder
   resources {
     type
+    level
   }
   traits {
     type
@@ -16,6 +19,7 @@ fragment RealmFragment on Realm {
   }
   buildings {
     type
+    id
   }
   squads {
     action

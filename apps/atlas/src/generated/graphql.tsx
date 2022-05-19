@@ -54,24 +54,13 @@ export type BuildingCost = {
   resourceType: Scalars['String'];
 };
 
-export type BuildingCostInput = {
-  buildingType: Scalars['String'];
-  qty: Scalars['Float'];
-  resourceType: Scalars['String'];
-};
-
-export type BuildingInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  realmId: Scalars['Float'];
-  type: BuildingType;
-};
-
 export enum BuildingType {
   Amphitheater = 'Amphitheater',
-  Carpenter = 'Carpenter',
+  ArcherTower = 'Archer_Tower',
+  Architect = 'Architect',
+  Barracks = 'Barracks',
   Castle = 'Castle',
   Dock = 'Dock',
-  ExplorersGuild = 'Explorers_Guild',
   Fairgrounds = 'Fairgrounds',
   Farms = 'Farms',
   Fishmonger = 'Fishmonger',
@@ -80,13 +69,12 @@ export enum BuildingType {
   Guild = 'Guild',
   Hamlet = 'Hamlet',
   Housing = 'Housing',
-  LogisticsOffice = 'Logistics_Office',
+  MageTower = 'Mage_Tower',
   OfficerAcademy = 'Officer_Academy',
   ParadeGrounds = 'Parade_Grounds',
-  ResourceFacility = 'Resource_Facility',
   RoyalReserve = 'Royal_Reserve',
   School = 'School',
-  Symposium = 'Symposium',
+  TradeOffice = 'Trade_Office',
 }
 
 export type BuildingTypeInput = {
@@ -145,8 +133,9 @@ export type Event = {
   contract: Scalars['String'];
   eventId: Scalars['String'];
   id: Scalars['Int'];
+  keys: Array<Scalars['String']>;
   name: Scalars['String'];
-  parameters: Array<Scalars['Int']>;
+  parameters: Array<Scalars['String']>;
   status: Scalars['Int'];
   timestamp: Scalars['DateTime'];
   transactionNumber: Scalars['Int'];
@@ -157,7 +146,6 @@ export type EventAvgAggregate = {
   __typename?: 'EventAvgAggregate';
   blockNumber?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
-  parameters?: Maybe<Scalars['Float']>;
   status?: Maybe<Scalars['Float']>;
   transactionNumber?: Maybe<Scalars['Float']>;
 };
@@ -165,7 +153,6 @@ export type EventAvgAggregate = {
 export type EventAvgOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
-  parameters?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   transactionNumber?: InputMaybe<SortOrder>;
 };
@@ -178,6 +165,7 @@ export type EventCountAggregate = {
   contract: Scalars['Int'];
   eventId: Scalars['Int'];
   id: Scalars['Int'];
+  keys: Scalars['Int'];
   name: Scalars['Int'];
   parameters: Scalars['Int'];
   status: Scalars['Int'];
@@ -192,6 +180,7 @@ export type EventCountOrderByAggregateInput = {
   contract?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   parameters?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -205,6 +194,7 @@ export type EventCreateInput = {
   chainId: Scalars['String'];
   contract: Scalars['String'];
   eventId: Scalars['String'];
+  keys?: InputMaybe<EventCreatekeysInput>;
   name: Scalars['String'];
   parameters?: InputMaybe<EventCreateparametersInput>;
   status?: InputMaybe<Scalars['Int']>;
@@ -219,6 +209,7 @@ export type EventCreateManyInput = {
   contract: Scalars['String'];
   eventId: Scalars['String'];
   id?: InputMaybe<Scalars['Int']>;
+  keys?: InputMaybe<EventCreatekeysInput>;
   name: Scalars['String'];
   parameters?: InputMaybe<EventCreateparametersInput>;
   status?: InputMaybe<Scalars['Int']>;
@@ -227,8 +218,12 @@ export type EventCreateManyInput = {
   txHash: Scalars['String'];
 };
 
+export type EventCreatekeysInput = {
+  set: Array<Scalars['String']>;
+};
+
 export type EventCreateparametersInput = {
-  set: Array<Scalars['Int']>;
+  set: Array<Scalars['String']>;
 };
 
 export type EventGroupBy = {
@@ -243,8 +238,9 @@ export type EventGroupBy = {
   contract: Scalars['String'];
   eventId: Scalars['String'];
   id: Scalars['Int'];
+  keys?: Maybe<Array<Scalars['String']>>;
   name: Scalars['String'];
-  parameters?: Maybe<Array<Scalars['Int']>>;
+  parameters?: Maybe<Array<Scalars['String']>>;
   status: Scalars['Int'];
   timestamp: Scalars['DateTime'];
   transactionNumber: Scalars['Int'];
@@ -316,6 +312,7 @@ export type EventOrderByWithAggregationInput = {
   contract?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   parameters?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -330,6 +327,7 @@ export type EventOrderByWithRelationInput = {
   contract?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  keys?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   parameters?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -344,6 +342,7 @@ export enum EventScalarFieldEnum {
   Contract = 'contract',
   EventId = 'eventId',
   Id = 'id',
+  Keys = 'keys',
   Name = 'name',
   Parameters = 'parameters',
   Status = 'status',
@@ -361,8 +360,9 @@ export type EventScalarWhereWithAggregatesInput = {
   contract?: InputMaybe<StringWithAggregatesFilter>;
   eventId?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  keys?: InputMaybe<StringNullableListFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
-  parameters?: InputMaybe<IntNullableListFilter>;
+  parameters?: InputMaybe<StringNullableListFilter>;
   status?: InputMaybe<IntWithAggregatesFilter>;
   timestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
   transactionNumber?: InputMaybe<IntWithAggregatesFilter>;
@@ -373,7 +373,6 @@ export type EventSumAggregate = {
   __typename?: 'EventSumAggregate';
   blockNumber?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-  parameters?: Maybe<Array<Scalars['Int']>>;
   status?: Maybe<Scalars['Int']>;
   transactionNumber?: Maybe<Scalars['Int']>;
 };
@@ -381,7 +380,6 @@ export type EventSumAggregate = {
 export type EventSumOrderByAggregateInput = {
   blockNumber?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
-  parameters?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   transactionNumber?: InputMaybe<SortOrder>;
 };
@@ -391,6 +389,7 @@ export type EventUpdateInput = {
   chainId?: InputMaybe<StringFieldUpdateOperationsInput>;
   contract?: InputMaybe<StringFieldUpdateOperationsInput>;
   eventId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  keys?: InputMaybe<EventUpdatekeysInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   parameters?: InputMaybe<EventUpdateparametersInput>;
   status?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -404,6 +403,7 @@ export type EventUpdateManyMutationInput = {
   chainId?: InputMaybe<StringFieldUpdateOperationsInput>;
   contract?: InputMaybe<StringFieldUpdateOperationsInput>;
   eventId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  keys?: InputMaybe<EventUpdatekeysInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   parameters?: InputMaybe<EventUpdateparametersInput>;
   status?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -412,9 +412,14 @@ export type EventUpdateManyMutationInput = {
   txHash?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
+export type EventUpdatekeysInput = {
+  push?: InputMaybe<Array<Scalars['String']>>;
+  set?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type EventUpdateparametersInput = {
-  push?: InputMaybe<Array<Scalars['Int']>>;
-  set?: InputMaybe<Array<Scalars['Int']>>;
+  push?: InputMaybe<Array<Scalars['String']>>;
+  set?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type EventWhereInput = {
@@ -426,8 +431,9 @@ export type EventWhereInput = {
   contract?: InputMaybe<StringFilter>;
   eventId?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
+  keys?: InputMaybe<StringNullableListFilter>;
   name?: InputMaybe<StringFilter>;
-  parameters?: InputMaybe<IntNullableListFilter>;
+  parameters?: InputMaybe<StringNullableListFilter>;
   status?: InputMaybe<IntFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   transactionNumber?: InputMaybe<IntFilter>;
@@ -466,14 +472,6 @@ export type IntFilterInput = {
   lt?: InputMaybe<Scalars['Int']>;
   lte?: InputMaybe<Scalars['Int']>;
   notIn?: InputMaybe<Array<Scalars['Int']>>;
-};
-
-export type IntNullableListFilter = {
-  equals?: InputMaybe<Array<Scalars['Int']>>;
-  has?: InputMaybe<Scalars['Int']>;
-  hasEvery?: InputMaybe<Array<Scalars['Int']>>;
-  hasSome?: InputMaybe<Array<Scalars['Int']>>;
-  isEmpty?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type IntWithAggregatesFilter = {
@@ -542,12 +540,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   createEvent: Event;
   createManyEvent: AffectedRowsOutput;
-  createOrUpdateBuildingCost: BuildingCost;
-  createOrUpdateBuildings: Building;
   createOrUpdateRealm: Realm;
   createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
-  createOrUpdateWallet: Wallet;
   deleteEvent?: Maybe<Event>;
   deleteManyEvent: AffectedRowsOutput;
   reindexDesiege: Scalars['Boolean'];
@@ -565,14 +560,6 @@ export type MutationCreateManyEventArgs = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type MutationCreateOrUpdateBuildingCostArgs = {
-  data: BuildingCostInput;
-};
-
-export type MutationCreateOrUpdateBuildingsArgs = {
-  data: BuildingInput;
-};
-
 export type MutationCreateOrUpdateRealmArgs = {
   data: RealmInput;
 };
@@ -583,10 +570,6 @@ export type MutationCreateOrUpdateRealmTraitArgs = {
 
 export type MutationCreateOrUpdateResourcesArgs = {
   data: ResourceInput;
-};
-
-export type MutationCreateOrUpdateWalletArgs = {
-  data: WalletInput;
 };
 
 export type MutationDeleteEventArgs = {
@@ -762,7 +745,6 @@ export type Query = {
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
   getWallet: Wallet;
-  getWallets: Array<Wallet>;
   groupByEvent: Array<EventGroupBy>;
 };
 
@@ -872,10 +854,12 @@ export type Realm = {
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
+  ownerL2?: Maybe<Scalars['String']>;
   rarityRank: Scalars['Int'];
   rarityScore: Scalars['Float'];
   realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
+  settledOwner?: Maybe<Scalars['String']>;
   squads?: Maybe<Array<Squad>>;
   traits?: Maybe<Array<RealmTrait>>;
   wallet?: Maybe<Wallet>;
@@ -891,10 +875,12 @@ export type RealmFilterInput = {
   name?: InputMaybe<StringFilterInput>;
   orderType?: InputMaybe<OrderTypeInput>;
   owner?: InputMaybe<StringFilterInput>;
+  ownerL2?: InputMaybe<StringFilterInput>;
   rarityRank?: InputMaybe<IntFilterInput>;
   rarityScore?: InputMaybe<IntFilterInput>;
   realmId?: InputMaybe<IntFilterInput>;
   resourceType?: InputMaybe<ResourceTypeInput>;
+  settledOwner?: InputMaybe<StringFilterInput>;
   squadAction?: InputMaybe<SquadActionInput>;
   squadType?: InputMaybe<SquadTypeInput>;
   trait?: InputMaybe<RealmTraitFilterInput>;
@@ -907,9 +893,11 @@ export type RealmInput = {
   name: Scalars['String'];
   orderType?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<Scalars['String']>;
+  ownerL2?: InputMaybe<Scalars['String']>;
   rarityRank?: InputMaybe<Scalars['Int']>;
   rarityScore?: InputMaybe<Scalars['Float']>;
   realmId: Scalars['Int'];
+  settledOwner?: InputMaybe<Scalars['String']>;
   wonder?: InputMaybe<Scalars['String']>;
 };
 
@@ -951,9 +939,11 @@ export enum RealmTraitType {
 export type Resource = {
   __typename?: 'Resource';
   id: Scalars['ID'];
+  level: Scalars['Int'];
   realm: Realm;
   realmId?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
+  upgrades: Array<Scalars['String']>;
 };
 
 export type ResourceInput = {
@@ -1083,6 +1073,14 @@ export type StringFilterInput = {
   startsWith?: InputMaybe<Array<Scalars['String']>>;
 };
 
+export type StringNullableListFilter = {
+  equals?: InputMaybe<Array<Scalars['String']>>;
+  has?: InputMaybe<Scalars['String']>;
+  hasEvery?: InputMaybe<Array<Scalars['String']>>;
+  hasSome?: InputMaybe<Array<Scalars['String']>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type StringWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedStringFilter>;
@@ -1105,13 +1103,10 @@ export type StringWithAggregatesFilter = {
 export type Wallet = {
   __typename?: 'Wallet';
   address: Scalars['String'];
-  id: Scalars['ID'];
-  realms: Array<Realm>;
-};
-
-export type WalletInput = {
-  address: Scalars['String'];
-  realms?: InputMaybe<RealmInput>;
+  realmsBridgedHeld: Scalars['Int'];
+  realmsL1Held: Scalars['Int'];
+  realmsL2Held: Scalars['Int'];
+  realmsSettledHeld: Scalars['Int'];
 };
 
 export type DesiegeFragmentFragment = {
@@ -1236,18 +1231,28 @@ export type GetRealmQuery = {
     realmId: number;
     owner?: string | null;
     bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    resources?: Array<{
+      __typename?: 'Resource';
+      type: string;
+      level: number;
+    }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
       qty: number;
     }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      type?: string | null;
+      id: string;
+    }> | null;
     squads?: Array<{
       __typename?: 'Squad';
       action: string;
@@ -1270,18 +1275,28 @@ export type GetRealmsQuery = {
     realmId: number;
     owner?: string | null;
     bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
     name?: string | null;
     rarityRank: number;
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+    resources?: Array<{
+      __typename?: 'Resource';
+      type: string;
+      level: number;
+    }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
       qty: number;
     }> | null;
-    buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      type?: string | null;
+      id: string;
+    }> | null;
     squads?: Array<{
       __typename?: 'Squad';
       action: string;
@@ -1295,18 +1310,28 @@ export type RealmFragmentFragment = {
   realmId: number;
   owner?: string | null;
   bridgedOwner?: string | null;
+  ownerL2?: string | null;
+  settledOwner?: string | null;
   name?: string | null;
   rarityRank: number;
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
-  resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
+  resources?: Array<{
+    __typename?: 'Resource';
+    type: string;
+    level: number;
+  }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
     type: string;
     qty: number;
   }> | null;
-  buildings?: Array<{ __typename?: 'Building'; type?: string | null }> | null;
+  buildings?: Array<{
+    __typename?: 'Building';
+    type?: string | null;
+    id: string;
+  }> | null;
   squads?: Array<{ __typename?: 'Squad'; action: string; type: string }> | null;
 };
 
@@ -1325,33 +1350,11 @@ export type GetWalletQuery = {
   __typename?: 'Query';
   getWallet: {
     __typename?: 'Wallet';
-    id: string;
-    realms: Array<{
-      __typename?: 'Realm';
-      realmId: number;
-      owner?: string | null;
-      bridgedOwner?: string | null;
-      name?: string | null;
-      rarityRank: number;
-      rarityScore: number;
-      orderType: string;
-      wonder?: string | null;
-      resources?: Array<{ __typename?: 'Resource'; type: string }> | null;
-      traits?: Array<{
-        __typename?: 'RealmTrait';
-        type: string;
-        qty: number;
-      }> | null;
-      buildings?: Array<{
-        __typename?: 'Building';
-        type?: string | null;
-      }> | null;
-      squads?: Array<{
-        __typename?: 'Squad';
-        action: string;
-        type: string;
-      }> | null;
-    }>;
+    address: string;
+    realmsL1Held: number;
+    realmsL2Held: number;
+    realmsSettledHeld: number;
+    realmsBridgedHeld: number;
   };
 };
 
@@ -1392,6 +1395,8 @@ export const RealmFragmentFragmentDoc = gql`
     realmId
     owner
     bridgedOwner
+    ownerL2
+    settledOwner
     name
     rarityRank
     rarityScore
@@ -1399,6 +1404,7 @@ export const RealmFragmentFragmentDoc = gql`
     wonder
     resources {
       type
+      level
     }
     traits {
       type
@@ -1406,6 +1412,7 @@ export const RealmFragmentFragmentDoc = gql`
     }
     buildings {
       type
+      id
     }
     squads {
       action
@@ -1776,13 +1783,13 @@ export type GetRealmsQueryResult = Apollo.QueryResult<
 export const GetWalletDocument = gql`
   query getWallet($address: String!) @api(name: starkIndexer) {
     getWallet(address: $address) {
-      id
-      realms {
-        ...RealmFragment
-      }
+      address
+      realmsL1Held
+      realmsL2Held
+      realmsSettledHeld
+      realmsBridgedHeld
     }
   }
-  ${RealmFragmentFragmentDoc}
 `;
 
 /**

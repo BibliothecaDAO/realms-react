@@ -18,17 +18,20 @@ import { LootPanel } from '@/components/panels/LootPanel';
 import { LorePanel } from '@/components/panels/LorePanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
+import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { JourneyProvider } from '@/context/JourneyContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
+import { ResourceProvider } from '@/context/ResourcesContext';
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
@@ -48,6 +51,7 @@ function App() {
         GaProvider,
         CryptProvider,
         JourneyProvider,
+        ResourceProvider,
       ]}
     >
       <Atlas />
@@ -229,6 +233,8 @@ function Atlas() {
             <BankPanel />
             <CryptsPanel />
             <RealmSideBar id={selectedId} />
+            <BridgeRealmsSideBar />
+            <SettleRealmsSideBar />
             <TradePanel />
             <ResourceSwapSideBar />
             <CryptsSideBar id={selectedId} />

@@ -19,7 +19,7 @@ const APOLLO_ENDPOINTS = {
   goerli: {
     realms:
       'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms-goerli',
-    starkIndexer: 'https://starknet-indexer-c9bsk.ondigitalocean.app/graphql',
+    starkIndexer: 'https://dev-indexer-gu226.ondigitalocean.app/graphql',
     ecosystem:
       'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem-goerli',
   },

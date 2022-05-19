@@ -1,12 +1,14 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import type { ReactElement } from 'react';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
+import { resources, findResourceName } from '@/util/resources';
 import { BasePanel } from './BasePanel';
 
 type Row = {
-  resource: string;
+  resource: ReactElement;
   balance: number;
   output: number;
   change: number;
@@ -14,52 +16,29 @@ type Row = {
   action: ReactElement;
 };
 
-const defaultData: Row[] = [
-  {
-    resource: 'Wood',
-    balance: 1322,
-    output: 100,
-    change: 0.08,
-    rate: 0.234,
-    action: <Button>Trade</Button>,
-  },
-  {
-    resource: 'Stone',
-    balance: 1322,
-    output: 100,
-    change: 0.08,
-    rate: 0.234,
-    action: <Button>Trade</Button>,
-  },
-  {
-    resource: 'Coal',
-    balance: 1322,
-    output: 100,
-    change: 0.08,
-    rate: 0.234,
-    action: <Button>Trade</Button>,
-  },
-  {
-    resource: 'Ironwood',
-    balance: 1322,
-    output: 100,
-    change: 0.08,
-    rate: 0.234,
-    action: <Button>Trade</Button>,
-  },
-  {
-    resource: 'Heartwood',
-    balance: 1322,
-    output: 100,
-    change: 0.08,
-    rate: 0.234,
-    action: <Button>Trade</Button>,
-  },
-];
-
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
+  const { balance, updateBalance } = useResourcesContext();
+  const defaultData: Row[] = balance?.map((resource) => {
+    const resourceModel = findResourceName(resource.resourceId.toString());
+    return {
+      resource: (
+        <div className="flex mb-4 mr-4 text-xl">
+          <ResourceIcon
+            resource={resourceModel?.trait.replace(' ', '') || ''}
+            size="md"
+          />
 
+          <span className="self-center ml-4">{resourceModel?.trait}</span>
+        </div>
+      ),
+      balance: resource.amount,
+      output: 0,
+      change: 0.08,
+      rate: 0,
+      action: <Button>Trade</Button>,
+    };
+  });
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     { Header: 'Balance', id: 2, accessor: 'balance' },
@@ -86,15 +65,11 @@ export function BankPanel(): ReactElement {
           <Close />
         </button>
       </div>
+
       <div className="relative overflow-x-auto">
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
-        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-          <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
-            Coming Soon!
-          </div>
-        </div>
       </div>
     </BasePanel>
   );

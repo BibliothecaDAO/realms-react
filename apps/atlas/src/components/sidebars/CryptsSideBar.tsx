@@ -13,13 +13,14 @@ type Props = {
 
 export const CryptsSideBar = (props: Props) => {
   const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
-
+  const isCryptsSelected = selectedMenuType === 'crypt' && showDetails;
   const { loading, error, data } = useQuery<CryptData>(getCryptQuery, {
     variables: { id: props.id.toString() },
+    skip: !isCryptsSelected,
   });
 
   return (
-    <BaseSideBar open={selectedMenuType === 'crypt' && showDetails}>
+    <BaseSideBar open={isCryptsSelected}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end">
           <Button size="sm" onClick={() => toggleMenuType('crypt')}>

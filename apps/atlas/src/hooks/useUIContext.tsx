@@ -18,7 +18,11 @@ export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType = 'account' | 'trade' | 'bank' | 'lore' | AssetType;
 
-export type MenuType = 'resourceSwap' | PanelType;
+export type MenuType =
+  | 'settleRealms'
+  | 'bridgeRealms'
+  | 'resourceSwap'
+  | PanelType;
 
 export type AssetFilter = {
   value: AssetType;
@@ -236,7 +240,7 @@ function useUI(): UI {
       } else if (panelType === 'bank') {
         setArtBackground('bank');
         if (breakpoints.lg) {
-          setMenuType('resourceSwap');
+          openDetails('resourceSwap', '1');
         }
       } else if (panelType === 'trade') {
         setArtBackground('realm');

@@ -70,9 +70,6 @@ export function RealmHistory(): ReactElement {
   return (
     <div className="relative p-2">
       <Table columns={columns} data={defaultData} options={tableOptions} />
-      <div className="absolute top-0 bottom-0 left-0 right-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-        <p className="text-lg"></p>Coming Soon!
-      </div>
     </div>
   );
 }

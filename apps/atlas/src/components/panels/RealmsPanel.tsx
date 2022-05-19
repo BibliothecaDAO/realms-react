@@ -1,6 +1,7 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import { useStarknet } from '@starknet-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
@@ -16,6 +17,7 @@ export const RealmsPanel = () => {
   const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
     useUIContext();
   const { account } = useWalletContext();
+  const { account: starkAccount } = useStarknet();
   const { state, actions } = useRealmContext();
 
   const limit = 50;
@@ -69,6 +71,8 @@ export const RealmsPanel = () => {
       filter.OR = [
         { owner: { equals: account?.toLowerCase() } },
         { bridgedOwner: { equals: account?.toLowerCase() } },
+        { ownerL2: { equals: starkAccount?.toLowerCase() } },
+        { settledOwner: { equals: starkAccount?.toLowerCase() } },
       ];
     }
 
@@ -136,14 +140,17 @@ export const RealmsPanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <RealmsFilter />
+        <RealmsFilter isYourRealms={state.selectedTab === 0} />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        <RealmOverviews realms={data?.getRealms ?? []} />
+        <RealmOverviews
+          realms={data?.getRealms ?? []}
+          isYourRealms={state.selectedTab === 0}
+        />
       </div>
 
       {hasNoResults() && (
