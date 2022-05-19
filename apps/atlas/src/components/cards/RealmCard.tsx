@@ -9,6 +9,7 @@ import { RealmTroops } from '@/components/tables/RealmTroops';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
+import { DownloadAssets } from '@/shared/DownloadAssets';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
@@ -119,6 +120,7 @@ function Overview(props: RealmsCardProps): ReactElement {
         id={props.realm.realmId.toString()}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
+      <DownloadAssets id={props.realm.id}></DownloadAssets>
     </div>
   );
 }
