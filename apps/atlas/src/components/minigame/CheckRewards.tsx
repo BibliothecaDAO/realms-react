@@ -6,6 +6,7 @@ import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useUserReward from '@/hooks/desiege/useUserReward';
 import Button from '@/shared/Button';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
+import { shortenAddressWidth } from '@/util/formatters';
 import VictoryDisplay from './VictoryDisplay';
 
 type Prop = {
@@ -29,7 +30,7 @@ const CheckRewards: React.FC<Prop> = (props) => {
   return (
     <div className="text-2xl">
       <h3 className="my-2">
-        Contribution for Game{' '}
+        Game{' '}
         {editingGameNumber ? (
           <input
             className="inline-block w-16 px-2 mx-2 text-black"
@@ -62,11 +63,6 @@ const CheckRewards: React.FC<Prop> = (props) => {
           ) : (
             <>
               <VictoryDisplay gameIdx={gameIdx} />
-              <p>
-                Siege contribution allocation:{' '}
-                <span className="text-4xl">{userReward.alloc?.toString()}</span>
-              </p>
-              <p>Your StarkNet account: {account}</p>
             </>
           )}
 
@@ -76,10 +72,21 @@ const CheckRewards: React.FC<Prop> = (props) => {
               userReward.loading ? 'animate-pulse' : null
             )}
           >
+            <div className="flex justify-between mb-4">
+              <div className="flex-grow">
+                Game Receipt for:{' '}
+                <pre> {shortenAddressWidth(account || '', 6)}</pre>
+              </div>
+              <div>
+                Siege victory contribution:{' '}
+                <span className="text-4xl">{userReward.alloc?.toString()}</span>
+              </div>
+            </div>
+
             {userReward.alloc && userReward.alloc.toNumber() > 0 ? (
               <>
-                <h2>You have contributed to victory!</h2> You can claim with
-                this account for something in the future...
+                <h2>Contributed to victory!</h2> With this receipt, you can
+                claim something in the future.
                 <Button className="mt-2" disabled>
                   Claim
                 </Button>
