@@ -214,7 +214,6 @@ const GameControls: React.FC<Prop> = (props) => {
           </Button>
         </>
       ) : undefined}
-
       <ChatComponent channelName="desiege-chat" />
     </div>
   );
