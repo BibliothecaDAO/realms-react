@@ -1,7 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 
 interface Props {
-  id: string;
+  id: number;
 }
 
 export const DownloadAssets = (props: Props) => {

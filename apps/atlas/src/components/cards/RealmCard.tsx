@@ -120,7 +120,7 @@ function Overview(props: RealmsCardProps): ReactElement {
         id={props.realm.realmId.toString()}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
-      <DownloadAssets id={props.realm.id}></DownloadAssets>
+      <DownloadAssets id={props.realm.realmId}></DownloadAssets>
     </div>
   );
 }
@@ -134,7 +134,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
         label: 'Overview',
         component: <Overview {...props} />,
       },
-      {
+      /* {
         label: 'Resources',
         component: <RealmResources {...props} />,
       },
@@ -149,7 +149,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       {
         label: 'History',
         component: <RealmHistory />,
-      },
+      }, */
     ],
     [props.realm?.realmId]
   );
