@@ -47,16 +47,18 @@ export const RealmsPanel = () => {
 
   const variables = useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
-      resourceType: { equals: resource },
+      resources: { some: { resourceId: { equals: resource } } },
     }));
 
     const traitsFilters = Object.keys(state.traitsFilter)
       // Filter 0 entries
       .filter((key: string) => (state.traitsFilter as any)[key])
       .map((key: string) => ({
-        trait: {
-          type: key as RealmTraitType,
-          qty: { gte: (state.traitsFilter as any)[key] },
+        traits: {
+          some: {
+            type: { equals: key as RealmTraitType },
+            qty: { gte: (state.traitsFilter as any)[key] },
+          },
         },
       }));
 

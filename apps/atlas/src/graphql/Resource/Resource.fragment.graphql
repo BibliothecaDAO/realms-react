@@ -1,5 +1,5 @@
 fragment ResourceFragment on Resource {
-    id
-    type
-    realmId
-  }
+  id
+  resourceId
+  realmId
+}
