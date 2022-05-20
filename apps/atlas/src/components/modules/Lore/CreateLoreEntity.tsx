@@ -2,13 +2,18 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { markdown } from '@codemirror/lang-markdown';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView } from '@codemirror/view';
-import { useStarknet } from '@starknet-react/core';
+import {
+  useStarknet,
+  useContract,
+  useStarknetInvoke,
+} from '@starknet-react/core';
 import CodeMirror from '@uiw/react-codemirror';
 import Arweave from 'arweave';
 import axios from 'axios';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { Contract, defaultProvider } from 'starknet';
+import type { Abi } from 'starknet';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useGetLorePoisQuery } from '@/generated/graphql';
 import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
@@ -34,6 +39,22 @@ const arweave = Arweave.init({
 
 export const CreateLoreEntity = () => {
   const starknet = useStarknet();
+
+  const { contract: loreContract } = useContract({
+    abi: loreContractABI as Abi,
+    address: process.env.NEXT_PUBLIC_LORE_ADDRESS as string,
+  });
+
+  const {
+    data: createEntityData,
+    loading,
+    error: starknetError,
+    reset,
+    invoke,
+  } = useStarknetInvoke({
+    contract: loreContract,
+    method: 'create_entity',
+  });
 
   const [entityTitle, setEntityTitle] = useState('Grug The Dark Lord');
 
@@ -76,23 +97,57 @@ export const CreateLoreEntity = () => {
     }
   };
 
+  const submitEntityToStarknet = (arweaveId?) => {
+    const submittedArweaveId = arweaveId || arweaveTxID;
+    const part1 = shortStringToBigIntUtil(
+      submittedArweaveId.substring(0, submittedArweaveId.length / 2)
+    ).toString();
+    const part2 = shortStringToBigIntUtil(
+      submittedArweaveId.substring(
+        submittedArweaveId.length / 2,
+        submittedArweaveId.length
+      )
+    ).toString();
+
+    const starkinizedPOIs = entityData.pois.map((poi) => {
+      if (poi.assetId) {
+        return { id: poi.id, asset_id: bnToUint256(poi.assetId) };
+      }
+
+      return { id: poi.id, asset_id: bnToUint256(0) };
+    });
+    console.log(starkinizedPOIs);
+    const args = [
+      {
+        Part1: part1,
+        Part2: part2,
+      },
+      '0', // kind
+      starkinizedPOIs, // pois
+      [], // props
+    ];
+
+    invoke({ args: args });
+  };
+
+  const entityData = {
+    title: entityTitle,
+    markdown: editorValue,
+    pois: extractPOIs(editorValue),
+  };
+
   const createEntity = async () => {
     // Clearing
     setArweaveTxID(null);
     setStarknetTxID(null);
 
-    const data = {
-      title: entityTitle,
-      markdown: editorValue,
-      pois: extractPOIs(editorValue),
-    };
-
+    console.log(entityData);
     try {
       setCreatingStep(CREATING_STEPS.UPLOADING_TO_ARWEAVE);
 
       const arweaveRes = await axios.post<UploadArweaveResponse>(
         '/api/lore/upload_arweave',
-        data
+        entityData
       );
 
       const arweaveId = arweaveRes.data.arweaveId;
@@ -107,43 +162,13 @@ export const CreateLoreEntity = () => {
       // Starknet
       setCreatingStep(CREATING_STEPS.ADDING_TO_STARKNET);
 
-      const part1 = shortStringToBigIntUtil(
-        arweaveId.substring(0, arweaveId.length / 2)
-      ).toString();
-      const part2 = shortStringToBigIntUtil(
-        arweaveId.substring(arweaveId.length / 2, arweaveId.length)
-      ).toString();
-
-      const loreContract = new Contract(
-        loreContractABI,
-        process.env.NEXT_PUBLIC_LORE_ADDRESS as string,
-        starknet.library
-      );
-
-      const starkinizedPOIs = data.pois.map((poi) => {
-        if (poi.assetId) {
-          return { id: poi.id, asset_id: bnToUint256(poi.assetId) };
-        }
-
-        return { id: poi.id, asset_id: bnToUint256(0) };
-      });
-
-      const starknetTx = await loreContract.create_entity(
-        {
-          Part1: part1,
-          Part2: part2,
-        },
-        '0', // kind
-        starkinizedPOIs, // pois
-        [] // props
-      );
+      submitEntityToStarknet(arweaveId);
 
       setCreatingStep(CREATING_STEPS.WAITING_FOR_STARKNET);
-      setStarknetTxID(starknetTx.transaction_hash);
-
-      await defaultProvider.waitForTransaction(starknetTx.transaction_hash);
-
-      setCreatingStep(CREATING_STEPS.DONE);
+      if (createEntityData) {
+        setStarknetTxID(createEntityData);
+        setCreatingStep(CREATING_STEPS.DONE);
+      }
     } catch (error) {
       // setIsCreating(false);
       setCreatingStep(CREATING_STEPS.INITIAL);
@@ -230,6 +255,15 @@ export const CreateLoreEntity = () => {
                 className={`bg-white w-4 h-4 rounded-full mx-auto mb-2`}
               ></div>
               Waiting for StarkNet
+              {starknetError && (
+                <Button
+                  onClick={() => {
+                    submitEntityToStarknet();
+                  }}
+                >
+                  Resubmit Starknet Transaction
+                </Button>
+              )}
             </div>
             <div
               className={clsx({

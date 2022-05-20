@@ -87,6 +87,17 @@
   {
     "data": [
       {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
         "name": "id",
         "type": "felt"
       }
@@ -96,19 +107,41 @@
     "type": "event"
   },
   {
-    "inputs": [
+    "data": [
       {
-        "name": "owner",
+        "name": "entity_id",
         "type": "felt"
       },
       {
-        "name": "module_controller_addr",
+        "name": "revision_id",
         "type": "felt"
       }
     ],
-    "name": "constructor",
+    "keys": [],
+    "name": "entity_revision_created",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
     "outputs": [],
-    "type": "constructor"
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
   },
   {
     "inputs": [
@@ -153,7 +186,7 @@
         "type": "felt"
       },
       {
-        "name": "content",
+        "name": "content_link",
         "type": "EntityContentLink"
       },
       {
@@ -251,10 +284,10 @@
   },
   {
     "inputs": [],
-    "name": "get_last_id",
+    "name": "get_last_entity_id",
     "outputs": [
       {
-        "name": "res",
+        "name": "last_entity_id",
         "type": "felt"
       }
     ],
