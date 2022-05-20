@@ -53,6 +53,7 @@ function Atlas() {
               <AccountModule />
               <LootModule />
               <GaModule />
+              <LorePanel />
               <RealmsModule />
               <CryptModule />
               <BankModule />
