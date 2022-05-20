@@ -10,19 +10,14 @@ fragment RealmFragment on Realm {
   orderType
   wonder
   resources {
-    type
+    resourceId
     level
+    upgrades
   }
   traits {
     type
     qty
   }
-  buildings {
-    type
-    id
-  }
-  squads {
-    action
-    type
-  }
+  attackTroopIds
+  defendTroopIds
 }

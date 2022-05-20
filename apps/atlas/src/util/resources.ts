@@ -1,4 +1,4 @@
-interface Resources {
+export interface Resources {
   trait: string;
   value: number;
   colour: string;

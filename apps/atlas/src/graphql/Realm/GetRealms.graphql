@@ -1,6 +1,6 @@
 #import "./Realm.fragment.graphql"
 query getRealms(
-  $filter: RealmFilterInput
+  $filter: RealmWhereInput
   $orderBy: RealmOrderByInput
   $take: Float
   $skip: Float

@@ -5,10 +5,12 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import { findResourceName } from '@/util/resources';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
   isYourRealms?: boolean;
 }
+
 const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
@@ -142,14 +144,15 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-black/50">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
+                  const info = findResourceName(resource.resourceId + '');
                   return (
                     <div className="flex my-4 font-bold " key={index}>
                       <ResourceIcon
                         size="sm"
-                        resource={resource.type.replace('_', '')}
+                        resource={info?.trait?.replace('_', '') as string}
                       />{' '}
                       <span className="ml-4 uppercase tracking-veryWide">
-                        {resource.type.replace('_', ' ')}
+                        {info?.trait}
                       </span>
                       {/* <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
                       100

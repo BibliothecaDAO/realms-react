@@ -7,15 +7,13 @@ import { useUIContext } from '@/hooks/useUIContext';
 import type { CryptData } from '@/types/index';
 import { Crypt } from '../cards/Crypt';
 import { BaseSideBar } from './BaseSideBar';
-type Props = {
-  id: string;
-};
 
-export const CryptsSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
+export const CryptsSideBar = () => {
+  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
+    useUIContext();
   const isCryptsSelected = selectedMenuType === 'crypt' && showDetails;
   const { loading, error, data } = useQuery<CryptData>(getCryptQuery, {
-    variables: { id: props.id.toString() },
+    variables: { id: selectedId },
     skip: !isCryptsSelected,
   });
 

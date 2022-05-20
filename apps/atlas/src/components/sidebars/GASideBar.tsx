@@ -7,15 +7,13 @@ import { useUIContext } from '@/hooks/useUIContext';
 import type { GAData } from '@/types/index';
 import { GAdventurer } from '../cards/GAdventurer';
 import { BaseSideBar } from './BaseSideBar';
-type Props = {
-  id: string;
-};
 
-export const GASideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
+export const GASideBar = () => {
+  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
+    useUIContext();
   const isGASelected = selectedMenuType === 'ga' && showDetails;
   const { loading, error, data } = useQuery<GAData>(getGAQuery, {
-    variables: { id: props.id },
+    variables: { id: selectedId },
     skip: !isGASelected,
   });
 

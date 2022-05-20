@@ -40,48 +40,35 @@ export type AggregateEvent = {
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
+  buildingId?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   realm?: Maybe<Realm>;
   realmId: Scalars['Float'];
-  type?: Maybe<Scalars['String']>;
 };
 
 /** Building Cost Model */
 export type BuildingCost = {
   __typename?: 'BuildingCost';
-  buildingType: Scalars['String'];
+  buildingId: Scalars['Int'];
   qty: Scalars['Float'];
-  resourceType: Scalars['String'];
+  resourceId: Scalars['Int'];
 };
 
-export enum BuildingType {
-  Amphitheater = 'Amphitheater',
-  ArcherTower = 'Archer_Tower',
-  Architect = 'Architect',
-  Barracks = 'Barracks',
-  Castle = 'Castle',
-  Dock = 'Dock',
-  Fairgrounds = 'Fairgrounds',
-  Farms = 'Farms',
-  Fishmonger = 'Fishmonger',
-  Granary = 'Granary',
-  GrandMarket = 'Grand_Market',
-  Guild = 'Guild',
-  Hamlet = 'Hamlet',
-  Housing = 'Housing',
-  MageTower = 'Mage_Tower',
-  OfficerAcademy = 'Officer_Academy',
-  ParadeGrounds = 'Parade_Grounds',
-  RoyalReserve = 'Royal_Reserve',
-  School = 'School',
-  TradeOffice = 'Trade_Office',
-}
+export type BuildingListRelationFilter = {
+  every?: InputMaybe<BuildingWhereInput>;
+  none?: InputMaybe<BuildingWhereInput>;
+  some?: InputMaybe<BuildingWhereInput>;
+};
 
-export type BuildingTypeInput = {
-  equals?: InputMaybe<BuildingType>;
-  in?: InputMaybe<Array<BuildingType>>;
-  not?: InputMaybe<Array<BuildingType>>;
-  notIn?: InputMaybe<Array<BuildingType>>;
+export type BuildingWhereInput = {
+  AND?: InputMaybe<Array<BuildingWhereInput>>;
+  NOT?: InputMaybe<Array<BuildingWhereInput>>;
+  OR?: InputMaybe<Array<BuildingWhereInput>>;
+  buildingId?: InputMaybe<IntFilter>;
+  eventId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  realm?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntNullableFilter>;
 };
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -124,6 +111,20 @@ export type Desiege = {
   initialHealth: Scalars['Float'];
   startedOn: Scalars['DateTime'];
   winner: Scalars['Float'];
+};
+
+export type EnumOrderTypeNullableFilter = {
+  equals?: InputMaybe<OrderType>;
+  in?: InputMaybe<Array<OrderType>>;
+  not?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  notIn?: InputMaybe<Array<OrderType>>;
+};
+
+export type EnumRealmTraitTypeFilter = {
+  equals?: InputMaybe<RealmTraitType>;
+  in?: InputMaybe<Array<RealmTraitType>>;
+  not?: InputMaybe<NestedEnumRealmTraitTypeFilter>;
+  notIn?: InputMaybe<Array<RealmTraitType>>;
 };
 
 export type Event = {
@@ -445,6 +446,17 @@ export type EventWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
+export type FloatFilter = {
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
 export type IntFieldUpdateOperationsInput = {
   decrement?: InputMaybe<Scalars['Int']>;
   divide?: InputMaybe<Scalars['Int']>;
@@ -464,13 +476,14 @@ export type IntFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-export type IntFilterInput = {
+export type IntNullableFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
   gte?: InputMaybe<Scalars['Int']>;
   in?: InputMaybe<Array<Scalars['Int']>>;
   lt?: InputMaybe<Scalars['Int']>;
   lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
@@ -541,7 +554,6 @@ export type Mutation = {
   createEvent: Event;
   createManyEvent: AffectedRowsOutput;
   createOrUpdateRealm: Realm;
-  createOrUpdateRealmTrait: RealmTrait;
   createOrUpdateResources: Resource;
   deleteEvent?: Maybe<Event>;
   deleteManyEvent: AffectedRowsOutput;
@@ -562,10 +574,6 @@ export type MutationCreateManyEventArgs = {
 
 export type MutationCreateOrUpdateRealmArgs = {
   data: RealmInput;
-};
-
-export type MutationCreateOrUpdateRealmTraitArgs = {
-  data: RealmTraitInput;
 };
 
 export type MutationCreateOrUpdateResourcesArgs = {
@@ -621,6 +629,20 @@ export type NestedDateTimeWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
+export type NestedEnumOrderTypeNullableFilter = {
+  equals?: InputMaybe<OrderType>;
+  in?: InputMaybe<Array<OrderType>>;
+  not?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  notIn?: InputMaybe<Array<OrderType>>;
+};
+
+export type NestedEnumRealmTraitTypeFilter = {
+  equals?: InputMaybe<RealmTraitType>;
+  in?: InputMaybe<Array<RealmTraitType>>;
+  not?: InputMaybe<NestedEnumRealmTraitTypeFilter>;
+  notIn?: InputMaybe<Array<RealmTraitType>>;
+};
+
 export type NestedFloatFilter = {
   equals?: InputMaybe<Scalars['Float']>;
   gt?: InputMaybe<Scalars['Float']>;
@@ -640,6 +662,17 @@ export type NestedIntFilter = {
   lt?: InputMaybe<Scalars['Int']>;
   lte?: InputMaybe<Scalars['Int']>;
   not?: InputMaybe<NestedIntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type NestedIntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
@@ -669,6 +702,20 @@ export type NestedStringFilter = {
   lt?: InputMaybe<Scalars['String']>;
   lte?: InputMaybe<Scalars['String']>;
   not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type NestedStringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
 };
@@ -715,13 +762,6 @@ export enum OrderType {
   TheTwins = 'the_Twins',
 }
 
-export type OrderTypeInput = {
-  equals?: InputMaybe<OrderType>;
-  in?: InputMaybe<Array<OrderType>>;
-  not?: InputMaybe<Array<OrderType>>;
-  notIn?: InputMaybe<Array<OrderType>>;
-};
-
 export type Query = {
   __typename?: 'Query';
   aggregateEvent: AggregateEvent;
@@ -739,7 +779,6 @@ export type Query = {
   getLoreEntity: LoreEntity;
   getLorePois: Array<LorePoi>;
   getRealm: Realm;
-  getRealmTraits: Array<RealmTrait>;
   getRealms: Array<Realm>;
   getResource: Resource;
   getResources: Array<Resource>;
@@ -813,7 +852,7 @@ export type QueryGetRealmArgs = {
 };
 
 export type QueryGetRealmsArgs = {
-  filter?: InputMaybe<RealmFilterInput>;
+  filter?: InputMaybe<RealmWhereInput>;
   orderBy?: InputMaybe<RealmOrderByInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
@@ -848,8 +887,10 @@ export enum QueryMode {
 /** The Realm Model */
 export type Realm = {
   __typename?: 'Realm';
+  attackTroopIds: Array<Scalars['String']>;
   bridgedOwner?: Maybe<Scalars['String']>;
   buildings?: Maybe<Array<Building>>;
+  defendTroopIds: Array<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
@@ -860,31 +901,9 @@ export type Realm = {
   realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
   settledOwner?: Maybe<Scalars['String']>;
-  squads?: Maybe<Array<Squad>>;
   traits?: Maybe<Array<RealmTrait>>;
   wallet?: Maybe<Wallet>;
   wonder?: Maybe<Scalars['String']>;
-};
-
-export type RealmFilterInput = {
-  AND?: InputMaybe<Array<RealmFilterInput>>;
-  NOT?: InputMaybe<Array<RealmFilterInput>>;
-  OR?: InputMaybe<Array<RealmFilterInput>>;
-  bridgedOwner?: InputMaybe<StringFilterInput>;
-  buildingType?: InputMaybe<BuildingTypeInput>;
-  name?: InputMaybe<StringFilterInput>;
-  orderType?: InputMaybe<OrderTypeInput>;
-  owner?: InputMaybe<StringFilterInput>;
-  ownerL2?: InputMaybe<StringFilterInput>;
-  rarityRank?: InputMaybe<IntFilterInput>;
-  rarityScore?: InputMaybe<IntFilterInput>;
-  realmId?: InputMaybe<IntFilterInput>;
-  resourceType?: InputMaybe<ResourceTypeInput>;
-  settledOwner?: InputMaybe<StringFilterInput>;
-  squadAction?: InputMaybe<SquadActionInput>;
-  squadType?: InputMaybe<SquadTypeInput>;
-  trait?: InputMaybe<RealmTraitFilterInput>;
-  wonder?: InputMaybe<StringFilterInput>;
 };
 
 export type RealmInput = {
@@ -901,10 +920,21 @@ export type RealmInput = {
   wonder?: InputMaybe<Scalars['String']>;
 };
 
+export type RealmListRelationFilter = {
+  every?: InputMaybe<RealmWhereInput>;
+  none?: InputMaybe<RealmWhereInput>;
+  some?: InputMaybe<RealmWhereInput>;
+};
+
 export type RealmOrderByInput = {
   rarityRank?: InputMaybe<OrderByDirectionInput>;
   rarityScore?: InputMaybe<OrderByDirectionInput>;
   realmId?: InputMaybe<OrderByDirectionInput>;
+};
+
+export type RealmRelationFilter = {
+  is?: InputMaybe<RealmWhereInput>;
+  isNot?: InputMaybe<RealmWhereInput>;
 };
 
 /** Realm Trait Model */
@@ -917,15 +947,10 @@ export type RealmTrait = {
   type: Scalars['String'];
 };
 
-export type RealmTraitFilterInput = {
-  qty?: InputMaybe<IntFilterInput>;
-  type: RealmTraitType;
-};
-
-export type RealmTraitInput = {
-  qty: Scalars['Float'];
-  realmId: Scalars['Float'];
-  type: RealmTraitType;
+export type RealmTraitListRelationFilter = {
+  every?: InputMaybe<RealmTraitWhereInput>;
+  none?: InputMaybe<RealmTraitWhereInput>;
+  some?: InputMaybe<RealmTraitWhereInput>;
 };
 
 export enum RealmTraitType {
@@ -935,6 +960,40 @@ export enum RealmTraitType {
   River = 'River',
 }
 
+export type RealmTraitWhereInput = {
+  AND?: InputMaybe<Array<RealmTraitWhereInput>>;
+  NOT?: InputMaybe<Array<RealmTraitWhereInput>>;
+  OR?: InputMaybe<Array<RealmTraitWhereInput>>;
+  qty?: InputMaybe<IntFilter>;
+  realm?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  type?: InputMaybe<EnumRealmTraitTypeFilter>;
+};
+
+export type RealmWhereInput = {
+  AND?: InputMaybe<Array<RealmWhereInput>>;
+  NOT?: InputMaybe<Array<RealmWhereInput>>;
+  OR?: InputMaybe<Array<RealmWhereInput>>;
+  attackTroopIds?: InputMaybe<StringNullableListFilter>;
+  bridgedOwner?: InputMaybe<StringNullableFilter>;
+  buildings?: InputMaybe<BuildingListRelationFilter>;
+  defendTroopIds?: InputMaybe<StringNullableListFilter>;
+  id?: InputMaybe<IntFilter>;
+  imageUrl?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringNullableFilter>;
+  orderType?: InputMaybe<EnumOrderTypeNullableFilter>;
+  owner?: InputMaybe<StringNullableFilter>;
+  ownerL2?: InputMaybe<StringNullableFilter>;
+  rarityRank?: InputMaybe<IntFilter>;
+  rarityScore?: InputMaybe<FloatFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  resources?: InputMaybe<ResourceListRelationFilter>;
+  settledOwner?: InputMaybe<StringNullableFilter>;
+  traits?: InputMaybe<RealmTraitListRelationFilter>;
+  wallet?: InputMaybe<WalletRelationFilter>;
+  wonder?: InputMaybe<StringNullableFilter>;
+};
+
 /** The Resource Model */
 export type Resource = {
   __typename?: 'Resource';
@@ -942,103 +1001,71 @@ export type Resource = {
   level: Scalars['Int'];
   realm: Realm;
   realmId?: Maybe<Scalars['Float']>;
-  type: Scalars['String'];
+  resourceId: Scalars['Int'];
   upgrades: Array<Scalars['String']>;
 };
 
 export type ResourceInput = {
   id?: InputMaybe<Scalars['ID']>;
   realmId: Scalars['Float'];
-  type: ResourceType;
+  resourceId: Scalars['Int'];
 };
 
-/** ResourceType */
-export enum ResourceType {
-  Adamantine = 'Adamantine',
-  AlchemicalSilver = 'Alchemical_Silver',
-  Coal = 'Coal',
-  ColdIron = 'Cold_Iron',
-  Copper = 'Copper',
-  DeepCrystal = 'Deep_Crystal',
-  Diamonds = 'Diamonds',
-  Dragonhide = 'Dragonhide',
-  EtherealSilica = 'Ethereal_Silica',
-  Gold = 'Gold',
-  Hartwood = 'Hartwood',
-  Ignium = 'Ignium',
-  Ironwood = 'Ironwood',
-  Mithral = 'Mithral',
-  Obsidian = 'Obsidian',
-  Ruby = 'Ruby',
-  Sapphire = 'Sapphire',
-  Silver = 'Silver',
-  Stone = 'Stone',
-  TrueIce = 'True_Ice',
-  TwilightQuartz = 'Twilight_Quartz',
-  Wood = 'Wood',
-}
+export type ResourceListRelationFilter = {
+  every?: InputMaybe<ResourceWhereInput>;
+  none?: InputMaybe<ResourceWhereInput>;
+  some?: InputMaybe<ResourceWhereInput>;
+};
 
-export type ResourceTypeInput = {
-  equals?: InputMaybe<ResourceType>;
-  in?: InputMaybe<Array<ResourceType>>;
-  not?: InputMaybe<Array<ResourceType>>;
-  notIn?: InputMaybe<Array<ResourceType>>;
+export type ResourceTokenListRelationFilter = {
+  every?: InputMaybe<ResourceTokenWhereInput>;
+  none?: InputMaybe<ResourceTokenWhereInput>;
+  some?: InputMaybe<ResourceTokenWhereInput>;
+};
+
+export type ResourceTokenWhereInput = {
+  AND?: InputMaybe<Array<ResourceTokenWhereInput>>;
+  NOT?: InputMaybe<Array<ResourceTokenWhereInput>>;
+  OR?: InputMaybe<Array<ResourceTokenWhereInput>>;
+  address?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  qty?: InputMaybe<IntFilter>;
+  resourceId?: InputMaybe<IntFilter>;
+  wallet?: InputMaybe<WalletRelationFilter>;
+};
+
+export type ResourceWhereInput = {
+  AND?: InputMaybe<Array<ResourceWhereInput>>;
+  NOT?: InputMaybe<Array<ResourceWhereInput>>;
+  OR?: InputMaybe<Array<ResourceWhereInput>>;
+  id?: InputMaybe<IntFilter>;
+  level?: InputMaybe<IntFilter>;
+  realm?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntNullableFilter>;
+  resourceId?: InputMaybe<IntFilter>;
+  upgrades?: InputMaybe<StringNullableListFilter>;
+};
+
+export type SRealmListRelationFilter = {
+  every?: InputMaybe<SRealmWhereInput>;
+  none?: InputMaybe<SRealmWhereInput>;
+  some?: InputMaybe<SRealmWhereInput>;
+};
+
+export type SRealmWhereInput = {
+  AND?: InputMaybe<Array<SRealmWhereInput>>;
+  NOT?: InputMaybe<Array<SRealmWhereInput>>;
+  OR?: InputMaybe<Array<SRealmWhereInput>>;
+  id?: InputMaybe<IntFilter>;
+  owner?: InputMaybe<StringNullableFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  wallet?: InputMaybe<WalletRelationFilter>;
 };
 
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc',
 }
-
-/** The Squad Model */
-export type Squad = {
-  __typename?: 'Squad';
-  action: Scalars['String'];
-  realm?: Maybe<Realm>;
-  realmId: Scalars['Int'];
-  type: Scalars['String'];
-};
-
-export enum SquadAction {
-  Defence = 'Defence',
-  Offence = 'Offence',
-}
-
-export type SquadActionInput = {
-  equals?: InputMaybe<SquadAction>;
-  in?: InputMaybe<Array<SquadAction>>;
-  not?: InputMaybe<Array<SquadAction>>;
-  notIn?: InputMaybe<Array<SquadAction>>;
-};
-
-export enum SquadType {
-  Apprentice = 'Apprentice',
-  Arcanist = 'Arcanist',
-  Archer = 'Archer',
-  Ballista = 'Ballista',
-  Catapult = 'Catapult',
-  GrandMarshal = 'Grand_Marshal',
-  Guard = 'Guard',
-  GuardCaptain = 'Guard_Captain',
-  Healer = 'Healer',
-  Knight = 'Knight',
-  KnightCommander = 'Knight_Commander',
-  LifeMage = 'Life_Mage',
-  Mage = 'Mage',
-  Scorpio = 'Scorpio',
-  Scout = 'Scout',
-  Shaman = 'Shaman',
-  Sniper = 'Sniper',
-  Squire = 'Squire',
-  Watchman = 'Watchman',
-}
-
-export type SquadTypeInput = {
-  equals?: InputMaybe<SquadType>;
-  in?: InputMaybe<Array<SquadType>>;
-  not?: InputMaybe<Array<SquadType>>;
-  notIn?: InputMaybe<Array<SquadType>>;
-};
 
 export type StringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
@@ -1059,18 +1086,19 @@ export type StringFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
-export type StringFilterInput = {
-  contains?: InputMaybe<Array<Scalars['String']>>;
-  endsWith?: InputMaybe<Array<Scalars['String']>>;
+export type StringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
   equals?: InputMaybe<Scalars['String']>;
-  gt?: InputMaybe<Array<Scalars['String']>>;
-  gte?: InputMaybe<Array<Scalars['String']>>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
   in?: InputMaybe<Array<Scalars['String']>>;
-  lt?: InputMaybe<Array<Scalars['String']>>;
-  lte?: InputMaybe<Array<Scalars['String']>>;
-  not?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
-  startsWith?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type StringNullableListFilter = {
@@ -1107,6 +1135,22 @@ export type Wallet = {
   realmsL1Held: Scalars['Int'];
   realmsL2Held: Scalars['Int'];
   realmsSettledHeld: Scalars['Int'];
+};
+
+export type WalletRelationFilter = {
+  is?: InputMaybe<WalletWhereInput>;
+  isNot?: InputMaybe<WalletWhereInput>;
+};
+
+export type WalletWhereInput = {
+  AND?: InputMaybe<Array<WalletWhereInput>>;
+  NOT?: InputMaybe<Array<WalletWhereInput>>;
+  OR?: InputMaybe<Array<WalletWhereInput>>;
+  address?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  realms?: InputMaybe<RealmListRelationFilter>;
+  sRealms?: InputMaybe<SRealmListRelationFilter>;
+  tokens?: InputMaybe<ResourceTokenListRelationFilter>;
 };
 
 export type DesiegeFragmentFragment = {
@@ -1238,31 +1282,24 @@ export type GetRealmQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
+    attackTroopIds: Array<string>;
+    defendTroopIds: Array<string>;
     resources?: Array<{
       __typename?: 'Resource';
-      type: string;
+      resourceId: number;
       level: number;
+      upgrades: Array<string>;
     }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
       qty: number;
     }> | null;
-    buildings?: Array<{
-      __typename?: 'Building';
-      type?: string | null;
-      id: string;
-    }> | null;
-    squads?: Array<{
-      __typename?: 'Squad';
-      action: string;
-      type: string;
-    }> | null;
   };
 };
 
 export type GetRealmsQueryVariables = Exact<{
-  filter?: InputMaybe<RealmFilterInput>;
+  filter?: InputMaybe<RealmWhereInput>;
   orderBy?: InputMaybe<RealmOrderByInput>;
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
@@ -1282,25 +1319,18 @@ export type GetRealmsQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
+    attackTroopIds: Array<string>;
+    defendTroopIds: Array<string>;
     resources?: Array<{
       __typename?: 'Resource';
-      type: string;
+      resourceId: number;
       level: number;
+      upgrades: Array<string>;
     }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
       type: string;
       qty: number;
-    }> | null;
-    buildings?: Array<{
-      __typename?: 'Building';
-      type?: string | null;
-      id: string;
-    }> | null;
-    squads?: Array<{
-      __typename?: 'Squad';
-      action: string;
-      type: string;
     }> | null;
   }>;
 };
@@ -1317,28 +1347,25 @@ export type RealmFragmentFragment = {
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
+  attackTroopIds: Array<string>;
+  defendTroopIds: Array<string>;
   resources?: Array<{
     __typename?: 'Resource';
-    type: string;
+    resourceId: number;
     level: number;
+    upgrades: Array<string>;
   }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
     type: string;
     qty: number;
   }> | null;
-  buildings?: Array<{
-    __typename?: 'Building';
-    type?: string | null;
-    id: string;
-  }> | null;
-  squads?: Array<{ __typename?: 'Squad'; action: string; type: string }> | null;
 };
 
 export type ResourceFragmentFragment = {
   __typename?: 'Resource';
   id: string;
-  type: string;
+  resourceId: number;
   realmId?: number | null;
 };
 
@@ -1403,27 +1430,22 @@ export const RealmFragmentFragmentDoc = gql`
     orderType
     wonder
     resources {
-      type
+      resourceId
       level
+      upgrades
     }
     traits {
       type
       qty
     }
-    buildings {
-      type
-      id
-    }
-    squads {
-      action
-      type
-    }
+    attackTroopIds
+    defendTroopIds
   }
 `;
 export const ResourceFragmentFragmentDoc = gql`
   fragment ResourceFragment on Resource {
     id
-    type
+    resourceId
     realmId
   }
 `;
@@ -1720,7 +1742,7 @@ export type GetRealmQueryResult = Apollo.QueryResult<
 >;
 export const GetRealmsDocument = gql`
   query getRealms(
-    $filter: RealmFilterInput
+    $filter: RealmWhereInput
     $orderBy: RealmOrderByInput
     $take: Float
     $skip: Float

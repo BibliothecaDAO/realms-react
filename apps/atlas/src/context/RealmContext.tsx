@@ -1,10 +1,6 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
-import type {
-  ResourceType,
-  OrderType,
-  RealmFragmentFragment,
-} from '@/generated/graphql';
+import type { OrderType } from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
 import { storage } from '@/util/localStorage';
 
@@ -23,7 +19,7 @@ interface RealmState {
   rarityFilter: RarityFilter;
   traitsFilter: TraitsFilter;
   selectedOrders: OrderType[];
-  selectedResources: ResourceType[];
+  selectedResources: number[];
   favouriteRealms: number[];
   searchIdFilter: string;
   selectedTab: number;
@@ -35,7 +31,7 @@ type RealmAction =
   | { type: 'updateRarityFilter'; payload: RarityFilter }
   | { type: 'updateTraitsFilter'; payload: TraitsFilter }
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
-  | { type: 'updateSelectedResources'; payload: ResourceType[] }
+  | { type: 'updateSelectedResources'; payload: number[] }
   | { type: 'toggleHasWonderFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
@@ -49,7 +45,7 @@ interface RealmActions {
   updateRarityFilter(filter: RarityFilter): void;
   updateTraitsFilter(filter: TraitsFilter): void;
   updateSelectedOrders(orders: OrderType[]): void;
-  updateSelectedResources(resources: ResourceType[]): void;
+  updateSelectedResources(resources: number[]): void;
   toggleHasWonderFilter(): void;
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
@@ -72,7 +68,7 @@ const defaultFilters = {
     [RealmTraitType.River]: 0,
   },
   selectedOrders: [] as OrderType[],
-  selectedResources: [] as ResourceType[],
+  selectedResources: [] as number[],
   searchIdFilter: '',
   hasWonderFilter: false,
 };
@@ -157,7 +153,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>
     dispatch({ type: 'updateSelectedOrders', payload: orders }),
-  updateSelectedResources: (resources: ResourceType[]) =>
+  updateSelectedResources: (resources: number[]) =>
     dispatch({ type: 'updateSelectedResources', payload: resources }),
   clearFilters: () => dispatch({ type: 'clearFilfters' }),
   addFavouriteRealm: (realmId: number) =>

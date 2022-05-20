@@ -9,16 +9,13 @@ import type { Data } from '@/types/index';
 import { RealmCard } from '../cards/RealmCard';
 import { BaseSideBar } from './BaseSideBar';
 
-type Props = {
-  id: string;
-};
-
-export const RealmSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
+export const RealmSideBar = () => {
+  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
+    useUIContext();
   const isRealmsSelected = selectedMenuType === 'realm' && showDetails;
   const { data, loading } = useGetRealmQuery({
     variables: {
-      id: parseInt(props.id),
+      id: parseInt(selectedId),
     },
     skip: !isRealmsSelected,
   });
