@@ -144,7 +144,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-black/50">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
-                  const info = findResourceName(resource.resourceId + '');
+                  const info = findResourceName(resource.resourceId);
                   return (
                     <div className="flex my-4 font-bold " key={index}>
                       <ResourceIcon

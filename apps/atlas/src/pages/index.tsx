@@ -53,7 +53,6 @@ function Atlas() {
               <AccountModule />
               <LootModule />
               <GaModule />
-              <LorePanel />
               <RealmsModule />
               <CryptModule />
               <BankModule />
@@ -74,6 +73,7 @@ function RealmsModule() {
     <RealmProvider>
       <>
         <RealmsPanel />
+        <LorePanel />
         <RealmSideBar />
         <BridgeRealmsSideBar />
         <SettleRealmsSideBar />

@@ -53,11 +53,15 @@ function Overview(props: RealmsCardProps): ReactElement {
         {props.realm.resources?.map((re, index) => (
           <div key={index} className="flex mb-4 mr-4 text-xl">
             <ResourceIcon
-              resource={re.type?.replace(' ', '') || ''}
+              resource={
+                findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
+              }
               size="md"
             />
 
-            <span className="self-center ml-4">{re.type}</span>
+            <span className="self-center ml-4">
+              {findResourceName(re.resourceId)?.trait}
+            </span>
           </div>
         ))}
       </div>

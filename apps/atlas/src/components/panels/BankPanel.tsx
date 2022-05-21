@@ -20,7 +20,7 @@ export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
   const { balance, updateBalance } = useResourcesContext();
   const defaultData: Row[] = balance?.map((resource) => {
-    const resourceModel = findResourceName(resource.resourceId.toString());
+    const resourceModel = findResourceName(resource.resourceId);
     return {
       resource: (
         <div className="flex mb-4 mr-4 text-xl">
