@@ -28,7 +28,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     passWithNoTests: false,
-    exclude: ['**/e2e/**'],
+    exclude: ['**/e2e/**', './node_modules'],
     setupFiles: './config/tests/setupVitest.ts',
   },
 });
