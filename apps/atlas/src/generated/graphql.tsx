@@ -103,14 +103,16 @@ export type DateTimeWithAggregatesFilter = {
 /** The Desiege Model */
 export type Desiege = {
   __typename?: 'Desiege';
-  attackedTokens: Scalars['Float'];
-  defendedTokens: Scalars['Float'];
+  attackedTokens: Scalars['Int'];
+  defendedTokens: Scalars['Int'];
+  endBlock: Scalars['Int'];
   eventIndexed: Scalars['Float'];
-  gameId: Scalars['Float'];
+  gameId: Scalars['Int'];
   id: Scalars['ID'];
-  initialHealth: Scalars['Float'];
+  initialHealth: Scalars['Int'];
+  startBlock: Scalars['Int'];
   startedOn: Scalars['DateTime'];
-  winner: Scalars['Float'];
+  winner: Scalars['Int'];
 };
 
 export type EnumOrderTypeNullableFilter = {
@@ -774,6 +776,7 @@ export type Query = {
   getBuildingsByAddress: Array<Building>;
   getBuildingsByRealm: Array<Building>;
   getDesiege: Desiege;
+  getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
   getLoreEntities: Array<LoreEntity>;
   getLoreEntity: LoreEntity;
@@ -1295,6 +1298,10 @@ export type GetRealmQuery = {
       type: string;
       qty: number;
     }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId?: number | null;
+    }> | null;
   };
 };
 
@@ -1332,6 +1339,10 @@ export type GetRealmsQuery = {
       type: string;
       qty: number;
     }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId?: number | null;
+    }> | null;
   }>;
 };
 
@@ -1359,6 +1370,10 @@ export type RealmFragmentFragment = {
     __typename?: 'RealmTrait';
     type: string;
     qty: number;
+  }> | null;
+  buildings?: Array<{
+    __typename?: 'Building';
+    buildingId?: number | null;
   }> | null;
 };
 
@@ -1437,6 +1452,9 @@ export const RealmFragmentFragmentDoc = gql`
     traits {
       type
       qty
+    }
+    buildings {
+      buildingId
     }
     attackTroopIds
     defendTroopIds

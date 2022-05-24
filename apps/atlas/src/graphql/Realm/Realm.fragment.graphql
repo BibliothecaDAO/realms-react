@@ -18,6 +18,9 @@ fragment RealmFragment on Realm {
     type
     qty
   }
+  buildings {
+    buildingId
+  }
   attackTroopIds
   defendTroopIds
 }

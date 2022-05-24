@@ -14,7 +14,7 @@ import { BankPanel } from '@/components/panels/BankPanel';
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
-import { LorePanel } from '@/components/panels/LorePanel';
+/* import { LorePanel } from '@/components/panels/LorePanel'; */
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
 import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
@@ -73,7 +73,7 @@ function RealmsModule() {
     <RealmProvider>
       <>
         <RealmsPanel />
-        <LorePanel />
+        {/* <LorePanel /> */}
         <RealmSideBar />
         <BridgeRealmsSideBar />
         <SettleRealmsSideBar />

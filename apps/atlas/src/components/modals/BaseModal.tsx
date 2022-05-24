@@ -2,7 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useUIContext } from '@/hooks/useUIContext';
-import { LoreEntityModal } from './LoreEntityModal';
+/* import { LoreEntityModal } from './LoreEntityModal'; */
 
 export const BaseModal = () => {
   const { selectedModal, setModal } = useUIContext();
@@ -25,7 +25,7 @@ export const BaseModal = () => {
     if (!props) {
       return null;
     }
-    component = <LoreEntityModal entityId={parseInt(props.id)} />;
+    /* component = <LoreEntityModal entityId={parseInt(props.id)} />; */
   }
 
   return (
