@@ -1,8 +1,8 @@
 import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
+import { useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-
 import { useResourcesContract } from '@/hooks/settling/stark-contracts';
 import { resources } from '@/util/resources';
 
@@ -12,6 +12,7 @@ type Resources = {
   availableResources: AvailabeResources;
   claimableLords?: BN;
   claimableResources?: any;
+  loadingClaimable: boolean;
 };
 type AvailabeResources = {
   daysAccrued: number;
@@ -24,7 +25,6 @@ type useResourcesArgs = {
 
 const useResources = (args: useResourcesArgs): Resources => {
   const { contract: resourcesContract } = useResourcesContract();
-
   const claimResourcesAction = useStarknetInvoke({
     contract: resourcesContract,
     method: 'claim_resources',
@@ -34,7 +34,6 @@ const useResources = (args: useResourcesArgs): Resources => {
     contract: resourcesContract,
     method: 'upgrade_resource',
   });
-
   const {
     data: allOutputData,
     loading: outputLoading,
@@ -70,12 +69,15 @@ const useResources = (args: useResourcesArgs): Resources => {
       remainder: 0,
     };
   }
+  console.log(outputLoading);
+  console.log(allOutputData);
   return {
     availableResources,
     claimableLords: allOutputData && uint256ToBN(allOutputData[1]),
     claimableResources:
-      allOutputData &&
-      allOutputData[0]?.map((resource) => uint256ToBN(resource)),
+      allOutputData && allOutputData['user_mint']
+        ? allOutputData['user_mint'].map((resource) => uint256ToBN(resource))
+        : 0,
     claim: () => {
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id))],
@@ -86,6 +88,7 @@ const useResources = (args: useResourcesArgs): Resources => {
         args: [bnToUint256(toBN(args.token_id)), resourceId],
       });
     },
+    loadingClaimable: outputLoading,
   };
 };
 

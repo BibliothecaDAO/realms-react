@@ -1,4 +1,4 @@
-import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Table, Button, ResourceIcon, Spinner } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -9,7 +9,7 @@ import type { RealmsCardProps } from '../../types';
 type Row = {
   resource: ReactElement;
   baseOutput: number;
-  claimableResources: string;
+  claimableResources: string | ReactElement;
   // totalOutput: number;
   level: number;
   build: ReactElement;
@@ -22,6 +22,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
     upgrade,
     claimableLords,
     claimableResources,
+    loadingClaimable,
   } = useResources({
     token_id: props.realm.realmId,
     resources: props.realm.resources,
@@ -46,10 +47,10 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           </span>
         ),
         baseOutput: 100,
-        claimableResources:
-          (claimableResources &&
-            formatEther(claimableResources[index].toString(10))) ||
-          '0',
+        claimableResources: (claimableResources[index] &&
+          formatEther(claimableResources[index].toString(10))) || (
+          <Spinner size="md" scheme="white" variant="bricks" />
+        ),
         // totalOutput: 122,
         level: re.level,
         build: (
@@ -77,9 +78,18 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
   return (
     <div>
       <div className="flex justify-between">
-        <span>
+        <span className="flex">
           Claimable Lords:{' '}
-          {claimableLords && formatEther(claimableLords.toString(10))}
+          {claimableLords ? (
+            formatEther(claimableLords.toString(10))
+          ) : (
+            <Spinner
+              className="ml-4"
+              size="md"
+              scheme="white"
+              variant="bricks"
+            />
+          )}
         </span>
         <span>
           Accrued: {availableResources.daysAccrued}D{' '}
