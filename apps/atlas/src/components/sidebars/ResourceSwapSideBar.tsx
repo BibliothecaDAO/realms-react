@@ -64,11 +64,6 @@ export const ResourceSwapSideBar = (props: Props) => {
               ))}
             </Tabs.Panels>
           </Tabs>
-          <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-            <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
-              Coming Soon!
-            </div>
-          </div>
         </div>
       </div>
     </BaseSideBar>

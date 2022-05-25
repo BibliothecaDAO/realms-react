@@ -1,14 +1,15 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import useResources from '@/hooks/settling/useResources';
-import { resources } from '@/util/resources';
+import { resources, findResourceName } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
 type Row = {
   resource: ReactElement;
   baseOutput: number;
-  claimableResources: number;
+  claimableResources: string;
   // totalOutput: number;
   level: number;
   build: ReactElement;
@@ -33,7 +34,9 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         resource: (
           <span className="flex">
             <ResourceIcon
-              resource={re.type.replace(' ', '') || ''}
+              resource={
+                findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
+              }
               size="md"
               className="mr-4"
             />
@@ -44,8 +47,9 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         ),
         baseOutput: 100,
         claimableResources:
-          (claimableResources && claimableResources[index]?.low.toNumber()) ||
-          0,
+          (claimableResources &&
+            formatEther(claimableResources[index].toString(10))) ||
+          '0',
         // totalOutput: 122,
         level: re.level,
         build: (
@@ -73,7 +77,10 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
   return (
     <div>
       <div className="flex justify-between">
-        <span>Claimable Lords: {claimableLords}</span>
+        <span>
+          Claimable Lords:{' '}
+          {claimableLords && formatEther(claimableLords.toString(10))}
+        </span>
         <span>
           Accrued: {availableResources.daysAccrued}D{' '}
           {availableResources.remainder}m

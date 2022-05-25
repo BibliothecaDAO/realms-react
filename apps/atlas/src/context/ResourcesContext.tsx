@@ -71,7 +71,7 @@ function useResources() {
     balance = resourceBalanceData[0].map((resourceBalance, index) => {
       return {
         resourceId: index + 1,
-        amount: uint256ToBN(resourceBalance).toNumber(),
+        amount: uint256ToBN(resourceBalance).toString(10),
       };
     });
   }

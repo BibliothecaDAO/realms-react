@@ -1,5 +1,6 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetRealmQuery } from '@/generated/graphql';
@@ -9,7 +10,7 @@ import { BasePanel } from './BasePanel';
 
 type Row = {
   resource: ReactElement;
-  balance: number;
+  balance: string;
   output: number;
   change: number;
   rate: number;
@@ -32,7 +33,7 @@ export function BankPanel(): ReactElement {
           <span className="self-center ml-4">{resourceModel?.trait}</span>
         </div>
       ),
-      balance: resource.amount,
+      balance: formatEther(resource.amount),
       output: 0,
       change: 0.08,
       rate: 0,
@@ -70,11 +71,6 @@ export function BankPanel(): ReactElement {
         {data && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
-        <div className="absolute inset-0 backdrop-blur firefox:bg-opacity-90 firefox:bg-gray-300">
-          <div className="grid h-full text-4xl font-bold text-center uppercase place-items-center text">
-            Coming Soon!
-          </div>
-        </div>
       </div>
     </BasePanel>
   );

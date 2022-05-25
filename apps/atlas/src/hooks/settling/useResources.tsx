@@ -1,4 +1,5 @@
 import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
+import type BN from 'bn.js';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
@@ -9,7 +10,7 @@ type Resources = {
   claim: () => void;
   upgrade: (resourceId: number) => void;
   availableResources: AvailabeResources;
-  claimableLords?: number;
+  claimableLords?: BN;
   claimableResources?: any;
 };
 type AvailabeResources = {
@@ -69,11 +70,12 @@ const useResources = (args: useResourcesArgs): Resources => {
       remainder: 0,
     };
   }
-
   return {
     availableResources,
-    claimableLords: allOutputData && uint256ToBN(allOutputData[1]).toNumber(),
-    claimableResources: allOutputData && allOutputData[0],
+    claimableLords: allOutputData && uint256ToBN(allOutputData[1]),
+    claimableResources:
+      allOutputData &&
+      allOutputData[0]?.map((resource) => uint256ToBN(resource)),
     claim: () => {
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id))],

@@ -73,7 +73,7 @@ export function AccountPanel() {
         <div className="text-xl">
           <h2>Realms</h2>
           <p>You have: 42 Realms</p>
-          {/* <p className="mb-2">
+          <p className="mb-2">
             L1 Realms: 12
             <Button
               variant="primary"
@@ -116,7 +116,7 @@ export function AccountPanel() {
           >
             Mint Realms
           </Button>
-           <h2 className="mt-12">Claims</h2>
+          <h2 className="mt-12">Claims</h2>
           <h3>Resources</h3>
           <div className="flex flex-wrap font-semibold tracking-widest uppercase">
             {resourceIds.map((re: any, index) => (
@@ -182,7 +182,7 @@ export function AccountPanel() {
             >
               View Troops
             </Button>
-          </p> */}
+          </p>
         </div>
       </div>
     </BasePanel>
