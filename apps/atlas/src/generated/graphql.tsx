@@ -448,6 +448,17 @@ export type EventWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
+/** Exchange Price */
+export type ExchangePrice = {
+  __typename?: 'ExchangePrice';
+  buyAmount: Scalars['String'];
+  date: Scalars['String'];
+  hour: Scalars['Int'];
+  rateAmount: Scalars['String'];
+  sellAmount: Scalars['String'];
+  tokenId: Scalars['Int'];
+};
+
 export type FloatFilter = {
   equals?: InputMaybe<Scalars['Float']>;
   gt?: InputMaybe<Scalars['Float']>;
@@ -775,6 +786,7 @@ export type Query = {
   getBuildings: Array<Building>;
   getBuildingsByAddress: Array<Building>;
   getBuildingsByRealm: Array<Building>;
+  getCurrentExchangePrices: Array<ExchangePrice>;
   getDesiege: Desiege;
   getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
@@ -1187,6 +1199,21 @@ export type GetDesiegeQuery = {
   };
 };
 
+export type GetCurrentExchangePricesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetCurrentExchangePricesQuery = {
+  __typename?: 'Query';
+  getCurrentExchangePrices: Array<{
+    __typename?: 'ExchangePrice';
+    tokenId: number;
+    rateAmount: string;
+    buyAmount: string;
+    sellAmount: string;
+  }>;
+};
+
 export type GetLoreEntitiesQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
@@ -1523,6 +1550,66 @@ export type GetDesiegeLazyQueryHookResult = ReturnType<
 export type GetDesiegeQueryResult = Apollo.QueryResult<
   GetDesiegeQuery,
   GetDesiegeQueryVariables
+>;
+export const GetCurrentExchangePricesDocument = gql`
+  query getCurrentExchangePrices @api(name: starkIndexer) {
+    getCurrentExchangePrices {
+      tokenId
+      rateAmount
+      buyAmount
+      sellAmount
+    }
+  }
+`;
+
+/**
+ * __useGetCurrentExchangePricesQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentExchangePricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentExchangePricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentExchangePricesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentExchangePricesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCurrentExchangePricesQuery,
+    GetCurrentExchangePricesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetCurrentExchangePricesQuery,
+    GetCurrentExchangePricesQueryVariables
+  >(GetCurrentExchangePricesDocument, options);
+}
+export function useGetCurrentExchangePricesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCurrentExchangePricesQuery,
+    GetCurrentExchangePricesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetCurrentExchangePricesQuery,
+    GetCurrentExchangePricesQueryVariables
+  >(GetCurrentExchangePricesDocument, options);
+}
+export type GetCurrentExchangePricesQueryHookResult = ReturnType<
+  typeof useGetCurrentExchangePricesQuery
+>;
+export type GetCurrentExchangePricesLazyQueryHookResult = ReturnType<
+  typeof useGetCurrentExchangePricesLazyQuery
+>;
+export type GetCurrentExchangePricesQueryResult = Apollo.QueryResult<
+  GetCurrentExchangePricesQuery,
+  GetCurrentExchangePricesQueryVariables
 >;
 export const GetLoreEntitiesDocument = gql`
   query getLoreEntities($take: Float, $skip: Float) @api(name: starkIndexer) {

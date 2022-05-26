@@ -3,7 +3,10 @@ import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useGetRealmQuery } from '@/generated/graphql';
+import {
+  useGetCurrentExchangePricesQuery,
+  useGetRealmQuery,
+} from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { resources, findResourceName } from '@/util/resources';
 import { BasePanel } from './BasePanel';
@@ -20,6 +23,11 @@ type Row = {
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
   const { balance, updateBalance } = useResourcesContext();
+
+  const { data: exchangeData } = useGetCurrentExchangePricesQuery();
+
+  // console.log(exchangeData?.getCurrentExchangePrices);
+
   const defaultData: Row[] = balance?.map((resource) => {
     const resourceModel = findResourceName(resource.resourceId);
     return {

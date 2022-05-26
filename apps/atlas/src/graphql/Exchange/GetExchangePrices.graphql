@@ -1,0 +1,8 @@
+query getCurrentExchangePrices @api(name: starkIndexer) {
+  getCurrentExchangePrices {
+    tokenId
+    rateAmount
+    buyAmount
+    sellAmount
+  }
+}
