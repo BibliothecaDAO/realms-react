@@ -3,12 +3,9 @@ import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import {
-  useGetExchangeRatesQuery,
-  useGetRealmQuery,
-} from '@/generated/graphql';
+import { useGetRealmQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
-import { resources, findResourceName } from '@/util/resources';
+import { findResourceName } from '@/util/resources';
 import { BasePanel } from './BasePanel';
 
 type Row = {
@@ -16,17 +13,13 @@ type Row = {
   balance: string;
   output: number;
   change: number;
-  rate: number;
+  rate: string;
   action: ReactElement;
 };
 
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
   const { balance, updateBalance } = useResourcesContext();
-  const { data: exchangeRate, refetch: refetchExchangeRate } =
-    useGetExchangeRatesQuery();
-
-  // console.log(exchangeRate?.getExchangeRates);
 
   const defaultData: Row[] = balance?.map((resource) => {
     const resourceModel = findResourceName(resource.resourceId);
@@ -43,8 +36,8 @@ export function BankPanel(): ReactElement {
       ),
       balance: formatEther(resource.amount),
       output: 0,
-      change: 0.08,
-      rate: 0,
+      change: 0.08, // TODO
+      rate: (+formatEther(resource.rate)).toFixed(4),
       action: <Button>Trade</Button>,
     };
   });

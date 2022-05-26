@@ -57,7 +57,6 @@ function Atlas() {
               <CryptModule />
               <BankModule />
               <TradePanel />
-              <ResourceSwapSideBar />
               <FlyTo />
               <MapModule />
             </div>
@@ -108,6 +107,7 @@ function BankModule() {
   return (
     <ResourceProvider>
       <BankPanel />
+      <ResourceSwapSideBar />
     </ResourceProvider>
   );
 }
