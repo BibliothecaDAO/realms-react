@@ -126,11 +126,7 @@ function LootModule() {
 }
 
 function AccountModule() {
-  return (
-    <JourneyProvider>
-      <AccountPanel />
-    </JourneyProvider>
-  );
+  return <AccountPanel />;
 }
 
 function MapModule() {

@@ -6,6 +6,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
+import useApprovals from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useUIContext } from '@/hooks/useUIContext';
 import { shortenAddress } from '@/util/formatters';
@@ -14,10 +15,11 @@ import { useWalletContext } from '../../hooks/useWalletContext';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
-  const { state, actions } = useJourneyContext();
+  /* const { state, actions } = useJourneyContext(); */
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { mintRealm } = useSettling();
+  const { approveLords, approvalStatus, lordsApproval } = useApprovals();
   const { account, connect, connectors, disconnect } = useStarknet();
   const { togglePanelType, toggleMenuType, selectedPanel } = useUIContext();
   const resourceIds = [
@@ -30,9 +32,9 @@ export function AccountPanel() {
     { id: 22, amount: 10 },
   ];
   const [selectedId, setSelectedId] = useState(0);
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(state);
-  }, [state]);
+  }, [state]); */
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <div>
@@ -161,6 +163,13 @@ export function AccountPanel() {
               </Button>
             </div>
           </div>
+          <h2>Approval Status</h2>
+          {lordsApproval}
+          {lordsApproval == 'not-approved' && (
+            <Button variant="primary" size="sm" onClick={() => approveLords()}>
+              Approve Lords for Building contract
+            </Button>
+          )}
           <h2 className="mt-12">Troops & Raiding</h2>
           <p>In the last week:</p>
           <p>

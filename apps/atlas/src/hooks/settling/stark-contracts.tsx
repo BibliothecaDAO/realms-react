@@ -7,6 +7,7 @@ import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
+import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
@@ -70,7 +71,7 @@ export function useCombatContract(): UseContract {
 }
 
 /**
- * Load the Realms Resources 1155 contract.
+ * Load the Realms Resources ERC1155 contract.
  * @returns The `Resources` contract or undefined.
  */
 export function useResources1155Contract(): UseContract {
@@ -81,7 +82,18 @@ export function useResources1155Contract(): UseContract {
   });
 }
 /**
- * Load the Realms Resources 721 contract.
+ * Load the Lords ERC20 contract.
+ * @returns The `Resources` contract or undefined.
+ */
+export function useLordsContract(): UseContract {
+  return useContract({
+    abi: Lords as Abi,
+    address:
+      '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d',
+  });
+}
+/**
+ * Load the Realms Resources ERC721 contract.
  * @returns The `Realms` contract or undefined.
  */
 export function useRealms721Contract(): UseContract {
