@@ -4,7 +4,7 @@ import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
-  useGetCurrentExchangePricesQuery,
+  useGetExchangeRatesQuery,
   useGetRealmQuery,
 } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -23,10 +23,10 @@ type Row = {
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
   const { balance, updateBalance } = useResourcesContext();
+  const { data: exchangeRate, refetch: refetchExchangeRate } =
+    useGetExchangeRatesQuery();
 
-  const { data: exchangeData } = useGetCurrentExchangePricesQuery();
-
-  // console.log(exchangeData?.getCurrentExchangePrices);
+  // console.log(exchangeRate?.getExchangeRates);
 
   const defaultData: Row[] = balance?.map((resource) => {
     const resourceModel = findResourceName(resource.resourceId);

@@ -448,13 +448,13 @@ export type EventWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
-/** Exchange Price */
-export type ExchangePrice = {
-  __typename?: 'ExchangePrice';
+/** Exchange Rate */
+export type ExchangeRate = {
+  __typename?: 'ExchangeRate';
+  amount: Scalars['String'];
   buyAmount: Scalars['String'];
   date: Scalars['String'];
   hour: Scalars['Int'];
-  rateAmount: Scalars['String'];
   sellAmount: Scalars['String'];
   tokenId: Scalars['Int'];
 };
@@ -786,10 +786,10 @@ export type Query = {
   getBuildings: Array<Building>;
   getBuildingsByAddress: Array<Building>;
   getBuildingsByRealm: Array<Building>;
-  getCurrentExchangePrices: Array<ExchangePrice>;
   getDesiege: Desiege;
   getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
+  getExchangeRates: Array<ExchangeRate>;
   getLoreEntities: Array<LoreEntity>;
   getLoreEntity: LoreEntity;
   getLorePois: Array<LorePoi>;
@@ -1199,16 +1199,14 @@ export type GetDesiegeQuery = {
   };
 };
 
-export type GetCurrentExchangePricesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
+export type GetExchangeRatesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCurrentExchangePricesQuery = {
+export type GetExchangeRatesQuery = {
   __typename?: 'Query';
-  getCurrentExchangePrices: Array<{
-    __typename?: 'ExchangePrice';
+  getExchangeRates: Array<{
+    __typename?: 'ExchangeRate';
     tokenId: number;
-    rateAmount: string;
+    amount: string;
     buyAmount: string;
     sellAmount: string;
   }>;
@@ -1551,11 +1549,11 @@ export type GetDesiegeQueryResult = Apollo.QueryResult<
   GetDesiegeQuery,
   GetDesiegeQueryVariables
 >;
-export const GetCurrentExchangePricesDocument = gql`
-  query getCurrentExchangePrices @api(name: starkIndexer) {
-    getCurrentExchangePrices {
+export const GetExchangeRatesDocument = gql`
+  query getExchangeRates @api(name: starkIndexer) {
+    getExchangeRates {
       tokenId
-      rateAmount
+      amount
       buyAmount
       sellAmount
     }
@@ -1563,53 +1561,53 @@ export const GetCurrentExchangePricesDocument = gql`
 `;
 
 /**
- * __useGetCurrentExchangePricesQuery__
+ * __useGetExchangeRatesQuery__
  *
- * To run a query within a React component, call `useGetCurrentExchangePricesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCurrentExchangePricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetExchangeRatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetExchangeRatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetCurrentExchangePricesQuery({
+ * const { data, loading, error } = useGetExchangeRatesQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetCurrentExchangePricesQuery(
+export function useGetExchangeRatesQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetCurrentExchangePricesQuery,
-    GetCurrentExchangePricesQueryVariables
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetCurrentExchangePricesQuery,
-    GetCurrentExchangePricesQueryVariables
-  >(GetCurrentExchangePricesDocument, options);
+  return Apollo.useQuery<GetExchangeRatesQuery, GetExchangeRatesQueryVariables>(
+    GetExchangeRatesDocument,
+    options
+  );
 }
-export function useGetCurrentExchangePricesLazyQuery(
+export function useGetExchangeRatesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetCurrentExchangePricesQuery,
-    GetCurrentExchangePricesQueryVariables
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetCurrentExchangePricesQuery,
-    GetCurrentExchangePricesQueryVariables
-  >(GetCurrentExchangePricesDocument, options);
+    GetExchangeRatesQuery,
+    GetExchangeRatesQueryVariables
+  >(GetExchangeRatesDocument, options);
 }
-export type GetCurrentExchangePricesQueryHookResult = ReturnType<
-  typeof useGetCurrentExchangePricesQuery
+export type GetExchangeRatesQueryHookResult = ReturnType<
+  typeof useGetExchangeRatesQuery
 >;
-export type GetCurrentExchangePricesLazyQueryHookResult = ReturnType<
-  typeof useGetCurrentExchangePricesLazyQuery
+export type GetExchangeRatesLazyQueryHookResult = ReturnType<
+  typeof useGetExchangeRatesLazyQuery
 >;
-export type GetCurrentExchangePricesQueryResult = Apollo.QueryResult<
-  GetCurrentExchangePricesQuery,
-  GetCurrentExchangePricesQueryVariables
+export type GetExchangeRatesQueryResult = Apollo.QueryResult<
+  GetExchangeRatesQuery,
+  GetExchangeRatesQueryVariables
 >;
 export const GetLoreEntitiesDocument = gql`
   query getLoreEntities($take: Float, $skip: Float) @api(name: starkIndexer) {
