@@ -6105,6 +6105,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:2.11.5":
+  version: 2.11.5
+  resolution: "@popperjs/core@npm:2.11.5"
+  checksum: 868c9c5fc2765417d55e8a0a2449b9b8ec3f613b626a12905b9700f8413b433a1ee37ec581a929e0c51ea00a32a7fe5b58ea75d3772d7d85146ecdbd0288331b
+  languageName: node
+  linkType: hard
+
 "@probe.gl/env@npm:3.5.0, @probe.gl/env@npm:^3.5.0":
   version: 3.5.0
   resolution: "@probe.gl/env@npm:3.5.0"
@@ -11130,6 +11137,7 @@ __metadata:
     "@next/bundle-analyzer": "npm:12.1.6"
     "@next/env": "npm:12.1.6"
     "@playwright/test": "npm:1.22.2"
+    "@popperjs/core": "npm:2.11.5"
     "@quentin-sommer/react-useragent": "npm:3.1.1"
     "@react-spring/three": "npm:9.4.5"
     "@react-spring/types": "npm:^9.4.5"
@@ -11216,6 +11224,7 @@ __metadata:
     react-map-gl: "npm:^7.0.14"
     react-markdown: "npm:8.0.3"
     react-moment: "npm:1.1.2"
+    react-popper: "npm:2.3.0"
     react-query: "npm:3.39.0"
     react-spring: "npm:^9.4.5"
     rimraf: "npm:3.0.2"
@@ -27971,6 +27980,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.0.1":
+  version: 3.2.0
+  resolution: "react-fast-compare@npm:3.2.0"
+  checksum: 83b544e0c35aa1db9d815a22d6a56ae53c619752488e3d989629ed078091a4182fe79c8c2a93aa67a61abcc56b91b9def57da1522670be9016bd54f508196258
+  languageName: node
+  linkType: hard
+
 "react-floater@npm:^0.7.3":
   version: 0.7.3
   resolution: "react-floater@npm:0.7.3"
@@ -28105,6 +28121,20 @@ __metadata:
   version: 1.0.0
   resolution: "react-native-crypto-js@npm:1.0.0"
   checksum: bcd3962b58220630927ad306731db6382ef400e619e1748b018719e65ae8e5dbc84fbbe5fc1e1e61d583278d62981aa400551fb462f2531dc1d9109d29fdc43a
+  languageName: node
+  linkType: hard
+
+"react-popper@npm:2.3.0":
+  version: 2.3.0
+  resolution: "react-popper@npm:2.3.0"
+  dependencies:
+    react-fast-compare: "npm:^3.0.1"
+    warning: "npm:^4.0.2"
+  peerDependencies:
+    "@popperjs/core": ^2.0.0
+    react: ^16.8.0 || ^17 || ^18
+    react-dom: ^16.8.0 || ^17 || ^18
+  checksum: c90b40f0a7b2e95e411cb444786f4b17abc03ad4d75c2a9700858ce2d2665c8545c0e5bf3ba17d271ce67f87001ce6fb902319a94d1b6915f85604862aa8332c
   languageName: node
   linkType: hard
 
@@ -33654,6 +33684,15 @@ __metadata:
   dependencies:
     makeerror: "npm:1.0.12"
   checksum: 584bd2a543de771451a60c91866be059e0e0728f5d4744a1225e7b9b7c9bcb87fd03f573a8d95fbdb8b553c13ad5913db19b7b91a86af6b8fb170254a5d18b7a
+  languageName: node
+  linkType: hard
+
+"warning@npm:^4.0.2":
+  version: 4.0.3
+  resolution: "warning@npm:4.0.3"
+  dependencies:
+    loose-envify: "npm:^1.0.0"
+  checksum: a8a2ebdd8fb207ea69d9db8f5e02e2b74399cd3b6df3b0cc8c536ea3b8bd4d1c6da6605ea30eee25f5cd1acb44ceecf9b0a1eb7f1d3537e20212f4b3f218d688
   languageName: node
   linkType: hard
 
