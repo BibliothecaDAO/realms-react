@@ -28,7 +28,7 @@ h4 {
 }
 
 button {
-  @apply font-display;
+  @apply font-lords;
 }
 
 body {
@@ -107,4 +107,9 @@ html {
 
 *::-webkit-scrollbar-thumb {
   @apply bg-off-200;
+}
+
+@font-face {
+  font-family: Lords;
+  src: url('fontforlordsn.otf');
 }

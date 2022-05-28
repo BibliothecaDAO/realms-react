@@ -2,6 +2,7 @@
 import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
+import type { ReactElement } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
@@ -40,7 +41,11 @@ import { useUIContext, UIProvider } from '@/hooks/useUIContext';
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
-function Atlas() {
+export default function Base({
+  children,
+}: {
+  children: ReactElement | ReactElement[];
+}) {
   return (
     <UIProvider>
       <Layout>
@@ -48,7 +53,9 @@ function Atlas() {
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
             <Header />
+
             <div className="relative w-full h-full">
+              {children}
               <ArtBackground />
               <AccountModule />
               <LootModule />
@@ -320,5 +327,3 @@ function MapModule() {
     </DeckGL>
   );
 }
-
-export default Atlas;

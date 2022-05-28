@@ -32,7 +32,7 @@ export const MenuSideBar = () => {
     'bg-transparent border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner rounded-xl';
   const iconClasses = 'w-6 mx-auto sm:w-10 fill-current mb-1';
   const textClasses =
-    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5';
+    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5 font-lords';
 
   return (
     <div>

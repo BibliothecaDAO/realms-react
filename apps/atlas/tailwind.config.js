@@ -39,8 +39,9 @@ module.exports = {
         veryWide: '0.165em',
       },
       fontFamily: {
-        display: ['EB Garamond', 'serif'],
+        display: ['Lords', 'serif'],
         body: ['Inconsolata', 'monospace'],
+        lords: ['Lords', 'serif'],
       },
       zIndex: {
         50: '50',

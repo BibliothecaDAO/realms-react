@@ -8,6 +8,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { useStarknet } from '@starknet-react/core';
+import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -29,6 +30,7 @@ export function Header() {
     <div className="top-0 left-0 z-40 justify-end hidden bg-gray-800 shadow-inner sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mt-2">
+          <Link href="/realms/1">Link</Link>
           <IconButton
             aria-label="Bank"
             variant="unstyled"
