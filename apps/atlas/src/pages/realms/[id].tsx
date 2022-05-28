@@ -45,25 +45,32 @@ export default function RealmsPage() {
           <RealmBannerHeading order="the fox" title="Smutmum" />
           <div className="grid grid-flow-col grid-cols-6 gap-4 py-4">
             <Card className="col-start-1 col-end-4">
-              <DataCard title="raids" value="2" />
+              <DataCard title="Attacks Won" value="2" />
             </Card>
             <Card className="col-start-4 col-end-7">
-              <DataCard title="raids" value="2" />
+              <DataCard title="Defences" value="2" />
             </Card>
             <Card className="col-start-4 col-end-7 row-span-2">
-              <DataCard title="raids" value="2" />
+              <DataCard title="Resources" value="2" />
+            </Card>
+            <Card className="col-start-1 col-end-4">
+              <DataCard title="happiness" value="2" />
             </Card>
             <Card className="col-start-1 col-end-4">
               <DataCard title="raids" value="2" />
             </Card>
-            <Card className="col-start-1 col-end-4">
-              <DataCard title="raids" value="2" />
-            </Card>
+            <Card className="col-start-1 col-end-7">
+              <div className="flex justify-between w-full ">
+                <div className="text-2xl font-semibold tracking-widest text-white uppercase">
+                  squads
+                </div>
+                <div className="text-2xl font-semibold tracking-widest text-white uppercase">
+                  Attacking
+                </div>
+              </div>
 
-            <SquadBuilder
-              className="col-start-1 col-end-7"
-              troops={dummySquad}
-            />
+              <SquadBuilder troops={dummySquad} />
+            </Card>
           </div>
         </div>
         <div className="w-4/12 p-8">

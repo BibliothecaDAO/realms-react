@@ -191,3 +191,16 @@ export type RealmFeatureProperties = {
   order: string;
   resources: string[];
 };
+
+export interface TroopInterface {
+  troopId: number;
+  index: number;
+  type: number;
+  tier: number;
+  agility: number;
+  attack: number;
+  defense: number;
+  vitality: number;
+  wisdom: number;
+  squadSlot: number;
+}

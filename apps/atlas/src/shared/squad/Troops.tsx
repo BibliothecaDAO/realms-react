@@ -1,13 +1,12 @@
 import { twMerge } from 'tailwind-merge';
+import type { TroopInterface } from '@/types/index';
 interface HealthBarProps {
   vitality: number;
   troopId: number;
 }
 
 interface TroopProps {
-  vitality: number;
-  troopId: number;
-  tier: string;
+  troop: TroopInterface;
   className?: string;
 }
 
@@ -40,7 +39,7 @@ export const HealthBar = (props: HealthBarProps) => {
       style={{
         height: `${getVitality()}%`,
       }}
-      className={`relative bottom-0 w-2 ${getColour()}`}
+      className={`relative bottom-0 w-2 rounded ${getColour()}`}
     ></div>
   );
 };
@@ -51,9 +50,9 @@ export const TroopType = () => {
 
 const STYLES = {
   tier: {
-    t1: 'w-12 h-24',
-    t2: 'w-24 h-24',
-    t3: 'w-48 h-24',
+    1: 'w-12 h-24',
+    2: 'w-24 h-24',
+    3: 'w-48 h-24',
   },
 } as const;
 
@@ -61,11 +60,17 @@ export const Troop = (props: TroopProps) => {
   return (
     <div
       className={`${twMerge(
-        STYLES.tier[props.tier],
+        STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white rounded`}
+      )} bg-white rounded bg-opacity-40 shadow-inner`}
     >
-      <HealthBar troopId={props.troopId} vitality={props.vitality} />
+      <HealthBar
+        troopId={props.troop.troopId}
+        vitality={props.troop.vitality}
+      />
+      <div className="text-2xl text-center font-body">
+        {props.troop.troopId}
+      </div>
     </div>
   );
 };
