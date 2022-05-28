@@ -86,6 +86,17 @@ export type DateTimeFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
+export type DateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
 export type DateTimeWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedDateTimeFilter>;
@@ -525,6 +536,11 @@ export type LoreEntity = {
   revisions: Array<LoreEntityRevision>;
 };
 
+export type LoreEntityRelationFilter = {
+  is?: InputMaybe<LoreEntityWhereInput>;
+  isNot?: InputMaybe<LoreEntityWhereInput>;
+};
+
 /** Lore Entity Revision */
 export type LoreEntityRevision = {
   __typename?: 'LoreEntityRevision';
@@ -536,6 +552,62 @@ export type LoreEntityRevision = {
   props: Array<LorePropsOnEntityRevisions>;
   revisionNumber: Scalars['Float'];
   title?: Maybe<Scalars['String']>;
+};
+
+export type LoreEntityRevisionListRelationFilter = {
+  every?: InputMaybe<LoreEntityRevisionWhereInput>;
+  none?: InputMaybe<LoreEntityRevisionWhereInput>;
+  some?: InputMaybe<LoreEntityRevisionWhereInput>;
+};
+
+export type LoreEntityRevisionRelationFilter = {
+  is?: InputMaybe<LoreEntityRevisionWhereInput>;
+  isNot?: InputMaybe<LoreEntityRevisionWhereInput>;
+};
+
+export type LoreEntityRevisionWhereInput = {
+  AND?: InputMaybe<Array<LoreEntityRevisionWhereInput>>;
+  NOT?: InputMaybe<Array<LoreEntityRevisionWhereInput>>;
+  OR?: InputMaybe<Array<LoreEntityRevisionWhereInput>>;
+  arweaveId?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  entity?: InputMaybe<LoreEntityRelationFilter>;
+  entityId?: InputMaybe<IntFilter>;
+  eventIndexed?: InputMaybe<StringNullableFilter>;
+  excerpt?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  markdown?: InputMaybe<StringNullableFilter>;
+  media_url?: InputMaybe<StringNullableFilter>;
+  pois?: InputMaybe<LorePoisOnEntityRevisionsListRelationFilter>;
+  props?: InputMaybe<LorePropsOnEntityRevisionsListRelationFilter>;
+  revisionNumber?: InputMaybe<IntFilter>;
+  title?: InputMaybe<StringNullableFilter>;
+};
+
+export type LoreEntityWhereInput = {
+  AND?: InputMaybe<Array<LoreEntityWhereInput>>;
+  NOT?: InputMaybe<Array<LoreEntityWhereInput>>;
+  OR?: InputMaybe<Array<LoreEntityWhereInput>>;
+  eventIndexed?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  kind?: InputMaybe<IntFilter>;
+  owner?: InputMaybe<StringNullableFilter>;
+  revisions?: InputMaybe<LoreEntityRevisionListRelationFilter>;
+};
+
+export type LorePoiRelationFilter = {
+  is?: InputMaybe<LorePoiWhereInput>;
+  isNot?: InputMaybe<LorePoiWhereInput>;
+};
+
+export type LorePoiWhereInput = {
+  AND?: InputMaybe<Array<LorePoiWhereInput>>;
+  NOT?: InputMaybe<Array<LorePoiWhereInput>>;
+  OR?: InputMaybe<Array<LorePoiWhereInput>>;
+  assetType?: InputMaybe<StringNullableFilter>;
+  entities?: InputMaybe<LorePoisOnEntityRevisionsListRelationFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
 };
 
 /** Lore POI */
@@ -554,12 +626,60 @@ export type LorePoisOnEntityRevisions = {
   poiId: Scalars['ID'];
 };
 
+export type LorePoisOnEntityRevisionsListRelationFilter = {
+  every?: InputMaybe<LorePoisOnEntityRevisionsWhereInput>;
+  none?: InputMaybe<LorePoisOnEntityRevisionsWhereInput>;
+  some?: InputMaybe<LorePoisOnEntityRevisionsWhereInput>;
+};
+
+export type LorePoisOnEntityRevisionsWhereInput = {
+  AND?: InputMaybe<Array<LorePoisOnEntityRevisionsWhereInput>>;
+  NOT?: InputMaybe<Array<LorePoisOnEntityRevisionsWhereInput>>;
+  OR?: InputMaybe<Array<LorePoisOnEntityRevisionsWhereInput>>;
+  assetId?: InputMaybe<StringNullableFilter>;
+  entityRevision?: InputMaybe<LoreEntityRevisionRelationFilter>;
+  entityRevisionId?: InputMaybe<IntFilter>;
+  poi?: InputMaybe<LorePoiRelationFilter>;
+  poiId?: InputMaybe<IntFilter>;
+};
+
+export type LorePropRelationFilter = {
+  is?: InputMaybe<LorePropWhereInput>;
+  isNot?: InputMaybe<LorePropWhereInput>;
+};
+
+export type LorePropWhereInput = {
+  AND?: InputMaybe<Array<LorePropWhereInput>>;
+  NOT?: InputMaybe<Array<LorePropWhereInput>>;
+  OR?: InputMaybe<Array<LorePropWhereInput>>;
+  entities?: InputMaybe<LorePropsOnEntityRevisionsListRelationFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+};
+
 /** Lore Entity Revision */
 export type LorePropsOnEntityRevisions = {
   __typename?: 'LorePropsOnEntityRevisions';
   entityRevisionId: Scalars['ID'];
   propId: Scalars['ID'];
   value?: Maybe<Scalars['String']>;
+};
+
+export type LorePropsOnEntityRevisionsListRelationFilter = {
+  every?: InputMaybe<LorePropsOnEntityRevisionsWhereInput>;
+  none?: InputMaybe<LorePropsOnEntityRevisionsWhereInput>;
+  some?: InputMaybe<LorePropsOnEntityRevisionsWhereInput>;
+};
+
+export type LorePropsOnEntityRevisionsWhereInput = {
+  AND?: InputMaybe<Array<LorePropsOnEntityRevisionsWhereInput>>;
+  NOT?: InputMaybe<Array<LorePropsOnEntityRevisionsWhereInput>>;
+  OR?: InputMaybe<Array<LorePropsOnEntityRevisionsWhereInput>>;
+  entityRevision?: InputMaybe<LoreEntityRevisionRelationFilter>;
+  entityRevisionId?: InputMaybe<IntFilter>;
+  prop?: InputMaybe<LorePropRelationFilter>;
+  propId?: InputMaybe<IntFilter>;
+  value?: InputMaybe<StringNullableFilter>;
 };
 
 export type Mutation = {
@@ -625,6 +745,17 @@ export type NestedDateTimeFilter = {
   lt?: InputMaybe<Scalars['DateTime']>;
   lte?: InputMaybe<Scalars['DateTime']>;
   not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedDateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
@@ -849,6 +980,7 @@ export type QueryGetDesiegeArgs = {
 };
 
 export type QueryGetLoreEntitiesArgs = {
+  filter?: InputMaybe<LoreEntityWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
@@ -902,7 +1034,6 @@ export enum QueryMode {
 /** The Realm Model */
 export type Realm = {
   __typename?: 'Realm';
-  attackTroopIds: Array<Scalars['String']>;
   bridgedOwner?: Maybe<Scalars['String']>;
   buildings?: Maybe<Array<Building>>;
   defendTroopIds: Array<Scalars['String']>;
@@ -916,6 +1047,7 @@ export type Realm = {
   realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
   settledOwner?: Maybe<Scalars['String']>;
+  squad: Array<Troop>;
   traits?: Maybe<Array<RealmTrait>>;
   wallet?: Maybe<Wallet>;
   wonder?: Maybe<Scalars['String']>;
@@ -989,10 +1121,8 @@ export type RealmWhereInput = {
   AND?: InputMaybe<Array<RealmWhereInput>>;
   NOT?: InputMaybe<Array<RealmWhereInput>>;
   OR?: InputMaybe<Array<RealmWhereInput>>;
-  attackTroopIds?: InputMaybe<StringNullableListFilter>;
   bridgedOwner?: InputMaybe<StringNullableFilter>;
   buildings?: InputMaybe<BuildingListRelationFilter>;
-  defendTroopIds?: InputMaybe<StringNullableListFilter>;
   id?: InputMaybe<IntFilter>;
   imageUrl?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringNullableFilter>;
@@ -1004,6 +1134,7 @@ export type RealmWhereInput = {
   realmId?: InputMaybe<IntFilter>;
   resources?: InputMaybe<ResourceListRelationFilter>;
   settledOwner?: InputMaybe<StringNullableFilter>;
+  squad?: InputMaybe<TroopListRelationFilter>;
   traits?: InputMaybe<RealmTraitListRelationFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
   wonder?: InputMaybe<StringNullableFilter>;
@@ -1140,6 +1271,46 @@ export type StringWithAggregatesFilter = {
   not?: InputMaybe<NestedStringWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
+};
+
+/** Troop */
+export type Troop = {
+  __typename?: 'Troop';
+  agility: Scalars['Int'];
+  attack: Scalars['Int'];
+  defense: Scalars['Int'];
+  index: Scalars['Int'];
+  realmId: Scalars['Int'];
+  squadSlot: Scalars['Int'];
+  tier: Scalars['Int'];
+  troopId: Scalars['Int'];
+  type: Scalars['Int'];
+  vitality: Scalars['Int'];
+  wisdom: Scalars['Int'];
+};
+
+export type TroopListRelationFilter = {
+  every?: InputMaybe<TroopWhereInput>;
+  none?: InputMaybe<TroopWhereInput>;
+  some?: InputMaybe<TroopWhereInput>;
+};
+
+export type TroopWhereInput = {
+  AND?: InputMaybe<Array<TroopWhereInput>>;
+  NOT?: InputMaybe<Array<TroopWhereInput>>;
+  OR?: InputMaybe<Array<TroopWhereInput>>;
+  Realm?: InputMaybe<RealmRelationFilter>;
+  agility?: InputMaybe<IntFilter>;
+  attack?: InputMaybe<IntFilter>;
+  defense?: InputMaybe<IntFilter>;
+  index?: InputMaybe<IntFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  squadSlot?: InputMaybe<IntFilter>;
+  tier?: InputMaybe<IntFilter>;
+  troopId?: InputMaybe<IntFilter>;
+  type?: InputMaybe<IntFilter>;
+  vitality?: InputMaybe<IntFilter>;
+  wisdom?: InputMaybe<IntFilter>;
 };
 
 /** The Wallet Model */
@@ -1310,8 +1481,6 @@ export type GetRealmQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    attackTroopIds: Array<string>;
-    defendTroopIds: Array<string>;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1327,6 +1496,19 @@ export type GetRealmQuery = {
       __typename?: 'Building';
       buildingId?: number | null;
     }> | null;
+    squad: Array<{
+      __typename?: 'Troop';
+      troopId: number;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      defense: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }>;
   };
 };
 
@@ -1351,8 +1533,6 @@ export type GetRealmsQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    attackTroopIds: Array<string>;
-    defendTroopIds: Array<string>;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1368,6 +1548,19 @@ export type GetRealmsQuery = {
       __typename?: 'Building';
       buildingId?: number | null;
     }> | null;
+    squad: Array<{
+      __typename?: 'Troop';
+      troopId: number;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      defense: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }>;
   }>;
 };
 
@@ -1383,8 +1576,6 @@ export type RealmFragmentFragment = {
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
-  attackTroopIds: Array<string>;
-  defendTroopIds: Array<string>;
   resources?: Array<{
     __typename?: 'Resource';
     resourceId: number;
@@ -1400,6 +1591,19 @@ export type RealmFragmentFragment = {
     __typename?: 'Building';
     buildingId?: number | null;
   }> | null;
+  squad: Array<{
+    __typename?: 'Troop';
+    troopId: number;
+    index: number;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    defense: number;
+    vitality: number;
+    wisdom: number;
+    squadSlot: number;
+  }>;
 };
 
 export type ResourceFragmentFragment = {
@@ -1481,8 +1685,18 @@ export const RealmFragmentFragmentDoc = gql`
     buildings {
       buildingId
     }
-    attackTroopIds
-    defendTroopIds
+    squad {
+      troopId
+      index
+      type
+      tier
+      agility
+      attack
+      defense
+      vitality
+      wisdom
+      squadSlot
+    }
   }
 `;
 export const ResourceFragmentFragmentDoc = gql`

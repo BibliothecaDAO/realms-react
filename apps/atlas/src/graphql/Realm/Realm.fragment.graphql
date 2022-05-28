@@ -21,6 +21,16 @@ fragment RealmFragment on Realm {
   buildings {
     buildingId
   }
-  attackTroopIds
-  defendTroopIds
+  squad {
+    troopId
+    index
+    type
+    tier
+    agility
+    attack
+    defense
+    vitality
+    wisdom
+    squadSlot
+  }
 }
