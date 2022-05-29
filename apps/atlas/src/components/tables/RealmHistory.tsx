@@ -66,7 +66,7 @@ export function RealmHistory(): ReactElement {
     { Header: 'Lord', id: 2, accessor: 'lord' },
     { Header: 'Outcome', id: 3, accessor: 'outcome' },
   ];
-  const tableOptions = { is_striped: true, search: true };
+  const tableOptions = { is_striped: true, search: false };
   return (
     <div className="relative p-2">
       <Table columns={columns} data={defaultData} options={tableOptions} />

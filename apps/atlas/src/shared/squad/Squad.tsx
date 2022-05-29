@@ -27,16 +27,17 @@ export const SquadBuilder = (props: SquadProps) => {
     };
 
     const currentTroops = getTier(tier);
+    const temp: TroopInterface[] = [];
 
-    for (let index = 0; index <= length - currentTroops.length; index++) {
+    for (let index = 0; index < length - currentTroops.length; index++) {
       emptyTroop['tier'] = tier;
-      currentTroops.push(emptyTroop);
+      temp.push(emptyTroop);
     }
 
-    return currentTroops;
+    return currentTroops.concat(temp);
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div
         className={`${
           props.flipped ? 'order-last' : ''

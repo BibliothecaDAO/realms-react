@@ -131,15 +131,16 @@ export const Troop = (props: TroopProps) => {
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white rounded bg-opacity-40 shadow-inner`}
+      )} bg-white rounded shadow-inner`}
     >
       <HealthBar
         troopId={props.troop.troopId}
         vitality={props.troop.vitality}
       />
-      <div className="text-2xl text-center font-body">
-        {props.troop.troopId} {getTroop()?.name}
-      </div>
+
+      {/* <div className="mt-auto text-2xl text-center font-body">
+        {getTroop()?.name}
+      </div> */}
       <Popover className="relative">
         <div ref={ref}>
           {isOpen && (

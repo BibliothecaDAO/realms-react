@@ -244,7 +244,7 @@ function useUI(): UI {
           setMenuType(panelType);
         }
       } else if (panelType === 'combat') {
-        // setArtBackground('crypt');
+        // setArtBackground('bank');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
