@@ -5,67 +5,89 @@ import {
 } from '@starknet-react/core';
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import type { Contract } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
 import {
-  useResources1155Contract,
   useLordsContract,
   useBuildingContract,
+  useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
   isApproved: (operator: any) => ['desiege', 'token-approval', operator],
 };
 
-const useApprovals = () => {
+const ALLOWANCE_AMOUNT = ethers.utils.parseUnits('999999999999999', 18);
+
+const createApprovalParams = (contractAddress: string) => {
+  return {
+    args: [
+      toBN(contractAddress).toString(),
+      bnToUint256(ALLOWANCE_AMOUNT.toString()),
+    ],
+  };
+};
+
+const createStarknetAllowanceCall = (
+  lordsContract: any,
+  account: string,
+  contractAddress: string
+) => {
+  return {
+    contract: lordsContract,
+    method: 'allowance',
+    args: [toBN(account).toString(), toBN(contractAddress).toString()],
+  };
+};
+
+const useApprovalForContract = (contract: Contract) => {
   const { account } = useStarknet();
-
-  const [is1155TokenApproved, setIs1155TokenApproved] = useState<
-    'approved' | 'not-approved'
-  >();
-
+  const [isApproved, setIsApproved] = useState<boolean>(false);
   const { contract: lordsContract } = useLordsContract();
-  const { contract: buildingContract } = useBuildingContract();
-
   const approveLordsAction = useStarknetInvoke({
     contract: lordsContract,
     method: 'approve',
   });
 
   const {
-    data: lordsData,
+    data: outputResult,
     loading: outputLoading,
     error: outputError,
-  } = useStarknetCall({
-    contract: lordsContract,
-    method: 'allowance',
-    args: [
-      toBN(account as string).toString(),
-      toBN(buildingContract?.address as string).toString(),
-    ],
-  });
+  } = useStarknetCall(
+    createStarknetAllowanceCall(
+      lordsContract,
+      account as string,
+      contract?.address as string
+    )
+  );
+
+  useEffect(() => {
+    if (!outputResult) return;
+
+    setIsApproved(
+      uint256ToBN(outputResult['remaining']) >=
+        toBN(ALLOWANCE_AMOUNT.toString())
+    );
+  }, [outputResult]);
 
   return {
-    approvalStatus: is1155TokenApproved,
-    lordsApproval:
-      lordsData &&
-      uint256ToBN(lordsData['remaining']) >=
-        toBN(ethers.utils.parseUnits('999999999999999', 18).toString())
-        ? 'approved'
-        : 'not-approved',
+    isApproved,
     approveLords: () => {
-      approveLordsAction.invoke({
-        args: [
-          toBN(buildingContract?.address as string).toString(),
-          bnToUint256(
-            ethers.utils.parseUnits('999999999999999', 18).toString()
-          ),
-        ],
-      });
+      approveLordsAction.invoke(
+        createApprovalParams(contract?.address as string)
+      );
     },
   };
 };
 
-export default useApprovals;
+export const useApproveLordsForBuilding = () => {
+  const { contract: buildingContract } = useBuildingContract();
+  return useApprovalForContract(buildingContract as Contract);
+};
+
+export const useApproveLordsForExchange = () => {
+  const { contract: lordsContract } = useLordsContract();
+  return useApprovalForContract(lordsContract as Contract);
+};

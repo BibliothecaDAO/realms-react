@@ -18,6 +18,7 @@ import { useState, useMemo } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import { useApproveLordsForExchange } from '@/hooks/settling/useApprovals';
 import { useSwapResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
@@ -144,6 +145,8 @@ export function SwapResources(): ReactElement {
   } = useSwapResources();
 
   const { balance, getResourceById } = useResourcesContext();
+  const { approveLords, isApproved: isLordsApprovedForExchange } =
+    useApproveLordsForExchange();
 
   const [slippage, setSlippage] = useState(0.1);
 
@@ -188,6 +191,14 @@ export function SwapResources(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
+      {!isLordsApprovedForExchange && (
+        <div>
+          <Button className="w-full" variant="primary" onClick={approveLords}>
+            APPROVE LORDS
+          </Button>
+        </div>
+      )}
+
       <div>
         {selectedResourcesWithBalance.map((resource) => (
           <div className="relative" key={resource.resourceId}>
@@ -232,7 +243,7 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onBuyTokensClick}
-            disabled={buyTokensLoading}
+            disabled={buyTokensLoading || !isLordsApprovedForExchange}
           >
             {buyTokensLoading ? 'Loading...' : 'Trade'}
           </Button>
