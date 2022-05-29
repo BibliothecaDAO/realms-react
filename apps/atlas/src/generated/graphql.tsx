@@ -41,6 +41,7 @@ export type AggregateEvent = {
 export type Building = {
   __typename?: 'Building';
   buildingId?: Maybe<Scalars['Int']>;
+  buildingName: Scalars['String'];
   id: Scalars['ID'];
   realm?: Maybe<Realm>;
   realmId: Scalars['Float'];
@@ -466,8 +467,10 @@ export type ExchangeRate = {
   buyAmount: Scalars['String'];
   date: Scalars['String'];
   hour: Scalars['Int'];
+  percentChange24Hr?: Maybe<Scalars['Float']>;
   sellAmount: Scalars['String'];
   tokenId: Scalars['Int'];
+  tokenName: Scalars['String'];
 };
 
 export type FloatFilter = {
@@ -1148,6 +1151,7 @@ export type Resource = {
   realm: Realm;
   realmId?: Maybe<Scalars['Float']>;
   resourceId: Scalars['Int'];
+  resourceName: Scalars['String'];
   upgrades: Array<Scalars['String']>;
 };
 
@@ -1284,6 +1288,7 @@ export type Troop = {
   squadSlot: Scalars['Int'];
   tier: Scalars['Int'];
   troopId: Scalars['Int'];
+  troopName: Scalars['String'];
   type: Scalars['Int'];
   vitality: Scalars['Int'];
   wisdom: Scalars['Int'];
@@ -1377,9 +1382,11 @@ export type GetExchangeRatesQuery = {
   getExchangeRates: Array<{
     __typename?: 'ExchangeRate';
     tokenId: number;
+    tokenName: string;
     amount: string;
     buyAmount: string;
     sellAmount: string;
+    percentChange24Hr?: number | null;
   }>;
 };
 
@@ -1498,7 +1505,9 @@ export type GetRealmQuery = {
     }> | null;
     squad: Array<{
       __typename?: 'Troop';
+      realmId: number;
       troopId: number;
+      troopName: string;
       index: number;
       type: number;
       tier: number;
@@ -1550,7 +1559,9 @@ export type GetRealmsQuery = {
     }> | null;
     squad: Array<{
       __typename?: 'Troop';
+      realmId: number;
       troopId: number;
+      troopName: string;
       index: number;
       type: number;
       tier: number;
@@ -1593,7 +1604,9 @@ export type RealmFragmentFragment = {
   }> | null;
   squad: Array<{
     __typename?: 'Troop';
+    realmId: number;
     troopId: number;
+    troopName: string;
     index: number;
     type: number;
     tier: number;
@@ -1610,6 +1623,7 @@ export type ResourceFragmentFragment = {
   __typename?: 'Resource';
   id: string;
   resourceId: number;
+  resourceName: string;
   realmId?: number | null;
 };
 
@@ -1686,7 +1700,9 @@ export const RealmFragmentFragmentDoc = gql`
       buildingId
     }
     squad {
+      realmId
       troopId
+      troopName
       index
       type
       tier
@@ -1703,6 +1719,7 @@ export const ResourceFragmentFragmentDoc = gql`
   fragment ResourceFragment on Resource {
     id
     resourceId
+    resourceName
     realmId
   }
 `;
@@ -1767,9 +1784,11 @@ export const GetExchangeRatesDocument = gql`
   query getExchangeRates @api(name: starkIndexer) {
     getExchangeRates {
       tokenId
+      tokenName
       amount
       buyAmount
       sellAmount
+      percentChange24Hr
     }
   }
 `;

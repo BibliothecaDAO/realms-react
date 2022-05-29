@@ -5,7 +5,6 @@ import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
-import { findResourceName } from '@/util/resources';
 import { BasePanel } from './BasePanel';
 
 type Row = {
@@ -22,21 +21,20 @@ export function BankPanel(): ReactElement {
   const { balance } = useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
-    const resourceModel = findResourceName(resource.resourceId);
     return {
       resource: (
         <div className="flex mb-4 mr-4 text-xl">
           <ResourceIcon
-            resource={resourceModel?.trait.replace(' ', '') || ''}
+            resource={resource?.resourceName?.replace(' ', '') || ''}
             size="md"
           />
 
-          <span className="self-center ml-4">{resourceModel?.trait}</span>
+          <span className="self-center ml-4">{resource?.resourceName}</span>
         </div>
       ),
       balance: formatEther(resource.amount),
       output: 0,
-      change: 0.08, // TODO
+      change: resource.percentChange,
       rate: (+formatEther(resource.rate)).toFixed(4),
       action: <Button>Trade</Button>,
     };
