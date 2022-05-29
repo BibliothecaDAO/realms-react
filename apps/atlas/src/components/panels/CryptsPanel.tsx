@@ -91,7 +91,7 @@ export const CryptsPanel = () => {
   const hasNoResults = () => !loading && (data?.dungeons?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isCryptPanel}>
+    <BasePanel open={isCryptPanel} style="lg:w-7/12">
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Crypts</h1>

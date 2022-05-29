@@ -8,10 +8,10 @@ import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
-import { BaseModal } from '@/components/modals/BaseModal';
 import { Header } from '@/components/navigation/header';
 import { AccountPanel } from '@/components/panels/AccountPanel';
 import { BankPanel } from '@/components/panels/BankPanel';
+import { CombatPanel } from '@/components/panels/CombatPanel';
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
@@ -28,7 +28,6 @@ import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
-import { JourneyProvider } from '@/context/JourneyContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
@@ -66,6 +65,7 @@ export default function Base({
               <TradePanel />
               <FlyTo />
               <MapModule />
+              <CombatPanel />
             </div>
           </div>
         </div>
@@ -137,7 +137,7 @@ function AccountModule() {
 }
 
 function MapModule() {
-  const ITEM_VIEW_LEVEL = 5;
+  const ItemViewLevel = 5;
   const { openDetails, selectedId, coordinates } = useUIContext();
   const [resource] = useState<Array<string>>([]);
 
@@ -169,7 +169,7 @@ function MapModule() {
     extruded: true,
     pickable: true,
     opacity: 1,
-    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ItemViewLevel ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.tokenId === parseInt(selectedId) ? 4000 : 100,
@@ -193,7 +193,7 @@ function MapModule() {
     extruded: true,
     pickable: true,
     opacity: 1,
-    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ItemViewLevel ? false : true,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: (d: any) =>
       d.properties.realm_idx === parseInt(selectedId) ? 4000 : 1,
@@ -216,7 +216,7 @@ function MapModule() {
     filled: true,
     extruded: true,
     pickable: true,
-    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ItemViewLevel ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -239,7 +239,7 @@ function MapModule() {
     filled: true,
     extruded: true,
     pickable: true,
-    visible: viewState.zoom < ITEM_VIEW_LEVEL ? false : true,
+    visible: viewState.zoom < ItemViewLevel ? false : true,
     opacity: 1,
     getPosition: (d: any) => d.geometry.coordinates,
     getRadius: 1,
@@ -266,11 +266,11 @@ function MapModule() {
     iconAtlas:
       'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
     iconMapping: iconMapping,
-    getIcon: (d) => 'marker',
+    getIcon: () => 'marker',
     sizeScale: 5,
     getPosition: (d: any) => d.geometry.coordinates,
-    getSize: (d) => 5,
-    getColor: (d: any) => [255, 255, 255],
+    getSize: () => 5,
+    getColor: () => [255, 255, 255],
   });
 
   useEffect(() => {

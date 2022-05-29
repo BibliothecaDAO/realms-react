@@ -1,4 +1,4 @@
-import { IconButton, Button } from '@bibliotheca-dao/ui-lib';
+import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
@@ -9,20 +9,14 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
-import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
-  const { account, connectWallet } = useWalletContext();
-  const {
-    toggleMenuType,
-    mainMenu,
-    toggleMainMenu,
-    togglePanelType,
-    selectedPanel,
-  } = useUIContext();
+  const { connectWallet } = useWalletContext();
+  const { mainMenu, toggleMainMenu, togglePanelType, selectedPanel } =
+    useUIContext();
 
   const animation = useSpring({
     opacity: mainMenu ? 0.85 : 0,
@@ -151,7 +145,20 @@ export const MenuSideBar = () => {
           />
           <span className={textClasses}>Lore</span>
         </div>
-
+        <div className="flex flex-col place-items-center ">
+          <IconButton
+            className={`${buttonClasses} ${
+              selectedPanel === 'lore' ? 'bg-gray-700' : ''
+            }`}
+            aria-label="Combat"
+            variant="unstyled"
+            texture={false}
+            onClick={() => togglePanelType('combat')}
+            icon={<Library className={iconClasses} />}
+            size="lg"
+          />
+          <span className={textClasses}>Combat</span>
+        </div>
         {/* <div className="flex flex-col place-items-center ">
           <IconButton
             className={`${buttonClasses} ${

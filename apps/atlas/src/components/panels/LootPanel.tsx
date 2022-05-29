@@ -78,7 +78,7 @@ export const LootPanel = () => {
   const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isLootPanel}>
+    <BasePanel open={isLootPanel} style="lg:w-7/12">
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Loot</h1>

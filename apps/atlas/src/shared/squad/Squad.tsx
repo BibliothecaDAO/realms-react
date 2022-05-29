@@ -4,6 +4,7 @@ import type { TroopInterface } from '@/types/index';
 interface SquadProps {
   className?: string;
   troops: Array<TroopInterface>;
+  flipped?: boolean;
 }
 
 export const SquadBuilder = (props: SquadProps) => {
@@ -27,7 +28,7 @@ export const SquadBuilder = (props: SquadProps) => {
 
     const currentTroops = getTier(tier);
 
-    for (let index = 0; index < length - currentTroops.length; index++) {
+    for (let index = 0; index <= length - currentTroops.length; index++) {
       emptyTroop['tier'] = tier;
       currentTroops.push(emptyTroop);
     }
@@ -35,8 +36,12 @@ export const SquadBuilder = (props: SquadProps) => {
     return currentTroops;
   };
   return (
-    <>
-      <div className="flex justify-around w-full my-2">
+    <div className="flex flex-col">
+      <div
+        className={`${
+          props.flipped ? 'order-last' : ''
+        } flex justify-around w-full my-2`}
+      >
         {fillGap(1, 16).map((a, index) => {
           return <Troop key={index} troop={a} />;
         })}
@@ -46,11 +51,15 @@ export const SquadBuilder = (props: SquadProps) => {
           return <Troop key={index} troop={a} />;
         })}
       </div>
-      <div className="flex justify-around w-full my-2">
+      <div
+        className={`${
+          props.flipped ? 'order-first' : ''
+        } flex justify-around w-full my-2`}
+      >
         {fillGap(3, 1).map((a, index) => {
           return <Troop key={index} troop={a} />;
         })}
       </div>
-    </>
+    </div>
   );
 };

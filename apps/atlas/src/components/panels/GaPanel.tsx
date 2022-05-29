@@ -89,7 +89,7 @@ export const GaPanel = () => {
     !loading && (data?.gadventurers?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isGaPanel}>
+    <BasePanel open={isGaPanel} style="lg:w-7/12">
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Genesis Adventurers</h1>

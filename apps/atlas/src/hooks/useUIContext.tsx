@@ -16,7 +16,13 @@ import loot_bags from '../geodata/loot_bags.json';
 import realms from '../geodata/realms.json';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
-export type PanelType = 'account' | 'trade' | 'bank' | 'lore' | AssetType;
+export type PanelType =
+  | 'account'
+  | 'trade'
+  | 'bank'
+  | 'lore'
+  | 'combat'
+  | AssetType;
 
 export type MenuType =
   | 'settleRealms'
@@ -234,6 +240,11 @@ function useUI(): UI {
       setPanelType(panelType);
       if (panelType === 'crypt') {
         setArtBackground('crypt');
+        if (breakpoints.lg) {
+          setMenuType(panelType);
+        }
+      } else if (panelType === 'combat') {
+        // setArtBackground('crypt');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }

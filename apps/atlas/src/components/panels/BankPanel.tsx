@@ -19,7 +19,7 @@ type Row = {
 
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
-  const { balance, updateBalance } = useResourcesContext();
+  const { balance } = useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
     const resourceModel = findResourceName(resource.resourceId);
@@ -56,7 +56,7 @@ export function BankPanel(): ReactElement {
     },
   });
   return (
-    <BasePanel open={selectedPanel === 'bank'}>
+    <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
         <h1 className="tex">Iron Bank</h1>
