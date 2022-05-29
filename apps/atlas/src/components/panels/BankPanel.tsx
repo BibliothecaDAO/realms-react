@@ -23,13 +23,13 @@ export function BankPanel(): ReactElement {
   const defaultData: Row[] = balance?.map((resource) => {
     return {
       resource: (
-        <div className="flex mr-4 text-xl">
+        <div className="flex mr-4">
           <ResourceIcon
             resource={resource?.resourceName?.replace(' ', '') || ''}
             size="sm"
           />
 
-          <span className="self-center ml-4 font-display">
+          <span className="self-center ml-4 tracking-widest uppercase">
             {resource?.resourceName}
           </span>
         </div>
@@ -63,7 +63,7 @@ export function BankPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
-        <h1 className="tex">Iron Bank</h1>
+        <h1 className="w-full text-center">Iron Bank</h1>
         <button
           className="mb-8 transition-all rounded "
           onClick={() => togglePanelType('bank')}

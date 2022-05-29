@@ -95,8 +95,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex justify-between pt-1.5 text-xs">
-          <div>MAX: 900</div>
+        <div className="flex justify-between pt-1.5 text-xs uppercase">
+          <div>balance:</div>
           <div>1 = {displayRate(props.resource.rate)}</div>
         </div>
       </div>
