@@ -2,6 +2,7 @@ import type { UseContract } from '@starknet-react/core';
 import { useContract } from '@starknet-react/core';
 import type { Abi } from 'starknet';
 
+import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
@@ -101,5 +102,17 @@ export function useRealms721Contract(): UseContract {
     abi: Realms721 as Abi,
     address:
       '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
+  });
+}
+
+/**
+ * Load the Exchange ERC20_1155 contract.
+ * @returns The `Exchange` contract or undefined.
+ */
+export function useExchangeContract(): UseContract {
+  return useContract({
+    abi: Exchange as Abi,
+    address:
+      '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd',
   });
 }

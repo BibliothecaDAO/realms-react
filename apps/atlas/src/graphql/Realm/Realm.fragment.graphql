@@ -22,7 +22,9 @@ fragment RealmFragment on Realm {
     buildingId
   }
   squad {
+    realmId
     troopId
+    troopName
     index
     type
     tier

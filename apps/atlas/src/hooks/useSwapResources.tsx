@@ -1,106 +1,98 @@
+import { useStarknetInvoke } from '@starknet-react/core';
+import { BigNumber } from 'ethers';
 import { useState, useEffect } from 'react';
-
-const resources = [
-  'Wood',
-  'Stone',
-  'Coal',
-  'Copper',
-  'Obsidian',
-  'Silver',
-  'Ironwood',
-  'Cold Iron',
-  'Gold',
-  'Hartwood',
-  'Diamonds',
-  'Sapphire',
-  'Ruby',
-  'Deep Crystal',
-  'Ignium',
-  'Ethereal Silica',
-  'True Ice',
-  'Twilight Quartz',
-  'Alchemical Silver',
-  'Adamantine',
-  'Mithral',
-  'Dragonhide',
-];
-
-export type Resource = typeof resources[number];
+import { toFelt } from 'starknet/dist/utils/number';
+import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { resources } from '@/util/resources';
+import { useExchangeContract } from './settling/stark-contracts';
 
 export type ResourceQty = {
-  name: Resource;
-  qty: string | number;
+  resourceId: number;
+  qty: number;
 };
 
 export const useSwapResources = () => {
   const [loading, setLoading] = useState(false);
+  const [availableResources, setAvailableResources] = useState<number[]>(
+    resources.map((resource) => resource.id)
+  );
   const [selectedResources, setSelectedResources] = useState<ResourceQty[]>([]);
-  const [availableResources, setAvailableResources] =
-    useState<Resource[]>(resources);
+  const { contract: exchangeContract } = useExchangeContract();
+  const {
+    data: buyTokensData,
+    loading: buyTokensLoading,
+    invoke: invokeBuyTokens,
+    error: buyTokensError,
+  } = useStarknetInvoke({
+    contract: exchangeContract,
+    method: 'buy_tokens',
+  });
+
+  const buyTokens = (
+    maxAmount: BigNumber,
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    invokeBuyTokens({
+      args: [
+        bnToUint256(maxAmount.toHexString()),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
 
   const addSelectedResources = () => {
-    setSelectedResources((prevRows) => [
-      ...prevRows,
-      {
-        name: availableResources[0],
-        qty: 0, // Random age
-      },
-    ]);
+    if (availableResources.length === 0) {
+      return;
+    }
+    const resourceId = availableResources[0];
+    setSelectedResources([...selectedResources, { resourceId, qty: 0 }]);
   };
-  const removeSelectedResource = (name: Resource) => {
+
+  const removeSelectedResource = (resourceId: number) => {
     setSelectedResources(
-      selectedResources.filter((item) => item.name !== name)
+      selectedResources.filter((item) => item.resourceId !== resourceId)
     );
   };
+
   const updateSelectedResource = (
-    name: string,
-    qty?: number | string,
-    newName?: string
+    resourceId: number,
+    newResourceId: number
   ) => {
-    console.log(qty);
-    console.log(name);
-    console.log(selectedResources);
     setSelectedResources(
-      selectedResources.map((resourceRow) => {
-        console.log(resourceRow);
-        if (resourceRow.name === name) {
-          console.log(name);
-          resourceRow.qty = qty ? qty : resourceRow.qty;
-          resourceRow.name = newName ? newName : resourceRow.name;
-          console.log(resourceRow);
-          return { ...resourceRow };
-        } else {
-          return { ...resourceRow };
+      selectedResources.map((resource) => {
+        if (resource.resourceId === resourceId) {
+          return { ...resource, resourceId: newResourceId };
         }
+        return resource;
       })
     );
   };
-  const updateResourceQty = ({ name, qty }: ResourceQty) => {
+  const updateSelectedResourceQty = (resourceId: number, qty: number) => {
     setSelectedResources(
-      selectedResources.map((resourceRow) =>
-        resourceRow.name === name
-          ? { ...resourceRow, qty: qty }
-          : { ...resourceRow }
+      selectedResources.map((resource) =>
+        resource.resourceId === resourceId
+          ? { ...resource, qty: qty }
+          : { ...resource }
       )
     );
   };
-  const handleResourceChange = (name: string, newName: string) => {
-    setSelectedResources(
-      selectedResources.map((resourceRow) =>
-        resourceRow.name === name
-          ? { ...resourceRow, name: newName, qty: 0 }
-          : { ...resourceRow }
-      )
-    );
-  };
+
   useEffect(() => {
-    const resourceRowNames = selectedResources.map((i) => {
-      return i.name;
-    });
     setAvailableResources(
-      resources.filter(function (el) {
-        return resourceRowNames.indexOf(el) < 0;
-      })
+      resources
+        .map((resource) => resource.id)
+        .filter(
+          (resourceId) =>
+            selectedResources.find(
+              (resource) => resource.resourceId === resourceId
+            ) === undefined
+        )
     );
   }, [selectedResources]);
   return {
@@ -109,8 +101,11 @@ export const useSwapResources = () => {
     selectedResources,
     addSelectedResources,
     removeSelectedResource,
-    updateResourceQty,
-    handleResourceChange,
+    updateSelectedResourceQty,
     updateSelectedResource,
+    buyTokens,
+    buyTokensData,
+    buyTokensLoading,
+    buyTokensError,
   };
 };
