@@ -23,20 +23,26 @@ export function BankPanel(): ReactElement {
   const defaultData: Row[] = balance?.map((resource) => {
     return {
       resource: (
-        <div className="flex mb-4 mr-4 text-xl">
+        <div className="flex mr-4 text-xl">
           <ResourceIcon
             resource={resource?.resourceName?.replace(' ', '') || ''}
-            size="md"
+            size="sm"
           />
 
-          <span className="self-center ml-4">{resource?.resourceName}</span>
+          <span className="self-center ml-4 font-display">
+            {resource?.resourceName}
+          </span>
         </div>
       ),
       balance: formatEther(resource.amount),
       output: 0,
       change: resource.percentChange,
       rate: (+formatEther(resource.rate)).toFixed(4),
-      action: <Button>Trade</Button>,
+      action: (
+        <Button variant="secondary" size="xs">
+          Trade
+        </Button>
+      ),
     };
   });
   const columns = [

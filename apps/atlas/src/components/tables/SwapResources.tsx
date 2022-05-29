@@ -209,15 +209,20 @@ export function SwapResources(): ReactElement {
             />
           </div>
         ))}
-        <IconButton
-          aria-label="Add Row"
-          icon={<ChevronRight className="w-8 h-8" />}
-          size="lg"
-          onClick={() => addSelectedResources()}
-        />
+        <div className="flex w-full">
+          <Button
+            aria-label="Add Row"
+            size="xs"
+            variant="primary"
+            className="mx-auto"
+            onClick={() => addSelectedResources()}
+          >
+            add +
+          </Button>
+        </div>
       </div>
       <div className="flex justify-end w-full pt-4">
-        <div className="flex flex-col justify-end w-full pb-16">
+        <div className="flex flex-col justify-end w-full">
           <div className="flex flex-col  rounded p-4 mb-5 bg-gray-500/70 shadow-[inset_0_6px_8px_0px_rgba(0,0,0,0.18)]">
             <div className="flex justify-end text-2xl font-semibold">
               <span className="mr-1">{calculatedTotalInLords.toFixed(2)}</span>

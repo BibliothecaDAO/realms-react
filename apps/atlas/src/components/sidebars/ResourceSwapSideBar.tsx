@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 
@@ -30,10 +30,10 @@ export const ResourceSwapSideBar = (props: Props) => {
         label: 'LP Merchant',
         component: <Menu />,
       },
-      {
-        label: 'Stake',
-        component: <Menu />,
-      },
+      // {
+      //   label: 'Stake',
+      //   component: <Menu />,
+      // },
     ],
     []
   );
@@ -41,13 +41,17 @@ export const ResourceSwapSideBar = (props: Props) => {
     <BaseSideBar open={selectedMenuType === 'resourceSwap' && showDetails}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-between w-full">
-          <h2 className="uppercase">Resource Swap</h2>
-          <button
-            className="right-0 z-10 p-4 transition-all rounded bg-white/20 hover:bg-white/70 shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.25)]"
+          <Button
+            variant="secondary"
+            size="xs"
+            className="ml-auto"
             onClick={() => toggleMenuType('resourceSwap')}
           >
             <Close />
-          </button>
+          </Button>
+        </div>
+        <div>
+          <h1 className="my-8 text-center uppercase">Resource emporium</h1>
         </div>
         <div className="relative">
           <Tabs className="h-full" variant="primary">
@@ -58,7 +62,7 @@ export const ResourceSwapSideBar = (props: Props) => {
                 </Tabs.Tab>
               ))}
             </Tabs.List>
-            <Tabs.Panels className="h-full">
+            <Tabs.Panels className="h-full p-4 rounded shadow-inner bg-black/30">
               {tabs.map((tab) => (
                 <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
               ))}
