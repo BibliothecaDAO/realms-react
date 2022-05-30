@@ -3,6 +3,7 @@ import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useExchangeContract } from './settling/stark-contracts';
+import useTxCallback from './useTxCallback';
 
 export type ResourceQty = {
   resourceId: number;
@@ -12,13 +13,16 @@ export type ResourceQty = {
 export const useSwapResources = () => {
   const { contract: exchangeContract } = useExchangeContract();
   const {
-    data: buyTokensData,
-    loading: buyTokensLoading,
+    data: transactionHash,
     invoke: invokeBuyTokens,
-    error: buyTokensError,
+    error: invokeError,
   } = useStarknetInvoke({
     contract: exchangeContract,
     method: 'buy_tokens',
+  });
+  const { tx, loading } = useTxCallback(transactionHash, (status) => {
+    // Update state changes?
+    return true;
   });
 
   const buyTokens = (
@@ -27,6 +31,9 @@ export const useSwapResources = () => {
     tokenAmounts: BigNumber[],
     deadline: number
   ) => {
+    if (loading) {
+      return;
+    }
     invokeBuyTokens({
       args: [
         bnToUint256(maxAmount.toHexString()),
@@ -38,10 +45,12 @@ export const useSwapResources = () => {
       ],
     });
   };
+
   return {
+    transactionResult: tx,
+    loading,
     buyTokens,
-    buyTokensData,
-    buyTokensLoading,
-    buyTokensError,
+    transactionHash,
+    invokeError,
   };
 };
