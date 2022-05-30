@@ -37,7 +37,7 @@ export function BankPanel(): ReactElement {
       ),
       balance: formatEther(resource.amount),
       output: 0,
-      change: resource.percentChange,
+      change: `${(resource.percentChange * 100).toFixed(2)}%`,
       rate: (+formatEther(resource.rate)).toFixed(4),
       action: (
         <Button
