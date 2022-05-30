@@ -11,9 +11,20 @@ type Row = {
   resource: ReactElement;
   balance: string;
   output: number;
-  change: number;
+  change: ReactElement;
   rate: string;
   action: ReactElement;
+};
+
+export const RateChange = (change: number) => {
+  const x = (change * 100).toFixed(2);
+  return (
+    <span
+      className={`${parseInt(x) < 0 ? 'text-red-300' : 'text-green-300/80'}`}
+    >
+      + {x} %
+    </span>
+  );
 };
 
 export function BankPanel(): ReactElement {
@@ -37,7 +48,7 @@ export function BankPanel(): ReactElement {
       ),
       balance: formatEther(resource.amount),
       output: 0,
-      change: resource.percentChange,
+      change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),
       action: (
         <Button
@@ -71,7 +82,7 @@ export function BankPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
-        <h1 className="w-full text-center">Iron Bank</h1>
+        <h1 className="w-full text-center font-lords">Iron Bank</h1>
         <button
           className="mb-8 transition-all rounded "
           onClick={() => togglePanelType('bank')}

@@ -73,7 +73,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="py-2 tracking-wider text-center"
+                  className="py-2 text-xs tracking-widest text-center border border-gray-500/60"
                   key={header.id}
                   colSpan={header.colSpan}
                 >
@@ -88,13 +88,16 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-gray-600/30'
+                  ? 'bg-gray-600/60'
                   : 'bg-gray-600/50'
-              } hover:bg-white-600/90 font-semibold`}
+              } hover:bg-white-600/90 font-semibold shadow-inner`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
-                <td className="p-2" key={cell.id}>
+                <td
+                  className="p-2 mx-auto text-center border border-gray-500/60"
+                  key={cell.id}
+                >
                   {cell.renderCell()}
                 </td>
               ))}

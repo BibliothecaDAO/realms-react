@@ -51,7 +51,7 @@ export const ResourceSwapSideBar = (props: Props) => {
           </Button>
         </div>
         <div>
-          <h1 className="my-8 text-center uppercase">Resource emporium</h1>
+          <h1 className="my-8 text-center font-lords">Resource emporium</h1>
         </div>
         <div className="relative">
           <Tabs className="h-full" variant="primary">
