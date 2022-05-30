@@ -1,4 +1,13 @@
-import { Button, IconButton, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import {
+  Button,
+  IconButton,
+  ResourceIcon,
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
+  CardStats,
+} from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -12,6 +21,9 @@ import { useUIContext } from '@/hooks/useUIContext';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { useWalletContext } from '../../hooks/useWalletContext';
+
+import { RealmResources } from '../tables/RealmResources';
+import { BankCard } from './Account/AccountCards';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
@@ -33,47 +45,130 @@ export function AccountPanel() {
     { id: 22, amount: 10 },
   ];
   const [selectedId, setSelectedId] = useState(0);
-  /* useEffect(() => {
-    console.log(state);
-  }, [state]); */
+
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div>
-        <div className="flex mb-4">
-          <h3 className="w-28">Ethereum</h3>
-          <span>
-            {isConnected && (
-              <Button variant="secondary" onClick={disconnectWallet}>
-                <Ethereum className="w-4 mx-4" /> {displayName} [ disconnect ]
-              </Button>
-            )}
-            {!isConnected && (
-              <Button variant="primary" onClick={connectWallet}>
-                <Ethereum className="w-4 mr-4" /> Connect
-              </Button>
-            )}
-          </span>
-        </div>
-        <div className="flex mb-12">
-          <h3 className="w-28">Starknet</h3>
-          <span>
-            {account ? (
-              <Button
-                variant="secondary"
-                onClick={() => disconnect(connectors[0])}
-              >
-                <StarkNet className="w-5 mr-2" />
-                {shortenAddress(account)} [ disconnect ]
-              </Button>
-            ) : (
-              <Button variant="primary" onClick={() => connect(connectors[0])}>
-                <StarkNet className="w-5 mr-2" />
-                Connect to StarkNet
-              </Button>
-            )}
-          </span>
-        </div>
-        <div className="text-xl">
+      <div className="grid grid-cols-12 gap-4">
+        <Card className="col-start-1 col-end-6">
+          <CardBody>
+            <CardTitle>Ser, your empire</CardTitle>
+            <div className="flex mb-4">
+              <h3 className="w-28">Ethereum</h3>
+              <span>
+                {isConnected && (
+                  <Button variant="secondary" onClick={disconnectWallet}>
+                    <Ethereum className="w-4 mx-4" /> {displayName} [ disconnect
+                    ]
+                  </Button>
+                )}
+                {!isConnected && (
+                  <Button variant="primary" onClick={connectWallet}>
+                    <Ethereum className="w-4 mr-4" /> Connect
+                  </Button>
+                )}
+              </span>
+            </div>
+            <div className="flex mb-12">
+              <h3 className="w-28">Starknet</h3>
+              <span>
+                {account ? (
+                  <Button
+                    variant="secondary"
+                    onClick={() => disconnect(connectors[0])}
+                  >
+                    <StarkNet className="w-5 mr-2" />
+                    {shortenAddress(account)} [ disconnect ]
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    onClick={() => connect(connectors[0])}
+                  >
+                    <StarkNet className="w-5 mr-2" />
+                    Connect to StarkNet
+                  </Button>
+                )}
+              </span>
+            </div>
+          </CardBody>
+        </Card>
+        <Card className="col-start-6 col-end-9">
+          <CardBody>
+            <CardTitle>lords</CardTitle>
+            <CardStats>100m</CardStats>
+            <Button
+              variant="primary"
+              size="sm"
+              className="ml-auto"
+              onClick={() => connect(connectors[0])}
+            >
+              Claim
+            </Button>
+          </CardBody>
+        </Card>
+        <Card className="col-start-9 col-end-13 row-span-3">
+          <CardBody>
+            <CardTitle>Needing your attention</CardTitle>
+          </CardBody>
+        </Card>
+        <Card className="col-start-1 col-end-4">
+          <CardBody>
+            <CardTitle>Realms Settled</CardTitle>
+            <Button
+              variant="primary"
+              className="ml-8"
+              size="sm"
+              onClick={() => toggleMenuType('bridgeRealms')}
+            >
+              Bridge Realms
+            </Button>
+          </CardBody>
+        </Card>
+        <Card className="col-start-4 col-end-6">
+          <CardBody>
+            <CardTitle>Realms Settled</CardTitle>
+            <CardStats>9</CardStats>
+          </CardBody>
+        </Card>
+        <Card className="col-start-6 col-end-9 row-span-2">
+          <CardBody>
+            <CardTitle>Resources</CardTitle>
+            {/* <BankCard/> */}
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => connect(connectors[0])}
+            >
+              Claim Empires Resources
+            </Button>
+          </CardBody>
+        </Card>
+        <Card className="col-start-1 col-end-6">
+          <CardBody>
+            <CardTitle>Mint Realms</CardTitle>
+            <input
+              placeholder="Type Id"
+              type={'number'}
+              className="w-3/12 px-4 py-4 text-black rounded-l bg-white/80"
+              value={selectedId}
+              onChange={(e) => {
+                setSelectedId(parseInt(e.target.value));
+              }}
+              min="1"
+              max="8000"
+            />
+            <Button
+              className="ml-8"
+              variant="primary"
+              size="sm"
+              onClick={() => mintRealm(selectedId)}
+            >
+              Mint Realms
+            </Button>
+          </CardBody>
+        </Card>
+
+        {/* <div className="text-xl">
           <h2>Realms</h2>
           <p>You have: 42 Realms</p>
           <p className="mb-2">
@@ -120,27 +215,6 @@ export function AccountPanel() {
             Mint Realms
           </Button>
           <h2 className="mt-12">Claims</h2>
-          <h3>Resources</h3>
-          <div className="flex flex-wrap font-semibold tracking-widest uppercase">
-            {resourceIds.map((re: any, index) => (
-              <div
-                key={index}
-                className="flex p-1 mb-4 mr-4 text-xl border rounded bg-gray-800/70 hover:bg-gray-500/70"
-              >
-                <ResourceIcon
-                  resource={
-                    findResourceName(re.id)?.trait?.replace(' ', '') || ''
-                  }
-                  size="sm"
-                />
-
-                <span className="self-center ml-1 text-sm">
-                  {findResourceName(re.id)?.trait}:
-                </span>
-                <span className="self-center mr-2 text-sm">{re.amount}</span>
-              </div>
-            ))}
-          </div>
           <Button
             variant="primary"
             size="sm"
@@ -193,7 +267,7 @@ export function AccountPanel() {
               View Troops
             </Button>
           </p>
-        </div>
+        </div> */}
       </div>
     </BasePanel>
   );

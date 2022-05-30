@@ -21,7 +21,7 @@ export const FlyTo = () => {
   }
 
   return (
-    <div className="absolute z-10 flex w-full h-10 px-4 text-xl bottom-4 sm:top-10 sm:right-2 sm:w-96">
+    <div className="absolute flex w-full h-10 px-4 text-xl z-1 bottom-4 sm:top-10 sm:right-2 sm:w-96">
       <input
         placeholder="Type Id"
         type={'number'}
@@ -39,7 +39,7 @@ export const FlyTo = () => {
       </button>
 
       <select
-        className="w-5/12 p-1 px-4 mr-2 uppercase transition-all duration-300 cursor-pointer text-off-100 bg-off-200/50 rounded-r font-display"
+        className="w-5/12 p-1 px-4 mr-2 uppercase transition-all duration-300 rounded-r cursor-pointer text-off-100 bg-off-200/50 font-display"
         value={selectedAssetFilter.value}
         onChange={(event) =>
           setSelectedAssetType(event.target.value as AssetType)

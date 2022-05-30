@@ -7,3 +7,4 @@ export { Table } from './table/table';
 export { Select } from './select/select';
 export { InputNumber } from './input-number/input-number';
 export { Spinner } from './spinner';
+export { Card, CardBody, CardText, CardTitle, CardStats } from './card/Card';

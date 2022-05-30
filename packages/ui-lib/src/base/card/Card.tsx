@@ -12,7 +12,9 @@ const inlineStyle = {
 
 export function Card({ children, className }: Props) {
   return (
-    <div className={`${className} relative rounded-lg`} style={inlineStyle}>
+    <div
+      className={`${className} duration-150 transition-all  hover:bg-gray-600/60 flex flex-wrap p-4 text-gray-600 bg-white/30 rounded shadow-sm border-l-4 border-double overflow-hidden`}
+    >
       {children}
     </div>
   );
@@ -30,7 +32,7 @@ export function CardBody({ children, className, loading }: Props) {
     );
   }
   return (
-    <div className={`${className} block flex-grow flex-shrink p-5`}>
+    <div className={`${className} flex flex-col flex-grow flex-shrink p-5`}>
       {children}
     </div>
   );
@@ -38,7 +40,9 @@ export function CardBody({ children, className, loading }: Props) {
 
 export function CardTitle({ children, className }: Props) {
   return (
-    <div className={`${className} font-medium text-gray-700 mb-3`}>
+    <div
+      className={`${className} z-20 w-full text-2xl font-semibold tracking-widest text-white uppercase font-lords`}
+    >
       {children}
     </div>
   );
@@ -46,4 +50,14 @@ export function CardTitle({ children, className }: Props) {
 
 export function CardText({ children, className }: Props) {
   return <div className={`${className} text-gray-500`}>{children}</div>;
+}
+
+export function CardStats({ children, className }: Props) {
+  return (
+    <div
+      className={`${className} w-full pt-4 pr-10 text-5xl text-right text-white`}
+    >
+      {children}
+    </div>
+  );
 }

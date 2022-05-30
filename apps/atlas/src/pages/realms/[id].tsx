@@ -1,3 +1,4 @@
+import { Card, CardBody, CardText, CardTitle } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useState } from 'react';
@@ -13,21 +14,6 @@ interface DataCardProps {
   className?: string;
   icon?: string;
 }
-
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export const Card = (props: CardProps) => {
-  return (
-    <div
-      className={`duration-150 transition-all  hover:bg-gray-600/60 flex flex-wrap p-4 text-gray-600 bg-white/30 rounded shadow-sm border-l-4 border-double ${props.className} overflow-hidden`}
-    >
-      {props.children}
-    </div>
-  );
-};
 
 export const DataCard = (props: DataCardProps) => {
   return (
