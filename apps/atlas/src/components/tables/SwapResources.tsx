@@ -11,7 +11,6 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
-import { BigNumber } from 'ethers';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { useState, useMemo } from 'react';
@@ -131,8 +130,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  const { buyTokens, buyTokensData, buyTokensLoading, buyTokensError } =
-    useSwapResources();
+  const {
+    buyTokens,
+    invokeError,
+    transactionHash,
+    loading: isTransactionInProgress,
+    transactionResult,
+  } = useSwapResources();
 
   const {
     availableResourceIds,
@@ -159,7 +163,7 @@ export function SwapResources(): ReactElement {
   }, [calculatedTotalInLords, slippage]);
 
   function onBuyTokensClick() {
-    if (calculatedTotalInLords === 0 || buyTokensLoading) return;
+    if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
     const tokenIds = selectedSwapResourcesWithBalance.map(
       (resource) => resource.resourceId
@@ -178,6 +182,7 @@ export function SwapResources(): ReactElement {
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
   }
 
+  console.log(transactionResult);
   return (
     <div className="flex flex-col justify-between h-full">
       {!isLordsApprovedForExchange && (
@@ -237,9 +242,9 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onBuyTokensClick}
-            disabled={buyTokensLoading || !isLordsApprovedForExchange}
+            disabled={isTransactionInProgress || !isLordsApprovedForExchange}
           >
-            {buyTokensLoading ? 'Loading...' : 'Trade'}
+            {isTransactionInProgress ? 'Pending...' : 'Trade'}
           </Button>
         </div>
       </div>
