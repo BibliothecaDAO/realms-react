@@ -2,6 +2,7 @@ import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useStarknet } from '@starknet-react/core';
+import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
@@ -24,6 +25,10 @@ export const RealmsPanel = () => {
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
+
+  const starknetWallet = starkAccount
+    ? BigNumber.from(starkAccount).toHexString()
+    : '';
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
@@ -73,8 +78,8 @@ export const RealmsPanel = () => {
       filter.OR = [
         { owner: { equals: account?.toLowerCase() } },
         { bridgedOwner: { equals: account?.toLowerCase() } },
-        { ownerL2: { equals: starkAccount?.toLowerCase() } },
-        { settledOwner: { equals: starkAccount?.toLowerCase() } },
+        { ownerL2: { equals: starknetWallet } },
+        { settledOwner: { equals: starknetWallet } },
       ];
     }
 
