@@ -39,7 +39,7 @@ module.exports = {
         veryWide: '0.165em',
       },
       fontFamily: {
-        display: ['Lords', 'serif'],
+        display: ['EB Garamond', 'serif'],
         body: ['Inconsolata', 'monospace'],
         lords: ['Lords', 'serif'],
       },

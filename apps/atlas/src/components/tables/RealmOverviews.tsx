@@ -5,6 +5,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import { realmStatus } from '@/shared/Getters/Realm';
 import { findResourceName } from '@/util/resources';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
@@ -53,20 +54,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     openDetails('realm', realmId.toString());
     if (selectedMenuType !== 'realm') {
       toggleMenuType('realm');
-    }
-  };
-
-  const realmStatus = (realm: RealmFragmentFragment) => {
-    if (realm.bridgedOwner) {
-      return 'Bridge Pending';
-    }
-    if (realm.settledOwner) {
-      return 'Settled L2';
-    }
-    if (realm.ownerL2) {
-      return 'Unsettled L2';
-    } else {
-      return 'Layer 1';
     }
   };
 
@@ -199,7 +186,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   togglePanelType('realm');
                   gotoAssetId(realm.realmId, 'realm');
                 }}
-                variant="primary"
+                variant="secondary"
                 size="xs"
                 className="w-full uppercase"
               >
@@ -235,6 +222,14 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 size="xs"
                 className="w-full "
               >
+                quick view
+              </Button>
+              <Button
+                href={`/realms/` + realm.realmId}
+                variant="primary"
+                size="xs"
+                className="w-full "
+              >
                 details
               </Button>
               {!isFavourite(realm) && (
@@ -243,7 +238,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   variant="secondary"
                   onClick={() => actions.addFavouriteRealm(realm.realmId)}
                 >
-                  Add
+                  Add to favs
                 </Button>
               )}{' '}
               {isFavourite(realm) && (
@@ -253,7 +248,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   className="w-full"
                   onClick={() => actions.removeFavouriteRealm(realm.realmId)}
                 >
-                  Remove
+                  Remove from favs
                 </Button>
               )}
             </div>
