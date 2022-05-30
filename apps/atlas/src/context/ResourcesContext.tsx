@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  useContract,
-  useStarknet,
-  useStarknetCall,
-} from '@starknet-react/core';
-import type BN from 'bn.js';
-import { BigNumber, ethers } from 'ethers';
+import { useStarknet, useStarknetCall } from '@starknet-react/core';
+
 import React, {
   createContext,
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -25,6 +21,11 @@ export type Resource = {
   amount: string;
   rate: string;
   percentChange: number;
+};
+
+export type ResourceQty = {
+  resourceId: number;
+  qty: number;
 };
 
 type ResourcesBalance = Array<Resource>;
@@ -44,6 +45,16 @@ const initBalance = resources.map((resource) => {
 });
 
 const ResourcesContext = createContext<{
+  availableResourceIds: number[];
+  selectedSwapResources: ResourceQty[];
+  selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
+  addSelectedSwapResources: (resourceId?: number) => void;
+  removeSelectedSwapResource: (resourceId: number) => void;
+  updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
+  updateSelectedSwapResource: (
+    resourceId: number,
+    newResourceId: number
+  ) => void;
   balance: ResourcesBalance;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
@@ -64,6 +75,12 @@ export const ResourceProvider = (props: ResourceProviderProps) => {
 function useResources() {
   const { account } = useStarknet();
   const [balance, setBalance] = useState([...initBalance]);
+  const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
+    resources.map((resource) => resource.id)
+  );
+  const [selectedSwapResources, setSelectedSwapResources] = useState<
+    ResourceQty[]
+  >([]);
 
   const { contract: resources1155Contract } = useResources1155Contract();
   const ownerAddressInt = toBN(account as string).toString();
@@ -73,9 +90,8 @@ function useResources() {
       contract: resources1155Contract,
       method: 'balanceOfBatch',
       args: [
-        Array(resourceMapping.length).fill(ownerAddressInt), // ...again
+        Array(resourceMapping.length).fill(ownerAddressInt),
         resourceMapping,
-        // Token IDs],
       ],
     }
   );
@@ -83,6 +99,60 @@ function useResources() {
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
     pollInterval: 5000,
   });
+
+  const addSelectedSwapResources = (resourceId?: number) => {
+    if (availableResourceIds.length === 0) {
+      return;
+    }
+    const select = resourceId ?? availableResourceIds[0];
+    setSelectedSwapResources([
+      ...selectedSwapResources,
+      { resourceId: select, qty: 0 },
+    ]);
+  };
+
+  const removeSelectedSwapResource = (resourceId: number) => {
+    setSelectedSwapResources(
+      selectedSwapResources.filter((item) => item.resourceId !== resourceId)
+    );
+  };
+
+  const updateSelectedSwapResource = (
+    resourceId: number,
+    newResourceId: number
+  ) => {
+    setSelectedSwapResources(
+      selectedSwapResources.map((resource) => {
+        if (resource.resourceId === resourceId) {
+          return { ...resource, resourceId: newResourceId };
+        }
+        return resource;
+      })
+    );
+  };
+
+  const updateSelectedSwapResourceQty = (resourceId: number, qty: number) => {
+    setSelectedSwapResources(
+      selectedSwapResources.map((resource) =>
+        resource.resourceId === resourceId
+          ? { ...resource, qty: qty }
+          : { ...resource }
+      )
+    );
+  };
+
+  useEffect(() => {
+    setAvailableResourceIds(
+      resources
+        .map((resource) => resource.id)
+        .filter(
+          (resourceId) =>
+            selectedSwapResources.find(
+              (resource) => resource.resourceId === resourceId
+            ) === undefined
+        )
+    );
+  }, [selectedSwapResources]);
 
   useEffect(() => {
     if (!resourceBalanceData || !resourceBalanceData[0]) {
@@ -113,7 +183,23 @@ function useResources() {
     [balance]
   );
 
+  const selectedSwapResourcesWithBalance = useMemo(() => {
+    return selectedSwapResources.map((resource) => {
+      return {
+        ...resource,
+        ...getResourceById(resource.resourceId),
+      } as Resource & ResourceQty;
+    });
+  }, [selectedSwapResources, balance]);
+
   return {
+    availableResourceIds,
+    selectedSwapResources,
+    selectedSwapResourcesWithBalance,
+    addSelectedSwapResources,
+    removeSelectedSwapResource,
+    updateSelectedSwapResourceQty,
+    updateSelectedSwapResource,
     balance,
     updateBalance,
     getResourceById,

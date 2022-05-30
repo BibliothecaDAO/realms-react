@@ -23,7 +23,7 @@ import { findResourceName } from '@/util/resources';
 import { useWalletContext } from '../../hooks/useWalletContext';
 
 import { RealmResources } from '../tables/RealmResources';
-import { BankCard } from './Account/AccountCards';
+// import { BankCard } from './Account/AccountCards';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {

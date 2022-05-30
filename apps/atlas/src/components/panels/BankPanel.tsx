@@ -18,7 +18,8 @@ type Row = {
 
 export function BankPanel(): ReactElement {
   const { togglePanelType, selectedPanel } = useUIContext();
-  const { balance } = useResourcesContext();
+  const { balance, availableResourceIds, addSelectedSwapResources } =
+    useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
     return {
@@ -39,7 +40,14 @@ export function BankPanel(): ReactElement {
       change: resource.percentChange,
       rate: (+formatEther(resource.rate)).toFixed(4),
       action: (
-        <Button variant="secondary" size="xs">
+        <Button
+          variant="secondary"
+          size="xs"
+          onClick={() => {
+            addSelectedSwapResources(resource.resourceId);
+          }}
+          disabled={!availableResourceIds.includes(resource.resourceId)}
+        >
           Trade
         </Button>
       ),

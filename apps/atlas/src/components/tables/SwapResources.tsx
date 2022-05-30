@@ -96,7 +96,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           </Select.Options>
         </Select>
         <div className="flex justify-between pt-1.5 text-xs uppercase">
-          <div>balance:</div>
+          <div>balance: {formatEther(props.resource.amount)}</div>
           <div>1 = {displayRate(props.resource.rate)}</div>
         </div>
       </div>
@@ -131,39 +131,28 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  const {
-    selectedResources,
-    availableResources,
-    addSelectedResources,
-    removeSelectedResource,
-    updateSelectedResource,
-    updateSelectedResourceQty,
-    buyTokens,
-    buyTokensData,
-    buyTokensLoading,
-    buyTokensError,
-  } = useSwapResources();
+  const { buyTokens, buyTokensData, buyTokensLoading, buyTokensError } =
+    useSwapResources();
 
-  const { balance, getResourceById } = useResourcesContext();
+  const {
+    availableResourceIds,
+    selectedSwapResourcesWithBalance,
+    getResourceById,
+    addSelectedSwapResources,
+    removeSelectedSwapResource,
+    updateSelectedSwapResourceQty,
+    updateSelectedSwapResource,
+  } = useResourcesContext();
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
 
   const [slippage, setSlippage] = useState(0.1);
 
-  const selectedResourcesWithBalance = useMemo(() => {
-    return selectedResources.map((resource) => {
-      return {
-        ...resource,
-        ...getResourceById(resource.resourceId),
-      } as Resource & ResourceQty;
-    });
-  }, [selectedResources, balance]);
-
   const calculatedTotalInLords = useMemo(() => {
-    return selectedResourcesWithBalance.reduce((acc, resource) => {
+    return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
       return acc + calculateLords(resource.rate, resource.qty);
     }, 0);
-  }, [selectedResourcesWithBalance]);
+  }, [selectedSwapResourcesWithBalance]);
 
   const calculatedSlippage = useMemo(() => {
     return calculatedTotalInLords * slippage;
@@ -172,10 +161,10 @@ export function SwapResources(): ReactElement {
   function onBuyTokensClick() {
     if (calculatedTotalInLords === 0 || buyTokensLoading) return;
 
-    const tokenIds = selectedResourcesWithBalance.map(
+    const tokenIds = selectedSwapResourcesWithBalance.map(
       (resource) => resource.resourceId
     );
-    const tokenAmounts = selectedResources.map((resource) =>
+    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
     const maxAmount = parseEther(
@@ -200,23 +189,23 @@ export function SwapResources(): ReactElement {
       )}
 
       <div>
-        {selectedResourcesWithBalance.map((resource) => (
+        {selectedSwapResourcesWithBalance.map((resource) => (
           <div className="relative" key={resource.resourceId}>
             <ResourceRow
               key={resource.resourceId}
               resource={resource}
-              availableResources={availableResources.map(
+              availableResources={availableResourceIds.map(
                 (resourceId) => getResourceById(resourceId) as Resource
               )}
-              onResourceChange={updateSelectedResource}
-              onQtyChange={updateSelectedResourceQty}
+              onResourceChange={updateSelectedSwapResource}
+              onQtyChange={updateSelectedSwapResourceQty}
             />
             <IconButton
               className="absolute -top-3 -right-3"
               icon={<Danger className="w-3 h-3" />}
               aria-label="Remove Row"
               size="xs"
-              onClick={() => removeSelectedResource(resource.resourceId)}
+              onClick={() => removeSelectedSwapResource(resource.resourceId)}
             />
           </div>
         ))}
@@ -226,7 +215,7 @@ export function SwapResources(): ReactElement {
             size="xs"
             variant="primary"
             className="mx-auto"
-            onClick={() => addSelectedResources()}
+            onClick={() => addSelectedSwapResources()}
           >
             add +
           </Button>
