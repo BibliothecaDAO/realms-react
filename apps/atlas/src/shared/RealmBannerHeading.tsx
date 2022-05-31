@@ -4,19 +4,22 @@ import { useState, Fragment } from 'react';
 interface HeaderProps {
   title: string;
   // icon: string;
+  realmId: number;
   order: string;
 }
 
-const realms = [
-  { id: 1, name: 'smutmum' },
-  { id: 2, name: 'rektum' },
-  { id: 3, name: 'sdfascasdf' },
-  { id: 4, name: 'shoshoshun' },
-];
+// const realms = [
+//   { id: 1, name: 'smutmum' },
+//   { id: 2, name: 'rektum' },
+//   { id: 3, name: 'sdfascasdf' },
+//   { id: 4, name: 'shoshoshun' },
+// ];
 
 export const RealmBannerHeading = (props: HeaderProps) => {
+  const realms = [{ id: props.realmId, name: props.title }];
   const [selectedRealm, setSelectedRealm] = useState(realms[0]);
   const [query, setQuery] = useState('');
+
   const filteredRealms =
     query === ''
       ? realms

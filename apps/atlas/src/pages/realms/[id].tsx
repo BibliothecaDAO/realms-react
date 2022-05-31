@@ -57,6 +57,7 @@ export default function RealmsPage() {
           <RealmBannerHeading
             order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
             title={realm?.name ?? ''}
+            realmId={realmId}
           />
           <div className="grid grid-flow-col grid-cols-6 gap-4 py-4">
             <Card className="col-start-1 col-end-3">
