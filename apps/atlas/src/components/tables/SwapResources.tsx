@@ -185,7 +185,6 @@ export function SwapResources(): ReactElement {
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
   }
 
-  console.log(transactionResult);
   return (
     <div className="flex flex-col justify-between h-full">
       {!isLordsApprovedForExchange && (

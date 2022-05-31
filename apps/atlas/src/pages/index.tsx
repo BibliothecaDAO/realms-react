@@ -53,24 +53,37 @@ export default function Base({
           <div className="relative flex flex-col w-full">
             <Header />
 
-            <div className="relative w-full h-full">
-              {children}
-              <ArtBackground />
-              <AccountModule />
-              <LootModule />
-              <GaModule />
-              <RealmsModule />
-              <CryptModule />
-              <BankModule />
-              <TradePanel />
-              <FlyTo />
-              <MapModule />
-              <CombatPanel />
-            </div>
+            <AtlasMain>{children}</AtlasMain>
           </div>
         </div>
       </Layout>
     </UIProvider>
+  );
+}
+
+function AtlasMain({ children }: { children: ReactElement | ReactElement[] }) {
+  const { selectedPanel } = useUIContext();
+  const shouldShowMap = !children;
+
+  return (
+    <div className="relative w-full h-full">
+      {!selectedPanel && children}
+      <ArtBackground />
+      <AccountModule />
+      <LootModule />
+      <GaModule />
+      <RealmsModule />
+      <CryptModule />
+      <BankModule />
+      <TradePanel />
+      <CombatPanel />
+      {shouldShowMap && (
+        <>
+          <FlyTo />
+          <MapModule />
+        </>
+      )}
+    </div>
   );
 }
 

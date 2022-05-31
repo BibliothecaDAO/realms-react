@@ -1,6 +1,7 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
@@ -224,14 +225,11 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               >
                 quick view
               </Button>
-              <Button
-                href={`/realms/` + realm.realmId}
-                variant="primary"
-                size="xs"
-                className="w-full "
-              >
-                details
-              </Button>
+              <Link href={`/realms/${realm.realmId}`}>
+                <Button variant="primary" size="xs" className="w-full ">
+                  details
+                </Button>
+              </Link>
               {!isFavourite(realm) && (
                 <Button
                   size="xs"

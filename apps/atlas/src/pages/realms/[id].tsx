@@ -1,8 +1,10 @@
 import { Card, CardBody, CardText, CardTitle } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RealmHistory } from '@/components/tables/RealmHistory';
+import { useGetRealmQuery } from '@/generated/graphql';
 import Base from '@/pages/index';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
@@ -37,12 +39,25 @@ export const DataCard = (props: DataCardProps) => {
 
 export default function RealmsPage() {
   const [squad, setSquad] = useState(false);
+  const { query } = useRouter();
 
+  const realmId = parseInt(query.id as string);
+
+  const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
+  const realm = realmData?.getRealm;
+
+  const attackSquad =
+    realm?.squad?.filter((squad) => squad.squadSlot === 1) ?? [];
+  const defenseSquad =
+    realm?.squad?.filter((squad) => squad.squadSlot === 2) ?? [];
   return (
     <Base>
       <div className="absolute top-0 z-20 grid w-full h-full grid-cols-6 gap-5 p-6 overflow-auto bg-hero">
         <div className="col-start-1 col-end-5">
-          <RealmBannerHeading order="the fox" title="Smutmum" />
+          <RealmBannerHeading
+            order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
+            title={realm?.name ?? ''}
+          />
           <div className="grid grid-flow-col grid-cols-6 gap-4 py-4">
             <Card className="col-start-1 col-end-3">
               <DataCard icon="attack" title="Attacks Won" value="2" />
@@ -81,9 +96,9 @@ export default function RealmsPage() {
                 </div>
               </div>
               {squad ? (
-                <SquadBuilder troops={dummySquad} />
+                <SquadBuilder troops={attackSquad} />
               ) : (
-                <SquadBuilder troops={dummyDefenceSquad} />
+                <SquadBuilder troops={defenseSquad} />
               )}
             </Card>
             <Card className="col-start-1 col-end-7">
@@ -100,7 +115,7 @@ export default function RealmsPage() {
           <Card className="w-full">
             <div>
               <h2 className="text-center text-white">History</h2>
-              <RealmHistory />
+              <RealmHistory realmId={realmId} />
             </div>
 
             {/* <DataCard title="history" value="2" /> */}

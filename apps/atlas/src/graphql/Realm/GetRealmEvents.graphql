@@ -1,0 +1,11 @@
+query getRealmEvents($filter: RealmEventWhereInput, $take: Float, $skip: Float)
+@api(name: starkIndexer) {
+  getRealmEvents(filter: $filter, take: $take, skip: $skip) {
+    id
+    eventType
+    realmId
+    realmOwner
+    data
+    timestamp
+  }
+}

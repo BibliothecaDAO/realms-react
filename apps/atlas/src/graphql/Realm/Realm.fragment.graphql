@@ -11,6 +11,7 @@ fragment RealmFragment on Realm {
   wonder
   resources {
     resourceId
+    resourceName
     level
     upgrades
   }
@@ -20,6 +21,7 @@ fragment RealmFragment on Realm {
   }
   buildings {
     buildingId
+    buildingName
   }
   squad {
     realmId
