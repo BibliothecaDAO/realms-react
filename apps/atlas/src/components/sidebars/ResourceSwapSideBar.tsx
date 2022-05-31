@@ -9,6 +9,7 @@ import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
 import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useUIContext } from '@/hooks/useUIContext';
 import type { Data } from '@/types/index';
+import { LpMerchant } from '../tables/LpMerchant';
 import { BaseSideBar } from './BaseSideBar';
 type Props = {
   resources?: string[];
@@ -28,7 +29,7 @@ export const ResourceSwapSideBar = (props: Props) => {
       },
       {
         label: 'LP Merchant',
-        component: <Menu />,
+        component: <LpMerchant />,
       },
       // {
       //   label: 'Stake',

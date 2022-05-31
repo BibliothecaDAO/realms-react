@@ -58,7 +58,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
   return (
-    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
+    <div className="flex p-3 mb-4 rounded shadow-inner bg-gray-900/50">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -106,11 +106,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             value={props.resource.qty}
             inputSize="md"
             colorScheme="transparent"
-            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
-            /* inputPrefix={/* <span className="text-md text-gray">
-            ~{value} {mockData.additionalCurrency}
-          </span>} 
-        prefixPosition="button" */
+            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 ml-auto"
             min={0}
             max={10000}
             stringMode // to support high precision decimals
@@ -124,13 +120,19 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             </span>{' '}
             <LordsIcon className="w-5 h-5" />
           </div>
+          <div className="flex justify-end">
+            Your Current: 0
+            <span className="mr-1">
+              {/* This = current balance of LP tokens * Lords price of that token */}
+            </span>{' '}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export function SwapResources(): ReactElement {
+export function LpMerchant(): ReactElement {
   const [enabled, setEnabled] = useState(false);
 
   const {
@@ -195,29 +197,31 @@ export function SwapResources(): ReactElement {
           </Button>
         </div>
       )}
-      <div className="flex w-full mx-auto mb-8 tracking-widest">
-        <div className={`px-4 uppercase ${enabled && 'font-semibold'}`}>
-          Buy tokens
-        </div>
-        <Switch
-          checked={enabled}
-          onChange={setEnabled}
-          className={`${
-            enabled ? 'bg-green-600' : 'bg-blue-600'
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
-        >
-          <span className="sr-only">Enable notifications</span>
-          <span
-            className={`${
-              enabled ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white`}
-          />
-        </Switch>
-        <div className={`px-4 uppercase ${!enabled && 'font-semibold'}`}>
-          Sell tokens
-        </div>
-      </div>
+
       <div>
+        <div className="flex w-full mx-auto mb-8 tracking-widest">
+          <div className={`px-4 uppercase ${enabled && 'font-semibold'}`}>
+            Add LP
+          </div>
+          <Switch
+            checked={enabled}
+            onChange={setEnabled}
+            className={`${
+              enabled ? 'bg-green-600' : 'bg-blue-600'
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span className="sr-only">Enable notifications</span>
+            <span
+              className={`${
+                enabled ? 'translate-x-6' : 'translate-x-1'
+              } inline-block h-4 w-4 transform rounded-full bg-white`}
+            />
+          </Switch>
+          <div className={`px-4 uppercase ${!enabled && 'font-semibold'}`}>
+            remove LP
+          </div>
+        </div>
+
         {selectedSwapResourcesWithBalance.map((resource) => (
           <div className="relative" key={resource.resourceId}>
             <ResourceRow
@@ -271,9 +275,13 @@ export function SwapResources(): ReactElement {
             {isTransactionInProgress
               ? 'Pending...'
               : enabled
-              ? 'buy resources'
-              : 'sell resources'}
+              ? 'add liquidity'
+              : 'remove liquidity'}
           </Button>
+          <div className="my-2 text-center">
+            Please make sure you understand the risks of impermanent loss before
+            providing liquidity.
+          </div>
         </div>
       </div>
     </div>
