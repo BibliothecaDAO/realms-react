@@ -64,7 +64,7 @@ export const MenuSideBar = () => {
       {
         page: 'bank',
         icon: <Bank className={iconClasses} />,
-        text: 'Crypts',
+        text: 'Bank',
       },
       {
         page: 'combat',

@@ -43,13 +43,12 @@ export default function Base({
 }
 
 function AtlasMain({ children }: { children: ReactElement | ReactElement[] }) {
-  const { togglePanelType, selectedMenuType } = useAtlasContext();
+  const { togglePanelType, selectedPanel } = useAtlasContext();
   const { pathname } = useRouter();
   useEffect(() => {
     const panel = pathname.split('/')[1];
-    if (panel && selectedMenuType !== panel)
-      togglePanelType(panel as PanelType);
-    else if (!panel && !selectedMenuType) togglePanelType(selectedMenuType);
+    if (panel && selectedPanel !== panel) togglePanelType(panel as PanelType);
+    else if (!panel && !selectedPanel) togglePanelType(selectedPanel);
   }, [pathname]);
   return (
     <div className="relative w-full h-full">

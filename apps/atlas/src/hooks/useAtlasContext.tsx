@@ -195,7 +195,6 @@ function useAtlas(): Atlas {
     if (!query) {
       return;
     }
-    console.log(query);
     setShowDetails(true);
     setSelectedAssetFilter(assetFilterByType(query.assetType as AssetType));
     setSelectedId(query.assetId);
@@ -266,7 +265,17 @@ function useAtlas(): Atlas {
   };
 
   const openDetails = (menuType: MenuType, assetId: string) => {
-    router.push(`/${menuType}?id=${assetId}`, undefined, {
+    let panel = menuType;
+    switch (panel) {
+      case 'settleRealms':
+      case 'bridgeRealms':
+        panel = 'account';
+        break;
+      case 'resourceSwap':
+        panel = 'bank';
+        break;
+    }
+    router.push(`/${panel}?id=${assetId}`, undefined, {
       shallow: true,
     });
   };
