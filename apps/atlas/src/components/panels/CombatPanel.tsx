@@ -24,10 +24,22 @@ export function CombatPanel(): ReactElement {
           <SquadBuilder flipped={true} troops={dummySquad} />
           <Button variant="primary">Attack</Button>
           <SquadBuilder troops={dummySquad} />
-          <RealmBannerHeading order="the fox" title="Smutmum" />
+          <RealmBannerHeading order="power" title="Smutmum" />
         </div>
-        <div className="col-start-7 col-end-9 p-8 rounded bg-white/60">
-          <div className="text-2xl font-lords">battle report</div>
+        <div className="col-start-7 col-end-9 px-4 py-4 bg-white rounded">
+          <div className="mb-4 text-3xl text-center text-gray-500 font-lords">
+            battle report
+          </div>
+          <div className="flex flex-wrap">
+            <div className="w-full px-4 py-3 my-1 uppercase bg-gray-500 rounded shadow-inner">
+              {' '}
+              Realm 1 hit points 20
+            </div>
+            <div className="w-full px-4 py-3 my-1 uppercase bg-gray-500 rounded shadow-inner">
+              {' '}
+              attack
+            </div>
+          </div>
         </div>
       </div>
     </BasePanel>

@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Anger from '../../icons/orders/anger.svg';
 import Brilliance from '../../icons/orders/brilliance.svg';
@@ -24,12 +25,12 @@ export type Props = {
 };
 
 const Components: { [key: string]: ReactElement } = Object.freeze({
-  power: <Power />,
+  power: <Power className="stroke-8 stroke-order-power" />,
   anger: <Anger />,
   brilliance: <Brilliance />,
   detection: <Detection />,
   enlightenment: <Enlightenment />,
-  'the fox': <Fox />,
+  'the fox': <Fox className="stroke-8 stroke-order-fox" />,
   fury: <Fury />,
   giants: <Giants />,
   perfection: <Perfection />,
@@ -52,9 +53,27 @@ const STYLES = {
 } as const;
 
 export const OrderIcon = (props: Props) => {
+  const [open, setIsOpen] = useState(false);
   return (
-    <div className={twMerge(STYLES.size[props.size], props.className)}>
+    <div
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+      className={
+        twMerge(STYLES.size[props.size], props.className) +
+        ` stroke-order-${props.order
+          .replace('the', '')
+          .replace('_', '')
+          .replace(' ', '')}`
+      }
+    >
       {Components[props.order.replace('_', ' ')]}
+      <div
+        className={`mt-2 absolute p-2 bg-black/40 rounded-sm uppercase ${
+          open ? 'block' : 'hidden'
+        }`}
+      >
+        {props.order.replace('_', ' ')}
+      </div>
     </div>
   );
 };

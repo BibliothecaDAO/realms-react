@@ -25,11 +25,16 @@ export const RealmBannerHeading = (props: HeaderProps) => {
         });
 
   return (
-    <div className="flex flex-wrap p-4 text-gray-600 bg-orange-900 border-4 border-double rounded shadow-lg">
+    <div
+      className={`flex flex-wrap px-8 p-4 text-gray-600 border-4 border-double rounded shadow-lg bg-order-${props.order.replace(
+        'the ',
+        ''
+      )}`}
+    >
       <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase font-lords">
         <OrderIcon
-          className="self-center"
-          size={'sm'}
+          className="self-center text-white stroke-white fill-white"
+          size={'md'}
           order={props.order.toLowerCase()}
         />
         <div className="self-center">
@@ -48,7 +53,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
                     <li
                       className={`${
                         active
-                          ? 'bg-orange-500 text-white'
+                          ? 'bg-gray-500 text-white'
                           : 'bg-white text-black'
                       }`}
                     >
@@ -65,8 +70,8 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
         {/* <div className="self-center text-4xl">~ {props.title} ~</div> */}
         <OrderIcon
-          className="self-center stroke-white"
-          size={'sm'}
+          className="self-center text-white stroke-white fill-white"
+          size={'md'}
           order={props.order.toLowerCase()}
         />
       </div>

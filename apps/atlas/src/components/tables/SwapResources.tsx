@@ -197,7 +197,7 @@ export function SwapResources(): ReactElement {
       )}
       <div className="flex w-full mx-auto mb-8 tracking-widest">
         <div className={`px-4 uppercase ${enabled && 'font-semibold'}`}>
-          Buy tokens
+          Buy Resources
         </div>
         <Switch
           checked={enabled}
@@ -214,7 +214,7 @@ export function SwapResources(): ReactElement {
           />
         </Switch>
         <div className={`px-4 uppercase ${!enabled && 'font-semibold'}`}>
-          Sell tokens
+          Sell Resources
         </div>
       </div>
       <div>
