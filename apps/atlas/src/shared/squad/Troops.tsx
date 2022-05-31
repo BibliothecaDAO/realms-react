@@ -131,7 +131,7 @@ export const Troop = (props: TroopProps) => {
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white rounded shadow-inner`}
+      )} bg-white/50 rounded shadow-inner`}
     >
       <HealthBar
         troopId={props.troop.troopId}

@@ -20,11 +20,11 @@ export function CombatPanel(): ReactElement {
       </div>
       <div className="relative grid h-full grid-cols-8 gap-4">
         <div className="flex flex-col justify-between h-full col-start-1 col-end-7">
-          <RealmBannerHeading order="the fox" title="Smutmum" />
+          <RealmBannerHeading realmId={1} order="the fox" title="Smutmum" />
           <SquadBuilder flipped={true} troops={dummySquad} />
           <Button variant="primary">Attack</Button>
           <SquadBuilder troops={dummySquad} />
-          <RealmBannerHeading order="power" title="Smutmum" />
+          <RealmBannerHeading realmId={2} order="power" title="Smutmum" />
         </div>
         <div className="col-start-7 col-end-9 px-4 py-4 bg-white rounded">
           <div className="mb-4 text-3xl text-center text-gray-500 font-lords">

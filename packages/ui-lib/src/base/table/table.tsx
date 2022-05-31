@@ -55,7 +55,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   });
 
   return (
-    <div className="p-2 ">
+    <div className="w-full p-2">
       {options?.search && (
         <div>
           <input

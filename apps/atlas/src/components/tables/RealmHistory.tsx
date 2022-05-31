@@ -70,7 +70,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
   const columns = [
     { Header: 'Action', id: 1, accessor: 'action' },
     { Header: 'Lord', id: 2, accessor: 'lord' },
-    { Header: 'Outcome', id: 3, accessor: 'outcome' },
+    // { Header: 'Outcome', id: 3, accessor: 'outcome' },
   ];
 
   const { data: realmEventsData } = useGetRealmEventsQuery({
@@ -111,19 +111,19 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
       return {
         action: genRealmEventAction(realmEvent),
         lord: shortenAddress(realmEvent.realmOwner ?? ''),
-        outcome: (
-          <div>
-            <p>-2 Catapults</p>
-            <p>+63 Coal, +8 Dragonhide</p>
-          </div>
-        ),
+        // outcome: (
+        //   <div>
+        //     <p>-2 Catapults</p>
+        //     <p>+63 Coal, +8 Dragonhide</p>
+        //   </div>
+        // ),
       };
     })
     .filter((row) => row.action !== '');
 
   const tableOptions = { is_striped: true, search: false };
   return (
-    <div className="relative p-2">
+    <div className="flex w-full p-2">
       <Table columns={columns} data={realmEventData} options={tableOptions} />
     </div>
   );

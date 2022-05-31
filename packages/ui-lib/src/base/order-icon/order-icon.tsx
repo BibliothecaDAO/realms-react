@@ -33,7 +33,7 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   'the fox': <Fox className="stroke-8 stroke-order-fox" />,
   fury: <Fury />,
   giants: <Giants />,
-  perfection: <Perfection />,
+  perfection: <Perfection className="stroke-current" />,
   reflection: <Reflection />,
   skill: <Skill />,
   titans: <Titans />,

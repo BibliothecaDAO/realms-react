@@ -24,13 +24,13 @@ export function Header() {
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
     {
       volume: 1,
+      loop: true,
     }
   );
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden bg-gray-800 shadow-inner sm:flex">
+    <div className="top-0 left-0 z-40 justify-end hidden shadow-inner bg-gray-700/90 sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mt-2">
-          <Link href="/realms/1">Link</Link>
           <IconButton
             aria-label="Bank"
             variant="unstyled"

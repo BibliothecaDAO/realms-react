@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import Helm from '../../icons/helm.svg';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -13,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all  hover:bg-gray-600/60 flex flex-wrap p-4 text-gray-600 bg-white/30 rounded shadow-sm border-l-4 border-double overflow-hidden`}
+      className={`${className} duration-150 transition-all  hover:bg-gray-600/80 flex flex-wrap p-4 text-gray-600 bg-gray-800/30 rounded shadow-inner overflow-hidden group `}
     >
       {children}
     </div>
@@ -41,9 +42,11 @@ export function CardBody({ children, className, loading }: Props) {
 export function CardTitle({ children, className }: Props) {
   return (
     <div
-      className={`${className} z-20 w-full text-2xl font-semibold tracking-widest text-white uppercase font-lords`}
+      className={`${className} z-20 w-full font-semibold tracking-widest uppercase `}
     >
-      {children}
+      <h4 className="px-2 text-white rounded shadow-inner drop-shadow-sm font-lords bg-white/10">
+        {children}
+      </h4>
     </div>
   );
 }
@@ -55,9 +58,19 @@ export function CardText({ children, className }: Props) {
 export function CardStats({ children, className }: Props) {
   return (
     <div
-      className={`${className} w-full pt-4 pr-10 text-5xl text-right text-white`}
+      className={`${className} w-full pt-4 pr-4 text-5xl text-right text-white`}
     >
       {children}
+    </div>
+  );
+}
+
+export function CardIcon() {
+  return (
+    <div className="relative left-0 w-full bottom-20">
+      <div className="absolute left-0">
+        <Helm className="w-32 h-32 fill-white opacity-10" />
+      </div>
     </div>
   );
 }
