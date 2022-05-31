@@ -8,8 +8,8 @@ import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmTroops } from '@/components/tables/RealmTroops';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
-import { useUIContext } from '@/hooks/useUIContext';
 import { DownloadAssets } from '@/shared/DownloadAssets';
 import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
@@ -25,7 +25,7 @@ const variantMaps: any = {
 };
 
 function Overview(props: RealmsCardProps): ReactElement {
-  const { gotoAssetId } = useUIContext();
+  const { gotoAssetId } = useAtlasContext();
   const regions = props.realm.traits?.find((o) => o.type === 'Region');
   const cities = props.realm.traits?.find((o) => o.type === 'City');
   const rivers = props.realm.traits?.find((o) => o.type === 'River');

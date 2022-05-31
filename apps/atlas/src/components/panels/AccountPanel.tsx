@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
 import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { useWalletContext } from '../../hooks/useWalletContext';
@@ -34,7 +34,7 @@ export function AccountPanel() {
   const { approveLords, isApproved: isLordsApprovedForBuilding } =
     useApproveLordsForBuilding();
   const { account, connect, connectors, disconnect } = useStarknet();
-  const { togglePanelType, toggleMenuType, selectedPanel } = useUIContext();
+  const { togglePanelType, toggleMenuType, selectedPanel } = useAtlasContext();
   const resourceIds = [
     { id: 1, amount: 120 },
     { id: 3, amount: 90 },

@@ -11,14 +11,14 @@ import { useStarknet } from '@starknet-react/core';
 import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { shortenAddress } from '@/util/formatters';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { account, connect, connectors } = useStarknet();
-  const { togglePanelType } = useUIContext();
+  const { togglePanelType } = useAtlasContext();
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
@@ -61,19 +61,21 @@ export function Header() {
           </Button>
         </span>
         <span>
-          <Button
-            variant="primary"
-            onClick={() => togglePanelType('account')}
-            className="py-1"
-          >
-            <Crown className="w-8 mr-4" />
-            <Ethereum
-              className={`w-4 mx-4 ${!isConnected ? 'filter grayscale' : ''}`}
-            />
-            <StarkNet
-              className={`w-5 mr-2 ${!account ? 'filter grayscale' : ''}`}
-            />
-          </Button>
+          <Link href="/account">
+            <Button
+              variant="primary"
+              // onClick={() => togglePanelType('account')}
+              className="py-1"
+            >
+              <Crown className="w-8 mr-4" />
+              <Ethereum
+                className={`w-4 mx-4 ${!isConnected ? 'filter grayscale' : ''}`}
+              />
+              <StarkNet
+                className={`w-5 mr-2 ${!account ? 'filter grayscale' : ''}`}
+              />
+            </Button>
+          </Link>
         </span>
       </div>
     </div>

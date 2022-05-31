@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
 import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
 import { getRealmQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import type { Data } from '@/types/index';
 import { LpMerchant } from '../tables/LpMerchant';
 import { BaseSideBar } from './BaseSideBar';
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
+  const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
 
   /* const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
@@ -39,9 +39,9 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={selectedMenuType === 'resourceSwap' && showDetails}>
+    <BaseSideBar open={true}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
-        <div className="flex justify-between w-full">
+        {/* <div className="flex justify-between w-full">
           <Button
             variant="secondary"
             size="xs"
@@ -50,7 +50,7 @@ export const ResourceSwapSideBar = (props: Props) => {
           >
             <Close />
           </Button>
-        </div>
+        </div> */}
         <div>
           <h1 className="my-8 text-center font-lords">Resource emporium</h1>
         </div>
