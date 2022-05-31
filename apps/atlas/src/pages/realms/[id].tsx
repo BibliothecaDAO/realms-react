@@ -55,6 +55,7 @@ export default function RealmsPage() {
       <div className="absolute top-0 z-20 grid w-full h-full grid-cols-6 gap-5 p-6 overflow-auto bg-hero">
         <div className="col-start-1 col-end-5">
           <RealmBannerHeading
+            key={realm?.realmId ?? ''}
             order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
             title={realm?.name ?? ''}
             realmId={realmId}
