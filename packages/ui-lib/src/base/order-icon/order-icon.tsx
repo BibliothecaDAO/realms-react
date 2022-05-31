@@ -21,6 +21,7 @@ export type Props = {
   order: string;
   size: keyof typeof STYLES['size'];
   className?: string;
+  withTooltip?: boolean;
 };
 
 const Components: { [key: string]: ReactElement } = Object.freeze({
@@ -44,17 +45,30 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
 
 const STYLES = {
   size: {
-    xs: 'w-4 h-4 my-4 flex',
-    sm: 'w-6 h-6 my-4 flex',
-    md: 'w-8 h-8 my-4 flex',
-    lg: 'w-12 h-12 my-4 flex',
+    xs: 'w-4 h-4 my-4 flex justify-center',
+    sm: 'w-6 h-6 my-4 flex justify-center',
+    md: 'w-8 h-8 my-4 flex justify-center',
+    lg: 'w-12 h-12 my-4 flex justify-center',
   },
 } as const;
 
 export const OrderIcon = (props: Props) => {
   return (
-    <div className={twMerge(STYLES.size[props.size], props.className)}>
-      {Components[props.order.replace('_', ' ')]}
+    <div className="relative flex flex-col items-center justify-center group">
+      <div className={twMerge(STYLES.size[props.size], props.className)}>
+        {Components[props.order.replace('_', ' ')]}
+      </div>
+      {props.withTooltip && (
+        <div className="absolute top-0 -translate-y-full w-max flex flex-col items-center hidden group-hover:flex">
+          <span className="relative rounded z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">
+            Order of {props.order.includes('the') && 'the '}
+            <span className="capitalize">
+              {props.order.replace('the ', '')}
+            </span>
+          </span>
+          <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+        </div>
+      )}
     </div>
   );
 };
