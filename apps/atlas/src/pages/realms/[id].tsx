@@ -11,12 +11,14 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { useGetRealmQuery } from '@/generated/graphql';
 import Base from '@/pages/index';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
+import { shortenAddress } from '@/util/formatters';
 
 interface DataCardProps {
   title: string;
@@ -60,7 +62,7 @@ export default function RealmsPage() {
     realm?.squad?.filter((squad) => squad.squadSlot === 2) ?? [];
   return (
     <Base>
-      <div className="absolute top-0 z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-hero">
+      <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
         <div className="col-start-1 col-end-5">
           <RealmBannerHeading
             key={realm?.realmId ?? ''}
@@ -69,31 +71,41 @@ export default function RealmsPage() {
             realmId={realmId}
           />
           <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-            <Card className="col-start-1 col-end-3">
-              <CardTitle>Attacks Won</CardTitle>
-              <CardStats>2</CardStats>
-              <CardIcon />
-              {/* <DataCard icon="attack" title="Attacks Won" value="2" /> */}
-            </Card>
-            <Card className="col-start-3 col-end-5">
-              <CardTitle>Defence Won</CardTitle>
-              <CardStats>2</CardStats>
-              {/* <CardIcon /> */}
-            </Card>{' '}
-            <Card className="col-start-5 col-end-7">
-              <CardTitle>Attacks Won</CardTitle>
-              <CardStats>2</CardStats>
+            <div className="col-start-1 col-end-4">
+              <Image
+                src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
+                alt="map"
+                className="w-full mt-4 rounded-xl -scale-x-100"
+                width={500}
+                height={320}
+                layout={'responsive'}
+              />
+            </div>
+            <Card className="col-start-4 col-end-7">
+              <CardTitle>Owner</CardTitle>
+              <CardStats>
+                {shortenAddress(realm?.owner ? realm.owner : '0')}
+              </CardStats>
               {/* <CardIcon /> */}
             </Card>
             <Card className="col-start-4 col-end-7">
-              <CardTitle>Attacks Won</CardTitle>
-              <CardStats>2</CardStats>
+              <CardTitle>Realm State</CardTitle>
+              <CardStats>Settled</CardStats>
             </Card>
-            <Card className="col-start-1 col-end-3">
-              <CardTitle>Attacks Won</CardTitle>
+            <Card className="col-start-1 col-end-2 ">
+              <CardTitle>Happiness</CardTitle>
               <CardStats>2</CardStats>
               {/* <CardIcon /> */}
             </Card>
+            <Card className="col-start-2 col-end-4 ">
+              <CardTitle>Last Raided</CardTitle>
+              <CardStats>2</CardStats>
+              {/* <CardIcon /> */}
+            </Card>
+            {/* {realmData && realmData.getRealm && (
+              <RealmCard realm={realmData!.getRealm} loading={false} />
+            )} */}
+
             <Card className="col-start-1 col-end-7">
               <div className="flex justify-between w-full mb-10">
                 <div className="text-2xl font-semibold tracking-widest text-white uppercase font-lords">
@@ -128,7 +140,7 @@ export default function RealmsPage() {
             </Card> */}
           </div>
         </div>
-        <div className="grid grid-cols-6 col-start-5 col-end-7 gap-2">
+        <div className="grid grid-cols-6 col-start-5 col-end-7">
           <Card className="col-start-1 col-end-7">
             <div className="w-full">
               <h2 className="text-center text-white font-lords">History</h2>
@@ -137,16 +149,6 @@ export default function RealmsPage() {
 
             {/* <DataCard title="history" value="2" /> */}
           </Card>
-          <div className="col-start-1 col-end-7">
-            <Image
-              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
-              alt="map"
-              className="w-full mt-4 rounded-xl -scale-x-100"
-              width={500}
-              height={320}
-              layout={'responsive'}
-            />
-          </div>
         </div>
       </div>
     </Base>

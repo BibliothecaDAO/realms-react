@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import Helm from '../../icons/helm.svg';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -44,7 +44,7 @@ export function CardTitle({ children, className }: Props) {
     <div
       className={`${className} z-20 w-full font-semibold tracking-widest uppercase `}
     >
-      <h4 className="px-2 text-white rounded shadow-inner drop-shadow-sm font-lords bg-white/10">
+      <h4 className="px-2 rounded shadow-inner text-white/70 drop-shadow-sm font-body bg-white/10">
         {children}
       </h4>
     </div>
@@ -58,19 +58,25 @@ export function CardText({ children, className }: Props) {
 export function CardStats({ children, className }: Props) {
   return (
     <div
-      className={`${className} w-full pt-4 pr-4 text-5xl text-right text-white`}
+      className={`${className} w-full pt-4 pr-4 text-5xl text-right text-white mt-auto`}
     >
       {children}
     </div>
   );
 }
 
-export function CardIcon() {
+const Components: { [key: string]: ReactElement } = Object.freeze({
+  helm: <Helm className="w-32 h-32 fill-white opacity-10" />,
+});
+
+interface IconProps {
+  icon: string;
+}
+
+export function CardIcon({ icon }: IconProps) {
   return (
     <div className="relative left-0 w-full bottom-20">
-      <div className="absolute left-0">
-        <Helm className="w-32 h-32 fill-white opacity-10" />
-      </div>
+      <div className="absolute left-0">{Components[icon]}</div>
     </div>
   );
 }
