@@ -28,6 +28,9 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     { Header: 'Build', id: 6, accessor: 'buildAction' },
   ];
   const tableOptions = { is_striped: true };
+  const formatStat = (stat: number): string => {
+    return stat > 0 ? `+${stat}` : `${stat}`;
+  };
 
   const defaultData: Row[] = buildings.map((building) => {
     return {
@@ -35,17 +38,23 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
       requirements: building.limitTraitName, // String(building.limit ?? 0),
       population: (
         <span>
-          0 <span className="text-white/50">({building.population})</span>{' '}
+          0{' '}
+          <span className="text-white/50">
+            ({formatStat(building.population)})
+          </span>{' '}
         </span>
       ),
       culture: (
         <span>
-          0 <span className="text-white/50">({building.culture})</span>{' '}
+          0{' '}
+          <span className="text-white/50">
+            ({formatStat(building.culture)})
+          </span>{' '}
         </span>
       ),
       food: (
         <span>
-          0 <span className="text-white/50">({building.food})</span>{' '}
+          0 <span className="text-white/50">({formatStat(building.food)})</span>{' '}
         </span>
       ),
       built: building.count,
