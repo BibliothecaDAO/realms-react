@@ -43,6 +43,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       ? realm.traits?.find((o) => o.type === trait).qty
       : '0';
   };
+
+  // TODO: tenox move to indexer
+  const realmOwner =
+    realm?.settledOwner ||
+    realm?.ownerL2 ||
+    realm?.bridgedOwner ||
+    realm?.owner ||
+    '0';
+
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
       <div className="col-start-1 col-end-5">
@@ -66,7 +75,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           <Card className="col-start-5 col-end-7">
             <CardTitle>Owner</CardTitle>
             <CardStats className="text-2xl">
-              {shortenAddress(realm?.owner ? realm.owner : '0')}
+              {shortenAddress(realmOwner)}
             </CardStats>
             {/* <CardIcon /> */}
           </Card>
