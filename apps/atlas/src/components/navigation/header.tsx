@@ -7,11 +7,12 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
+import { Menu } from '@headlessui/react';
 import { useStarknet } from '@starknet-react/core';
-import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
 import { useUIContext } from '@/hooks/useUIContext';
+import NetworkConnect from '@/shared/NetworkConnectDropdown';
 import { shortenAddress } from '@/util/formatters';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
@@ -61,7 +62,8 @@ export function Header() {
           </Button>
         </span>
         <span>
-          <Button
+          <NetworkConnect />
+          {/* <Button
             variant="primary"
             onClick={() => togglePanelType('account')}
             className="py-1"
@@ -73,8 +75,15 @@ export function Header() {
             <StarkNet
               className={`w-5 mr-2 ${!account ? 'filter grayscale' : ''}`}
             />
-          </Button>
+          </Button> */}
         </span>
+        <Button
+          variant="primary"
+          onClick={() => togglePanelType('account')}
+          className="py-1"
+        >
+          Account
+        </Button>
       </div>
     </div>
   );
