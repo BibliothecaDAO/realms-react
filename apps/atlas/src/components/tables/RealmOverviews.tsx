@@ -6,7 +6,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { realmStatus } from '@/shared/Getters/Realm';
+import { RealmStatus } from '@/shared/Getters/Realm';
 import { findResourceName } from '@/util/resources';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
@@ -114,7 +114,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 rank: {realm.rarityRank}
               </h4>
               <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-blue-400 rounded sm:block">
-                {realmStatus(realm)}
+                {RealmStatus(realm)}
               </h4>
 
               <div className="flex ml-auto ">
@@ -195,7 +195,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               </Button>
               {isYourRealm(realm) && (
                 <div>
-                  {realmStatus(realm) === 'Layer 1' && (
+                  {RealmStatus(realm) === 'Layer 1' && (
                     <Button
                       size="xs"
                       variant="secondary"
@@ -205,7 +205,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                       Bridge Realm
                     </Button>
                   )}
-                  {realmStatus(realm) === 'Unsettled L2' && (
+                  {RealmStatus(realm) === 'Unsettled L2' && (
                     <Button
                       size="xs"
                       variant="secondary"

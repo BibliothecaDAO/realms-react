@@ -6,46 +6,22 @@ import {
   CardStats,
   CardIcon,
 } from '@bibliotheca-dao/ui-lib';
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
+import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
+import { RealmResources } from '@/components/tables/RealmResources';
 import { useGetRealmQuery } from '@/generated/graphql';
 import Base from '@/pages/index';
+import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
-
-interface DataCardProps {
-  title: string;
-  value: string;
-  className?: string;
-  icon?: string;
-}
-
-export const DataCard = (props: DataCardProps) => {
-  return (
-    <>
-      <div className="z-20 w-full text-2xl font-semibold tracking-widest text-white uppercase font-lords ">
-        {props.title}
-      </div>
-      <div className="w-full pt-4 pr-10 text-5xl text-right text-white">
-        {props.value}
-      </div>
-      {props.icon && (
-        <div className="relative left-0 w-full bottom-20">
-          <div className="absolute left-0">
-            <Helm className="w-32 h-32 fill-order-perfection opacity-20" />
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
+import { findResourceName } from '@/util/resources';
 
 export default function RealmsPage() {
   const [squad, setSquad] = useState(false);
@@ -60,6 +36,12 @@ export default function RealmsPage() {
     realm?.squad?.filter((squad) => squad.squadSlot === 1) ?? [];
   const defenseSquad =
     realm?.squad?.filter((squad) => squad.squadSlot === 2) ?? [];
+
+  const getTrait = (realm: any, trait: string) => {
+    return realm?.traits?.find((o) => o.type === trait)
+      ? realm.traits?.find((o) => o.type === trait).qty
+      : '0';
+  };
   return (
     <Base>
       <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
@@ -71,7 +53,7 @@ export default function RealmsPage() {
             realmId={realmId}
           />
           <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-            <div className="col-start-1 col-end-4">
+            <div className="col-start-1 col-end-5 row-span-3">
               <Image
                 src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
                 alt="map"
@@ -81,27 +63,56 @@ export default function RealmsPage() {
                 layout={'responsive'}
               />
             </div>
-            <Card className="col-start-4 col-end-7">
+            <Card className="col-start-5 col-end-7">
               <CardTitle>Owner</CardTitle>
-              <CardStats>
+              <CardStats className="text-2xl">
                 {shortenAddress(realm?.owner ? realm.owner : '0')}
               </CardStats>
               {/* <CardIcon /> */}
             </Card>
-            <Card className="col-start-4 col-end-7">
+            <Card className="col-start-5 col-end-7">
               <CardTitle>Realm State</CardTitle>
-              <CardStats>Settled</CardStats>
+              {realm && (
+                <CardStats className="text-2xl">{RealmStatus(realm)}</CardStats>
+              )}
             </Card>
-            <Card className="col-start-1 col-end-2 ">
+            <Card className="col-start-5 col-end-7 ">
               <CardTitle>Happiness</CardTitle>
-              <CardStats>2</CardStats>
+              <CardStats className="text-4xl">2</CardStats>
               {/* <CardIcon /> */}
             </Card>
-            <Card className="col-start-2 col-end-4 ">
-              <CardTitle>Last Raided</CardTitle>
-              <CardStats>2</CardStats>
-              {/* <CardIcon /> */}
+            <Card className="col-start-1 col-end-3 ">
+              <CardTitle>Traits</CardTitle>
+              <div className="w-full my-2 text-white">
+                <TraitTable
+                  trait="Region"
+                  traitAmount={getTrait(realm, 'Region')}
+                />
+              </div>
+              <div className="w-full my-2 text-white">
+                <TraitTable
+                  trait="City"
+                  traitAmount={getTrait(realm, 'City')}
+                />
+              </div>
+              <div className="w-full my-2 text-white">
+                <TraitTable
+                  trait="Harbor"
+                  traitAmount={getTrait(realm, 'Harbor')}
+                />
+              </div>
+              <div className="w-full my-2 text-white">
+                <TraitTable
+                  trait="River"
+                  traitAmount={getTrait(realm, 'River')}
+                />
+              </div>
             </Card>
+            <Card className="col-start-3 col-end-7 ">
+              <CardTitle>Resources</CardTitle>
+              {realm && <RealmResources realm={realm} loading={false} />}
+            </Card>
+
             {/* {realmData && realmData.getRealm && (
               <RealmCard realm={realmData!.getRealm} loading={false} />
             )} */}
@@ -146,8 +157,6 @@ export default function RealmsPage() {
               <h2 className="text-center text-white font-lords">History</h2>
               <RealmHistory realmId={realmId} />
             </div>
-
-            {/* <DataCard title="history" value="2" /> */}
           </Card>
         </div>
       </div>

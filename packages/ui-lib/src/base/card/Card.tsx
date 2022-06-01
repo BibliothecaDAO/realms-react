@@ -41,10 +41,8 @@ export function CardBody({ children, className, loading }: Props) {
 
 export function CardTitle({ children, className }: Props) {
   return (
-    <div
-      className={`${className} z-20 w-full font-semibold tracking-widest uppercase `}
-    >
-      <h4 className="px-2 rounded shadow-inner text-white/70 drop-shadow-sm font-body bg-white/10">
+    <div className={`${className} z-20 w-full tracking-widest uppercase `}>
+      <h4 className="px-2 rounded shadow-inner text-white/90 drop-shadow-sm font-body bg-white/10">
         {children}
       </h4>
     </div>
@@ -58,7 +56,7 @@ export function CardText({ children, className }: Props) {
 export function CardStats({ children, className }: Props) {
   return (
     <div
-      className={`${className} w-full pt-4 pr-4 text-5xl text-right text-white mt-auto`}
+      className={`${className} w-full pt-4 pr-4 text-right text-white mt-auto`}
     >
       {children}
     </div>

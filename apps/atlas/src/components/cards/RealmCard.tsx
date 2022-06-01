@@ -11,7 +11,7 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUIContext } from '@/hooks/useUIContext';
 import { DownloadAssets } from '@/shared/DownloadAssets';
-import { realmStatus, TraitTable } from '@/shared/Getters/Realm';
+import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
@@ -74,30 +74,10 @@ function Overview(props: RealmsCardProps): ReactElement {
           (props.size ? variantMaps[props.size]?.regions : '')
         }
       >
-        <TraitTable
-          title="regions"
-          colour="bg-amber-700/60"
-          traitMax={7}
-          traitAmount={regions?.qty}
-        />
-        <TraitTable
-          title="Cities"
-          colour="bg-amber-300/60"
-          traitMax={21}
-          traitAmount={cities?.qty}
-        />
-        <TraitTable
-          title="Harbors"
-          colour="bg-blue-700/60"
-          traitMax={35}
-          traitAmount={harbors?.qty}
-        />
-        <TraitTable
-          title="rivers"
-          colour="bg-blue-500/60"
-          traitMax={60}
-          traitAmount={rivers?.qty}
-        />
+        <TraitTable trait="Region" traitAmount={regions?.qty} />
+        <TraitTable trait="City" traitAmount={cities?.qty} />
+        <TraitTable trait="Harbor" traitAmount={harbors?.qty} />
+        <TraitTable trait="River" traitAmount={rivers?.qty} />
       </div>
       <MarketplaceByPanel
         id={props.realm.realmId.toString()}
@@ -161,7 +141,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
               layout={'responsive'}
             />
           </div>
-          {realmStatus(props.realm)}
+          {RealmStatus(props.realm)}
           <div className="flex">
             <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
             <h2

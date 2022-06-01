@@ -6,9 +6,10 @@ import useResources from '@/hooks/settling/useResources';
 import { resources, findResourceName } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
+
 type Row = {
   resource: ReactElement;
-  baseOutput: number;
+  // baseOutput: number;
   claimableResources: string | ReactElement;
   // totalOutput: number;
   level: number;
@@ -46,12 +47,15 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
             </span>
           </span>
         ),
-        baseOutput: 100,
+        // baseOutput: 100,
         claimableResources: (claimableResources[index] &&
           formatEther(claimableResources[index].toString(10))) || (
           <Spinner size="md" scheme="white" variant="bricks" />
         ),
-        // totalOutput: 122,
+        raidableResources: (claimableResources[index] &&
+          formatEther(claimableResources[index].toString(10))) || (
+          <Spinner size="md" scheme="white" variant="bricks" />
+        ),
         level: re.level,
         build: (
           <Button
@@ -68,16 +72,16 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
 
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
-    { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
+    // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     { Header: 'Claimable Resources', id: 3, accessor: 'claimableResources' },
-    // { Header: 'Total Output', id: 3, accessor: 'totalOutput' },
+    { Header: 'Raidable', id: 3, accessor: 'totalOutput' },
     { Header: 'level', id: 4, accessor: 'level' },
     { Header: 'Build', id: 5, accessor: 'build' },
   ];
   const tableOptions = { is_striped: true };
   return (
-    <div>
-      <div className="flex justify-between">
+    <div className="w-full">
+      {/* <div className="flex justify-between">
         <span className="flex">
           Claimable Lords:{' '}
           {claimableLords ? (
@@ -95,10 +99,23 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           Accrued: {availableResources.daysAccrued}D{' '}
           {availableResources.remainder}m
         </span>
-      </div>
+      </div> */}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
-      <Button className="mt-3 ml-2" variant="primary" onClick={() => claim()}>
+      <Button
+        size="sm"
+        className="mt-3 ml-2"
+        variant="primary"
+        onClick={() => claim()}
+      >
         Harvest Resources
+      </Button>
+      <Button
+        size="sm"
+        className="mt-3 ml-2"
+        variant="primary"
+        onClick={() => claim()}
+      >
+        Raid Vault
       </Button>
     </div>
   );
