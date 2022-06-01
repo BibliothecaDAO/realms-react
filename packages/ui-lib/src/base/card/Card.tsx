@@ -14,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all  hover:bg-gray-600/80 flex flex-wrap p-4 text-gray-600 bg-gray-800/30 rounded shadow-inner overflow-hidden group `}
+      className={`${className} duration-150 transition-all  hover:bg-gray-600/80 flex flex-wrap p-4 text-gray-600 bg-gray-800/30 rounded shadow-inner overflow-hidden group border-off-200/40 border`}
     >
       {children}
     </div>
@@ -42,7 +42,7 @@ export function CardBody({ children, className, loading }: Props) {
 export function CardTitle({ children, className }: Props) {
   return (
     <div className={`${className} z-20 w-full tracking-widest uppercase `}>
-      <h5 className="px-2 font-semibold rounded shadow-inner text-white/90 drop-shadow-sm font-body bg-white/10">
+      <h5 className="px-2 py-1 font-semibold rounded border-off-200/40 text-white/90 font-lords bg-gradient-to-b from-gray-500/40">
         {children}
       </h5>
     </div>

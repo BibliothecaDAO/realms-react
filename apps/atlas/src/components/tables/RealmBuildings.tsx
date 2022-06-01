@@ -28,6 +28,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   const realmBuildings = props.realm.buildings;
 
   const defaultData: Row[] = buildings.map((building) => {
+    console.log(realmBuildings);
     return {
       building: building.name,
       requirements: building.limit,
