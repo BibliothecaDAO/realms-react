@@ -115,7 +115,7 @@ export function useGaContext() {
   return useContext(GaContext);
 }
 
-export function GaProvider({ children }: { children: JSX.Element }) {
+export function GaProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(gaReducer, {
     ...defaultGaState,
     favouriteGa: storage<string[]>(GAFavoriteLocalStorageKey, []).get(),

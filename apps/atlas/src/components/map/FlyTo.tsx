@@ -1,5 +1,5 @@
-import type { AssetType } from '@/hooks/useUIContext';
-import { AssetFilters, useUIContext } from '@/hooks/useUIContext';
+import type { AssetType } from '@/hooks/useAtlasContext';
+import { AssetFilters, useAtlasContext } from '@/hooks/useAtlasContext';
 
 export const FlyTo = () => {
   const {
@@ -8,7 +8,7 @@ export const FlyTo = () => {
     selectedId,
     setSelectedId,
     gotoAssetId,
-  } = useUIContext();
+  } = useAtlasContext();
 
   function onChangeId(event: any) {
     let tokenId = parseInt(event.target.value);

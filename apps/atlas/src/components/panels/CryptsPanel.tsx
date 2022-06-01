@@ -2,20 +2,21 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
 import { getCryptsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const CryptsPanel = () => {
-  const { togglePanelType, selectedPanel, openDetails, isDisplayLarge } =
-    useUIContext();
+  const { selectedId, selectedPanel, openDetails, isDisplayLarge } =
+    useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -79,10 +80,15 @@ export const CryptsPanel = () => {
   });
 
   useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.dungeons?.length ?? 0) > 0) {
+    if (
+      !selectedId &&
+      isDisplayLarge &&
+      page === 1 &&
+      (data?.dungeons?.length ?? 0) > 0
+    ) {
       openDetails('crypt', data?.dungeons[0].id as string);
     }
-  }, [data, page]);
+  }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -95,13 +101,11 @@ export const CryptsPanel = () => {
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Crypts</h1>
-
-        <button
-          className="z-50 transition-all rounded sm:hidden top-4"
-          onClick={() => togglePanelType('crypt')}
-        >
-          <Close />
-        </button>
+        <Link href="/">
+          <button className="z-50 transition-all rounded top-4">
+            <Close />
+          </button>
+        </Link>
       </div>
       <Tabs
         selectedIndex={state.selectedTab}

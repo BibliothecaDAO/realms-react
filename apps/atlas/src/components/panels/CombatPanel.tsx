@@ -1,21 +1,24 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import Link from 'next/link';
 import type { ReactElement } from 'react';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { BasePanel } from './BasePanel';
 export function CombatPanel(): ReactElement {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { selectedPanel } = useAtlasContext();
 
   return (
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="flex justify-between">
         <div>
-          <Button variant="secondary" onClick={() => togglePanelType('combat')}>
-            <Close />
-          </Button>
+          <Link href="/">
+            <Button variant="secondary">
+              <Close />
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="relative grid h-full grid-cols-8 gap-4">

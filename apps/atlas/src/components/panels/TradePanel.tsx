@@ -2,11 +2,11 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import type { ReactElement } from 'react';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { BasePanel } from './BasePanel';
 
 export function TradePanel(): ReactElement {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { togglePanelType, selectedPanel } = useAtlasContext();
 
   const { data } = useGetRealmQuery({
     variables: {

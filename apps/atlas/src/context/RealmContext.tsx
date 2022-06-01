@@ -176,7 +176,7 @@ export function useRealmContext() {
   return useContext(RealmContext);
 }
 
-export function RealmProvider({ children }: { children: JSX.Element }) {
+export function RealmProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(realmReducer, {
     ...defaultRealmState,
     favouriteRealms: storage<number[]>(RealmFavoriteLocalStorageKey, []).get(),
