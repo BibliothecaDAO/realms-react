@@ -19,8 +19,8 @@ export const VARIANTS = {
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body font-bold uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded',
-      active: 'bg-gray-600  shadow-md text-white',
+      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body  uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded   hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200',
+      active: 'bg-stone-500  shadow-md text-white border',
       inactive: 'bg-transparent text-gray-200',
     },
     tabList: 'flex py-3 space-x-2',

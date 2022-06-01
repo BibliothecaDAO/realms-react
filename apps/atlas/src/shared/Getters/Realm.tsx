@@ -52,7 +52,7 @@ export const TraitTable = (props: TraitProps) => {
 
   return (
     <div>
-      <span className="flex justify-between">
+      <span className="flex justify-between font-body">
         <span className="tracking-widest uppercase">{getTrait()?.title} </span>
         <span>
           {props.traitAmount} / {getTrait()?.traitMax}{' '}

@@ -35,7 +35,7 @@ const STYLES = {
     default:
       'text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:text-gray-900 hover:text-gray-900',
     primary:
-      'text-white bg-stone-400 hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
+      'text-white bg-stone-500 hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
     secondary:
       'bg-gray-600 text-white border-gray-600 hover:bg-gray-400 hover:text-gray-800 active:text-gray-900  active:bg-gray-200 shadow-md ',
     tertiary:
