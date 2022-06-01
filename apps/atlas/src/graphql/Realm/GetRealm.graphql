@@ -1,6 +1,24 @@
- 
 query getRealm($id: Float!) @api(name: starkIndexer) {
-    getRealm(realmId: $id) {
-        ...RealmFragment
+  getRealm(realmId: $id) {
+    ...RealmFragment
+  }
+}
+
+query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
+  getBuildingsByRealmId(id: $id) {
+    realmId
+    buildingId
+    buildingName
+    limit
+    limitTraitId
+    limitTraitName
+    count
+    population
+    food
+    culture
+    buildingCost {
+      amount
+      resources
     }
+  }
 }

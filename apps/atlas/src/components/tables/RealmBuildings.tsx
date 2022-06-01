@@ -1,7 +1,7 @@
-import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
+import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
-import { buildings } from '@/util/buildings';
 import type { RealmsCardProps } from '../../types';
 
 type Row = {
@@ -12,9 +12,12 @@ type Row = {
 };
 
 export function RealmBuildings(props: RealmsCardProps): ReactElement {
-  const { build } = useBuildings({
-    token_id: props.realm.realmId,
+  const { data } = useGetBuildingsByRealmIdQuery({
+    variables: { id: props.realm.realmId },
   });
+
+  const buildings = data?.getBuildingsByRealmId ?? [];
+  const { build } = useBuildings();
   const columns = [
     { Header: 'Building', id: 1, accessor: 'building' },
     { Header: 'Requirements', id: 2, accessor: 'requirements' },
@@ -25,36 +28,31 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     { Header: 'Build', id: 6, accessor: 'buildAction' },
   ];
   const tableOptions = { is_striped: true };
-  const realmBuildings = props.realm.buildings;
 
   const defaultData: Row[] = buildings.map((building) => {
-    console.log(realmBuildings);
     return {
-      building: building.name,
-      requirements: building.limit,
+      building: building.buildingName,
+      requirements: building.limitTraitName, // String(building.limit ?? 0),
       population: (
         <span>
-          0 <span className="text-white/50">(+{building.population})</span>{' '}
+          0 <span className="text-white/50">({building.population})</span>{' '}
         </span>
       ),
       culture: (
         <span>
-          0 <span className="text-white/50">(+{building.culture})</span>{' '}
+          0 <span className="text-white/50">({building.culture})</span>{' '}
         </span>
       ),
       food: (
         <span>
-          0 <span className="text-white/50">(+{building.food})</span>{' '}
+          0 <span className="text-white/50">({building.food})</span>{' '}
         </span>
       ),
-      built: realmBuildings?.find(
-        (realmBuilding) => realmBuilding.buildingId === building.id
-      )
-        ? 1
-        : 0,
+      built: building.count,
       buildAction: (
         <Button
-          onClick={() => build(building.id)}
+          aria-details="klajsfl"
+          onClick={() => build(props.realm.realmId, building.buildingId)}
           variant="primary"
           type="button"
           size="xs"

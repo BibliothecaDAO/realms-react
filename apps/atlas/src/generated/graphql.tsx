@@ -28,19 +28,27 @@ export type Scalars = {
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
-  buildingId?: Maybe<Scalars['Int']>;
+  buildingCost: BuildingCost;
+  buildingId: Scalars['Int'];
   buildingName: Scalars['String'];
-  id: Scalars['ID'];
-  realm?: Maybe<Realm>;
+  builds: Array<Scalars['String']>;
+  count: Scalars['Int'];
+  culture: Scalars['Int'];
+  food: Scalars['Int'];
+  limit?: Maybe<Scalars['Float']>;
+  limitTraitId: Scalars['Int'];
+  limitTraitName: Scalars['String'];
+  population: Scalars['Int'];
   realmId: Scalars['Float'];
 };
 
 /** Building Cost Model */
 export type BuildingCost = {
   __typename?: 'BuildingCost';
+  amount: Scalars['Float'];
   buildingId: Scalars['Int'];
-  qty: Scalars['Float'];
-  resourceId: Scalars['Int'];
+  buildingName: Scalars['String'];
+  resources: Scalars['JSON'];
 };
 
 export type BuildingListRelationFilter = {
@@ -54,6 +62,7 @@ export type BuildingWhereInput = {
   NOT?: InputMaybe<Array<BuildingWhereInput>>;
   OR?: InputMaybe<Array<BuildingWhereInput>>;
   buildingId?: InputMaybe<IntFilter>;
+  builds?: InputMaybe<StringNullableListFilter>;
   eventId?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
   realm?: InputMaybe<RealmRelationFilter>;
@@ -451,11 +460,9 @@ export enum OrderType {
 
 export type Query = {
   __typename?: 'Query';
-  getBuilding: Building;
+  getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
-  getBuildings: Array<Building>;
-  getBuildingsByAddress: Array<Building>;
-  getBuildingsByRealm: Array<Building>;
+  getBuildingsByRealmId: Array<Building>;
   getDesiege: Desiege;
   getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
@@ -472,16 +479,8 @@ export type Query = {
   getWallet: Wallet;
 };
 
-export type QueryGetBuildingArgs = {
+export type QueryGetBuildingsByRealmIdArgs = {
   id: Scalars['Float'];
-};
-
-export type QueryGetBuildingsByAddressArgs = {
-  address: Scalars['String'];
-};
-
-export type QueryGetBuildingsByRealmArgs = {
-  realmId: Scalars['Float'];
 };
 
 export type QueryGetDesiegeArgs = {
@@ -989,8 +988,14 @@ export type GetRealmQuery = {
     }> | null;
     buildings?: Array<{
       __typename?: 'Building';
-      buildingId?: number | null;
+      buildingId: number;
       buildingName: string;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
     }> | null;
     squad: Array<{
       __typename?: 'Troop';
@@ -1008,6 +1013,32 @@ export type GetRealmQuery = {
       squadSlot: number;
     }>;
   };
+};
+
+export type GetBuildingsByRealmIdQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+export type GetBuildingsByRealmIdQuery = {
+  __typename?: 'Query';
+  getBuildingsByRealmId: Array<{
+    __typename?: 'Building';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    limit?: number | null;
+    limitTraitId: number;
+    limitTraitName: string;
+    count: number;
+    population: number;
+    food: number;
+    culture: number;
+    buildingCost: {
+      __typename?: 'BuildingCost';
+      amount: number;
+      resources: any;
+    };
+  }>;
 };
 
 export type GetRealmEventsQueryVariables = Exact<{
@@ -1064,8 +1095,14 @@ export type GetRealmsQuery = {
     }> | null;
     buildings?: Array<{
       __typename?: 'Building';
-      buildingId?: number | null;
+      buildingId: number;
       buildingName: string;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
     }> | null;
     squad: Array<{
       __typename?: 'Troop';
@@ -1111,8 +1148,14 @@ export type RealmFragmentFragment = {
   }> | null;
   buildings?: Array<{
     __typename?: 'Building';
-    buildingId?: number | null;
+    buildingId: number;
     buildingName: string;
+    count: number;
+    population: number;
+    culture: number;
+    food: number;
+    limitTraitId: number;
+    limitTraitName: string;
   }> | null;
   squad: Array<{
     __typename?: 'Troop';
@@ -1212,6 +1255,13 @@ export const RealmFragmentFragmentDoc = gql`
     buildings {
       buildingId
       buildingName
+      count
+      buildingName
+      population
+      culture
+      food
+      limitTraitId
+      limitTraitName
     }
     squad {
       realmId
@@ -1589,6 +1639,77 @@ export type GetRealmLazyQueryHookResult = ReturnType<
 export type GetRealmQueryResult = Apollo.QueryResult<
   GetRealmQuery,
   GetRealmQueryVariables
+>;
+export const GetBuildingsByRealmIdDocument = gql`
+  query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
+    getBuildingsByRealmId(id: $id) {
+      realmId
+      buildingId
+      buildingName
+      limit
+      limitTraitId
+      limitTraitName
+      count
+      population
+      food
+      culture
+      buildingCost {
+        amount
+        resources
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetBuildingsByRealmIdQuery__
+ *
+ * To run a query within a React component, call `useGetBuildingsByRealmIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBuildingsByRealmIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBuildingsByRealmIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBuildingsByRealmIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >(GetBuildingsByRealmIdDocument, options);
+}
+export function useGetBuildingsByRealmIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetBuildingsByRealmIdQuery,
+    GetBuildingsByRealmIdQueryVariables
+  >(GetBuildingsByRealmIdDocument, options);
+}
+export type GetBuildingsByRealmIdQueryHookResult = ReturnType<
+  typeof useGetBuildingsByRealmIdQuery
+>;
+export type GetBuildingsByRealmIdLazyQueryHookResult = ReturnType<
+  typeof useGetBuildingsByRealmIdLazyQuery
+>;
+export type GetBuildingsByRealmIdQueryResult = Apollo.QueryResult<
+  GetBuildingsByRealmIdQuery,
+  GetBuildingsByRealmIdQueryVariables
 >;
 export const GetRealmEventsDocument = gql`
   query getRealmEvents(
