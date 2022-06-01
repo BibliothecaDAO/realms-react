@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
+import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -28,8 +29,9 @@ export function Header() {
     }
   );
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden shadow-inner bg-gray-700/90 sm:flex">
+    <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-stone-500 sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
+        <BibliothecaDAO className="self-center h-8 ml-2 mr-auto stroke-white fill-white" />
         <div className="self-center mt-2">
           <IconButton
             aria-label="Bank"

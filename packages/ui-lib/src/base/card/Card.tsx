@@ -42,7 +42,7 @@ export function CardBody({ children, className, loading }: Props) {
 export function CardTitle({ children, className }: Props) {
   return (
     <div className={`${className} z-20 w-full tracking-widest uppercase `}>
-      <h5 className="px-2 py-1 font-semibold rounded border-off-200/40 text-white/90 font-lords bg-gradient-to-b from-gray-500/40">
+      <h5 className="px-2 py-1 font-semibold rounded border-off-200/40 text-white/90 bg-gradient-to-b from-gray-500/40 font-body">
         {children}
       </h5>
     </div>

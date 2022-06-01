@@ -116,12 +116,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
       >
         Harvest Resources
       </Button>
-      <Button
-        size="sm"
-        className="mt-3 ml-2"
-        variant="primary"
-        onClick={() => claim()}
-      >
+      <Button size="sm" href="/combat" className="mt-3 ml-2" variant="primary">
         Raid Vault
       </Button>
     </div>

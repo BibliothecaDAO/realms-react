@@ -28,7 +28,7 @@ h4 {
 }
 
 button {
-  @apply font-lords;
+  @apply font-body;
 }
 
 body {
@@ -106,7 +106,7 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply bg-off-200;
+  @apply bg-stone-200;
 }
 
 @font-face {

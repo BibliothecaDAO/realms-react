@@ -7,8 +7,9 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
+import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -35,10 +36,10 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'bg-transparent border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-4 hover:text-stone-200 hover:bg-stone-500 shadow-inner rounded-xl';
-  const iconClasses = 'w-6 mx-auto sm:w-10 fill-current mb-1';
+    'bg-transparent border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:text-stone-200 hover:bg-stone-500 shadow-inner rounded ';
+  const iconClasses = 'w-6 mx-auto sm:w-8 fill-current';
   const textClasses =
-    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5 font-lords';
+    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5 ';
 
   const menus = useMemo(() => {
     return [
@@ -46,6 +47,11 @@ export const MenuSideBar = () => {
         page: 'realm',
         icon: <Castle className={`${iconClasses}`} />,
         text: 'Realms',
+      },
+      {
+        page: 'bank',
+        icon: <Lords className={iconClasses} />,
+        text: 'Bank',
       },
       {
         page: 'loot',
@@ -62,14 +68,10 @@ export const MenuSideBar = () => {
         icon: <Danger className={iconClasses} />,
         text: 'Crypts',
       },
-      {
-        page: 'bank',
-        icon: <Bank className={iconClasses} />,
-        text: 'Bank',
-      },
+
       {
         page: 'combat',
-        icon: <Danger className={iconClasses} />,
+        icon: <ShieldSmall className={iconClasses} />,
         text: 'Combat',
       },
     ];
@@ -96,13 +98,13 @@ export const MenuSideBar = () => {
             <div className="flex flex-col place-items-center ">
               <IconButton
                 className={`${buttonClasses} ${
-                  isPage(menu.page) ? 'bg-gray-700' : ''
+                  isPage(menu.page) ? 'bg-stone-500 shadow-2xl' : ''
                 }`}
                 aria-label={menu.text}
                 variant="unstyled"
                 texture={false}
                 icon={menu.icon}
-                size="lg"
+                size="md"
               />
 
               <span className={textClasses}>{menu.text}</span>

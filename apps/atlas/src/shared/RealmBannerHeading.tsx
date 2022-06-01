@@ -35,11 +35,13 @@ export const RealmBannerHeading = (props: HeaderProps) => {
       )}`}
     >
       <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase font-lords">
-        <OrderIcon
-          className="self-center text-white stroke-white fill-white"
-          size={'md'}
-          order={props.order.toLowerCase()}
-        />
+        <div className="absolute z-10 flex justify-center w-12 h-32 -mt-4 bg-white rounded-b-full shadow-xl">
+          <OrderIcon
+            className="self-center mt-auto text-white stroke-white fill-white"
+            size={'md'}
+            order={props.order.toLowerCase()}
+          />
+        </div>
         <div className="self-center">
           <Combobox value={selectedRealm} onChange={setSelectedRealm}>
             <Combobox.Input
@@ -70,13 +72,14 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <Combobox.Button className="text-white">+</Combobox.Button>
           </Combobox>
         </div>
+        <div></div>
 
         {/* <div className="self-center text-4xl">~ {props.title} ~</div> */}
-        <OrderIcon
+        {/* <OrderIcon
           className="self-center text-white stroke-white fill-white"
           size={'md'}
           order={props.order.toLowerCase()}
-        />
+        /> */}
       </div>
     </div>
   );
