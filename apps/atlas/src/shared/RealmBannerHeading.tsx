@@ -42,6 +42,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           )} border-double rounded-b-full shadow-xl`}
         >
           <OrderIcon
+            withTooltip
             className="self-center mt-auto text-white stroke-white fill-white"
             size={'md'}
             order={props.order.toLowerCase()}

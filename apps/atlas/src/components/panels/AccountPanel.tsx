@@ -49,10 +49,13 @@ export function AccountPanel() {
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <div className="grid grid-cols-12 gap-4">
-        <Card className="col-start-1 col-end-6">
+        <div className="col-start-1 col-end-6">
+          <h1>Ser, Your Empire</h1>
+        </div>
+        <Card className="col-start-1 col-end-6 text-white">
           <CardBody>
             <CardTitle>Ser, your empire</CardTitle>
-            <div className="flex mb-4">
+            <div className="flex mb-4 ">
               <h3 className="w-28">Ethereum</h3>
               <span>
                 {isConnected && (
@@ -113,7 +116,7 @@ export function AccountPanel() {
         </Card>
         <Card className="col-start-1 col-end-4">
           <CardBody>
-            <CardTitle>Realms Settled</CardTitle>
+            <CardTitle>Bridge Realms</CardTitle>
             <Button
               variant="primary"
               className="ml-8"

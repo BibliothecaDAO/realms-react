@@ -52,6 +52,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     realm?.owner ||
     '0';
 
+  const date = new Date();
+
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
       <div className="col-start-1 col-end-5">
@@ -87,7 +89,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </Card>
           <Card className="col-start-5 col-end-7 ">
             <CardTitle>Last Attacked</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+            <CardStats className="text-2xl">{date.toDateString()}</CardStats>
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-3 ">
