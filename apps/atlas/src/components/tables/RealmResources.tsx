@@ -73,33 +73,40 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
-    { Header: 'Claimable Resources', id: 3, accessor: 'claimableResources' },
-    { Header: 'Raidable', id: 3, accessor: 'totalOutput' },
+    { Header: 'Claimable Resources', id: 2, accessor: 'claimableResources' },
+    { Header: 'Raidable Resources', id: 3, accessor: 'raidableResources' },
     { Header: 'level', id: 4, accessor: 'level' },
     { Header: 'Build', id: 5, accessor: 'build' },
   ];
   const tableOptions = { is_striped: true };
   return (
     <div className="w-full">
-      {/* <div className="flex justify-between">
-        <span className="flex">
-          Claimable Lords:{' '}
-          {claimableLords ? (
-            formatEther(claimableLords.toString(10))
-          ) : (
-            <Spinner
-              className="ml-4"
-              size="md"
-              scheme="white"
-              variant="bricks"
-            />
-          )}
+      <div className="flex justify-between p-2 text-white uppercase">
+        <span className="flex flex-col">
+          <span> Claimable Lords:</span>
+
+          <span className="text-3xl">
+            {' '}
+            {claimableLords ? (
+              formatEther(claimableLords.toString(10))
+            ) : (
+              <Spinner
+                className="ml-4"
+                size="md"
+                scheme="white"
+                variant="bricks"
+              />
+            )}
+          </span>
         </span>
-        <span>
-          Accrued: {availableResources.daysAccrued}D{' '}
-          {availableResources.remainder}m
+        <span className="flex flex-col">
+          <span>Days Accrued: </span>
+
+          <span className="text-3xl">
+            {availableResources.daysAccrued}D {availableResources.remainder}m
+          </span>
         </span>
-      </div> */}
+      </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
       <Button
         size="sm"
@@ -109,12 +116,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
       >
         Harvest Resources
       </Button>
-      <Button
-        size="sm"
-        className="mt-3 ml-2"
-        variant="primary"
-        onClick={() => claim()}
-      >
+      <Button size="sm" href="/combat" className="mt-3 ml-2" variant="primary">
         Raid Vault
       </Button>
     </div>

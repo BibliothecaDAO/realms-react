@@ -4,7 +4,7 @@ import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 
 type Row = {
   resource: ReactElement;
@@ -16,7 +16,7 @@ type Row = {
 };
 
 export function BankPanel(): ReactElement {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { togglePanelType, selectedPanel } = useAtlasContext();
   const { balance } = useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {

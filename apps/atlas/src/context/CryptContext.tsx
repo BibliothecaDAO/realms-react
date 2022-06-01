@@ -124,7 +124,7 @@ export function useCryptContext() {
   return useContext(CryptContext);
 }
 
-export function CryptProvider({ children }: { children: JSX.Element }) {
+export function CryptProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cryptReducer, {
     ...defaultCryptState,
     favouriteCrypt: storage<string[]>(CryptFavoriteLocalStorageKey, []).get(),

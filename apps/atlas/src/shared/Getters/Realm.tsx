@@ -23,20 +23,20 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-amber-700/60',
+      colour: 'bg-amber-400/70',
       traitMax: 7,
       title: 'Regions',
     },
-    { trait: 'City', colour: 'bg-amber-300/60', traitMax: 21, title: 'Cities' },
+    { trait: 'City', colour: 'bg-amber-300/70', traitMax: 21, title: 'Cities' },
     {
       trait: 'River',
-      colour: 'bg-blue-700/60',
+      colour: 'bg-amber-500/70',
       traitMax: 35,
       title: 'Harbors',
     },
     {
       trait: 'Harbor',
-      colour: 'bg-blue-500/60',
+      colour: 'bg-amber-700/70',
       traitMax: 60,
       title: 'Rivers',
     },

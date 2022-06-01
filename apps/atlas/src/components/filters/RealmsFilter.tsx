@@ -6,7 +6,7 @@ import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 
 type RealmsFilterProps = {
   isYourRealms: boolean;

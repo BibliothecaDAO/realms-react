@@ -1,11 +1,11 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { animated, useSpring } from '@react-spring/web';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 /* import { LoreEntityModal } from './LoreEntityModal'; */
 
 export const BaseModal = () => {
-  const { selectedModal, setModal } = useUIContext();
+  const { selectedModal, setModal } = useAtlasContext();
 
   const animation = useSpring({
     opacity: selectedModal ? 1 : 0,

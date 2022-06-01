@@ -55,7 +55,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   });
 
   return (
-    <div className="w-full p-2">
+    <div className="w-full">
       {options?.search && (
         <div>
           <input
@@ -89,7 +89,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
                   ? 'bg-gray-600/60'
-                  : 'bg-gray-600/50'
+                  : 'bg-gray-600/20'
               } hover:bg-white-600/90 font-semibold shadow-inner`}
               key={row.id}
             >

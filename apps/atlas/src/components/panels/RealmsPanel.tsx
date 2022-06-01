@@ -3,20 +3,21 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
-  const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
-    useUIContext();
+  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
+    useAtlasContext();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
   const { state, actions } = useRealmContext();
@@ -110,10 +111,15 @@ export const RealmsPanel = () => {
   });
 
   useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.getRealms?.length ?? 0) > 0) {
+    if (
+      !selectedId &&
+      isDisplayLarge &&
+      page === 1 &&
+      (data?.getRealms?.length ?? 0) > 0
+    ) {
       openDetails('realm', data?.getRealms[0].realmId + '');
     }
-  }, [data, page]);
+  }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -126,13 +132,11 @@ export const RealmsPanel = () => {
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Realms</h1>
-
-        <button
-          className="z-50 transition-all rounded sm:hidden top-4"
-          onClick={() => togglePanelType('realm')}
-        >
-          <Close />
-        </button>
+        <Link href="/">
+          <button className="z-50 transition-all rounded top-4">
+            <Close />
+          </button>
+        </Link>
       </div>
       <Tabs
         selectedIndex={state.selectedTab}

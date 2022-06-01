@@ -2,20 +2,21 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 
 export const GaPanel = () => {
-  const { isDisplayLarge, togglePanelType, openDetails, selectedPanel } =
-    useUIContext();
+  const { isDisplayLarge, selectedId, openDetails, selectedPanel } =
+    useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -76,10 +77,15 @@ export const GaPanel = () => {
   });
 
   useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.gadventurers?.length ?? 0) > 0) {
+    if (
+      !selectedId &&
+      isDisplayLarge &&
+      page === 1 &&
+      (data?.gadventurers?.length ?? 0) > 0
+    ) {
       openDetails('ga', data?.gadventurers[0].id as string);
     }
-  }, [data, page]);
+  }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -93,13 +99,11 @@ export const GaPanel = () => {
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Genesis Adventurers</h1>
-
-        <button
-          className="z-50 transition-all rounded sm:hidden top-4"
-          onClick={() => togglePanelType('ga')}
-        >
-          <Close />
-        </button>
+        <Link href="/">
+          <button className="z-50 transition-all rounded top-4">
+            <Close />
+          </button>
+        </Link>
       </div>
       <Tabs
         selectedIndex={state.selectedTab}
