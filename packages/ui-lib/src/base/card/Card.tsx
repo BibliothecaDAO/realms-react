@@ -42,9 +42,9 @@ export function CardBody({ children, className, loading }: Props) {
 export function CardTitle({ children, className }: Props) {
   return (
     <div className={`${className} z-20 w-full tracking-widest uppercase `}>
-      <h4 className="px-2 rounded shadow-inner text-white/90 drop-shadow-sm font-body bg-white/10">
+      <h5 className="px-2 font-semibold rounded shadow-inner text-white/90 drop-shadow-sm font-body bg-white/10">
         {children}
-      </h4>
+      </h5>
     </div>
   );
 }

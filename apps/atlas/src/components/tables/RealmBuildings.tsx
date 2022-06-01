@@ -18,8 +18,11 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   const columns = [
     { Header: 'Building', id: 1, accessor: 'building' },
     { Header: 'Requirements', id: 2, accessor: 'requirements' },
-    { Header: 'Built', id: 3, accessor: 'built' },
-    { Header: 'Build', id: 3, accessor: 'buildAction' },
+    { Header: 'Population', id: 3, accessor: 'population' },
+    { Header: 'Culture', id: 4, accessor: 'culture' },
+    { Header: 'Food', id: 4, accessor: 'food' },
+    { Header: 'Built', id: 5, accessor: 'built' },
+    { Header: 'Build', id: 6, accessor: 'buildAction' },
   ];
   const tableOptions = { is_striped: true };
   const realmBuildings = props.realm.buildings;
@@ -28,6 +31,21 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     return {
       building: building.name,
       requirements: building.limit,
+      population: (
+        <span>
+          0 <span className="text-white/50">(+{building.population})</span>{' '}
+        </span>
+      ),
+      culture: (
+        <span>
+          0 <span className="text-white/50">(+{building.culture})</span>{' '}
+        </span>
+      ),
+      food: (
+        <span>
+          0 <span className="text-white/50">(+{building.food})</span>{' '}
+        </span>
+      ),
       built: realmBuildings?.find(
         (realmBuilding) => realmBuilding.buildingId === building.id
       )
@@ -38,6 +56,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           onClick={() => build(building.id)}
           variant="primary"
           type="button"
+          size="xs"
         >
           Build
         </Button>
@@ -46,10 +65,12 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   });
 
   return (
-    <div className="p-2">
+    <div className="w-full mt-2">
       <Table columns={columns} data={defaultData} options={tableOptions} />
-      <div className="flex justify-end w-full pt-4">
-        <Button variant="primary">Build All</Button>
+      <div className="flex justify-end w-full mt-4">
+        <Button size="xs" variant="primary">
+          Build All
+        </Button>
       </div>
     </div>
   );

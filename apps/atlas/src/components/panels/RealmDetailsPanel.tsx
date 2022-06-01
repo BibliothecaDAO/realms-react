@@ -21,6 +21,7 @@ import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
+import { RealmBuildings } from '../tables/RealmBuildings';
 
 interface RealmDetailsPanelProps {
   realmId: number;
@@ -76,7 +77,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             )}
           </Card>
           <Card className="col-start-5 col-end-7 ">
-            <CardTitle>Happiness</CardTitle>
+            <CardTitle>Last Attacked</CardTitle>
             <CardStats className="text-4xl">2</CardStats>
             {/* <CardIcon /> */}
           </Card>
@@ -135,6 +136,30 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             ) : (
               <SquadBuilder troops={defenseSquad} />
             )}
+          </Card>
+          <Card className="col-start-1 col-end-3 ">
+            <CardTitle>Happiness</CardTitle>
+            <CardStats className="text-4xl">2</CardStats>
+            {/* <CardIcon /> */}
+          </Card>
+          <Card className="col-start-3 col-end-4 ">
+            <CardTitle>Culture</CardTitle>
+            <CardStats className="text-4xl">2</CardStats>
+            {/* <CardIcon /> */}
+          </Card>
+          <Card className="col-start-4 col-end-5 ">
+            <CardTitle>Food</CardTitle>
+            <CardStats className="text-4xl">2</CardStats>
+            {/* <CardIcon /> */}
+          </Card>
+          <Card className="col-start-5 col-end-7 ">
+            <CardTitle>Population</CardTitle>
+            <CardStats className="text-4xl">2</CardStats>
+            {/* <CardIcon /> */}
+          </Card>
+          <Card className="col-start-1 col-end-7 ">
+            <CardTitle>Buildings</CardTitle>
+            {realm && <RealmBuildings realm={realm} loading={false} />}
           </Card>
           {/* <Card className="col-start-1 col-end-7">
               <div className="flex justify-between w-full ">
