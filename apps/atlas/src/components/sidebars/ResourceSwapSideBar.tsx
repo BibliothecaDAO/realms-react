@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
+  const { selectedPanel } = useAtlasContext();
 
   /* const { loading, error, data } = useQuery<Data>(getRealmQuery, {
     variables: { id: props.id.toString() },
@@ -39,7 +39,7 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={true}>
+    <BaseSideBar open={selectedPanel === 'bank'}>
       <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
         {/* <div className="flex justify-between w-full">
           <Button

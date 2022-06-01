@@ -90,7 +90,7 @@ export const LootPanel = () => {
         <h1>Loot</h1>
 
         <Link href="/">
-          <button className="z-50 transition-all rounded sm:hidden top-4">
+          <button className="z-50 transition-all rounded top-4">
             <Close />
           </button>
         </Link>

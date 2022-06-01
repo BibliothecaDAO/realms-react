@@ -19,15 +19,16 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
   const { mainMenu, toggleMainMenu } = useAtlasContext();
-  const { pathname } = useRouter();
+  const { query } = useRouter();
 
   const isPage = useCallback(
-    (name: string) => name === pathname.split('/')[1],
-    [pathname]
+    (name: string) => name === (query.segment && query.segment[0]),
+    [query]
   );
   const getPageHref = useCallback(
-    (name: string) => (name === pathname.split('/')[1] ? '/' : `/${name}`),
-    [pathname]
+    (name: string) =>
+      name === (query.segment && query.segment[0]) ? '/' : `/${name}`,
+    [query]
   );
   const animation = useSpring({
     opacity: mainMenu ? 0.85 : 0,
@@ -72,7 +73,7 @@ export const MenuSideBar = () => {
         text: 'Combat',
       },
     ];
-  }, [pathname]);
+  }, [query]);
 
   return (
     <div>

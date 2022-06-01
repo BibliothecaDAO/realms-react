@@ -101,8 +101,8 @@ export const CryptsPanel = () => {
       <div className="flex justify-between pt-2">
         <div className="sm:hidden"></div>
         <h1>Crypts</h1>
-        <Link href={'/'}>
-          <button className="z-50 transition-all rounded sm:hidden top-4">
+        <Link href="/">
+          <button className="z-50 transition-all rounded top-4">
             <Close />
           </button>
         </Link>

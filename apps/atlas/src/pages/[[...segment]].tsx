@@ -3,29 +3,45 @@ import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { useRouter } from 'next/router';
-import type { ReactElement } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
 import { Header } from '@/components/navigation/header';
+import { AccountPanel } from '@/components/panels/AccountPanel';
+import { BankPanel } from '@/components/panels/BankPanel';
+import { CombatPanel } from '@/components/panels/CombatPanel';
+import { CryptsPanel } from '@/components/panels/CryptsPanel';
+import { GaPanel } from '@/components/panels/GaPanel';
+import { LootPanel } from '@/components/panels/LootPanel';
+/* import { LorePanel } from '@/components/panels/LorePanel'; */
+import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
+import { RealmsPanel } from '@/components/panels/RealmsPanel';
+import { TradePanel } from '@/components/panels/TradePanel';
+import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
+import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
+import { GASideBar } from '@/components/sidebars/GASideBar';
+import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
+import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
+import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
+import { CryptProvider } from '@/context/CryptContext';
+import { GaProvider } from '@/context/GaContext';
+import { LootProvider } from '@/context/LootContext';
+import { RealmProvider } from '@/context/RealmContext';
+import { ResourceProvider } from '@/context/ResourcesContext';
 import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import type { PanelType } from '@/hooks/useAtlasContext';
 import { useAtlasContext, AtlasProvider } from '@/hooks/useAtlasContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
-export default function Base({
-  children,
-}: {
-  children: ReactElement | ReactElement[];
-}) {
+export default function AtlasPage() {
   return (
     <AtlasProvider>
       <Layout>
@@ -33,8 +49,7 @@ export default function Base({
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
             <Header />
-
-            <AtlasMain>{children}</AtlasMain>
+            <AtlasMain />
           </div>
         </div>
       </Layout>
@@ -42,22 +57,82 @@ export default function Base({
   );
 }
 
-function AtlasMain({ children }: { children: ReactElement | ReactElement[] }) {
-  const { togglePanelType, selectedPanel } = useAtlasContext();
-  const { pathname } = useRouter();
-  useEffect(() => {
-    const panel = pathname.split('/')[1];
-    if (panel && selectedPanel !== panel) togglePanelType(panel as PanelType);
-    else if (!panel && !selectedPanel) togglePanelType(selectedPanel);
-  }, [pathname]);
+function AtlasMain() {
   return (
     <div className="relative w-full h-full">
-      {children}
       <ArtBackground />
+      <AccountModule />
+      <LootModule />
+      <GaModule />
+      <RealmsModule />
+      <CryptModule />
+      <BankModule />
+      <TradePanel />
+      <CombatPanel />
       <FlyTo />
       <MapModule />
     </div>
   );
+}
+
+function RealmsModule() {
+  const { query } = useRouter();
+  const segments = query?.segment ?? [];
+  const realmId = segments[1] ? Number(segments[1]) : 0;
+  return (
+    <RealmProvider>
+      {realmId > 0 && <RealmDetailsPanel realmId={realmId} />}
+      {realmId === 0 && (
+        <>
+          <RealmsPanel />
+          {/* <LorePanel /> */}
+          <RealmSideBar />
+          <BridgeRealmsSideBar />
+          <SettleRealmsSideBar />
+        </>
+      )}
+    </RealmProvider>
+  );
+}
+
+function GaModule() {
+  return (
+    <GaProvider>
+      <GaPanel />
+      <GASideBar />
+    </GaProvider>
+  );
+}
+
+function CryptModule() {
+  return (
+    <CryptProvider>
+      <CryptsPanel />
+      <CryptsSideBar />
+    </CryptProvider>
+  );
+}
+
+function BankModule() {
+  return (
+    <ResourceProvider>
+      <BankPanel />
+      <ResourceSwapSideBar />
+    </ResourceProvider>
+  );
+}
+
+function LootModule() {
+  return (
+    <LootProvider>
+      <LootPanel />
+      <LootSideBar />
+    </LootProvider>
+  );
+}
+
+function AccountModule() {
+  return <AccountPanel />;
 }
 
 function MapModule() {

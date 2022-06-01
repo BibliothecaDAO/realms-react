@@ -90,24 +90,6 @@ interface AtlasProviderProps {
   children: React.ReactNode;
 }
 
-function useQueryPOI() {
-  const { query, pathname } = useRouter();
-  const validQueries = ['realm', 'crypt', 'loot', 'ga'];
-  const page = pathname.split('/')[1];
-
-  if (
-    !validQueries.includes(page) ||
-    parseInt((query?.id as string) ?? '0') <= 0
-  ) {
-    return null;
-  }
-
-  return {
-    assetType: page,
-    assetId: query?.id as string,
-  };
-}
-
 const assetFilterByType = (assetType: AssetType) =>
   AssetFilters.find(
     (assetFilter) => assetFilter.value === assetType
@@ -168,8 +150,8 @@ function useCoordinates() {
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function useAtlas(): Atlas {
   const router = useRouter();
-  const query = useQueryPOI();
-  const [selectedId, setSelectedId] = useState(query ? query.assetId : '');
+  // const poiQuery = useQueryPOI();
+  const [selectedId, setSelectedId] = useState('');
   const [showDetails, setShowDetails] = useState(false);
   const [selectedAssetFilter, setSelectedAssetFilter] = useState(
     AssetFilters[0]
@@ -186,19 +168,24 @@ function useAtlas(): Atlas {
 
   const [selectedMenuType, setMenuType] = useState<MenuType>(undefined);
   const [selectedPanel, setPanelType] = useState<PanelType>(undefined);
-
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
-
   const [selectedModal, setSelectedModal] = useState<ModalType>(null);
 
   useEffect(() => {
-    if (!query) {
-      return;
+    const panel = router.query.segment && router.query.segment[0];
+    const id = router.query?.id as string;
+
+    if (selectedPanel !== panel) {
+      setShowDetails(true);
+      togglePanelType((panel || selectedPanel) as PanelType);
     }
-    setShowDetails(true);
-    setSelectedAssetFilter(assetFilterByType(query.assetType as AssetType));
-    setSelectedId(query.assetId);
-  }, [query]);
+
+    if (id) {
+      setShowDetails(true);
+      setSelectedAssetFilter(assetFilterByType(panel as AssetType));
+      setSelectedId(id);
+    }
+  }, [router.query]);
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
@@ -222,6 +209,7 @@ function useAtlas(): Atlas {
     }
   };
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const togglePanelType = (panelType: PanelType) => {
     setMainMenu(false);
     if (selectedPanel === panelType) {
@@ -269,12 +257,13 @@ function useAtlas(): Atlas {
     switch (panel) {
       case 'settleRealms':
       case 'bridgeRealms':
-        panel = 'account';
+        panel = 'realm';
         break;
       case 'resourceSwap':
         panel = 'bank';
         break;
     }
+
     router.push(`/${panel}?id=${assetId}`, undefined, {
       shallow: true,
     });

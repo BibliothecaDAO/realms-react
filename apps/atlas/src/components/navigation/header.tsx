@@ -18,7 +18,7 @@ export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { account, connect, connectors } = useStarknet();
-  const { togglePanelType } = useAtlasContext();
+  const { selectedPanel } = useAtlasContext();
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
@@ -61,7 +61,7 @@ export function Header() {
           </Button>
         </span>
         <span>
-          <Link href="/account">
+          <Link href={selectedPanel === 'account' ? '' : '/account'}>
             <Button
               variant="primary"
               // onClick={() => togglePanelType('account')}

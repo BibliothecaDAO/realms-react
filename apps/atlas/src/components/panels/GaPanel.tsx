@@ -100,7 +100,7 @@ export const GaPanel = () => {
         <div className="sm:hidden"></div>
         <h1>Genesis Adventurers</h1>
         <Link href="/">
-          <button className="z-50 transition-all rounded sm:hidden top-4">
+          <button className="z-50 transition-all rounded top-4">
             <Close />
           </button>
         </Link>
