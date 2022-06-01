@@ -17,9 +17,6 @@ import { findResourceName } from '@/util/resources';
 import { Realm } from '../../types';
 import type { RealmsCardProps } from '../../types';
 
-type OverviewProps = {
-  test: string;
-};
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };

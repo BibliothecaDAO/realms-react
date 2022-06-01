@@ -77,8 +77,8 @@ export default function RealmsPage() {
               )}
             </Card>
             <Card className="col-start-5 col-end-7 ">
-              <CardTitle>Happiness</CardTitle>
-              <CardStats className="text-4xl">2</CardStats>
+              <CardTitle>Last Attacked</CardTitle>
+              <CardStats className="text-4xl">Yesterday</CardStats>
               {/* <CardIcon /> */}
             </Card>
             <Card className="col-start-1 col-end-3 ">
