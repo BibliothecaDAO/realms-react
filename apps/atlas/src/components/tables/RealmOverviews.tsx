@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmStatus } from '@/shared/Getters/Realm';
 import { findResourceName } from '@/util/resources';
@@ -33,7 +33,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     selectedMenuType,
     gotoAssetId,
     togglePanelType,
-  } = useUIContext();
+  } = useAtlasContext();
   const {
     state: { favouriteRealms },
     actions,
@@ -225,7 +225,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               >
                 quick view
               </Button>
-              <Link href={`/realms/${realm.realmId}`}>
+              <Link href={`/realm/${realm.realmId}`}>
                 <Button variant="primary" size="xs" className="w-full ">
                   details
                 </Button>

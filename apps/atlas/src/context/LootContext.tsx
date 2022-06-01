@@ -114,7 +114,7 @@ export function useLootContext() {
   return useContext(LootContext);
 }
 
-export function LootProvider({ children }: { children: JSX.Element }) {
+export function LootProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(lootReducer, {
     ...defaultLootState,
     favouriteLoot: storage<string[]>(LootFavoriteLocalStorageKey, []).get(),

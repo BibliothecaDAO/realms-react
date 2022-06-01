@@ -10,14 +10,26 @@ import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Scale from '@bibliotheca-dao/ui-lib/icons/scale.svg';
 import { animated, useSpring } from '@react-spring/web';
-import { useUIContext } from '@/hooks/useUIContext';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useCallback, useMemo } from 'react';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
-  const { mainMenu, toggleMainMenu, togglePanelType, selectedPanel } =
-    useUIContext();
+  const { mainMenu, toggleMainMenu } = useAtlasContext();
+  const { query } = useRouter();
 
+  const isPage = useCallback(
+    (name: string) => name === (query.segment && query.segment[0]),
+    [query]
+  );
+  const getPageHref = useCallback(
+    (name: string) =>
+      name === (query.segment && query.segment[0]) ? '/' : `/${name}`,
+    [query]
+  );
   const animation = useSpring({
     opacity: mainMenu ? 0.85 : 0,
   });
@@ -27,6 +39,41 @@ export const MenuSideBar = () => {
   const iconClasses = 'w-6 mx-auto sm:w-10 fill-current mb-1';
   const textClasses =
     'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5 font-lords';
+
+  const menus = useMemo(() => {
+    return [
+      {
+        page: 'realm',
+        icon: <Castle className={`${iconClasses}`} />,
+        text: 'Realms',
+      },
+      {
+        page: 'loot',
+        icon: <Bag className={`${iconClasses}`} />,
+        text: 'Loot',
+      },
+      {
+        page: 'ga',
+        icon: <Helm className={iconClasses} />,
+        text: 'GA',
+      },
+      {
+        page: 'crypt',
+        icon: <Danger className={iconClasses} />,
+        text: 'Crypts',
+      },
+      {
+        page: 'bank',
+        icon: <Bank className={iconClasses} />,
+        text: 'Bank',
+      },
+      {
+        page: 'combat',
+        icon: <Danger className={iconClasses} />,
+        text: 'Combat',
+      },
+    ];
+  }, [query]);
 
   return (
     <div>
@@ -44,135 +91,25 @@ export const MenuSideBar = () => {
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'realm' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Realms"
-            variant="unstyled"
-            texture={false}
-            onClick={() => {
-              togglePanelType('realm');
-            }}
-            icon={<Castle className={`${iconClasses}`} />}
-            size="lg"
-          />
+        {menus.map((menu) => (
+          <Link href={getPageHref(menu.page)} key={menu.page}>
+            <div className="flex flex-col place-items-center ">
+              <IconButton
+                className={`${buttonClasses} ${
+                  isPage(menu.page) ? 'bg-gray-700' : ''
+                }`}
+                aria-label={menu.text}
+                variant="unstyled"
+                texture={false}
+                icon={menu.icon}
+                size="lg"
+              />
 
-          <span className={textClasses}>Realms</span>
-        </div>
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'loot' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Loot"
-            variant="unstyled"
-            texture={false}
-            onClick={() => togglePanelType('loot')}
-            icon={<Bag className={`${iconClasses}`} />}
-            size="lg"
-          />
-          <span className={textClasses}>Loot</span>
-        </div>
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'ga' ? 'bg-gray-700' : ''
-            }`}
-            onClick={() => togglePanelType('ga')}
-            aria-label="GA"
-            variant="unstyled"
-            texture={false}
-            icon={<Helm className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>GA</span>
-        </div>
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'crypt' ? 'bg-gray-700' : ''
-            }`}
-            onClick={() => togglePanelType('crypt')}
-            aria-label="Crypts"
-            variant="unstyled"
-            texture={false}
-            icon={<Danger className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>Crypts</span>
-        </div>
-        {/* <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'trade' ? 'bg-gray-700' : ''
-            }`}
-            onClick={() => togglePanelType('trade')}
-            aria-label="Trade"
-            variant="unstyled"
-            texture={false}
-            icon={<Scale className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>Trade</span>
-        </div> */}
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'bank' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Bank"
-            variant="unstyled"
-            texture={false}
-            onClick={() => togglePanelType('bank')}
-            icon={<Bank className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>Bank</span>
-        </div>
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'lore' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Lore"
-            variant="unstyled"
-            texture={false}
-            onClick={() => togglePanelType('lore')}
-            icon={<Library className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>Lore</span>
-        </div>
-        <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'lore' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Combat"
-            variant="unstyled"
-            texture={false}
-            onClick={() => togglePanelType('combat')}
-            icon={<Library className={iconClasses} />}
-            size="lg"
-          />
-          <span className={textClasses}>Combat</span>
-        </div>
-        {/* <div className="flex flex-col place-items-center ">
-          <IconButton
-            className={`${buttonClasses} ${
-              selectedPanel === 'bank' ? 'bg-gray-700' : ''
-            }`}
-            aria-label="Desiege"
-            href="/desiege"
-            variant="unstyled"
-            texture={false}
-            icon={<Shield className={'w-10 mx-auto mt-4 fill-current'} />}
-            size="lg"
-          />
-          <span className={textClasses}>Desiege</span>
-        </div> */}
+              <span className={textClasses}>{menu.text}</span>
+            </div>
+          </Link>
+        ))}
+
         <div className="grow" />
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton

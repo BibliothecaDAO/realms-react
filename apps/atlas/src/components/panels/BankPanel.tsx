@@ -1,10 +1,11 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { formatEther } from '@ethersproject/units';
+import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { BasePanel } from './BasePanel';
 
 type Row = {
@@ -28,7 +29,7 @@ export const RateChange = (change: number) => {
 };
 
 export function BankPanel(): ReactElement {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  const { selectedPanel } = useAtlasContext();
   const { balance, availableResourceIds, addSelectedSwapResources } =
     useResourcesContext();
 
@@ -83,12 +84,11 @@ export function BankPanel(): ReactElement {
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
         <h1 className="w-full text-center font-lords">Iron Bank</h1>
-        <button
-          className="mb-8 transition-all rounded "
-          onClick={() => togglePanelType('bank')}
-        >
-          <Close />
-        </button>
+        <Link href="/">
+          <button className="mb-8 transition-all rounded ">
+            <Close />
+          </button>
+        </Link>
       </div>
 
       <div className="relative overflow-x-auto">
