@@ -69,7 +69,7 @@ function AtlasMain() {
       <BankModule />
       <TradePanel />
       <CombatPanel />
-      <FlyTo />
+      {/* <FlyTo /> */}
       <MapModule />
     </div>
   );
