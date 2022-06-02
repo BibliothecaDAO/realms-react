@@ -5,6 +5,8 @@ import {
   CardTitle,
   CardStats,
   CardIcon,
+  Donut,
+  CountdownTimer,
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
@@ -52,7 +54,23 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     realm?.owner ||
     '0';
 
-  const date = new Date();
+  const hoursAgoAttack = 20;
+
+  const getProgress = () => {
+    const attacked = new Date();
+    // replace with date
+    return (
+      ((attacked.getHours() + hoursAgoAttack - attacked.getHours()) / 24) *
+      100
+    ).toFixed();
+  };
+
+  // Replace with actual last time attacked
+  const time = () => {
+    const NOW_IN_MS = new Date().getTime();
+
+    return (NOW_IN_MS + 86400000).toString();
+  };
 
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
@@ -87,9 +105,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               <CardStats className="text-2xl">{RealmStatus(realm)}</CardStats>
             )}
           </Card>
-          <Card className="col-start-5 col-end-7 ">
-            <CardTitle>Last Attacked</CardTitle>
-            <CardStats className="text-2xl">{date.toDateString()}</CardStats>
+          <Card className="col-start-5 col-end-7 text-white">
+            <CardTitle>Attack Available in</CardTitle>
+            {/* <CardStats className="text-2xl">{date.toDateString()}</CardStats> */}
+            {/* <div className='flex justify-around w-full my-4 text-white'>
+              
+              <Donut label={24 - hoursAgoAttack} className='mx-auto stroke-green-400' radius={50} stroke={2} progress={getProgress()}/>
+              
+            </div> */}
+            <CountdownTimer date={time()} />
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-3 ">

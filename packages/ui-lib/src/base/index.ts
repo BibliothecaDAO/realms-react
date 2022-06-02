@@ -16,3 +16,4 @@ export {
   CardIcon,
 } from './card/Card';
 export { Donut } from './chart/Donut';
+export { CountdownTimer } from './countdown/CountDown';

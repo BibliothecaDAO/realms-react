@@ -95,7 +95,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className="p-2 mx-auto text-center border border-gray-500/60"
+                  className="p-2 mx-auto text-left border border-gray-500/60"
                   key={cell.id}
                 >
                   {cell.renderCell()}

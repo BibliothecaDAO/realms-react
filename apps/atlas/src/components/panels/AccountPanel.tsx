@@ -50,7 +50,7 @@ export function AccountPanel() {
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <div className="grid grid-cols-12 gap-8">
-        <div className="flex col-start-1 col-end-5">
+        <div className="flex col-start-1 col-end-6 space-x-2">
           <span>
             {isConnected && (
               <Button size="sm" variant="secondary" onClick={disconnectWallet}>
@@ -63,9 +63,6 @@ export function AccountPanel() {
               </Button>
             )}
           </span>
-        </div>
-
-        <div className="flex col-start-5 col-end-9">
           <span>
             {account ? (
               <Button

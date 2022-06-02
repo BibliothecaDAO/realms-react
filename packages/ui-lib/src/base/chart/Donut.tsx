@@ -1,15 +1,16 @@
 interface DonutProps {
   radius: number;
   stroke: number;
-  progress: number;
+  progress: string;
   className: string;
+  label: string | number;
 }
 
 export const Donut = (props: DonutProps) => {
   const normalizedRadius = props.radius - props.stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset =
-    circumference - (props.progress / 100) * circumference;
+    circumference - (parseInt(props.progress) / 100) * circumference;
   return (
     <svg height={props.radius * 2} width={props.radius * 2}>
       <circle
@@ -25,12 +26,12 @@ export const Donut = (props: DonutProps) => {
         cy={props.radius}
       />
       <text
-        className="font-semibold fill-white font-body"
+        className=" fill-white font-body"
         x={props.radius - 20}
         y={props.radius + 10}
         fontSize="30"
       >
-        {props.progress}
+        {props.label}
       </text>
     </svg>
   );
