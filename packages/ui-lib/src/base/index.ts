@@ -15,3 +15,4 @@ export {
   CardStats,
   CardIcon,
 } from './card/Card';
+export { Donut } from './chart/Donut';

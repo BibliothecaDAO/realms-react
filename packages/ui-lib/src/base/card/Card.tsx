@@ -14,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all  hover:bg-gray-600/80 flex flex-wrap p-4 text-gray-600 bg-gray-800/30 rounded shadow-inner overflow-hidden group border-off-200/40 border`}
+      className={`${className} duration-150 transition-all  hover:bg-gray-600/80 flex flex-wrap px-4 pb-4 pt-2 text-gray-600 bg-gray-800/30 rounded shadow-inner overflow-hidden group border-off-200/40 border`}
     >
       {children}
     </div>
