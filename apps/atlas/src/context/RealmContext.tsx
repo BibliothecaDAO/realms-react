@@ -24,6 +24,7 @@ interface RealmState {
   searchIdFilter: string;
   selectedTab: number;
   hasWonderFilter: boolean;
+  isSettledFilter: boolean;
   selectedRealms: number[];
 }
 
@@ -33,6 +34,7 @@ type RealmAction =
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'updateSelectedResources'; payload: number[] }
   | { type: 'toggleHasWonderFilter' }
+  | { type: 'toggleIsSettledFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
@@ -47,6 +49,7 @@ interface RealmActions {
   updateSelectedOrders(orders: OrderType[]): void;
   updateSelectedResources(resources: number[]): void;
   toggleHasWonderFilter(): void;
+  toggleIsSettledFilter(): void;
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
@@ -71,6 +74,7 @@ const defaultFilters = {
   selectedResources: [] as number[],
   searchIdFilter: '',
   hasWonderFilter: false,
+  isSettledFilter: false,
 };
 
 const defaultRealmState = {
@@ -92,6 +96,8 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, selectedTab: action.payload };
     case 'toggleHasWonderFilter':
       return { ...state, hasWonderFilter: !state.hasWonderFilter };
+    case 'toggleIsSettledFilter':
+      return { ...state, isSettledFilter: !state.isSettledFilter };
     case 'updateSelectedOrders':
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
@@ -149,6 +155,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
   updateSelectedTab: (tab: number) =>
     dispatch({ type: 'updateSelectedTab', payload: tab }),
   toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
+  toggleIsSettledFilter: () => dispatch({ type: 'toggleIsSettledFilter' }),
   updateTraitsFilter: (filter: TraitsFilter) =>
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>
