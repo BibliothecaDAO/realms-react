@@ -54,7 +54,6 @@ Apps are user-facing sites that typically house gameplay ui. These are the main 
 - [README](./apps/atlas/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) | [CHANGELOG](./apps/atlas/CHANGELOG.md)
 - tech: SSR, tailwind v3, Three.js, Mapbox, Deck.gl, emotion, graphQL, rest, Web3 + StarkNet,
 
-
 **[Briq App](./apps/briq-app/)** - A marketing page for the Realms + Briq Wonder building competition (now completed), linking a StarkNet address to a Google form
 
 - [README](./apps/briq-app/README.md) | [Vercel](https://wonder.bibliothecadao.xyz/) | [CHANGELOG](./apps/briq-app/CHANGELOG.md)
@@ -62,7 +61,7 @@ Apps are user-facing sites that typically house gameplay ui. These are the main 
 
 **[Treasury Page](./apps/treasury_page/)** - A page showing the Bibliotheca DAO treasury assets, including token balances and NFTs (special thanks to @hari, @kalaiy & @neoTINS)
 
-- [README](./apps/treasury_page/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/) 
+- [README](./apps/treasury_page/README.md) | [Vercel](https://atlas.bibliothecadao.xyz/)
 - tech: Create React AOo, tailwind v3, emotion, rest.
 
 AMM _(coming soon)_
@@ -87,7 +86,7 @@ Packages are common libraries that can be included in apps.
 
 ### Shared static assets
 
-**[static](./static)** - A dedicated folder at the root level for statuc asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
+**[static](./static)** - A dedicated folder at the root level for static asstets. If needed static resources like **locales**, **images**,... can be shared by using symlinks in the repo.
 
 ### Folder overview
 
