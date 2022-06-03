@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 import { Portal } from '@headlessui/react';
 import type { Story, Meta } from '@storybook/react';
 import clsx from 'clsx';
+import Gear from '../../icons/settings.svg';
 import { Button } from '../button';
 import type { MenuProps } from './menu';
 import { Menu } from './menu';
 // eslint-disable-next-line import/no-unresolved
-import Gear from '@/icons/settings.svg';
 
 export default {
   component: Menu,

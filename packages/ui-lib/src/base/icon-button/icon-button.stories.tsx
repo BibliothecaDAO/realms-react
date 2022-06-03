@@ -1,8 +1,8 @@
 import type { Story, Meta } from '@storybook/react';
+import Castle from '../../icons/castle.svg';
 import type { IconButtonProps } from './icon-button';
 import { IconButton } from './icon-button';
 // eslint-disable-next-line import/no-unresolved
-import Castle from '@/icons/castle.svg';
 
 export default {
   component: IconButton,
