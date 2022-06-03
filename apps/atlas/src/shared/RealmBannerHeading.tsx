@@ -1,6 +1,7 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { Combobox } from '@headlessui/react';
 import { useState, Fragment } from 'react';
+import { SearchFilter } from '@/components/filters/SearchFilter';
 interface HeaderProps {
   title: string;
   // icon: string;
@@ -29,7 +30,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-90 flex flex-wrap px-8 p-4  rounded shadow bg-order-${props.order.replace(
+      className={`bg-opacity-90 flex flex-wrap pl-8 pr-4 p-4  rounded shadow bg-order-${props.order.replace(
         'the ',
         ''
       )}`}
@@ -78,7 +79,12 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <Combobox.Button className="text-white">+</Combobox.Button>
           </Combobox> */}
         </div>
-        <div className="self-center font-body">{props.realmId}</div>
+        <SearchFilter
+          placeholder="SEARCH BY ID"
+          // onSubmit={}
+          defaultValue={props.realmId.toString()}
+        />
+        {/* <div className="self-center font-body">{props.realmId}</div> */}
       </div>
     </div>
   );

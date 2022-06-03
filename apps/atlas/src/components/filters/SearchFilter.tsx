@@ -20,9 +20,9 @@ export function SearchFilter(props: SearchFilterProps) {
   }
 
   return (
-    <div className="bg-black/40 p-1.5 rounded flex gap-1 justify-center items-center">
+    <div className="flex items-center justify-center gap-1 px-2 py-1 rounded bg-black/20">
       <input
-        className="w-full px-3 py-2 h-9 leading-tight text-white font-bold text-sm uppercase focus:outline-none rounded appearance-none bg-gray-800/80 hover:bg-gray-300/20 tracking-widest"
+        className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
         type="text"
         value={value}
         onChange={(e) => {
@@ -37,7 +37,7 @@ export function SearchFilter(props: SearchFilterProps) {
       />
 
       <button
-        className="bg-900/80 rounded flex justify-center items-center p-2 h-9 cursor-pointer hover:bg-gray-300/20"
+        className="flex items-center justify-center p-2 transition-all duration-300 rounded cursor-pointer bg-900/80 h-9 hover:bg-gray-300/20"
         onClick={doSubmit}
       >
         <svg
