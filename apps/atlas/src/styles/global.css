@@ -27,10 +27,6 @@ h4 {
   @apply text-xl font-semibold tracking-widest uppercase font-body;
 }
 
-button {
-  @apply font-lords;
-}
-
 body {
   @apply text-gray-200 font-body;
 }
