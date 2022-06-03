@@ -79,13 +79,6 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           </Combobox> */}
         </div>
         <div className="self-center font-body">{props.realmId}</div>
-
-        {/* <div className="self-center text-4xl">~ {props.title} ~</div> */}
-        {/* <OrderIcon
-          className="self-center text-white stroke-white fill-white"
-          size={'md'}
-          order={props.order.toLowerCase()}
-        /> */}
       </div>
     </div>
   );

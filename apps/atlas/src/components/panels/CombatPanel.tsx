@@ -1,5 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -12,39 +12,64 @@ export function CombatPanel(): ReactElement {
 
   return (
     <BasePanel open={selectedPanel === 'combat'}>
-      <div className="flex justify-between">
-        <div>
-          <Link href="/">
-            <Button variant="secondary">
-              <Close />
-            </Button>
-          </Link>
-        </div>
-      </div>
-      <div className="relative grid h-full grid-cols-8 gap-4">
-        <div className="flex flex-col justify-between h-full col-start-1 col-end-7">
+      <div className="relative grid h-full grid-cols-8 gap-12">
+        <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
           <RealmBannerHeading realmId={1} order="the fox" title="Smutmum" />
-          <SquadBuilder flipped={true} troops={dummySquad} />
+          <SquadBuilder
+            withPurchase={false}
+            flipped={true}
+            troops={dummySquad}
+          />
           <Button variant="primary">Attack</Button>
-          <SquadBuilder troops={dummySquad} />
+          <SquadBuilder withPurchase={true} troops={dummySquad} />
           <RealmBannerHeading realmId={2} order="power" title="Smutmum" />
         </div>
-        <div className="col-start-7 col-end-9 px-4 py-4 bg-white rounded">
-          <div className="mb-4 text-3xl text-center text-gray-500 font-lords">
+        <div className="col-start-7 col-end-9 pt-4 pb-4 border-4 rounded-md rounded-b-full shadow-2xl bg-stone-400 borer-double">
+          <div className="py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords">
             battle report
           </div>
-          <div className="flex flex-wrap">
-            <div className="w-full px-4 py-3 my-1 uppercase bg-gray-500 rounded shadow-inner">
-              {' '}
-              Realm 1 hit points 20
-            </div>
-            <div className="w-full px-4 py-3 my-1 uppercase bg-gray-500 rounded shadow-inner">
-              {' '}
-              attack
-            </div>
+          <div className="flex flex-wrap px-4">
+            {combatItem.map((a, index) => {
+              return (
+                <BattleReportItem
+                  key={index}
+                  realm={a.realm}
+                  hitPoints={a.hitPoints}
+                />
+              );
+            })}
+          </div>
+          <div className="flex w-full px-4 pt-10">
+            <Button variant="primary" className="w-full">
+              Success
+            </Button>
           </div>
         </div>
       </div>
     </BasePanel>
+  );
+}
+
+const combatItem = [
+  { realm: '1', hitPoints: '20' },
+  { realm: '2', hitPoints: '3' },
+  { realm: '1', hitPoints: '3' },
+  { realm: '2', hitPoints: '30' },
+  { realm: '1', hitPoints: '6' },
+];
+
+interface BattleReportItem {
+  realm: string;
+  hitPoints: number | string;
+}
+
+export function BattleReportItem(props: BattleReportItem): ReactElement {
+  return (
+    <div className="flex justify-between w-full px-4 py-3 my-1 font-semibold uppercase border rounded shadow-inner bg-stone-300 text-off-200 border-stone-300">
+      {' '}
+      <span>Realm {props.realm}</span>
+      <span>deals </span>
+      <span>{props.hitPoints} damage</span>
+    </div>
   );
 }

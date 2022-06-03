@@ -17,7 +17,7 @@ import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
+import { IsOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -69,7 +69,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const time = () => {
     const NOW_IN_MS = new Date().getTime();
 
-    return (NOW_IN_MS + 86400000).toString();
+    return (NOW_IN_MS + 26400000).toString();
   };
 
   return (
@@ -81,6 +81,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           title={realm?.name ?? ''}
           realmId={realmId}
         />
+
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">
             <Image
@@ -106,7 +107,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             )}
           </Card>
           <Card className="col-start-5 col-end-7 text-white">
-            <CardTitle>Attack Available in</CardTitle>
+            <CardTitle>Vulnerable in</CardTitle>
             {/* <CardStats className="text-2xl">{date.toDateString()}</CardStats> */}
             {/* <div className='flex justify-around w-full my-4 text-white'>
               

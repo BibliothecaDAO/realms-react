@@ -224,7 +224,7 @@ function useAtlas(): Atlas {
           setMenuType(panelType);
         }
       } else if (panelType === 'combat') {
-        // setArtBackground('bank');
+        // setArtBackground('crypt');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }

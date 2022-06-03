@@ -11,6 +11,7 @@ interface HealthBarProps {
 interface TroopProps {
   troop: TroopInterface;
   className?: string;
+  withPurchase?: boolean;
 }
 
 const troops = [
@@ -42,7 +43,7 @@ export const HealthBar = (props: HealthBarProps) => {
       style={{
         height: `${getVitality()}%`,
       }}
-      className={`relative bottom-0 w-2 rounded ${getColour()}`}
+      className={`relative bottom-0 w-2 rounded-tl rounded-br ${getColour()}`}
     ></div>
   );
 };
@@ -53,9 +54,9 @@ export const TroopType = () => {
 
 const STYLES = {
   tier: {
-    1: 'w-10 h-24',
-    2: 'w-24 h-24',
-    3: 'w-48 h-24',
+    1: 'w-10 h-16',
+    2: 'w-24 h-16',
+    3: 'w-48 h-20',
   },
 } as const;
 
@@ -131,7 +132,7 @@ export const Troop = (props: TroopProps) => {
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white/50 rounded shadow-inner`}
+      )} bg-white/50 rounded shadow-inner flex`}
     >
       <HealthBar
         troopId={props.troop.troopId}
@@ -141,40 +142,45 @@ export const Troop = (props: TroopProps) => {
       {/* <div className="mt-auto text-2xl text-center font-body">
         {getTroop()?.name}
       </div> */}
-      <Popover className="relative">
-        <div ref={ref}>
-          {isOpen && (
-            <Popover.Panel className="absolute z-50 m-auto md:left-0" static>
-              <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
-                <div className="text-lg text-center uppercase font-lords">
-                  Select Troop to build
-                </div>
-                <ul>
-                  {getTroopTierList().map((a, index) => {
-                    return (
-                      <li
-                        className="flex justify-between my-2 font-lords"
-                        key={index}
-                      >
-                        {a.name}{' '}
-                        <Button
-                          variant="secondary"
-                          size="xs"
-                          onClick={() => {
-                            setIsOpen(!isOpen);
-                          }}
+      {props.withPurchase && (
+        <Popover className="relative bottom-0">
+          <div ref={ref}>
+            {isOpen && (
+              <Popover.Panel
+                className="absolute z-50 m-auto -bottom-10 md:left-0"
+                static
+              >
+                <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+                  <div className="text-center uppercase border-b text-md">
+                    Select Troop to build
+                  </div>
+                  <ul>
+                    {getTroopTierList().map((a, index) => {
+                      return (
+                        <li
+                          className="flex justify-between my-2 font-lords"
+                          key={index}
                         >
-                          add
-                        </Button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </Popover.Panel>
-          )}
-        </div>
-      </Popover>
+                          {a.name}{' '}
+                          <Button
+                            variant="secondary"
+                            size="xs"
+                            onClick={() => {
+                              setIsOpen(!isOpen);
+                            }}
+                          >
+                            add
+                          </Button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </Popover.Panel>
+            )}
+          </div>
+        </Popover>
+      )}
     </div>
   );
 };

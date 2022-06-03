@@ -1,4 +1,11 @@
+import { useStarknet } from '@starknet-react/core';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import { useWalletContext } from '@/hooks/useWalletContext';
+
+interface TraitProps {
+  trait: string;
+  traitAmount?: number;
+}
 
 export const RealmStatus = (realm: RealmFragmentFragment) => {
   if (realm.bridgedOwner) {
@@ -13,11 +20,6 @@ export const RealmStatus = (realm: RealmFragmentFragment) => {
     return 'Layer 1';
   }
 };
-
-interface TraitProps {
-  trait: string;
-  traitAmount?: number;
-}
 
 export const TraitTable = (props: TraitProps) => {
   const traitSet = [
@@ -68,4 +70,10 @@ export const TraitTable = (props: TraitProps) => {
       </div>
     </div>
   );
+};
+
+export const IsOwner = (owner?: string | null) => {
+  const { account, connect, connectors } = useStarknet();
+
+  return account == owner ? true : false;
 };

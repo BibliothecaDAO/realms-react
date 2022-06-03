@@ -3,6 +3,7 @@ import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import useResources from '@/hooks/settling/useResources';
+import { IsOwner } from '@/shared/Getters/Realm';
 import { resources, findResourceName } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
@@ -57,7 +58,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           <Spinner size="md" scheme="white" variant="bricks" />
         ),
         level: re.level,
-        build: (
+        build: IsOwner(props.realm?.ownerL2) && (
           <Button
             variant="secondary"
             onClick={() => upgrade(resourceId)}
@@ -108,17 +109,27 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         </span>
       </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
-      <Button
-        size="sm"
-        className="mt-3 ml-2"
-        variant="primary"
-        onClick={() => claim()}
-      >
-        Harvest Resources
-      </Button>
-      <Button size="sm" href="/combat" className="mt-3 ml-2" variant="primary">
-        Raid Vault
-      </Button>
+
+      {IsOwner(props.realm?.ownerL2) && (
+        <Button
+          size="sm"
+          className="mt-3 ml-2"
+          variant="primary"
+          onClick={() => claim()}
+        >
+          Harvest Resources
+        </Button>
+      )}
+      {!IsOwner(props.realm?.ownerL2) && (
+        <Button
+          size="sm"
+          href="/combat"
+          className="mt-3 ml-2"
+          variant="primary"
+        >
+          Raid Vault
+        </Button>
+      )}
     </div>
   );
 }
