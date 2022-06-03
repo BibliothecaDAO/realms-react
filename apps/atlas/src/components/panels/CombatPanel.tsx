@@ -1,44 +1,73 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { getOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { RealmVault } from '../tables/RealmVault';
 import { BasePanel } from './BasePanel';
+
 export function CombatPanel(): ReactElement {
   const { selectedPanel } = useAtlasContext();
+  const router = useRouter();
+  const { attackingRealmId, defendingRealmId } = router.query;
+
+  const attackId = attackingRealmId ? attackingRealmId.toString() : '0';
+  const defendId = defendingRealmId ? defendingRealmId.toString() : '0';
 
   const { data: AttackingRealm, loading: AttackingLoading } = useGetRealmQuery({
     variables: {
-      id: parseInt('3'),
+      id: parseInt(attackId),
     },
     skip: false,
   });
 
   const { data: DefendingRealm, loading: DefendingLoading } = useGetRealmQuery({
     variables: {
-      id: parseInt('4'),
+      id: parseInt(defendId),
     },
     skip: false,
   });
+
+  const attackSquad =
+    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 1) ??
+    [];
+  const defenseSquad =
+    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
+    [];
 
   return (
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="relative grid h-full grid-cols-8 gap-12">
         <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
-          <RealmBannerHeading realmId={1} order="the fox" title="Funfun" />
-          <SquadBuilder
-            withPurchase={false}
-            flipped={true}
-            troops={dummySquad}
-          />
+          {DefendingRealm?.getRealm?.name && (
+            <RealmBannerHeading
+              realmId={parseInt(defendId)}
+              order={getOrder(DefendingRealm?.getRealm)}
+              title={DefendingRealm?.getRealm?.name}
+            />
+          )}
+
+          <SquadBuilder withPurchase={true} troops={defenseSquad} />
           <Button variant="primary">Attack</Button>
-          <SquadBuilder withPurchase={true} troops={dummySquad} />
-          <RealmBannerHeading realmId={2} order="power" title="Shuahd" />
+          <SquadBuilder
+            flipped={true}
+            withPurchase={true}
+            troops={attackSquad}
+          />
+
+          {AttackingRealm?.getRealm?.name && (
+            <RealmBannerHeading
+              realmId={parseInt(attackId)}
+              order={getOrder(AttackingRealm?.getRealm)}
+              title={AttackingRealm?.getRealm?.name}
+            />
+          )}
         </div>
         <div className="col-start-7 col-end-9 pt-4 pb-4 border-4 rounded-md rounded-b-full shadow-2xl bg-stone-400 borer-double">
           <div className="py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords">

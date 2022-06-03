@@ -87,3 +87,7 @@ export const IsOwner = (owner?: string | null) => {
 
   return account == owner ? true : false;
 };
+
+export const getOrder = (realm: RealmFragmentFragment) => {
+  return realm.orderType.toLowerCase();
+};
