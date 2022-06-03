@@ -9,6 +9,7 @@ fragment RealmFragment on Realm {
   rarityScore
   orderType
   wonder
+  lastAttacked
   resources {
     resourceId
     resourceName
