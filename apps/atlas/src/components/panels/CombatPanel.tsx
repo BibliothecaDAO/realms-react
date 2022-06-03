@@ -3,7 +3,10 @@ import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
-import { useGetRealmQuery } from '@/generated/graphql';
+import {
+  useGetRealmCombatResultQuery,
+  useGetRealmQuery,
+} from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
@@ -40,6 +43,16 @@ export function CombatPanel(): ReactElement {
   const defenseSquad =
     AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
     [];
+
+  // Sample combat result query
+  // const { data: combatResult } = useGetRealmCombatResultQuery({
+  //   variables: {
+  //     defendRealmId: 1061,
+  //     transactionHash:
+  //       '0x56aaed97a22b5ac764c7c2e32f1b3a3d0e3721540b326b8a4bf46fa77ed1e38',
+  //   },
+  // });
+  // console.log(combatResult);
 
   return (
     <BasePanel open={selectedPanel === 'combat'}>

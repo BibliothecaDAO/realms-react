@@ -1,6 +1,6 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
-import { useGetRealmEventsQuery } from '@/generated/graphql';
+import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { shortenAddress } from '@/util/formatters';
 
 type Row = {
@@ -73,7 +73,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
     // { Header: 'Outcome', id: 3, accessor: 'outcome' },
   ];
 
-  const { data: realmEventsData } = useGetRealmEventsQuery({
+  const { data: historyData } = useGetRealmHistoryQuery({
     variables: { filter: { realmId: { equals: realmId } } },
   });
 
@@ -106,7 +106,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
     }
   }
 
-  const realmEventData = (realmEventsData?.getRealmEvents ?? [])
+  const realmEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
       return {
         action: genRealmEventAction(realmEvent),

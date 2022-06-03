@@ -22,3 +22,46 @@ query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
     }
   }
 }
+
+query getRealmHistory(
+  $filter: RealmHistoryWhereInput
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  getRealmHistory(filter: $filter, take: $take, skip: $skip) {
+    id
+    eventType
+    realmId
+    realmOwner
+    data
+    timestamp
+  }
+}
+
+query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
+@api(name: starkIndexer) {
+  getRealmCombatResult(
+    defendRealmId: $defendRealmId
+    transactionHash: $transactionHash
+  ) {
+    defendRealmId
+    attackRealmId
+    transactionHash
+    history {
+      eventType
+      attackSquad
+      defendSquad
+      outcome
+      attackType
+      hitPoints
+      timestamp
+    }
+    resourcesPillaged {
+      resourceId
+      resourceName
+      amount
+    }
+    outcome
+    timestamp
+  }
+}

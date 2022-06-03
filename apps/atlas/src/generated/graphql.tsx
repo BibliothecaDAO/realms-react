@@ -19,10 +19,10 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
-  DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
 };
 
 /** The Buildings Model */
@@ -69,26 +69,57 @@ export type BuildingWhereInput = {
   realmId?: InputMaybe<IntNullableFilter>;
 };
 
+/** The Combat History Model */
+export type CombatHistory = {
+  __typename?: 'CombatHistory';
+  attackRealmId: Scalars['Int'];
+  attackRealmOwner?: Maybe<Scalars['String']>;
+  attackSquad?: Maybe<Scalars['JSON']>;
+  attackType?: Maybe<Scalars['Int']>;
+  defendRealmId: Scalars['Int'];
+  defendRealmOwner?: Maybe<Scalars['String']>;
+  defendSquad?: Maybe<Scalars['JSON']>;
+  eventId: Scalars['String'];
+  eventType: Scalars['String'];
+  hitPoints?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  outcome?: Maybe<Scalars['Int']>;
+  timestamp?: Maybe<Scalars['Timestamp']>;
+  transactionHash?: Maybe<Scalars['String']>;
+};
+
+/** The CombatResult Model */
+export type CombatResult = {
+  __typename?: 'CombatResult';
+  attackRealmId: Scalars['Int'];
+  defendRealmId: Scalars['Int'];
+  history?: Maybe<Array<CombatHistory>>;
+  outcome?: Maybe<Scalars['Int']>;
+  resourcesPillaged?: Maybe<Array<ResourceAmount>>;
+  timestamp?: Maybe<Scalars['Timestamp']>;
+  transactionHash: Scalars['String'];
+};
+
 export type DateTimeFilter = {
-  equals?: InputMaybe<Scalars['DateTime']>;
-  gt?: InputMaybe<Scalars['DateTime']>;
-  gte?: InputMaybe<Scalars['DateTime']>;
-  in?: InputMaybe<Array<Scalars['DateTime']>>;
-  lt?: InputMaybe<Scalars['DateTime']>;
-  lte?: InputMaybe<Scalars['DateTime']>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
   not?: InputMaybe<NestedDateTimeFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
 export type DateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTime']>;
-  gt?: InputMaybe<Scalars['DateTime']>;
-  gte?: InputMaybe<Scalars['DateTime']>;
-  in?: InputMaybe<Array<Scalars['DateTime']>>;
-  lt?: InputMaybe<Scalars['DateTime']>;
-  lte?: InputMaybe<Scalars['DateTime']>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
 /** The Desiege Model */
@@ -102,7 +133,7 @@ export type Desiege = {
   id: Scalars['ID'];
   initialHealth: Scalars['Int'];
   startBlock: Scalars['Int'];
-  startedOn: Scalars['DateTime'];
+  startedOn: Scalars['Timestamp'];
   winner: Scalars['Int'];
 };
 
@@ -188,7 +219,7 @@ export type LoreEntityRelationFilter = {
 /** Lore Entity Revision */
 export type LoreEntityRevision = {
   __typename?: 'LoreEntityRevision';
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Timestamp'];
   excerpt?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   markdown?: Maybe<Scalars['String']>;
@@ -337,25 +368,25 @@ export type MutationCreateOrUpdateResourcesArgs = {
 };
 
 export type NestedDateTimeFilter = {
-  equals?: InputMaybe<Scalars['DateTime']>;
-  gt?: InputMaybe<Scalars['DateTime']>;
-  gte?: InputMaybe<Scalars['DateTime']>;
-  in?: InputMaybe<Array<Scalars['DateTime']>>;
-  lt?: InputMaybe<Scalars['DateTime']>;
-  lte?: InputMaybe<Scalars['DateTime']>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
   not?: InputMaybe<NestedDateTimeFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
 export type NestedDateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTime']>;
-  gt?: InputMaybe<Scalars['DateTime']>;
-  gte?: InputMaybe<Scalars['DateTime']>;
-  in?: InputMaybe<Array<Scalars['DateTime']>>;
-  lt?: InputMaybe<Scalars['DateTime']>;
-  lte?: InputMaybe<Scalars['DateTime']>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
 export type NestedEnumOrderTypeNullableFilter = {
@@ -471,7 +502,8 @@ export type Query = {
   getLoreEntity: LoreEntity;
   getLorePois: Array<LorePoi>;
   getRealm: Realm;
-  getRealmEvents: Array<RealmEvent>;
+  getRealmCombatResult: CombatResult;
+  getRealmHistory: Array<RealmHistory>;
   getRealms: Array<Realm>;
   getResource: Resource;
   getResources: Array<Resource>;
@@ -506,8 +538,13 @@ export type QueryGetRealmArgs = {
   realmId: Scalars['Float'];
 };
 
-export type QueryGetRealmEventsArgs = {
-  filter?: InputMaybe<RealmEventWhereInput>;
+export type QueryGetRealmCombatResultArgs = {
+  defendRealmId: Scalars['Float'];
+  transactionHash: Scalars['String'];
+};
+
+export type QueryGetRealmHistoryArgs = {
+  filter?: InputMaybe<RealmHistoryWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
@@ -543,7 +580,7 @@ export type Realm = {
   buildings?: Maybe<Array<Building>>;
   defendTroopIds: Array<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
-  lastAttacked?: Maybe<Scalars['String']>;
+  lastAttacked?: Maybe<Scalars['Timestamp']>;
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
@@ -559,23 +596,23 @@ export type Realm = {
   wonder?: Maybe<Scalars['String']>;
 };
 
-/** The Realm Event Model */
-export type RealmEvent = {
-  __typename?: 'RealmEvent';
+/** The Realm History Model */
+export type RealmHistory = {
+  __typename?: 'RealmHistory';
   data?: Maybe<Scalars['JSON']>;
   eventId?: Maybe<Scalars['String']>;
   eventType?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   realmId: Scalars['Int'];
   realmOwner?: Maybe<Scalars['String']>;
-  timestamp?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['Timestamp']>;
   transactionHash?: Maybe<Scalars['String']>;
 };
 
-export type RealmEventWhereInput = {
-  AND?: InputMaybe<Array<RealmEventWhereInput>>;
-  NOT?: InputMaybe<Array<RealmEventWhereInput>>;
-  OR?: InputMaybe<Array<RealmEventWhereInput>>;
+export type RealmHistoryWhereInput = {
+  AND?: InputMaybe<Array<RealmHistoryWhereInput>>;
+  NOT?: InputMaybe<Array<RealmHistoryWhereInput>>;
+  OR?: InputMaybe<Array<RealmHistoryWhereInput>>;
   data?: InputMaybe<JsonFilter>;
   eventId?: InputMaybe<StringFilter>;
   eventType?: InputMaybe<StringFilter>;
@@ -670,6 +707,14 @@ export type Resource = {
   resourceId: Scalars['Int'];
   resourceName: Scalars['String'];
   upgrades: Array<Scalars['String']>;
+};
+
+/** The Token Amount Model */
+export type ResourceAmount = {
+  __typename?: 'ResourceAmount';
+  amount: Scalars['String'];
+  resourceId: Scalars['Int'];
+  resourceName: Scalars['String'];
 };
 
 export type ResourceInput = {
@@ -978,7 +1023,7 @@ export type GetRealmQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    lastAttacked?: string | null;
+    lastAttacked?: any | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1046,23 +1091,56 @@ export type GetBuildingsByRealmIdQuery = {
   }>;
 };
 
-export type GetRealmEventsQueryVariables = Exact<{
-  filter?: InputMaybe<RealmEventWhereInput>;
+export type GetRealmHistoryQueryVariables = Exact<{
+  filter?: InputMaybe<RealmHistoryWhereInput>;
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
-export type GetRealmEventsQuery = {
+export type GetRealmHistoryQuery = {
   __typename?: 'Query';
-  getRealmEvents: Array<{
-    __typename?: 'RealmEvent';
+  getRealmHistory: Array<{
+    __typename?: 'RealmHistory';
     id: number;
     eventType?: string | null;
     realmId: number;
     realmOwner?: string | null;
     data?: any | null;
-    timestamp?: string | null;
+    timestamp?: any | null;
   }>;
+};
+
+export type GetRealmCombatResultQueryVariables = Exact<{
+  defendRealmId: Scalars['Float'];
+  transactionHash: Scalars['String'];
+}>;
+
+export type GetRealmCombatResultQuery = {
+  __typename?: 'Query';
+  getRealmCombatResult: {
+    __typename?: 'CombatResult';
+    defendRealmId: number;
+    attackRealmId: number;
+    transactionHash: string;
+    outcome?: number | null;
+    timestamp?: any | null;
+    history?: Array<{
+      __typename?: 'CombatHistory';
+      eventType: string;
+      attackSquad?: any | null;
+      defendSquad?: any | null;
+      outcome?: number | null;
+      attackType?: number | null;
+      hitPoints?: number | null;
+      timestamp?: any | null;
+    }> | null;
+    resourcesPillaged?: Array<{
+      __typename?: 'ResourceAmount';
+      resourceId: number;
+      resourceName: string;
+      amount: string;
+    }> | null;
+  };
 };
 
 export type GetRealmsQueryVariables = Exact<{
@@ -1086,7 +1164,7 @@ export type GetRealmsQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
-    lastAttacked?: string | null;
+    lastAttacked?: any | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1140,7 +1218,7 @@ export type RealmFragmentFragment = {
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
-  lastAttacked?: string | null;
+  lastAttacked?: any | null;
   resources?: Array<{
     __typename?: 'Resource';
     resourceId: number;
@@ -1719,13 +1797,13 @@ export type GetBuildingsByRealmIdQueryResult = Apollo.QueryResult<
   GetBuildingsByRealmIdQuery,
   GetBuildingsByRealmIdQueryVariables
 >;
-export const GetRealmEventsDocument = gql`
-  query getRealmEvents(
-    $filter: RealmEventWhereInput
+export const GetRealmHistoryDocument = gql`
+  query getRealmHistory(
+    $filter: RealmHistoryWhereInput
     $take: Float
     $skip: Float
   ) @api(name: starkIndexer) {
-    getRealmEvents(filter: $filter, take: $take, skip: $skip) {
+    getRealmHistory(filter: $filter, take: $take, skip: $skip) {
       id
       eventType
       realmId
@@ -1737,16 +1815,16 @@ export const GetRealmEventsDocument = gql`
 `;
 
 /**
- * __useGetRealmEventsQuery__
+ * __useGetRealmHistoryQuery__
  *
- * To run a query within a React component, call `useGetRealmEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRealmEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetRealmHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRealmHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRealmEventsQuery({
+ * const { data, loading, error } = useGetRealmHistoryQuery({
  *   variables: {
  *      filter: // value for 'filter'
  *      take: // value for 'take'
@@ -1754,39 +1832,120 @@ export const GetRealmEventsDocument = gql`
  *   },
  * });
  */
-export function useGetRealmEventsQuery(
+export function useGetRealmHistoryQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetRealmEventsQuery,
-    GetRealmEventsQueryVariables
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetRealmEventsQuery, GetRealmEventsQueryVariables>(
-    GetRealmEventsDocument,
+  return Apollo.useQuery<GetRealmHistoryQuery, GetRealmHistoryQueryVariables>(
+    GetRealmHistoryDocument,
     options
   );
 }
-export function useGetRealmEventsLazyQuery(
+export function useGetRealmHistoryLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetRealmEventsQuery,
-    GetRealmEventsQueryVariables
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetRealmEventsQuery, GetRealmEventsQueryVariables>(
-    GetRealmEventsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    GetRealmHistoryQuery,
+    GetRealmHistoryQueryVariables
+  >(GetRealmHistoryDocument, options);
 }
-export type GetRealmEventsQueryHookResult = ReturnType<
-  typeof useGetRealmEventsQuery
+export type GetRealmHistoryQueryHookResult = ReturnType<
+  typeof useGetRealmHistoryQuery
 >;
-export type GetRealmEventsLazyQueryHookResult = ReturnType<
-  typeof useGetRealmEventsLazyQuery
+export type GetRealmHistoryLazyQueryHookResult = ReturnType<
+  typeof useGetRealmHistoryLazyQuery
 >;
-export type GetRealmEventsQueryResult = Apollo.QueryResult<
-  GetRealmEventsQuery,
-  GetRealmEventsQueryVariables
+export type GetRealmHistoryQueryResult = Apollo.QueryResult<
+  GetRealmHistoryQuery,
+  GetRealmHistoryQueryVariables
+>;
+export const GetRealmCombatResultDocument = gql`
+  query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
+  @api(name: starkIndexer) {
+    getRealmCombatResult(
+      defendRealmId: $defendRealmId
+      transactionHash: $transactionHash
+    ) {
+      defendRealmId
+      attackRealmId
+      transactionHash
+      history {
+        eventType
+        attackSquad
+        defendSquad
+        outcome
+        attackType
+        hitPoints
+        timestamp
+      }
+      resourcesPillaged {
+        resourceId
+        resourceName
+        amount
+      }
+      outcome
+      timestamp
+    }
+  }
+`;
+
+/**
+ * __useGetRealmCombatResultQuery__
+ *
+ * To run a query within a React component, call `useGetRealmCombatResultQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRealmCombatResultQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRealmCombatResultQuery({
+ *   variables: {
+ *      defendRealmId: // value for 'defendRealmId'
+ *      transactionHash: // value for 'transactionHash'
+ *   },
+ * });
+ */
+export function useGetRealmCombatResultQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >(GetRealmCombatResultDocument, options);
+}
+export function useGetRealmCombatResultLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetRealmCombatResultQuery,
+    GetRealmCombatResultQueryVariables
+  >(GetRealmCombatResultDocument, options);
+}
+export type GetRealmCombatResultQueryHookResult = ReturnType<
+  typeof useGetRealmCombatResultQuery
+>;
+export type GetRealmCombatResultLazyQueryHookResult = ReturnType<
+  typeof useGetRealmCombatResultLazyQuery
+>;
+export type GetRealmCombatResultQueryResult = Apollo.QueryResult<
+  GetRealmCombatResultQuery,
+  GetRealmCombatResultQueryVariables
 >;
 export const GetRealmsDocument = gql`
   query getRealms(
