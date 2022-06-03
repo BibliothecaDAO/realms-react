@@ -11,8 +11,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["src/*"],
-      "@bibliotheca-dao/core-lib/*": ["../core-lib/src/*"],
-      "@bibliotheca-dao/core-lib": ["../core-lib/src/index"]
+      "@bibliotheca-dao/core-lib/*": ["../../../packages/core-lib/src/*"],
+      "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
     }
   },
   "exclude": ["**/node_modules", "**/.*/", "dist"]
