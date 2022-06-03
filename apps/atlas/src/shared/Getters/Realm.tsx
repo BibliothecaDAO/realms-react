@@ -21,6 +21,16 @@ export const RealmStatus = (realm: RealmFragmentFragment) => {
   }
 };
 
+export const RealmOwner = (realm: RealmFragmentFragment) => {
+  return (
+    realm?.settledOwner ||
+    realm?.ownerL2 ||
+    realm?.bridgedOwner ||
+    realm?.owner ||
+    '0'
+  );
+};
+
 export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {

@@ -543,6 +543,7 @@ export type Realm = {
   buildings?: Maybe<Array<Building>>;
   defendTroopIds: Array<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
+  lastAttacked?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
@@ -568,6 +569,7 @@ export type RealmEvent = {
   realmId: Scalars['Int'];
   realmOwner?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['String']>;
+  transactionHash?: Maybe<Scalars['String']>;
 };
 
 export type RealmEventWhereInput = {
@@ -581,6 +583,7 @@ export type RealmEventWhereInput = {
   realmId?: InputMaybe<IntFilter>;
   realmOwner?: InputMaybe<StringFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
+  transactionHash?: InputMaybe<StringFilter>;
 };
 
 export type RealmListRelationFilter = {
@@ -641,6 +644,7 @@ export type RealmWhereInput = {
   buildings?: InputMaybe<BuildingListRelationFilter>;
   id?: InputMaybe<IntFilter>;
   imageUrl?: InputMaybe<StringFilter>;
+  lastAttacked?: InputMaybe<DateTimeNullableFilter>;
   name?: InputMaybe<StringNullableFilter>;
   orderType?: InputMaybe<EnumOrderTypeNullableFilter>;
   owner?: InputMaybe<StringNullableFilter>;
@@ -974,6 +978,7 @@ export type GetRealmQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
+    lastAttacked?: string | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1081,6 +1086,7 @@ export type GetRealmsQuery = {
     rarityScore: number;
     orderType: string;
     wonder?: string | null;
+    lastAttacked?: string | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1134,6 +1140,7 @@ export type RealmFragmentFragment = {
   rarityScore: number;
   orderType: string;
   wonder?: string | null;
+  lastAttacked?: string | null;
   resources?: Array<{
     __typename?: 'Resource';
     resourceId: number;
@@ -1242,6 +1249,7 @@ export const RealmFragmentFragmentDoc = gql`
     rarityScore
     orderType
     wonder
+    lastAttacked
     resources {
       resourceId
       resourceName

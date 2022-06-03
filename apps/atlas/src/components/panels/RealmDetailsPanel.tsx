@@ -16,8 +16,9 @@ import { useState } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { IsOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
+import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -46,15 +47,11 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       : '0';
   };
 
-  // TODO: tenox move to indexer
-  const realmOwner =
-    realm?.settledOwner ||
-    realm?.ownerL2 ||
-    realm?.bridgedOwner ||
-    realm?.owner ||
-    '0';
-
   const hoursAgoAttack = 20;
+
+  const timeAttacked = realm?.lastAttacked
+    ? new Date(parseInt(realm.lastAttacked))
+    : null;
 
   const getProgress = () => {
     const attacked = new Date();
@@ -96,7 +93,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           <Card className="col-start-5 col-end-7">
             <CardTitle>Owner</CardTitle>
             <CardStats className="text-2xl">
-              {shortenAddress(realmOwner)}
+              {shortenAddress(RealmOwner(realm as RealmFragmentFragment))}
             </CardStats>
             {/* <CardIcon /> */}
           </Card>
