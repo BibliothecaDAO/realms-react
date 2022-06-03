@@ -11,7 +11,7 @@ const NetworkConnectButton = () => {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
 
-  const { account, connect, connectors } = useStarknet();
+  const { account, error, connect, connectors } = useStarknet();
 
   return (
     <Popover className="relative">
@@ -47,6 +47,8 @@ const NetworkConnectButton = () => {
             </Button>{' '}
           </>
         ) : null}
+
+        {error ? <p className="text-red-300">Error: {error.message}</p> : null}
 
         <hr className="my-4" />
         {isConnected && (
