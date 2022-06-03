@@ -17,8 +17,8 @@ export function CombatPanel(): ReactElement {
   const router = useRouter();
   const { attackingRealmId, defendingRealmId } = router.query;
 
-  const attackId = attackingRealmId ? attackingRealmId.toString() : '0';
-  const defendId = defendingRealmId ? defendingRealmId.toString() : '0';
+  const attackId = attackingRealmId ? attackingRealmId.toString() : '1';
+  const defendId = defendingRealmId ? defendingRealmId.toString() : '2';
 
   const { data: AttackingRealm, loading: AttackingLoading } = useGetRealmQuery({
     variables: {
@@ -53,13 +53,13 @@ export function CombatPanel(): ReactElement {
             />
           )}
 
-          <SquadBuilder withPurchase={true} troops={defenseSquad} />
-          <Button variant="primary">Attack</Button>
           <SquadBuilder
             flipped={true}
             withPurchase={true}
-            troops={attackSquad}
+            troops={defenseSquad}
           />
+          <Button variant="primary">Attack</Button>
+          <SquadBuilder withPurchase={true} troops={attackSquad} />
 
           {AttackingRealm?.getRealm?.name && (
             <RealmBannerHeading

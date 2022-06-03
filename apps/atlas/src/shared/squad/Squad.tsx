@@ -9,20 +9,21 @@ interface SquadProps {
 }
 
 export const SquadBuilder = (props: SquadProps) => {
-  const emptyTroop = {
-    troopId: 0,
-    index: 0,
-    type: 0,
-    tier: 0,
-    agility: 0,
-    attack: 0,
-    defense: 0,
-    vitality: 0,
-    wisdom: 0,
-    squadSlot: 0,
-  };
+  console.log(props.troops);
 
   const fillGap = (tier: number, length: number) => {
+    const emptyTroop = {
+      troopId: 0,
+      index: 0,
+      type: 0,
+      tier: 0,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    };
     const currentTroops = props.troops.filter((a) => a.tier === tier);
     const temp: TroopInterface[] = [];
 
@@ -36,6 +37,16 @@ export const SquadBuilder = (props: SquadProps) => {
     });
   };
 
+  const tier1 = () => {
+    return fillGap(1, 16);
+  };
+  const tier2 = () => {
+    return fillGap(2, 8);
+  };
+  const tier3 = () => {
+    return fillGap(3, 1);
+  };
+
   return (
     <div className="flex flex-col w-full">
       <div
@@ -43,15 +54,15 @@ export const SquadBuilder = (props: SquadProps) => {
           props.flipped ? 'order-last' : ''
         } flex justify-around w-full my-2`}
       >
-        {fillGap(1, 16)}
+        {tier1()}
       </div>
-      <div className="flex justify-around w-full my-2 ">{fillGap(2, 8)}</div>
+      <div className="flex justify-around w-full my-2 ">{tier2()}</div>
       <div
         className={`${
           props.flipped ? 'order-first' : ''
         } flex justify-around w-full my-2`}
       >
-        {fillGap(3, 1)}
+        {tier3()}
       </div>
     </div>
   );

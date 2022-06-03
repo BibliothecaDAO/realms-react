@@ -18,6 +18,7 @@ const troopList = [
   {
     name: 'watchman',
     type: 'melee',
+    troopId: 1,
     tier: 1,
     agility: 1,
     attack: 1,
@@ -29,6 +30,7 @@ const troopList = [
     name: 'squire',
     type: 'melee',
     tier: 1,
+    troopId: 1,
     agility: 1,
     attack: 1,
     defense: 1,
@@ -39,6 +41,7 @@ const troopList = [
     name: 'guard',
     type: 'melee',
     tier: 2,
+    troopId: 2,
     agility: 1,
     attack: 1,
     defense: 1,
@@ -49,6 +52,7 @@ const troopList = [
     name: 'archer',
     type: 'ranged',
     tier: 2,
+    troopId: 2,
     agility: 1,
     attack: 1,
     defense: 1,
@@ -59,6 +63,7 @@ const troopList = [
     name: 'guard captain',
     type: 'melee',
     tier: 3,
+    troopId: 3,
     agility: 1,
     attack: 1,
     defense: 1,
@@ -69,7 +74,8 @@ const troopList = [
 
 export const HealthBar = (props: HealthBarProps) => {
   const getVitality = () => {
-    const vit = troopList.find((a) => a.id === props.troopId)?.vitality ?? 0;
+    const vit =
+      troopList.find((a) => a.troopId === props.troopId)?.vitality ?? 0;
     return (props.vitality / vit) * 100;
   };
 
@@ -111,7 +117,6 @@ const STYLES = {
 export const Troop = (props: TroopProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
-
   const getTroop = () => {
     return troopList.find((a) => a.tier === props.troop.tier);
   };
