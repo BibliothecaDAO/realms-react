@@ -29,19 +29,27 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-90 flex flex-wrap px-8 p-4  rounded shadow-inner bg-order-${props.order.replace(
+      className={`bg-opacity-90 flex flex-wrap px-8 p-4  rounded shadow bg-order-${props.order.replace(
         'the ',
         ''
       )}`}
     >
-      <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase font-lords">
-        <OrderIcon
-          className="self-center text-white stroke-white fill-white"
-          size={'md'}
-          order={props.order.toLowerCase()}
-        />
-        <div className="self-center">
-          <Combobox value={selectedRealm} onChange={setSelectedRealm}>
+      <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase ">
+        <div
+          className={`absolute z-10 flex justify-center w-12 h-32 -mt-4 bg-white border-4 border-order-${props.order.replace(
+            'the ',
+            ''
+          )} border-double rounded-b-full shadow-xl`}
+        >
+          <OrderIcon
+            className="self-center mt-auto text-white stroke-white fill-white"
+            size={'md'}
+            order={props.order.toLowerCase()}
+          />
+        </div>
+        <div className="self-center mx-auto">
+          <h1 className="font-lords">{props.title}</h1>
+          {/* <Combobox value={selectedRealm} onChange={setSelectedRealm}>
             <Combobox.Input
               className={
                 'rounded-md px-4 bg-transparent text-white text-3xl text-center'
@@ -60,7 +68,6 @@ export const RealmBannerHeading = (props: HeaderProps) => {
                           : 'bg-white text-black'
                       }`}
                     >
-                      {/* {selected && <CheckIcon />} */}
                       {realm.name}
                     </li>
                   )}
@@ -68,15 +75,16 @@ export const RealmBannerHeading = (props: HeaderProps) => {
               ))}
             </Combobox.Options>
             <Combobox.Button className="text-white">+</Combobox.Button>
-          </Combobox>
+          </Combobox> */}
         </div>
+        <div className="self-center font-body">{props.realmId}</div>
 
         {/* <div className="self-center text-4xl">~ {props.title} ~</div> */}
-        <OrderIcon
+        {/* <OrderIcon
           className="self-center text-white stroke-white fill-white"
           size={'md'}
           order={props.order.toLowerCase()}
-        />
+        /> */}
       </div>
     </div>
   );

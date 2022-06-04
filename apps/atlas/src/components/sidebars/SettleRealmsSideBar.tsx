@@ -12,7 +12,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import useSettling from '@/hooks/settling/useSettling';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmCard } from '../cards/RealmCard';
 import { BaseSideBar } from './BaseSideBar';
@@ -71,7 +71,7 @@ function RealmsSelectable(props: RealmsSelectableProps): ReactElement {
 
 /* TBD Should this be merged with Bridge Realms Sidebar */
 export const SettleRealmsSideBar = () => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useUIContext();
+  const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
   const { account } = useStarknet();
   const [selectedResource, setResource] = useState<number>();
   const isSettleRealms = selectedMenuType === 'settleRealms' && showDetails;

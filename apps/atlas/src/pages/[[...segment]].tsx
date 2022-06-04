@@ -2,7 +2,7 @@
 import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
-import type { ReactElement } from 'react';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
@@ -16,6 +16,7 @@ import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
 /* import { LorePanel } from '@/components/panels/LorePanel'; */
+import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
 import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
@@ -35,39 +36,30 @@ import crypts from '@/geodata/crypts_all.json';
 import ga_bags from '@/geodata/ga_bags.json';
 import loot_bags from '@/geodata/loot_bags.json';
 import realms from '@/geodata/realms.json';
-import { useUIContext, UIProvider } from '@/hooks/useUIContext';
+import { useAtlasContext, AtlasProvider } from '@/hooks/useAtlasContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
 import type { RealmFeatures } from '@/types/index';
 
-export default function Base({
-  children,
-}: {
-  children: ReactElement | ReactElement[];
-}) {
+export default function AtlasPage() {
   return (
-    <UIProvider>
+    <AtlasProvider>
       <Layout>
         <div className="relative flex h-full overflow-hidden sm:h-screen">
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
             <Header />
-
-            <AtlasMain>{children}</AtlasMain>
+            <AtlasMain />
           </div>
         </div>
       </Layout>
-    </UIProvider>
+    </AtlasProvider>
   );
 }
 
-function AtlasMain({ children }: { children: ReactElement | ReactElement[] }) {
-  const { selectedPanel } = useUIContext();
-  const shouldShowMap = !children;
-
+function AtlasMain() {
   return (
     <div className="relative w-full h-full">
-      {!selectedPanel && children}
       <ArtBackground />
       <AccountModule />
       <LootModule />
@@ -77,26 +69,28 @@ function AtlasMain({ children }: { children: ReactElement | ReactElement[] }) {
       <BankModule />
       <TradePanel />
       <CombatPanel />
-      {shouldShowMap && (
-        <>
-          <FlyTo />
-          <MapModule />
-        </>
-      )}
+      {/* <FlyTo /> */}
+      <MapModule />
     </div>
   );
 }
 
 function RealmsModule() {
+  const { query } = useRouter();
+  const segments = query?.segment ?? [];
+  const realmId = segments[1] ? Number(segments[1]) : 0;
   return (
     <RealmProvider>
-      <>
-        <RealmsPanel />
-        {/* <LorePanel /> */}
-        <RealmSideBar />
-        <BridgeRealmsSideBar />
-        <SettleRealmsSideBar />
-      </>
+      {realmId > 0 && <RealmDetailsPanel realmId={realmId} />}
+      {realmId === 0 && (
+        <>
+          <RealmsPanel />
+          {/* <LorePanel /> */}
+          <RealmSideBar />
+          <BridgeRealmsSideBar />
+          <SettleRealmsSideBar />
+        </>
+      )}
     </RealmProvider>
   );
 }
@@ -104,10 +98,8 @@ function RealmsModule() {
 function GaModule() {
   return (
     <GaProvider>
-      <>
-        <GaPanel />
-        <GASideBar />
-      </>
+      <GaPanel />
+      <GASideBar />
     </GaProvider>
   );
 }
@@ -115,10 +107,8 @@ function GaModule() {
 function CryptModule() {
   return (
     <CryptProvider>
-      <>
-        <CryptsPanel />
-        <CryptsSideBar />
-      </>
+      <CryptsPanel />
+      <CryptsSideBar />
     </CryptProvider>
   );
 }
@@ -133,14 +123,10 @@ function BankModule() {
 }
 
 function LootModule() {
-  const { selectedId } = useUIContext();
-
   return (
     <LootProvider>
-      <>
-        <LootPanel />
-        <LootSideBar id={selectedId} />
-      </>
+      <LootPanel />
+      <LootSideBar />
     </LootProvider>
   );
 }
@@ -151,7 +137,7 @@ function AccountModule() {
 
 function MapModule() {
   const ItemViewLevel = 5;
-  const { openDetails, selectedId, coordinates } = useUIContext();
+  const { openDetails, selectedId, coordinates } = useAtlasContext();
   const [resource] = useState<Array<string>>([]);
 
   const filteredData = () => {

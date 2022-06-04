@@ -1,18 +1,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
+import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
+import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
-import { useUIContext } from '@/hooks/useUIContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
   const { balance } = useWalletContext();
-  const { togglePanelType } = useUIContext();
+  const { selectedPanel } = useAtlasContext();
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
@@ -22,8 +24,9 @@ export function Header() {
     }
   );
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden shadow-inner bg-gray-700/90 sm:flex">
+    <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-stone-500 sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
+        <BibliothecaDAO className="self-center h-8 ml-2 mr-auto stroke-white fill-white" />
         <div className="self-center mt-2">
           <IconButton
             aria-label="Bank"
@@ -53,14 +56,12 @@ export function Header() {
           <Lords className="w-6" /> <span className="px-4">{balance}</span>
         </span>
         <NetworkConnectButton />
-        <Button
-          variant="primary"
-          onClick={() => togglePanelType('account')}
-          className="py-1 text-sm"
-        >
-          <Crown className="inline-block w-6 mr-2 -ml-2" />
-          Account
-        </Button>
+        <Link href={selectedPanel === 'account' ? '' : '/account'}>
+          <Button variant="primary" className="py-1 text-sm">
+            <Crown className="inline-block w-6 mr-2 -ml-2" />
+            Account
+          </Button>
+        </Link>
       </div>
     </div>
   );
