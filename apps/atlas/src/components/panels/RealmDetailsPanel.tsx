@@ -32,8 +32,10 @@ interface RealmDetailsPanelProps {
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const [squad, setSquad] = useState(false);
+  const [id, setId] = useState(realmId);
+  const router = useRouter();
+  const { data: realmData } = useGetRealmQuery({ variables: { id: id } });
 
-  const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
   const realm = realmData?.getRealm;
 
   const attackSquad =
@@ -69,10 +71,16 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     return (NOW_IN_MS + 26400000).toString();
   };
 
+  const pushPage = (value) => {
+    setId(parseInt(value));
+    router.push('/realms/' + value);
+  };
+
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
       <div className="col-start-1 col-end-5">
         <RealmBannerHeading
+          onSubmit={(value) => pushPage(parseInt(value))}
           key={realm?.realmId ?? ''}
           order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
           title={realm?.name ?? ''}

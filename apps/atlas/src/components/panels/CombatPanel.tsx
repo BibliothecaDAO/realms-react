@@ -3,13 +3,14 @@ import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import {
   useGetRealmCombatResultQuery,
   useGetRealmQuery,
 } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
-import { getOrder } from '@/shared/Getters/Realm';
+import { getOrder, IsOwner } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -17,12 +18,21 @@ import { RealmVault } from '../tables/RealmVault';
 import { BasePanel } from './BasePanel';
 
 export function CombatPanel(): ReactElement {
+  const [attackId, setAttackId] = useState('3');
+  const [defendId, setDefendId] = useState('1061');
+
   const { selectedPanel } = useAtlasContext();
   const router = useRouter();
   const { attackingRealmId, defendingRealmId } = router.query;
 
-  const attackId = attackingRealmId ? attackingRealmId.toString() : '3';
-  const defendId = defendingRealmId ? defendingRealmId.toString() : '1061';
+  useEffect(() => {
+    if (attackingRealmId) {
+      setAttackId(attackingRealmId ? attackingRealmId.toString() : '3');
+    }
+    if (defendingRealmId) {
+      setDefendId(defendingRealmId ? defendingRealmId.toString() : '1061');
+    }
+  });
 
   const { initiateCombat } = useCombat({ token_id: parseInt(attackId) });
 
@@ -73,6 +83,7 @@ export function CombatPanel(): ReactElement {
         <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
           {DefendingRealm?.getRealm?.name && (
             <RealmBannerHeading
+              onSubmit={(value) => setDefendId(value)}
               realmId={parseInt(defendId)}
               order={getOrder(DefendingRealm?.getRealm)}
               title={DefendingRealm?.getRealm?.name}
@@ -87,7 +98,7 @@ export function CombatPanel(): ReactElement {
             troops={defenseSquad}
           />
 
-          {/* <Button variant="primary">Attack</Button> */}
+          <hr></hr>
 
           <SquadBuilder
             location={1}
@@ -98,6 +109,7 @@ export function CombatPanel(): ReactElement {
 
           {AttackingRealm?.getRealm?.name && (
             <RealmBannerHeading
+              onSubmit={(value) => setAttackId(value)}
               realmId={parseInt(attackId)}
               order={getOrder(AttackingRealm?.getRealm)}
               title={AttackingRealm?.getRealm?.name}
@@ -118,13 +130,16 @@ export function CombatPanel(): ReactElement {
             )}
           </div>
           <div className="w-full px-4 mb-4">
-            <Button
-              onClick={() => initiateCombat(parseInt(defendId), 1)}
-              className="w-full"
-              variant="attack"
-            >
-              Raid Vault
-            </Button>
+            {IsOwner(AttackingRealm?.getRealm?.ownerL2) && (
+              <Button
+                disabled={IsOwner(AttackingRealm?.getRealm?.ownerL2)}
+                onClick={() => initiateCombat(parseInt(defendId), 1)}
+                className="w-full"
+                variant="attack"
+              >
+                Raid Vault
+              </Button>
+            )}
           </div>
 
           <div className={bannerClasses}>battle report</div>
