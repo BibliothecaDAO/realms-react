@@ -20,7 +20,7 @@ export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
   const { account, connect, connectors } = useStarknet();
-  const { selectedPanel } = useAtlasContext();
+  const { selectedPanel, toggleMenuType } = useAtlasContext();
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
@@ -88,6 +88,15 @@ export function Header() {
               />
             </Button>
           </Link>
+        </span>
+        <span>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => toggleMenuType('transactionCart')}
+          >
+            tx
+          </Button>
         </span>
       </div>
     </div>

@@ -27,6 +27,7 @@ import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
+import { TransactionCartSideBar } from '@/components/sidebars/TransactionCartSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
@@ -71,6 +72,7 @@ function AtlasMain() {
       <CombatPanel />
       {/* <FlyTo /> */}
       <MapModule />
+      <TransactionCartSideBar />
     </div>
   );
 }

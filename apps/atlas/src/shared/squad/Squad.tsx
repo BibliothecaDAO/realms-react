@@ -1,3 +1,6 @@
+import { Button } from '@bibliotheca-dao/ui-lib/base';
+import { number } from 'starknet';
+import useCombat from '@/hooks/settling/useCombat';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
 
@@ -6,10 +9,79 @@ interface SquadProps {
   troops: Array<TroopInterface>;
   flipped?: boolean;
   withPurchase?: boolean;
+  realmId: number;
+  location: number; // 1 attack 2 defence
 }
 
 export const SquadBuilder = (props: SquadProps) => {
-  console.log(props.troops);
+  const { buildSquad } = useCombat({ token_id: props.realmId });
+
+  const troopsToPurchase = [
+    {
+      troopId: 1,
+      index: 1,
+      type: 1,
+      tier: 1,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    },
+    {
+      troopId: 1,
+      index: 1,
+      type: 1,
+      tier: 1,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    },
+    {
+      troopId: 1,
+      index: 1,
+      type: 1,
+      tier: 1,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    },
+    {
+      troopId: 2,
+      index: 2,
+      type: 2,
+      tier: 2,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    },
+    {
+      troopId: 3,
+      index: 3,
+      type: 2,
+      tier: 3,
+      agility: 0,
+      attack: 0,
+      defense: 0,
+      vitality: 0,
+      wisdom: 0,
+      squadSlot: 0,
+    },
+  ];
+
+  const troopIdsToPurchase = () => {
+    return troopsToPurchase.map((a) => a.troopId);
+  };
 
   const fillGap = (tier: number, length: number) => {
     const emptyTroop = {
@@ -64,6 +136,23 @@ export const SquadBuilder = (props: SquadProps) => {
       >
         {tier3()}
       </div>
+      {props.withPurchase && (
+        <div className="w-full p-8 rounded bg-white/20">
+          <h4>buy troops</h4>{' '}
+          <div className="flex space-x-2">
+            {troopsToPurchase.map((a, index) => {
+              return <Troop withPurchase={false} key={index} troop={a} />;
+            })}
+          </div>
+          <Button
+            onClick={() => buildSquad(troopIdsToPurchase(), props.location)}
+            className="mt-4"
+            variant="primary"
+          >
+            Purchase
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

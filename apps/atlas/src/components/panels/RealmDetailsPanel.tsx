@@ -165,9 +165,17 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               </div>
             </div>
             {squad ? (
-              <SquadBuilder troops={attackSquad} />
+              <SquadBuilder
+                location={1}
+                realmId={realmId}
+                troops={attackSquad}
+              />
             ) : (
-              <SquadBuilder troops={defenseSquad} />
+              <SquadBuilder
+                location={2}
+                realmId={realmId}
+                troops={defenseSquad}
+              />
             )}
           </Card>
           <Card className="col-start-1 col-end-3 ">

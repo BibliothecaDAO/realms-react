@@ -7,6 +7,7 @@ import {
   useGetRealmCombatResultQuery,
   useGetRealmQuery,
 } from '@/generated/graphql';
+import useCombat from '@/hooks/settling/useCombat';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
@@ -20,8 +21,10 @@ export function CombatPanel(): ReactElement {
   const router = useRouter();
   const { attackingRealmId, defendingRealmId } = router.query;
 
-  const attackId = attackingRealmId ? attackingRealmId.toString() : '1';
-  const defendId = defendingRealmId ? defendingRealmId.toString() : '2';
+  const attackId = attackingRealmId ? attackingRealmId.toString() : '3';
+  const defendId = defendingRealmId ? defendingRealmId.toString() : '1061';
+
+  const { initiateCombat } = useCombat({ token_id: parseInt(attackId) });
 
   const { data: AttackingRealm, loading: AttackingLoading } = useGetRealmQuery({
     variables: {
@@ -45,14 +48,24 @@ export function CombatPanel(): ReactElement {
     [];
 
   // Sample combat result query
-  // const { data: combatResult } = useGetRealmCombatResultQuery({
-  //   variables: {
-  //     defendRealmId: 1061,
-  //     transactionHash:
-  //       '0x56aaed97a22b5ac764c7c2e32f1b3a3d0e3721540b326b8a4bf46fa77ed1e38',
-  //   },
-  // });
-  // console.log(combatResult);
+  const { data: combatResult } = useGetRealmCombatResultQuery({
+    variables: {
+      defendRealmId: 1061,
+      transactionHash:
+        '0x56aaed97a22b5ac764c7c2e32f1b3a3d0e3721540b326b8a4bf46fa77ed1e38',
+    },
+  });
+  console.log(combatResult);
+  const getCombatSteps = () => {
+    return combatResult?.getRealmCombatResult?.history
+      ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
+          return a.eventType == 'combat_step';
+        })
+      : [];
+  };
+
+  const bannerClasses =
+    'py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords transition-all duration-300';
 
   return (
     <BasePanel open={selectedPanel === 'combat'}>
@@ -67,12 +80,21 @@ export function CombatPanel(): ReactElement {
           )}
 
           <SquadBuilder
+            location={2}
             flipped={true}
-            withPurchase={true}
+            realmId={parseInt(defendId)}
+            withPurchase={false}
             troops={defenseSquad}
           />
-          <Button variant="primary">Attack</Button>
-          <SquadBuilder withPurchase={true} troops={attackSquad} />
+
+          {/* <Button variant="primary">Attack</Button> */}
+
+          <SquadBuilder
+            location={1}
+            realmId={parseInt(attackId)}
+            withPurchase={true}
+            troops={attackSquad}
+          />
 
           {AttackingRealm?.getRealm?.name && (
             <RealmBannerHeading
@@ -83,35 +105,48 @@ export function CombatPanel(): ReactElement {
           )}
         </div>
         <div className="col-start-7 col-end-9 pt-4 pb-4 border-4 rounded-md rounded-b-full shadow-2xl bg-stone-400 borer-double">
-          <div className="py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords">
+          <div className={bannerClasses}>
             {' '}
             <span>Raidable Vault</span>
           </div>
           <div className="px-4">
-            {AttackingRealm && (
+            {DefendingRealm && !DefendingLoading && (
               <RealmVault
-                realm={AttackingRealm?.getRealm}
+                realm={DefendingRealm?.getRealm}
                 loading={AttackingLoading}
               />
             )}
           </div>
-          <div className="py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords">
-            battle report
+          <div className="w-full px-4 mb-4">
+            <Button
+              onClick={() => initiateCombat(parseInt(defendId), 1)}
+              className="w-full"
+              variant="attack"
+            >
+              Raid Vault
+            </Button>
           </div>
+
+          <div className={bannerClasses}>battle report</div>
           <div className="flex flex-wrap px-4">
-            {combatItem.map((a, index) => {
+            {getCombatSteps().map((a, index) => {
               return (
                 <BattleReportItem
                   key={index}
-                  realm={a.realm}
+                  realm={'1'}
                   hitPoints={a.hitPoints}
                 />
               );
             })}
           </div>
-          <div className="py-5 mt-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords">
-            Outcome
-          </div>
+          {/* <div className="px-4">
+            {DefendingRealm && !DefendingLoading && (
+              <RealmVault
+                realm={DefendingRealm?.getRealm}
+                loading={AttackingLoading}
+              />
+            )}
+          </div> */}
           {/* <div className="flex w-full px-4 pt-10">
             <Button variant="primary" className="w-full">
               Success
@@ -123,22 +158,14 @@ export function CombatPanel(): ReactElement {
   );
 }
 
-const combatItem = [
-  { realm: '1', hitPoints: '20' },
-  { realm: '2', hitPoints: '3' },
-  { realm: '1', hitPoints: '3' },
-  { realm: '2', hitPoints: '30' },
-  { realm: '1', hitPoints: '6' },
-];
-
 interface BattleReportItem {
   realm: string;
-  hitPoints: number | string;
+  hitPoints: number | null | undefined;
 }
 
 export function BattleReportItem(props: BattleReportItem): ReactElement {
   return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 font-semibold uppercase border rounded shadow-inner bg-stone-300 text-stone-400 border-stone-300">
+    <div className="flex justify-between w-full px-4 py-3 my-1 text-white uppercase border rounded shadow-inner border-stone-300 bg-order-fox">
       {' '}
       <span>Realm {props.realm}</span>
       <span>deals </span>

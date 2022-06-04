@@ -69,8 +69,6 @@ const useResources = (args: useResourcesArgs): Resources => {
       remainder: 0,
     };
   }
-  console.log(outputLoading);
-  console.log(allOutputData);
   return {
     availableResources,
     claimableLords: allOutputData && uint256ToBN(allOutputData[1]),
