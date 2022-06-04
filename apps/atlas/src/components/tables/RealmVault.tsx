@@ -40,11 +40,11 @@ export function RealmVault(props: RealmsCardProps): ReactElement {
               resource={
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
-              size="md"
+              size="sm"
               className="mr-4"
             />
-            <span className="self-center font-semibold tracking-widest uppercase">
-              {re.type || ''}
+            <span className="self-center text-xs tracking-widest uppercase">
+              {findResourceName(re.resourceId)?.trait.replace(' ', '') || ''}
             </span>
           </span>
         ),

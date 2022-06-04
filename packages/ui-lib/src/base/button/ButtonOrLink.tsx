@@ -34,6 +34,8 @@ const STYLES = {
   variant: {
     default:
       'text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:text-gray-900 hover:text-gray-900',
+    attack:
+      'text-red-600 bg-red-400 hover:bg-red-500 active:bg-red-300 active:text-red-900 hover:text-red-900 text-white border-red-300 hover:text-red-200',
     primary:
       'text-white bg-stone-500 hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200 shadow-md ',
     secondary:

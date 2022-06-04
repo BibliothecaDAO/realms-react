@@ -12,3 +12,6 @@ export enum ElementToken {
   Light = 1,
   Dark,
 }
+
+export const DAY_CYCLE = 1800;
+export const RAIDABLE_PERCENTAGE = 25;
