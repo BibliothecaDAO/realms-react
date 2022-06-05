@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from 'react';
 import {
   useGetRealmCombatResultQuery,
   useGetRealmQuery,
+  useGetTroopStatsQuery,
 } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -65,6 +66,8 @@ export function CombatPanel(): ReactElement {
         '0x7e1999c5e27eacd00549aaa4d8e080d0132d5339e6a0719f1fa046c384882ad',
     },
   });
+
+  const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const getCombatSteps = () => {
     return combatResult?.getRealmCombatResult?.history

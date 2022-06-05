@@ -508,6 +508,7 @@ export type Query = {
   getResource: Resource;
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
+  getTroopStats: Array<TroopStats>;
   getWallet: Wallet;
 };
 
@@ -822,6 +823,7 @@ export type Troop = {
   realmId: Scalars['Int'];
   squadSlot: Scalars['Int'];
   tier: Scalars['Int'];
+  troopCost?: Maybe<TroopCost>;
   troopId: Scalars['Int'];
   troopName: Scalars['String'];
   type: Scalars['Int'];
@@ -829,10 +831,34 @@ export type Troop = {
   wisdom: Scalars['Int'];
 };
 
+/** Troop Cost Model */
+export type TroopCost = {
+  __typename?: 'TroopCost';
+  amount: Scalars['Float'];
+  resources: Scalars['JSON'];
+  troopId: Scalars['Int'];
+  troopName: Scalars['String'];
+};
+
 export type TroopListRelationFilter = {
   every?: InputMaybe<TroopWhereInput>;
   none?: InputMaybe<TroopWhereInput>;
   some?: InputMaybe<TroopWhereInput>;
+};
+
+/** TroopStats */
+export type TroopStats = {
+  __typename?: 'TroopStats';
+  agility: Scalars['Int'];
+  attack: Scalars['Int'];
+  defense: Scalars['Int'];
+  tier: Scalars['Int'];
+  troopCost?: Maybe<TroopCost>;
+  troopId: Scalars['Int'];
+  troopName: Scalars['String'];
+  type: Scalars['Int'];
+  vitality: Scalars['Int'];
+  wisdom: Scalars['Int'];
 };
 
 export type TroopWhereInput = {
@@ -1203,6 +1229,29 @@ export type GetRealmsQuery = {
       wisdom: number;
       squadSlot: number;
     }>;
+  }>;
+};
+
+export type GetTroopStatsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTroopStatsQuery = {
+  __typename?: 'Query';
+  getTroopStats: Array<{
+    __typename?: 'TroopStats';
+    troopId: number;
+    troopName: string;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    defense: number;
+    vitality: number;
+    wisdom: number;
+    troopCost?: {
+      __typename?: 'TroopCost';
+      amount: number;
+      resources: any;
+    } | null;
   }>;
 };
 
@@ -2008,6 +2057,75 @@ export type GetRealmsLazyQueryHookResult = ReturnType<
 export type GetRealmsQueryResult = Apollo.QueryResult<
   GetRealmsQuery,
   GetRealmsQueryVariables
+>;
+export const GetTroopStatsDocument = gql`
+  query getTroopStats @api(name: starkIndexer) {
+    getTroopStats {
+      troopId
+      troopName
+      type
+      tier
+      agility
+      attack
+      defense
+      vitality
+      wisdom
+      troopCost {
+        amount
+        resources
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetTroopStatsQuery__
+ *
+ * To run a query within a React component, call `useGetTroopStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTroopStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTroopStatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTroopStatsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTroopStatsQuery,
+    GetTroopStatsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(
+    GetTroopStatsDocument,
+    options
+  );
+}
+export function useGetTroopStatsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTroopStatsQuery,
+    GetTroopStatsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTroopStatsQuery, GetTroopStatsQueryVariables>(
+    GetTroopStatsDocument,
+    options
+  );
+}
+export type GetTroopStatsQueryHookResult = ReturnType<
+  typeof useGetTroopStatsQuery
+>;
+export type GetTroopStatsLazyQueryHookResult = ReturnType<
+  typeof useGetTroopStatsLazyQuery
+>;
+export type GetTroopStatsQueryResult = Apollo.QueryResult<
+  GetTroopStatsQuery,
+  GetTroopStatsQueryVariables
 >;
 export const GetWalletDocument = gql`
   query getWallet($address: String!) @api(name: starkIndexer) {
