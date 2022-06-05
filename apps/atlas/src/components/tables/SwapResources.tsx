@@ -18,7 +18,10 @@ import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useApproveLordsForExchange } from '@/hooks/settling/useApprovals';
+import {
+  useApproveLordsForExchange,
+  useApproveResourcesForExchange,
+} from '@/hooks/settling/useApprovals';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
@@ -157,6 +160,8 @@ export function SwapResources(): ReactElement {
   } = useResourcesContext();
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
+  const { approveResources, isApproved: isResourcesApprovedForExchange } =
+    useApproveResourcesForExchange();
 
   const [slippage, setSlippage] = useState(0.1);
 
@@ -224,10 +229,21 @@ export function SwapResources(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {!isLordsApprovedForExchange && (
+      {!isLordsApprovedForExchange && isBuy && (
         <div>
           <Button className="w-full" variant="primary" onClick={approveLords}>
             APPROVE LORDS
+          </Button>
+        </div>
+      )}
+      {!isResourcesApprovedForExchange && isSell && (
+        <div>
+          <Button
+            className="w-full"
+            variant="primary"
+            onClick={approveResources}
+          >
+            APPROVE RESOURCES
           </Button>
         </div>
       )}
@@ -304,7 +320,11 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            disabled={isTransactionInProgress || !isLordsApprovedForExchange}
+            disabled={
+              isTransactionInProgress ||
+              (!isLordsApprovedForExchange && isBuy) ||
+              (!isResourcesApprovedForExchange && isSell)
+            }
           >
             {isTransactionInProgress
               ? 'Pending...'

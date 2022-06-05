@@ -6,13 +6,14 @@ import {
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
-import { toBN } from 'starknet/dist/utils/number';
+import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
 import {
   useLordsContract,
   useBuildingContract,
   useExchangeContract,
+  useResources1155Contract,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -90,4 +91,42 @@ export const useApproveLordsForBuilding = () => {
 export const useApproveLordsForExchange = () => {
   const { contract: lordsContract } = useLordsContract();
   return useApprovalForContract(lordsContract as Contract);
+};
+
+export const useApproveResourcesForExchange = () => {
+  const { account } = useStarknet();
+  const { contract: exchangeContract } = useExchangeContract();
+  const { contract: resourcesContract } = useResources1155Contract();
+  const [isApproved, setIsApproved] = useState<boolean>(false);
+
+  const approveResourcesAction = useStarknetInvoke({
+    contract: resourcesContract,
+    method: 'setApprovalForAll',
+  });
+
+  const {
+    data: outputResult,
+    loading: outputLoading,
+    error: outputError,
+  } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'isApprovedForAll',
+    args: [
+      toBN(account as string).toString(),
+      toBN(exchangeContract?.address as string).toString(),
+    ],
+  });
+
+  useEffect(() => {
+    if (!outputResult) return;
+    setIsApproved(uint256ToBN(outputResult['is_approved']).toString() == '1');
+  }, [outputResult]);
+
+  const approveResources = () => {
+    approveResourcesAction.invoke({
+      args: [toBN(exchangeContract?.address as string).toString(), toFelt(1)],
+    });
+  };
+
+  return { isApproved, approveResources };
 };
