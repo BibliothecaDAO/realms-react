@@ -49,8 +49,11 @@ export default function AtlasPage() {
         <div className="relative flex h-full overflow-hidden sm:h-screen">
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
-            <Header />
-            <AtlasMain />
+            <ResourceProvider>
+              <Header />
+
+              <AtlasMain />
+            </ResourceProvider>
           </div>
         </div>
       </Layout>
@@ -67,7 +70,8 @@ function AtlasMain() {
       <GaModule />
       <RealmsModule />
       <CryptModule />
-      <BankModule />
+      <BankPanel />
+      <ResourceSwapSideBar />
       <TradePanel />
       <CombatPanel />
       {/* <FlyTo /> */}

@@ -12,7 +12,10 @@ import React, {
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { useGetExchangeRatesQuery } from '@/generated/graphql';
-import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
+import {
+  useLordsContract,
+  useResources1155Contract,
+} from '@/hooks/settling/stark-contracts';
 import { resources } from '@/util/resources';
 
 export type Resource = {
@@ -56,6 +59,7 @@ const ResourcesContext = createContext<{
     newResourceId: number
   ) => void;
   balance: ResourcesBalance;
+  lordsBalance: string;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
 }>(null!);
@@ -75,6 +79,8 @@ export const ResourceProvider = (props: ResourceProviderProps) => {
 function useResources() {
   const { account } = useStarknet();
   const [balance, setBalance] = useState([...initBalance]);
+  const [lordsBalance, setLordsBalance] = useState('0');
+
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
   );
@@ -83,7 +89,15 @@ function useResources() {
   >([]);
 
   const { contract: resources1155Contract } = useResources1155Contract();
+  const { contract: lordsContract } = useLordsContract();
+
   const ownerAddressInt = toBN(account as string).toString();
+
+  const { data: lordsBalanceData, refresh } = useStarknetCall({
+    contract: lordsContract,
+    method: 'balanceOf',
+    args: [ownerAddressInt],
+  });
 
   const { data: resourceBalanceData, refresh: updateBalance } = useStarknetCall(
     {
@@ -140,6 +154,13 @@ function useResources() {
       )
     );
   };
+
+  useEffect(() => {
+    if (!lordsBalanceData || !lordsBalanceData[0]) {
+      return;
+    }
+    setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
+  });
 
   useEffect(() => {
     setAvailableResourceIds(
@@ -203,6 +224,7 @@ function useResources() {
     balance,
     updateBalance,
     getResourceById,
+    lordsBalance,
   };
 }
 

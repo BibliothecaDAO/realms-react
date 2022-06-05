@@ -3,6 +3,7 @@ import {
   useStarknet,
   useStarknetTransactionManager,
 } from '@starknet-react/core';
+import Link from 'next/link';
 
 interface TxCartItem {
   transaction: Transaction;
@@ -10,12 +11,13 @@ interface TxCartItem {
 
 const STYLES = {
   status: {
-    REJECTED: 'bg-red-200',
+    REJECTED: 'bg-red-400',
     NOT_RECEIVED: 'bg-red-200',
     RECEIVED: 'bg-green-400/90 animate-pulse',
     PENDING: 'bg-orange-400 animate-pulse',
     ACCEPTED_ON_L2: 'bg-green-600/90',
     ACCEPTED_ON_L1: 'bg-green-900',
+    TRANSACTION_RECEIVED: 'bg-green-400 animate-pulse',
   },
 } as const;
 
@@ -26,11 +28,19 @@ const TxCartItem = (props: TxCartItem) => {
         STYLES.status[props.transaction.status]
       }  rounded shadow-inner flex p-4 w-full font-semibold`}
     >
-      <span className="w-full p-2 rounded shadow-inner bg-black/10">
+      <span className="flex justify-between w-full p-2 uppercase rounded shadow-inner bg-black/10">
         {props.transaction.status}
+        <Link
+          target={'blank_'}
+          href={
+            'https://goerli.voyager.online/tx/' +
+            props.transaction.transactionHash
+          }
+        >
+          See on Voyager
+        </Link>
       </span>
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
-      {/* <span>{props.transaction.transactionHash}</span> */}
     </div>
   );
 };

@@ -163,7 +163,7 @@ export function SwapResources(): ReactElement {
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.1);
+  const [slippage, setSlippage] = useState(0.5);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {

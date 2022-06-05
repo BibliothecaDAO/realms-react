@@ -9,10 +9,12 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
+import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { shortenAddress } from '@/util/formatters';
 import { useWalletContext } from '../../hooks/useWalletContext';
@@ -21,11 +23,14 @@ export function Header() {
     useWalletContext();
   const { account, connect, connectors } = useStarknet();
   const { selectedPanel, toggleMenuType } = useAtlasContext();
+  const { lordsBalance, availableResourceIds, addSelectedSwapResources } =
+    useResourcesContext();
+
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
     {
-      volume: 1,
+      volume: 0.6,
       loop: true,
     }
   );
@@ -69,7 +74,10 @@ export function Header() {
 
         <span>
           <Button variant="primary" onClick={connectWallet}>
-            <Lords className="w-6" /> <span className="px-4">{balance}</span>
+            <Lords className="w-6" />{' '}
+            <span className="px-4">
+              {(+formatEther(lordsBalance)).toFixed(2)}
+            </span>
           </Button>
         </span>
         <span>

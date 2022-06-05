@@ -66,7 +66,7 @@ const useApprovalForContract = (contract: Contract) => {
 
   useEffect(() => {
     if (!outputResult) return;
-
+    console.log(outputResult);
     setIsApproved(
       uint256ToBN(outputResult['remaining']) >=
         toBN(ALLOWANCE_AMOUNT.toString())
@@ -111,18 +111,17 @@ export const useApproveResourcesForExchange = () => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'isApprovedForAll',
-    args: [
-      toBN(account as string).toString(),
-      toBN(exchangeContract?.address as string).toString(),
-    ],
+    args: [account as string, exchangeContract?.address.toString()],
   });
 
   useEffect(() => {
     if (!outputResult) return;
-    setIsApproved(uint256ToBN(outputResult['is_approved']).toString() == '1');
+    console.log(outputResult.toString() == '1');
+    setIsApproved(outputResult.toString() == '1');
   }, [outputResult]);
 
   const approveResources = () => {
+    console.log(approveResourcesAction.error);
     approveResourcesAction.invoke({
       args: [toBN(exchangeContract?.address as string).toString(), toFelt(1)],
     });

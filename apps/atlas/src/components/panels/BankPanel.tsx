@@ -30,8 +30,12 @@ export const RateChange = (change: number) => {
 
 export function BankPanel(): ReactElement {
   const { selectedPanel } = useAtlasContext();
-  const { balance, availableResourceIds, addSelectedSwapResources } =
-    useResourcesContext();
+  const {
+    lordsBalance,
+    balance,
+    availableResourceIds,
+    addSelectedSwapResources,
+  } = useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
     return {
@@ -83,12 +87,12 @@ export function BankPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
-        <h1 className="w-full text-center font-lords">Iron Bank</h1>
-        <Link href="/">
-          <button className="mb-8 transition-all rounded ">
-            <Close />
-          </button>
-        </Link>
+        <div className="w-full">
+          <h1 className="w-full text-center font-lords">Iron Bank</h1>
+          <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">
+            Your Lords Balance: {(+formatEther(lordsBalance)).toFixed(2)}
+          </h4>
+        </div>
       </div>
 
       <div className="relative overflow-x-auto">
