@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
+import { useState } from 'react';
 import { number } from 'starknet';
 import useCombat from '@/hooks/settling/useCombat';
 import { Troop } from '@/shared/squad/Troops';
@@ -15,72 +16,10 @@ interface SquadProps {
 
 export const SquadBuilder = (props: SquadProps) => {
   const { buildSquad } = useCombat({ token_id: props.realmId });
-
-  const troopsToPurchase = [
-    {
-      troopId: 1,
-      index: 1,
-      type: 1,
-      tier: 1,
-      agility: 0,
-      attack: 0,
-      defense: 0,
-      vitality: 0,
-      wisdom: 0,
-      squadSlot: 0,
-    },
-    {
-      troopId: 1,
-      index: 1,
-      type: 1,
-      tier: 1,
-      agility: 0,
-      attack: 0,
-      defense: 0,
-      vitality: 0,
-      wisdom: 0,
-      squadSlot: 0,
-    },
-    {
-      troopId: 1,
-      index: 1,
-      type: 1,
-      tier: 1,
-      agility: 0,
-      attack: 0,
-      defense: 0,
-      vitality: 0,
-      wisdom: 0,
-      squadSlot: 0,
-    },
-    {
-      troopId: 2,
-      index: 2,
-      type: 2,
-      tier: 2,
-      agility: 0,
-      attack: 0,
-      defense: 0,
-      vitality: 0,
-      wisdom: 0,
-      squadSlot: 0,
-    },
-    {
-      troopId: 3,
-      index: 3,
-      type: 2,
-      tier: 3,
-      agility: 0,
-      attack: 0,
-      defense: 0,
-      vitality: 0,
-      wisdom: 0,
-      squadSlot: 0,
-    },
-  ];
+  const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
   const troopIdsToPurchase = () => {
-    return troopsToPurchase.map((a) => a.troopId);
+    return toBuy.map((a: any) => a.troopId);
   };
 
   const fillGap = (tier: number, length: number) => {
@@ -105,7 +44,15 @@ export const SquadBuilder = (props: SquadProps) => {
     }
 
     return currentTroops.concat(temp).map((a, index) => {
-      return <Troop withPurchase={props.withPurchase} key={index} troop={a} />;
+      return (
+        <Troop
+          onSubmit={(value: any) => setToBuy((current) => [...current, value])}
+          onRemove={(value: any) => setToBuy((current) => [...current, value])}
+          withPurchase={props.withPurchase}
+          key={index}
+          troop={a}
+        />
+      );
     });
   };
 
@@ -117,6 +64,32 @@ export const SquadBuilder = (props: SquadProps) => {
   };
   const tier3 = () => {
     return fillGap(3, 1);
+  };
+
+  const trimTroopFromSquad = (troop: TroopInterface) => {
+    const index = toBuy.findIndex((a) => a.troopId === troop.troopId);
+
+    setToBuy(() => [...toBuy.splice(index, 1)]);
+  };
+
+  const stats = () => {
+    return {
+      agility: props.troops
+        .map((troop) => troop.agility)
+        .reduce((prev, curr) => prev + curr, 0),
+      attack: props.troops
+        .map((troop) => troop.attack)
+        .reduce((prev, curr) => prev + curr, 0),
+      defense: props.troops
+        .map((troop) => troop.defense)
+        .reduce((prev, curr) => prev + curr, 0),
+      vitality: props.troops
+        .map((troop) => troop.vitality)
+        .reduce((prev, curr) => prev + curr, 0),
+      wisdom: props.troops
+        .map((troop) => troop.wisdom)
+        .reduce((prev, curr) => prev + curr, 0),
+    };
   };
 
   return (
@@ -140,8 +113,18 @@ export const SquadBuilder = (props: SquadProps) => {
         <div className="w-full p-8 rounded bg-white/20">
           <h4>buy troops</h4>{' '}
           <div className="flex space-x-2">
-            {troopsToPurchase.map((a, index) => {
-              return <Troop withPurchase={false} key={index} troop={a} />;
+            {toBuy.map((a, index) => {
+              return (
+                <Troop
+                  onSubmit={(value: any) =>
+                    setToBuy((current) => [...current, value])
+                  }
+                  onRemove={(value: any) => trimTroopFromSquad(value)}
+                  withPurchase={false}
+                  key={index}
+                  troop={a}
+                />
+              );
             })}
           </div>
           <Button
@@ -151,8 +134,24 @@ export const SquadBuilder = (props: SquadProps) => {
           >
             Purchase
           </Button>
+          <Button
+            onClick={() => setToBuy(() => [])}
+            className="mt-4"
+            variant="primary"
+          >
+            Clear
+          </Button>
         </div>
       )}
+      {/* <div className="flex">
+        <div className="p-8 uppercase rounded bg-black/90">
+          <div>Agility: {stats().agility}</div>
+          <div>attack: {stats().attack}</div>
+          <div>defense: {stats().defense}</div>
+          <div>vitality: {stats().vitality}</div>
+          <div>Wisdom: {stats().wisdom}</div>
+        </div>
+      </div> */}
     </div>
   );
 };

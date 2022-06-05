@@ -1,4 +1,4 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Button, CountdownTimer } from '@bibliotheca-dao/ui-lib';
 import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -67,6 +67,17 @@ export function CombatPanel(): ReactElement {
     },
   });
 
+  const timeAttacked = DefendingRealm?.getRealm?.lastAttacked
+    ? new Date(parseInt(DefendingRealm?.getRealm?.lastAttacked)).getTime()
+    : 0;
+
+  // Replace with actual last time attacked
+  const time = () => {
+    const NOW_IN_MS = new Date().getTime();
+
+    return (timeAttacked + 1800000).toString();
+  };
+
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const getCombatSteps = () => {
@@ -84,6 +95,7 @@ export function CombatPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="relative grid h-full grid-cols-8 gap-12">
         <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
+          <CountdownTimer date={time()} />
           {DefendingRealm?.getRealm?.name && (
             <RealmBannerHeading
               onSubmit={(value) => setDefendId(value)}

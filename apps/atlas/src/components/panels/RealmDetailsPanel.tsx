@@ -49,26 +49,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       : '0';
   };
 
-  const hoursAgoAttack = 20;
-
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
     : 0;
-
-  const getProgress = () => {
-    const attacked = new Date();
-    // replace with date
-    return (
-      ((attacked.getHours() + hoursAgoAttack - attacked.getHours()) / 24) *
-      100
-    ).toFixed();
-  };
 
   // Replace with actual last time attacked
   const time = () => {
     const NOW_IN_MS = new Date().getTime();
 
-    return (timeAttacked + 26400000).toString();
+    return (timeAttacked + 1800).toString();
   };
 
   const pushPage = (value) => {
@@ -157,7 +146,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
           <Card className="col-start-1 col-end-7">
             <div className="flex justify-between w-full mb-10">
-              <div className="text-2xl font-semibold tracking-widest text-white uppercase font-lords">
+              <div className="text-2xl font-semibold tracking-widest text-white uppercase">
                 Military Strength
               </div>
               <div className="text-xl font-semibold tracking-widest text-white uppercase ">
@@ -176,12 +165,14 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               <SquadBuilder
                 location={1}
                 realmId={realmId}
+                withPurchase={true}
                 troops={attackSquad}
               />
             ) : (
               <SquadBuilder
                 location={2}
                 realmId={realmId}
+                withPurchase={true}
                 troops={defenseSquad}
               />
             )}

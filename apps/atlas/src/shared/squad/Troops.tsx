@@ -12,6 +12,8 @@ interface TroopProps {
   troop: TroopInterface;
   className?: string;
   withPurchase?: boolean;
+  onSubmit: (value: TroopInterface) => void;
+  onRemove: (value: TroopInterface) => void;
 }
 
 const troopList = [
@@ -259,10 +261,11 @@ type Row = {
 };
 
 export const Troop = (props: TroopProps) => {
+  console.log(props.troop);
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const getTroop = () => {
-    return troopList.find((a) => a.tier === props.troop.tier);
+    return troopList.find((a) => a.troopId === props.troop.troopId);
   };
 
   const getTroopTierList = () => {
@@ -282,7 +285,7 @@ export const Troop = (props: TroopProps) => {
           variant="secondary"
           size="xs"
           onClick={() => {
-            setIsOpen(!isOpen);
+            props.onSubmit(re);
           }}
         >
           add
@@ -306,8 +309,20 @@ export const Troop = (props: TroopProps) => {
       />
 
       <div className="mt-auto text-xs text-center text-black uppercase font-body">
-        {getTroop()?.name.substring(0, 3)}
+        {getTroop()?.name.substring(0, 5)}
       </div>
+      {!props.withPurchase && (
+        <Button
+          variant="secondary"
+          size="xs"
+          onClick={() => {
+            props.onRemove(props.troop);
+          }}
+        >
+          x
+        </Button>
+      )}
+
       {props.withPurchase && props.troop.vitality === 0 && (
         <Popover className="relative top-0">
           <div ref={ref}>
