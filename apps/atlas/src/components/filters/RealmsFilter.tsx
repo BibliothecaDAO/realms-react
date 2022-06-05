@@ -32,6 +32,16 @@ export function RealmsFilter(props: RealmsFilterProps) {
             <Button
               variant="primary"
               size="sm"
+              className={clsx('', state.isSettledFilter ? 'bg-black' : '')}
+              onClick={actions.toggleIsSettledFilter}
+            >
+              Settled
+            </Button>
+          </div>
+          <div>
+            <Button
+              variant="primary"
+              size="sm"
               className={clsx('', state.hasWonderFilter ? 'bg-black' : '')}
               onClick={actions.toggleHasWonderFilter}
             >
