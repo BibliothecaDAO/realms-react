@@ -62,7 +62,7 @@ export function CombatPanel(): ReactElement {
     variables: {
       defendRealmId: 1061,
       transactionHash:
-        '0x56aaed97a22b5ac764c7c2e32f1b3a3d0e3721540b326b8a4bf46fa77ed1e38',
+        '0x7e1999c5e27eacd00549aaa4d8e080d0132d5339e6a0719f1fa046c384882ad',
     },
   });
 
@@ -130,16 +130,16 @@ export function CombatPanel(): ReactElement {
             )}
           </div>
           <div className="w-full px-4 mb-4">
-            {IsOwner(AttackingRealm?.getRealm?.ownerL2) && (
-              <Button
-                disabled={IsOwner(AttackingRealm?.getRealm?.ownerL2)}
-                onClick={() => initiateCombat(parseInt(defendId), 1)}
-                className="w-full"
-                variant="attack"
-              >
-                Raid Vault
-              </Button>
-            )}
+            {/* {IsOwner(AttackingRealm?.getRealm?.ownerL2) && ( */}
+            <Button
+              disabled={IsOwner(AttackingRealm?.getRealm?.ownerL2)}
+              onClick={() => initiateCombat(parseInt(defendId), 1)}
+              className="w-full"
+              variant="attack"
+            >
+              Raid Vault
+            </Button>
+            {/* )} */}
           </div>
 
           <div className={bannerClasses}>battle report</div>
@@ -180,7 +180,7 @@ interface BattleReportItem {
 
 export function BattleReportItem(props: BattleReportItem): ReactElement {
   return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 text-white uppercase border rounded shadow-inner border-stone-300 bg-order-fox">
+    <div className="flex justify-between w-full px-4 py-3 my-1 text-white uppercase border rounded shadow-inner bg-order-fox">
       {' '}
       <span>Realm {props.realm}</span>
       <span>deals </span>
