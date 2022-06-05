@@ -15,6 +15,7 @@ import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmCard } from '../cards/RealmCard';
+import { TransactionCartTable } from '../tables/Transactions';
 import { BaseSideBar } from './BaseSideBar';
 type Props = {
   id: string;
@@ -53,7 +54,7 @@ export const TransactionCartSideBar = () => {
       },
       {
         label: 'Processing',
-        component: <span />,
+        component: <TransactionCartTable />,
       },
     ],
     [selectedTab]

@@ -77,6 +77,7 @@ const useResources = (args: useResourcesArgs): Resources => {
         ? allOutputData['user_mint'].map((resource) => uint256ToBN(resource))
         : 0,
     claim: () => {
+      console.log(claimResourcesAction.error);
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id))],
       });

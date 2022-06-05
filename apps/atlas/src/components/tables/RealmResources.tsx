@@ -1,4 +1,10 @@
-import { Table, Button, ResourceIcon, Spinner } from '@bibliotheca-dao/ui-lib';
+import {
+  Table,
+  Button,
+  ResourceIcon,
+  Spinner,
+  CountdownTimer,
+} from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -102,15 +108,13 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         </span>
         <span className="flex flex-col">
           <span>Days Accrued: </span>
-
-          <span className="text-3xl">
-            {availableResources.daysAccrued}D {availableResources.remainder}m
-          </span>
+          {/* <CountdownTimer date={'16544528050000'} /> */}
+          <span className="text-3xl">{availableResources.daysAccrued}D</span>
         </span>
       </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
 
-      {IsOwner(props.realm?.ownerL2) && (
+      {props.realm?.ownerL2 && (
         <Button
           size="sm"
           className="mt-3 ml-2"
@@ -123,7 +127,12 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
       {!IsOwner(props.realm?.ownerL2) && (
         <Button
           size="sm"
-          href="/combat"
+          href={
+            `/combat?` +
+            `defendingRealmId=` +
+            props.realm.realmId +
+            '&attackingRealmId=3'
+          }
           className="mt-3 ml-2"
           variant="primary"
         >

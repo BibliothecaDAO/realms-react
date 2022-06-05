@@ -52,8 +52,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const hoursAgoAttack = 20;
 
   const timeAttacked = realm?.lastAttacked
-    ? new Date(parseInt(realm.lastAttacked))
-    : null;
+    ? new Date(parseInt(realm.lastAttacked)).getTime()
+    : 0;
 
   const getProgress = () => {
     const attacked = new Date();
@@ -68,7 +68,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const time = () => {
     const NOW_IN_MS = new Date().getTime();
 
-    return (NOW_IN_MS + 26400000).toString();
+    return (timeAttacked + 26400000).toString();
   };
 
   const pushPage = (value) => {

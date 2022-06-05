@@ -60,8 +60,8 @@ const DateTimeDisplay = (props: TimeDisplay) => {
 
 const ExpiredNotice = () => {
   return (
-    <div className="expired-notice">
-      <p>Ready</p>
+    <div className="w-full p-2 text-center uppercase bg-red-500 rounded animate-pulse">
+      <p>Realm can be Attacked</p>
     </div>
   );
 };

@@ -65,7 +65,7 @@ export function CombatPanel(): ReactElement {
         '0x56aaed97a22b5ac764c7c2e32f1b3a3d0e3721540b326b8a4bf46fa77ed1e38',
     },
   });
-  console.log(combatResult);
+
   const getCombatSteps = () => {
     return combatResult?.getRealmCombatResult?.history
       ? combatResult?.getRealmCombatResult?.history?.filter((a) => {

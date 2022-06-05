@@ -92,7 +92,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }
   return (
     <div>
-      {bridgeRow}
+      {/* {bridgeRow} */}
 
       {props.realms &&
         props.realms.map((realm: RealmFragmentFragment, index) => (
@@ -179,7 +179,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className="flex justify-center w-full px-6 py-4 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-0 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
+            <div className="flex justify-center w-full px-6 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
