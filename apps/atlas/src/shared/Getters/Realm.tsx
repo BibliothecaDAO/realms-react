@@ -36,7 +36,7 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-amber-400/70',
+      colour: 'bg-green-200/70',
       traitMax: 7,
       title: 'Regions',
     },
@@ -49,7 +49,7 @@ export const TraitTable = (props: TraitProps) => {
     },
     {
       trait: 'River',
-      colour: 'bg-amber-700/70',
+      colour: 'bg-blue-700/70',
       traitMax: 60,
       title: 'Rivers',
     },
@@ -65,15 +65,15 @@ export const TraitTable = (props: TraitProps) => {
 
   return (
     <div>
-      <span className="flex justify-between font-body">
+      <span className="flex justify-between font-semibold font-body">
         <span className="tracking-widest uppercase">{getTrait()?.title} </span>
         <span>
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
         </span>
       </span>
-      <div className="w-full my-2 bg-gray-200 rounded">
+      <div className="w-full my-1 rounded-full bg-gray-100/20">
         <div
-          className={`h-2 ${getTrait()?.colour}`}
+          className={`h-3 ${getTrait()?.colour} shadow-inner rounded-full`}
           style={{
             width: `${getWidth()}%`,
           }}
