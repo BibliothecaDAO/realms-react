@@ -32,14 +32,11 @@ const useCombat = (args: useCombatArgs): Combat => {
 
   return {
     buildSquad: (troop_ids, slot) => {
-      console.log(buildSquadAction.error);
-      console.log(troop_ids);
       buildSquadAction.invoke({
         args: [troop_ids, bnToUint256(toBN(args.token_id)), slot],
       });
     },
     initiateCombat: (defending_realm_id, attack_type) => {
-      console.log(combatInvoke.error);
       combatInvoke({
         args: [
           bnToUint256(toBN(args.token_id)),
