@@ -7,6 +7,7 @@ import { useCombatContract } from '@/hooks/settling/stark-contracts';
 type Combat = {
   buildSquad: (troop_ids: number[], slot: number) => void;
   initiateCombat: (defending_realm_id: number, attack_type: number) => void;
+  combatData: any;
 };
 type useCombatArgs = {
   token_id: number;
@@ -20,7 +21,11 @@ const useCombat = (args: useCombatArgs): Combat => {
     method: 'build_squad_from_troops_in_realm',
   });
 
-  const initiateCombatAction = useStarknetInvoke({
+  const {
+    data: combatData,
+    loading: combatLoading,
+    invoke: combatInvoke,
+  } = useStarknetInvoke({
     contract: combatContract,
     method: 'initiate_combat',
   });
@@ -34,8 +39,8 @@ const useCombat = (args: useCombatArgs): Combat => {
       });
     },
     initiateCombat: (defending_realm_id, attack_type) => {
-      console.log(initiateCombatAction.error);
-      initiateCombatAction.invoke({
+      console.log(combatInvoke.error);
+      combatInvoke({
         args: [
           bnToUint256(toBN(args.token_id)),
           bnToUint256(toBN(defending_realm_id)),
@@ -43,6 +48,7 @@ const useCombat = (args: useCombatArgs): Combat => {
         ],
       });
     },
+    combatData: combatData,
   };
 };
 
