@@ -1036,6 +1036,25 @@ export type LorePoiFragmentFragment = {
   assetType?: string | null;
 };
 
+export type GetAccountQueryVariables = Exact<{
+  account: Scalars['String'];
+}>;
+
+export type GetAccountQuery = {
+  __typename?: 'Query';
+  ownedRealmsCount: number;
+  settledRealmsCount: number;
+  accountHistory: Array<{
+    __typename?: 'RealmHistory';
+    id: number;
+    eventType?: string | null;
+    realmId: number;
+    realmOwner?: string | null;
+    data?: any | null;
+    timestamp?: any | null;
+  }>;
+};
+
 export type GetRealmQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
@@ -1257,25 +1276,6 @@ export type GetTroopStatsQuery = {
       amount: number;
       resources: any;
     } | null;
-  }>;
-};
-
-export type GetAccountQueryVariables = Exact<{
-  account: Scalars['String'];
-}>;
-
-export type GetAccountQuery = {
-  __typename?: 'Query';
-  ownedRealmsCount: number;
-  settledRealmsCount: number;
-  accountHistory: Array<{
-    __typename?: 'RealmHistory';
-    id: number;
-    eventType?: string | null;
-    realmId: number;
-    realmOwner?: string | null;
-    data?: any | null;
-    timestamp?: any | null;
   }>;
 };
 
@@ -1745,6 +1745,73 @@ export type GetLorePoisQueryResult = Apollo.QueryResult<
   GetLorePoisQuery,
   GetLorePoisQueryVariables
 >;
+export const GetAccountDocument = gql`
+  query getAccount($account: String!) @api(name: starkIndexer) {
+    ownedRealmsCount: getRealmsCount(filter: { ownerL2: { equals: $account } })
+    settledRealmsCount: getRealmsCount(
+      filter: { settledOwner: { equals: $account } }
+    )
+    accountHistory: getRealmHistory(
+      filter: { realmOwner: { equals: $account } }
+    ) {
+      id
+      eventType
+      realmId
+      realmOwner
+      data
+      timestamp
+    }
+  }
+`;
+
+/**
+ * __useGetAccountQuery__
+ *
+ * To run a query within a React component, call `useGetAccountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAccountQuery({
+ *   variables: {
+ *      account: // value for 'account'
+ *   },
+ * });
+ */
+export function useGetAccountQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetAccountQuery,
+    GetAccountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAccountQuery, GetAccountQueryVariables>(
+    GetAccountDocument,
+    options
+  );
+}
+export function useGetAccountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAccountQuery,
+    GetAccountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAccountQuery, GetAccountQueryVariables>(
+    GetAccountDocument,
+    options
+  );
+}
+export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
+export type GetAccountLazyQueryHookResult = ReturnType<
+  typeof useGetAccountLazyQuery
+>;
+export type GetAccountQueryResult = Apollo.QueryResult<
+  GetAccountQuery,
+  GetAccountQueryVariables
+>;
 export const GetRealmDocument = gql`
   query getRealm($id: Float!) @api(name: starkIndexer) {
     getRealm(realmId: $id) {
@@ -2150,73 +2217,6 @@ export type GetTroopStatsLazyQueryHookResult = ReturnType<
 export type GetTroopStatsQueryResult = Apollo.QueryResult<
   GetTroopStatsQuery,
   GetTroopStatsQueryVariables
->;
-export const GetAccountDocument = gql`
-  query getAccount($account: String!) @api(name: starkIndexer) {
-    ownedRealmsCount: getRealmsCount(filter: { ownerL2: { equals: $account } })
-    settledRealmsCount: getRealmsCount(
-      filter: { settledOwner: { equals: $account } }
-    )
-    accountHistory: getRealmHistory(
-      filter: { realmOwner: { equals: $account } }
-    ) {
-      id
-      eventType
-      realmId
-      realmOwner
-      data
-      timestamp
-    }
-  }
-`;
-
-/**
- * __useGetAccountQuery__
- *
- * To run a query within a React component, call `useGetAccountQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAccountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAccountQuery({
- *   variables: {
- *      account: // value for 'account'
- *   },
- * });
- */
-export function useGetAccountQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetAccountQuery,
-    GetAccountQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAccountQuery, GetAccountQueryVariables>(
-    GetAccountDocument,
-    options
-  );
-}
-export function useGetAccountLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetAccountQuery,
-    GetAccountQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAccountQuery, GetAccountQueryVariables>(
-    GetAccountDocument,
-    options
-  );
-}
-export type GetAccountQueryHookResult = ReturnType<typeof useGetAccountQuery>;
-export type GetAccountLazyQueryHookResult = ReturnType<
-  typeof useGetAccountLazyQuery
->;
-export type GetAccountQueryResult = Apollo.QueryResult<
-  GetAccountQuery,
-  GetAccountQueryVariables
 >;
 export const GetWalletDocument = gql`
   query getWallet($address: String!) @api(name: starkIndexer) {
