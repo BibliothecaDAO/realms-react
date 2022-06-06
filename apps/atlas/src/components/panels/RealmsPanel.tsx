@@ -90,6 +90,12 @@ export const RealmsPanel = () => {
       };
     }
 
+    if (state.isSettledFilter) {
+      filter.NOT = {
+        settledOwner: { equals: null },
+      };
+    }
+
     filter.rarityRank = { gte: state.rarityFilter.rarityRank };
     filter.rarityScore = { gte: state.rarityFilter.rarityScore };
     filter.orderType =
