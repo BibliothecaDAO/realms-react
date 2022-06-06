@@ -5,6 +5,8 @@ import {
   CardTitle,
   CardStats,
   CardIcon,
+  Donut,
+  CountdownTimer,
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
@@ -14,8 +16,9 @@ import { useState } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
+import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -29,8 +32,10 @@ interface RealmDetailsPanelProps {
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const [squad, setSquad] = useState(false);
+  const [id, setId] = useState(realmId);
+  const router = useRouter();
+  const { data: realmData } = useGetRealmQuery({ variables: { id: id } });
 
-  const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
   const realm = realmData?.getRealm;
 
   const attackSquad =
@@ -44,23 +49,33 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       : '0';
   };
 
-  // TODO: tenox move to indexer
-  const realmOwner =
-    realm?.settledOwner ||
-    realm?.ownerL2 ||
-    realm?.bridgedOwner ||
-    realm?.owner ||
-    '0';
+  const timeAttacked = realm?.lastAttacked
+    ? new Date(parseInt(realm.lastAttacked)).getTime()
+    : 0;
+
+  // Replace with actual last time attacked
+  const time = () => {
+    const NOW_IN_MS = new Date().getTime();
+
+    return (timeAttacked + 1800).toString();
+  };
+
+  const pushPage = (value) => {
+    setId(parseInt(value));
+    router.push('/realms/' + value);
+  };
 
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
       <div className="col-start-1 col-end-5">
         <RealmBannerHeading
+          onSubmit={(value) => pushPage(parseInt(value))}
           key={realm?.realmId ?? ''}
           order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
           title={realm?.name ?? ''}
           realmId={realmId}
         />
+
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">
             <Image
@@ -75,7 +90,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           <Card className="col-start-5 col-end-7">
             <CardTitle>Owner</CardTitle>
             <CardStats className="text-2xl">
-              {shortenAddress(realmOwner)}
+              {shortenAddress(RealmOwner(realm as RealmFragmentFragment))}
             </CardStats>
             {/* <CardIcon /> */}
           </Card>
@@ -85,9 +100,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               <CardStats className="text-2xl">{RealmStatus(realm)}</CardStats>
             )}
           </Card>
-          <Card className="col-start-5 col-end-7 ">
-            <CardTitle>Last Attacked</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+          <Card className="col-start-5 col-end-7 text-white">
+            <CardTitle>Vulnerable in</CardTitle>
+            {/* <CardStats className="text-2xl">{date.toDateString()}</CardStats> */}
+            {/* <div className='flex justify-around w-full my-4 text-white'>
+              
+              <Donut label={24 - hoursAgoAttack} className='mx-auto stroke-green-400' radius={50} stroke={2} progress={getProgress()}/>
+              
+            </div> */}
+            <CountdownTimer date={time()} />
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-3 ">
@@ -125,7 +146,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
           <Card className="col-start-1 col-end-7">
             <div className="flex justify-between w-full mb-10">
-              <div className="text-2xl font-semibold tracking-widest text-white uppercase font-lords">
+              <div className="text-2xl font-semibold tracking-widest text-white uppercase">
                 Military Strength
               </div>
               <div className="text-xl font-semibold tracking-widest text-white uppercase ">
@@ -141,9 +162,19 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               </div>
             </div>
             {squad ? (
-              <SquadBuilder troops={attackSquad} />
+              <SquadBuilder
+                location={1}
+                realmId={realmId}
+                withPurchase={true}
+                troops={attackSquad}
+              />
             ) : (
-              <SquadBuilder troops={defenseSquad} />
+              <SquadBuilder
+                location={2}
+                realmId={realmId}
+                withPurchase={true}
+                troops={defenseSquad}
+              />
             )}
           </Card>
           <Card className="col-start-1 col-end-3 ">

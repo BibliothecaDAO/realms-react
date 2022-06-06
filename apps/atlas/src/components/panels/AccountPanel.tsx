@@ -7,6 +7,7 @@ import {
   CardText,
   CardTitle,
   CardStats,
+  Donut,
 } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
@@ -48,51 +49,52 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="grid grid-cols-12 gap-4">
-        <Card className="col-start-1 col-end-6">
-          <CardBody>
-            <CardTitle>Ser, your empire</CardTitle>
-            <div className="flex mb-4">
-              <h3 className="w-28">Ethereum</h3>
-              <span>
-                {isConnected && (
-                  <Button variant="secondary" onClick={disconnectWallet}>
-                    <Ethereum className="w-4 mx-4" /> {displayName} [ disconnect
-                    ]
-                  </Button>
-                )}
-                {!isConnected && (
-                  <Button variant="primary" onClick={connectWallet}>
-                    <Ethereum className="w-4 mr-4" /> Connect
-                  </Button>
-                )}
-              </span>
-            </div>
-            <div className="flex mb-12">
-              <h3 className="w-28">Starknet</h3>
-              <span>
-                {account ? (
-                  <Button
-                    variant="secondary"
-                    onClick={() => disconnect(connectors[0])}
-                  >
-                    <StarkNet className="w-5 mr-2" />
-                    {shortenAddress(account)} [ disconnect ]
-                  </Button>
-                ) : (
-                  <Button
-                    variant="primary"
-                    onClick={() => connect(connectors[0])}
-                  >
-                    <StarkNet className="w-5 mr-2" />
-                    Connect to StarkNet
-                  </Button>
-                )}
-              </span>
-            </div>
-          </CardBody>
-        </Card>
-        <Card className="col-start-6 col-end-9">
+      <div className="grid grid-cols-12 gap-8">
+        <div className="flex col-start-1 col-end-6 space-x-2">
+          <span>
+            {isConnected && (
+              <Button size="sm" variant="secondary" onClick={disconnectWallet}>
+                <Ethereum className="w-4 mx-4" /> {displayName} [ disconnect ]
+              </Button>
+            )}
+            {!isConnected && (
+              <Button size="sm" variant="primary" onClick={connectWallet}>
+                <Ethereum className="w-4 mr-4" /> Connect
+              </Button>
+            )}
+          </span>
+          <span>
+            {account ? (
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => disconnect(connectors[0])}
+              >
+                <StarkNet className="w-5 mr-2" />
+                {shortenAddress(account)} [ disconnect ]
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={() => connect(connectors[0])}
+              >
+                <StarkNet className="w-5 mr-2" />
+                Connect to StarkNet
+              </Button>
+            )}
+          </span>
+        </div>
+
+        <div className="col-start-1 col-end-7 p-8">
+          <h1>Ser, Your Vast Empire</h1>
+          <p className="mt-8 text-2xl">
+            This is your dashboard for all things happen on your lands.
+          </p>
+        </div>
+        {/* <Donut className='stroke-red-200' radius={90} stroke={10} progress={90}/> */}
+
+        {/* <Card className="col-start-6 col-end-9">
           <CardBody>
             <CardTitle>lords</CardTitle>
             <CardStats>100m</CardStats>
@@ -105,51 +107,74 @@ export function AccountPanel() {
               Claim
             </Button>
           </CardBody>
-        </Card>
+        </Card> */}
         <Card className="col-start-9 col-end-13 row-span-3">
           <CardBody>
             <CardTitle>Needing your attention</CardTitle>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-4">
+        <Card className="col-start-1 col-end-5">
           <CardBody>
-            <CardTitle>Realms Settled</CardTitle>
-            <Button
-              variant="primary"
-              className="ml-8"
-              size="sm"
-              onClick={() => toggleMenuType('bridgeRealms')}
-            >
-              Bridge Realms
+            <CardTitle>Total Realms</CardTitle>
+            <CardStats className="text-5xl">20</CardStats>
+            <Button className="mt-10" variant="primary" size="sm" href="/realm">
+              See Realms
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-4 col-end-6">
+        <Card className="col-start-5 col-end-9">
           <CardBody>
-            <CardTitle>Realms Settled</CardTitle>
-            <CardStats>9</CardStats>
+            <CardTitle>Total Crypts</CardTitle>
+            <CardStats className="text-5xl">20</CardStats>
+            <Button className="mt-10" variant="primary" size="sm" href="/crypt">
+              See Crypts
+            </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-6 col-end-9 row-span-2">
+        <Card className="col-start-1 col-end-5">
           <CardBody>
-            <CardTitle>Resources</CardTitle>
+            <CardTitle>Realm Admin</CardTitle>
+            <div className="flex w-full mt-10 space-x-2">
+              <Button
+                variant="primary"
+                className="mt-auto ml-8"
+                size="sm"
+                onClick={() => toggleMenuType('bridgeRealms')}
+              >
+                Bridge Realms
+              </Button>
+              <Button
+                className="ml-8"
+                variant="primary"
+                size="sm"
+                onClick={() => toggleMenuType('settleRealms')}
+              >
+                Settle Realms
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        <Card className="col-start-5 col-end-9">
+          <CardBody>
+            <CardTitle>Resources + Lords</CardTitle>
             {/* <BankCard/> */}
             <Button
               variant="primary"
               size="sm"
-              onClick={() => connect(connectors[0])}
+              className="mt-auto"
+              href="/bank"
             >
-              Claim Empires Resources
+              Go to Bank
             </Button>
           </CardBody>
         </Card>
         <Card className="col-start-1 col-end-6">
           <CardBody>
-            <CardTitle>Mint Realms</CardTitle>
+            <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
             <input
               placeholder="Type Id"
               type={'number'}
-              className="w-3/12 px-4 py-4 text-black rounded-l bg-white/80"
+              className="w-3/12 p-2 mx-auto mb-2 text-black rounded bg-white/80"
               value={selectedId}
               onChange={(e) => {
                 setSelectedId(parseInt(e.target.value));

@@ -34,7 +34,7 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
   'the fox': <Fox className="stroke-8 stroke-order-fox" />,
   fury: <Fury />,
   giants: <Giants />,
-  perfection: <Perfection className="stroke-current" />,
+  perfection: <Perfection className=" fill-order-perfection" />,
   reflection: <Reflection />,
   skill: <Skill />,
   titans: <Titans />,

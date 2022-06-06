@@ -1,4 +1,11 @@
+import { useStarknet } from '@starknet-react/core';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import { useWalletContext } from '@/hooks/useWalletContext';
+
+interface TraitProps {
+  trait: string;
+  traitAmount?: number;
+}
 
 export const RealmStatus = (realm: RealmFragmentFragment) => {
   if (realm.bridgedOwner) {
@@ -14,10 +21,15 @@ export const RealmStatus = (realm: RealmFragmentFragment) => {
   }
 };
 
-interface TraitProps {
-  trait: string;
-  traitAmount?: number;
-}
+export const RealmOwner = (realm: RealmFragmentFragment) => {
+  return (
+    realm?.settledOwner ||
+    realm?.ownerL2 ||
+    realm?.bridgedOwner ||
+    realm?.owner ||
+    '0'
+  );
+};
 
 export const TraitTable = (props: TraitProps) => {
   const traitSet = [
@@ -52,7 +64,7 @@ export const TraitTable = (props: TraitProps) => {
 
   return (
     <div>
-      <span className="flex justify-between">
+      <span className="flex justify-between font-body">
         <span className="tracking-widest uppercase">{getTrait()?.title} </span>
         <span>
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
@@ -68,4 +80,14 @@ export const TraitTable = (props: TraitProps) => {
       </div>
     </div>
   );
+};
+
+export const IsOwner = (owner?: string | null) => {
+  const { account, connect, connectors } = useStarknet();
+
+  return account == owner ? true : false;
+};
+
+export const getOrder = (realm: RealmFragmentFragment) => {
+  return realm.orderType.toLowerCase();
 };

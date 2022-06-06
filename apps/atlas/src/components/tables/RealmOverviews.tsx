@@ -92,7 +92,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }
   return (
     <div>
-      {bridgeRow}
+      {/* {bridgeRow} */}
 
       {props.realms &&
         props.realms.map((realm: RealmFragmentFragment, index) => (
@@ -106,14 +106,16 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               </div>
             )}
             <div className="flex w-full p-2 text-white shadow-inner rounded-t-l bg-black/80">
-              <h3 className="self-center mb-1 ml-4">
-                <span className="mr-4 text-gray-400">{realm.realmId} | </span>
+              <h3 className="self-center mb-1 ml-4 font-lords">
+                <span className="mr-1 text-gray-400 font-body">
+                  {realm.realmId} |{' '}
+                </span>
                 {realm.name}
               </h3>
               <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
               </h4>
-              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-blue-400 rounded sm:block">
+              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-blue-100 rounded sm:block">
                 {RealmStatus(realm)}
               </h4>
 
@@ -142,9 +144,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                       <span className="ml-4 uppercase tracking-veryWide">
                         {info?.trait}
                       </span>
-                      {/* <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
-                      100
-                    </span> */}
                     </div>
                   );
                 })}
@@ -180,7 +179,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 );
               })}
             </div> */}
-            <div className="flex justify-center w-full px-6 py-4 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-0 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
+            <div className="flex justify-center w-full px-6 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {

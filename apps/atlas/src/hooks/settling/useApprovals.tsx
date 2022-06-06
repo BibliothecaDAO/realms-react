@@ -6,13 +6,14 @@ import {
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
-import { toBN } from 'starknet/dist/utils/number';
+import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
 import {
   useLordsContract,
   useBuildingContract,
   useExchangeContract,
+  useResources1155Contract,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -65,7 +66,7 @@ const useApprovalForContract = (contract: Contract) => {
 
   useEffect(() => {
     if (!outputResult) return;
-
+    console.log(outputResult);
     setIsApproved(
       uint256ToBN(outputResult['remaining']) >=
         toBN(ALLOWANCE_AMOUNT.toString())
@@ -90,4 +91,41 @@ export const useApproveLordsForBuilding = () => {
 export const useApproveLordsForExchange = () => {
   const { contract: lordsContract } = useLordsContract();
   return useApprovalForContract(lordsContract as Contract);
+};
+
+export const useApproveResourcesForExchange = () => {
+  const { account } = useStarknet();
+  const { contract: exchangeContract } = useExchangeContract();
+  const { contract: resourcesContract } = useResources1155Contract();
+  const [isApproved, setIsApproved] = useState<boolean>(false);
+
+  const approveResourcesAction = useStarknetInvoke({
+    contract: resourcesContract,
+    method: 'setApprovalForAll',
+  });
+
+  const {
+    data: outputResult,
+    loading: outputLoading,
+    error: outputError,
+  } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'isApprovedForAll',
+    args: [account as string, exchangeContract?.address.toString()],
+  });
+
+  useEffect(() => {
+    if (!outputResult) return;
+    console.log(outputResult.toString() == '1');
+    setIsApproved(outputResult.toString() == '1');
+  }, [outputResult]);
+
+  const approveResources = () => {
+    console.log(approveResourcesAction.error);
+    approveResourcesAction.invoke({
+      args: [toBN(exchangeContract?.address as string).toString(), toFelt(1)],
+    });
+  };
+
+  return { isApproved, approveResources };
 };

@@ -28,6 +28,7 @@ export type MenuType =
   | 'settleRealms'
   | 'bridgeRealms'
   | 'resourceSwap'
+  | 'transactionCart'
   | PanelType;
 
 export type AssetFilter = {
@@ -223,17 +224,12 @@ function useAtlas(): Atlas {
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
-      } else if (panelType === 'combat') {
-        // setArtBackground('bank');
-        if (breakpoints.lg) {
-          setMenuType(panelType);
-        }
       } else if (panelType === 'bank') {
         setArtBackground('bank');
         if (breakpoints.lg) {
           openDetails('resourceSwap', '1');
         }
-      } else if (panelType === 'trade') {
+      } else if (panelType === 'trade' || panelType === 'combat') {
         setArtBackground('realm');
         if (breakpoints.lg) {
           setMenuType(panelType);
@@ -261,6 +257,8 @@ function useAtlas(): Atlas {
         break;
       case 'resourceSwap':
         panel = 'bank';
+        break;
+      case 'transactionCart':
         break;
     }
 

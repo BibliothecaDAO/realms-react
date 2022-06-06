@@ -82,6 +82,7 @@ export function useResources1155Contract(): UseContract {
       '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70',
   });
 }
+
 /**
  * Load the Lords ERC20 contract.
  * @returns The `Resources` contract or undefined.

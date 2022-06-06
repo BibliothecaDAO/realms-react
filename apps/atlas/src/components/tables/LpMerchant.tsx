@@ -14,12 +14,15 @@ import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useApproveLordsForExchange } from '@/hooks/settling/useApprovals';
-import { useSwapResources } from '@/hooks/useSwapResources';
+import {
+  useApproveLordsForExchange,
+  useApproveResourcesForExchange,
+} from '@/hooks/settling/useApprovals';
+import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
@@ -58,7 +61,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
   return (
-    <div className="flex p-3 mb-4 rounded shadow-inner bg-gray-900/50">
+    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -106,7 +109,11 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             value={props.resource.qty}
             inputSize="md"
             colorScheme="transparent"
-            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 ml-auto"
+            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
+            /* inputPrefix={/* <span className="text-md text-gray">
+            ~{value} {mockData.additionalCurrency}
+          </span>} 
+        prefixPosition="button" */
             min={0}
             max={10000}
             stringMode // to support high precision decimals
@@ -120,12 +127,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             </span>{' '}
             <LordsIcon className="w-5 h-5" />
           </div>
-          <div className="flex justify-end">
-            Your Current: 0
-            <span className="mr-1">
-              {/* This = current balance of LP tokens * Lords price of that token */}
-            </span>{' '}
-          </div>
         </div>
       </div>
     </div>
@@ -133,15 +134,20 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function LpMerchant(): ReactElement {
-  const [enabled, setEnabled] = useState(false);
+  // const [enabled, setEnabled] = useState(false);
+  const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
+    return state === 'sell' ? 'buy' : 'sell';
+  }, 'buy');
 
-  const {
-    buyTokens,
-    invokeError,
-    transactionHash,
-    loading: isTransactionInProgress,
-    transactionResult,
-  } = useSwapResources();
+  const isBuy = tradeType === 'buy';
+  const isSell = tradeType === 'sell';
+
+  const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
+  const { sellTokens, loading: isSellTransactionInProgress } =
+    useSellResources();
+
+  const isTransactionInProgress =
+    isBuyTransactionInProgress || isSellTransactionInProgress;
 
   const {
     availableResourceIds,
@@ -154,8 +160,10 @@ export function LpMerchant(): ReactElement {
   } = useResourcesContext();
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
+  const { approveResources, isApproved: isResourcesApprovedForExchange } =
+    useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.1);
+  const [slippage, setSlippage] = useState(0.5);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -168,6 +176,8 @@ export function LpMerchant(): ReactElement {
   }, [calculatedTotalInLords, slippage]);
 
   function onBuyTokensClick() {
+    // TODO: check lords balance
+
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
     const tokenIds = selectedSwapResourcesWithBalance.map(
@@ -187,41 +197,81 @@ export function LpMerchant(): ReactElement {
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
   }
 
-  console.log(transactionResult);
+  function onSellTokensClick() {
+    // TODO: check resource balances
+
+    if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
+
+    const tokenIds = selectedSwapResourcesWithBalance.map(
+      (resource) => resource.resourceId
+    );
+    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(String(resource.qty))
+    );
+    const minAmount = parseEther(
+      String(calculatedTotalInLords - calculatedSlippage)
+    );
+
+    const maxDate = new Date();
+    maxDate.setMinutes(maxDate.getMinutes() + 30);
+    const deadline = Math.floor(maxDate.getTime() / 1000);
+
+    sellTokens(minAmount, tokenIds, tokenAmounts, deadline);
+  }
+
+  function onTradeClicked() {
+    if (isBuy) {
+      onBuyTokensClick();
+    } else {
+      onSellTokensClick();
+    }
+  }
+
   return (
     <div className="flex flex-col justify-between h-full">
-      {!isLordsApprovedForExchange && (
+      {!isLordsApprovedForExchange && isBuy && (
         <div>
           <Button className="w-full" variant="primary" onClick={approveLords}>
             APPROVE LORDS
           </Button>
         </div>
       )}
-
-      <div>
-        <div className="flex w-full mx-auto mb-8 tracking-widest">
-          <div className={`px-4 uppercase ${enabled && 'font-semibold'}`}>
-            Add LP
-          </div>
-          <Switch
-            checked={enabled}
-            onChange={setEnabled}
-            className={`${
-              enabled ? 'bg-green-600' : 'bg-blue-600'
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
+      {!isResourcesApprovedForExchange && isSell && (
+        <div>
+          <Button
+            className="w-full"
+            variant="primary"
+            onClick={approveResources}
           >
-            <span className="sr-only">Enable notifications</span>
-            <span
-              className={`${
-                enabled ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white`}
-            />
-          </Switch>
-          <div className={`px-4 uppercase ${!enabled && 'font-semibold'}`}>
-            remove LP
-          </div>
+            APPROVE RESOURCES
+          </Button>
         </div>
-
+      )}
+      <div className="flex w-full mx-auto mb-8 tracking-widest">
+        <div
+          className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
+        >
+          Buy Resources
+        </div>
+        <Switch
+          checked={isBuy}
+          onChange={toggleTradeType}
+          className={`${
+            isBuy ? 'bg-green-600' : 'bg-blue-600'
+          } relative inline-flex h-6 w-11 items-center rounded-full`}
+        >
+          <span className="sr-only">Enable notifications</span>
+          <span
+            className={`${
+              isSell ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 transform rounded-full bg-white`}
+          />
+        </Switch>
+        <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
+          Sell Resources
+        </div>
+      </div>
+      <div>
         {selectedSwapResourcesWithBalance.map((resource) => (
           <div className="relative" key={resource.resourceId}>
             <ResourceRow
@@ -269,19 +319,19 @@ export function LpMerchant(): ReactElement {
           <Button
             className="w-full"
             variant="primary"
-            onClick={onBuyTokensClick}
-            disabled={isTransactionInProgress || !isLordsApprovedForExchange}
+            onClick={onTradeClicked}
+            disabled={
+              isTransactionInProgress ||
+              (!isLordsApprovedForExchange && isBuy) ||
+              (!isResourcesApprovedForExchange && isSell)
+            }
           >
             {isTransactionInProgress
               ? 'Pending...'
-              : enabled
-              ? 'add liquidity'
-              : 'remove liquidity'}
+              : isBuy
+              ? 'buy resources'
+              : 'sell resources'}
           </Button>
-          <div className="my-2 text-center">
-            Please make sure you understand the risks of impermanent loss before
-            providing liquidity.
-          </div>
         </div>
       </div>
     </div>

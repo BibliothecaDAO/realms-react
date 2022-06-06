@@ -1,8 +1,15 @@
-import { Table, Button, ResourceIcon, Spinner } from '@bibliotheca-dao/ui-lib';
+import {
+  Table,
+  Button,
+  ResourceIcon,
+  Spinner,
+  CountdownTimer,
+} from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import useResources from '@/hooks/settling/useResources';
+import { IsOwner } from '@/shared/Getters/Realm';
 import { resources, findResourceName } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
@@ -57,7 +64,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           <Spinner size="md" scheme="white" variant="bricks" />
         ),
         level: re.level,
-        build: (
+        build: IsOwner(props.realm?.ownerL2) && (
           <Button
             variant="secondary"
             onClick={() => upgrade(resourceId)}
@@ -101,24 +108,37 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         </span>
         <span className="flex flex-col">
           <span>Days Accrued: </span>
-
-          <span className="text-3xl">
-            {availableResources.daysAccrued}D {availableResources.remainder}m
-          </span>
+          {/* <CountdownTimer date={'16544528050000'} /> */}
+          <span className="text-3xl">{availableResources.daysAccrued}D</span>
         </span>
       </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
-      <Button
-        size="sm"
-        className="mt-3 ml-2"
-        variant="primary"
-        onClick={() => claim()}
-      >
-        Harvest Resources
-      </Button>
-      <Button size="sm" href="/combat" className="mt-3 ml-2" variant="primary">
-        Raid Vault
-      </Button>
+
+      {props.realm?.ownerL2 && (
+        <Button
+          size="sm"
+          className="mt-3 ml-2"
+          variant="primary"
+          onClick={() => claim()}
+        >
+          Harvest Resources
+        </Button>
+      )}
+      {!IsOwner(props.realm?.ownerL2) && (
+        <Button
+          size="sm"
+          href={
+            `/combat?` +
+            `defendingRealmId=` +
+            props.realm.realmId +
+            '&attackingRealmId=3'
+          }
+          className="mt-3 ml-2"
+          variant="primary"
+        >
+          Raid Vault
+        </Button>
+      )}
     </div>
   );
 }

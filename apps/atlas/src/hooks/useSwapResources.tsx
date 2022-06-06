@@ -10,21 +10,32 @@ export type ResourceQty = {
   qty: number;
 };
 
-export const useSwapResources = () => {
+const useSwapResourcesTransaction = (method: string) => {
   const { contract: exchangeContract } = useExchangeContract();
   const {
     data: transactionHash,
-    invoke: invokeBuyTokens,
+    invoke,
     error: invokeError,
   } = useStarknetInvoke({
     contract: exchangeContract,
-    method: 'buy_tokens',
+    method,
   });
   const { tx, loading } = useTxCallback(transactionHash, (status) => {
     // Update state changes?
     return true;
   });
 
+  return {
+    transactionHash: tx,
+    invoke,
+    invokeError,
+    loading,
+  };
+};
+
+export const useBuyResources = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('buy_tokens');
   const buyTokens = (
     maxAmount: BigNumber,
     tokenIds: number[],
@@ -34,7 +45,7 @@ export const useSwapResources = () => {
     if (loading) {
       return;
     }
-    invokeBuyTokens({
+    invoke({
       args: [
         bnToUint256(maxAmount.toHexString()),
         tokenIds.map((value) => bnToUint256(value)),
@@ -47,9 +58,41 @@ export const useSwapResources = () => {
   };
 
   return {
-    transactionResult: tx,
     loading,
     buyTokens,
+    transactionHash,
+    invokeError,
+  };
+};
+
+export const useSellResources = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('sell_tokens');
+
+  const sellTokens = (
+    minAmount: BigNumber,
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    if (loading) {
+      return;
+    }
+    invoke({
+      args: [
+        bnToUint256(minAmount.toHexString()),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    sellTokens,
     transactionHash,
     invokeError,
   };

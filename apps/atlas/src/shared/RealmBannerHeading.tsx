@@ -1,11 +1,13 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { Combobox } from '@headlessui/react';
 import { useState, Fragment } from 'react';
+import { SearchFilter } from '@/components/filters/SearchFilter';
 interface HeaderProps {
   title: string;
   // icon: string;
   realmId: number;
   order: string;
+  onSubmit: (value: string) => void;
 }
 
 // const realms = [
@@ -29,19 +31,18 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-90 flex flex-wrap px-8 p-4  rounded shadow bg-order-${props.order.replace(
-        'the ',
-        ''
-      )}`}
+      className={`bg-opacity-90 flex flex-wrap pl-8 pr-4 p-4  rounded shadow bg-order-${props.order
+        .replace('the ', '')
+        .replace('the_', '')}`}
     >
       <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase ">
         <div
-          className={`absolute z-10 flex justify-center w-12 h-32 -mt-4 bg-white border-4 border-order-${props.order.replace(
-            'the ',
-            ''
-          )} border-double rounded-b-full shadow-xl`}
+          className={`absolute z-10 flex justify-center w-12 h-32 -mt-4 bg-white border-4 border-order-${props.order
+            .replace('the ', '')
+            .replace('the_', '')} border-double rounded-b-full shadow-xl`}
         >
           <OrderIcon
+            withTooltip
             className="self-center mt-auto text-white stroke-white fill-white"
             size={'md'}
             order={props.order.toLowerCase()}
@@ -49,42 +50,15 @@ export const RealmBannerHeading = (props: HeaderProps) => {
         </div>
         <div className="self-center mx-auto">
           <h1 className="font-lords">{props.title}</h1>
-          {/* <Combobox value={selectedRealm} onChange={setSelectedRealm}>
-            <Combobox.Input
-              className={
-                'rounded-md px-4 bg-transparent text-white text-3xl text-center'
-              }
-              onChange={(event) => setQuery(event.target.value)}
-              displayValue={(realm: any) => realm.name}
-            />
-            <Combobox.Options className="absolute z-10 py-1 mt-1 text-5xl bg-white rounded-md shadow-lg max-h-60 focus:outline-none sm:text-sm w-72">
-              {filteredRealms.map((realm) => (
-                <Combobox.Option key={realm.id} value={realm} as={Fragment}>
-                  {({ active }) => (
-                    <li
-                      className={`${
-                        active
-                          ? 'bg-gray-500 text-white'
-                          : 'bg-white text-black'
-                      }`}
-                    >
-                      {realm.name}
-                    </li>
-                  )}
-                </Combobox.Option>
-              ))}
-            </Combobox.Options>
-            <Combobox.Button className="text-white">+</Combobox.Button>
-          </Combobox> */}
         </div>
-        <div className="self-center font-body">{props.realmId}</div>
 
-        {/* <div className="self-center text-4xl">~ {props.title} ~</div> */}
-        {/* <OrderIcon
-          className="self-center text-white stroke-white fill-white"
-          size={'md'}
-          order={props.order.toLowerCase()}
-        /> */}
+        <SearchFilter
+          placeholder="SEARCH BY ID"
+          onSubmit={(value) => {
+            props.onSubmit(parseInt(value) ? value : '');
+          }}
+          defaultValue={props.realmId.toString()}
+        />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
+import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -71,7 +72,7 @@ export const MenuSideBar = () => {
 
       {
         page: 'combat',
-        icon: <ShieldSmall className={iconClasses} />,
+        icon: <Shield className={iconClasses} />,
         text: 'Combat',
       },
     ];
@@ -89,7 +90,7 @@ export const MenuSideBar = () => {
       </div>
       <animated.div
         style={animation}
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0  bg-gray-800 z-40 shadow-2xl flex flex-col transform duration-300 transition-all overflow-auto ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-800 z-40 shadow-2xl flex flex-col transform duration-300 transition-all overflow-auto ${
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
