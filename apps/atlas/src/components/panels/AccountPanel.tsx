@@ -14,8 +14,10 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
+import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
+import { useGetAccountQuery } from '@/generated/graphql';
 import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -46,6 +48,11 @@ export function AccountPanel() {
     { id: 22, amount: 10 },
   ];
   const [selectedId, setSelectedId] = useState(0);
+
+  const { data: accountData } = useGetAccountQuery({
+    variables: { account: BigNumber.from(account ?? '0').toHexString() },
+  });
+  console.log(accountData);
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
