@@ -62,7 +62,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const pushPage = (value) => {
     setId(parseInt(value));
-    router.push('/realms/' + value);
+    router.push('/realm/' + value);
   };
 
   return (

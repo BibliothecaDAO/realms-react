@@ -55,7 +55,7 @@ export function CombatPanel(): ReactElement {
     AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 1) ??
     [];
   const defenseSquad =
-    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
+    DefendingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
     [];
 
   // Sample combat result query

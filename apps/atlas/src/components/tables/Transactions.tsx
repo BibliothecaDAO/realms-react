@@ -1,12 +1,23 @@
-import type { Transaction } from '@starknet-react/core';
 import {
   useStarknet,
   useStarknetTransactionManager,
 } from '@starknet-react/core';
 import Link from 'next/link';
 
-interface TxCartItem {
-  transaction: Transaction;
+interface Transaction {
+  transactionItem: TransactionItem;
+}
+
+interface TransactionItem {
+  status: string;
+  transaction: TransactionData;
+  transactionHash: string;
+  lastUpdatedAt: number;
+  metadata?: any;
+}
+
+interface TransactionData {
+  calldata: string[];
 }
 
 const STYLES = {
@@ -21,20 +32,21 @@ const STYLES = {
   },
 } as const;
 
-const TxCartItem = (props: TxCartItem) => {
+const TxCartItem = (props: Transaction) => {
   return (
     <div
       className={`${
-        STYLES.status[props.transaction.status]
+        STYLES.status[props.transactionItem.status]
       }  rounded shadow-inner flex p-4 w-full font-semibold`}
     >
       <span className="flex justify-between w-full p-2 uppercase rounded shadow-inner bg-black/10">
-        {props.transaction.status}
+        {props.transactionItem.status}
+
         <Link
           target={'blank_'}
           href={
             'https://goerli.voyager.online/tx/' +
-            props.transaction.transactionHash
+            props.transactionItem.transactionHash
           }
         >
           See on Voyager
@@ -51,7 +63,7 @@ export const TransactionCartTable = () => {
   return (
     <div className="flex flex-wrap w-full space-y-2">
       {transactions.reverse().map((a, index) => {
-        return <TxCartItem key={index} transaction={a} />;
+        return <TxCartItem key={index} transactionItem={a} />;
       })}
     </div>
   );

@@ -151,7 +151,7 @@ export function AccountPanel() {
   const tableOptions = { is_striped: true, search: false };
   const columns = [
     { Header: 'Event', id: 1, accessor: 'event' },
-    { Header: 'action', id: 2, accessor: 'action' },
+    { Header: 'advisor', id: 2, accessor: 'action' },
   ];
 
   return (
@@ -166,7 +166,7 @@ export function AccountPanel() {
         {/* <Donut className='stroke-red-200' radius={90} stroke={10} progress={90}/> */}
         <Card className="col-start-9 col-end-13 row-span-3">
           <CardBody>
-            <CardTitle>Needing your attention</CardTitle>
+            <CardTitle>Events across your empire</CardTitle>
             <Table
               columns={columns}
               data={realmEventData}

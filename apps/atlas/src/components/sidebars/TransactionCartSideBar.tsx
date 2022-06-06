@@ -44,7 +44,7 @@ export const TransactionCartSideBar = () => {
 
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(1);
 
   const tabs = useMemo(
     () => [
