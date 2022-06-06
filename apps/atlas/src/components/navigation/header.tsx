@@ -4,9 +4,7 @@ import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
-import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
@@ -16,7 +14,7 @@ import { useState } from 'react';
 import useSound from 'use-sound';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
-import { shortenAddress } from '@/util/formatters';
+import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
@@ -72,6 +70,13 @@ export function Header() {
           />
         </div>
 
+        <NetworkConnectButton />
+        <Link href={selectedPanel === 'account' ? '' : '/account'}>
+          <Button variant="primary" className="py-1 text-sm">
+            <Crown className="inline-block w-6 mr-2 -ml-2" />
+            Account
+          </Button>
+        </Link>
         <span>
           <Button variant="primary" onClick={connectWallet}>
             <Lords className="w-6" />{' '}
@@ -79,23 +84,6 @@ export function Header() {
               {(+formatEther(lordsBalance)).toFixed(2)}
             </span>
           </Button>
-        </span>
-        <span>
-          <Link href={selectedPanel === 'account' ? '' : '/account'}>
-            <Button
-              variant="primary"
-              // onClick={() => togglePanelType('account')}
-              className="py-1"
-            >
-              <Crown className="w-8 mr-4" />
-              <Ethereum
-                className={`w-4 mx-4 ${!isConnected ? 'filter grayscale' : ''}`}
-              />
-              <StarkNet
-                className={`w-5 mr-2 ${!account ? 'filter grayscale' : ''}`}
-              />
-            </Button>
-          </Link>
         </span>
         <span>
           <Button

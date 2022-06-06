@@ -117,12 +117,7 @@ export function AccountPanel() {
           <CardBody>
             <CardTitle>Total Realms</CardTitle>
             <CardStats className="text-5xl">20</CardStats>
-            <Button
-              className="mt-10"
-              variant="primary"
-              size="sm"
-              onClick={() => mintRealm(selectedId)}
-            >
+            <Button className="mt-10" variant="primary" size="sm" href="/realm">
               See Realms
             </Button>
           </CardBody>
@@ -131,12 +126,7 @@ export function AccountPanel() {
           <CardBody>
             <CardTitle>Total Crypts</CardTitle>
             <CardStats className="text-5xl">20</CardStats>
-            <Button
-              className="mt-10"
-              variant="primary"
-              size="sm"
-              onClick={() => mintRealm(selectedId)}
-            >
+            <Button className="mt-10" variant="primary" size="sm" href="/crypt">
               See Crypts
             </Button>
           </CardBody>
