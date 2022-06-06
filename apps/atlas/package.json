@@ -178,7 +178,7 @@
     "mapbox-gl": "^2.8.2",
     "meshline": "2.0.4",
     "moment": "2.29.3",
-    "msw": "^0.42.0",
+    "msw": "^0.39.0",
     "next": "12.1.7-canary.29",
     "next-seo": "5.4.0",
     "picocolors": "1.0.0",
