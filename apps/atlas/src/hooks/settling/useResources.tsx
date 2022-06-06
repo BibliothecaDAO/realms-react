@@ -12,6 +12,7 @@ type Resources = {
   availableResources: AvailabeResources;
   claimableLords?: BN;
   claimableResources?: any;
+  raidableVault?: any;
   loadingClaimable: boolean;
 };
 type AvailabeResources = {
@@ -45,16 +46,23 @@ const useResources = (args: useResourcesArgs): Resources => {
   });
 
   const {
+    data: allResourceVault,
+    loading: allResourceVaultLoading,
+    error: allResourceVaultError,
+  } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'get_all_vault_raidable',
+    args: [bnToUint256(toBN(args.token_id))],
+  });
+
+  const {
     data: availableResourcesData,
     loading,
     error,
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'days_accrued',
-    args: [
-      bnToUint256(toBN(args.token_id)),
-      // Token IDs],
-    ],
+    args: [bnToUint256(toBN(args.token_id))],
   });
 
   let availableResources: AvailabeResources;
@@ -69,8 +77,13 @@ const useResources = (args: useResourcesArgs): Resources => {
       remainder: 0,
     };
   }
+
   return {
     availableResources,
+    raidableVault:
+      allResourceVault && allResourceVault['user_mint']
+        ? allResourceVault['user_mint'].map((resource) => uint256ToBN(resource))
+        : 0,
     claimableLords: allOutputData && uint256ToBN(allOutputData[1]),
     claimableResources:
       allOutputData && allOutputData['user_mint']

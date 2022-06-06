@@ -63,7 +63,7 @@ export function CombatPanel(): ReactElement {
     variables: {
       defendRealmId: 1061,
       transactionHash:
-        '0x7e1999c5e27eacd00549aaa4d8e080d0132d5339e6a0719f1fa046c384882ad',
+        '0x5db41537df591e0f7e4a7835c03951ebe9f8872b24b46d9ee594d0444220e62',
     },
   });
 

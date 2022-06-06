@@ -20,6 +20,7 @@ type Row = {
 export function RealmVault(props: RealmsCardProps): ReactElement {
   const {
     availableResources,
+    raidableVault,
     claim,
     upgrade,
     claimableLords,
@@ -53,8 +54,8 @@ export function RealmVault(props: RealmsCardProps): ReactElement {
         //   formatEther(claimableResources[index].toString(10))) || (
         //   <Spinner size="md" scheme="white" variant="bricks" />
         // ),
-        raidableResources: (claimableResources[index] &&
-          formatEther(claimableResources[index].toString(10))) || (
+        raidableResources: (raidableVault[index] &&
+          formatEther(raidableVault[index].toString(10))) || (
           <Spinner size="md" scheme="white" variant="bricks" />
         ),
         // level: re.level,
