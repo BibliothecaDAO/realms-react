@@ -71,12 +71,12 @@ export function Header() {
         </div>
 
         <NetworkConnectButton />
-        <Link href={selectedPanel === 'account' ? '' : '/account'}>
+        {/* <Link href={selectedPanel === 'account' ? '' : '/account'}>
           <Button variant="primary" className="py-1 text-sm">
             <Crown className="inline-block w-6 mr-2 -ml-2" />
             Account
           </Button>
-        </Link>
+        </Link> */}
         <span>
           <Button variant="primary" onClick={connectWallet}>
             <Lords className="w-6" />{' '}

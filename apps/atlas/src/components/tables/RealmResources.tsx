@@ -115,7 +115,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
       </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
 
-      {props.realm?.ownerL2 && (
+      {IsOwner(props.realm?.settledOwner) && (
         <Button
           size="sm"
           className="mt-3 ml-2"
@@ -125,7 +125,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           Harvest Resources
         </Button>
       )}
-      {!IsOwner(props.realm?.ownerL2) && (
+      {!IsOwner(props.realm?.settledOwner) && (
         <Button
           size="sm"
           href={

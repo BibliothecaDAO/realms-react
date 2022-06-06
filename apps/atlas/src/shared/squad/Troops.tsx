@@ -311,7 +311,7 @@ export const Troop = (props: TroopProps) => {
       <div className="mt-auto text-xs text-center text-black uppercase font-body">
         {getTroop()?.name.substring(0, 5)}
       </div>
-      {!props.withPurchase && (
+      {/* {!props.withPurchase && (
         <Button
           variant="secondary"
           size="xs"
@@ -321,7 +321,7 @@ export const Troop = (props: TroopProps) => {
         >
           x
         </Button>
-      )}
+      )} */}
 
       {props.withPurchase && props.troop.vitality === 0 && (
         <Popover className="relative top-0">

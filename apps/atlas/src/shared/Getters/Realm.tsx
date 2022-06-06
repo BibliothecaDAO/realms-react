@@ -1,4 +1,5 @@
 import { useStarknet } from '@starknet-react/core';
+import { ethers } from 'ethers';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
@@ -83,11 +84,19 @@ export const TraitTable = (props: TraitProps) => {
 };
 
 export const IsOwner = (owner?: string | null) => {
-  const { account, connect, connectors } = useStarknet();
+  const { account } = useStarknet();
 
-  return account == owner ? true : false;
+  if (account) {
+    return account == owner ? true : false;
+  } else {
+    return false;
+  }
 };
 
 export const getOrder = (realm: RealmFragmentFragment) => {
   return realm.orderType.toLowerCase();
+};
+
+export const getAccountHex = (account: string) => {
+  return ethers.BigNumber.from(account).toHexString();
 };

@@ -1,8 +1,8 @@
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
@@ -44,6 +44,11 @@ export const MenuSideBar = () => {
 
   const menus = useMemo(() => {
     return [
+      {
+        page: 'account',
+        icon: <Crown className={`${iconClasses}`} />,
+        text: 'empire',
+      },
       {
         page: 'realm',
         icon: <Castle className={`${iconClasses}`} />,

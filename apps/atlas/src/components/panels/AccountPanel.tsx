@@ -21,6 +21,7 @@ import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { useWalletContext } from '../../hooks/useWalletContext';
@@ -45,8 +46,7 @@ export function AccountPanel() {
     variables: {
       filter: {
         realmOwner: {
-          equals:
-            '0x00e07fec8e00eaf66056cd57355ca3e51042524b29a18542fde1df7148f5a00f',
+          equals: account ? getAccountHex(account) : '',
         },
       },
     },
@@ -55,14 +55,22 @@ export function AccountPanel() {
   function genRealmEvent(event) {
     switch (event.eventType) {
       case 'realm_combat_attack':
-        return event.data?.success
-          ? `💰 Raid Successful`
-          : `😞 Unsuccessful Raid`;
+        return event.data?.success ? (
+          <span className="">
+            💰 Raid Successful <br></br> on {event.data?.defendRealmId}
+          </span>
+        ) : (
+          `😞 Unsuccessful Raid`
+        );
       case 'realm_combat_defend':
         return event.data?.success ? (
-          <span className="">💪 Defended Raid from</span>
+          <span className="">
+            💪 Defended Raid from {event.data?.defendRealmId}
+          </span>
         ) : (
-          <span className="">🔥 We have been Pillaged!</span>
+          <span className="">
+            🔥 We have been Pillaged! {event.data?.defendRealmId}
+          </span>
         );
       case 'realm_building_built':
         return `🏗️ Built ${event.data?.buildingName}`;
@@ -83,21 +91,37 @@ export function AccountPanel() {
     switch (event.eventType) {
       case 'realm_combat_attack':
         return event.data?.success ? (
-          <Button size="xs" variant="primary" href={'/ream/'}>
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/ream/' + event.data?.defendRealmId}
+          >
             Pillage again
           </Button>
         ) : (
-          <Button size="xs" variant="primary" href={'/ream/'}>
-            try again
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/ream/' + event.data?.defendRealmId}
+          >
+            Try again
           </Button>
         );
       case 'realm_combat_defend':
         return event.data?.success ? (
-          <Button size="xs" variant="primary" href={'/ream/'}>
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/ream/' + event.data?.attackRealmId}
+          >
             Try again
           </Button>
         ) : (
-          <Button size="xs" variant="primary" href={'/ream/'}>
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/ream/' + event.data?.attackRealmId}
+          >
             ⚔️ Retaliate
           </Button>
         );
