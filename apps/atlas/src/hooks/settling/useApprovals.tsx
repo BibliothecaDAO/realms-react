@@ -40,6 +40,7 @@ const createStarknetAllowanceCall = (
     contract: lordsContract,
     method: 'allowance',
     args: [toBN(account).toString(), toBN(contractAddress).toString()],
+    options: { watch: false },
   };
 };
 

@@ -2,17 +2,16 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Popover } from '@headlessui/react';
-import { useStarknet } from '@starknet-react/core';
+import { useStarknet, InjectedConnector } from '@starknet-react/core';
+import { useMemo } from 'react';
 import { removeHexPrefix } from 'starknet/dist/utils/encode';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { shortenAddressWidth } from '@/util/formatters';
-
 const NetworkConnectButton = () => {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
 
   const { account, error, connect, connectors } = useStarknet();
-
   return (
     <Popover className="relative">
       <Popover.Button as="div">
@@ -37,14 +36,13 @@ const NetworkConnectButton = () => {
         {!account ? (
           <>
             <p className="mb-2">StarkNet</p>
-            <Button
-              onClick={() => connect(connectors[0])}
-              variant="primary"
-              className="w-full text-xs"
-            >
-              <StarkNet className="w-4 mr-4" />
-              Connect StarkNet
-            </Button>{' '}
+            {connectors.map((connector) =>
+              connector.available() ? (
+                <Button key={connector.id} onClick={() => connect(connector)}>
+                  Connect {connector.name}
+                </Button>
+              ) : null
+            )}
           </>
         ) : null}
 

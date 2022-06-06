@@ -153,7 +153,7 @@ export function AccountPanel() {
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => disconnect(connectors[0])}
+                onClick={() => disconnect()}
               >
                 <StarkNet className="w-5 mr-2" />
                 {shortenAddress(account)} [ disconnect ]
