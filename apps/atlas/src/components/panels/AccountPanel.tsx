@@ -15,9 +15,13 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
+import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
-import { useGetRealmHistoryQuery } from '@/generated/graphql';
+import {
+  useGetRealmHistoryQuery,
+  useGetAccountQuery,
+} from '@/generated/graphql';
 import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -42,14 +46,8 @@ export function AccountPanel() {
 
   const [selectedId, setSelectedId] = useState(0);
 
-  const { data: historyData2 } = useGetRealmHistoryQuery({
-    variables: {
-      filter: {
-        realmOwner: {
-          equals: account ? getAccountHex(account) : '',
-        },
-      },
-    },
+  const { data: accountData } = useGetAccountQuery({
+    variables: { account: account ? getAccountHex(account) : '' },
   });
 
   function genRealmEvent(event) {
@@ -140,9 +138,9 @@ export function AccountPanel() {
     }
   }
 
-  const realmEventData = (historyData2?.getRealmHistory ?? [])
+  const realmEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
-      console.log(historyData2?.getRealmHistory);
+      console.log(accountData?.accountHistory);
       return {
         event: genRealmEvent(realmEvent),
         action: genRealmAction(realmEvent),
@@ -159,42 +157,6 @@ export function AccountPanel() {
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <div className="grid grid-cols-12 gap-8">
-        <div className="flex col-start-1 col-end-6 space-x-2">
-          <span>
-            {isConnected && (
-              <Button size="sm" variant="secondary" onClick={disconnectWallet}>
-                <Ethereum className="w-4 mx-4" /> {displayName} [ disconnect ]
-              </Button>
-            )}
-            {!isConnected && (
-              <Button size="sm" variant="primary" onClick={connectWallet}>
-                <Ethereum className="w-4 mr-4" /> Connect
-              </Button>
-            )}
-          </span>
-          <span>
-            {account ? (
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => disconnect()}
-              >
-                <StarkNet className="w-5 mr-2" />
-                {shortenAddress(account)} [ disconnect ]
-              </Button>
-            ) : (
-              <Button
-                size="sm"
-                variant="primary"
-                onClick={() => connect(connectors[0])}
-              >
-                <StarkNet className="w-5 mr-2" />
-                Connect to StarkNet
-              </Button>
-            )}
-          </span>
-        </div>
-
         <div className="col-start-1 col-end-7 p-8">
           <h1>Ser, Your Vast Empire</h1>
           <p className="mt-8 text-2xl">
@@ -202,21 +164,6 @@ export function AccountPanel() {
           </p>
         </div>
         {/* <Donut className='stroke-red-200' radius={90} stroke={10} progress={90}/> */}
-
-        {/* <Card className="col-start-6 col-end-9">
-          <CardBody>
-            <CardTitle>lords</CardTitle>
-            <CardStats>100m</CardStats>
-            <Button
-              variant="primary"
-              size="sm"
-              className="ml-auto"
-              onClick={() => connect(connectors[0])}
-            >
-              Claim
-            </Button>
-          </CardBody>
-        </Card> */}
         <Card className="col-start-9 col-end-13 row-span-3">
           <CardBody>
             <CardTitle>Needing your attention</CardTitle>
@@ -306,107 +253,6 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-
-        {/* <div className="text-xl">
-          <h2>Realms</h2>
-          <p>You have: 42 Realms</p>
-          <p className="mb-2">
-            L1 Realms: 12
-            <Button
-              variant="primary"
-              className="ml-8"
-              size="sm"
-              onClick={() => toggleMenuType('bridgeRealms')}
-            >
-              Bridge Realms
-            </Button>
-          </p>
-          <p className="mb-2">
-            L2 Realms unsettled: 20
-            <Button
-              className="ml-8"
-              variant="primary"
-              size="sm"
-              onClick={() => toggleMenuType('settleRealms')}
-            >
-              Settle Realms
-            </Button>
-          </p>
-          <p>L2 Realms Settled: 10</p>
-          <h4>Mint Realms</h4>
-          <input
-            placeholder="Type Id"
-            type={'number'}
-            className="w-3/12 px-4 py-4 text-black rounded-l bg-white/80"
-            value={selectedId}
-            onChange={(e) => {
-              setSelectedId(parseInt(e.target.value));
-            }}
-            min="1"
-            max="8000"
-          />
-          <Button
-            className="ml-8"
-            variant="primary"
-            size="sm"
-            onClick={() => mintRealm(selectedId)}
-          >
-            Mint Realms
-          </Button>
-          <h2 className="mt-12">Claims</h2>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => connect(connectors[0])}
-          >
-            Claim Resources
-          </Button>
-          <h3 className="mt-6 mb-3">Lords</h3>
-          <div className="flex align-items-center">
-            <span className="flex px-4 text-4xl text-center">
-              <Lords className="w-12 mr-4" />
-              {balance}
-            </span>
-            <div>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => connect(connectors[0])}
-              >
-                Claim Lords
-              </Button>
-            </div>
-          </div>
-          <h2>Approval Status</h2>
-          {isLordsApprovedForBuilding ? 'Approved' : 'Not Approved'}
-          {!isLordsApprovedForBuilding && (
-            <Button variant="primary" size="sm" onClick={() => approveLords()}>
-              Approve Lords for Building contract
-            </Button>
-          )}
-          <h2 className="mt-12">Troops & Raiding</h2>
-          <p>In the last week:</p>
-          <p>
-            You have been raided X times, losing A Resources and B Troops{' '}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => connect(connectors[0])}
-            >
-              View Raids
-            </Button>
-          </p>
-          <p>
-            X Watchmen, Y Knights & Z Catapults have finished building{' '}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => connect(connectors[0])}
-            >
-              View Troops
-            </Button>
-          </p>
-        </div> */}
       </div>
     </BasePanel>
   );
