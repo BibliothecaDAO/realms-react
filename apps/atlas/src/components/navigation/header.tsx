@@ -88,7 +88,6 @@ export function Header() {
         <span>
           <Button
             variant="primary"
-            size="sm"
             onClick={() => toggleMenuType('transactionCart')}
           >
             tx

@@ -8,6 +8,7 @@ import {
   CardTitle,
   CardStats,
   Donut,
+  Table,
 } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
@@ -16,6 +17,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
+import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -36,16 +38,99 @@ export function AccountPanel() {
     useApproveLordsForBuilding();
   const { account, connect, connectors, disconnect } = useStarknet();
   const { togglePanelType, toggleMenuType, selectedPanel } = useAtlasContext();
-  const resourceIds = [
-    { id: 1, amount: 120 },
-    { id: 3, amount: 90 },
-    { id: 6, amount: 130 },
-    { id: 12, amount: 120 },
-    { id: 15, amount: 520 },
-    { id: 18, amount: 20 },
-    { id: 22, amount: 10 },
-  ];
+
   const [selectedId, setSelectedId] = useState(0);
+
+  const { data: historyData2 } = useGetRealmHistoryQuery({
+    variables: {
+      filter: {
+        realmOwner: {
+          equals:
+            '0x00e07fec8e00eaf66056cd57355ca3e51042524b29a18542fde1df7148f5a00f',
+        },
+      },
+    },
+  });
+
+  function genRealmEvent(event) {
+    switch (event.eventType) {
+      case 'realm_combat_attack':
+        return event.data?.success
+          ? `💰 Raid Successful`
+          : `😞 Unsuccessful Raid`;
+      case 'realm_combat_defend':
+        return event.data?.success ? (
+          <span className="">💪 Defended Raid from</span>
+        ) : (
+          <span className="">🔥 We have been Pillaged!</span>
+        );
+      case 'realm_building_built':
+        return `🏗️ Built ${event.data?.buildingName}`;
+      case 'realm_resource_upgraded':
+        return `🏗️ Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`;
+      case 'realm_mint':
+        return `Minted`;
+      case 'realm_settle':
+        return '🏘️ Settled';
+      case 'realm_unsettle':
+        return '🏚️ Unsettled';
+      default:
+        return '';
+    }
+  }
+
+  function genRealmAction(event) {
+    switch (event.eventType) {
+      case 'realm_combat_attack':
+        return event.data?.success ? (
+          <Button size="xs" variant="primary" href={'/ream/'}>
+            Pillage again
+          </Button>
+        ) : (
+          <Button size="xs" variant="primary" href={'/ream/'}>
+            try again
+          </Button>
+        );
+      case 'realm_combat_defend':
+        return event.data?.success ? (
+          <Button size="xs" variant="primary" href={'/ream/'}>
+            Try again
+          </Button>
+        ) : (
+          <Button size="xs" variant="primary" href={'/ream/'}>
+            ⚔️ Retaliate
+          </Button>
+        );
+      case 'realm_building_built':
+        return `Built ${event.data?.buildingName}`;
+      case 'realm_resource_upgraded':
+        return `Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`;
+      case 'realm_mint':
+        return 'Ser, welcome';
+      case 'realm_settle':
+        return 'Ser, welcome';
+      case 'realm_unsettle':
+        return 'Unsettled';
+      default:
+        return '';
+    }
+  }
+
+  const realmEventData = (historyData2?.getRealmHistory ?? [])
+    .map((realmEvent) => {
+      console.log(historyData2?.getRealmHistory);
+      return {
+        event: genRealmEvent(realmEvent),
+        action: genRealmAction(realmEvent),
+      };
+    })
+    .filter((row) => row.event !== '');
+
+  const tableOptions = { is_striped: true, search: false };
+  const columns = [
+    { Header: 'Event', id: 1, accessor: 'event' },
+    { Header: 'action', id: 2, accessor: 'action' },
+  ];
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
@@ -111,6 +196,11 @@ export function AccountPanel() {
         <Card className="col-start-9 col-end-13 row-span-3">
           <CardBody>
             <CardTitle>Needing your attention</CardTitle>
+            <Table
+              columns={columns}
+              data={realmEventData}
+              options={tableOptions}
+            />
           </CardBody>
         </Card>
         <Card className="col-start-1 col-end-5">

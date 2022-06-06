@@ -41,13 +41,13 @@ export const TraitTable = (props: TraitProps) => {
     },
     { trait: 'City', colour: 'bg-amber-300/70', traitMax: 21, title: 'Cities' },
     {
-      trait: 'River',
+      trait: 'Harbor',
       colour: 'bg-amber-500/70',
       traitMax: 35,
       title: 'Harbors',
     },
     {
-      trait: 'Harbor',
+      trait: 'River',
       colour: 'bg-amber-700/70',
       traitMax: 60,
       title: 'Rivers',

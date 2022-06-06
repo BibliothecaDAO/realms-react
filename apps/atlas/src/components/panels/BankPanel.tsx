@@ -51,7 +51,7 @@ export function BankPanel(): ReactElement {
           </span>
         </div>
       ),
-      balance: formatEther(resource.amount),
+      balance: (+formatEther(resource.amount)).toFixed(),
       output: 0,
       change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),

@@ -16,7 +16,7 @@ const NetworkConnectButton = () => {
   return (
     <Popover className="relative">
       <Popover.Button as="div">
-        <Button variant="primary" className="text-sm">
+        <Button variant="primary">
           {' '}
           <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
           {account

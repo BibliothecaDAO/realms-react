@@ -76,14 +76,14 @@ export function RealmVault(props: RealmsCardProps): ReactElement {
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     // { Header: 'Claimable Resources', id: 2, accessor: 'claimableResources' },
-    { Header: 'Raidable Resources', id: 3, accessor: 'raidableResources' },
+    { Header: 'Raidable', id: 3, accessor: 'raidableResources' },
     // { Header: 'level', id: 4, accessor: 'level' },
     // { Header: 'Build', id: 5, accessor: 'build' },
   ];
   const tableOptions = { is_striped: true };
   return (
     <div className="w-full mb-4">
-      <div className="flex justify-between p-2 text-white uppercase">
+      {/* <div className="flex justify-between p-2 text-white uppercase">
         <span className="flex flex-col">
           <span>Days Accrued: </span>
 
@@ -91,7 +91,7 @@ export function RealmVault(props: RealmsCardProps): ReactElement {
             {availableResources.daysAccrued}D {availableResources.remainder}m
           </span>
         </span>
-      </div>
+      </div> */}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
     </div>
   );
