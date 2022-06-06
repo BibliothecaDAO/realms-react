@@ -56,6 +56,7 @@ const useSettling = (): Settling => {
       toBN(account as string).toString(),
       toBN(settlingContract?.address as string).toString(),
     ],
+    options: { watch: false },
   });
 
   useEffect(() => {
