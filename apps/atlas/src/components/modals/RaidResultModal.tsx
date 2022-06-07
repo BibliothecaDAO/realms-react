@@ -4,20 +4,25 @@ import { useGetRealmCombatResultQuery } from '@/generated/graphql';
 
 export const RaidResultModal = ({ defendId, tx }) => {
   // Sample combat result query
-  const { data: combatResult } = useGetRealmCombatResultQuery({
+  const [pollInterval, setPollInterval] = useState(5000);
+  const {
+    data: combatResult,
+    startPolling,
+    stopPolling,
+  } = useGetRealmCombatResultQuery({
     variables: {
       defendRealmId: defendId,
       transactionHash: tx,
     },
-    pollInterval: 5000,
+    fetchPolicy: 'cache-and-network',
   });
+  useEffect(() => {
+    startPolling(5000); // TODO poll interval after transaction accepted on l2
 
-  /* useEffect(() => {
-    startPolling(5000);
     return () => {
       stopPolling();
     };
-  }, [startPolling, stopPolling]); */
+  }, []);
 
   const getCombatSteps = () => {
     return combatResult?.getRealmCombatResult?.history
@@ -28,7 +33,8 @@ export const RaidResultModal = ({ defendId, tx }) => {
   };
 
   return (
-    <div className="flex flex-wrap px-4">
+    <div className="flex flex-wrap px-4 bg-gray/800">
+      poll Interval: {pollInterval}
       {getCombatSteps().map((a, index) => {
         return (
           <BattleReportItem key={index} realm={'1'} hitPoints={a.hitPoints} />

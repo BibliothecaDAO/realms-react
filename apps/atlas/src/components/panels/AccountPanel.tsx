@@ -17,7 +17,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
 import {
   useGetRealmHistoryQuery,
@@ -29,6 +29,7 @@ import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
+import realms from '../../geodata/realms.json';
 import { useWalletContext } from '../../hooks/useWalletContext';
 import { RealmResources } from '../tables/RealmResources';
 // import { BankCard } from './Account/AccountCards';
@@ -50,6 +51,10 @@ export function AccountPanel() {
     variables: { account: account ? getAccountHex(account) : '' },
     pollInterval: 10000,
   });
+
+  const getRealmDetails = (realmId: number) =>
+    realms.features.find((a: any) => a.properties.realm_idx === realmId)
+      ?.properties;
 
   const realmsCount =
     (accountData?.ownedRealmsCount ?? 0) +
