@@ -200,7 +200,6 @@ export function AccountPanel() {
 
   const realmEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
-      console.log(accountData?.accountHistory);
       return {
         event: genRealmEvent(realmEvent),
         timestamp: realmEvent.timestamp,
