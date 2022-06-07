@@ -22,7 +22,7 @@ export function CombatPanel(): ReactElement {
   const [attackId, setAttackId] = useState('3');
   const [defendId, setDefendId] = useState('1061');
 
-  const { selectedPanel } = useAtlasContext();
+  const { selectedPanel, setModal } = useAtlasContext();
   const router = useRouter();
   const { attackingRealmId, defendingRealmId } = router.query;
 
@@ -33,9 +33,19 @@ export function CombatPanel(): ReactElement {
     if (defendingRealmId) {
       setDefendId(defendingRealmId ? defendingRealmId.toString() : '1061');
     }
-  });
+  }, [attackingRealmId, defendingRealmId]);
 
-  const { initiateCombat } = useCombat({ token_id: parseInt(attackId) });
+  const { initiateCombat, combatData } = useCombat({
+    token_id: parseInt(attackId),
+  });
+  useEffect(() => {
+    if (combatData) {
+      setModal({
+        type: 'raid-result',
+        props: { defendId, tx: combatData },
+      });
+    }
+  }, [combatData]);
 
   const { data: AttackingRealm, loading: AttackingLoading } = useGetRealmQuery({
     variables: {
@@ -55,17 +65,8 @@ export function CombatPanel(): ReactElement {
     AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 1) ??
     [];
   const defenseSquad =
-    DefendingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
+    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
     [];
-
-  // Sample combat result query
-  const { data: combatResult } = useGetRealmCombatResultQuery({
-    variables: {
-      defendRealmId: 1010,
-      transactionHash:
-        '0x67f4b7da93f89702a3fb4029b391d6b5c681f49c0924da9547f0e57e249f60f',
-    },
-  });
 
   const timeAttacked = DefendingRealm?.getRealm?.lastAttacked
     ? new Date(parseInt(DefendingRealm?.getRealm?.lastAttacked)).getTime()
@@ -79,15 +80,6 @@ export function CombatPanel(): ReactElement {
   };
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
-
-  const getCombatSteps = () => {
-    console.log(combatResult?.getRealmCombatResult?.history);
-    return combatResult?.getRealmCombatResult?.history
-      ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
-          return a.eventType == 'combat_step';
-        })
-      : [];
-  };
 
   const bannerClasses =
     'py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords transition-all duration-300';
@@ -159,17 +151,16 @@ export function CombatPanel(): ReactElement {
           </div>
 
           <div className={bannerClasses}>battle report</div>
-          <div className="flex flex-wrap px-4">
-            {getCombatSteps().map((a, index) => {
-              return (
-                <BattleReportItem
-                  key={index}
-                  realm={'1'}
-                  hitPoints={a.hitPoints}
-                />
-              );
-            })}
-          </div>
+          <Button
+            onClick={() => {
+              setModal({
+                type: 'raid-result',
+                props: { defendId: 4 },
+              });
+            }}
+          >
+            Open Modal
+          </Button>
           {/* <div className="px-4">
             {DefendingRealm && !DefendingLoading && (
               <RealmVault
@@ -186,21 +177,5 @@ export function CombatPanel(): ReactElement {
         </div>
       </div>
     </BasePanel>
-  );
-}
-
-interface BattleReportItem {
-  realm: string;
-  hitPoints: number | null | undefined;
-}
-
-export function BattleReportItem(props: BattleReportItem): ReactElement {
-  return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 text-white uppercase border rounded shadow-inner bg-order-fox">
-      {' '}
-      <span>Realm {props.realm}</span>
-      <span>deals </span>
-      <span>{props.hitPoints} damage</span>
-    </div>
   );
 }
