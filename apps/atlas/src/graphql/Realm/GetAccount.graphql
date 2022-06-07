@@ -9,13 +9,6 @@ query getAccount($account: String!) @api(name: starkIndexer) {
     id
     eventType
     realmId
-    realm {
-      name
-      rarityRank
-      rarityScore
-      orderType
-      wonder
-    }
     realmOwner
     data
     timestamp

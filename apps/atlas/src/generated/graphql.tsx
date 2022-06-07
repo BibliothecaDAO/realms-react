@@ -57,10 +57,6 @@ export type BuildingListRelationFilter = {
   some?: InputMaybe<BuildingWhereInput>;
 };
 
-export type BuildingOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
 export type BuildingWhereInput = {
   AND?: InputMaybe<Array<BuildingWhereInput>>;
   NOT?: InputMaybe<Array<BuildingWhereInput>>;
@@ -514,9 +510,7 @@ export type Query = {
   getResourcesByAddress: Array<Resource>;
   getTroopStats: Array<TroopStats>;
   getWallet: Wallet;
-  realm: Realm;
   realmHistory: Array<RealmHistory>;
-  realms: Array<Realm>;
   realmsCount: Scalars['Int'];
 };
 
@@ -577,19 +571,8 @@ export type QueryGetWalletArgs = {
   address: Scalars['String'];
 };
 
-export type QueryRealmArgs = {
-  id: Scalars['Float'];
-};
-
 export type QueryRealmHistoryArgs = {
   filter?: InputMaybe<RealmHistoryWhereInput>;
-  skip?: InputMaybe<Scalars['Float']>;
-  take?: InputMaybe<Scalars['Float']>;
-};
-
-export type QueryRealmsArgs = {
-  filter?: InputMaybe<RealmWhereInput>;
-  orderBy?: InputMaybe<RealmOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
@@ -666,31 +649,6 @@ export type RealmOrderByInput = {
   realmId?: InputMaybe<OrderByDirectionInput>;
 };
 
-export type RealmOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
-export type RealmOrderByWithRelationInput = {
-  bridgedOwner?: InputMaybe<SortOrder>;
-  buildings?: InputMaybe<BuildingOrderByRelationAggregateInput>;
-  id?: InputMaybe<SortOrder>;
-  imageUrl?: InputMaybe<SortOrder>;
-  lastAttacked?: InputMaybe<SortOrder>;
-  name?: InputMaybe<SortOrder>;
-  orderType?: InputMaybe<SortOrder>;
-  owner?: InputMaybe<SortOrder>;
-  ownerL2?: InputMaybe<SortOrder>;
-  rarityRank?: InputMaybe<SortOrder>;
-  rarityScore?: InputMaybe<SortOrder>;
-  realmId?: InputMaybe<SortOrder>;
-  resources?: InputMaybe<ResourceOrderByRelationAggregateInput>;
-  settledOwner?: InputMaybe<SortOrder>;
-  squad?: InputMaybe<TroopOrderByRelationAggregateInput>;
-  traits?: InputMaybe<RealmTraitOrderByRelationAggregateInput>;
-  wallet?: InputMaybe<WalletOrderByWithRelationInput>;
-  wonder?: InputMaybe<SortOrder>;
-};
-
 export type RealmRelationFilter = {
   is?: InputMaybe<RealmWhereInput>;
   isNot?: InputMaybe<RealmWhereInput>;
@@ -710,10 +668,6 @@ export type RealmTraitListRelationFilter = {
   every?: InputMaybe<RealmTraitWhereInput>;
   none?: InputMaybe<RealmTraitWhereInput>;
   some?: InputMaybe<RealmTraitWhereInput>;
-};
-
-export type RealmTraitOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
 };
 
 export enum RealmTraitType {
@@ -789,18 +743,10 @@ export type ResourceListRelationFilter = {
   some?: InputMaybe<ResourceWhereInput>;
 };
 
-export type ResourceOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
 export type ResourceTokenListRelationFilter = {
   every?: InputMaybe<ResourceTokenWhereInput>;
   none?: InputMaybe<ResourceTokenWhereInput>;
   some?: InputMaybe<ResourceTokenWhereInput>;
-};
-
-export type ResourceTokenOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
 };
 
 export type ResourceTokenWhereInput = {
@@ -832,10 +778,6 @@ export type SRealmListRelationFilter = {
   some?: InputMaybe<SRealmWhereInput>;
 };
 
-export type SRealmOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
 export type SRealmWhereInput = {
   AND?: InputMaybe<Array<SRealmWhereInput>>;
   NOT?: InputMaybe<Array<SRealmWhereInput>>;
@@ -845,11 +787,6 @@ export type SRealmWhereInput = {
   realmId?: InputMaybe<IntFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
 };
-
-export enum SortOrder {
-  Asc = 'asc',
-  Desc = 'desc',
-}
 
 export type StringFilter = {
   contains?: InputMaybe<Scalars['String']>;
@@ -922,10 +859,6 @@ export type TroopListRelationFilter = {
   some?: InputMaybe<TroopWhereInput>;
 };
 
-export type TroopOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
 /** TroopStats */
 export type TroopStats = {
   __typename?: 'TroopStats';
@@ -967,14 +900,6 @@ export type Wallet = {
   realmsL1Held: Scalars['Int'];
   realmsL2Held: Scalars['Int'];
   realmsSettledHeld: Scalars['Int'];
-};
-
-export type WalletOrderByWithRelationInput = {
-  address?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  realms?: InputMaybe<RealmOrderByRelationAggregateInput>;
-  sRealms?: InputMaybe<SRealmOrderByRelationAggregateInput>;
-  tokens?: InputMaybe<ResourceTokenOrderByRelationAggregateInput>;
 };
 
 export type WalletRelationFilter = {
@@ -1135,14 +1060,6 @@ export type GetAccountQuery = {
     realmOwner?: string | null;
     data?: any | null;
     timestamp?: any | null;
-    realm?: {
-      __typename?: 'Realm';
-      name?: string | null;
-      rarityRank: number;
-      rarityScore: number;
-      orderType: string;
-      wonder?: string | null;
-    } | null;
   }>;
 };
 
@@ -1848,13 +1765,6 @@ export const GetAccountDocument = gql`
       id
       eventType
       realmId
-      realm {
-        name
-        rarityRank
-        rarityScore
-        orderType
-        wonder
-      }
       realmOwner
       data
       timestamp
