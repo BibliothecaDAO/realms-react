@@ -18,11 +18,13 @@ export const RaidResultModal = ({ defendId, tx }) => {
   });
   useEffect(() => {
     startPolling(5000); // TODO poll interval after transaction accepted on l2
-
+    if (combatResult?.getRealmCombatResult) {
+      stopPolling();
+    }
     return () => {
       stopPolling();
     };
-  }, []);
+  }, [combatResult]);
 
   const getCombatSteps = () => {
     return combatResult?.getRealmCombatResult?.history
@@ -34,7 +36,6 @@ export const RaidResultModal = ({ defendId, tx }) => {
 
   return (
     <div className="flex flex-wrap px-4 bg-gray/800">
-      poll Interval: {pollInterval}
       {getCombatSteps().map((a, index) => {
         return (
           <BattleReportItem key={index} realm={'1'} hitPoints={a.hitPoints} />
