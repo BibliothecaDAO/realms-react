@@ -5,9 +5,11 @@ import {
   Card,
   CardBody,
 } from '@bibliotheca-dao/ui-lib';
+import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { shortenAddress } from '@/util/formatters';
+import { findResourceName } from '@/util/resources';
 
 interface RealmHistoryProps {
   realmId: number;
@@ -27,6 +29,34 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
   const successClass = 'bg-green-200/20';
   const negativeClass = 'bg-red-200/20';
 
+  const resourcePillaged = (resources: any) => {
+    return (
+      <div className="my-4">
+        {resources.map((resource, index) => {
+          const info = findResourceName(resource.resourceId);
+          return (
+            <div className="flex justify-between my-1 text-white" key={index}>
+              <div className="flex">
+                <ResourceIcon
+                  size="xs"
+                  className="self-center"
+                  resource={info?.trait?.replace('_', '') as string}
+                />{' '}
+                <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+                  {info?.trait}
+                </span>
+              </div>
+
+              <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+                {(+formatEther(resource.amount)).toFixed()} units
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   function genRealmEvent(event) {
     switch (event.eventType) {
       case 'realm_combat_attack':
@@ -39,6 +69,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
             `😞 Unsuccessful Raid`
           ),
           class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
               size="xs"
@@ -69,6 +100,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
               size="xs"
@@ -155,6 +187,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                 {new Date(a.timestamp).toLocaleDateString('en-US')}
               </span>
               <h5 className="text-white">{a.event.event}</h5>
+              {a.event?.resources && a.event.resources}
               <div className="mt-4">{a.event.action}</div>
             </CardBody>
           </Card>

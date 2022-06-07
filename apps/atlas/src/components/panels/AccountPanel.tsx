@@ -14,6 +14,7 @@ import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
+import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
@@ -29,7 +30,6 @@ import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { useWalletContext } from '../../hooks/useWalletContext';
-
 import { RealmResources } from '../tables/RealmResources';
 // import { BankCard } from './Account/AccountCards';
 import { BasePanel } from './BasePanel';
@@ -56,6 +56,38 @@ export function AccountPanel() {
     (accountData?.settledRealmsCount ?? 0);
   const successClass = 'bg-green-200/20';
   const negativeClass = 'bg-red-200/20';
+
+  const resourcePillaged = (resources: any) => {
+    return (
+      <div className="my-4">
+        {resources.map((resource, index) => {
+          const info = findResourceName(resource.resourceId);
+          return (
+            <div
+              className="flex justify-between my-1 text-white w-96"
+              key={index}
+            >
+              <div className="flex">
+                <ResourceIcon
+                  size="xs"
+                  className="self-center"
+                  resource={info?.trait?.replace('_', '') as string}
+                />{' '}
+                <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+                  {info?.trait}
+                </span>
+              </div>
+
+              <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+                {(+formatEther(resource.amount)).toFixed()} units
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   function genRealmEvent(event) {
     switch (event.eventType) {
       case 'realm_combat_attack':
@@ -68,6 +100,7 @@ export function AccountPanel() {
             `😞 Unsuccessful Raid`
           ),
           class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
               size="sm"
@@ -98,6 +131,7 @@ export function AccountPanel() {
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
               size="sm"
@@ -240,6 +274,7 @@ export function AccountPanel() {
                   {new Date(a.timestamp).toLocaleDateString('en-US')}
                 </span>
                 <h3 className="text-white">{a.event.event}</h3>
+                {a.event?.resources && a.event.resources}
                 <div className="mt-4">{a.event.action}</div>
               </CardBody>
             </Card>

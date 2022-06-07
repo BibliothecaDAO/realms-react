@@ -212,12 +212,12 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         </div>
       </div>
       <div className="grid grid-cols-6 col-start-5 col-end-7">
-        <Card className="col-start-1 col-end-7">
-          <div className="w-full">
+        <div className="col-start-1 col-end-7">
+          <div className="w-full ">
             <h2 className="text-center text-white font-lords">History</h2>
             <RealmHistory realmId={realmId} />
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );
