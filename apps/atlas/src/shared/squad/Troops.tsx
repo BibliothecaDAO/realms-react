@@ -261,7 +261,6 @@ type Row = {
 };
 
 export const Troop = (props: TroopProps) => {
-  console.log(props.troop);
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const getTroop = () => {

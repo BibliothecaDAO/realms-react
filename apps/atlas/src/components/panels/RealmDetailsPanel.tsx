@@ -34,7 +34,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const [squad, setSquad] = useState(false);
   const [id, setId] = useState(realmId);
   const router = useRouter();
-  const { data: realmData } = useGetRealmQuery({ variables: { id: id } });
+  const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
 
   const realm = realmData?.getRealm;
 

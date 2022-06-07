@@ -39,8 +39,8 @@ export function Header() {
           <Link href={'/'}>
             <span className="flex">
               {' '}
-              <BibliothecaBook className="h-8 ml-2 mr-4 stroke-white fill-white" />
-              <BibliothecaDAO className="self-center h-8 ml-2 mr-auto stroke-white fill-white" />
+              <BibliothecaBook className="h-5 ml-2 mr-4 stroke-white fill-white" />
+              <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" />
             </span>
           </Link>
         </div>

@@ -164,7 +164,7 @@ export function AccountPanel() {
           </p>
         </div>
         {/* <Donut className='stroke-red-200' radius={90} stroke={10} progress={90}/> */}
-        <Card className="col-start-9 col-end-13 row-span-3">
+        <Card className="col-start-1 col-end-8">
           <CardBody>
             <CardTitle>Events across your empire</CardTitle>
             <Table

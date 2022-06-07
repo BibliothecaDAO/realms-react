@@ -61,9 +61,9 @@ export function CombatPanel(): ReactElement {
   // Sample combat result query
   const { data: combatResult } = useGetRealmCombatResultQuery({
     variables: {
-      defendRealmId: 1061,
+      defendRealmId: 1010,
       transactionHash:
-        '0x5db41537df591e0f7e4a7835c03951ebe9f8872b24b46d9ee594d0444220e62',
+        '0x67f4b7da93f89702a3fb4029b391d6b5c681f49c0924da9547f0e57e249f60f',
     },
   });
 
@@ -81,6 +81,7 @@ export function CombatPanel(): ReactElement {
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const getCombatSteps = () => {
+    console.log(combatResult?.getRealmCombatResult?.history);
     return combatResult?.getRealmCombatResult?.history
       ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
           return a.eventType == 'combat_step';
