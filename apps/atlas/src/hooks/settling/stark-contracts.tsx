@@ -1,4 +1,3 @@
-import type { UseContract } from '@starknet-react/core';
 import { useContract } from '@starknet-react/core';
 import type { Abi } from 'starknet';
 
@@ -16,7 +15,7 @@ import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.js
  * Load the Realms Settling contract.
  * @returns The `Settling` contract or undefined.
  */
-export function useSettlingContract(): UseContract {
+export function useSettlingContract() {
   return useContract({
     abi: Settling as Abi,
     address:
@@ -27,7 +26,7 @@ export function useSettlingContract(): UseContract {
  * Load the Realms Resources contract.
  * @returns The `Resources` contract or undefined.
  */
-export function useResourcesContract(): UseContract {
+export function useResourcesContract() {
   return useContract({
     abi: Resources as Abi,
     address:
@@ -39,7 +38,7 @@ export function useResourcesContract(): UseContract {
  * Load the Realms Buildings contract.
  * @returns The `Buildings` contract or undefined.
  */
-export function useBuildingContract(): UseContract {
+export function useBuildingContract() {
   return useContract({
     abi: Building as Abi,
     address:
@@ -51,7 +50,7 @@ export function useBuildingContract(): UseContract {
  * Load the Realms Wonder contract.
  * @returns The `Wonder` contract or undefined.
  */
-export function useWonderContract(): UseContract {
+export function useWonderContract() {
   return useContract({
     abi: Wonder as Abi,
     address:
@@ -63,7 +62,7 @@ export function useWonderContract(): UseContract {
  * Load the Realms Combat contract.
  * @returns The `Combat` contract or undefined.
  */
-export function useCombatContract(): UseContract {
+export function useCombatContract() {
   return useContract({
     abi: Combat as Abi,
     address:
@@ -75,7 +74,7 @@ export function useCombatContract(): UseContract {
  * Load the Realms Resources ERC1155 contract.
  * @returns The `Resources` contract or undefined.
  */
-export function useResources1155Contract(): UseContract {
+export function useResources1155Contract() {
   return useContract({
     abi: Resources1155 as Abi,
     address:
@@ -87,7 +86,7 @@ export function useResources1155Contract(): UseContract {
  * Load the Lords ERC20 contract.
  * @returns The `Resources` contract or undefined.
  */
-export function useLordsContract(): UseContract {
+export function useLordsContract() {
   return useContract({
     abi: Lords as Abi,
     address:
@@ -98,7 +97,7 @@ export function useLordsContract(): UseContract {
  * Load the Realms Resources ERC721 contract.
  * @returns The `Realms` contract or undefined.
  */
-export function useRealms721Contract(): UseContract {
+export function useRealms721Contract() {
   return useContract({
     abi: Realms721 as Abi,
     address:
@@ -110,7 +109,7 @@ export function useRealms721Contract(): UseContract {
  * Load the Exchange ERC20_1155 contract.
  * @returns The `Exchange` contract or undefined.
  */
-export function useExchangeContract(): UseContract {
+export function useExchangeContract() {
   return useContract({
     abi: Exchange as Abi,
     address:
