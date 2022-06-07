@@ -51,6 +51,9 @@ export function AccountPanel() {
     pollInterval: 10000,
   });
 
+  const realmsCount =
+    (accountData?.ownedRealmsCount ?? 0) +
+    (accountData?.settledRealmsCount ?? 0);
   const successClass = 'bg-green-200/20';
   const negativeClass = 'bg-red-200/20';
   function genRealmEvent(event) {
@@ -184,7 +187,7 @@ export function AccountPanel() {
         <Card className="col-start-1 col-end-3">
           <CardBody>
             <CardTitle>Realms</CardTitle>
-            <CardStats className="text-5xl">20</CardStats>
+            <CardStats className="text-5xl">{realmsCount}</CardStats>
             <Button className="mt-10" variant="primary" size="sm" href="/realm">
               See Realms
             </Button>
