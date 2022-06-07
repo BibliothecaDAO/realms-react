@@ -128,11 +128,11 @@ export function AccountPanel() {
         return {
           event: event.data?.success ? (
             <span className="">
-              💪 Defended raid from {event.data?.defendRealmId}
+              🔥 We have been Pillaged by Realm {event.data?.attackRealmId}
             </span>
           ) : (
             <span className="">
-              🔥 We have been Pillaged by Realm {event.data?.attackRealmId}
+              💪 Defended raid from {event.data?.defendRealmId}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
