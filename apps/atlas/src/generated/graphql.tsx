@@ -618,6 +618,8 @@ export type RealmHistory = {
   id: Scalars['Int'];
   realm?: Maybe<Realm>;
   realmId: Scalars['Int'];
+  realmName?: Maybe<Scalars['String']>;
+  realmOrder?: Maybe<Scalars['String']>;
   realmOwner?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['Timestamp']>;
   transactionHash?: Maybe<Scalars['String']>;
@@ -632,6 +634,8 @@ export type RealmHistoryWhereInput = {
   eventType?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
   realmId?: InputMaybe<IntFilter>;
+  realmName?: InputMaybe<StringFilter>;
+  realmOrder?: InputMaybe<EnumOrderTypeNullableFilter>;
   realmOwner?: InputMaybe<StringFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   transactionHash?: InputMaybe<StringFilter>;
@@ -1058,6 +1062,8 @@ export type GetAccountQuery = {
     eventType?: string | null;
     realmId: number;
     realmOwner?: string | null;
+    realmName?: string | null;
+    realmOrder?: string | null;
     data?: any | null;
     timestamp?: any | null;
   }>;
@@ -1766,6 +1772,8 @@ export const GetAccountDocument = gql`
       eventType
       realmId
       realmOwner
+      realmName
+      realmOrder
       data
       timestamp
     }
