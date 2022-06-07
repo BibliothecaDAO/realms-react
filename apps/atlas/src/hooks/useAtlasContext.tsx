@@ -56,7 +56,7 @@ export const AssetFilters: AssetFilter[] = [
 ];
 
 export type ModalType = {
-  type: 'lore-entity';
+  type: 'lore-entity' | 'raid-result';
   props?: object;
 } | null;
 

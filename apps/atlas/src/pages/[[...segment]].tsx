@@ -8,6 +8,7 @@ import { Map } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
+import { BaseModal } from '@/components/modals/BaseModal';
 import { Header } from '@/components/navigation/header';
 import { AccountPanel } from '@/components/panels/AccountPanel';
 import { BankPanel } from '@/components/panels/BankPanel';
@@ -76,6 +77,7 @@ function AtlasMain() {
       <CombatPanel />
       {/* <FlyTo /> */}
       <MapModule />
+      <BaseModal />
       <TransactionCartSideBar />
     </div>
   );
