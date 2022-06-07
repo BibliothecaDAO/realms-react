@@ -1,7 +1,6 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
-import Link from 'next/link';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -17,14 +16,6 @@ const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
 export function RealmOverviews(props: RealmOverviewsProps) {
-  const testRealm = {
-    name: 'Smutmum',
-    order: 'anger',
-    id: 1,
-    resources: ['Wood', 'DragonHide', 'Coal', 'Ruby', 'Copper'],
-    statistics: ['Happiness', 'Culture', 'Food', 'Population'],
-    military: ['Offence', 'Defence', 'Last Attacked'],
-  };
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
   const {
@@ -43,6 +34,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     realm.owner === JOURNEY_1_ADDRESS;
   const isBridgedViaCarrack = (realm: RealmFragmentFragment) =>
     realm.owner === JOURNEY_2_ADDRESS;
+
   const isYourRealm = (realm: RealmFragmentFragment) =>
     (account &&
       (account.toLowerCase() === realm.owner ||
@@ -98,7 +90,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
         props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex flex-wrap w-full h-auto max-w-full mb-2 overflow-x-auto rounded justify-evenly"
+            className="flex flex-wrap w-full h-auto max-w-full mb-2 rounded justify-evenly"
           >
             {realm?.wonder && (
               <div className="w-full p-2 text-xl font-semibold text-center text-gray-200 uppercase border-gray-500 rounded-t shadow-inner tracking-veryWide bg-black/30">
@@ -112,19 +104,27 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 </span>
                 {realm.name}
               </h3>
-              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
+              <div className="self-center ml-4">
+                <Button
+                  href={`/realm/${realm.realmId}`}
+                  variant="secondary"
+                  size="xs"
+                  className="w-full "
+                >
+                  view
+                </Button>
+              </div>
+
+              {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
-              </h4>
-              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-blue-100 rounded sm:block">
+              </h4> */}
+              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border rounded border-blue-100/20 sm:block">
                 {RealmStatus(realm)}
               </h4>
 
               <div className="flex ml-auto ">
-                <span className="self-center tracking-widest uppercase">
-                  {realm.orderType.toLowerCase().replace('_', ' ')}
-                </span>
-
                 <OrderIcon
+                  withTooltip
                   className="self-center mx-3"
                   size={'md'}
                   order={realm.orderType.toLowerCase()}
@@ -224,11 +224,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               >
                 quick view
               </Button>
-              <Link href={`/realm/${realm.realmId}`}>
-                <Button variant="primary" size="xs" className="w-full ">
-                  details
-                </Button>
-              </Link>
               {!isFavourite(realm) && (
                 <Button
                   size="xs"
