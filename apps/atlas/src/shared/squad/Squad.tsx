@@ -12,6 +12,7 @@ interface SquadProps {
   withPurchase?: boolean;
   realmId: number;
   location: number; // 1 attack 2 defence
+  troopsStats: any;
 }
 
 export const SquadBuilder = (props: SquadProps) => {
@@ -19,7 +20,7 @@ export const SquadBuilder = (props: SquadProps) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
   const troopIdsToPurchase = () => {
-    return toBuy.map((a: any) => a.troopId);
+    return toBuy.map((a: TroopInterface) => a.troopId);
   };
 
   const fillGap = (tier: number, length: number) => {
@@ -51,6 +52,7 @@ export const SquadBuilder = (props: SquadProps) => {
           withPurchase={props.withPurchase}
           key={index}
           troop={a}
+          troopsStats={props.troopsStats}
         />
       );
     });
@@ -116,13 +118,16 @@ export const SquadBuilder = (props: SquadProps) => {
             {toBuy.map((a, index) => {
               return (
                 <Troop
-                  onSubmit={(value: any) =>
+                  onSubmit={(value: TroopInterface) =>
                     setToBuy((current) => [...current, value])
                   }
-                  onRemove={(value: any) => trimTroopFromSquad(value)}
+                  onRemove={(value: TroopInterface) =>
+                    trimTroopFromSquad(value)
+                  }
                   withPurchase={false}
                   key={index}
                   troop={a}
+                  troopsStats={props.troopsStats}
                 />
               );
             })}

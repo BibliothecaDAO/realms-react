@@ -203,4 +203,17 @@ export interface TroopInterface {
   vitality: number;
   wisdom: number;
   squadSlot: number;
+  troopName: string;
+  troopCost: ItemCost[];
+}
+
+export interface ItemCost {
+  amount: number;
+  resources: ResourceCost[];
+}
+
+export interface ResourceCost {
+  amount: number;
+  resourceId: number;
+  resourceName: string;
 }

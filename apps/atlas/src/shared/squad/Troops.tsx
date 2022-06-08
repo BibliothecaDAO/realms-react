@@ -1,8 +1,9 @@
 import { Button, Table } from '@bibliotheca-dao/ui-lib/base';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { Popover } from '@headlessui/react';
 import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { TroopInterface } from '@/types/index';
+import type { ItemCost, TroopInterface } from '@/types/index';
 interface HealthBarProps {
   vitality: number;
   troopId: number;
@@ -14,6 +15,7 @@ interface TroopProps {
   withPurchase?: boolean;
   onSubmit: (value: TroopInterface) => void;
   onRemove: (value: TroopInterface) => void;
+  troopsStats: TroopInterface[];
 }
 
 const troopList = [
@@ -247,6 +249,7 @@ const columns = [
   { Header: 'vitality', id: 5, accessor: 'vitality' },
   { Header: 'wisdom', id: 6, accessor: 'wisdom' },
   { Header: 'add', id: 6, accessor: 'add' },
+  { Header: 'cost', id: 6, accessor: 'troopCost' },
 ];
 
 const tableOptions = { is_striped: true };
@@ -258,27 +261,52 @@ type Row = {
   defense: number;
   vitality: number;
   wisdom: number;
+  troopCost: any[];
 };
 
 export const Troop = (props: TroopProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const getTroop = () => {
-    return troopList.find((a) => a.troopId === props.troop.troopId);
+    return props.troopsStats?.find(
+      (a: TroopInterface) => a.troopId === props.troop.troopId
+    );
   };
 
   const getTroopTierList = () => {
-    return troopList.filter((a) => a.tier === props.troop.tier);
+    return props?.troopsStats?.filter(
+      (a: TroopInterface) => a.tier === props.troop.tier
+    );
   };
 
-  const mappedRowData: Row[] = (getTroopTierList() as any).map((re, index) => {
+  const troopCostCell = (cost: ItemCost) => {
+    console.log(cost);
+    return (
+      <div className="w-24">
+        <div className="flex justify-between">
+          <Lords className="w-4" /> {cost.amount}
+        </div>
+
+        {cost.resources.map((a, index) => {
+          return (
+            <div key={index} className="flex justify-between">
+              <span>{a.resourceName}</span> <span>{a.amount}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const mappedRowData: Row[] = (getTroopTierList() as any)?.map((re, index) => {
     return {
-      name: <span className="tracking-wider uppercase">{re.name}</span>,
+      name: <span className="tracking-wider uppercase">{re.troopName}</span>,
       agility: re.agility,
       attack: re.attack,
       defense: re.defense,
       vitality: re.vitality,
       wisdom: re.wisdom,
+      troopCost: troopCostCell(re.troopCost),
       add: (
         <Button
           variant="secondary"
@@ -308,7 +336,7 @@ export const Troop = (props: TroopProps) => {
       />
 
       <div className="mt-auto text-xs text-center text-black uppercase font-body">
-        {getTroop()?.name.substring(0, 5)}
+        {getTroop()?.troopName.substring(0, 5)}
       </div>
       {/* {!props.withPurchase && (
         <Button
@@ -330,7 +358,7 @@ export const Troop = (props: TroopProps) => {
                 className="absolute z-50 m-auto bottom-10 md:left-0"
                 static
               >
-                <div className="flex flex-col gap-6 p-2 text-xs text-white bg-black rounded shadow-sm">
+                <div className="flex gap-6 p-2 text-sm text-white bg-black rounded shadow-sm">
                   <Table
                     columns={columns}
                     data={mappedRowData}

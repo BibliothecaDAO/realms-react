@@ -65,7 +65,7 @@ export function CombatPanel(): ReactElement {
     AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 1) ??
     [];
   const defenseSquad =
-    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
+    DefendingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
     [];
 
   const timeAttacked = DefendingRealm?.getRealm?.lastAttacked
@@ -80,6 +80,8 @@ export function CombatPanel(): ReactElement {
   };
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
+
+  console.log(troopStatsData);
 
   const bannerClasses =
     'py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords transition-all duration-300';
@@ -104,6 +106,7 @@ export function CombatPanel(): ReactElement {
             realmId={parseInt(defendId)}
             withPurchase={false}
             troops={defenseSquad}
+            troopsStats={troopStatsData?.getTroopStats}
           />
 
           <hr></hr>
@@ -113,6 +116,7 @@ export function CombatPanel(): ReactElement {
             realmId={parseInt(attackId)}
             withPurchase={true}
             troops={attackSquad}
+            troopsStats={troopStatsData?.getTroopStats}
           />
 
           {AttackingRealm?.getRealm?.name && (
