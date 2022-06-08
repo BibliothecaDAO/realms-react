@@ -6130,42 +6130,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pmmmwh/react-refresh-webpack-plugin@npm:^0.4.3":
-  version: 0.4.3
-  resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.4.3"
-  dependencies:
-    ansi-html: "npm:^0.0.7"
-    error-stack-parser: "npm:^2.0.6"
-    html-entities: "npm:^1.2.1"
-    native-url: "npm:^0.2.6"
-    schema-utils: "npm:^2.6.5"
-    source-map: "npm:^0.7.3"
-  peerDependencies:
-    "@types/webpack": 4.x
-    react-refresh: ">=0.8.3 <0.10.0"
-    sockjs-client: ^1.4.0
-    type-fest: ^0.13.1
-    webpack: ">=4.43.0 <6.0.0"
-    webpack-dev-server: 3.x
-    webpack-hot-middleware: 2.x
-    webpack-plugin-serve: 0.x || 1.x
-  peerDependenciesMeta:
-    "@types/webpack":
-      optional: true
-    sockjs-client:
-      optional: true
-    type-fest:
-      optional: true
-    webpack-dev-server:
-      optional: true
-    webpack-hot-middleware:
-      optional: true
-    webpack-plugin-serve:
-      optional: true
-  checksum: a952d91873d86f97872ae392929218e9643125e886aeef6fb241000d4f63b0af0861550efdb66f1261e39d082ee4c9bed3a666f0e58fbc27b53317d967d2d501
-  languageName: node
-  linkType: hard
-
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
   version: 0.5.7
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.7"
@@ -7682,26 +7646,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/preset-create-react-app@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@storybook/preset-create-react-app@npm:3.2.0"
-  dependencies:
-    "@pmmmwh/react-refresh-webpack-plugin": "npm:^0.4.3"
-    "@types/babel__core": "npm:^7.1.7"
-    "@types/webpack": "npm:^4.41.13"
-    babel-plugin-react-docgen: "npm:^4.1.0"
-    pnp-webpack-plugin: "npm:^1.6.4"
-    react-docgen-typescript-plugin: "npm:^1.0.0"
-    semver: "npm:^7.3.5"
-  peerDependencies:
-    "@babel/core": "*"
-    "@storybook/node-logger": "*"
-    "@storybook/react": ">=5.2"
-    react-scripts: ">=3.0.0"
-  checksum: a672f47dea4e48f09870ab2e3e84466a9b75602559ed23f127b1a56f4a0b0ff5bea393104596fb18b539aba33e3a82d08a02fce7c2d902aed18c005281cfa310
-  languageName: node
-  linkType: hard
-
 "@storybook/preview-web@npm:6.5.6":
   version: 6.5.6
   resolution: "@storybook/preview-web@npm:6.5.6"
@@ -8487,7 +8431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14, @types/babel__core@npm:^7.1.7":
+"@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14":
   version: 7.1.19
   resolution: "@types/babel__core@npm:7.1.19"
   dependencies:
@@ -9259,6 +9203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/tailwindcss@npm:3.0.10":
+  version: 3.0.10
+  resolution: "@types/tailwindcss@npm:3.0.10"
+  checksum: 43424f592a309ab02f58d2ca120ff0061ca1e17429d8115c4404bb8ec7fe69eb8a7cbb0f4ac144182b8cc5d7e7ee9c876c673e6949f683a58b300224609128e6
+  languageName: node
+  linkType: hard
+
 "@types/tapable@npm:^1, @types/tapable@npm:^1.0.5":
   version: 1.0.8
   resolution: "@types/tapable@npm:1.0.8"
@@ -9330,7 +9281,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack@npm:^4.41.13, @types/webpack@npm:^4.41.26, @types/webpack@npm:^4.41.8":
+"@types/webpack@npm:^4.41.26, @types/webpack@npm:^4.41.8":
   version: 4.41.32
   resolution: "@types/webpack@npm:4.41.32"
   dependencies:
@@ -10649,15 +10600,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-html@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "ansi-html@npm:0.0.7"
-  bin:
-    ansi-html: ./bin/ansi-html
-  checksum: 25e5044981fb8c31622b1513a3397f9397d4a935a274d2e22973e5d29323f0717ac975f4f6775b47ab7151196ead8aded4fa918623a34ad47c6e24e2279fbe4b
-  languageName: node
-  linkType: hard
-
 "ansi-regex@npm:^2.0.0":
   version: 2.1.1
   resolution: "ansi-regex@npm:2.1.1"
@@ -11755,7 +11697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-react-docgen@npm:^4.1.0, babel-plugin-react-docgen@npm:^4.2.1":
+"babel-plugin-react-docgen@npm:^4.2.1":
   version: 4.2.1
   resolution: "babel-plugin-react-docgen@npm:4.2.1"
   dependencies:
@@ -19448,13 +19390,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:^1.2.1":
-  version: 1.4.0
-  resolution: "html-entities@npm:1.4.0"
-  checksum: 8ef6432b856e6b82c6d5362af3df8f05dbe87db1a02e008d16090c609ba0ac53c0cf220f61be4cc515e03184e8fe5fdcfd7bb3f6334e1bc98d0135e1ee76fe44
-  languageName: node
-  linkType: hard
-
 "html-entities@npm:^2.1.0, html-entities@npm:^2.3.2":
   version: 2.3.3
   resolution: "html-entities@npm:2.3.3"
@@ -24767,15 +24702,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"native-url@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "native-url@npm:0.2.6"
-  dependencies:
-    querystring: "npm:^0.2.0"
-  checksum: ac14b56b8ab5e901f26dedc6b208b2aebf9d74722cd332746c719cb1967db9a68541344aecfbfa395d70ba929d703418912963f3b61ecc858a16bacad49b4130
-  languageName: node
-  linkType: hard
-
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -26369,15 +26295,6 @@ __metadata:
   dependencies:
     ts-pnp: "npm:^1.1.6"
   checksum: 7c8958fc6e2549e28b02144cd743f6c28b26a5dcc461fa0cbb82a2feedd6eaf5a7c6e9febe370a0adbc7c7c5b6ec04082d96f896e478d42ed05acc6a6a1c3a20
-  languageName: node
-  linkType: hard
-
-"pnp-webpack-plugin@npm:^1.6.4":
-  version: 1.7.0
-  resolution: "pnp-webpack-plugin@npm:1.7.0"
-  dependencies:
-    ts-pnp: "npm:^1.1.6"
-  checksum: 0be41a4df7d57d90d5f00acd95fb4abd34f850cfb21f79d54c9cb9952b24b2f9de3a778d0df04c3f32f1b9676798ae8e067429eeb71af06259ec386d872b23c3
   languageName: node
   linkType: hard
 
@@ -28068,34 +27985,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-docgen-typescript-plugin@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "react-docgen-typescript-plugin@npm:1.0.1"
-  dependencies:
-    debug: "npm:^4.1.1"
-    endent: "npm:^2.0.1"
-    find-cache-dir: "npm:^3.3.1"
-    flat-cache: "npm:^3.0.4"
-    micromatch: "npm:^4.0.2"
-    react-docgen-typescript: "npm:^1.22.0"
-    tslib: "npm:^2.0.0"
-    webpack-sources: "npm:^2.2.0"
-  peerDependencies:
-    typescript: ">= 3.x"
-    webpack: ">= 4"
-  checksum: 7b072e0ad9e506251b7483461edb0bf2b770b310c9a9537f70292bdd4755ba6356151a81a621fc89042b35b985d1ae2c3b73b7a84125d3fd962369a48c25f013
-  languageName: node
-  linkType: hard
-
-"react-docgen-typescript@npm:^1.22.0":
-  version: 1.22.0
-  resolution: "react-docgen-typescript@npm:1.22.0"
-  peerDependencies:
-    typescript: ">= 3.x"
-  checksum: 66d44fccee4fc16eca6a510632309b1ded71a9bb26c83b85d467941ca250fa32e2d41fcd6f2f75e55fd2138c9cbf0f82aa0c55e0f46becce9e7683f81f7564cf
-  languageName: node
-  linkType: hard
-
 "react-docgen-typescript@npm:^2.1.1":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
@@ -28700,11 +28589,12 @@ __metadata:
     "@storybook/builder-webpack5": "npm:^6.5.6"
     "@storybook/manager-webpack5": "npm:^6.5.6"
     "@storybook/node-logger": "npm:^6.5.6"
-    "@storybook/preset-create-react-app": "npm:^3.2.0"
     "@storybook/react": "npm:^6.5.6"
     "@storybook/testing-library": "npm:^0.0.11"
     "@types/prettier": "npm:2.6.1"
     "@types/shell-quote": "npm:1.7.1"
+    "@types/tailwindcss": "npm:3.0.10"
+    autoprefixer: "npm:10.4.7"
     cross-env: "npm:7.0.3"
     eslint: "npm:8.16.0"
     husky: "npm:8.0.1"
@@ -28713,8 +28603,11 @@ __metadata:
     npm-run-all: "npm:4.1.5"
     postcss: "npm:8.4.14"
     prettier: "npm:2.6.2"
+    react: "npm:18.1.0"
+    react-dom: "npm:18.1.0"
     rimraf: "npm:3.0.2"
     shell-quote: "npm:1.7.3"
+    tailwindcss: "npm:3.0.24"
     typescript: "npm:4.6.4"
   languageName: unknown
   linkType: soft
