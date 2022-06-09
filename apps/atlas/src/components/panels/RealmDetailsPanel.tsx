@@ -17,7 +17,7 @@ import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useGetRealmQuery } from '@/generated/graphql';
+import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
@@ -37,6 +37,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
 
   const realm = realmData?.getRealm;
+  const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const attackSquad =
     realm?.squad?.filter((squad) => squad.squadSlot === 1) ?? [];
@@ -167,6 +168,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                 realmId={realmId}
                 withPurchase={true}
                 troops={attackSquad}
+                troopsStats={troopStatsData?.getTroopStats}
               />
             ) : (
               <SquadBuilder
@@ -174,6 +176,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                 realmId={realmId}
                 withPurchase={true}
                 troops={defenseSquad}
+                troopsStats={troopStatsData?.getTroopStats}
               />
             )}
           </Card>

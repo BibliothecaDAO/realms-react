@@ -81,8 +81,6 @@ export function CombatPanel(): ReactElement {
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
-  console.log(troopStatsData);
-
   const bannerClasses =
     'py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords transition-all duration-300';
 
