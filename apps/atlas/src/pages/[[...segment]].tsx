@@ -81,6 +81,7 @@ function AtlasMain() {
       <MapModule />
       <BaseModal />
       <TransactionCartSideBar />
+      <MilitarySideBar />
     </div>
   );
 }
@@ -99,7 +100,6 @@ function RealmsModule() {
         ))}
       {realmId === 0 && (
         <>
-          <MilitarySideBar />
           <RealmsPanel />
           {/* <LorePanel /> */}
           <RealmSideBar />
