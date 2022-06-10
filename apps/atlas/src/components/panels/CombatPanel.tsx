@@ -19,8 +19,8 @@ import { RealmVault } from '../tables/RealmVault';
 import { BasePanel } from './BasePanel';
 
 export function CombatPanel(): ReactElement {
-  const [attackId, setAttackId] = useState('3');
-  const [defendId, setDefendId] = useState('1061');
+  const [attackId, setAttackId] = useState('5500');
+  const [defendId, setDefendId] = useState('1291');
 
   const { selectedPanel, setModal } = useAtlasContext();
   const router = useRouter();
@@ -28,10 +28,10 @@ export function CombatPanel(): ReactElement {
 
   useEffect(() => {
     if (attackingRealmId) {
-      setAttackId(attackingRealmId ? attackingRealmId.toString() : '3');
+      setAttackId(attackingRealmId ? attackingRealmId.toString() : '5500');
     }
     if (defendingRealmId) {
-      setDefendId(defendingRealmId ? defendingRealmId.toString() : '1061');
+      setDefendId(defendingRealmId ? defendingRealmId.toString() : '1291');
     }
   }, [attackingRealmId, defendingRealmId]);
 
@@ -87,7 +87,7 @@ export function CombatPanel(): ReactElement {
   type Row = {
     stat: string;
     attacker: number;
-    defender: ReactElement;
+    defender: number;
   };
 
   const columns = [
@@ -130,7 +130,6 @@ export function CombatPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="relative grid h-full grid-cols-8 gap-12">
         <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
-          <CountdownTimer date={time()} />
           {DefendingRealm?.getRealm?.name && (
             <RealmBannerHeading
               onSubmit={(value) => setDefendId(value)}
@@ -173,6 +172,10 @@ export function CombatPanel(): ReactElement {
             {' '}
             <span>Raidable Vault</span>
           </div>
+          <div className="px-4">
+            <CountdownTimer date={time()} />
+          </div>
+
           <div className="px-4">
             {DefendingRealm && !DefendingLoading && (
               <RealmVault

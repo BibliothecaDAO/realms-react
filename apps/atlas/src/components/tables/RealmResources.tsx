@@ -132,7 +132,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
             `/combat?` +
             `defendingRealmId=` +
             props.realm.realmId +
-            '&attackingRealmId=3'
+            '&attackingRealmId=5500'
           }
           className="mt-3 ml-2"
           variant="primary"
