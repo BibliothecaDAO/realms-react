@@ -2,6 +2,7 @@ import { useStarknet } from '@starknet-react/core';
 import { ethers } from 'ethers';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import type { TroopInterface } from '@/types/';
 
 interface TraitProps {
   trait: string;
@@ -100,4 +101,24 @@ export const getOrder = (realm: RealmFragmentFragment) => {
 
 export const getAccountHex = (account: string) => {
   return ethers.BigNumber.from(account).toHexString();
+};
+
+export const squadStats = (squad: TroopInterface[]) => {
+  return {
+    agility: squad
+      .map((troop) => troop.agility)
+      .reduce((prev, curr) => prev + curr, 0),
+    attack: squad
+      .map((troop) => troop.attack)
+      .reduce((prev, curr) => prev + curr, 0),
+    defense: squad
+      .map((troop) => troop.defense)
+      .reduce((prev, curr) => prev + curr, 0),
+    vitality: squad
+      .map((troop) => troop.vitality)
+      .reduce((prev, curr) => prev + curr, 0),
+    wisdom: squad
+      .map((troop) => troop.wisdom)
+      .reduce((prev, curr) => prev + curr, 0),
+  };
 };

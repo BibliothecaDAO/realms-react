@@ -208,7 +208,7 @@ export const HealthBar = (props: HealthBarProps) => {
   const getColour = () => {
     const vit = getVitality();
     if (vit > 70) {
-      return 'bg-green-200 ';
+      return 'bg-green-400 ';
     } else if (vit > 50) {
       return 'bg-yellow-200 ';
     } else if (vit > 25) {
@@ -221,9 +221,9 @@ export const HealthBar = (props: HealthBarProps) => {
   return (
     <div
       style={{
-        height: `${getVitality()}%`,
+        marginTop: `${100 - getVitality()}%`,
       }}
-      className={`relative bottom-0 w-1 rounded-tl rounded-br ${getColour()}`}
+      className={`relative bottom-0 w-1 rounded-tl rounded-br rotate-180 transform mr-1 ${getColour()}`}
     ></div>
   );
 };
@@ -280,7 +280,7 @@ export const Troop = (props: TroopProps) => {
   };
 
   const troopCostCell = (cost: ItemCost) => {
-    console.log(cost);
+    // console.log(cost);
     return (
       <div className="w-24">
         <div className="flex justify-between">
@@ -328,7 +328,7 @@ export const Troop = (props: TroopProps) => {
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white/50 rounded shadow-inner flex`}
+      )} bg-white/30 rounded shadow-inner flex`}
     >
       <HealthBar
         troopId={props.troop.troopId}

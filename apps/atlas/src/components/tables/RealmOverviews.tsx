@@ -5,7 +5,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { RealmStatus } from '@/shared/Getters/Realm';
+import { RealmStatus, squadStats } from '@/shared/Getters/Realm';
 import { findResourceName } from '@/util/resources';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
@@ -82,6 +82,8 @@ export function RealmOverviews(props: RealmOverviewsProps) {
       </div>
     );
   }
+
+  console.log(props.realms);
   return (
     <div>
       {/* {bridgeRow} */}
@@ -104,16 +106,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 </span>
                 {realm.name}
               </h3>
-              <div className="self-center ml-4">
-                <Button
-                  href={`/realm/${realm.realmId}`}
-                  variant="secondary"
-                  size="xs"
-                  className="w-full "
-                >
-                  view
-                </Button>
-              </div>
 
               {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
@@ -149,7 +141,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div>
-            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
+            {/* <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
               {' '}
               <div className="self-center w-full">
                 {realm.traits?.map((trait, index) => {
@@ -165,20 +157,26 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   );
                 })}
               </div>
-            </div>
-            {/* <div className="w-1/4 p-8 bg-gray-700/70">
-              {' '}
-              {testRealm.military.map((a, index) => {
-                return (
-                  <div className="flex my-4 font-bold " key={index}>
-                    <span className="uppercase tracking-veryWide">{a}</span>
-                    <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
-                      100
-                    </span>
-                  </div>
-                );
-              })}
             </div> */}
+            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
+              <div className="self-center w-full font-semibold tracking-widest uppercase">
+                <div className="flex justify-between ">
+                  Vitality: <span> {squadStats(realm.squad).vitality}</span>
+                </div>
+                <div className="flex justify-between">
+                  Attack: <span>{squadStats(realm.squad).attack}</span>
+                </div>
+                <div className="flex justify-between">
+                  Defense: <span>{squadStats(realm.squad).defense}</span>
+                </div>
+                <div className="flex justify-between">
+                  Wisdom: <span>{squadStats(realm.squad).wisdom}</span>
+                </div>
+                <div className="flex justify-between">
+                  Agility: <span>{squadStats(realm.squad).agility}</span>
+                </div>
+              </div>
+            </div>
             <div className="flex justify-center w-full px-6 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
               {' '}
               <Button
@@ -243,6 +241,15 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   Remove from favs
                 </Button>
               )}
+              <hr />
+              <Button
+                href={`/realm/${realm.realmId}`}
+                variant="primary"
+                size="xs"
+                className="w-full "
+              >
+                {isYourRealm(realm) ? 'manage' : 'details'}
+              </Button>
             </div>
           </div>
         ))}
