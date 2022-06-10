@@ -1,5 +1,5 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCombat from '@/hooks/settling/useCombat';
 import { squadStats } from '@/shared/Getters/Realm';
 import { Troop } from '@/shared/squad/Troops';
@@ -33,7 +33,6 @@ type Row = {
   troopCost: any[];
 };
 export const ArmoryBuilder = (props: Props) => {
-  const { buildSquad } = useCombat({ token_id: props.realmId });
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
   const getTroopIds = (troops: TroopInterface[]) => {
@@ -67,7 +66,6 @@ export const ArmoryBuilder = (props: Props) => {
   };
 
   const troopCostCell = (cost: ItemCost) => {
-    console.log(cost);
     return (
       <div className="w-24">
         <div className="flex justify-between">
@@ -98,11 +96,6 @@ export const ArmoryBuilder = (props: Props) => {
     console.log(props.statistics);
     return {
       name: <span className="tracking-wider uppercase ">{re.troopName}</span>,
-      //   agility: re.agility,
-      //   attack: re.attack,
-      //   defense: re.defense,
-      //   vitality: re.vitality,
-      //   wisdom: re.wisdom,
       troopCost: troopCostCell(re.troopCost),
       add: (
         <Button
@@ -143,8 +136,28 @@ export const ArmoryBuilder = (props: Props) => {
     }, []);
   };
 
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    setValue('');
+  }, [1]);
+
+  const { buildSquad } = useCombat({ token_id: parseInt(value) });
+
   return (
     <div className="w-full">
+      <div className="flex space-x-2">
+        <input
+          className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
+          type="text"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+          placeholder={'Realm ID'}
+        />
+      </div>
+
       <div className="my-4 overflow-y-scroll h-72">
         {mappedRowData && (
           <Table

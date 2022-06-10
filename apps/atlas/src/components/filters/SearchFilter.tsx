@@ -12,6 +12,7 @@ export function SearchFilter(props: SearchFilterProps) {
   useEffect(() => {
     setValue(props.defaultValue ?? '');
   }, [props.defaultValue]);
+
   function doSubmit() {
     if (!props.onSubmit) {
       return;
