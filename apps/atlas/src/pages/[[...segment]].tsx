@@ -17,6 +17,7 @@ import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
 /* import { LorePanel } from '@/components/panels/LorePanel'; */
+import { RaidResultsPanel } from '@/components/panels/RaidResultsPanel';
 import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { TradePanel } from '@/components/panels/TradePanel';
@@ -91,7 +92,12 @@ function RealmsModule() {
   return (
     <RealmProvider>
       <MilitarySideBar />
-      {realmId > 0 && <RealmDetailsPanel realmId={realmId} />}
+      {realmId > 0 &&
+        (segments[2] === 'combat' ? (
+          <RaidResultsPanel defendId={realmId} tx={segments[3]} />
+        ) : (
+          <RealmDetailsPanel realmId={realmId} />
+        ))}
       {realmId === 0 && (
         <>
           <RealmsPanel />

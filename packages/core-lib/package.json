@@ -30,7 +30,7 @@
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "dependencies": {
-    "@tsed/exceptions": "^6.114.16",
+    "@tsed/exceptions": "^6.114.17",
     "dequal": "^2.0.2"
   },
   "devDependencies": {
