@@ -23,6 +23,7 @@ export const RealmStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const RealmOwner = (realm: RealmFragmentFragment) => {
+  console.log(realm);
   return (
     realm?.settledOwner ||
     realm?.ownerL2 ||
@@ -85,7 +86,7 @@ export const TraitTable = (props: TraitProps) => {
 
 export const IsOwner = (owner?: string | null) => {
   const { account } = useStarknet();
-
+  console.log(account, owner);
   if (account) {
     return account == owner ? true : false;
   } else {

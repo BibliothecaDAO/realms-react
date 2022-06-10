@@ -2,6 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import { number } from 'starknet';
 import useCombat from '@/hooks/settling/useCombat';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
 
@@ -16,6 +17,7 @@ interface SquadProps {
 }
 
 export const SquadBuilder = (props: SquadProps) => {
+  const { selectedPanel, toggleMenuType } = useAtlasContext();
   const { buildSquad } = useCombat({ token_id: props.realmId });
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
@@ -24,7 +26,7 @@ export const SquadBuilder = (props: SquadProps) => {
   };
 
   const fillGap = (tier: number, length: number) => {
-    const emptyTroop = {
+    const emptyTroop: TroopInterface = {
       troopId: 0,
       index: 0,
       type: 0,
@@ -35,6 +37,7 @@ export const SquadBuilder = (props: SquadProps) => {
       vitality: 0,
       wisdom: 0,
       squadSlot: 0,
+      troopName: '',
     };
     const currentTroops = props.troops.filter((a) => a.tier === tier);
     const temp: TroopInterface[] = [];
@@ -111,7 +114,7 @@ export const SquadBuilder = (props: SquadProps) => {
       >
         {tier3()}
       </div>
-      {props.withPurchase && (
+      {/* {props.withPurchase && (
         <div className="w-full p-8 rounded bg-white/20">
           <h4>buy troops</h4>{' '}
           <div className="flex space-x-2">
@@ -147,16 +150,25 @@ export const SquadBuilder = (props: SquadProps) => {
             Clear
           </Button>
         </div>
-      )}
-      {/* <div className="flex">
-        <div className="p-8 uppercase rounded bg-black/90">
+      )} */}
+      <div className="flex">
+        <div className="p-2 text-white uppercase rounded bg-black/30">
           <div>Agility: {stats().agility}</div>
           <div>attack: {stats().attack}</div>
           <div>defense: {stats().defense}</div>
           <div>vitality: {stats().vitality}</div>
           <div>Wisdom: {stats().wisdom}</div>
         </div>
-      </div> */}
+        <div>
+          <Button
+            onClick={() => toggleMenuType('military')}
+            className="mt-4"
+            variant="primary"
+          >
+            Add troops
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

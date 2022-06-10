@@ -25,6 +25,7 @@ import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
+import { MilitarySideBar } from '@/components/sidebars/MilitarySideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
@@ -89,6 +90,7 @@ function RealmsModule() {
   const realmId = segments[1] ? Number(segments[1]) : 0;
   return (
     <RealmProvider>
+      <MilitarySideBar />
       {realmId > 0 && <RealmDetailsPanel realmId={realmId} />}
       {realmId === 0 && (
         <>

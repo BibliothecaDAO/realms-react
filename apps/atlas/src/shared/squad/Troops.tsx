@@ -242,12 +242,12 @@ const STYLES = {
 
 const columns = [
   { Header: 'name', id: 1, accessor: 'name' },
-  { Header: 'agility', id: 2, accessor: 'agility' },
+  // { Header: 'agility', id: 2, accessor: 'agility' },
   // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
-  { Header: 'attack', id: 3, accessor: 'attack' },
-  { Header: 'defense', id: 4, accessor: 'defense' },
-  { Header: 'vitality', id: 5, accessor: 'vitality' },
-  { Header: 'wisdom', id: 6, accessor: 'wisdom' },
+  // { Header: 'attack', id: 3, accessor: 'attack' },
+  // { Header: 'defense', id: 4, accessor: 'defense' },
+  // { Header: 'vitality', id: 5, accessor: 'vitality' },
+  // { Header: 'wisdom', id: 6, accessor: 'wisdom' },
   { Header: 'add', id: 6, accessor: 'add' },
   { Header: 'cost', id: 6, accessor: 'troopCost' },
 ];
@@ -256,11 +256,11 @@ const tableOptions = { is_striped: true };
 
 type Row = {
   name: string;
-  agility: number;
-  attack: number;
-  defense: number;
-  vitality: number;
-  wisdom: number;
+  // agility: number;
+  // attack: number;
+  // defense: number;
+  // vitality: number;
+  // wisdom: number;
   troopCost: any[];
 };
 
@@ -301,11 +301,11 @@ export const Troop = (props: TroopProps) => {
   const mappedRowData: Row[] = (getTroopTierList() as any)?.map((re, index) => {
     return {
       name: <span className="tracking-wider uppercase">{re.troopName}</span>,
-      agility: re.agility,
-      attack: re.attack,
-      defense: re.defense,
-      vitality: re.vitality,
-      wisdom: re.wisdom,
+      // agility: re.agility,
+      // attack: re.attack,
+      // defense: re.defense,
+      // vitality: re.vitality,
+      // wisdom: re.wisdom,
       troopCost: troopCostCell(re.troopCost),
       add: (
         <Button
@@ -350,26 +350,28 @@ export const Troop = (props: TroopProps) => {
         </Button>
       )} */}
 
-      {props.withPurchase && props.troop.vitality === 0 && (
-        <Popover className="relative top-0">
-          <div ref={ref}>
-            {isOpen && (
-              <Popover.Panel
-                className="absolute z-50 m-auto bottom-10 md:left-0"
-                static
-              >
-                <div className="flex gap-6 p-2 text-sm text-white bg-black rounded shadow-sm">
-                  <Table
+      {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
+      <Popover className="relative top-0">
+        <div ref={ref}>
+          {isOpen && (
+            <Popover.Panel
+              className="absolute z-50 m-auto bottom-10 md:left-0"
+              static
+            >
+              <div className="p-2 text-sm text-white bg-black rounded shadow-sm">
+                <h5>{props.troop.troopName}</h5>
+                Vitality: {props.troop.vitality}
+                {/* <Table
                     columns={columns}
                     data={mappedRowData}
                     options={tableOptions}
-                  />
-                </div>
-              </Popover.Panel>
-            )}
-          </div>
-        </Popover>
-      )}
+                  /> */}
+              </div>
+            </Popover.Panel>
+          )}
+        </div>
+      </Popover>
+      {/* )} */}
     </div>
   );
 };

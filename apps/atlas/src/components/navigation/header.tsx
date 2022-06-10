@@ -78,7 +78,7 @@ export function Header() {
           </Button>
         </Link> */}
         <span>
-          <Button variant="primary" onClick={connectWallet}>
+          <Button href="/bank" variant="primary" onClick={connectWallet}>
             <Lords className="w-6" />{' '}
             <span className="px-4">
               {(+formatEther(lordsBalance)).toFixed(2)}
@@ -90,6 +90,11 @@ export function Header() {
             variant="primary"
             onClick={() => toggleMenuType('transactionCart')}
           >
+            tx
+          </Button>
+        </span>
+        <span>
+          <Button variant="primary" onClick={() => toggleMenuType('military')}>
             tx
           </Button>
         </span>

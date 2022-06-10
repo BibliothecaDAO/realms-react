@@ -29,6 +29,7 @@ export type MenuType =
   | 'bridgeRealms'
   | 'resourceSwap'
   | 'transactionCart'
+  | 'military'
   | PanelType;
 
 export type AssetFilter = {
@@ -259,6 +260,7 @@ function useAtlas(): Atlas {
         panel = 'bank';
         break;
       case 'transactionCart':
+      case 'military':
         break;
     }
 
