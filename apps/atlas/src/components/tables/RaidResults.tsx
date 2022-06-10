@@ -25,6 +25,7 @@ export const RaidResults = ({ defendId, tx }) => {
   }, [combatResult]);
 
   const getCombatSteps = () => {
+    console.log(combatResult?.getRealmCombatResult);
     return combatResult?.getRealmCombatResult?.history
       ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
           return a.eventType == 'combat_step';
@@ -50,7 +51,7 @@ interface BattleReportItem {
 
 export function BattleReportItem(props: BattleReportItem): ReactElement {
   return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 text-white uppercase border rounded shadow-inner bg-order-fox">
+    <div className="flex justify-between w-full px-4 py-3 my-1 text-black uppercase bg-white border rounded shadow-inner">
       {' '}
       <span>Realm {props.realm}</span>
       <span>deals </span>

@@ -114,52 +114,15 @@ export const SquadBuilder = (props: SquadProps) => {
       >
         {tier3()}
       </div>
-      {/* {props.withPurchase && (
-        <div className="w-full p-8 rounded bg-white/20">
-          <h4>buy troops</h4>{' '}
-          <div className="flex space-x-2">
-            {toBuy.map((a, index) => {
-              return (
-                <Troop
-                  onSubmit={(value: TroopInterface) =>
-                    setToBuy((current) => [...current, value])
-                  }
-                  onRemove={(value: TroopInterface) =>
-                    trimTroopFromSquad(value)
-                  }
-                  withPurchase={false}
-                  key={index}
-                  troop={a}
-                  troopsStats={props.troopsStats}
-                />
-              );
-            })}
-          </div>
-          <Button
-            onClick={() => buildSquad(troopIdsToPurchase(), props.location)}
-            className="mt-4"
-            variant="primary"
-          >
-            Purchase
-          </Button>
-          <Button
-            onClick={() => setToBuy(() => [])}
-            className="mt-4"
-            variant="primary"
-          >
-            Clear
-          </Button>
-        </div>
-      )} */}
       <div className="flex">
-        <div className="p-2 text-white uppercase rounded bg-black/30">
+        {/* <div className="p-2 text-white uppercase rounded bg-black/30">
           <div>Agility: {stats().agility}</div>
           <div>attack: {stats().attack}</div>
           <div>defense: {stats().defense}</div>
           <div>vitality: {stats().vitality}</div>
           <div>Wisdom: {stats().wisdom}</div>
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <Button
             onClick={() => toggleMenuType('military')}
             className="mt-4"
@@ -167,7 +130,7 @@ export const SquadBuilder = (props: SquadProps) => {
           >
             Add troops
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

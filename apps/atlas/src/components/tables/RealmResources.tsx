@@ -84,7 +84,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
     { Header: 'Claimable Resources', id: 2, accessor: 'claimableResources' },
     { Header: 'Raidable Resources', id: 3, accessor: 'raidableResources' },
     { Header: 'level', id: 4, accessor: 'level' },
-    { Header: 'Build', id: 5, accessor: 'build' },
+    // { Header: 'Build', id: 5, accessor: 'build' },
   ];
   const tableOptions = { is_striped: true };
   return (

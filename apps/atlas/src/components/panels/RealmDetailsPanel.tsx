@@ -66,6 +66,26 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     router.push('/realm/' + value);
   };
 
+  console.log(realmData);
+
+  const getPopulation = () => {
+    return realmData?.getRealm?.buildings
+      ?.map((a) => a.population)
+      .reduce((prev, curr) => prev + curr, 0);
+  };
+
+  const getFood = () => {
+    return realmData?.getRealm?.buildings
+      ?.map((a) => a.food)
+      .reduce((prev, curr) => prev + curr, 0);
+  };
+
+  const getCulture = () => {
+    return realmData?.getRealm?.buildings
+      ?.map((a) => a.culture)
+      .reduce((prev, curr) => prev + curr, 0);
+  };
+
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
       <div className="col-start-1 col-end-5">
@@ -182,22 +202,22 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </Card>
           <Card className="col-start-1 col-end-3 ">
             <CardTitle>Happiness</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+            <CardStats className="text-4xl">100</CardStats>
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-3 col-end-4 ">
             <CardTitle>Culture</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+            <CardStats className="text-4xl">{getCulture()}</CardStats>
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-4 col-end-5 ">
             <CardTitle>Food</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+            <CardStats className="text-4xl">{getFood()}</CardStats>
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-5 col-end-7 ">
             <CardTitle>Population</CardTitle>
-            <CardStats className="text-4xl">2</CardStats>
+            <CardStats className="text-4xl">{getPopulation()}</CardStats>
             {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-7 ">

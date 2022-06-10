@@ -2,13 +2,17 @@ import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
+import { IsOwner } from '@/shared/Getters/Realm';
 import type { RealmsCardProps } from '../../types';
 
 type Row = {
-  building: string;
-  requirements: string;
+  building: ReactElement;
+  requirements: ReactElement;
   built: number;
-  buildAction: ReactElement;
+  population: ReactElement;
+  culture: ReactElement;
+  food: ReactElement;
+  buildAction: any;
 };
 
 export function RealmBuildings(props: RealmsCardProps): ReactElement {
@@ -34,31 +38,42 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
 
   const defaultData: Row[] = buildings.map((building) => {
     return {
-      building: building.buildingName,
-      requirements: building.limitTraitName, // String(building.limit ?? 0),
+      building: (
+        <span className="tracking-widest uppercase">
+          {building.buildingName}
+        </span>
+      ),
+      requirements: (
+        <span className="tracking-widest uppercase">
+          {building.limitTraitName}
+        </span>
+      ),
       population: (
         <span>
-          0{' '}
-          <span className="text-white/50">
+          {parseInt(formatStat(building.population)) * building.count}{' '}
+          <span className="text-white/50 ">
             ({formatStat(building.population)})
           </span>{' '}
         </span>
       ),
       culture: (
         <span>
-          0{' '}
-          <span className="text-white/50">
+          {parseInt(formatStat(building.culture)) * building.count}{' '}
+          <span className="text-xs text-white/50">
             ({formatStat(building.culture)})
           </span>{' '}
         </span>
       ),
       food: (
         <span>
-          0 <span className="text-white/50">({formatStat(building.food)})</span>{' '}
+          {parseInt(formatStat(building.food)) * building.count}{' '}
+          <span className="text-xs text-white/50">
+            ({formatStat(building.food)})
+          </span>{' '}
         </span>
       ),
       built: building.count,
-      buildAction: (
+      buildAction: IsOwner(props.realm?.settledOwner) && (
         <Button
           aria-details="klajsfl"
           onClick={() => build(props.realm.realmId, building.buildingId)}
@@ -75,11 +90,13 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   return (
     <div className="w-full mt-2">
       <Table columns={columns} data={defaultData} options={tableOptions} />
-      <div className="flex justify-end w-full mt-4">
-        <Button size="xs" variant="primary">
-          Build All
-        </Button>
-      </div>
+      {IsOwner(props.realm?.settledOwner) && (
+        <div className="flex justify-end w-full mt-4">
+          <Button size="xs" variant="primary">
+            Build All
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

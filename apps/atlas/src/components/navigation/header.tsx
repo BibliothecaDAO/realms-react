@@ -3,8 +3,8 @@
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
-import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
@@ -86,15 +86,15 @@ export function Header() {
           </Button>
         </span>
         <span>
+          <Button variant="primary" onClick={() => toggleMenuType('military')}>
+            <Sword className="w-5 stroke-white fill-white" />
+          </Button>
+        </span>
+        <span>
           <Button
             variant="primary"
             onClick={() => toggleMenuType('transactionCart')}
           >
-            tx
-          </Button>
-        </span>
-        <span>
-          <Button variant="primary" onClick={() => toggleMenuType('military')}>
             tx
           </Button>
         </span>

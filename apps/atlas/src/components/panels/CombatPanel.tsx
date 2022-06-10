@@ -1,4 +1,4 @@
-import { Button, CountdownTimer } from '@bibliotheca-dao/ui-lib';
+import { Button, CountdownTimer, Table } from '@bibliotheca-dao/ui-lib';
 import D12 from '@bibliotheca-dao/ui-lib/icons/D12.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -11,7 +11,7 @@ import {
 } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
-import { getOrder, IsOwner } from '@/shared/Getters/Realm';
+import { getOrder, IsOwner, squadStats } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -84,6 +84,48 @@ export function CombatPanel(): ReactElement {
   const bannerClasses =
     'py-5 mb-4 -mx-4 text-4xl text-center text-white border-4 border-double rounded shadow-xl bg-off-200 font-lords transition-all duration-300';
 
+  type Row = {
+    stat: string;
+    attacker: number;
+    defender: ReactElement;
+  };
+
+  const columns = [
+    { Header: 'stat', id: 1, accessor: 'stat' },
+    { Header: 'attacker', id: 2, accessor: 'attacker' },
+    { Header: 'defender', id: 3, accessor: 'defender' },
+  ];
+
+  const tableOptions = { is_striped: true };
+
+  const defaultData: Row[] = [
+    {
+      stat: 'Vitality',
+      attacker: squadStats(attackSquad).vitality,
+      defender: squadStats(defenseSquad).vitality,
+    },
+    {
+      stat: 'Attack',
+      attacker: squadStats(attackSquad).attack,
+      defender: squadStats(defenseSquad).attack,
+    },
+    {
+      stat: 'Defense',
+      attacker: squadStats(attackSquad).defense,
+      defender: squadStats(defenseSquad).defense,
+    },
+    {
+      stat: 'Wisdom',
+      attacker: squadStats(attackSquad).wisdom,
+      defender: squadStats(defenseSquad).wisdom,
+    },
+    {
+      stat: 'Agility',
+      attacker: squadStats(attackSquad).agility,
+      defender: squadStats(defenseSquad).agility,
+    },
+  ];
+
   return (
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="relative grid h-full grid-cols-8 gap-12">
@@ -139,6 +181,17 @@ export function CombatPanel(): ReactElement {
               />
             )}
           </div>
+
+          <div className={bannerClasses}>battle stats</div>
+          <div className="flex">
+            <div className="w-full my-4 shadow-inner bg-gray-800/60">
+              <Table
+                columns={columns}
+                data={defaultData}
+                options={tableOptions}
+              />
+            </div>
+          </div>
           <div className="w-full px-4 mb-4">
             {/* {IsOwner(AttackingRealm?.getRealm?.ownerL2) && ( */}
             <Button
@@ -151,9 +204,7 @@ export function CombatPanel(): ReactElement {
             </Button>
             {/* )} */}
           </div>
-
-          <div className={bannerClasses}>battle report</div>
-          <Button
+          {/* <Button
             onClick={() => {
               setModal({
                 type: 'raid-result',
@@ -165,7 +216,7 @@ export function CombatPanel(): ReactElement {
             }}
           >
             Open Modal
-          </Button>
+          </Button> */}
           {/* <div className="px-4">
             {DefendingRealm && !DefendingLoading && (
               <RealmVault
