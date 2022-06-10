@@ -91,7 +91,6 @@ function RealmsModule() {
   const realmId = segments[1] ? Number(segments[1]) : 0;
   return (
     <RealmProvider>
-      <MilitarySideBar />
       {realmId > 0 &&
         (segments[2] === 'combat' ? (
           <RaidResultsPanel defendId={realmId} tx={segments[3]} />
@@ -100,6 +99,7 @@ function RealmsModule() {
         ))}
       {realmId === 0 && (
         <>
+          <MilitarySideBar />
           <RealmsPanel />
           {/* <LorePanel /> */}
           <RealmSideBar />

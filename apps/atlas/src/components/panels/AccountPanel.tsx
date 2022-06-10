@@ -286,10 +286,10 @@ export function AccountPanel() {
           );
         })}
 
-        <Card className="col-start-5 col-end-9">
+        {/* <Card className="col-start-5 col-end-9">
           <CardBody>
             <CardTitle>Resources + Lords</CardTitle>
-            {/* <BankCard/> */}
+            <BankCard/>
             <Button
               variant="primary"
               size="sm"
@@ -299,7 +299,7 @@ export function AccountPanel() {
               Go to Bank
             </Button>
           </CardBody>
-        </Card>
+        </Card> */}
         <Card className="col-start-1 col-end-6">
           <CardBody>
             <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>

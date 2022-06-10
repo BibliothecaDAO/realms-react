@@ -8,22 +8,23 @@ import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
-import { useStarknet } from '@starknet-react/core';
+import {
+  useStarknet,
+  useStarknetTransactionManager,
+} from '@starknet-react/core';
 import Link from 'next/link';
 import { useState } from 'react';
 import useSound from 'use-sound';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
+import { TxStyles } from '@/shared/Validators/styles';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
-  const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
-    useWalletContext();
-  const { account, connect, connectors } = useStarknet();
-  const { selectedPanel, toggleMenuType } = useAtlasContext();
-  const { lordsBalance, availableResourceIds, addSelectedSwapResources } =
-    useResourcesContext();
-
+  const { connectWallet } = useWalletContext();
+  const { toggleMenuType } = useAtlasContext();
+  const { lordsBalance } = useResourcesContext();
+  const { transactions } = useStarknetTransactionManager();
   const [soundOn, setSoundOn] = useState(false);
   const [play, { stop }] = useSound(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
@@ -32,6 +33,13 @@ export function Header() {
       loop: true,
     }
   );
+
+  const TxStyle = () => {
+    return transactions.length
+      ? TxStyles.status[transactions[0].status]
+      : 'bg-gray-200';
+  };
+
   return (
     <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-stone-500 sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
@@ -71,16 +79,11 @@ export function Header() {
         </div>
 
         <NetworkConnectButton />
-        {/* <Link href={selectedPanel === 'account' ? '' : '/account'}>
-          <Button variant="primary" className="py-1 text-sm">
-            <Crown className="inline-block w-6 mr-2 -ml-2" />
-            Account
-          </Button>
-        </Link> */}
+
         <span>
-          <Button href="/bank" variant="primary" onClick={connectWallet}>
+          <Button href="/bank" variant="primary">
             <Lords className="w-6" />{' '}
-            <span className="px-4">
+            <span className="pl-4">
               {(+formatEther(lordsBalance)).toFixed(2)}
             </span>
           </Button>
@@ -93,9 +96,18 @@ export function Header() {
         <span>
           <Button
             variant="primary"
+            className="relative inline-flex"
             onClick={() => toggleMenuType('transactionCart')}
           >
             tx
+            <span className="flex w-3 h-3 ml-3">
+              <span
+                className={`absolute inline-flex w-3 h-3 duration-300 rounded-full opacity-75 ${TxStyle()}`}
+              ></span>
+              <span
+                className={`relative inline-flex w-3 h-3 rounded-full ${TxStyle()}`}
+              ></span>
+            </span>
           </Button>
         </span>
       </div>

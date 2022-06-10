@@ -47,7 +47,6 @@ const TxCartItem = (props: TxCartItem) => {
 
 export const TransactionCartTable = () => {
   const { transactions } = useStarknetTransactionManager();
-  console.log(transactions);
   return (
     <div className="flex flex-wrap w-full space-y-2">
       {transactions.reverse().map((a, index) => {

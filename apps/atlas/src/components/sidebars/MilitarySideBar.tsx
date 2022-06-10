@@ -26,27 +26,7 @@ type RealmsSelectableProps = {
   realms?: RealmFragmentFragment[];
   selectedTab: number;
 };
-type OwnerFilter =
-  | {
-      ownerL2: {
-        equals: string | undefined;
-      };
-    }[]
-  | {
-      settledOwner: {
-        equals: string | undefined;
-      };
-    }[];
-type Row = {
-  name: string;
-  // agility: number;
-  // attack: number;
-  // defense: number;
-  // vitality: number;
-  // wisdom: number;
-  troopCost: any[];
-};
-/* TBD Should this be merged with Bridge Realms Sidebar */
+
 export const MilitarySideBar = () => {
   const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
   const { account } = useStarknet();

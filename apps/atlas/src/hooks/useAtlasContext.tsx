@@ -259,9 +259,9 @@ function useAtlas(): Atlas {
       case 'resourceSwap':
         panel = 'bank';
         break;
-      case 'transactionCart':
       case 'military':
         break;
+      case 'transactionCart':
     }
 
     router.push(`/${panel}?id=${assetId}`, undefined, {
