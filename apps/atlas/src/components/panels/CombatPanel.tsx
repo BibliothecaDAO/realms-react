@@ -157,7 +157,10 @@ export function CombatPanel(): ReactElement {
             onClick={() => {
               setModal({
                 type: 'raid-result',
-                props: { defendId: 4 },
+                props: {
+                  defendId: 1291,
+                  tx: '0x6563df76cbee8270f502b34b81c008e36c2f8916163525658df5ebd052260b9',
+                },
               });
             }}
           >

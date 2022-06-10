@@ -1171,6 +1171,7 @@ export type GetRealmHistoryQuery = {
     realmOwner?: string | null;
     data?: any | null;
     timestamp?: any | null;
+    transactionHash?: string | null;
   }>;
 };
 
@@ -1966,6 +1967,7 @@ export const GetRealmHistoryDocument = gql`
       realmOwner
       data
       timestamp
+      transactionHash
     }
   }
 `;

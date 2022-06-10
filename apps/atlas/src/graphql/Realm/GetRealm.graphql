@@ -35,6 +35,7 @@ query getRealmHistory(
     realmOwner
     data
     timestamp
+    transactionHash
   }
 }
 

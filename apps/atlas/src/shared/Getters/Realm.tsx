@@ -1,8 +1,9 @@
 import { useStarknet } from '@starknet-react/core';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { TroopInterface } from '@/types/';
+import type { TroopInterface } from '@/types/index';
+import { shortenAddress } from '@/util/formatters';
 
 interface TraitProps {
   trait: string;
@@ -87,9 +88,10 @@ export const TraitTable = (props: TraitProps) => {
 
 export const IsOwner = (owner?: string | null) => {
   const { account } = useStarknet();
-  console.log(account, owner);
+  const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
+
   if (account) {
-    return account == owner ? true : false;
+    return starknetWallet == owner ? true : false;
   } else {
     return false;
   }
