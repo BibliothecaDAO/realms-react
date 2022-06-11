@@ -1,5 +1,6 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
-import { useEffect, useState } from 'react';
+import { Switch } from '@headlessui/react';
+import { useEffect, useReducer, useState } from 'react';
 import useCombat from '@/hooks/settling/useCombat';
 import { squadStats } from '@/shared/Getters/Realm';
 import { Troop } from '@/shared/squad/Troops';
@@ -144,6 +145,16 @@ export const ArmoryBuilder = (props: Props) => {
 
   const { buildSquad } = useCombat({ token_id: parseInt(value) });
 
+  const [armyType, toggleArmyType] = useReducer(
+    (state: 'attacking' | 'defending') => {
+      return state === 'defending' ? 'attacking' : 'defending';
+    },
+    'attacking'
+  );
+
+  const isAttack = armyType === 'attacking';
+  const isDefend = armyType === 'defending';
+
   return (
     <div className="w-full">
       <div className="flex space-x-2">
@@ -156,6 +167,32 @@ export const ArmoryBuilder = (props: Props) => {
           }}
           placeholder={'Realm ID'}
         />
+        <div className="flex self-center">
+          <div
+            className={`px-4 uppercase ${
+              armyType === 'attacking' && 'font-semibold'
+            }`}
+          >
+            Attacking
+          </div>
+          <Switch
+            checked={isAttack}
+            onChange={toggleArmyType}
+            className={`${
+              isAttack ? 'bg-green-600' : 'bg-blue-600'
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span className="sr-only">Army Switch</span>
+            <span
+              className={`${
+                isDefend ? 'translate-x-6' : 'translate-x-1'
+              } inline-block h-4 w-4 transform rounded-full bg-white`}
+            />
+          </Switch>
+          <div className={`px-4 uppercase ${isDefend && 'font-semibold'}`}>
+            Defending
+          </div>
+        </div>
       </div>
 
       <div className="my-4 overflow-y-scroll h-72">
@@ -226,7 +263,7 @@ export const ArmoryBuilder = (props: Props) => {
         </div>
         <div className="flex space-x-2">
           <Button
-            onClick={() => buildSquad(getTroopIds(toBuy), 1)}
+            onClick={() => buildSquad(getTroopIds(toBuy), isAttack ? 1 : 2)}
             className="mt-4"
             size="xs"
             variant="primary"

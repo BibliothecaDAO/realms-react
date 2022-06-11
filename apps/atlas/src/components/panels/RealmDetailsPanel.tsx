@@ -34,7 +34,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const [squad, setSquad] = useState(false);
   const [id, setId] = useState(realmId);
   const router = useRouter();
-  const { data: realmData } = useGetRealmQuery({ variables: { id: realmId } });
+  const { data: realmData } = useGetRealmQuery({
+    variables: { id: realmId },
+    pollInterval: 5000,
+  });
 
   const realm = realmData?.getRealm;
   const { data: troopStatsData } = useGetTroopStatsQuery();
@@ -224,14 +227,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <CardTitle>Buildings</CardTitle>
             {realm && <RealmBuildings realm={realm} loading={false} />}
           </Card>
-          {/* <Card className="col-start-1 col-end-7">
-              <div className="flex justify-between w-full ">
-                <div className="text-2xl font-semibold tracking-widest text-white uppercase">
-                  Troop Cart [this should be in popup]
-                </div>
-              </div>
-              <SquadBuilder troops={[]} />
-            </Card> */}
         </div>
       </div>
       <div className="grid grid-cols-6 col-start-5 col-end-7">
