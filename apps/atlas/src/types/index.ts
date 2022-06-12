@@ -217,3 +217,8 @@ export interface ResourceCost {
   resourceId: number;
   resourceName: string;
 }
+
+export interface MinMaxRange {
+  min: number;
+  max: number;
+}

@@ -15,3 +15,13 @@ export enum ElementToken {
 
 export const DAY_CYCLE = 1800;
 export const RAIDABLE_PERCENTAGE = 25;
+
+export enum RealmsMax {
+  Score = 400,
+  Rank = 7992,
+
+  Region = 7,
+  City = 21,
+  Harbour = 35,
+  River = 60,
+}
