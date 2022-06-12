@@ -25,3 +25,7 @@ export enum RealmsMax {
   Harbour = 35,
   River = 60,
 }
+export enum LootMax {
+  Greatness = 160,
+  Rating = 720,
+}
