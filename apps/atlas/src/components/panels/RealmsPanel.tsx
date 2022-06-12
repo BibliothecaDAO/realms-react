@@ -39,8 +39,8 @@ export const RealmsPanel = () => {
     state.selectedOrders,
     state.searchIdFilter,
     state.hasWonderFilter,
-    state.rarityFilter.rarityRank,
-    state.rarityFilter.rarityScore,
+    state.rarityFilter.rank,
+    state.rarityFilter.score,
     state.traitsFilter.City,
     state.traitsFilter.Harbor,
     state.traitsFilter.Region,
@@ -58,12 +58,15 @@ export const RealmsPanel = () => {
 
     const traitsFilters = Object.keys(state.traitsFilter)
       // Filter 0 entries
-      .filter((key: string) => (state.traitsFilter as any)[key])
+      .filter((key: string) => state.traitsFilter[key])
       .map((key: string) => ({
         traits: {
           some: {
             type: { equals: key as RealmTraitType },
-            qty: { gte: (state.traitsFilter as any)[key] },
+            qty: {
+              gte: state.traitsFilter[key].min,
+              lte: state.traitsFilter[key].max,
+            },
           },
         },
       }));
@@ -96,8 +99,14 @@ export const RealmsPanel = () => {
       };
     }
 
-    filter.rarityRank = { gte: state.rarityFilter.rarityRank };
-    filter.rarityScore = { gte: state.rarityFilter.rarityScore };
+    filter.rarityRank = {
+      gte: state.rarityFilter.rank.min,
+      lte: state.rarityFilter.rank.max,
+    };
+    filter.rarityScore = {
+      gte: state.rarityFilter.score.min,
+      lte: state.rarityFilter.score.max,
+    };
     filter.orderType =
       state.selectedOrders.length > 0
         ? { in: [...state.selectedOrders] }

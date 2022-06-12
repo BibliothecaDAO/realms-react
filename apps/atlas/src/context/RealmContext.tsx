@@ -1,18 +1,22 @@
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
+import { RealmsMax } from '@/constants/index';
 import type { OrderType } from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
 import { storage } from '@/util/localStorage';
-
+import type { MinMaxRange } from '../types';
 const RealmFavoriteLocalStorageKey = 'realm.favourites';
 
-type RarityFilter = { rarityScore: number; rarityRank: number };
+type RarityFilter = {
+  score: MinMaxRange;
+  rank: MinMaxRange;
+};
 
 type TraitsFilter = {
-  [RealmTraitType.Region]: number;
-  [RealmTraitType.City]: number;
-  [RealmTraitType.Harbor]: number;
-  [RealmTraitType.River]: number;
+  [RealmTraitType.Region]: MinMaxRange;
+  [RealmTraitType.City]: MinMaxRange;
+  [RealmTraitType.Harbor]: MinMaxRange;
+  [RealmTraitType.River]: MinMaxRange;
 };
 
 interface RealmState {
@@ -61,14 +65,20 @@ interface RealmActions {
 
 const defaultFilters = {
   rarityFilter: {
-    rarityScore: 0,
-    rarityRank: 0,
+    score: {
+      min: 0,
+      max: RealmsMax.Score,
+    },
+    rank: {
+      min: 0,
+      max: RealmsMax.Rank,
+    },
   },
   traitsFilter: {
-    [RealmTraitType.Region]: 0,
-    [RealmTraitType.City]: 0,
-    [RealmTraitType.Harbor]: 0,
-    [RealmTraitType.River]: 0,
+    [RealmTraitType.Region]: { min: 0, max: RealmsMax.Region },
+    [RealmTraitType.City]: { min: 0, max: RealmsMax.City },
+    [RealmTraitType.Harbor]: { min: 0, max: RealmsMax.Harbour },
+    [RealmTraitType.River]: { min: 0, max: RealmsMax.River },
   },
   selectedOrders: [] as OrderType[],
   selectedResources: [] as number[],

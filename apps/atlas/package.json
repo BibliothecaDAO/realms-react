@@ -147,6 +147,7 @@
     "@playwright/test": "1.22.2",
     "@popperjs/core": "2.11.5",
     "@quentin-sommer/react-useragent": "3.1.1",
+    "@radix-ui/react-slider": "0.1.4",
     "@react-spring/three": "9.4.5",
     "@react-spring/types": "^9.4.5",
     "@react-spring/web": "^9.4.5",
