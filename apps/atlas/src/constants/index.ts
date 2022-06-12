@@ -29,3 +29,8 @@ export enum LootMax {
   Greatness = 160,
   Rating = 720,
 }
+export enum CryptsMax {
+  Size = 24,
+  NumDoors = 12,
+  NumPoints = 13,
+}
