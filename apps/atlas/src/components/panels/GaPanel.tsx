@@ -51,8 +51,10 @@ export const GaPanel = () => {
     if (state.selectedTab === 0) {
       where.currentOwner = account?.toLowerCase();
     }
-    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
-    where.bagRating_gt = state.ratingFilter.bagRating;
+    where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
+    where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
+    where.bagRating_gte = state.ratingFilter.bagRating.min;
+    where.bagRating_lte = state.ratingFilter.bagRating.max;
 
     if (state.selectedOrders.length > 0) {
       where.order_in = [
