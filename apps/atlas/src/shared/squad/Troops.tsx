@@ -336,7 +336,7 @@ export const Troop = (props: TroopProps) => {
       />
 
       <div className="mt-auto text-xs text-center text-black uppercase font-body">
-        {getTroop()?.troopName.substring(0, 5)}
+        {getTroop()?.troopName?.substring(0, 5)}
       </div>
       {/* {!props.withPurchase && (
         <Button

@@ -203,7 +203,7 @@ export interface TroopInterface {
   vitality: number;
   wisdom: number;
   squadSlot: number;
-  troopName: string;
+  troopName?: string;
   troopCost?: ItemCost[];
 }
 
