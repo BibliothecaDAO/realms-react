@@ -4,7 +4,7 @@ import {
   useStarknetTransactionManager,
 } from '@starknet-react/core';
 import Link from 'next/link';
-
+import { useTxMessage } from '@/hooks/settling/useTxMessage';
 interface TxCartItem {
   transaction: Transaction;
 }
@@ -22,14 +22,19 @@ const STYLES = {
 } as const;
 
 const TxCartItem = (props: TxCartItem) => {
+  const [title, message] = useTxMessage(props.transaction.metadata);
+
   return (
     <div
       className={`${
         STYLES.status[props.transaction.status]
       }  rounded shadow-inner flex p-4 w-full font-semibold`}
     >
-      <span className="flex justify-between w-full p-2 uppercase rounded shadow-inner bg-black/10">
-        {props.transaction.status}
+      <div className="flex justify-between w-full p-2 rounded shadow-inner bg-black/10">
+        <div>
+          <h4>{title}</h4>
+          <p>{message}</p>
+        </div>
         <Link
           target={'blank_'}
           href={
@@ -39,7 +44,7 @@ const TxCartItem = (props: TxCartItem) => {
         >
           See on Voyager
         </Link>
-      </span>
+      </div>
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
     </div>
   );

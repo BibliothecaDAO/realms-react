@@ -19,6 +19,11 @@ const useBuildings = (): Building => {
     build: (realmId: number, buildingId: number) => {
       buildAction.invoke({
         args: [bnToUint256(toBN(realmId)), buildingId],
+        metadata: {
+          action: 'realm_building',
+          realmId,
+          buildingId,
+        },
       });
     },
   };

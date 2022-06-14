@@ -34,6 +34,10 @@ const useCombat = (args: useCombatArgs): Combat => {
     buildSquad: (troop_ids, slot) => {
       buildSquadAction.invoke({
         args: [troop_ids, bnToUint256(toBN(args.token_id)), slot],
+        metadata: {
+          action: 'build_troops',
+          realmId: args.token_id,
+        },
       });
     },
     initiateCombat: (defending_realm_id, attack_type) => {
@@ -43,6 +47,11 @@ const useCombat = (args: useCombatArgs): Combat => {
           bnToUint256(toBN(defending_realm_id)),
           attack_type,
         ],
+        metadata: {
+          action: 'raid',
+          defendingRealmId: defending_realm_id,
+          realmId: args.token_id,
+        },
       });
     },
     combatData: combatData,

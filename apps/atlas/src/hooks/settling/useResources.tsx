@@ -93,11 +93,20 @@ const useResources = (args: useResourcesArgs): Resources => {
       console.log(claimResourcesAction.error);
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id))],
+        metadata: {
+          action: 'harvest_resources',
+          realmId: args.token_id,
+        },
       });
     },
     upgrade: (resourceId: number) => {
       upgradeResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id)), resourceId],
+        metadata: {
+          action: 'upgrade_resource',
+          realmId: args.token_id,
+          resourceId,
+        },
       });
     },
     loadingClaimable: outputLoading,
