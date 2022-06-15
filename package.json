@@ -54,7 +54,7 @@
     "atlas": "yarn apps/atlas dev",
     "briq": "yarn apps/briq-app dev",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -s static"
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "autoprefixer": "10.4.7",
