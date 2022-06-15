@@ -173,6 +173,7 @@
     "gl-matrix": "^3.4.3",
     "graphql": "^16.5.0",
     "heroicons": "^1.0.6",
+    "listplayer": "0.2.3",
     "loot-rarity": "^5.0.1",
     "loot-sdk": "^0.1.2",
     "mapbox-gl": "^2.8.2",
