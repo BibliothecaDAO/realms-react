@@ -1,7 +1,6 @@
 import type { Story, Meta } from '@storybook/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import { useState, useCallback } from 'react';
-import { ResourceIcon } from 'base';
 import ChevronRight from '../../icons/chevron-right.svg';
 import type { IInputNumberProps } from './input-number';
 import { InputNumber } from './input-number';

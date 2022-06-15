@@ -2,7 +2,7 @@ import type { Story, Meta } from '@storybook/react';
 import { useMemo } from 'react';
 import type { ReactElement } from 'react';
 
-import { ResourceIcon } from 'base';
+import { ResourceIcon } from '..';
 import { Button } from '../button';
 import { Table } from './table';
 

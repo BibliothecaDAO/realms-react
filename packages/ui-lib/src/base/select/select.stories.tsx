@@ -1,6 +1,6 @@
 import type { Story, Meta } from '@storybook/react';
 import { useState } from 'react';
-import { ResourceIcon } from 'base';
+import { ResourceIcon } from '../';
 import ChevronRight from '../../icons/chevron-right.svg';
 import type { SelectProps } from './select';
 import { Select } from './select';
