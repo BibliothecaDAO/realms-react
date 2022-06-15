@@ -7,13 +7,23 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
-  staticDirs: ['../static'],
+  staticDirs: ['../static', '../packages/ui-lib/src/static'],
   stories: [
     '../apps/**/*.stories.mdx',
     '../apps/**/*.stories.@(js|jsx|ts|tsx)',
     '../packages/**/*.stories.mdx',
     '../packages/**/*.stories.@(js|jsx|ts|tsx)',
   ],
+  typescript: {
+    check: false,
+    checkOptions: {},
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+    },
+  },
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -111,7 +121,17 @@ module.exports = {
     });
 
     config.module.rules = [...rules];
-
-    return config;
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          '@emotion/core': emotionReactEleven,
+          '@emotion/styled': emotionStyledEleven,
+          'emotion-theming': emotionReactEleven,
+        },
+      },
+    };
   },
 };
