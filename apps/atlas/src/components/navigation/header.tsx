@@ -4,6 +4,8 @@ import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
+import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
@@ -14,25 +16,44 @@ import {
 } from '@starknet-react/core';
 import Link from 'next/link';
 import { useState } from 'react';
-import useSound from 'use-sound';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { usePlayer } from '@/hooks/usePlayer';
+import { useWalletContext } from '@/hooks/useWalletContext';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { TxStyles } from '@/shared/Validators/styles';
-import { useWalletContext } from '../../hooks/useWalletContext';
 export function Header() {
   const { connectWallet } = useWalletContext();
   const { toggleMenuType } = useAtlasContext();
   const { lordsBalance } = useResourcesContext();
   const { transactions } = useStarknetTransactionManager();
   const [soundOn, setSoundOn] = useState(false);
-  const [play, { stop }] = useSound(
-    '/music/scott-buckley-i-walk-with-ghosts.mp3',
+
+  const [player, currentTrack] = usePlayer([
     {
-      volume: 0.6,
-      loop: true,
-    }
-  );
+      title: 'The Minstrels - Order of Enlightenment',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-enlightenment.mp3',
+    },
+    {
+      title: 'The Minstrels - Order of Protection',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-protection.mp3',
+    },
+    {
+      title: 'The Minstrels - Order of Rage',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-rage.mp3',
+    },
+    {
+      title: 'I walk with ghosts',
+      artist: 'Scott Buckley',
+      src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
+    },
+  ]);
 
   const TxStyle = () => {
     return transactions.length
@@ -53,29 +74,58 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="self-center mt-2">
-          <IconButton
-            aria-label="Bank"
-            variant="unstyled"
-            className="fill-current"
-            texture={false}
-            onClick={() => {
-              if (soundOn) {
-                stop();
-              } else {
-                play();
+        <div className="flex items-center mr-4">
+          <div className="text-xs mr-4">{currentTrack}</div>
+          <div className="self-center flex">
+            <IconButton
+              aria-label="Bank"
+              variant="unstyled"
+              className="fill-current"
+              texture={false}
+              onClick={() => {
+                if (soundOn) {
+                  player.prev();
+                }
+              }}
+              icon={<PlayBack className="mr-3" />}
+              size="lg"
+            />
+            <IconButton
+              aria-label="Bank"
+              variant="unstyled"
+              className="fill-current"
+              texture={false}
+              onClick={() => {
+                if (soundOn) {
+                  player.pause();
+                } else {
+                  player.play();
+                }
+                setSoundOn((prev) => !prev);
+              }}
+              icon={
+                soundOn ? (
+                  <VolumeOn className="w-6" />
+                ) : (
+                  <VolumeOff className="w-6" />
+                )
               }
-              setSoundOn((prev) => !prev);
-            }}
-            icon={
-              soundOn ? (
-                <VolumeOn className="w-6" />
-              ) : (
-                <VolumeOff className="w-6" />
-              )
-            }
-            size="lg"
-          />
+              size="lg"
+            />
+            <IconButton
+              aria-label="Bank"
+              variant="unstyled"
+              className="fill-current"
+              texture={false}
+              onClick={() => {
+                if (soundOn) {
+                  player.next();
+                }
+              }}
+              icon={<PlayForward className="ml-3" />}
+              size="lg"
+            />
+          </div>
         </div>
 
         <NetworkConnectButton />
