@@ -57,6 +57,10 @@ export type BuildingListRelationFilter = {
   some?: InputMaybe<BuildingWhereInput>;
 };
 
+export type BuildingOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type BuildingWhereInput = {
   AND?: InputMaybe<Array<BuildingWhereInput>>;
   NOT?: InputMaybe<Array<BuildingWhereInput>>;
@@ -510,8 +514,11 @@ export type Query = {
   getResourcesByAddress: Array<Resource>;
   getTroopStats: Array<TroopStats>;
   getWallet: Wallet;
+  realm: Realm;
   realmHistory: Array<RealmHistory>;
+  realms: Array<Realm>;
   realmsCount: Scalars['Int'];
+  troopStats: Array<TroopStats>;
 };
 
 export type QueryGetBuildingsByRealmIdArgs = {
@@ -571,8 +578,19 @@ export type QueryGetWalletArgs = {
   address: Scalars['String'];
 };
 
+export type QueryRealmArgs = {
+  id: Scalars['Float'];
+};
+
 export type QueryRealmHistoryArgs = {
   filter?: InputMaybe<RealmHistoryWhereInput>;
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
+};
+
+export type QueryRealmsArgs = {
+  filter?: InputMaybe<RealmWhereInput>;
+  orderBy?: InputMaybe<RealmOrderByWithRelationInput>;
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
 };
@@ -594,6 +612,8 @@ export type Realm = {
   defendTroopIds: Array<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   lastAttacked?: Maybe<Scalars['Timestamp']>;
+  lastClaimTime?: Maybe<Scalars['Timestamp']>;
+  lastVaultTime?: Maybe<Scalars['Timestamp']>;
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   owner?: Maybe<Scalars['String']>;
@@ -603,8 +623,9 @@ export type Realm = {
   realmId: Scalars['Int'];
   resources?: Maybe<Array<Resource>>;
   settledOwner?: Maybe<Scalars['String']>;
-  squad: Array<Troop>;
+  squad?: Maybe<Array<Troop>>;
   traits?: Maybe<Array<RealmTrait>>;
+  troops?: Maybe<Array<Troop>>;
   wallet?: Maybe<Wallet>;
   wonder?: Maybe<Scalars['String']>;
 };
@@ -653,6 +674,33 @@ export type RealmOrderByInput = {
   realmId?: InputMaybe<OrderByDirectionInput>;
 };
 
+export type RealmOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type RealmOrderByWithRelationInput = {
+  bridgedOwner?: InputMaybe<SortOrder>;
+  buildings?: InputMaybe<BuildingOrderByRelationAggregateInput>;
+  id?: InputMaybe<SortOrder>;
+  imageUrl?: InputMaybe<SortOrder>;
+  lastAttacked?: InputMaybe<SortOrder>;
+  lastClaimTime?: InputMaybe<SortOrder>;
+  lastVaultTime?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  orderType?: InputMaybe<SortOrder>;
+  owner?: InputMaybe<SortOrder>;
+  ownerL2?: InputMaybe<SortOrder>;
+  rarityRank?: InputMaybe<SortOrder>;
+  rarityScore?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  resources?: InputMaybe<ResourceOrderByRelationAggregateInput>;
+  settledOwner?: InputMaybe<SortOrder>;
+  squad?: InputMaybe<TroopOrderByRelationAggregateInput>;
+  traits?: InputMaybe<RealmTraitOrderByRelationAggregateInput>;
+  wallet?: InputMaybe<WalletOrderByWithRelationInput>;
+  wonder?: InputMaybe<SortOrder>;
+};
+
 export type RealmRelationFilter = {
   is?: InputMaybe<RealmWhereInput>;
   isNot?: InputMaybe<RealmWhereInput>;
@@ -672,6 +720,10 @@ export type RealmTraitListRelationFilter = {
   every?: InputMaybe<RealmTraitWhereInput>;
   none?: InputMaybe<RealmTraitWhereInput>;
   some?: InputMaybe<RealmTraitWhereInput>;
+};
+
+export type RealmTraitOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
 };
 
 export enum RealmTraitType {
@@ -700,6 +752,8 @@ export type RealmWhereInput = {
   id?: InputMaybe<IntFilter>;
   imageUrl?: InputMaybe<StringFilter>;
   lastAttacked?: InputMaybe<DateTimeNullableFilter>;
+  lastClaimTime?: InputMaybe<DateTimeNullableFilter>;
+  lastVaultTime?: InputMaybe<DateTimeNullableFilter>;
   name?: InputMaybe<StringNullableFilter>;
   orderType?: InputMaybe<EnumOrderTypeNullableFilter>;
   owner?: InputMaybe<StringNullableFilter>;
@@ -747,10 +801,18 @@ export type ResourceListRelationFilter = {
   some?: InputMaybe<ResourceWhereInput>;
 };
 
+export type ResourceOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type ResourceTokenListRelationFilter = {
   every?: InputMaybe<ResourceTokenWhereInput>;
   none?: InputMaybe<ResourceTokenWhereInput>;
   some?: InputMaybe<ResourceTokenWhereInput>;
+};
+
+export type ResourceTokenOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
 };
 
 export type ResourceTokenWhereInput = {
@@ -782,6 +844,10 @@ export type SRealmListRelationFilter = {
   some?: InputMaybe<SRealmWhereInput>;
 };
 
+export type SRealmOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type SRealmWhereInput = {
   AND?: InputMaybe<Array<SRealmWhereInput>>;
   NOT?: InputMaybe<Array<SRealmWhereInput>>;
@@ -791,6 +857,11 @@ export type SRealmWhereInput = {
   realmId?: InputMaybe<IntFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
 };
+
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc',
+}
 
 export type StringFilter = {
   contains?: InputMaybe<Scalars['String']>;
@@ -863,6 +934,10 @@ export type TroopListRelationFilter = {
   some?: InputMaybe<TroopWhereInput>;
 };
 
+export type TroopOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 /** TroopStats */
 export type TroopStats = {
   __typename?: 'TroopStats';
@@ -904,6 +979,14 @@ export type Wallet = {
   realmsL1Held: Scalars['Int'];
   realmsL2Held: Scalars['Int'];
   realmsSettledHeld: Scalars['Int'];
+};
+
+export type WalletOrderByWithRelationInput = {
+  address?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realms?: InputMaybe<RealmOrderByRelationAggregateInput>;
+  sRealms?: InputMaybe<SRealmOrderByRelationAggregateInput>;
+  tokens?: InputMaybe<ResourceTokenOrderByRelationAggregateInput>;
 };
 
 export type WalletRelationFilter = {
@@ -1088,6 +1171,8 @@ export type GetRealmQuery = {
     orderType: string;
     wonder?: string | null;
     lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastVaultTime?: any | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1111,7 +1196,7 @@ export type GetRealmQuery = {
       limitTraitId: number;
       limitTraitName: string;
     }> | null;
-    squad: Array<{
+    squad?: Array<{
       __typename?: 'Troop';
       realmId: number;
       troopId: number;
@@ -1125,7 +1210,7 @@ export type GetRealmQuery = {
       vitality: number;
       wisdom: number;
       squadSlot: number;
-    }>;
+    }> | null;
   };
 };
 
@@ -1230,6 +1315,8 @@ export type GetRealmsQuery = {
     orderType: string;
     wonder?: string | null;
     lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastVaultTime?: any | null;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1253,7 +1340,7 @@ export type GetRealmsQuery = {
       limitTraitId: number;
       limitTraitName: string;
     }> | null;
-    squad: Array<{
+    squad?: Array<{
       __typename?: 'Troop';
       realmId: number;
       troopId: number;
@@ -1267,7 +1354,7 @@ export type GetRealmsQuery = {
       vitality: number;
       wisdom: number;
       squadSlot: number;
-    }>;
+    }> | null;
   }>;
 };
 
@@ -1307,6 +1394,8 @@ export type RealmFragmentFragment = {
   orderType: string;
   wonder?: string | null;
   lastAttacked?: any | null;
+  lastClaimTime?: any | null;
+  lastVaultTime?: any | null;
   resources?: Array<{
     __typename?: 'Resource';
     resourceId: number;
@@ -1330,7 +1419,7 @@ export type RealmFragmentFragment = {
     limitTraitId: number;
     limitTraitName: string;
   }> | null;
-  squad: Array<{
+  squad?: Array<{
     __typename?: 'Troop';
     realmId: number;
     troopId: number;
@@ -1344,7 +1433,7 @@ export type RealmFragmentFragment = {
     vitality: number;
     wisdom: number;
     squadSlot: number;
-  }>;
+  }> | null;
 };
 
 export type ResourceFragmentFragment = {
@@ -1416,6 +1505,8 @@ export const RealmFragmentFragmentDoc = gql`
     orderType
     wonder
     lastAttacked
+    lastClaimTime
+    lastVaultTime
     resources {
       resourceId
       resourceName

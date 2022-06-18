@@ -10,6 +10,8 @@ fragment RealmFragment on Realm {
   orderType
   wonder
   lastAttacked
+  lastClaimTime
+  lastVaultTime
   resources {
     resourceId
     resourceName
