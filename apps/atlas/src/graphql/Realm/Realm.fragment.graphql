@@ -33,7 +33,7 @@ fragment RealmFragment on Realm {
     limitTraitId
     limitTraitName
   }
-  squad {
+  troops {
     realmId
     troopId
     troopName

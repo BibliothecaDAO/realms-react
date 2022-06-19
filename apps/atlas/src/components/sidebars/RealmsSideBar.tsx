@@ -30,8 +30,8 @@ export const RealmSideBar = () => {
             </Button>
           </div>
         </div>
-        {data && data.getRealm && (
-          <RealmCard realm={data!.getRealm} loading={loading} />
+        {data && data.realm && (
+          <RealmCard realm={data!.realm} loading={loading} />
         )}
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">

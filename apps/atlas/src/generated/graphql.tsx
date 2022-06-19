@@ -1158,7 +1158,7 @@ export type GetRealmQueryVariables = Exact<{
 
 export type GetRealmQuery = {
   __typename?: 'Query';
-  getRealm: {
+  realm: {
     __typename?: 'Realm';
     realmId: number;
     owner?: string | null;
@@ -1196,7 +1196,7 @@ export type GetRealmQuery = {
       limitTraitId: number;
       limitTraitName: string;
     }> | null;
-    squad?: Array<{
+    troops?: Array<{
       __typename?: 'Troop';
       realmId: number;
       troopId: number;
@@ -1295,14 +1295,15 @@ export type GetRealmCombatResultQuery = {
 
 export type GetRealmsQueryVariables = Exact<{
   filter?: InputMaybe<RealmWhereInput>;
-  orderBy?: InputMaybe<RealmOrderByInput>;
+  orderBy?: InputMaybe<RealmOrderByWithRelationInput>;
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
 }>;
 
 export type GetRealmsQuery = {
   __typename?: 'Query';
-  getRealms: Array<{
+  total: number;
+  realms: Array<{
     __typename?: 'Realm';
     realmId: number;
     owner?: string | null;
@@ -1340,7 +1341,7 @@ export type GetRealmsQuery = {
       limitTraitId: number;
       limitTraitName: string;
     }> | null;
-    squad?: Array<{
+    troops?: Array<{
       __typename?: 'Troop';
       realmId: number;
       troopId: number;
@@ -1419,7 +1420,7 @@ export type RealmFragmentFragment = {
     limitTraitId: number;
     limitTraitName: string;
   }> | null;
-  squad?: Array<{
+  troops?: Array<{
     __typename?: 'Troop';
     realmId: number;
     troopId: number;
@@ -1528,7 +1529,7 @@ export const RealmFragmentFragmentDoc = gql`
       limitTraitId
       limitTraitName
     }
-    squad {
+    troops {
       realmId
       troopId
       troopName
@@ -1922,7 +1923,7 @@ export type GetAccountQueryResult = Apollo.QueryResult<
 >;
 export const GetRealmDocument = gql`
   query getRealm($id: Float!) @api(name: starkIndexer) {
-    getRealm(realmId: $id) {
+    realm(id: $id) {
       ...RealmFragment
     }
   }
@@ -2199,13 +2200,14 @@ export type GetRealmCombatResultQueryResult = Apollo.QueryResult<
 export const GetRealmsDocument = gql`
   query getRealms(
     $filter: RealmWhereInput
-    $orderBy: RealmOrderByInput
+    $orderBy: RealmOrderByWithRelationInput
     $take: Float
     $skip: Float
   ) @api(name: starkIndexer) {
-    getRealms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
       ...RealmFragment
     }
+    total: realmsCount(filter: $filter)
   }
   ${RealmFragmentFragmentDoc}
 `;

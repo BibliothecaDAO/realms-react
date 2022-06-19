@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
+import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
@@ -22,7 +23,7 @@ export const RealmsPanel = () => {
   const { account: starkAccount } = useStarknet();
   const { state, actions } = useRealmContext();
 
-  const limit = 50;
+  const limit = 20;
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
@@ -99,14 +100,25 @@ export const RealmsPanel = () => {
       };
     }
 
-    filter.rarityRank = {
-      gte: state.rarityFilter.rank.min,
-      lte: state.rarityFilter.rank.max,
-    };
-    filter.rarityScore = {
-      gte: state.rarityFilter.score.min,
-      lte: state.rarityFilter.score.max,
-    };
+    if (
+      state.rarityFilter.rank.min > 0 ||
+      state.rarityFilter.rank.max < RealmsMax.Rank
+    ) {
+      filter.rarityRank = {
+        gte: state.rarityFilter.rank.min,
+        lte: state.rarityFilter.rank.max,
+      };
+    }
+    if (
+      state.rarityFilter.score.min > 0 ||
+      state.rarityFilter.score.max < RealmsMax.Score
+    ) {
+      filter.rarityScore = {
+        gte: state.rarityFilter.score.min,
+        lte: state.rarityFilter.score.max,
+      };
+    }
+
     filter.orderType =
       state.selectedOrders.length > 0
         ? { in: [...state.selectedOrders] }
@@ -130,17 +142,32 @@ export const RealmsPanel = () => {
       !selectedId &&
       isDisplayLarge &&
       page === 1 &&
-      (data?.getRealms?.length ?? 0) > 0
+      (data?.realms?.length ?? 0) > 0
     ) {
-      openDetails('realm', data?.getRealms[0].realmId + '');
+      openDetails('realm', data?.realms[0].realmId + '');
     }
   }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
-    (page > 1 || (data?.getRealms?.length ?? 0) === limit);
+    (page > 1 || (data?.realms?.length ?? 0) === limit);
 
-  const hasNoResults = () => !loading && (data?.getRealms?.length ?? 0) === 0;
+  const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
+
+  const displayResults = () => {
+    if (!data) {
+      return '';
+    }
+    const resultStr = `${data?.total?.toLocaleString()} Results`;
+    if (data.total <= limit) {
+      return resultStr;
+    }
+    const start = (page - 1) * limit;
+    const count = Math.min(data.realms.length, limit);
+    return `${start.toLocaleString()} - ${(
+      start + count
+    ).toLocaleString()} of ${resultStr}`;
+  };
 
   return (
     <BasePanel open={isRealmPanel} style="lg:w-7/12">
@@ -167,6 +194,11 @@ export const RealmsPanel = () => {
       </Tabs>
       <div>
         <RealmsFilter isYourRealms={state.selectedTab === 0} />
+        {data && (
+          <div className="pb-4 font-semibold text-right">
+            {displayResults()}
+          </div>
+        )}
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
@@ -174,7 +206,7 @@ export const RealmsPanel = () => {
           </div>
         )}
         <RealmOverviews
-          realms={data?.getRealms ?? []}
+          realms={data?.realms ?? []}
           isYourRealms={state.selectedTab === 0}
         />
       </div>
@@ -206,10 +238,7 @@ export const RealmsPanel = () => {
           <Button onClick={previousPage} disabled={page === 1}>
             Previous
           </Button>
-          <Button
-            onClick={nextPage}
-            disabled={data?.getRealms?.length !== limit}
-          >
+          <Button onClick={nextPage} disabled={data?.realms?.length !== limit}>
             Next
           </Button>
         </div>

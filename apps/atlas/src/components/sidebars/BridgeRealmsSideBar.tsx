@@ -46,7 +46,7 @@ export const BridgeRealmsSideBar = () => {
 
   const toggleSelectAllRealms = () =>
     actions.toggleSelectAllRealms(
-      (data?.getRealms || []).map((realm) => realm.realmId)
+      (data?.realms || []).map((realm) => realm.realmId)
     );
 
   return (
@@ -71,8 +71,8 @@ export const BridgeRealmsSideBar = () => {
             </Button>
           </div>
           {data &&
-            data.getRealms &&
-            data.getRealms.map((realm: RealmFragmentFragment, index) => (
+            data.realms &&
+            data.realms.map((realm: RealmFragmentFragment, index) => (
               <SelectableRealm
                 key={index}
                 realm={realm}
