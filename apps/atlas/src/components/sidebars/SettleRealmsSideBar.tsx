@@ -115,23 +115,17 @@ export const SettleRealmsSideBar = () => {
       {
         label: 'Settle',
         component: (
-          <RealmsSelectable
-            selectedTab={selectedTab}
-            realms={data?.getRealms}
-          />
+          <RealmsSelectable selectedTab={selectedTab} realms={data?.realms} />
         ),
       },
       {
         label: 'Unsettle',
         component: (
-          <RealmsSelectable
-            selectedTab={selectedTab}
-            realms={data?.getRealms}
-          />
+          <RealmsSelectable selectedTab={selectedTab} realms={data?.realms} />
         ),
       },
     ],
-    [data?.getRealms, selectedTab]
+    [data?.realms, selectedTab]
   );
 
   return (
