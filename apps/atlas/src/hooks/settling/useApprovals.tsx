@@ -9,11 +9,14 @@ import type { Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   useLordsContract,
   useBuildingContract,
   useExchangeContract,
   useResources1155Contract,
+  useSettlingContract,
+  useRealms721Contract,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -129,4 +132,52 @@ export const useApproveResourcesForExchange = () => {
   };
 
   return { isApproved, approveResources };
+};
+
+export const useApproveAllGameContracts = () => {
+  const txQueue = useTransactionQueue();
+  const { contract: lordsContract } = useLordsContract();
+  const { contract: buildingContract } = useBuildingContract();
+  const { contract: exchangeContract } = useExchangeContract();
+  const { contract: resourcesContract } = useResources1155Contract();
+
+  const { contract: settlingContract } = useSettlingContract();
+  const { contract: realmsContract } = useRealms721Contract();
+
+  // ERC-20 approvals
+  if (lordsContract?.address) {
+    if (buildingContract?.address) {
+      txQueue.add({
+        contractAddress: lordsContract?.address,
+        entrypoint: 'approve',
+        calldata: [buildingContract?.address, ALLOWANCE_AMOUNT.toString()],
+      });
+    }
+
+    if (exchangeContract?.address) {
+      txQueue.add({
+        contractAddress: lordsContract?.address,
+        entrypoint: 'approve',
+        calldata: [exchangeContract?.address, ALLOWANCE_AMOUNT.toString()],
+      });
+    }
+  }
+
+  if (resourcesContract?.address && exchangeContract?.address) {
+    // ERC-1155 approvals
+    txQueue.add({
+      contractAddress: resourcesContract?.address,
+      entrypoint: 'setApprovalForAll',
+      calldata: [exchangeContract?.address, toFelt(1)],
+    });
+  }
+
+  if (realmsContract?.address && settlingContract?.address) {
+    // ERC-721 approvals
+    txQueue.add({
+      contractAddress: realmsContract?.address,
+      entrypoint: 'setApprovalForAll',
+      calldata: [settlingContract?.address, toFelt(1)],
+    });
+  }
 };
