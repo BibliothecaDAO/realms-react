@@ -11591,6 +11591,7 @@ __metadata:
     graphql: "npm:^16.5.0"
     happy-dom: "npm:5.3.1"
     heroicons: "npm:^1.0.6"
+    listplayer: "npm:0.2.3"
     loot-rarity: "npm:^5.0.1"
     loot-sdk: "npm:^0.1.2"
     mapbox-gl: "npm:^2.8.2"
@@ -23103,6 +23104,13 @@ __metadata:
   bin:
     lint-staged: bin/lint-staged.js
   checksum: 1c6b779073bfddcdb04de268efcd80fff466b7de2a4e4440a74cc115cbc3a2c9ca47221ca5f659652511264222511e3f1a8d0531d92cba2f4e2ad701463370e0
+  languageName: node
+  linkType: hard
+
+"listplayer@npm:0.2.3":
+  version: 0.2.3
+  resolution: "listplayer@npm:0.2.3"
+  checksum: af72f466c7c703401e0b65f40f0bb529d73fb87caa85e003fb0f79433b41b904330f431bb510711bb6af4cb998e8d9545875b2b68a05f24dc2f35c6746f2fd74
   languageName: node
   linkType: hard
 
