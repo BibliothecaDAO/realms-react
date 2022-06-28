@@ -17,6 +17,12 @@ import {
   useResources1155Contract,
   useSettlingContract,
   useRealms721Contract,
+  LordsContractAddress,
+  RealmsContractAddress,
+  ExchangeContractAddress,
+  ResourcesContractAddress,
+  BuildingContractAddress,
+  SettlingContractAddress,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -134,53 +140,52 @@ export const useApproveResourcesForExchange = () => {
   return { isApproved, approveResources };
 };
 
-export const useApproveAllGameContracts = () => {
+export const getApproveAllGameContracts = () => {
   const txs: Call[] = [];
 
-  const { contract: lordsContract } = useLordsContract();
-  const { contract: buildingContract } = useBuildingContract();
-  const { contract: exchangeContract } = useExchangeContract();
-  const { contract: resourcesContract } = useResources1155Contract();
-
-  const { contract: settlingContract } = useSettlingContract();
-  const { contract: realmsContract } = useRealms721Contract();
-
   // ERC-20 approvals
-  if (lordsContract?.address) {
-    if (buildingContract?.address) {
-      txs.push({
-        contractAddress: lordsContract?.address,
-        entrypoint: 'approve',
-        calldata: [buildingContract?.address, ALLOWANCE_AMOUNT.toString()],
-      });
-    }
+  txs.push({
+    contractAddress: LordsContractAddress,
+    entrypoint: 'approve',
+    calldata: [
+      toBN(BuildingContractAddress).toString(),
+      ALLOWANCE_AMOUNT.toString(),
+      0,
+    ],
+  });
+  txs.push({
+    contractAddress: LordsContractAddress,
+    entrypoint: 'approve',
+    calldata: [
+      toBN(ExchangeContractAddress).toString(),
+      ALLOWANCE_AMOUNT.toString(),
+      0,
+    ],
+  });
 
-    if (exchangeContract?.address) {
-      txs.push({
-        contractAddress: lordsContract?.address,
-        entrypoint: 'approve',
-        calldata: [exchangeContract?.address, ALLOWANCE_AMOUNT.toString()],
-      });
-    }
-  }
+  /*
+    The next two fail at `estimate_fee` with following error:
+    Error in the called contract (0x4a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd):
+    Error at pc=0:10:
+    Got an exception while executing a hint.
+    Cairo traceback (most recent call last):
+    Unknown location (pc=0:159)
+    Unknown location (pc=0:145)
+    Error in the called contract (0x4a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd):
+    Entry point 0x2d4c8ea4c8fb9f571d1f6f9b7692fff8e5ceaf73b1df98e7da8c1109b39ae9a not found in contract with class hash 0x4151ad13961ce0206914807790957390691277f3b5a0e1f281e64a3c09c55a8.
+  */
 
-  if (resourcesContract?.address && exchangeContract?.address) {
-    // ERC-1155 approvals
-    txs.push({
-      contractAddress: resourcesContract?.address,
-      entrypoint: 'setApprovalForAll',
-      calldata: [exchangeContract?.address, toFelt(1)],
-    });
-  }
+  // txs.push({
+  //   contractAddress: ResourcesContractAddress,
+  //   entrypoint: 'setApprovalForAll',
+  //   calldata: [toBN(ExchangeContractAddress).toString(), toFelt(1)],
+  // });
 
-  if (realmsContract?.address && settlingContract?.address) {
-    // ERC-721 approvals
-    txs.push({
-      contractAddress: realmsContract?.address,
-      entrypoint: 'setApprovalForAll',
-      calldata: [settlingContract?.address, toFelt(1)],
-    });
-  }
+  // txs.push({
+  //   contractAddress: RealmsContractAddress,
+  //   entrypoint: 'setApprovalForAll',
+  //   calldata: [toBN(SettlingContractAddress).toString(), toFelt(1)],
+  // });
 
   return txs;
 };

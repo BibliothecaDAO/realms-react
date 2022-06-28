@@ -25,7 +25,7 @@ import {
   useGetAccountQuery,
 } from '@/generated/graphql';
 import {
-  useApproveAllGameContracts,
+  getApproveAllGameContracts,
   useApproveLordsForBuilding,
 } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -218,19 +218,7 @@ export function AccountPanel() {
   ];
 
   const txQueue = useTransactionQueue();
-  const approveTxs = useApproveAllGameContracts();
-
-  const [addedApprovalsToQueue, setAddedApprovalsToQueue] = useState(false);
-
-  useEffect(() => {
-    console.log(approveTxs.length, 'approvals');
-    console.log(txQueue.transactions.length, 'txs in queue');
-    if (approveTxs.length == 4 && !addedApprovalsToQueue) {
-      console.log(approveTxs);
-      setAddedApprovalsToQueue(true);
-      txQueue.add(approveTxs);
-    }
-  }, [approveTxs, txQueue.transactions, addedApprovalsToQueue]);
+  const approveTxs = getApproveAllGameContracts();
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
@@ -281,11 +269,18 @@ export function AccountPanel() {
               </Button>
             </div>
             <Button
-              onClick={() =>
-                txQueue.executeMulticall().then((txHash) => {
-                  console.log(txHash);
-                })
-              }
+              onClick={() => {
+                txQueue
+                  .executeMulticall(approveTxs)
+                  .then((txHash) => {
+                    // TODO: Track txHash status
+                    console.log(txHash);
+                  })
+                  .catch((err) => {
+                    // TODO: handle error
+                    console.log(err);
+                  });
+              }}
             >
               Approve All Contracts
             </Button>

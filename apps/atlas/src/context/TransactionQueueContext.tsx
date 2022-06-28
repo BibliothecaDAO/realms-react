@@ -4,9 +4,9 @@ import type { Call } from 'starknet';
 type Tx = Call;
 
 interface TransactionQueue {
-  add: (tx: Tx | Tx[]) => void;
+  add: (tx: Tx[]) => void;
   transactions: Tx[];
-  executeMulticall: () => Promise<string>;
+  executeMulticall: (transactions: Tx[]) => Promise<string>;
 }
 
 export const TransactionQueueContext = createContext<
@@ -20,20 +20,18 @@ export const TransactionQueueProvider = ({
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
 
-  const add = useCallback((tx: Tx | Tx[]) => {
-    setTx((prev) => prev.concat(tx));
-  }, []);
+  const add = (tx: Tx[]) => {
+    setTx(tx);
+  };
 
-  const executeMulticall = useCallback(() => {
+  const executeMulticall = async (transactions: Tx[]) => {
+    // TODO: Catch and handle errors
+
     const starknet = getStarknet();
-    return new Promise<string>((resolve, reject) => {
-      starknet.enable().then(() => {
-        starknet.account.execute(txs).then((res) => {
-          resolve(res.transaction_hash);
-        });
-      });
-    });
-  }, []);
+    await starknet.enable();
+    const res = await starknet.account.execute(transactions);
+    return res.transaction_hash;
+  };
 
   return (
     <TransactionQueueContext.Provider
