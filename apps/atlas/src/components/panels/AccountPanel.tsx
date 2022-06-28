@@ -218,7 +218,19 @@ export function AccountPanel() {
   ];
 
   const txQueue = useTransactionQueue();
-  useApproveAllGameContracts();
+  const approveTxs = useApproveAllGameContracts();
+
+  const [addedApprovalsToQueue, setAddedApprovalsToQueue] = useState(false);
+
+  useEffect(() => {
+    console.log(approveTxs.length, 'approvals');
+    console.log(txQueue.transactions.length, 'txs in queue');
+    if (approveTxs.length == 4 && !addedApprovalsToQueue) {
+      console.log(approveTxs);
+      setAddedApprovalsToQueue(true);
+      txQueue.add(approveTxs);
+    }
+  }, [approveTxs, txQueue.transactions, addedApprovalsToQueue]);
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
@@ -268,7 +280,13 @@ export function AccountPanel() {
                 Settle Realms
               </Button>
             </div>
-            <Button onClick={() => txQueue.executeMulticall()}>
+            <Button
+              onClick={() =>
+                txQueue.executeMulticall().then((txHash) => {
+                  console.log(txHash);
+                })
+              }
+            >
               Approve All Contracts
             </Button>
           </CardBody>

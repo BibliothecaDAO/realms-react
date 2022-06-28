@@ -5,7 +5,7 @@ import {
 } from '@starknet-react/core';
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
-import type { Contract } from 'starknet';
+import type { Call, Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 
@@ -135,7 +135,8 @@ export const useApproveResourcesForExchange = () => {
 };
 
 export const useApproveAllGameContracts = () => {
-  const txQueue = useTransactionQueue();
+  const txs: Call[] = [];
+
   const { contract: lordsContract } = useLordsContract();
   const { contract: buildingContract } = useBuildingContract();
   const { contract: exchangeContract } = useExchangeContract();
@@ -147,7 +148,7 @@ export const useApproveAllGameContracts = () => {
   // ERC-20 approvals
   if (lordsContract?.address) {
     if (buildingContract?.address) {
-      txQueue.add({
+      txs.push({
         contractAddress: lordsContract?.address,
         entrypoint: 'approve',
         calldata: [buildingContract?.address, ALLOWANCE_AMOUNT.toString()],
@@ -155,7 +156,7 @@ export const useApproveAllGameContracts = () => {
     }
 
     if (exchangeContract?.address) {
-      txQueue.add({
+      txs.push({
         contractAddress: lordsContract?.address,
         entrypoint: 'approve',
         calldata: [exchangeContract?.address, ALLOWANCE_AMOUNT.toString()],
@@ -165,7 +166,7 @@ export const useApproveAllGameContracts = () => {
 
   if (resourcesContract?.address && exchangeContract?.address) {
     // ERC-1155 approvals
-    txQueue.add({
+    txs.push({
       contractAddress: resourcesContract?.address,
       entrypoint: 'setApprovalForAll',
       calldata: [exchangeContract?.address, toFelt(1)],
@@ -174,10 +175,12 @@ export const useApproveAllGameContracts = () => {
 
   if (realmsContract?.address && settlingContract?.address) {
     // ERC-721 approvals
-    txQueue.add({
+    txs.push({
       contractAddress: realmsContract?.address,
       entrypoint: 'setApprovalForAll',
       calldata: [settlingContract?.address, toFelt(1)],
     });
   }
+
+  return txs;
 };
