@@ -11,6 +11,20 @@ import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
+// Note: Can use process.env | static definition
+export const LordsContractAddress =
+  '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d';
+export const RealmsContractAddress =
+  '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0';
+export const SettlingContractAddress =
+  '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356';
+export const ExchangeContractAddress =
+  '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd';
+export const ResourcesContractAddress =
+  '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd';
+export const BuildingContractAddress =
+  '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc';
+
 /**
  * Load the Realms Settling contract.
  * @returns The `Settling` contract or undefined.
