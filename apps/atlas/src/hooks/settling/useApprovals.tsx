@@ -99,8 +99,8 @@ export const useApproveLordsForBuilding = () => {
 };
 
 export const useApproveLordsForExchange = () => {
-  const { contract: lordsContract } = useLordsContract();
-  return useApprovalForContract(lordsContract as Contract);
+  const { contract: exchangeContract } = useExchangeContract();
+  return useApprovalForContract(exchangeContract as Contract);
 };
 
 export const useApproveResourcesForExchange = () => {
