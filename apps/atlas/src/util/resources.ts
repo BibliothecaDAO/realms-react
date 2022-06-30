@@ -1,4 +1,4 @@
-interface Resources {
+export interface Resources {
   trait: string;
   value: number;
   colour: string;
@@ -8,8 +8,8 @@ interface Resources {
   img: string;
 }
 
-export const findResourceName = (value: string) => {
-  return resources.find((e) => e.id === parseInt(value));
+export const findResourceName = (value: number) => {
+  return resources.find((e) => e.id === value);
 };
 
 export const resources: Array<Resources> = [

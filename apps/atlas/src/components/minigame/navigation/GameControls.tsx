@@ -2,7 +2,9 @@ import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
 import use1155Approval from '@/hooks/desiege/use1155Approval';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
@@ -10,11 +12,16 @@ import { useTokenBalances } from '@/hooks/desiege/useTokenBalances';
 import Button from '@/shared/Button';
 import ElementLabel from '@/shared/ElementsLabel';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
+import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
+
 import {
+  CityVitalityDisplay,
   ShieldVitalityDisplay,
-  ShieldVitalityDisplayClassnames,
 } from '../TowerShieldVitality';
 import { GamePreparation } from './GamePreparation';
+import Tutorial from './Onboarding/GameActions';
+
+const ChatComponent = dynamic(() => import('../realtime/Chat'), { ssr: false });
 
 type Prop = {
   onChooseElements: () => void;
@@ -28,13 +35,10 @@ enum OnboardingTutorials {
 const GameControls: React.FC<Prop> = (props) => {
   const {
     account,
-    connectBrowserWallet,
     error: starknetConnectionError,
+    connect,
+    connectors,
   } = useStarknet();
-
-  useEffect(() => {
-    connectBrowserWallet(); // on mount
-  }, []);
 
   const gameVars = useGameVariables();
 
@@ -70,30 +74,46 @@ const GameControls: React.FC<Prop> = (props) => {
     'w-full p-2 my-4 text-lg bg-white text-black transition-colors border border-white rounded-md  hover:bg-gray-200 font-body tracking-widest duration-150';
 
   const ConnectStarknetButton = () => (
-    <button className={primaryBtnClass} onClick={() => connectBrowserWallet()}>
+    <button className={primaryBtnClass} onClick={() => connect(connectors[0])}>
       Connect StarkNet
     </button>
   );
   return (
     <div className="text-gray-800">
+      <Tutorial
+        didShowTutorial={() => setShowTutorial(true)}
+        onCloseTutorial={() => setShowTutorial(false)}
+        showTutorial={showTutorial}
+      />
       <div
-        id="shield-vitality-container"
+        id="shield-indicator"
         className={classNames(
           showTutorial ? '' : 'hidden',
-          'absolute -right-56',
-          ShieldVitalityDisplayClassnames
+          'absolute -right-full'
         )}
       >
-        {/* <ShieldVitalityDisplay
-          shield={toBN(20 * EFFECT_BASE_FACTOR)}
+        <ShieldVitalityDisplay
+          shield={toBN(100 * EFFECT_BASE_FACTOR)}
           health={toBN(100 * EFFECT_BASE_FACTOR)}
-        /> */}
+        />
+      </div>
+      <div
+        id="vitality-indicator"
+        className={classNames(
+          showTutorial ? '' : 'hidden',
+          'absolute -right-64'
+        )}
+      >
+        <CityVitalityDisplay
+          shield={toBN(100 * EFFECT_BASE_FACTOR)}
+          health={toBN(100 * EFFECT_BASE_FACTOR)}
+        />
       </div>
       <div className="font-bold">
-        <p className="text-xl tracking-widest text-gray-800 uppercase">
+        <p className="mt-1 text-xl tracking-widest text-gray-800 uppercase">
           Season 1
         </p>
-        <h1>
+        <h1 className="text-5xl">
           <ElementLabel> Divine Eclipse</ElementLabel>{' '}
         </h1>
       </div>
@@ -173,7 +193,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </div> */}
 
           <button
-            className="w-full my-2 text-center underline"
+            className="mb-2 text-center underline cursor-pointer"
             onClick={() => setShowTutorial(true)}
           >
             Show Tutorial
@@ -194,6 +214,7 @@ const GameControls: React.FC<Prop> = (props) => {
           </Button>
         </>
       ) : undefined}
+      <ChatComponent channelName="desiege-chat" />
     </div>
   );
 };

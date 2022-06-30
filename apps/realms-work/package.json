@@ -15,11 +15,9 @@
   },
   "browserslist": {
     "production": [
-      ">0.2% and supports es6-class",
+      ">0.2%",
       "not dead",
-      "not op_mini all",
-      "not chrome < 51",
-      "not safari < 10"
+      "not op_mini all"
     ],
     "development": [
       "last 1 chrome version",
@@ -105,7 +103,7 @@
     "typescript": "4.6.3"
   },
   "dependencies": {
-    "@argent/get-starknet": "^2.1.1",
+    "@argent/get-starknet": "3.3.0",
     "@babel/core": "7.17.5",
     "@bibliotheca-dao/core-lib": "workspace:^",
     "@bibliotheca-dao/postcss-100vh-fix": "^1.0.3",

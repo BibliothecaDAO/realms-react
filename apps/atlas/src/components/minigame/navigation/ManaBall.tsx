@@ -5,6 +5,7 @@ import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import useTokenPool from '@/hooks/desiege/useTokenPool';
 import useTotalMinted from '@/hooks/desiege/useTotalMinted';
+import { DarkGradient, LightGradient } from '@/shared/ElementsLabel';
 import {
   EFFECT_BASE_FACTOR,
   TOKEN_INDEX_OFFSET_BASE,
@@ -13,8 +14,8 @@ interface Props {
   side: 'light' | 'dark';
 }
 
-const lightColours = 'from-rose-500 via-blue-600 to-rose-400';
-const darkColours = 'from-rose-500 via-violet-900 to-rose-800';
+const lightColours = `via-blue-900 ${LightGradient}`;
+const darkColours = `via-gray-900 ${DarkGradient}`;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const ManaBall = (props: Props) => {
@@ -62,7 +63,8 @@ export const ManaBall = (props: Props) => {
 
   return (
     <div
-      className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-4 text-white shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
+      id={`mana-ball-${props.side}`}
+      className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-2 text-white shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
         props.side === 'dark' ? darkColours : lightColours
       }`}
     >

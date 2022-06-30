@@ -2,17 +2,17 @@ import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
-import { ResourceType } from '@/generated/graphql';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
+import { resources } from '@/util/resources';
 
 type ResourcesFilterProps = {
-  selectedValues: ResourceType[];
-  onChange(selected: ResourceType[]): void;
+  selectedValues: number[];
+  onChange(selected: number[]): void;
 };
 
 type ResourceOption = {
   name: string;
-  value: ResourceType;
+  value: number;
 };
 
 export function ResourcesFilter(props: ResourcesFilterProps) {
@@ -35,30 +35,10 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
   const isSelected = (option: ResourceOption) =>
     props.selectedValues.indexOf(option.value) > -1;
 
-  const resources = [
-    { name: 'Adamantine', value: ResourceType.Adamantine },
-    { name: 'Alchemical Silver', value: ResourceType.AlchemicalSilver },
-    { name: 'Coal', value: ResourceType.Coal },
-    { name: 'Cold Iron', value: ResourceType.ColdIron },
-    { name: 'Copper', value: ResourceType.Copper },
-    { name: 'Deep Crystal', value: ResourceType.DeepCrystal },
-    { name: 'Diamonds', value: ResourceType.Diamonds },
-    { name: 'Dragonhide', value: ResourceType.Dragonhide },
-    { name: 'Ethereal Silica', value: ResourceType.EtherealSilica },
-    { name: 'Gold', value: ResourceType.Gold },
-    { name: 'Hartwood', value: ResourceType.Hartwood },
-    { name: 'Ignium', value: ResourceType.Ignium },
-    { name: 'Ironwood', value: ResourceType.Ironwood },
-    { name: 'Mithral', value: ResourceType.Mithral },
-    { name: 'Obsidian', value: ResourceType.Obsidian },
-    { name: 'Ruby', value: ResourceType.Ruby },
-    { name: 'Sapphire', value: ResourceType.Sapphire },
-    { name: 'Silver', value: ResourceType.Silver },
-    { name: 'Stone', value: ResourceType.Stone },
-    { name: 'True Ice', value: ResourceType.TrueIce },
-    { name: 'Twilight Quartz', value: ResourceType.TwilightQuartz },
-    { name: 'Wood', value: ResourceType.Wood },
-  ];
+  const resourcesOptions = resources.map((resource) => ({
+    name: resource.trait,
+    value: resource.id,
+  }));
 
   return (
     <Popover className="relative">
@@ -83,7 +63,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
               <h4 className="text-center">Resources</h4>
 
               <div className="relative grid items-center justify-center grid-cols-2 gap-4">
-                {resources.map((resource, idx) => (
+                {resourcesOptions.map((resource, idx) => (
                   <div
                     role="button"
                     key={resource.value}
@@ -99,7 +79,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                       resource={resource.name.replace(' ', '')}
                       size="xs"
                     />{' '}
-                    <span>{resource.value.replace('_', ' ')}</span>
+                    <span>{resource.name}</span>
                   </div>
                 ))}
               </div>

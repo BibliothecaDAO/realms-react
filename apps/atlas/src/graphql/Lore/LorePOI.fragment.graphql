@@ -1,0 +1,5 @@
+fragment LorePoiFragment on LorePoi {
+  id,
+  name,
+  assetType
+}

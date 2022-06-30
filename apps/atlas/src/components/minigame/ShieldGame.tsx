@@ -1,10 +1,13 @@
 import { XCircleIcon } from '@heroicons/react/solid';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { BattleContextProvider } from '@/hooks/desiege/useBattleContext';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
-import { queryKeys } from '@/hooks/desiege/useTotalMinted';
+import { queryKeys as userBalanceQueryKeys } from '@/hooks/desiege/useTokenBalances';
+import { queryKeys as totalMintedQueryKeys } from '@/hooks/desiege/useTotalMinted';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
@@ -17,6 +20,12 @@ import ContractList from './ContractList';
 import GameBlockTimer from './navigation/GameBlockTimer';
 import GameControls from './navigation/GameControls';
 import MenuBar from './navigation/MenuBar';
+
+// Must not be loaded on server as uses client-side only components (websockets)
+const BattleListenerComponent = dynamic(
+  () => import('./realtime/BattleListener'),
+  { ssr: false }
+);
 
 export type DesiegeTab =
   | 'game-controls'
@@ -56,6 +65,15 @@ const ShieldGame: React.FC<Prop> = (props) => {
   useEffect(() => {
     if (view == 'lore' || view == 'check-rewards') {
       setModalOpen(true);
+    }
+  }, [view]);
+
+  useEffect(() => {
+    // Reset query string so that refreshes don't keep the same tab open
+    if (initialTabFromQuery !== undefined) {
+      router.replace({
+        query: undefined,
+      });
     }
   }, [view]);
 
@@ -103,19 +121,25 @@ const ShieldGame: React.FC<Prop> = (props) => {
         <Bridge
           onComplete={() => {
             setBridgeModalOpen(false);
+
+            const nextGameIdx = (getGameVariables.data?.gameIdx as number) + 1;
             // re-fetch total minted to display on the mana balls
             queryClient.invalidateQueries(
-              queryKeys.totalMinted(getGameVariables.data?.gameIdx)
+              totalMintedQueryKeys.totalMinted(nextGameIdx)
+            );
+            // re-fetch the user balance
+            queryClient.invalidateQueries(
+              userBalanceQueryKeys.tokenBalance(nextGameIdx)
             );
           }}
           onClose={() => setBridgeModalOpen(false)}
         />
       </Modal>
       <div className="absolute z-10 p-8">
-        <div className="w-full">
+        <div className="">
           <div
             id="game-actions"
-            className="w-full p-8 pt-10 rounded-md shadow-inner bg-gradient-to-b from-white/80"
+            className="px-6 py-2 rounded-md shadow-inner w-96 max-w-96 bg-gradient-to-b from-white/80"
           >
             <GameControls
               onChooseElements={() => {
@@ -131,18 +155,20 @@ const ShieldGame: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <TowerDefence
-        gameIdx={getGameVariables.data?.gameIdx}
-        gameStatus={gameStatus.data}
-      />
-
-      <MenuBar
-        setupModalInitialIsOpen={view == 'setup'}
-        toggleTab={(tab) => {
-          setModalOpen(true);
-          setView(tab);
-        }}
-      />
+      <BattleContextProvider>
+        <TowerDefence
+          gameIdx={getGameVariables.data?.gameIdx}
+          gameStatus={gameStatus.data}
+        />
+        <MenuBar
+          setupModalInitialIsOpen={view == 'setup'}
+          toggleTab={(tab) => {
+            setModalOpen(true);
+            setView(tab);
+          }}
+        />
+        <BattleListenerComponent />
+      </BattleContextProvider>
 
       {gameStatus.data &&
       gameStatus.data == 'active' &&

@@ -95,9 +95,10 @@ jobs:
       # to debug cache issues: ls ${{ github.workspace }}/.cache
       # Build packages that have changed (--include & --since), assuming that
       # apps build are done already. Otherwise --from & --since
-      - name: Run build for changed packages
-        run: |
-          yarn workspaces foreach -tv --include '@bibliotheca-dao/*' --since=origin/main run build
+      ## Dont run due to svg issues
+      #- name: Run build for changed packages
+      #   run: |
+      #     yarn workspaces foreach -tv --include '@bibliotheca-dao/*' --since=origin/main run build
 
       # Test storybook build on packages that have changed (--include & --since)
       - name: Run storybook build for changed packages

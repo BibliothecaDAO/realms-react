@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-h1,
 h2,
 h3,
 h4,
@@ -12,7 +11,7 @@ h6 {
 }
 
 h1 {
-  @apply text-3xl sm:text-4xl md:text-6xl;
+  @apply text-3xl sm:text-4xl md:text-6xl font-lords;
 }
 
 h2 {
@@ -24,11 +23,11 @@ h3 {
 }
 
 h4 {
-  @apply text-xl uppercase font-body tracking-widest font-semibold;
+  @apply text-xl font-semibold tracking-widest uppercase font-body;
 }
 
 button {
-  @apply font-display;
+  @apply font-body;
 }
 
 body {
@@ -68,22 +67,20 @@ body {
   }
 }
 @layer utilities {
-  @variants responsive {
-    .text-shadow {
-      text-shadow: 2px 2px 4px black;
-    }
+  .text-shadow {
+    text-shadow: 2px 2px 4px black;
+  }
 
-    .text-shadow-md {
-      text-shadow: 4px 4px 8px black;
-    }
+  .text-shadow-md {
+    text-shadow: 4px 4px 8px black;
+  }
 
-    .text-shadow-lg {
-      text-shadow: 15px 15px 30px black;
-    }
+  .text-shadow-lg {
+    text-shadow: 15px 15px 30px black;
+  }
 
-    .text-shadow-none {
-      text-shadow: none;
-    }
+  .text-shadow-none {
+    text-shadow: none;
   }
 }
 
@@ -108,5 +105,10 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply bg-off-200;
+  @apply bg-stone-200;
+}
+
+@font-face {
+  font-family: Lords;
+  src: url('fontforlordsn.otf');
 }

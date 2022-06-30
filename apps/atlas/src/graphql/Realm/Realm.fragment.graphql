@@ -2,23 +2,49 @@ fragment RealmFragment on Realm {
   realmId
   owner
   bridgedOwner
+  ownerL2
+  settledOwner
   name
   rarityRank
   rarityScore
   orderType
   wonder
+  lastAttacked
+  lastClaimTime
+  lastVaultTime
   resources {
-    type
+    resourceId
+    resourceName
+    level
+    upgrades
   }
   traits {
     type
     qty
   }
   buildings {
-    type
+    buildingId
+    buildingName
+    count
+    buildingName
+    population
+    culture
+    food
+    limitTraitId
+    limitTraitName
   }
-  squads {
-    action
+  squad {
+    realmId
+    troopId
+    troopName
+    index
     type
+    tier
+    agility
+    attack
+    defense
+    vitality
+    wisdom
+    squadSlot
   }
 }

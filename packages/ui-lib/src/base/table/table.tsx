@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-key */
 import { ArrayUtils } from '@bibliotheca-dao/core-lib';
 import type { AccessorFn } from '@tanstack/react-table';
 import {
   Column,
-  columnFilterRowsFn,
   createTable,
-  globalFilterRowsFn,
-  useTable,
+  getCoreRowModel,
+  useTableInstance,
 } from '@tanstack/react-table';
 import { useReducer, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -31,54 +31,51 @@ type TableProps = {
 export function Table({ data, columns: customColumns, options }: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const table = createTable<typeof data>();
-  const { createColumns, createDataColumn, createGroup } = table;
+  const table = createTable().setRowType<typeof data>();
+  const { createDataColumn } = table;
 
-  const defaultColumns = createColumns(
-    customColumns?.map((column) => {
-      return createDataColumn(column.accessor, {
-        header: column.Header,
-        footer: (props: { column: { id: any } }) => props.column.id,
-      });
-    })
-  );
+  const defaultColumns = customColumns?.map((column) => {
+    return createDataColumn(column.accessor, {
+      header: column.Header,
+      cell: (info) => info.getValue(),
+      footer: (props: { column: { id: any } }) => props.column.id,
+    });
+  });
 
   const [columns] = useState<typeof defaultColumns>(() => [...defaultColumns]);
 
-  const instance = useTable(table, {
+  const instance = useTableInstance(table, {
     data,
     columns,
     state: {
       globalFilter,
     },
+    getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterRowsFn: globalFilterRowsFn,
   });
 
   return (
-    <div className="p-2">
+    <div className="w-full">
       {options?.search && (
         <div>
           <input
             value={globalFilter ?? ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
-            className="p-2 text-gray-600 border shadow font-lg bg-gray-600/40 border-block"
-            placeholder="Search all columns..."
+            className="p-2 text-gray-600 border rounded font-lg bg-white-600/40 border-block"
+            placeholder="Search..."
           />
         </div>
       )}
-      <div className="h-2" />
-      <table
-        className="w-full text-left text-white -striped"
-        {...instance.getTableProps()}
-      >
-        <thead className="uppercase">
+
+      <table className="w-full text-left text-white rounded-xl">
+        <thead className="uppercase rounded-xl">
           {instance.getHeaderGroups().map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="text-md tracking-wider py-2"
-                  {...header.getHeaderProps()}
+                  className="p-2 text-xs tracking-widest text-center border border-gray-500/60"
+                  key={header.id}
+                  colSpan={header.colSpan}
                 >
                   {header.isPlaceholder ? null : header.renderHeader()}
                 </th>
@@ -86,18 +83,21 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             </tr>
           ))}
         </thead>
-        <tbody className="shadow-lg" {...instance.getTableBodyProps()}>
+        <tbody className="shadow-inner rounded-xl">
           {instance.getRowModel().rows.map((row, index) => (
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-gray-900/70'
-                  : 'bg-gray-800/70'
-              } border-b-2 border-gray-900 hover:bg-gray-600/90`}
-              {...row.getRowProps()}
+                  ? 'bg-gray-600/60'
+                  : 'bg-gray-600/20'
+              } hover:bg-white-600/90 font-semibold shadow-inner`}
+              key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
-                <td className="px-2 py-1.5" {...cell.getCellProps()}>
+                <td
+                  className="p-2 mx-auto text-left border border-gray-500/60"
+                  key={cell.id}
+                >
                   {cell.renderCell()}
                 </td>
               ))}

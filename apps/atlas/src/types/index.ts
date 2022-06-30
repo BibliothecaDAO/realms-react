@@ -1,4 +1,4 @@
-import { number } from 'starknet';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
 
@@ -97,6 +97,11 @@ export interface RealmProps {
   loading: boolean;
   size?: string;
 }
+export interface RealmsCardProps {
+  realm: RealmFragmentFragment;
+  loading: boolean;
+  size?: string;
+}
 export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
@@ -185,3 +190,34 @@ export type RealmFeatureProperties = {
   order: string;
   resources: string[];
 };
+
+export interface TroopInterface {
+  troopId: number;
+  index: number;
+  type: number;
+  tier: number;
+  agility: number;
+  attack: number;
+  defense: number;
+  vitality: number;
+  wisdom: number;
+  squadSlot: number;
+  troopName?: string;
+  troopCost?: ItemCost[];
+}
+
+export interface ItemCost {
+  amount: number;
+  resources: ResourceCost[];
+}
+
+export interface ResourceCost {
+  amount: number;
+  resourceId: number;
+  resourceName: string;
+}
+
+export interface MinMaxRange {
+  min: number;
+  max: number;
+}

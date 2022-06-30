@@ -9,7 +9,7 @@
     "incremental": true,
     "noImplicitAny": false,
     "paths": {
-      "@/test-utils": ["../config/jest/test-utils"],
+      "@/test-utils": ["../config/tests/test-utils"],
       "@/abi/*": ["./abi/*"],
       "@/constants/*": ["./constants/*"],
       "@/components/*": ["./components/*"],
@@ -30,15 +30,18 @@
       "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
     }
   },
-
-  "exclude": ["**/node_modules", "**/.*/", ".next"],
+  "exclude": ["**/node_modules", "**/.*/"],
   "include": [
     "next-env.d.ts",
     "custom.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.mts",
     "**/*.js",
+    "**/*.cjs",
+    "**/*.mjs",
     "**/*.jsx",
     "**/*.json"
-  ]
+  ],
+  "types": ["vitest/globals"]
 }

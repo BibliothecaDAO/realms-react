@@ -1,0 +1,8 @@
+query getLorePois(
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  getLorePois(take: $take, skip: $skip) {
+    ...LorePoiFragment
+  }
+}

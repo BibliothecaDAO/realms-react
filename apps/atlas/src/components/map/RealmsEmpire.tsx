@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+/* import { useQuery } from '@apollo/client';
 
 import { useState, useRef } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
@@ -99,7 +99,7 @@ export const RealmsEmpire = () => {
     setLimit(limit + 25);
   }, [isVisible]); */
 
-  const grids =
+/* const grids =
     'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 xl:gap-6';
 
   return (
@@ -180,3 +180,5 @@ export const RealmsEmpire = () => {
     </div>
   );
 };
+*/
+export {};

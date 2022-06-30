@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7ff5bd95.css",
+    "main.js": "/static/js/main.e66fa2ce.js",
+    "static/media/Treasury-modified.png": "/static/media/Treasury-modified.3c2a753ee78561f37e02.png",
+    "static/media/biblio_logo.png": "/static/media/biblio_logo.ec6b9c84a73ce9e69191.png",
+    "index.html": "/index.html",
+    "main.7ff5bd95.css.map": "/static/css/main.7ff5bd95.css.map",
+    "main.e66fa2ce.js.map": "/static/js/main.e66fa2ce.js.map"
+  },
+  "entrypoints": ["static/css/main.7ff5bd95.css", "static/js/main.e66fa2ce.js"]
+}

@@ -1,4 +1,4 @@
-import { getAddress, isAddress } from '@ethersproject/address';
+import { isAddress } from '@ethersproject/address';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -85,7 +85,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const inputAddress = firstParam(req.query.address);
+  const inputAddress = firstParam(req.query.address || '');
   const lowercaseAddress = inputAddress.toLowerCase();
 
   if (inputAddress !== lowercaseAddress) {
