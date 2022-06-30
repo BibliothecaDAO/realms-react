@@ -22,7 +22,10 @@ import {
   ExchangeContractAddress,
   Resources1155ContractAddress,
   BuildingContractAddress,
+  ResourceGameContractAddress,
   SettlingContractAddress,
+  CombatContractAddress,
+  StakedRealmsContractAddress,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -150,7 +153,7 @@ export const getApproveAllGameContracts = () => {
     calldata: [
       toBN(BuildingContractAddress).toString(),
       ALLOWANCE_AMOUNT.toString(),
-      0,
+      0, // Extra felt for uint256
     ],
   });
   txs.push({
@@ -159,14 +162,23 @@ export const getApproveAllGameContracts = () => {
     calldata: [
       toBN(ExchangeContractAddress).toString(),
       ALLOWANCE_AMOUNT.toString(),
-      0,
+      0, // Extra felt for uint256
     ],
   });
+
+  // ERC-1155 approvals
 
   txs.push({
     contractAddress: Resources1155ContractAddress,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(ExchangeContractAddress).toString(), toFelt(1)],
+  });
+
+  // Game approvals
+  txs.push({
+    contractAddress: RealmsContractAddress,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(SettlingContractAddress).toString(), toFelt(1)],
   });
 
   return txs;

@@ -14,8 +14,12 @@ import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.js
 // Note: Can use process.env | static definition
 export const LordsContractAddress =
   '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d';
+export const ResourceGameContractAddress =
+  '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd';
 export const RealmsContractAddress =
   '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0';
+export const StakedRealmsContractAddress =
+  '0x007235420ad11fa85b9e9837fb03a0b42a56cc930dd51a9aadbb5ad229eabe77';
 export const SettlingContractAddress =
   '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356';
 export const ExchangeContractAddress =
@@ -24,6 +28,8 @@ export const Resources1155ContractAddress =
   '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70';
 export const BuildingContractAddress =
   '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc';
+export const CombatContractAddress =
+  '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9';
 
 /**
  * Load the Realms Settling contract.
