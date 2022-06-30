@@ -43,7 +43,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="container px-10 py-20 mx-auto">
+        {/* <div className="container px-10 py-20 mx-auto">
           <div className="flex">
             <div className="self-center w-1/2">
               <h1 className="font-lords">
@@ -74,8 +74,8 @@ function Home() {
               />
             </div>
           </div>
-        </div>
-        <div className="container px-10 py-20 mx-auto">
+        </div> */}
+        {/* <div className="container px-10 py-20 mx-auto">
           <div className="flex">
             <div className="self-center w-1/2 ">
               <h1 className="font-lords">
@@ -106,7 +106,7 @@ function Home() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         {/* <div className="container grid grid-cols-2 gap-2 px-4 mx-auto sm:gap-4 sm:grid-cols-3">
           {jobs.map((a, index) => {
             return (

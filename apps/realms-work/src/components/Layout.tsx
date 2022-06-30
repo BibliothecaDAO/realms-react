@@ -11,7 +11,7 @@ export default function Layout({
   return (
     <div className="min-h-screen bg-black">
       <Head />
-      <Header />
+      {/* <Header /> */}
       {children}
       <FooterBlock />
     </div>

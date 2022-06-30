@@ -42,7 +42,7 @@ module.exports = {
         },
       }),
       backgroundImage: {
-        hero: "url('/cover.jpg')",
+        hero: "url('/dark.png')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
