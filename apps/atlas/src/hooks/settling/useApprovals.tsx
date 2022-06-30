@@ -156,6 +156,15 @@ export const getApproveAllGameContracts = () => {
       0, // Extra felt for uint256
     ],
   });
+
+  // Exchange approvals
+
+  txs.push({
+    contractAddress: Resources1155ContractAddress,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(ExchangeContractAddress).toString(), toFelt(1)],
+  });
+
   txs.push({
     contractAddress: LordsContractAddress,
     entrypoint: 'approve',
@@ -166,19 +175,39 @@ export const getApproveAllGameContracts = () => {
     ],
   });
 
-  // ERC-1155 approvals
-
   txs.push({
     contractAddress: Resources1155ContractAddress,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(ExchangeContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(ResourceGameContractAddress).toString(), toFelt(1)],
   });
 
-  // Game approvals
+  // Settling
+
   txs.push({
     contractAddress: RealmsContractAddress,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(SettlingContractAddress).toString(), toFelt(1)],
+  });
+
+  // Buildings
+  txs.push({
+    contractAddress: Resources1155ContractAddress,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(BuildingContractAddress).toString(), toFelt(1)],
+  });
+
+  txs.push({
+    contractAddress: RealmsContractAddress,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(BuildingContractAddress).toString(), toFelt(1)],
+  });
+
+  // Combat
+
+  txs.push({
+    contractAddress: Resources1155ContractAddress,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CombatContractAddress).toString(), toFelt(1)],
   });
 
   return txs;
