@@ -20,8 +20,8 @@ export const SettlingContractAddress =
   '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356';
 export const ExchangeContractAddress =
   '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd';
-export const ResourcesContractAddress =
-  '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd';
+export const Resources1155ContractAddress =
+  '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70';
 export const BuildingContractAddress =
   '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc';
 
