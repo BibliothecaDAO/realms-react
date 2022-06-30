@@ -146,17 +146,6 @@ export const useApproveResourcesForExchange = () => {
 export const getApproveAllGameContracts = () => {
   const txs: Call[] = [];
 
-  // ERC-20 approvals
-  txs.push({
-    contractAddress: LordsContractAddress,
-    entrypoint: 'approve',
-    calldata: [
-      toBN(BuildingContractAddress).toString(),
-      ALLOWANCE_AMOUNT.toString(),
-      0, // Extra felt for uint256
-    ],
-  });
-
   // Exchange approvals
 
   txs.push({
