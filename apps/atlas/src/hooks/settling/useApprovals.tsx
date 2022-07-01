@@ -185,12 +185,6 @@ export const getApproveAllGameContracts = () => {
     calldata: [toBN(BuildingContractAddress).toString(), toFelt(1)],
   });
 
-  txs.push({
-    contractAddress: RealmsContractAddress,
-    entrypoint: 'setApprovalForAll',
-    calldata: [toBN(BuildingContractAddress).toString(), toFelt(1)],
-  });
-
   // Combat
 
   txs.push({
