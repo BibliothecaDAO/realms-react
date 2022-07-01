@@ -1,12 +1,12 @@
 import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
-import type { Call } from 'starknet';
+import type { AddTransactionResponse, Call } from 'starknet';
 type Tx = Call;
 
 interface TransactionQueue {
   add: (tx: Tx[]) => void;
   transactions: Tx[];
-  executeMulticall: (transactions: Tx[]) => Promise<string>;
+  executeMulticall: (transactions: Tx[]) => Promise<AddTransactionResponse>;
 }
 
 export const TransactionQueueContext = createContext<
@@ -29,8 +29,7 @@ export const TransactionQueueProvider = ({
 
     const starknet = getStarknet();
     await starknet.enable();
-    const res = await starknet.account.execute(transactions);
-    return res.transaction_hash;
+    return await starknet.account.execute(transactions);
   };
 
   return (
