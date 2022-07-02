@@ -24,12 +24,12 @@ export const TransactionQueueProvider = ({
     setTx(tx);
   };
 
-  const executeMulticall = async (transactions: Tx[]) => {
-    // TODO: Catch and handle errors
-
+  const executeMulticall = async (transactions?: Tx[]) => {
     const starknet = getStarknet();
     await starknet.enable();
-    return await starknet.account.execute(transactions);
+    return await starknet.account.execute(
+      transactions ? [...transactions, ...txs] : txs
+    );
   };
 
   return (
