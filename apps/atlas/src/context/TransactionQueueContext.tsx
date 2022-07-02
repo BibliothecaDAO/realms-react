@@ -2,7 +2,7 @@ import { useStarknetTransactionManager } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
 import type { AddTransactionResponse, Call } from 'starknet';
-type Tx = Call & { status: 'ENQUEUED' };
+type Tx = Call & { status: 'ENQUEUED'; metadata?: any };
 
 interface TransactionQueue {
   add: (tx: Call[]) => void;
@@ -32,17 +32,23 @@ export const TransactionQueueProvider = ({
 
   const txManager = useStarknetTransactionManager();
 
-  const executeMulticall = async (transactions?: Tx[]) => {
+  const executeMulticall = async (inline?: Tx[]) => {
     const starknet = getStarknet();
     await starknet.enable();
-    const resp = await starknet.account.execute(
-      transactions ? [...transactions, ...txs] : txs
-    );
+
+    const t = inline ? [...inline, ...txs] : txs;
+
+    const resp = await starknet.account.execute(t);
 
     txManager.addTransaction({
       ...resp,
       status: 'TRANSACTION_RECEIVED',
       transactionHash: resp.transaction_hash,
+      metadata: {
+        title: 'Grouped Command',
+        description:
+          'This is a multicall. Descriptions of transactions inside coming soon.',
+      },
     });
     setTx([]);
     return resp;

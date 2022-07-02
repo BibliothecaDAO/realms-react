@@ -1,4 +1,13 @@
-export function useTxMessage(metadata) {
+import { Call, RawCalldata } from 'starknet';
+import { Entrypoints } from './useResources';
+
+type TxWithMetadata = { status: string; metadata?: any };
+
+export function useTxMessage(tx: TxWithMetadata) {
+  const isQueued = tx.status == 'ENQUEUED';
+
+  const metadata = tx.metadata;
+
   if (metadata?.action) {
     switch (metadata.action) {
       case 'mint':
@@ -10,10 +19,10 @@ export function useTxMessage(metadata) {
       case 'unsettle':
         return ['Unsettling', `Abandoning realm #${metadata.realmId}.`];
 
-      case 'harvest_resources':
+      case Entrypoints.claim:
         return [
-          'Harvesting Resources',
-          `Serfs gathering resources on Realm #${metadata.realmId}.`,
+          `${isQueued ? 'Harvest' : 'Harvesting'} Resources`,
+          `Serfs gathering resources on Realm #${tx.metadata.realmId}.`,
         ];
 
       case 'realm_building':

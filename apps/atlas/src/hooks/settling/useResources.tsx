@@ -16,10 +16,11 @@ export const Entrypoints = {
 };
 
 export const BuildCall: Record<string, (args: any) => Call> = {
-  claim: ({ tokenId }) => ({
+  claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,
-    calldata: uint256ToRawCalldata(bnToUint256(toBN(tokenId))),
+    calldata: uint256ToRawCalldata(bnToUint256(toBN(realmId))),
+    metadata: { realmId, action: Entrypoints.claim },
   }),
 };
 
