@@ -15,6 +15,7 @@ import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmCard } from '../cards/RealmCard';
+import { TransactionQueue } from '../tables/TransactionQueue';
 import { TransactionCartTable } from '../tables/Transactions';
 import { BaseSideBar } from './BaseSideBar';
 type Props = {
@@ -44,13 +45,19 @@ export const TransactionCartSideBar = () => {
 
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
 
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const tabs = useMemo(
     () => [
       {
         label: 'To Submit',
-        component: <span />,
+        component: (
+          <TransactionQueue
+            onSubmit={() => {
+              setSelectedTab(1);
+            }}
+          />
+        ),
       },
       {
         label: 'Processing',
