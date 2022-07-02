@@ -1,10 +1,27 @@
 import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
 import { useState } from 'react';
+import type { Call } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useResourcesContract } from '@/hooks/settling/stark-contracts';
+import {
+  ModuleAddr,
+  useResourcesContract,
+} from '@/hooks/settling/stark-contracts';
+import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { resources } from '@/util/resources';
+
+export const Entrypoints = {
+  claim: 'claim_resources',
+};
+
+export const BuildCall: Record<string, (args: any) => Call> = {
+  claim: ({ tokenId }) => ({
+    contractAddress: ModuleAddr.ResourceGame,
+    entrypoint: Entrypoints.claim,
+    calldata: uint256ToRawCalldata(bnToUint256(toBN(tokenId))),
+  }),
+};
 
 type Resources = {
   claim: () => void;
@@ -28,7 +45,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   const { contract: resourcesContract } = useResourcesContract();
   const claimResourcesAction = useStarknetInvoke({
     contract: resourcesContract,
-    method: 'claim_resources',
+    method: Entrypoints.claim,
   });
 
   const upgradeResourcesAction = useStarknetInvoke({

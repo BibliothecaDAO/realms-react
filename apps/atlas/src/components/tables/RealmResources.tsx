@@ -8,7 +8,8 @@ import {
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
-import useResources from '@/hooks/settling/useResources';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import useResources, { BuildCall } from '@/hooks/settling/useResources';
 import { IsOwner } from '@/shared/Getters/Realm';
 import { resources, findResourceName } from '@/util/resources';
 
@@ -78,6 +79,8 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
     }
   );
 
+  const txQueue = useTransactionQueue();
+
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
@@ -120,7 +123,9 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
           size="sm"
           className="mt-3 ml-2"
           variant="primary"
-          onClick={() => claim()}
+          onClick={() =>
+            txQueue.add([BuildCall.claim({ tokenId: props.realm.realmId })])
+          }
         >
           Harvest Resources
         </Button>
