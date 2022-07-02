@@ -15,10 +15,7 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { formatEther } from '@ethersproject/units';
-import {
-  useStarknet,
-  useStarknetTransactionManager,
-} from '@starknet-react/core';
+import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
@@ -221,7 +218,6 @@ export function AccountPanel() {
   ];
 
   const txQueue = useTransactionQueue();
-  const txTracker = useStarknetTransactionManager();
   const approveTxs = getApproveAllGameContracts();
 
   return (
@@ -276,14 +272,9 @@ export function AccountPanel() {
               className="mt-2"
               onClick={() => {
                 txQueue
-                  .executeMulticall(approveTxs)
-                  .then((txResp) => {
-                    txTracker.addTransaction({
-                      ...txResp,
-                      status: 'TRANSACTION_RECEIVED',
-                      transactionHash: txResp.transaction_hash,
-                    });
-                  })
+                  .executeMulticall(
+                    approveTxs.map((t) => ({ ...t, status: 'ENQUEUED' }))
+                  )
                   .catch((err) => {
                     // TODO: handle error
                     console.log(err);
