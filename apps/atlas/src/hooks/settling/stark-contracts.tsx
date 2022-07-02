@@ -11,25 +11,26 @@ import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
-// Note: Can use process.env | static definition
-export const LordsContractAddress =
-  '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d';
-export const ResourceGameContractAddress =
-  '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd';
-export const RealmsContractAddress =
-  '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0';
-export const StakedRealmsContractAddress =
-  '0x007235420ad11fa85b9e9837fb03a0b42a56cc930dd51a9aadbb5ad229eabe77';
-export const SettlingContractAddress =
-  '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356';
-export const ExchangeContractAddress =
-  '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd';
-export const Resources1155ContractAddress =
-  '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70';
-export const BuildingContractAddress =
-  '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc';
-export const CombatContractAddress =
-  '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9';
+// Note: Can use process.env | static definition if needed
+// Lords: process.env.LORDS_ADDR | "0x..."
+export const ModuleAddr = {
+  Lords: '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d',
+  ResourceGame:
+    '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd',
+  Realms: '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
+  StakedRealms:
+    '0x007235420ad11fa85b9e9837fb03a0b42a56cc930dd51a9aadbb5ad229eabe77',
+  Settling:
+    '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356',
+  Exchange:
+    '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd',
+  ResourcesToken:
+    '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70',
+  Building:
+    '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
+  Combat: '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',
+  Wonder: '0x05c292e4f4ea5ab160647ef2ce002e702f149af7370774839c0822a6c9b29361',
+};
 
 /**
  * Load the Realms Settling contract.
@@ -38,8 +39,7 @@ export const CombatContractAddress =
 export function useSettlingContract() {
   return useContract({
     abi: Settling as Abi,
-    address:
-      '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356',
+    address: ModuleAddr.Settling,
   });
 }
 /**
@@ -49,8 +49,7 @@ export function useSettlingContract() {
 export function useResourcesContract() {
   return useContract({
     abi: Resources as Abi,
-    address:
-      '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd',
+    address: ModuleAddr.ResourceGame,
   });
 }
 
@@ -61,8 +60,7 @@ export function useResourcesContract() {
 export function useBuildingContract() {
   return useContract({
     abi: Building as Abi,
-    address:
-      '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
+    address: ModuleAddr.Building,
   });
 }
 
@@ -73,8 +71,7 @@ export function useBuildingContract() {
 export function useWonderContract() {
   return useContract({
     abi: Wonder as Abi,
-    address:
-      '0x05c292e4f4ea5ab160647ef2ce002e702f149af7370774839c0822a6c9b29361',
+    address: ModuleAddr.Wonder,
   });
 }
 
@@ -85,8 +82,7 @@ export function useWonderContract() {
 export function useCombatContract() {
   return useContract({
     abi: Combat as Abi,
-    address:
-      '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',
+    address: ModuleAddr.Combat,
   });
 }
 
@@ -97,8 +93,7 @@ export function useCombatContract() {
 export function useResources1155Contract() {
   return useContract({
     abi: Resources1155 as Abi,
-    address:
-      '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70',
+    address: ModuleAddr.ResourcesToken,
   });
 }
 
@@ -109,8 +104,7 @@ export function useResources1155Contract() {
 export function useLordsContract() {
   return useContract({
     abi: Lords as Abi,
-    address:
-      '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d',
+    address: ModuleAddr.Lords,
   });
 }
 /**
@@ -120,8 +114,7 @@ export function useLordsContract() {
 export function useRealms721Contract() {
   return useContract({
     abi: Realms721 as Abi,
-    address:
-      '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
+    address: ModuleAddr.Realms,
   });
 }
 
@@ -132,7 +125,6 @@ export function useRealms721Contract() {
 export function useExchangeContract() {
   return useContract({
     abi: Exchange as Abi,
-    address:
-      '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd',
+    address: ModuleAddr.Exchange,
   });
 }

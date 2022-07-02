@@ -15,17 +15,7 @@ import {
   useBuildingContract,
   useExchangeContract,
   useResources1155Contract,
-  useSettlingContract,
-  useRealms721Contract,
-  LordsContractAddress,
-  RealmsContractAddress,
-  ExchangeContractAddress,
-  Resources1155ContractAddress,
-  BuildingContractAddress,
-  ResourceGameContractAddress,
-  SettlingContractAddress,
-  CombatContractAddress,
-  StakedRealmsContractAddress,
+  ModuleAddr as CM,
 } from '@/hooks/settling/stark-contracts';
 
 export const queryKeys = {
@@ -149,48 +139,48 @@ export const getApproveAllGameContracts = () => {
   // Exchange approvals
 
   txs.push({
-    contractAddress: Resources1155ContractAddress,
+    contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(ExchangeContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(CM.Exchange).toString(), toFelt(1)],
   });
 
   txs.push({
-    contractAddress: LordsContractAddress,
+    contractAddress: CM.Lords,
     entrypoint: 'approve',
     calldata: [
-      toBN(ExchangeContractAddress).toString(),
+      toBN(CM.Exchange).toString(),
       ALLOWANCE_AMOUNT.toString(),
       0, // Extra felt for uint256
     ],
   });
 
   txs.push({
-    contractAddress: Resources1155ContractAddress,
+    contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(ResourceGameContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(CM.ResourceGame).toString(), toFelt(1)],
   });
 
   // Settling
 
   txs.push({
-    contractAddress: RealmsContractAddress,
+    contractAddress: CM.Realms,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(SettlingContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(CM.Settling).toString(), toFelt(1)],
   });
 
   // Buildings
   txs.push({
-    contractAddress: Resources1155ContractAddress,
+    contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(BuildingContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(CM.Building).toString(), toFelt(1)],
   });
 
   // Combat
 
   txs.push({
-    contractAddress: Resources1155ContractAddress,
+    contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CombatContractAddress).toString(), toFelt(1)],
+    calldata: [toBN(CM.Combat).toString(), toFelt(1)],
   });
 
   return txs;
