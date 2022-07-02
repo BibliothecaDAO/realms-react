@@ -4,9 +4,22 @@ import {
   useStarknetTransactionManager,
 } from '@starknet-react/core';
 import Link from 'next/link';
+import type { Status, TransactionStatus } from 'starknet';
 import { useTxMessage } from '@/hooks/settling/useTxMessage';
+import { ExternalLink } from '@/shared/Icons';
+
+interface Metadata {
+  description: string;
+  title: string;
+  action: string;
+}
+interface EnqueuedOrReceivedTransaction {
+  metadata?: Metadata;
+  status: Status | TransactionStatus | 'ENQUEUED';
+  transactionHash?: string;
+}
 interface TxCartItem {
-  transaction: Transaction;
+  transaction: EnqueuedOrReceivedTransaction;
 }
 
 const STYLES = {
@@ -18,11 +31,15 @@ const STYLES = {
     ACCEPTED_ON_L2: 'bg-green-600/90',
     ACCEPTED_ON_L1: 'bg-green-900',
     TRANSACTION_RECEIVED: 'bg-green-400 animate-pulse',
+    ENQUEUED: 'border-gray-600 border border-dashed',
   },
 } as const;
 
-const TxCartItem = (props: TxCartItem) => {
-  const [title, message] = useTxMessage(props.transaction.metadata);
+export const TxCartItem = (props: TxCartItem) => {
+  const [title, message] = useTxMessage(props.transaction);
+
+  const resolvedTitle = props.transaction.metadata?.title || title;
+  const resolvedMsg = props.transaction.metadata?.description || message;
 
   return (
     <div
@@ -32,18 +49,24 @@ const TxCartItem = (props: TxCartItem) => {
     >
       <div className="flex justify-between w-full p-2 rounded shadow-inner bg-black/10">
         <div>
-          <h4>{title}</h4>
-          <p>{message}</p>
+          <h4>{resolvedTitle}</h4>
+          <p>{resolvedMsg}</p>
         </div>
-        <Link
-          target={'blank_'}
-          href={
-            'https://goerli.voyager.online/tx/' +
-            props.transaction.transactionHash
-          }
-        >
-          See on Voyager
-        </Link>
+        {props.transaction.transactionHash ? (
+          <Link
+            target={'_blank'}
+            rel="noreferrer noopener"
+            href={
+              // TODO: use network aware link using @/util/blockExplorer
+              'https://goerli.voyager.online/tx/' +
+              props.transaction.transactionHash
+            }
+          >
+            <span>
+              See on Voyager <ExternalLink className="inline-block w-4" />
+            </span>
+          </Link>
+        ) : null}
       </div>
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
     </div>
