@@ -7,10 +7,16 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import useResources, { BuildCall } from '@/hooks/settling/useResources';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import useResources, {
+  BuildCall,
+  Entrypoints,
+} from '@/hooks/settling/useResources';
 import { IsOwner } from '@/shared/Getters/Realm';
+import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
 import { resources, findResourceName } from '@/util/resources';
 
 import type { RealmsCardProps } from '../../types';
@@ -37,6 +43,9 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
     token_id: props.realm.realmId,
     resources: props.realm.resources,
   });
+
+  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
+
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
       const resourceId =
@@ -81,6 +90,18 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
 
   const txQueue = useTransactionQueue();
 
+  useEffect(() => {
+    setEnqueuedHarvestTx(
+      !!txQueue.transactions.find(
+        (t) =>
+          t.contractAddress == ModuleAddr.ResourceGame &&
+          t.entrypoint == Entrypoints.claim &&
+          t.calldata &&
+          toBN(t.calldata[0]).eq(toBN(props.realm.realmId))
+      )
+    );
+  }, [txQueue.transactions]);
+
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
@@ -119,16 +140,20 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
 
       {IsOwner(props.realm?.settledOwner) && (
-        <Button
-          size="sm"
-          className="mt-3 ml-2"
-          variant="primary"
-          onClick={() =>
-            txQueue.add([BuildCall.claim({ tokenId: props.realm.realmId })])
-          }
-        >
-          Harvest Resources
-        </Button>
+        <div className="flex items-center">
+          <Button
+            disabled={enqueuedHarvestTx}
+            size="sm"
+            className="mt-3 ml-2"
+            variant="primary"
+            onClick={() => {
+              txQueue.add([BuildCall.claim({ realmId: props.realm.realmId })]);
+            }}
+          >
+            Harvest Resources
+          </Button>
+          {enqueuedHarvestTx ? <TxAddedToQueueLabel /> : null}
+        </div>
       )}
       {!IsOwner(props.realm?.settledOwner) && (
         <Button
