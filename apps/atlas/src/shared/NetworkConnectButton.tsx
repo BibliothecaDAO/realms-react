@@ -38,8 +38,16 @@ const NetworkConnectButton = () => {
             <p className="mb-2">StarkNet</p>
             {connectors.map((connector) =>
               connector.available() ? (
-                <Button key={connector.id()} onClick={() => connect(connector)}>
-                  Connect {connector.name()}
+                <Button
+                  variant="secondary"
+                  className="w-full text-xs"
+                  key={connector.id()}
+                  onClick={() => connect(connector)}
+                >
+                  <StarkNet className="inline-block w-4 mr-2" /> Connect{' '}
+                  {connector.name() !== 'Disconnected'
+                    ? connector.name()
+                    : 'Wallet'}
                 </Button>
               ) : null
             )}
