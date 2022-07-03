@@ -1,5 +1,5 @@
-import { Call, RawCalldata } from 'starknet';
-import { Entrypoints } from './useResources';
+import { Entrypoints as BuildingMethods } from './useBuildings';
+import { Entrypoints as ResourceMethods } from './useResources';
 
 type TxWithMetadata = { status: string; metadata?: any };
 
@@ -19,16 +19,18 @@ export function useTxMessage(tx: TxWithMetadata) {
       case 'unsettle':
         return ['Unsettling', `Abandoning realm #${metadata.realmId}.`];
 
-      case Entrypoints.claim:
+      case ResourceMethods.claim:
         return [
           `${isQueued ? 'Harvest' : 'Harvesting'} Resources`,
           `Serfs gathering resources on Realm #${tx.metadata.realmId}.`,
         ];
 
-      case 'realm_building':
+      case BuildingMethods.build:
         return [
-          'Constructing Building',
-          `Realm #${metadata.realmId} has commenced building ${metadata.buildingId}`,
+          isQueued ? 'Construct Building' : 'Constructing Building',
+          `Realm #${metadata.realmId} ${
+            isQueued ? 'commanded to build' : 'has commenced'
+          } building ${metadata.buildingId}`,
         ];
 
       case 'upgrade_resource':

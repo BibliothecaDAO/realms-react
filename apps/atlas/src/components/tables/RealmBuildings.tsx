@@ -1,7 +1,8 @@
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
-import useBuildings from '@/hooks/settling/useBuildings';
+import { BuildCall } from '@/hooks/settling/useBuildings';
 import { IsOwner } from '@/shared/Getters/Realm';
 import type { RealmsCardProps } from '../../types';
 
@@ -20,8 +21,10 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     variables: { id: props.realm.realmId },
   });
 
+  const txQueue = useTransactionQueue();
+
   const buildings = data?.getBuildingsByRealmId ?? [];
-  const { build } = useBuildings();
+
   const columns = [
     { Header: 'Building', id: 1, accessor: 'building' },
     { Header: 'Requirements', id: 2, accessor: 'requirements' },
@@ -75,8 +78,15 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
       built: building.count,
       buildAction: IsOwner(props.realm?.settledOwner) && (
         <Button
-          aria-details="klajsfl"
-          onClick={() => build(props.realm.realmId, building.buildingId)}
+          aria-details="Build Building on Realm"
+          onClick={() => {
+            txQueue.add(
+              BuildCall.build({
+                realmId: props.realm.realmId,
+                buildingId: building.buildingId,
+              })
+            );
+          }}
           variant="primary"
           type="button"
           size="xs"
