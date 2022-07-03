@@ -5,7 +5,7 @@ import {
 } from '@starknet-react/core';
 import Link from 'next/link';
 import type { Status, TransactionStatus } from 'starknet';
-import { useTxMessage } from '@/hooks/settling/useTxMessage';
+import { getTxMessage } from '@/hooks/settling/useTxMessage';
 import { ExternalLink } from '@/shared/Icons';
 
 interface Metadata {
@@ -36,10 +36,10 @@ const STYLES = {
 } as const;
 
 export const TxCartItem = (props: TxCartItem) => {
-  const [title, message] = useTxMessage(props.transaction);
+  const { title, description } = getTxMessage(props.transaction);
 
   const resolvedTitle = props.transaction.metadata?.title || title;
-  const resolvedMsg = props.transaction.metadata?.description || message;
+  const resolvedMsg = props.transaction.metadata?.description || description;
 
   return (
     <div
@@ -50,7 +50,22 @@ export const TxCartItem = (props: TxCartItem) => {
       <div className="flex justify-between w-full p-2 rounded shadow-inner bg-black/10">
         <div>
           <h4>{resolvedTitle}</h4>
-          <p>{resolvedMsg}</p>
+          {Array.isArray(resolvedMsg) ? (
+            resolvedMsg.map((m, i) => {
+              if (m.title && m.description) {
+                // The description is typically unique for a tx
+                return (
+                  <div key={`${props.transaction.transactionHash}:${i}`}>
+                    <h4>{m.title}</h4>
+                    <p>{m.description}</p>
+                  </div>
+                );
+              }
+              return <p key={m}>{m}</p>;
+            })
+          ) : (
+            <p>{resolvedMsg}</p>
+          )}
         </div>
         {props.transaction.transactionHash ? (
           <Link

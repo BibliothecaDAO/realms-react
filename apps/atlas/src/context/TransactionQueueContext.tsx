@@ -3,6 +3,7 @@ import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import type { AddTransactionResponse, Call } from 'starknet';
+import { getTxMessage } from '@/hooks/settling/useTxMessage';
 import { Scroll } from '@/shared/Icons';
 type Tx = Call & { status: 'ENQUEUED'; metadata?: any };
 type CallWithMeta = Call & { metadata?: any };
@@ -63,9 +64,10 @@ export const TransactionQueueProvider = ({
       status: 'TRANSACTION_RECEIVED',
       transactionHash: resp.transaction_hash,
       metadata: {
-        title: 'Grouped Command',
-        description:
-          'This is a multicall. Descriptions of transactions inside coming soon.',
+        title: 'By Royal Decree, it was commanded...',
+        description: t.map((t) =>
+          getTxMessage({ ...t, status: 'TRANSACTION_RECEIVED' })
+        ),
       },
     });
     setTx([]);
