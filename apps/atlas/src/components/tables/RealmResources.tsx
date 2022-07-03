@@ -147,7 +147,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
             className="mt-3 ml-2"
             variant="primary"
             onClick={() => {
-              txQueue.add([BuildCall.claim({ realmId: props.realm.realmId })]);
+              txQueue.add(BuildCall.claim({ realmId: props.realm.realmId }));
             }}
           >
             Harvest Resources
