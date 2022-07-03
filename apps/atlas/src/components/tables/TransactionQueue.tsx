@@ -10,7 +10,6 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
   return (
     <>
-      <p className="z-0 mb-2 text-xl">Ser, your signature is required</p>
       <div className="flex justify-between mb-4">
         <Button
           disabled={txQueue.transactions.length == 0}
@@ -27,11 +26,20 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
               })
           }
         >
-          Sign for {txQueue.transactions.length} Command
-          {txQueue.transactions.length > 1 ? 's' : ''}
+          {txQueue.transactions.length > 0
+            ? `Sign for ${txQueue.transactions.length} Command${
+                txQueue.transactions.length > 1 ? 's' : ''
+              }`
+            : 'Sign the Decree'}
         </Button>
         <Button onClick={() => txQueue.empty()}>Clear</Button>
       </div>
+      {txQueue.transactions.length > 0 ? (
+        <p className="z-0 mb-2 text-xl">
+          Ser, your royal signature is requested to execute the following
+          commands:
+        </p>
+      ) : null}
       {txQueue.transactions.map((c) => (
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
