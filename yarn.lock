@@ -19254,6 +19254,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"goober@npm:^2.1.1":
+  version: 2.1.10
+  resolution: "goober@npm:2.1.10"
+  peerDependencies:
+    csstype: ^3.0.10
+  checksum: f1a3d63820fd4ff0e261d0452471156d5477474cff125a1f131b716454d9899bc6421fe5d0e9c3985396ac73bb3655114b97167c25e0a968081a6d8674369593
+  languageName: node
+  linkType: hard
+
 "got@npm:^11.8.2":
   version: 11.8.5
   resolution: "got@npm:11.8.5"
@@ -28678,6 +28687,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hot-toast@npm:2.2.0":
+  version: 2.2.0
+  resolution: "react-hot-toast@npm:2.2.0"
+  dependencies:
+    goober: "npm:^2.1.1"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 67b2cfb46f6782dd80ecf215a9db977f75b3f03428cc756b636c5f1fc2c7fe1e15bbef24bc0a5a06b6eff7bdc3bd4dd20c26b9ccf631b102cef9b32ffdeee35f
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^5.1.0":
   version: 5.1.1
   resolution: "react-inspector@npm:5.1.1"
@@ -29176,6 +29197,7 @@ __metadata:
     lint-staged: "npm:13.0.2"
     npm-run-all: "npm:4.1.5"
     prettier: "npm:2.7.1"
+    react-hot-toast: "npm:2.2.0"
     rimraf: "npm:3.0.2"
     shell-quote: "npm:1.7.3"
     typescript: "npm:4.7.4"
