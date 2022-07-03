@@ -5,7 +5,7 @@ import type { AddTransactionResponse, Call } from 'starknet';
 type Tx = Call & { status: 'ENQUEUED'; metadata?: any };
 
 interface TransactionQueue {
-  add: (tx: Call[]) => void;
+  add: (tx: Call | Call[]) => void;
   transactions: Tx[];
   empty: () => void;
   executeMulticall: (transactions: Tx[]) => Promise<AddTransactionResponse>;
@@ -22,8 +22,14 @@ export const TransactionQueueProvider = ({
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
 
-  const add = (tx: Call[]) => {
-    setTx((prev) => prev.concat(tx.map((t) => ({ ...t, status: 'ENQUEUED' }))));
+  const add = (tx: Call[] | Call) => {
+    if (Array.isArray(tx)) {
+      setTx((prev) =>
+        prev.concat(tx.map((t) => ({ ...t, status: 'ENQUEUED' })))
+      );
+    } else {
+      setTx((prev) => prev.concat({ ...tx, status: 'ENQUEUED' }));
+    }
   };
 
   const empty = () => {
