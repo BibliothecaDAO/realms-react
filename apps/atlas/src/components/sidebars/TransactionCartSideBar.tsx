@@ -61,7 +61,7 @@ export const TransactionCartSideBar = () => {
         ),
       },
       {
-        label: 'Processing',
+        label: 'Status',
         component: <TransactionCartTable />,
       },
     ],
