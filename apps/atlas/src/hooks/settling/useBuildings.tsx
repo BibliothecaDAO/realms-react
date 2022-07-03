@@ -24,7 +24,7 @@ export const BuildCall: Record<string, (args: any) => Call> = {
       ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
       args.buildingId,
     ],
-    metadata: args,
+    metadata: { ...args, action: Entrypoints.build },
   }),
 };
 
