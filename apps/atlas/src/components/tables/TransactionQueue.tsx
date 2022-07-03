@@ -10,8 +10,11 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
   return (
     <>
+      <p className="z-0 mb-2 text-xl">Ser, your signature is required</p>
       <div className="flex justify-between mb-4">
         <Button
+          disabled={txQueue.transactions.length == 0}
+          variant="secondary"
           onClick={() =>
             txQueue
               .executeMulticall([])
@@ -24,7 +27,8 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
               })
           }
         >
-          Submit {txQueue.transactions.length} Transaction(s)
+          Sign for {txQueue.transactions.length} Command
+          {txQueue.transactions.length > 1 ? 's' : ''}
         </Button>
         <Button onClick={() => txQueue.empty()}>Clear</Button>
       </div>
