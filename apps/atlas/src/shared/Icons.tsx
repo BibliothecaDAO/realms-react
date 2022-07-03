@@ -1,3 +1,4 @@
+import ScrollIcon from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import { AnnotationIcon } from '@heroicons/react/outline';
 import {
   ExternalLinkIcon,
@@ -14,3 +15,4 @@ export const VolumeOff = VolumeOffIcon;
 export const CheckCircle = CheckCircleIcon;
 
 export const Annotation = AnnotationIcon;
+export const Scroll = ScrollIcon;

@@ -20,6 +20,7 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { usePlayer } from '@/hooks/usePlayer';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import { Scroll } from '@/shared/Icons';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { TxStyles } from '@/shared/Validators/styles';
 export function Header() {
@@ -75,8 +76,8 @@ export function Header() {
         </div>
 
         <div className="flex items-center mr-4">
-          <div className="text-xs mr-4">{currentTrack}</div>
-          <div className="self-center flex">
+          <div className="mr-4 text-xs">{currentTrack}</div>
+          <div className="flex self-center">
             <IconButton
               aria-label="Bank"
               variant="unstyled"
@@ -149,7 +150,7 @@ export function Header() {
             className="relative inline-flex"
             onClick={() => toggleMenuType('transactionCart')}
           >
-            tx
+            <Scroll className="inline-block w-6 fill-white" />
             <span className="flex w-3 h-3 ml-3">
               <span
                 className={`absolute inline-flex w-3 h-3 duration-300 rounded-full opacity-75 ${TxStyle()}`}
