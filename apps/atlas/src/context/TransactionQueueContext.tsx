@@ -1,13 +1,20 @@
 import { useStarknetTransactionManager } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import type { AddTransactionResponse, Call } from 'starknet';
+import usePrevious from '@/hooks/usePrevious';
 type Tx = Call & { status: 'ENQUEUED'; metadata?: any };
+
+interface Simulation {
+  status: 'loading' | 'success' | 'error';
+  error?: any;
+}
 
 interface TransactionQueue {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
   empty: () => void;
+  simulation: Simulation;
   executeMulticall: (transactions: Tx[]) => Promise<AddTransactionResponse>;
 }
 
@@ -21,6 +28,9 @@ export const TransactionQueueProvider = ({
   children: React.ReactNode;
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
+  const [loadSim, setLoadSim] = useState(false);
+  const prevLoadingSimulation = usePrevious(loadSim);
+  const [simError, setSimError] = useState<any>();
 
   const add = (tx: Call[] | Call) => {
     if (Array.isArray(tx)) {
@@ -30,6 +40,8 @@ export const TransactionQueueProvider = ({
     } else {
       setTx((prev) => prev.concat({ ...tx, status: 'ENQUEUED' }));
     }
+
+    setLoadSim(true);
   };
 
   const empty = () => {
@@ -37,6 +49,28 @@ export const TransactionQueueProvider = ({
   };
 
   const txManager = useStarknetTransactionManager();
+
+  const simulate = async () => {
+    console.log('Running simulation');
+    const starknet = getStarknet();
+    setSimError(undefined);
+    try {
+      const res = await starknet.account.estimateFee(txs);
+      console.log('simulation response', res);
+      return res;
+    } catch (e: any) {
+      console.error('error while simulation txs:', e);
+      setSimError(e);
+    } finally {
+      setLoadSim(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!prevLoadingSimulation && loadSim) {
+      simulate();
+    }
+  }, [loadSim, txs]);
 
   const executeMulticall = async (inline?: Tx[]) => {
     const starknet = getStarknet();
@@ -60,9 +94,14 @@ export const TransactionQueueProvider = ({
     return resp;
   };
 
+  const simulation: Simulation = {
+    status: loadSim ? 'loading' : simError ? 'error' : 'success',
+    error: simError,
+  };
+
   return (
     <TransactionQueueContext.Provider
-      value={{ add, empty, transactions: txs, executeMulticall }}
+      value={{ add, empty, transactions: txs, simulation, executeMulticall }}
     >
       {children}
     </TransactionQueueContext.Provider>
