@@ -1,4 +1,4 @@
-import { number } from 'starknet';
+import type { Call as StarknetCall } from 'starknet';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
@@ -221,4 +221,8 @@ export interface ResourceCost {
 export interface MinMaxRange {
   min: number;
   max: number;
+}
+
+export interface RealmsCall extends StarknetCall {
+  metadata: any;
 }

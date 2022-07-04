@@ -12,7 +12,7 @@ import { toBN } from 'starknet/dist/utils/number';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useResources, {
-  BuildCall,
+  createCall,
   Entrypoints,
 } from '@/hooks/settling/useResources';
 import { IsOwner } from '@/shared/Getters/Realm';
@@ -147,7 +147,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
             className="mt-3 ml-2"
             variant="primary"
             onClick={() => {
-              txQueue.add(BuildCall.claim({ realmId: props.realm.realmId }));
+              txQueue.add(createCall.claim({ realmId: props.realm.realmId }));
             }}
           >
             Harvest Resources

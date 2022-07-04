@@ -2,7 +2,7 @@ import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
-import { BuildCall } from '@/hooks/settling/useBuildings';
+import { createCall } from '@/hooks/settling/useBuildings';
 import { IsOwner } from '@/shared/Getters/Realm';
 import type { RealmsCardProps } from '../../types';
 
@@ -81,7 +81,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           aria-details="Build Building on Realm"
           onClick={() => {
             txQueue.add(
-              BuildCall.build({
+              createCall.build({
                 realmId: props.realm.realmId,
                 buildingId: building.buildingId,
               })

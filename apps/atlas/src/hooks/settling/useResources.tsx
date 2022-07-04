@@ -1,21 +1,19 @@
 import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
-import { useState } from 'react';
-import type { Call } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import {
   ModuleAddr,
   useResourcesContract,
 } from '@/hooks/settling/stark-contracts';
+import type { RealmsCall } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import { resources } from '@/util/resources';
 
 export const Entrypoints = {
   claim: 'claim_resources',
 };
 
-export const BuildCall: Record<string, (args: any) => Call> = {
+export const createCall: Record<string, (args: any) => RealmsCall> = {
   claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,

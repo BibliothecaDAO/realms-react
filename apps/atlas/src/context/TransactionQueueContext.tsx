@@ -2,11 +2,13 @@ import { useStarknetTransactionManager } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
-import type { AddTransactionResponse, Call } from 'starknet';
+import type { AddTransactionResponse } from 'starknet';
 import { getTxMessage } from '@/hooks/settling/useTxMessage';
 import { Scroll } from '@/shared/Icons';
-type Tx = Call & { status: 'ENQUEUED'; metadata?: any };
-type CallWithMeta = Call & { metadata?: any };
+import type { RealmsCall } from '../types';
+
+type Call = RealmsCall;
+type Tx = Call & { status: 'ENQUEUED' };
 interface TransactionQueue {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
@@ -25,7 +27,7 @@ export const TransactionQueueProvider = ({
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
 
-  const add = (tx: CallWithMeta[] | CallWithMeta) => {
+  const add = (tx: Call[] | Call) => {
     const scrollIcon = <Scroll className="w-4" />;
 
     if (Array.isArray(tx)) {
@@ -64,7 +66,7 @@ export const TransactionQueueProvider = ({
       status: 'TRANSACTION_RECEIVED',
       transactionHash: resp.transaction_hash,
       metadata: {
-        title: 'By Royal Decree, it was commanded...',
+        title: 'Multicall',
         description: t.map((t) =>
           getTxMessage({ ...t, status: 'TRANSACTION_RECEIVED' })
         ),
