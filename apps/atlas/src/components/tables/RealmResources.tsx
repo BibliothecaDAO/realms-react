@@ -96,8 +96,7 @@ export function RealmResources(props: RealmsCardProps): ReactElement {
         (t) =>
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
-          t.calldata &&
-          toBN(t.calldata[0]).eq(toBN(props.realm.realmId))
+          t.metadata.realmId == props.realm.realmId
       )
     );
   }, [txQueue.transactions]);

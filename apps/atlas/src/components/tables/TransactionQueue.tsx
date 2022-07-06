@@ -40,11 +40,11 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           commands:
         </p>
       ) : null}
-      {txQueue.transactions.map((c) => (
+      {txQueue.transactions.map((c, i) => (
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
             ?.map((bignum) => bignum.toString())
-            .join(':')}`}
+            .join(':')}::${i}`}
           transaction={c}
         />
       ))}
