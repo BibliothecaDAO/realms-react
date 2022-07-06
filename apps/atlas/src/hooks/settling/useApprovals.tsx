@@ -21,6 +21,7 @@ export const queryKeys = {
 };
 
 const ALLOWANCE_AMOUNT = ethers.utils.parseUnits('999999999999999', 18);
+const MIN_ALLOWANCE_AMOUNT = ethers.utils.parseUnits('1000', 18);
 
 const createApprovalParams = (contractAddress: string) => {
   return {
@@ -57,6 +58,7 @@ const useApprovalForContract = (contract: Contract) => {
     data: outputResult,
     loading: outputLoading,
     error: outputError,
+    refresh: refreshApproval,
   } = useStarknetCall(
     createStarknetAllowanceCall(
       lordsContract,
@@ -67,10 +69,9 @@ const useApprovalForContract = (contract: Contract) => {
 
   useEffect(() => {
     if (!outputResult) return;
-    console.log(outputResult);
     setIsApproved(
       uint256ToBN(outputResult['remaining']) >=
-        toBN(ALLOWANCE_AMOUNT.toString())
+        toBN(MIN_ALLOWANCE_AMOUNT.toString())
     );
   }, [outputResult]);
 
@@ -117,7 +118,6 @@ export const useApproveResourcesForExchange = () => {
 
   useEffect(() => {
     if (!outputResult) return;
-    console.log(outputResult.toString() == '1');
     setIsApproved(outputResult.toString() == '1');
   }, [outputResult]);
 
