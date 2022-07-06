@@ -55,8 +55,7 @@
     "briq": "yarn apps/briq-app dev"
   },
   "dependencies": {
-    "cross-env": "7.0.3",
-    "react-hot-toast": "2.2.0"
+    "cross-env": "7.0.3"
   },
   "devDependencies": {
     "@bibliotheca-dao/eslint-config-bases": "workspace:^",
