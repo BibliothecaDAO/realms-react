@@ -1,8 +1,4 @@
-import type { Transaction } from '@starknet-react/core';
-import {
-  useStarknet,
-  useStarknetTransactionManager,
-} from '@starknet-react/core';
+import { useStarknetTransactionManager } from '@starknet-react/core';
 import Link from 'next/link';
 import type { Status, TransactionStatus } from 'starknet';
 import { getTxMessage } from '@/hooks/settling/useTxMessage';
