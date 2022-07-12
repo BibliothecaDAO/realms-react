@@ -224,5 +224,5 @@ export interface MinMaxRange {
 }
 
 export interface RealmsCall extends StarknetCall {
-  metadata: any;
+  metadata: { title: string; description: string } | any;
 }
