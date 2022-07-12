@@ -1,3 +1,4 @@
+import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useStarknetTransactionManager } from '@starknet-react/core';
 import Link from 'next/link';
 import type { Status, TransactionStatus } from 'starknet';
@@ -16,6 +17,7 @@ interface EnqueuedOrReceivedTransaction {
 }
 interface TxCartItem {
   transaction: EnqueuedOrReceivedTransaction;
+  onRemove?: () => void;
 }
 
 const STYLES = {
@@ -81,6 +83,16 @@ export const TxCartItem = (props: TxCartItem) => {
             </span>
           </Link>
         ) : null}
+        {props.onRemove && (
+          <Button
+            size="sm"
+            variant="outline"
+            texture={false}
+            onClick={props.onRemove}
+          >
+            Remove
+          </Button>
+        )}
       </div>
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
     </div>
