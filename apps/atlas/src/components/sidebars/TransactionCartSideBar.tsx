@@ -3,6 +3,7 @@ import { OrderIcon, Tabs, ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import ScrollIcon from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import type { ReactElement } from 'react';
@@ -15,6 +16,7 @@ import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmCard } from '../cards/RealmCard';
+import { TransactionQueue } from '../tables/TransactionQueue';
 import { TransactionCartTable } from '../tables/Transactions';
 import { BaseSideBar } from './BaseSideBar';
 type Props = {
@@ -44,16 +46,22 @@ export const TransactionCartSideBar = () => {
 
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
 
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const tabs = useMemo(
     () => [
       {
-        label: 'To Submit',
-        component: <span />,
+        label: 'Command List',
+        component: (
+          <TransactionQueue
+            onSubmit={() => {
+              setSelectedTab(1);
+            }}
+          />
+        ),
       },
       {
-        label: 'Processing',
+        label: 'Status',
         component: <TransactionCartTable />,
       },
     ],
@@ -65,7 +73,10 @@ export const TransactionCartSideBar = () => {
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div>
           <div className="flex justify-between mb-2">
-            <h2>Transaction Cart</h2>
+            <h2>
+              <ScrollIcon className="inline-block w-16 mr-4 fill-slate-200" />
+              Thee Royal Decree
+            </h2>
             <div className="flex justify-end mb-2 mr-1">
               <Button
                 size="sm"

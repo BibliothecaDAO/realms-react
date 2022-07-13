@@ -7,8 +7,10 @@ import {
 } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React from 'react';
+import { Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
@@ -62,7 +64,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ApolloProvider client={apolloClient}>
           <StarknetProvider autoConnect connectors={connectors}>
             <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
+              <TransactionQueueProvider>
+                <Component {...pageProps} />
+              </TransactionQueueProvider>
+
               {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
@@ -75,6 +80,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           </StarknetProvider>
         </ApolloProvider>
       </WalletProvider>
+      <Toaster gutter={12} containerClassName="mt-16 right-0">
+        {(t) => <ToastBar position="top-right" toast={t} />}
+      </Toaster>
     </BreakpointProvider>
   );
 }

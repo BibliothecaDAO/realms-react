@@ -11691,6 +11691,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-hot-toast: "npm:2.2.0"
     react-joyride: "npm:^2.5.0"
     react-map-gl: "npm:^7.0.16"
     react-markdown: "npm:8.0.3"
@@ -19251,6 +19252,15 @@ __metadata:
     map-limit: "npm:0.0.1"
     resolve: "npm:^1.0.0"
   checksum: 0e94975efcccd5d58181300075520ad561fb56278b311b106eb5b00a4a2a35495e021e34e20fc90d38b6c5ed03f5b0b1e8d572acd0af6d97f4997acb6492893c
+  languageName: node
+  linkType: hard
+
+"goober@npm:^2.1.1":
+  version: 2.1.10
+  resolution: "goober@npm:2.1.10"
+  peerDependencies:
+    csstype: ^3.0.10
+  checksum: f1a3d63820fd4ff0e261d0452471156d5477474cff125a1f131b716454d9899bc6421fe5d0e9c3985396ac73bb3655114b97167c25e0a968081a6d8674369593
   languageName: node
   linkType: hard
 
@@ -28675,6 +28685,18 @@ __metadata:
     react: 15 - 18
     react-dom: 15 - 18
   checksum: 55b85d0216973e32d1ad06a8f5688b7f73535b165d0f18c35f64aed14faace8703ea8f836261700337277f2eba6ac8bf12e487f1e2bfd8a02276a2662e4be8d9
+  languageName: node
+  linkType: hard
+
+"react-hot-toast@npm:2.2.0":
+  version: 2.2.0
+  resolution: "react-hot-toast@npm:2.2.0"
+  dependencies:
+    goober: "npm:^2.1.1"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 67b2cfb46f6782dd80ecf215a9db977f75b3f03428cc756b636c5f1fc2c7fe1e15bbef24bc0a5a06b6eff7bdc3bd4dd20c26b9ccf631b102cef9b32ffdeee35f
   languageName: node
   linkType: hard
 

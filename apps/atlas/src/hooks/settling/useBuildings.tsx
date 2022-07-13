@@ -1,10 +1,31 @@
 import { useStarknetInvoke } from '@starknet-react/core';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useBuildingContract } from '@/hooks/settling/stark-contracts';
+import {
+  ModuleAddr,
+  useBuildingContract,
+} from '@/hooks/settling/stark-contracts';
+import type { RealmsCall } from '@/types/index';
+import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Building = {
   build: (realmId: number, buildingId: number) => void;
+};
+
+export const Entrypoints = {
+  build: 'build',
+};
+
+export const createCall: Record<string, (args: any) => RealmsCall> = {
+  build: (args: { realmId; buildingId }) => ({
+    contractAddress: ModuleAddr.Building,
+    entrypoint: Entrypoints.build,
+    calldata: [
+      ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
+      args.buildingId,
+    ],
+    metadata: { ...args, action: Entrypoints.build },
+  }),
 };
 
 const useBuildings = (): Building => {

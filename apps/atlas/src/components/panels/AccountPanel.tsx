@@ -19,11 +19,15 @@ import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useJourneyContext } from '@/context/JourneyContext';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   useGetRealmHistoryQuery,
   useGetAccountQuery,
 } from '@/generated/graphql';
-import { useApproveLordsForBuilding } from '@/hooks/settling/useApprovals';
+import {
+  getApproveAllGameContracts,
+  useApproveLordsForBuilding,
+} from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getAccountHex } from '@/shared/Getters/Realm';
@@ -213,6 +217,9 @@ export function AccountPanel() {
     { Header: 'advisor', id: 2, accessor: 'action' },
   ];
 
+  const txQueue = useTransactionQueue();
+  const approveTxs = getApproveAllGameContracts();
+
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <div className="grid grid-cols-12 gap-3">
@@ -261,6 +268,21 @@ export function AccountPanel() {
                 Settle Realms
               </Button>
             </div>
+            <Button
+              className="mt-2"
+              onClick={() => {
+                txQueue
+                  .executeMulticall(
+                    approveTxs.map((t) => ({ ...t, status: 'ENQUEUED' }))
+                  )
+                  .catch((err) => {
+                    // TODO: handle error
+                    console.log(err);
+                  });
+              }}
+            >
+              Approve All Contracts
+            </Button>
           </CardBody>
         </Card>
         <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1>

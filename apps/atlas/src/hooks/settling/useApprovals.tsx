@@ -8,13 +8,14 @@ import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-
 import {
   useLordsContract,
   useBuildingContract,
   useExchangeContract,
   useResources1155Contract,
+  ModuleAddr as CM,
 } from '@/hooks/settling/stark-contracts';
+import type { RealmsCall } from '@/types/index';
 
 export const queryKeys = {
   isApproved: (operator: any) => ['desiege', 'token-approval', operator],
@@ -129,4 +130,81 @@ export const useApproveResourcesForExchange = () => {
   };
 
   return { isApproved, approveResources };
+};
+
+export const getApproveAllGameContracts = () => {
+  const txs: RealmsCall[] = [];
+
+  // Exchange approvals
+
+  txs.push({
+    contractAddress: CM.ResourcesToken,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.Exchange).toString(), toFelt(1)],
+    metadata: {
+      title: 'Realm Resources Contract',
+      description: 'Approve spending by Realms Exchange module',
+    },
+  });
+
+  txs.push({
+    contractAddress: CM.Lords,
+    entrypoint: 'approve',
+    calldata: [
+      toBN(CM.Exchange).toString(),
+      ALLOWANCE_AMOUNT.toString(),
+      0, // Extra felt for uint256
+    ],
+    metadata: {
+      title: 'Lords Contract',
+      description: 'Approve spending by Realms Exchange module',
+    },
+  });
+
+  txs.push({
+    contractAddress: CM.ResourcesToken,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.ResourceGame).toString(), toFelt(1)],
+    metadata: {
+      title: 'Realms Resources',
+      description: 'Approve spending by Resource Game module',
+    },
+  });
+
+  // Settling
+
+  txs.push({
+    contractAddress: CM.Realms,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.Settling).toString(), toFelt(1)],
+    metadata: {
+      title: 'Realms NFT',
+      description: 'Approve spending by Settling module',
+    },
+  });
+
+  // Buildings
+  txs.push({
+    contractAddress: CM.ResourcesToken,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.Building).toString(), toFelt(1)],
+    metadata: {
+      title: 'Realms Resources Contract',
+      description: 'Approve spending by Building module',
+    },
+  });
+
+  // Combat
+
+  txs.push({
+    contractAddress: CM.ResourcesToken,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.Combat).toString(), toFelt(1)],
+    metadata: {
+      title: 'Realm Resources Contract',
+      description: 'Approve spending by Combat module',
+    },
+  });
+
+  return txs;
 };
