@@ -71,7 +71,6 @@ export const MainFooter = () => {
         className="max-w-full"
         title="discord-widget"
         height="300"
-        allowtransparency="true"
         frameBorder="0"
         sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
       ></iframe>
