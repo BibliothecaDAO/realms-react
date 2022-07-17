@@ -53,7 +53,7 @@
     "postinstall": "is-ci || yarn husky install",
     "atlas": "yarn apps/atlas dev",
     "briq": "yarn apps/briq-app dev",
-    "work": "yarn apps/realms-work dev"
+    "work": "yarn apps/bibliotheca-dao dev"
   },
   "dependencies": {
     "cross-env": "7.0.3"

@@ -100,17 +100,11 @@ export const DaoProjects = () => {
   return (
     <div>
       <div className="featured-game-bg"></div>
-      <div className="container mx-auto">
+      <div className="container mx-auto my-20">
         <div className="row justify-content-center">
           <div className="col-xl-6 col-lg-8">
             <div className="mb-6 text-center">
-              <h2 className="uppercase">
-                Our <span>Projects</span>
-              </h2>
-              <p>
-                DAO developed range of games, docs, tooling, and contribution
-                guidelines
-              </p>
+              <h1 className="mb-20 uppercase font-lords">DAO Projects</h1>
             </div>
           </div>
         </div>
@@ -130,11 +124,11 @@ export const DaoProjects = () => {
                   objectPosition={'center'}
                   objectFit={'cover'}
                 />
-                <div className="absolute transition-all duration-500 ease-in-out group-hover:h-1/2 h-24 w-full py-2.5 bottom-2 inset-x-0 bg-gray-700/80 text-white text-xs text-center leading-4">
-                  <h4>
+                <div className="absolute transition-all duration-500 ease-in-out group-hover:h-1/2 h-24 w-full py-2.5 bottom-2 inset-x-0 bg-white/60 text-white text-xs text-center leading-4">
+                  <h2>
                     <Link href={project.link}>{project.title}</Link>
-                  </h4>
-                  <div className="game-meta">
+                  </h2>
+                  <div className="text-xl">
                     <span>{project.subtitle}</span>
                   </div>
                   <div className="mt-4 transition-all duration-500 opacity-0 group-hover:opacity-100">

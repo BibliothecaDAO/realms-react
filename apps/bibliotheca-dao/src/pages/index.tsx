@@ -24,7 +24,7 @@ function Home() {
       {/* <div className="h-96">
           <MobiusModel />
   </div> */}
-      <div className="relative w-full h-screen bg-bottom bg-cover bg-hero ">
+      {/* <div className="relative w-full h-screen bg-bottom bg-cover bg-hero ">
         {' '}
         <div className="container flex flex-col justify-center h-full mx-auto ">
           <div className="self-center p-8 mt-auto text-center sm:w-1/2 sm:py-20">
@@ -38,27 +38,29 @@ function Home() {
             </Button>
           </div>
         </div>
-      </div>
-      <div className="container px-10 py-20 mx-auto">
+      </div> */}
+      <div className="container px-10 pt-40 mx-auto">
         <div className="sm:flex">
-          <div className="self-center w-full sm:w-1/2">
-            <h1 className="font-lords">
-              founded in Loot, <br></br> a vision beyond{' '}
+          <div className="self-center w-7/12 h-screen">
+            <h1 className="mb-10 leading-loose font-body">
+              BibliothecaDAO is a community-owned <br /> on-chain game
+              development DAO.
             </h1>
-            <p className="mt-10 text-2xl">
+            <p>We make on-chain realities a reality.</p>
+            {/* <p className="mt-10 text-2xl">
               A community-owned On-Chain Game Development DAO terraforming the
               Lootverse
-            </p>
-            <div className="mt-10 space-x-4">
+            </p> */}
+            {/* <div className="mt-10 space-x-4">
               <Button size="sm" variant="primary">
                 the atlas
               </Button>
               <Button size="sm" variant="primary">
                 the discord
               </Button>
-            </div>
+            </div> */}
           </div>
-          <div className="w-full sm:w-1/2">
+          {/* <div className="w-full sm:w-1/2">
             <Image
               src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/2.webp`}
               alt="map"
@@ -67,7 +69,7 @@ function Home() {
               height={320}
               layout={'responsive'}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -31,7 +31,7 @@ button {
 }
 
 body {
-  @apply text-lg leading-loose text-gray-200 font-body;
+  @apply text-lg leading-loose text-off-300 font-body;
 }
 
 hr {

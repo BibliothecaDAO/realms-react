@@ -82,12 +82,13 @@ module.exports = {
           600: '#757575',
           700: '#616161',
           800: '#424242',
-          900: '#161619',
+          900: '#1b1b1d',
           1000: '#0e0e0e',
         },
         off: {
           100: '#F9F7F1',
           200: '#8D795B',
+          300: '#f5eee6',
         },
         /* Crypts and Caverns color styles */
         desert: {
