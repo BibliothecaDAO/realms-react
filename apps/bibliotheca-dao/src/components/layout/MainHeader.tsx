@@ -11,12 +11,12 @@ export const MainHeader = () => {
     // },
     {
       title: 'Discord',
-      icon: <Discord className="self-center w-6 mr-3 fill-current" />,
+      icon: <Discord className="self-center w-6 fill-current" />,
       link: links[0].discord,
     },
     {
       title: 'Github',
-      icon: <Github className="self-center w-6 mr-3 fill-current" />,
+      icon: <Github className="self-center w-6 fill-current" />,
       link: links[0].github,
     },
   ];
@@ -26,7 +26,7 @@ export const MainHeader = () => {
       <div className="container flex mx-auto">
         <BibliothecaBook className="self-center mr-10 fill-current h-9" />
         <a className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
-          treasury 250 E
+          <span className="hidden ml-3 sm:block">treasury </span> 250 E
         </a>
         <div className="flex space-x-4">
           {headerElements.map((a, index) => {
@@ -34,9 +34,9 @@ export const MainHeader = () => {
               <a
                 key={index}
                 href={a.link}
-                className="flex self-center px-4 transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900"
+                className="flex self-center px-4 py-1 transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900"
               >
-                {a.icon} {a.title}
+                {a.icon} <span className="hidden ml-3 sm:block">{a.title}</span>
               </a>
             );
           })}
