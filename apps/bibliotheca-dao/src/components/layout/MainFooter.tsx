@@ -1,3 +1,4 @@
+import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import Image from 'next/image';
 import { links } from '@/data/Projects';
 
@@ -7,13 +8,7 @@ export const MainFooter = () => {
   return (
     <div className="grid w-full grid-cols-1 gap-2 p-10 mx-auto mt-10 border-t border-white/20 sm:grid-cols-2 lg:grid-cols-4 sm:p-10">
       <div className="">
-        <Image
-          className="mb-10 rounded"
-          alt="Vercel logo"
-          src="/bibliotheca-logo.jpg"
-          width={200}
-          height={200}
-        />
+        <BibliothecaBook className="self-center fill-current h-36" />
       </div>
       <div className="mb-10 tracking-widest uppercase">
         <h4 className="mb-6">Links</h4>

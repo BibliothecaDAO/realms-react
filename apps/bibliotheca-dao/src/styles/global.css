@@ -27,7 +27,7 @@ h4 {
 }
 
 button {
-  @apply tracking-widest font-lords;
+  @apply tracking-widest uppercase;
 }
 
 body {

@@ -54,14 +54,14 @@ function Home() {
               A community-owned On-Chain Game Development DAO terraforming the
               Lootverse
             </p> */}
-            <div className="mt-10 space-x-4">
+            {/* <div className="mt-10 space-x-4">
               <Button size="lg" variant="primary">
                 the atlas
               </Button>
               <Button size="lg" variant="primary">
                 the discord
               </Button>
-            </div>
+            </div> */}
           </div>
           {/* <div className="w-full sm:w-1/2">
             <Image

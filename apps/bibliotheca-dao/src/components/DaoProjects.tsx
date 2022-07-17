@@ -108,7 +108,7 @@ export const DaoProjects = () => {
             return (
               <div
                 key={index}
-                className="flex flex-col border rounded border-white/40"
+                className="flex flex-col border rounded border-off-300"
               >
                 <img
                   src={project.image}
