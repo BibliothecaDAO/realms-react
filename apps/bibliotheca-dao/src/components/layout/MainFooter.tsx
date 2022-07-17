@@ -5,7 +5,7 @@ const footerLinkStyles = 'hover:underline transition-all duration-300';
 
 export const MainFooter = () => {
   return (
-    <div className="grid w-full grid-cols-1 gap-2 p-10 mx-auto mt-10 border-t border-white sm:grid-cols-2 lg:grid-cols-4 sm:p-10">
+    <div className="grid w-full grid-cols-1 gap-2 p-10 mx-auto mt-10 border-t border-white/20 sm:grid-cols-2 lg:grid-cols-4 sm:p-10">
       <div className="">
         <Image
           className="mb-10 rounded"
@@ -15,7 +15,7 @@ export const MainFooter = () => {
           height={200}
         />
       </div>
-      <div className="mb-10">
+      <div className="mb-10 tracking-widest uppercase">
         <h4 className="mb-6">Links</h4>
         <ul>
           <li className={footerLinkStyles}>
@@ -43,7 +43,7 @@ export const MainFooter = () => {
           })} */}
         </ul>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 tracking-widest uppercase">
         <h4 className="mb-6">Socials</h4>
         <ul>
           <li className={footerLinkStyles}>

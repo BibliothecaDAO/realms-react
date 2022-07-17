@@ -7,36 +7,36 @@ const projects = [
     title: 'The Atlas',
     image: '/imperion.jpg',
     link: 'https://atlas.bibliothecadao.xyz/',
-    subtitle: 'Play the MMOCG Realms Game',
+    subtitle: 'Explore the Realmverse',
     content: (
       <div>
         <Button
           href="https://atlas.bibliothecadao.xyz/"
           size="sm"
-          variant="primary"
+          variant="secondary"
         >
           Explore the Atlas
         </Button>
       </div>
     ),
   },
-  {
-    title: 'Realms Information',
-    image: '/dark.png',
-    link: '',
-    subtitle: 'A synopsis of the Realms ecosystem',
-    content: (
-      <div>
-        <Button
-          href="https://atlas.bibliothecadao.xyz/"
-          size="sm"
-          variant="primary"
-        >
-          Learn more
-        </Button>
-      </div>
-    ),
-  },
+  // {
+  //   title: 'Realms',
+  //   image: '/dark.png',
+  //   link: '',
+  //   subtitle: 'A synopsis of the Realms ecosystem',
+  //   content: (
+  //     <div>
+  //       <Button
+  //         href="https://atlas.bibliothecadao.xyz/"
+  //         size="sm"
+  //         variant="primary"
+  //       >
+  //         Learn more
+  //       </Button>
+  //     </div>
+  //   ),
+  // },
   {
     title: 'DAO Governance',
     image: '/governance-nft.png',
@@ -44,16 +44,10 @@ const projects = [
     subtitle: 'Participate in the future of Bibliotheca projects',
     content: (
       <div>
-        <Link href={'/treasury'}>
-          <Button size="sm" className="mr-2" variant="primary">
-            Treasury
-          </Button>
-        </Link>
-
         <Button
           href="https://snapshot.org/#/council.bibliotheca.eth"
           size="sm"
-          variant="primary"
+          variant="secondary"
         >
           Voting
         </Button>
@@ -70,7 +64,7 @@ const projects = [
         <Button
           href="https://scroll.bibliothecadao.xyz/"
           size="sm"
-          variant="primary"
+          variant="secondary"
         >
           Read the Scroll
         </Button>
@@ -87,7 +81,7 @@ const projects = [
         <Button
           href="https://staking.bibliothecadao.xyz/"
           size="sm"
-          variant="primary"
+          variant="secondary"
         >
           Visit Staking Site
         </Button>
@@ -109,46 +103,29 @@ export const DaoProjects = () => {
           </div>
         </div>
 
-        <div className="container grid gap-8 sm:grid-cols-2 ">
+        <div className="container grid gap-8 px-10 sm:grid-cols-2">
           {projects.map((project, index) => {
             return (
               <div
                 key={index}
-                className="relative group h-96 mb-30 bg-clip-content"
+                className="flex flex-col border rounded border-white/40"
               >
-                <Image
-                  className="transition-all duration-500 ease-in-out rounded-xl hover:bg-clip-border group-hover:scale-125"
-                  alt="Vercel logo"
+                <img
                   src={project.image}
-                  layout={'fill'}
-                  objectPosition={'center'}
-                  objectFit={'cover'}
+                  alt=""
+                  className="object-cover h-64 rounded-t"
                 />
-                <div className="absolute transition-all duration-500 ease-in-out group-hover:h-1/2 h-24 w-full py-2.5 bottom-2 inset-x-0 bg-white/60 text-white text-xs text-center leading-4">
-                  <h2>
+                <div className="w-full py-10 text-center transition-all duration-500 ease-in-out rounded shadow-inner bottom-2 bg-gray-900/50">
+                  <h2 className="mb-2 uppercase font-lords">
                     <Link href={project.link}>{project.title}</Link>
                   </h2>
-                  <div className="text-xl">
+                  <div className="text-xl opacity-50">
                     <span>{project.subtitle}</span>
                   </div>
-                  <div className="mt-4 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                  <div className="mt-8 group-hover:opacity-100">
                     {project.content}
                   </div>
                 </div>
-                {/* <div className="featured-game-content featured-game-overlay-content">
-                  <div className="featured-game-icon">
-                    <img src="assets/img/icon/featured_game_icon.png" alt="" />
-                  </div>
-                  <h4>
-                    <a href="/">
-                      JUST FOR <span>GAMERS</span>
-                    </a>
-                  </h4>
-                  <div className="featured-game-meta">
-                    <i className="fas fa-bell"></i>
-                    <span>Playstation 5 , Xbox</span>
-                  </div>
-            </div> */}
               </div>
             );
           })}
