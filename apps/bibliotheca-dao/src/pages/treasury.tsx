@@ -23,47 +23,90 @@ function Treasury() {
     setfiltertab(!filtertab);
   }
 
-  useEffect(() => {
-    const getnft = async () => {
-      const response = await fetch('/api/getNFTs');
-      const data = await response.json();
-      // console.log(data); //logging nfts data
-      setnfts(data);
-    };
+  // useEffect(() => {
+  //   const getnft = async () => {
+  //     const response = await fetch('/api/getNFTs');
+  //     const data = await response.json();
+  //     // console.log(data); //logging nfts data
+  //     setnfts(data);
+  //   };
 
-    const getnftlist = async () => {
-      const response = await fetch('/api/getNFTList');
-      const data = await response.json();
-      // console.log(data); //logging nftlist data
-      setnftlist(data);
-    };
+  //   const getnftlist = async () => {
+  //     const response = await fetch('/api/getNFTList');
+  //     const data = await response.json();
+  //     // console.log(data); //logging nftlist data
+  //     setnftlist(data);
+  //   };
 
-    const gettable = async () => {
-      const response = await fetch('/api/tableApi');
-      const data = await response.json();
-      // console.log(data); //logging table data
-      settable(data);
-    };
+  //   const gettable = async () => {
+  //     const response = await fetch('/api/tableApi');
+  //     const data = await response.json();
+  //     // console.log(data); //logging table data
+  //     settable(data);
+  //   };
 
-    const gettotalassest = async () => {
-      const response = await fetch('/api/totalAsset');
-      const data = await response.json();
-      // console.log(data);
-      settotalassest(data);
-    };
+  //   const gettotalassest = async () => {
+  //     const response = await fetch('/api/totalAsset');
+  //     const data = await response.json();
+  //     // console.log(data);
+  //     settotalassest(data);
+  //   };
 
-    gettable();
-    getnft();
-    getnftlist();
-    gettotalassest();
-  }, []);
+  //   gettable();
+  //   getnft();
+  //   getnftlist();
+  //   gettotalassest();
+  // }, []);
 
   return (
     <MainLayout>
-      <h1 className="pt-[4rem] text-center text-white title tracking-[4px] laptop:mb-[5rem] tablet:mb-[2.5rem] font-EB_Garamond standard:text-[6.5rem] desktop:text-[5.5rem] laptop:text-[4rem] minilap:text-[2.7rem] tablet:text-[1.8rem] phone:text-[1.5rem] smphone:text-[1.3rem] smphone:mb-[2rem]">
-        Bibliotheca <span className="text-[#8D795B] inline-block">DAO</span>{' '}
-        <span className="inline-block">Treasury</span>
-      </h1>
+      <div className="container px-10 py-40 mx-auto pt-60">
+        <h1>Bibliotheca DAO</h1>
+        <p>
+          {' '}
+          The treasury funds managed by community members will be used to enable
+          the DAO's mission, vision and goals.
+        </p>
+      </div>
+      <div className="bg-off-300">
+        <div className="container px-10 py-40 mx-auto text-gray-900">
+          <h1 className="mb-10">Assets</h1>
+
+          <h3>Coins</h3>
+          <table className="w-full mb-20 text-left border border-gray-900 table-auto sm:w-1/2">
+            <thead>
+              <tr className="tracking-widest uppercase border border-gray-900">
+                <th className="p-2">Asset</th>
+                <th className="p-2">Amount</th>
+                <th className="p-2">USD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border border-gray-900 ">
+                <td className="p-2">Ethereum</td>
+                <td>290</td>
+                <td>1961</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>NFTs</h3>
+          <div className="container grid gap-4 sm:grid-cols-3 md:grid-cols-4">
+            <div className="bg-gray-900 rounded rounded-t shadow-lg">
+              <img
+                className="object-cover w-full rounded-t"
+                src="https://d23fdhqc1jb9no.cloudfront.net/_Realms/2.svg"
+                alt=""
+              />
+              <div className="p-4">
+                <h4 className="text-off-300">Realm</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 
 
       <div className="tablet:px-[4rem] smphone:px-[2rem] font-Inconsolata flex items-center justify-between mb-[6rem] tablet:flex-col-reverse laptop:flex-row phone:flex-col-reverse smphone:flex-col-reverse desktop:px-[5rem]">
         <div className="text-white font-light laptop:w-[62%] tablet:w-[100%] tracking-[2px] standard:text-[1.5rem] desktop:text-[1.4rem] desktop:text-[1.3rem] minilap:text-[1rem] tablet:text-[1.2rem] phone:text-[1rem] smphone:text-[0.8rem] phone:mt-[1rem] smphone:mt-[2rem]">
@@ -113,8 +156,6 @@ function Treasury() {
         <div className="border-double border-4 border-[#8D795B] standard:h-[80vh] desktop:h-[70vh] laptop:h-[60vh] tablet:h-[50vh] grid laptop:grid-cols-[.60fr,2fr]">
           <div className="h-full border-solid border-r-2 border-[#8D795B] overflow-auto nft_asset smphone:hidden laptop:inline-block">
             <div className="py-[2.5rem] px-[1.5rem]">
-              {/* nfts assets names */}
-
               <div className="flex justify-between items-center mb-[.1rem] hover:bg-[#202023] px-[.5rem] py-[.3rem] hover:cursor-pointer">
                 <p className="text-lg font-Inconsolata">All</p>
                 <img src="./arrow-right.png" alt="icon" className="w-6 h-6" />
@@ -130,7 +171,6 @@ function Treasury() {
             </div>
           </div>
 
-          {/* phone nft list  */}
           <div
             className={
               'h-full border-solid border-2 border-[#8D795B] overflow-auto nft_asset fixed top-0 left-0 bg-[#161619] minilap:w-[45%] ' +
@@ -139,7 +179,6 @@ function Treasury() {
           >
             <div className="p-[1.5rem]">
               <div className="flex justify-end px-[.5rem] py-[.3rem] mb-[1rem]">
-                {/* //eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
                 <div role="button" onClick={() => changefiltertab}>
                   <img
                     alt="Close"
@@ -148,8 +187,6 @@ function Treasury() {
                   />
                 </div>
               </div>
-
-              {/* nfts assets names */}
 
               <div className="flex justify-between items-center mb-[.1rem] hover:bg-[#202023] px-[.5rem] py-[.3rem] hover:cursor-pointer">
                 <p className="text-lg font-Inconsolata">All</p>
@@ -176,14 +213,12 @@ function Treasury() {
           </div>
 
           <div className="h-full p-[2rem] nft_asset_imgs sm:flex flex-wrap justify-center laptop:grid grid-cols-4 overflow-y-scroll gap-[2rem]">
-            {/* nfs assets img */}
-
             {nfts.map((nft: any) => (
               <Nft_img key={nft.tokenid} url={nft.imgurl} name={nft.nftname} />
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </MainLayout>
   );
 }
