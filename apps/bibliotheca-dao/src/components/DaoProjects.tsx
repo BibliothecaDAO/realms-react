@@ -108,20 +108,20 @@ export const DaoProjects = () => {
             return (
               <div
                 key={index}
-                className="flex flex-col border rounded border-off-300"
+                className="flex flex-col transition-all duration-150 border rounded border-off-300 group hover:-translate-y-2"
               >
                 <img
                   src={project.image}
                   alt=""
                   className="object-cover h-64 rounded-t"
                 />
-                <div className="w-full py-10 text-center transition-all duration-500 ease-in-out rounded shadow-inner bottom-2 bg-gray-900/50">
-                  <h2 className="mb-2 uppercase font-lords">
+                <div className="w-full py-10 text-center transition-all duration-150 ease-in-out shadow-inner cursor-pointer bottom-2 bg-gray-900/50 group-hover:bg-off-300 group-hover:text-gray-900 ">
+                  <h2 className="mb-2">
                     <Link href={project.link}>{project.title}</Link>
                   </h2>
-                  <div className="text-xl opacity-50">
+                  <p className="text-xl">
                     <span>{project.subtitle}</span>
-                  </div>
+                  </p>
                   <div className="mt-8 group-hover:opacity-100">
                     {project.content}
                   </div>
