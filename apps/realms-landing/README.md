@@ -1,4 +1,4 @@
-# The Briq x Realms Repo
+# The Realms Landing Page Repo
 
 <p align="left">
   <a aria-label="Build" href="https://github.com/BibliothecaForAdventurers/realms-react/actions?query=workflow%3ACI">
@@ -11,7 +11,7 @@
 ## Develop
 
 ```bash
-$ cd apps/briq-app
+$ cd apps/realms-landing
 $ yarn dev
 # Alternatively: yarn workspace webapp run dev -p 3000
 ```
