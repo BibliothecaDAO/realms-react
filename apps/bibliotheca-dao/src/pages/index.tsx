@@ -32,13 +32,9 @@ function Home() {
               We are making <br />
               on-chain realities a reality.
             </h1>
-            <p className="text-3xl leading-relaxed opacity-50 ">
+            {/* <p className="text-3xl leading-relaxed opacity-50 ">
               BibliothecaDAO is a community-owned <br /> on-chain game
               development DAO.
-            </p>
-            {/* <p className="mt-10 text-2xl">
-              A community-owned On-Chain Game Development DAO terraforming the
-              Lootverse
             </p> */}
           </div>
           {/* <div className="w-full sm:w-1/2">
@@ -53,20 +49,36 @@ function Home() {
           </div> */}
         </div>
       </div>
+      <div className="container flex px-10 py-40 mx-auto border-t">
+        <div className="self-center px-10 sm:w-1/2">
+          <div className="flex mb-5">
+            <StarkNet className="w-12" />
+            <h5 className="self-center ml-4 tracking-widest uppercase font-body">
+              Running on StarkNet
+            </h5>
+          </div>
+
+          <h1 className="mb-10">Eternal Reign</h1>
+          <p>
+            "Empires rise and fall in the quest for control of Resources and
+            Ancient Relics within an eternal world. Maintain and defend your
+            empire or it will fall into disarray and be consumed by enemies."
+          </p>
+        </div>
+        <div className="sm:w-1/2">
+          {' '}
+          <Image
+            src={`/lightAndDark_v1.jpg`}
+            alt="map"
+            className="w-full mt-4 rounded-xl"
+            width={500}
+            height={500}
+            layout={'responsive'}
+          />
+        </div>
+      </div>
       <PartnerBanner />
       <DaoProjects />
-      {/* <div className="container grid grid-cols-2 gap-2 px-4 mx-auto sm:gap-4 sm:grid-cols-3">
-          {jobs.map((a, index) => {
-            return (
-              <JobCard
-                key={index}
-                location={a.location}
-                title={a.title}
-                skills={a.skills}
-              />
-            );
-          })}
-        </div> */}
     </MainLayout>
   );
 }

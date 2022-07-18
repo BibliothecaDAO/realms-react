@@ -103,7 +103,7 @@ export const DaoProjects = () => {
           </div>
         </div>
 
-        <div className="container grid gap-8 px-10 sm:grid-cols-2">
+        <div className="container grid gap-8 px-10 sm:grid-cols-3">
           {projects.map((project, index) => {
             return (
               <div
@@ -113,16 +113,16 @@ export const DaoProjects = () => {
                 <img
                   src={project.image}
                   alt=""
-                  className="object-cover h-64 rounded-t"
+                  className="object-cover rounded-t h-96"
                 />
-                <div className="w-full py-10 text-center transition-all duration-150 ease-in-out shadow-inner cursor-pointer bottom-2 bg-gray-900/50 group-hover:bg-off-300 group-hover:text-gray-900 ">
+                <div className="flex flex-col w-full px-4 py-10 text-center transition-all duration-150 ease-in-out shadow-inner cursor-pointer bottom-2 bg-gray-900/50 group-hover:bg-off-300 group-hover:text-gray-900">
                   <h2 className="mb-2">
                     <Link href={project.link}>{project.title}</Link>
                   </h2>
                   <p className="text-xl">
                     <span>{project.subtitle}</span>
                   </p>
-                  <div className="mt-8 group-hover:opacity-100">
+                  <div className="mt-20 group-hover:opacity-100">
                     {project.content}
                   </div>
                 </div>
