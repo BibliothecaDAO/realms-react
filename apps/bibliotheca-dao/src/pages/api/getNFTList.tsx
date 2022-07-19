@@ -1,32 +1,41 @@
-import axios from 'axios';
-import Moralis from 'moralis/node';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-  destruct,
-  destructList,
-  nftitems,
-  FilterByClickList,
-} from '../../util/nftsdestruct';
+import type { NextRequest, NextResponse } from 'next/server';
 
-const serverUrl = process.env.SERVERURL; // moralise serverUrl need to put as env
-const appId = process.env.APPID; /// /moralise appId need to put as env
+export const config = {
+  runtime: 'experimental-edge',
+};
 
+const API_URL =
+  process.env.GRAPH_API ||
+  'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms';
 const walletaddress = process.env.WALLETADDRESS || ''; // need to put as env
-const apikey = process.env.APIKEY;
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  Moralis.start({ serverUrl, appId });
-
-  const options = { address: walletaddress };
-
+export default async (req: NextRequest, res: NextResponse) => {
+  const query = `
+		query Realms($address: String) {
+      realms(where: { currentOwner: $address}) {
+				tokenId
+        name
+        resourceIds
+        rarityScore
+        rarityRank
+			}
+		}
+  `;
   try {
-    const data = await Moralis.Web3API.account.getNFTs(options);
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ query, variables: { address: walletaddress } }),
+    });
 
-    res.send(destructList(data));
-
-    return;
+    return new Response(response.body, {
+      status: response.status,
+      headers: {
+        // Allow list of backend headers.
+        'content-type': response.headers.get('content-type') || '',
+        'cache-control': 'public, s-maxage=600, stale-while-revalidate=59',
+      },
+    });
   } catch (e) {
-    console.error('Notification request error: ', e);
+    console.log(e);
   }
-  res.send('Ok');
 };

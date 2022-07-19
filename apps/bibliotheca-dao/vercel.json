@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/treasuryapi/(.*)", "destination": "src/pages/treasuryapi" }
-  ]
-}
