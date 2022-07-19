@@ -7,7 +7,7 @@ export const config = {
   runtime: 'experimental-edge',
 };
 
-export default async (req: NextRequest, res: NextResponse) => {
+export default async function handler(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get('token');
   const tokenString = token ? 'token=' + token + '&' : null;
@@ -31,4 +31,4 @@ export default async (req: NextRequest, res: NextResponse) => {
       status: 400,
     });
   }
-};
+}

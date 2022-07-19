@@ -9,7 +9,7 @@ const API_URL =
   'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms';
 const walletaddress = process.env.WALLETADDRESS || ''; // need to put as env
 
-export default async (req: NextRequest, res: NextResponse) => {
+export default async function handler(req: NextRequest) {
   const query = `
 		query Realms($address: String) {
       realms(where: { currentOwner: $address}) {
@@ -38,4 +38,4 @@ export default async (req: NextRequest, res: NextResponse) => {
   } catch (e) {
     console.log(e);
   }
-};
+}
