@@ -14,7 +14,7 @@ export default function Tourus() {
 
     // Create effect
     const effect = useMemo(() => {
-      const effect = new AsciiEffect(gl, ' .:{}', options);
+      const effect = new AsciiEffect(gl, ' .:{} ', options);
       effect.domElement.style.position = 'absolute';
       effect.domElement.style.top = '0px';
       effect.domElement.style.left = '0px';
@@ -39,6 +39,7 @@ export default function Tourus() {
     useFrame((state) => {
       effect.render(scene, camera);
     }, 1);
+    return <mesh />;
   }
 
   return (
