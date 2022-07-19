@@ -27,31 +27,52 @@ function Home() {
           <div className="self-end w-full pb-20 sm:w-1/2">
             <h1 className="mb-10 leading-relaxed font-body">
               We are making <br />
-              on-chain realities a reality.
+              <span className="underline">on-chain</span> realities <br /> a
+              reality.
             </h1>
-            {/* <p className="text-3xl leading-relaxed opacity-50 ">
-              BibliothecaDAO is a community-owned <br /> on-chain game
-              development DAO.
-            </p> */}
           </div>
-          {/* <div className="w-full sm:w-1/2">
-            <Image
-              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/2.webp`}
-              alt="map"
-              className="w-full mt-4 rounded-xl -scale-x-100"
-              width={500}
-              height={320}
-              layout={'responsive'}
-            />
-          </div> */}
         </div>
       </div>
-      <div className="container relative z-20 flex px-10 py-40 mx-auto border-t">
+      <div className="container relative z-20 flex mx-auto border-t">
+        <div className="self-center px-10 sm:w-1/2">
+          <div className="flex mb-5">
+            {/* <StarkNet className="w-12" /> */}
+            <h5 className="self-center tracking-widest uppercase font-body">
+              on-chain manifesto
+            </h5>
+          </div>
+
+          <h1 className="mb-10">Master Scroll</h1>
+          <p>
+            Eternal games, as the name suggests, are ever-lasting. They will
+            exist for as long as the network they are deployed upon exists. They
+            are both persistent and ephemeral, and they are a new paradigm in
+            game design.
+          </p>
+          <div className="mt-4">
+            <Button size="sm" variant="primary">
+              read the scroll
+            </Button>
+          </div>
+        </div>
+        <div className="sm:w-1/2">
+          {' '}
+          <Image
+            src={`/lightAndDark_v1.jpg`}
+            alt="map"
+            className="w-full mt-4"
+            width={500}
+            height={500}
+            layout={'responsive'}
+          />
+        </div>
+      </div>
+      <div className="container relative z-20 flex mx-auto border-t">
         <div className="self-center px-10 sm:w-1/2">
           <div className="flex mb-5">
             <StarkNet className="w-12" />
             <h5 className="self-center ml-4 tracking-widest uppercase font-body">
-              Running on StarkNet
+              Game Running on StarkNet
             </h5>
           </div>
 
@@ -67,7 +88,7 @@ function Home() {
           <Image
             src={`/lightAndDark_v1.jpg`}
             alt="map"
-            className="w-full mt-4 rounded-xl"
+            className="w-full mt-4"
             width={500}
             height={500}
             layout={'responsive'}

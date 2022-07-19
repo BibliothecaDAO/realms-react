@@ -37,23 +37,23 @@ const projects = [
   //     </div>
   //   ),
   // },
-  {
-    title: 'DAO Governance',
-    image: '/governance-nft.png',
-    link: '',
-    subtitle: 'Participate in the future of Bibliotheca projects',
-    content: (
-      <div>
-        <Button
-          href="https://snapshot.org/#/council.bibliotheca.eth"
-          size="sm"
-          variant="secondary"
-        >
-          Voting
-        </Button>
-      </div>
-    ),
-  },
+  // {
+  //   title: 'DAO Governance',
+  //   image: '/governance-nft.png',
+  //   link: '',
+  //   subtitle: 'Participate in the future of Bibliotheca projects',
+  //   content: (
+  //     <div>
+  //       <Button
+  //         href="https://snapshot.org/#/council.bibliotheca.eth"
+  //         size="sm"
+  //         variant="secondary"
+  //       >
+  //         Voting
+  //       </Button>
+  //     </div>
+  //   ),
+  // },
   {
     title: 'The Master Scroll',
     image: '/mobius.jpeg',
@@ -71,38 +71,37 @@ const projects = [
       </div>
     ),
   },
-  {
-    title: 'Realm Staking',
-    image: '/governance-nft.png',
-    link: 'https://staking.bibliothecadao.xyz/',
-    subtitle: 'Join the journey to L2 and earn $LORDS',
-    content: (
-      <div>
-        <Button
-          href="https://staking.bibliothecadao.xyz/"
-          size="sm"
-          variant="secondary"
-        >
-          Visit Staking Site
-        </Button>
-      </div>
-    ),
-  },
+  // {
+  //   title: 'Realm Staking',
+  //   image: '/governance-nft.png',
+  //   link: 'https://staking.bibliothecadao.xyz/',
+  //   subtitle: 'Join the journey to L2 and earn $LORDS',
+  //   content: (
+  //     <div>
+  //       <Button
+  //         href="https://staking.bibliothecadao.xyz/"
+  //         size="sm"
+  //         variant="secondary"
+  //       >
+  //         Visit Staking Site
+  //       </Button>
+  //     </div>
+  //   ),
+  // },
 ];
 
 export const DaoProjects = () => {
   return (
     <div className="relative z-20">
-      <div className="featured-game-bg"></div>
-      <div className="container mx-auto my-20">
-        <div className="container grid px-10 sm:grid-cols-2">
+      {/* <div className="container mx-auto my-20">
+        <div className="container grid px-10 sm:grid-cols-1">
           {projects.map((project, index) => {
             return (
               <div
                 key={index}
-                className="flex flex-col transition-all duration-150 group "
+                className="flex transition-all duration-150 group "
               >
-                <img src={project.image} alt="" className="object-cover h-96" />
+                <img src={project.image} alt="" className="object-cover w-96" />
                 <div className="flex flex-col w-full px-4 py-10 text-center transition-all duration-150 ease-in-out shadow-inner cursor-pointer bottom-2 bg-gray-900/50 group-hover:bg-off-300 group-hover:text-gray-900">
                   <h2 className="mb-2 uppercase">
                     <Link href={project.link}>{project.title}</Link>
@@ -118,7 +117,7 @@ export const DaoProjects = () => {
             );
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
