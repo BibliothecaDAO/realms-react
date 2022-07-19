@@ -14,7 +14,6 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import MobiusModel from '@/components/MobiusModel';
 import { WithNavMenu } from '@/components/NavMenu';
 import { PartnerBanner } from '@/components/PartnerBanner';
-import Tourus from '@/components/Tourus';
 
 function Home() {
   const jobs = [
@@ -23,11 +22,7 @@ function Home() {
 
   return (
     <MainLayout>
-      <div className="fixed w-screen h-screen bg-gray-900">
-        <Tourus />
-      </div>
-
-      <div className="container relative z-20 px-10 mx-auto">
+      <div className="container px-10 mx-auto">
         <div className="flex h-screen">
           <div className="self-end w-full pb-20 sm:w-1/2">
             <h1 className="mb-10 leading-relaxed font-body">

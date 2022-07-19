@@ -95,28 +95,16 @@ export const DaoProjects = () => {
     <div className="relative z-20">
       <div className="featured-game-bg"></div>
       <div className="container mx-auto my-20">
-        <div className="row justify-content-center">
-          <div className="col-xl-6 col-lg-8">
-            <div className="mb-6 text-center">
-              <h1 className="mb-20 uppercase font-lords">DAO Projects</h1>
-            </div>
-          </div>
-        </div>
-
-        <div className="container grid gap-8 px-10 sm:grid-cols-3">
+        <div className="container grid px-10 sm:grid-cols-2">
           {projects.map((project, index) => {
             return (
               <div
                 key={index}
-                className="flex flex-col transition-all duration-150 border rounded border-off-300 group hover:-translate-y-2"
+                className="flex flex-col transition-all duration-150 group "
               >
-                <img
-                  src={project.image}
-                  alt=""
-                  className="object-cover rounded-t h-96"
-                />
+                <img src={project.image} alt="" className="object-cover h-96" />
                 <div className="flex flex-col w-full px-4 py-10 text-center transition-all duration-150 ease-in-out shadow-inner cursor-pointer bottom-2 bg-gray-900/50 group-hover:bg-off-300 group-hover:text-gray-900">
-                  <h2 className="mb-2">
+                  <h2 className="mb-2 uppercase">
                     <Link href={project.link}>{project.title}</Link>
                   </h2>
                   <p className="text-xl">

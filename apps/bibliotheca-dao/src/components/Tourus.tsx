@@ -6,7 +6,7 @@ import { AsciiEffect } from 'three-stdlib';
 export default function Tourus() {
   function AsciiRenderer({
     renderIndex = 1,
-    characters = ' .:-+*=%@#',
+    characters = '.:;}@ ',
     ...options
   }) {
     // Reactive state
@@ -14,7 +14,7 @@ export default function Tourus() {
 
     // Create effect
     const effect = useMemo(() => {
-      const effect = new AsciiEffect(gl, ' .:{} ', options);
+      const effect = new AsciiEffect(gl, characters, options);
       effect.domElement.style.position = 'absolute';
       effect.domElement.style.top = '0px';
       effect.domElement.style.left = '0px';
@@ -38,14 +38,14 @@ export default function Tourus() {
     // Take over render-loop (that is what the index is for)
     useFrame((state) => {
       effect.render(scene, camera);
-    }, 1);
+    }, 2);
     return <mesh />;
   }
 
   return (
     <Canvas>
-      <color attach="background" args={['#1b1b1d']} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      {/* <color attach="background" args={['#1b1b1d']} /> */}
+      <spotLight position={[10, 2, 10]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Torusknot />
       <OrbitControls />
@@ -72,7 +72,7 @@ function Torusknot(props: any) {
       onPointerOver={() => hover(true)}
       onPointerOut={() => hover(false)}
     >
-      <torusKnotGeometry args={[1, 0.4, 128, 32]} />
+      <torusKnotGeometry args={[1, 0.2, 128, 32]} />
       <meshStandardMaterial color="orange" />
     </mesh>
   );

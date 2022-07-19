@@ -46,39 +46,39 @@ function Treasury() {
   return (
     <MainLayout>
       <div className="container px-10 py-40 mx-auto pt-60">
-        <h1>Bibliotheca DAO</h1>
-        <p>
+        <h1 className="mb-8">Bibliotheca DAO</h1>
+        <p className="w-1/2 text-xl">
           {' '}
           The treasury funds managed by community members will be used to enable
           the DAO's mission, vision and goals.
         </p>
       </div>
-      <div className="bg-off-300">
-        <div className="container px-10 py-40 mx-auto text-gray-900">
+      <div className="border-t">
+        <div className="container px-10 py-20 mx-auto ">
           <h1 className="mb-10">Assets</h1>
-
-          <h3>Coins</h3>
-          <table className="w-full mb-20 text-left border border-gray-900 table-auto sm:w-1/2">
+          <table className="w-full mb-20 text-left border border-gray-300 table-auto /40 sm:w-1/2">
             <thead>
-              <tr className="tracking-widest uppercase border border-gray-900">
+              <tr className="tracking-widest uppercase border border-off-300/40">
                 <th className="p-2">Asset</th>
-                <th className="p-2">Amount</th>
-                <th className="p-2">USD</th>
+                <th className="p-2 text-right">Amount</th>
+                <th className="p-2 text-right">USD</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border border-gray-900 ">
+              <tr className="border border-gray-300/40 ">
                 <td className="p-2">Lords</td>
-                <td>{DAOlordsBalance}</td>
-                <td>
+                <td className="p-2 text-right">{DAOlordsBalance}</td>
+                <td className="p-2 text-right">
                   {lords && formatCurrency(DAOlordsBalance * lords.price.rate)}
                 </td>
               </tr>
               {erc20Balance && (
-                <tr className="border border-gray-900 ">
+                <tr className="border border-gray-300/40 ">
                   <td className="p-2">Ethereum</td>
-                  <td>{erc20Balance.ETH.balance.toFixed(3)}</td>
-                  <td>
+                  <td className="p-2 text-right">
+                    {erc20Balance.ETH.balance.toFixed(3)}
+                  </td>
+                  <td className="p-2 text-right">
                     {formatCurrency(
                       erc20Balance.ETH.balance * erc20Balance.ETH.price.rate
                     )}
@@ -89,15 +89,15 @@ function Treasury() {
                 erc20Balance?.tokens.map((token: any) => (
                   <tr
                     key={token.tokenInfo.name}
-                    className="border border-gray-900 "
+                    className="border border-gray-300/40 "
                   >
                     <td className="p-2">{token.tokenInfo.name}</td>
-                    <td>
+                    <td className="p-2 text-right">
                       {(
                         token.balance / Math.pow(10, token.tokenInfo.decimals)
                       ).toFixed(3)}
                     </td>
-                    <td>
+                    <td className="p-2 text-right">
                       {formatCurrency(
                         (token.balance /
                           Math.pow(10, token.tokenInfo.decimals)) *
@@ -109,7 +109,6 @@ function Treasury() {
             </tbody>
           </table>
 
-          <h3>NFTs</h3>
           <div className="container grid gap-4 sm:grid-cols-3 md:grid-cols-4">
             {nftList.map((realm: any) => (
               <div
