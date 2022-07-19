@@ -27,7 +27,7 @@ export const MainHeader = () => {
     },
   ];
   return (
-    <div className="fixed z-10 flex w-full h-16 px-10 space-x-8 tracking-widest uppercase bg-gray-900 border-b border-off-300">
+    <div className="fixed z-50 flex w-full h-16 px-10 space-x-8 tracking-widest uppercase bg-gray-900 border-b border-off-300">
       {' '}
       <div className="container flex mx-auto">
         <Link href="/">
