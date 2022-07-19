@@ -77,7 +77,6 @@ const nextConfig = {
 
   // Standalone build
   // @link https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files-experimental
-  output: 'standalone',
 
   compiler: {
     // @https://nextjs.org/docs/advanced-features/compiler#remove-react-properties
@@ -103,7 +102,6 @@ const nextConfig = {
     },
     // React 18 server components
     // @link https://nextjs.org/docs/advanced-features/react-18/server-components
-    serverComponents: false,
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
     outputFileTracingRoot: undefined, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS
@@ -205,21 +203,6 @@ const nextConfig = {
 };
 
 let config = nextConfig;
-
-if (tmModules.length > 0) {
-  console.info(
-    `${pc.green('notice')}- Will transpile [${tmModules.join(',')}]`
-  );
-
-  const withNextTranspileModules = require('next-transpile-modules')(
-    tmModules,
-    {
-      resolveSymlinks: true,
-      debug: false,
-    }
-  );
-  config = withNextTranspileModules(config);
-}
 
 if (process.env.ANALYZE === 'true') {
   // @ts-ignore
