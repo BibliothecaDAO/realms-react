@@ -2,7 +2,10 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
+import { FaqBlock } from '@/components/Faqs';
 import { MainLayout } from '@/components/layout/MainLayout';
+
+import { treasuryPage } from '@/data/Information';
 
 const DAOlordsBalance = 100000000;
 function Treasury() {
@@ -63,6 +66,7 @@ function Treasury() {
             Snapshot
           </Button>
         </div>
+        <FaqBlock faqs={TreasuryPage} />
       </div>
       <div className="border-t">
         <div className="container px-8 py-20 mx-auto">

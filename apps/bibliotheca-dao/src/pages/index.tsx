@@ -13,6 +13,8 @@ import { JobCard } from '@/components/JobCard';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { PartnerBanner } from '@/components/PartnerBanner';
 
+import { homePage } from '@/data/Information';
+
 function Home() {
   const jobs = [
     { location: 'Realms', title: 'Creative Director', skills: ['creative'] },
@@ -30,8 +32,9 @@ function Home() {
           </div>
         </div>
       </div>
+      <FaqBlock faqs={homePage} />
       <PartnerBanner />
-      <FaqBlock />
+
       <div className="container relative z-20 flex py-10 mx-auto">
         <div className="self-center px-10 sm:w-1/2">
           <div className="flex mb-5">

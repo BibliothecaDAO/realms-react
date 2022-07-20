@@ -1,25 +1,19 @@
 import { Disclosure } from '@headlessui/react';
 
-const faqs = [
-  {
-    title: 'We are a decentralised game studio',
-    text: 'Formed from the Lootverse',
-  },
-  {
-    title: 'Why do we exist?',
-    text: 'To buidler',
-  },
-  {
-    title: 'Can I join?',
-    text: 'Yes!',
-  },
-];
+interface FaqObject {
+  faqs: Array<Faq>;
+}
 
-export const FaqBlock = () => {
+interface Faq {
+  title: string;
+  text: string;
+}
+
+export const FaqBlock = (props: FaqObject) => {
   return (
     <div className="container flex justify-center mx-auto my-40">
       <div className="w-full">
-        {faqs.map((a, index) => {
+        {props.faqs.map((a, index) => {
           return (
             <Disclosure key={index}>
               <Disclosure.Button className="w-full px-8 py-4 my-2 text-2xl text-left transition-all duration-300 rounded bg-gray-1000/80 hover:bg-gray-900">
