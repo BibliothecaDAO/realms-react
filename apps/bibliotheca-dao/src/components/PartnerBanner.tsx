@@ -16,7 +16,7 @@ export const PartnerBanner = () => {
     },
   ];
   return (
-    <div className="relative z-20 flex justify-center w-full h-48 p-20 space-x-10 text-gray-900 shadow-inner bg-off-300/40">
+    <div className="relative z-20 flex justify-center w-full h-48 p-20 space-x-10 text-gray-900 shadow-inner bg-off-300/40 text-off-300">
       <h4>Working with</h4>{' '}
       {partners.map((a, index) => {
         return (

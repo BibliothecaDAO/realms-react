@@ -11,8 +11,6 @@ import { FaqBlock } from '@/components/Faqs';
 
 import { JobCard } from '@/components/JobCard';
 import { MainLayout } from '@/components/layout/MainLayout';
-import MobiusModel from '@/components/MobiusModel';
-import { WithNavMenu } from '@/components/NavMenu';
 import { PartnerBanner } from '@/components/PartnerBanner';
 
 function Home() {
@@ -33,7 +31,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="container relative z-20 flex mx-auto border-t">
+      <PartnerBanner />
+      <div className="container relative z-20 flex mx-auto ">
         <div className="self-center px-10 sm:w-1/2">
           <div className="flex mb-5">
             {/* <StarkNet className="w-12" /> */}
@@ -43,14 +42,9 @@ function Home() {
           </div>
 
           <h1 className="mb-10">Master Scroll</h1>
-          <p>
-            Eternal games, as the name suggests, are ever-lasting. They will
-            exist for as long as the network they are deployed upon exists. They
-            are both persistent and ephemeral, and they are a new paradigm in
-            game design.
-          </p>
+          <p>This is our whitepaper of our first game.</p>
           <div className="mt-4">
-            <Button size="sm" variant="primary">
+            <Button size="sm" variant="dao">
               read the scroll
             </Button>
           </div>
@@ -67,35 +61,7 @@ function Home() {
           />
         </div>
       </div>
-      <div className="container relative z-20 flex mx-auto border-t">
-        <div className="self-center px-10 sm:w-1/2">
-          <div className="flex mb-5">
-            <StarkNet className="w-12" />
-            <h5 className="self-center ml-4 tracking-widest uppercase font-body">
-              Game Running on StarkNet
-            </h5>
-          </div>
 
-          <h1 className="mb-10">Eternal Reign</h1>
-          <p>
-            "Empires rise and fall in the quest for control of Resources and
-            Ancient Relics within an eternal world. Maintain and defend your
-            empire or it will fall into disarray and be consumed by enemies."
-          </p>
-        </div>
-        <div className="sm:w-1/2">
-          {' '}
-          <Image
-            src={`/lightAndDark_v1.jpg`}
-            alt="map"
-            className="w-full mt-4"
-            width={500}
-            height={500}
-            layout={'responsive'}
-          />
-        </div>
-      </div>
-      <PartnerBanner />
       <DaoProjects />
     </MainLayout>
   );

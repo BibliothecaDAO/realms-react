@@ -48,6 +48,7 @@ const STYLES = {
     outline:
       'text-gray-500 hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 active:text-gray-900',
     unstyled: '',
+    dao: 'flex self-center px-4 py-1 transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900',
   },
 } as const;
 

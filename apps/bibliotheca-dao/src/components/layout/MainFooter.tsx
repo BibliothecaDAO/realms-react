@@ -8,7 +8,7 @@ const footerHREFStyles = 'hover:border-b-4 border-gray-900/10';
 
 export const MainFooter = () => {
   return (
-    <div className="relative z-20 grid w-full grid-cols-1 gap-2 p-10 mx-auto mt-10 text-off-300 sm:grid-cols-2 lg:grid-cols-4 sm:p-10 bg-off-300/40">
+    <div className="relative z-20 grid w-full grid-cols-1 gap-2 p-10 mx-auto text-off-300 sm:grid-cols-2 lg:grid-cols-4 sm:p-10 bg-off-300/40">
       <div className="">
         <BibliothecaBook className="self-center fill-current h-36" />
       </div>
@@ -32,7 +32,7 @@ export const MainFooter = () => {
           </li>
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].scroll}>
-              Master Scroll
+              Master Scroll (litepaper)
             </a>
           </li>
           <li className={footerLinkStyles}>
@@ -61,11 +61,6 @@ export const MainFooter = () => {
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].twitterRealms}>
               Realms Twitter
-            </a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a className={footerHREFStyles} href={links[0].discord}>
-              Discord
             </a>
           </li>
           {/* {projects.map((a, index) => {

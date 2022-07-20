@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
+import { Button } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 
@@ -45,18 +46,28 @@ function Treasury() {
 
   return (
     <MainLayout>
-      <div className="container px-10 py-40 mx-auto pt-60">
-        <h1 className="mb-8">Bibliotheca DAO</h1>
-        <p className="w-1/2 text-xl">
+      <div className="container px-10 py-20 pt-40 mx-auto sm:px-20 sm:py-40 sm:pt-60">
+        <h1 className="mb-8 font-lords">Bibliotheca DAO</h1>
+        <p className="sm:text-xl sm:w-1/2">
           {' '}
           The treasury funds managed by community members will be used to enable
           the DAO's mission, vision and goals.
         </p>
+        <div className="flex mt-10">
+          <Button
+            href="https://snapshot.org/#/council.bibliotheca.eth"
+            size="sm"
+            variant="dao"
+            texture={false}
+          >
+            Snapshot
+          </Button>
+        </div>
       </div>
       <div className="border-t">
-        <div className="container px-10 py-20 mx-auto ">
+        <div className="container px-8 py-20 mx-auto">
           <h1 className="mb-10">Assets</h1>
-          <table className="w-full mb-20 text-left border border-gray-300 table-auto /40 sm:w-1/2">
+          <table className="w-full mb-20 text-xs text-left border border-gray-300 table-auto sm:text-lg md:w-1/2 sm:w-2/3">
             <thead>
               <tr className="tracking-widest uppercase border border-off-300/40">
                 <th className="p-2">Asset</th>
@@ -113,7 +124,7 @@ function Treasury() {
             {nftList.map((realm: any) => (
               <div
                 key={realm.tokenId}
-                className="bg-gray-900 rounded rounded-t shadow-lg"
+                className="rounded rounded-t shadow-lg bg-gray-900/40"
               >
                 <img
                   className="object-cover w-full rounded-t"
@@ -125,8 +136,8 @@ function Treasury() {
                   alt=""
                 />
                 <div className="p-4">
-                  <h4 className="text-off-300">Realm #{realm.tokenId}</h4>
-                  <h5 className="text-off-300">{realm.name}</h5>
+                  <h5 className="text-off-300">Realm #{realm.tokenId}</h5>
+                  <h4 className="text-off-300">{realm.name}</h4>
                 </div>
               </div>
             ))}
