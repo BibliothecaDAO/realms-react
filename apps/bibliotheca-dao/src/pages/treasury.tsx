@@ -66,7 +66,7 @@ function Treasury() {
             Snapshot
           </Button>
         </div>
-        <FaqBlock faqs={TreasuryPage} />
+        <FaqBlock faqs={treasuryPage} />
       </div>
       <div className="border-t">
         <div className="container px-8 py-20 mx-auto">
