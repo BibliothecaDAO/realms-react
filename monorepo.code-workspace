@@ -9,8 +9,8 @@
       "path": "apps/briq-app"
     },
     {
-      "name": "treasury-page",
-      "path": "apps/treasury-page"
+      "name": "realms-landing-page",
+      "path": "apps/realms-landing"
     },
     {
       "name": "DAO-site",

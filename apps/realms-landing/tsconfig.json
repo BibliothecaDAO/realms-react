@@ -1,0 +1,40 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/test-utils": ["../config/jest/test-utils"],
+      "@/abi/*": ["./abi/*"],
+      "@/constants/*": ["./constants/*"],
+      "@/components/*": ["./components/*"],
+      "@/context/*": ["./context/*"],
+      "@/data/*": ["./data/*"],
+      "@/geodata/*": ["./geodata/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/mocks/*": ["./mocks/*"],
+      "@/pages/*": ["./pages/*"],
+      "@/services/*": ["./services/*"],
+      "@/shared/*": ["./shared/*"],
+      "@/types/*": ["./types/*"],
+      "@/util/*": ["./util/*"],
+      "@bibliotheca-dao/ui-lib/*": ["../../../packages/ui-lib/src/*"],
+      "@bibliotheca-dao/ui-lib": ["../../../packages/ui-lib/src/index"],
+      "@bibliotheca-dao/core-lib/*": ["../../../packages/core-lib/src/*"],
+      "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
+    }
+  },
+  "exclude": ["**/node_modules", "**/.*/", ".next"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.json"
+  ]
+}
