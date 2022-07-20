@@ -25,14 +25,14 @@ function Home() {
           <div className="self-end w-full pb-20 sm:w-1/2">
             <h1 className="mb-10 leading-relaxed font-body">
               We are making <br />
-              <span className="underline">on-chain</span> realities <br /> a
-              reality.
+              <span className="underline">on-chain</span> realities <br />
             </h1>
           </div>
         </div>
       </div>
       <PartnerBanner />
-      <div className="container relative z-20 flex mx-auto ">
+      <FaqBlock />
+      <div className="container relative z-20 flex py-10 mx-auto">
         <div className="self-center px-10 sm:w-1/2">
           <div className="flex mb-5">
             {/* <StarkNet className="w-12" /> */}
