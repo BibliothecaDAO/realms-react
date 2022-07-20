@@ -9,11 +9,11 @@
       "path": "apps/briq-app"
     },
     {
-      "name": "realms-landing-page",
+      "name": "Realms Landing",
       "path": "apps/realms-landing"
     },
     {
-      "name": "DAO-site",
+      "name": "DAO Site",
       "path": "apps/bibliotheca-dao"
     },
     {
