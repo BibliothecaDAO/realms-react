@@ -35,6 +35,7 @@
     "@bibliotheca-dao/core-lib": "workspace:^",
     "@tanstack/react-table": "8.2.6",
     "clsx": "1.2.1",
+    "keen-slider": "6.7.0",
     "rc-input-number": "7.3.4"
   },
   "devDependencies": {
