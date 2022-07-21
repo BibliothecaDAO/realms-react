@@ -1912,6 +1912,7 @@ __metadata:
     eslint-plugin-testing-library: "npm:5.5.1"
     https-browserify: "npm:^1.0.0"
     jest: "npm:28.1.3"
+    keen-slider: "npm:6.7.0"
     microbundle: "npm:0.15.0"
     next: "npm:12.2.2"
     npm-run-all: "npm:4.1.5"
@@ -20452,6 +20453,13 @@ __metadata:
     node-gyp-build: "npm:^4.2.0"
     readable-stream: "npm:^3.6.0"
   checksum: 846c852cea2e55021937ff8d901c65f14d04999d4ca40360c16aeeac1938cafcd8c4340ecf2d06ea217bada17d997bada961d34d6e042befe0700b57f8ada59d
+  languageName: node
+  linkType: hard
+
+"keen-slider@npm:6.7.0":
+  version: 6.7.0
+  resolution: "keen-slider@npm:6.7.0"
+  checksum: 5f6f05b89e3ca160a6b8ab65eefc1510ed119eab7d0155af839f37c2dde5c36d8c5a9b8f5b9b54a130e7d8ddbc83790fd6d3f00b1b3782d10b913ffd17bf4466
   languageName: node
   linkType: hard
 

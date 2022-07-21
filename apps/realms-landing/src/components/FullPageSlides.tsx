@@ -160,8 +160,6 @@ export const FullPageSlides = () => {
               layout="fill"
               objectFit="cover"
               objectPosition={slide.imagePosition || 'top'}
-              width={16}
-              height={9}
             />
             <div className="container relative h-full py-10 mx-auto">
               {slide.content}
