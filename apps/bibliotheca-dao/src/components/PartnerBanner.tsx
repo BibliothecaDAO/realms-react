@@ -16,11 +16,11 @@ export const PartnerBanner = () => {
     },
   ];
   return (
-    <div className="relative z-20 flex justify-center w-full h-48 p-20 space-x-10 text-gray-900 shadow-inner bg-off-300/40 text-off-300">
+    <div className="relative z-20 flex flex-wrap justify-center w-full h-auto p-10 text-gray-900 shadow-inner sm:p-20 sm:space-x-10 bg-off-300/40 text-off-300">
       <h4>We work with</h4>{' '}
       {partners.map((a, index) => {
         return (
-          <div key={index} className="self-center">
+          <div key={index} className="self-center p-4">
             {' '}
             <a href={a.url}>{a.icon}</a>{' '}
           </div>
