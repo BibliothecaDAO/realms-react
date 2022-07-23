@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useState } from 'react';
 import useKeyPress from '../useKeyPress';
 
@@ -11,6 +13,7 @@ const DefaultHotkeys = {
   Statistics: 's',
   Harvests: 'h',
   Lore: 'l',
+  Vault: 'v',
 };
 
 type Subview = keyof typeof DefaultHotkeys;
@@ -27,6 +30,7 @@ const useRealmDetailHotkeys = () => {
   const statsPress = useKeyPress(DefaultHotkeys.Statistics);
   const harvestPress = useKeyPress(DefaultHotkeys.Harvests);
   const lorePress = useKeyPress(DefaultHotkeys.Lore);
+  const vaultPress = useKeyPress(DefaultHotkeys.Vault);
 
   useEffect(() => {
     if (raidPress) {
@@ -60,6 +64,9 @@ const useRealmDetailHotkeys = () => {
     if (lorePress) {
       subview == 'Lore' ? setSubview(null) : setSubview('Lore');
     }
+    if(vaultPress) {
+      subview == "Vault" ? setSubview(null) : setSubview("Vault")
+    }
   }, [
     raidPress,
     foodPress,
@@ -70,6 +77,7 @@ const useRealmDetailHotkeys = () => {
     statsPress,
     harvestPress,
     lorePress,
+    vaultPress
   ]);
 
   return {
