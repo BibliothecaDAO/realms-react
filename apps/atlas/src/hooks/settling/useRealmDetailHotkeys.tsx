@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import useKeyPress from '../useKeyPress';
 
-const DefaultHotkeys = {
+export const HotKeys = {
   Raid: 'r',
   Food: 'f',
   AttackingArmy: 'a',
@@ -16,21 +16,21 @@ const DefaultHotkeys = {
   Vault: 'v',
 };
 
-type Subview = keyof typeof DefaultHotkeys;
+export type Subview = keyof typeof HotKeys | null;
 
 const useRealmDetailHotkeys = () => {
-  const [subview, setSubview] = useState<Subview | null>(null);
+  const [subview, setSubview] = useState<Subview>(null);
 
-  const raidPress = useKeyPress(DefaultHotkeys.Raid);
-  const foodPress = useKeyPress(DefaultHotkeys.Food);
-  const attackersPress = useKeyPress(DefaultHotkeys.AttackingArmy);
-  const defendersPress = useKeyPress(DefaultHotkeys.DefendingArmy);
-  const buildingsPress = useKeyPress(DefaultHotkeys.Buildings);
-  const goblinPress = useKeyPress(DefaultHotkeys.Goblins);
-  const statsPress = useKeyPress(DefaultHotkeys.Statistics);
-  const harvestPress = useKeyPress(DefaultHotkeys.Harvests);
-  const lorePress = useKeyPress(DefaultHotkeys.Lore);
-  const vaultPress = useKeyPress(DefaultHotkeys.Vault);
+  const raidPress = useKeyPress(HotKeys.Raid);
+  const foodPress = useKeyPress(HotKeys.Food);
+  const attackersPress = useKeyPress(HotKeys.AttackingArmy);
+  const defendersPress = useKeyPress(HotKeys.DefendingArmy);
+  const buildingsPress = useKeyPress(HotKeys.Buildings);
+  const goblinPress = useKeyPress(HotKeys.Goblins);
+  const statsPress = useKeyPress(HotKeys.Statistics);
+  const harvestPress = useKeyPress(HotKeys.Harvests);
+  const lorePress = useKeyPress(HotKeys.Lore);
+  const vaultPress = useKeyPress(HotKeys.Vault);
 
   useEffect(() => {
     if (raidPress) {
@@ -83,7 +83,17 @@ const useRealmDetailHotkeys = () => {
   return {
     subview,
     clear: () => setSubview(null),
-    set: (val: keyof typeof DefaultHotkeys | null) => setSubview(val),
+    set: (val: Subview) => setSubview(val),
+    raidPress,
+    foodPress,
+    attackersPress,
+    defendersPress,
+    buildingsPress,
+    goblinPress,
+    statsPress,
+    harvestPress,
+    lorePress,
+    vaultPress
   };
 };
 

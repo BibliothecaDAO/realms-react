@@ -32,6 +32,7 @@ import Harvests from './RealmDetails/Harvests';
 import Military from './RealmDetails/Military';
 import Raid from './RealmDetails/Raids';
 import Statistics from './RealmDetails/Statistics';
+import RealmToolbar from './RealmDetails/Toolbar';
 
 interface RealmDetailsPanelProps {
   realmId: number;
@@ -47,7 +48,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const realm = realmData?.realm;
 
-  const { subview } = useRealmDetailHotkeys();
+  const { subview, set } = useRealmDetailHotkeys();
   // Replace with actual last time attacked
 
   const pushPage = (value) => {
@@ -91,6 +92,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             {subview == 'Statistics' && <Statistics realm={realmData} />}
           </>
         </AtlasSidebar>
+        <RealmToolbar
+          onSetSubview={(s) => set(s)}
+          className="absolute bottom-0"
+        />
         {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">
