@@ -1,11 +1,10 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
-import { useStarknet } from '@starknet-react/core';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
+import Typist from 'react-typist-component';
 import { DaoProjects } from '@/components/DaoProjects';
 import { FaqBlock } from '@/components/Faqs';
 
@@ -19,15 +18,42 @@ function Home() {
   const jobs = [
     { location: 'Realms', title: 'Creative Director', skills: ['creative'] },
   ];
-
+  const [count, setCount] = useState(0);
+  const [key, setKey] = useState(1);
   return (
     <MainLayout>
       <div className="container px-10 mx-auto">
         <div className="flex h-screen">
           <div className="self-end w-full pb-20 sm:w-1/2">
             <h1 className="mb-10 leading-relaxed font-body">
-              We are making <br />
-              <span className="underline">on-chain</span> realities <br />
+              <Typist
+                typingDelay={100}
+                cursor={<span className="no-underline cursor">|</span>}
+                restartKey={key}
+                loop={true}
+              >
+                We are making <br />
+                <span className="underline">
+                  On Chain
+                  <Typist.Delay ms={1500} />
+                  <Typist.Backspace count={8} />
+                  <Typist.Delay ms={1500} />
+                  MMO
+                  <Typist.Delay ms={1500} />
+                  <Typist.Backspace count={3} />
+                  <Typist.Delay ms={1500} />
+                  Composable
+                  <Typist.Delay ms={4000} />
+                </span>
+                {/* <Typist.Paste>
+                  <div>
+                    use
+                    <div>deeper div</div>
+                  </div>
+                </Typist.Paste> */}
+              </Typist>
+              {''} <br />
+              realities
             </h1>
           </div>
         </div>

@@ -1,12 +1,9 @@
-import type { HTMLAttributes } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import type { HTMLAttributes, FC } from 'react';
 
 type TypedTextProps = {
-  /**
-   * Animation speed in milliseconds
-   */
+  /** Animation speed in milliseconds */
   delay: number;
-
   children: string;
 } & HTMLAttributes<HTMLSpanElement>;
 
@@ -14,7 +11,7 @@ const defaultProps = {
   delay: 250,
 };
 
-export const TypedText: React.FC<TypedTextProps> = (props) => {
+export const TypedText: FC<TypedTextProps> = (props) => {
   const { children, delay, ...restProps } = { ...defaultProps, ...props };
 
   const [text, setText] = useState(children);
@@ -23,7 +20,7 @@ export const TypedText: React.FC<TypedTextProps> = (props) => {
   const interval = useRef<number | null | undefined>();
   useEffect(() => {
     interval.current = window.setInterval(() => {
-      console.log('running interval');
+      // console.log('running interval');
       setCurrIdx((currIdx) => {
         if (currIdx > text.length) {
           if (interval.current) {

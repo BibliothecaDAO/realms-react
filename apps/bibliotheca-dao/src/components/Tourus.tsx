@@ -1,4 +1,4 @@
-import { OrbitControls, useCursor } from '@react-three/drei';
+import { OrbitControls, useCursor, CameraShake } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { AsciiEffect } from 'three-stdlib';
@@ -41,10 +41,19 @@ export default function Tourus() {
     }, 2);
     return <mesh />;
   }
-
+  const args = {
+    maxPitch: 0.35,
+    maxRoll: 0.35,
+    maxYaw: 0.35,
+    pitchFrequency: 0.08,
+    rollFrequency: 0.1,
+    yawFrequency: 0.1,
+  };
   return (
     <Canvas>
       {/* <color attach="background" args={['#1b1b1d']} /> */}
+      <CameraShake {...args} />
+      {/* Might be better replaced with position change if other elements */}
       <spotLight position={[10, 2, 10]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Torusknot />

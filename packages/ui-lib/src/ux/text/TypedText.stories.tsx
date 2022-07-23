@@ -43,7 +43,7 @@ export const BasicExample: ComponentStory<typeof TypedText> = (args) => {
                 background-color: blueviolet;
                 color: white;
               `}
-              {...args}
+              textArray={['hello world', 'on chain']}
             >
               Hello world
             </TypedText>

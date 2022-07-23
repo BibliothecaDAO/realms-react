@@ -32,7 +32,9 @@ export const MainHeader = () => {
       {' '}
       <div className="container flex mx-auto">
         <Link href="/">
-          <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
+          <>
+            <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
+          </>
         </Link>
         <Link href="/treasury">
           <a className='className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900'>
