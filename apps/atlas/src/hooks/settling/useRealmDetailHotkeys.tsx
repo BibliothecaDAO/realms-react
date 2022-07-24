@@ -21,16 +21,16 @@ export type Subview = keyof typeof HotKeys | null;
 const useRealmDetailHotkeys = () => {
   const [subview, setSubview] = useState<Subview>(null);
 
-  const raidPress = useKeyPress(HotKeys.Raid);
-  const foodPress = useKeyPress(HotKeys.Food);
-  const attackersPress = useKeyPress(HotKeys.AttackingArmy);
-  const defendersPress = useKeyPress(HotKeys.DefendingArmy);
-  const buildingsPress = useKeyPress(HotKeys.Buildings);
-  const goblinPress = useKeyPress(HotKeys.Goblins);
-  const statsPress = useKeyPress(HotKeys.Survey);
-  const harvestPress = useKeyPress(HotKeys.Harvests);
-  const lorePress = useKeyPress(HotKeys.Lore);
-  const vaultPress = useKeyPress(HotKeys.Vault);
+  const raidPress = useKeyPress({ key: HotKeys.Raid});
+  const foodPress = useKeyPress({ key: HotKeys.Food});
+  const attackersPress = useKeyPress({ key: HotKeys.AttackingArmy});
+  const defendersPress = useKeyPress({ key: HotKeys.DefendingArmy});
+  const buildingsPress = useKeyPress({ key: HotKeys.Buildings});
+  const goblinPress = useKeyPress({ key: HotKeys.Goblins});
+  const statsPress = useKeyPress({ key: HotKeys.Survey});
+  const harvestPress = useKeyPress({ key: HotKeys.Harvests});
+  const lorePress = useKeyPress({ key: HotKeys.Lore});
+  const vaultPress = useKeyPress({ key: HotKeys.Vault});
 
   useEffect(() => {
     if (raidPress) {

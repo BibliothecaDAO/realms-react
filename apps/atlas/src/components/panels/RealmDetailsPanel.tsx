@@ -12,13 +12,14 @@ import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import useKeyPress from '@/hooks/useKeyPress';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
@@ -49,12 +50,26 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const realm = realmData?.realm;
 
   const { subview, set } = useRealmDetailHotkeys();
-  // Replace with actual last time attacked
 
   const pushPage = (value) => {
     setId(parseInt(value));
     router.push('/realm/' + value);
   };
+
+  const leftPressed = useKeyPress({ keycode: 'LEFT' });
+  const rightPressed = useKeyPress({ keycode: 'RIGHT' });
+
+  useEffect(() => {
+    if (!realm) {
+      return;
+    }
+    if (leftPressed) {
+      pushPage(realm.realmId - 1);
+    }
+    if (rightPressed) {
+      pushPage(realm.realmId + 1);
+    }
+  }, [leftPressed, rightPressed]);
 
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
