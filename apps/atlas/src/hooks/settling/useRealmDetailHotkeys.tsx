@@ -4,16 +4,14 @@ import { useEffect, useState } from 'react';
 import useKeyPress from '../useKeyPress';
 
 export const HotKeys = {
-  Raid: 'r',
+  Attack: 'a', // aka Raid
+  Resources: 'r',
   Food: 'f',
-  AttackingArmy: 'a',
-  DefendingArmy: 'd',
+  History: 'h',
   Buildings: 'b',
   Goblins: 'g',
   Survey: 's',
-  Harvests: 'h',
   Lore: 'l',
-  Vault: 'v',
 };
 
 export type Subview = keyof typeof HotKeys | null;
@@ -21,41 +19,29 @@ export type Subview = keyof typeof HotKeys | null;
 const useRealmDetailHotkeys = () => {
   const [subview, setSubview] = useState<Subview>(null);
 
-  const raidPress = useKeyPress({ key: HotKeys.Raid});
+  const attackPress = useKeyPress({ key: HotKeys.Attack});
   const foodPress = useKeyPress({ key: HotKeys.Food});
-  const attackersPress = useKeyPress({ key: HotKeys.AttackingArmy});
-  const defendersPress = useKeyPress({ key: HotKeys.DefendingArmy});
   const buildingsPress = useKeyPress({ key: HotKeys.Buildings});
+  const historyPress = useKeyPress({ key: HotKeys.History });
   const goblinPress = useKeyPress({ key: HotKeys.Goblins});
-  const statsPress = useKeyPress({ key: HotKeys.Survey});
-  const harvestPress = useKeyPress({ key: HotKeys.Harvests});
+  const surveyPress = useKeyPress({ key: HotKeys.Survey});
+  const resourcesPress = useKeyPress({ key: HotKeys.Resources});
   const lorePress = useKeyPress({ key: HotKeys.Lore});
-  const vaultPress = useKeyPress({ key: HotKeys.Vault});
 
   useEffect(() => {
-    if (raidPress) {
-      subview == 'Raid' ? setSubview(null) : setSubview('Raid');
+    if (attackPress) {
+      subview == 'Attack' ? setSubview(null) : setSubview('Attack');
     }
     if (foodPress) {
       subview == 'Food' ? setSubview(null) : setSubview('Food');
     }
-    if (attackersPress) {
-      subview == 'AttackingArmy'
-        ? setSubview(null)
-        : setSubview('AttackingArmy');
-    }
-    if (defendersPress) {
-      subview == 'DefendingArmy'
-        ? setSubview(null)
-        : setSubview('DefendingArmy');
-    }
     if (buildingsPress) {
       subview == 'Buildings' ? setSubview(null) : setSubview('Buildings');
     }
-    if (harvestPress) {
-      subview == 'Harvests' ? setSubview(null) : setSubview('Harvests');
+    if (resourcesPress) {
+      subview == 'Resources' ? setSubview(null) : setSubview('Resources');
     }
-    if (statsPress) {
+    if (surveyPress) {
       subview == 'Survey' ? setSubview(null) : setSubview('Survey');
     }
     if (goblinPress) {
@@ -64,36 +50,32 @@ const useRealmDetailHotkeys = () => {
     if (lorePress) {
       subview == 'Lore' ? setSubview(null) : setSubview('Lore');
     }
-    if(vaultPress) {
-      subview == "Vault" ? setSubview(null) : setSubview("Vault")
+    if(historyPress){
+      subview == "History" ? setSubview(null) : setSubview("History");
     }
   }, [
-    raidPress,
+    attackPress,
     foodPress,
-    attackersPress,
-    defendersPress,
     buildingsPress,
     goblinPress,
-    statsPress,
-    harvestPress,
+    surveyPress,
+    resourcesPress,
+    historyPress,
     lorePress,
-    vaultPress
   ]);
 
   return {
     subview,
     clear: () => setSubview(null),
     set: (val: Subview) => setSubview(val),
-    raidPress,
+    attackPress,
     foodPress,
-    attackersPress,
-    defendersPress,
     buildingsPress,
     goblinPress,
-    statsPress,
-    harvestPress,
+    surveyPress,
+    resourcesPress,
+    historyPress,
     lorePress,
-    vaultPress
   };
 };
 

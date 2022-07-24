@@ -40,7 +40,7 @@ interface RealmDetailsPanelProps {
 }
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
-  const [id, setId] = useState(realmId);
+  const [_, setId] = useState(realmId);
   const router = useRouter();
   const { data: realmData } = useGetRealmQuery({
     variables: { id: realmId },
@@ -90,6 +90,11 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             height={320}
             layout={'responsive'}
           />
+          <div className="absolute flex justify-center items-center flex-col top-8 w-full">
+            {subview == 'Attack' && (
+              <Military squad="Defend" realm={realmData} />
+            )}
+          </div>
         </div>
 
         <AtlasSidebar isOpen={!!subview}>
@@ -97,16 +102,11 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <h2>{subview}</h2>
             {realmData ? (
               <>
-                {subview == 'Raid' ? <Raid realm={realmData} /> : null}
-                {subview == 'Harvests' && <Harvests realm={realmData} />}
+                {subview == 'Attack' ? <Raid realm={realmData} /> : null}
+                {subview == 'Resources' && <Harvests realm={realmData} />}
                 {subview == 'Food' ? <Food realm={realmData} /> : null}
-                {subview == 'AttackingArmy' && (
-                  <Military squad="Attack" realm={realmData} />
-                )}
-                {subview == 'DefendingArmy' && (
-                  <Military squad="Defend" realm={realmData} />
-                )}
                 {subview == 'Survey' && <Statistics realm={realmData} />}
+                {subview == 'History' && <RealmHistory realmId={realmId} />}
               </>
             ) : null}
           </>

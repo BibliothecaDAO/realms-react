@@ -16,7 +16,6 @@ export default function useKeyPress(target: {
   const [keyPressed, setKeyPressed] = useState<boolean>(false);
   // If pressed key is our target key then set to true
   function downHandler({ key, keyCode }) {
-    console.log(key, keyCode);
     if (
       key === target.key ||
       (target.keycode && keyCode == Keycodes[target.keycode])

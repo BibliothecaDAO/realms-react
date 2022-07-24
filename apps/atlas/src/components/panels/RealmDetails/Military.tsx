@@ -23,7 +23,7 @@ const Military: React.FC<Prop> = (props) => {
   return (
     <>
       <div className="text-2xl font-semibold tracking-widest text-white uppercase">
-        Military Strength
+        {props.squad}ing Army
       </div>
       <SquadBuilder
         location={Squad[props.squad]}

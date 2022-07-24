@@ -37,8 +37,8 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
         title="Survey"
       ></ToolbarItem>
       <ToolbarItem
-        onClick={() => props.onSetSubview('Harvests')}
-        title="Harvest"
+        onClick={() => props.onSetSubview('Resources')}
+        title="Resources"
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Food')}
@@ -49,7 +49,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
         title="Buildings"
       ></ToolbarItem>
       <ToolbarItem
-        onClick={() => props.onSetSubview('Raid')}
+        onClick={() => props.onSetSubview('Attack')}
         title="Raid"
       ></ToolbarItem>
       <ToolbarItem
@@ -59,6 +59,10 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       <ToolbarItem
         onClick={() => props.onSetSubview('Lore')}
         title="Lore"
+      ></ToolbarItem>
+      <ToolbarItem
+        onClick={() => props.onSetSubview('History')}
+        title="History"
       ></ToolbarItem>
     </div>
   );

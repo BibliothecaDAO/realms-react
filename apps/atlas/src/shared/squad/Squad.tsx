@@ -2,7 +2,6 @@ import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import { number } from 'starknet';
 import useCombat from '@/hooks/settling/useCombat';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
 
@@ -17,7 +16,6 @@ interface SquadProps {
 }
 
 export const SquadBuilder = (props: SquadProps) => {
-  const { selectedPanel, toggleMenuType } = useAtlasContext();
   const { buildSquad } = useCombat({ token_id: props.realmId });
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
