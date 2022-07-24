@@ -10,7 +10,7 @@ export const HotKeys = {
   DefendingArmy: 'd',
   Buildings: 'b',
   Goblins: 'g',
-  Statistics: 's',
+  Survey: 's',
   Harvests: 'h',
   Lore: 'l',
   Vault: 'v',
@@ -27,7 +27,7 @@ const useRealmDetailHotkeys = () => {
   const defendersPress = useKeyPress(HotKeys.DefendingArmy);
   const buildingsPress = useKeyPress(HotKeys.Buildings);
   const goblinPress = useKeyPress(HotKeys.Goblins);
-  const statsPress = useKeyPress(HotKeys.Statistics);
+  const statsPress = useKeyPress(HotKeys.Survey);
   const harvestPress = useKeyPress(HotKeys.Harvests);
   const lorePress = useKeyPress(HotKeys.Lore);
   const vaultPress = useKeyPress(HotKeys.Vault);
@@ -56,7 +56,7 @@ const useRealmDetailHotkeys = () => {
       subview == 'Harvests' ? setSubview(null) : setSubview('Harvests');
     }
     if (statsPress) {
-      subview == 'Statistics' ? setSubview(null) : setSubview('Statistics');
+      subview == 'Survey' ? setSubview(null) : setSubview('Survey');
     }
     if (goblinPress) {
       subview == 'Goblins' ? setSubview(null) : setSubview('Goblins');

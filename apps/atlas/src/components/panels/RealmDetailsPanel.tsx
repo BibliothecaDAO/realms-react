@@ -80,16 +80,20 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         <AtlasSidebar isOpen={!!subview}>
           <>
             <h2>{subview}</h2>
-            {subview == 'Raid' ? <Raid realm={realmData} /> : null}
-            {subview == 'Harvests' && <Harvests realm={realmData} />}
-            {subview == 'Food' ? <Food realm={realmData} /> : null}
-            {subview == 'AttackingArmy' && (
-              <Military squad="Attack" realm={realmData} />
-            )}
-            {subview == 'DefendingArmy' && (
-              <Military squad="Defend" realm={realmData} />
-            )}
-            {subview == 'Statistics' && <Statistics realm={realmData} />}
+            {realmData ? (
+              <>
+                {subview == 'Raid' ? <Raid realm={realmData} /> : null}
+                {subview == 'Harvests' && <Harvests realm={realmData} />}
+                {subview == 'Food' ? <Food realm={realmData} /> : null}
+                {subview == 'AttackingArmy' && (
+                  <Military squad="Attack" realm={realmData} />
+                )}
+                {subview == 'DefendingArmy' && (
+                  <Military squad="Defend" realm={realmData} />
+                )}
+                {subview == 'Survey' && <Statistics realm={realmData} />}
+              </>
+            ) : null}
           </>
         </AtlasSidebar>
         <RealmToolbar

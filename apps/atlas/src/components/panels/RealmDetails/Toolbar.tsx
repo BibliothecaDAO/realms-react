@@ -4,7 +4,7 @@ import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 
 type ToolbarItemProps = {
   title: string;
-  children: React.ReactNode | React.ReactNode[];
+  children?: React.ReactNode | React.ReactNode[];
   onClick: () => void;
 };
 
@@ -33,12 +33,12 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       )}
     >
       <ToolbarItem
-        onClick={() => props.onSetSubview('Statistics')}
-        title="Statistics"
+        onClick={() => props.onSetSubview('Survey')}
+        title="Survey"
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Harvests')}
-        title="Harvests"
+        title="Harvest"
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Food')}
@@ -49,12 +49,8 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
         title="Buildings"
       ></ToolbarItem>
       <ToolbarItem
-        onClick={() => props.onSetSubview('Vault')}
-        title="Vault"
-      ></ToolbarItem>
-      <ToolbarItem
         onClick={() => props.onSetSubview('Raid')}
-        title="Raids"
+        title="Raid"
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Goblins')}
