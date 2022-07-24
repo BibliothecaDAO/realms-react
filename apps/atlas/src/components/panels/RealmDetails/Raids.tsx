@@ -27,17 +27,16 @@ const Raid: React.FC<Prop> = (props) => {
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
+  if (!realm) {
+    return null;
+  }
+
   return (
     <>
       <Card className="col-start-5 col-end-7 text-white">
         <CardTitle>Vulnerable in</CardTitle>
         <CountdownTimer date={time()} />
-        <RealmResources
-          loading={false}
-          realm={realm!}
-          showClaimable
-          showRaidable
-        />
+        <RealmResources loading={false} realm={realm} showRaidable />
       </Card>
     </>
   );
