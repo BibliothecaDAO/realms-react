@@ -1,10 +1,13 @@
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import Discord from '@bibliotheca-dao/ui-lib/icons/social/discord.svg';
 import Github from '@bibliotheca-dao/ui-lib/icons/social/github.svg';
 import Link from 'next/link';
 import { links } from '@/data/Projects';
+import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MainHeader = () => {
+  const { lordsPrice } = useWalletContext();
   const headerElements = [
     // {
     //   title: 'DAO',
@@ -32,13 +35,12 @@ export const MainHeader = () => {
       {' '}
       <div className="container flex mx-auto">
         <Link href="/">
-          <>
-            <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
-          </>
+          <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
         </Link>
         <Link href="/treasury">
-          <a className='className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900'>
-            <span className="hidden sm:block"></span> DAO Ξ
+          <a className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
+            <span className="hidden sm:block"></span> DAO | ${lordsPrice}{' '}
+            <Lords className="self-center h-4 ml-4 fill-current" />
           </a>
         </Link>
         <div className="flex space-x-4">

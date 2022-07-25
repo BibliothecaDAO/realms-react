@@ -1,7 +1,7 @@
 import type { NextRequest, NextResponse } from 'next/server';
 
 const walletaddress = process.env.WALLETADDRESS || ''; // need to put as env
-const apikey = process.env.APIKEY;
+const apikey = process.env.NEXT_PUBLIC_APIKEY;
 
 export const config = {
   runtime: 'experimental-edge',
