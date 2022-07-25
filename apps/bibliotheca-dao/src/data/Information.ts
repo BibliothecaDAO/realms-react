@@ -1,19 +1,19 @@
 export const homePage = [
   {
-    title: 'A decentralised game studio',
-    text: 'Formed from the Lootverse',
+    title: 'What are we?',
+    text: 'We are the custodians of an open source permissionless gaming ecosystem built on StarkNet; a L2 Zero-Knowledge rollup.',
   },
   {
-    title: 'Birthed from the Lootverse',
-    text: 'To buidler',
+    title: 'Where did we come from?',
+    text: 'We emerged from the Lootverse with our first NFT collection, Loot Realms.',
   },
   {
     title: 'Why do we exist?',
-    text: 'To buidlers',
+    text: 'We are a development DAO. We exist to build on-chain games. If you have a desire to build games on bleeding edge technologies you will feel right at home.',
   },
   {
     title: 'Can I join?',
-    text: 'Yes!',
+    text: 'The DAO is operated by the Loot Realm NFTS. To participate in governance you must hold a Realm NFT. More governance tokens will be released in the future.',
   },
 ];
 

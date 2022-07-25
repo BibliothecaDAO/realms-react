@@ -5,24 +5,30 @@ import Yagi from '@bibliotheca-dao/ui-lib/icons/yagi.svg';
 export const PartnerBanner = () => {
   const partners = [
     {
-      icon: <Starkware className="w-48" />,
+      icon: <Starkware className="w-48 hover:opacity-50" />,
       url: 'https://starkware.co/starknet/',
     },
     {
-      icon: <Cartridge className="w-48" />,
-      url: 'https://starkware.co/starknet/',
+      icon: <Cartridge className="w-48 hover:opacity-50" />,
+      url: 'https://cartridge.gg/',
     },
     {
-      icon: <Yagi className="w-32" />,
+      icon: <Yagi className="w-32 hover:opacity-50" />,
+      url: 'https://yagi.fi/',
+    },
+    {
+      icon: (
+        <span className="text-4xl text-orange-600 hover:opacity-50">Briq</span>
+      ),
       url: 'https://briq.construction',
     },
     {
-      icon: <span className="text-4xl text-orange-600">Briq</span>,
-      url: 'https://briq.construction',
+      icon: <Topology className="w-48 hover:opacity-50" />,
+      url: 'https://topology.gg/',
     },
     {
-      icon: <Topology className="w-48" />,
-      url: 'https://briq.construction',
+      icon: <img src="/match.png" className="w-12 hover:opacity-50" alt="" />,
+      url: 'https://www.matchboxdao.com/',
     },
   ];
   return (

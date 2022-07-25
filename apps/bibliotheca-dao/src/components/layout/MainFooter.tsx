@@ -10,9 +10,9 @@ export const MainFooter = () => {
   return (
     <div className="relative z-20 grid w-full grid-cols-1 gap-2 p-10 mx-auto text-off-300 sm:grid-cols-2 lg:grid-cols-4 sm:p-10 bg-off-300/40">
       <div className="">
-        <BibliothecaBook className="self-center fill-current h-36" />
+        <BibliothecaBook className="self-center h-24 fill-current sm:h-36" />
       </div>
-      <div className="mb-10 tracking-widest uppercase">
+      <div className="my-10 tracking-widest uppercase">
         <h4 className="mb-6">Links</h4>
         <ul>
           <li className={footerLinkStyles}>
