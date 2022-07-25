@@ -1,11 +1,11 @@
 export const homePage = [
   {
     title: 'What are we?',
-    text: 'We are the custodians of an open source permissionless gaming ecosystem built on StarkNet; a L2 Zero-Knowledge rollup.',
+    text: 'We are the custodians of an open-source permissionless gaming ecosystem built on StarkNet; a L2 Zero-Knowledge rollup.',
   },
   {
     title: 'Where did we come from?',
-    text: 'We emerged from the Lootverse with our first NFT collection, Loot Realms.',
+    text: 'We emerged from the Lootverse with our first NFT collection; Loot Realms.',
   },
   {
     title: 'Why do we exist?',
@@ -13,7 +13,7 @@ export const homePage = [
   },
   {
     title: 'Can I join?',
-    text: 'The DAO is operated by the Loot Realm NFTS. To participate in governance you must hold a Realm NFT. More governance tokens will be released in the future.',
+    text: 'The DAO is operated by the Loot Realms NFTS. To participate in governance you must hold a Realms NFT. More governance tokens will be released in the future.',
   },
 ];
 
