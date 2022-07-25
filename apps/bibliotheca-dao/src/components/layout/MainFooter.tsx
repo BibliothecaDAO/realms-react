@@ -50,7 +50,7 @@ export const MainFooter = () => {
           })} */}
         </ul>
       </div>
-      <div className="mb-10 tracking-widest uppercase">
+      <div className="my-10 tracking-widest uppercase">
         <h4 className="mb-6">Socials</h4>
         <ul>
           <li className={footerLinkStyles}>
