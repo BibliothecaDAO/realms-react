@@ -39,7 +39,7 @@ export const MainHeader = () => {
         </Link>
         <Link href="/treasury">
           <a className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
-            <span className="hidden sm:block"></span> DAO | ${lordsPrice}{' '}
+            <span className="hidden sm:block">DAO | </span> ${lordsPrice}{' '}
             <Lords className="self-center h-4 ml-4 fill-current" />
           </a>
         </Link>
