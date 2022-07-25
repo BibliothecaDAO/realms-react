@@ -19,9 +19,11 @@ import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
+import SidebarHeader from '@/shared/SidebarHeader';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
@@ -58,6 +60,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
+  const isOwner = useIsOwner(realm?.settledOwner);
 
   useEffect(() => {
     if (!realm) {
@@ -80,8 +83,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
           title={realm?.name ?? ''}
           realmId={realmId}
+          hideSearchFilter
         />
-        <div className="relative w-full">
+        <div className="relative w-full h-full">
           <Image
             src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
             alt="map"
@@ -94,12 +98,19 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             {subview == 'Attack' && (
               <Military squad="Defend" realm={realmData} />
             )}
+            {subview == 'Buildings' && realmData?.realm && (
+              <RealmBuildings realm={realmData.realm} loading={false} />
+            )}
+            <div id="spacer" className="h-20 w-full" />
           </div>
         </div>
 
         <AtlasSidebar isOpen={!!subview}>
           <>
-            <h2>{subview}</h2>
+            <SidebarHeader
+              onClose={() => set(null)}
+              title={subview as string}
+            />
             {realmData ? (
               <>
                 {subview == 'Attack' ? <Raid realm={realmData} /> : null}
@@ -111,10 +122,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             ) : null}
           </>
         </AtlasSidebar>
-        <RealmToolbar
-          onSetSubview={(s) => set(s)}
-          className="absolute bottom-0"
-        />
+        <RealmToolbar onSetSubview={(s) => set(s)} className="fixed bottom-0" />
         {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">

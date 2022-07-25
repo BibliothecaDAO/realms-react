@@ -8,6 +8,7 @@ interface HeaderProps {
   realmId: number;
   order: string;
   onSubmit: (value: string) => void;
+  hideSearchFilter?: boolean;
 }
 
 // const realms = [
@@ -54,13 +55,15 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           <h1 className="font-lords">{props.title}</h1>
         </div>
 
-        <SearchFilter
-          placeholder="SEARCH BY ID"
-          onSubmit={(value) => {
-            props.onSubmit(parseInt(value) ? value : '');
-          }}
-          defaultValue={props.realmId.toString()}
-        />
+        {!props.hideSearchFilter && (
+          <SearchFilter
+            placeholder="SEARCH BY ID"
+            onSubmit={(value) => {
+              props.onSubmit(parseInt(value) ? value : '');
+            }}
+            defaultValue={props.realmId.toString()}
+          />
+        )}
       </div>
     </div>
   );

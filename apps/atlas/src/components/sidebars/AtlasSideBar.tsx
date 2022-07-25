@@ -5,7 +5,7 @@ import { animated, useSpring } from 'react-spring';
 
 type Prop = {
   isOpen: boolean;
-  children: React.ReactElement[] | React.ReactElement;
+  children: React.ReactNode[] | React.ReactNode;
   width?: 'w-1/4' | 'w-1/3' | 'w-1/2' | 'w-full';
   container?: HTMLElement;
 };

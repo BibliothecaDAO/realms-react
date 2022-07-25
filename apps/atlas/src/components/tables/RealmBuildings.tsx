@@ -5,7 +5,7 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { createCall, Entrypoints } from '@/hooks/settling/useBuildings';
-import { IsOwner } from '@/shared/Getters/Realm';
+import useIsOwner from '@/hooks/useIsOwner';
 import { Scroll } from '@/shared/Icons';
 import type { RealmsCall, RealmsCardProps } from '../../types';
 import PreviewBuild from '../PreviewBuild';
@@ -29,6 +29,8 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   const txQueue = useTransactionQueue();
 
   const [previewBuild, setPreviewBuild] = useState<any>();
+
+  const isOwner = useIsOwner(props.realm?.settledOwner);
 
   const buildings = data?.getBuildingsByRealmId ?? [];
 
@@ -116,7 +118,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           )}
         </p>
       ),
-      buildAction: IsOwner(props.realm?.settledOwner) && (
+      buildAction: isOwner && (
         <Button
           aria-details="Build Building on Realm"
           onClick={() => {

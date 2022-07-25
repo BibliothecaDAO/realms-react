@@ -50,7 +50,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Attack')}
-        title="Raid"
+        title="Attack"
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Goblins')}
