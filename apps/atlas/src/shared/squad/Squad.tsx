@@ -1,9 +1,13 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { number } from 'starknet';
+import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
+import { ArmoryBuilder } from '@/components/tables/Armory';
+import { useGetTroopStatsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
+import SidebarHeader from '../SidebarHeader';
 
 interface SquadProps {
   className?: string;
@@ -19,9 +23,15 @@ export const SquadBuilder = (props: SquadProps) => {
   const { buildSquad } = useCombat({ token_id: props.realmId });
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
+  const { data: troopStatsData } = useGetTroopStatsQuery();
+
   const troopIdsToPurchase = () => {
     return toBuy.map((a: TroopInterface) => a.troopId);
   };
+
+  const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
+    null
+  );
 
   const fillGap = (tier: number, length: number) => {
     const emptyTroop: TroopInterface = {
@@ -48,6 +58,7 @@ export const SquadBuilder = (props: SquadProps) => {
     return currentTroops.concat(temp).map((a, index) => {
       return (
         <Troop
+          onClick={(val) => setSelectedTroop(val)}
           onSubmit={(value: any) => setToBuy((current) => [...current, value])}
           onRemove={(value: any) => setToBuy((current) => [...current, value])}
           withPurchase={props.withPurchase}
@@ -112,6 +123,21 @@ export const SquadBuilder = (props: SquadProps) => {
       >
         {tier3()}
       </div>
+      <AtlasSidebar isOpen={!!selectedTroop}>
+        <SidebarHeader
+          onClose={() => setSelectedTroop(null)}
+          title={`Train Tier ${selectedTroop?.tier || ' '} Troop`}
+        />
+        {troopStatsData?.getTroopStats ? (
+          <ArmoryBuilder
+            statistics={troopStatsData.getTroopStats}
+            realmId={props.realmId}
+            hideSquadToggle
+            filterTier={selectedTroop?.tier}
+          />
+        ) : null}
+      </AtlasSidebar>
+
       <div className="flex">
         {/* <div className="p-2 text-white uppercase rounded bg-black/30">
           <div>Agility: {stats().agility}</div>

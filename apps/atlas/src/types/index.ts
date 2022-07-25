@@ -195,7 +195,7 @@ export type RealmFeatureProperties = {
 export interface TroopInterface {
   troopId: number;
   index: number;
-  type: number;
+  type: number | string;
   tier: number;
   agility: number;
   attack: number;

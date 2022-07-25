@@ -1,6 +1,7 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
 import { useEffect, useReducer, useState } from 'react';
+import type { GetTroopStatsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { squadStats } from '@/shared/Getters/Realm';
 import { Troop } from '@/shared/squad/Troops';
@@ -8,7 +9,9 @@ import type { ItemCost, ResourceCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
 interface Props {
   realmId: number;
-  statistics: any;
+  statistics: GetTroopStatsQuery['getTroopStats'];
+  hideSquadToggle?: boolean;
+  filterTier?: number;
 }
 const columns = [
   { Header: 'name', id: 1, accessor: 'name' },
@@ -19,19 +22,19 @@ const columns = [
   //   { Header: 'wisdom', id: 6, accessor: 'wisdom' },
 
   { Header: 'cost', id: 6, accessor: 'troopCost' },
-  { Header: 'add', id: 6, accessor: 'add' },
+  { Header: 'action', id: 6, accessor: 'add' },
 ];
 
 const tableOptions = { is_striped: true };
 
 type Row = {
-  name: string;
+  name: JSX.Element;
   //   agility: number;
   //   attack: number;
   //   defense: number;
   //   vitality: number;
   //   wisdom: number;
-  troopCost: any[];
+  troopCost: JSX.Element;
 };
 export const ArmoryBuilder = (props: Props) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
@@ -75,17 +78,15 @@ export const ArmoryBuilder = (props: Props) => {
 
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="flex justify-between">
-              <span className="flex">
-                <ResourceIcon
-                  resource={
-                    findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
-                  }
-                  size="xs"
-                  className="self-center mr-4"
-                />
-                <span>{a.amount}</span>
-              </span>
+            <div key={index} className="inline-block">
+              <ResourceIcon
+                resource={
+                  findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
+                }
+                size="xs"
+                className="self-center mr-4"
+              />
+              <span>{a.amount}</span>
             </div>
           );
         })}
@@ -93,20 +94,24 @@ export const ArmoryBuilder = (props: Props) => {
     );
   };
 
-  const mappedRowData: Row[] = (props.statistics as any)?.map((re, index) => {
-    console.log(props.statistics);
+  const filteredTroops =
+    props.filterTier !== undefined
+      ? props.statistics.filter((v) => v.tier == props.filterTier)
+      : props.statistics;
+
+  const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
       name: <span className="tracking-wider uppercase ">{re.troopName}</span>,
-      troopCost: troopCostCell(re.troopCost),
+      troopCost: troopCostCell(re.troopCost!),
       add: (
         <Button
           variant="secondary"
           size="xs"
           onClick={() => {
-            setToBuy((current) => [...current, re]);
+            // setToBuy((current) => [...current, re]);
           }}
         >
-          add to squad
+          train
         </Button>
       ),
     };
@@ -139,11 +144,7 @@ export const ArmoryBuilder = (props: Props) => {
 
   const [value, setValue] = useState('');
 
-  useEffect(() => {
-    setValue('');
-  }, [1]);
-
-  const { buildSquad } = useCombat({ token_id: parseInt(value) });
+  const { buildSquad } = useCombat({ token_id: props.realmId });
 
   const [armyType, toggleArmyType] = useReducer(
     (state: 'attacking' | 'defending') => {
@@ -157,45 +158,47 @@ export const ArmoryBuilder = (props: Props) => {
 
   return (
     <div className="w-full">
-      <div className="flex space-x-2">
-        <input
-          className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
-          type="text"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          placeholder={'Realm ID'}
-        />
-        <div className="flex self-center">
-          <div
-            className={`px-4 uppercase ${
-              armyType === 'attacking' && 'font-semibold'
-            }`}
-          >
-            Attacking
-          </div>
-          <Switch
-            checked={isAttack}
-            onChange={toggleArmyType}
-            className={`${
-              isAttack ? 'bg-green-600' : 'bg-blue-600'
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span className="sr-only">Army Switch</span>
-            <span
+      {!props.hideSquadToggle && (
+        <div className="flex space-x-2">
+          <input
+            className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
+            type="text"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            placeholder={'Realm ID'}
+          />
+          <div className="flex self-center">
+            <div
+              className={`px-4 uppercase ${
+                armyType === 'attacking' && 'font-semibold'
+              }`}
+            >
+              Attacking
+            </div>
+            <Switch
+              checked={isAttack}
+              onChange={toggleArmyType}
               className={`${
-                isDefend ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white`}
-            />
-          </Switch>
-          <div className={`px-4 uppercase ${isDefend && 'font-semibold'}`}>
-            Defending
+                isAttack ? 'bg-green-600' : 'bg-blue-600'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className="sr-only">Army Switch</span>
+              <span
+                className={`${
+                  isDefend ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white`}
+              />
+            </Switch>
+            <div className={`px-4 uppercase ${isDefend && 'font-semibold'}`}>
+              Defending
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="my-4 overflow-y-scroll h-72">
+      <div className="my-4 overflow-y-scroll">
         {mappedRowData && (
           <Table
             columns={columns}
@@ -204,7 +207,7 @@ export const ArmoryBuilder = (props: Props) => {
           />
         )}
       </div>
-      <div className="flex space-x-2">
+      {/* <div className="flex space-x-2">
         <div className="w-1/2 my-4 shadow-inner bg-gray-800/60">
           <div className="self-center w-full p-4 font-semibold tracking-widest uppercase">
             <h4>Squad Statistics</h4>
@@ -247,8 +250,7 @@ export const ArmoryBuilder = (props: Props) => {
             );
           })}
         </div>
-      </div>
-
+      </div> 
       <div className="w-full p-8 rounded bg-gray-800/60">
         <div className="flex flex-wrap">
           <div className="flex flex-wrap w-full my-1">
@@ -282,6 +284,7 @@ export const ArmoryBuilder = (props: Props) => {
           </Button>
         </div>
       </div>
+      */}
     </div>
   );
 };

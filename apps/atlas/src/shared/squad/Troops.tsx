@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Table } from '@bibliotheca-dao/ui-lib/base';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { Popover } from '@headlessui/react';
 import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import type { GetTroopStatsQuery } from '@/generated/graphql';
 import type { ItemCost, TroopInterface } from '@/types/index';
+import troopList from './TroopList';
 interface HealthBarProps {
   vitality: number;
   troopId: number;
@@ -13,190 +16,11 @@ interface TroopProps {
   troop: TroopInterface;
   className?: string;
   withPurchase?: boolean;
+  onClick?: (value: TroopInterface) => void;
   onSubmit: (value: TroopInterface) => void;
   onRemove: (value: TroopInterface) => void;
-  troopsStats: TroopInterface[];
+  troopsStats: GetTroopStatsQuery['getTroopStats'];
 }
-
-const troopList = [
-  {
-    name: 'watchman',
-    type: 'melee',
-    troopId: 1,
-    tier: 1,
-    agility: 1,
-    attack: 1,
-    defense: 3,
-    vitality: 4,
-    wisdom: 1,
-  },
-  {
-    name: 'guard',
-    type: 'melee',
-    tier: 2,
-    troopId: 2,
-    agility: 2,
-    attack: 2,
-    defense: 6,
-    vitality: 8,
-    wisdom: 2,
-  },
-  {
-    name: 'guard captain',
-    type: 'melee',
-    tier: 3,
-    troopId: 3,
-    agility: 4,
-    attack: 4,
-    defense: 12,
-    vitality: 16,
-    wisdom: 4,
-  },
-  {
-    name: 'squire',
-    type: 'melee',
-    tier: 1,
-    troopId: 4,
-    agility: 1,
-    attack: 4,
-    defense: 1,
-    vitality: 4,
-    wisdom: 3,
-  },
-
-  {
-    name: 'Knight',
-    type: 'melee',
-    tier: 2,
-    troopId: 5,
-    agility: 4,
-    attack: 4,
-    defense: 12,
-    vitality: 16,
-    wisdom: 4,
-  },
-  {
-    name: 'Knight Commander',
-    type: 'melee',
-    tier: 3,
-    troopId: 6,
-    agility: 4,
-    attack: 16,
-    defense: 4,
-    vitality: 4,
-    wisdom: 12,
-  },
-  {
-    name: 'Scout',
-    type: 'Ranged',
-    tier: 1,
-    troopId: 7,
-    agility: 4,
-    attack: 3,
-    defense: 1,
-    vitality: 1,
-    wisdom: 1,
-  },
-  {
-    name: 'archer',
-    type: 'ranged',
-    tier: 2,
-    troopId: 8,
-    agility: 8,
-    attack: 6,
-    defense: 2,
-    vitality: 2,
-    wisdom: 2,
-  },
-  {
-    name: 'sniper',
-    type: 'ranged',
-    tier: 3,
-    troopId: 9,
-    agility: 16,
-    attack: 12,
-    defense: 4,
-    vitality: 4,
-    wisdom: 4,
-  },
-  {
-    name: 'Scorpio',
-    type: 'Siege',
-    tier: 1,
-    troopId: 10,
-    agility: 1,
-    attack: 4,
-    defense: 1,
-    vitality: 3,
-    wisdom: 1,
-  },
-  {
-    name: 'Ballista',
-    type: 'Siege',
-    tier: 2,
-    troopId: 11,
-    agility: 2,
-    attack: 8,
-    defense: 2,
-    vitality: 6,
-    wisdom: 2,
-  },
-  {
-    name: 'Catapult',
-    type: 'Siege',
-    tier: 3,
-    troopId: 12,
-    agility: 4,
-    attack: 16,
-    defense: 4,
-    vitality: 12,
-    wisdom: 4,
-  },
-  {
-    name: 'Apprentice',
-    type: 'ranged',
-    tier: 1,
-    troopId: 13,
-    agility: 2,
-    attack: 2,
-    defense: 1,
-    vitality: 1,
-    wisdom: 4,
-  },
-  {
-    name: 'Mage',
-    type: 'ranged',
-    tier: 2,
-    troopId: 14,
-    agility: 4,
-    attack: 4,
-    defense: 2,
-    vitality: 2,
-    wisdom: 8,
-  },
-  {
-    name: 'Arcanist',
-    type: 'ranged',
-    tier: 3,
-    troopId: 15,
-    agility: 8,
-    attack: 8,
-    defense: 4,
-    vitality: 4,
-    wisdom: 16,
-  },
-  {
-    name: 'GrandMarshal',
-    type: 'ranged',
-    tier: 3,
-    troopId: 16,
-    agility: 16,
-    attack: 16,
-    defense: 16,
-    vitality: 16,
-    wisdom: 16,
-  },
-];
 
 export const HealthBar = (props: HealthBarProps) => {
   const getVitality = () => {
@@ -268,15 +92,11 @@ export const Troop = (props: TroopProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const getTroop = () => {
-    return props.troopsStats?.find(
-      (a: TroopInterface) => a.troopId === props.troop.troopId
-    );
+    return props.troopsStats?.find((a) => a.troopId === props.troop.troopId);
   };
 
   const getTroopTierList = () => {
-    return props?.troopsStats?.filter(
-      (a: TroopInterface) => a.tier === props.troop.tier
-    );
+    return props?.troopsStats?.filter((a) => a.tier === props.troop.tier);
   };
 
   const troopCostCell = (cost: ItemCost) => {
@@ -323,12 +143,15 @@ export const Troop = (props: TroopProps) => {
 
   return (
     <div
+      role={'button'}
+      tabIndex={0}
+      onClick={() => props.onClick && props.onClick(props.troop)}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white/30 rounded shadow-inner flex`}
+      )} bg-white/30 rounded cursor-pointer shadow-inner flex`}
     >
       <HealthBar
         troopId={props.troop.troopId}
