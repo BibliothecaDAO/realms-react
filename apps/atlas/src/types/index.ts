@@ -204,7 +204,7 @@ export interface TroopInterface {
   wisdom: number;
   squadSlot: number;
   troopName?: string;
-  troopCost?: ItemCost[];
+  troopCost?: ItemCost | null;
 }
 
 export interface ItemCost {

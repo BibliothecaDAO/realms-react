@@ -26,7 +26,7 @@ const Military: React.FC<Prop> = (props) => {
         {props.squad}ing Army
       </div>
       <SquadBuilder
-        location={Squad[props.squad]}
+        squad={props.squad}
         realmId={realm.realmId}
         withPurchase={true}
         troops={troops}

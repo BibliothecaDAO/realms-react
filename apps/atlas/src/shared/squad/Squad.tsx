@@ -3,11 +3,13 @@ import { useMemo, useState } from 'react';
 import { number } from 'starknet';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
+import type { Squad } from '@/constants/index';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
 import SidebarHeader from '../SidebarHeader';
+import SquadStatistics from './SquadStatistics';
 
 interface SquadProps {
   className?: string;
@@ -15,9 +17,11 @@ interface SquadProps {
   flipped?: boolean;
   withPurchase?: boolean;
   realmId: number;
-  location: number; // 1 attack 2 defence
   troopsStats: any;
+  squad: keyof typeof Squad;
 }
+
+const EmptyTroopId = 0;
 
 export const SquadBuilder = (props: SquadProps) => {
   const { buildSquad } = useCombat({ token_id: props.realmId });
@@ -25,17 +29,13 @@ export const SquadBuilder = (props: SquadProps) => {
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
-  const troopIdsToPurchase = () => {
-    return toBuy.map((a: TroopInterface) => a.troopId);
-  };
-
   const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
     null
   );
 
   const fillGap = (tier: number, length: number) => {
     const emptyTroop: TroopInterface = {
-      troopId: 0,
+      troopId: EmptyTroopId,
       index: 0,
       type: 0,
       tier: 0,
@@ -48,26 +48,40 @@ export const SquadBuilder = (props: SquadProps) => {
       troopName: '',
     };
     const currentTroops = props.troops.filter((a) => a.tier === tier);
+
+    const queuedTroops = toBuy.filter((t) => t.tier == tier);
+
     const temp: TroopInterface[] = [];
 
-    for (let index = 0; index < length - currentTroops.length; index++) {
+    for (
+      let index = 0;
+      index < length - currentTroops.length - queuedTroops.length;
+      index++
+    ) {
       emptyTroop['tier'] = tier;
       temp.push(emptyTroop);
     }
 
-    return currentTroops.concat(temp).map((a, index) => {
-      return (
-        <Troop
-          onClick={(val) => setSelectedTroop(val)}
-          onSubmit={(value: any) => setToBuy((current) => [...current, value])}
-          onRemove={(value: any) => setToBuy((current) => [...current, value])}
-          withPurchase={props.withPurchase}
-          key={index}
-          troop={a}
-          troopsStats={props.troopsStats}
-        />
-      );
-    });
+    return currentTroops
+      .concat(queuedTroops)
+      .concat(temp)
+      .map((a, index) => {
+        return (
+          <Troop
+            onClick={(val) => setSelectedTroop(val)}
+            onSubmit={(value: any) =>
+              setToBuy((current) => [...current, value])
+            }
+            onRemove={(value: any) =>
+              setToBuy((current) => [...current, value])
+            }
+            withPurchase={props.withPurchase}
+            key={index}
+            troop={a}
+            troopsStats={props.troopsStats}
+          />
+        );
+      });
   };
 
   const tier1 = () => {
@@ -106,6 +120,9 @@ export const SquadBuilder = (props: SquadProps) => {
     };
   };
 
+  const selectedTroopIsEmpty =
+    selectedTroop && selectedTroop.troopId == EmptyTroopId;
+
   return (
     <div className="flex flex-col w-full">
       <div
@@ -126,36 +143,69 @@ export const SquadBuilder = (props: SquadProps) => {
       <AtlasSidebar isOpen={!!selectedTroop}>
         <SidebarHeader
           onClose={() => setSelectedTroop(null)}
-          title={`Train Tier ${selectedTroop?.tier || ' '} Troop`}
+          title={
+            selectedTroopIsEmpty
+              ? `Train Tier ${selectedTroop?.tier || ' '} Troop`
+              : selectedTroop?.troopName
+          }
         />
-        {troopStatsData?.getTroopStats ? (
-          <ArmoryBuilder
-            statistics={troopStatsData.getTroopStats}
-            realmId={props.realmId}
-            hideSquadToggle
-            filterTier={selectedTroop?.tier}
-          />
-        ) : null}
-      </AtlasSidebar>
 
-      <div className="flex">
-        {/* <div className="p-2 text-white uppercase rounded bg-black/30">
-          <div>Agility: {stats().agility}</div>
-          <div>attack: {stats().attack}</div>
-          <div>defense: {stats().defense}</div>
-          <div>vitality: {stats().vitality}</div>
-          <div>Wisdom: {stats().wisdom}</div>
-        </div> */}
-        {/* <div>
-          <Button
-            onClick={() => toggleMenuType('military')}
-            className="mt-4"
-            variant="primary"
-          >
-            Add troops
-          </Button>
-        </div> */}
-      </div>
+        {selectedTroopIsEmpty && troopStatsData?.getTroopStats && (
+          <>
+            <ArmoryBuilder
+              onBuildTroop={(t) => setToBuy(toBuy.concat(t))}
+              squad={props.squad}
+              troops={props.troops}
+              troopsQueued={toBuy}
+              statistics={troopStatsData.getTroopStats}
+              realmId={props.realmId}
+              hideSquadToggle
+              filterTier={selectedTroop?.tier}
+            />
+            <div className="grid grid-cols-2 gap-12 my-4">
+              <div className="col-start-1 col-end-2">
+                <h3>Statistics Preview</h3>
+                <SquadStatistics troops={props.troops} troopsQueued={toBuy} />
+              </div>
+              <div className="col-start-2 col-end-3">
+                <h3>Costs</h3>
+                <p>TODO</p>
+              </div>
+            </div>
+
+            <div className="flex">
+              <Button
+                disabled={toBuy.length == 0}
+                variant="primary"
+                className="flex-1 w-full mr-2"
+              >
+                {toBuy.length == 0
+                  ? 'Select Troops to Train'
+                  : `Train ${toBuy.length} Troops`}
+              </Button>
+              <Button
+                onClick={() => setToBuy([])}
+                disabled={toBuy.length == 0}
+                variant="outline"
+              >
+                Clear
+              </Button>
+            </div>
+          </>
+        )}
+
+        {selectedTroop && !selectedTroopIsEmpty && (
+          <>
+            <div className="p-2 text-white uppercase rounded bg-black/30">
+              <div>Agility: {selectedTroop.agility}</div>
+              <div>attack: {selectedTroop.attack}</div>
+              <div>defense: {selectedTroop.defense}</div>
+              <div>vitality: {selectedTroop.vitality}</div>
+              <div>Wisdom: {selectedTroop.wisdom}</div>
+            </div>
+          </>
+        )}
+      </AtlasSidebar>
     </div>
   );
 };

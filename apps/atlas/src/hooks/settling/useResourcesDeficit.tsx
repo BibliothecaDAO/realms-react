@@ -19,12 +19,15 @@ const useResourcesDeficit = (props: Props) => {
 
   const [deficits, setDeficits] = useState<Record<number, BigNumberish>>({});
 
-  const { balance: resourceBalances, balanceStatus } = useResourcesContext();
+  const resources = useResourcesContext();
 
   useEffect(() => {
-    if (Object.keys(resourceCosts).length > 0 && balanceStatus == 'success') {
+    if (
+      Object.keys(resourceCosts).length > 0 &&
+      resources.balanceStatus == 'success'
+    ) {
       const deficits = {};
-      resourceBalances.forEach((r) => {
+      resources.balance.forEach((r) => {
         const amount = toBN(r.amount, 10);
         if (resourceCosts[r.resourceId]) {
           const costBN = toBN(resourceCosts[r.resourceId]);
@@ -36,10 +39,11 @@ const useResourcesDeficit = (props: Props) => {
 
       setDeficits(deficits);
     }
-  }, [resourceBalances, resourceCosts]);
+  }, [resources.balance, resourceCosts]);
 
   return {
     deficits,
+    ...resources,
   };
 };
 

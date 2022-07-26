@@ -40,5 +40,7 @@ export enum Squad {
   Defend = 2,
 }
 
+export const TroopTierMax = [16, 8, 1];
+
 // Transaction status for a tx in queue (for multicall)
 export const ENQUEUED_STATUS = 'ENQUEUED';

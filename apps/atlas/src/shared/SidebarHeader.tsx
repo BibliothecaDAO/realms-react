@@ -1,11 +1,11 @@
 type Props = {
-  title: string;
+  title?: string;
   onClose: () => void;
 };
 
 const SidebarHeader = (props: Props) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mb-2">
       <h2>{props.title}</h2>
       <button onClick={props.onClose}>Close</button>
     </div>
