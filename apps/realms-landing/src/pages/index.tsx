@@ -14,12 +14,12 @@ function Home() {
   return (
     <MainLayout>
       <FullPageSlides />
-      <div className="py-5 mx-auto sm:w-1/4">
+      <div className="container px-8 py-5 mx-auto sm:w-1/2 sm:px-0 lg:w-1/4">
         <FaqBlock />
         <h1 className="text-xl font-semibold text-center lg:text-4xl">
           Stay up to Date
         </h1>
-        <p className="px-20 py-1 text-center">
+        <p className="px-10 py-1 text-center">
           Sign up to the newsletter and be the first one to know about new
           developments in the ecosystem.
         </p>

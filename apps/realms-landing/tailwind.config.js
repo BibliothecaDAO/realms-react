@@ -28,8 +28,8 @@ module.exports = {
         'screen-30': '30vh',
       },
       fontFamily: {
-        display: ['EB Garamond', 'serif'],
-        body: ['Inconsolata', 'monospace'],
+        display: ['IM Fell DW Pica SC', 'serif'],
+        body: ['IM Fell DW Pica', 'serif'],
         lords: ['Lords', 'serif'],
       },
       typography: (theme) => ({

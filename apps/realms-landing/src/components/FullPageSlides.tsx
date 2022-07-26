@@ -13,11 +13,9 @@ const slides = [
           <h1 className="text-9xl">Realms</h1>
           <h1>Imperion</h1>
         </div>
-        <div className="text-xl text-slate-800">
-          <p>Build Empires inside your browser.</p>
-          <p className="mb-6">
-            An eternal on-chain reality, powered by Starknet
-          </p>
+        <div className="text-xl text-gray-900">
+          <p>Build empires inside your browser.</p>
+          <p className="mb-6">An eternal on-chain game running on StarkNet</p>
           <Button href="https://atlas.bibliothecadao.xyz" variant="secondary">
             Explore the Atlas
           </Button>
@@ -29,16 +27,12 @@ const slides = [
     image: '/realms-art/eternity-desktop.png',
     imagePosition: '50% 70%',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
-          <h2>Realms</h2>
-          <h2>The Eternal</h2>
-          <h2>Gaming Universe</h2>
+          <h2 className="mb-4">An Eternal World</h2>
           <p>
-            Stride forth into your fantasy Universe. An eternal, on-chain
-            reality. The Realms is more than the land beneath your feet; it is
-            the grand stage for undending games and player-led experiences. This
-            is the Realms On-Chain Universe (ROCU)
+            The Realms are <strong>your</strong> fantasy universe. [GAME NAME]
+            is the first module in an infinitely expanding player-owned world.
           </p>
         </div>
       </div>
@@ -49,14 +43,13 @@ const slides = [
     link: 'https://scroll.bibliothecadao.xyz/',
     imagePosition: 'center',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
-          <h2>Behold Imperion</h2>
+          <h2 className="mb-4">Introducing [GAME NAME]</h2>
           <p>
-            Stride forth into your fantasy Universe. An eternal, on-chain
-            reality. The Realms is more than the land beneath your feet; it is
-            the grand stage for undending games and player-led experiences. This
-            is the Realms On-Chain Universe (ROCU)
+            A next generation MMO. Raise empires, raid resources, control
+            Relics. Maintain your cities and finesse your forces, or fall into
+            ruin.
           </p>
         </div>
       </div>
@@ -68,17 +61,12 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: 'center',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto text-slate-700 sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-4 mx-auto text-gray-900 sm:w-1/2">
         <div>
-          <h2>Player of Games</h2>
+          <h2 className="mb-4">Player with Freedom</h2>
           <p>
-            In the Realms On-Chain Universe you have unlimited agency to play
-            the way you wish. Take to the battlefield and show your prowess as a
-            general or soldier. Collude with members of your Order to take down
-            the powerful or prey on the weak. Dominate the markets with your eye
-            for an opportunity. In this on-chain civilization, no one can tell
-            you what to do. As you play, you create value in assets the you
-            fully own.
+            Dominate the battlefield. Out-smart the market. Exercise diplomacy.
+            Take down the powerful or prey on the weak? Your world, your choice.
           </p>
         </div>
       </div>
@@ -89,17 +77,12 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: 'center',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
-          <h2>Create or Destroy</h2>
+          <h2 className="mb-4">The Realms Resist</h2>
           <p>
-            Imperion is a persistent game of strategy, resource management,
-            trading, building and battling, set in the ROCU. Fine tuen the
-            composition of your empire's buildings and your military forces.
-            Produce what you need, or raid to take what you require to maintain
-            and grow your empire. Ward of parasitic goblins. Launch grand
-            expeditions to control the Relics of competing Orders, and fight
-            tooth and nail to defend your own.
+            It’s not just other Realm Lords to worry about: the Realms are
+            fighting back against over-exploitation.
           </p>
         </div>
       </div>
@@ -110,17 +93,12 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: '50% 65%',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto text-slate-700 sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2">
         <div>
-          <h2>Built on StarkNet</h2>
+          <h2 className="mb-4">Built on StarkNet</h2>
           <p>
-            The potential of gaming on the Ethereum blockchain can be fully
-            realised with StarkNet scaling technology. Many Layer 2 solutions
-            exist, but none offer the same advantages to game developers
-            creating rich and immersive gameplay involving thousands of
-            transactions per second. StarkNet are strategic partners and
-            investors in Bilbiotheca, the Web3 gaming studio building the Realms
-            On-Chain Universe.
+            Real-time, deeply strategic gameplay. On-chain and unstoppable.
+            Eternal play is made possible by StarkNet and Ethereum.
           </p>
         </div>
       </div>
@@ -131,15 +109,16 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: '50% 65%',
     content: (
-      <div className="flex flex-col justify-end h-full mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-4 mx-auto sm:w-1/2">
         <div>
-          <h2>Realms,</h2>
-          <h2>Eternal Metaverse</h2>
+          <h2 className="mb-4">Your realm is your sovereign empire</h2>
           <p>
-            Stride forth into your fantasy Universe. An eternal, on-chain
-            reality. The Realms is more than the land beneath your feet; it is
-            the grand stage for undending games and player-led experiences. This
-            is the Realms On-Chain Universe (ROCU)
+            There are 8,000 individual realms which together form the
+            territorial base layer of the Realms fantasy universe. Each realm is
+            unique. All produce resources. Some host mysterious ‘Wonders’. Each
+            belongs to one of 16 powerful Orders. Explore the deeds to these
+            sovereign states in the Realm On Chain Universe{' '}
+            <a href="https://opensea.io/collection/lootrealms">here</a>.
           </p>
         </div>
       </div>
@@ -161,7 +140,7 @@ export const FullPageSlides = () => {
               objectFit="cover"
               objectPosition={slide.imagePosition || 'top'}
             />
-            <div className="container relative h-full py-10 mx-auto">
+            <div className="container relative h-full py-16 mx-auto">
               {slide.content}
             </div>
           </div>
