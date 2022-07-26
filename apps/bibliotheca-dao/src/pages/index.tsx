@@ -18,7 +18,6 @@ function Home() {
   const jobs = [
     { location: 'Realms', title: 'Creative Director', skills: ['creative'] },
   ];
-  const [count, setCount] = useState(0);
   const [key, setKey] = useState(1);
   return (
     <MainLayout>
@@ -38,19 +37,13 @@ function Home() {
                   <Typist.Delay ms={1500} />
                   <Typist.Backspace count={8} />
                   <Typist.Delay ms={1500} />
-                  MMO
+                  eternal gaming
                   <Typist.Delay ms={1500} />
-                  <Typist.Backspace count={3} />
+                  <Typist.Backspace count={14} />
                   <Typist.Delay ms={1500} />
                   composable
                   <Typist.Delay ms={4000} />
                 </span>
-                {/* <Typist.Paste>
-                  <div>
-                    use
-                    <div>deeper div</div>
-                  </div>
-                </Typist.Paste> */}
               </Typist>
               <br />
               realities.
@@ -72,7 +65,7 @@ function Home() {
           </div>
 
           <h1 className="mb-10">Master Scroll</h1>
-          <p className="sm:text-2xl">Our litepaper on eternal games.</p>
+          <p className="sm:text-2xl">Our litepaper on ETERNAL GAMES.</p>
           <div className="mt-4">
             <Button
               href="https://scroll.bibliothecadao.xyz/"
@@ -111,7 +104,7 @@ function Home() {
               size="sm"
               variant="dao"
             >
-              explore on the atlas
+              explore the atlas
             </Button>
           </div>
         </div>
