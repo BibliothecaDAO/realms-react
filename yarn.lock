@@ -23238,13 +23238,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"listplayer@npm:0.2.3":
-  version: 0.2.3
-  resolution: "listplayer@npm:0.2.3"
-  checksum: af72f466c7c703401e0b65f40f0bb529d73fb87caa85e003fb0f79433b41b904330f431bb510711bb6af4cb998e8d9545875b2b68a05f24dc2f35c6746f2fd74
-  languageName: node
-  linkType: hard
-
 "listr-silent-renderer@npm:^1.1.1":
   version: 1.1.1
   resolution: "listr-silent-renderer@npm:1.1.1"

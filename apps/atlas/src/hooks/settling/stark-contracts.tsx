@@ -14,7 +14,7 @@ import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.js
 // Note: Can use process.env | static definition if needed
 // Lords: process.env.LORDS_ADDR | "0x..."
 export const ModuleAddr = {
-  Lords: '0x007d55d72aebeca63b909d5fac3316e082efe9eb98cb003672bf865c7a2dd45d',
+  Lords: '0x0448549cccff35dc6d5df90efceda3123e4cec9fa2faff21d392c4a92e95493c',
   ResourceGame:
     '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd',
   Realms: '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
@@ -23,9 +23,9 @@ export const ModuleAddr = {
   Settling:
     '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356',
   Exchange:
-    '0x040cfa14714dcd6899f034c4df8396c0b2851598a58d58846da05c5e7743cbfd',
+    '0x015eba242880374267dc54900b7d569a964fcd8d251a2edfb66a4ec9a78eaedc',
   ResourcesToken:
-    '0x043f4c6a92250cda1e297988840dff5506d8f8cef4cabe2e48bd4b4718bf4a70',
+    '0x07144f39e676656e81d482dc2cc9f68c98d768fe1beaad28438b43142cc9ff9e',
   Building:
     '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
   Combat: '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',

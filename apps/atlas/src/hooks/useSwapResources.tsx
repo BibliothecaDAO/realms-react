@@ -97,3 +97,77 @@ export const useSellResources = () => {
     invokeError,
   };
 };
+
+export const useAddLiquidity = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('add_liquidity');
+
+  const addLiquidity = (
+    minCurrencyAmount: BigNumber[],
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    if (loading) {
+      return;
+    }
+    invoke({
+      args: [
+        minCurrencyAmount.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    addLiquidity,
+    transactionHash,
+    invokeError,
+  };
+};
+
+export const useRemoveLiquidity = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('remove_liquidity');
+
+  const removeLiquidity = (
+    minCurrencyAmount: BigNumber[],
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    lpAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    if (loading) {
+      return;
+    }
+    invoke({
+      args: [
+        minCurrencyAmount.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        lpAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    removeLiquidity,
+    transactionHash,
+    invokeError,
+  };
+};

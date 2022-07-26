@@ -15,6 +15,7 @@ import { useGetExchangeRatesQuery } from '@/generated/graphql';
 import {
   useLordsContract,
   useResources1155Contract,
+  useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 import { resources } from '@/util/resources';
 
@@ -23,6 +24,7 @@ export type Resource = {
   resourceName: string;
   amount: string;
   rate: string;
+  lp: string;
   percentChange: number;
 };
 
@@ -43,6 +45,7 @@ const initBalance = resources.map((resource) => {
     resourceName: resource.trait,
     amount: '0',
     rate: '0',
+    lp: '0',
     percentChange: 0,
   };
 });
@@ -62,6 +65,7 @@ const ResourcesContext = createContext<{
   lordsBalance: string;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
+  lpBalance: ResourcesBalance;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -80,6 +84,7 @@ function useResources() {
   const { account } = useStarknet();
   const [balance, setBalance] = useState([...initBalance]);
   const [lordsBalance, setLordsBalance] = useState('0');
+  const [lpBalance, setlpBalanceData] = useState([...initBalance]);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -90,6 +95,7 @@ function useResources() {
 
   const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
+  const { contract: exchangeContract } = useExchangeContract();
 
   const ownerAddressInt = toBN(account as string).toString();
 
@@ -109,6 +115,15 @@ function useResources() {
       ],
     }
   );
+
+  const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
+    contract: exchangeContract,
+    method: 'balanceOfBatch',
+    args: [
+      Array(resourceMapping.length).fill(ownerAddressInt),
+      resourceMapping,
+    ],
+  });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
     pollInterval: 5000,
@@ -179,7 +194,17 @@ function useResources() {
     if (!resourceBalanceData || !resourceBalanceData[0]) {
       return;
     }
+    if (!lpBalanceData || !lpBalanceData[0]) {
+      return;
+    }
     const rates = exchangeRateData?.getExchangeRates ?? [];
+
+    const lp = lpBalanceData[0].map((resourceBalance, index) => {
+      return {
+        amount: uint256ToBN(resourceBalance).toString(10),
+      };
+    });
+
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
         const resourceId = index + 1;
@@ -191,6 +216,7 @@ function useResources() {
           resourceName,
           amount: uint256ToBN(resourceBalance).toString(10),
           rate: rateAmount ?? '0',
+          lp: lp[index].amount,
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
@@ -225,6 +251,7 @@ function useResources() {
     updateBalance,
     getResourceById,
     lordsBalance,
+    lpBalance,
   };
 }
 

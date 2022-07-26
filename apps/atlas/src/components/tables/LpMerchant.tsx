@@ -22,7 +22,7 @@ import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
+import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
@@ -30,6 +30,7 @@ type ResourceRowProps = {
   availableResources: Resource[];
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
+  onLpQtyChange: (resourceId: number, qty: number) => void;
 };
 
 const displayRate = (rate: string) => {
@@ -53,10 +54,26 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
       props.onQtyChange(
         props.resource.resourceId,
         parseInt(newValue as string)
-      ); /* updatePercentByValue(newValue); */
-    }, 500);
+      );
+    }, 100);
     setTime(timerId);
   };
+
+  const handleLpValueChange = (newValue: ValueType | null) => {
+    if (newValue === null) return;
+    if (time) {
+      clearTimeout(time);
+    }
+    let timerId: NodeJS.Timeout | null = null;
+    timerId = setTimeout(() => {
+      props.onLpQtyChange(
+        props.resource.resourceId,
+        parseInt(newValue as string)
+      );
+    }, 100);
+    setTime(timerId);
+  };
+
   const handleSelectChange = (newValue: number) => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
@@ -100,7 +117,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         </Select>
         <div className="flex justify-between pt-1.5 text-xs uppercase">
           <div>balance: {formatEther(props.resource.amount)}</div>
-          <div>1 = {displayRate(props.resource.rate)}</div>
+          {/* <div>1 = {displayRate(props.resource.rate)}</div> */}
         </div>
       </div>
       <div className="flex justify-end text-right sm:w-1/2">
@@ -110,14 +127,20 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             inputSize="md"
             colorScheme="transparent"
             className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
-            /* inputPrefix={/* <span className="text-md text-gray">
-            ~{value} {mockData.additionalCurrency}
-          </span>} 
-        prefixPosition="button" */
             min={0}
             max={10000}
             stringMode // to support high precision decimals
             onChange={handleValueChange}
+          />{' '}
+          <InputNumber
+            value={props.resource.qty}
+            inputSize="md"
+            colorScheme="transparent"
+            className="w-20 mt-10 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
+            min={0}
+            max={10000}
+            stringMode // to support high precision decimals
+            onChange={handleLpValueChange}
           />{' '}
           <div className="flex justify-end">
             <span className="mr-1">
@@ -142,12 +165,14 @@ export function LpMerchant(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
-  const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
-  const { sellTokens, loading: isSellTransactionInProgress } =
-    useSellResources();
+  const { addLiquidity, loading: isAddLiquidityTransactionInProgress } =
+    useAddLiquidity();
+  const { removeLiquidity, loading: isRemoveLiquidityTransactionInProgress } =
+    useRemoveLiquidity();
 
   const isTransactionInProgress =
-    isBuyTransactionInProgress || isSellTransactionInProgress;
+    isAddLiquidityTransactionInProgress ||
+    isRemoveLiquidityTransactionInProgress;
 
   const {
     availableResourceIds,
@@ -157,9 +182,12 @@ export function LpMerchant(): ReactElement {
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
+    updateSelectedLpResourceQty,
   } = useResourcesContext();
+
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
+
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
@@ -175,7 +203,7 @@ export function LpMerchant(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
-  function onBuyTokensClick() {
+  function onAddLiquidityClick() {
     // TODO: check lords balance
 
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
@@ -186,15 +214,15 @@ export function LpMerchant(): ReactElement {
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
-    const maxAmount = parseEther(
-      String(calculatedTotalInLords + calculatedSlippage)
+    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(String(1))
     );
 
     const maxDate = new Date();
     maxDate.setMinutes(maxDate.getMinutes() + 30);
     const deadline = Math.floor(maxDate.getTime() / 1000);
 
-    buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
+    addLiquidity(currencyAmounts, tokenIds, tokenAmounts, deadline);
   }
 
   function onSellTokensClick() {
@@ -208,20 +236,31 @@ export function LpMerchant(): ReactElement {
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
-    const minAmount = parseEther(
-      String(calculatedTotalInLords - calculatedSlippage)
+
+    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(String(0.1))
+    );
+
+    const lpAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(String(0.2))
     );
 
     const maxDate = new Date();
     maxDate.setMinutes(maxDate.getMinutes() + 30);
     const deadline = Math.floor(maxDate.getTime() / 1000);
 
-    sellTokens(minAmount, tokenIds, tokenAmounts, deadline);
+    removeLiquidity(
+      currencyAmounts,
+      tokenIds,
+      tokenAmounts,
+      lpAmounts,
+      deadline
+    );
   }
 
   function onTradeClicked() {
     if (isBuy) {
-      onBuyTokensClick();
+      onAddLiquidityClick();
     } else {
       onSellTokensClick();
     }
@@ -236,6 +275,7 @@ export function LpMerchant(): ReactElement {
           </Button>
         </div>
       )}
+      {/* TODO: NOT WORKING */}
       {!isResourcesApprovedForExchange && isSell && (
         <div>
           <Button
@@ -251,7 +291,7 @@ export function LpMerchant(): ReactElement {
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
-          Buy Resources
+          add LP
         </div>
         <Switch
           checked={isBuy}
@@ -268,7 +308,7 @@ export function LpMerchant(): ReactElement {
           />
         </Switch>
         <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
-          Sell Resources
+          remove LP
         </div>
       </div>
       <div>
@@ -277,11 +317,13 @@ export function LpMerchant(): ReactElement {
             <ResourceRow
               key={resource.resourceId}
               resource={resource}
+              lp={resource}
               availableResources={availableResourceIds.map(
                 (resourceId) => getResourceById(resourceId) as Resource
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}
+              onLpQtyChange={updateSelectedLpResourceQty}
             />
             <IconButton
               className="absolute -top-3 -right-3"
@@ -329,8 +371,8 @@ export function LpMerchant(): ReactElement {
             {isTransactionInProgress
               ? 'Pending...'
               : isBuy
-              ? 'buy resources'
-              : 'sell resources'}
+              ? 'add liquidity'
+              : 'remove liquidity'}
           </Button>
         </div>
       </div>

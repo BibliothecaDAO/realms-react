@@ -33,6 +33,7 @@ export function BankPanel(): ReactElement {
   const {
     lordsBalance,
     balance,
+    lpBalance,
     availableResourceIds,
     addSelectedSwapResources,
   } = useResourcesContext();
@@ -55,6 +56,7 @@ export function BankPanel(): ReactElement {
       output: 0,
       change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),
+      lp_balance: (+formatEther(resource.lp)).toFixed(2),
       action: (
         <Button
           variant="secondary"
@@ -75,7 +77,8 @@ export function BankPanel(): ReactElement {
     { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Change', id: 4, accessor: 'change' },
     { Header: 'Rate', id: 5, accessor: 'rate' },
-    { Header: 'Action', id: 6, accessor: 'action' },
+    { Header: 'LP Balance', id: 6, accessor: 'lp_balance' },
+    { Header: 'Action', id: 7, accessor: 'action' },
   ];
   const tableOptions = { is_striped: true };
   const { data } = useGetRealmQuery({
