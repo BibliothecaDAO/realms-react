@@ -140,7 +140,7 @@ export function CombatPanel(): ReactElement {
           )}
 
           <SquadBuilder
-            location={2}
+            squad="Defend"
             flipped={true}
             realmId={parseInt(defendId)}
             withPurchase={false}
@@ -151,7 +151,7 @@ export function CombatPanel(): ReactElement {
           <hr></hr>
 
           <SquadBuilder
-            location={1}
+            squad="Attack"
             realmId={parseInt(attackId)}
             withPurchase={true}
             troops={attackSquad}

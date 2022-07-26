@@ -41,9 +41,12 @@ export const MilitarySideBar = () => {
     () => [
       {
         label: 'Armory',
-        component: (
+        component: troopStatsData?.getTroopStats && (
           <ArmoryBuilder
             realmId={5500}
+            troops={[]}
+            troopsQueued={[]}
+            squad={'Attack'}
             statistics={troopStatsData?.getTroopStats}
           />
         ),
