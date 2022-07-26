@@ -8,9 +8,9 @@ const slides = [
     image: '/realms-art/warRoom-desktop.png',
     link: 'https://atlas.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-between h-full text-center">
+      <div className="flex flex-col justify-between h-full px-6 text-center">
         <div className="mb-2 uppercase">
-          <h1 className="text-9xl">Realms</h1>
+          <h1 className="text-7xl sm:text-9xl">Realms</h1>
           <h1>Imperion</h1>
         </div>
         <div className="text-xl text-gray-900">
@@ -61,7 +61,7 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: 'center',
     content: (
-      <div className="flex flex-col justify-end h-full px-4 mx-auto text-gray-900 sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:w-1/2">
         <div>
           <h2 className="mb-4">Player with Freedom</h2>
           <p>
@@ -109,7 +109,7 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: '50% 65%',
     content: (
-      <div className="flex flex-col justify-end h-full px-4 mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:w-1/2">
         <div>
           <h2 className="mb-4">Your realm is your sovereign empire</h2>
           <p>
