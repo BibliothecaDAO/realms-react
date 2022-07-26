@@ -31,45 +31,45 @@ const SquadStatistics = (props: Props) => {
       <div className="flex justify-between ">
         Vitality:{' '}
         <span>
-          {squadStats(props.troops).vitality}{' '}
+          {squadStats(props.troops).vitality}
           {vitalityQueued
-            ? `+ ${squadStats(props.troopsQueued).vitality} = ${vitalitySum}`
+            ? `+${squadStats(props.troopsQueued).vitality}=${vitalitySum}`
             : ''}
         </span>
       </div>
       <div className="flex justify-between">
         Attack:{' '}
         <span>
-          {squadStats(props.troops).attack}{' '}
+          {squadStats(props.troops).attack}
           {attackQueued
-            ? `+ ${squadStats(props.troopsQueued).attack} = ${attackSum}`
+            ? `+${squadStats(props.troopsQueued).attack}=${attackSum}`
             : ''}
         </span>
       </div>
       <div className="flex justify-between">
         Defense:{' '}
         <span>
-          {squadStats(props.troops).defense}{' '}
+          {squadStats(props.troops).defense}
           {defenseQueued
-            ? `+ ${squadStats(props.troopsQueued).defense} = ${defenseSum}`
+            ? `+${squadStats(props.troopsQueued).defense}=${defenseSum}`
             : ''}
         </span>
       </div>
       <div className="flex justify-between">
         Wisdom:{' '}
         <span>
-          {squadStats(props.troops).wisdom}{' '}
+          {squadStats(props.troops).wisdom}
           {wisdomQueued
-            ? `+ ${squadStats(props.troopsQueued).wisdom} = ${wisdomSum}`
+            ? `+${squadStats(props.troopsQueued).wisdom}=${wisdomSum}`
             : ''}
         </span>
       </div>
       <div className="flex justify-between">
         Agility:{' '}
         <span>
-          {squadStats(props.troops).agility}{' '}
+          {squadStats(props.troops).agility}
           {agilityQueued
-            ? `+ ${squadStats(props.troopsQueued).agility} = ${agilitySum}`
+            ? `+${squadStats(props.troopsQueued).agility}=${agilitySum}`
             : ''}
         </span>
       </div>

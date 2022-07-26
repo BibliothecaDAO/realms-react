@@ -36,10 +36,23 @@ import Military from './RealmDetails/Military';
 import Raid from './RealmDetails/Raids';
 import Statistics from './RealmDetails/Statistics';
 import RealmToolbar from './RealmDetails/Toolbar';
+// import styled from '@emotion/styled';
 
 interface RealmDetailsPanelProps {
   realmId: number;
 }
+
+// const Overlay = styled.div`
+//   transform: perspective(1100px) rotateX(60deg) rotateZ(45deg) scale(110%);
+//   transform-style: preserve-3d;
+//   background-color: orange;
+//   position: absolute;
+//   height: 500px;
+//   width: 500px;
+//   opacity: 50%;
+//   top: 0px;
+//   left: 0px;
+// `;
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const [_, setId] = useState(realmId);
@@ -109,7 +122,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           <>
             <SidebarHeader
               onClose={() => set(null)}
-              title={subview as string}
+              title={
+                subview == 'Attack' && isOwner ? 'Armory' : (subview as string)
+              }
             />
             {realmData ? (
               <>
@@ -122,7 +137,11 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             ) : null}
           </>
         </AtlasSidebar>
-        <RealmToolbar onSetSubview={(s) => set(s)} className="fixed bottom-0" />
+        <RealmToolbar
+          isOwnerOfRealm={isOwner}
+          onSetSubview={(s) => set(s)}
+          className="fixed bottom-0"
+        />
         {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">

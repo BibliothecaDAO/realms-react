@@ -1,12 +1,11 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
-import { useEffect, useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
-import useCombat from '@/hooks/settling/useCombat';
-import { Troop } from '@/shared/squad/Troops';
-import type { ItemCost, ResourceCost, TroopInterface } from '@/types/index';
+import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
+
 interface Props {
   realmId: number;
   statistics: GetTroopStatsQuery['getTroopStats'];
@@ -19,12 +18,6 @@ interface Props {
 }
 const columns = [
   { Header: 'name', id: 1, accessor: 'name' },
-  //   { Header: 'agility', id: 2, accessor: 'agility' },
-  //   { Header: 'attack', id: 3, accessor: 'attack' },
-  //   { Header: 'defense', id: 4, accessor: 'defense' },
-  //   { Header: 'vitality', id: 5, accessor: 'vitality' },
-  //   { Header: 'wisdom', id: 6, accessor: 'wisdom' },
-
   { Header: 'cost', id: 6, accessor: 'troopCost' },
   { Header: 'action', id: 6, accessor: 'add' },
 ];
@@ -33,11 +26,6 @@ const tableOptions = { is_striped: true };
 
 type Row = {
   name: JSX.Element;
-  //   agility: number;
-  //   attack: number;
-  //   defense: number;
-  //   vitality: number;
-  //   wisdom: number;
   troopCost: JSX.Element;
 };
 export const ArmoryBuilder = (props: Props) => {
@@ -107,34 +95,6 @@ export const ArmoryBuilder = (props: Props) => {
       ),
     };
   });
-  /*
-  const getCostSums = (squad: TroopInterface[]) => {
-    const troopIds = squad?.map((a: TroopInterface) => {
-      return a?.troopCost;
-    });
-
-    const resources = troopIds
-      .map((a: any) => {
-        return a.resources;
-      })
-      .flat();
-
-    return resources.reduce((acc, curr) => {
-      const index = acc.findIndex(
-        (item) => item.resourceId === curr.resourceId
-      );
-      index > -1
-        ? (acc[index].amount += curr.amount)
-        : acc.push({
-            resourceId: curr.resourceId,
-            amount: curr.amount,
-          });
-      return acc;
-    }, []);
-  };
-  */
-
-  const { buildSquad } = useCombat({ token_id: props.realmId });
 
   const [armyType, toggleArmyType] = useReducer(
     (state: 'attacking' | 'defending') => {
@@ -197,30 +157,6 @@ export const ArmoryBuilder = (props: Props) => {
           />
         )}
       </div>
-      {/* <div className="flex space-x-2">
-        <div className="w-1/2 p-4 my-4 font-semibold shadow-inner bg-gray-800/60">
-          <h4>Cost</h4>
-          <hr className="py-2 " />
-          {getCostSums(toBuy).map((a, index) => {
-            return (
-              <div key={index} className="flex justify-between">
-                <span className="flex justify-between w-full">
-                  <ResourceIcon
-                    resource={
-                      findResourceName(a.resourceId)?.trait.replace(' ', '') ||
-                      ''
-                    }
-                    size="xs"
-                    className="self-center mr-4"
-                  />
-                  <span>{a.amount}</span>
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div> 
-      */}
     </div>
   );
 };

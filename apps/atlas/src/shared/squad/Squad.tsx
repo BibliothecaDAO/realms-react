@@ -1,13 +1,15 @@
-import { Button } from '@bibliotheca-dao/ui-lib/base';
-import { useMemo, useState } from 'react';
-import { number } from 'starknet';
+import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import { useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
-import type { Squad } from '@/constants/index';
+import { Squad } from '@/constants/index';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
-import useCombat from '@/hooks/settling/useCombat';
+import { createCall } from '@/hooks/settling/useCombat';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
+import { getCostSums } from '@/util/armory';
+import { findResourceName } from '@/util/resources';
 import SidebarHeader from '../SidebarHeader';
 import SquadStatistics from './SquadStatistics';
 
@@ -24,7 +26,6 @@ interface SquadProps {
 const EmptyTroopId = 0;
 
 export const SquadBuilder = (props: SquadProps) => {
-  const { buildSquad } = useCombat({ token_id: props.realmId });
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
@@ -94,11 +95,7 @@ export const SquadBuilder = (props: SquadProps) => {
     return fillGap(3, 1);
   };
 
-  const trimTroopFromSquad = (troop: TroopInterface) => {
-    const index = toBuy.findIndex((a) => a.troopId === troop.troopId);
-
-    setToBuy(() => [...toBuy.splice(index, 1)]);
-  };
+  const txQueue = useTransactionQueue();
 
   const stats = () => {
     return {
@@ -145,8 +142,8 @@ export const SquadBuilder = (props: SquadProps) => {
           onClose={() => setSelectedTroop(null)}
           title={
             selectedTroopIsEmpty
-              ? `Train Tier ${selectedTroop?.tier || ' '} Troop`
-              : selectedTroop?.troopName
+              ? `Train Tier ${selectedTroop?.tier || ' '} Troops`
+              : selectedTroop?.troopName || 'Troop'
           }
         />
 
@@ -162,20 +159,43 @@ export const SquadBuilder = (props: SquadProps) => {
               hideSquadToggle
               filterTier={selectedTroop?.tier}
             />
-            <div className="grid grid-cols-2 gap-12 my-4">
+            <div className="grid grid-cols-2 gap-6 my-4">
               <div className="col-start-1 col-end-2">
                 <h3>Statistics Preview</h3>
                 <SquadStatistics troops={props.troops} troopsQueued={toBuy} />
               </div>
               <div className="col-start-2 col-end-3">
                 <h3>Costs</h3>
-                <p>TODO</p>
+                {getCostSums(toBuy).map((a, index) => {
+                  return (
+                    <div key={index} className="inline-block mb-2">
+                      <span className="">
+                        <ResourceIcon
+                          resource={findResourceName(a.resourceId)?.trait || ''}
+                          size="xs"
+                          className="self-center mr-4"
+                        />
+                        <span>{a.amount}</span>
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <div className="flex">
               <Button
                 disabled={toBuy.length == 0}
+                onClick={() => {
+                  txQueue.add(
+                    createCall.buildSquad({
+                      realmId: props.realmId,
+                      troopIds: toBuy.map((t) => t.troopId),
+                      squadSlot: Squad[props.squad],
+                    })
+                  );
+                  setToBuy([]);
+                }}
                 variant="primary"
                 className="flex-1 w-full mr-2"
               >
