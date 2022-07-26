@@ -108,9 +108,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             layout={'responsive'}
           />
           <div className="absolute flex justify-center items-center flex-col top-8 w-full">
-            {subview == 'Attack' && (
-              <Military squad="Defend" realm={realmData} />
-            )}
+            {subview == 'Attack' && <Military realm={realmData} />}
             {subview == 'Buildings' && realmData?.realm && (
               <RealmBuildings realm={realmData.realm} loading={false} />
             )}
