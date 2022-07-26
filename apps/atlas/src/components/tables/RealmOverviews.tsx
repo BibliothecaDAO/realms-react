@@ -161,19 +161,19 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
               <div className="self-center w-full font-semibold tracking-widest uppercase">
                 <div className="flex justify-between ">
-                  Vitality: <span> {squadStats(realm.squad).vitality}</span>
+                  Vitality: <span> {squadStats(realm.troops).vitality}</span>
                 </div>
                 <div className="flex justify-between">
-                  Attack: <span>{squadStats(realm.squad).attack}</span>
+                  Attack: <span>{squadStats(realm.troops).attack}</span>
                 </div>
                 <div className="flex justify-between">
-                  Defense: <span>{squadStats(realm.squad).defense}</span>
+                  Defense: <span>{squadStats(realm.troops).defense}</span>
                 </div>
                 <div className="flex justify-between">
-                  Wisdom: <span>{squadStats(realm.squad).wisdom}</span>
+                  Wisdom: <span>{squadStats(realm.troops).wisdom}</span>
                 </div>
                 <div className="flex justify-between">
-                  Agility: <span>{squadStats(realm.squad).agility}</span>
+                  Agility: <span>{squadStats(realm.troops).agility}</span>
                 </div>
               </div>
             </div>

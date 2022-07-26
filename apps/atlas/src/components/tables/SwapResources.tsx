@@ -134,7 +134,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  // const [enabled, setEnabled] = useState(false);
   const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
     return state === 'sell' ? 'buy' : 'sell';
   }, 'buy');
@@ -151,6 +150,7 @@ export function SwapResources(): ReactElement {
 
   const {
     availableResourceIds,
+    lordsBalance,
     selectedSwapResourcesWithBalance,
     getResourceById,
     addSelectedSwapResources,
@@ -163,7 +163,7 @@ export function SwapResources(): ReactElement {
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.5);
+  const [slippage, setSlippage] = useState(0.1);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -175,10 +175,43 @@ export function SwapResources(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
-  function onBuyTokensClick() {
-    // TODO: check lords balance
+  const isBuyButtonDisabled = useMemo(() => {
+    if (isSell) {
+      return false;
+    }
+    const balance = parseFloat(formatEther(lordsBalance));
+    return (
+      !isLordsApprovedForExchange ||
+      balance === 0 ||
+      balance < calculatedTotalInLords
+    );
+  }, [
+    tradeType,
+    isLordsApprovedForExchange,
+    isResourcesApprovedForExchange,
+    lordsBalance,
+    calculatedTotalInLords,
+  ]);
 
-    if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
+  const isSellButtonDisabled = useMemo(() => {
+    if (isBuy) {
+      return false;
+    }
+
+    return (
+      !isResourcesApprovedForExchange ||
+      selectedSwapResourcesWithBalance.filter(
+        (resource) => resource.qty > parseFloat(formatEther(resource.amount))
+      ).length !== 0
+    );
+  }, [
+    tradeType,
+    isResourcesApprovedForExchange,
+    selectedSwapResourcesWithBalance,
+  ]);
+
+  function onBuyTokensClick() {
+    if (isBuyButtonDisabled) return;
 
     const tokenIds = selectedSwapResourcesWithBalance.map(
       (resource) => resource.resourceId
@@ -198,9 +231,7 @@ export function SwapResources(): ReactElement {
   }
 
   function onSellTokensClick() {
-    // TODO: check resource balances
-
-    if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
+    if (isSellButtonDisabled) return;
 
     const tokenIds = selectedSwapResourcesWithBalance.map(
       (resource) => resource.resourceId
@@ -230,14 +261,14 @@ export function SwapResources(): ReactElement {
   return (
     <div className="flex flex-col justify-between h-full">
       {!isLordsApprovedForExchange && isBuy && (
-        <div>
+        <div className="pb-4">
           <Button className="w-full" variant="primary" onClick={approveLords}>
             APPROVE LORDS
           </Button>
         </div>
       )}
       {!isResourcesApprovedForExchange && isSell && (
-        <div>
+        <div className="pb-4">
           <Button
             className="w-full"
             variant="primary"
@@ -311,8 +342,11 @@ export function SwapResources(): ReactElement {
               <span className="mr-1">{calculatedTotalInLords.toFixed(2)}</span>
               <LordsIcon className="w-6 h-6 mt-0.5" />
             </div>
-            <div className="flex justify-end text-md">
-              {calculatedSlippage.toFixed(2)}
+            <div>
+              <div className="flex justify-end text-md">
+                {(+formatEther(lordsBalance)).toFixed(2)}{' '}
+                <LordsIcon className="w-4 h-4 mt-1 ml-1" />
+              </div>
             </div>
           </div>
 
@@ -320,11 +354,7 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            disabled={
-              isTransactionInProgress ||
-              (!isLordsApprovedForExchange && isBuy) ||
-              (!isResourcesApprovedForExchange && isSell)
-            }
+            disabled={isBuyButtonDisabled || isSellButtonDisabled}
           >
             {isTransactionInProgress
               ? 'Pending...'

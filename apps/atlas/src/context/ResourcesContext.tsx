@@ -160,7 +160,7 @@ function useResources() {
       return;
     }
     setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
-  });
+  }, [lordsBalanceData]);
 
   useEffect(() => {
     setAvailableResourceIds(

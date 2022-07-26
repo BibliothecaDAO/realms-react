@@ -22,17 +22,17 @@ export function RaidResultsPanel({ defendId, tx }: RealmResultsPanelProps) {
   }, [defendId]);
   const { data: realmData } = useGetRealmsQuery({ variables });
 
-  const defendingRealmData = realmData?.getRealms.find(
+  const defendingRealmData = realmData?.realms.find(
     (realm) => realm.realmId === defendId
   );
-  const attackingRealmData = realmData?.getRealms.find(
+  const attackingRealmData = realmData?.realms.find(
     (realm) => realm.realmId === defendId
   );
 
   const attackSquad =
-    attackingRealmData?.squad?.filter((squad) => squad.squadSlot === 1) ?? [];
+    attackingRealmData?.troops?.filter((squad) => squad.squadSlot === 1) ?? [];
   const defenseSquad =
-    defendingRealmData?.squad?.filter((squad) => squad.squadSlot === 2) ?? [];
+    defendingRealmData?.troops?.filter((squad) => squad.squadSlot === 2) ?? [];
 
   const getTrait = (realm: any, trait: string) => {
     return realm?.traits?.find((o) => o.type === trait)

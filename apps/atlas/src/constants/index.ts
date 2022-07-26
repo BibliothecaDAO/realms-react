@@ -18,7 +18,7 @@ export const RAIDABLE_PERCENTAGE = 25;
 
 export enum RealmsMax {
   Score = 400,
-  Rank = 7992,
+  Rank = 8000,
 
   Region = 7,
   City = 21,

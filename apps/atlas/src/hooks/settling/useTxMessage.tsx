@@ -1,47 +1,77 @@
-export function useTxMessage(metadata) {
-  switch (metadata.action) {
-    case 'mint':
-      return ['Minting', `Terraforming realm ${metadata.realmId}.`];
+import { Entrypoints as BuildingMethods } from './useBuildings';
+import { Entrypoints as ResourceMethods } from './useResources';
 
-    case 'settle':
-      return ['Settling', `Realm #${metadata.realmId} is being populated.`];
+type TxWithMetadata = { status: string; metadata?: any };
 
-    case 'unsettle':
-      return ['Unsettling', `Abandoning realm #${metadata.realmId}.`];
+interface TxMessage {
+  title: string;
+  description: string;
+}
 
-    case 'harvest_resources':
-      return [
-        'Harvesting Resources',
-        `Serfs gathering resources on Realm #${metadata.realmId}.`,
-      ];
+export function getTxMessage(tx: TxWithMetadata): TxMessage {
+  const isQueued = tx.status == 'ENQUEUED';
 
-    case 'realm_building':
-      return [
-        'Constructing Building',
-        `Realm #${metadata.realmId} has commenced building ${metadata.buildingId}`,
-      ];
+  const metadata = tx.metadata;
 
-    case 'upgrade_resource':
-      return [
-        'Upgrading Resource',
-        `Realm ${metadata.realmId} is increasing production of ${metadata.resourceId}.`,
-      ];
+  if (metadata.title && metadata.description) {
+    return metadata;
+  }
 
-    case 'build_troops':
-      return [
-        `Building Troops`,
-        `Realm #${metadata.realmId} is summoning an army.`,
-      ];
-    case 'raid':
-      return [
-        `Raiding Realm #${metadata.defendingRealmId}`,
-        `Realm #${metadata.realmId} has mobilised their army for an attack.`,
-      ];
+  if (metadata?.action) {
+    switch (metadata.action) {
+      case 'mint':
+        return {
+          title: 'Minting',
+          description: `Terraforming realm ${metadata.realmId}.`,
+        };
 
-    default:
-      return [
-        'Moving convoy',
-        'Convoy of 10 humans from (-4, 3) to (5, 6). Travel time estimated to 5 hours.',
-      ];
+      case 'settle':
+        return {
+          title: 'Settling',
+          description: `Realm #${metadata.realmId} is being populated.`,
+        };
+
+      case 'unsettle':
+        return {
+          title: 'Unsettling',
+          description: `Abandoning realm #${metadata.realmId}.`,
+        };
+
+      case ResourceMethods.claim:
+        return {
+          title: `${isQueued ? 'Harvest' : 'Harvesting'} Resources`,
+          description: `Serfs gathering resources on Realm #${tx.metadata.realmId}.`,
+        };
+
+      case BuildingMethods.build:
+        return {
+          title: isQueued ? 'Construct Building' : 'Constructing Building',
+          description: `Realm #${metadata.realmId} ${
+            isQueued ? 'commanded to build' : 'has commenced'
+          } building ${metadata.buildingId}`,
+        };
+
+      case 'upgrade_resource':
+        return {
+          title: 'Upgrading Resource',
+          description: `Realm ${metadata.realmId} is increasing production of ${metadata.resourceId}.`,
+        };
+
+      case 'build_troops':
+        return {
+          title: `Building Troops`,
+          description: `Realm #${metadata.realmId} is summoning an army.`,
+        };
+      case 'raid':
+        return {
+          title: `Raiding Realm #${metadata.defendingRealmId}`,
+          description: `Realm #${metadata.realmId} has mobilised their army for an attack.`,
+        };
+
+      default:
+        return { title: 'No Title', description: 'No Message' };
+    }
+  } else {
+    return { title: 'No Title', description: 'No Message' };
   }
 }

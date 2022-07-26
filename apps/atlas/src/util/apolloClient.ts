@@ -38,12 +38,10 @@ export default new ApolloClient({
     typePolicies: {
       /* eslint-disable @typescript-eslint/naming-convention */
       Query: {
-        fields: {
-          realms: concatPagination(['where', 'orderBy']),
-          bridgedRealms: concatPagination(['where', 'orderBy']),
-          // dungeons: concatPagination(['where']),
-          // bags: concatPagination(['where']),
-        },
+        fields: {},
+      },
+      Realm: {
+        keyFields: ['realmId'],
       },
     },
   }),

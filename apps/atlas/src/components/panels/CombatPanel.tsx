@@ -62,14 +62,14 @@ export function CombatPanel(): ReactElement {
   });
 
   const attackSquad =
-    AttackingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 1) ??
+    AttackingRealm?.realm?.troops?.filter((squad) => squad.squadSlot === 1) ??
     [];
   const defenseSquad =
-    DefendingRealm?.getRealm?.squad?.filter((squad) => squad.squadSlot === 2) ??
+    DefendingRealm?.realm?.troops?.filter((squad) => squad.squadSlot === 2) ??
     [];
 
-  const timeAttacked = DefendingRealm?.getRealm?.lastAttacked
-    ? new Date(parseInt(DefendingRealm?.getRealm?.lastAttacked)).getTime()
+  const timeAttacked = DefendingRealm?.realm?.lastAttacked
+    ? new Date(parseInt(DefendingRealm?.realm?.lastAttacked)).getTime()
     : 0;
 
   // Replace with actual last time attacked
@@ -130,12 +130,12 @@ export function CombatPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'combat'}>
       <div className="relative grid h-full grid-cols-8 gap-12">
         <div className="flex flex-col justify-around h-full col-start-1 col-end-7">
-          {DefendingRealm?.getRealm?.name && (
+          {DefendingRealm?.realm?.name && (
             <RealmBannerHeading
               onSubmit={(value) => setDefendId(value)}
               realmId={parseInt(defendId)}
-              order={getOrder(DefendingRealm?.getRealm)}
-              title={DefendingRealm?.getRealm?.name}
+              order={getOrder(DefendingRealm?.realm)}
+              title={DefendingRealm?.realm?.name}
             />
           )}
 
@@ -158,12 +158,12 @@ export function CombatPanel(): ReactElement {
             troopsStats={troopStatsData?.getTroopStats}
           />
 
-          {AttackingRealm?.getRealm?.name && (
+          {AttackingRealm?.realm?.name && (
             <RealmBannerHeading
               onSubmit={(value) => setAttackId(value)}
               realmId={parseInt(attackId)}
-              order={getOrder(AttackingRealm?.getRealm)}
-              title={AttackingRealm?.getRealm?.name}
+              order={getOrder(AttackingRealm?.realm)}
+              title={AttackingRealm?.realm?.name}
             />
           )}
         </div>
@@ -179,7 +179,7 @@ export function CombatPanel(): ReactElement {
           <div className="px-4">
             {DefendingRealm && !DefendingLoading && (
               <RealmVault
-                realm={DefendingRealm?.getRealm}
+                realm={DefendingRealm?.realm}
                 loading={AttackingLoading}
               />
             )}
@@ -198,7 +198,7 @@ export function CombatPanel(): ReactElement {
           <div className="w-full px-4 mb-4">
             {/* {IsOwner(AttackingRealm?.getRealm?.ownerL2) && ( */}
             <Button
-              disabled={IsOwner(AttackingRealm?.getRealm?.ownerL2)}
+              disabled={IsOwner(AttackingRealm?.realm?.ownerL2)}
               onClick={() => initiateCombat(parseInt(defendId), 1)}
               className="w-full"
               variant="attack"

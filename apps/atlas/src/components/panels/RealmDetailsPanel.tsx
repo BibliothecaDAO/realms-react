@@ -39,13 +39,13 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     pollInterval: 5000,
   });
 
-  const realm = realmData?.getRealm;
+  const realm = realmData?.realm;
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const attackSquad =
-    realm?.squad?.filter((squad) => squad.squadSlot === 1) ?? [];
+    realm?.troops?.filter((squad) => squad.squadSlot === 1) ?? [];
   const defenseSquad =
-    realm?.squad?.filter((squad) => squad.squadSlot === 2) ?? [];
+    realm?.troops?.filter((squad) => squad.squadSlot === 2) ?? [];
 
   const getTrait = (realm: any, trait: string) => {
     return realm?.traits?.find((o) => o.type === trait)
@@ -69,22 +69,20 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     router.push('/realm/' + value);
   };
 
-  console.log(realmData);
-
   const getPopulation = () => {
-    return realmData?.getRealm?.buildings
+    return realm?.buildings
       ?.map((a) => a.population)
       .reduce((prev, curr) => prev + curr, 0);
   };
 
   const getFood = () => {
-    return realmData?.getRealm?.buildings
+    return realm?.buildings
       ?.map((a) => a.food)
       .reduce((prev, curr) => prev + curr, 0);
   };
 
   const getCulture = () => {
-    return realmData?.getRealm?.buildings
+    return realm?.buildings
       ?.map((a) => a.culture)
       .reduce((prev, curr) => prev + curr, 0);
   };

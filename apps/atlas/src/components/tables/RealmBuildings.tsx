@@ -1,14 +1,18 @@
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
-import useBuildings from '@/hooks/settling/useBuildings';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import { createCall, Entrypoints } from '@/hooks/settling/useBuildings';
 import { IsOwner } from '@/shared/Getters/Realm';
-import type { RealmsCardProps } from '../../types';
+import { Scroll } from '@/shared/Icons';
+import type { RealmsCall, RealmsCardProps } from '../../types';
 
 type Row = {
   building: ReactElement;
   requirements: ReactElement;
-  built: number;
+  built: ReactElement;
   population: ReactElement;
   culture: ReactElement;
   food: ReactElement;
@@ -20,8 +24,25 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     variables: { id: props.realm.realmId },
   });
 
+  const txQueue = useTransactionQueue();
+
   const buildings = data?.getBuildingsByRealmId ?? [];
-  const { build } = useBuildings();
+
+  const [buildingsInQueue, setBuildingsInQueue] = useState<
+    Pick<RealmsCall, 'metadata'>[]
+  >([]);
+
+  useEffect(() => {
+    const buildingsToBuild = txQueue.transactions.filter(
+      (tx) =>
+        tx.contractAddress == ModuleAddr.Building &&
+        tx.entrypoint == Entrypoints.build
+    );
+    setBuildingsInQueue(
+      buildingsToBuild.map((b) => ({ metadata: b.metadata }))
+    );
+  }, [txQueue.transactions]);
+
   const columns = [
     { Header: 'Building', id: 1, accessor: 'building' },
     { Header: 'Requirements', id: 2, accessor: 'requirements' },
@@ -37,6 +58,12 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   };
 
   const defaultData: Row[] = buildings.map((building) => {
+    const queued = buildingsInQueue.filter(
+      (b) =>
+        b.metadata.buildingId === building.buildingId &&
+        b.metadata.realmId === building.realmId
+    );
+
     return {
       building: (
         <span className="tracking-widest uppercase">
@@ -72,11 +99,30 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           </span>{' '}
         </span>
       ),
-      built: building.count,
+      built: (
+        <p className="relative w-full">
+          {building.count}{' '}
+          {queued.length > 0 ? (
+            <span className="absolute right-0">
+              <Scroll className="inline-block w-4 mr-1 fill-green-200" />
+              {`+${queued.length}`}
+            </span>
+          ) : (
+            ''
+          )}
+        </p>
+      ),
       buildAction: IsOwner(props.realm?.settledOwner) && (
         <Button
-          aria-details="klajsfl"
-          onClick={() => build(props.realm.realmId, building.buildingId)}
+          aria-details="Build Building on Realm"
+          onClick={() => {
+            txQueue.add(
+              createCall.build({
+                realmId: props.realm.realmId,
+                buildingId: building.buildingId,
+              })
+            );
+          }}
           variant="primary"
           type="button"
           size="xs"
