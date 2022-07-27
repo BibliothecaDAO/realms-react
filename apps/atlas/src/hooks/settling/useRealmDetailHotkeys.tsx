@@ -16,8 +16,8 @@ export const HotKeys = {
 
 export type Subview = keyof typeof HotKeys | null;
 
-const useRealmDetailHotkeys = () => {
-  const [subview, setSubview] = useState<Subview>(null);
+const useRealmDetailHotkeys = (initialSubview?:Subview) => {
+  const [subview, setSubview] = useState<Subview>(initialSubview || null);
 
   const attackPress = useKeyPress({ key: HotKeys.Army});
   const foodPress = useKeyPress({ key: HotKeys.Food});

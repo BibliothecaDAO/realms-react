@@ -18,6 +18,7 @@ import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
+import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
@@ -61,7 +62,24 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const realm = realmData?.realm;
 
-  const { subview, set } = useRealmDetailHotkeys();
+  const { subview, set } = useRealmDetailHotkeys(
+    router.query['tab'] as Subview
+  );
+
+  useEffect(() => {
+    if (realm) {
+      router.push(
+        {
+          pathname: `realm/${realm?.realmId}`,
+          query: {
+            tab: subview,
+          },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  }, [subview]);
 
   const pushPage = (value) => {
     if (!loading) {
@@ -245,7 +263,19 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       <RealmToolbar
         selected={subview}
         isOwnerOfRealm={isOwner}
-        onSetSubview={(s) => set(s)}
+        onSetSubview={(s) => {
+          router.push(
+            {
+              pathname: `realm/${realm?.realmId}`,
+              query: {
+                tab: s,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          set(s);
+        }}
         className="absolute bottom-0 z-20"
       />
     </>

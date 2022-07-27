@@ -22,7 +22,7 @@ const ToolbarItem = (props: ToolbarItemProps) => {
       >
         <span
           className={clsx(
-            'px-1 py-0.5 group-hover:bg-white group-hover:text-black uppercase border',
+            'px-1 transition-colors py-0.5 group-hover:bg-white group-hover:text-black uppercase border',
             pressed && 'bg-white text-black'
           )}
         >
