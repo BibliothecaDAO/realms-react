@@ -60,7 +60,7 @@ const Military: React.FC<Prop> = (props) => {
       </div>
       <SquadBuilder
         squad={squadSlot}
-        realmId={realm.realmId}
+        realm={realm}
         withPurchase={true}
         troops={troops}
         troopsStats={troopStatsData?.getTroopStats}

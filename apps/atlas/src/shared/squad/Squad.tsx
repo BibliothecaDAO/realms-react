@@ -4,8 +4,10 @@ import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
 import { Squad } from '@/constants/index';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import type { GetRealmQuery } from '@/generated/graphql';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import { createCall } from '@/hooks/settling/useCombat';
+import useIsOwner from '@/hooks/useIsOwner';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
 import { getCostSums } from '@/util/armory';
@@ -18,7 +20,7 @@ interface SquadProps {
   troops: Array<TroopInterface>;
   flipped?: boolean;
   withPurchase?: boolean;
-  realmId: number;
+  realm?: GetRealmQuery['realm'];
   troopsStats: any;
   squad: keyof typeof Squad;
 }
@@ -29,6 +31,8 @@ export const SquadBuilder = (props: SquadProps) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
+
+  const isOwner = useIsOwner(props.realm?.settledOwner);
 
   const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
     null
@@ -69,7 +73,11 @@ export const SquadBuilder = (props: SquadProps) => {
       .map((a, index) => {
         return (
           <Troop
-            onClick={(val) => setSelectedTroop(val)}
+            onClick={(val) => {
+              if (isOwner || val.troopId != EmptyTroopId) {
+                setSelectedTroop(val);
+              }
+            }}
             onSubmit={(value: any) =>
               setToBuy((current) => [...current, value])
             }
@@ -96,26 +104,6 @@ export const SquadBuilder = (props: SquadProps) => {
   };
 
   const txQueue = useTransactionQueue();
-
-  const stats = () => {
-    return {
-      agility: props.troops
-        .map((troop) => troop.agility)
-        .reduce((prev, curr) => prev + curr, 0),
-      attack: props.troops
-        .map((troop) => troop.attack)
-        .reduce((prev, curr) => prev + curr, 0),
-      defense: props.troops
-        .map((troop) => troop.defense)
-        .reduce((prev, curr) => prev + curr, 0),
-      vitality: props.troops
-        .map((troop) => troop.vitality)
-        .reduce((prev, curr) => prev + curr, 0),
-      wisdom: props.troops
-        .map((troop) => troop.wisdom)
-        .reduce((prev, curr) => prev + curr, 0),
-    };
-  };
 
   const selectedTroopIsEmpty =
     selectedTroop && selectedTroop.troopId == EmptyTroopId;
@@ -147,7 +135,7 @@ export const SquadBuilder = (props: SquadProps) => {
           }
         />
 
-        {selectedTroopIsEmpty && troopStatsData?.getTroopStats && (
+        {selectedTroopIsEmpty && troopStatsData?.getTroopStats && isOwner && (
           <>
             <ArmoryBuilder
               onBuildTroop={(t) => setToBuy(toBuy.concat(t))}
@@ -155,7 +143,7 @@ export const SquadBuilder = (props: SquadProps) => {
               troops={props.troops}
               troopsQueued={toBuy}
               statistics={troopStatsData.getTroopStats}
-              realmId={props.realmId}
+              realmId={props.realm?.realmId as number}
               hideSquadToggle
               filterTier={selectedTroop?.tier}
             />
@@ -189,7 +177,7 @@ export const SquadBuilder = (props: SquadProps) => {
                 onClick={() => {
                   txQueue.add(
                     createCall.buildSquad({
-                      realmId: props.realmId,
+                      realmId: props.realm?.realmId,
                       troopIds: toBuy.map((t) => t.troopId),
                       squadSlot: Squad[props.squad],
                     })
