@@ -6,6 +6,7 @@ type Props = {
   troops: TroopInterface[];
   troopsQueued: TroopInterface[];
   className?: string;
+  reversed?: boolean;
 };
 
 const SquadStatistics = (props: Props) => {
@@ -28,7 +29,12 @@ const SquadStatistics = (props: Props) => {
         'self-center w-full font-semibold tracking-widest uppercase'
       )}
     >
-      <div className="flex justify-between ">
+      <div
+        className={clsx(
+          'flex justify-between',
+          props.reversed && 'flex-row-reverse'
+        )}
+      >
         Vitality:{' '}
         <span>
           {squadStats(props.troops).vitality}
@@ -37,7 +43,12 @@ const SquadStatistics = (props: Props) => {
             : ''}
         </span>
       </div>
-      <div className="flex justify-between">
+      <div
+        className={clsx(
+          'flex justify-between',
+          props.reversed && 'flex-row-reverse'
+        )}
+      >
         Attack:{' '}
         <span>
           {squadStats(props.troops).attack}
@@ -46,7 +57,12 @@ const SquadStatistics = (props: Props) => {
             : ''}
         </span>
       </div>
-      <div className="flex justify-between">
+      <div
+        className={clsx(
+          'flex justify-between',
+          props.reversed && 'flex-row-reverse'
+        )}
+      >
         Defense:{' '}
         <span>
           {squadStats(props.troops).defense}
@@ -55,7 +71,12 @@ const SquadStatistics = (props: Props) => {
             : ''}
         </span>
       </div>
-      <div className="flex justify-between">
+      <div
+        className={clsx(
+          'flex justify-between',
+          props.reversed && 'flex-row-reverse'
+        )}
+      >
         Wisdom:{' '}
         <span>
           {squadStats(props.troops).wisdom}
@@ -64,7 +85,12 @@ const SquadStatistics = (props: Props) => {
             : ''}
         </span>
       </div>
-      <div className="flex justify-between">
+      <div
+        className={clsx(
+          'flex justify-between',
+          props.reversed && 'flex-row-reverse'
+        )}
+      >
         Agility:{' '}
         <span>
           {squadStats(props.troops).agility}

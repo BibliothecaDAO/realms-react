@@ -20,6 +20,9 @@ type Prop = {
   showRaidable?: boolean;
   showClaimable?: boolean;
   showLevel?: boolean;
+  hideLordsClaimable?: boolean;
+  hideDaysAccrued?: boolean;
+  header?: React.ReactNode;
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
@@ -44,16 +47,16 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         resources.find((res) => res.trait === re.type)?.id || 0;
       const mappedData = {
         resource: (
-          <span className="flex">
+          <span className="flex w-48">
             <ResourceIcon
               resource={
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
-              size="md"
+              size="sm"
               className="mr-4"
             />
             <span className="self-center font-semibold tracking-widest uppercase">
-              {re.type || ''}
+              {re.resourceName || ''}
             </span>
           </span>
         ),
@@ -105,27 +108,32 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   return (
     <div className="w-full">
       <div className="flex justify-between p-2 text-white uppercase">
-        <span className="flex flex-col">
-          <span> Claimable Lords:</span>
+        {!props.hideLordsClaimable && (
+          <span className="flex flex-col">
+            <span> Claimable Lords:</span>
 
-          <span className="text-3xl">
-            {' '}
-            {claimableLords ? (
-              formatEther(claimableLords.toString(10))
-            ) : (
-              <Spinner
-                className="ml-4"
-                size="md"
-                scheme="white"
-                variant="bricks"
-              />
-            )}
+            <span className="text-3xl">
+              {' '}
+              {claimableLords ? (
+                formatEther(claimableLords.toString(10))
+              ) : (
+                <Spinner
+                  className="ml-4"
+                  size="md"
+                  scheme="white"
+                  variant="bricks"
+                />
+              )}
+            </span>
           </span>
-        </span>
-        <span className="flex flex-col">
-          <span>Days Accrued: </span>
-          <span className="text-3xl">{availableResources.daysAccrued}D</span>
-        </span>
+        )}
+        {!props.hideLordsClaimable && (
+          <span className="flex flex-col">
+            <span>Days Accrued: </span>
+            <span className="text-3xl">{availableResources.daysAccrued}D</span>
+          </span>
+        )}
+        {props.header}
       </div>
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
     </div>
