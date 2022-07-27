@@ -1,3 +1,4 @@
+import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
@@ -25,6 +26,19 @@ const Military: React.FC<Prop> = (props) => {
   const [selectedRealms, setSelectedRealms] = useState<
     GetRealmsQuery['realms']
   >([]);
+
+  const timeAttacked = realm?.lastAttacked
+    ? new Date(parseInt(realm.lastAttacked)).getTime()
+    : 0;
+
+  const cooldownMinutes = 30;
+
+  const time = () => {
+    const cooldown = 60 * cooldownMinutes;
+    return (timeAttacked + cooldown).toString();
+  };
+
+  const countdown = useCountdown({ date: time() });
 
   const { initiateCombat } = useCombat();
 
@@ -119,7 +133,8 @@ const Military: React.FC<Prop> = (props) => {
                   onClick={() => setIsRaiding(true)}
                   className="text-black"
                   size="sm"
-                  variant="attack"
+                  disabled={!countdown.expired}
+                  variant={countdown.expired ? 'attack' : 'outline'}
                 >
                   Raid Vault
                 </Button>
