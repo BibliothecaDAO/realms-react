@@ -107,7 +107,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             height={320}
             layout={'responsive'}
           />
-          <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll bg-gray-800/40 md:overflow-x-visible">
+          <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll md:overflow-x-visible">
             {subview == 'Attack' && <Military realm={realmData?.realm} />}
             {subview == 'Buildings' && realmData?.realm && (
               <RealmBuildings realm={realmData.realm} loading={false} />
