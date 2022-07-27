@@ -1,5 +1,5 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
 import { Squad } from '@/constants/index';
@@ -29,6 +29,10 @@ const EmptyTroopId = 0;
 
 export const SquadBuilder = (props: SquadProps) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
+
+  useEffect(() => {
+    setToBuy([]);
+  }, [props.squad]);
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
