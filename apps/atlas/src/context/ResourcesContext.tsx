@@ -186,6 +186,10 @@ function useResources() {
           : { ...resource }
       )
     );
+    setSelectedLpResources([
+      ...selectedLpResources,
+      { resourceId: resourceId, lpqty: 0, currencyqty: 0 },
+    ]);
   };
 
   const updateSelectedLpResourceQty = (
