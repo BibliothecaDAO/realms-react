@@ -1,11 +1,10 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Link from 'next/link';
-
 const slides = [
   {
     title: '',
-    image: '/realms-art/warRoom-desktop.png',
+    image: 'warRoom',
     link: 'https://atlas.bibliothecadao.xyz/',
     content: (
       <div className="flex flex-col justify-between h-full px-6 text-center">
@@ -16,7 +15,11 @@ const slides = [
         <div className="text-xl text-gray-900">
           <p>Build empires inside your browser.</p>
           <p className="mb-6">An eternal on-chain game running on StarkNet</p>
-          <Button href="https://atlas.bibliothecadao.xyz" variant="secondary">
+          <Button
+            className="normal-case"
+            href="https://atlas.bibliothecadao.xyz"
+            variant="secondary"
+          >
             Explore the Atlas
           </Button>
         </div>
@@ -24,8 +27,7 @@ const slides = [
     ),
   },
   {
-    image: '/realms-art/eternity-desktop.png',
-    imagePosition: '50% 70%',
+    image: 'eternity',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
@@ -39,9 +41,8 @@ const slides = [
     ),
   },
   {
-    image: '/realms-art/keyImage-desktop.png',
+    image: 'keyImage',
     link: 'https://scroll.bibliothecadao.xyz/',
-    imagePosition: 'center',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
@@ -57,9 +58,8 @@ const slides = [
   },
   {
     title: 'Realm Staking',
-    image: '/realms-art/riches-desktop.png',
+    image: 'riches',
     link: 'https://staking.bibliothecadao.xyz/',
-    imagePosition: 'center',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:w-1/2">
         <div>
@@ -73,9 +73,8 @@ const slides = [
     ),
   },
   {
-    image: '/realms-art/createOrDestroy-desktop.png',
+    image: 'createOrDestroy',
     link: 'https://staking.bibliothecadao.xyz/',
-    imagePosition: 'center',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
@@ -89,9 +88,9 @@ const slides = [
     ),
   },
   {
-    image: '/realms-art/sky-desktop.png',
+    image: 'sky',
     link: 'https://staking.bibliothecadao.xyz/',
-    imagePosition: '50% 65%',
+    imagePosition: 'bottom',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2">
         <div>
@@ -105,9 +104,8 @@ const slides = [
     ),
   },
   {
-    image: '/realms-art/siege-desktop.png',
+    image: 'siege',
     link: 'https://staking.bibliothecadao.xyz/',
-    imagePosition: '50% 65%',
     content: (
       <div className="flex flex-col justify-end h-full px-8 mx-auto sm:w-1/2">
         <div>
@@ -127,21 +125,44 @@ const slides = [
 ];
 
 export const FullPageSlides = () => {
+  const myLoader = ({
+    src,
+    width,
+    quality,
+  }: {
+    src: any;
+    width: any;
+    quality?: any;
+  }) => {
+    console.log(width);
+    if (width > 1080) {
+      return `/_next/image?url=/realms-art/desktop/${src}-desktop.png&w=${width}&q=${
+        quality || 75
+      }`;
+    } else {
+      return `/_next/image?url=/realms-art/tablet/${src}-tablet.png&w=${width}&q=${
+        quality || 75
+      }`;
+    }
+  };
+
   return (
-    <div className="flex flex-col">
+    <div className="">
       {slides.map((slide, index) => {
         return (
-          <div key={index} className="relative w-full h-screen">
+          <div key={index} className="relative w-full h-screen ">
             <Image
-              className="w-full h-full"
               alt=""
+              loader={myLoader}
               src={slide.image}
-              layout="fill"
-              objectFit="cover"
-              objectPosition={slide.imagePosition || 'top'}
+              className="object-cover w-full h-full"
+              width="1920"
+              height="1080"
+              sizes="100vw"
+              priority={index == 0 ? true : false}
             />
-            <div className="container relative h-full py-16 mx-auto">
-              {slide.content}
+            <div className="absolute top-0 w-full h-full py-14">
+              <div className="container h-full mx-auto">{slide.content}</div>
             </div>
           </div>
         );
