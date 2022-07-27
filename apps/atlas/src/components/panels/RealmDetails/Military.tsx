@@ -5,6 +5,7 @@ import { RealmResources } from '@/components/tables/RealmResources';
 import { Squad } from '@/constants/index';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
+import useCombat from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
 import RealmSelector from '@/shared/RealmSelector';
 import SidebarHeader from '@/shared/SidebarHeader';
@@ -12,11 +13,11 @@ import { SquadBuilder } from '@/shared/squad/Squad';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 
 type Prop = {
-  realm?: GetRealmQuery;
+  realm?: GetRealmQuery['realm'];
 };
 
 const Military: React.FC<Prop> = (props) => {
-  const realm = props.realm?.realm;
+  const realm = props.realm;
 
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
@@ -24,6 +25,8 @@ const Military: React.FC<Prop> = (props) => {
   const [selectedRealms, setSelectedRealms] = useState<
     GetRealmsQuery['realms']
   >([]);
+
+  const { initiateCombat } = useCombat();
 
   const [isRaiding, setIsRaiding] = useState(false);
 
@@ -42,7 +45,7 @@ const Military: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="font-semibold mt-2 bg-gray-800 px-2 py-1 tracking-widest rounded-lg">
+      <div className="px-2 py-1 mt-2 font-semibold tracking-widest bg-gray-800 rounded-lg">
         <h3>{squadSlot}ing Army</h3>
         {isOwner ? (
           <button
@@ -86,14 +89,23 @@ const Military: React.FC<Prop> = (props) => {
               troops={selectedRealms[0]?.troops || []}
             ></SquadStatistics>
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               Select <br />
               Realm
             </div>
           )}
         </div>
 
-        <Button variant="primary" className="w-full">
+        <Button
+          onClick={() => {
+            initiateCombat({
+              attackingRealmId: selectedRealms[0]?.realmId,
+              defendingRealmId: realm.realmId,
+            });
+          }}
+          variant="primary"
+          className="w-full mt-2"
+        >
           Order the Assault
         </Button>
       </AtlasSidebar>

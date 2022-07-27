@@ -9,17 +9,9 @@ import {
 import type { RealmsCall } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
-type Combat = {
-  buildSquad: (troop_ids: number[], slot: number) => void;
-  initiateCombat: (defending_realm_id: number, attack_type: number) => void;
-  combatData: any;
-};
-type useCombatArgs = {
-  token_id: number;
-};
-
 export const Entrypoints = {
   buildSquad: 'build_squad_from_troops_in_realm',
+  initiateCombat: 'initiate_combat',
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
@@ -36,7 +28,7 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
   }),
 };
 
-const useCombat = (args: useCombatArgs): Combat => {
+const useCombat = () => {
   const { contract: combatContract } = useCombatContract();
 
   const buildSquadAction = useStarknetInvoke({
@@ -54,26 +46,15 @@ const useCombat = (args: useCombatArgs): Combat => {
   });
 
   return {
-    buildSquad: (troop_ids, slot) => {
-      buildSquadAction.invoke({
-        args: [troop_ids, bnToUint256(toBN(args.token_id)), slot],
-        metadata: {
-          action: 'build_troops',
-          realmId: args.token_id,
-        },
-      });
-    },
-    initiateCombat: (defending_realm_id, attack_type) => {
+    initiateCombat: (args: { attackingRealmId; defendingRealmId }) => {
       combatInvoke({
         args: [
-          bnToUint256(toBN(args.token_id)),
-          bnToUint256(toBN(defending_realm_id)),
-          attack_type,
+          bnToUint256(toBN(args.attackingRealmId)),
+          bnToUint256(toBN(args.defendingRealmId)),
         ],
         metadata: {
-          action: 'raid',
-          defendingRealmId: defending_realm_id,
-          realmId: args.token_id,
+          action: Entrypoints.initiateCombat,
+          ...args,
         },
       });
     },

@@ -89,7 +89,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
-      <div className="col-span-6 md:col-start-1 md:col-end-5 relative">
+      <div className="relative col-span-6 md:col-start-1 md:col-end-5">
         <RealmBannerHeading
           onSubmit={(value) => pushPage(parseInt(value))}
           key={realm?.realmId ?? ''}
@@ -107,12 +107,12 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             height={320}
             layout={'responsive'}
           />
-          <div className="absolute bg-gray-800/40 overflow-x-scroll md:overflow-x-visible flex justify-center items-center flex-col top-0 w-full">
-            {subview == 'Attack' && <Military realm={realmData} />}
+          <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll bg-gray-800/40 md:overflow-x-visible">
+            {subview == 'Attack' && <Military realm={realmData?.realm} />}
             {subview == 'Buildings' && realmData?.realm && (
               <RealmBuildings realm={realmData.realm} loading={false} />
             )}
-            <div id="spacer" className="h-20 w-full" />
+            <div id="spacer" className="w-full h-20" />
           </div>
         </div>
 

@@ -35,9 +35,7 @@ export function CombatPanel(): ReactElement {
     }
   }, [attackingRealmId, defendingRealmId]);
 
-  const { initiateCombat, combatData } = useCombat({
-    token_id: parseInt(attackId),
-  });
+  const { initiateCombat, combatData } = useCombat();
   useEffect(() => {
     if (combatData) {
       setModal({
@@ -199,7 +197,12 @@ export function CombatPanel(): ReactElement {
             {/* {IsOwner(AttackingRealm?.getRealm?.ownerL2) && ( */}
             <Button
               disabled={IsOwner(AttackingRealm?.realm?.ownerL2)}
-              onClick={() => initiateCombat(parseInt(defendId), 1)}
+              onClick={() =>
+                initiateCombat({
+                  attackingRealmId: parseInt(attackId),
+                  defendingRealmId: parseInt(defendId),
+                })
+              }
               className="w-full"
               variant="attack"
             >
