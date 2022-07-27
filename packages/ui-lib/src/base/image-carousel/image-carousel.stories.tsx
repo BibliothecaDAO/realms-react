@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { ResourceIcon } from 'base';
 import ChevronRight from '../../icons/chevron-right.svg';
 import type { ImageCarouselProps } from './image-carousel';
-import ImageCarousel from './image-carousel';
+import { ImageCarousel } from './image-carousel';
 
 export default {
   component: ImageCarousel,

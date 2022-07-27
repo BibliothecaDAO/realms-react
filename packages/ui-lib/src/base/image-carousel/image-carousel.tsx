@@ -1,21 +1,22 @@
 import { useKeenSlider } from 'keen-slider/react'; // import from 'keen-slider/react.es' for to get an ES module
-import Image from 'next/image';
-import React, { useState } from 'react';
-import 'keen-slider/keen-slider.min.css';
+import Image from 'next/future/image';
+import type { HTMLAttributes } from 'react';
+import { useState } from 'react';
 
 export interface ImageCarouselItem {
   // eslint-disable-next-line react/no-unused-prop-types
   title: string;
   link: string;
-  imageUrl: string;
+  image: string;
 }
 
-export interface ImageCarouselProps {
+export interface ImageCarouselProps extends HTMLAttributes<HTMLDivElement> {
   items: ImageCarouselItem[];
+  loader?: any;
 }
 
-const ImageCarousel = (props: ImageCarouselProps) => {
-  const [currentSlide, setCurrentSlide] = React.useState(0);
+export function ImageCarousel({ items, loader }: ImageCarouselProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     slides: {
@@ -25,13 +26,13 @@ const ImageCarousel = (props: ImageCarouselProps) => {
     breakpoints: {
       '(min-width: 600px)': {
         slides: {
-          perView: 2.2,
+          perView: 1.2,
           spacing: 16,
         },
       },
       '(min-width: 996px)': {
         slides: {
-          perView: 3.4,
+          perView: 1.4,
           spacing: 16,
         },
       },
@@ -47,15 +48,18 @@ const ImageCarousel = (props: ImageCarouselProps) => {
 
   return (
     <div className="relative">
-      <div ref={sliderRef} className=" keen-slider">
-        {props.items.map((item: any, index: number) => {
+      <div ref={sliderRef} className="keen-slider">
+        {items.map((item: any, index: number) => {
           return (
             <div key={item.title} className="keen-slider__slide">
               <Image
-                className="block w-full h-full"
+                loader={loader || null}
+                className="block object-contain w-full h-full"
                 alt={item.title}
-                src={item.imageUrl || ''}
-                objectFit="cover"
+                src={item.image || ''}
+                width="1275"
+                height="639"
+                sizes="60vw"
               />
               {item.title}
             </div>
@@ -85,7 +89,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
       )}
     </div>
   );
-};
+}
 function Arrow(props: {
   disabled: boolean;
   left?: boolean;
@@ -110,5 +114,3 @@ function Arrow(props: {
     </svg>
   );
 }
-
-export default ImageCarousel;

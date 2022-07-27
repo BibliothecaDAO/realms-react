@@ -3,6 +3,7 @@ import { StarknetProvider } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import '../styles/global.css';
+import 'keen-slider/keen-slider.min.css';
 /* import PageTransition from '@/components/navigation/PageTransition'; 
 import { animated, Transition } from '@react-spring/web'; */
 
