@@ -45,7 +45,7 @@ const Military: React.FC<Prop> = (props) => {
 
   return (
     <>
-      <div className="px-2 py-1 mt-2 font-semibold tracking-widest bg-gray-800 rounded-lg">
+      <div className="px-2 py-1 font-semibold tracking-widest bg-gray-800">
         <h3>{squadSlot}ing Army</h3>
         {isOwner ? (
           <button

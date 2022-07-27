@@ -28,7 +28,6 @@ import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
-import AtlasSidebar from '../sidebars/AtlasSideBar';
 import { RealmBuildings } from '../tables/RealmBuildings';
 import Food from './RealmDetails/Food';
 import Harvests from './RealmDetails/Harvests';
@@ -108,34 +107,22 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               height={320}
               layout={'responsive'}
             />
-            <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll md:overflow-x-visible">
-              {subview == 'Army' && <Military realm={realmData?.realm} />}
-              {subview == 'Buildings' && realmData?.realm && (
-                <RealmBuildings realm={realmData.realm} loading={false} />
-              )}
-              <div id="spacer" className="w-full h-20" />
-            </div>
-          </div>
-
-          <AtlasSidebar isOpen={false}>
-            <>
-              <SidebarHeader
-                onClose={() => set(null)}
-                title={
-                  subview == 'Army' && isOwner ? 'Army' : (subview as string)
-                }
-              />
-              {realmData ? (
+            <div className="absolute top-0 w-full overflow-x-scroll md:overflow-x-visible">
+              {realmData?.realm ? (
                 <>
-                  {subview == 'Army' ? <Raid realm={realmData} /> : null}
+                  {subview == 'Army' && <Military realm={realmData?.realm} />}
+                  {subview == 'Buildings' && realmData?.realm && (
+                    <RealmBuildings realm={realmData.realm} loading={false} />
+                  )}
                   {subview == 'Resources' && <Harvests realm={realmData} />}
                   {subview == 'Food' ? <Food realm={realmData} /> : null}
                   {subview == 'Survey' && <Statistics realm={realmData} />}
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
+                  <div id="spacer" className="w-full h-20" />
                 </>
               ) : null}
-            </>
-          </AtlasSidebar>
+            </div>
+          </div>
 
           {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
