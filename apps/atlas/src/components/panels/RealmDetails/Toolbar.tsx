@@ -54,8 +54,8 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
         title="Buildings"
       ></ToolbarItem>
       <ToolbarItem
-        onClick={() => props.onSetSubview('Attack')}
-        title={props.isOwnerOfRealm ? 'Armory' : 'Attack'}
+        onClick={() => props.onSetSubview('Army')}
+        title={props.isOwnerOfRealm ? 'Army' : 'Attack'}
       ></ToolbarItem>
       <ToolbarItem
         onClick={() => props.onSetSubview('Goblins')}

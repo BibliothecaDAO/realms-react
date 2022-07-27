@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import useKeyPress from '../useKeyPress';
 
 export const HotKeys = {
-  Attack: 'a', // aka Raid
+  Army: 'a',
   Resources: 'r',
   Food: 'f',
   History: 'h',
@@ -19,7 +19,7 @@ export type Subview = keyof typeof HotKeys | null;
 const useRealmDetailHotkeys = () => {
   const [subview, setSubview] = useState<Subview>(null);
 
-  const attackPress = useKeyPress({ key: HotKeys.Attack});
+  const attackPress = useKeyPress({ key: HotKeys.Army});
   const foodPress = useKeyPress({ key: HotKeys.Food});
   const buildingsPress = useKeyPress({ key: HotKeys.Buildings});
   const historyPress = useKeyPress({ key: HotKeys.History });
@@ -30,7 +30,7 @@ const useRealmDetailHotkeys = () => {
 
   useEffect(() => {
     if (attackPress) {
-      subview == 'Attack' ? setSubview(null) : setSubview('Attack');
+      subview == 'Army' ? setSubview(null) : setSubview('Army');
     }
     if (foodPress) {
       subview == 'Food' ? setSubview(null) : setSubview('Food');

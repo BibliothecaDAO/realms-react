@@ -88,60 +88,56 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   }, [leftPressed, rightPressed]);
 
   return (
-    <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
-      <div className="relative col-span-6 md:col-start-1 md:col-end-5">
-        <RealmBannerHeading
-          onSubmit={(value) => pushPage(parseInt(value))}
-          key={realm?.realmId ?? ''}
-          order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
-          title={realm?.name ?? ''}
-          realmId={realmId}
-          hideSearchFilter
-        />
-        <div className="relative w-full">
-          <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
-            alt="map"
-            className="w-full -scale-x-100"
-            width={500}
-            height={320}
-            layout={'responsive'}
+    <>
+      <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
+        <div className="relative col-span-6 md:col-start-1 md:col-end-5">
+          <RealmBannerHeading
+            onSubmit={(value) => pushPage(parseInt(value))}
+            key={realm?.realmId ?? ''}
+            order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
+            title={realm?.name ?? ''}
+            realmId={realmId}
+            hideSearchFilter
           />
-          <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll md:overflow-x-visible">
-            {subview == 'Attack' && <Military realm={realmData?.realm} />}
-            {subview == 'Buildings' && realmData?.realm && (
-              <RealmBuildings realm={realmData.realm} loading={false} />
-            )}
-            <div id="spacer" className="w-full h-20" />
-          </div>
-        </div>
-
-        <AtlasSidebar containerClassName="w-full md:w-1/3" isOpen={false}>
-          <>
-            <SidebarHeader
-              onClose={() => set(null)}
-              title={
-                subview == 'Attack' && isOwner ? 'Armory' : (subview as string)
-              }
+          <div className="relative w-full">
+            <Image
+              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
+              alt="map"
+              className="w-full -scale-x-100"
+              width={500}
+              height={320}
+              layout={'responsive'}
             />
-            {realmData ? (
-              <>
-                {subview == 'Attack' ? <Raid realm={realmData} /> : null}
-                {subview == 'Resources' && <Harvests realm={realmData} />}
-                {subview == 'Food' ? <Food realm={realmData} /> : null}
-                {subview == 'Survey' && <Statistics realm={realmData} />}
-                {subview == 'History' && <RealmHistory realmId={realmId} />}
-              </>
-            ) : null}
-          </>
-        </AtlasSidebar>
-        <RealmToolbar
-          selected={subview}
-          isOwnerOfRealm={isOwner}
-          onSetSubview={(s) => set(s)}
-          className="fixed bottom-0"
-        />
-        {/*
+            <div className="absolute top-0 flex flex-col items-center justify-center w-full overflow-x-scroll md:overflow-x-visible">
+              {subview == 'Army' && <Military realm={realmData?.realm} />}
+              {subview == 'Buildings' && realmData?.realm && (
+                <RealmBuildings realm={realmData.realm} loading={false} />
+              )}
+              <div id="spacer" className="w-full h-20" />
+            </div>
+          </div>
+
+          <AtlasSidebar isOpen={false}>
+            <>
+              <SidebarHeader
+                onClose={() => set(null)}
+                title={
+                  subview == 'Army' && isOwner ? 'Army' : (subview as string)
+                }
+              />
+              {realmData ? (
+                <>
+                  {subview == 'Army' ? <Raid realm={realmData} /> : null}
+                  {subview == 'Resources' && <Harvests realm={realmData} />}
+                  {subview == 'Food' ? <Food realm={realmData} /> : null}
+                  {subview == 'Survey' && <Statistics realm={realmData} />}
+                  {subview == 'History' && <RealmHistory realmId={realmId} />}
+                </>
+              ) : null}
+            </>
+          </AtlasSidebar>
+
+          {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">
             <Image
@@ -256,7 +252,14 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </Card>
         </div>
         */}
+        </div>
       </div>
-    </div>
+      <RealmToolbar
+        selected={subview}
+        isOwnerOfRealm={isOwner}
+        onSetSubview={(s) => set(s)}
+        className="absolute bottom-0 z-30"
+      />
+    </>
   );
 }

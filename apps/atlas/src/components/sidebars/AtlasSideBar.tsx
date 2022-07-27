@@ -33,7 +33,7 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
     <animated.div
       className={clsx(
         'absolute top-0 shadow-lg shadow-black bottom-0 right-0 p-4 bg-gray-800/80 z-20 overflow-y-scroll',
-        props.containerClassName || 'w-1/3'
+        props.containerClassName ? props.containerClassName : 'w-full md:w-1/3'
       )}
       style={animation}
     >
