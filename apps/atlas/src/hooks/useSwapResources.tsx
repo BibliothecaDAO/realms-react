@@ -10,6 +10,12 @@ export type ResourceQty = {
   qty: number;
 };
 
+export type LpQty = {
+  resourceId: number;
+  lpqty: number;
+  currencyqty: number;
+};
+
 const useSwapResourcesTransaction = (method: string) => {
   const { contract: exchangeContract } = useExchangeContract();
   const {
@@ -148,6 +154,9 @@ export const useRemoveLiquidity = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'remove_liquidity',
+      },
       args: [
         minCurrencyAmount.map((value) =>
           bnToUint256(BigNumber.from(value).toHexString())

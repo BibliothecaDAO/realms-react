@@ -81,11 +81,7 @@ export function BankPanel(): ReactElement {
     { Header: 'Action', id: 7, accessor: 'action' },
   ];
   const tableOptions = { is_striped: true };
-  const { data } = useGetRealmQuery({
-    variables: {
-      id: 1, // value for 'id'
-    },
-  });
+
   return (
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
@@ -99,7 +95,7 @@ export function BankPanel(): ReactElement {
       </div>
 
       <div className="relative overflow-x-auto">
-        {data && (
+        {balance && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
       </div>
