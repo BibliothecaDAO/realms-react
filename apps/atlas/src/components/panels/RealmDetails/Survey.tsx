@@ -7,7 +7,7 @@ type Prop = {
   realm?: GetRealmQuery;
 };
 
-const Statistics: React.FC<Prop> = (props) => {
+const Survey: React.FC<Prop> = (props) => {
   const getTrait = (realm: any, trait: string) => {
     return realm?.traits?.find((o) => o.type === trait)
       ? realm.traits?.find((o) => o.type === trait).qty
@@ -49,4 +49,4 @@ const Statistics: React.FC<Prop> = (props) => {
   );
 };
 
-export default Statistics;
+export default Survey;

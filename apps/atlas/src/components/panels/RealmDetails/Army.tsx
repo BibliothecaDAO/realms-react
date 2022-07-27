@@ -17,7 +17,7 @@ type Prop = {
   realm?: GetRealmQuery['realm'];
 };
 
-const Military: React.FC<Prop> = (props) => {
+const Army: React.FC<Prop> = (props) => {
   const realm = props.realm;
 
   // Always initialize with defending army
@@ -151,4 +151,4 @@ const Military: React.FC<Prop> = (props) => {
   );
 };
 
-export default Military;
+export default Army;

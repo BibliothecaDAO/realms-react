@@ -29,11 +29,10 @@ import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { RealmBuildings } from '../tables/RealmBuildings';
+import Army from './RealmDetails/Army';
 import Food from './RealmDetails/Food';
-import Harvests from './RealmDetails/Harvests';
-import Military from './RealmDetails/Military';
-import Raid from './RealmDetails/Raids';
-import Statistics from './RealmDetails/Statistics';
+import ResourceDetails from './RealmDetails/Resources';
+import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
 // import styled from '@emotion/styled';
 
@@ -54,9 +53,8 @@ interface RealmDetailsPanelProps {
 // `;
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
-  const [_, setId] = useState(realmId);
   const router = useRouter();
-  const { data: realmData } = useGetRealmQuery({
+  const { data: realmData, loading } = useGetRealmQuery({
     variables: { id: realmId },
     pollInterval: 5000,
   });
@@ -66,8 +64,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const { subview, set } = useRealmDetailHotkeys();
 
   const pushPage = (value) => {
-    setId(parseInt(value));
-    router.push('/realm/' + value);
+    if (!loading) {
+      router.push('/realm/' + value, undefined, { shallow: true });
+    }
   };
 
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
@@ -110,13 +109,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <div className="absolute top-0 w-full overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
-                  {subview == 'Army' && <Military realm={realmData?.realm} />}
+                  {subview == 'Army' && <Army realm={realmData?.realm} />}
                   {subview == 'Buildings' && realmData?.realm && (
                     <RealmBuildings realm={realmData.realm} loading={false} />
                   )}
-                  {subview == 'Resources' && <Harvests realm={realmData} />}
+                  {subview == 'Resources' && (
+                    <ResourceDetails realm={realmData} />
+                  )}
                   {subview == 'Food' ? <Food realm={realmData} /> : null}
-                  {subview == 'Survey' && <Statistics realm={realmData} />}
+                  {subview == 'Survey' && <Survey realm={realmData} />}
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
                   <div id="spacer" className="w-full h-20" />
                 </>
@@ -245,7 +246,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         selected={subview}
         isOwnerOfRealm={isOwner}
         onSetSubview={(s) => set(s)}
-        className="absolute bottom-0 z-30"
+        className="absolute bottom-0 z-20"
       />
     </>
   );
