@@ -137,7 +137,7 @@ export function CombatPanel(): ReactElement {
             />
           )}
 
-          <SquadBuilder
+          {/* <SquadBuilder
             squad="Defend"
             flipped={true}
             realmId={parseInt(defendId)}
@@ -154,7 +154,7 @@ export function CombatPanel(): ReactElement {
             withPurchase={true}
             troops={attackSquad}
             troopsStats={troopStatsData?.getTroopStats}
-          />
+          /> */}
 
           {AttackingRealm?.realm?.name && (
             <RealmBannerHeading
