@@ -89,7 +89,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   return (
     <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
-      <div className="col-start-1 col-end-5 relative">
+      <div className="col-span-6 md:col-start-1 md:col-end-5 relative">
         <RealmBannerHeading
           onSubmit={(value) => pushPage(parseInt(value))}
           key={realm?.realmId ?? ''}
@@ -98,7 +98,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           realmId={realmId}
           hideSearchFilter
         />
-        <div className="relative w-full h-full">
+        <div className="relative w-full">
           <Image
             src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
             alt="map"
@@ -107,7 +107,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             height={320}
             layout={'responsive'}
           />
-          <div className="absolute flex justify-center items-center flex-col top-8 w-full">
+          <div className="absolute bg-gray-800/40 overflow-x-scroll md:overflow-x-visible flex justify-center items-center flex-col top-0 w-full">
             {subview == 'Attack' && <Military realm={realmData} />}
             {subview == 'Buildings' && realmData?.realm && (
               <RealmBuildings realm={realmData.realm} loading={false} />
@@ -116,7 +116,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </div>
         </div>
 
-        <AtlasSidebar isOpen={!!subview}>
+        <AtlasSidebar containerClassName="w-full md:w-1/3" isOpen={false}>
           <>
             <SidebarHeader
               onClose={() => set(null)}
@@ -136,6 +136,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </>
         </AtlasSidebar>
         <RealmToolbar
+          selected={subview}
           isOwnerOfRealm={isOwner}
           onSetSubview={(s) => set(s)}
           className="fixed bottom-0"
@@ -255,14 +256,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </Card>
         </div>
         */}
-      </div>
-      <div className="grid grid-cols-6 col-start-5 col-end-7">
-        <div className="col-start-1 col-end-7">
-          <div className="w-full ">
-            <h2 className="text-center text-white font-lords">History</h2>
-            <RealmHistory realmId={realmId} />
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { animated, useSpring } from 'react-spring';
 type Prop = {
   isOpen: boolean;
   children: React.ReactNode[] | React.ReactNode;
-  width?: 'w-1/4' | 'w-1/3' | 'w-1/2' | 'w-full';
+  containerClassName?: string;
   container?: HTMLElement;
 };
 
@@ -32,8 +32,8 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0 bottom-0 right-0 p-4 bg-gray-800/80 z-20 overflow-y-scroll',
-        props.width || 'w-1/3'
+        'absolute top-0 shadow-lg shadow-black bottom-0 right-0 p-4 bg-gray-800/80 z-20 overflow-y-scroll',
+        props.containerClassName || 'w-1/3'
       )}
       style={animation}
     >

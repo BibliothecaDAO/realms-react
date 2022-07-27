@@ -11,7 +11,10 @@ type ToolbarItemProps = {
 const ToolbarItem = (props: ToolbarItemProps) => {
   return (
     <div>
-      <button onClick={props.onClick} className="text-xs">
+      <button
+        onClick={props.onClick}
+        className="text-xs text-gray-300 hover:text-white"
+      >
         {props.title}
       </button>{' '}
       {props.children}
@@ -21,6 +24,7 @@ const ToolbarItem = (props: ToolbarItemProps) => {
 
 type ToolbarProps = {
   className?: string;
+  selected: string | null;
   isOwnerOfRealm?: boolean;
   onSetSubview: (string: Subview) => void;
 };
