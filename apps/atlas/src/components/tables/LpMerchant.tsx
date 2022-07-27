@@ -28,6 +28,7 @@ import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 type ResourceRowProps = {
   resource: Resource & ResourceQty & LpQty;
   availableResources: Resource[];
+  isRemoveLp?: boolean;
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
   onLpQtyChange: (
@@ -158,19 +159,22 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             onChange={handleValueChange}
           />{' '}
         </div>
-        <div className="flex justify-between">
-          <div className="self-center w-1/2">Min Lp to remove:</div>
-          <InputNumber
-            value={props.resource.lpqty}
-            inputSize="md"
-            colorScheme="transparent"
-            className=" text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-1/2"
-            min={0}
-            max={10000}
-            stringMode // to support high precision decimals
-            onChange={handleLpValueChange}
-          />{' '}
-        </div>
+        {props.isRemoveLp && (
+          <div className="flex justify-between">
+            <div className="self-center w-1/2">Min Lp to remove:</div>
+            <InputNumber
+              value={props.resource.lpqty}
+              inputSize="md"
+              colorScheme="transparent"
+              className=" text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-1/2"
+              min={0}
+              max={10000}
+              stringMode // to support high precision decimals
+              onChange={handleLpValueChange}
+            />{' '}
+          </div>
+        )}
+
         <div className="flex justify-between">
           <div className="self-center w-1/2">Min currency:</div>
           <InputNumber
@@ -256,7 +260,7 @@ export function LpMerchant(): ReactElement {
       parseEther(String(resource.qty))
     );
     const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.lpqty))
+      parseEther(String(resource.currencyqty))
     );
 
     const maxDate = new Date();
@@ -358,6 +362,7 @@ export function LpMerchant(): ReactElement {
             <ResourceRow
               key={resource.resourceId}
               resource={resource}
+              isRemoveLp={isSell}
               availableResources={availableResourceIds.map(
                 (resourceId) => getResourceById(resourceId) as Resource
               )}

@@ -52,6 +52,10 @@ export const useBuyResources = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'buy_tokens',
+        title: 'buy_tokens',
+      },
       args: [
         bnToUint256(maxAmount.toHexString()),
         tokenIds.map((value) => bnToUint256(value)),
@@ -85,6 +89,10 @@ export const useSellResources = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'sell_tokens',
+        title: 'sell_tokens',
+      },
       args: [
         bnToUint256(minAmount.toHexString()),
         tokenIds.map((value) => bnToUint256(value)),
@@ -118,6 +126,10 @@ export const useAddLiquidity = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'add_liquidity',
+        title: 'add_liquidity',
+      },
       args: [
         minCurrencyAmount.map((value) =>
           bnToUint256(BigNumber.from(value).toHexString())
@@ -156,6 +168,7 @@ export const useRemoveLiquidity = () => {
     invoke({
       metadata: {
         action: 'remove_liquidity',
+        title: 'remove_liquidity',
       },
       args: [
         minCurrencyAmount.map((value) =>

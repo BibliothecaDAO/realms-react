@@ -73,7 +73,11 @@ const ResourcesContext = createContext<{
   getResourceById: (resourceId: number) => Resource | undefined;
   lpBalance: ResourcesBalance;
   selectedLpResources: LpQty[];
-  updateSelectedLpResourceQty: (resourceId: number, qty: number) => void;
+  updateSelectedLpResourceQty: (
+    resourceId: number,
+    lpqty: number,
+    currencyqty: number
+  ) => void;
 }>(null!);
 
 interface ResourceProviderProps {
