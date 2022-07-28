@@ -5,11 +5,15 @@ import Yagi from '@bibliotheca-dao/ui-lib/icons/yagi.svg';
 export const PartnerBanner = () => {
   const partners = [
     {
-      icon: <Starkware className="w-48 grayscale hover:grayscale-0" />,
+      icon: (
+        <Starkware className="w-48 grayscale brightness-200 hover:grayscale-0" />
+      ),
       url: 'https://starkware.co/starknet/',
     },
     {
-      icon: <Cartridge className="w-48 grayscale hover:grayscale-0" />,
+      icon: (
+        <Cartridge className="w-48 grayscale brightness-[0.4] hover:brightness-100 hover:grayscale-0" />
+      ),
       url: 'https://cartridge.gg/',
     },
     {
@@ -18,14 +22,16 @@ export const PartnerBanner = () => {
     },
     {
       icon: (
-        <span className="text-4xl hover:text-orange-600 grayscale hover:grayscale-0">
+        <span className="text-4xl hover:text-orange-600 grayscale brightness-[0.4] hover:brightness-100 hover:grayscale-0">
           Briq
         </span>
       ),
       url: 'https://briq.construction',
     },
     {
-      icon: <Topology className="w-48 grayscale hover:grayscale-0" />,
+      icon: (
+        <Topology className="w-48 grayscale brightness-[0.4] hover:brightness-100 hover:grayscale-0" />
+      ),
       url: 'https://topology.gg/',
     },
     {
