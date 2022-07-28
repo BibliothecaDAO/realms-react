@@ -75,11 +75,11 @@ export const MenuSideBar = () => {
         text: 'Crypts',
       },
 
-      {
-        page: 'combat',
-        icon: <Shield className={iconClasses} />,
-        text: 'Combat',
-      },
+      // {
+      //   page: 'combat',
+      //   icon: <Shield className={iconClasses} />,
+      //   text: 'Combat',
+      // },
     ];
   }, [query]);
 
