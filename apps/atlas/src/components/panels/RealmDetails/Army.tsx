@@ -31,14 +31,18 @@ const Army: React.FC<Prop> = (props) => {
     ? new Date(parseInt(realm.lastAttacked)).getTime()
     : 0;
 
-  const cooldownMinutes = 30;
+  const vaultCooldownMinutes = 30;
+  const attackingCooldownMinutes = 10;
 
-  const time = () => {
-    const cooldown = 60 * cooldownMinutes;
-    return (timeAttacked + cooldown).toString();
+  const time = (timestamp: any, minutes: number) => {
+    const cooldownSeconds = 60 * minutes;
+    const t = timestamp ? new Date(parseInt(timestamp)).getTime() : 0;
+    return (t + cooldownSeconds).toString();
   };
 
-  const countdown = useCountdown({ date: time() });
+  const vaultCountdown = useCountdown({
+    date: time(realm?.lastAttacked, vaultCooldownMinutes),
+  });
 
   const { initiateCombat } = useCombat();
 
@@ -66,6 +70,7 @@ const Army: React.FC<Prop> = (props) => {
     attackingRealm?.troops &&
     attackingRealm.troops.filter((t) => t.squadSlot == Squad['Attack']).length >
       0;
+  // TODO: Attacking army cooldown has expired
 
   const raidButtonEnabled =
     !!attackingRealm && !isSameOrder && attackRealmHasAttackSquad;
@@ -175,8 +180,8 @@ const Army: React.FC<Prop> = (props) => {
                   onClick={() => setIsRaiding(true)}
                   className="text-black"
                   size="sm"
-                  disabled={!countdown.expired}
-                  variant={countdown.expired ? 'attack' : 'outline'}
+                  disabled={!vaultCountdown.expired}
+                  variant={vaultCountdown.expired ? 'attack' : 'outline'}
                 >
                   Raid Vault
                 </Button>
