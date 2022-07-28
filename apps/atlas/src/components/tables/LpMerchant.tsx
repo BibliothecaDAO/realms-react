@@ -64,40 +64,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     setTime(timerId);
   };
 
-  const handleLpValueChange = (newValue: ValueType | null) => {
-    console.log(newValue);
-    if (newValue === null) return;
-    if (time) {
-      clearTimeout(time);
-    }
-    let timerId: NodeJS.Timeout | null = null;
-    timerId = setTimeout(() => {
-      props.onLpQtyChange(
-        props.resource.resourceId,
-        parseInt(newValue as string),
-        props.resource.currencyqty
-      );
-    }, 100);
-    setTime(timerId);
-  };
-
-  const handleCurrencyValueChange = (newValue: ValueType | null) => {
-    console.log(newValue);
-    if (newValue === null) return;
-    if (time) {
-      clearTimeout(time);
-    }
-    let timerId: NodeJS.Timeout | null = null;
-    timerId = setTimeout(() => {
-      props.onLpQtyChange(
-        props.resource.resourceId,
-        props.resource.lpqty,
-        parseInt(newValue as string)
-      );
-    }, 100);
-    setTime(timerId);
-  };
-
   const handleSelectChange = (newValue: number) => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
@@ -140,69 +106,42 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex justify-between pt-1.5 text-xs uppercase">
-          <div>balance: {formatEther(props.resource.amount)}</div>
-          <div>1 = {displayRate(props.resource.rate)}</div>
+        <div className="flex flex-col justify-between pt-1.5 text-xs uppercase">
+          <div className="w-full">
+            balance: {formatEther(props.resource.amount)}
+          </div>
+          <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
         </div>
       </div>
-      <div className="flex flex-wrap justify-end text-right sm:w-1/2">
-        <div className="flex justify-between">
-          <div className="self-center w-1/2">Min tokens:</div>
+      <div className="flex flex-wrap justify-end pl-4 text-right sm:w-1/2">
+        <div className="flex flex-col justify-between">
+          <div className="self-center w-full font-semibold tracking-widest uppercase">
+            {props.isRemoveLp ? 'remove' : 'add'} Liquidity
+          </div>
           <InputNumber
             value={props.resource.qty}
             inputSize="md"
             colorScheme="transparent"
-            className="text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-1/2"
+            className="text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-full"
             min={0}
             max={10000}
             stringMode // to support high precision decimals
             onChange={handleValueChange}
           />{' '}
         </div>
-        {props.isRemoveLp && (
-          <div className="flex justify-between">
-            <div className="self-center w-1/2">Min Lp to remove:</div>
-            <InputNumber
-              value={props.resource.lpqty}
-              inputSize="md"
-              colorScheme="transparent"
-              className=" text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-1/2"
-              min={0}
-              max={10000}
-              stringMode // to support high precision decimals
-              onChange={handleLpValueChange}
-            />{' '}
-          </div>
-        )}
 
-        <div className="flex justify-between">
-          <div className="self-center w-1/2">Min currency:</div>
-          <InputNumber
-            value={props.resource.currencyqty}
-            inputSize="md"
-            colorScheme="transparent"
-            className=" text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-1/2"
-            min={0}
-            max={10000}
-            stringMode // to support high precision decimals
-            onChange={handleCurrencyValueChange}
-          />{' '}
+        <div className="flex justify-end">
+          <span className="mr-1">
+            {calculateLords(props.resource.rate, props.resource.qty).toFixed(2)}
+          </span>{' '}
+          <LordsIcon className="w-5 h-5" />
         </div>
-        {/* <div className="flex justify-end">
-            <span className="mr-1">
-              {calculateLords(props.resource.rate, props.resource.qty).toFixed(
-                2
-              )}
-            </span>{' '}
-            <LordsIcon className="w-5 h-5" />
-          </div> */}
       </div>
     </div>
   );
 };
 
 export function LpMerchant(): ReactElement {
-  // const [enabled, setEnabled] = useState(false);
   const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
     return state === 'sell' ? 'buy' : 'sell';
   }, 'buy');
@@ -212,6 +151,7 @@ export function LpMerchant(): ReactElement {
 
   const { addLiquidity, loading: isAddLiquidityTransactionInProgress } =
     useAddLiquidity();
+
   const { removeLiquidity, loading: isRemoveLiquidityTransactionInProgress } =
     useRemoveLiquidity();
 
@@ -236,7 +176,7 @@ export function LpMerchant(): ReactElement {
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.5);
+  const [slippage, setSlippage] = useState(0.05);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -248,26 +188,36 @@ export function LpMerchant(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
+  const deadline = () => {
+    const maxDate = new Date();
+    maxDate.setMinutes(maxDate.getMinutes() + 30);
+    return Math.floor(maxDate.getTime() / 1000);
+  };
+
+  // get token ids
+  const tokenIds = selectedSwapResourcesWithBalance.map(
+    (resource) => resource.resourceId
+  );
+
   function onAddLiquidityClick() {
     // TODO: check lords balance
 
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
+
+    // tokens * lords_price * (1 + slippage)
     const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.currencyqty))
+      parseEther(
+        String(
+          resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 + slippage)
+        )
+      )
     );
 
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
-
-    addLiquidity(currencyAmounts, tokenIds, tokenAmounts, deadline);
+    addLiquidity(currencyAmounts, tokenIds, tokenAmounts, deadline());
   }
 
   function onRemoveLiquidityClick() {
@@ -275,31 +225,36 @@ export function LpMerchant(): ReactElement {
 
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
-    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) => {
+      const amount = String(
+        resource.qty *
+          (parseInt(resource.rate) / 10 ** 18) *
+          (1 - slippage) *
+          1000
+      );
+
+      return parseEther(amount);
+    });
+
+    // tokens * lords_price * (1 + slippage) / 1000
+    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) => {
+      const amount = String(
+        resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 - slippage)
+      );
+      return parseEther(amount);
+    });
+
+    // we pass in the exact LP amount, currency and token amounts are computed via slippage
+    const lpAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
-
-    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.currencyqty))
-    );
-
-    const lpAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.lpqty))
-    );
-
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
 
     removeLiquidity(
       currencyAmounts,
       tokenIds,
       tokenAmounts,
       lpAmounts,
-      deadline
+      deadline()
     );
   }
 

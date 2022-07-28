@@ -117,7 +117,7 @@ export const useAddLiquidity = () => {
     useSwapResourcesTransaction('add_liquidity');
 
   const addLiquidity = (
-    minCurrencyAmount: BigNumber[],
+    maxCurrencyAmount: BigNumber[],
     tokenIds: number[],
     tokenAmounts: BigNumber[],
     deadline: number
@@ -131,7 +131,7 @@ export const useAddLiquidity = () => {
         title: 'add_liquidity',
       },
       args: [
-        minCurrencyAmount.map((value) =>
+        maxCurrencyAmount.map((value) =>
           bnToUint256(BigNumber.from(value).toHexString())
         ),
         tokenIds.map((value) => bnToUint256(value)),

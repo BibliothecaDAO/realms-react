@@ -11,7 +11,7 @@ import { BasePanel } from './BasePanel';
 type Row = {
   resource: ReactElement;
   balance: string;
-  output: number;
+  // output: number;
   change: ReactElement;
   rate: string;
   action: ReactElement;
@@ -52,11 +52,11 @@ export function BankPanel(): ReactElement {
           </span>
         </div>
       ),
-      balance: (+formatEther(resource.amount)).toFixed(),
-      output: 0,
+      balance: (+formatEther(resource.amount)).toFixed(1).toLocaleString(),
+      // output: 0,
       change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),
-      lp_balance: (+formatEther(resource.lp)).toFixed(2),
+      lp_balance: (+formatEther(resource.lp)).toFixed(3).toLocaleString(),
       action: (
         <Button
           variant="secondary"
@@ -74,7 +74,7 @@ export function BankPanel(): ReactElement {
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     { Header: 'Balance', id: 2, accessor: 'balance' },
-    { Header: 'Output', id: 3, accessor: 'output' },
+    // { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Change', id: 4, accessor: 'change' },
     { Header: 'Rate', id: 5, accessor: 'rate' },
     { Header: 'LP Balance', id: 6, accessor: 'lp_balance' },

@@ -152,10 +152,10 @@ function useResources() {
       ...selectedSwapResources,
       { resourceId: select, qty: 0 },
     ]);
-    setSelectedLpResources([
-      ...selectedLpResources,
-      { resourceId: select, lpqty: 0, currencyqty: 0 },
-    ]);
+    // setSelectedLpResources([
+    //   ...selectedLpResources,
+    //   { resourceId: select, lpqty: 0, currencyqty: 0 },
+    // ]);
   };
 
   const removeSelectedSwapResource = (resourceId: number) => {
@@ -186,10 +186,10 @@ function useResources() {
           : { ...resource }
       )
     );
-    setSelectedLpResources([
-      ...selectedLpResources,
-      { resourceId: resourceId, lpqty: 0, currencyqty: 0 },
-    ]);
+    // setSelectedLpResources([
+    //   ...selectedLpResources,
+    //   { resourceId: resourceId, lpqty: 0, currencyqty: 0 },
+    // ]);
   };
 
   const updateSelectedLpResourceQty = (
@@ -279,10 +279,9 @@ function useResources() {
       return {
         ...resource,
         ...getResourceById(resource.resourceId),
-        ...getLpResourceById(resource.resourceId),
-      } as Resource & ResourceQty & LpQty;
+      } as Resource & ResourceQty;
     });
-  }, [selectedSwapResources, balance, selectedLpResources]);
+  }, [selectedSwapResources, balance]);
 
   return {
     availableResourceIds,

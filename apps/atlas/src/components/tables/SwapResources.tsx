@@ -110,10 +110,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             inputSize="md"
             colorScheme="transparent"
             className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
-            /* inputPrefix={/* <span className="text-md text-gray">
-            ~{value} {mockData.additionalCurrency}
-          </span>} 
-        prefixPosition="button" */
             min={0}
             max={10000}
             stringMode // to support high precision decimals
@@ -163,7 +159,7 @@ export function SwapResources(): ReactElement {
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.1);
+  const [slippage, setSlippage] = useState(0.5);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -210,44 +206,35 @@ export function SwapResources(): ReactElement {
     selectedSwapResourcesWithBalance,
   ]);
 
-  function onBuyTokensClick() {
-    if (isBuyButtonDisabled) return;
-
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
-    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.qty))
-    );
-    const maxAmount = parseEther(
-      String(calculatedTotalInLords + calculatedSlippage)
-    );
-
+  const deadline = () => {
     const maxDate = new Date();
     maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
+    return Math.floor(maxDate.getTime() / 1000);
+  };
 
-    buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
+  // get token ids
+  const tokenIds = selectedSwapResourcesWithBalance.map(
+    (resource) => resource.resourceId
+  );
+
+  const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+    parseEther(String(resource.qty))
+  );
+
+  function onBuyTokensClick() {
+    if (isBuyButtonDisabled) return;
+    const maxAmount = parseEther(
+      String(calculatedTotalInLords + 1 * calculatedSlippage)
+    );
+    buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
   }
 
   function onSellTokensClick() {
     if (isSellButtonDisabled) return;
-
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
-    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-      parseEther(String(resource.qty))
-    );
     const minAmount = parseEther(
-      String(calculatedTotalInLords - calculatedSlippage)
+      String(calculatedTotalInLords - 1 * calculatedSlippage)
     );
-
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
-
-    sellTokens(minAmount, tokenIds, tokenAmounts, deadline);
+    sellTokens(minAmount, tokenIds, tokenAmounts, deadline());
   }
 
   function onTradeClicked() {
@@ -291,7 +278,7 @@ export function SwapResources(): ReactElement {
             isBuy ? 'bg-green-600' : 'bg-blue-600'
           } relative inline-flex h-6 w-11 items-center rounded-full`}
         >
-          <span className="sr-only">Enable notifications</span>
+          <span className="sr-only">Buy/Sell</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
