@@ -54,14 +54,14 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         props.resource.resourceId,
         parseInt(newValue as string)
       ); /* updatePercentByValue(newValue); */
-    }, 500);
+    }, 300);
     setTime(timerId);
   };
   const handleSelectChange = (newValue: number) => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
   return (
-    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
+    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.2)] bg-gray-900/70">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -98,32 +98,37 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex justify-between pt-1.5 text-xs uppercase">
-          <div>balance: {formatEther(props.resource.amount)}</div>
-          <div>1 = {displayRate(props.resource.rate)}</div>
-        </div>
-      </div>
-      <div className="flex justify-end text-right sm:w-1/2">
-        <div className="flex flex-col justify-between">
-          <InputNumber
-            value={props.resource.qty}
-            inputSize="md"
-            colorScheme="transparent"
-            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
-            min={0}
-            max={10000}
-            stringMode // to support high precision decimals
-            onChange={handleValueChange}
-          />{' '}
-          <div className="flex justify-end">
-            <span className="mr-1">
-              {calculateLords(props.resource.rate, props.resource.qty).toFixed(
-                2
-              )}
-            </span>{' '}
-            <LordsIcon className="w-5 h-5" />
+        <div className="flex mt-4">
+          <div className="flex justify-between space-x-2">
+            <InputNumber
+              value={props.resource.qty}
+              inputSize="md"
+              colorScheme="transparent"
+              className="w-20 text-3xl font-semibold text-left"
+              min={0}
+              max={1000000}
+              stringMode // to support high precision decimals
+              onChange={handleValueChange}
+            />{' '}
+            <div className="flex self-end justify-end text-lg opacity-70">
+              <span className="self-center mr-1 font-semibold">
+                ~{' '}
+                {calculateLords(
+                  props.resource.rate,
+                  props.resource.qty
+                ).toFixed(2)}
+              </span>{' '}
+              <LordsIcon className="self-center w-5 h-5" />
+            </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
+        <div className="w-full">
+          balance:{' '}
+          {(+formatEther(props.resource.amount)).toFixed(2).toLocaleString()}
+        </div>
+        <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
       </div>
     </div>
   );
@@ -224,7 +229,7 @@ export function SwapResources(): ReactElement {
   function onBuyTokensClick() {
     if (isBuyButtonDisabled) return;
     const maxAmount = parseEther(
-      String(calculatedTotalInLords + 1 * calculatedSlippage)
+      String(calculatedTotalInLords + calculatedSlippage)
     );
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
   }
@@ -232,7 +237,7 @@ export function SwapResources(): ReactElement {
   function onSellTokensClick() {
     if (isSellButtonDisabled) return;
     const minAmount = parseEther(
-      String(calculatedTotalInLords - 1 * calculatedSlippage)
+      String(calculatedTotalInLords - calculatedSlippage)
     );
     sellTokens(minAmount, tokenIds, tokenAmounts, deadline());
   }
@@ -247,25 +252,7 @@ export function SwapResources(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {!isLordsApprovedForExchange && isBuy && (
-        <div className="pb-4">
-          <Button className="w-full" variant="primary" onClick={approveLords}>
-            APPROVE LORDS
-          </Button>
-        </div>
-      )}
-      {!isResourcesApprovedForExchange && isSell && (
-        <div className="pb-4">
-          <Button
-            className="w-full"
-            variant="primary"
-            onClick={approveResources}
-          >
-            APPROVE RESOURCES
-          </Button>
-        </div>
-      )}
-      <div className="flex w-full mx-auto mb-8 tracking-widest">
+      <div className="flex mx-auto mb-8 tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
@@ -275,8 +262,8 @@ export function SwapResources(): ReactElement {
           checked={isBuy}
           onChange={toggleTradeType}
           className={`${
-            isBuy ? 'bg-green-600' : 'bg-blue-600'
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
+            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
+          } relative inline-flex h-6 w-11 items-center rounded-full shadow-inner`}
         >
           <span className="sr-only">Buy/Sell</span>
           <span
@@ -302,7 +289,7 @@ export function SwapResources(): ReactElement {
               onQtyChange={updateSelectedSwapResourceQty}
             />
             <IconButton
-              className="absolute -top-3 -right-3"
+              className="absolute top-3 right-3 hover:bg-red-900"
               icon={<Danger className="w-3 h-3" />}
               aria-label="Remove Row"
               size="xs"
@@ -324,15 +311,21 @@ export function SwapResources(): ReactElement {
       </div>
       <div className="flex justify-end w-full pt-4">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex flex-col  rounded p-4 mb-5 bg-gray-500/70 shadow-[inset_0_6px_8px_0px_rgba(0,0,0,0.18)]">
+          <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
-              <span className="mr-1">{calculatedTotalInLords.toFixed(2)}</span>
-              <LordsIcon className="w-6 h-6 mt-0.5" />
+              <span>
+                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
+                  Your total in LORDS:
+                </span>
+                {calculatedTotalInLords.toLocaleString()}
+              </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
-                {(+formatEther(lordsBalance)).toFixed(2)}{' '}
-                <LordsIcon className="w-4 h-4 mt-1 ml-1" />
+                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  your lords Balance:
+                </span>
+                {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>
             </div>
           </div>

@@ -52,11 +52,11 @@ export function BankPanel(): ReactElement {
           </span>
         </div>
       ),
-      balance: (+formatEther(resource.amount)).toFixed(1).toLocaleString(),
+      balance: (+formatEther(resource.amount)).toLocaleString(),
       // output: 0,
       change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),
-      lp_balance: (+formatEther(resource.lp)).toFixed(3).toLocaleString(),
+      lp_balance: (+formatEther(resource.lp)).toLocaleString(),
       action: (
         <Button
           variant="secondary"

@@ -69,7 +69,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
   };
 
   return (
-    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
+    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.2)] bg-gray-900/70">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -106,36 +106,42 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex flex-col justify-between pt-1.5 text-xs uppercase">
-          <div className="w-full">
-            balance: {formatEther(props.resource.amount)}
+        <div className="flex flex-wrap mt-4">
+          <div className="self-center w-full text-sm font-semibold tracking-widest uppercase opacity-50">
+            {props.isRemoveLp
+              ? 'LP tokens to withdraw'
+              : props.resource.resourceName + ' to LP'}
           </div>
-          <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
+          <div className="flex justify-between space-x-2">
+            <InputNumber
+              value={props.resource.qty}
+              inputSize="md"
+              colorScheme="transparent"
+              className="w-20 text-3xl font-semibold text-left"
+              min={0}
+              max={1000000}
+              stringMode // to support high precision decimals
+              onChange={handleValueChange}
+            />{' '}
+            <div className="flex self-end justify-end text-lg opacity-70">
+              <span className="self-center mr-1 font-semibold">
+                ~{' '}
+                {calculateLords(
+                  props.resource.rate,
+                  props.resource.qty
+                ).toFixed(2)}
+              </span>{' '}
+              <LordsIcon className="self-center w-5 h-5" />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="flex flex-wrap justify-end pl-4 text-right sm:w-1/2">
-        <div className="flex flex-col justify-between">
-          <div className="self-center w-full font-semibold tracking-widest uppercase">
-            {props.isRemoveLp ? 'remove' : 'add'} Liquidity
-          </div>
-          <InputNumber
-            value={props.resource.qty}
-            inputSize="md"
-            colorScheme="transparent"
-            className="text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2 w-full"
-            min={0}
-            max={10000}
-            stringMode // to support high precision decimals
-            onChange={handleValueChange}
-          />{' '}
+      <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
+        <div className="w-full">1 = {displayRate(props.resource.rate)} </div>
+        <div className="w-full">
+          {(+formatEther(props.resource.amount)).toLocaleString()}
         </div>
-
-        <div className="flex justify-end">
-          <span className="mr-1">
-            {calculateLords(props.resource.rate, props.resource.qty).toFixed(2)}
-          </span>{' '}
-          <LordsIcon className="w-5 h-5" />
-        </div>
+        {/* <div className="w-full">1 = {props.resource.lpqty} </div> */}
       </div>
     </div>
   );
@@ -163,6 +169,7 @@ export function LpMerchant(): ReactElement {
     availableResourceIds,
     selectedSwapResourcesWithBalance,
     getResourceById,
+    lordsBalance,
     addSelectedSwapResources,
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
@@ -268,26 +275,7 @@ export function LpMerchant(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {!isLordsApprovedForExchange && isBuy && (
-        <div>
-          <Button className="w-full" variant="primary" onClick={approveLords}>
-            APPROVE LORDS
-          </Button>
-        </div>
-      )}
-      {/* TODO: NOT WORKING */}
-      {!isResourcesApprovedForExchange && isSell && (
-        <div>
-          <Button
-            className="w-full"
-            variant="primary"
-            onClick={approveResources}
-          >
-            APPROVE RESOURCES
-          </Button>
-        </div>
-      )}
-      <div className="flex w-full mx-auto mb-8 tracking-widest">
+      <div className="flex mx-auto mb-8 tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
@@ -297,7 +285,7 @@ export function LpMerchant(): ReactElement {
           checked={isBuy}
           onChange={toggleTradeType}
           className={`${
-            isBuy ? 'bg-green-600' : 'bg-blue-600'
+            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
           } relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Enable notifications</span>
@@ -346,15 +334,25 @@ export function LpMerchant(): ReactElement {
           </Button>
         </div>
       </div>
+
       <div className="flex justify-end w-full pt-4">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex flex-col  rounded p-4 mb-5 bg-gray-500/70 shadow-[inset_0_6px_8px_0px_rgba(0,0,0,0.18)]">
+          <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
-              <span className="mr-1">{calculatedTotalInLords.toFixed(2)}</span>
-              <LordsIcon className="w-6 h-6 mt-0.5" />
+              <span>
+                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
+                  Your total in LORDS:
+                </span>
+                {calculatedTotalInLords.toLocaleString()}
+              </span>
             </div>
-            <div className="flex justify-end text-md">
-              {calculatedSlippage.toFixed(2)}
+            <div>
+              <div className="flex justify-end text-md">
+                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  your lords Balance:
+                </span>
+                {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+              </div>
             </div>
           </div>
 

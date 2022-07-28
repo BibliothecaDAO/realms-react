@@ -139,7 +139,7 @@ export function Header() {
           <Button href="/bank" variant="primary">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
-              {(+formatEther(lordsBalance)).toFixed(2)}
+              {(+formatEther(lordsBalance)).toLocaleString()}
             </span>
           </Button>
         </span>
