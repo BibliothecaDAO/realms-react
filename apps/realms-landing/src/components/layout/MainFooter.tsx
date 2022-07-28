@@ -1,74 +1,42 @@
-import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
-import Image from 'next/image';
-import { links } from '@/data/Projects';
-
+import Heart from '@bibliotheca-dao/ui-lib/icons/heart.svg';
+import Discord from '@bibliotheca-dao/ui-lib/icons/social/discord.svg';
+import Github from '@bibliotheca-dao/ui-lib/icons/social/github.svg';
+import Twitter from '@bibliotheca-dao/ui-lib/icons/social/twitter.svg';
 const footerLinkStyles = 'hover:underline transition-all duration-300';
 
 export const MainFooter = () => {
   return (
-    <div className="grid w-full grid-cols-1 gap-2 p-10 mx-auto mt-10 border-t border-white/20 sm:grid-cols-2 lg:grid-cols-4 sm:p-10">
-      <div className="">
-        <BibliothecaBook className="self-center fill-current h-36" />
+    <div className="flex flex-col mx-auto">
+      <div className="flex pt-4 pb-16 mx-auto">
+        <a
+          href="https://discord.gg/WpwYzsT8Jv"
+          target="_blank"
+          rel="noreferrer"
+          className="self-center"
+        >
+          <Discord className="fill-current w-7 hover:animate-bounce sm:mr-4" />
+        </a>
+        <a
+          href="https://discord.gg/WpwYzsT8Jv"
+          target="_blank"
+          rel="noreferrer"
+          className="self-center"
+        >
+          <Github className="fill-current w-7 hover:animate-bounce sm:mr-4" />
+        </a>
+        <a
+          href="https://twitter.com/LootRealms"
+          target="_blank"
+          rel="noreferrer"
+          className="self-center"
+        >
+          <Twitter className="w-6 fill-current hover:animate-bounce sm:mr-4" />
+        </a>
       </div>
-      <div className="mb-10 tracking-widest uppercase">
-        <h4 className="mb-6">Links</h4>
-        <ul>
-          <li className={footerLinkStyles}>
-            <a href={links[0].website}>The Atlas</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].treasury}>The Treasury</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].snapshot}>Snapshot Voting</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].scroll}>Master Scroll</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].staking}>Staking</a>
-          </li>
-          {/* {projects.map((a, index) => {
-            return (
-              <li className={footerLinkStyles} key={index}>
-                {' '}
-                <a href={a.website}>{a.name}</a>{' '}
-              </li>
-            );
-          })} */}
-        </ul>
+
+      <div className="flex pb-4 mx-auto text-white text-body">
+        Made with <Heart className="h-8 px-2 fill-current" /> by BibliothecaDAO
       </div>
-      <div className="mb-10 tracking-widest uppercase">
-        <h4 className="mb-6">Socials</h4>
-        <ul>
-          <li className={footerLinkStyles}>
-            <a href={links[0].twitterBiblio}>Bibliotheca Twitter</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].twitterRealms}>Realms Twitter</a>
-          </li>
-          <li className={footerLinkStyles}>
-            <a href={links[0].discord}>Discord</a>
-          </li>
-          {/* {projects.map((a, index) => {
-            return (
-              <li className={footerLinkStyles} key={index}>
-                {' '}
-                <a href={a.website}>{a.name}</a>{' '}
-              </li>
-            );
-          })} */}
-        </ul>
-      </div>
-      <iframe
-        src="https://discord.com/widget?id=884211910222970891&theme=dark"
-        width="350"
-        className="max-w-full"
-        title="discord-widget"
-        height="300"
-        frameBorder="0"
-        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-      ></iframe>
     </div>
   );
 };

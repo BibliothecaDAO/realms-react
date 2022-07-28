@@ -19,12 +19,16 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
     width: any;
     quality?: any;
   }) => {
-    if (width > 1080) {
+    if (width > 1280) {
       return `/_next/image?url=/realms-art/desktop/${src}-desktop.png&w=${width}&q=${
         quality || 75
       }`;
-    } else {
+    } else if (width > 768) {
       return `/_next/image?url=/realms-art/tablet/${src}-tablet.png&w=${width}&q=${
+        quality || 75
+      }`;
+    } else {
+      return `/_next/image?url=/realms-art/mobile/${src}-mobile.png&w=${width}&q=${
         quality || 75
       }`;
     }

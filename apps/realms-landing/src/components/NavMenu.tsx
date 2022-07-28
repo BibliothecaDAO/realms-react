@@ -1,18 +1,10 @@
+import { Button } from '@bibliotheca-dao/ui-lib';
+import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+import Discord from '@bibliotheca-dao/ui-lib/icons/social/discord.svg';
+import Github from '@bibliotheca-dao/ui-lib/icons/social/github.svg';
+import Twitter from '@bibliotheca-dao/ui-lib/icons/social/twitter.svg';
 import { useState, useEffect } from 'react';
 import { ScrollSpy } from '@/util/ScrollSpy';
-// Abstracted from ScrollSpy to allow for easier customizations
-const onScrollUpdate = (entry: any, isInVewPort: any) => {
-  const { target, boundingClientRect } = entry;
-  const menuItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
-  if (boundingClientRect.y <= 0 && isInVewPort) {
-    menuItem?.classList.add('font-semibold', 'text-white');
-  } else {
-    if (menuItem?.classList.contains('font-semibold')) {
-      menuItem.classList.remove('font-semibold');
-      menuItem.classList.remove('text-white');
-    }
-  }
-};
 
 const NavMenu = ({ options }: any) => {
   // control the click event
@@ -31,23 +23,91 @@ const NavMenu = ({ options }: any) => {
     }
   };
 
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   return (
-    <nav className="pt-8 pr-8 text-xl tracking-widest uppercase sm:block">
-      <ul>
-        {options.map((option: any) => (
-          <li className="my-2" key={option.hash}>
-            <a
-              href={`#${option.hash}`}
-              onClick={onClick}
-              data-scrollspy-id={option.hash}
-              className={`hover:font-semibold`}
-            >
-              {option.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <header className="fixed top-0 z-10 w-full tracking-widest text-whitetext-xl bg-black/50 bg-blend-multiply backdrop-brightness-125 sm:block">
+      <div className="flex justify-between w-full px-8">
+        <span className="mt-1 text-5xl uppercase font-lords">
+          R<span className="hidden lg:inline">ealms</span>
+        </span>
+        <nav
+          className={`justify-center gap-4 lg:gap-8 my-auto text-base text-center flex lg:flex-row grow
+            ${
+              showMobileMenu
+                ? 'absolute top-16 mx-auto flex-col left-0 right-0 bg-black/50 py-6'
+                : 'hidden lg:flex'
+            }
+          `}
+        >
+          <a
+            href="https://bibliothecadao.xyz/treasury"
+            onClick={onClick}
+            className={`hover:text-gray-400`}
+          >
+            The Treasury
+          </a>
+          <a
+            href="https://snapshot.org/#/council.bibliotheca.eth"
+            onClick={onClick}
+            className={`hover:text-gray-400`}
+          >
+            Snapshot Voting
+          </a>
+          <a
+            href="https://scroll.bibliothecadao.xyz/"
+            onClick={onClick}
+            className={`hover:text-gray-400`}
+          >
+            Master Scroll
+          </a>
+          <a
+            href="https://staking.bibliothecadao.xyz/"
+            onClick={onClick}
+            className={`hover:text-gray-400`}
+          >
+            Staking
+          </a>
+        </nav>
+        <div className="hidden mr-10 xl:mr-32 lg:flex">
+          <a
+            href="https://discord.gg/WpwYzsT8Jv"
+            target="_blank"
+            rel="noreferrer"
+            className="self-center"
+          >
+            <Discord className="fill-current w-7 hover:animate-bounce sm:mr-4" />
+          </a>
+          <a
+            href="https://discord.gg/WpwYzsT8Jv"
+            target="_blank"
+            rel="noreferrer"
+            className="self-center"
+          >
+            <Github className="fill-current w-7 hover:animate-bounce sm:mr-4" />
+          </a>
+          <a
+            href="https://twitter.com/LootRealms"
+            target="_blank"
+            rel="noreferrer"
+            className="self-center"
+          >
+            <Twitter className="w-6 fill-current hover:animate-bounce sm:mr-4" />
+          </a>
+        </div>
+        <Button
+          className="py-2 my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl bg-white/50"
+          href="https://atlas.bibliothecadao.xyz"
+          variant="dao"
+          texture={false}
+        >
+          Explore the Atlas
+        </Button>
+        <Menu
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          className="justify-center my-auto lg:hidden"
+        />
+      </div>
+    </header>
   );
 };
 
@@ -64,16 +124,5 @@ export const WithNavMenu = ({ children, selector }: any) => {
     setOptions(optionsFromSections);
   }, [selector]);
 
-  return (
-    <div className="flex">
-      <ScrollSpy handleScroll={onScrollUpdate} />
-      <div className="relative pr-14">
-        <div className="sticky top-0 hidden  sm:block">
-          <NavMenu options={options} />
-          <div className="pt-8 pb-16"></div>
-        </div>
-      </div>
-      <div className="flex-1">{children}</div>
-    </div>
-  );
+  return <NavMenu options={options} />;
 };

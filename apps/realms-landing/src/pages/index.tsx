@@ -1,4 +1,5 @@
 import { Button, ImageCarousel } from '@bibliotheca-dao/ui-lib';
+import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/bibliotheca-book.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import type { NextPage } from 'next';
@@ -26,9 +27,10 @@ const slides = [
           <p>Build empires inside your browser.</p>
           <p className="mb-6">An eternal on-chain game running on StarkNet</p>
           <Button
-            className="normal-case"
+            className="max-w-xs py-3 mx-auto font-normal tracking-wide text-white normal-case border-0 rounded-lg shadow-lg backdrop-brightness-125 bg-black/50"
             href="https://atlas.bibliothecadao.xyz"
-            variant="secondary"
+            variant="dao"
+            texture={false}
           >
             Explore the Atlas
           </Button>
@@ -71,7 +73,7 @@ const slides = [
     image: 'riches',
     link: 'https://staking.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2">
         <div>
           <h2 className="mb-4">Player with Freedom</h2>
           <p>
@@ -117,7 +119,7 @@ const slides = [
     image: 'siege',
     link: 'https://staking.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:w-1/2">
+      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
         <div>
           <h2 className="mb-4">Your realm is your sovereign empire</h2>
           <p>
@@ -182,6 +184,7 @@ function Home() {
   };
   return (
     <MainLayout>
+      <WithNavMenu />
       {slides.slice(0, 5).map((slide) => {
         return (
           <FullPageSlide
@@ -192,31 +195,25 @@ function Home() {
           />
         );
       })}
-      <div className="container relative px-8 py-12 mx-auto sm:px-0">
-        <h2 className="mb-8">Settle, Raid, Trade</h2>
-        <div className="pl-8 sm:pl-0">
+      <div className="container relative max-w-xl px-8 py-12 mx-auto sm:px-0">
+        <h2 className="mb-10">Settle, Raid, Trade</h2>
+        {/* <div className="pl-8 sm:pl-0">
           <ImageCarousel loader={carouselLoader} items={mockData.items} />
-        </div>
-        <p className="max-w-xl pb-8 mx-auto">
+    </div> */}
+        <p className="pb-12 mx-auto">
           Your realm has unique characteristics which shape its' population and
           production capacities. Build the city that suits the territory, the
           metagame and your playstyle
         </p>
         <h2>Bibliotheca: Stewards of on-chain gaming</h2>
-        <Image
-          className="pt-8 mx-auto mb-10 rounded"
-          alt="Vercel logo"
-          src="/bibliotheca-logo.jpg"
-          width={300}
-          height={300}
-        />
-        <p className="max-w-4xl pb-8">
+        <BibliothecaBook className="h-48 py-6 mx-auto" />
+        <p className="pb-8 mx-auto">
           The Bibliotheca team is a pioneering web3 game studio provoked into
           action by the birth of a composable on-chain hyperverse, Dom Hoffman's
           Loot Project. Bibliotheca's first misssion: build a massively
-          multiplater onchain gaming ecosystem on StarkNet residing in the Loot
-          hypervers. To date the team have won over the StarkNet and on-chain
-          gamin communities by pushing at the boundaries of the bleeding edge
+          multiplayer on-chain gaming ecosystem on StarkNet residing in the Loot
+          hyperverse. To date the team have won over the StarkNet and on-chain
+          gaming communities by pushing at the boundaries of the bleeding edge
           tech, and with an open source composability focused outlook.
         </p>
         <PartnerBanner />
@@ -234,31 +231,33 @@ function Home() {
       })}
       <div className="container px-8 py-5 mx-auto sm:w-1/2 sm:px-0 lg:w-1/4">
         <FaqBlock />
-        <h1 className="text-xl font-semibold text-center lg:text-4xl">
-          Stay up to Date
-        </h1>
-        <p className="px-10 py-1 text-center">
-          Sign up to the newsletter and be the first one to know about new
-          developments in the ecosystem.
-        </p>
-        <div className="flex justify-center mt-6">
-          <div className="flex-row">
-            <div className="bg-white rounded-lg">
-              <div className="flex justify-between flex-warp md:flex-row">
-                <input
-                  type="email"
-                  className="p-3 m-1 text-sm font-medium text-gray-700 border-none appearance-none md:w-96 focus:outline-none focus:border-white focus:rounded focus:placeholder-transparent"
-                  placeholder="Enter your email"
-                  aria-label="Enter your email"
-                />
-                <button className="w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
-                  Subscribe
-                </button>
+        <div className="max-w-lg mx-auto">
+          <h1 className="text-xl font-semibold font-display lg:text-4xl">
+            Stay up to Date
+          </h1>
+          <p className="py-1">
+            Sign up to the newsletter and be the first one to know about new
+            developments in the ecosystem.
+          </p>
+          <div className="flex justify-center mt-6">
+            <div className="flex-row w-full mr-12">
+              <div className="bg-white rounded-lg">
+                <div className="flex justify-between w-full flex-warp md:flex-row">
+                  <input
+                    type="email"
+                    className="p-3 m-1 text-sm font-medium text-gray-700 border-none appearance-none focus:outline-none focus:border-white focus:rounded focus:placeholder-transparent"
+                    placeholder="Enter your email"
+                    aria-label="Enter your email"
+                  />
+                  <button className="w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
+                    Subscribe
+                  </button>
+                </div>
               </div>
+              <p className="mt-2 ml-1 text-sm font-light text-gray-300">
+                Unsubscribe at any time
+              </p>
             </div>
-            <p className="mt-2 ml-1 text-sm font-light text-gray-300">
-              Unsubscribe at any time
-            </p>
           </div>
         </div>
       </div>
