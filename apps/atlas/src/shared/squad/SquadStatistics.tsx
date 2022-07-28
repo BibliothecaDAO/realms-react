@@ -4,7 +4,7 @@ import type { TroopInterface } from '@/types/index';
 
 type Props = {
   troops: TroopInterface[];
-  troopsQueued: TroopInterface[];
+  troopsQueued?: TroopInterface[];
   className?: string;
   reversed?: boolean;
 };

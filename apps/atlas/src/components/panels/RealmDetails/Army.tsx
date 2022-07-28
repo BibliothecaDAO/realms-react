@@ -91,15 +91,11 @@ const Army: React.FC<Prop> = (props) => {
           <h3>Attacker</h3>
         </div>
         <div className="grid grid-cols-2 gap-2 divide-x-2 divide-dotted divide-slate-200">
-          <SquadStatistics
-            troopsQueued={[]}
-            troops={realm.troops!}
-          ></SquadStatistics>
+          <SquadStatistics troops={realm.troops || []}></SquadStatistics>
           {selectedRealms && selectedRealms.length > 0 ? (
             <SquadStatistics
               className="pl-2"
               reversed
-              troopsQueued={[]}
               troops={selectedRealms[0]?.troops || []}
             ></SquadStatistics>
           ) : (
