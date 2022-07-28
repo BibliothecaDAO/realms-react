@@ -118,7 +118,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           )}
         </p>
       ),
-      buildAction: isOwner && (
+      buildAction: (
         <Button
           aria-details="Build Building on Realm"
           onClick={() => {
@@ -149,22 +149,21 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           </button>
         </div>
         <PreviewBuild building={previewBuild} />
-        <div className="w-full p-4 absolute left-0 bottom-0">
-          <Button
-            onClick={() => {
-              txQueue.add(
-                createCall.build({
-                  realmId: props.realm.realmId,
-                  buildingId: previewBuild.buildingId,
-                })
-              );
-            }}
-            variant="primary"
-            className="w-full"
-          >
-            Build {previewBuild?.buildingName}
-          </Button>
-        </div>
+        <Button
+          disabled={!isOwner}
+          onClick={() => {
+            txQueue.add(
+              createCall.build({
+                realmId: props.realm.realmId,
+                buildingId: previewBuild.buildingId,
+              })
+            );
+          }}
+          variant="primary"
+          className="w-full mt-2"
+        >
+          Build {previewBuild?.buildingName}
+        </Button>
       </Sidebar>
     </div>
   );
