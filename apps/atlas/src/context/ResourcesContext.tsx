@@ -59,7 +59,7 @@ const initBalance = resources.map((resource) => {
 const ResourcesContext = createContext<{
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
-  selectedSwapResourcesWithBalance: (Resource & ResourceQty & LpQty)[];
+  selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
   addSelectedSwapResources: (resourceId?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
   updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
@@ -72,12 +72,6 @@ const ResourcesContext = createContext<{
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
   lpBalance: ResourcesBalance;
-  selectedLpResources: LpQty[];
-  updateSelectedLpResourceQty: (
-    resourceId: number,
-    lpqty: number,
-    currencyqty: number
-  ) => void;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -104,8 +98,6 @@ function useResources() {
   const [selectedSwapResources, setSelectedSwapResources] = useState<
     ResourceQty[]
   >([]);
-
-  const [selectedLpResources, setSelectedLpResources] = useState<LpQty[]>([]);
 
   const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
@@ -152,10 +144,6 @@ function useResources() {
       ...selectedSwapResources,
       { resourceId: select, qty: 0 },
     ]);
-    // setSelectedLpResources([
-    //   ...selectedLpResources,
-    //   { resourceId: select, lpqty: 0, currencyqty: 0 },
-    // ]);
   };
 
   const removeSelectedSwapResource = (resourceId: number) => {
@@ -183,24 +171,6 @@ function useResources() {
       selectedSwapResources.map((resource) =>
         resource.resourceId === resourceId
           ? { ...resource, qty: qty }
-          : { ...resource }
-      )
-    );
-    // setSelectedLpResources([
-    //   ...selectedLpResources,
-    //   { resourceId: resourceId, lpqty: 0, currencyqty: 0 },
-    // ]);
-  };
-
-  const updateSelectedLpResourceQty = (
-    resourceId: number,
-    lpqty: number,
-    currencyqty: number
-  ) => {
-    setSelectedLpResources(
-      selectedLpResources.map((resource) =>
-        resource.resourceId === resourceId
-          ? { ...resource, lpqty: lpqty, currencyqty: currencyqty }
           : { ...resource }
       )
     );
@@ -266,14 +236,6 @@ function useResources() {
     [balance]
   );
 
-  const getLpResourceById = useCallback(
-    (resourceId: number) => {
-      return selectedLpResources.find(
-        (resource) => resource.resourceId === resourceId
-      );
-    },
-    [selectedLpResources]
-  );
   const selectedSwapResourcesWithBalance = useMemo(() => {
     return selectedSwapResources.map((resource) => {
       return {
@@ -296,8 +258,6 @@ function useResources() {
     getResourceById,
     lordsBalance,
     lpBalance,
-    selectedLpResources,
-    updateSelectedLpResourceQty,
   };
 }
 

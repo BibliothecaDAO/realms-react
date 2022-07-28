@@ -26,16 +26,11 @@ import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
-  resource: Resource & ResourceQty & LpQty;
+  resource: Resource & ResourceQty;
   availableResources: Resource[];
   isRemoveLp?: boolean;
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
-  onLpQtyChange: (
-    resourceId: number,
-    lpqty: number,
-    currencyqty: number
-  ) => void;
 };
 
 const displayRate = (rate: string) => {
@@ -174,7 +169,6 @@ export function LpMerchant(): ReactElement {
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
-    updateSelectedLpResourceQty,
   } = useResourcesContext();
 
   const { approveLords, isApproved: isLordsApprovedForExchange } =
@@ -311,7 +305,6 @@ export function LpMerchant(): ReactElement {
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}
-              onLpQtyChange={updateSelectedLpResourceQty}
             />
             <IconButton
               className="absolute -top-3 -right-3"
