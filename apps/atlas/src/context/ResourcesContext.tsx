@@ -25,6 +25,8 @@ export type Resource = {
   amount: string;
   rate: string;
   lp: string;
+  currencyAmount: string;
+  tokenAmount: string;
   percentChange: number;
 };
 
@@ -52,6 +54,8 @@ const initBalance = resources.map((resource) => {
     amount: '0',
     rate: '0',
     lp: '0',
+    currencyAmount: '0',
+    tokenAmount: '0',
     percentChange: 0,
   };
 });
@@ -71,7 +75,6 @@ const ResourcesContext = createContext<{
   lordsBalance: string;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
-  lpBalance: ResourcesBalance;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -90,7 +93,6 @@ function useResources() {
   const { account } = useStarknet();
   const [balance, setBalance] = useState([...initBalance]);
   const [lordsBalance, setLordsBalance] = useState('0');
-  const [lpBalance, setlpBalanceData] = useState([...initBalance]);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -130,6 +132,13 @@ function useResources() {
       resourceMapping,
     ],
   });
+
+  const { data: exchangePairData, refresh: updateExchangePairData } =
+    useStarknetCall({
+      contract: exchangeContract,
+      method: 'get_all_currency_reserves',
+      args: [resourceMapping],
+    });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
     pollInterval: 5000,
@@ -197,19 +206,51 @@ function useResources() {
   }, [selectedSwapResources]);
 
   useEffect(() => {
-    if (!resourceBalanceData || !resourceBalanceData[0]) {
+    if (
+      !resourceBalanceData ||
+      !resourceBalanceData[0] ||
+      !lpBalanceData ||
+      !lpBalanceData[0] ||
+      !exchangePairData ||
+      !exchangePairData[0]
+    ) {
       return;
     }
-    if (!lpBalanceData || !lpBalanceData[0]) {
-      return;
-    }
+
     const rates = exchangeRateData?.getExchangeRates ?? [];
 
-    const lp = lpBalanceData[0].map((resourceBalance, index) => {
-      return {
-        amount: uint256ToBN(resourceBalance).toString(10),
-      };
-    });
+    // const userLp = lpBalanceData[0].map((resourceBalance, index) => {
+    //   return {
+    //     amount: uint256ToBN(resourceBalance).toString(10),
+    //   };
+    // });
+
+    // const currencyExchangeData = exchangePairData[0].map(
+    //   (resourceBalance, index) => {
+    //     return {
+    //       amount: uint256ToBN(resourceBalance).toString(10),
+    //     };
+    //   }
+    // );
+
+    // const tokenExchangeData = exchangePairData[1].map(
+    //   (resourceBalance, index) => {
+    //     return {
+    //       amount: uint256ToBN(resourceBalance).toString(10),
+    //     };
+    //   }
+    // );
+
+    const pluckData = (data: any) => {
+      return data.map((resourceBalance, index) => {
+        return {
+          amount: uint256ToBN(resourceBalance).toString(10),
+        };
+      });
+    };
+    const userLp = pluckData(lpBalanceData[0]);
+    const currencyExchangeData = pluckData(exchangePairData[0]);
+    const tokenExchangeData = pluckData(exchangePairData[1]);
 
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
@@ -222,7 +263,9 @@ function useResources() {
           resourceName,
           amount: uint256ToBN(resourceBalance).toString(10),
           rate: rateAmount ?? '0',
-          lp: lp[index].amount,
+          lp: userLp[index].amount,
+          currencyAmount: currencyExchangeData[index].amount,
+          tokenAmount: tokenExchangeData[index].amount,
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
@@ -257,7 +300,6 @@ function useResources() {
     updateBalance,
     getResourceById,
     lordsBalance,
-    lpBalance,
   };
 }
 

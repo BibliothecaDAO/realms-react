@@ -33,7 +33,6 @@ export function BankPanel(): ReactElement {
   const {
     lordsBalance,
     balance,
-    lpBalance,
     availableResourceIds,
     addSelectedSwapResources,
   } = useResourcesContext();
@@ -56,7 +55,14 @@ export function BankPanel(): ReactElement {
       // output: 0,
       change: RateChange(resource.percentChange),
       rate: (+formatEther(resource.rate)).toFixed(4),
-      lp_balance: (+formatEther(resource.lp)).toLocaleString(),
+      lp_balance: (
+        <span>
+          Your Balance: {(+formatEther(resource.lp)).toLocaleString()} <br></br>
+          Total LORDS:{' '}
+          {(+formatEther(resource.currencyAmount)).toLocaleString()} <br></br>
+          Total Token: {(+formatEther(resource.tokenAmount)).toLocaleString()}
+        </span>
+      ),
       action: (
         <Button
           variant="secondary"

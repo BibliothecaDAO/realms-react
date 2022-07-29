@@ -177,7 +177,7 @@ export function LpMerchant(): ReactElement {
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.05);
+  const [slippage, setSlippage] = useState(0.5);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -227,22 +227,24 @@ export function LpMerchant(): ReactElement {
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) => {
-      const amount = String(
-        resource.qty *
-          (parseInt(resource.rate) / 10 ** 18) *
-          (1 - slippage) *
-          1000
-      );
+      // TODO: using 0 until the real rate is cached in indexer
+      // const amount = String(
+      //   resource.qty *
+      //     (parseInt(resource.rate) / 10 ** 18) *
+      //     (1 - slippage) *
+      //     1000
+      // );
 
-      return parseEther(amount);
+      return parseEther('0');
     });
 
     // tokens * lords_price * (1 + slippage) / 1000
     const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) => {
-      const amount = String(
-        resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 - slippage)
-      );
-      return parseEther(amount);
+      // TODO: using 0 until the real rate is cached in indexer
+      // const amount = String(
+      //   resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 - slippage)
+      // );
+      return parseEther('0');
     });
 
     // we pass in the exact LP amount, currency and token amounts are computed via slippage
