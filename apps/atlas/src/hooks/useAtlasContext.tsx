@@ -225,18 +225,13 @@ function useAtlas(): Atlas {
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
-      } else if (panelType === 'bank') {
+      } else if (panelType === 'bank' || panelType === 'lore') {
         setArtBackground('bank');
-        if (breakpoints.lg) {
-          openDetails('resourceSwap', '1');
-        }
-      } else if (panelType === 'trade' || panelType === 'combat') {
-        setArtBackground('realm');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
-      } else if (panelType === 'lore') {
-        setArtBackground('bank');
+      } else if (panelType === 'trade' || panelType === 'combat') {
+        setArtBackground('realm');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
