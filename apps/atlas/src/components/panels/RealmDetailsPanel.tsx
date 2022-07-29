@@ -277,6 +277,17 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           set(s);
         }}
         className="absolute bottom-0 z-20"
+        onNavigateIntent={(dir) => {
+          if (!realm) {
+            return;
+          }
+          if (dir == 'previous') {
+            pushPage(realm.realmId - 1);
+          }
+          if (dir == 'next') {
+            pushPage(realm.realmId + 1);
+          }
+        }}
       />
     </>
   );
