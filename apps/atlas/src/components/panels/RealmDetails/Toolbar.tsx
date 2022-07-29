@@ -52,26 +52,14 @@ type ToolbarProps = {
   isOwnerOfRealm?: boolean;
   onNavigateIntent: (direction: 'previous' | 'next') => void;
   onSetSubview: (string: Subview) => void;
+  isMobile: boolean;
 };
 
 const RealmToolbar: React.FC<ToolbarProps> = (props) => {
-  const [showPlaylist, setShowPlaylist] = useState(false);
+  const [showPlaylist, setShowPlaylist] = useState(props.isMobile);
 
   return (
     <div className={clsx(props.className, 'w-full')}>
-      {showPlaylist && (
-        <div className="w-full bg-slate-700 border-b border-b-slate-500 fill-white flex">
-          <button onClick={() => props.onNavigateIntent('previous')}>
-            <ChevronLeftIcon className="w-6 p-1 inline-block" />
-            Prev{' '}
-          </button>
-          <div className="flex-1 text-center">All Realms</div>
-          <button onClick={() => props.onNavigateIntent('next')}>
-            Next
-            <ChevronRightIcon className="w-6 p-1 inline-block" />
-          </button>
-        </div>
-      )}
       <div
         className={clsx('w-full flex justify-around bg-slate-700 py-2 gap-2')}
       >
@@ -116,13 +104,28 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
           onClick={() => props.onSetSubview('Lore')}
           title="Lore"
         ></ToolbarItem>
-        <ToolbarItem
-          hotkey="p"
-          triggerOnPress
-          onClick={() => setShowPlaylist((prev) => !prev)}
-          title="PlayList"
-        />
+        {!props.isMobile && (
+          <ToolbarItem
+            hotkey="p"
+            triggerOnPress
+            onClick={() => setShowPlaylist((prev) => !prev)}
+            title="PlayList"
+          />
+        )}
       </div>
+      {showPlaylist && (
+        <div className="w-full bg-slate-700 border-t border-t-slate-500 fill-white flex">
+          <button onClick={() => props.onNavigateIntent('previous')}>
+            <ChevronLeftIcon className="w-6 p-1 inline-block" />
+            Prev{' '}
+          </button>
+          <div className="flex-1 text-center">All Realms</div>
+          <button onClick={() => props.onNavigateIntent('next')}>
+            Next
+            <ChevronRightIcon className="w-6 p-1 inline-block" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

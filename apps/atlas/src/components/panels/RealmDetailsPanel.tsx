@@ -10,6 +10,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import { UserAgent } from '@quentin-sommer/react-useragent';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -260,35 +261,40 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         */}
         </div>
       </div>
-      <RealmToolbar
-        selected={subview}
-        isOwnerOfRealm={isOwner}
-        onSetSubview={(s) => {
-          router.push(
-            {
-              pathname: `realm/${realm?.realmId}`,
-              query: {
-                tab: s,
-              },
-            },
-            undefined,
-            { shallow: true }
-          );
-          set(s);
-        }}
-        className="absolute bottom-0 z-20"
-        onNavigateIntent={(dir) => {
-          if (!realm) {
-            return;
-          }
-          if (dir == 'previous') {
-            pushPage(realm.realmId - 1);
-          }
-          if (dir == 'next') {
-            pushPage(realm.realmId + 1);
-          }
-        }}
-      />
+      <UserAgent>
+        {({ mobile }) => (
+          <RealmToolbar
+            selected={subview}
+            isOwnerOfRealm={isOwner}
+            isMobile={mobile}
+            onSetSubview={(s) => {
+              router.push(
+                {
+                  pathname: `realm/${realm?.realmId}`,
+                  query: {
+                    tab: s,
+                  },
+                },
+                undefined,
+                { shallow: true }
+              );
+              set(s);
+            }}
+            className="absolute bottom-0 z-20"
+            onNavigateIntent={(dir) => {
+              if (!realm) {
+                return;
+              }
+              if (dir == 'previous') {
+                pushPage(realm.realmId - 1);
+              }
+              if (dir == 'next') {
+                pushPage(realm.realmId + 1);
+              }
+            }}
+          />
+        )}
+      </UserAgent>
     </>
   );
 }
