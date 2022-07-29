@@ -46,13 +46,14 @@ export const RealmBannerHeading = (props: HeaderProps) => {
         >
           <OrderIcon
             withTooltip
+            containerClassName="my-4 flex flex-col items-center justify-center"
             className="self-center mt-auto text-white stroke-white fill-white"
             size={'sm'}
             order={props.order.toLowerCase()}
           />
         </div>
         <div className="self-center mx-auto">
-          <p className="font-lords text-2xl md:text-6xl">{props.title}</p>
+          <p className="text-2xl font-lords md:text-6xl">{props.title}</p>
         </div>
 
         {!props.hideSearchFilter && (

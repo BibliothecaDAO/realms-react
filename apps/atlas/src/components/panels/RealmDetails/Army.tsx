@@ -109,7 +109,7 @@ const Army: React.FC<Prop> = (props) => {
             Defender{' '}
             <OrderIcon
               withTooltip
-              className="inline-block"
+              containerClassName="inline-block"
               size="sm"
               order={realm.orderType}
             />
@@ -117,6 +117,7 @@ const Army: React.FC<Prop> = (props) => {
           <h3>
             {attackingRealm && (
               <OrderIcon
+                containerClassName="inline-block"
                 withTooltip
                 size="sm"
                 order={attackingRealm?.orderType}
