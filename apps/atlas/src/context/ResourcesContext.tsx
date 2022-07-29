@@ -219,28 +219,6 @@ function useResources() {
 
     const rates = exchangeRateData?.getExchangeRates ?? [];
 
-    // const userLp = lpBalanceData[0].map((resourceBalance, index) => {
-    //   return {
-    //     amount: uint256ToBN(resourceBalance).toString(10),
-    //   };
-    // });
-
-    // const currencyExchangeData = exchangePairData[0].map(
-    //   (resourceBalance, index) => {
-    //     return {
-    //       amount: uint256ToBN(resourceBalance).toString(10),
-    //     };
-    //   }
-    // );
-
-    // const tokenExchangeData = exchangePairData[1].map(
-    //   (resourceBalance, index) => {
-    //     return {
-    //       amount: uint256ToBN(resourceBalance).toString(10),
-    //     };
-    //   }
-    // );
-
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
         return {

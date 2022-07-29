@@ -967,5 +967,46 @@
     "name": "set_royalty_info",
     "outputs": [],
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_ids",
+        "type": "Uint256*"
+      },
+      {
+        "name": "lp_amounts_len",
+        "type": "felt"
+      },
+      {
+        "name": "lp_amounts",
+        "type": "Uint256*"
+      }
+    ],
+    "name": "get_owed_currency_tokens",
+    "outputs": [
+      {
+        "name": "currency_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "currency_reserves",
+        "type": "Uint256*"
+      },
+      {
+        "name": "token_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_reserves",
+        "type": "Uint256*"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   }
 ]

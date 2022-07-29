@@ -226,19 +226,23 @@ export function SwapResources(): ReactElement {
     parseEther(String(resource.qty))
   );
 
+  // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
     if (isBuyButtonDisabled) return;
-    const maxAmount = parseEther(
-      String(calculatedTotalInLords + calculatedSlippage)
-    );
+    // const maxAmount = parseEther(
+    //   String(calculatedTotalInLords + calculatedSlippage)
+    // );
+    const maxAmount = parseEther(String('0'));
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
   }
 
+  // TODO: Set actual slippage when indexer caches rates
   function onSellTokensClick() {
     if (isSellButtonDisabled) return;
-    const minAmount = parseEther(
-      String(calculatedTotalInLords - calculatedSlippage)
-    );
+    // const minAmount = parseEther(
+    //   String(calculatedTotalInLords - calculatedSlippage)
+    // );
+    const minAmount = parseEther(String('0'));
     sellTokens(minAmount, tokenIds, tokenAmounts, deadline());
   }
 

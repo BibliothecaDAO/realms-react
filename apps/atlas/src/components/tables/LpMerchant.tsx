@@ -8,16 +8,24 @@ import {
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
+import { useStarknetCall } from '@starknet-react/core';
+
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import { useState, useMemo, useReducer } from 'react';
+import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
+import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import {
+  useLordsContract,
+  useResources1155Contract,
+  useExchangeContract,
+} from '@/hooks/settling/stark-contracts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -42,7 +50,37 @@ const calculateLords = (rate: string, qty: number) => {
 };
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
+  const { contract: exchangeContract } = useExchangeContract();
+
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
+  const [currencyAndTokenBalance, setCurrencyAndTokenBalance] = useState({
+    currency: '0',
+    token: '0',
+  });
+
+  const {
+    data: currencyAndTokenValues,
+    refresh: updateCurrencyAndTokenValues,
+    loading,
+  } = useStarknetCall({
+    contract: exchangeContract,
+    method: 'get_owed_currency_tokens',
+    args: [
+      [bnToUint256(toBN(props.resource.resourceId))],
+      [bnToUint256(toBN(props.resource.lp))],
+    ],
+  });
+
+  useEffect(() => {
+    if (!currencyAndTokenValues || !currencyAndTokenValues[0]) {
+      return;
+    }
+
+    setCurrencyAndTokenBalance({
+      currency: uint256ToBN(currencyAndTokenValues[0][0]).toString(10),
+      token: uint256ToBN(currencyAndTokenValues[1][0]).toString(10),
+    });
+  }, [currencyAndTokenValues]);
 
   const handleValueChange = (newValue: ValueType | null) => {
     if (newValue === null) return;
@@ -102,17 +140,18 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           </Select.Options>
         </Select>
         <div className="flex flex-wrap mt-4">
-          <div className="self-center w-full text-sm font-semibold tracking-widest uppercase opacity-50">
-            {props.isRemoveLp
-              ? 'LP tokens to withdraw'
-              : props.resource.resourceName + ' to LP'}
-          </div>
+          {/* <div className="self-center w-full text-sm font-semibold tracking-widest uppercase opacity-50">
+
+          </div> */}
           <div className="flex justify-between space-x-2">
+            <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
+              {props.isRemoveLp ? 'remove' : 'add'}
+            </span>
             <InputNumber
               value={props.resource.qty}
               inputSize="md"
               colorScheme="transparent"
-              className="w-20 text-3xl font-semibold text-left"
+              className="w-24 text-3xl font-semibold text-left"
               min={0}
               max={1000000}
               stringMode // to support high precision decimals
@@ -120,14 +159,36 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             />{' '}
             <div className="flex self-end justify-end text-lg opacity-70">
               <span className="self-center mr-1 font-semibold">
-                ~{' '}
+                ~
                 {calculateLords(
                   props.resource.rate,
                   props.resource.qty
                 ).toFixed(2)}
               </span>{' '}
-              <LordsIcon className="self-center w-5 h-5" />
+              {/* <LordsIcon className="self-center w-5 h-5" /> */}
             </div>
+          </div>
+          <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-75 border-white/20">
+            lp-{props.resource.resourceName}:{' '}
+            {loading
+              ? 'loading...'
+              : (+formatEther(props.resource.lp)).toLocaleString()}{' '}
+            <br />
+            <span className="opacity-60">
+              {' '}
+              -LORDS:{' '}
+              {loading
+                ? 'loading...'
+                : (+formatEther(
+                    currencyAndTokenBalance.currency
+                  )).toLocaleString()}{' '}
+              <br />-{props.resource.resourceName}:{' '}
+              {loading
+                ? 'loading...'
+                : (+formatEther(
+                    currencyAndTokenBalance.token
+                  )).toLocaleString()}
+            </span>
           </div>
         </div>
       </div>
@@ -136,7 +197,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         <div className="w-full">
           {(+formatEther(props.resource.amount)).toLocaleString()}
         </div>
-        {/* <div className="w-full">1 = {props.resource.lpqty} </div> */}
       </div>
     </div>
   );
@@ -308,13 +368,13 @@ export function LpMerchant(): ReactElement {
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}
             />
-            <IconButton
-              className="absolute -top-3 -right-3"
-              icon={<Danger className="w-3 h-3" />}
-              aria-label="Remove Row"
+            <Button
+              className="absolute -top-3 -right-3 opacity-60"
               size="xs"
               onClick={() => removeSelectedSwapResource(resource.resourceId)}
-            />
+            >
+              -
+            </Button>
           </div>
         ))}
         <div className="flex w-full">
