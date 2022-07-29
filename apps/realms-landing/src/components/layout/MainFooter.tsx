@@ -6,7 +6,7 @@ const footerLinkStyles = 'hover:underline transition-all duration-300';
 
 export const MainFooter = () => {
   return (
-    <div className="flex flex-col mx-auto">
+    <div className="flex flex-col mx-auto snap-start">
       <div className="flex pt-4 pb-16 mx-auto">
         <a
           href="https://discord.gg/WpwYzsT8Jv"

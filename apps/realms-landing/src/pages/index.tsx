@@ -5,9 +5,11 @@ import OpenSea from '@bibliotheca-dao/ui-lib/icons/social/open-sea.svg';
 
 import { FaqBlock } from '@/components/Faqs';
 import { FullPageSlide } from '@/components/FullPageSlide';
+import { MainFooter } from '@/components/layout/MainFooter';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { WithNavMenu } from '@/components/NavMenu';
 import { PartnerBanner } from '@/components/PartnerBanner';
+import { ScrollSpy } from '@/util/ScrollSpy';
 const slides = [
   {
     title: '',
@@ -124,18 +126,20 @@ const slides = [
           <span className="inline">
             Each Realm is a unique and powerful state, capable of producing
             resources and raising armies. There are 8,000 Realms.
-            <a
-              className="inline-block ml-4 mr-2 align-middle"
-              href="https://opensea.io/collection/lootrealms"
-            >
-              <OpenSea className="w-8 fill-current hover:animate-bounce" />
-            </a>
-            <a
-              className="inline-block align-middle"
-              href="https://looksrare.org/collections/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
-            >
-              <LooksRare className="w-8 fill-current hover:animate-bounce" />
-            </a>
+            <span className="inline-block">
+              <a
+                className="inline-block ml-4 mr-2 align-middle"
+                href="https://opensea.io/collection/lootrealms"
+              >
+                <OpenSea className="w-8 fill-current hover:animate-bounce" />
+              </a>
+              <a
+                className="inline-block align-middle"
+                href="https://looksrare.org/collections/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
+              >
+                <LooksRare className="w-8 fill-current hover:animate-bounce" />
+              </a>
+            </span>
           </span>
         </div>
       </div>
@@ -172,6 +176,22 @@ const mockData = {
   ],
 };
 function Home() {
+  const onScrollUpdate = (entry: any, isInVewPort: any) => {
+    const { target, boundingClientRect } = entry;
+    const menuItem = document.querySelector(
+      `[data-scrollspy-id="${target.id}"]`
+    );
+    console.log(entry);
+    if (boundingClientRect.y <= 0 && isInVewPort) {
+      menuItem?.classList.add('[--child-opacity:1]');
+      menuItem?.classList.remove('[--child-opacity:0]');
+    } else {
+      if (menuItem?.classList.contains('[--child-opacity:1]')) {
+        menuItem.classList.remove('[--child-opacity:1]');
+        menuItem.classList.add('[--child-opacity:0]');
+      }
+    }
+  };
   const carouselLoader = ({
     src,
     width,
@@ -192,7 +212,10 @@ function Home() {
   return (
     <MainLayout>
       <WithNavMenu />
-      <div className="h-screen overflow-scroll snap-y snap-mandatory">
+
+      <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
+        <ScrollSpy handleScroll={onScrollUpdate} />
+
         {slides.slice(0, 5).map((slide) => {
           return (
             <FullPageSlide
@@ -203,7 +226,7 @@ function Home() {
             />
           );
         })}
-        <div className="container relative max-w-xl px-8 py-12 mx-auto sm:px-0 snap-center">
+        <div className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
           {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
         <div className="pl-8 sm:pl-0">
           <ImageCarousel loader={carouselLoader} items={mockData.items} />
@@ -219,7 +242,7 @@ function Home() {
             Bibliotheca DAO is a pioneering web3 game studio building eternal
             games on Starknet.
           </p>
-          <p className="pb-4">
+          <p className="hidden pb-4 sm:block">
             We are making games for gamers. We are open source. We are community
             funded. We are Starknet Hackathon winners. We are winners of the
             Game7 Gitcoin Grant. We are proud recipients of the Loot Ecosystem
@@ -251,7 +274,7 @@ function Home() {
             />
           );
         })}
-        <div className="container px-8 py-5 mx-auto snap-center sm:w-1/2 sm:px-0 lg:w-1/4">
+        <div className="container px-8 py-5 mx-auto snap-start sm:w-1/2 sm:px-0 lg:w-1/4">
           <FaqBlock />
           <div className="max-w-lg mx-auto">
             <h1 className="text-xl font-semibold font-display lg:text-4xl">
@@ -262,7 +285,7 @@ function Home() {
               developments in the ecosystem.
             </p>
             <div className="flex justify-center mt-6">
-              <div className="flex-row w-full mr-12">
+              <div className="flex-row w-full">
                 <div className="bg-white rounded-lg">
                   <div className="flex justify-between w-full flex-warp md:flex-row">
                     <input
@@ -271,7 +294,7 @@ function Home() {
                       placeholder="Enter your email"
                       aria-label="Enter your email"
                     />
-                    <button className="w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
+                    <button className="right-0 w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
                       Subscribe
                     </button>
                   </div>
@@ -283,6 +306,7 @@ function Home() {
             </div>
           </div>
         </div>
+        <MainFooter />
       </div>
     </MainLayout>
   );
