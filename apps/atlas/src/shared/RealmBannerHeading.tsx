@@ -53,7 +53,9 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           />
         </div>
         <div className="self-center mx-auto">
-          <p className="text-2xl font-lords md:text-6xl">{props.title}</p>
+          <p className="text-2xl font-lords md:text-6xl">
+            {props.title || 'Loading'}
+          </p>
         </div>
 
         {!props.hideSearchFilter && (
