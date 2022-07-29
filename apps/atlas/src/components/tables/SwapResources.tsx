@@ -30,6 +30,7 @@ type ResourceRowProps = {
   availableResources: Resource[];
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
+  buy?: boolean;
 };
 
 const displayRate = (rate: string) => {
@@ -98,8 +99,11 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex mt-4">
-          <div className="flex justify-between space-x-2">
+        <div className="flex flex-wrap mt-4">
+          <div className="flex flex-wrap justify-between space-x-2 ">
+            <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
+              swap
+            </span>
             <InputNumber
               value={props.resource.qty}
               inputSize="md"
@@ -110,24 +114,32 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               stringMode // to support high precision decimals
               onChange={handleValueChange}
             />{' '}
-            <div className="flex self-end justify-end sm:text-lg opacity-70">
-              <span className="self-center mr-1 font-semibold">
-                ~{' '}
+            <div
+              className={`flex self-end justify-end uppercase sm:text-lg opacity-70  ${
+                props.buy ? 'text-red-200' : 'text-green-200'
+              }`}
+            >
+              <span
+                className={`self-center mr-1   ${
+                  props.buy ? 'text-red-200' : 'text-green-200'
+                }`}
+              >
+                {props.buy ? '-' : '+'}
                 {calculateLords(
                   props.resource.rate,
                   props.resource.qty
-                ).toFixed(2)}
+                ).toLocaleString()}{' '}
+                Lords
               </span>{' '}
-              <LordsIcon className="self-center w-3 h-3 sm:w-5 sm:h-5" />
+              {/* <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" /> */}
             </div>
+          </div>
+          <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-60 border-white/20">
+            balance: {(+formatEther(props.resource.amount)).toLocaleString()}
           </div>
         </div>
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-xs font-semibold tracking-widest text-right uppercase sm:text-sm opacity-80">
-        <div className="w-full">
-          bal:{' '}
-          {(+formatEther(props.resource.amount)).toFixed(2).toLocaleString()}
-        </div>
         <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
       </div>
     </div>
@@ -229,10 +241,10 @@ export function SwapResources(): ReactElement {
   // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
     if (isBuyButtonDisabled) return;
-    // const maxAmount = parseEther(
-    //   String(calculatedTotalInLords + calculatedSlippage)
-    // );
-    const maxAmount = parseEther(String('0'));
+    const maxAmount = parseEther(
+      String(calculatedTotalInLords + calculatedSlippage)
+    );
+    // const maxAmount = parseEther(String('0'));
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
   }
 
@@ -291,14 +303,16 @@ export function SwapResources(): ReactElement {
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}
+              buy={isBuy}
             />
-            <IconButton
+            <Button
               className="absolute top-3 right-3 hover:bg-red-900"
-              icon={<Danger className="w-3 h-3" />}
-              aria-label="Remove Row"
               size="xs"
+              variant="secondary"
               onClick={() => removeSelectedSwapResource(resource.resourceId)}
-            />
+            >
+              x
+            </Button>
           </div>
         ))}
         <div className="flex w-full">
