@@ -3,7 +3,7 @@ import { default as HTMLHead } from 'next/head'; // Meta
 import type { ReactElement } from 'react';
 
 const meta = {
-  title: 'Realms NFT On Chain Game',
+  title: 'Realms: Eternal Game',
   description:
     'Realms are building a MMOCCG (massively-multiplayer on-chain composable game) on L2 StarkNet',
   website: 'https://realms.xyz/',

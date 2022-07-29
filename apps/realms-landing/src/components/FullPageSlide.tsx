@@ -35,7 +35,7 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
   };
 
   return (
-    <div className="relative w-full h-screen ">
+    <div className="relative w-full h-screen snap-center">
       <Image
         alt=""
         loader={myLoader}
