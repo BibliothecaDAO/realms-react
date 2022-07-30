@@ -33,7 +33,11 @@ import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useStakeLords, useApproveLords } from '@/hooks/useNexus';
+import {
+  useStakeLords,
+  useApproveLords,
+  useWithdrawLords,
+} from '@/hooks/useNexus';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
@@ -60,6 +64,8 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
 
   const { approveLords, loading: loadinguseApproveLords } = useApproveLords();
 
+  const { withdrawLords, loading: loadingwithdrawLords } = useWithdrawLords();
+
   const ownerAddressInt = toBN(account as string).toString();
 
   const splitterAddressInt = toBN(ModuleAddr.Splitter as string).toString();
@@ -69,6 +75,8 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     splitter: '0',
     nexus: '0',
     stLords: '0',
+    totalStkLords: '0',
+    preview: '0',
   });
 
   const {
@@ -101,6 +109,20 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     args: [ownerAddressInt],
   });
 
+  const { data: stLordsTotalSupply, refresh: updateStLordsTotalSupply } =
+    useStarknetCall({
+      contract: nexusContract,
+      method: 'totalSupply',
+      args: [],
+    });
+
+  const { data: previewWithdraw, refresh: updatePreviewWithdraw } =
+    useStarknetCall({
+      contract: nexusContract,
+      method: 'previewRedeem',
+      args: [bnToUint256(parseEther(String(input)).toHexString())],
+    });
+
   useEffect(() => {
     if (
       !splitterBalanceValues ||
@@ -108,7 +130,11 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       !nexusBalanceValues ||
       !nexusBalanceValues[0] ||
       !userStLordsBalanceValues ||
-      !userStLordsBalanceValues[0]
+      !userStLordsBalanceValues[0] ||
+      !stLordsTotalSupply ||
+      !stLordsTotalSupply[0] ||
+      !previewWithdraw ||
+      !previewWithdraw[0]
     ) {
       return;
     }
@@ -117,8 +143,16 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       splitter: uint256ToBN(splitterBalanceValues[0]).toString(10),
       nexus: uint256ToBN(nexusBalanceValues[0]).toString(10),
       stLords: uint256ToBN(userStLordsBalanceValues[0]).toString(10),
+      totalStkLords: uint256ToBN(stLordsTotalSupply[0]).toString(10),
+      preview: uint256ToBN(previewWithdraw[0]).toString(10),
     });
-  }, [splitterBalanceValues, nexusBalanceValues, userStLordsBalanceValues]);
+  }, [
+    splitterBalanceValues,
+    nexusBalanceValues,
+    userStLordsBalanceValues,
+    stLordsTotalSupply,
+    previewWithdraw,
+  ]);
 
   const handleValueChange = (newValue: ValueType | null) => {
     setInput(newValue);
@@ -129,6 +163,13 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       return;
     }
     stakeLords(parseEther(String(input)), account);
+  }
+
+  function onWithdrawLords() {
+    if (!account) {
+      return;
+    }
+    withdrawLords(parseEther(String(input)), account);
   }
 
   function approveLordsFn() {
@@ -161,25 +202,44 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
                 props.buy ? 'text-red-200' : 'text-green-200'
               }`}
             >
-              {/* <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" /> */}
+              {(+formatEther(balances.preview)).toLocaleString()}
             </div>
           </div>
           <div className="w-full pt-2 uppercase border-t border-white/30">
             Stk-LORDS : {(+formatEther(balances.stLords)).toLocaleString()}
-            <br />
-            total nexus LORDS :{' '}
+            <br />- nexus LORDS :{' '}
             {(+formatEther(balances.nexus)).toLocaleString()}
+            <br />- SUPPLY STK-LORDS :{' '}
+            {(+formatEther(balances.totalStkLords)).toLocaleString()}
             {/* <br />
             Nexus balance : {(+formatEther(balances.nexus)).toLocaleString()} */}
             {/* Splitter : {(+formatEther(balances.splitter)).toLocaleString()} */}
           </div>
           <div className="flex mt-4 space-x-2">
-            <button className="p-1 border rounded" onClick={onStakeLords}>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="p-1 border rounded"
+              onClick={onStakeLords}
+            >
               stake
-            </button>
-            <button className="p-1 border rounded" onClick={approveLordsFn}>
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="p-1 border rounded"
+              onClick={approveLordsFn}
+            >
               approve
-            </button>
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="p-1 border rounded"
+              onClick={onWithdrawLords}
+            >
+              withdraw
+            </Button>
           </div>
         </div>
       </div>

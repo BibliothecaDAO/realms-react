@@ -78,9 +78,9 @@ export const TxCartItem = (props: TxCartItem) => {
               props.transaction.transactionHash
             }
           >
-            <span>
+            <a>
               See on Voyager <ExternalLink className="inline-block w-4" />
-            </span>
+            </a>
           </Link>
         ) : null}
         {props.onRemove && (

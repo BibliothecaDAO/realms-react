@@ -77,6 +77,36 @@ export const useStakeLords = () => {
   };
 };
 
+export const useWithdrawLords = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useNexusTransaction('redeem');
+
+  const withdrawLords = (lordsAmount: BigNumber, receiver: string) => {
+    if (loading) {
+      return;
+    }
+
+    invoke({
+      metadata: {
+        action: 'redeem',
+        title: `withdraw from nexus - ${lordsAmount}`,
+      },
+      args: [
+        bnToUint256(lordsAmount.toHexString()),
+        toFelt(receiver),
+        toFelt(receiver),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    withdrawLords,
+    transactionHash,
+    invokeError,
+  };
+};
+
 export const useApproveLords = () => {
   const { transactionHash, invokeLords, invokeError, loading } =
     useNexusTransaction('approve');
