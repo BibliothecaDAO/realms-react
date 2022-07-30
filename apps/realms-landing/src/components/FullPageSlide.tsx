@@ -51,9 +51,7 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
         priority={priority}
       />
       <div className="absolute top-0 w-full h-full py-14">
-        <div className="container transition duration-500 h-full mx-auto opacity-[var(--child-opacity,0)]">
-          {content}
-        </div>
+        <div className="container h-full mx-auto ">{content}</div>
       </div>
     </div>
   );

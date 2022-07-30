@@ -42,3 +42,13 @@ hr {
   font-family: Lords;
   src: url('fontforlordsn.otf');
 }
+
+[data-content] > * {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+}
+
+.active [data-content] > * {
+  opacity: 1;
+  transform: translate3d(0, -3rem, 0);
+}

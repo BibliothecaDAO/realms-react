@@ -2,7 +2,6 @@ import { Button, ImageCarousel } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/bibliotheca-book.svg';
 import LooksRare from '@bibliotheca-dao/ui-lib/icons/social/looks-rare.svg';
 import OpenSea from '@bibliotheca-dao/ui-lib/icons/social/open-sea.svg';
-
 import { FaqBlock } from '@/components/Faqs';
 import { FullPageSlide } from '@/components/FullPageSlide';
 import { MainFooter } from '@/components/layout/MainFooter';
@@ -18,21 +17,29 @@ const slides = [
     priority: true,
     content: (
       <div className="flex flex-col justify-between h-full px-6 text-center">
-        <div className="mb-2 uppercase">
-          <h1 className="text-7xl sm:text-9xl">Realms</h1>
-          <h1>Imperion</h1>
+        <div className="mt-32 uppercase" data-content>
+          <h1 className="duration-700 opacity-0 text-7xl sm:text-9xl">
+            Realms
+          </h1>
+          <h1 className="duration-700 delay-100 opacity-0">Imperion</h1>
         </div>
-        <div className="text-xl text-gray-900">
-          <p>Build empires inside your browser.</p>
-          <p className="mb-6">An eternal on-chain game running on StarkNet</p>
-          <Button
-            className="max-w-xs py-3 mx-auto font-normal tracking-wide text-white normal-case border-0 rounded-lg shadow-lg backdrop-brightness-125 bg-black/50"
-            href="https://atlas.bibliothecadao.xyz"
-            variant="dao"
-            texture={false}
-          >
-            Explore the Atlas
-          </Button>
+        <div className="text-xl text-gray-900" data-content>
+          <p className="duration-700 delay-200 opacity-0">
+            Build empires inside your browser.
+          </p>
+          <p className="pb-6 duration-700 delay-500 opacity-0">
+            An eternal on-chain game running on StarkNet
+          </p>
+          <div className="duration-700 delay-700 opacity-0">
+            <Button
+              className="max-w-xs py-3 mx-auto font-normal tracking-wide text-white normal-case border-0 rounded-lg shadow-lg backdrop-brightness-125 bg-black/50"
+              href="https://atlas.bibliothecadao.xyz"
+              variant="dao"
+              texture={false}
+            >
+              Explore the Atlas
+            </Button>
+          </div>
         </div>
       </div>
     ),
@@ -40,15 +47,17 @@ const slides = [
   {
     image: 'eternity',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4">An Eternal World</h2>
-          <p>
-            The Realms are <strong>your</strong> fantasy universe. [GAME NAME]
-            is the first module in an infinitely expanding player-owned game
-            world.
-          </p>
-        </div>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2"
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          An Eternal World
+        </h2>
+        <p className="duration-700 delay-300 opacity-0">
+          The Realms are your fantasy universe. [GAME NAME] is the first module
+          in an infinitely expanding player-owned game world.
+        </p>
       </div>
     ),
   },
@@ -56,15 +65,17 @@ const slides = [
     image: 'keyImage',
     link: 'https://scroll.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4">Introducing [GAME NAME]</h2>
-          <p>
-            A next generation MMO. Raise empires, raid resources, control
-            Relics. Maintain your cities and finesse your forces, or fall into
-            ruin.
-          </p>
-        </div>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2 "
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          Introducing [GAME NAME]
+        </h2>
+        <p className="duration-700 delay-300 opacity-0">
+          A next generation MMO. Raise empires, raid resources, control Relics.
+          Maintain your cities and finesse your forces, or fall into ruin.
+        </p>
       </div>
     ),
   },
@@ -73,14 +84,17 @@ const slides = [
     image: 'riches',
     link: 'https://staking.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4">Play with Freedom</h2>
-          <p>
-            Dominate the battlefield. Out-smart the market. Exercise diplomacy.
-            Take down the powerful or prey on the weak? Your world, your choice.
-          </p>
-        </div>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2"
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          Play with Freedom
+        </h2>
+        <p className="duration-700 delay-300 opacity-0">
+          Dominate the battlefield. Out-smart the market. Exercise diplomacy.
+          Take down the powerful or prey on the weak? Your world, your choice.
+        </p>
       </div>
     ),
   },
@@ -88,15 +102,18 @@ const slides = [
     image: 'createOrDestroy',
     link: 'https://staking.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4">The Realms Resist</h2>
-          <p>
-            It’s not just the other Lords you need to conquer: the Realms are
-            home to powerful environmental entities seeking to drag your empire
-            into decay.
-          </p>
-        </div>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2"
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          The Realms Resist
+        </h2>
+        <p className="duration-700 delay-300 opacity-0">
+          It’s not just the other Lords you need to conquer: the Realms are home
+          to powerful environmental entities seeking to drag your empire into
+          decay.
+        </p>
       </div>
     ),
   },
@@ -105,14 +122,17 @@ const slides = [
     link: 'https://staking.bibliothecadao.xyz/',
     imagePosition: 'bottom',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4">Built on StarkNet</h2>
-          <p>
-            Real-time, deeply strategic gameplay. On-chain and unstoppable.
-            Eternal play is made possible by StarkNet and Ethereum.
-          </p>
-        </div>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto text-gray-900 sm:px-0 sm:w-1/2"
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          Built on StarkNet
+        </h2>
+        <p className="duration-700 delay-300 opacity-0">
+          Real-time, deeply strategic gameplay. On-chain and unstoppable.
+          Eternal play is made possible by StarkNet and Ethereum.
+        </p>
       </div>
     ),
   },
@@ -120,28 +140,31 @@ const slides = [
     image: 'siege',
     link: 'https://staking.bibliothecadao.xyz/',
     content: (
-      <div className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2">
-        <div>
-          <h2 className="mb-4"> Your sovereign empire</h2>
-          <span className="inline">
-            Each Realm is a unique and powerful state, capable of producing
-            resources and raising armies. There are 8,000 Realms.
-            <span className="inline-block">
-              <a
-                className="inline-block ml-4 mr-2 align-middle"
-                href="https://opensea.io/collection/lootrealms"
-              >
-                <OpenSea className="w-8 fill-current hover:animate-bounce" />
-              </a>
-              <a
-                className="inline-block align-middle"
-                href="https://looksrare.org/collections/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
-              >
-                <LooksRare className="w-8 fill-current hover:animate-bounce" />
-              </a>
-            </span>
+      <div
+        className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2"
+        data-content
+      >
+        <h2 className="mb-4 duration-700 opacity-0 delay-0">
+          Your sovereign empire
+        </h2>
+        <span className="inline duration-700 delay-300 opacity-0">
+          Each Realm is a unique and powerful state, capable of producing
+          resources and raising armies. There are 8,000 Realms.
+          <span className="inline-block">
+            <a
+              className="inline-block ml-4 mr-2 align-middle"
+              href="https://opensea.io/collection/lootrealms"
+            >
+              <OpenSea className="w-8 fill-current hover:animate-bounce" />
+            </a>
+            <a
+              className="inline-block align-middle"
+              href="https://looksrare.org/collections/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
+            >
+              <LooksRare className="w-8 fill-current hover:animate-bounce" />
+            </a>
           </span>
-        </div>
+        </span>
       </div>
     ),
   },
@@ -181,14 +204,11 @@ function Home() {
     const menuItem = document.querySelector(
       `[data-scrollspy-id="${target.id}"]`
     );
-    console.log(entry);
-    if (boundingClientRect.y <= 0 && isInVewPort) {
-      menuItem?.classList.add('[--child-opacity:1]');
-      menuItem?.classList.remove('[--child-opacity:0]');
+    if (entry.intersectionRatio >= 0.75) {
+      menuItem?.classList.add('active');
     } else {
-      if (menuItem?.classList.contains('[--child-opacity:1]')) {
-        menuItem.classList.remove('[--child-opacity:1]');
-        menuItem.classList.add('[--child-opacity:0]');
+      if (menuItem?.classList.contains('active')) {
+        menuItem?.classList.remove('active');
       }
     }
   };
@@ -226,7 +246,7 @@ function Home() {
             />
           );
         })}
-        <div className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
+        <section className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
           {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
         <div className="pl-8 sm:pl-0">
           <ImageCarousel loader={carouselLoader} items={mockData.items} />
@@ -262,7 +282,7 @@ function Home() {
             Visit Us{' '}
           </Button>
           <PartnerBanner />
-        </div>
+        </section>
         {/* eslint-disable-next-line sonarjs/no-identical-functions */}
         {slides.slice(5).map((slide) => {
           return (
