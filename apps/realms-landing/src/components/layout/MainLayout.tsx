@@ -6,7 +6,9 @@ export const MainLayout: FC<{ children: ReactNode }> = (props) => {
   return (
     <div className="bg-gray-900">
       <Head />
-      <main>{children}</main>
+      <main className="h-screen overflow-y-scroll snap-y snap-mandatory">
+        {children}
+      </main>
     </div>
   );
 };

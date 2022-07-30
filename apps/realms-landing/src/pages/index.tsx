@@ -239,21 +239,20 @@ function Home() {
     <MainLayout>
       <WithNavMenu />
 
-      <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
-        <ScrollSpy handleScroll={onScrollUpdate} />
+      <ScrollSpy handleScroll={onScrollUpdate} />
 
-        {slides.slice(0, 5).map((slide) => {
-          return (
-            <FullPageSlide
-              key={slide.image}
-              image={slide.image}
-              priority={slide.priority}
-              content={slide.content}
-            />
-          );
-        })}
-        <section className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
-          {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
+      {slides.slice(0, 5).map((slide) => {
+        return (
+          <FullPageSlide
+            key={slide.image}
+            image={slide.image}
+            priority={slide.priority}
+            content={slide.content}
+          />
+        );
+      })}
+      <section className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
+        {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
         <div className="pl-8 sm:pl-0">
           <ImageCarousel loader={carouselLoader} items={mockData.items} />
     </div> 
@@ -262,78 +261,76 @@ function Home() {
           production capacities. Build the city that suits the territory, the
           metagame and your playstyle
         </p> */}
-          <h2>Bibliotheca: Stewards of on-chain gaming</h2>
-          <BibliothecaBook className="h-48 py-6 mx-auto" />
-          <p className="pb-4">
-            Bibliotheca DAO is a pioneering web3 game studio building eternal
-            games on Starknet.
+        <h2>Bibliotheca: Stewards of on-chain gaming</h2>
+        <BibliothecaBook className="h-48 py-6 mx-auto" />
+        <p className="pb-4">
+          Bibliotheca DAO is a pioneering web3 game studio building eternal
+          games on Starknet.
+        </p>
+        <p className="hidden pb-4 sm:block">
+          We are making games for gamers. We are open source. We are community
+          funded. We are Starknet Hackathon winners. We are winners of the Game7
+          Gitcoin Grant. We are proud recipients of the Loot Ecosystem Grant. We
+          are proud to have received grants and investment from StarkWare.{' '}
+        </p>
+        <p className="pb-4">
+          Our first mission: build a massively multiplayer on-chain gaming
+          universe, leveraging the composability of the Loot hyperverse.
+        </p>
+        <Button
+          className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
+          href="https://bibliothecadao.xyz"
+          variant="dao"
+          texture={false}
+        >
+          Visit Us{' '}
+        </Button>
+        <PartnerBanner />
+      </section>
+      {/* eslint-disable-next-line sonarjs/no-identical-functions */}
+      {slides.slice(5).map((slide) => {
+        return (
+          <FullPageSlide
+            key={slide.image}
+            image={slide.image}
+            priority={slide.priority}
+            content={slide.content}
+          />
+        );
+      })}
+      <div className="container px-8 py-5 mx-auto snap-start sm:w-1/2 sm:px-0 lg:w-1/4">
+        <FaqBlock />
+        <div className="max-w-lg mx-auto">
+          <h1 className="text-xl font-semibold font-display lg:text-4xl">
+            Stay up to Date
+          </h1>
+          <p className="py-1">
+            Sign up to the newsletter and be the first one to know about new
+            developments in the ecosystem.
           </p>
-          <p className="hidden pb-4 sm:block">
-            We are making games for gamers. We are open source. We are community
-            funded. We are Starknet Hackathon winners. We are winners of the
-            Game7 Gitcoin Grant. We are proud recipients of the Loot Ecosystem
-            Grant. We are proud to have received grants and investment from
-            StarkWare.{' '}
-          </p>
-          <p className="pb-4">
-            Our first mission: build a massively multiplayer on-chain gaming
-            universe, leveraging the composability of the Loot hyperverse.
-          </p>
-          <Button
-            className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
-            href="https://bibliothecadao.xyz"
-            variant="dao"
-            texture={false}
-          >
-            Visit Us{' '}
-          </Button>
-          <PartnerBanner />
-        </section>
-        {/* eslint-disable-next-line sonarjs/no-identical-functions */}
-        {slides.slice(5).map((slide) => {
-          return (
-            <FullPageSlide
-              key={slide.image}
-              image={slide.image}
-              priority={slide.priority}
-              content={slide.content}
-            />
-          );
-        })}
-        <div className="container px-8 py-5 mx-auto snap-start sm:w-1/2 sm:px-0 lg:w-1/4">
-          <FaqBlock />
-          <div className="max-w-lg mx-auto">
-            <h1 className="text-xl font-semibold font-display lg:text-4xl">
-              Stay up to Date
-            </h1>
-            <p className="py-1">
-              Sign up to the newsletter and be the first one to know about new
-              developments in the ecosystem.
-            </p>
-            <div className="flex justify-center mt-6">
-              <div className="flex-row w-full">
-                <div className="bg-white rounded-lg">
-                  <div className="flex justify-between w-full flex-warp md:flex-row">
-                    <input
-                      type="email"
-                      className="p-3 m-1 text-sm font-medium text-gray-700 border-none appearance-none focus:outline-none focus:border-white focus:rounded focus:placeholder-transparent"
-                      placeholder="Enter your email"
-                      aria-label="Enter your email"
-                    />
-                    <button className="right-0 w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
-                      Subscribe
-                    </button>
-                  </div>
+          <div className="flex justify-center mt-6">
+            <div className="flex-row w-full">
+              <div className="bg-white rounded-lg">
+                <div className="flex justify-between w-full flex-warp md:flex-row">
+                  <input
+                    type="email"
+                    className="p-3 m-1 text-sm font-medium text-gray-700 border-none appearance-none focus:outline-none focus:border-white focus:rounded focus:placeholder-transparent"
+                    placeholder="Enter your email"
+                    aria-label="Enter your email"
+                  />
+                  <button className="right-0 w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
+                    Subscribe
+                  </button>
                 </div>
-                <p className="mt-2 ml-1 text-sm font-light text-gray-300">
-                  Unsubscribe at any time
-                </p>
               </div>
+              <p className="mt-2 ml-1 text-sm font-light text-gray-300">
+                Unsubscribe at any time
+              </p>
             </div>
           </div>
         </div>
-        <MainFooter />
       </div>
+      <MainFooter />
     </MainLayout>
   );
 }
