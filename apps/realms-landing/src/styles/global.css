@@ -32,20 +32,10 @@ button {
 
 body {
   @apply text-lg leading-loose text-off-300 font-body;
-
-  height: 100%;
-  position: fixed;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 hr {
   @apply my-8;
-}
-
-html {
-  overflow: hidden;
-  width: 100%;
 }
 
 @font-face {
