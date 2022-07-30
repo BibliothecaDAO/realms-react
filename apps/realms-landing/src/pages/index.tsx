@@ -2,6 +2,7 @@ import { Button, ImageCarousel } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/bibliotheca-book.svg';
 import LooksRare from '@bibliotheca-dao/ui-lib/icons/social/looks-rare.svg';
 import OpenSea from '@bibliotheca-dao/ui-lib/icons/social/open-sea.svg';
+import { useEffect } from 'react';
 import { FaqBlock } from '@/components/Faqs';
 import { FullPageSlide } from '@/components/FullPageSlide';
 import { MainFooter } from '@/components/layout/MainFooter';
@@ -199,6 +200,11 @@ const mockData = {
   ],
 };
 function Home() {
+  useEffect(() => {
+    if (window.scrollTo) {
+      window.scrollTo(0, 1);
+    }
+  });
   const onScrollUpdate = (entry: any, isInVewPort: any) => {
     const { target, boundingClientRect } = entry;
     const menuItem = document.querySelector(
