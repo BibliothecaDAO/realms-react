@@ -13,6 +13,7 @@ import {
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import type { Data } from '@/types/index';
 import { LpMerchant } from '../tables/LpMerchant';
+import { Nexus } from '../tables/Nexus';
 import { BaseSideBar } from './BaseSideBar';
 type Props = {
   resources?: string[];
@@ -40,10 +41,10 @@ export const ResourceSwapSideBar = (props: Props) => {
         label: 'LP Merchant',
         component: <LpMerchant />,
       },
-      // {
-      //   label: 'Stake',
-      //   component: <Menu />,
-      // },
+      {
+        label: 'Nexus',
+        component: <Nexus />,
+      },
     ],
     []
   );
@@ -93,7 +94,10 @@ export const ResourceSwapSideBar = (props: Props) => {
           <Tabs className="h-full" variant="primary">
             <Tabs.List className="">
               {tabs.map((tab) => (
-                <Tabs.Tab key={tab.label} className="uppercase">
+                <Tabs.Tab
+                  key={tab.label}
+                  className="font-semibold tracking-widest uppercase"
+                >
                   {tab.label}
                 </Tabs.Tab>
               ))}

@@ -1,6 +1,8 @@
 import { useContract } from '@starknet-react/core';
 import type { Abi } from 'starknet';
 
+import Nexus from '@/abi/nexus/SingleSidedStaking.json';
+import Splitter from '@/abi/nexus/Splitter.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
@@ -30,8 +32,32 @@ export const ModuleAddr = {
     '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
   Combat: '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',
   Wonder: '0x05c292e4f4ea5ab160647ef2ce002e702f149af7370774839c0822a6c9b29361',
+  Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
+  Splitter:
+    '0x06a60b479e9fe080fd8e0a8c4965040a25e276889c2de0cf105c410d0ac81436',
 };
 
+/**
+ * Load the Nexus contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useNexusContract() {
+  return useContract({
+    abi: Nexus as Abi,
+    address: ModuleAddr.Nexus,
+  });
+}
+
+/**
+ * Load the Splitter contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useSplitterContract() {
+  return useContract({
+    abi: Splitter as Abi,
+    address: ModuleAddr.Splitter,
+  });
+}
 /**
  * Load the Realms Settling contract.
  * @returns The `Settling` contract or undefined.
@@ -42,6 +68,7 @@ export function useSettlingContract() {
     address: ModuleAddr.Settling,
   });
 }
+
 /**
  * Load the Realms Resources contract.
  * @returns The `Resources` contract or undefined.
