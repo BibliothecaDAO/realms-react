@@ -4,58 +4,68 @@ import { ExclamationCircleIcon, PlusIcon } from '@heroicons/react/solid';
 import { useEffect, useState } from 'react';
 // import { formatEther } from '@ethersproject/units';
 import { toBN } from 'starknet/dist/utils/number';
+import { RealmBuildingsSize, BASE_SQM } from '@/constants/buildings';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import type { GetRealmQuery } from '@/generated/graphql';
 import useResourcesDeficit from '@/hooks/settling/useResourcesDeficit';
 import { ResourceIcon } from '@/shared/ResourceIcon';
+import { RealmTrait } from '../constants';
 
-interface BuildingProps {
-  realmId: number;
-  buildingId: number;
-  buildingName: string;
-  limit?: number | null;
-  limitTraitId: number;
-  limitTraitName: string;
-  count: number;
-  population: number;
-  food: number;
-  culture: number;
-  buildingCost: {
-    __typename?: 'BuildingCost';
-    amount: number;
-    resources: any;
+type Props = {
+  building?: {
+    buildingId: number;
+    buildingName: string;
   };
-}
+  realm: GetRealmQuery['realm'];
+};
 
-const CheckBuildRequirements = (props: { building?: BuildingProps }) => {
-  const { building } = props;
+const getTrait = (realm: any, trait: string) => {
+  return realm?.traits?.find((o) => o.type === trait)
+    ? realm.traits?.find((o) => o.type === trait).qty
+    : '0';
+};
+
+const CheckBuildRequirements = (props: Props) => {
+  const { building, realm } = props;
 
   const [costs, setCosts] = useState<Record<number, string>>({});
 
   const { deficits, lordsBalance } = useResourcesDeficit({
     resourceCosts: costs,
   });
+
+  // TODO: Show effect on integrity
+
+  const maxBuildableSize =
+    BASE_SQM +
+    getTrait(realm, RealmTrait.Region) * getTrait(realm, RealmTrait.City);
+
+  // const currentSqm = realm?.buildings?.reduce((prev, acc) => {
+  //   return prev.count * RealmBuildingsSize[prev.buildingName];
+  // })
+
   // TODO: Retrieve from storage or indexer
   const buildingLordsCost = 60;
 
-  useEffect(() => {
-    if (building) {
-      const costKeyed = {};
-      building.buildingCost.resources.forEach((r) => {
-        costKeyed[r.resourceId] = toBN(r.amount)
-          .mul(toBN('1000000000000000000', 10))
-          .toString();
-      });
-      setCosts(costKeyed);
-    }
-  }, [building]);
+  // useEffect(() => {
+  //   if (building) {
+  //     const costKeyed = {};
+  //     building.buildingCost.resources.forEach((r) => {
+  //       costKeyed[r.resourceId] = toBN(r.amount)
+  //         .mul(toBN('1000000000000000000', 10))
+  //         .toString();
+  //     });
+  //     setCosts(costKeyed);
+  //   }
+  // }, [building]);
 
-  if (building == undefined) {
-    return null;
-  }
+  // if (building == undefined) {
+  //   return null;
+  // }
 
   return (
     <div className="grid grid-flow-row grid-cols-4 gap-4">
-      <h2 className="col-span-4 font-lords">{building.buildingName}</h2>
+      <h2 className="col-span-4 font-lords">{building?.buildingName}</h2>
 
       <div className="flex items-center justify-between col-span-4">
         <h3>Resource Costs</h3>
@@ -68,7 +78,7 @@ const CheckBuildRequirements = (props: { building?: BuildingProps }) => {
       </div>
 
       <div className="flex flex-row justify-between col-span-3 md:justify-around">
-        {building.buildingCost.resources.map((r) => (
+        {/* {building.buildingCost.resources.map((r) => (
           <div
             key={r.resourceId}
             className="relative flex flex-col items-center"
@@ -80,7 +90,7 @@ const CheckBuildRequirements = (props: { building?: BuildingProps }) => {
             <ResourceIcon size="sm" resource={r.resourceName} />
             <p>{r.amount}</p>
           </div>
-        ))}
+        ))} */}
       </div>
       <div className="relative flex flex-col items-center justify-center">
         <PlusIcon className="absolute left-0 w-6" />

@@ -148,7 +148,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
             Close
           </button>
         </div>
-        <PreviewBuild building={previewBuild} />
+        <PreviewBuild realm={props.realm} building={previewBuild} />
         <Button
           disabled={!isOwner}
           onClick={() => {
