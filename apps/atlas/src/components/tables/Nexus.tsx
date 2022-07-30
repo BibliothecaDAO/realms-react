@@ -33,7 +33,7 @@ import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useStakeLords } from '@/hooks/useNexus';
+import { useStakeLords, useApproveLords } from '@/hooks/useNexus';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
@@ -50,6 +50,7 @@ const calculateLords = (rate: string, qty: number) => {
 
 const LordsInput = (props: ResourceRowProps): ReactElement => {
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
+  const [input, setInput] = useState<any>(0);
   const { account } = useStarknet();
   const { contract: exchangeContract } = useExchangeContract();
   const { contract: lordsContract } = useLordsContract();
@@ -57,7 +58,9 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
 
   const { stakeLords, loading: loadingStakeLords } = useStakeLords();
 
-  const ownerAddressInt = toBN(account);
+  const { approveLords, loading: loadinguseApproveLords } = useApproveLords();
+
+  const ownerAddressInt = toBN(account as string).toString();
 
   const splitterAddressInt = toBN(ModuleAddr.Splitter as string).toString();
   const nexusAddressInt = toBN(ModuleAddr.Nexus as string).toString();
@@ -65,6 +68,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
   const [balances, setBalances] = useState({
     splitter: '0',
     nexus: '0',
+    stLords: '0',
   });
 
   const {
@@ -94,7 +98,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
   } = useStarknetCall({
     contract: nexusContract,
     method: 'balanceOf',
-    args: [nexusAddressInt],
+    args: [ownerAddressInt],
   });
 
   useEffect(() => {
@@ -102,7 +106,9 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       !splitterBalanceValues ||
       !splitterBalanceValues[0] ||
       !nexusBalanceValues ||
-      !nexusBalanceValues[0]
+      !nexusBalanceValues[0] ||
+      !userStLordsBalanceValues ||
+      !userStLordsBalanceValues[0]
     ) {
       return;
     }
@@ -110,29 +116,26 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     setBalances({
       splitter: uint256ToBN(splitterBalanceValues[0]).toString(10),
       nexus: uint256ToBN(nexusBalanceValues[0]).toString(10),
+      stLords: uint256ToBN(userStLordsBalanceValues[0]).toString(10),
     });
-  }, [splitterBalanceValues, nexusBalanceValues]);
+  }, [splitterBalanceValues, nexusBalanceValues, userStLordsBalanceValues]);
 
   const handleValueChange = (newValue: ValueType | null) => {
-    if (newValue === null) return;
-    if (time) {
-      clearTimeout(time);
-    }
-    const timerId: NodeJS.Timeout | null = null;
-    // timerId = setTimeout(() => {
-    //   props.onQtyChange(
-    //     props.resource.resourceId,
-    //     parseInt(newValue as string)
-    //   ); /* updatePercentByValue(newValue); */
-    // }, 300);
-    setTime(timerId);
+    setInput(newValue);
   };
 
   function onStakeLords() {
     if (!account) {
       return;
     }
-    stakeLords(parseEther(String(2000)), account);
+    stakeLords(parseEther(String(input)), account);
+  }
+
+  function approveLordsFn() {
+    if (!account) {
+      return;
+    }
+    approveLords(nexusAddressInt, parseEther(String(input)));
   }
 
   return (
@@ -144,7 +147,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
               stake lords
             </span>
             <InputNumber
-              value={0}
+              value={input}
               inputSize="md"
               colorScheme="transparent"
               className="w-20 text-xl font-semibold text-left sm:text-3xl"
@@ -162,13 +165,22 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
             </div>
           </div>
           <div className="w-full pt-2 uppercase border-t border-white/30">
-            nx-LORDS : {(+formatEther(balances.nexus)).toLocaleString()}
+            Stk-LORDS : {(+formatEther(balances.stLords)).toLocaleString()}
             <br />
-            Nexus balance : {(+formatEther(balances.nexus)).toLocaleString()}
-            <br />
+            total nexus LORDS :{' '}
+            {(+formatEther(balances.nexus)).toLocaleString()}
+            {/* <br />
+            Nexus balance : {(+formatEther(balances.nexus)).toLocaleString()} */}
             {/* Splitter : {(+formatEther(balances.splitter)).toLocaleString()} */}
           </div>
-          <button onClick={onStakeLords}>stake</button>
+          <div className="flex mt-4 space-x-2">
+            <button className="p-1 border rounded" onClick={onStakeLords}>
+              stake
+            </button>
+            <button className="p-1 border rounded" onClick={approveLordsFn}>
+              approve
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -261,7 +273,7 @@ export function Nexus(): ReactElement {
       </div>
       <div className="flex justify-end w-full pt-4">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex flex-col py-4 rounded ">
+          {/* <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
               <span>
                 <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
@@ -278,7 +290,7 @@ export function Nexus(): ReactElement {
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* <Button
             className="w-full"
