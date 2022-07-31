@@ -321,7 +321,7 @@ export function Nexus(): ReactElement {
           <LordsInput stake={isBuy} />
           <div>
             Fees from the AMM flow into this vault. <br /> This is an
-            experimental ERC-4646 vault. The Cairo implementation was designed
+            experimental ERC-4626 vault. The Cairo implementation was designed
             by{' '}
             <a className="underline" href="https://yagi.fi/">
               Yagi Finance
