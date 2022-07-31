@@ -33,11 +33,7 @@ import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import {
-  useStakeLords,
-  useApproveLords,
-  useWithdrawLords,
-} from '@/hooks/useNexus';
+import { useStakeLords, useWithdrawLords } from '@/hooks/useNexus';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
