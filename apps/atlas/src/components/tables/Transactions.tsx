@@ -47,18 +47,24 @@ export const TxCartItem = (props: TxCartItem) => {
     <div
       className={`${
         STYLES.status[props.transaction.status]
-      }  rounded shadow-inner flex p-4 w-full font-semibold`}
+      }  rounded shadow-inner flex p-4 w-full font-semibold my-1`}
     >
-      <div className="flex justify-between w-full p-2 rounded shadow-inner bg-black/10">
+      <div className="flex justify-between w-full p-4 rounded shadow-inner bg-black/10">
         <div>
-          <h4>{resolvedTitle}</h4>
+          <h6 className="text-xs opacity-40">{props.transaction.status}</h6>
+          <h2 className="sm:text-3xl opacity-80">{resolvedTitle}</h2>
           {descriptionIsArray ? (
             resolvedMsg.map((m, i) => {
               if (m.title && m.description) {
                 return (
-                  <div key={`${props.transaction.transactionHash}:${i}`}>
-                    <h4>{m.title}</h4>
-                    <p>{m.description}</p>
+                  <div
+                    className="py-2"
+                    key={`${props.transaction.transactionHash}:${i}`}
+                  >
+                    <h5>
+                      {i + 1}. {m.title}
+                    </h5>
+                    <p className="text-sm opacity-70">{m.description}</p>
                   </div>
                 );
               }
@@ -78,7 +84,7 @@ export const TxCartItem = (props: TxCartItem) => {
               props.transaction.transactionHash
             }
           >
-            <a>
+            <a className="p-2 tracking-wide uppercase opacity-60">
               See on Voyager <ExternalLink className="inline-block w-4" />
             </a>
           </Link>
@@ -102,8 +108,8 @@ export const TxCartItem = (props: TxCartItem) => {
 export const TransactionCartTable = () => {
   const { transactions } = useStarknetTransactionManager();
   return (
-    <div className="flex flex-wrap w-full space-y-2">
-      {transactions.reverse().map((a, index) => {
+    <div className="flex flex-col-reverse flex-wrap w-full">
+      {transactions.map((a, index) => {
         return <TxCartItem key={index} transaction={a} />;
       })}
     </div>

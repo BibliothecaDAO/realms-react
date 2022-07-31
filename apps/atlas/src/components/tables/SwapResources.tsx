@@ -7,7 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import CloseX from '@bibliotheca-dao/ui-lib/icons/close.svg';
 
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
@@ -108,7 +108,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               value={props.resource.qty}
               inputSize="md"
               colorScheme="transparent"
-              className="w-20 text-xl font-semibold text-left sm:text-3xl"
+              className="text-xl font-semibold w-36 sm:text-3xl"
               min={0}
               max={1000000}
               stringMode // to support high precision decimals
@@ -306,9 +306,9 @@ export function SwapResources(): ReactElement {
               buy={isBuy}
             />
             <Button
-              className="absolute top-3 right-3 hover:bg-red-900"
+              className="absolute top-3 right-3 border-white/20 "
               size="xs"
-              variant="secondary"
+              variant="outline"
               onClick={() => removeSelectedSwapResource(resource.resourceId)}
             >
               x
@@ -333,7 +333,7 @@ export function SwapResources(): ReactElement {
             <div className="flex justify-end text-2xl font-semibold">
               <span>
                 <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
-                  Your total in LORDS:
+                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}
               </span>
@@ -352,13 +352,10 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            disabled={isBuyButtonDisabled || isSellButtonDisabled}
+            loading={isTransactionInProgress}
+            disabled={isTransactionInProgress}
           >
-            {isTransactionInProgress
-              ? 'Pending...'
-              : isBuy
-              ? 'buy resources'
-              : 'sell resources'}
+            {isBuy ? 'buy resources' : 'sell resources'}
           </Button>
         </div>
       </div>

@@ -331,7 +331,7 @@ export function LpMerchant(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="flex mx-auto mb-8 tracking-widest">
+      <div className="flex mx-auto mb-8 text-sm tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
@@ -369,11 +369,12 @@ export function LpMerchant(): ReactElement {
               onQtyChange={updateSelectedSwapResourceQty}
             />
             <Button
-              className="absolute -top-3 -right-3 opacity-60"
+              className="absolute top-3 right-3 border-white/20 "
               size="xs"
+              variant="outline"
               onClick={() => removeSelectedSwapResource(resource.resourceId)}
             >
-              -
+              x
             </Button>
           </div>
         ))}
@@ -396,7 +397,7 @@ export function LpMerchant(): ReactElement {
             <div className="flex justify-end text-2xl font-semibold">
               <span>
                 <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
-                  Your total in LORDS:
+                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}
               </span>
@@ -415,17 +416,10 @@ export function LpMerchant(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            disabled={
-              isTransactionInProgress ||
-              (!isLordsApprovedForExchange && isBuy) ||
-              (!isResourcesApprovedForExchange && isSell)
-            }
+            loading={isTransactionInProgress}
+            disabled={isTransactionInProgress}
           >
-            {isTransactionInProgress
-              ? 'Pending...'
-              : isBuy
-              ? 'add liquidity'
-              : 'remove liquidity'}
+            {isBuy ? 'add liquidity' : 'remove liquidity'}
           </Button>
         </div>
       </div>

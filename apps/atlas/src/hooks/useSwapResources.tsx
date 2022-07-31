@@ -54,7 +54,7 @@ export const useBuyResources = () => {
     invoke({
       metadata: {
         action: 'buy_tokens',
-        title: 'buy_tokens',
+        description: 'Buying tokens',
       },
       args: [
         bnToUint256(maxAmount.toHexString()),
@@ -91,7 +91,8 @@ export const useSellResources = () => {
     invoke({
       metadata: {
         action: 'sell_tokens',
-        title: 'sell_tokens',
+        title: 'Sell Tokens',
+        description: 'Selling tokens',
       },
       args: [
         bnToUint256(minAmount.toHexString()),
@@ -128,7 +129,8 @@ export const useAddLiquidity = () => {
     invoke({
       metadata: {
         action: 'add_liquidity',
-        title: 'add_liquidity',
+        title: 'Adding Liquidity',
+        description: 'Adding Liquidity',
       },
       args: [
         maxCurrencyAmount.map((value) =>
@@ -168,7 +170,7 @@ export const useRemoveLiquidity = () => {
     invoke({
       metadata: {
         action: 'remove_liquidity',
-        title: 'remove_liquidity',
+        title: 'Removing Liquidity',
       },
       args: [
         minCurrencyAmount.map((value) =>

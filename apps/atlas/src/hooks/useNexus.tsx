@@ -1,3 +1,4 @@
+import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import type { BigNumber } from 'ethers';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
@@ -22,7 +23,6 @@ export type LpQty = {
   currencyqty: number;
 };
 
-// TODO move lords out of this
 const useNexusTransaction = (method: string) => {
   const { contract: lordsContract } = useLordsContract();
   const {
@@ -63,28 +63,13 @@ export const useStakeLords = () => {
     useNexusTransaction('deposit');
   const txQueue = useTransactionQueue();
 
-  // txs.push({
-  //   contractAddress: CM.Lords,
-  //   entrypoint: 'approve',
-  //   calldata: [
-  //     toBN(CM.Exchange).toString(),
-  //     ALLOWANCE_AMOUNT.toString(),
-  //     0, // Extra felt for uint256
-  //   ],
-  //   metadata: {
-  //     title: 'Lords Contract',
-  //     description: 'Approve spending by Realms Exchange module',
-  //   },
-  // });
-
   const stakeLords = (lordsAmount: BigNumber, receiver: string) => {
     if (loading) {
       return;
     }
 
+    // We approve then deposit in a multicall
     const txs: RealmsCall[] = [];
-
-    // Exchange approvals
 
     txs.push({
       contractAddress: ModuleAddr.Lords,
@@ -95,8 +80,10 @@ export const useStakeLords = () => {
         0,
       ],
       metadata: {
-        title: 'approve',
-        description: 'approve lords for nexus',
+        title: 'Approve Lords for Nexus',
+        description: `You are approving ${(+formatEther(
+          lordsAmount
+        )).toLocaleString()} $LORDS to stake into the NEXUS.`,
       },
     });
 
@@ -105,35 +92,33 @@ export const useStakeLords = () => {
       entrypoint: 'deposit',
       calldata: [lordsAmount.toHexString(), 0, toFelt(receiver)],
       metadata: {
-        title: 'deposit',
-        description: 'deposit',
+        title: 'Deposit into Nexus',
+        description: `You are depositing ${(+formatEther(
+          lordsAmount
+        )).toLocaleString()} $LORDS into the Nexus`,
       },
     });
 
     txQueue.executeMulticall(txs.map((t) => ({ ...t, status: 'ENQUEUED' })));
   };
 
-  return {
-    loading,
-    stakeLords,
-    transactionHash,
-    invokeError,
-  };
-};
-
-export const useWithdrawLords = () => {
-  const { transactionHash, invoke, invokeError, loading } =
-    useNexusTransaction('redeem');
+  const {
+    transactionHash: redeemTxHash,
+    invoke: redeemInvoke,
+    loading: redeemLoading,
+  } = useNexusTransaction('redeem');
 
   const withdrawLords = (lordsAmount: BigNumber, receiver: string) => {
     if (loading) {
       return;
     }
 
-    invoke({
+    redeemInvoke({
       metadata: {
-        action: 'redeem',
-        title: `withdraw from nexus - ${lordsAmount}`,
+        title: 'Redeem $LORDS',
+        description: `You are redeeming ${(+formatEther(
+          lordsAmount
+        )).toLocaleString()} $LORDS to stake into the NEXUS.`,
       },
       args: [
         bnToUint256(lordsAmount.toHexString()),
@@ -144,7 +129,8 @@ export const useWithdrawLords = () => {
   };
 
   return {
-    loading,
+    loading: redeemLoading || loading,
+    stakeLords,
     withdrawLords,
     transactionHash,
     invokeError,
