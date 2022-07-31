@@ -41,7 +41,7 @@ import {
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
-  buy?: boolean;
+  stake?: boolean;
 };
 
 const displayRate = (rate: string) => {
@@ -60,9 +60,18 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
   const { contract: lordsContract } = useLordsContract();
   const { contract: nexusContract } = useNexusContract();
 
-  const { stakeLords, loading: loadingStakeLords } = useStakeLords();
+  const {
+    availableResourceIds,
+    selectedSwapResourcesWithBalance,
+    getResourceById,
+    lordsBalance,
+    addSelectedSwapResources,
+    removeSelectedSwapResource,
+    updateSelectedSwapResourceQty,
+    updateSelectedSwapResource,
+  } = useResourcesContext();
 
-  const { approveLords, loading: loadinguseApproveLords } = useApproveLords();
+  const { stakeLords, loading: loadingStakeLords } = useStakeLords();
 
   const { withdrawLords, loading: loadingwithdrawLords } = useWithdrawLords();
 
@@ -77,6 +86,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     stLords: '0',
     totalStkLords: '0',
     preview: '0',
+    previewDeposit: '0',
   });
 
   const {
@@ -123,6 +133,13 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       args: [bnToUint256(parseEther(String(input)).toHexString())],
     });
 
+  const { data: previewDeposit, refresh: updatePreviewDeposit } =
+    useStarknetCall({
+      contract: nexusContract,
+      method: 'previewDeposit',
+      args: [bnToUint256(parseEther(String(input)).toHexString())],
+    });
+
   useEffect(() => {
     if (
       !splitterBalanceValues ||
@@ -134,7 +151,9 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       !stLordsTotalSupply ||
       !stLordsTotalSupply[0] ||
       !previewWithdraw ||
-      !previewWithdraw[0]
+      !previewWithdraw[0] ||
+      !previewDeposit ||
+      !previewDeposit[0]
     ) {
       return;
     }
@@ -145,6 +164,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       stLords: uint256ToBN(userStLordsBalanceValues[0]).toString(10),
       totalStkLords: uint256ToBN(stLordsTotalSupply[0]).toString(10),
       preview: uint256ToBN(previewWithdraw[0]).toString(10),
+      previewDeposit: uint256ToBN(previewDeposit[0]).toString(10),
     });
   }, [
     splitterBalanceValues,
@@ -152,94 +172,94 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     userStLordsBalanceValues,
     stLordsTotalSupply,
     previewWithdraw,
+    previewDeposit,
   ]);
 
   const handleValueChange = (newValue: ValueType | null) => {
     setInput(newValue);
   };
 
-  function onStakeLords() {
+  async function onStakeLords() {
     if (!account) {
       return;
     }
-    stakeLords(parseEther(String(input)), account);
+
+    await stakeLords(parseEther(String(input)), account);
   }
 
   function onWithdrawLords() {
     if (!account) {
       return;
     }
+
     withdrawLords(parseEther(String(input)), account);
   }
 
-  function approveLordsFn() {
-    if (!account) {
-      return;
+  function onNexusClicked() {
+    if (props.stake) {
+      onStakeLords();
+    } else {
+      onWithdrawLords();
     }
-    approveLords(nexusAddressInt, parseEther(String(input)));
   }
 
   return (
     <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.2)] bg-gray-900/70">
-      <div className="sm:w-1/2">
-        <div className="flex flex-wrap mt-4">
-          <div className="flex flex-wrap justify-between w-full space-x-2">
-            <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
-              stake lords
-            </span>
+      <div className="sm:w-full">
+        <div className="flex flex-wrap w-full">
+          <div className="flex flex-wrap justify-center w-full mb-1">
+            {/* <span className="self-end text-xs font-semibold tracking-widest uppercase opacity-40">
+              {props.stake ? 'remove' : 'add'}
+            </span> */}
             <InputNumber
               value={input}
               inputSize="md"
               colorScheme="transparent"
-              className="w-20 text-xl font-semibold text-left sm:text-3xl"
+              className="font-semibold text-left sm:text-4xl"
               min={0}
-              max={1000000}
+              max={
+                props.stake
+                  ? (+formatEther(lordsBalance)).toFixed(0)
+                  : (+formatEther(balances.totalStkLords)).toFixed(0)
+              }
               stringMode // to support high precision decimals
               onChange={handleValueChange}
             />{' '}
-            <div
-              className={`flex self-end justify-end uppercase sm:text-lg opacity-70  ${
-                props.buy ? 'text-red-200' : 'text-green-200'
-              }`}
-            >
-              {(+formatEther(balances.preview)).toLocaleString()}
-            </div>
           </div>
-          <div className="w-full pt-2 uppercase border-t border-white/30">
-            Stk-LORDS : {(+formatEther(balances.stLords)).toLocaleString()}
-            <br />- nexus LORDS :{' '}
-            {(+formatEther(balances.nexus)).toLocaleString()}
-            <br />- SUPPLY STK-LORDS :{' '}
-            {(+formatEther(balances.totalStkLords)).toLocaleString()}
+          <div className="w-full pt-2 font-semibold text-right border-t border-white/30">
+            <span className="text-xs tracking-widest uppercase opacity-60">
+              {props.stake ? 'stk-lords from deposit' : 'lords withdrawl'}
+            </span>{' '}
+            <br />{' '}
+            <span className="text-xl">
+              {props.stake
+                ? (+formatEther(balances.previewDeposit)).toLocaleString()
+                : (+formatEther(balances.preview)).toLocaleString()}
+            </span>
+            <br />
+            {/* <br />- SUPPLY STK-LORDS :{' '}
+            
             {/* <br />
-            Nexus balance : {(+formatEther(balances.nexus)).toLocaleString()} */}
+            Nexus balance : {(+formatEther(balances.nexus)).toLocaleString()}
             {/* Splitter : {(+formatEther(balances.splitter)).toLocaleString()} */}
           </div>
-          <div className="flex mt-4 space-x-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="p-1 border rounded"
-              onClick={onStakeLords}
-            >
-              stake
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="p-1 border rounded"
-              onClick={approveLordsFn}
-            >
-              approve
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="p-1 border rounded"
-              onClick={onWithdrawLords}
-            >
-              withdraw
-            </Button>
+          <div className="flex flex-wrap justify-end w-full pt-2 mt-2 border-t border-white/30">
+            <div className="w-full">
+              <Button
+                variant="primary"
+                size="sm"
+                className="w-full p-1 border rounded"
+                onClick={onNexusClicked}
+              >
+                {props.stake ? 'stake in nexus' : 'withdraw from nexus'}
+              </Button>
+            </div>
+            <div className="w-full mt-2 text-right border-t border-white/30">
+              <span className="text-sm uppercase opacity-70">
+                balance stk-lords:{' '}
+                {(+formatEther(balances.totalStkLords)).toLocaleString()}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -255,54 +275,12 @@ export function Nexus(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
-  const {
-    availableResourceIds,
-    lordsBalance,
-    selectedSwapResourcesWithBalance,
-    getResourceById,
-    addSelectedSwapResources,
-    removeSelectedSwapResource,
-    updateSelectedSwapResourceQty,
-    updateSelectedSwapResource,
-  } = useResourcesContext();
-  const { approveLords, isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-  const { approveResources, isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-
-  const [slippage, setSlippage] = useState(0.5);
-
-  const calculatedTotalInLords = useMemo(() => {
-    return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
-      return acc + calculateLords(resource.rate, resource.qty);
-    }, 0);
-  }, [selectedSwapResourcesWithBalance]);
-
-  const calculatedSlippage = useMemo(() => {
-    return calculatedTotalInLords * slippage;
-  }, [calculatedTotalInLords, slippage]);
-
-  const isBuyButtonDisabled = useMemo(() => {
-    if (isSell) {
-      return false;
-    }
-    const balance = parseFloat(formatEther(lordsBalance));
-    return (
-      !isLordsApprovedForExchange ||
-      balance === 0 ||
-      balance < calculatedTotalInLords
-    );
-  }, [
-    tradeType,
-    isLordsApprovedForExchange,
-    isResourcesApprovedForExchange,
-    lordsBalance,
-    calculatedTotalInLords,
-  ]);
-
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="flex mx-auto mb-8 text-sm tracking-widest">
+      <div className="mb-4 text-5xl tracking-widest text-center uppercase font-lords">
+        Nexus
+      </div>
+      <div className="flex mx-auto mb-4 text-sm tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
@@ -323,45 +301,17 @@ export function Nexus(): ReactElement {
           />
         </Switch>
         <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
-          Remove Lords
+          withdraw Lords
         </div>
       </div>
       <div>
-        <div className="relative">
-          <LordsInput />
+        <div className="relative w-1/2 mx-auto">
+          <LordsInput stake={isBuy} />
         </div>
       </div>
-      <div className="flex justify-end w-full pt-4">
-        <div className="flex flex-col justify-end w-full">
-          {/* <div className="flex flex-col py-4 rounded ">
-            <div className="flex justify-end text-2xl font-semibold">
-              <span>
-                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
-                  Your total in LORDS:
-                </span>
-                {calculatedTotalInLords.toLocaleString()}
-              </span>
-            </div>
-            <div>
-              <div className="flex justify-end text-md">
-                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your lords Balance:
-                </span>
-                {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-              </div>
-            </div>
-          </div> */}
-
-          {/* <Button
-            className="w-full"
-            variant="primary"
-            onClick={onTradeClicked}
-            disabled={isBuyButtonDisabled || isSellButtonDisabled}
-          >
-            {isTransactionInProgress ? 'Pending...' : isBuy ? 'add' : 'remove'}
-          </Button> */}
-        </div>
-      </div>
+      {/* <Button variant="primary" size="lg">
+        withdraw lords
+      </Button> */}
     </div>
   );
 }

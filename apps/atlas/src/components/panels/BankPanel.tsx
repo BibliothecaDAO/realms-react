@@ -61,7 +61,10 @@ export function BankPanel(): ReactElement {
       rate: (
         <span className="text-lg">
           1 = {(+formatEther(resource.rate)).toFixed(4)}{' '}
-          <span className="opacity-50">$LORDS</span> <br />
+          <span className="text-sm uppercase opacity-50">
+            $LORDS / {resource?.resourceName}
+          </span>{' '}
+          <br />
           <span className="text-sm">{RateChange(resource.percentChange)}</span>
         </span>
       ),

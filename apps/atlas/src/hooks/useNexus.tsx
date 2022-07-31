@@ -1,8 +1,14 @@
 import { useStarknetInvoke } from '@starknet-react/core';
 import type { BigNumber } from 'ethers';
-import { toFelt } from 'starknet/dist/utils/number';
+import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useNexusContract, useLordsContract } from './settling/stark-contracts';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import type { RealmsCall } from '../types';
+import {
+  useNexusContract,
+  useLordsContract,
+  ModuleAddr,
+} from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
 export type ResourceQty = {
@@ -48,25 +54,63 @@ const useNexusTransaction = (method: string) => {
     invokeError,
     loading,
     invokeLords,
+    nexusContract,
   };
 };
 
 export const useStakeLords = () => {
-  const { transactionHash, invoke, invokeError, loading } =
+  const { transactionHash, invoke, invokeError, loading, nexusContract } =
     useNexusTransaction('deposit');
+  const txQueue = useTransactionQueue();
+
+  // txs.push({
+  //   contractAddress: CM.Lords,
+  //   entrypoint: 'approve',
+  //   calldata: [
+  //     toBN(CM.Exchange).toString(),
+  //     ALLOWANCE_AMOUNT.toString(),
+  //     0, // Extra felt for uint256
+  //   ],
+  //   metadata: {
+  //     title: 'Lords Contract',
+  //     description: 'Approve spending by Realms Exchange module',
+  //   },
+  // });
 
   const stakeLords = (lordsAmount: BigNumber, receiver: string) => {
     if (loading) {
       return;
     }
-    console.log(toFelt(receiver));
-    invoke({
+
+    const txs: RealmsCall[] = [];
+
+    // Exchange approvals
+
+    txs.push({
+      contractAddress: ModuleAddr.Lords,
+      entrypoint: 'approve',
+      calldata: [
+        toBN(ModuleAddr.Nexus).toString(),
+        lordsAmount.toHexString(),
+        0,
+      ],
       metadata: {
-        action: 'deposit',
-        title: 'deposit',
+        title: 'approve',
+        description: 'approve lords for nexus',
       },
-      args: [bnToUint256(lordsAmount.toHexString()), toFelt(receiver)],
     });
+
+    txs.push({
+      contractAddress: ModuleAddr.Nexus,
+      entrypoint: 'deposit',
+      calldata: [lordsAmount.toHexString(), 0, toFelt(receiver)],
+      metadata: {
+        title: 'deposit',
+        description: 'deposit',
+      },
+    });
+
+    txQueue.executeMulticall(txs.map((t) => ({ ...t, status: 'ENQUEUED' })));
   };
 
   return {
@@ -102,32 +146,6 @@ export const useWithdrawLords = () => {
   return {
     loading,
     withdrawLords,
-    transactionHash,
-    invokeError,
-  };
-};
-
-export const useApproveLords = () => {
-  const { transactionHash, invokeLords, invokeError, loading } =
-    useNexusTransaction('approve');
-
-  const approveLords = (spender: string, lordsAmount: BigNumber) => {
-    if (loading) {
-      return;
-    }
-
-    invokeLords({
-      metadata: {
-        action: 'approve',
-        title: 'Approval Lords For Nexus',
-      },
-      args: [toFelt(spender), bnToUint256(lordsAmount.toHexString())],
-    });
-  };
-
-  return {
-    loading,
-    approveLords,
     transactionHash,
     invokeError,
   };
