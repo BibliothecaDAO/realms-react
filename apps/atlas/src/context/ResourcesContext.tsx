@@ -15,6 +15,7 @@ import { useGetExchangeRatesQuery } from '@/generated/graphql';
 import {
   useLordsContract,
   useResources1155Contract,
+  useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 import { resources } from '@/util/resources';
 import type { NetworkState } from '../types';
@@ -24,12 +25,21 @@ export type Resource = {
   resourceName: string;
   amount: string;
   rate: string;
+  lp: string;
+  currencyAmount: string;
+  tokenAmount: string;
   percentChange: number;
 };
 
 export type ResourceQty = {
   resourceId: number;
   qty: number;
+};
+
+export type LpQty = {
+  resourceId: number;
+  lpqty: number;
+  currencyqty: number;
 };
 
 type ResourcesBalance = Array<Resource>;
@@ -44,6 +54,9 @@ const initBalance = resources.map((resource) => {
     resourceName: resource.trait,
     amount: '0',
     rate: '0',
+    lp: '0',
+    currencyAmount: '0',
+    tokenAmount: '0',
     percentChange: 0,
   };
 });
@@ -93,6 +106,7 @@ function useResources() {
 
   const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
+  const { contract: exchangeContract } = useExchangeContract();
 
   const ownerAddressInt = toBN(account as string).toString();
 
@@ -114,6 +128,22 @@ function useResources() {
       resourceMapping,
     ],
   });
+
+  const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
+    contract: exchangeContract,
+    method: 'balanceOfBatch',
+    args: [
+      Array(resourceMapping.length).fill(ownerAddressInt),
+      resourceMapping,
+    ],
+  });
+
+  const { data: exchangePairData, refresh: updateExchangePairData } =
+    useStarknetCall({
+      contract: exchangeContract,
+      method: 'get_all_currency_reserves',
+      args: [resourceMapping],
+    });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
     pollInterval: 5000,
@@ -165,7 +195,7 @@ function useResources() {
       return;
     }
     setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
-  });
+  }, [lordsBalanceData]);
 
   useEffect(() => {
     setAvailableResourceIds(
@@ -185,10 +215,31 @@ function useResources() {
       setBalanceStatus('error');
     }
     if (!resourceBalanceData || !resourceBalanceData[0]) {
+    if (
+      !resourceBalanceData ||
+      !resourceBalanceData[0] ||
+      !lpBalanceData ||
+      !lpBalanceData[0] ||
+      !exchangePairData ||
+      !exchangePairData[0]
+    ) {
       return;
     }
+
     const rates = exchangeRateData?.getExchangeRates ?? [];
-    setBalanceStatus('success');
+
+
+    const pluckData = (data: any) => {
+      return data.map((resourceBalance, index) => {
+        return {
+          amount: uint256ToBN(resourceBalance).toString(10),
+        };
+      });
+    };
+    const userLp = pluckData(lpBalanceData[0]);
+    const currencyExchangeData = pluckData(exchangePairData[0]);
+    const tokenExchangeData = pluckData(exchangePairData[1]);
+
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
         const resourceId = index + 1;
@@ -200,6 +251,9 @@ function useResources() {
           resourceName,
           amount: uint256ToBN(resourceBalance).toString(10),
           rate: rateAmount ?? '0',
+          lp: userLp[index].amount,
+          currencyAmount: currencyExchangeData[index].amount,
+          tokenAmount: tokenExchangeData[index].amount,
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })

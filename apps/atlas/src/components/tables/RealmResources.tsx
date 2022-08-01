@@ -92,6 +92,20 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     }
   );
 
+
+  const txQueue = useTransactionQueue();
+
+  useEffect(() => {
+    setEnqueuedHarvestTx(
+      !!txQueue.transactions.find(
+        (t) =>
+          t.contractAddress == ModuleAddr.ResourceGame &&
+          t.entrypoint == Entrypoints.claim &&
+          t.metadata.realmId == props.realm.realmId
+      )
+    );
+  }, [txQueue.transactions]);
+
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },

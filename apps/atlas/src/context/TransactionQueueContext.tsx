@@ -13,6 +13,7 @@ type Tx = Call & { status: typeof ENQUEUED_STATUS };
 interface TransactionQueue {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
+  remove: (tx: Tx) => void;
   empty: () => void;
   executeMulticall: (transactions: Tx[]) => Promise<AddTransactionResponse>;
 }
@@ -48,6 +49,15 @@ export const TransactionQueueProvider = ({
     }
   };
 
+  const remove = (tx: Tx) => {
+    const i = txs.indexOf(tx);
+    setTx((prev) => {
+      const next = [...prev];
+      next.splice(i, 1);
+      return next;
+    });
+  };
+
   const empty = () => {
     setTx([]);
   };
@@ -79,7 +89,7 @@ export const TransactionQueueProvider = ({
 
   return (
     <TransactionQueueContext.Provider
-      value={{ add, empty, transactions: txs, executeMulticall }}
+      value={{ add, remove, empty, transactions: txs, executeMulticall }}
     >
       {children}
     </TransactionQueueContext.Provider>

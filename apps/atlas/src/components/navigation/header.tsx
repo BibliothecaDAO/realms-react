@@ -27,6 +27,18 @@ export function Header() {
       src: '/music/minstrels/minstrels-enlightenment.mp3',
     },
     {
+      title: 'The Minstrels - Order of Power',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-power.mp3',
+    },
+    {
+      title: 'The Minstrels - Order of Anger',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-anger.mp3',
+    },
+    {
       title: 'The Minstrels - Order of Protection',
       album: 'The 16 Orders',
       artist: 'The Minstrels',
@@ -37,6 +49,12 @@ export function Header() {
       album: 'The 16 Orders',
       artist: 'The Minstrels',
       src: '/music/minstrels/minstrels-rage.mp3',
+    },
+    {
+      title: 'The Minstrels - Order of Brilliance',
+      album: 'The 16 Orders',
+      artist: 'The Minstrels',
+      src: '/music/minstrels/minstrels-brilliance.mp3',
     },
     {
       title: 'I walk with ghosts',
@@ -115,10 +133,10 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button href="/bank" variant="primary">
+          <Button onClick={() => toggleMenuType('bank')} variant="primary">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
-              {(+formatEther(lordsBalance)).toFixed(2)}
+              {(+formatEther(lordsBalance)).toLocaleString()}
             </span>
           </Button>
         </span>

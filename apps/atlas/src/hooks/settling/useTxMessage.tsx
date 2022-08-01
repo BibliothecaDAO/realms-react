@@ -15,6 +15,10 @@ export function getTxMessage(tx: TxWithMetadata): TxMessage {
 
   const metadata = tx.metadata;
 
+  if (metadata.title && metadata.description) {
+    return metadata;
+  }
+
   if (metadata?.action) {
     switch (metadata.action) {
       case 'mint':

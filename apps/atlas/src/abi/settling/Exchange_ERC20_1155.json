@@ -19,6 +19,47 @@
   {
     "data": [
       {
+        "name": "previousOwner",
+        "type": "felt"
+      },
+      {
+        "name": "newOwner",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
         "name": "operator",
         "type": "felt"
       },
@@ -119,17 +160,6 @@
   {
     "data": [
       {
-        "name": "implementation",
-        "type": "felt"
-      }
-    ],
-    "keys": [],
-    "name": "Upgraded",
-    "type": "event"
-  },
-  {
-    "data": [
-      {
         "name": "caller",
         "type": "felt"
       },
@@ -221,6 +251,10 @@
   },
   {
     "inputs": [
+      {
+        "name": "uri",
+        "type": "felt"
+      },
       {
         "name": "currency_address_",
         "type": "felt"
@@ -526,6 +560,14 @@
       {
         "name": "value",
         "type": "Uint256"
+      },
+      {
+        "name": "data_len",
+        "type": "felt"
+      },
+      {
+        "name": "data",
+        "type": "felt*"
       }
     ],
     "name": "onERC1155Received",
@@ -692,14 +734,47 @@
   {
     "inputs": [
       {
-        "name": "interface_id",
+        "name": "token_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_ids",
+        "type": "Uint256*"
+      }
+    ],
+    "name": "get_all_currency_reserves",
+    "outputs": [
+      {
+        "name": "currency_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "currency_reserves",
+        "type": "Uint256*"
+      },
+      {
+        "name": "token_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_reserves",
+        "type": "Uint256*"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "interfaceId",
         "type": "felt"
       }
     ],
     "name": "supportsInterface",
     "outputs": [
       {
-        "name": "is_supported",
+        "name": "success",
         "type": "felt"
       }
     ],
@@ -811,7 +886,7 @@
   {
     "inputs": [
       {
-        "name": "_from",
+        "name": "from_",
         "type": "felt"
       },
       {
@@ -825,6 +900,14 @@
       {
         "name": "amount",
         "type": "Uint256"
+      },
+      {
+        "name": "data_len",
+        "type": "felt"
+      },
+      {
+        "name": "data",
+        "type": "felt*"
       }
     ],
     "name": "safeTransferFrom",
@@ -834,7 +917,7 @@
   {
     "inputs": [
       {
-        "name": "_from",
+        "name": "from_",
         "type": "felt"
       },
       {
@@ -856,6 +939,14 @@
       {
         "name": "amounts",
         "type": "Uint256*"
+      },
+      {
+        "name": "data_len",
+        "type": "felt"
+      },
+      {
+        "name": "data",
+        "type": "felt*"
       }
     ],
     "name": "safeBatchTransferFrom",
@@ -875,6 +966,47 @@
     ],
     "name": "set_royalty_info",
     "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_ids",
+        "type": "Uint256*"
+      },
+      {
+        "name": "lp_amounts_len",
+        "type": "felt"
+      },
+      {
+        "name": "lp_amounts",
+        "type": "Uint256*"
+      }
+    ],
+    "name": "get_owed_currency_tokens",
+    "outputs": [
+      {
+        "name": "currency_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "currency_reserves",
+        "type": "Uint256*"
+      },
+      {
+        "name": "token_reserves_len",
+        "type": "felt"
+      },
+      {
+        "name": "token_reserves",
+        "type": "Uint256*"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

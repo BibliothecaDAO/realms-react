@@ -10,6 +10,12 @@ export type ResourceQty = {
   qty: number;
 };
 
+export type LpQty = {
+  resourceId: number;
+  lpqty: number;
+  currencyqty: number;
+};
+
 const useSwapResourcesTransaction = (method: string) => {
   const { contract: exchangeContract } = useExchangeContract();
   const {
@@ -46,6 +52,10 @@ export const useBuyResources = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'buy_tokens',
+        description: 'Buying tokens',
+      },
       args: [
         bnToUint256(maxAmount.toHexString()),
         tokenIds.map((value) => bnToUint256(value)),
@@ -79,6 +89,11 @@ export const useSellResources = () => {
       return;
     }
     invoke({
+      metadata: {
+        action: 'sell_tokens',
+        title: 'Sell Tokens',
+        description: 'Selling tokens',
+      },
       args: [
         bnToUint256(minAmount.toHexString()),
         tokenIds.map((value) => bnToUint256(value)),
@@ -93,6 +108,89 @@ export const useSellResources = () => {
   return {
     loading,
     sellTokens,
+    transactionHash,
+    invokeError,
+  };
+};
+
+export const useAddLiquidity = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('add_liquidity');
+
+  const addLiquidity = (
+    maxCurrencyAmount: BigNumber[],
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    if (loading) {
+      return;
+    }
+    invoke({
+      metadata: {
+        action: 'add_liquidity',
+        title: 'Adding Liquidity',
+        description: 'Adding Liquidity',
+      },
+      args: [
+        maxCurrencyAmount.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    addLiquidity,
+    transactionHash,
+    invokeError,
+  };
+};
+
+export const useRemoveLiquidity = () => {
+  const { transactionHash, invoke, invokeError, loading } =
+    useSwapResourcesTransaction('remove_liquidity');
+
+  const removeLiquidity = (
+    minCurrencyAmount: BigNumber[],
+    tokenIds: number[],
+    tokenAmounts: BigNumber[],
+    lpAmounts: BigNumber[],
+    deadline: number
+  ) => {
+    if (loading) {
+      return;
+    }
+    invoke({
+      metadata: {
+        action: 'remove_liquidity',
+        title: 'Removing Liquidity',
+      },
+      args: [
+        minCurrencyAmount.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        tokenIds.map((value) => bnToUint256(value)),
+        tokenAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        lpAmounts.map((value) =>
+          bnToUint256(BigNumber.from(value).toHexString())
+        ),
+        toFelt(deadline),
+      ],
+    });
+  };
+
+  return {
+    loading,
+    removeLiquidity,
     transactionHash,
     invokeError,
   };

@@ -13,7 +13,9 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
       <div className="flex justify-between mb-4">
         <Button
           disabled={txQueue.transactions.length == 0}
-          variant="secondary"
+          className="flex-1 mr-4"
+          size="lg"
+          variant="primary"
           onClick={() =>
             txQueue
               .executeMulticall([])
@@ -32,7 +34,15 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
               }`
             : 'Sign the Decree'}
         </Button>
-        <Button onClick={() => txQueue.empty()}>Clear</Button>
+        <Button
+          disabled={txQueue.transactions.length == 0}
+          size="sm"
+          texture={false}
+          variant="outline"
+          onClick={() => txQueue.empty()}
+        >
+          Remove All
+        </Button>
       </div>
       {txQueue.transactions.length > 0 ? (
         <p className="z-0 mb-2 text-xl">
@@ -40,12 +50,13 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           commands:
         </p>
       ) : null}
-      {txQueue.transactions.map((c) => (
+      {txQueue.transactions.map((c, i) => (
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
             ?.map((bignum) => bignum.toString())
-            .join(':')}`}
+            .join(':')}::${i}`}
           transaction={c}
+          onRemove={() => txQueue.remove(c)}
         />
       ))}
     </>

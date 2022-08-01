@@ -88,8 +88,8 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-gray-600/60'
-                  : 'bg-gray-600/20'
+                  ? 'bg-gray-600/80'
+                  : 'bg-gray-600/90'
               } hover:bg-white-600/90 font-semibold shadow-inner`}
               key={row.id}
             >

@@ -10,10 +10,10 @@ import { BasePanel } from './BasePanel';
 
 type Row = {
   resource: ReactElement;
-  balance: string;
-  output: number;
-  change: ReactElement;
-  rate: string;
+  // balance: string;
+  // output: number;
+  // change: ReactElement;
+  rate: ReactElement;
   action: ReactElement;
 };
 
@@ -40,21 +40,49 @@ export function BankPanel(): ReactElement {
   const defaultData: Row[] = balance?.map((resource) => {
     return {
       resource: (
-        <div className="flex mr-4">
-          <ResourceIcon
-            resource={resource?.resourceName?.replace(' ', '') || ''}
-            size="sm"
-          />
+        <div className="mr-4">
+          <div className="flex mb-2 text-xl">
+            <ResourceIcon
+              resource={resource?.resourceName?.replace(' ', '') || ''}
+              size="sm"
+            />
+            <span className="self-center ml-4 tracking-widest uppercase">
+              {resource?.resourceName}
+            </span>{' '}
+          </div>
 
-          <span className="self-center ml-4 tracking-widest uppercase">
-            {resource?.resourceName}
+          <span className="text-sm tracking-widest uppercase opacity-60">
+            balance: {(+formatEther(resource.amount)).toLocaleString()}
           </span>
         </div>
       ),
-      balance: (+formatEther(resource.amount)).toFixed(),
-      output: 0,
-      change: RateChange(resource.percentChange),
-      rate: (+formatEther(resource.rate)).toFixed(4),
+      // balance: (+formatEther(resource.amount)).toLocaleString(),
+      // output: 0,
+      rate: (
+        <span className="text-lg">
+          1 = {(+formatEther(resource.rate)).toFixed(4)}{' '}
+          <span className="text-sm uppercase opacity-50">
+            $LORDS / {resource?.resourceName}
+          </span>{' '}
+          <br />
+          <span className="text-sm">{RateChange(resource.percentChange)}</span>
+        </span>
+      ),
+      // change: ,
+
+      lp_balance: (
+        <span className="text-lg uppercase">
+          {(+formatEther(resource.lp)).toLocaleString()} <br />
+          <span className="text-sm opacity-60">
+            {' '}
+            LORDS: {(+formatEther(
+              resource.currencyAmount
+            )).toLocaleString()}{' '}
+            <br />
+            Token: {(+formatEther(resource.tokenAmount)).toLocaleString()}
+          </span>
+        </span>
+      ),
       action: (
         <Button
           variant="secondary"
@@ -71,32 +99,30 @@ export function BankPanel(): ReactElement {
   });
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
-    { Header: 'Balance', id: 2, accessor: 'balance' },
-    { Header: 'Output', id: 3, accessor: 'output' },
-    { Header: 'Change', id: 4, accessor: 'change' },
+    // { Header: 'Balance', id: 2, accessor: 'balance' },
+    // { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Rate', id: 5, accessor: 'rate' },
-    { Header: 'Action', id: 6, accessor: 'action' },
+    // { Header: 'Change', id: 4, accessor: 'change' },
+
+    { Header: 'Liquidity', id: 6, accessor: 'lp_balance' },
+    { Header: 'Action', id: 7, accessor: 'action' },
   ];
   const tableOptions = { is_striped: true };
-  const { data } = useGetRealmQuery({
-    variables: {
-      id: 1, // value for 'id'
-    },
-  });
+
   return (
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="sm:hidden"></div>
         <div className="w-full">
           <h1 className="w-full text-center font-lords">Iron Bank</h1>
-          <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">
+          {/* <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">
             Your Lords Balance: {(+formatEther(lordsBalance)).toFixed(2)}
-          </h4>
+          </h4> */}
         </div>
       </div>
 
       <div className="relative overflow-x-auto">
-        {data && (
+        {balance && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
       </div>

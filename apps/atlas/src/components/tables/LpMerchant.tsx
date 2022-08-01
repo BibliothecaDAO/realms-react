@@ -8,26 +8,35 @@ import {
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
+import { useStarknetCall } from '@starknet-react/core';
+
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import { useState, useMemo, useReducer } from 'react';
+import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
+import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import {
+  useLordsContract,
+  useResources1155Contract,
+  useExchangeContract,
+} from '@/hooks/settling/stark-contracts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
-import type { ResourceQty } from '@/hooks/useSwapResources';
+import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
+import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
   resource: Resource & ResourceQty;
   availableResources: Resource[];
+  isRemoveLp?: boolean;
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
 };
@@ -41,7 +50,37 @@ const calculateLords = (rate: string, qty: number) => {
 };
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
+  const { contract: exchangeContract } = useExchangeContract();
+
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
+  const [currencyAndTokenBalance, setCurrencyAndTokenBalance] = useState({
+    currency: '0',
+    token: '0',
+  });
+
+  const {
+    data: currencyAndTokenValues,
+    refresh: updateCurrencyAndTokenValues,
+    loading,
+  } = useStarknetCall({
+    contract: exchangeContract,
+    method: 'get_owed_currency_tokens',
+    args: [
+      [bnToUint256(toBN(props.resource.resourceId))],
+      [bnToUint256(toBN(props.resource.lp))],
+    ],
+  });
+
+  useEffect(() => {
+    if (!currencyAndTokenValues || !currencyAndTokenValues[0]) {
+      return;
+    }
+
+    setCurrencyAndTokenBalance({
+      currency: uint256ToBN(currencyAndTokenValues[0][0]).toString(10),
+      token: uint256ToBN(currencyAndTokenValues[1][0]).toString(10),
+    });
+  }, [currencyAndTokenValues]);
 
   const handleValueChange = (newValue: ValueType | null) => {
     if (newValue === null) return;
@@ -53,15 +92,17 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
       props.onQtyChange(
         props.resource.resourceId,
         parseInt(newValue as string)
-      ); /* updatePercentByValue(newValue); */
-    }, 500);
+      );
+    }, 100);
     setTime(timerId);
   };
+
   const handleSelectChange = (newValue: number) => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
+
   return (
-    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] bg-gray-900/70">
+    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.2)] bg-gray-900/70">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -98,35 +139,63 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             ))}
           </Select.Options>
         </Select>
-        <div className="flex justify-between pt-1.5 text-xs uppercase">
-          <div>balance: {formatEther(props.resource.amount)}</div>
-          <div>1 = {displayRate(props.resource.rate)}</div>
+        <div className="flex flex-wrap mt-4">
+          {/* <div className="self-center w-full text-sm font-semibold tracking-widest uppercase opacity-50">
+
+          </div> */}
+          <div className="flex justify-between space-x-2">
+            <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
+              {props.isRemoveLp ? 'remove' : 'add'}
+            </span>
+            <InputNumber
+              value={props.resource.qty}
+              inputSize="md"
+              colorScheme="transparent"
+              className="w-24 text-3xl font-semibold text-left"
+              min={0}
+              max={1000000}
+              stringMode // to support high precision decimals
+              onChange={handleValueChange}
+            />{' '}
+            <div className="flex self-end justify-end text-lg opacity-70">
+              <span className="self-center mr-1 font-semibold">
+                ~
+                {calculateLords(
+                  props.resource.rate,
+                  props.resource.qty
+                ).toFixed(2)}
+              </span>{' '}
+              {/* <LordsIcon className="self-center w-5 h-5" /> */}
+            </div>
+          </div>
+          <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-75 border-white/20">
+            lp-{props.resource.resourceName}:{' '}
+            {loading
+              ? 'loading...'
+              : (+formatEther(props.resource.lp)).toLocaleString()}{' '}
+            <br />
+            <span className="opacity-60">
+              {' '}
+              -LORDS:{' '}
+              {loading
+                ? 'loading...'
+                : (+formatEther(
+                    currencyAndTokenBalance.currency
+                  )).toLocaleString()}{' '}
+              <br />-{props.resource.resourceName}:{' '}
+              {loading
+                ? 'loading...'
+                : (+formatEther(
+                    currencyAndTokenBalance.token
+                  )).toLocaleString()}
+            </span>
+          </div>
         </div>
       </div>
-      <div className="flex justify-end text-right sm:w-1/2">
-        <div className="flex flex-col justify-between">
-          <InputNumber
-            value={props.resource.qty}
-            inputSize="md"
-            colorScheme="transparent"
-            className="w-20 text-2xl font-semibold text-right shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.3)] mb-2"
-            /* inputPrefix={/* <span className="text-md text-gray">
-            ~{value} {mockData.additionalCurrency}
-          </span>} 
-        prefixPosition="button" */
-            min={0}
-            max={10000}
-            stringMode // to support high precision decimals
-            onChange={handleValueChange}
-          />{' '}
-          <div className="flex justify-end">
-            <span className="mr-1">
-              {calculateLords(props.resource.rate, props.resource.qty).toFixed(
-                2
-              )}
-            </span>{' '}
-            <LordsIcon className="w-5 h-5" />
-          </div>
+      <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
+        <div className="w-full">1 = {displayRate(props.resource.rate)} </div>
+        <div className="w-full">
+          {(+formatEther(props.resource.amount)).toLocaleString()}
         </div>
       </div>
     </div>
@@ -134,7 +203,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function LpMerchant(): ReactElement {
-  // const [enabled, setEnabled] = useState(false);
   const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
     return state === 'sell' ? 'buy' : 'sell';
   }, 'buy');
@@ -142,24 +210,30 @@ export function LpMerchant(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
-  const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
-  const { sellTokens, loading: isSellTransactionInProgress } =
-    useSellResources();
+  const { addLiquidity, loading: isAddLiquidityTransactionInProgress } =
+    useAddLiquidity();
+
+  const { removeLiquidity, loading: isRemoveLiquidityTransactionInProgress } =
+    useRemoveLiquidity();
 
   const isTransactionInProgress =
-    isBuyTransactionInProgress || isSellTransactionInProgress;
+    isAddLiquidityTransactionInProgress ||
+    isRemoveLiquidityTransactionInProgress;
 
   const {
     availableResourceIds,
     selectedSwapResourcesWithBalance,
     getResourceById,
+    lordsBalance,
     addSelectedSwapResources,
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
   } = useResourcesContext();
+
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
+
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
@@ -175,89 +249,99 @@ export function LpMerchant(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
-  function onBuyTokensClick() {
+  const deadline = () => {
+    const maxDate = new Date();
+    maxDate.setMinutes(maxDate.getMinutes() + 30);
+    return Math.floor(maxDate.getTime() / 1000);
+  };
+
+  // get token ids
+  const tokenIds = selectedSwapResourcesWithBalance.map(
+    (resource) => resource.resourceId
+  );
+
+  function onAddLiquidityClick() {
     // TODO: check lords balance
 
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
-    const maxAmount = parseEther(
-      String(calculatedTotalInLords + calculatedSlippage)
+
+    // tokens * lords_price * (1 + slippage)
+    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(
+        String(
+          resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 + slippage)
+        )
+      )
     );
 
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
-
-    buyTokens(maxAmount, tokenIds, tokenAmounts, deadline);
+    addLiquidity(currencyAmounts, tokenIds, tokenAmounts, deadline());
   }
 
-  function onSellTokensClick() {
+  function onRemoveLiquidityClick() {
     // TODO: check resource balances
 
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
-    const tokenIds = selectedSwapResourcesWithBalance.map(
-      (resource) => resource.resourceId
-    );
-    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
+    const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) => {
+      // TODO: using 0 until the real rate is cached in indexer
+      // const amount = String(
+      //   resource.qty *
+      //     (parseInt(resource.rate) / 10 ** 18) *
+      //     (1 - slippage) *
+      //     1000
+      // );
+
+      return parseEther('0');
+    });
+
+    // tokens * lords_price * (1 + slippage) / 1000
+    const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) => {
+      // TODO: using 0 until the real rate is cached in indexer
+      // const amount = String(
+      //   resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 - slippage)
+      // );
+      return parseEther('0');
+    });
+
+    // we pass in the exact LP amount, currency and token amounts are computed via slippage
+    const lpAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(String(resource.qty))
     );
-    const minAmount = parseEther(
-      String(calculatedTotalInLords - calculatedSlippage)
+
+    removeLiquidity(
+      currencyAmounts,
+      tokenIds,
+      tokenAmounts,
+      lpAmounts,
+      deadline()
     );
-
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    const deadline = Math.floor(maxDate.getTime() / 1000);
-
-    sellTokens(minAmount, tokenIds, tokenAmounts, deadline);
   }
 
   function onTradeClicked() {
     if (isBuy) {
-      onBuyTokensClick();
+      onAddLiquidityClick();
     } else {
-      onSellTokensClick();
+      onRemoveLiquidityClick();
     }
   }
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {!isLordsApprovedForExchange && isBuy && (
-        <div>
-          <Button className="w-full" variant="primary" onClick={approveLords}>
-            APPROVE LORDS
-          </Button>
-        </div>
-      )}
-      {!isResourcesApprovedForExchange && isSell && (
-        <div>
-          <Button
-            className="w-full"
-            variant="primary"
-            onClick={approveResources}
-          >
-            APPROVE RESOURCES
-          </Button>
-        </div>
-      )}
-      <div className="flex w-full mx-auto mb-8 tracking-widest">
+      <div className="flex mx-auto mb-8 text-sm tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
-          Buy Resources
+          add LP
         </div>
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
           className={`${
-            isBuy ? 'bg-green-600' : 'bg-blue-600'
+            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
           } relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Enable notifications</span>
@@ -268,7 +352,7 @@ export function LpMerchant(): ReactElement {
           />
         </Switch>
         <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
-          Sell Resources
+          remove LP
         </div>
       </div>
       <div>
@@ -277,19 +361,21 @@ export function LpMerchant(): ReactElement {
             <ResourceRow
               key={resource.resourceId}
               resource={resource}
+              isRemoveLp={isSell}
               availableResources={availableResourceIds.map(
                 (resourceId) => getResourceById(resourceId) as Resource
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}
             />
-            <IconButton
-              className="absolute -top-3 -right-3"
-              icon={<Danger className="w-3 h-3" />}
-              aria-label="Remove Row"
+            <Button
+              className="absolute top-3 right-3 border-white/20 "
               size="xs"
+              variant="outline"
               onClick={() => removeSelectedSwapResource(resource.resourceId)}
-            />
+            >
+              x
+            </Button>
           </div>
         ))}
         <div className="flex w-full">
@@ -304,15 +390,25 @@ export function LpMerchant(): ReactElement {
           </Button>
         </div>
       </div>
+
       <div className="flex justify-end w-full pt-4">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex flex-col  rounded p-4 mb-5 bg-gray-500/70 shadow-[inset_0_6px_8px_0px_rgba(0,0,0,0.18)]">
+          <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
-              <span className="mr-1">{calculatedTotalInLords.toFixed(2)}</span>
-              <LordsIcon className="w-6 h-6 mt-0.5" />
+              <span>
+                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
+                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
+                </span>
+                {calculatedTotalInLords.toLocaleString()}
+              </span>
             </div>
-            <div className="flex justify-end text-md">
-              {calculatedSlippage.toFixed(2)}
+            <div>
+              <div className="flex justify-end text-md">
+                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  your lords Balance:
+                </span>
+                {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+              </div>
             </div>
           </div>
 
@@ -320,17 +416,10 @@ export function LpMerchant(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            disabled={
-              isTransactionInProgress ||
-              (!isLordsApprovedForExchange && isBuy) ||
-              (!isResourcesApprovedForExchange && isSell)
-            }
+            loading={isTransactionInProgress}
+            disabled={isTransactionInProgress}
           >
-            {isTransactionInProgress
-              ? 'Pending...'
-              : isBuy
-              ? 'buy resources'
-              : 'sell resources'}
+            {isBuy ? 'add liquidity' : 'remove liquidity'}
           </Button>
         </div>
       </div>
