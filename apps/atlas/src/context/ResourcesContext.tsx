@@ -143,6 +143,9 @@ function useResources() {
       contract: exchangeContract,
       method: 'get_all_currency_reserves',
       args: [resourceMapping],
+      options: {
+        watch: false,
+      },
     });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
