@@ -214,7 +214,6 @@ function useResources() {
     if (resourcesBalanceError) {
       setBalanceStatus('error');
     }
-    if (!resourceBalanceData || !resourceBalanceData[0]) {
     if (
       !resourceBalanceData ||
       !resourceBalanceData[0] ||
@@ -227,7 +226,6 @@ function useResources() {
     }
 
     const rates = exchangeRateData?.getExchangeRates ?? [];
-
 
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
