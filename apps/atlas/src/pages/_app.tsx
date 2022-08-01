@@ -9,12 +9,12 @@ import React from 'react';
 import { Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'starknet';
 import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 import apolloClient from '@/util/apolloClient';
-
 /* import PageTransition from '@/components/navigation/PageTransition'; 
 import { animated, Transition } from '@react-spring/web'; */
 
@@ -61,7 +61,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     <BreakpointProvider queries={queries}>
       <WalletProvider>
         <ApolloProvider client={apolloClient}>
-          <StarknetProvider autoConnect connectors={connectors}>
+          <StarknetProvider
+            defaultProvider={
+              new Provider({
+                rpc: {
+                  nodeUrl:
+                    'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
+                },
+              })
+            }
+            autoConnect
+            connectors={connectors}
+          >
             <QueryClientProvider client={queryClient}>
               <TransactionQueueProvider>
                 <Component {...pageProps} />
