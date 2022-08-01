@@ -85,18 +85,22 @@ const nextConfig = {
   },
 
   experimental: {
-    // React 18
-    // @link https://nextjs.org/docs/advanced-features/react-18
-    reactRoot: true,
-    // React 18 streaming
-    // @link https://nextjs.org/docs/advanced-features/react-18/streaming
-    runtime: undefined,
+    browsersListForSwc: true,
+    legacyBrowsers: false,
+    images: {
+      allowFutureImage: true,
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'avatars.githubusercontent.com',
+        },
+      ],
+      unoptimized: false,
+    },
+
     // React 18 server components
     // @link https://nextjs.org/docs/advanced-features/react-18/server-components
     serverComponents: false,
-    // Standalone build
-    // @link https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files-experimental
-    outputStandalone: false,
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
     outputFileTracingRoot: undefined, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS
