@@ -6,19 +6,16 @@ import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
 import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
-import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import TransactionNavItem from './TransactionNavItem';
 export function Header() {
-  const { toggleMenuType } = useAtlasContext();
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
 
@@ -141,11 +138,6 @@ export function Header() {
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}
             </span>
-          </Button>
-        </span>
-        <span>
-          <Button variant="primary" onClick={() => toggleMenuType('military')}>
-            <Sword className="w-5 stroke-white fill-white" />
           </Button>
         </span>
         <TransactionNavItem />

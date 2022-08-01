@@ -164,7 +164,6 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
 
   const realmEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
-      console.log(historyData?.getRealmHistory);
       return {
         event: genRealmEvent(realmEvent),
         timestamp: realmEvent.timestamp,

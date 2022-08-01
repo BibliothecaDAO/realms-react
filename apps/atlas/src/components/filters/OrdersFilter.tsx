@@ -92,6 +92,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
                     aria-hidden="true"
                   >
                     <OrderIcon
+                      containerClassName="my-4"
                       withTooltip
                       order={order.name.toLowerCase()}
                       size="md"

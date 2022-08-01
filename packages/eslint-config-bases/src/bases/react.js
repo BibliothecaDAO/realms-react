@@ -34,6 +34,7 @@ module.exports = {
         'react/no-unescaped-entities': ['error', { forbid: ['>'] }],
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
+        'sonarjs/cognitive-complexity': 'off',
         // Fine-tune naming convention react typescript jsx (function components)
         // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/naming-convention.md
         '@typescript-eslint/naming-convention': [

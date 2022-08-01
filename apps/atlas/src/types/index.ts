@@ -195,7 +195,7 @@ export type RealmFeatureProperties = {
 export interface TroopInterface {
   troopId: number;
   index: number;
-  type: number;
+  type: number | string;
   tier: number;
   agility: number;
   attack: number;
@@ -204,7 +204,7 @@ export interface TroopInterface {
   wisdom: number;
   squadSlot: number;
   troopName?: string;
-  troopCost?: ItemCost[];
+  troopCost?: ItemCost | null;
 }
 
 export interface ItemCost {
@@ -226,3 +226,5 @@ export interface MinMaxRange {
 export interface RealmsCall extends StarknetCall {
   metadata: { title: string; description: string } | any;
 }
+
+export type NetworkState = 'loading' | 'success' | 'error';

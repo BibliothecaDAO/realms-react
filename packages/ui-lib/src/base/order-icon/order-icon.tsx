@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -22,6 +23,7 @@ export type Props = {
   order: string;
   size: keyof typeof STYLES['size'];
   className?: string;
+  containerClassName?: string;
   withTooltip?: boolean;
 };
 
@@ -46,26 +48,26 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
 
 const STYLES = {
   size: {
-    xs: 'w-4 h-4 my-4 flex justify-center',
-    sm: 'w-6 h-6 my-4 flex justify-center',
-    md: 'w-8 h-8 my-4 flex justify-center',
-    lg: 'w-12 h-12 my-4 flex justify-center',
+    xs: 'w-4 h-4 flex justify-center',
+    sm: 'w-6 h-6 flex justify-center',
+    md: 'w-8 h-8 flex justify-center',
+    lg: 'w-12 h-12 flex justify-center',
   },
 } as const;
 
 export const OrderIcon = (props: Props) => {
+  const order = props.order.toLowerCase();
+
   return (
-    <div className="relative flex flex-col items-center justify-center group">
+    <div className={twMerge('relative group', props.containerClassName)}>
       <div className={twMerge(STYLES.size[props.size], props.className)}>
-        {Components[props.order.replace('_', ' ')]}
+        {Components[order.replace('_', ' ')]}
       </div>
       {props.withTooltip && (
         <div className="absolute top-0 flex flex-col items-center hidden -translate-y-full w-max group-hover:flex">
           <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black rounded shadow-lg">
-            Order of {props.order.includes('the') && 'the '}
-            <span className="capitalize">
-              {props.order.replace('the ', '')}
-            </span>
+            Order of {order.includes('the') && 'the '}
+            <span className="capitalize">{order.replace('the ', '')}</span>
           </span>
           <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
         </div>

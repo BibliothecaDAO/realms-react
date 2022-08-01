@@ -2,6 +2,8 @@
 import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
+import { UserAgent } from '@quentin-sommer/react-useragent';
+import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { Map } from 'react-map-gl';
@@ -67,21 +69,35 @@ export default function AtlasPage() {
 function AtlasMain() {
   return (
     <div className="relative w-full h-full">
-      <ArtBackground />
-      <AccountModule />
-      <LootModule />
-      <GaModule />
-      <RealmsModule />
-      <CryptModule />
-      <BankPanel />
-      <ResourceSwapSideBar />
-      <TradePanel />
-      <CombatPanel />
-      {/* <FlyTo /> */}
-      <MapModule />
-      <BaseModal />
-      <TransactionCartSideBar />
-      <MilitarySideBar />
+      <UserAgent>
+        {(ua: UserAgentProps) => (
+          <>
+            <ArtBackground />
+            <AccountModule />
+            <LootModule />
+            <GaModule />
+            <RealmsModule />
+            <CryptModule />
+            <BankPanel />
+            <ResourceSwapSideBar />
+            <TradePanel />
+            {/* <CombatPanel /> */}
+            {/* <FlyTo /> */}
+            {/* Hide the map on mobile devices */}
+            {!ua.mobile ? (
+              <MapModule />
+            ) : (
+              <div className="w-full h-full bg-hero object-cover object-right" />
+            )}
+            <BaseModal />
+            <TransactionCartSideBar />
+            <MilitarySideBar />
+            <div id="sidebar-root">
+              {/* Render children here using the AtlasSideBar component */}
+            </div>
+          </>
+        )}
+      </UserAgent>
     </div>
   );
 }

@@ -1,4 +1,6 @@
+import { ENQUEUED_STATUS, Squad } from '@/constants/index';
 import { Entrypoints as BuildingMethods } from './useBuildings';
+import { Entrypoints as CombatMethods } from './useCombat';
 import { Entrypoints as ResourceMethods } from './useResources';
 
 type TxWithMetadata = { status: string; metadata?: any };
@@ -9,7 +11,7 @@ interface TxMessage {
 }
 
 export function getTxMessage(tx: TxWithMetadata): TxMessage {
-  const isQueued = tx.status == 'ENQUEUED';
+  const isQueued = tx.status == ENQUEUED_STATUS;
 
   const metadata = tx.metadata;
 
@@ -57,10 +59,14 @@ export function getTxMessage(tx: TxWithMetadata): TxMessage {
           description: `Realm ${metadata.realmId} is increasing production of ${metadata.resourceId}.`,
         };
 
-      case 'build_troops':
+      case CombatMethods.buildSquad:
         return {
-          title: `Building Troops`,
-          description: `Realm #${metadata.realmId} is summoning an army.`,
+          title: `Troop Training`,
+          description: `Realm #${metadata.realmId} ${
+            isQueued ? 'ordered to train' : 'is training'
+          } ${metadata.troopIds.length} troops for ${
+            Squad[metadata.squadSlot]
+          }ing army.`,
         };
       case 'raid':
         return {

@@ -10,94 +10,141 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import { UserAgent } from '@quentin-sommer/react-useragent';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
+import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
+import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import useIsOwner from '@/hooks/useIsOwner';
+import useKeyPress from '@/hooks/useKeyPress';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
+import SidebarHeader from '@/shared/SidebarHeader';
 import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { RealmBuildings } from '../tables/RealmBuildings';
+import Army from './RealmDetails/Army';
+import Food from './RealmDetails/Food';
+import ResourceDetails from './RealmDetails/Resources';
+import Survey from './RealmDetails/Survey';
+import RealmToolbar from './RealmDetails/Toolbar';
+// import styled from '@emotion/styled';
 
 interface RealmDetailsPanelProps {
   realmId: number;
 }
 
+// const Overlay = styled.div`
+//   transform: perspective(1100px) rotateX(60deg) rotateZ(45deg) scale(110%);
+//   transform-style: preserve-3d;
+//   background-color: orange;
+//   position: absolute;
+//   height: 500px;
+//   width: 500px;
+//   opacity: 50%;
+//   top: 0px;
+//   left: 0px;
+// `;
+
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
-  const [squad, setSquad] = useState(false);
-  const [id, setId] = useState(realmId);
   const router = useRouter();
-  const { data: realmData } = useGetRealmQuery({
+  const { data: realmData, loading } = useGetRealmQuery({
     variables: { id: realmId },
     pollInterval: 5000,
   });
 
   const realm = realmData?.realm;
-  const { data: troopStatsData } = useGetTroopStatsQuery();
 
-  const attackSquad =
-    realm?.troops?.filter((squad) => squad.squadSlot === 1) ?? [];
-  const defenseSquad =
-    realm?.troops?.filter((squad) => squad.squadSlot === 2) ?? [];
+  const { subview, set } = useRealmDetailHotkeys(
+    router.query['tab'] as Subview
+  );
 
-  const getTrait = (realm: any, trait: string) => {
-    return realm?.traits?.find((o) => o.type === trait)
-      ? realm.traits?.find((o) => o.type === trait).qty
-      : '0';
-  };
-
-  const timeAttacked = realm?.lastAttacked
-    ? new Date(parseInt(realm.lastAttacked)).getTime()
-    : 0;
-
-  // Replace with actual last time attacked
-  const time = () => {
-    const NOW_IN_MS = new Date().getTime();
-
-    return (timeAttacked + 1800).toString();
-  };
+  useEffect(() => {
+    if (realm) {
+      router.push(
+        {
+          pathname: `realm/${realm?.realmId}`,
+          query: {
+            tab: subview,
+          },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  }, [subview]);
 
   const pushPage = (value) => {
-    setId(parseInt(value));
-    router.push('/realm/' + value);
+    if (!loading) {
+      router.push('/realm/' + value, undefined, { shallow: true });
+    }
   };
 
-  const getPopulation = () => {
-    return realm?.buildings
-      ?.map((a) => a.population)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
+  const leftPressed = useKeyPress({ keycode: 'LEFT' });
+  const rightPressed = useKeyPress({ keycode: 'RIGHT' });
+  const isOwner = useIsOwner(realm?.settledOwner);
 
-  const getFood = () => {
-    return realm?.buildings
-      ?.map((a) => a.food)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
-
-  const getCulture = () => {
-    return realm?.buildings
-      ?.map((a) => a.culture)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
+  useEffect(() => {
+    if (!realm) {
+      return;
+    }
+    if (leftPressed) {
+      pushPage(realm.realmId - 1);
+    }
+    if (rightPressed) {
+      pushPage(realm.realmId + 1);
+    }
+  }, [leftPressed, rightPressed]);
 
   return (
-    <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 p-6 overflow-auto bg-cover bg-hero">
-      <div className="col-start-1 col-end-5">
-        <RealmBannerHeading
-          onSubmit={(value) => pushPage(parseInt(value))}
-          key={realm?.realmId ?? ''}
-          order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
-          title={realm?.name ?? ''}
-          realmId={realmId}
-        />
+    <>
+      <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
+        <div className="relative col-span-6 md:col-start-1 md:col-end-5">
+          <RealmBannerHeading
+            onSubmit={(value) => pushPage(parseInt(value))}
+            key={realm?.realmId ?? ''}
+            order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
+            title={realm?.name ?? ''}
+            realmId={realmId}
+            hideSearchFilter
+          />
+          <div className="relative w-full">
+            <Image
+              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
+              alt="map"
+              className="w-full -scale-x-100"
+              width={500}
+              height={320}
+              layout={'responsive'}
+            />
+            <div className="absolute top-0 w-full overflow-x-scroll md:overflow-x-visible">
+              {realmData?.realm ? (
+                <>
+                  {subview == 'Army' && <Army realm={realmData?.realm} />}
+                  {subview == 'Buildings' && realmData?.realm && (
+                    <RealmBuildings realm={realmData.realm} loading={false} />
+                  )}
+                  {subview == 'Resources' && (
+                    <ResourceDetails realm={realmData} />
+                  )}
+                  {subview == 'Food' ? <Food realm={realmData} /> : null}
+                  {subview == 'Survey' && <Survey realm={realmData} />}
+                  {subview == 'History' && <RealmHistory realmId={realmId} />}
+                  <div id="spacer" className="w-full h-20" />
+                </>
+              ) : null}
+            </div>
+          </div>
 
+          {/*
         <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
           <div className="col-start-1 col-end-5 row-span-3">
             <Image
@@ -114,7 +161,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <CardStats className="text-2xl">
               {shortenAddress(RealmOwner(realm as RealmFragmentFragment))}
             </CardStats>
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-5 col-end-7">
             <CardTitle>Realm State</CardTitle>
@@ -124,14 +170,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </Card>
           <Card className="col-start-5 col-end-7 text-white">
             <CardTitle>Vulnerable in</CardTitle>
-            {/* <CardStats className="text-2xl">{date.toDateString()}</CardStats> */}
-            {/* <div className='flex justify-around w-full my-4 text-white'>
-              
-              <Donut label={24 - hoursAgoAttack} className='mx-auto stroke-green-400' radius={50} stroke={2} progress={getProgress()}/>
-              
-            </div> */}
             <CountdownTimer date={time()} />
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-3 ">
             <CardTitle>Traits</CardTitle>
@@ -162,9 +201,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             {realm && <RealmResources realm={realm} loading={false} />}
           </Card>
 
-          {/* {realmData && realmData.getRealm && (
-              <RealmCard realm={realmData!.getRealm} loading={false} />
-            )} */}
 
           <Card className="col-start-1 col-end-7">
             <div className="flex justify-between w-full mb-10">
@@ -204,37 +240,61 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           <Card className="col-start-1 col-end-3 ">
             <CardTitle>Happiness</CardTitle>
             <CardStats className="text-4xl">100</CardStats>
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-3 col-end-4 ">
             <CardTitle>Culture</CardTitle>
             <CardStats className="text-4xl">{getCulture()}</CardStats>
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-4 col-end-5 ">
             <CardTitle>Food</CardTitle>
             <CardStats className="text-4xl">{getFood()}</CardStats>
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-5 col-end-7 ">
             <CardTitle>Population</CardTitle>
             <CardStats className="text-4xl">{getPopulation()}</CardStats>
-            {/* <CardIcon /> */}
           </Card>
           <Card className="col-start-1 col-end-7 ">
             <CardTitle>Buildings</CardTitle>
             {realm && <RealmBuildings realm={realm} loading={false} />}
           </Card>
         </div>
-      </div>
-      <div className="grid grid-cols-6 col-start-5 col-end-7">
-        <div className="col-start-1 col-end-7">
-          <div className="w-full ">
-            <h2 className="text-center text-white font-lords">History</h2>
-            <RealmHistory realmId={realmId} />
-          </div>
+        */}
         </div>
       </div>
-    </div>
+      <UserAgent>
+        {({ mobile }) => (
+          <RealmToolbar
+            selected={subview}
+            isOwnerOfRealm={isOwner}
+            isMobile={mobile}
+            onSetSubview={(s) => {
+              router.push(
+                {
+                  pathname: `realm/${realm?.realmId}`,
+                  query: {
+                    tab: s,
+                  },
+                },
+                undefined,
+                { shallow: true }
+              );
+              set(s);
+            }}
+            className="absolute bottom-0 z-20"
+            onNavigateIntent={(dir) => {
+              if (!realm) {
+                return;
+              }
+              if (dir == 'previous') {
+                pushPage(realm.realmId - 1);
+              }
+              if (dir == 'next') {
+                pushPage(realm.realmId + 1);
+              }
+            }}
+          />
+        )}
+      </UserAgent>
+    </>
   );
 }
