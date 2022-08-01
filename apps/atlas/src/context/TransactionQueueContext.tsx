@@ -2,7 +2,7 @@ import { useStarknetTransactionManager } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
-import type { AddTransactionResponse } from 'starknet';
+import type { InvokeFunctionResponse } from 'starknet';
 import { getTxMessage } from '@/hooks/settling/useTxMessage';
 import { Scroll } from '@/shared/Icons';
 import { ENQUEUED_STATUS } from '../constants';
@@ -15,7 +15,7 @@ interface TransactionQueue {
   transactions: Tx[];
   remove: (tx: Tx) => void;
   empty: () => void;
-  executeMulticall: (transactions: Tx[]) => Promise<AddTransactionResponse>;
+  executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
 export const TransactionQueueContext = createContext<

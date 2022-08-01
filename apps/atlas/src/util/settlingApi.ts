@@ -18,7 +18,9 @@ export const starknetNetwork =
     | 'mainnet-alpha'
     | 'goerli-alpha') || 'goerli-alpha';
 
-export const provider = new Provider({ network: starknetNetwork });
+export const provider = new Provider({
+  sequencer: { network: starknetNetwork },
+});
 
 if (!CONTROLLER_ADDRESS) {
   throw new Error(

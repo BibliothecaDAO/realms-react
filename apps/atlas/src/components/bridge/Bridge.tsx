@@ -11,7 +11,9 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import type { AddTransactionResponse } from 'starknet';
+import type { InvokeFunctionResponse } from 'starknet';
+// eslint-disable-next-line import/order
+import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import useTotalMinted from '@/hooks/desiege/useTotalMinted';
@@ -27,7 +29,6 @@ import { getHostname } from '@/util/blockExplorer';
 import { messageKey } from '@/util/messageKey';
 import { EFFECT_BASE_FACTOR, starknetNetwork } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
-import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
 type Prop = {
   initialTab?: TabName;
@@ -120,7 +121,7 @@ export const Bridge: React.FC<Prop> = (props) => {
           messageKey(starkAccount as string)
         );
         setMiddlewareStatus('pending');
-        const res = await axios.post<AddTransactionResponse | MintingError>(
+        const res = await axios.post<InvokeFunctionResponse | MintingError>(
           '/api/minigame_alpha_mint',
           {
             starknetAddress: starkAccount,
@@ -130,8 +131,10 @@ export const Bridge: React.FC<Prop> = (props) => {
           }
         );
 
-        if ('code' in res.data && res.data.code == 'TRANSACTION_RECEIVED') {
-          setTransactionHash(res.data.transaction_hash);
+        if (
+          'code' in res.data /* && res.data.code == 'TRANSACTION_RECEIVED' */
+        ) {
+          setTransactionHash(res.data);
           setMintError(undefined);
         }
         if ('error' in res.data) {
