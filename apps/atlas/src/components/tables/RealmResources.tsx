@@ -1,6 +1,7 @@
 import { Table, Button, ResourceIcon, Spinner } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { resources, findResourceName } from '@/util/resources';
@@ -92,8 +93,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     }
   );
 
-
-  const txQueue = useTransactionQueue();
+  /* const txQueue = useTransactionQueue();
 
   useEffect(() => {
     setEnqueuedHarvestTx(
@@ -105,7 +105,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       )
     );
   }, [txQueue.transactions]);
-
+*/
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
