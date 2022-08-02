@@ -236,7 +236,7 @@ function useAtlas(): Atlas {
           setMenuType(panelType);
         }
       } else {
-        setArtBackground('hero');
+        setArtBackground('warRoom');
         if (breakpoints.lg) {
           setMenuType(panelType);
         }

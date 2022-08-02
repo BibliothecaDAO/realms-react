@@ -32,7 +32,7 @@ import {
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getAccountHex } from '@/shared/Getters/Realm';
-import { shortenAddress } from '@/util/formatters';
+import { shortenAddress, shortenAddressWidth } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import realms from '../../geodata/realms.json';
 import { useWalletContext } from '../../hooks/useWalletContext';
@@ -64,8 +64,8 @@ export function AccountPanel() {
   const realmsCount =
     (accountData?.ownedRealmsCount ?? 0) +
     (accountData?.settledRealmsCount ?? 0);
-  const successClass = 'bg-green-200/20';
-  const negativeClass = 'bg-red-200/20';
+  const successClass = '';
+  const negativeClass = '';
 
   const resourcePillaged = (resources: any) => {
     return (
@@ -223,13 +223,33 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="grid grid-cols-12 gap-3">
-        <div className="col-start-1 col-end-7 p-8">
-          <h1>Ser, Your Vast Empire</h1>
-          <p className="mt-8 text-2xl">
-            This is your dashboard for all things happen on your lands.
-          </p>
+      <div className="w-full p-10 py-10 bg-black/60">
+        <div className="flex justify-between">
+          <div className="flex flex-wrap">
+            <div className="flex">
+              {' '}
+              <Crown className={`stroke-current w-12 h-12 self-center`} />
+              {account && (
+                <span className="self-center ml-4 text-2xl text-center">
+                  {shortenAddressWidth(account, 6)}
+                </span>
+              )}
+            </div>
+
+            <h2 className="w-full sm:text-6xl">Ser, Your Vast Empire</h2>
+          </div>
+
+          {/* <p className="mt-2 sm:text-2xl">
+            This is your dashboard for all things happening on your lands.
+          </p> */}
+          <img
+            className="w-64 h-64 rounded-full shadow"
+            src="/keyImage-tablet.png"
+            alt=""
+          />
         </div>
+      </div>
+      <div className="grid grid-cols-12 gap-3 p-3 sm:p-6">
         <Card className="col-start-1 col-end-3">
           <CardBody>
             <CardTitle>Realms</CardTitle>
@@ -286,12 +306,36 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-        <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1>
+        <Card className="col-start-8 col-end-13">
+          <CardBody>
+            <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
+            <input
+              placeholder="Type Id"
+              type={'number'}
+              className="w-3/12 p-2 mx-auto mb-2 text-black rounded bg-white/80"
+              value={selectedId}
+              onChange={(e) => {
+                setSelectedId(parseInt(e.target.value));
+              }}
+              min="1"
+              max="8000"
+            />
+            <Button
+              className="ml-8"
+              variant="primary"
+              size="sm"
+              onClick={() => mintRealm(selectedId)}
+            >
+              Mint Realms
+            </Button>
+          </CardBody>
+        </Card>
+        {/* <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1> */}
         {realmEventData.map((a, index) => {
           return (
             <Card
               key={index}
-              className={`col-start-1 col-end-8 ${
+              className={`col-start-4 col-end-8 ${
                 loadingData ?? 'animate-pulse'
               }`}
             >
@@ -322,30 +366,6 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card> */}
-        <Card className="col-start-1 col-end-6">
-          <CardBody>
-            <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
-            <input
-              placeholder="Type Id"
-              type={'number'}
-              className="w-3/12 p-2 mx-auto mb-2 text-black rounded bg-white/80"
-              value={selectedId}
-              onChange={(e) => {
-                setSelectedId(parseInt(e.target.value));
-              }}
-              min="1"
-              max="8000"
-            />
-            <Button
-              className="ml-8"
-              variant="primary"
-              size="sm"
-              onClick={() => mintRealm(selectedId)}
-            >
-              Mint Realms
-            </Button>
-          </CardBody>
-        </Card>
       </div>
     </BasePanel>
   );

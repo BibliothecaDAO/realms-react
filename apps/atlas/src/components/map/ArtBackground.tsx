@@ -8,6 +8,7 @@ export type BackgroundOptions =
   | 'bank'
   | 'crypt'
   | 'lore'
+  | 'warRoom'
   | undefined;
 
 type ArtBackgroundProps = {

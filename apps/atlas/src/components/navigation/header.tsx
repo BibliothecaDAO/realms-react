@@ -67,7 +67,7 @@ export function Header() {
   ]);
 
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-stone-500 sm:flex">
+    <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-gray-1000 sm:flex">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mr-auto">
           <Link href={'/'}>

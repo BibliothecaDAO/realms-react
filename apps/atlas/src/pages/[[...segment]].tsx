@@ -87,7 +87,7 @@ function AtlasMain() {
             {!ua.mobile ? (
               <MapModule />
             ) : (
-              <div className="w-full h-full bg-hero object-cover object-right" />
+              <div className="object-cover object-right w-full h-full bg-warRoom" />
             )}
             <BaseModal />
             <TransactionCartSideBar />

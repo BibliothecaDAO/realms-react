@@ -95,7 +95,7 @@ export const MenuSideBar = () => {
       </div>
       <animated.div
         style={animation}
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-800 z-40 shadow-2xl flex flex-col transform  overflow-auto ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1000 z-40 shadow-2xl flex flex-col transform  overflow-auto ${
           mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
@@ -104,7 +104,7 @@ export const MenuSideBar = () => {
             <div className="flex flex-col place-items-center ">
               <IconButton
                 className={`${buttonClasses} ${
-                  isPage(menu.page) ? 'bg-stone-500 shadow-2xl' : ''
+                  isPage(menu.page) ? 'bg-stone-800 shadow-2xl' : ''
                 }`}
                 aria-label={menu.text}
                 variant="unstyled"
