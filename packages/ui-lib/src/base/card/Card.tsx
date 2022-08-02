@@ -14,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all  hover:bg-gray-200/50 flex flex-wrap p-6 text-gray-600 bg-white/40 rounded shadow-xl group `}
+      className={`${className} duration-150 transition-all  hover:bg-gray-900/50 flex flex-wrap p-3 text-gray-800 bg-black/50 rounded-xl shadow-xl group flex-grow`}
     >
       {children}
     </div>
@@ -34,7 +34,7 @@ export function CardBody({ children, className, loading }: Props) {
   }
   return (
     <div
-      className={`${className} flex flex-col flex-grow flex-shrink p-5 shadow-md rounded bg-black/40`}
+      className={`${className} flex flex-col flex-grow  p-3 rounded-xl bg-black/60 text-gray-800 `}
     >
       {children}
     </div>
@@ -43,8 +43,8 @@ export function CardBody({ children, className, loading }: Props) {
 
 export function CardTitle({ children, className }: Props) {
   return (
-    <div className={`${className} z-20 w-full tracking-widest uppercase`}>
-      <h3 className="px-2 py-1 font-semibold text-left text-white border-b rounded font-body">
+    <div className={`${className} w-full mb-4`}>
+      <h3 className="px-2 py-1 text-left rounded text-stone-200 font-display">
         {children}
       </h3>
     </div>
@@ -58,7 +58,7 @@ export function CardText({ children, className }: Props) {
 export function CardStats({ children, className }: Props) {
   return (
     <div
-      className={`${className} w-full pt-4 pr-4 text-right text-white mt-auto`}
+      className={`${className} w-full pt-4 pr-4 text-right text-white mt-auto font-semibold`}
     >
       {children}
     </div>

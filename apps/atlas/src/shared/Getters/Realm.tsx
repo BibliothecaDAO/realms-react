@@ -39,20 +39,20 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-green-200/70',
+      colour: 'bg-green-200/30',
       traitMax: 7,
       title: 'Regions',
     },
-    { trait: 'City', colour: 'bg-amber-300/70', traitMax: 21, title: 'Cities' },
+    { trait: 'City', colour: 'bg-amber-300/50', traitMax: 21, title: 'Cities' },
     {
       trait: 'Harbor',
-      colour: 'bg-amber-500/70',
+      colour: 'bg-amber-500/50',
       traitMax: 35,
       title: 'Harbors',
     },
     {
       trait: 'River',
-      colour: 'bg-blue-700/70',
+      colour: 'bg-blue-700/50',
       traitMax: 60,
       title: 'Rivers',
     },
@@ -74,7 +74,7 @@ export const TraitTable = (props: TraitProps) => {
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
         </span>
       </span>
-      <div className="w-full my-1 rounded-full bg-gray-100/20">
+      <div className="w-full my-1 rounded-full bg-gray-100/70">
         <div
           className={`h-3 ${getTrait()?.colour} shadow-inner rounded-full`}
           style={{

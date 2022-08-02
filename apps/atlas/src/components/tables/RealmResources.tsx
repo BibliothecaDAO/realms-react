@@ -121,7 +121,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const tableOptions = { is_striped: true };
   return (
     <div className="w-full">
-      <div className="flex justify-between p-2 font-semibold text-white uppercase">
+      {/* <div className="flex justify-between p-2 font-semibold text-white uppercase">
         {!props.hideLordsClaimable && (
           <span className="flex flex-col">
             <span> Claimable Lords:</span>
@@ -148,7 +148,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           </span>
         )}
         {props.header}
-      </div>
+      </div> */}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
     </div>
   );

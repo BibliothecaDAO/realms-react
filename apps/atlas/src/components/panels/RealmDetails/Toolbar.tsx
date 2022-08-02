@@ -34,7 +34,7 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     <div>
       <button
         onClick={props.onClick}
-        className={`md:px-6 px-4 py-2 uppercase rounded-b-xl group font-body tracking-wider hover:bg-opacity-90 transition-all duration-300 hover:py-4 font-semibold ${
+        className={`md:px-6 px-4 py-2 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-4 shadow-xl ${
           props.color
         }  ${props.selected ? 'bg-opacity-90 py-4' : 'bg-opacity-50'} `}
       >
@@ -74,7 +74,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
     {
       hotkey: HotKeys.Survey,
       click: () => props.onSetSubview('Survey'),
-      title: 'Survey',
+      title: 'Overview',
       icon: (
         <Helm className="self-center w-4 h-4 fill-current stroke-current" />
       ),
@@ -83,7 +83,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
     {
       hotkey: HotKeys.Army,
       click: () => props.onSetSubview('Army'),
-      title: props.isOwnerOfRealm ? 'Army' : 'Attack',
+      title: 'Military',
       icon: (
         <Helm className="self-center w-4 h-4 fill-current stroke-current" />
       ),
@@ -93,7 +93,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
     {
       hotkey: HotKeys.Resources,
       click: () => props.onSetSubview('Resources'),
-      title: 'Resources',
+      title: 'Economics',
       icon: (
         <Helm className="self-center w-4 h-4 fill-current stroke-current" />
       ),
@@ -121,11 +121,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   return (
     <div className={clsx(props.className, 'w-full')}>
-      <div
-        className={clsx(
-          'w-full flex space-x-1  md:space-x-4 md:pl-40 justify-center'
-        )}
-      >
+      <div className={clsx('w-full flex space-x-1  md:space-x-4 md:pl-44 ')}>
         {toolBarItems.map((a, i) => {
           return (
             <ToolbarItem
@@ -139,7 +135,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
             />
           );
         })}
-        {!props.isMobile && (
+        {/* {!props.isMobile && (
           <ToolbarItem
             color={props.color}
             selected={props.selected === 'PlayList'}
@@ -149,7 +145,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
             onClick={() => setShowPlaylist((prev) => !prev)}
             title="PlayList"
           />
-        )}
+        )} */}
       </div>
       {/* {showPlaylist && (
         <div className="flex w-full border-t bg-slate-700 border-t-slate-500 fill-white">
