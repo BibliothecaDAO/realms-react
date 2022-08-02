@@ -35,11 +35,13 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     useCombat();
 
   const [txSubmitted, setTxSubmitted] = useState(false);
+
   useEffect(() => {
     if (combatData) {
       setTxSubmitted(true);
     }
   }, [combatData]);
+
   return (
     <div>
       {(!txSubmitted || combatError) && (

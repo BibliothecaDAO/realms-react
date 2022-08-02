@@ -1,4 +1,5 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
@@ -117,7 +118,7 @@ export const SquadBuilder = (props: SquadProps) => {
       <div
         className={`${
           props.flipped ? 'order-last' : ''
-        } flex justify-around w-full my-2`}
+        } flex justify-around w-full flex-wrap my-2`}
       >
         {tier1()}
       </div>
@@ -209,6 +210,15 @@ export const SquadBuilder = (props: SquadProps) => {
         {selectedTroop && !selectedTroopIsEmpty && (
           <>
             <div className="p-2 text-white uppercase rounded bg-black/30">
+              <div className="mx-auto sm:w-1/2">
+                <Image
+                  src={`/realm-troops/${selectedTroop.troopName}.png`}
+                  alt=""
+                  width="200"
+                  height="200"
+                  layout={'responsive'}
+                />
+              </div>
               <div>Agility: {selectedTroop.agility}</div>
               <div>attack: {selectedTroop.attack}</div>
               <div>defense: {selectedTroop.defense}</div>

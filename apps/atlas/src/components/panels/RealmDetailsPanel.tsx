@@ -220,7 +220,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               height={320}
               layout={'responsive'}
             /> */}
-            <div className="absolute w-full p-10 overflow-x-scroll md:overflow-x-visible">
+            <div className="absolute w-full px-6 py-10 overflow-x-scroll sm:p-10 md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
                   {subview == 'Army' && <Army realm={realmData?.realm} />}

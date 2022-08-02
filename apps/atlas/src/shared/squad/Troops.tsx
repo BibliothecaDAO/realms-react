@@ -2,6 +2,7 @@
 import { Button, Table } from '@bibliotheca-dao/ui-lib/base';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { Popover } from '@headlessui/react';
+import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
@@ -58,9 +59,9 @@ export const TroopType = () => {
 
 const STYLES = {
   tier: {
-    1: 'w-10 h-16',
-    2: 'w-24 h-16',
-    3: 'w-48 h-20',
+    1: 'basis-1/12 md:mx-2 h-16',
+    2: 'basis-1/6 md:mx-4 h-20',
+    3: 'basis-1/4 mx-auto h-24',
   },
 } as const;
 
@@ -140,7 +141,10 @@ export const Troop = (props: TroopProps) => {
       ),
     };
   });
-
+  const style = {
+    '--image-url': `url('/realm-troops/${getTroop()?.troopName}.png')`,
+  } as React.CSSProperties;
+  console.log(style);
   return (
     <div
       role={'button'}
@@ -148,19 +152,24 @@ export const Troop = (props: TroopProps) => {
       onClick={() => props.onClick && props.onClick(props.troop)}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
+      style={style}
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white/30 rounded cursor-pointer shadow-inner flex`}
+      )} bg-white/30 bg-[image:var(--image-url)] object-cover bg-blend-overlay bg-contain bg-center bg-no-repeat rounded cursor-pointer bg-gradient-to-t shadow-inner flex`}
     >
-      <HealthBar
-        troopId={props.troop.troopId}
-        vitality={props.troop.vitality}
-      />
+      {getTroop()?.troopName && (
+        <div>
+          <HealthBar
+            troopId={props.troop.troopId}
+            vitality={props.troop.vitality}
+          />
 
-      <div className="mt-auto text-xs text-center text-black uppercase font-body">
-        {getTroop()?.troopName?.substring(0, 5)}
-      </div>
+          <div className="mt-auto text-xs text-center text-indigo-700 uppercase sm:text-sm text-clip font-body">
+            {getTroop()?.troopName}
+          </div>
+        </div>
+      )}
       {/* {!props.withPurchase && (
         <Button
           variant="secondary"
