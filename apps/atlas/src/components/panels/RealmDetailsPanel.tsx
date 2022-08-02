@@ -163,7 +163,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             realmId={realmId}
             hideSearchFilter
           />
-          <div className="absolute z-50 text-black bottom-10 right-10">
+          <div className="fixed z-50 text-black bottom-10 right-10">
             <div
               className={`w-40 h-40 rounded-full ${color} flex justify-center align-middle text-black bg-opacity-70 shadow-2xl`}
             >
