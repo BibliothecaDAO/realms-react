@@ -98,7 +98,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   return (
     <div className={clsx(props.className, 'w-full')}>
-      <div className={clsx('w-full flex  space-x-4 ml-40')}>
+      <div className={clsx('w-full flex  space-x-4 pl-40')}>
         {toolBarItems.map((a, i) => {
           return (
             <ToolbarItem

@@ -10,6 +10,10 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import {
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
+} from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -109,9 +113,45 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const color = `bg-order-${order.replace('the ', '').replace('the_', '')} 
     text-order-secondary-${order.replace('the ', '').replace('the_', '')}`;
 
+  const s =
+    'absolute self-center px-3 py-2 rounded-full font-semibold text-white fill-current stroke-current hover:bg-white/10 ';
+  const s_icons = 'w-5 h-5 text-white fill-current stroke-current';
+  const quickActions = [
+    {
+      icon: <ArrowNarrowRightIcon className={s_icons} />,
+      action: 's',
+      class: `-mr-28 ${s}`,
+    },
+    {
+      icon: <Helm className={s_icons} />,
+      action: 's',
+      class: `-mt-24 -mr-14 ${s}`,
+    },
+    {
+      icon: <Helm className={s_icons} />,
+      action: 's',
+      class: `-mb-24 -mr-14 ${s}`,
+    },
+    {
+      icon: <ArrowNarrowLeftIcon className={s_icons} />,
+      action: 's',
+      class: `-ml-28 ${s}`,
+    },
+    {
+      icon: <Helm className={s_icons} />,
+      action: 's',
+      class: `mt-24 -ml-14 ${s}`,
+    },
+    {
+      icon: <Helm className={s_icons} />,
+      action: 's',
+      class: `mb-24 -ml-14 ${s}`,
+    },
+  ];
+
   return (
     <>
-      <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
+      <div className="absolute z-20 grid w-full h-full overflow-auto bg-cover bg-hero">
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}
@@ -121,6 +161,20 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             realmId={realmId}
             hideSearchFilter
           />
+          <div className="absolute z-50 text-black bottom-10 right-10">
+            <div
+              className={`w-40 h-40 rounded-full ${color} flex justify-center align-middle text-black bg-opacity-70 shadow-2xl`}
+            >
+              {quickActions.map((a, i) => {
+                return (
+                  <button key={i} className={a.class}>
+                    {a.icon}
+                  </button>
+                );
+              })}
+              <div className="self-center w-8 h-8 border rounded-full"></div>
+            </div>
+          </div>
           <UserAgent>
             {({ mobile }) => (
               <RealmToolbar
@@ -165,7 +219,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               height={320}
               layout={'responsive'}
             /> */}
-            <div className="absolute top-0 w-full overflow-x-scroll md:overflow-x-visible">
+            <div className="absolute w-full p-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
                   {subview == 'Army' && <Army realm={realmData?.realm} />}
