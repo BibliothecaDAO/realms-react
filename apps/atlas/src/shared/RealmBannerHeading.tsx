@@ -11,13 +11,6 @@ interface HeaderProps {
   hideSearchFilter?: boolean;
 }
 
-// const realms = [
-//   { id: 1, name: 'smutmum' },
-//   { id: 2, name: 'rektum' },
-//   { id: 3, name: 'sdfascasdf' },
-//   { id: 4, name: 'shoshoshun' },
-// ];
-
 export const RealmBannerHeading = (props: HeaderProps) => {
   const realms = [{ id: props.realmId, name: props.title }];
   const [selectedRealm, setSelectedRealm] = useState(realms[0]);
@@ -32,15 +25,15 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-90 flex py-8 p-4 flex-wrap shadow bg-order-${props.order
+      className={` bg-opacity-90 flex py-4 md:py-8 p-4 flex-wrap shadow bg-order-${props.order
         .replace('the ', '')
         .replace('the_', '')} text-order-secondary-${props.order
         .replace('the ', '')
         .replace('the_', '')}`}
     >
-      <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase ">
+      <div className="flex justify-between w-full tracking-widest text-center uppercase ">
         <div
-          className={`absolute ml-12 md:ml-4 z-10 flex justify-center w-10 h-16 md:w-24 md:h-40 -mt-8 bg-white border-4 border-order-${props.order
+          className={`absolute ml-12 md:ml-4 z-10 flex justify-center w-10 h-16 md:w-24 md:h-40 -mt-8 bg-white border-4 hidden sm:inline-block border-order-${props.order
             .replace('the ', '')
             .replace('the_', '')} border-double rounded-b-full shadow-xl`}
         >
@@ -52,8 +45,8 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             order={props.order.toLowerCase()}
           />
         </div>
-        <div className="pl-40 text-left">
-          <p className="text-2xl font-lords md:text-6xl">
+        <div className="pl-16 text-left md:pl-40">
+          <p className="text-3xl font-lords md:text-6xl">
             {props.title || 'Loading'}
           </p>
         </div>

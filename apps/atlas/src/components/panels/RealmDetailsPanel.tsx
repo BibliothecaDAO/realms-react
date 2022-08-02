@@ -119,32 +119,32 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const quickActions = [
     {
       icon: <ArrowNarrowRightIcon className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? '' + 1),
       class: `-mr-28 ${s}`,
     },
     {
       icon: <Helm className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? ''),
       class: `-mt-24 -mr-14 ${s}`,
     },
     {
       icon: <Helm className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? ''),
       class: `-mb-24 -mr-14 ${s}`,
     },
     {
       icon: <ArrowNarrowLeftIcon className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? ''),
       class: `-ml-28 ${s}`,
     },
     {
       icon: <Helm className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? ''),
       class: `mt-24 -ml-14 ${s}`,
     },
     {
       icon: <Helm className={s_icons} />,
-      action: 's',
+      action: () => pushPage(realm?.realmId ?? ''),
       class: `mb-24 -ml-14 ${s}`,
     },
   ];
@@ -167,7 +167,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             >
               {quickActions.map((a, i) => {
                 return (
-                  <button key={i} className={a.class}>
+                  <button onClick={a.action} key={i} className={a.class}>
                     {a.icon}
                   </button>
                 );
