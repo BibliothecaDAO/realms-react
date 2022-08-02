@@ -32,7 +32,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-90 flex p-2 flex-wrap shadow bg-order-${props.order
+      className={`bg-opacity-90 flex py-8 p-4 flex-wrap shadow bg-order-${props.order
         .replace('the ', '')
         .replace('the_', '')} text-order-secondary-${props.order
         .replace('the ', '')
@@ -40,7 +40,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
     >
       <div className="flex justify-between w-full text-2xl tracking-widest text-center uppercase ">
         <div
-          className={`absolute ml-12 md:ml-4 z-10 flex justify-center w-10 h-16 md:w-12 md:h-20 -mt-4 bg-white border-4 border-order-${props.order
+          className={`absolute ml-12 md:ml-4 z-10 flex justify-center w-10 h-16 md:w-24 md:h-40 -mt-8 bg-white border-4 border-order-${props.order
             .replace('the ', '')
             .replace('the_', '')} border-double rounded-b-full shadow-xl`}
         >
@@ -48,12 +48,12 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             withTooltip
             containerClassName="my-4 flex flex-col items-center justify-center"
             className="self-center mt-auto text-white stroke-white fill-white"
-            size={'sm'}
+            size={'lg'}
             order={props.order.toLowerCase()}
           />
         </div>
-        <div className="self-center mx-auto">
-          <p className="text-2xl font-lords md:text-5xl">
+        <div className="pl-40 text-left">
+          <p className="text-2xl font-lords md:text-6xl">
             {props.title || 'Loading'}
           </p>
         </div>

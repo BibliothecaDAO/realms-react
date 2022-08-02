@@ -136,7 +136,7 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={() => togglePanelType('trade')} variant="primary">
+          <Button onClick={() => togglePanelType('bank')} variant="primary">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}

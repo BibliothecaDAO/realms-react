@@ -12,6 +12,8 @@ type ToolbarItemProps = {
   hotkey: string;
   onClick: () => void;
   triggerOnPress?: boolean;
+  color: string;
+  selected: boolean;
 };
 
 const ToolbarItem = (props: ToolbarItemProps) => {
@@ -29,17 +31,19 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     <div>
       <button
         onClick={props.onClick}
-        className="text-xs group text-gray-300 hover:text-white"
+        className={`px-10 py-2 uppercase rounded-b-xl group font-display tracking-wider hover:bg-opacity-90 transition-all duration-300 hover:py-4 ${
+          props.color
+        }  ${props.selected ? 'bg-opacity-90 py-4' : 'bg-opacity-50'} `}
       >
+        {props.title}
         <span
           className={clsx(
-            'px-1 transition-colors py-0.5 group-hover:bg-white group-hover:text-black uppercase border',
+            'px-1 transition-colors uppercase opacity-30 ',
             pressed && 'bg-white text-black'
           )}
         >
           {props.hotkey}
         </span>{' '}
-        {props.title}
       </button>{' '}
       {props.children}
     </div>
@@ -53,59 +57,64 @@ type ToolbarProps = {
   onNavigateIntent: (direction: 'previous' | 'next') => void;
   onSetSubview: (string: Subview) => void;
   isMobile: boolean;
+  color: string;
 };
 
 const RealmToolbar: React.FC<ToolbarProps> = (props) => {
   const [showPlaylist, setShowPlaylist] = useState(props.isMobile);
 
+  const toolBarItems = [
+    {
+      hotkey: HotKeys.Army,
+      click: () => props.onSetSubview('Army'),
+      title: props.isOwnerOfRealm ? 'Army' : 'Attack',
+      tabName: 'Army',
+    },
+    {
+      hotkey: HotKeys.Survey,
+      click: () => props.onSetSubview('Survey'),
+      title: 'Survey',
+      tabName: 'Survey',
+    },
+    {
+      hotkey: HotKeys.Goblins,
+      click: () => props.onSetSubview('Goblins'),
+      title: 'Goblins',
+      tabName: 'Goblins',
+    },
+    {
+      hotkey: HotKeys.History,
+      click: () => props.onSetSubview('History'),
+      title: 'History',
+      tabName: 'History',
+    },
+    {
+      hotkey: HotKeys.Lore,
+      click: () => props.onSetSubview('Lore'),
+      title: 'Lore',
+      tabName: 'Lore',
+    },
+  ];
+
   return (
     <div className={clsx(props.className, 'w-full')}>
-      <div
-        className={clsx('w-full flex justify-around bg-slate-700 py-2 gap-2')}
-      >
-        <ToolbarItem
-          hotkey={HotKeys.Army}
-          onClick={() => props.onSetSubview('Army')}
-          title={props.isOwnerOfRealm ? 'Army' : 'Attack'}
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.Survey}
-          onClick={() => props.onSetSubview('Survey')}
-          title="Survey"
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.Resources}
-          onClick={() => props.onSetSubview('Resources')}
-          title="Resources"
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.Food}
-          onClick={() => props.onSetSubview('Food')}
-          title="Food"
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.Buildings}
-          onClick={() => props.onSetSubview('Buildings')}
-          title="Buildings"
-        ></ToolbarItem>
-
-        <ToolbarItem
-          hotkey={HotKeys.Goblins}
-          onClick={() => props.onSetSubview('Goblins')}
-          title="Goblins"
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.History}
-          onClick={() => props.onSetSubview('History')}
-          title="History"
-        ></ToolbarItem>
-        <ToolbarItem
-          hotkey={HotKeys.Lore}
-          onClick={() => props.onSetSubview('Lore')}
-          title="Lore"
-        ></ToolbarItem>
+      <div className={clsx('w-full flex  space-x-4 ml-40')}>
+        {toolBarItems.map((a, i) => {
+          return (
+            <ToolbarItem
+              key={i}
+              selected={props.selected === a.tabName}
+              color={props.color}
+              hotkey={a.hotkey}
+              onClick={a.click}
+              title={a.title}
+            />
+          );
+        })}
         {!props.isMobile && (
           <ToolbarItem
+            color={props.color}
+            selected={props.selected === 'PlayList'}
             hotkey="p"
             triggerOnPress
             onClick={() => setShowPlaylist((prev) => !prev)}
@@ -114,15 +123,15 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
         )}
       </div>
       {showPlaylist && (
-        <div className="w-full bg-slate-700 border-t border-t-slate-500 fill-white flex">
+        <div className="flex w-full border-t bg-slate-700 border-t-slate-500 fill-white">
           <button onClick={() => props.onNavigateIntent('previous')}>
-            <ChevronLeftIcon className="w-6 p-1 inline-block" />
+            <ChevronLeftIcon className="inline-block w-6 p-1" />
             Prev{' '}
           </button>
           <div className="flex-1 text-center">All Realms</div>
           <button onClick={() => props.onNavigateIntent('next')}>
             Next
-            <ChevronRightIcon className="w-6 p-1 inline-block" />
+            <ChevronRightIcon className="inline-block w-6 p-1" />
           </button>
         </div>
       )}

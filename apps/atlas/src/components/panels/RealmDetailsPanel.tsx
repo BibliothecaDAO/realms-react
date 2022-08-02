@@ -104,10 +104,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     }
   }, [leftPressed, rightPressed]);
 
+  const order = realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? '';
+
+  const color = `bg-order-${order.replace('the ', '').replace('the_', '')} 
+    text-order-secondary-${order.replace('the ', '').replace('the_', '')}`;
+
   return (
     <>
       <div className="absolute z-20 grid w-full h-full grid-cols-6 gap-8 overflow-auto bg-cover bg-hero">
-        <div className="relative col-span-6 md:col-start-1 md:col-end-5">
+        <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}
             key={realm?.realmId ?? ''}
@@ -116,15 +121,50 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             realmId={realmId}
             hideSearchFilter
           />
+          <UserAgent>
+            {({ mobile }) => (
+              <RealmToolbar
+                selected={subview}
+                isOwnerOfRealm={isOwner}
+                isMobile={mobile}
+                color={color}
+                onSetSubview={(s) => {
+                  router.push(
+                    {
+                      pathname: `realm/${realm?.realmId}`,
+                      query: {
+                        tab: s,
+                      },
+                    },
+                    undefined,
+                    { shallow: true }
+                  );
+                  set(s);
+                }}
+                className=""
+                onNavigateIntent={(dir) => {
+                  if (!realm) {
+                    return;
+                  }
+                  if (dir == 'previous') {
+                    pushPage(realm.realmId - 1);
+                  }
+                  if (dir == 'next') {
+                    pushPage(realm.realmId + 1);
+                  }
+                }}
+              />
+            )}
+          </UserAgent>
           <div className="relative w-full">
-            <Image
+            {/* <Image
               src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
               alt="map"
               className="w-full -scale-x-100"
               width={500}
               height={320}
               layout={'responsive'}
-            />
+            /> */}
             <div className="absolute top-0 w-full overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
@@ -261,40 +301,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         */}
         </div>
       </div>
-      <UserAgent>
-        {({ mobile }) => (
-          <RealmToolbar
-            selected={subview}
-            isOwnerOfRealm={isOwner}
-            isMobile={mobile}
-            onSetSubview={(s) => {
-              router.push(
-                {
-                  pathname: `realm/${realm?.realmId}`,
-                  query: {
-                    tab: s,
-                  },
-                },
-                undefined,
-                { shallow: true }
-              );
-              set(s);
-            }}
-            className="absolute bottom-0 z-20"
-            onNavigateIntent={(dir) => {
-              if (!realm) {
-                return;
-              }
-              if (dir == 'previous') {
-                pushPage(realm.realmId - 1);
-              }
-              if (dir == 'next') {
-                pushPage(realm.realmId + 1);
-              }
-            }}
-          />
-        )}
-      </UserAgent>
     </>
   );
 }
