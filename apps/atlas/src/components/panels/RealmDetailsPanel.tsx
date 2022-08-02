@@ -87,6 +87,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   }, [subview]);
 
   const pushPage = (value) => {
+    console.log(value);
     if (!loading) {
       router.push('/realm/' + value, undefined, { shallow: true });
     }
@@ -119,7 +120,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const quickActions = [
     {
       icon: <ArrowNarrowRightIcon className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? '' + 1),
+      action: () => pushPage(realm ? realm?.realmId + 1 : ''),
       class: `-mr-28 ${s}`,
     },
     {
@@ -134,7 +135,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     },
     {
       icon: <ArrowNarrowLeftIcon className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? ''),
+      action: () => pushPage(realm ? realm?.realmId - 1 : ''),
       class: `-ml-28 ${s}`,
     },
     {
@@ -151,7 +152,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   return (
     <>
-      <div className="absolute z-20 grid w-full h-full overflow-auto bg-cover bg-hero">
+      <div className="absolute z-20 grid w-full h-full overflow-auto bg-cover">
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}

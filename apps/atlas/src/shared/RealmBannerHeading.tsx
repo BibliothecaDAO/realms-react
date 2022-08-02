@@ -33,7 +33,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
     >
       <div className="flex justify-between w-full tracking-widest text-center uppercase ">
         <div
-          className={`absolute ml-12 md:ml-4 z-10 flex justify-center w-10 h-16 md:w-24 md:h-40 -mt-8 bg-white border-4 hidden sm:inline-block border-order-${props.order
+          className={`absolute ml-12 md:ml-4 z-10 justify-center w-10 h-16 md:w-24 md:h-40 -mt-8 bg-white border-4 hidden sm:flex border-order-${props.order
             .replace('the ', '')
             .replace('the_', '')} border-double rounded-b-full shadow-xl`}
         >

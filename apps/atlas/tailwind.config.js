@@ -105,7 +105,7 @@ module.exports = {
       },
       backgroundImage: {
         texture: "url('/texture-button.png')",
-        hero: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/cover.jpg')",
+        hero: "linear-gradient(0deg, rgba(184,184,184,0.1), rgba(184,184,184,0.75)), url('/createOrDestroy-desktop.webp')",
         bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/bank.jpg')",
         realm:
           "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/realm.jpg')",

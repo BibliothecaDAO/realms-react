@@ -34,9 +34,9 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     <div>
       <button
         onClick={props.onClick}
-        className={`md:px-10 px-4 py-2 uppercase rounded-b-xl group font-display tracking-wider hover:bg-opacity-90 transition-all duration-300 hover:py-4 ${
+        className={`md:px-6 px-4 py-2 uppercase rounded-b-xl group font-body tracking-wider hover:bg-opacity-90 transition-all duration-300 hover:py-4 font-semibold ${
           props.color
-        }  ${props.selected ? 'bg-opacity-90 py-4  -mt-1' : 'bg-opacity-50'} `}
+        }  ${props.selected ? 'bg-opacity-90 py-4' : 'bg-opacity-50'} `}
       >
         <span className="flex">
           {' '}
@@ -72,38 +72,49 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   const toolBarItems = [
     {
-      hotkey: HotKeys.Army,
-      click: () => props.onSetSubview('Army'),
-      title: props.isOwnerOfRealm ? 'Army' : 'Attack',
-      icon: <Helm className="w-5 h-5 fill-current stroke-current" />,
-      tabName: 'Army',
-    },
-    {
       hotkey: HotKeys.Survey,
       click: () => props.onSetSubview('Survey'),
       title: 'Survey',
-      icon: <Helm className="w-5 h-5 fill-current stroke-current" />,
+      icon: (
+        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+      ),
       tabName: 'Survey',
     },
     {
-      hotkey: HotKeys.Goblins,
-      click: () => props.onSetSubview('Goblins'),
-      title: 'Goblins',
-      icon: <Helm className="w-5 h-5 fill-current stroke-current" />,
-      tabName: 'Goblins',
+      hotkey: HotKeys.Army,
+      click: () => props.onSetSubview('Army'),
+      title: props.isOwnerOfRealm ? 'Army' : 'Attack',
+      icon: (
+        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+      ),
+      tabName: 'Army',
+    },
+
+    {
+      hotkey: HotKeys.Resources,
+      click: () => props.onSetSubview('Resources'),
+      title: 'Resources',
+      icon: (
+        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+      ),
+      tabName: 'Resources',
     },
     {
       hotkey: HotKeys.History,
       click: () => props.onSetSubview('History'),
       title: 'History',
-      icon: <Helm className="w-5 h-5 fill-current stroke-current" />,
+      icon: (
+        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+      ),
       tabName: 'History',
     },
     {
       hotkey: HotKeys.Lore,
       click: () => props.onSetSubview('Lore'),
       title: 'Lore',
-      icon: <Helm className="w-5 h-5 fill-current stroke-current" />,
+      icon: (
+        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+      ),
       tabName: 'Lore',
     },
   ];
