@@ -1,8 +1,19 @@
+import { Spinner } from '@bibliotheca-dao/ui-lib';
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { useGetRealmCombatResultQuery } from '@/generated/graphql';
+import useTxCallback from '@/hooks/useTxCallback';
 
 export const RaidResults = ({ defendId, tx }) => {
+  const { tx: txCallback, loading } = useTxCallback(tx, (status) => {
+    // Update state changes?
+    console.log(loading);
+    console.log(status);
+    console.log(txCallback);
+    if (status !== 'REJECTED') {
+      console.log('rejected');
+    }
+  });
   // Sample combat result query
   const {
     data: combatResult,
@@ -22,10 +33,9 @@ export const RaidResults = ({ defendId, tx }) => {
     return () => {
       stopPolling();
     };
-  }, [combatResult]);
+  }, [combatResult, startPolling, stopPolling]);
 
   const getCombatSteps = () => {
-    console.log(combatResult?.getRealmCombatResult);
     return combatResult?.getRealmCombatResult?.history
       ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
           return a.eventType == 'combat_step';
@@ -34,12 +44,22 @@ export const RaidResults = ({ defendId, tx }) => {
   };
 
   return (
-    <div className="relative flex flex-wrap px-4 bg-gray/800">
-      {getCombatSteps().map((a, index) => {
-        return (
-          <BattleReportItem key={index} realm={'1'} hitPoints={a.hitPoints} />
-        );
-      })}
+    <div className="relative flex flex-wrap px-40">
+      {combatResult?.getRealmCombatResult ? (
+        <div>
+          {getCombatSteps().map((a, index) => {
+            return (
+              <BattleReportItem
+                key={index}
+                realm={'1'}
+                hitPoints={a.hitPoints}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <Spinner size="md" scheme="white" variant="bricks" />
+      )}
     </div>
   );
 };

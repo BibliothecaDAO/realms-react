@@ -38,6 +38,7 @@ const useCombat = () => {
 
   const {
     data: combatData,
+    error,
     loading: combatLoading,
     invoke: combatInvoke,
   } = useStarknetInvoke({
@@ -51,6 +52,7 @@ const useCombat = () => {
         args: [
           bnToUint256(toBN(args.attackingRealmId)),
           bnToUint256(toBN(args.defendingRealmId)),
+          1, // Remove on upgrade to combat v2
         ],
         metadata: {
           action: Entrypoints.initiateCombat,
@@ -58,6 +60,8 @@ const useCombat = () => {
         },
       });
     },
+    combatLoading,
+    combatError: error,
     combatData: combatData,
   };
 };
