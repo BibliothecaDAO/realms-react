@@ -99,10 +99,10 @@ export const SquadBuilder = (props: SquadProps) => {
   };
 
   const tier1 = () => {
-    return fillGap(1, 16);
+    return fillGap(1, 9);
   };
   const tier2 = () => {
-    return fillGap(2, 8);
+    return fillGap(2, 5);
   };
   const tier3 = () => {
     return fillGap(3, 1);
@@ -114,19 +114,17 @@ export const SquadBuilder = (props: SquadProps) => {
     selectedTroop && selectedTroop.troopId == EmptyTroopId;
 
   return (
-    <div className="flex flex-col w-full">
-      <div
-        className={`${
-          props.flipped ? 'order-last' : ''
-        } flex justify-around w-full flex-wrap my-2`}
-      >
+    <div className="flex flex-col w-full mt-4">
+      <div className={`${props.flipped ? 'order-last' : ''} flex gap-2 my-2`}>
         {tier1()}
       </div>
-      <div className="flex justify-around w-full my-2 ">{tier2()}</div>
+      <div className="flex justify-around w-full gap-3 mx-auto my-2 sm:w-3/4">
+        {tier2()}
+      </div>
       <div
         className={`${
           props.flipped ? 'order-first' : ''
-        } flex justify-around w-full my-2`}
+        } flex justify-around w-full sm:w-1/2 mx-auto my-2`}
       >
         {tier3()}
       </div>

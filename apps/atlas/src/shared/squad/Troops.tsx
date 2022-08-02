@@ -59,9 +59,9 @@ export const TroopType = () => {
 
 const STYLES = {
   tier: {
-    1: 'basis-1/12 md:mx-2 h-16',
-    2: 'basis-1/6 md:mx-4 h-20',
-    3: 'basis-1/4 mx-auto h-24',
+    1: 'h-16',
+    2: 'h-20',
+    3: 'mx-auto h-24',
   },
 } as const;
 
@@ -156,7 +156,7 @@ export const Troop = (props: TroopProps) => {
       className={`${twMerge(
         STYLES.tier[props.troop.tier],
         props.className
-      )} bg-white/30 bg-[image:var(--image-url)] object-cover bg-blend-overlay bg-contain bg-center bg-no-repeat rounded cursor-pointer bg-gradient-to-t shadow-inner flex`}
+      )} bg-white/30 w-full bg-[image:var(--image-url)] object-cover bg-blend-overlay bg-contain bg-center bg-no-repeat rounded cursor-pointer bg-gradient-to-t shadow-inner flex`}
     >
       {getTroop()?.troopName && (
         <div>
