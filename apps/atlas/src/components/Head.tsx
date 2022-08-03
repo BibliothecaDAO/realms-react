@@ -15,6 +15,7 @@ export function Head(): ReactElement {
     <HTMLHead>
       {/* Primary Meta Tags */}
       <title>{meta.title}</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
       <meta name="title" content={meta.description} />
       <meta name="description" content={meta.description} />
 

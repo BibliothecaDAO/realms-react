@@ -38,7 +38,7 @@ export const ResourceSwapSideBar = (props: Props) => {
         component: <SwapResources key="1" />,
       },
       {
-        label: 'LP Merchant',
+        label: 'LP',
         component: <LpMerchant />,
       },
       {
@@ -50,7 +50,7 @@ export const ResourceSwapSideBar = (props: Props) => {
   );
   return (
     <BaseSideBar open={isBankSelected}>
-      <div className="top-0 bottom-0 right-0 w-full h-auto p-6 pt-10 lg:w-5/12 rounded-r-2xl">
+      <div className="top-0 bottom-0 right-0 w-full h-auto p-2 pt-10 md:p-6 lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-between w-full">
           <Button
             variant="secondary"
@@ -62,7 +62,7 @@ export const ResourceSwapSideBar = (props: Props) => {
           </Button>
         </div>
         <div>
-          <h2 className="my-8 text-center">Resource Emporium</h2>
+          <h2 className="mt-8 mb-2 text-center">Swap</h2>
         </div>
         <div>
           {!isLordsApprovedForExchange && (
@@ -94,15 +94,12 @@ export const ResourceSwapSideBar = (props: Props) => {
           <Tabs className="h-full" variant="primary">
             <Tabs.List className="">
               {tabs.map((tab) => (
-                <Tabs.Tab
-                  key={tab.label}
-                  className="font-semibold tracking-widest uppercase"
-                >
+                <Tabs.Tab key={tab.label} className="">
                   {tab.label}
                 </Tabs.Tab>
               ))}
             </Tabs.List>
-            <Tabs.Panels className="h-full p-4 rounded shadow-inner bg-black/10">
+            <Tabs.Panels className="h-full p-2 rounded shadow-inner bg-black/10">
               {tabs.map((tab) => (
                 <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
               ))}

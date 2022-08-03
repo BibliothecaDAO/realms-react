@@ -10,7 +10,7 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-lg font-semibold md:text-md font-body uppercase tracking-widest transition-all duration-150  rounded hover:bg-black/10  hover:shadow text-gray-700',
+      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg font-semibold md:text-md font-body uppercase tracking-widest transition-all duration-150  rounded hover:bg-black/10  hover:shadow text-gray-700',
       active:
         ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-white ring-opacity-20 text-white bg-gray-800 shadow',
       inactive: 'text-white border-transparent',
@@ -19,11 +19,11 @@ export const VARIANTS = {
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body  uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded   hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200',
+      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded   hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200',
       active: 'bg-stone-500  shadow-md text-white border',
       inactive: 'bg-transparent text-gray-200',
     },
-    tabList: 'flex py-3 space-x-2',
+    tabList: 'flex py-2 space-x-2',
   },
 };
 

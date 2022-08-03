@@ -1,4 +1,5 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { formatEther } from '@ethersproject/units';
 import Link from 'next/link';
@@ -41,7 +42,7 @@ export function BankPanel(): ReactElement {
     return {
       resource: (
         <div className="mr-4">
-          <div className="flex mb-2 text-xl">
+          <div className="flex mb-2 sm:text-xl">
             <ResourceIcon
               resource={resource?.resourceName?.replace(' ', '') || ''}
               size="sm"
@@ -51,7 +52,7 @@ export function BankPanel(): ReactElement {
             </span>{' '}
           </div>
 
-          <span className="text-sm tracking-widest uppercase opacity-60">
+          <span className="text-xs tracking-widest uppercase sm:text-sm opacity-60">
             balance: {(+formatEther(resource.amount)).toLocaleString()}
           </span>
         </div>
@@ -59,21 +60,23 @@ export function BankPanel(): ReactElement {
       // balance: (+formatEther(resource.amount)).toLocaleString(),
       // output: 0,
       rate: (
-        <span className="text-lg">
+        <span className="text-xs sm:text-lg">
           1 = {(+formatEther(resource.rate)).toFixed(4)}{' '}
-          <span className="text-sm uppercase opacity-50">
+          <span className="uppercase opacity-50 sm:text-sm">
             $LORDS / {resource?.resourceName}
           </span>{' '}
           <br />
-          <span className="text-sm">{RateChange(resource.percentChange)}</span>
+          <span className="text-xs sm:text-sm">
+            {RateChange(resource.percentChange)}
+          </span>
         </span>
       ),
       // change: ,
 
       lp_balance: (
-        <span className="text-lg uppercase">
+        <span className="text-xs uppercase sm:text-lg">
           {(+formatEther(resource.lp)).toLocaleString()} <br />
-          <span className="text-sm opacity-60">
+          <span className="text-xs sm:text-sm opacity-60">
             {' '}
             LORDS: {(+formatEther(
               resource.currencyAmount
@@ -113,14 +116,6 @@ export function BankPanel(): ReactElement {
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="w-full p-10 pt-20 bg-black/70">
-          <Button
-            variant="secondary"
-            size="xs"
-            className="ml-auto"
-            onClick={() => toggleMenuType('bank')}
-          >
-            <Close />
-          </Button>
           <h2 className="w-full">The Resource Emporium</h2>
           <p className="text-2xl opacity-70">
             Trade your resources on the market.
@@ -128,6 +123,16 @@ export function BankPanel(): ReactElement {
           {/* <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">
             Your Lords Balance: {(+formatEther(lordsBalance)).toFixed(2)}
           </h4> */}
+          <div className="flex">
+            <Button
+              variant="secondary"
+              size="xs"
+              className="ml-auto"
+              onClick={() => toggleMenuType('bank')}
+            >
+              <ChevronRight />
+            </Button>
+          </div>
         </div>
       </div>
 

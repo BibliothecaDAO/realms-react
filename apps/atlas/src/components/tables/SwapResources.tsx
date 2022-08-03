@@ -73,7 +73,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             label={props.resource?.resourceName ?? ''}
             variant={props.resource?.resourceName ? 'default' : 'placeholder'}
             icon={
-              <ChevronRight className="w-5 h-5 text-white transform -rotate-90" />
+              <ChevronRight className="w-5 h-5 text-white transform -rotate-90 " />
             }
             labelIcon={
               <ResourceIcon
@@ -134,7 +134,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               {/* <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" /> */}
             </div>
           </div>
-          <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-60 border-white/20">
+          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
             balance: {(+formatEther(props.resource.amount)).toLocaleString()}
           </div>
         </div>
