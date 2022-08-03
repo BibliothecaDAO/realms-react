@@ -322,7 +322,7 @@ function MapModule() {
       transitionInterpolator: new FlyToInterpolator(),
     });
   }, [coordinates]);
-  const [loaded, setLoaded] = useState<boolean>();
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   return (
     <DeckGL
@@ -332,7 +332,7 @@ function MapModule() {
       pickingRadius={25}
       viewState={viewState}
       controller={true}
-      onLoad={() => setLoaded(true)}
+      // onLoad={() => setLoaded(true)}
       onViewStateChange={(e) => setViewState(e.viewState)}
       layers={[
         realmsLayer,
@@ -342,19 +342,22 @@ function MapModule() {
         gaBagLayer,
       ]}
     >
-      {loaded ? (
-        <Map
-          attributionControl={false}
-          mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-          mapboxAccessToken={
-            'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-          }
-        />
-      ) : (
-        <div className={'w-full h-full flex justify-center'}>
-          <h1 className={'self-center'}>Loading Atlas...</h1>
+      {!loaded ? (
+        <div className="flex justify-center w-full h-full bg-gray-1000">
+          {' '}
+          <h1 className="self-center">loading Atlas...</h1>{' '}
         </div>
+      ) : (
+        ''
       )}
+      <Map
+        attributionControl={false}
+        onLoad={() => setLoaded(true)}
+        mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
+        mapboxAccessToken={
+          'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
+        }
+      />
     </DeckGL>
   );
 }
