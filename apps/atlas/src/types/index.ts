@@ -176,12 +176,12 @@ export interface GAsData {
 }
 
 export type RealmFeatures = {
-  type: string;
+  type?: string;
   geometry: RealmFeatureGeometry;
   properties: RealmFeatureProperties;
 };
 export type RealmFeatureGeometry = {
-  type: string;
+  type?: string;
   coordinates: number[];
 };
 export type RealmFeatureProperties = {

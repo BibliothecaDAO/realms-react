@@ -8,12 +8,12 @@ import React, {
   useState,
 } from 'react';
 import type { BackgroundOptions } from '@/components/map/ArtBackground';
-import { useBreakpoint } from '@/hooks/useBreakPoint';
 
-import crypts from '../geodata/crypts_all.json';
-import ga_bags from '../geodata/ga_bags.json';
-import loot_bags from '../geodata/loot_bags.json';
-import realms from '../geodata/realms.json';
+import crypts from '@/geodata/crypts.json';
+import ga_bags from '@/geodata/ga.json';
+import loot_bags from '@/geodata/loot.json';
+import realms from '@/geodata/realms.json';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType =
@@ -50,9 +50,7 @@ export const AssetFilters: AssetFilter[] = [
   {
     value: 'ga',
     name: 'GA',
-    maxId: Math.max(
-      ...ga_bags.features.map((feature) => parseInt(feature.properties.ga_id))
-    ),
+    maxId: Math.max(...ga_bags.features.map((feature) => parseInt(feature.id))),
   },
 ];
 
@@ -111,23 +109,19 @@ function useCoordinates() {
     let asset;
     switch (assetType) {
       case 'realm':
-        asset = realms.features.filter(
-          (a: any) => a.properties.realm_idx === parseInt(assetId)
-        );
+        asset = realms.features.filter((a: any) => a.id === parseInt(assetId));
         break;
       case 'crypt':
-        asset = crypts.features.filter(
-          (a: any) => a.properties.tokenId === parseInt(assetId)
-        );
+        asset = crypts.features.filter((a: any) => a.id === parseInt(assetId));
         break;
       case 'loot':
         asset = loot_bags.features.filter(
-          (a: any) => a.properties.bag_id === parseInt(assetId)
+          (a: any) => a.id === parseInt(assetId)
         );
         break;
       case 'ga':
         asset = ga_bags.features.filter(
-          (a: any) => parseInt(a.properties.ga_id) === parseInt(assetId)
+          (a: any) => parseInt(a.id) === parseInt(assetId)
         );
         break;
     }
