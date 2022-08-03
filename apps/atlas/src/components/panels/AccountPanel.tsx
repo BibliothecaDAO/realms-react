@@ -223,47 +223,55 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="w-full p-10 py-10 bg-black/80 rounded-b-3xl">
-        <div className="flex justify-between">
+      <div className="w-full p-10 py-10 border-b-4 rounded-br-full bg-black/40 border-white/70">
+        <div className="flex">
+          <div className="relative">
+            <img
+              className="w-48 h-48 mr-10 border-2 rounded-full shadow-2xl border-white/20"
+              src="/keyImage-tablet.png"
+              alt=""
+            />
+            <div className="absolute px-2 text-xl font-semibold border-2 rounded-full bg-black/60 border-white/70 bottom-10 right-10">
+              1
+            </div>
+          </div>
+
           <div className="flex flex-wrap">
             <div className="flex">
               {' '}
               <Crown className={`stroke-current w-12 h-12 self-center`} />
               {account && (
-                <span className="self-center ml-4 text-2xl text-center">
+                <span className="self-center ml-4 text-xl font-semibold text-center">
                   {shortenAddressWidth(account, 6)}
                 </span>
               )}
             </div>
 
-            <h2 className="w-full sm:text-6xl">Ser, Your Vast Empire</h2>
+            <h2 className="w-full sm:text-5xl">Ser, Your Vast Empire</h2>
+            <div>
+              <Button
+                variant="primary"
+                size="xs"
+                onClick={() => {
+                  txQueue
+                    .executeMulticall(
+                      approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+                    )
+                    .catch((err) => {
+                      // TODO: handle error
+                      console.log(err);
+                    });
+                }}
+              >
+                Approve All game Contracts
+              </Button>
+            </div>
           </div>
 
           {/* <p className="mt-2 sm:text-2xl">
             This is your dashboard for all things happening on your lands.
           </p> */}
-          <img
-            className="w-48 h-48 rounded-full shadow-2xl"
-            src="/keyImage-tablet.png"
-            alt=""
-          />
         </div>
-        <Button
-          variant="primary"
-          size="xs"
-          onClick={() => {
-            txQueue
-              .executeMulticall(
-                approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-              )
-              .catch((err) => {
-                // TODO: handle error
-                console.log(err);
-              });
-          }}
-        >
-          Approve All game Contracts
-        </Button>
       </div>
       <div className="grid grid-cols-12 gap-6 p-3 sm:p-6">
         <Card className="col-start-1 col-end-3">
