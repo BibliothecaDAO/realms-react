@@ -38,9 +38,9 @@ import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
-import crypts from '@/geodata/crypts_all.json';
-import ga_bags from '@/geodata/ga_bags.json';
-import loot_bags from '@/geodata/loot_bags.json';
+import crypts from '@/geodata/crypts.json';
+import ga_bags from '@/geodata/ga.json';
+import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
 import { useAtlasContext, AtlasProvider } from '@/hooks/useAtlasContext';
 
@@ -67,6 +67,10 @@ export default function AtlasPage() {
 }
 
 function AtlasMain() {
+  const callback = (data) => {
+    console.log('profiling');
+    console.log(data);
+  };
   return (
     <div className="relative w-full h-full">
       <UserAgent>
@@ -172,11 +176,11 @@ function MapModule() {
   const { openDetails, selectedId, coordinates } = useAtlasContext();
   const [resource] = useState<Array<string>>([]);
 
-  const filteredData = () => {
+  /* const filteredData = () => {
     return realms.features.filter((a: RealmFeatures) =>
       a.properties.resources.some((b: string) => resource.includes(b))
     );
-  };
+  }; */
 
   const [viewState, setViewState] = useState({
     longitude: 0,
@@ -201,9 +205,8 @@ function MapModule() {
     pickable: true,
     opacity: 1,
     visible: viewState.zoom < ItemViewLevel ? false : true,
-    getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: (d: any) =>
-      d.properties.tokenId === parseInt(selectedId) ? 4000 : 100,
+    getPosition: (d: any) => d.coordinates,
+    getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0, 0],
@@ -212,7 +215,7 @@ function MapModule() {
       getVisible: viewState,
     },
     onClick: (info: any) => {
-      openDetails('crypt', info.object.properties.tokenId);
+      openDetails('crypt', info.object.id);
     },
   });
 
@@ -225,9 +228,8 @@ function MapModule() {
     pickable: true,
     opacity: 1,
     visible: viewState.zoom < ItemViewLevel ? false : true,
-    getPosition: (d: any) => d.geometry.coordinates,
-    getRadius: (d: any) =>
-      d.properties.realm_idx === parseInt(selectedId) ? 4000 : 1,
+    getPosition: (d: any) => d.coordinates,
+    getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 1),
     getElevation: 10000,
     lineWidthMinPixels: 1,
     getFillColor: [0, 0, 0, 0],
@@ -236,7 +238,7 @@ function MapModule() {
       getVisible: viewState,
     },
     onClick: (info: any) => {
-      openDetails('realm', info.object.properties.realm_idx);
+      openDetails('realm', info.object.id);
     },
   });
 
@@ -249,7 +251,7 @@ function MapModule() {
     pickable: true,
     visible: viewState.zoom < ItemViewLevel ? false : true,
     opacity: 1,
-    getPosition: (d: any) => d.geometry.coordinates,
+    getPosition: (d: any) => d.coordinates,
     getRadius: 1,
     getElevation: 10000,
     lineWidthMinPixels: 1,
@@ -259,7 +261,7 @@ function MapModule() {
       getVisible: viewState,
     },
     onClick: (info: any) => {
-      openDetails('loot', info.object.properties.bag_id);
+      openDetails('loot', info.object.id);
     },
   });
 
@@ -272,7 +274,7 @@ function MapModule() {
     pickable: true,
     visible: viewState.zoom < ItemViewLevel ? false : true,
     opacity: 1,
-    getPosition: (d: any) => d.geometry.coordinates,
+    getPosition: (d: any) => d.coordinates,
     getRadius: 1,
     getElevation: 10000,
     lineWidthMinPixels: 1,
@@ -282,7 +284,7 @@ function MapModule() {
       getVisible: viewState,
     },
     onClick: (info: any) => {
-      openDetails('ga', info.object.properties.ga_id);
+      openDetails('ga', info.object.id);
     },
   });
 
@@ -290,7 +292,7 @@ function MapModule() {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
 
-  const resourceLayer = new IconLayer({
+  /* const resourceLayer = new IconLayer({
     id: 'icon-layer',
     data: filteredData(),
     pickable: false,
@@ -299,10 +301,10 @@ function MapModule() {
     iconMapping: iconMapping,
     getIcon: () => 'marker',
     sizeScale: 5,
-    getPosition: (d: any) => d.geometry.coordinates,
+    getPosition: (d: any) => d.coordinates,
     getSize: () => 5,
     getColor: () => [255, 255, 255],
-  });
+  }); */
 
   useEffect(() => {
     if (!coordinates) {
@@ -334,13 +336,7 @@ function MapModule() {
       controller={true}
       // onLoad={() => setLoaded(true)}
       onViewStateChange={(e) => setViewState(e.viewState)}
-      layers={[
-        realmsLayer,
-        resourceLayer,
-        cryptsLayer,
-        lootBagLayer,
-        gaBagLayer,
-      ]}
+      layers={[realmsLayer, cryptsLayer, lootBagLayer, gaBagLayer]}
     >
       {!loaded ? (
         <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1000">

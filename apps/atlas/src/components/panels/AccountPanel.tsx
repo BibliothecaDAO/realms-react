@@ -1,54 +1,37 @@
 import {
   Button,
-  IconButton,
   ResourceIcon,
   Card,
   CardBody,
-  CardText,
   CardTitle,
   CardStats,
   Donut,
-  Table,
 } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
-import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
+
 import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
-import { BigNumber } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ENQUEUED_STATUS } from '@/constants/index';
-import { useJourneyContext } from '@/context/JourneyContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import {
-  useGetRealmHistoryQuery,
-  useGetAccountQuery,
-} from '@/generated/graphql';
-import {
-  getApproveAllGameContracts,
-  useApproveLordsForBuilding,
-} from '@/hooks/settling/useApprovals';
+import { useGetAccountQuery } from '@/generated/graphql';
+import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { getAccountHex } from '@/shared/Getters/Realm';
-import { shortenAddress, shortenAddressWidth } from '@/util/formatters';
+import { shortenAddressWidth } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
-import realms from '../../geodata/realms.json';
-import { useWalletContext } from '../../hooks/useWalletContext';
-import { RealmResources } from '../tables/RealmResources';
+
 // import { BankCard } from './Account/AccountCards';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
   /* const { state, actions } = useJourneyContext(); */
-  const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
-    useWalletContext();
+
   const { mintRealm } = useSettling();
-  const { approveLords, isApproved: isLordsApprovedForBuilding } =
-    useApproveLordsForBuilding();
-  const { account, connect, connectors, disconnect } = useStarknet();
-  const { togglePanelType, toggleMenuType, selectedPanel } = useAtlasContext();
+
+  const { account } = useStarknet();
+  const { toggleMenuType, selectedPanel } = useAtlasContext();
 
   const [selectedId, setSelectedId] = useState(0);
 
@@ -57,9 +40,9 @@ export function AccountPanel() {
     pollInterval: 10000,
   });
 
-  const getRealmDetails = (realmId: number) =>
+  /* const getRealmDetails = (realmId: number) =>
     realms.features.find((a: any) => a.properties.realm_idx === realmId)
-      ?.properties;
+      ?.properties; */
 
   const realmsCount =
     (accountData?.ownedRealmsCount ?? 0) +
