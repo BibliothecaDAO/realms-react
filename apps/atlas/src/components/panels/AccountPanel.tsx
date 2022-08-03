@@ -81,7 +81,7 @@ export function AccountPanel() {
     );
   };
 
-  function genRealmEvent(event) {
+  function genMilitaryRealmEvent(event) {
     switch (event.eventType) {
       case 'realm_combat_attack':
         return {
@@ -90,13 +90,13 @@ export function AccountPanel() {
               💰 Raid successful on Realm {event.data?.defendRealmId}
             </span>
           ) : (
-            `😞 Unsuccessful Raid`
+            `Unsuccessful Raid`
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
-              size="sm"
+              size="xs"
               variant="primary"
               href={'/ream/' + event.data?.defendRealmId}
             >
@@ -104,7 +104,7 @@ export function AccountPanel() {
             </Button>
           ) : (
             <Button
-              size="sm"
+              size="xs"
               variant="primary"
               href={'/ream/' + event.data?.defendRealmId}
             >
@@ -116,18 +116,18 @@ export function AccountPanel() {
         return {
           event: event.data?.success ? (
             <span className="">
-              🔥 We have been Pillaged by Realm {event.data?.attackRealmId}
+              We have been Pillaged by Realm {event.data?.attackRealmId}
             </span>
           ) : (
             <span className="">
-              💪 Defended raid from {event.data?.defendRealmId}
+              Defended raid from {event.data?.defendRealmId}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
           action: event.data?.success ? (
             <Button
-              size="sm"
+              size="xs"
               variant="primary"
               href={'/ream/' + event.data?.attackRealmId}
             >
@@ -135,29 +135,39 @@ export function AccountPanel() {
             </Button>
           ) : (
             <Button
-              size="sm"
+              size="xs"
               variant="primary"
               href={'/ream/' + event.data?.attackRealmId}
             >
-              ⚔️ muster the troops! to battle!!
+              muster the troops!
             </Button>
           ),
         };
+      default:
+        return {
+          event: '',
+          class: '',
+          action: '',
+        };
+    }
+  }
+  function genEconomicRealmEvent(event) {
+    switch (event.eventType) {
       case 'realm_building_built':
         return {
-          event: `🏗️ Built ${event.data?.buildingName}`,
+          event: `Built ${event.data?.buildingName}`,
           class: successClass,
           action: '',
         };
       case 'realm_resource_upgraded':
         return {
-          event: `🏗️ Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`,
+          event: `Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`,
           class: successClass,
           action: '',
         };
       case 'realm_mint':
         return {
-          event: `🏗️ Minted Realm ${event.realmId}`,
+          event: `Minted Realm ${event.realmId}`,
           class: successClass,
           action: (
             <Button size="sm" variant="primary" href={'/ream/' + event.realmId}>
@@ -167,13 +177,13 @@ export function AccountPanel() {
         };
       case 'realm_settle':
         return {
-          event: '🏘️ Settled',
+          event: 'Settled',
           class: successClass,
           action: '',
         };
       case 'realm_unsettle':
         return {
-          event: '🏚️ Unsettled',
+          event: 'Unsettled',
           class: successClass,
           action: '',
         };
@@ -186,20 +196,23 @@ export function AccountPanel() {
     }
   }
 
-  const realmEventData = (accountData?.accountHistory ?? [])
+  const economicEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
       return {
-        event: genRealmEvent(realmEvent),
+        event: genEconomicRealmEvent(realmEvent),
         timestamp: realmEvent.timestamp,
       };
     })
     .filter((row) => row.event.event !== '');
 
-  const tableOptions = { is_striped: true, search: false };
-  const columns = [
-    { Header: 'Event', id: 1, accessor: 'event' },
-    { Header: 'advisor', id: 2, accessor: 'action' },
-  ];
+  const militaryEventData = (accountData?.accountHistory ?? [])
+    .map((realmEvent) => {
+      return {
+        event: genMilitaryRealmEvent(realmEvent),
+        timestamp: realmEvent.timestamp,
+      };
+    })
+    .filter((row) => row.event.event !== '');
 
   const txQueue = useTransactionQueue();
   const approveTxs = getApproveAllGameContracts();
@@ -353,7 +366,7 @@ export function AccountPanel() {
           </CardBody>
         </Card> */}
         {/* <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1> */}
-        {/* {realmEventData.map((a, index) => {
+        {/* {economicEventData.map((a, index) => {
           return (
             <Card
               key={index}
@@ -373,56 +386,64 @@ export function AccountPanel() {
             </Card>
           );
         })} */}
-        <Card className={`col-start-1 col-end-7`}>
+        <Card className={`col-start-1 col-end-6`}>
           <CardTitle>Economic History</CardTitle>
           <CardBody>
-            {realmEventData.map((a, index) => {
+            {economicEventData.map((a, index) => {
               return (
                 <div
                   key={index}
-                  className={`col-start-6 col-end-12 ${
+                  className={`col-start-6 col-end-12 flex mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
                     loadingData ?? 'animate-pulse'
                   }`}
                 >
-                  <CardBody className={`flex ${a.event.class} `}>
-                    <span className="py-1 mb-4 font-semibold text-white">
+                  {/* <CardBody className={`flex ${a.event.class} `}> */}
+                  <div>
+                    <div className="py-1 pb-2 mb-2 text-white opacity-60">
                       {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
                       {new Date(a.timestamp).toLocaleDateString('en-US')}
-                    </span>
+                    </div>
                     <h3 className="text-white">{a.event.event}</h3>
-                    {a.event?.resources && a.event.resources}
-                    <div className="mt-4">{a.event.action}</div>
-                  </CardBody>
+
+                    {/* {a.event?.resources && a.event.resources} */}
+                  </div>
+
+                  <div className="mt-4">{a.event.action}</div>
+                  {/* </CardBody> */}
                 </div>
               );
             })}
           </CardBody>
         </Card>
-        {/* <Card className={`col-start-7 col-end-13`}>
+        <Card className={`col-start-6 col-end-11`}>
           <CardTitle>Military History</CardTitle>
           <CardBody>
-            {realmEventData.map((a, index) => {
+            {militaryEventData.map((a, index) => {
               return (
                 <div
                   key={index}
-                  className={`col-start-6 col-end-12 ${
+                  className={`col-start-6 col-end-12 flex mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
                     loadingData ?? 'animate-pulse'
                   }`}
                 >
-                  <CardBody className={`flex ${a.event.class} `}>
-                    <span className="py-1 mb-4 font-semibold text-white">
+                  {/* <CardBody className={`flex ${a.event.class} `}> */}
+                  <div>
+                    <div className="py-1 pb-2 mb-2 text-white opacity-60">
                       {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
                       {new Date(a.timestamp).toLocaleDateString('en-US')}
-                    </span>
+                    </div>
                     <h3 className="text-white">{a.event.event}</h3>
+
                     {a.event?.resources && a.event.resources}
-                    <div className="mt-4">{a.event.action}</div>
-                  </CardBody>
+                  </div>
+
+                  <div className="mt-4">{a.event.action}</div>
+                  {/* </CardBody> */}
                 </div>
               );
             })}
           </CardBody>
-        </Card> */}
+        </Card>
 
         {/* <Card className="col-start-5 col-end-9">
           <CardBody>
