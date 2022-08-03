@@ -29,7 +29,7 @@ export const RateChange = (change: number) => {
 };
 
 export function BankPanel(): ReactElement {
-  const { selectedPanel } = useAtlasContext();
+  const { selectedPanel, toggleMenuType } = useAtlasContext();
   const {
     lordsBalance,
     balance,
@@ -112,8 +112,15 @@ export function BankPanel(): ReactElement {
   return (
     <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
       <div className="flex justify-between">
-        <div className="sm:hidden"></div>
-        <div className="w-full p-10 bg-black/70">
+        <div className="w-full p-10 pt-20 bg-black/70">
+          <Button
+            variant="secondary"
+            size="xs"
+            className="ml-auto"
+            onClick={() => toggleMenuType('bank')}
+          >
+            <Close />
+          </Button>
           <h2 className="w-full">The Resource Emporium</h2>
           <p className="text-2xl opacity-70">
             Trade your resources on the market.
