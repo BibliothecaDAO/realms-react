@@ -11,6 +11,7 @@ import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 
 import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
+import Image from 'next/future/image';
 import { useState } from 'react';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
@@ -222,10 +223,12 @@ export function AccountPanel() {
       <div className="w-full p-10 py-10 border-b-4 rounded-br-full bg-black/40 border-white/70">
         <div className="flex">
           <div className="relative">
-            <img
+            <Image
+              src={'/keyImage-tablet.png'}
+              alt="map"
+              height={300}
+              width={300}
               className="w-48 h-48 mr-10 border-2 rounded-full shadow-2xl border-white/20"
-              src="/keyImage-tablet.png"
-              alt=""
             />
             <div className="absolute px-2 text-xl font-semibold border-2 rounded-full bg-black/60 border-white/70 bottom-10 right-10">
               1
