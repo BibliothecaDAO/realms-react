@@ -66,12 +66,12 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
       )}
 
       <table className="w-full text-left text-white rounded-xl">
-        <thead className="uppercase rounded-xl">
+        <thead className="uppercase rounded-xl bg-black/60">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="p-2 text-xs tracking-widest text-center border border-gray-500/60"
+                  className="p-2 text-xs tracking-widest text-center border border-black/70"
                   key={header.id}
                   colSpan={header.colSpan}
                 >
@@ -91,14 +91,14 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-gray-600/60'
-                  : 'bg-gray-600/20'
+                  ? 'bg-black/80'
+                  : 'bg-black/60'
               } hover:bg-white-600/90 font-semibold shadow-inner`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className="p-2 mx-auto text-left border border-gray-500/60"
+                  className="p-2 mx-auto text-left border border-black/70"
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

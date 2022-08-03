@@ -74,7 +74,9 @@ export function Header() {
             <span className="flex">
               {' '}
               {/* <BibliothecaBook className="self-center h-5 ml-2 mr-4 stroke-white fill-white " /> */}
-              <div className="self-center text-5xl font-lords">Realms</div>
+              <div className="self-center text-5xl font-lords">
+                Eternal Reign
+              </div>
               {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
             </span>
           </Link>

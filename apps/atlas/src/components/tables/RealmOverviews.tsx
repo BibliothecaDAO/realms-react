@@ -91,14 +91,14 @@ export function RealmOverviews(props: RealmOverviewsProps) {
         props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex flex-wrap w-full h-auto max-w-full mb-2 rounded justify-evenly"
+            className="flex flex-wrap w-full h-auto max-w-full border-2 justify-evenly border-black/60"
           >
             {realm?.wonder && (
               <div className="w-full p-2 text-xl font-semibold text-center text-gray-200 uppercase border-gray-500 rounded-t shadow-inner tracking-veryWide bg-black/30">
                 {realm?.wonder}
               </div>
             )}
-            <div className="flex w-full p-2 text-white shadow-inner rounded-t-l bg-black/80">
+            <div className="flex w-full p-2 text-white shadow-inner rounded-t-l bg-black/90">
               <h3 className="self-center mb-1 ml-4 font-lords">
                 <span className="mr-1 text-gray-400 font-body">
                   {realm.realmId} |{' '}
@@ -122,7 +122,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 />
               </div>
             </div>
-            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-black/50">
+            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-black/90">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
                   const info = findResourceName(resource.resourceId);
@@ -157,7 +157,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div> */}
-            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
+            <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-black/80">
               <div className="self-center w-full font-semibold tracking-widest uppercase">
                 <div className="flex justify-between ">
                   Vitality: <span> {squadStats(realm.troops).vitality}</span>
@@ -176,7 +176,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center w-full px-6 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3 bg-gray-600/70">
+            <div className="flex justify-center w-full px-6 space-x-2 shadow-inner sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3 bg-black/80">
               {' '}
               <Button
                 onClick={() => {

@@ -171,9 +171,9 @@ export const RealmsPanel = () => {
 
   return (
     <BasePanel open={isRealmPanel} style="lg:w-7/12">
-      <div className="flex justify-between pt-2">
+      <div className="flex justify-between p-10 bg-black/70">
         <div className="sm:hidden"></div>
-        <h1>Realms</h1>
+        <h2>Realms</h2>
         <Link href="/">
           <button className="z-50 transition-all rounded top-4">
             <Close />
@@ -194,11 +194,11 @@ export const RealmsPanel = () => {
       </Tabs>
       <div>
         <RealmsFilter isYourRealms={state.selectedTab === 0} />
-        {data && (
+        {/* {data && (
           <div className="pb-4 font-semibold text-right">
             {displayResults()}
           </div>
-        )}
+        )} */}
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />

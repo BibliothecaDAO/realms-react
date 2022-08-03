@@ -6,7 +6,7 @@ import { UserAgent } from '@quentin-sommer/react-useragent';
 import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import { Map } from 'react-map-gl';
+import Map, { FullscreenControl } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { FlyTo } from '@/components/map/FlyTo';
@@ -343,7 +343,7 @@ function MapModule() {
       ]}
     >
       {!loaded ? (
-        <div className="flex justify-center w-full h-full bg-gray-1000">
+        <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1000">
           {' '}
           <h1 className="self-center">loading Atlas...</h1>{' '}
         </div>
@@ -357,7 +357,9 @@ function MapModule() {
         mapboxAccessToken={
           'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
         }
-      />
+      >
+        <FullscreenControl position="bottom-right" />
+      </Map>
     </DeckGL>
   );
 }

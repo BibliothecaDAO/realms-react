@@ -17,7 +17,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between mb-2">
+      <div className="flex flex-wrap justify-between px-2 bg-black/90">
         <div className="w-full my-1 sm:w-auto">
           <SearchFilter
             placeholder="SEARCH BY ID"

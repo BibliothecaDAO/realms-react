@@ -108,7 +108,7 @@ module.exports = {
         hero: "linear-gradient(0deg, rgba(184,184,184,0.1), rgba(184,184,184,0.75)), url('/createOrDestroy-desktop.webp')",
         warRoom:
           "linear-gradient(0deg, rgba(184,184,184,0.1), rgba(184,184,184,0.75)), url('/warRoom-desktop.png')",
-        bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/bank.jpg')",
+        bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/riches-desktop.png')",
         realm:
           "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/realm.jpg')",
         crypt:
