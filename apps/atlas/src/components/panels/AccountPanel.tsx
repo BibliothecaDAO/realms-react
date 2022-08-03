@@ -223,7 +223,7 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="w-full p-10 py-10 bg-black/60">
+      <div className="w-full p-10 py-10 bg-black/80 rounded-b-3xl">
         <div className="flex justify-between">
           <div className="flex flex-wrap">
             <div className="flex">
@@ -243,36 +243,66 @@ export function AccountPanel() {
             This is your dashboard for all things happening on your lands.
           </p> */}
           <img
-            className="w-64 h-64 rounded-full shadow"
+            className="w-48 h-48 rounded-full shadow-2xl"
             src="/keyImage-tablet.png"
             alt=""
           />
         </div>
+        <Button
+          variant="primary"
+          size="xs"
+          onClick={() => {
+            txQueue
+              .executeMulticall(
+                approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+              )
+              .catch((err) => {
+                // TODO: handle error
+                console.log(err);
+              });
+          }}
+        >
+          Approve All game Contracts
+        </Button>
       </div>
-      <div className="grid grid-cols-12 gap-3 p-3 sm:p-6">
+      <div className="grid grid-cols-12 gap-6 p-3 sm:p-6">
         <Card className="col-start-1 col-end-3">
+          <CardTitle>Settled Realms</CardTitle>
           <CardBody>
-            <CardTitle>Realms</CardTitle>
             <CardStats className="text-5xl">{realmsCount}</CardStats>
-            <Button className="mt-10" variant="primary" size="sm" href="/realm">
+            <Button variant="primary" size="xs" href="/realm">
               See Realms
             </Button>
           </CardBody>
         </Card>
         <Card className="col-start-3 col-end-5">
+          <CardTitle>Unsettled Realms</CardTitle>
           <CardBody>
-            <CardTitle>Crypts</CardTitle>
+            <CardStats className="text-5xl">{realmsCount}</CardStats>
+            <Button
+              className="w-full"
+              variant="primary"
+              size="xs"
+              onClick={() => toggleMenuType('settleRealms')}
+            >
+              Settle Realms
+            </Button>
+          </CardBody>
+        </Card>
+        {/* <Card className="col-start-3 col-end-5">
+          <CardTitle>Crypts</CardTitle>
+          <CardBody>
             <CardStats className="text-5xl">20</CardStats>
             <Button className="mt-10" variant="primary" size="sm" href="/crypt">
               See Crypts
             </Button>
           </CardBody>
-        </Card>
-        <Card className="col-start-5 col-end-8">
+        </Card> */}
+        {/* <Card className="col-start-5 col-end-8">
+          <CardTitle>Contract Approvals</CardTitle>
           <CardBody>
-            <CardTitle>Realm Admin</CardTitle>
             <div className="flex w-full mt-10 space-x-2">
-              <Button
+            <Button
                 variant="primary"
                 className="mt-auto ml-8"
                 size="sm"
@@ -280,7 +310,7 @@ export function AccountPanel() {
               >
                 Bridge Realms
               </Button>
-              <Button
+            <Button
                 className="ml-8"
                 variant="primary"
                 size="sm"
@@ -290,7 +320,8 @@ export function AccountPanel() {
               </Button>
             </div>
             <Button
-              className="mt-2"
+              variant="primary"
+              size="xs"
               onClick={() => {
                 txQueue
                   .executeMulticall(
@@ -305,10 +336,10 @@ export function AccountPanel() {
               Approve All Contracts
             </Button>
           </CardBody>
-        </Card>
-        <Card className="col-start-8 col-end-13">
+        </Card> */}
+        {/* <Card className="col-start-8 col-end-13">
+          <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
           <CardBody>
-            <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
             <input
               placeholder="Type Id"
               type={'number'}
@@ -329,13 +360,13 @@ export function AccountPanel() {
               Mint Realms
             </Button>
           </CardBody>
-        </Card>
+        </Card> */}
         {/* <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1> */}
-        {realmEventData.map((a, index) => {
+        {/* {realmEventData.map((a, index) => {
           return (
             <Card
               key={index}
-              className={`col-start-4 col-end-8 ${
+              className={`col-start-1 col-end-5 ${
                 loadingData ?? 'animate-pulse'
               }`}
             >
@@ -350,7 +381,57 @@ export function AccountPanel() {
               </CardBody>
             </Card>
           );
-        })}
+        })} */}
+        <Card className={`col-start-1 col-end-7`}>
+          <CardTitle>Economic History</CardTitle>
+          <CardBody>
+            {realmEventData.map((a, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`col-start-6 col-end-12 ${
+                    loadingData ?? 'animate-pulse'
+                  }`}
+                >
+                  <CardBody className={`flex ${a.event.class} `}>
+                    <span className="py-1 mb-4 font-semibold text-white">
+                      {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
+                      {new Date(a.timestamp).toLocaleDateString('en-US')}
+                    </span>
+                    <h3 className="text-white">{a.event.event}</h3>
+                    {a.event?.resources && a.event.resources}
+                    <div className="mt-4">{a.event.action}</div>
+                  </CardBody>
+                </div>
+              );
+            })}
+          </CardBody>
+        </Card>
+        {/* <Card className={`col-start-7 col-end-13`}>
+          <CardTitle>Military History</CardTitle>
+          <CardBody>
+            {realmEventData.map((a, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`col-start-6 col-end-12 ${
+                    loadingData ?? 'animate-pulse'
+                  }`}
+                >
+                  <CardBody className={`flex ${a.event.class} `}>
+                    <span className="py-1 mb-4 font-semibold text-white">
+                      {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
+                      {new Date(a.timestamp).toLocaleDateString('en-US')}
+                    </span>
+                    <h3 className="text-white">{a.event.event}</h3>
+                    {a.event?.resources && a.event.resources}
+                    <div className="mt-4">{a.event.action}</div>
+                  </CardBody>
+                </div>
+              );
+            })}
+          </CardBody>
+        </Card> */}
 
         {/* <Card className="col-start-5 col-end-9">
           <CardBody>
