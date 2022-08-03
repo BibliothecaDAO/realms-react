@@ -4,8 +4,9 @@ import {
   StarknetProvider,
   getInstalledInjectedConnectors,
 } from '@starknet-react/core';
+import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -57,6 +58,16 @@ const queries = {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const connectors = getInstalledInjectedConnectors();
+  useEffect(() => {
+    // match the dapp with a wallet instance
+    connect({ showList: false }).then((wallet) => {
+      // connect the dapp with the chosen wallet instance
+      wallet?.enable({ showModal: false }).then(() => {
+        const isConnected = !!wallet?.isConnected;
+        // use `isConnected` :thumbsup:
+      });
+    });
+  }, []);
   return (
     <BreakpointProvider queries={queries}>
       <WalletProvider>
