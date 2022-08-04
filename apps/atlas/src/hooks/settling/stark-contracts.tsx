@@ -4,6 +4,7 @@ import type { Abi } from 'starknet';
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
+import Food from '@/abi/settling/Food.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
@@ -11,6 +12,7 @@ import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
 import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
+import Relics from '@/abi/settling/Relics.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
 // Note: Can use process.env | static definition if needed
@@ -35,7 +37,31 @@ export const ModuleAddr = {
   Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
   Splitter:
     '0x06a60b479e9fe080fd8e0a8c4965040a25e276889c2de0cf105c410d0ac81436',
+  Food: '0x03a34ef38f402d6b66b681db7905edfc48676288a7b08cd79910737c45431093',
+  Relics: '0x027d0dd8dbe02f8dec5ff64b873eb78993c520f7c6f10b95f86cb061857769d0',
 };
+
+/**
+ * Load the Food contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useFoodContract() {
+  return useContract({
+    abi: Food as Abi,
+    address: ModuleAddr.Food,
+  });
+}
+
+/**
+ * Load the Relic contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useRelicContract() {
+  return useContract({
+    abi: Relics as Abi,
+    address: ModuleAddr.Relics,
+  });
+}
 
 /**
  * Load the Nexus contract.

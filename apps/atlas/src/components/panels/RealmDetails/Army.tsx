@@ -20,7 +20,7 @@ type Prop = {
 };
 
 const Army: React.FC<Prop> = (props) => {
-  const { buildings } = useRealmContext();
+  const { buildings, loading } = useRealmContext();
   const { build } = useBuildings();
   const realm = props.realm;
 
@@ -50,8 +50,6 @@ const Army: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     setSquadSlot('Defend');
-
-    console.log(buildings);
   }, [realm?.realmId]);
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
@@ -61,61 +59,43 @@ const Army: React.FC<Prop> = (props) => {
   const troops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
-  const militaryBuildings = [
-    {
-      title: 'barracks',
-      img: '/barracks.png',
-      id: 6,
-    },
-    {
-      title: 'Archer Tower',
-      img: '/barracks.png',
-      id: 7,
-    },
-    {
-      title: 'Mage Tower',
-      img: '/barracks.png',
-      id: 8,
-    },
-    {
-      title: 'Castle',
-      img: '/barracks.png',
-      id: 9,
-    },
-  ];
   return (
     <Card>
       <CardTitle>Build Military Buildings</CardTitle>
       <div className="flex space-x-2">
-        {militaryBuildings.map((a, i) => {
-          return (
-            <div key={i} className="p-1 border rounded border-white/20">
-              <Image
-                height={300}
-                width={300}
-                className="w-64 h-64 rounded"
-                src={a.img}
-                alt=""
-              />
-              <div className="p-3 capitalize">
-                <h3>{a.title}</h3>
-                <hr className="opacity-20" />
-                <h5 className="my-2">Qty Built:</h5>
-                <h5 className="my-2">Decay time:</h5>
-                <div className="flex w-full mt-3">
-                  <Button
-                    onClick={() => build(realm.realmId, a.id, 1)}
-                    className="w-full"
-                    size="xs"
-                    variant="primary"
-                  >
-                    build
-                  </Button>
+        {buildings
+          ?.filter((a) => a.type === 'military')
+          .map((a, i) => {
+            return (
+              <div key={i} className="p-1 border rounded border-white/20">
+                <Image
+                  height={300}
+                  width={300}
+                  className="w-64 h-64 rounded"
+                  src={a.img}
+                  alt=""
+                />
+                <div className="p-3 capitalize">
+                  <h3>{a.name}</h3>
+                  <hr className="opacity-20" />
+                  <h5 className="my-2">
+                    Quantity Built: {!loading ? a.quantityBuilt : 'loading...'}
+                  </h5>
+                  <h5 className="my-2">Decay time:</h5>
+                  <div className="flex w-full mt-3">
+                    <Button
+                      onClick={() => build(realm.realmId, a.id, 1)}
+                      className="w-full"
+                      size="xs"
+                      variant="primary"
+                    >
+                      build
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
 
       {/* <div className="px-2 py-1 font-semibold tracking-widest bg-gray-800">
