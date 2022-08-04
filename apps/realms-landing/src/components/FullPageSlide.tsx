@@ -46,7 +46,7 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
         src={image}
         className="object-cover w-full h-full"
         width="1920"
-        height="1080"
+        height="900"
         sizes="100vw"
         priority={priority}
       />

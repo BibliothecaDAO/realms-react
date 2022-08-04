@@ -47,6 +47,7 @@ const slides = [
   },
   {
     image: 'eternity',
+    priority: true,
     content: (
       <div
         className="flex flex-col justify-end h-full px-8 mx-auto sm:px-0 sm:w-1/2"
