@@ -328,9 +328,9 @@ function Home() {
               </p>
             </div>
           </div>
+          <MainFooter />
         </div>
       </div>
-      <MainFooter />
     </MainLayout>
   );
 }
