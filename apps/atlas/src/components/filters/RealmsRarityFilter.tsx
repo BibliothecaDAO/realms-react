@@ -53,7 +53,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="primary"
+          variant="outline"
           size="sm"
           className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {

@@ -15,7 +15,7 @@ const NetworkConnectButton = () => {
   return (
     <Popover className="relative">
       <Popover.Button as="div">
-        <Button variant="primary">
+        <Button variant="outline">
           {' '}
           <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
           {account
@@ -39,7 +39,7 @@ const NetworkConnectButton = () => {
             {connectors.map((connector) =>
               connector.available() ? (
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   className="w-full text-xs"
                   key={connector.id()}
                   onClick={() => connect(connector)}
@@ -72,7 +72,7 @@ const NetworkConnectButton = () => {
         {!isConnected && (
           <>
             <Button
-              variant="secondary"
+              variant="outline"
               className="w-full text-xs"
               onClick={connectWallet}
             >

@@ -390,7 +390,7 @@ export function AccountPanel() {
           );
         })} */}
         <Card className={`col-start-1 col-end-6`}>
-          <CardTitle>Economic History</CardTitle>
+          <CardTitle>Mercantile History</CardTitle>
           <CardBody>
             {economicEventData.map((a, index) => {
               return (
@@ -419,7 +419,7 @@ export function AccountPanel() {
           </CardBody>
         </Card>
         <Card className={`col-start-6 col-end-11`}>
-          <CardTitle>Military History</CardTitle>
+          <CardTitle>Battle History</CardTitle>
           <CardBody>
             {militaryEventData.map((a, index) => {
               return (

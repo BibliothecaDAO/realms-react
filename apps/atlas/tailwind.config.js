@@ -159,6 +159,9 @@ module.exports = {
           100: '#F9F7F1',
           200: '#8D795B',
         },
+        cta: {
+          100: '#87272d',
+        },
         /* Crypts and Caverns color styles */
         desert: {
           /* Desert Oasis */ main: '#F3D899',

@@ -117,7 +117,7 @@ export function BankPanel(): ReactElement {
       <div className="flex justify-between">
         <div className="w-full p-10 pt-20 bg-black/70">
           <h2 className="w-full">The Resource Emporium</h2>
-          <p className="text-2xl opacity-70">
+          <p className="sm:text-2xl opacity-70">
             Trade your resources on the market.
           </p>
           {/* <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">

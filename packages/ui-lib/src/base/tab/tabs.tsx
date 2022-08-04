@@ -10,17 +10,17 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg font-semibold md:text-md font-body uppercase tracking-widest transition-all duration-150  rounded hover:bg-black/10  hover:shadow text-gray-700',
+      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150  rounded border hover:border-cta-100 hover:shadow text-gray-700',
       active:
-        ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-white ring-opacity-20 text-white bg-gray-800 shadow',
+        ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-cta-100 ring-opacity-90 text-white border-cta-100 border',
       inactive: 'text-white border-transparent',
     },
     tabList: 'flex space-x-3 sm:space-x-4 bg-black/90 p-2 shadow-inner ',
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:bg-gray-600 hover:shadow-md transition-all duration-150 hover:text-white rounded   hover:bg-stone-400/80 focus-visible:ring-yellow-700 border-off-200',
-      active: 'bg-stone-500  shadow-md text-white border',
+      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-150 hover:text-white rounded    focus-visible:ring-yellow-700 border-cta-100 hover:border',
+      active: ' shadow-md text-white border',
       inactive: 'bg-transparent text-gray-200',
     },
     tabList: 'flex py-2 space-x-2',
@@ -47,7 +47,10 @@ export const Tabs = ({
       {onChange ? (
         <HeadlessTab.Group
           as="div"
-          className={clsx('flex flex-1 flex-col ', className)}
+          className={clsx(
+            'flex flex-1 flex-col border-t border-b border-black',
+            className
+          )}
           selectedIndex={selectedIndex}
           onChange={onChange}
         >

@@ -74,7 +74,7 @@ export function Header() {
             <span className="flex">
               {' '}
               {/* <BibliothecaBook className="self-center h-5 ml-2 mr-4 stroke-white fill-white " /> */}
-              <div className="self-center text-5xl font-lords">
+              <div className="self-center text-3xl font-lords">
                 Eternal Reign
               </div>
               {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
@@ -139,7 +139,7 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={() => togglePanelType('bank')} variant="primary">
+          <Button onClick={() => togglePanelType('bank')} variant="outline">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}
