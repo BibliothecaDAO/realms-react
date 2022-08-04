@@ -234,7 +234,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
                 size="sm"
                 loading={loadingStakeLords}
                 disabled={loadingStakeLords}
-                className="w-full p-1 border rounded"
+                className="w-full p-1"
                 onClick={onNexusClicked}
               >
                 {props.stake ? 'stake in nexus' : 'withdraw from nexus'}

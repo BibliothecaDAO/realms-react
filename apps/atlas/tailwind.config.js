@@ -105,14 +105,11 @@ module.exports = {
       },
       backgroundImage: {
         texture: "url('/texture-button.png')",
-        hero: "linear-gradient(0deg, rgba(184,184,184,0.1), rgba(184,184,184,0.75)), url('/createOrDestroy-desktop.webp')",
-        warRoom:
-          "linear-gradient(0deg, rgba(184,184,184,0.1), rgba(184,184,184,0.75)), url('/warRoom-desktop.png')",
-        bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/riches-desktop.png')",
-        realm:
-          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/realm.jpg')",
-        crypt:
-          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/crypt.jpg')",
+        hero: "url('/createOrDestroy-desktop.webp')",
+        warRoom: "url('/warRoom-desktop.png')",
+        bank: "url('/riches-desktop.png')",
+        realm: "url('/realm.jpg')",
+        crypt: "url('/crypt.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',

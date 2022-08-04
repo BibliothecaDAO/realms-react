@@ -48,7 +48,7 @@ export function BankPanel(): ReactElement {
               resource={resource?.resourceName?.replace(' ', '') || ''}
               size="md"
             />
-            <div className="flex flex-col w-full pt-2 md:ml-4 sm:w-1/3 md:mt-0">
+            <div className="flex flex-col w-full pt-2 md:ml-4 sm:w-2/3 md:mt-0">
               {' '}
               <span className="self-center w-full tracking-widest uppercase text-stone-200">
                 {resource?.resourceName}
@@ -103,7 +103,7 @@ export function BankPanel(): ReactElement {
     { Header: 'Rate', id: 5, accessor: 'rate' },
     // { Header: 'Change', id: 4, accessor: 'change' },
 
-    { Header: 'Liquidity', id: 6, accessor: 'lp_balance' },
+    { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
     { Header: 'Action', id: 7, accessor: 'action' },
   ];
   const tableOptions = { is_striped: true };
