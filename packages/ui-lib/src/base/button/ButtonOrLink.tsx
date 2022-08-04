@@ -12,7 +12,7 @@ import { twMerge } from 'tailwind-merge';
 import { Spinner } from '../spinner';
 
 const STYLES = {
-  icon: 'rounded-2xl bg-gray-500 border-gray-600 text-gray-200 ',
+  icon: 'rounded-2xl border-gray-600 text-gray-200 ',
   base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase hover:-translate-y-1 active:translate-y-1 active:shadow-inner font-semibold',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
