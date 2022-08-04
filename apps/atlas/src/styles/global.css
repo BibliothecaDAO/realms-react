@@ -31,7 +31,7 @@ button {
 }
 
 body {
-  @apply text-gray-200 font-body;
+  @apply text-stone-300 font-body;
 }
 
 #deckgl-wrapper {

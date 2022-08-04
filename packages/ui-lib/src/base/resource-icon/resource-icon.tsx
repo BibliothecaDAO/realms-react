@@ -77,10 +77,10 @@ const Components: { [key: string]: Resource } = Object.freeze({
 
 const STYLES = {
   size: {
-    xs: 'w-4',
-    sm: 'w-6',
-    md: 'w-8',
-    lg: 'w-12',
+    xs: 'w-2 md:w-4',
+    sm: 'w-4 md:w-6',
+    md: 'w-6 md:w-8',
+    lg: 'w-8 md:w-12',
   },
 } as const;
 
