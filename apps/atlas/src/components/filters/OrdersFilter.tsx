@@ -60,7 +60,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="primary"
+          variant="outline"
           size="sm"
           className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
           onClick={() => {

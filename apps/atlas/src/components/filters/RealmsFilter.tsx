@@ -30,7 +30,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
         <div className="flex flex-wrap self-center gap-2 md:flex-nowrap">
           <div>
             <Button
-              variant="primary"
+              variant="outline"
               size="sm"
               className={clsx('', state.isSettledFilter ? 'bg-black' : '')}
               onClick={actions.toggleIsSettledFilter}
@@ -40,7 +40,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
           </div>
           <div>
             <Button
-              variant="primary"
+              variant="outline"
               size="sm"
               className={clsx('', state.hasWonderFilter ? 'bg-black' : '')}
               onClick={actions.toggleHasWonderFilter}

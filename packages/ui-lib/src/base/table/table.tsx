@@ -65,13 +65,13 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
         </div>
       )}
 
-      <table className="w-full text-left text-white rounded-xl">
-        <thead className="uppercase rounded-xl bg-black/60">
+      <table className="w-full ">
+        <thead className="uppercase bg-black/90">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="p-2 text-xs tracking-widest text-center border border-black/70"
+                  className="p-2 tracking-widest text-center border border-black"
                   key={header.id}
                   colSpan={header.colSpan}
                 >
@@ -86,19 +86,19 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             </tr>
           ))}
         </thead>
-        <tbody className="shadow-inner rounded-xl">
+        <tbody className="shadow-inner">
           {table.getRowModel().rows.map((row, index) => (
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-black/80'
-                  : 'bg-black/60'
-              } hover:bg-white-600/90 font-semibold shadow-inner`}
+                  ? 'bg-black'
+                  : 'bg-gray-1000'
+              } hover:bg-gray-800 font-semibold shadow-inner transition-all duration-30`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className="p-2 mx-auto text-left border border-black/70"
+                  className="px-3 py-1 mx-auto text-left border border-black"
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -171,9 +171,9 @@ export const RealmsPanel = () => {
 
   return (
     <BasePanel open={isRealmPanel} style="lg:w-7/12">
-      <div className="flex justify-between p-10 bg-black/70">
+      <div className="flex justify-between px-6 py-10 bg-black/90">
         <div className="sm:hidden"></div>
-        <h2>Realms</h2>
+        <h2>Loot Realms</h2>
         <Link href="/">
           <button className="z-50 transition-all rounded top-4">
             <Close />

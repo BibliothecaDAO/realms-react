@@ -4,6 +4,7 @@ import type { Abi } from 'starknet';
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
+import Food from '@/abi/settling/Food.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
@@ -11,6 +12,7 @@ import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
 import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
+import Relics from '@/abi/settling/Relics.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 
 // Note: Can use process.env | static definition if needed
@@ -18,25 +20,48 @@ import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.js
 export const ModuleAddr = {
   Lords: '0x0448549cccff35dc6d5df90efceda3123e4cec9fa2faff21d392c4a92e95493c',
   ResourceGame:
-    '0x04a29535b95b85aca744a0b1bcc2faa1972f0769db1ec10780bb7c01ce3fe8fd',
-  Realms: '0x0741568eef7e69072fac5ac490ef2dca278fe75898814326fc37b0c6b36e94e0',
+    '0x06f0e13b23b610534484e8347f78312af6c11cced04e34bd124956a915e5c881',
+  Realms: '0x076bb5a142fa1d9c5d3a46eefaec38cc32b44e093432b1eb46466ea124f848a5',
   StakedRealms:
-    '0x007235420ad11fa85b9e9837fb03a0b42a56cc930dd51a9aadbb5ad229eabe77',
+    '0x06f798682fc548e98a9556b624eb110f1bc37eeadd16bc2f49056f8ede7993c5',
   Settling:
-    '0x077b2a96db5fb49200f11155f6c2b1f5c0e697fb62d6b2c290592a1cb0ad0356',
+    '0x03d4ac75998ac3205f4722a0ea385f09f3c8175ea544a63d55d93f7e3736c18b',
   Exchange:
     '0x015eba242880374267dc54900b7d569a964fcd8d251a2edfb66a4ec9a78eaedc',
   ResourcesToken:
     '0x07144f39e676656e81d482dc2cc9f68c98d768fe1beaad28438b43142cc9ff9e',
   Building:
-    '0x04d2078fade1855b48ad11d711d11afa107f050637572eecbab244a4cd7f35cc',
-  Combat: '0x0143c2b110961626f46c4b35c55fa565227ffdb803155e917df790bad29240b9',
-  Wonder: '0x05c292e4f4ea5ab160647ef2ce002e702f149af7370774839c0822a6c9b29361',
+    '0x07e6ef6eae7a6d03baaace2fe8b5747ed52fa6c7ae615f3e3bd3311ac98d139a',
+  Combat: '0x0139bad2b0b220d71ea1fc48fa2858e993b3d471a3b03be609c54ff0c9795d71',
+  Wonder: '0x0096cae38dd01a1e381c9e57db09669298fa079cfdb45e1a429c4020a6515549',
   Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
   Splitter:
     '0x06a60b479e9fe080fd8e0a8c4965040a25e276889c2de0cf105c410d0ac81436',
   Food: '0x03a34ef38f402d6b66b681db7905edfc48676288a7b08cd79910737c45431093',
+  Relics: '0x027d0dd8dbe02f8dec5ff64b873eb78993c520f7c6f10b95f86cb061857769d0',
 };
+
+/**
+ * Load the Food contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useFoodContract() {
+  return useContract({
+    abi: Food as Abi,
+    address: ModuleAddr.Food,
+  });
+}
+
+/**
+ * Load the Relic contract.
+ * @returns The `Settling` contract or undefined.
+ */
+export function useRelicContract() {
+  return useContract({
+    abi: Relics as Abi,
+    address: ModuleAddr.Relics,
+  });
+}
 
 /**
  * Load the Nexus contract.

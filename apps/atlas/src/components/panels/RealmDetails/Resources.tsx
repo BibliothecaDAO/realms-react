@@ -1,7 +1,8 @@
-import { Button } from '@bibliotheca-dao/ui-lib/base';
+import { Button, Card } from '@bibliotheca-dao/ui-lib/base';
 import React, { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { RealmResources } from '@/components/tables/RealmResources';
+import { useRealmContext } from '@/context/RealmDetailContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
@@ -14,6 +15,7 @@ type Prop = {
 };
 
 const Harvests: React.FC<Prop> = (props) => {
+  const { availableFood } = useRealmContext();
   const realm = props.realm?.realm;
 
   const isOwner = useIsOwner(realm?.settledOwner);
@@ -39,8 +41,12 @@ const Harvests: React.FC<Prop> = (props) => {
   }
 
   return (
-    <>
-      <RealmResources showClaimable realm={realm} loading={false} />
+    <Card className="flex">
+      <div className="w-1/2">
+        <RealmResources showClaimable realm={realm} loading={false} />
+      </div>
+      <div className="w-1/2">Available food: {availableFood}</div>
+
       {isOwner && (
         <div className="flex items-center">
           <Button
@@ -57,7 +63,7 @@ const Harvests: React.FC<Prop> = (props) => {
           {enqueuedHarvestTx ? <TxAddedToQueueLabel /> : null}
         </div>
       )}
-    </>
+    </Card>
   );
 };
 

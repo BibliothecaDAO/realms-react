@@ -15,14 +15,18 @@ import {
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
+import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { toBN } from 'starknet/utils/number';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
+import useBuildings from '@/hooks/settling/useBuildings';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -41,26 +45,13 @@ import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
 
-// import styled from '@emotion/styled';
-
 interface RealmDetailsPanelProps {
   realmId: number;
 }
 
-// const Overlay = styled.div`
-//   transform: perspective(1100px) rotateX(60deg) rotateZ(45deg) scale(110%);
-//   transform-style: preserve-3d;
-//   background-color: orange;
-//   position: absolute;
-//   height: 500px;
-//   width: 500px;
-//   opacity: 50%;
-//   top: 0px;
-//   left: 0px;
-// `;
-
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const router = useRouter();
+
   const { data: realmData, loading } = useGetRealmQuery({
     variables: { id: realmId },
     pollInterval: 5000,

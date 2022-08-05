@@ -1,4 +1,4 @@
-import { useStarknetInvoke } from '@starknet-react/core';
+import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
@@ -9,7 +9,8 @@ import type { RealmsCall } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Building = {
-  build: (realmId: number, buildingId: number) => void;
+  build: (realmId: number, buildingId: number, qty: number) => void;
+  // getEffectiveBuildings: (realmId: number) => void;
 };
 
 export const Entrypoints = {
@@ -37,9 +38,9 @@ const useBuildings = (): Building => {
   });
 
   return {
-    build: (realmId: number, buildingId: number) => {
+    build: (realmId: number, buildingId: number, qty: number) => {
       buildAction.invoke({
-        args: [bnToUint256(toBN(realmId)), buildingId],
+        args: [bnToUint256(toBN(realmId)), buildingId, qty],
         metadata: {
           action: 'realm_building',
           realmId,

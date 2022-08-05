@@ -220,7 +220,7 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="w-full p-10 py-10 border-b-4 rounded-br-full bg-black/40 border-white/70">
+      <div className="w-full p-10 py-10 border-b-4 rounded-br-full bg-black/60 border-white/70">
         <div className="flex">
           <div className="relative">
             <Image
@@ -230,7 +230,7 @@ export function AccountPanel() {
               width={300}
               className="w-48 h-48 mr-10 border-2 rounded-full shadow-2xl border-white/20"
             />
-            <div className="absolute px-2 text-xl font-semibold border-2 rounded-full bg-black/60 border-white/70 bottom-10 right-10">
+            <div className="absolute px-2 text-xl font-semibold border-2 rounded-full bg-black/80 border-white/70 bottom-10 right-10">
               1
             </div>
           </div>
@@ -390,7 +390,7 @@ export function AccountPanel() {
           );
         })} */}
         <Card className={`col-start-1 col-end-6`}>
-          <CardTitle>Economic History</CardTitle>
+          <CardTitle>Mercantile History</CardTitle>
           <CardBody>
             {economicEventData.map((a, index) => {
               return (
@@ -419,7 +419,7 @@ export function AccountPanel() {
           </CardBody>
         </Card>
         <Card className={`col-start-6 col-end-11`}>
-          <CardTitle>Military History</CardTitle>
+          <CardTitle>Battle History</CardTitle>
           <CardBody>
             {militaryEventData.map((a, index) => {
               return (

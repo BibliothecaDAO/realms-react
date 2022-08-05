@@ -37,6 +37,7 @@ import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
+import { RealmDetailProvider } from '@/context/RealmDetailContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
@@ -91,7 +92,7 @@ function AtlasMain() {
             {!ua.mobile ? (
               <MapModule />
             ) : (
-              <div className="object-cover object-right w-full h-full bg-warRoom" />
+              <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
             )}
             <BaseModal />
             <TransactionCartSideBar />
@@ -116,7 +117,9 @@ function RealmsModule() {
         (segments[2] === 'combat' ? (
           <RaidResultsPanel defendId={realmId} tx={segments[3]} />
         ) : (
-          <RealmDetailsPanel realmId={realmId} />
+          <RealmDetailProvider>
+            <RealmDetailsPanel realmId={realmId} />
+          </RealmDetailProvider>
         ))}
       {realmId === 0 && (
         <>
