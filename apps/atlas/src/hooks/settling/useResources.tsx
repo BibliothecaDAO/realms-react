@@ -100,7 +100,8 @@ const useResources = (args: useResourcesArgs): Resources => {
       allResourceVault && allResourceVault['user_mint']
         ? allResourceVault['user_mint'].map((resource) => uint256ToBN(resource))
         : 0,
-    claimableLords: allOutputData && uint256ToBN(allOutputData[1]),
+    claimableLords:
+      allOutputData && allOutputData[1] && uint256ToBN(allOutputData[1]),
     claimableResources:
       allOutputData && allOutputData['user_mint']
         ? allOutputData['user_mint'].map((resource) => uint256ToBN(resource))

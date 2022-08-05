@@ -78,6 +78,12 @@ const Survey: React.FC<Prop> = (props) => {
           />
         </Card>
         <Card className="col-start-3 col-end-5 ">
+          <CardTitle>Resources</CardTitle>
+          <CardBody>
+            {realm && <RealmResources realm={realm} loading={false} />}
+          </CardBody>
+        </Card>
+        <Card className="col-start-3 col-end-5 ">
           <CardTitle>Traits</CardTitle>
           <CardBody>
             <div className="w-full my-1 ">
@@ -103,12 +109,6 @@ const Survey: React.FC<Prop> = (props) => {
             </div>
           </CardBody>
         </Card>
-        {/* <Card className="col-start-2 col-end-4 ">
-          <CardTitle>Resources</CardTitle>
-          <CardBody>
-            {realm && <RealmResources realm={realm} loading={false} />}
-          </CardBody>
-        </Card> */}
       </div>
     </>
   );
