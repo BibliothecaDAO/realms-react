@@ -29,6 +29,12 @@ type Prop = {
   realm: GetRealmQuery;
 };
 
+interface ResourceAndFoodInput {
+  farmsToBuild: string;
+  fishingVillagesToBuild: string;
+  workHutsToBuild: string;
+}
+
 const Harvests: React.FC<Prop> = (props) => {
   const { buildings, loading } = useRealmContext();
 
@@ -77,12 +83,6 @@ const Harvests: React.FC<Prop> = (props) => {
 
   if (!realm) {
     return null;
-  }
-
-  interface ResourceAndFoodInput {
-    farmsToBuild: string;
-    fishingVillagesToBuild: string;
-    workHutsToBuild: string;
   }
 
   return (
