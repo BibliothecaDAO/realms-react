@@ -19,6 +19,7 @@ import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { useSpring } from 'react-spring';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
 import { RealmCard } from '@/components/cards/RealmCard';
@@ -204,15 +205,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             )}
           </UserAgent>
           <div className="relative w-full">
-            {/* <Image
-              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
-              alt="map"
-              className="w-full -scale-x-100"
-              width={500}
-              height={320}
-              layout={'responsive'}
-            /> */}
-            <div className="absolute w-full px-6 py-10 overflow-x-scroll sm:p-10 md:overflow-x-visible">
+            <div className="w-full px-6 py-10 overflow-x-scroll sm:p-10 md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
                   {subview == 'Army' && <Army realm={realmData?.realm} />}
