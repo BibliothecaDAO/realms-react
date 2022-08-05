@@ -39,6 +39,6 @@ describe('Dynamic element balancing', () => {
     const dark = MINIMUM_MINT_AMOUNT * 2 * multiplier;
     // diff would be MIN / 2 which is lower than minimum
     const next = getNextMintAmount({ light, dark }, 'light');
-    expect(next).toEqual(MINIMUM_MINT_AMOUNT * multiplier);
+    expect(next).toStrictEqual(MINIMUM_MINT_AMOUNT * multiplier);
   });
 });

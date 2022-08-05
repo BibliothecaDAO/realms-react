@@ -80,6 +80,7 @@ function useRealm() {
   });
 
   useEffect(() => {
+    console.log('all output data fetched');
     if (!allOutputData || !allOutputData[0] || !foodData || !foodData[0]) {
       return;
     }

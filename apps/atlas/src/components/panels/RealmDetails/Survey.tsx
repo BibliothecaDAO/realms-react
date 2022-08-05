@@ -69,7 +69,7 @@ const Survey: React.FC<Prop> = (props) => {
         <Card className="col-start-1 col-end-3 ">
           {' '}
           <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm.realmId}.webp`}
+            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
             alt="map"
             className="w-full -scale-x-100"
             width={500}

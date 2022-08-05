@@ -1,14 +1,14 @@
-import React from 'react';
-import { createCall } from '@/hooks/settling/useFood';
 import {
   Card,
   CardTitle,
   CardStats,
   Button,
 } from '@bibliotheca-dao/ui-lib/base';
-import type { GetRealmQuery } from '@/generated/graphql';
+import React from 'react';
 import { RealmBuildingId } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import type { GetRealmQuery } from '@/generated/graphql';
+import { createCall } from '@/hooks/settling/useFood';
 
 type Prop = {
   realm?: GetRealmQuery;

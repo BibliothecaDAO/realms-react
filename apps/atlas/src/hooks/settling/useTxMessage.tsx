@@ -10,6 +10,7 @@ interface TxMessage {
   description: string;
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function getTxMessage(tx: TxWithMetadata): TxMessage {
   const isQueued = tx.status == ENQUEUED_STATUS;
 

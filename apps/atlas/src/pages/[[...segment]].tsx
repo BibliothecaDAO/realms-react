@@ -14,7 +14,7 @@ import { BaseModal } from '@/components/modals/BaseModal';
 import { Header } from '@/components/navigation/header';
 import { AccountPanel } from '@/components/panels/AccountPanel';
 import { BankPanel } from '@/components/panels/BankPanel';
-import { CombatPanel } from '@/components/panels/CombatPanel';
+/* import { CombatPanel } from '@/components/panels/CombatPanel'; */
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
@@ -68,10 +68,6 @@ export default function AtlasPage() {
 }
 
 function AtlasMain() {
-  const callback = (data) => {
-    console.log('profiling');
-    console.log(data);
-  };
   return (
     <div className="relative w-full h-full">
       <UserAgent>
@@ -177,9 +173,9 @@ function AccountModule() {
 function MapModule() {
   const ItemViewLevel = 5;
   const { openDetails, selectedId, coordinates } = useAtlasContext();
-  const [resource] = useState<Array<string>>([]);
+  /* const [resource] = useState<Array<string>>([]);
 
-  /* const filteredData = () => {
+  const filteredData = () => {
     return realms.features.filter((a: RealmFeatures) =>
       a.properties.resources.some((b: string) => resource.includes(b))
     );
@@ -291,11 +287,11 @@ function MapModule() {
     },
   });
 
-  const iconMapping = {
+  /* const iconMapping = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
 
-  /* const resourceLayer = new IconLayer({
+   const resourceLayer = new IconLayer({
     id: 'icon-layer',
     data: filteredData(),
     pickable: false,
