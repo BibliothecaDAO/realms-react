@@ -8,7 +8,7 @@ import React from 'react';
 import { RealmBuildingId } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
-import { createCall } from '@/hooks/settling/useFood';
+import { createFoodCall } from '@/hooks/settling/useFood';
 
 type Prop = {
   realm?: GetRealmQuery;
@@ -45,7 +45,7 @@ const Food: React.FC<Prop> = (props) => {
         <Button
           onClick={() => {
             txQueue.add(
-              createCall.create({
+              createFoodCall.create({
                 tokenId: realm?.realmId,
                 quantity: 1,
                 foodBuildingId: RealmBuildingId.Farm,
@@ -63,7 +63,7 @@ const Food: React.FC<Prop> = (props) => {
         <Button
           onClick={() => {
             txQueue.add(
-              createCall.create({
+              createFoodCall.create({
                 tokenId: realm?.realmId,
                 quantity: 1,
                 foodBuildingId: RealmBuildingId.FishingVillage,
