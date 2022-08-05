@@ -121,7 +121,7 @@ const Harvests: React.FC<Prop> = (props) => {
                 createBuildingCall.build({
                   realmId: realm.realmId,
                   buildingId: RealmBuildingId.House,
-                  qty: 1,
+                  qty: input.workHutsToBuild,
                 })
               )
             }
