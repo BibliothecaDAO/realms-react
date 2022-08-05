@@ -24,7 +24,12 @@ export enum RealmBuildingId {
   Barracks = 6,
   MageTower = 7,
   ArcherTower = 8,
-  Castle = 9
+  Castle = 9,
+}
+
+export enum HarvestType {
+  Export = 1,
+  Store = 2,
 }
 
 const BASE_RESOURCES_PER_DAY = 250;

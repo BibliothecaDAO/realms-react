@@ -144,6 +144,7 @@ function useRealm() {
     ]);
 
     console.log(availableFood);
+    console.log(buildings);
   }, [allOutputData, realmId, availableFood]);
 
   return {

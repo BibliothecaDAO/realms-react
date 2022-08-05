@@ -17,13 +17,14 @@ export const Entrypoints = {
   build: 'build',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
-  build: (args: { realmId; buildingId }) => ({
+export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
+  build: (args: { realmId; buildingId; qty }) => ({
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,
     calldata: [
       ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
       args.buildingId,
+      args.qty,
     ],
     metadata: { ...args, action: Entrypoints.build },
   }),

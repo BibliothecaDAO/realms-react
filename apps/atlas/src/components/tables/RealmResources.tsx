@@ -14,7 +14,6 @@ type Row = {
   claimableResources: string | ReactElement;
   // totalOutput: number;
   level: number;
-  build: ReactElement;
 };
 
 type Prop = {
@@ -27,15 +26,7 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const {
-    availableResources,
-    raidableVault,
-    claim,
-    upgrade,
-    claimableLords,
-    claimableResources,
-    loadingClaimable,
-  } = useResources({
+  const { claim, loadingClaimable, realmsResourcesDetails } = useResources({
     token_id: props.realm.realmId,
     resources: props.realm.resources,
   });
@@ -46,46 +37,49 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     (re, index) => {
       const resourceId =
         resources.find((res) => res.trait === re.type)?.id || 0;
+
       const mappedData = {
         resource: (
-          <span className="flex w-48">
+          <span className="flex">
             <ResourceIcon
               resource={
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
-              size="sm"
+              size="md"
               className="mr-4"
             />
-            <span className="self-center font-semibold tracking-widest uppercase">
+            <span className="self-center text-xl font-semibold tracking-widest uppercase">
               {re.resourceName || ''}
             </span>
           </span>
         ),
         // baseOutput: 100,
         level: re.level,
-        build: isOwner && (
-          <Button
-            variant="secondary"
-            onClick={() => upgrade(resourceId)}
-            size="xs"
-          >
-            Upgrade
-          </Button>
-        ),
       };
+      {
+        /* eslint-disable */
+      }
       if (props.showClaimable) {
         Object.assign(mappedData, {
-          claimableResources: (claimableResources[index] &&
-            formatEther(claimableResources[index].toString(10))) || (
-            <Spinner size="md" scheme="white" variant="bricks" />
+          claimableResources: (
+            <span className="w-full text-center">
+              {(realmsResourcesDetails.claimableResources[index] &&
+                realmsResourcesDetails.claimableResources[index]) || (
+                <Spinner size="md" scheme="white" variant="circle" />
+              )}
+            </span>
           ),
         });
       }
       if (props.showRaidable) {
         Object.assign(mappedData, {
-          raidableResources: (raidableVault[index] &&
-            formatEther(raidableVault[index].toString(10))) || (
-            <Spinner size="md" scheme="white" variant="bricks" />
+          raidableResources: (
+            <span className="w-full text-center">
+              {(realmsResourcesDetails.vaultResources[index] &&
+                realmsResourcesDetails.vaultResources[index]) || (
+                <Spinner size="md" scheme="white" variant="circle" />
+              )}
+            </span>
           ),
         });
       }
@@ -119,36 +113,20 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   ].filter((i) => i !== undefined);
 
   const tableOptions = { is_striped: true };
+
   return (
     <div className="w-full">
-      {/* <div className="flex justify-between p-2 font-semibold text-white uppercase">
-        {!props.hideLordsClaimable && (
-          <span className="flex flex-col">
-            <span> Claimable Lords:</span>
+      <div className="flex justify-between p-2 text-2xl">
+        <div>
+          Days: {realmsResourcesDetails.daysAccrued} /
+          {realmsResourcesDetails.daysRemainder}s
+        </div>
+        <div>
+          Vault: {realmsResourcesDetails.vaultAccrued} /
+          {realmsResourcesDetails.vaultRemainder}s
+        </div>
+      </div>
 
-            <span className="text-3xl">
-              {' '}
-              {claimableLords ? (
-                formatEther(claimableLords.toString(10))
-              ) : (
-                <Spinner
-                  className="ml-4"
-                  size="md"
-                  scheme="white"
-                  variant="bricks"
-                />
-              )}
-            </span>
-          </span>
-        )}
-        {!props.hideLordsClaimable && (
-          <span className="flex flex-col font-semibold">
-            <span>Days Accrued: </span>
-            <span className="text-3xl">{availableResources.daysAccrued}D</span>
-          </span>
-        )}
-        {props.header}
-      </div> */}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
     </div>
   );

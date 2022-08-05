@@ -1,5 +1,7 @@
+import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
 import type BN from 'bn.js';
+import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import {
@@ -24,33 +26,41 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 
 type Resources = {
   claim: () => void;
-  upgrade: (resourceId: number) => void;
-  availableResources: AvailabeResources;
-  claimableLords?: BN;
-  claimableResources?: any;
-  raidableVault?: any;
+  realmsResourcesDetails: AvailableResources;
   loadingClaimable: boolean;
 };
-type AvailabeResources = {
+type AvailableResources = {
   daysAccrued: number;
-  remainder: number;
+  daysRemainder: number;
+  vaultAccrued: number;
+  vaultRemainder: number;
+  claimableResources: number[];
+  vaultResources: number[];
 };
+
 type useResourcesArgs = {
   token_id: number;
   resources: any;
 };
 
 const useResources = (args: useResourcesArgs): Resources => {
+  const [realmsResourcesDetails, setRealmsResourcesDetails] =
+    useState<AvailableResources>({
+      daysAccrued: 0,
+      daysRemainder: 0,
+      vaultAccrued: 0,
+      vaultRemainder: 0,
+      claimableResources: [],
+      vaultResources: [],
+    });
+
   const { contract: resourcesContract } = useResourcesContract();
+
   const claimResourcesAction = useStarknetInvoke({
     contract: resourcesContract,
     method: Entrypoints.claim,
   });
 
-  const upgradeResourcesAction = useStarknetInvoke({
-    contract: resourcesContract,
-    method: 'upgrade_resource',
-  });
   const {
     data: allOutputData,
     loading: outputLoading,
@@ -81,31 +91,57 @@ const useResources = (args: useResourcesArgs): Resources => {
     args: [bnToUint256(toBN(args.token_id))],
   });
 
-  let availableResources: AvailabeResources;
-  if (availableResourcesData) {
-    availableResources = {
+  const {
+    data: availableVaultDays,
+    loading: loadingAvailableVaultDays,
+    error: errorVaultDays,
+  } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'get_available_vault_days',
+    args: [bnToUint256(toBN(args.token_id))],
+  });
+
+  useEffect(() => {
+    if (
+      !availableResourcesData ||
+      !availableResourcesData[0] ||
+      !allResourceVault ||
+      !allResourceVault[0] ||
+      !allOutputData ||
+      !allOutputData[0] ||
+      !availableVaultDays ||
+      !availableVaultDays[0]
+    ) {
+      return;
+    }
+
+    const resources = allOutputData[0]?.map((a) => {
+      return (+formatEther(uint256ToBN(a).toString(10))).toLocaleString();
+    });
+
+    const vault = allResourceVault[0]?.map((a) => {
+      return (+formatEther(uint256ToBN(a).toString(10))).toLocaleString();
+    });
+
+    console.log(resources);
+
+    setRealmsResourcesDetails({
       daysAccrued: availableResourcesData[0].toNumber(),
-      remainder: availableResourcesData[1].toNumber(),
-    };
-  } else {
-    availableResources = {
-      daysAccrued: 0,
-      remainder: 0,
-    };
-  }
+      daysRemainder: availableResourcesData[1].toNumber(),
+      vaultAccrued: availableVaultDays[0].toNumber(),
+      vaultRemainder: availableVaultDays[1].toNumber(),
+      claimableResources: resources,
+      vaultResources: vault,
+    });
+  }, [
+    availableResourcesData,
+    allResourceVault,
+    allOutputData,
+    availableVaultDays,
+  ]);
 
   return {
-    availableResources,
-    raidableVault:
-      allResourceVault && allResourceVault['user_mint']
-        ? allResourceVault['user_mint'].map((resource) => uint256ToBN(resource))
-        : 0,
-    claimableLords:
-      allOutputData && allOutputData[1] && uint256ToBN(allOutputData[1]),
-    claimableResources:
-      allOutputData && allOutputData['user_mint']
-        ? allOutputData['user_mint'].map((resource) => uint256ToBN(resource))
-        : 0,
+    realmsResourcesDetails,
     claim: () => {
       console.log(claimResourcesAction.error);
       claimResourcesAction.invoke({
@@ -113,16 +149,6 @@ const useResources = (args: useResourcesArgs): Resources => {
         metadata: {
           action: 'harvest_resources',
           realmId: args.token_id,
-        },
-      });
-    },
-    upgrade: (resourceId: number) => {
-      upgradeResourcesAction.invoke({
-        args: [bnToUint256(toBN(args.token_id)), resourceId],
-        metadata: {
-          action: 'upgrade_resource',
-          realmId: args.token_id,
-          resourceId,
         },
       });
     },

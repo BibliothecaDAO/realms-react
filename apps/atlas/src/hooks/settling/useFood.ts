@@ -3,13 +3,12 @@ import type { RealmsCall } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { ModuleAddr } from './stark-contracts';
 
-
 export const entrypoints = {
   create: 'create',
   harvest: 'harvest',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
   create: (args: {
     tokenId: number;
     quantity: number;
