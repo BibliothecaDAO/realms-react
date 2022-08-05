@@ -23,7 +23,7 @@ const NetworkConnectButton = () => {
             : 'Connect'}
         </Button>{' '}
       </Popover.Button>
-      <Popover.Panel className="absolute right-0 z-50 w-64 p-4 mt-2 bg-gray-700 rounded-md">
+      <Popover.Panel className="absolute right-0 z-50 w-64 p-6 mt-2 rounded-md bg-gray-1000">
         <h3>Game Networks</h3>
         {account ? (
           <>

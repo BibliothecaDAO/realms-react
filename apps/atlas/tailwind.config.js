@@ -95,7 +95,7 @@ module.exports = {
         veryWide: '0.165em',
       },
       fontFamily: {
-        display: ['EB Garamond', 'serif'],
+        display: ['IM Fell DW Pica SC', 'serif'],
         body: ['Inconsolata', 'monospace'],
         lords: ['Lords', 'serif'],
       },

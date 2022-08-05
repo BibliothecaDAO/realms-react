@@ -8,8 +8,8 @@ import {
   Donut,
 } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
-
 import { formatEther } from '@ethersproject/units';
+import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import Image from 'next/future/image';
 import { useState } from 'react';
@@ -57,22 +57,19 @@ export function AccountPanel() {
         {resources.map((resource, index) => {
           const info = findResourceName(resource.resourceId);
           return (
-            <div
-              className="flex justify-between my-1 text-white w-96"
-              key={index}
-            >
-              <div className="flex">
+            <div className="flex justify-between my-1 text-white" key={index}>
+              <div className="flex w-full">
                 <ResourceIcon
                   size="xs"
                   className="self-center"
                   resource={info?.trait?.replace('_', '') as string}
                 />{' '}
-                <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+                <span className="self-center ml-4 font-semibold uppercase">
                   {info?.trait}
                 </span>
               </div>
 
-              <span className="self-center ml-4 font-semibold uppercase tracking-veryWide">
+              <span className="self-center ml-4 font-semibold uppercase">
                 {(+formatEther(resource.amount)).toFixed()} units
               </span>
             </div>
@@ -88,7 +85,7 @@ export function AccountPanel() {
         return {
           event: event.data?.success ? (
             <span className="">
-              💰 Raid successful on Realm {event.data?.defendRealmId}
+              Raid successful on Realm {event.data?.defendRealmId}
             </span>
           ) : (
             `Unsuccessful Raid`
@@ -98,7 +95,7 @@ export function AccountPanel() {
           action: event.data?.success ? (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/ream/' + event.data?.defendRealmId}
             >
               Pillage and plunder again
@@ -106,7 +103,7 @@ export function AccountPanel() {
           ) : (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/ream/' + event.data?.defendRealmId}
             >
               Try again
@@ -129,7 +126,7 @@ export function AccountPanel() {
           action: event.data?.success ? (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/ream/' + event.data?.attackRealmId}
             >
               Try again
@@ -137,7 +134,7 @@ export function AccountPanel() {
           ) : (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/ream/' + event.data?.attackRealmId}
             >
               muster the troops!
@@ -171,7 +168,7 @@ export function AccountPanel() {
           event: `Minted Realm ${event.realmId}`,
           class: successClass,
           action: (
-            <Button size="sm" variant="primary" href={'/ream/' + event.realmId}>
+            <Button size="xs" variant="outline" href={'/ream/' + event.realmId}>
               Manage Realm
             </Button>
           ),
@@ -218,9 +215,26 @@ export function AccountPanel() {
   const txQueue = useTransactionQueue();
   const approveTxs = getApproveAllGameContracts();
 
+  const animationUp = useSpring({
+    opacity: selectedPanel === 'account' ? 1 : 0,
+    transform:
+      selectedPanel === 'account' ? `translateY(0)` : `translateY(+200%)`,
+    delay: 450,
+  });
+
+  const animation = useSpring({
+    opacity: selectedPanel === 'account' ? 1 : 0,
+    transform:
+      selectedPanel === 'account' ? `translateY(0)` : `translateY(-200%)`,
+    delay: 300,
+  });
+
   return (
     <BasePanel open={selectedPanel === 'account'}>
-      <div className="w-full p-10 py-10 border-b-4 rounded-br-full bg-black/60 border-white/70">
+      <animated.div
+        style={animation}
+        className="w-full p-10 py-10 border-b-4 shadow-xl bg-black/60 border-black/40"
+      >
         <div className="flex">
           <div className="relative">
             <Image
@@ -228,7 +242,7 @@ export function AccountPanel() {
               alt="map"
               height={300}
               width={300}
-              className="w-48 h-48 mr-10 border-2 rounded-full shadow-2xl border-white/20"
+              className="w-24 h-24 mr-10 border-2 rounded-full shadow-2xl md:w-48 md:h-48 border-white/20"
             />
             <div className="absolute px-2 text-xl font-semibold border-2 rounded-full bg-black/80 border-white/70 bottom-10 right-10">
               1
@@ -266,14 +280,13 @@ export function AccountPanel() {
               </Button>
             </div>
           </div>
-
-          {/* <p className="mt-2 sm:text-2xl">
-            This is your dashboard for all things happening on your lands.
-          </p> */}
         </div>
-      </div>
-      <div className="grid grid-cols-12 gap-6 p-3 sm:p-6">
-        <Card className="col-start-1 col-end-3">
+      </animated.div>
+      <animated.div
+        style={animationUp}
+        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:p-6"
+      >
+        <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-3">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
             <CardStats className="text-5xl">{realmsCount}</CardStats>
@@ -282,7 +295,7 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-3 col-end-5">
+        <Card className="col-start-1 col-end-13 md:col-start-3 md:col-end-5">
           <CardTitle>Unsettled Realms</CardTitle>
           <CardBody>
             <CardStats className="text-5xl">{realmsCount}</CardStats>
@@ -326,22 +339,6 @@ export function AccountPanel() {
                 Settle Realms
               </Button>
             </div>
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() => {
-                txQueue
-                  .executeMulticall(
-                    approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-                  )
-                  .catch((err) => {
-                    // TODO: handle error
-                    console.log(err);
-                  });
-              }}
-            >
-              Approve All Contracts
-            </Button>
           </CardBody>
         </Card> */}
         {/* <Card className="col-start-8 col-end-13">
@@ -368,41 +365,19 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card> */}
-        {/* <h1 className="col-start-3 col-end-8 mt-8">Ser, your news</h1> */}
-        {/* {economicEventData.map((a, index) => {
-          return (
-            <Card
-              key={index}
-              className={`col-start-1 col-end-5 ${
-                loadingData ?? 'animate-pulse'
-              }`}
-            >
-              <CardBody className={`flex ${a.event.class} `}>
-                <span className="py-1 mb-4 font-semibold text-white">
-                  {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
-                  {new Date(a.timestamp).toLocaleDateString('en-US')}
-                </span>
-                <h3 className="text-white">{a.event.event}</h3>
-                {a.event?.resources && a.event.resources}
-                <div className="mt-4">{a.event.action}</div>
-              </CardBody>
-            </Card>
-          );
-        })} */}
-        <Card className={`col-start-1 col-end-6`}>
+        <Card className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5`}>
           <CardTitle>Mercantile History</CardTitle>
           <CardBody>
             {economicEventData.map((a, index) => {
               return (
                 <div
                   key={index}
-                  className={`col-start-6 col-end-12 flex mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
+                  className={`flex flex-wrap mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
                     loadingData ?? 'animate-pulse'
                   }`}
                 >
-                  {/* <CardBody className={`flex ${a.event.class} `}> */}
-                  <div>
-                    <div className="py-1 pb-2 mb-2 text-white opacity-60">
+                  <div className="justify-between w-full h-full">
+                    <div className="text-xs font-semibold text-white/40">
                       {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
                       {new Date(a.timestamp).toLocaleDateString('en-US')}
                     </div>
@@ -412,40 +387,37 @@ export function AccountPanel() {
                   </div>
 
                   <div className="mt-4">{a.event.action}</div>
-                  {/* </CardBody> */}
                 </div>
               );
             })}
           </CardBody>
         </Card>
-        <Card className={`col-start-6 col-end-11`}>
+        <Card className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9`}>
           <CardTitle>Battle History</CardTitle>
-          <CardBody>
+          {/* <CardBody>
             {militaryEventData.map((a, index) => {
               return (
                 <div
                   key={index}
-                  className={`col-start-6 col-end-12 flex mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
+                  className={`flex flex-wrap mb-2 justify-between border border-white/10 rounded-xl p-3 bg-black/80 ${
                     loadingData ?? 'animate-pulse'
                   }`}
                 >
-                  {/* <CardBody className={`flex ${a.event.class} `}> */}
-                  <div>
-                    <div className="py-1 pb-2 mb-2 text-white opacity-60">
+                  <div className="justify-between w-full h-full">
+                    <div className="text-xs font-semibold text-white/40">
                       {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
                       {new Date(a.timestamp).toLocaleDateString('en-US')}
                     </div>
                     <h3 className="text-white">{a.event.event}</h3>
 
-                    {a.event?.resources && a.event.resources}
+                    
                   </div>
 
                   <div className="mt-4">{a.event.action}</div>
-                  {/* </CardBody> */}
                 </div>
               );
             })}
-          </CardBody>
+          </CardBody> */}
         </Card>
 
         {/* <Card className="col-start-5 col-end-9">
@@ -462,7 +434,7 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card> */}
-      </div>
+      </animated.div>
     </BasePanel>
   );
 }
