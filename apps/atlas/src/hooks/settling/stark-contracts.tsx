@@ -35,6 +35,7 @@ export const ModuleAddr = {
   Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
   Splitter:
     '0x06a60b479e9fe080fd8e0a8c4965040a25e276889c2de0cf105c410d0ac81436',
+  Food: '0x03a34ef38f402d6b66b681db7905edfc48676288a7b08cd79910737c45431093',
 };
 
 /**
