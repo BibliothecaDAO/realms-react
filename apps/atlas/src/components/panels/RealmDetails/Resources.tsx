@@ -13,7 +13,6 @@ import { toBN } from 'starknet/dist/utils/number';
 import { initSplineTexture } from 'three-stdlib';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmBuildingId, HarvestType } from '@/constants/buildings';
-import { useRealmContext } from '@/context/RealmDetailContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
@@ -36,12 +35,11 @@ interface ResourceAndFoodInput {
 }
 
 const Harvests: React.FC<Prop> = (props) => {
-  const { buildings, loading } = useRealmContext();
+  const { realmFoodDetails, availableFood } = useFood(
+    props.realm?.realm.realmId
+  );
+  const { buildings } = useBuildings(props.realm?.realm.realmId);
 
-  const { realmFoodDetails } = useFood(props.realm?.realm.realmId);
-
-  const { build } = useBuildings();
-  const { availableFood } = useRealmContext();
   const realm = props.realm?.realm;
 
   const isOwner = useIsOwner(realm?.settledOwner);
@@ -136,7 +134,7 @@ const Harvests: React.FC<Prop> = (props) => {
             colorScheme="transparent"
             className="w-12 bg-white border rounded border-white/40"
             min={1}
-            max={fishingVillageCapacity}
+            max={10}
             stringMode
             onChange={(value: ValueType) =>
               setInput({
@@ -252,6 +250,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
+            disabled={realmFoodDetails.totalFarmHarvest === 0}
             variant="primary"
           >
             Export
@@ -268,6 +267,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
+            disabled={realmFoodDetails.totalFarmHarvest === 0}
             variant="primary"
           >
             Harvest
@@ -276,7 +276,7 @@ const Harvests: React.FC<Prop> = (props) => {
       </Card>
       <Card className="col-start-6 col-end-12 row-span-2">
         <CardTitle>Store house</CardTitle>
-        <div className="w-1/2">Available food: {availableFood}</div>
+        <div className="p-2 text-4xl"> {availableFood}s</div>
       </Card>
       <Card className="flex flex-col h-full col-start-4 col-end-6">
         <CardTitle>
@@ -304,12 +304,6 @@ const Harvests: React.FC<Prop> = (props) => {
             <div className="text-3xl">{realmFoodDetails.decayedVillages}</div>
           </div>
         </div>
-        <CardStats className="text-4xl">
-          {
-            buildings?.find((a) => a.id === RealmBuildingId.FishingVillage)
-              ?.quantityBuilt
-          }
-        </CardStats>
         <div className="flex mt-auto space-x-2">
           <Button
             onClick={() => {
@@ -353,6 +347,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
+            disabled={realmFoodDetails.totalVillageHarvest === 0}
             variant="primary"
           >
             Export
@@ -368,6 +363,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
+            disabled={realmFoodDetails.totalVillageHarvest === 0}
             variant="primary"
           >
             Harvest

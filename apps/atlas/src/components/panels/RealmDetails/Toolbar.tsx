@@ -1,4 +1,6 @@
+import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import type { ReactElement } from 'react';
@@ -7,6 +9,7 @@ import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import { HotKeys } from '@/hooks/settling/useRealmDetailHotkeys';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
+import { Scroll } from '@/shared/Icons';
 
 type ToolbarItemProps = {
   title: string;
@@ -75,9 +78,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       hotkey: HotKeys.Survey,
       click: () => props.onSetSubview('Survey'),
       title: 'Overview',
-      icon: (
-        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
-      ),
+      icon: <Castle className="self-center w-4 h-4 fill-current" />,
       tabName: 'Survey',
     },
     {
@@ -94,9 +95,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       hotkey: HotKeys.Resources,
       click: () => props.onSetSubview('Resources'),
       title: 'Economics',
-      icon: (
-        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
-      ),
+      icon: <Lords className="self-center w-4 h-4 fill-current" />,
       tabName: 'Resources',
     },
     {
@@ -104,7 +103,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       click: () => props.onSetSubview('History'),
       title: 'History',
       icon: (
-        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+        <Scroll className="self-center w-4 h-4 fill-current stroke-current" />
       ),
       tabName: 'History',
     },
@@ -113,7 +112,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       click: () => props.onSetSubview('Lore'),
       title: 'Lore',
       icon: (
-        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+        <Scroll className="self-center w-4 h-4 fill-current stroke-current" />
       ),
       tabName: 'Lore',
     },

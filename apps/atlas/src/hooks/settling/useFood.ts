@@ -54,6 +54,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
 
 type UseRealmFoodDetails = {
   realmFoodDetails: RealmFoodDetails;
+  availableFood: number | undefined;
 };
 
 interface RealmFoodDetails {
@@ -79,6 +80,7 @@ const useFood = (realmId: number): UseRealmFoodDetails => {
     villagesBuilt: 0,
   });
   const { contract: foodContract } = useFoodContract();
+  const [availableFood, setAvailableFood] = useState();
 
   const {
     data: allOutputData,
@@ -90,8 +92,18 @@ const useFood = (realmId: number): UseRealmFoodDetails => {
     args: [bnToUint256(toBN(realmId))],
   });
 
+  const {
+    data: foodData,
+    loading: foodLoadingData,
+    error: foodError,
+  } = useStarknetCall({
+    contract: foodContract,
+    method: 'available_food_in_store',
+    args: [bnToUint256(toBN(realmId))],
+  });
+
   useEffect(() => {
-    if (!allOutputData || !allOutputData[0]) {
+    if (!allOutputData || !allOutputData[0] || !foodData || !foodData[0]) {
       return;
     }
     setRealmFoodDetails({
@@ -106,10 +118,12 @@ const useFood = (realmId: number): UseRealmFoodDetails => {
       decayedVillages: allOutputData['decayed_villages'].toNumber(),
       villagesBuilt: allOutputData['villages_built'].toNumber(),
     });
-  }, [allOutputData]);
+    setAvailableFood(foodData[0].toNumber());
+  }, [allOutputData, foodData]);
 
   return {
     realmFoodDetails,
+    availableFood,
   };
 };
 
