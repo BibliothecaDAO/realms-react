@@ -19,12 +19,8 @@ type Row = {
 
 export function RealmVault(props: RealmsCardProps): ReactElement {
   const {
-    availableResources,
-    raidableVault,
     claim,
-    upgrade,
-    claimableLords,
-    claimableResources,
+
     loadingClaimable,
   } = useResources({
     token_id: props.realm.realmId,
@@ -54,10 +50,10 @@ export function RealmVault(props: RealmsCardProps): ReactElement {
         //   formatEther(claimableResources[index].toString(10))) || (
         //   <Spinner size="md" scheme="white" variant="bricks" />
         // ),
-        raidableResources: (raidableVault[index] &&
-          formatEther(raidableVault[index].toString(10))) || (
-          <Spinner size="md" scheme="white" variant="bricks" />
-        ),
+        // raidableResources: (raidableVault[index] &&
+        //   formatEther(raidableVault[index].toString(10))) || (
+        //   <Spinner size="md" scheme="white" variant="bricks" />
+        // ),
         // level: re.level,
         // build: IsOwner(props.realm?.ownerL2) && (
         //   <Button
