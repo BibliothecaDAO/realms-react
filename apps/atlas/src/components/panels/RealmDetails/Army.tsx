@@ -22,9 +22,11 @@ import useBuildings, {
 import useIsOwner from '@/hooks/useIsOwner';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
+import type { BuildingDetail } from '@/types/index';
 
 type Prop = {
   realm: GetRealmQuery['realm'];
+  buildings: BuildingDetail[] | undefined;
 };
 
 interface BuildQuantity {
@@ -35,7 +37,6 @@ interface BuildQuantity {
 }
 
 const Army: React.FC<Prop> = (props) => {
-  const { buildings, loading } = useBuildings(props.realm?.realmId);
   const realm = props.realm;
 
   // Always initialize with defending army
@@ -91,7 +92,7 @@ const Army: React.FC<Prop> = (props) => {
       <Card className="col-span-8">
         <CardTitle>Build Military Buildings</CardTitle>
         <div className="flex space-x-2">
-          {buildings
+          {props.buildings
             ?.filter((a) => a.type === 'military')
             .map((a, i) => {
               return (
@@ -106,11 +107,8 @@ const Army: React.FC<Prop> = (props) => {
                   <div className="p-3 capitalize">
                     <h3>{a.name}</h3>
                     <hr className="opacity-20" />
-                    <h5 className="my-2">
-                      Quantity Built:{' '}
-                      {!loading ? a.quantityBuilt : 'loading...'}
-                    </h5>
-                    <h5 className="my-2">Decay time:</h5>
+                    <h5 className="my-2">Quantity Built: {a.quantityBuilt}</h5>
+                    {/* <h5 className="my-2">Decay time:</h5> */}
                     <div className="flex w-full mt-3 space-x-2">
                       <Button
                         onClick={() =>
@@ -118,7 +116,7 @@ const Army: React.FC<Prop> = (props) => {
                             createBuildingCall.build({
                               realmId: realm.realmId,
                               buildingId: a.id,
-                              qty: '1',
+                              qty: buildQty[a.key],
                             })
                           )
                         }

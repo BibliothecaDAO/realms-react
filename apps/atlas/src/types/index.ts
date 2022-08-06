@@ -228,3 +228,28 @@ export interface RealmsCall extends StarknetCall {
 }
 
 export type NetworkState = 'loading' | 'success' | 'error';
+
+export interface BuildingDetail {
+  name: string;
+  id: number;
+  quantityBuilt: number;
+  img: string;
+  type: string;
+  key: string;
+}
+
+export interface RealmFoodDetails {
+  totalFarmHarvest: number;
+  totalTimeRemainingUntilFarmHarvest: number;
+  decayedFarms: number;
+  farmsBuilt: number;
+  totalVillageHarvest: number;
+  totalTimeRemainingUntilVillageHarvest: number;
+  decayedVillages: number;
+  villagesBuilt: number;
+}
+
+export interface BuildingFootprint {
+  maxSqm: number;
+  currentSqm: number;
+}

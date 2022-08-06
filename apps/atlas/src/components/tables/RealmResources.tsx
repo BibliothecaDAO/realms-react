@@ -26,7 +26,7 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const { claim, loadingClaimable, realmsResourcesDetails } = useResources({
+  const { realmsResourcesDetails } = useResources({
     token_id: props.realm.realmId,
     resources: props.realm.resources,
   });

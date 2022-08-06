@@ -22,10 +22,15 @@ import useBuildings, {
 import useFood, { createFoodCall } from '@/hooks/settling/useFood';
 import { createCall, Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
+import { getTrait } from '@/shared/Getters/Realm';
 import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
+import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 
 type Prop = {
   realm: GetRealmQuery;
+  buildings: BuildingDetail[] | undefined;
+  realmFoodDetails: RealmFoodDetails;
+  availableFood: number | undefined;
 };
 
 interface ResourceAndFoodInput {
@@ -35,23 +40,12 @@ interface ResourceAndFoodInput {
 }
 
 const Harvests: React.FC<Prop> = (props) => {
-  const { realmFoodDetails, availableFood } = useFood(
-    props.realm?.realm.realmId
-  );
-  const { buildings } = useBuildings(props.realm?.realm.realmId);
-
   const realm = props.realm?.realm;
 
   const isOwner = useIsOwner(realm?.settledOwner);
   const txQueue = useTransactionQueue();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
-
-  const getTrait = (realm: any, trait: string) => {
-    return realm?.traits?.find((o) => o.type === trait)
-      ? realm.traits?.find((o) => o.type === trait).qty
-      : '0';
-  };
 
   const farmCapacity = getTrait(realm, 'River');
   const fishingVillageCapacity = getTrait(realm, 'Harbor');
@@ -97,18 +91,10 @@ const Harvests: React.FC<Prop> = (props) => {
 
         <CardTitle>Work huts</CardTitle>
 
-        {/* <CardBody>
-          {' '}
-          <p className="text-xl">
-            Workhuts increase your production by 25 units per day. They cost 10%
-            of all your resources to build.
-          </p>{' '}
-        </CardBody> */}
-
         <CardStats>
           <span className="text-4xl opacity-80">
             <span className="">
-              {buildings?.find((a) => a.name === 'House')?.quantityBuilt}
+              {props.buildings?.find((a) => a.name === 'House')?.quantityBuilt}
             </span>
           </span>
         </CardStats>
@@ -189,21 +175,25 @@ const Harvests: React.FC<Prop> = (props) => {
         <div className="flex flex-wrap justify-between p-2">
           <div className="w-1/2">
             <h5>farms built </h5>
-            <div className="text-3xl">{realmFoodDetails.farmsBuilt}</div>
+            <div className="text-3xl">{props.realmFoodDetails.farmsBuilt}</div>
           </div>
           <div className="w-1/2">
             <h5>farms to harvest </h5>
-            <div className="text-3xl">{realmFoodDetails.totalFarmHarvest}</div>
+            <div className="text-3xl">
+              {props.realmFoodDetails.totalFarmHarvest}
+            </div>
           </div>
           <div className="w-1/2">
             <h5>time till next harvest </h5>
             <div className="text-3xl">
-              {realmFoodDetails.totalTimeRemainingUntilFarmHarvest}
+              {props.realmFoodDetails.totalTimeRemainingUntilFarmHarvest}
             </div>
           </div>
           <div className="w-1/2">
             <h5>decayed farms</h5>
-            <div className="text-3xl">{realmFoodDetails.decayedFarms}</div>
+            <div className="text-3xl">
+              {props.realmFoodDetails.decayedFarms}
+            </div>
           </div>
         </div>
         <div className="flex mt-2 space-x-2">
@@ -250,7 +240,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
-            disabled={realmFoodDetails.totalFarmHarvest === 0}
+            disabled={props.realmFoodDetails.totalFarmHarvest === 0}
             variant="primary"
           >
             Export
@@ -267,7 +257,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
-            disabled={realmFoodDetails.totalFarmHarvest === 0}
+            disabled={props.realmFoodDetails.totalFarmHarvest === 0}
             variant="primary"
           >
             Harvest
@@ -276,7 +266,7 @@ const Harvests: React.FC<Prop> = (props) => {
       </Card>
       <Card className="col-start-6 col-end-12 row-span-2">
         <CardTitle>Store house</CardTitle>
-        <div className="p-2 text-4xl"> {availableFood}s</div>
+        <div className="p-2 text-4xl"> {props.availableFood}s</div>
       </Card>
       <Card className="flex flex-col h-full col-start-4 col-end-6">
         <CardTitle>
@@ -285,23 +275,27 @@ const Harvests: React.FC<Prop> = (props) => {
         <div className="flex flex-wrap justify-between p-2">
           <div className="w-1/2">
             <h5>villages built </h5>
-            <div className="text-3xl">{realmFoodDetails.villagesBuilt}</div>
+            <div className="text-3xl">
+              {props.realmFoodDetails.villagesBuilt}
+            </div>
           </div>
           <div className="w-1/2">
             <h5>villages to harvest </h5>
             <div className="text-3xl">
-              {realmFoodDetails.totalVillageHarvest}
+              {props.realmFoodDetails.totalVillageHarvest}
             </div>
           </div>
           <div className="w-1/2">
             <h5>time till next harvest </h5>
             <div className="text-3xl">
-              {realmFoodDetails.totalTimeRemainingUntilVillageHarvest}
+              {props.realmFoodDetails.totalTimeRemainingUntilVillageHarvest}
             </div>
           </div>
           <div className="w-1/2">
             <h5>decayed villages</h5>
-            <div className="text-3xl">{realmFoodDetails.decayedVillages}</div>
+            <div className="text-3xl">
+              {props.realmFoodDetails.decayedVillages}
+            </div>
           </div>
         </div>
         <div className="flex mt-auto space-x-2">
@@ -347,7 +341,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
-            disabled={realmFoodDetails.totalVillageHarvest === 0}
+            disabled={props.realmFoodDetails.totalVillageHarvest === 0}
             variant="primary"
           >
             Export
@@ -363,7 +357,7 @@ const Harvests: React.FC<Prop> = (props) => {
               );
             }}
             size="xs"
-            disabled={realmFoodDetails.totalVillageHarvest === 0}
+            disabled={props.realmFoodDetails.totalVillageHarvest === 0}
             variant="primary"
           >
             Harvest

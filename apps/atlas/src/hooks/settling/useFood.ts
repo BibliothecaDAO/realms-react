@@ -2,6 +2,7 @@ import { useStarknetCall } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
+import type { Realm } from '@/generated/graphql';
 import type { RealmsCall } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { ModuleAddr, useFoodContract } from './stark-contracts';
@@ -68,7 +69,7 @@ interface RealmFoodDetails {
   villagesBuilt: number;
 }
 
-const useFood = (realmId: number): UseRealmFoodDetails => {
+const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,
     totalTimeRemainingUntilFarmHarvest: 0,
@@ -89,7 +90,7 @@ const useFood = (realmId: number): UseRealmFoodDetails => {
   } = useStarknetCall({
     contract: foodContract,
     method: 'get_all_food_information',
-    args: [bnToUint256(toBN(realmId))],
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
   const {
@@ -99,7 +100,7 @@ const useFood = (realmId: number): UseRealmFoodDetails => {
   } = useStarknetCall({
     contract: foodContract,
     method: 'available_food_in_store',
-    args: [bnToUint256(toBN(realmId))],
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
   useEffect(() => {

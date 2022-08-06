@@ -10,9 +10,18 @@ import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { TraitTable } from '@/shared/Getters/Realm';
+import type {
+  BuildingDetail,
+  RealmFoodDetails,
+  BuildingFootprint,
+} from '@/types/index';
 
 type Prop = {
   realm?: GetRealmQuery;
+  buildingUtilisation: BuildingFootprint;
+  buildings: BuildingDetail[] | undefined;
+  realmFoodDetails: RealmFoodDetails;
+  availableFood: number | undefined;
 };
 
 const Survey: React.FC<Prop> = (props) => {
@@ -47,13 +56,16 @@ const Survey: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-start-3 col-end-4 ">
           <CardTitle>Food in Storehouse</CardTitle>
-          <CardStats className="text-4xl">{getPopulation()}</CardStats>
+          <CardStats className="text-4xl">{props.availableFood}</CardStats>
         </Card>
-        <Card className="col-start-4 col-end-5 ">
-          <CardTitle>Military Strength</CardTitle>
-          <CardStats className="text-4xl">{getPopulation()}</CardStats>
+        <Card className="col-start-4 col-end-6 ">
+          <CardTitle>Building usage</CardTitle>
+          <CardStats className="text-4xl">
+            {props.buildingUtilisation.currentSqm}sqm /{' '}
+            {props.buildingUtilisation.maxSqm}sqm
+          </CardStats>
         </Card>
-        <Card className="col-start-5 col-end-13 row-span-2">
+        <Card className="col-start-6 col-end-13 row-span-2">
           <CardTitle>{realm?.name} history</CardTitle>
           <CardBody className="text-2xl">
             Loot is a collaborative media project that aims to create a
@@ -66,7 +78,7 @@ const Survey: React.FC<Prop> = (props) => {
             <Button variant="outline">write an entry</Button>
           </div>
         </Card>
-        <Card className="col-start-1 col-end-3 ">
+        <Card className="col-start-1 col-end-4 ">
           {' '}
           <Image
             src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
@@ -77,13 +89,13 @@ const Survey: React.FC<Prop> = (props) => {
             layout={'responsive'}
           />
         </Card>
-        <Card className="col-start-3 col-end-5 ">
+        <Card className="col-start-4 col-end-6 ">
           <CardTitle>Resources</CardTitle>
           <CardBody>
             {realm && <RealmResources realm={realm} loading={false} />}
           </CardBody>
         </Card>
-        <Card className="col-start-3 col-end-5 ">
+        <Card className="col-start-1 col-end-3 ">
           <CardTitle>Traits</CardTitle>
           <CardBody>
             <div className="w-full my-1 ">

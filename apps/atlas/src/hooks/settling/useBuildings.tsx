@@ -2,18 +2,25 @@ import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { RealmBuildingId, HarvestType } from '@/constants/buildings';
+import {
+  RealmBuildingId,
+  HarvestType,
+  RealmBuildingsSize,
+} from '@/constants/buildings';
+import type { Realm } from '@/generated/graphql';
 import {
   ModuleAddr,
   useBuildingContract,
   useFoodContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall } from '@/types/index';
+import { getTrait } from '@/shared/Getters/Realm';
+import type { RealmsCall, BuildingFootprint } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Building = {
   buildings: BuildingDetail[] | undefined;
   loading: boolean;
+  buildingUtilisation: BuildingFootprint | undefined;
 };
 
 interface BuildingDetail {
@@ -42,20 +49,12 @@ export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
   }),
 };
 
-const useBuildings = (realmId: number): Building => {
+const useBuildings = (realm: Realm | undefined): Building => {
   const { contract: buildingContract } = useBuildingContract();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
-  const { contract: foodContract } = useFoodContract();
 
-  const {
-    data: foodData,
-    loading: foodLoadingData,
-    error: foodError,
-  } = useStarknetCall({
-    contract: foodContract,
-    method: 'available_food_in_store',
-    args: [bnToUint256(toBN(realmId))],
-  });
+  const [buildingUtilisation, SetBuildingUtilisation] =
+    useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
 
   const {
     data: allOutputData,
@@ -64,14 +63,14 @@ const useBuildings = (realmId: number): Building => {
   } = useStarknetCall({
     contract: buildingContract,
     method: 'get_effective_buildings',
-    args: [bnToUint256(toBN(realmId))],
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
   useEffect(() => {
     if (!allOutputData || !allOutputData[0]) {
       return;
     }
-    // setAvailableFood(foodData[0].toNumber());
+
     setBuildings([
       {
         name: 'Archer Tower',
@@ -138,11 +137,26 @@ const useBuildings = (realmId: number): Building => {
         type: 'economic',
       },
     ]);
-  }, [allOutputData]);
+
+    const sqm =
+      RealmBuildingsSize.Barracks * allOutputData[0].Barracks.toNumber() +
+      RealmBuildingsSize.ArcherTower * allOutputData[0].ArcherTower.toNumber() +
+      RealmBuildingsSize.Castle * allOutputData[0].Castle.toNumber() +
+      RealmBuildingsSize.MageTower * allOutputData[0].MageTower.toNumber() +
+      RealmBuildingsSize.House * allOutputData[0].House.toNumber();
+
+    const cities = getTrait(realm, 'City');
+    const regions = getTrait(realm, 'Region');
+
+    const max = (cities * regions) / 2 + 100;
+
+    SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
+  }, [allOutputData, realm]);
 
   return {
     buildings,
     loading,
+    buildingUtilisation,
   };
 };
 
