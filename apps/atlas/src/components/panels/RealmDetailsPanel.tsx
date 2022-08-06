@@ -44,7 +44,6 @@ import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { RealmBuildings } from '../tables/RealmBuildings';
 import Army from './RealmDetails/Army';
-import Food from './RealmDetails/Food';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
