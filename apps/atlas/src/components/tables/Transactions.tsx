@@ -25,12 +25,12 @@ const STYLES = {
   status: {
     REJECTED: 'bg-red-400',
     NOT_RECEIVED: 'bg-red-200',
-    RECEIVED: 'bg-green-400/90 animate-pulse',
-    PENDING: 'bg-orange-400 animate-pulse',
+    RECEIVED: 'bg-green-800/40 animate-pulse',
+    PENDING: 'bg-orange-500 animate-pulse',
     ACCEPTED_ON_L2: 'bg-green-600/90',
     ACCEPTED_ON_L1: 'bg-green-900',
     TRANSACTION_RECEIVED: 'bg-green-400 animate-pulse',
-    ENQUEUED: 'border-gray-600 border border-dashed',
+    ENQUEUED: 'border-white/20 border-2 bg-black',
   },
 } as const;
 
@@ -48,12 +48,14 @@ export const TxCartItem = (props: TxCartItem) => {
     <div
       className={`${
         STYLES.status[props.transaction.status]
-      }  rounded shadow-inner flex p-4 w-full font-semibold my-1`}
+      }  rounded flex p-4 w-full font-semibold mb-2`}
     >
-      <div className="flex justify-between w-full p-4 rounded shadow-inner bg-black/10">
+      <div className="flex justify-between w-full p-1 rounded shadow-inner bg-black/19">
         <div>
-          <h6 className="text-xs opacity-40">{props.transaction.status}</h6>
-          <h2 className="sm:text-3xl opacity-80">{resolvedTitle}</h2>
+          <h5 className="mb-3 text-xs opacity-80">
+            {props.transaction.status}
+          </h5>
+          <h2 className="sm:text-3xl">{resolvedTitle}</h2>
           {descriptionIsArray ? (
             resolvedMsg.map((m, i) => {
               if (m.title && m.description) {
@@ -62,10 +64,10 @@ export const TxCartItem = (props: TxCartItem) => {
                     className="py-2"
                     key={`${props.transaction.transactionHash}:${i}`}
                   >
-                    <h5>
+                    <h4>
                       {i + 1}. {m.title}
-                    </h5>
-                    <p className="text-sm opacity-70">{m.description}</p>
+                    </h4>
+                    <p className="text-lg opacity-75">{m.description}</p>
                   </div>
                 );
               }
@@ -75,31 +77,33 @@ export const TxCartItem = (props: TxCartItem) => {
             <p>{resolvedMsg}</p>
           )}
         </div>
-        {props.transaction.transactionHash ? (
-          <Link
-            target={'_blank'}
-            rel="noreferrer noopener"
-            href={
-              // TODO: use network aware link using @/util/blockExplorer
-              'https://goerli.voyager.online/tx/' +
-              props.transaction.transactionHash
-            }
-          >
-            <a className="p-2 tracking-wide uppercase opacity-60">
-              See on Voyager <ExternalLink className="inline-block w-4" />
-            </a>
-          </Link>
-        ) : null}
-        {props.onRemove && (
-          <Button
-            size="sm"
-            variant="outline"
-            texture={false}
-            onClick={props.onRemove}
-          >
-            Remove
-          </Button>
-        )}
+        <div>
+          {props.transaction.transactionHash ? (
+            <Link
+              target={'_blank'}
+              rel="noreferrer noopener"
+              href={
+                // TODO: use network aware link using @/util/blockExplorer
+                'https://goerli.voyager.online/tx/' +
+                props.transaction.transactionHash
+              }
+            >
+              <a className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/30 hover:bg-white/20">
+                See on Voyager <ExternalLink className="inline-block w-4" />
+              </a>
+            </Link>
+          ) : null}
+          {props.onRemove && (
+            <Button
+              size="sm"
+              variant="outline"
+              texture={false}
+              onClick={props.onRemove}
+            >
+              Remove
+            </Button>
+          )}
+        </div>
       </div>
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
     </div>

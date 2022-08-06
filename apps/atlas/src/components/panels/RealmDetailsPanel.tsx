@@ -220,16 +220,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                 <>
                   {subview == 'Army' && (
                     <Army
+                      open={subview == 'Army'}
                       availableResources={realmsResourcesDetails}
                       buildings={buildings}
                       realm={realmData?.realm}
                     />
                   )}
-                  {subview == 'Buildings' && realmData?.realm && (
-                    <RealmBuildings realm={realmData.realm} loading={false} />
-                  )}
                   {subview == 'Resources' && (
                     <ResourceDetails
+                      open={subview == 'Resources'}
                       availableResources={realmsResourcesDetails}
                       realmFoodDetails={realmFoodDetails}
                       availableFood={availableFood}
@@ -237,9 +236,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                       realm={realmData}
                     />
                   )}
-                  {subview == 'Food' ? <Food realm={realmData} /> : null}
                   {subview == 'Survey' && (
                     <Survey
+                      open={subview == 'Survey'}
                       availableResources={realmsResourcesDetails}
                       buildingUtilisation={buildingUtilisation}
                       realmFoodDetails={realmFoodDetails}
@@ -248,8 +247,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                       realm={realmData}
                     />
                   )}
+
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
-                  <div id="spacer" className="w-full h-20" />
                 </>
               ) : null}
             </div>

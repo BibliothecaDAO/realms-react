@@ -16,6 +16,7 @@ import type {
   BuildingFootprint,
   AvailableResources,
 } from '@/types/index';
+import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 type Prop = {
   realm?: GetRealmQuery;
@@ -24,6 +25,7 @@ type Prop = {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
   availableResources: AvailableResources;
+  open: boolean;
 };
 
 const Survey: React.FC<Prop> = (props) => {
@@ -46,7 +48,7 @@ const Survey: React.FC<Prop> = (props) => {
 
   const realm = props.realm?.realm;
   return (
-    <>
+    <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
         <Card className="col-start-1 col-end-2 ">
           <CardTitle>Vulnerable in</CardTitle>
@@ -63,8 +65,9 @@ const Survey: React.FC<Prop> = (props) => {
         <Card className="col-start-4 col-end-6 ">
           <CardTitle>Building usage</CardTitle>
           <CardStats className="text-4xl">
-            {props.buildingUtilisation.currentSqm}sqm /{' '}
-            {props.buildingUtilisation.maxSqm}sqm
+            {props.buildingUtilisation && props.buildingUtilisation.currentSqm}
+            sqm /{' '}
+            {props.buildingUtilisation && props.buildingUtilisation.maxSqm}sqm
           </CardStats>
         </Card>
         <Card className="col-start-6 col-end-13 row-span-2">
@@ -130,7 +133,7 @@ const Survey: React.FC<Prop> = (props) => {
           </CardBody>
         </Card>
       </div>
-    </>
+    </BaseRealmDetailPanel>
   );
 };
 
