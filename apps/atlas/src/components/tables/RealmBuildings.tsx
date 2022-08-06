@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import { createCall, Entrypoints } from '@/hooks/settling/useBuildings';
+import { createBuildingCall, Entrypoints } from '@/hooks/settling/useBuildings';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Scroll } from '@/shared/Icons';
 import type { RealmsCall, RealmsCardProps } from '../../types';
@@ -153,7 +153,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
           disabled={!isOwner}
           onClick={() => {
             txQueue.add(
-              createCall.build({
+              createBuildingCall.build({
                 realmId: props.realm.realmId,
                 buildingId: previewBuild.buildingId,
               })
