@@ -282,11 +282,11 @@ function MapModule() {
     },
   });
 
-  const iconMapping = {
+  /* const iconMapping = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
   };
 
-  /* const resourceLayer = new IconLayer({
+   const resourceLayer = new IconLayer({
     id: 'icon-layer',
     data: filteredData(),
     pickable: false,
