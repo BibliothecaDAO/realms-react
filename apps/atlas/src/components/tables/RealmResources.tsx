@@ -4,9 +4,8 @@ import type { ReactElement } from 'react';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
+import type { AvailableResources, RealmsCardProps } from '@/types/index';
 import { resources, findResourceName } from '@/util/resources';
-
-import type { RealmsCardProps } from '../../types';
 
 type Row = {
   resource: ReactElement;
@@ -23,14 +22,10 @@ type Prop = {
   hideLordsClaimable?: boolean;
   hideDaysAccrued?: boolean;
   header?: React.ReactNode;
+  availableResources: AvailableResources;
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const { realmsResourcesDetails } = useResources({
-    token_id: props.realm.realmId,
-    resources: props.realm.resources,
-  });
-
   const isOwner = useIsOwner(props.realm?.ownerL2);
 
   const mappedRowData: Row[] = (props.realm.resources as any).map(
@@ -63,8 +58,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           claimableResources: (
             <span className="w-full text-center">
-              {(realmsResourcesDetails.claimableResources[index] &&
-                realmsResourcesDetails.claimableResources[index]) || (
+              {(props.availableResources.claimableResources[index] &&
+                props.availableResources.claimableResources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}
             </span>
@@ -75,8 +70,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           raidableResources: (
             <span className="w-full text-center">
-              {(realmsResourcesDetails.vaultResources[index] &&
-                realmsResourcesDetails.vaultResources[index]) || (
+              {(props.availableResources.vaultResources[index] &&
+                props.availableResources.vaultResources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}
             </span>
@@ -118,12 +113,12 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     <div className="w-full">
       <div className="flex justify-between p-2 text-2xl">
         <div>
-          Days: {realmsResourcesDetails.daysAccrued} /
-          {realmsResourcesDetails.daysRemainder}s
+          Days: {props.availableResources.daysAccrued} /
+          {props.availableResources.daysRemainder}s
         </div>
         <div>
-          Vault: {realmsResourcesDetails.vaultAccrued} /
-          {realmsResourcesDetails.vaultRemainder}s
+          Vault: {props.availableResources.vaultAccrued} /
+          {props.availableResources.vaultRemainder}s
         </div>
       </div>
 

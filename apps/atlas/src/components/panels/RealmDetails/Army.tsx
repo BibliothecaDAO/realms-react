@@ -22,11 +22,12 @@ import useBuildings, {
 import useIsOwner from '@/hooks/useIsOwner';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
-import type { BuildingDetail } from '@/types/index';
+import type { BuildingDetail, AvailableResources } from '@/types/index';
 
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
+  availableResources: AvailableResources;
 };
 
 interface BuildQuantity {
@@ -153,6 +154,7 @@ const Army: React.FC<Prop> = (props) => {
       <Card className="col-span-4">
         <CardTitle>Raidable Resources</CardTitle>
         <RealmResources
+          availableResources={props.availableResources}
           header={
             <>
               <h3>Vault</h3>{' '}

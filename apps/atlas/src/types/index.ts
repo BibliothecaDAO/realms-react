@@ -253,3 +253,12 @@ export interface BuildingFootprint {
   maxSqm: number;
   currentSqm: number;
 }
+
+export type AvailableResources = {
+  daysAccrued: number;
+  daysRemainder: number;
+  vaultAccrued: number;
+  vaultRemainder: number;
+  claimableResources: number[];
+  vaultResources: number[];
+};

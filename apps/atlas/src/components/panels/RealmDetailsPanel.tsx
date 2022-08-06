@@ -32,6 +32,7 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
@@ -64,6 +65,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
   const { realmFoodDetails, availableFood } = useFood(realm as Realm);
+  const { realmsResourcesDetails } = useResources({
+    token_id: realm?.realmId,
+    resources: realm?.resources,
+  });
 
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
@@ -214,13 +219,18 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               {realmData?.realm ? (
                 <>
                   {subview == 'Army' && (
-                    <Army buildings={buildings} realm={realmData?.realm} />
+                    <Army
+                      availableResources={realmsResourcesDetails}
+                      buildings={buildings}
+                      realm={realmData?.realm}
+                    />
                   )}
                   {subview == 'Buildings' && realmData?.realm && (
                     <RealmBuildings realm={realmData.realm} loading={false} />
                   )}
                   {subview == 'Resources' && (
                     <ResourceDetails
+                      availableResources={realmsResourcesDetails}
                       realmFoodDetails={realmFoodDetails}
                       availableFood={availableFood}
                       buildings={buildings}
@@ -230,6 +240,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                   {subview == 'Food' ? <Food realm={realmData} /> : null}
                   {subview == 'Survey' && (
                     <Survey
+                      availableResources={realmsResourcesDetails}
                       buildingUtilisation={buildingUtilisation}
                       realmFoodDetails={realmFoodDetails}
                       availableFood={availableFood}

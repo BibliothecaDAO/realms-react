@@ -24,13 +24,18 @@ import { createCall, Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
 import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
-import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
+import type {
+  BuildingDetail,
+  RealmFoodDetails,
+  AvailableResources,
+} from '@/types/index';
 
 type Prop = {
   realm: GetRealmQuery;
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
+  availableResources: AvailableResources;
 };
 
 interface ResourceAndFoodInput {
@@ -134,7 +139,12 @@ const Harvests: React.FC<Prop> = (props) => {
       </Card>
       <Card className="col-start-2 col-end-4 ">
         <CardTitle>Resources</CardTitle>
-        <RealmResources showClaimable realm={realm} loading={false} />
+        <RealmResources
+          availableResources={props.availableResources}
+          showClaimable
+          realm={realm}
+          loading={false}
+        />
         <div className="mt-2">
           <div className="flex items-center">
             <Button

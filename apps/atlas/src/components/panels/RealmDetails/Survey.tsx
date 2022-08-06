@@ -14,14 +14,16 @@ import type {
   BuildingDetail,
   RealmFoodDetails,
   BuildingFootprint,
+  AvailableResources,
 } from '@/types/index';
 
 type Prop = {
   realm?: GetRealmQuery;
-  buildingUtilisation: BuildingFootprint;
+  buildingUtilisation: BuildingFootprint | undefined;
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
+  availableResources: AvailableResources;
 };
 
 const Survey: React.FC<Prop> = (props) => {
@@ -92,7 +94,13 @@ const Survey: React.FC<Prop> = (props) => {
         <Card className="col-start-4 col-end-6 ">
           <CardTitle>Resources</CardTitle>
           <CardBody>
-            {realm && <RealmResources realm={realm} loading={false} />}
+            {realm && (
+              <RealmResources
+                availableResources={props.availableResources}
+                realm={realm}
+                loading={false}
+              />
+            )}
           </CardBody>
         </Card>
         <Card className="col-start-1 col-end-3 ">
