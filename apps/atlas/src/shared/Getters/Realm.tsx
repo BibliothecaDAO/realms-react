@@ -39,20 +39,20 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-green-200/30',
+      colour: 'bg-green-200',
       traitMax: 7,
       title: 'Regions',
     },
-    { trait: 'City', colour: 'bg-amber-300/50', traitMax: 21, title: 'Cities' },
+    { trait: 'City', colour: 'bg-amber-300', traitMax: 21, title: 'Cities' },
     {
       trait: 'Harbor',
-      colour: 'bg-amber-500/50',
+      colour: 'bg-amber-500',
       traitMax: 35,
       title: 'Harbors',
     },
     {
       trait: 'River',
-      colour: 'bg-blue-700/50',
+      colour: 'bg-blue-700',
       traitMax: 60,
       title: 'Rivers',
     },
@@ -74,7 +74,7 @@ export const TraitTable = (props: TraitProps) => {
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
         </span>
       </span>
-      <div className="w-full my-1 rounded-full bg-gray-100/70">
+      <div className="w-full my-1 rounded-full bg-stone-100/10">
         <div
           className={`h-3 ${getTrait()?.colour} shadow-inner rounded-full`}
           style={{
@@ -126,4 +126,10 @@ export const squadStats = (squad: TroopInterface[] | undefined | null) => {
       .map((troop) => troop.wisdom)
       .reduce((prev, curr) => prev + curr, 0),
   };
+};
+
+export const getTrait = (realm: any, trait: string) => {
+  return realm?.traits?.find((o) => o.type === trait)
+    ? realm.traits?.find((o) => o.type === trait).qty
+    : '0';
 };

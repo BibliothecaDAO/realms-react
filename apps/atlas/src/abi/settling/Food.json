@@ -177,6 +177,10 @@
       {
         "name": "decayed_farms",
         "type": "felt"
+      },
+      {
+        "name": "farms_built",
+        "type": "felt"
       }
     ],
     "stateMutability": "view",
@@ -219,6 +223,55 @@
       {
         "name": "decayed_farms",
         "type": "felt"
+      },
+      {
+        "name": "villages_built",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_all_food_information",
+    "outputs": [
+      {
+        "name": "total_farm_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_farm_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_farms",
+        "type": "felt"
+      },
+      {
+        "name": "farms_built",
+        "type": "felt"
+      },
+      {
+        "name": "total_village_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_village_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_villages",
+        "type": "felt"
+      },
+      {
+        "name": "villages_built",
+        "type": "felt"
       }
     ],
     "stateMutability": "view",
@@ -249,17 +302,6 @@
       }
     ],
     "name": "update_food_hook",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "name": "token_id",
-        "type": "Uint256"
-      }
-    ],
-    "name": "reset",
     "outputs": [],
     "type": "function"
   }

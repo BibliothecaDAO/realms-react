@@ -28,11 +28,7 @@ const DateTimeDisplay = (props: TimeDisplay) => {
 };
 
 const ExpiredNotice = () => {
-  return (
-    <div className="w-full p-2 text-center uppercase bg-red-500 rounded animate-pulse">
-      <p>Realm can be Attacked</p>
-    </div>
-  );
+  return <p>Harvest</p>;
 };
 
 const ShowCounter = (props: Counter) => {

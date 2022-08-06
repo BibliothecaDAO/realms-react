@@ -8,7 +8,7 @@ import {
   ModuleAddr,
   useResourcesContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall } from '@/types/index';
+import type { RealmsCall, AvailableResources } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 export const Entrypoints = {
@@ -29,18 +29,10 @@ type Resources = {
   realmsResourcesDetails: AvailableResources;
   loadingClaimable: boolean;
 };
-type AvailableResources = {
-  daysAccrued: number;
-  daysRemainder: number;
-  vaultAccrued: number;
-  vaultRemainder: number;
-  claimableResources: number[];
-  vaultResources: number[];
-};
 
 type useResourcesArgs = {
-  token_id: number;
-  resources: any;
+  token_id: number | undefined;
+  resources: any | undefined;
 };
 
 const useResources = (args: useResourcesArgs): Resources => {
@@ -68,7 +60,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'get_all_resource_claimable',
-    args: [bnToUint256(toBN(args.token_id))],
+    args: [bnToUint256(toBN(args.token_id ?? 0))],
   });
 
   const {
@@ -78,7 +70,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'get_all_vault_raidable',
-    args: [bnToUint256(toBN(args.token_id))],
+    args: [bnToUint256(toBN(args.token_id ?? 0))],
   });
 
   const {
@@ -88,7 +80,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'days_accrued',
-    args: [bnToUint256(toBN(args.token_id))],
+    args: [bnToUint256(toBN(args.token_id ?? 0))],
   });
 
   const {
@@ -98,7 +90,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'get_available_vault_days',
-    args: [bnToUint256(toBN(args.token_id))],
+    args: [bnToUint256(toBN(args.token_id ?? 0))],
   });
 
   useEffect(() => {
@@ -145,7 +137,7 @@ const useResources = (args: useResourcesArgs): Resources => {
     claim: () => {
       console.log(claimResourcesAction.error);
       claimResourcesAction.invoke({
-        args: [bnToUint256(toBN(args.token_id))],
+        args: [bnToUint256(toBN(args.token_id ?? 0))],
         metadata: {
           action: 'harvest_resources',
           realmId: args.token_id,

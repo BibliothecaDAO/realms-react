@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { number } from 'starknet';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
+import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { DownloadAssets } from '@/shared/DownloadAssets';
@@ -84,6 +85,10 @@ function Overview(props: RealmsCardProps): ReactElement {
 
 export function RealmCard(props: RealmsCardProps): ReactElement {
   const ensData = useEnsResolver(props.realm?.owner as string);
+  const { realmsResourcesDetails } = useResources({
+    token_id: props.realm?.realmId,
+    resources: props.realm?.resources,
+  });
 
   const tabs = useMemo(
     () => [
@@ -93,7 +98,12 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       },
       {
         label: 'Resources',
-        component: <RealmResources {...props} />,
+        component: (
+          <RealmResources
+            availableResources={realmsResourcesDetails}
+            {...props}
+          />
+        ),
       },
       // {
       //   label: 'Troops',

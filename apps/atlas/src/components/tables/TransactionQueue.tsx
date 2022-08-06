@@ -10,11 +10,17 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
   return (
     <>
-      <div className="flex justify-between mb-4">
+      {txQueue.transactions.length > 0 ? (
+        <p className="z-0 p-2 font-semibold sm:text-xl">
+          Ser, your royal signature is requested to execute the following
+          commands:
+        </p>
+      ) : null}
+      <div className="flex justify-between my-2 mb-4 space-x-2">
         <Button
           disabled={txQueue.transactions.length == 0}
-          className="flex-1 mr-4"
-          size="lg"
+          className="flex-1"
+          size="md"
           variant="primary"
           onClick={() =>
             txQueue
@@ -36,7 +42,7 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
         </Button>
         <Button
           disabled={txQueue.transactions.length == 0}
-          size="sm"
+          size="md"
           texture={false}
           variant="outline"
           onClick={() => txQueue.empty()}
@@ -44,12 +50,6 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           Remove All
         </Button>
       </div>
-      {txQueue.transactions.length > 0 ? (
-        <p className="z-0 mb-2 text-xl">
-          Ser, your royal signature is requested to execute the following
-          commands:
-        </p>
-      ) : null}
       {txQueue.transactions.map((c, i) => (
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata

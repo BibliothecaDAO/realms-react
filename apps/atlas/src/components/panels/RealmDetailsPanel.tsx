@@ -10,6 +10,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
@@ -25,11 +26,13 @@ import { toBN } from 'starknet/utils/number';
 import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/tables/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
-import type { RealmFragmentFragment } from '@/generated/graphql';
+import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
+import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
@@ -41,7 +44,6 @@ import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 import { RealmBuildings } from '../tables/RealmBuildings';
 import Army from './RealmDetails/Army';
-import Food from './RealmDetails/Food';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
@@ -59,6 +61,13 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   });
 
   const realm = realmData?.realm;
+
+  const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
+  const { realmFoodDetails, availableFood } = useFood(realm as Realm);
+  const { realmsResourcesDetails } = useResources({
+    token_id: realm?.realmId,
+    resources: realm?.resources,
+  });
 
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
@@ -208,17 +217,37 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <div className="w-full px-6 py-10 overflow-x-scroll sm:p-10 md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
-                  {subview == 'Army' && <Army realm={realmData?.realm} />}
-                  {subview == 'Buildings' && realmData?.realm && (
-                    <RealmBuildings realm={realmData.realm} loading={false} />
+                  {subview == 'Army' && (
+                    <Army
+                      open={subview == 'Army'}
+                      availableResources={realmsResourcesDetails}
+                      buildings={buildings}
+                      realm={realmData?.realm}
+                    />
                   )}
                   {subview == 'Resources' && (
-                    <ResourceDetails realm={realmData} />
+                    <ResourceDetails
+                      open={subview == 'Resources'}
+                      availableResources={realmsResourcesDetails}
+                      realmFoodDetails={realmFoodDetails}
+                      availableFood={availableFood}
+                      buildings={buildings}
+                      realm={realmData}
+                    />
                   )}
-                  {subview == 'Food' ? <Food realm={realmData} /> : null}
-                  {subview == 'Survey' && <Survey realm={realmData} />}
+                  {subview == 'Survey' && (
+                    <Survey
+                      open={subview == 'Survey'}
+                      availableResources={realmsResourcesDetails}
+                      buildingUtilisation={buildingUtilisation}
+                      realmFoodDetails={realmFoodDetails}
+                      availableFood={availableFood}
+                      buildings={buildings}
+                      realm={realmData}
+                    />
+                  )}
+
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
-                  <div id="spacer" className="w-full h-20" />
                 </>
               ) : null}
             </div>
