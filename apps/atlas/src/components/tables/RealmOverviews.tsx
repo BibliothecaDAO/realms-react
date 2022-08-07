@@ -251,7 +251,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 quick view
               </Button>
               <Button
-                href={`/realm/${realm.realmId}`}
+                href={`/realm/${realm.realmId}?tab=Survey`}
                 variant="primary"
                 size="xs"
                 className="w-full "

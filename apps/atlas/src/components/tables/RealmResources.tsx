@@ -1,12 +1,18 @@
-import { Table, Button, ResourceIcon, Spinner } from '@bibliotheca-dao/ui-lib';
+import {
+  Table,
+  Button,
+  ResourceIcon,
+  Spinner,
+  CountdownTimer,
+} from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
+import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
 import { resources, findResourceName } from '@/util/resources';
-
 type Row = {
   resource: ReactElement;
   // baseOutput: number;
@@ -111,14 +117,29 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between p-2 text-2xl">
-        <div>
-          Days: {props.availableResources.daysAccrued} /
-          {props.availableResources.daysRemainder}s
+      <div className="flex flex-wrap justify-between p-2">
+        <div className="mb-5">
+          <h6>Days:</h6>
+          <span className="text-2xl">
+            {props.availableResources.daysAccrued == MAX_DAYS_ACCURED
+              ? `${MAX_DAYS_ACCURED} days accrued, you must claim now.`
+              : 'Days:' + props.availableResources.daysAccrued}
+          </span>{' '}
+          {props.availableResources.daysAccrued != MAX_DAYS_ACCURED && (
+            <CountdownTimer
+              date={(
+                (DAY - props.availableResources.daysRemainder) * 1000 +
+                new Date().getTime()
+              ).toString()}
+            />
+          )}
         </div>
+
         <div>
-          Vault: {props.availableResources.vaultAccrued} /
-          {props.availableResources.vaultRemainder}s
+          <h6>vault: </h6>
+          <span className="text-2xl">
+            {props.availableResources.vaultAccrued} days accrued
+          </span>{' '}
         </div>
       </div>
 

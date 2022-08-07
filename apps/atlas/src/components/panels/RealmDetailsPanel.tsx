@@ -213,8 +213,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               />
             )}
           </UserAgent>
-          <div className="relative w-full">
-            <div className="w-full px-6 py-10 overflow-x-scroll sm:p-10 md:overflow-x-visible">
+          <div className="relative w-full h-full">
+            <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
                   {subview == 'Army' && (

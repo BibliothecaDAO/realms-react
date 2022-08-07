@@ -9,9 +9,13 @@ type Props = {
 export const BaseRealmDetailPanel = (props: Props) => {
   const animation = useSpring({
     opacity: props.open ? 1 : 0,
-    transform: props.open ? `translateY(0)` : `translateY(200%)`,
-    delay: 150,
+    transform: props.open ? `translateY(0)` : `translateY(5%)`,
+    delay: 75,
   });
 
-  return <animated.div style={animation}>{props.children}</animated.div>;
+  return (
+    <animated.div className="absolute" style={animation}>
+      <div className={` relative px-8`}>{props.children}</div>
+    </animated.div>
+  );
 };

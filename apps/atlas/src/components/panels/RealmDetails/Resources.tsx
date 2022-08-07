@@ -210,11 +210,11 @@ const Harvests: React.FC<Prop> = (props) => {
               <div className="text-3xl">
                 <CountdownTimer
                   date={(
-                    new Date().getTime() +
                     (HARVEST_LENGTH -
                       props.realmFoodDetails
                         .totalTimeRemainingUntilFarmHarvest) *
-                      1000
+                      1000 +
+                    new Date().getTime()
                   ).toString()}
                 />
                 {/* {props.realmFoodDetails.totalTimeRemainingUntilFarmHarvest} */}
@@ -321,11 +321,11 @@ const Harvests: React.FC<Prop> = (props) => {
               <div className="text-3xl">
                 <CountdownTimer
                   date={(
-                    new Date().getTime() +
                     (HARVEST_LENGTH -
                       props.realmFoodDetails
                         .totalTimeRemainingUntilVillageHarvest) *
-                      1000
+                      1000 +
+                    new Date().getTime()
                   ).toString()}
                 />
               </div>

@@ -3,6 +3,7 @@ import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 interface DateProps {
   date: string;
 }
+
 interface TimeDisplay {
   value: any;
   type: any;
@@ -51,6 +52,7 @@ const ShowCounter = (props: Counter) => {
 
 export const CountdownTimer = (props: DateProps) => {
   const { days, hours, minutes, seconds } = useCountdown(props);
+
   if (days + hours + minutes + seconds <= 0) {
     return <ExpiredNotice />;
   } else {
