@@ -31,7 +31,7 @@ export enum HarvestType {
   Store = 2,
 }
 
-export const BASE_SQM = 25;
+export const BASE_SQM = 100;
 export const MAX_DAYS_ACCURED = 3;
 export const BASE_RESOURCES_PER_DAY = 250;
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;

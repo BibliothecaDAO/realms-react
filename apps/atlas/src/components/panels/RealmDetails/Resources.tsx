@@ -16,6 +16,8 @@ import {
   RealmBuildingId,
   HarvestType,
   HARVEST_LENGTH,
+  WORK_HUT_OUTPUT,
+  WORK_HUT_COST,
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
@@ -91,7 +93,7 @@ const Harvests: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-        <Card className="col-start-1 col-end-2 ">
+        <Card className="col-start-1 col-end-3 ">
           <div className="w-full p-4 mx-auto bg-white rounded bg-opacity-90">
             <Image
               width={200}
@@ -113,41 +115,47 @@ const Harvests: React.FC<Prop> = (props) => {
               </span>
             </span>
           </CardStats>
-          <div className="flex mt-2 space-x-2">
-            <Button
-              onClick={() =>
-                txQueue.add(
-                  createBuildingCall.build({
-                    realmId: realm.realmId,
-                    buildingId: RealmBuildingId.House,
-                    qty: input.workHutsToBuild,
+          <div className="p-2">
+            <div className="flex mt-2 space-x-2">
+              <Button
+                onClick={() =>
+                  txQueue.add(
+                    createBuildingCall.build({
+                      realmId: realm.realmId,
+                      buildingId: RealmBuildingId.House,
+                      qty: input.workHutsToBuild,
+                    })
+                  )
+                }
+                size="xs"
+                variant="primary"
+              >
+                Build
+              </Button>
+              <InputNumber
+                value={input.workHutsToBuild}
+                inputSize="sm"
+                colorScheme="transparent"
+                className="w-12 bg-white border rounded border-white/40"
+                min={1}
+                max={10}
+                stringMode
+                onChange={(value: ValueType) =>
+                  setInput({
+                    farmsToBuild: input.farmsToBuild,
+                    fishingVillagesToBuild: input.fishingVillagesToBuild,
+                    workHutsToBuild: value.toString(),
                   })
-                )
-              }
-              size="xs"
-              variant="primary"
-            >
-              Build
-            </Button>
-            <InputNumber
-              value={input.workHutsToBuild}
-              inputSize="sm"
-              colorScheme="transparent"
-              className="w-12 bg-white border rounded border-white/40"
-              min={1}
-              max={10}
-              stringMode
-              onChange={(value: ValueType) =>
-                setInput({
-                  farmsToBuild: input.farmsToBuild,
-                  fishingVillagesToBuild: input.fishingVillagesToBuild,
-                  workHutsToBuild: value.toString(),
-                })
-              }
-            />{' '}
+                }
+              />{' '}
+            </div>
+            <p className="py-1">
+              Workhuts increase your output by {WORK_HUT_OUTPUT} per day cycle.
+              They cost {WORK_HUT_COST} of all the resources on your realm.
+            </p>
           </div>
         </Card>
-        <Card className="col-start-2 col-end-4 ">
+        <Card className="col-start-3 col-end-5 ">
           <CardTitle>Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -170,26 +178,45 @@ const Harvests: React.FC<Prop> = (props) => {
             </div>
           </div>
         </Card>
-        <Card className="col-start-4 col-end-12 ">
-          <CardTitle>Instructions</CardTitle>
-          <CardBody>
-            <div className="p-2">
-              <h4>Resources</h4>
-              <p className="text-xl">
-                Try and maximise your resource output by building workhuts.
-              </p>
+
+        <Card className="col-start-1 col-end-3">
+          <div className="flex p-3 bg-white rounded">
+            <Image
+              width={200}
+              height={220}
+              className={' mx-auto'}
+              src={'/realm-buildings/storehouse.png'}
+            />
+          </div>
+
+          <CardTitle>Store house</CardTitle>
+
+          <div className="p-2 ">
+            <h6>food remaining</h6>
+
+            <div className="text-2xl">
+              {props.availableFood?.toLocaleString()} <br />
+              {props.availableFood && props?.availableFood > 0 ? (
+                <CountdownTimer
+                  date={(
+                    props.availableFood * 1000 +
+                    new Date().getTime()
+                  ).toString()}
+                />
+              ) : (
+                <span className="text-red-600 animate-pulse">
+                  Serfs are starving!!
+                </span>
+              )}
             </div>
-            <hr />
-            <div className="p-2">
-              <h4>Food</h4>
-              <p className="text-xl">
-                Food accures per day after harvesting farms. You consume 1 food
-                per second according to your population
-              </p>
-            </div>
-          </CardBody>
+            <p>
+              You consume 1 food per second according to your population. Build
+              and harvest Farms and Fishing Villages in order to keep your
+              citizens fed.
+            </p>
+          </div>
         </Card>
-        <Card className="flex flex-col h-full col-start-4 col-end-6 ">
+        <Card className="flex flex-col h-full col-start-3 col-end-5 ">
           <CardTitle>Farms Built - Capacity {farmCapacity}</CardTitle>
 
           <div className="flex flex-wrap justify-between p-2">
@@ -217,7 +244,6 @@ const Harvests: React.FC<Prop> = (props) => {
                     new Date().getTime()
                   ).toString()}
                 />
-                {/* {props.realmFoodDetails.totalTimeRemainingUntilFarmHarvest} */}
               </div>
             </div>
             <div className="w-1/2">
@@ -294,13 +320,7 @@ const Harvests: React.FC<Prop> = (props) => {
               Harvest
             </Button>
           </div>
-        </Card>
-        <Card className="col-start-6 col-end-12 row-span-2">
-          <CardTitle>Store house</CardTitle>
-          <div className="p-2 text-4xl"> {props.availableFood}s</div>
-        </Card>
-        <Card className="flex flex-col h-full col-start-4 col-end-6">
-          <CardTitle>
+          <CardTitle className="mt-4">
             Fishing Villages - Capacity {fishingVillageCapacity}
           </CardTitle>
           <div className="flex flex-wrap justify-between p-2">

@@ -133,7 +133,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'storeHouse',
         id: RealmBuildingId.StoreHouse,
         quantityBuilt: allOutputData[0].StoreHouse.toNumber(),
-        img: '/realm-buildings/barracks.png',
+        img: '/realm-buildings/storeHouse.png',
         type: 'economic',
       },
     ]);
