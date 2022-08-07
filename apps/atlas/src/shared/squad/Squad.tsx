@@ -150,12 +150,12 @@ export const SquadBuilder = (props: SquadProps) => {
               hideSquadToggle
               filterTier={selectedTroop?.tier}
             />
-            <div className="grid grid-cols-2 gap-6 my-4">
-              <div className="col-start-1 col-end-2">
+            <div className="flex flex-wrap">
+              <div className="w-full">
                 <h3>Statistics Preview</h3>
                 <SquadStatistics troops={props.troops} troopsQueued={toBuy} />
               </div>
-              <div className="col-start-2 col-end-3">
+              <div className="w-full mt-2">
                 <h3>Costs</h3>
                 {getCostSums(toBuy).map((a, index) => {
                   return (

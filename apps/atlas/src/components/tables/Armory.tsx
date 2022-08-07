@@ -32,10 +32,6 @@ export const ArmoryBuilder = (props: Props) => {
   const troopCostCell = (cost: ItemCost) => {
     return (
       <div className="w-24">
-        <div className="flex justify-between">
-          {/* <Lords className="w-4" /> {cost.amount} */}
-        </div>
-
         {cost.resources.map((a, index) => {
           return (
             <div key={index} className="inline-block">

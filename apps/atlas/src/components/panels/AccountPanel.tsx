@@ -278,6 +278,22 @@ export function AccountPanel() {
               >
                 Approve All game Contracts
               </Button>
+              {/* <Button
+                variant="primary"
+                className="mt-auto ml-8"
+                size="xs"
+                onClick={() => toggleMenuType('bridgeRealms')}
+              >
+                Bridge Realms
+              </Button> */}
+              <Button
+                className="ml-8"
+                variant="primary"
+                size="xs"
+                onClick={() => toggleMenuType('settleRealms')}
+              >
+                Settle Realms
+              </Button>
             </div>
           </div>
         </div>
@@ -318,31 +334,16 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card> */}
-        {/* <Card className="col-start-5 col-end-8">
-          <CardTitle>Contract Approvals</CardTitle>
-          <CardBody>
-            <div className="flex w-full mt-10 space-x-2">
-            <Button
-                variant="primary"
-                className="mt-auto ml-8"
-                size="sm"
-                onClick={() => toggleMenuType('bridgeRealms')}
-              >
-                Bridge Realms
-              </Button>
-            <Button
-                className="ml-8"
-                variant="primary"
-                size="sm"
-                onClick={() => toggleMenuType('settleRealms')}
-              >
-                Settle Realms
-              </Button>
-            </div>
-          </CardBody>
-        </Card> */}
-        {/* <Card className="col-start-8 col-end-13">
+        <Card className="col-start-8 col-end-13">
           <CardTitle>Mint Test Realms [card only for alpha]</CardTitle>
+          <div>loaf: 21-30</div>
+          <div>redbeard: 31-40</div>
+          <div>unidendefi: 41-50</div>
+          <div>milan: 51-60</div>
+          <div>abrax: 61-70</div>
+          <div>secretive: 71-80</div>
+          <div>amaro: 81-90</div>
+          <div>Tenox: 91-100</div>
           <CardBody>
             <input
               placeholder="Type Id"
@@ -364,7 +365,7 @@ export function AccountPanel() {
               Mint Realms
             </Button>
           </CardBody>
-        </Card> */}
+        </Card>
         <Card className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5`}>
           <CardTitle>Mercantile History</CardTitle>
           <CardBody>

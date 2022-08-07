@@ -41,6 +41,7 @@ function RealmsSelectable(props: RealmsSelectableProps): ReactElement {
     state: { selectedRealms },
     actions,
   } = useRealmContext();
+
   const { account } = useStarknet();
 
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
@@ -73,16 +74,18 @@ function RealmsSelectable(props: RealmsSelectableProps): ReactElement {
 export const SettleRealmsSideBar = () => {
   const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
   const { account } = useStarknet();
-  const [selectedResource, setResource] = useState<number>();
   const isSettleRealms = selectedMenuType === 'settleRealms' && showDetails;
 
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
 
   const { settleRealm, unsettleRealm, isRealmsApproved, approveRealms } =
     useSettling();
+
+  // TODO: Remove this from context
   const {
     state: { selectedRealms },
   } = useRealmContext();
+
   const limit = 50;
   const [page, setPage] = useState(1);
 
@@ -103,6 +106,7 @@ export const SettleRealmsSideBar = () => {
       skip: limit * (page - 1),
     };
   }, [starknetWallet, page]);
+
   const [selectedTab, setSelectedTab] = useState(0);
 
   const { data, loading, refetch } = useGetRealmsQuery({
@@ -127,6 +131,12 @@ export const SettleRealmsSideBar = () => {
     ],
     [data?.realms, selectedTab]
   );
+
+  const settleAll = () => {
+    selectedRealms.forEach((a) => {
+      settleRealm(a);
+    });
+  };
 
   return (
     <BaseSideBar open={isSettleRealms}>
@@ -161,7 +171,8 @@ export const SettleRealmsSideBar = () => {
           </Tabs>
         </div>
         <div className="w-full">
-          {isRealmsApproved != 'approved' && (
+          {/* Remove when needed  */}
+          {/* {isRealmsApproved != 'approved' && (
             <Button
               className="w-full"
               variant="primary"
@@ -169,14 +180,14 @@ export const SettleRealmsSideBar = () => {
             >
               Approve Realms for Settling
             </Button>
-          )}
+          )} */}
           {isRealmsApproved == 'approved' && (
             <Button
               className="w-full"
               variant="primary"
               onClick={() =>
                 selectedTab === 0
-                  ? settleRealm(selectedRealms[0])
+                  ? settleAll()
                   : unsettleRealm(selectedRealms[0])
               }
             >

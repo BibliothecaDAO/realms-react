@@ -6,16 +6,48 @@ import {
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   useSettlingContract,
   useRealms721Contract,
+  ModuleAddr,
 } from '@/hooks/settling/stark-contracts';
+import type { RealmsCall } from '@/types/index';
+import { uint256ToRawCalldata } from '@/util/rawCalldata';
+
 type Settling = {
   isRealmsApproved: 'approved' | 'not-approved' | undefined;
   approveRealms: () => void;
   settleRealm: (tokenId: number) => void;
   unsettleRealm: (tokenId: number) => void;
   mintRealm: (tokenId: number) => void;
+};
+
+export const Entrypoints = {
+  settle: 'settle',
+  unsettle: 'unsettle',
+  mint: 'mint',
+};
+
+export const createSettlingCall: Record<string, (args: any) => RealmsCall> = {
+  settle: ({ realmId }) => ({
+    contractAddress: ModuleAddr.Settling,
+    entrypoint: Entrypoints.settle,
+    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    metadata: { realmId, action: Entrypoints.settle },
+  }),
+  mint: ({ realmId }) => ({
+    contractAddress: ModuleAddr.Settling,
+    entrypoint: Entrypoints.mint,
+    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    metadata: { realmId, action: Entrypoints.mint },
+  }),
+  unsettle: ({ realmId }) => ({
+    contractAddress: ModuleAddr.Settling,
+    entrypoint: Entrypoints.unsettle,
+    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    metadata: { realmId, action: Entrypoints.unsettle },
+  }),
 };
 
 const useSettling = (): Settling => {
@@ -26,20 +58,6 @@ const useSettling = (): Settling => {
     'approved' | 'not-approved'
   >();
 
-  const settleRealmAction = useStarknetInvoke({
-    contract: settlingContract,
-    method: 'settle',
-  });
-
-  const unsettleRealmAction = useStarknetInvoke({
-    contract: settlingContract,
-    method: 'unsettle',
-  });
-
-  const mintRealmAction = useStarknetInvoke({
-    contract: realmsContract,
-    method: 'mint',
-  });
   const approve721 = useStarknetInvoke({
     contract: realmsContract,
     method: 'setApprovalForAll',
@@ -56,11 +74,14 @@ const useSettling = (): Settling => {
       toBN(account as string).toString(),
       toBN(settlingContract?.address as string).toString(),
     ],
-    options: { watch: false },
+    options: { watch: true },
   });
+
+  const txQueue = useTransactionQueue();
 
   useEffect(() => {
     if (realmsApprovalData !== undefined && account !== undefined) {
+      console.log(realmsApprovalData.toString());
       setIsRealmsApproved(
         realmsApprovalData.toString() === '1' ? 'approved' : 'not-approved'
       );
@@ -68,32 +89,27 @@ const useSettling = (): Settling => {
   }, [realmsApprovalData, account]);
 
   return {
-    settleRealm: (tokenId: number) => {
-      settleRealmAction.invoke({
-        args: [bnToUint256(toBN(tokenId))],
-        metadata: {
-          action: 'settle',
-          realmId: tokenId,
-        },
-      });
+    settleRealm: (realmId: number) => {
+      txQueue.add(
+        createSettlingCall.settle({
+          realmId: realmId,
+        })
+      );
     },
-    unsettleRealm: (tokenId: number) => {
-      unsettleRealmAction.invoke({
-        args: [bnToUint256(toBN(tokenId))],
-        metadata: {
-          action: 'unsettle',
-          realmId: tokenId,
-        },
-      });
+    unsettleRealm: (realmId: number) => {
+      txQueue.add(
+        createSettlingCall.unsettle({
+          realmId: realmId,
+        })
+      );
     },
-    mintRealm: (tokenId: number) => {
-      mintRealmAction.invoke({
-        args: [toBN(account as string).toString(), bnToUint256(toBN(tokenId))],
-        metadata: {
-          action: 'mint',
-          realmId: tokenId,
-        },
-      });
+    mintRealm: (realmId: number) => {
+      txQueue.add(
+        createSettlingCall.mint({
+          account: toBN(account as string).toString(),
+          realmId: realmId,
+        })
+      );
     },
     isRealmsApproved,
     approveRealms: () => {
