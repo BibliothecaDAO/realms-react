@@ -36,10 +36,10 @@ export const createSettlingCall: Record<string, (args: any) => RealmsCall> = {
     calldata: uint256ToRawCalldata(bnToUint256(realmId)),
     metadata: { realmId, action: Entrypoints.settle },
   }),
-  mint: ({ realmId }) => ({
-    contractAddress: ModuleAddr.Settling,
+  mint: ({ account, realmId }) => ({
+    contractAddress: ModuleAddr.Realms,
     entrypoint: Entrypoints.mint,
-    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    calldata: [account, ...uint256ToRawCalldata(bnToUint256(realmId))],
     metadata: { realmId, action: Entrypoints.mint },
   }),
   unsettle: ({ realmId }) => ({
