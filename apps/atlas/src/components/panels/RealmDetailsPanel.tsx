@@ -89,7 +89,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   }, [subview]);
 
   const pushPage = (value) => {
-    console.log(value);
     if (!loading) {
       router.push('/realm/' + value, undefined, { shallow: true });
     }

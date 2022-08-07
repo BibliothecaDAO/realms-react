@@ -142,7 +142,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           </span>{' '}
         </div>
       </div>
-
+      {props.header}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
     </div>
   );

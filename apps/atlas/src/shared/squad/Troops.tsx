@@ -144,7 +144,6 @@ export const Troop = (props: TroopProps) => {
   const style = {
     '--image-url': `url('/realm-troops/${getTroop()?.troopName}.png')`,
   } as React.CSSProperties;
-  console.log(style);
   return (
     <div
       role={'button'}

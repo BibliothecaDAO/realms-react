@@ -162,7 +162,6 @@ const Army: React.FC<Prop> = (props) => {
             availableResources={props.availableResources}
             header={
               <>
-                <h3>Vault</h3>{' '}
                 {!isOwner && (
                   <Button
                     onClick={() => setIsRaiding(true)}
