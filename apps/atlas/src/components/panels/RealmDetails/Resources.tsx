@@ -155,7 +155,7 @@ const Harvests: React.FC<Prop> = (props) => {
             </p>
           </div>
         </Card>
-        <Card className="col-start-3 col-end-5 ">
+        <Card className="col-start-3 col-end-6 ">
           <CardTitle>Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -212,11 +212,12 @@ const Harvests: React.FC<Prop> = (props) => {
             <p>
               You consume 1 food per second according to your population. Build
               and harvest Farms and Fishing Villages in order to keep your
-              citizens fed.
+              citizens fed. <br /> If you do not have food you are capped at 250
+              resources per day and your troops have half health.
             </p>
           </div>
         </Card>
-        <Card className="flex flex-col h-full col-start-3 col-end-5 ">
+        <Card className="flex col-start-3 col-end-6 ">
           <CardTitle>Farms Built - Capacity {farmCapacity}</CardTitle>
 
           <div className="flex flex-wrap justify-between p-2">
@@ -320,7 +321,7 @@ const Harvests: React.FC<Prop> = (props) => {
               Harvest
             </Button>
           </div>
-          <CardTitle className="mt-4">
+          <CardTitle className="mt-10">
             Fishing Villages - Capacity {fishingVillageCapacity}
           </CardTitle>
           <div className="flex flex-wrap justify-between p-2">
@@ -357,7 +358,7 @@ const Harvests: React.FC<Prop> = (props) => {
               </div>
             </div>
           </div>
-          <div className="flex mt-auto space-x-2">
+          <div className="flex space-x-2">
             <Button
               onClick={() => {
                 txQueue.add(

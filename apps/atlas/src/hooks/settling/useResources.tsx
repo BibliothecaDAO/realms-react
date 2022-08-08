@@ -115,8 +115,6 @@ const useResources = (args: useResourcesArgs): Resources => {
       return (+formatEther(uint256ToBN(a).toString(10))).toLocaleString();
     });
 
-    console.log(resources);
-
     setRealmsResourcesDetails({
       daysAccrued: availableResourcesData[0].toNumber(),
       daysRemainder: availableResourcesData[1].toNumber(),
@@ -135,7 +133,6 @@ const useResources = (args: useResourcesArgs): Resources => {
   return {
     realmsResourcesDetails,
     claim: () => {
-      console.log(claimResourcesAction.error);
       claimResourcesAction.invoke({
         args: [bnToUint256(toBN(args.token_id ?? 0))],
         metadata: {
