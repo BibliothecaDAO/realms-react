@@ -12,13 +12,13 @@ type Props = {
 const SquadStatistics = (props: Props) => {
   const vitalityQueued = squadStats(props.troopsQueued).vitality;
   const attackQueued = squadStats(props.troopsQueued).attack;
-  const defenseQueued = squadStats(props.troopsQueued).defense;
+  const armorQueued = squadStats(props.troopsQueued).armor;
   const wisdomQueued = squadStats(props.troopsQueued).wisdom;
   const agilityQueued = squadStats(props.troopsQueued).agility;
 
   const vitalitySum = squadStats(props.troops).vitality + vitalityQueued;
   const attackSum = squadStats(props.troops).attack + attackQueued;
-  const defenseSum = squadStats(props.troops).defense + defenseQueued;
+  const armorSum = squadStats(props.troops).armor + armorQueued;
   const wisdomSum = squadStats(props.troops).wisdom + wisdomQueued;
   const agilitySum = squadStats(props.troops).agility + agilityQueued;
 
@@ -65,9 +65,9 @@ const SquadStatistics = (props: Props) => {
       >
         Defense:{' '}
         <span>
-          {squadStats(props.troops).defense}
-          {defenseQueued
-            ? `+${squadStats(props.troopsQueued).defense}=${defenseSum}`
+          {squadStats(props.troops).armor}
+          {armorQueued
+            ? `+${squadStats(props.troopsQueued).armor}=${armorSum}`
             : ''}
         </span>
       </div>
