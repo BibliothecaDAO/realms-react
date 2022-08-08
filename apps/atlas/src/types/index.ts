@@ -247,6 +247,7 @@ export interface RealmFoodDetails {
   totalTimeRemainingUntilVillageHarvest: number;
   decayedVillages: number;
   villagesBuilt: number;
+  population: number;
 }
 
 export interface BuildingFootprint {

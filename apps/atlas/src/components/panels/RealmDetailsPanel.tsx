@@ -63,7 +63,11 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const realm = realmData?.realm;
 
   const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
-  const { realmFoodDetails, availableFood } = useFood(realm as Realm);
+  const {
+    realmFoodDetails,
+    availableFood,
+    loading: loadingFood,
+  } = useFood(realm as Realm);
   const { realmsResourcesDetails } = useResources({
     token_id: realm?.realmId,
     resources: realm?.resources,
@@ -216,35 +220,36 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
-                  {subview == 'Army' && (
-                    <Army
-                      open={subview == 'Army'}
-                      availableResources={realmsResourcesDetails}
-                      buildings={buildings}
-                      realm={realmData?.realm}
-                    />
-                  )}
-                  {subview == 'Resources' && (
-                    <ResourceDetails
-                      open={subview == 'Resources'}
-                      availableResources={realmsResourcesDetails}
-                      realmFoodDetails={realmFoodDetails}
-                      availableFood={availableFood}
-                      buildings={buildings}
-                      realm={realmData}
-                    />
-                  )}
-                  {subview == 'Survey' && (
-                    <Survey
-                      open={subview == 'Survey'}
-                      availableResources={realmsResourcesDetails}
-                      buildingUtilisation={buildingUtilisation}
-                      realmFoodDetails={realmFoodDetails}
-                      availableFood={availableFood}
-                      buildings={buildings}
-                      realm={realmData}
-                    />
-                  )}
+                  {/* {subview == 'Army' && ( */}
+                  <Army
+                    open={subview == 'Army'}
+                    availableResources={realmsResourcesDetails}
+                    buildings={buildings}
+                    realm={realmData?.realm}
+                  />
+                  {/* )} */}
+                  {/* {subview == 'Resources' && ( */}
+                  <ResourceDetails
+                    open={subview == 'Resources'}
+                    availableResources={realmsResourcesDetails}
+                    realmFoodDetails={realmFoodDetails}
+                    availableFood={availableFood}
+                    buildings={buildings}
+                    realm={realmData}
+                  />
+                  {/* )} */}
+                  {/* {subview == 'Survey' && ( */}
+                  <Survey
+                    open={subview == 'Survey'}
+                    availableResources={realmsResourcesDetails}
+                    buildingUtilisation={buildingUtilisation}
+                    realmFoodDetails={realmFoodDetails}
+                    availableFood={availableFood}
+                    buildings={buildings}
+                    realm={realmData}
+                    loading={loadingFood}
+                  />
+                  {/* )} */}
 
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
                 </>

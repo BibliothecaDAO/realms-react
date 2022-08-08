@@ -4,6 +4,7 @@ import {
   CardStats,
   CardBody,
   Button,
+  CountdownTimer,
 } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
 import React from 'react';
@@ -26,6 +27,7 @@ type Prop = {
   availableFood: number | undefined;
   availableResources: AvailableResources;
   open: boolean;
+  loading: boolean;
 };
 
 const Survey: React.FC<Prop> = (props) => {
@@ -56,11 +58,31 @@ const Survey: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-start-2 col-end-3 ">
           <CardTitle>Population</CardTitle>
-          <CardStats className="text-4xl">{getPopulation()}</CardStats>
+          <CardStats className="text-4xl">
+            {props.realmFoodDetails.population}
+          </CardStats>
         </Card>
         <Card className="col-start-3 col-end-4 ">
           <CardTitle>Food in Storehouse</CardTitle>
-          <CardStats className="text-4xl">{props.availableFood}</CardStats>
+          {!props.loading && (
+            <CardStats className="text-4xl">
+              <div>
+                {props.availableFood?.toLocaleString()} <br />
+                {props.availableFood && props?.availableFood > 0 ? (
+                  <CountdownTimer
+                    date={(
+                      props.availableFood * 1000 +
+                      new Date().getTime()
+                    ).toString()}
+                  />
+                ) : (
+                  <span className="text-red-600 animate-pulse">
+                    Serfs are starving!!
+                  </span>
+                )}
+              </div>
+            </CardStats>
+          )}
         </Card>
         <Card className="col-start-4 col-end-6 ">
           <CardTitle>Building usage</CardTitle>

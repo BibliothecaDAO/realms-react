@@ -3,9 +3,18 @@ import { useEffect, useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
 import type { Realm } from '@/generated/graphql';
-import type { RealmsCall } from '@/types/index';
+import type {
+  RealmsCall,
+  BuildingDetail,
+  RealmFoodDetails,
+  AvailableResources,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import { ModuleAddr, useFoodContract } from './stark-contracts';
+import {
+  ModuleAddr,
+  useCalculatorContract,
+  useFoodContract,
+} from './stark-contracts';
 
 export const entrypoints = {
   create: 'create',
@@ -56,18 +65,8 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
 type UseRealmFoodDetails = {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
+  loading: boolean;
 };
-
-interface RealmFoodDetails {
-  totalFarmHarvest: number;
-  totalTimeRemainingUntilFarmHarvest: number;
-  decayedFarms: number;
-  farmsBuilt: number;
-  totalVillageHarvest: number;
-  totalTimeRemainingUntilVillageHarvest: number;
-  decayedVillages: number;
-  villagesBuilt: number;
-}
 
 const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
@@ -79,14 +78,27 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     totalTimeRemainingUntilVillageHarvest: 0,
     decayedVillages: 0,
     villagesBuilt: 0,
+    population: 0,
   });
   const { contract: foodContract } = useFoodContract();
+
+  const { contract: calculatorContract } = useCalculatorContract();
   const [availableFood, setAvailableFood] = useState();
 
   const {
-    data: allOutputData,
-    loading: outputLoading,
-    error: outputError,
+    data: population,
+    loading: loadingPopulation,
+    error: errorPopulation,
+  } = useStarknetCall({
+    contract: calculatorContract,
+    method: 'calculate_population',
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
+  });
+
+  const {
+    data: foodInformation,
+    loading: foodLoading,
+    error: errorFoodInformation,
   } = useStarknetCall({
     contract: foodContract,
     method: 'get_all_food_information',
@@ -94,37 +106,50 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   });
 
   const {
-    data: foodData,
-    loading: foodLoadingData,
-    error: foodError,
+    data: storehouse,
+    loading,
+    error: errorStorehouse,
   } = useStarknetCall({
     contract: foodContract,
     method: 'available_food_in_store',
     args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
+  console.log(loading);
+
   useEffect(() => {
-    if (!allOutputData || !allOutputData[0] || !foodData || !foodData[0]) {
+    if (
+      !foodInformation ||
+      !foodInformation[0] ||
+      !storehouse ||
+      !storehouse[0] ||
+      !population ||
+      !population[0]
+    ) {
       return;
     }
+
     setRealmFoodDetails({
-      totalFarmHarvest: allOutputData['total_farm_harvest'].toNumber(),
+      totalFarmHarvest: foodInformation['total_farm_harvest'].toNumber(),
       totalTimeRemainingUntilFarmHarvest:
-        allOutputData['total_farm_remaining'].toNumber(),
-      decayedFarms: allOutputData['decayed_farms'].toNumber(),
-      farmsBuilt: allOutputData['farms_built'].toNumber(),
-      totalVillageHarvest: allOutputData['total_village_harvest'].toNumber(),
+        foodInformation['total_farm_remaining'].toNumber(),
+      decayedFarms: foodInformation['decayed_farms'].toNumber(),
+      farmsBuilt: foodInformation['farms_built'].toNumber(),
+      totalVillageHarvest: foodInformation['total_village_harvest'].toNumber(),
       totalTimeRemainingUntilVillageHarvest:
-        allOutputData['total_village_remaining'].toNumber(),
-      decayedVillages: allOutputData['decayed_villages'].toNumber(),
-      villagesBuilt: allOutputData['villages_built'].toNumber(),
+        foodInformation['total_village_remaining'].toNumber(),
+      decayedVillages: foodInformation['decayed_villages'].toNumber(),
+      villagesBuilt: foodInformation['villages_built'].toNumber(),
+      population: population[0].toNumber(),
     });
-    setAvailableFood(foodData[0].toNumber());
-  }, [allOutputData, foodData]);
+
+    setAvailableFood(storehouse[0].toNumber());
+  }, [foodInformation, storehouse, population]);
 
   return {
     realmFoodDetails,
     availableFood,
+    loading: foodLoading || loadingPopulation,
   };
 };
 

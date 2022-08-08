@@ -8,6 +8,7 @@ import Food from '@/abi/settling/Food.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
+import Calculator from '@/abi/settling/L04_Calculator.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
 import Combat from '@/abi/settling/L06_Combat.json';
 import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
@@ -39,11 +40,24 @@ export const ModuleAddr = {
     '0x06a60b479e9fe080fd8e0a8c4965040a25e276889c2de0cf105c410d0ac81436',
   Food: '0x03a34ef38f402d6b66b681db7905edfc48676288a7b08cd79910737c45431093',
   Relics: '0x027d0dd8dbe02f8dec5ff64b873eb78993c520f7c6f10b95f86cb061857769d0',
+  Calculator:
+    '0x05a74143789f2b8d2a95234318d7072062e449d37f9e882af68af663f9078ef7',
 };
 
 /**
+ * Load the Calculator contract.
+ * @returns The `Calculator` contract or undefined.
+ */
+export function useCalculatorContract() {
+  return useContract({
+    abi: Calculator as Abi,
+    address: ModuleAddr.Calculator,
+  });
+}
+
+/**
  * Load the Food contract.
- * @returns The `Settling` contract or undefined.
+ * @returns The `Food` contract or undefined.
  */
 export function useFoodContract() {
   return useContract({
@@ -54,7 +68,7 @@ export function useFoodContract() {
 
 /**
  * Load the Relic contract.
- * @returns The `Settling` contract or undefined.
+ * @returns The `Relic` contract or undefined.
  */
 export function useRelicContract() {
   return useContract({
