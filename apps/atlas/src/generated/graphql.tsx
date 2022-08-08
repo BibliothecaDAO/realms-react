@@ -906,7 +906,7 @@ export type Troop = {
   __typename?: 'Troop';
   agility: Scalars['Int'];
   attack: Scalars['Int'];
-  defense: Scalars['Int'];
+  armor: Scalars['Int'];
   index: Scalars['Int'];
   realmId: Scalars['Int'];
   squadSlot: Scalars['Int'];
@@ -943,7 +943,7 @@ export type TroopStats = {
   __typename?: 'TroopStats';
   agility: Scalars['Int'];
   attack: Scalars['Int'];
-  defense: Scalars['Int'];
+  armor: Scalars['Int'];
   tier: Scalars['Int'];
   troopCost?: Maybe<TroopCost>;
   troopId: Scalars['Int'];
@@ -960,7 +960,7 @@ export type TroopWhereInput = {
   Realm?: InputMaybe<RealmRelationFilter>;
   agility?: InputMaybe<IntFilter>;
   attack?: InputMaybe<IntFilter>;
-  defense?: InputMaybe<IntFilter>;
+  armor?: InputMaybe<IntFilter>;
   index?: InputMaybe<IntFilter>;
   realmId?: InputMaybe<IntFilter>;
   squadSlot?: InputMaybe<IntFilter>;
@@ -1206,7 +1206,7 @@ export type GetRealmQuery = {
       tier: number;
       agility: number;
       attack: number;
-      defense: number;
+      armor: number;
       vitality: number;
       wisdom: number;
       squadSlot: number;
@@ -1351,7 +1351,7 @@ export type GetRealmsQuery = {
       tier: number;
       agility: number;
       attack: number;
-      defense: number;
+      armor: number;
       vitality: number;
       wisdom: number;
       squadSlot: number;
@@ -1371,7 +1371,7 @@ export type GetTroopStatsQuery = {
     tier: number;
     agility: number;
     attack: number;
-    defense: number;
+    armor: number;
     vitality: number;
     wisdom: number;
     troopCost?: {
@@ -1430,7 +1430,7 @@ export type RealmFragmentFragment = {
     tier: number;
     agility: number;
     attack: number;
-    defense: number;
+    armor: number;
     vitality: number;
     wisdom: number;
     squadSlot: number;
@@ -1538,7 +1538,7 @@ export const RealmFragmentFragmentDoc = gql`
       tier
       agility
       attack
-      defense
+      armor
       vitality
       wisdom
       squadSlot
@@ -2269,7 +2269,7 @@ export const GetTroopStatsDocument = gql`
       tier
       agility
       attack
-      defense
+      armor
       vitality
       wisdom
       troopCost {
