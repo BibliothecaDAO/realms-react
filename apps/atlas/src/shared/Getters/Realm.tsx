@@ -25,7 +25,6 @@ export const RealmStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const RealmOwner = (realm: RealmFragmentFragment) => {
-  console.log(realm);
   return (
     realm?.settledOwner ||
     realm?.ownerL2 ||
@@ -107,7 +106,7 @@ export const getAccountHex = (account: string) => {
 
 export const squadStats = (squad: TroopInterface[] | undefined | null) => {
   if (!squad) {
-    return { agility: 0, attack: 0, defense: 0, vitality: 0, wisdom: 0 };
+    return { agility: 0, attack: 0, armor: 0, vitality: 0, wisdom: 0 };
   }
   return {
     agility: squad
@@ -116,8 +115,8 @@ export const squadStats = (squad: TroopInterface[] | undefined | null) => {
     attack: squad
       .map((troop) => troop.attack)
       .reduce((prev, curr) => prev + curr, 0),
-    defense: squad
-      .map((troop) => troop.defense)
+    armor: squad
+      .map((troop) => troop.armor)
       .reduce((prev, curr) => prev + curr, 0),
     vitality: squad
       .map((troop) => troop.vitality)

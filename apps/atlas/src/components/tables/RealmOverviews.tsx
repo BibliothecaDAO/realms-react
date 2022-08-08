@@ -206,7 +206,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   Attack: <span>{squadStats(realm.troops).attack}</span>
                 </div>
                 <div className="flex justify-between">
-                  Defense: <span>{squadStats(realm.troops).defense}</span>
+                  Armor: <span>{squadStats(realm.troops).armor}</span>
                 </div>
                 <div className="flex justify-between">
                   Wisdom: <span>{squadStats(realm.troops).wisdom}</span>

@@ -7,7 +7,7 @@ const columns = [
   { Header: 'name', id: 1, accessor: 'name' },
   { Header: 'agility', id: 2, accessor: 'agility' },
   { Header: 'attack', id: 3, accessor: 'attack' },
-  { Header: 'defense', id: 4, accessor: 'defense' },
+  { Header: 'armor', id: 4, accessor: 'armor' },
   { Header: 'vitality', id: 5, accessor: 'vitality' },
   { Header: 'wisdom', id: 6, accessor: 'wisdom' },
   //   { Header: 'add', id: 6, accessor: 'add' },
@@ -20,7 +20,7 @@ type Row = {
   name: string;
   agility: number;
   attack: number;
-  defense: number;
+  armor: number;
   vitality: number;
   wisdom: number;
   troopCost: any[];
@@ -34,7 +34,7 @@ export const MilitaryStatistics = (props: Props) => {
       ),
       agility: re.agility,
       attack: re.attack,
-      defense: re.defense,
+      armor: re.armor,
       vitality: re.vitality,
       wisdom: re.wisdom,
       troopCost: 2,
