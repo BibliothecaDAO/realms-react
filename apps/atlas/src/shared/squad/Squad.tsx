@@ -51,7 +51,7 @@ export const SquadBuilder = (props: SquadProps) => {
       tier: 0,
       agility: 0,
       attack: 0,
-      armor: 0,
+      defense: 0,
       vitality: 0,
       wisdom: 0,
       squadSlot: 0,

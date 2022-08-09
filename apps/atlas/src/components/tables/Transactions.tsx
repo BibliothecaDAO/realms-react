@@ -29,7 +29,7 @@ const STYLES = {
     PENDING: 'bg-orange-500 animate-pulse',
     ACCEPTED_ON_L2: 'bg-green-600/90',
     ACCEPTED_ON_L1: 'bg-green-900',
-    TRANSACTION_RECEIVED: 'bg-green-400 animate-pulse',
+    TRANSACTION_RECEIVED: 'bg-green-700 animate-pulse',
     ENQUEUED: 'border-white/20 border-2 bg-black',
   },
 } as const;
@@ -50,7 +50,7 @@ export const TxCartItem = (props: TxCartItem) => {
         STYLES.status[props.transaction.status]
       }  rounded flex p-4 w-full font-semibold mb-2`}
     >
-      <div className="flex justify-between w-full p-1 rounded shadow-inner bg-black/19">
+      <div className="flex justify-between w-full p-1 rounded bg-black/19">
         <div>
           <h5 className="mb-3 text-xs opacity-80">
             {props.transaction.status}
@@ -88,7 +88,7 @@ export const TxCartItem = (props: TxCartItem) => {
                 props.transaction.transactionHash
               }
             >
-              <a className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/30 hover:bg-white/20">
+              <a className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/50 hover:bg-white/20">
                 See on Voyager <ExternalLink className="inline-block w-4" />
               </a>
             </Link>
