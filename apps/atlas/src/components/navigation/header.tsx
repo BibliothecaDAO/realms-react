@@ -24,6 +24,11 @@ export function Header() {
 
   const [player, currentTrack] = usePlayer([
     {
+      title: 'Order of Enlightenment',
+      artist: 'Casey',
+      src: '/music/OrderOfEnlightenment_idea1_casey.mp3',
+    },
+    {
       title: 'The Minstrels - Order of Enlightenment',
       album: 'The 16 Orders',
       artist: 'The Minstrels',

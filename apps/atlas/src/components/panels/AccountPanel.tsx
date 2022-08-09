@@ -218,15 +218,15 @@ export function AccountPanel() {
   const animationUp = useSpring({
     opacity: selectedPanel === 'account' ? 1 : 0,
     transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(+200%)`,
-    delay: 450,
+      selectedPanel === 'account' ? `translateY(0)` : `translateY(+10%)`,
+    delay: 350,
   });
 
   const animation = useSpring({
     opacity: selectedPanel === 'account' ? 1 : 0,
     transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(-200%)`,
-    delay: 300,
+      selectedPanel === 'account' ? `translateY(0)` : `translateY(-20%)`,
+    delay: 150,
   });
 
   return (

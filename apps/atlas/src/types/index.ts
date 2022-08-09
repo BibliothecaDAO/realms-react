@@ -199,7 +199,7 @@ export interface TroopInterface {
   tier: number;
   agility: number;
   attack: number;
-  armor: number;
+  defense: number;
   vitality: number;
   wisdom: number;
   squadSlot: number;
