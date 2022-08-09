@@ -219,7 +219,7 @@ export const SquadBuilder = (props: SquadProps) => {
               </div>
               <div>Agility: {selectedTroop.agility}</div>
               <div>Attack: {selectedTroop.attack}</div>
-              <div>Armor: {selectedTroop.armor}</div>
+              <div>Armor: {selectedTroop.defense}</div>
               <div>Vitality: {selectedTroop.vitality}</div>
               <div>Wisdom: {selectedTroop.wisdom}</div>
             </div>
