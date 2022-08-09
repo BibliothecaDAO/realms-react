@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
+import useSound from 'use-sound';
 import { TxCartItem } from '@/components/tables/Transactions';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 
@@ -8,6 +9,27 @@ type Prop = {
 
 export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
+
+  const [play, { stop }] = useSound(
+    '/music/ui/ESM_Game_UI_Clean_App_Small_Light_Alert_Interface_Foley_Texture.wav',
+    {
+      volume: 1,
+    }
+  );
+
+  const signDecree = () => {
+    play();
+
+    txQueue
+      .executeMulticall([])
+      .then((_txResp) => {
+        props.onSubmit && props.onSubmit();
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO: Handle error
+      });
+  };
   return (
     <>
       {txQueue.transactions.length > 0 ? (
@@ -22,17 +44,9 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           className="flex-1"
           size="md"
           variant="primary"
-          onClick={() =>
-            txQueue
-              .executeMulticall([])
-              .then((_txResp) => {
-                props.onSubmit && props.onSubmit();
-              })
-              .catch((err) => {
-                console.log(err);
-                // TODO: Handle error
-              })
-          }
+          onClick={() => {
+            signDecree();
+          }}
         >
           {txQueue.transactions.length > 0
             ? `Sign for ${txQueue.transactions.length} Command${

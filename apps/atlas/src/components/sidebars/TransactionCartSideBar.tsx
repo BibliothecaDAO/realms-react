@@ -19,6 +19,7 @@ import { RealmCard } from '../cards/RealmCard';
 import { TransactionQueue } from '../tables/TransactionQueue';
 import { TransactionCartTable } from '../tables/Transactions';
 import { BaseSideBar } from './BaseSideBar';
+
 type Props = {
   id: string;
 };
