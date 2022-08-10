@@ -57,6 +57,7 @@ export const SquadBuilder = (props: SquadProps) => {
       squadSlot: 0,
       troopName: '',
     };
+
     const currentTroops = props.troops.filter((a) => a.tier === tier);
 
     const queuedTroops = toBuy.filter((t) => t.tier == tier);

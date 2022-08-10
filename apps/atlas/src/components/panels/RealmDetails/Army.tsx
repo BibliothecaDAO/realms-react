@@ -218,7 +218,7 @@ const Army: React.FC<Prop> = (props) => {
             showRaidable
           />
         </Card>
-        <Card className="col-span-12 md:col-span-4">
+        <Card className="col-span-12 md:col-span-12">
           <CardTitle>{squadSlot}ing Army</CardTitle>
 
           {/* TODO: add back for indexer */}

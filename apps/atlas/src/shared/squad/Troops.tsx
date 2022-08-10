@@ -5,9 +5,9 @@ import { Popover } from '@headlessui/react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { troopList } from '@/constants/troops';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import type { ItemCost, TroopInterface } from '@/types/index';
-import troopList from './TroopList';
 interface HealthBarProps {
   vitality: number;
   troopId: number;
@@ -53,29 +53,13 @@ export const HealthBar = (props: HealthBarProps) => {
   );
 };
 
-export const TroopType = () => {
-  return <div></div>;
-};
-
 const STYLES = {
   tier: {
-    1: 'h-16 w-32',
-    2: 'h-20 w-36',
-    3: 'mx-auto w-40 h-24',
+    1: 'h-32 w-32',
+    2: 'h-48 w-48',
+    3: 'mx-auto w-48 h-48',
   },
 } as const;
-
-const columns = [
-  { Header: 'name', id: 1, accessor: 'name' },
-  // { Header: 'agility', id: 2, accessor: 'agility' },
-  // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
-  // { Header: 'attack', id: 3, accessor: 'attack' },
-  // { Header: 'defense', id: 4, accessor: 'defense' },
-  // { Header: 'vitality', id: 5, accessor: 'vitality' },
-  // { Header: 'wisdom', id: 6, accessor: 'wisdom' },
-  { Header: 'add', id: 6, accessor: 'add' },
-  { Header: 'cost', id: 6, accessor: 'troopCost' },
-];
 
 const tableOptions = { is_striped: true };
 
@@ -145,31 +129,28 @@ export const Troop = (props: TroopProps) => {
     '--image-url': `url('/realm-troops/${getTroop()?.troopName}.png')`,
   } as React.CSSProperties;
   return (
-    <div
-      role={'button'}
-      tabIndex={0}
-      onClick={() => props.onClick && props.onClick(props.troop)}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-      style={style}
-      className={`${twMerge(
-        STYLES.tier[props.troop.tier],
-        props.className
-      )} bg-white/30 bg-[image:var(--image-url)] object-cover bg-contain bg-center bg-no-repeat rounded cursor-pointer shadow-inner flex`}
-    >
-      {getTroop()?.troopName && (
-        <div className="flex items-end w-full justify-bottom">
-          {/* <HealthBar
+    <div className="p-2 bg-red-700 rounded-2xl">
+      <div
+        role={'button'}
+        tabIndex={0}
+        onClick={() => props.onClick && props.onClick(props.troop)}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+        style={style}
+        className={`${twMerge(
+          STYLES.tier[props.troop.tier],
+          props.className
+        )} bg-[image:var(--image-url)] object-cover bg-contain bg-center bg-no-repeat rounded cursor-pointer flex `}
+      >
+        {getTroop()?.troopName && (
+          <div className="flex items-end w-full justify-bottom">
+            {/* <HealthBar
             troopId={props.troop.troopId}
             vitality={props.troop.vitality}
       /> */}
-
-          <div className="mt-auto text-xs text-center text-red-300 uppercase align-bottom sm:text-sm text-clip font-body">
-            {getTroop()?.troopName}
           </div>
-        </div>
-      )}
-      {/* {!props.withPurchase && (
+        )}
+        {/* {!props.withPurchase && (
         <Button
           variant="secondary"
           size="xs"
@@ -181,28 +162,32 @@ export const Troop = (props: TroopProps) => {
         </Button>
       )} */}
 
-      {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
-      <Popover className="relative top-0">
-        <div ref={ref}>
-          {isOpen && (
-            <Popover.Panel
-              className="absolute z-50 m-auto bottom-10 md:left-0"
-              static
-            >
-              <div className="p-2 text-sm text-white bg-black rounded shadow-sm">
-                <h5>{props.troop.troopName}</h5>
-                Vitality: {props.troop.vitality}
-                {/* <Table
+        {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
+        <Popover className="relative top-0">
+          <div ref={ref}>
+            {isOpen && (
+              <Popover.Panel
+                className="absolute z-50 m-auto bottom-10 md:left-0"
+                static
+              >
+                <div className="p-2 text-sm text-white bg-black rounded shadow-sm">
+                  <h5>{props.troop.troopName}</h5>
+                  Vitality: {props.troop.vitality}
+                  {/* <Table
                     columns={columns}
                     data={mappedRowData}
                     options={tableOptions}
                   /> */}
-              </div>
-            </Popover.Panel>
-          )}
-        </div>
-      </Popover>
-      {/* )} */}
+                </div>
+              </Popover.Panel>
+            )}
+          </div>
+        </Popover>
+        {/* )} */}
+      </div>
+      <div className="mt-4 mt-auto text-xs text-center text-black uppercase align-bottom sm:text-sm text-clip font-display">
+        {getTroop()?.troopName}
+      </div>
     </div>
   );
 };

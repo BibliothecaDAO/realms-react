@@ -21,7 +21,7 @@ export enum TroopBuildings {
   Crossbow = RealmBuildingId.ArcherTower,
   Paladin = RealmBuildingId.Barracks,
   Trebuchet = RealmBuildingId.Castle,
-  Archanist = RealmBuildingId.MageTower,
+  Arcanist = RealmBuildingId.MageTower,
 }
 
 export enum TroopTier {
@@ -36,7 +36,7 @@ export enum TroopTier {
   Crossbow = Tiers.Three,
   Paladin = Tiers.Three,
   Trebuchet = Tiers.Three,
-  Archanist = Tiers.Three,
+  Arcanist = Tiers.Three,
 }
 
 export enum TroopIds {
@@ -51,7 +51,7 @@ export enum TroopIds {
   Crossbow = 3,
   Paladin = 6,
   Trebuchet = 9,
-  Archanist = 12,
+  Arcanist = 12,
 }
 
 export const troopList = [
@@ -200,16 +200,16 @@ export const troopList = [
     buildingId: TroopBuildings.Mage,
   },
   {
-    name: 'Archanist',
+    name: 'Arcanist',
     type: 'magic',
-    img: 'Archanist.png',
-    tier: TroopTier.Archanist,
-    troopId: TroopIds.Archanist,
+    img: 'Arcanist.png',
+    tier: TroopTier.Arcanist,
+    troopId: TroopIds.Arcanist,
     agility: 7,
     attack: 11,
     armor: 2,
     vitality: 53,
     wisdom: 10,
-    buildingId: TroopBuildings.Archanist,
+    buildingId: TroopBuildings.Arcanist,
   },
 ];
