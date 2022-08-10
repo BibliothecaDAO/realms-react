@@ -14,7 +14,11 @@ import {
   useFoodContract,
 } from '@/hooks/settling/stark-contracts';
 import { getTrait } from '@/shared/Getters/Realm';
-import type { RealmsCall, BuildingFootprint } from '@/types/index';
+import type {
+  RealmsCall,
+  BuildingFootprint,
+  BuildingDetail,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Building = {
@@ -22,15 +26,6 @@ type Building = {
   loading: boolean;
   buildingUtilisation: BuildingFootprint | undefined;
 };
-
-interface BuildingDetail {
-  name: string;
-  id: number;
-  quantityBuilt: number;
-  img: string;
-  type: string;
-  key: string;
-}
 
 export const Entrypoints = {
   build: 'build',
@@ -79,6 +74,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].ArcherTower.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingSize: RealmBuildingsSize.ArcherTower,
+        sqmUsage:
+          allOutputData[0].ArcherTower.toNumber() *
+          RealmBuildingsSize.ArcherTower,
       },
       {
         name: 'Barracks',
@@ -87,6 +86,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].Barracks.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingSize: RealmBuildingsSize.Barracks,
+        sqmUsage:
+          allOutputData[0].Barracks.toNumber() * RealmBuildingsSize.Barracks,
       },
       {
         name: 'Castle',
@@ -95,6 +97,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].Castle.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingSize: RealmBuildingsSize.Castle,
+        sqmUsage:
+          allOutputData[0].Castle.toNumber() * RealmBuildingsSize.Castle,
       },
       {
         name: 'Farm',
@@ -103,6 +108,8 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].Farm.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingSize: RealmBuildingsSize.Farm,
+        sqmUsage: allOutputData[0].Farm.toNumber() * RealmBuildingsSize.Farm,
       },
       {
         name: 'Fishing Village',
@@ -111,6 +118,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].FishingVillage.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingSize: RealmBuildingsSize.FishingVillage,
+        sqmUsage:
+          allOutputData[0].FishingVillage.toNumber() *
+          RealmBuildingsSize.FishingVillage,
       },
       {
         name: 'House',
@@ -119,6 +130,8 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].House.toNumber(),
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingSize: RealmBuildingsSize.House,
+        sqmUsage: allOutputData[0].House.toNumber() * RealmBuildingsSize.House,
       },
       {
         name: 'MageTower',
@@ -127,6 +140,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].MageTower.toNumber(),
         img: '/realm-buildings/mageTower.png',
         type: 'military',
+        buildingSize: RealmBuildingsSize.MageTower,
+        sqmUsage:
+          allOutputData[0].MageTower.toNumber() * RealmBuildingsSize.MageTower,
       },
       {
         name: 'Store House',
@@ -135,6 +151,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: allOutputData[0].StoreHouse.toNumber(),
         img: '/realm-buildings/storeHouse.png',
         type: 'economic',
+        buildingSize: RealmBuildingsSize.StoreHouse,
+        sqmUsage:
+          allOutputData[0].StoreHouse.toNumber() *
+          RealmBuildingsSize.StoreHouse,
       },
     ]);
 
@@ -143,12 +163,13 @@ const useBuildings = (realm: Realm | undefined): Building => {
       RealmBuildingsSize.ArcherTower * allOutputData[0].ArcherTower.toNumber() +
       RealmBuildingsSize.Castle * allOutputData[0].Castle.toNumber() +
       RealmBuildingsSize.MageTower * allOutputData[0].MageTower.toNumber() +
-      RealmBuildingsSize.House * allOutputData[0].House.toNumber();
+      RealmBuildingsSize.House * allOutputData[0].House.toNumber() +
+      RealmBuildingsSize.StoreHouse * allOutputData[0].StoreHouse.toNumber();
 
     const cities = getTrait(realm, 'City');
     const regions = getTrait(realm, 'Region');
 
-    const max = (cities * regions) / 2 + 100;
+    const max = cities * (regions / 2) + 100;
 
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
   }, [allOutputData, realm]);

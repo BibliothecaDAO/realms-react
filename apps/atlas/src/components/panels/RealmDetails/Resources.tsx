@@ -92,8 +92,8 @@ const Harvests: React.FC<Prop> = (props) => {
 
   return (
     <BaseRealmDetailPanel open={props.open}>
-      <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-        <Card className="col-start-1 col-end-3 ">
+      <div className="grid grid-cols-12 gap-6 py-4">
+        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
           <div className="w-full p-4 mx-auto bg-white rounded bg-opacity-90">
             <Image
               width={200}
@@ -155,7 +155,7 @@ const Harvests: React.FC<Prop> = (props) => {
             </p>
           </div>
         </Card>
-        <Card className="col-start-3 col-end-6 ">
+        <Card className="col-span-12 md:col-start-3 md:col-end-8 ">
           <CardTitle>Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -179,7 +179,7 @@ const Harvests: React.FC<Prop> = (props) => {
           </div>
         </Card>
 
-        <Card className="col-start-1 col-end-3">
+        <Card className="col-span-12 md:col-start-1 md:col-end-3">
           <div className="flex p-3 bg-white rounded">
             <Image
               width={200}
@@ -217,7 +217,7 @@ const Harvests: React.FC<Prop> = (props) => {
             </p>
           </div>
         </Card>
-        <Card className="flex col-start-3 col-end-6 ">
+        <Card className="flex col-span-12 md:col-start-3 md:col-end-8 ">
           <CardTitle>Farms Built - Capacity {farmCapacity}</CardTitle>
 
           <div className="flex flex-wrap justify-between p-2">

@@ -18,7 +18,7 @@ export const BaseRealmDetailPanel = (props: Props) => {
       className={`absolute ${props.open ? 'z-10' : ''}`}
       style={animation}
     >
-      <div className={` relative px-8`}>{props.children}</div>
+      <div className={` relative px-4 md:px-8`}>{props.children}</div>
     </animated.div>
   );
 };

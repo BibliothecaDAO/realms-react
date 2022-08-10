@@ -51,18 +51,14 @@ const Survey: React.FC<Prop> = (props) => {
   const realm = props.realm?.realm;
   return (
     <BaseRealmDetailPanel open={props.open}>
-      <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-        <Card className="col-start-1 col-end-2 ">
-          <CardTitle>Vulnerable in</CardTitle>
-          <CardStats className="text-4xl">100</CardStats>
-        </Card>
-        <Card className="col-start-2 col-end-3 ">
+      <div className="grid grid-cols-12 gap-6 py-4">
+        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
           <CardTitle>Population</CardTitle>
           <CardStats className="text-4xl">
             {props.realmFoodDetails.population}
           </CardStats>
         </Card>
-        <Card className="col-start-3 col-end-4 ">
+        <Card className="col-span-12 md:col-start-3 md:col-end-5 ">
           <CardTitle>Food in Storehouse</CardTitle>
           {!props.loading && (
             <CardStats className="text-4xl">
@@ -77,22 +73,36 @@ const Survey: React.FC<Prop> = (props) => {
                   />
                 ) : (
                   <span className="text-red-600 animate-pulse">
-                    Serfs are starving!!
+                    Serfs are starving!
                   </span>
                 )}
               </div>
             </CardStats>
           )}
         </Card>
-        <Card className="col-start-4 col-end-6 ">
+        <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
           <CardTitle>Building usage</CardTitle>
-          <CardStats className="text-4xl">
-            {props.buildingUtilisation && props.buildingUtilisation.currentSqm}
-            sqm /{' '}
-            {props.buildingUtilisation && props.buildingUtilisation.maxSqm}sqm
+
+          <CardBody>
+            {props.buildings?.map((a, i) => {
+              return (
+                <div key={i} className="flex justify-between">
+                  <span>{a.name}</span>{' '}
+                  <span>
+                    {a.quantityBuilt} {a.sqmUsage}
+                  </span>
+                </div>
+              );
+            })}
+          </CardBody>
+          <CardStats className="flex justify-between text-2xl">
+            <h5>sqm used</h5>
+            {props.buildingUtilisation &&
+              props.buildingUtilisation.currentSqm}/{' '}
+            {props.buildingUtilisation && props.buildingUtilisation.maxSqm}
           </CardStats>
         </Card>
-        <Card className="col-start-6 col-end-13 row-span-2">
+        <Card className="col-span-12 row-span-2 md:col-start-8 md:col-end-13">
           <CardTitle>{realm?.name} history</CardTitle>
           <CardBody className="text-2xl">
             Loot is a collaborative media project that aims to create a
@@ -105,7 +115,7 @@ const Survey: React.FC<Prop> = (props) => {
             <Button variant="outline">write an entry</Button>
           </div>
         </Card>
-        <Card className="col-start-1 col-end-4 ">
+        <Card className="col-span-12 md:col-start-1 md:col-end-4 ">
           {' '}
           <Image
             src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
@@ -116,7 +126,7 @@ const Survey: React.FC<Prop> = (props) => {
             layout={'responsive'}
           />
         </Card>
-        <Card className="col-start-4 col-end-6 ">
+        <Card className="col-span-12 md:col-start-4 md:col-end-8 ">
           <CardTitle>Resources</CardTitle>
           <CardBody>
             {realm && (
@@ -128,7 +138,7 @@ const Survey: React.FC<Prop> = (props) => {
             )}
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-3 ">
+        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
           <CardTitle>Traits</CardTitle>
           <CardBody>
             <div className="w-full my-1 ">

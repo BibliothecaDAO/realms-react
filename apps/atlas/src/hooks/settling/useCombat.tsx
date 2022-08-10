@@ -31,11 +31,6 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 const useCombat = () => {
   const { contract: combatContract } = useCombatContract();
 
-  const buildSquadAction = useStarknetInvoke({
-    contract: combatContract,
-    method: 'build_squad_from_troops_in_realm',
-  });
-
   const {
     data: combatData,
     error,
@@ -52,7 +47,6 @@ const useCombat = () => {
         args: [
           bnToUint256(toBN(args.attackingRealmId)),
           bnToUint256(toBN(args.defendingRealmId)),
-          1, // Remove on upgrade to combat v2
         ],
         metadata: {
           action: Entrypoints.initiateCombat,

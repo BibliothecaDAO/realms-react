@@ -22,6 +22,7 @@ export type PanelType =
   | 'bank'
   | 'lore'
   | 'combat'
+  | 'realm'
   | AssetType;
 
 export type MenuType =

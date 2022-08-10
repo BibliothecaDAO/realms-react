@@ -236,6 +236,8 @@ export interface BuildingDetail {
   img: string;
   type: string;
   key: string;
+  sqmUsage: number;
+  buildingSize: number;
 }
 
 export interface RealmFoodDetails {

@@ -220,15 +220,13 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
-                  {/* {subview == 'Army' && ( */}
                   <Army
                     open={subview == 'Army'}
                     availableResources={realmsResourcesDetails}
                     buildings={buildings}
                     realm={realmData?.realm}
                   />
-                  {/* )} */}
-                  {/* {subview == 'Resources' && ( */}
+
                   <ResourceDetails
                     open={subview == 'Resources'}
                     availableResources={realmsResourcesDetails}
@@ -237,8 +235,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     buildings={buildings}
                     realm={realmData}
                   />
-                  {/* )} */}
-                  {/* {subview == 'Survey' && ( */}
+
                   <Survey
                     open={subview == 'Survey'}
                     availableResources={realmsResourcesDetails}
@@ -249,129 +246,12 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     realm={realmData}
                     loading={loadingFood}
                   />
-                  {/* )} */}
 
                   {subview == 'History' && <RealmHistory realmId={realmId} />}
                 </>
               ) : null}
             </div>
           </div>
-
-          {/*
-        <div className="grid grid-flow-col grid-cols-6 gap-6 py-4">
-          <div className="col-start-1 col-end-5 row-span-3">
-            <Image
-              src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realmId}.webp`}
-              alt="map"
-              className="w-full mt-4 rounded-xl -scale-x-100"
-              width={500}
-              height={320}
-              layout={'responsive'}
-            />
-          </div>
-          <Card className="col-start-5 col-end-7">
-            <CardTitle>Owner</CardTitle>
-            <CardStats className="text-2xl">
-              {shortenAddress(RealmOwner(realm as RealmFragmentFragment))}
-            </CardStats>
-          </Card>
-          <Card className="col-start-5 col-end-7">
-            <CardTitle>Realm State</CardTitle>
-            {realm && (
-              <CardStats className="text-2xl">{RealmStatus(realm)}</CardStats>
-            )}
-          </Card>
-          <Card className="col-start-5 col-end-7 text-white">
-            <CardTitle>Vulnerable in</CardTitle>
-            <CountdownTimer date={time()} />
-          </Card>
-          <Card className="col-start-1 col-end-3 ">
-            <CardTitle>Traits</CardTitle>
-            <div className="w-full my-2 text-white">
-              <TraitTable
-                trait="Region"
-                traitAmount={getTrait(realm, 'Region')}
-              />
-            </div>
-            <div className="w-full my-2 text-white">
-              <TraitTable trait="City" traitAmount={getTrait(realm, 'City')} />
-            </div>
-            <div className="w-full my-2 text-white">
-              <TraitTable
-                trait="Harbor"
-                traitAmount={getTrait(realm, 'Harbor')}
-              />
-            </div>
-            <div className="w-full my-2 text-white">
-              <TraitTable
-                trait="River"
-                traitAmount={getTrait(realm, 'River')}
-              />
-            </div>
-          </Card>
-          <Card className="col-start-3 col-end-7 ">
-            <CardTitle>Resources</CardTitle>
-            {realm && <RealmResources realm={realm} loading={false} />}
-          </Card>
-
-
-          <Card className="col-start-1 col-end-7">
-            <div className="flex justify-between w-full mb-10">
-              <div className="text-2xl font-semibold tracking-widest text-white uppercase">
-                Military Strength
-              </div>
-              <div className="text-xl font-semibold tracking-widest text-white uppercase ">
-                {squad ? <span>Attacking</span> : <span>Defending</span>} Squad
-                <Button
-                  className="ml-4"
-                  variant="secondary"
-                  size="xs"
-                  onClick={() => setSquad(!squad)}
-                >
-                  change
-                </Button>
-              </div>
-            </div>
-            {squad ? (
-              <SquadBuilder
-                location={1}
-                realmId={realmId}
-                withPurchase={true}
-                troops={attackSquad}
-                troopsStats={troopStatsData?.getTroopStats}
-              />
-            ) : (
-              <SquadBuilder
-                location={2}
-                realmId={realmId}
-                withPurchase={true}
-                troops={defenseSquad}
-                troopsStats={troopStatsData?.getTroopStats}
-              />
-            )}
-          </Card>
-          <Card className="col-start-1 col-end-3 ">
-            <CardTitle>Happiness</CardTitle>
-            <CardStats className="text-4xl">100</CardStats>
-          </Card>
-          <Card className="col-start-3 col-end-4 ">
-            <CardTitle>Culture</CardTitle>
-            <CardStats className="text-4xl">{getCulture()}</CardStats>
-          </Card>
-          <Card className="col-start-4 col-end-5 ">
-            <CardTitle>Food</CardTitle>
-            <CardStats className="text-4xl">{getFood()}</CardStats>
-          </Card>
-          <Card className="col-start-5 col-end-7 ">
-            <CardTitle>Population</CardTitle>
-            <CardStats className="text-4xl">{getPopulation()}</CardStats>
-          </Card>
-          <Card className="col-start-1 col-end-7 ">
-            <CardTitle>Buildings</CardTitle>
-            {realm && <RealmBuildings realm={realm} loading={false} />}
-          </Card>
-        </div>
-        */}
         </div>
       </div>
     </>

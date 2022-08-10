@@ -13,6 +13,7 @@ import { RaidingSideBar } from '@/components/sidebars/RaidingSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmBuildingId, HarvestType } from '@/constants/buildings';
 import { Squad } from '@/constants/index';
+import { troopList } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery } from '@/generated/graphql';
@@ -93,27 +94,42 @@ const Army: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
-        <Card className="col-span-8">
-          <CardTitle>Build Military Buildings</CardTitle>
-          <div className="flex space-x-2">
+        <Card className="col-span-12 md:col-span-4">
+          <CardTitle>Military Buildings</CardTitle>
+          <div className="flex flex-wrap">
             {props.buildings
               ?.filter((a) => a.type === 'military')
               .map((a, i) => {
                 return (
-                  <div key={i} className="p-1 border rounded border-white/20">
-                    <Image
-                      height={300}
-                      width={300}
-                      className="w-64 h-64 bg-white rounded"
-                      src={a.img}
-                      alt=""
-                    />
-                    <div className="p-3 capitalize">
-                      <h3>{a.name}</h3>
-                      <hr className="opacity-20" />
-                      <h5 className="my-2">
-                        Quantity Built: {a.quantityBuilt}
-                      </h5>
+                  <div key={i} className="flex flex-wrap w-full p-1">
+                    <div className="self-center">
+                      <Image
+                        height={200}
+                        width={200}
+                        className="w-64 h-auto bg-white rounded"
+                        src={a.img}
+                        alt=""
+                      />
+                    </div>
+
+                    <div className="p-4 capitalize">
+                      <h2>{a.name}</h2>
+
+                      <div className="flex flex-wrap">
+                        <div className="w-1/2">
+                          <h5>Quantity:</h5>
+                          <p className="text-2xl">{a.quantityBuilt}</p>
+                        </div>
+                        <div className="w-1/2">
+                          <h5>Usage:</h5>
+                          <p className="text-2xl">{a.sqmUsage} sqm</p>
+                        </div>
+                        <div className="w-1/2">
+                          <h5>size:</h5>
+                          <p className="text-2xl">{a.buildingSize} sqm</p>
+                        </div>
+                      </div>
+
                       {/* <h5 className="my-2">Decay time:</h5> */}
                       <div className="flex w-full mt-3 space-x-2">
                         <Button
@@ -151,12 +167,33 @@ const Army: React.FC<Prop> = (props) => {
                         />{' '}
                       </div>
                     </div>
+                    <div className="flex w-full p-2 space-x-3">
+                      {troopList
+                        .filter((b) => b.buildingId === a.id)
+                        .map((c, i) => {
+                          return (
+                            <div key={i} className="flex flex-col">
+                              <div className="p-2 bg-red-700 rounded-xl">
+                                <Image
+                                  height={75}
+                                  width={75}
+                                  className="object-contain h-auto "
+                                  src={'/realm-troops/' + c.img}
+                                  alt=""
+                                />
+                              </div>
+
+                              <h5 className="">{c.name}</h5>
+                            </div>
+                          );
+                        })}
+                    </div>
                   </div>
                 );
               })}
           </div>
         </Card>
-        <Card className="col-span-4">
+        <Card className="col-span-12 md:col-span-4">
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -181,7 +218,7 @@ const Army: React.FC<Prop> = (props) => {
             showRaidable
           />
         </Card>
-        <Card className="col-span-4">
+        <Card className="col-span-12 md:col-span-4">
           <CardTitle>{squadSlot}ing Army</CardTitle>
 
           {/* TODO: add back for indexer */}

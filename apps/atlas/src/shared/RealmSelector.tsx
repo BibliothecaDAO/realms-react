@@ -44,7 +44,7 @@ const RealmSelector = (props: Props) => {
               className="w-full p-4 border hover:bg-gray-500"
               key={r.realmId}
             >
-              <OrderIcon size="sm" order={r.orderType} /> {r.name}
+              <OrderIcon size="sm" order={r.orderType} /> {r.realmId} {r.name}
             </button>
           ))}
       </AtlasSidebar>

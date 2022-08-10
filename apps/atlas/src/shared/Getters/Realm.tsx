@@ -132,3 +132,7 @@ export const getTrait = (realm: any, trait: string) => {
     ? realm.traits?.find((o) => o.type === trait).qty
     : '0';
 };
+
+export const trimmedOrder = (order: string) => {
+  return order.replace('the ', '').replace('the_', '');
+};
