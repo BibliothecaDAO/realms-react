@@ -41,7 +41,7 @@ export const MainFooter = () => {
             </a>
           </li>
          <li className={footerLinkStyles}>
-            <a className={footerHREFStyles} href={https://old.biblioithecadao.xyz}>
+            <a className={footerHREFStyles} href={'https://old.biblioithecadao.xyz'}>
               Old Bibliotheca DAO site
             </a>
           </li>
