@@ -51,7 +51,7 @@ export const SquadBuilder = (props: SquadProps) => {
       tier: 0,
       agility: 0,
       attack: 0,
-      defense: 0,
+      armor: 0,
       vitality: 0,
       wisdom: 0,
       squadSlot: 0,
@@ -115,7 +115,11 @@ export const SquadBuilder = (props: SquadProps) => {
 
   return (
     <div className="flex flex-col w-full mt-4">
-      <div className={`${props.flipped ? 'order-last' : ''} flex gap-2 my-2`}>
+      <div
+        className={`${
+          props.flipped ? 'order-last' : ''
+        } max-w-full flex gap-2 my-2`}
+      >
         {tier1()}
       </div>
       <div className="flex justify-around w-full gap-3 mx-auto my-2 sm:w-3/4">
@@ -219,7 +223,7 @@ export const SquadBuilder = (props: SquadProps) => {
               </div>
               <div>Agility: {selectedTroop.agility}</div>
               <div>Attack: {selectedTroop.attack}</div>
-              <div>Armor: {selectedTroop.defense}</div>
+              <div>Armor: {selectedTroop.armor}</div>
               <div>Vitality: {selectedTroop.vitality}</div>
               <div>Wisdom: {selectedTroop.wisdom}</div>
             </div>

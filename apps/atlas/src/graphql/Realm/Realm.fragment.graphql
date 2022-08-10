@@ -42,7 +42,7 @@ fragment RealmFragment on Realm {
     tier
     agility
     attack
-    defense
+    armor
     vitality
     wisdom
     squadSlot

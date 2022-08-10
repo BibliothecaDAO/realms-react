@@ -116,7 +116,7 @@ export const squadStats = (squad: TroopInterface[] | undefined | null) => {
       .map((troop) => troop.attack)
       .reduce((prev, curr) => prev + curr, 0),
     armor: squad
-      .map((troop) => troop.defense)
+      .map((troop) => troop.armor)
       .reduce((prev, curr) => prev + curr, 0),
     vitality: squad
       .map((troop) => troop.vitality)
