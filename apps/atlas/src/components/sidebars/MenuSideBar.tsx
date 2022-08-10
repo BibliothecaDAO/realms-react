@@ -74,6 +74,11 @@ export const MenuSideBar = () => {
         icon: <Danger className={iconClasses} />,
         text: 'Crypts',
       },
+      {
+        page: 'lore',
+        icon: <Library className={iconClasses} />,
+        text: 'Lore',
+      },
 
       // {
       //   page: 'combat',

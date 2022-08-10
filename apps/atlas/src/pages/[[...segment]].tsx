@@ -17,7 +17,7 @@ import { BankPanel } from '@/components/panels/BankPanel';
 import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
-/* import { LorePanel } from '@/components/panels/LorePanel'; */
+import { LorePanel } from '@/components/panels/LorePanel';
 import { RaidResultsPanel } from '@/components/panels/RaidResultsPanel';
 import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
@@ -35,6 +35,7 @@ import { TransactionCartSideBar } from '@/components/sidebars/TransactionCartSid
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
+import { LoreProvider } from '@/context/LoreContext';
 import { RealmProvider } from '@/context/RealmContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import crypts from '@/geodata/crypts.json';
@@ -80,6 +81,7 @@ function AtlasMain() {
             <BankPanel />
             <ResourceSwapSideBar />
             <TradePanel />
+            <LoreModule />
             {/* <FlyTo /> */}
             {/* Hide the map on mobile devices */}
             {!ua.mobile ? (
@@ -351,5 +353,13 @@ function MapModule() {
         <FullscreenControl position="bottom-right" />
       </Map>
     </DeckGL>
+  );
+}
+
+function LoreModule() {
+  return (
+    <LoreProvider>
+      <LorePanel />
+    </LoreProvider>
   );
 }
