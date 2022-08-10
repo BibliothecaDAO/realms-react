@@ -19,9 +19,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: any;
 };
 
@@ -30,6 +28,7 @@ export type Building = {
   __typename?: 'Building';
   buildingCost: BuildingCost;
   buildingId: Scalars['Int'];
+  buildingIntegrity: Scalars['Int'];
   buildingName: Scalars['String'];
   builds: Array<Scalars['String']>;
   count: Scalars['Int'];
@@ -40,6 +39,7 @@ export type Building = {
   limitTraitName: Scalars['String'];
   population: Scalars['Int'];
   realmId: Scalars['Float'];
+  size: Scalars['Int'];
 };
 
 /** Building Cost Model */
@@ -66,6 +66,7 @@ export type BuildingWhereInput = {
   NOT?: InputMaybe<Array<BuildingWhereInput>>;
   OR?: InputMaybe<Array<BuildingWhereInput>>;
   buildingId?: InputMaybe<IntFilter>;
+  buildingIntegrity?: InputMaybe<IntFilter>;
   builds?: InputMaybe<StringNullableListFilter>;
   eventId?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
@@ -212,6 +213,7 @@ export type LoreEntity = {
   id: Scalars['ID'];
   kind: Scalars['Float'];
   owner: Scalars['String'];
+  ownerDisplayName?: Maybe<Scalars['String']>;
   revisions: Array<LoreEntityRevision>;
 };
 
@@ -271,6 +273,7 @@ export type LoreEntityWhereInput = {
   id?: InputMaybe<IntFilter>;
   kind?: InputMaybe<IntFilter>;
   owner?: InputMaybe<StringNullableFilter>;
+  ownerDisplayName?: InputMaybe<StringNullableFilter>;
   revisions?: InputMaybe<LoreEntityRevisionListRelationFilter>;
 };
 
@@ -318,6 +321,7 @@ export type LorePoisOnEntityRevisionsWhereInput = {
   assetId?: InputMaybe<StringNullableFilter>;
   entityRevision?: InputMaybe<LoreEntityRevisionRelationFilter>;
   entityRevisionId?: InputMaybe<IntFilter>;
+  id?: InputMaybe<IntFilter>;
   poi?: InputMaybe<LorePoiRelationFilter>;
   poiId?: InputMaybe<IntFilter>;
 };
@@ -356,6 +360,7 @@ export type LorePropsOnEntityRevisionsWhereInput = {
   OR?: InputMaybe<Array<LorePropsOnEntityRevisionsWhereInput>>;
   entityRevision?: InputMaybe<LoreEntityRevisionRelationFilter>;
   entityRevisionId?: InputMaybe<IntFilter>;
+  id?: InputMaybe<IntFilter>;
   prop?: InputMaybe<LorePropRelationFilter>;
   propId?: InputMaybe<IntFilter>;
   value?: InputMaybe<StringNullableFilter>;
@@ -905,8 +910,8 @@ export type StringNullableListFilter = {
 export type Troop = {
   __typename?: 'Troop';
   agility: Scalars['Int'];
+  armor: Scalars['Int'];
   attack: Scalars['Int'];
-  defense: Scalars['Int'];
   index: Scalars['Int'];
   realmId: Scalars['Int'];
   squadSlot: Scalars['Int'];
@@ -942,8 +947,8 @@ export type TroopOrderByRelationAggregateInput = {
 export type TroopStats = {
   __typename?: 'TroopStats';
   agility: Scalars['Int'];
+  armor: Scalars['Int'];
   attack: Scalars['Int'];
-  defense: Scalars['Int'];
   tier: Scalars['Int'];
   troopCost?: Maybe<TroopCost>;
   troopId: Scalars['Int'];
@@ -959,8 +964,9 @@ export type TroopWhereInput = {
   OR?: InputMaybe<Array<TroopWhereInput>>;
   Realm?: InputMaybe<RealmRelationFilter>;
   agility?: InputMaybe<IntFilter>;
+  armor?: InputMaybe<IntFilter>;
   attack?: InputMaybe<IntFilter>;
-  defense?: InputMaybe<IntFilter>;
+  building?: InputMaybe<IntFilter>;
   index?: InputMaybe<IntFilter>;
   realmId?: InputMaybe<IntFilter>;
   squadSlot?: InputMaybe<IntFilter>;
@@ -1206,7 +1212,7 @@ export type GetRealmQuery = {
       tier: number;
       agility: number;
       attack: number;
-      defense: number;
+      armor: number;
       vitality: number;
       wisdom: number;
       squadSlot: number;
@@ -1351,7 +1357,7 @@ export type GetRealmsQuery = {
       tier: number;
       agility: number;
       attack: number;
-      defense: number;
+      armor: number;
       vitality: number;
       wisdom: number;
       squadSlot: number;
@@ -1371,7 +1377,7 @@ export type GetTroopStatsQuery = {
     tier: number;
     agility: number;
     attack: number;
-    defense: number;
+    armor: number;
     vitality: number;
     wisdom: number;
     troopCost?: {
@@ -1430,7 +1436,7 @@ export type RealmFragmentFragment = {
     tier: number;
     agility: number;
     attack: number;
-    defense: number;
+    armor: number;
     vitality: number;
     wisdom: number;
     squadSlot: number;
@@ -1538,7 +1544,7 @@ export const RealmFragmentFragmentDoc = gql`
       tier
       agility
       attack
-      defense
+      armor
       vitality
       wisdom
       squadSlot
@@ -2269,7 +2275,7 @@ export const GetTroopStatsDocument = gql`
       tier
       agility
       attack
-      defense
+      armor
       vitality
       wisdom
       troopCost {

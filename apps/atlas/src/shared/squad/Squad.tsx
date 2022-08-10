@@ -115,7 +115,11 @@ export const SquadBuilder = (props: SquadProps) => {
 
   return (
     <div className="flex flex-col w-full mt-4">
-      <div className={`${props.flipped ? 'order-last' : ''} flex gap-2 my-2`}>
+      <div
+        className={`${
+          props.flipped ? 'order-last' : ''
+        } max-w-full flex gap-2 my-2`}
+      >
         {tier1()}
       </div>
       <div className="flex justify-around w-full gap-3 mx-auto my-2 sm:w-3/4">
