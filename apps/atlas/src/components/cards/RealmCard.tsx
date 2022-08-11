@@ -115,7 +115,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       // },
       {
         label: 'History',
-        component: <RealmHistory realmId={props.realm.realmId} />,
+        component: <RealmHistory open={true} realmId={props.realm.realmId} />,
       },
     ],
     [props.realm?.realmId]
