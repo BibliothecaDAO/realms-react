@@ -34,6 +34,9 @@ type Resources = {
 };
 
 const useResources = (realm: Realm | undefined): Resources => {
+  const { contract: resourcesContract } = useResourcesContract();
+  const txQueue = useTransactionQueue();
+
   const [realmsResourcesDetails, setRealmsResourcesDetails] =
     useState<AvailableResources>({
       daysAccrued: 0,
@@ -43,15 +46,6 @@ const useResources = (realm: Realm | undefined): Resources => {
       claimableResources: [],
       vaultResources: [],
     });
-
-  const { contract: resourcesContract } = useResourcesContract();
-
-  const txQueue = useTransactionQueue();
-
-  const claimResourcesAction = useStarknetInvoke({
-    contract: resourcesContract,
-    method: Entrypoints.claim,
-  });
 
   const {
     data: allOutputData,

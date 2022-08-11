@@ -8,6 +8,7 @@ import {
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
@@ -35,6 +36,9 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
+  const [play, { stop }] = useSound('/music/ui/Mint.mp3', {
+    volume: 0.2,
+  });
   const { claim } = useResources(props.realm as Realm);
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
@@ -116,6 +120,10 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
 
   const tableOptions = { is_striped: true };
 
+  const claimResources = () => {
+    play();
+    claim();
+  };
   return (
     <div className="w-full">
       <div className="flex justify-around flex-grow w-full p-4 text-center">
@@ -159,7 +167,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             variant="primary"
             className="w-full"
             onClick={() => {
-              claim();
+              claimResources();
             }}
           >
             {props.availableResources.daysAccrued === 0

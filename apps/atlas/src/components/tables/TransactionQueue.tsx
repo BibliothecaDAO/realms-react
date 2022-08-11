@@ -10,16 +10,12 @@ type Prop = {
 export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
 
-  const [play, { stop }] = useSound(
-    '/music/ui/ESM_Game_UI_Clean_App_Small_Light_Alert_Interface_Foley_Texture.wav',
-    {
-      volume: 1,
-    }
-  );
+  const [play, { stop }] = useSound('/music/ui/SignFor2Command2.mp3', {
+    volume: 0.2,
+  });
 
   const signDecree = () => {
     play();
-
     txQueue
       .executeMulticall([])
       .then((_txResp) => {
