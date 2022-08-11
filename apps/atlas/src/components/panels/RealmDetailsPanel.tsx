@@ -24,7 +24,7 @@ import { useSpring } from 'react-spring';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
 import { RealmCard } from '@/components/cards/RealmCard';
-import { RealmHistory } from '@/components/tables/RealmHistory';
+import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
@@ -62,13 +62,19 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const realm = realmData?.realm;
 
-  const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
+  const {
+    buildings,
+    buildingUtilisation,
+    loading: loadingBuildings,
+  } = useBuildings(realm as Realm);
+
   const {
     realmFoodDetails,
     availableFood,
     loading: loadingFood,
   } = useFood(realm as Realm);
-  const { realmsResourcesDetails } = useResources({
+
+  const { realmsResourcesDetails, loading: loadingResources } = useResources({
     token_id: realm?.realmId,
     resources: realm?.resources,
   });
@@ -76,6 +82,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
   );
+
+  const loadingHooks = loadingBuildings || loadingFood || loadingResources;
 
   useEffect(() => {
     if (realm) {
@@ -90,11 +98,14 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         { shallow: true }
       );
     }
+    console.log(realm);
   }, [subview]);
 
   const pushPage = (value) => {
     if (!loading) {
-      router.push('/realm/' + value, undefined, { shallow: true });
+      router.push('/realm/' + value + '?tab=Survey', undefined, {
+        shallow: true,
+      });
     }
   };
 
@@ -169,7 +180,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           />
           <div className="fixed z-50 text-black bottom-10 right-10">
             <div
-              className={`w-40 h-40 rounded-full ${color} flex justify-center align-middle text-black bg-opacity-70 shadow-2xl`}
+              className={`w-40 h-40 rounded-full border-4 border-double ${color} flex justify-center align-middle text-black bg-opacity-95 shadow-2xl`}
             >
               {quickActions.map((a, i) => {
                 return (
@@ -225,6 +236,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableResources={realmsResourcesDetails}
                     buildings={buildings}
                     realm={realmData?.realm}
+                    loading={loadingHooks}
                   />
 
                   <ResourceDetails
@@ -234,6 +246,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableFood={availableFood}
                     buildings={buildings}
                     realm={realmData}
+                    loading={loadingHooks}
                   />
 
                   <Survey
@@ -244,10 +257,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableFood={availableFood}
                     buildings={buildings}
                     realm={realmData}
-                    loading={loadingFood}
+                    loading={loadingHooks}
                   />
 
-                  {subview == 'History' && <RealmHistory realmId={realmId} />}
+                  <RealmHistory open={subview == 'History'} realmId={realmId} />
                 </>
               ) : null}
             </div>

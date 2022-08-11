@@ -31,6 +31,7 @@ type Prop = {
   buildings: BuildingDetail[] | undefined;
   availableResources: AvailableResources;
   open: boolean;
+  loading: boolean;
 };
 
 interface BuildQuantity {
@@ -94,14 +95,17 @@ const Army: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
-        <Card className="col-span-12 md:col-span-4">
+        <Card loading={props.loading} className="col-span-12 md:col-span-9">
           <CardTitle>Military Buildings</CardTitle>
           <div className="flex flex-wrap">
             {props.buildings
               ?.filter((a) => a.type === 'military')
               .map((a, i) => {
                 return (
-                  <div key={i} className="flex flex-wrap w-full p-1">
+                  <div
+                    key={i}
+                    className="flex flex-wrap w-1/2 p-3 border rounded border-white/20"
+                  >
                     <div className="self-center">
                       <Image
                         height={200}
@@ -167,17 +171,17 @@ const Army: React.FC<Prop> = (props) => {
                         />{' '}
                       </div>
                     </div>
-                    <div className="flex w-full p-2 space-x-3">
+                    <div className="flex w-full space-x-3">
                       {troopList
                         .filter((b) => b.buildingId === a.id)
                         .map((c, i) => {
                           return (
-                            <div key={i} className="flex flex-col">
-                              <div className="p-2 bg-red-700 rounded-xl">
+                            <div key={i} className="flex flex-col w-full">
+                              <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
                                 <Image
                                   height={75}
                                   width={75}
-                                  className="object-contain h-auto "
+                                  className="object-contain h-auto"
                                   src={'/realm-troops/' + c.img}
                                   alt=""
                                 />
@@ -193,7 +197,7 @@ const Army: React.FC<Prop> = (props) => {
               })}
           </div>
         </Card>
-        <Card className="col-span-12 md:col-span-4">
+        <Card loading={props.loading} className="col-span-12 md:col-span-3">
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -218,7 +222,7 @@ const Army: React.FC<Prop> = (props) => {
             showRaidable
           />
         </Card>
-        <Card className="col-span-12 md:col-span-12">
+        <Card loading={props.loading} className="col-span-12 md:col-span-12">
           <CardTitle>{squadSlot}ing Army</CardTitle>
 
           {/* TODO: add back for indexer */}

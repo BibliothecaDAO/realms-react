@@ -44,6 +44,7 @@ type Prop = {
   availableFood: number | undefined;
   availableResources: AvailableResources;
   open: boolean;
+  loading: boolean;
 };
 
 interface ResourceAndFoodInput {

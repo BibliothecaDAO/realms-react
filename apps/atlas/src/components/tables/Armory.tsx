@@ -1,5 +1,6 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
+import Image from 'next/image';
 import { useReducer } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
@@ -70,7 +71,25 @@ export const ArmoryBuilder = (props: Props) => {
 
   const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
-      name: <span className="tracking-wider uppercase ">{re.troopName}</span>,
+      name: (
+        <span className="tracking-wider ">
+          <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+            <Image
+              height={50}
+              width={50}
+              className="object-contain h-auto"
+              src={`/realm-troops/${re.troopName}.png`}
+              alt=""
+            />
+          </div>{' '}
+          <div className="mt-4 text-xl font-display"> {re.troopName}</div>
+          <div>Agility: {re.agility}</div>
+          <div>Attack: {re.attack}</div>
+          <div>Armor: {re.armor}</div>
+          <div>Vitality: {re.vitality}</div>
+          <div>Wisdom: {re.wisdom}</div>
+        </span>
+      ),
       troopCost: troopCostCell(re.troopCost!),
       add: (
         <Button

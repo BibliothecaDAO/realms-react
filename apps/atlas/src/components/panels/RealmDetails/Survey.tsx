@@ -52,36 +52,106 @@ const Survey: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6 py-4">
-        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-1 md:col-end-3 "
+        >
           <CardTitle>Population</CardTitle>
           <CardStats className="text-4xl">
             {props.realmFoodDetails.population}
           </CardStats>
         </Card>
-        <Card className="col-span-12 md:col-start-3 md:col-end-5 ">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-3 md:col-end-5 "
+        >
           <CardTitle>Food in Storehouse</CardTitle>
           {!props.loading && (
-            <CardStats className="text-4xl">
+            <CardStats>
               <div>
-                {props.availableFood?.toLocaleString()} <br />
-                {props.availableFood && props?.availableFood > 0 ? (
+                {props.availableFood && (
                   <CountdownTimer
                     date={(
                       props.availableFood * 1000 +
                       new Date().getTime()
                     ).toString()}
                   />
-                ) : (
-                  <span className="text-red-600 animate-pulse">
-                    Serfs are starving!
-                  </span>
                 )}
+                <div className="text-4xl">
+                  {props.availableFood?.toLocaleString()}
+                </div>{' '}
               </div>
             </CardStats>
           )}
         </Card>
-        <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
-          <CardTitle>Building usage</CardTitle>
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-5 md:col-end-8 "
+        >
+          <CardTitle>Military Strength</CardTitle>
+          {!props.loading && <CardStats className="text-4xl">0 / 0</CardStats>}
+        </Card>
+        <Card className="col-span-12 row-span-2 md:col-start-8 md:col-end-13 ">
+          <CardTitle>Landscape of {realm?.name}</CardTitle>{' '}
+          <Image
+            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
+            alt="map"
+            className="w-full -scale-x-100"
+            width={500}
+            height={320}
+            layout={'responsive'}
+          />
+          <CardTitle>Realm Traits</CardTitle>
+          <CardBody>
+            <div className="flex flex-wrap">
+              <div className="p-1 my-1 sm:w-1/2">
+                <TraitTable
+                  trait="Region"
+                  traitAmount={getTrait(realm, 'Region')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="City"
+                  traitAmount={getTrait(realm, 'City')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="Harbor"
+                  traitAmount={getTrait(realm, 'Harbor')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="River"
+                  traitAmount={getTrait(realm, 'River')}
+                />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+        {/* <Card
+          loading={props.loading}
+          className="col-span-12 row-span-2 md:col-start-8 md:col-end-13"
+        >
+          <CardTitle>{realm?.name} history</CardTitle>
+          <CardBody className="text-2xl">
+            Loot is a collaborative media project that aims to create a
+            decentralized, infinitely-expansive sci-fantasy universe, rich with
+            stories, games and multi-media. The Lootverse is a collection of NFT
+            projects, games, art, stories and multimedia backed by an active
+            community of players, builders, artists, writers and creators.
+          </CardBody>
+          <div className="pt-4 mt-auto">
+            <Button variant="outline">write an entry</Button>
+          </div>
+        </Card> */}
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-1 md:col-end-4 "
+        >
+          <CardTitle>Building</CardTitle>
 
           <CardBody>
             {props.buildings?.map((a, i) => {
@@ -102,31 +172,10 @@ const Survey: React.FC<Prop> = (props) => {
             {props.buildingUtilisation && props.buildingUtilisation.maxSqm}
           </CardStats>
         </Card>
-        <Card className="col-span-12 row-span-2 md:col-start-8 md:col-end-13">
-          <CardTitle>{realm?.name} history</CardTitle>
-          <CardBody className="text-2xl">
-            Loot is a collaborative media project that aims to create a
-            decentralized, infinitely-expansive sci-fantasy universe, rich with
-            stories, games and multi-media. The Lootverse is a collection of NFT
-            projects, games, art, stories and multimedia backed by an active
-            community of players, builders, artists, writers and creators.
-          </CardBody>
-          <div className="pt-4 mt-auto">
-            <Button variant="outline">write an entry</Button>
-          </div>
-        </Card>
-        <Card className="col-span-12 md:col-start-1 md:col-end-4 ">
-          {' '}
-          <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
-            alt="map"
-            className="w-full -scale-x-100"
-            width={500}
-            height={320}
-            layout={'responsive'}
-          />
-        </Card>
-        <Card className="col-span-12 md:col-start-4 md:col-end-8 ">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-4 md:col-end-8 "
+        >
           <CardTitle>Resources</CardTitle>
           <CardBody>
             {realm && (
@@ -136,32 +185,6 @@ const Survey: React.FC<Prop> = (props) => {
                 loading={false}
               />
             )}
-          </CardBody>
-        </Card>
-        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
-          <CardTitle>Traits</CardTitle>
-          <CardBody>
-            <div className="w-full my-1 ">
-              <TraitTable
-                trait="Region"
-                traitAmount={getTrait(realm, 'Region')}
-              />
-            </div>
-            <div className="w-full my-1 ">
-              <TraitTable trait="City" traitAmount={getTrait(realm, 'City')} />
-            </div>
-            <div className="w-full my-1 ">
-              <TraitTable
-                trait="Harbor"
-                traitAmount={getTrait(realm, 'Harbor')}
-              />
-            </div>
-            <div className="w-full my-1 ">
-              <TraitTable
-                trait="River"
-                traitAmount={getTrait(realm, 'River')}
-              />
-            </div>
           </CardBody>
         </Card>
       </div>

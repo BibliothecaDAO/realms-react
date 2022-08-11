@@ -87,7 +87,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
   const {
     data: population,
-    loading: loadingPopulation,
+    loading: populationLoading,
     error: errorPopulation,
   } = useStarknetCall({
     contract: calculatorContract,
@@ -107,15 +107,13 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
   const {
     data: storehouse,
-    loading,
+    loading: storehouseLoading,
     error: errorStorehouse,
   } = useStarknetCall({
     contract: foodContract,
     method: 'available_food_in_store',
     args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
-
-  console.log(loading);
 
   useEffect(() => {
     if (
@@ -149,7 +147,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   return {
     realmFoodDetails,
     availableFood,
-    loading: foodLoading || loadingPopulation,
+    loading: foodLoading || populationLoading || storehouseLoading,
   };
 };
 

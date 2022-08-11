@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
 import { number } from 'starknet';
-import { RealmHistory } from '@/components/tables/RealmHistory';
+import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';

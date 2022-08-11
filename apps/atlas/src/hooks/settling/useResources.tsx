@@ -27,7 +27,7 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 type Resources = {
   claim: () => void;
   realmsResourcesDetails: AvailableResources;
-  loadingClaimable: boolean;
+  loading: boolean;
 };
 
 type useResourcesArgs = {
@@ -55,7 +55,7 @@ const useResources = (args: useResourcesArgs): Resources => {
 
   const {
     data: allOutputData,
-    loading: outputLoading,
+    loading: claimableLoading,
     error: outputError,
   } = useStarknetCall({
     contract: resourcesContract,
@@ -65,7 +65,7 @@ const useResources = (args: useResourcesArgs): Resources => {
 
   const {
     data: allResourceVault,
-    loading: allResourceVaultLoading,
+    loading: vaultLoading,
     error: allResourceVaultError,
   } = useStarknetCall({
     contract: resourcesContract,
@@ -74,8 +74,8 @@ const useResources = (args: useResourcesArgs): Resources => {
   });
 
   const {
-    data: availableResourcesData,
-    loading,
+    data: daysAccrued,
+    loading: daysAccruedLoading,
     error,
   } = useStarknetCall({
     contract: resourcesContract,
@@ -85,7 +85,7 @@ const useResources = (args: useResourcesArgs): Resources => {
 
   const {
     data: availableVaultDays,
-    loading: loadingAvailableVaultDays,
+    loading: availableVaultDaysLoading,
     error: errorVaultDays,
   } = useStarknetCall({
     contract: resourcesContract,
@@ -95,8 +95,8 @@ const useResources = (args: useResourcesArgs): Resources => {
 
   useEffect(() => {
     if (
-      !availableResourcesData ||
-      !availableResourcesData[0] ||
+      !daysAccrued ||
+      !daysAccrued[0] ||
       !allResourceVault ||
       !allResourceVault[0] ||
       !allOutputData ||
@@ -116,19 +116,14 @@ const useResources = (args: useResourcesArgs): Resources => {
     });
 
     setRealmsResourcesDetails({
-      daysAccrued: availableResourcesData[0].toNumber(),
-      daysRemainder: availableResourcesData[1].toNumber(),
+      daysAccrued: daysAccrued[0].toNumber(),
+      daysRemainder: daysAccrued[1].toNumber(),
       vaultAccrued: availableVaultDays[0].toNumber(),
       vaultRemainder: availableVaultDays[1].toNumber(),
       claimableResources: resources,
       vaultResources: vault,
     });
-  }, [
-    availableResourcesData,
-    allResourceVault,
-    allOutputData,
-    availableVaultDays,
-  ]);
+  }, [daysAccrued, allResourceVault, allOutputData, availableVaultDays]);
 
   return {
     realmsResourcesDetails,
@@ -141,7 +136,11 @@ const useResources = (args: useResourcesArgs): Resources => {
         },
       });
     },
-    loadingClaimable: outputLoading,
+    loading:
+      claimableLoading ||
+      availableVaultDaysLoading ||
+      daysAccruedLoading ||
+      vaultLoading,
   };
 };
 

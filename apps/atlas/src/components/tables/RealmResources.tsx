@@ -120,7 +120,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       <div className="flex flex-wrap justify-between p-2">
         <div className="mb-5">
           <h6>Days:</h6>
-          <span className="text-2xl">
+          <span className="text-xl">
             {props.availableResources.daysAccrued == MAX_DAYS_ACCURED
               ? `${MAX_DAYS_ACCURED} days accrued, you must claim now.`
               : 'Days:' + props.availableResources.daysAccrued}
@@ -137,7 +137,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
 
         <div>
           <h6>vault: </h6>
-          <span className="text-2xl">
+          <span className="text-xl">
             {props.availableResources.vaultAccrued} days accrued
           </span>{' '}
         </div>
