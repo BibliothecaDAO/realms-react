@@ -73,6 +73,8 @@ export const RealmsPanel = () => {
       }));
 
     const filter = {} as any;
+    const orderBy = {} as any;
+
     if (state.searchIdFilter) {
       filter.realmId = { equals: parseInt(state.searchIdFilter) };
     } else if (state.selectedTab === 2) {
@@ -98,6 +100,13 @@ export const RealmsPanel = () => {
       filter.NOT = {
         settledOwner: { equals: null },
       };
+    }
+
+    if (state.isRaidableFilter) {
+      filter.NOT = {
+        lastVaultTime: { equals: null },
+      };
+      orderBy.lastVaultTime = 'asc';
     }
 
     if (
@@ -128,6 +137,7 @@ export const RealmsPanel = () => {
     return {
       filter,
       take: limit,
+      orderBy,
       skip: limit * (page - 1),
     };
   }, [account, state, page]);
@@ -135,6 +145,7 @@ export const RealmsPanel = () => {
   const { data, loading } = useGetRealmsQuery({
     variables,
     skip: !isRealmPanel,
+    pollInterval: 5000,
   });
 
   useEffect(() => {

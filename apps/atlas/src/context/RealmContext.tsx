@@ -29,6 +29,7 @@ interface RealmState {
   selectedTab: number;
   hasWonderFilter: boolean;
   isSettledFilter: boolean;
+  isRaidableFilter: boolean;
   selectedRealms: number[];
 }
 
@@ -39,6 +40,7 @@ type RealmAction =
   | { type: 'updateSelectedResources'; payload: number[] }
   | { type: 'toggleHasWonderFilter' }
   | { type: 'toggleIsSettledFilter' }
+  | { type: 'toggleIsRaidableFilter' }
   | { type: 'clearFilfters' }
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
@@ -54,6 +56,7 @@ interface RealmActions {
   updateSelectedResources(resources: number[]): void;
   toggleHasWonderFilter(): void;
   toggleIsSettledFilter(): void;
+  toggleIsRaidableFilter(): void;
   clearFilters(): void;
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
@@ -85,6 +88,7 @@ const defaultFilters = {
   searchIdFilter: '',
   hasWonderFilter: false,
   isSettledFilter: false,
+  isRaidableFilter: false,
 };
 
 const defaultRealmState = {
@@ -108,6 +112,8 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, hasWonderFilter: !state.hasWonderFilter };
     case 'toggleIsSettledFilter':
       return { ...state, isSettledFilter: !state.isSettledFilter };
+    case 'toggleIsRaidableFilter':
+      return { ...state, isRaidableFilter: !state.isRaidableFilter };
     case 'updateSelectedOrders':
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
@@ -166,6 +172,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateSelectedTab', payload: tab }),
   toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
   toggleIsSettledFilter: () => dispatch({ type: 'toggleIsSettledFilter' }),
+  toggleIsRaidableFilter: () => dispatch({ type: 'toggleIsRaidableFilter' }),
   updateTraitsFilter: (filter: TraitsFilter) =>
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>

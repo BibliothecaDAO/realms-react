@@ -11,6 +11,12 @@ interface TraitProps {
 }
 
 export const RealmStatus = (realm: RealmFragmentFragment) => {
+  return [RealmStateStatus(realm), RealmVaultStatus(realm)]
+    .filter(Boolean)
+    .join(', ');
+};
+
+export const RealmStateStatus = (realm: RealmFragmentFragment) => {
   if (realm.bridgedOwner) {
     return 'Bridge Pending';
   }
@@ -32,6 +38,28 @@ export const RealmOwner = (realm: RealmFragmentFragment) => {
     realm?.owner ||
     '0'
   );
+};
+
+export const RealmVaultStatus = (realm: RealmFragmentFragment) => {
+  if (!realm.lastVaultTime) {
+    return '';
+  }
+  const now = Date.now();
+  const lastVaultTime = new Date(realm.lastVaultTime);
+  const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
+  const minutesToVault = 60 * 24; // 24 hours
+  if (minutesSinceLastVault >= minutesToVault) {
+    return `Raidable`;
+  }
+
+  const minutesRemaining = minutesToVault - minutesSinceLastVault;
+  const hours = Math.floor(minutesRemaining / 60);
+  const minutes = Math.floor(minutesRemaining % 60);
+  if (hours > 0) {
+    return `Raidable in ${hours}h ${minutes}m`;
+  } else {
+    return `Raidable in ${minutes}m`;
+  }
 };
 
 export const TraitTable = (props: TraitProps) => {

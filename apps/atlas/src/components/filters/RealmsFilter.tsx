@@ -6,7 +6,6 @@ import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 
 type RealmsFilterProps = {
   isYourRealms: boolean;
@@ -28,6 +27,16 @@ export function RealmsFilter(props: RealmsFilterProps) {
           />
         </div>
         <div className="flex flex-wrap self-center gap-2 md:flex-nowrap">
+          <div>
+            <Button
+              variant="outline"
+              size="sm"
+              className={clsx('', state.isRaidableFilter ? 'bg-black' : '')}
+              onClick={actions.toggleIsRaidableFilter}
+            >
+              Raidable
+            </Button>
+          </div>
           <div>
             <Button
               variant="outline"
