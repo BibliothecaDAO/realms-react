@@ -4,6 +4,8 @@ import type BN from 'bn.js';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
+import type { Realm } from '@/generated/graphql';
 import {
   ModuleAddr,
   useResourcesContract,
@@ -35,7 +37,7 @@ type useResourcesArgs = {
   resources: any | undefined;
 };
 
-const useResources = (args: useResourcesArgs): Resources => {
+const useResources = (realm: Realm | undefined): Resources => {
   const [realmsResourcesDetails, setRealmsResourcesDetails] =
     useState<AvailableResources>({
       daysAccrued: 0,
@@ -60,7 +62,7 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'get_all_resource_claimable',
-    args: [bnToUint256(toBN(args.token_id ?? 0))],
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
   const {
@@ -70,39 +72,49 @@ const useResources = (args: useResourcesArgs): Resources => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'get_all_vault_raidable',
-    args: [bnToUint256(toBN(args.token_id ?? 0))],
+    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
   });
 
-  const {
-    data: daysAccrued,
-    loading: daysAccruedLoading,
-    error,
-  } = useStarknetCall({
-    contract: resourcesContract,
-    method: 'days_accrued',
-    args: [bnToUint256(toBN(args.token_id ?? 0))],
-  });
+  // CACHED IN INDEXER
+  // const {
+  //   data: daysAccrued,
+  //   loading: daysAccruedLoading,
+  //   error,
+  // } = useStarknetCall({
+  //   contract: resourcesContract,
+  //   method: 'days_accrued',
+  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
+  // });
 
-  const {
-    data: availableVaultDays,
-    loading: availableVaultDaysLoading,
-    error: errorVaultDays,
-  } = useStarknetCall({
-    contract: resourcesContract,
-    method: 'get_available_vault_days',
-    args: [bnToUint256(toBN(args.token_id ?? 0))],
-  });
+  // const {
+  //   data: availableVaultDays,
+  //   loading: availableVaultDaysLoading,
+  //   error: errorVaultDays,
+  // } = useStarknetCall({
+  //   contract: resourcesContract,
+  //   method: 'get_available_vault_days',
+  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
+  // });
+
+  const cachedDaysAccrued = parseInt(
+    ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed()
+  );
+
+  const cachedDaysRemained =
+    (new Date().getTime() - realm?.lastClaimTime) % DAY;
+
+  console.log(cachedDaysRemained);
+
+  const cachedVaultDaysAccrued = parseInt(
+    ((new Date().getTime() - realm?.lastVaultTime) / DAY / 1000).toFixed()
+  );
 
   useEffect(() => {
     if (
-      !daysAccrued ||
-      !daysAccrued[0] ||
       !allResourceVault ||
       !allResourceVault[0] ||
       !allOutputData ||
-      !allOutputData[0] ||
-      !availableVaultDays ||
-      !availableVaultDays[0]
+      !allOutputData[0]
     ) {
       return;
     }
@@ -116,31 +128,30 @@ const useResources = (args: useResourcesArgs): Resources => {
     });
 
     setRealmsResourcesDetails({
-      daysAccrued: daysAccrued[0].toNumber(),
-      daysRemainder: daysAccrued[1].toNumber(),
-      vaultAccrued: availableVaultDays[0].toNumber(),
-      vaultRemainder: availableVaultDays[1].toNumber(),
+      daysAccrued:
+        cachedDaysAccrued > MAX_DAYS_ACCURED
+          ? MAX_DAYS_ACCURED
+          : cachedDaysAccrued,
+      daysRemainder: cachedDaysRemained,
+      vaultAccrued: cachedVaultDaysAccrued,
+      vaultRemainder: 0,
       claimableResources: resources,
       vaultResources: vault,
     });
-  }, [daysAccrued, allResourceVault, allOutputData, availableVaultDays]);
+  }, [allResourceVault, allOutputData]);
 
   return {
     realmsResourcesDetails,
     claim: () => {
       claimResourcesAction.invoke({
-        args: [bnToUint256(toBN(args.token_id ?? 0))],
+        args: [bnToUint256(toBN(realm?.realmId ?? 0))],
         metadata: {
           action: 'harvest_resources',
-          realmId: args.token_id,
+          realmId: realm?.realmId ?? 0,
         },
       });
     },
-    loading:
-      claimableLoading ||
-      availableVaultDaysLoading ||
-      daysAccruedLoading ||
-      vaultLoading,
+    loading: claimableLoading || vaultLoading,
   };
 };
 

@@ -55,9 +55,9 @@ export const HealthBar = (props: HealthBarProps) => {
 
 const STYLES = {
   tier: {
-    1: 'h-32 w-32',
-    2: 'h-48 w-48',
-    3: 'mx-auto w-48 h-48',
+    1: 'h-24 w-16',
+    2: 'h-24 w-24',
+    3: 'mx-auto w-24 h-24',
   },
 } as const;
 

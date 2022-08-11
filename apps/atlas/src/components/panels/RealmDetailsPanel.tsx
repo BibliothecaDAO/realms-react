@@ -74,10 +74,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     loading: loadingFood,
   } = useFood(realm as Realm);
 
-  const { realmsResourcesDetails, loading: loadingResources } = useResources({
-    token_id: realm?.realmId,
-    resources: realm?.resources,
-  });
+  const { realmsResourcesDetails, loading: loadingResources } = useResources(
+    realm as Realm
+  );
 
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview

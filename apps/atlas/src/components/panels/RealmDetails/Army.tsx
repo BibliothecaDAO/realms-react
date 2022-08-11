@@ -95,138 +95,141 @@ const Army: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
-        <Card loading={props.loading} className="col-span-12 md:col-span-9">
-          <CardTitle>Military Buildings</CardTitle>
-          <div className="flex flex-wrap">
-            {props.buildings
-              ?.filter((a) => a.type === 'military')
-              .map((a, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="flex flex-wrap w-1/2 p-3 border rounded border-white/20"
-                  >
-                    <div className="self-center">
-                      <Image
-                        height={200}
-                        width={200}
-                        className="w-64 h-auto bg-white rounded"
-                        src={a.img}
-                        alt=""
-                      />
-                    </div>
-
-                    <div className="p-4 capitalize">
-                      <h2>{a.name}</h2>
-
-                      <div className="flex flex-wrap">
-                        <div className="w-1/2">
-                          <h5>Quantity:</h5>
-                          <p className="text-2xl">{a.quantityBuilt}</p>
-                        </div>
-                        <div className="w-1/2">
-                          <h5>Usage:</h5>
-                          <p className="text-2xl">{a.sqmUsage} sqm</p>
-                        </div>
-                        <div className="w-1/2">
-                          <h5>size:</h5>
-                          <p className="text-2xl">{a.buildingSize} sqm</p>
-                        </div>
+        {isOwner && (
+          <Card loading={props.loading} className="col-span-12 md:col-span-9">
+            <CardTitle>Military Buildings</CardTitle>
+            <div className="flex flex-wrap">
+              {props.buildings
+                ?.filter((a) => a.type === 'military')
+                .map((a, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="flex flex-wrap w-1/2 p-3 border rounded border-white/20"
+                    >
+                      <div className="self-center">
+                        <Image
+                          height={200}
+                          width={200}
+                          className="w-64 h-auto bg-white rounded"
+                          src={a.img}
+                          alt=""
+                        />
                       </div>
 
-                      {/* <h5 className="my-2">Decay time:</h5> */}
-                      <div className="flex w-full mt-3 space-x-2">
-                        <Button
-                          onClick={() =>
-                            txQueue.add(
-                              createBuildingCall.build({
-                                realmId: realm.realmId,
-                                buildingId: a.id,
-                                qty: buildQty[a.key],
+                      <div className="p-4 capitalize">
+                        <h2>{a.name}</h2>
+
+                        <div className="flex flex-wrap">
+                          <div className="w-1/2">
+                            <h5>Quantity:</h5>
+                            <p className="text-2xl">{a.quantityBuilt}</p>
+                          </div>
+                          <div className="w-1/2">
+                            <h5>Usage:</h5>
+                            <p className="text-2xl">{a.sqmUsage} sqm</p>
+                          </div>
+                          <div className="w-1/2">
+                            <h5>size:</h5>
+                            <p className="text-2xl">{a.buildingSize} sqm</p>
+                          </div>
+                        </div>
+
+                        {/* <h5 className="my-2">Decay time:</h5> */}
+                        <div className="flex w-full mt-3 space-x-2">
+                          <Button
+                            onClick={() =>
+                              txQueue.add(
+                                createBuildingCall.build({
+                                  realmId: realm.realmId,
+                                  buildingId: a.id,
+                                  qty: buildQty[a.key],
+                                })
+                              )
+                            }
+                            className="w-full"
+                            size="xs"
+                            variant="primary"
+                          >
+                            build
+                          </Button>
+                          <InputNumber
+                            value={buildQty[a.key]}
+                            inputSize="sm"
+                            colorScheme="transparent"
+                            className="w-12 bg-white border rounded border-white/40"
+                            min={1}
+                            max={10}
+                            stringMode
+                            onChange={(value) =>
+                              setBuildQty((current) => {
+                                return {
+                                  ...current,
+                                  [a.key]: value.toString(),
+                                };
                               })
-                            )
-                          }
-                          className="w-full"
-                          size="xs"
-                          variant="primary"
-                        >
-                          build
-                        </Button>
-                        <InputNumber
-                          value={buildQty[a.key]}
-                          inputSize="sm"
-                          colorScheme="transparent"
-                          className="w-12 bg-white border rounded border-white/40"
-                          min={1}
-                          max={10}
-                          stringMode
-                          onChange={(value) =>
-                            setBuildQty((current) => {
-                              return {
-                                ...current,
-                                [a.key]: value.toString(),
-                              };
-                            })
-                          }
-                        />{' '}
+                            }
+                          />{' '}
+                        </div>
+                      </div>
+                      <div className="flex w-full space-x-3">
+                        {troopList
+                          .filter((b) => b.buildingId === a.id)
+                          .map((c, i) => {
+                            return (
+                              <div key={i} className="flex flex-col w-full">
+                                <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+                                  <Image
+                                    height={75}
+                                    width={75}
+                                    className="object-contain h-auto"
+                                    src={'/realm-troops/' + c.img}
+                                    alt=""
+                                  />
+                                </div>
+
+                                <h5 className="">{c.name}</h5>
+                              </div>
+                            );
+                          })}
                       </div>
                     </div>
-                    <div className="flex w-full space-x-3">
-                      {troopList
-                        .filter((b) => b.buildingId === a.id)
-                        .map((c, i) => {
-                          return (
-                            <div key={i} className="flex flex-col w-full">
-                              <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
-                                <Image
-                                  height={75}
-                                  width={75}
-                                  className="object-contain h-auto"
-                                  src={'/realm-troops/' + c.img}
-                                  alt=""
-                                />
-                              </div>
+                  );
+                })}
+            </div>
+          </Card>
+        )}
 
-                              <h5 className="">{c.name}</h5>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </Card>
-        <Card loading={props.loading} className="col-span-12 md:col-span-3">
+        <Card loading={props.loading} className="col-span-12 md:col-span-4">
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
-            header={
-              <>
-                {!isOwner && (
-                  <Button
-                    onClick={() => setIsRaiding(true)}
-                    className="text-black"
-                    size="sm"
-                    disabled={!vaultCountdown.expired}
-                    variant={vaultCountdown.expired ? 'attack' : 'outline'}
-                  >
-                    Raid Vault
-                  </Button>
-                )}
-              </>
-            }
             realm={realm}
             loading={false}
             hideLordsClaimable
             showRaidable
           />
+
+          {!isOwner && (
+            <div className="w-full mt-3">
+              <Button
+                onClick={() => setIsRaiding(true)}
+                size="lg"
+                className="w-full"
+                disabled={!vaultCountdown.expired}
+                variant={'primary'}
+              >
+                Raid Vault
+              </Button>
+              <p>Pillage this vault.</p>
+            </div>
+          )}
         </Card>
-        <Card loading={props.loading} className="col-span-12 md:col-span-12">
+        <Card loading={props.loading} className="col-span-12 md:col-span-8">
           <CardTitle>{squadSlot}ing Army</CardTitle>
 
           {/* TODO: add back for indexer */}
-          {/* {isOwner ? ( */}
+          {/* {isOwner && ( */}
           <button
             onClick={() =>
               setSquadSlot((prev) => (prev == 'Attack' ? 'Defend' : 'Attack'))
@@ -235,7 +238,7 @@ const Army: React.FC<Prop> = (props) => {
           >
             View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
           </button>
-          {/* ) : null} */}
+          {/* )} */}
           <SquadBuilder
             squad={squadSlot}
             realm={realm}
