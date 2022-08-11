@@ -94,7 +94,7 @@ const Harvests: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6 py-4">
-        <Card className="col-span-12 md:col-start-1 md:col-end-3 ">
+        <Card className="col-span-12 md:col-start-1 md:col-end-4 ">
           <div className="w-full p-4 mx-auto bg-white rounded bg-opacity-90">
             <Image
               width={200}
@@ -104,7 +104,7 @@ const Harvests: React.FC<Prop> = (props) => {
             />
           </div>
 
-          <CardTitle>Work huts</CardTitle>
+          <CardTitle>Work huts [labour]</CardTitle>
 
           <CardStats>
             <span className="text-4xl opacity-80">
@@ -117,46 +117,49 @@ const Harvests: React.FC<Prop> = (props) => {
             </span>
           </CardStats>
           <div className="p-2">
-            <div className="flex mt-2 space-x-2">
-              <Button
-                onClick={() =>
-                  txQueue.add(
-                    createBuildingCall.build({
-                      realmId: realm.realmId,
-                      buildingId: RealmBuildingId.House,
-                      qty: input.workHutsToBuild,
+            {isOwner && (
+              <div className="flex mt-2 space-x-2">
+                <Button
+                  onClick={() =>
+                    txQueue.add(
+                      createBuildingCall.build({
+                        realmId: realm.realmId,
+                        buildingId: RealmBuildingId.House,
+                        qty: input.workHutsToBuild,
+                      })
+                    )
+                  }
+                  size="xs"
+                  variant="primary"
+                >
+                  Build
+                </Button>
+                <InputNumber
+                  value={input.workHutsToBuild}
+                  inputSize="sm"
+                  colorScheme="transparent"
+                  className="w-12 bg-white border rounded border-white/40"
+                  min={1}
+                  max={10}
+                  stringMode
+                  onChange={(value: ValueType) =>
+                    setInput({
+                      farmsToBuild: input.farmsToBuild,
+                      fishingVillagesToBuild: input.fishingVillagesToBuild,
+                      workHutsToBuild: value.toString(),
                     })
-                  )
-                }
-                size="xs"
-                variant="primary"
-              >
-                Build
-              </Button>
-              <InputNumber
-                value={input.workHutsToBuild}
-                inputSize="sm"
-                colorScheme="transparent"
-                className="w-12 bg-white border rounded border-white/40"
-                min={1}
-                max={10}
-                stringMode
-                onChange={(value: ValueType) =>
-                  setInput({
-                    farmsToBuild: input.farmsToBuild,
-                    fishingVillagesToBuild: input.fishingVillagesToBuild,
-                    workHutsToBuild: value.toString(),
-                  })
-                }
-              />{' '}
-            </div>
+                  }
+                />{' '}
+              </div>
+            )}
+
             <p className="py-1">
               Workhuts increase your output by {WORK_HUT_OUTPUT} per day cycle.
               They cost {WORK_HUT_COST} of all the resources on your realm.
             </p>
           </div>
         </Card>
-        <Card className="col-span-12 md:col-start-3 md:col-end-8 ">
+        <Card className="col-span-12 md:col-start-4 md:col-end-8 ">
           <CardTitle>Resources</CardTitle>
           <RealmResources
             availableResources={props.availableResources}
@@ -166,7 +169,7 @@ const Harvests: React.FC<Prop> = (props) => {
           />
         </Card>
 
-        <Card className="col-span-12 md:col-start-1 md:col-end-3">
+        <Card className="col-span-12 md:col-start-1 md:col-end-4">
           <div className="flex p-3 bg-white rounded">
             <Image
               width={200}
@@ -176,25 +179,28 @@ const Harvests: React.FC<Prop> = (props) => {
             />
           </div>
 
-          <CardTitle>Store house</CardTitle>
+          <CardTitle>Store house [food]</CardTitle>
 
-          <div className="p-2 ">
-            <h6>food remaining</h6>
-
-            <div className="text-2xl">
-              {props.availableFood?.toLocaleString()} <br />
+          <div>
+            <div className="text-right">
+              <br />
               {props.availableFood && props?.availableFood > 0 ? (
-                <CountdownTimer
-                  date={(
-                    props.availableFood * 1000 +
-                    new Date().getTime()
-                  ).toString()}
-                />
+                <div className="flex justify-end text-xl">
+                  <CountdownTimer
+                    date={(
+                      props.availableFood * 1000 +
+                      new Date().getTime()
+                    ).toString()}
+                  />
+                </div>
               ) : (
                 <span className="text-red-600 animate-pulse">
                   Serfs are starving!!
                 </span>
               )}
+              <div className="text-5xl ">
+                {props.availableFood?.toLocaleString()}
+              </div>
             </div>
             <p>
               You consume 1 food per second according to your population. Build
@@ -204,25 +210,25 @@ const Harvests: React.FC<Prop> = (props) => {
             </p>
           </div>
         </Card>
-        <Card className="flex col-span-12 md:col-start-3 md:col-end-8 ">
+        <Card className="flex col-span-12 md:col-start-4 md:col-end-8 ">
           <CardTitle>Farms Built - Capacity {farmCapacity}</CardTitle>
 
           <div className="flex flex-wrap justify-between p-2">
             <div className="w-1/2">
               <h5>farms built </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.farmsBuilt}
               </div>
             </div>
             <div className="w-1/2">
               <h5>farms to harvest </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.totalFarmHarvest}
               </div>
             </div>
             <div className="w-1/2">
               <h5>time till next harvest </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
@@ -236,97 +242,100 @@ const Harvests: React.FC<Prop> = (props) => {
             </div>
             <div className="w-1/2">
               <h5>decayed farms</h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.decayedFarms}
               </div>
             </div>
           </div>
-          <div className="flex mt-2 space-x-2">
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.create({
-                    tokenId: realm?.realmId,
-                    quantity: input.farmsToBuild,
-                    foodBuildingId: RealmBuildingId.Farm,
+          {isOwner && (
+            <div className="flex mt-2 space-x-2">
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.create({
+                      tokenId: realm?.realmId,
+                      quantity: input.farmsToBuild,
+                      foodBuildingId: RealmBuildingId.Farm,
+                    })
+                  );
+                }}
+                size="xs"
+                variant="primary"
+              >
+                Build
+              </Button>
+              <InputNumber
+                value={input.farmsToBuild}
+                inputSize="sm"
+                colorScheme="transparent"
+                className="w-12 bg-white border rounded border-white/40"
+                min={1}
+                max={farmCapacity}
+                stringMode // to support high precision decimals
+                onChange={(value: ValueType) =>
+                  setInput({
+                    farmsToBuild: value.toString(),
+                    fishingVillagesToBuild: input.fishingVillagesToBuild,
+                    workHutsToBuild: input.workHutsToBuild,
                   })
-                );
-              }}
-              size="xs"
-              variant="primary"
-            >
-              Build
-            </Button>
-            <InputNumber
-              value={input.farmsToBuild}
-              inputSize="sm"
-              colorScheme="transparent"
-              className="w-12 bg-white border rounded border-white/40"
-              min={1}
-              max={farmCapacity}
-              stringMode // to support high precision decimals
-              onChange={(value: ValueType) =>
-                setInput({
-                  farmsToBuild: value.toString(),
-                  fishingVillagesToBuild: input.fishingVillagesToBuild,
-                  workHutsToBuild: input.workHutsToBuild,
-                })
-              }
-            />{' '}
-            {/* eslint-disable */}
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.harvest({
-                    tokenId: realm?.realmId,
-                    harvestType: HarvestType.Export,
-                    foodBuildingId: RealmBuildingId.Farm,
-                  })
-                );
-              }}
-              size="xs"
-              disabled={props.realmFoodDetails.totalFarmHarvest === 0}
-              variant="primary"
-            >
-              Export
-            </Button>
-            {/* eslint-disable */}
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.harvest({
-                    tokenId: realm?.realmId,
-                    harvestType: HarvestType.Store,
-                    foodBuildingId: RealmBuildingId.Farm,
-                  })
-                );
-              }}
-              size="xs"
-              disabled={props.realmFoodDetails.totalFarmHarvest === 0}
-              variant="primary"
-            >
-              Harvest
-            </Button>
-          </div>
+                }
+              />{' '}
+              {/* eslint-disable */}
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.harvest({
+                      tokenId: realm?.realmId,
+                      harvestType: HarvestType.Export,
+                      foodBuildingId: RealmBuildingId.Farm,
+                    })
+                  );
+                }}
+                size="xs"
+                disabled={props.realmFoodDetails.totalFarmHarvest === 0}
+                variant="primary"
+              >
+                Export
+              </Button>
+              {/* eslint-disable */}
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.harvest({
+                      tokenId: realm?.realmId,
+                      harvestType: HarvestType.Store,
+                      foodBuildingId: RealmBuildingId.Farm,
+                    })
+                  );
+                }}
+                size="xs"
+                disabled={props.realmFoodDetails.totalFarmHarvest === 0}
+                variant="primary"
+              >
+                Harvest
+              </Button>
+            </div>
+          )}
+
           <CardTitle className="mt-10">
             Fishing Villages - Capacity {fishingVillageCapacity}
           </CardTitle>
           <div className="flex flex-wrap justify-between p-2">
             <div className="w-1/2">
               <h5>villages built </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.villagesBuilt}
               </div>
             </div>
             <div className="w-1/2">
               <h5>villages to harvest </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.totalVillageHarvest}
               </div>
             </div>
             <div className="w-1/2">
               <h5>time till next harvest </h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
@@ -340,76 +349,78 @@ const Harvests: React.FC<Prop> = (props) => {
             </div>
             <div className="w-1/2">
               <h5>decayed villages</h5>
-              <div className="text-3xl">
+              <div className="text-5xl">
                 {props.realmFoodDetails.decayedVillages}
               </div>
             </div>
           </div>
-          <div className="flex space-x-2">
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.create({
-                    tokenId: realm?.realmId,
-                    quantity: input.fishingVillagesToBuild,
-                    foodBuildingId: RealmBuildingId.FishingVillage,
+          {isOwner && (
+            <div className="flex space-x-2">
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.create({
+                      tokenId: realm?.realmId,
+                      quantity: input.fishingVillagesToBuild,
+                      foodBuildingId: RealmBuildingId.FishingVillage,
+                    })
+                  );
+                }}
+                size="xs"
+                variant="primary"
+              >
+                Build
+              </Button>
+              <InputNumber
+                value={input.fishingVillagesToBuild}
+                inputSize="sm"
+                colorScheme="transparent"
+                className="w-12 bg-white border rounded border-white/40"
+                min={1}
+                max={fishingVillageCapacity}
+                stringMode
+                onChange={(value: ValueType) =>
+                  setInput({
+                    farmsToBuild: input.farmsToBuild,
+                    fishingVillagesToBuild: value.toString(),
+                    workHutsToBuild: input.workHutsToBuild,
                   })
-                );
-              }}
-              size="xs"
-              variant="primary"
-            >
-              Build
-            </Button>
-            <InputNumber
-              value={input.fishingVillagesToBuild}
-              inputSize="sm"
-              colorScheme="transparent"
-              className="w-12 bg-white border rounded border-white/40"
-              min={1}
-              max={fishingVillageCapacity}
-              stringMode
-              onChange={(value: ValueType) =>
-                setInput({
-                  farmsToBuild: input.farmsToBuild,
-                  fishingVillagesToBuild: value.toString(),
-                  workHutsToBuild: input.workHutsToBuild,
-                })
-              }
-            />{' '}
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.harvest({
-                    tokenId: realm?.realmId,
-                    harvestType: HarvestType.Export,
-                    foodBuildingId: RealmBuildingId.FishingVillage,
-                  })
-                );
-              }}
-              size="xs"
-              disabled={props.realmFoodDetails.totalVillageHarvest === 0}
-              variant="primary"
-            >
-              Export
-            </Button>
-            <Button
-              onClick={() => {
-                txQueue.add(
-                  createFoodCall.harvest({
-                    tokenId: realm?.realmId,
-                    harvestType: HarvestType.Store,
-                    foodBuildingId: RealmBuildingId.FishingVillage,
-                  })
-                );
-              }}
-              size="xs"
-              disabled={props.realmFoodDetails.totalVillageHarvest === 0}
-              variant="primary"
-            >
-              Harvest
-            </Button>
-          </div>
+                }
+              />{' '}
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.harvest({
+                      tokenId: realm?.realmId,
+                      harvestType: HarvestType.Export,
+                      foodBuildingId: RealmBuildingId.FishingVillage,
+                    })
+                  );
+                }}
+                size="xs"
+                disabled={props.realmFoodDetails.totalVillageHarvest === 0}
+                variant="primary"
+              >
+                Export
+              </Button>
+              <Button
+                onClick={() => {
+                  txQueue.add(
+                    createFoodCall.harvest({
+                      tokenId: realm?.realmId,
+                      harvestType: HarvestType.Store,
+                      foodBuildingId: RealmBuildingId.FishingVillage,
+                    })
+                  );
+                }}
+                size="xs"
+                disabled={props.realmFoodDetails.totalVillageHarvest === 0}
+                variant="primary"
+              >
+                Harvest
+              </Button>
+            </div>
+          )}
         </Card>
       </div>
     </BaseRealmDetailPanel>

@@ -24,7 +24,6 @@ type Row = {
   // baseOutput: number;
   claimableResources: string | ReactElement;
   // totalOutput: number;
-  level: number;
 };
 
 type Prop = {
@@ -38,13 +37,10 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const isOwner = useIsOwner(props.realm?.ownerL2);
+  const isOwner = useIsOwner(props.realm?.settledOwner);
 
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
-      const resourceId =
-        resources.find((res) => res.trait === re.type)?.id || 0;
-
       const mappedData = {
         resource: (
           <span className="flex">
@@ -61,7 +57,6 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           </span>
         ),
         // baseOutput: 100,
-        level: re.level,
       };
       {
         /* eslint-disable */
