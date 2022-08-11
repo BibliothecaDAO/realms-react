@@ -46,9 +46,9 @@ export function AccountPanel() {
     realms.features.find((a: any) => a.properties.realm_idx === realmId)
       ?.properties; */
 
-  const realmsCount =
-    (accountData?.ownedRealmsCount ?? 0) +
-    (accountData?.settledRealmsCount ?? 0);
+  const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
+
+  const unSettledRealmsCount = accountData?.ownedRealmsCount ?? 0;
 
   const economicEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
@@ -161,7 +161,7 @@ export function AccountPanel() {
         <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-3">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
-            <CardStats className="text-5xl">{realmsCount}</CardStats>
+            <CardStats className="text-5xl">{settledRealmsCount}</CardStats>
             <Button variant="primary" size="xs" href="/realm">
               See Realms
             </Button>
@@ -170,7 +170,7 @@ export function AccountPanel() {
         <Card className="col-start-1 col-end-13 md:col-start-3 md:col-end-5">
           <CardTitle>Unsettled Realms</CardTitle>
           <CardBody>
-            <CardStats className="text-5xl">{realmsCount}</CardStats>
+            <CardStats className="text-5xl">{unSettledRealmsCount}</CardStats>
             <Button
               className="w-full"
               variant="primary"
@@ -199,7 +199,7 @@ export function AccountPanel() {
           <div>abrax: 61-70</div>
           <div>secretive: 71-80</div>
           <div>amaro: 81-90</div>
-          <div>Tenox: 91-100</div>
+          <div>tenox: 151-160</div>
           <CardBody>
             <input
               placeholder="Type Id"
