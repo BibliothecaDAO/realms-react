@@ -7,7 +7,6 @@ export const EventNa = {
   realmCombatAttack: 'realm_combat_attack',
   realmCombatDefend: 'realm_combat_defend',
   realmBuildingBuilt: 'realm_building_built',
-  realmCombatAttack: 'realm_combat_attack',
 };
 
 const resourcePillaged = (resources: any) => {
