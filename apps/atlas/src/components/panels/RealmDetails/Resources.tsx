@@ -164,20 +164,6 @@ const Harvests: React.FC<Prop> = (props) => {
             realm={realm}
             loading={false}
           />
-          <div className="mt-2">
-            <div className="flex items-center">
-              <Button
-                disabled={enqueuedHarvestTx}
-                size="xs"
-                variant="primary"
-                onClick={() => {
-                  txQueue.add(createCall.claim({ realmId: realm.realmId }));
-                }}
-              >
-                Harvest Resources
-              </Button>
-            </div>
-          </div>
         </Card>
 
         <Card className="col-span-12 md:col-start-1 md:col-end-3">

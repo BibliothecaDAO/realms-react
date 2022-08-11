@@ -7,12 +7,18 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import useResources from '@/hooks/settling/useResources';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import useResources, {
+  createCall,
+  Entrypoints,
+} from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
 import { resources, findResourceName } from '@/util/resources';
+
 type Row = {
   resource: ReactElement;
   // baseOutput: number;
@@ -47,9 +53,9 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
               size="md"
-              className="mr-4"
+              className="self-center mr-4"
             />
-            <span className="self-center text-xl font-semibold tracking-widest uppercase">
+            <span className="self-center text-lg font-semibold tracking-widest uppercase">
               {re.resourceName || ''}
             </span>
           </span>
@@ -88,7 +94,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     }
   );
 
-  /* const txQueue = useTransactionQueue();
+  const txQueue = useTransactionQueue();
+  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
   useEffect(() => {
     setEnqueuedHarvestTx(
@@ -100,15 +107,15 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       )
     );
   }, [txQueue.transactions]);
-*/
+
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     props.showClaimable
-      ? { Header: 'Claimable Resources', id: 2, accessor: 'claimableResources' }
+      ? { Header: 'Claimable', id: 2, accessor: 'claimableResources' }
       : undefined,
     props.showRaidable
-      ? { Header: 'Raidable Resources', id: 3, accessor: 'raidableResources' }
+      ? { Header: 'Raidable', id: 3, accessor: 'raidableResources' }
       : undefined,
     props.showLevel ? { Header: 'level', id: 4, accessor: 'level' } : undefined,
   ].filter((i) => i !== undefined);
@@ -117,33 +124,56 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap justify-between p-2">
-        <div className="mb-5">
-          <h6>Days:</h6>
-          <span className="text-xl">
-            {props.availableResources.daysAccrued == MAX_DAYS_ACCURED
-              ? `${MAX_DAYS_ACCURED} days accrued, you must claim now.`
-              : 'Days:' + props.availableResources.daysAccrued}
-          </span>{' '}
+      <div className="flex justify-around flex-grow w-full p-4 text-center">
+        <div className="w-1/2">
+          <h6>days</h6>
+          <div className="mt-3 text-5xl font-semibold">
+            {props.availableResources.daysAccrued === MAX_DAYS_ACCURED
+              ? `${MAX_DAYS_ACCURED}`
+              : props.availableResources.daysAccrued}{' '}
+            <span className="opacity-50"> / 3</span>
+          </div>{' '}
           {props.availableResources.daysAccrued != MAX_DAYS_ACCURED && (
-            <CountdownTimer
-              date={(
-                (DAY - props.availableResources.daysRemainder) * 1000 +
-                new Date().getTime()
-              ).toString()}
-            />
+            <div className="flex justify-between px-3 uppercase text-body">
+              next day
+              <CountdownTimer
+                date={(
+                  (DAY - props.availableResources.daysRemainder) * 1000 +
+                  new Date().getTime()
+                ).toString()}
+              />
+            </div>
           )}
         </div>
-
-        <div>
-          <h6>vault: </h6>
-          <span className="text-xl">
-            {props.availableResources.vaultAccrued} days accrued
-          </span>{' '}
+        <div className="border-r-4 border-white border-double border-white/30"></div>
+        <div className="w-1/2">
+          <h6>vault </h6>
+          <div className="mt-3 text-5xl font-semibold">
+            {props.availableResources.vaultAccrued}
+          </div>{' '}
         </div>
       </div>
       {props.header}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
+      {isOwner && (
+        <div className="flex w-full mt-4 space-x-3">
+          <Button
+            disabled={
+              enqueuedHarvestTx || props.availableResources.daysAccrued === 0
+            }
+            size="xs"
+            variant="primary"
+            className="w-full"
+            onClick={() => {
+              txQueue.add(createCall.claim({ realmId: props.realm.realmId }));
+            }}
+          >
+            {props.availableResources.daysAccrued === 0
+              ? 'nothing to harvest'
+              : 'Harvest Resources'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

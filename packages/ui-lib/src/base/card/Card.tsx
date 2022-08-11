@@ -14,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all border-4 border-double border-white/40  hover:bg-gray-900/90 p-3  bg-black/95 rounded-2xl shadow-xl group flex flex-col`}
+      className={`${className} duration-150 transition-all border-4 border-double border-white/40  hover:bg-stone-900 p-3  bg-black/95 rounded-2xl shadow-xl group flex flex-col`}
     >
       {children}
     </div>
@@ -32,9 +32,7 @@ export function CardBody({ children, className, loading }: Props) {
     );
   }
   return (
-    <div
-      className={`${className} flex flex-col flex-grow  p-3 rounded-xl bg-black/80 `}
-    >
+    <div className={`${className} flex flex-col flex-grow  p-3 rounded-xl  `}>
       {children}
     </div>
   );

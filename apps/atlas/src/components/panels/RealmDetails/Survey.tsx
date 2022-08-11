@@ -10,7 +10,8 @@ import Image from 'next/image';
 import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { GetRealmQuery } from '@/generated/graphql';
-import { TraitTable } from '@/shared/Getters/Realm';
+import useIsOwner from '@/hooks/useIsOwner';
+import { TraitTable, squadStats } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -49,6 +50,12 @@ const Survey: React.FC<Prop> = (props) => {
   };
 
   const realm = props.realm?.realm;
+
+  const attackingSquad = realm?.troops?.filter((a) => a.squadSlot === 1);
+  const defensiveSquad = realm?.troops?.filter((a) => a.squadSlot === 2);
+
+  const isOwner = useIsOwner(realm?.settledOwner);
+
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6 py-4">
@@ -70,12 +77,15 @@ const Survey: React.FC<Prop> = (props) => {
             <CardStats>
               <div>
                 {props.availableFood && (
-                  <CountdownTimer
-                    date={(
-                      props.availableFood * 1000 +
-                      new Date().getTime()
-                    ).toString()}
-                  />
+                  <div className="flex justify-end w-full text-xl">
+                    {' '}
+                    <CountdownTimer
+                      date={(
+                        props.availableFood * 1000 +
+                        new Date().getTime()
+                      ).toString()}
+                    />
+                  </div>
                 )}
                 <div className="text-4xl">
                   {props.availableFood?.toLocaleString()}
@@ -83,13 +93,34 @@ const Survey: React.FC<Prop> = (props) => {
               </div>
             </CardStats>
           )}
+          {isOwner && (
+            <Button variant="outline" size="xs">
+              manage
+            </Button>
+          )}
         </Card>
-        <Card
-          loading={props.loading}
-          className="col-span-12 md:col-start-5 md:col-end-8 "
-        >
+        <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
           <CardTitle>Military Strength</CardTitle>
-          {!props.loading && <CardStats className="text-4xl">0 / 0</CardStats>}
+          <div className="flex justify-around flex-grow w-full p-4 text-center">
+            <div>
+              <h5>Attacking</h5>
+              <div className="pt-3 text-5xl font-semibold">
+                {squadStats(attackingSquad).attack}
+              </div>
+            </div>
+            <div className="border-r-4 border-white border-double border-white/30"></div>
+            <div>
+              <h5>Defending</h5>
+              <div className="pt-3 text-5xl font-semibold text-5xll">
+                {squadStats(defensiveSquad).attack}
+              </div>
+            </div>
+          </div>
+          {isOwner && (
+            <Button variant="outline" size="xs">
+              manage
+            </Button>
+          )}
         </Card>
         <Card className="col-span-12 row-span-2 md:col-start-8 md:col-end-13 ">
           <CardTitle>Landscape of {realm?.name}</CardTitle>{' '}
@@ -156,10 +187,10 @@ const Survey: React.FC<Prop> = (props) => {
           <CardBody>
             {props.buildings?.map((a, i) => {
               return (
-                <div key={i} className="flex justify-between">
+                <div key={i} className="flex justify-between font-semibold">
                   <span>{a.name}</span>{' '}
                   <span>
-                    {a.quantityBuilt} {a.sqmUsage}
+                    {a.quantityBuilt} - {a.sqmUsage} sqm
                   </span>
                 </div>
               );
@@ -180,6 +211,8 @@ const Survey: React.FC<Prop> = (props) => {
           <CardBody>
             {realm && (
               <RealmResources
+                showClaimable
+                showRaidable
                 availableResources={props.availableResources}
                 realm={realm}
                 loading={false}

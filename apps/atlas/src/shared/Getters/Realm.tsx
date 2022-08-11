@@ -1,10 +1,10 @@
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
+import { DAY } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
-
 interface TraitProps {
   trait: string;
   traitAmount?: number;
@@ -47,7 +47,7 @@ export const RealmVaultStatus = (realm: RealmFragmentFragment) => {
   const now = Date.now();
   const lastVaultTime = new Date(realm.lastVaultTime);
   const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
-  const minutesToVault = 60 * 24; // 24 hours
+  const minutesToVault = DAY / 60; // 24 hours
   if (minutesSinceLastVault >= minutesToVault) {
     return `Raidable`;
   }
