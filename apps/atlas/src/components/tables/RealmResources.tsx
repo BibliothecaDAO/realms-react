@@ -10,11 +10,9 @@ import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
 import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import useResources, {
-  createCall,
-  Entrypoints,
-} from '@/hooks/settling/useResources';
+import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
 import { resources, findResourceName } from '@/util/resources';
@@ -37,6 +35,7 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
+  const { claim } = useResources(props.realm as Realm);
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
   const mappedRowData: Row[] = (props.realm.resources as any).map(
@@ -160,7 +159,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             variant="primary"
             className="w-full"
             onClick={() => {
-              txQueue.add(createCall.claim({ realmId: props.realm.realmId }));
+              claim();
             }}
           >
             {props.availableResources.daysAccrued === 0

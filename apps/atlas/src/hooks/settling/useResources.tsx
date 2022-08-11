@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import {
   ModuleAddr,
@@ -32,11 +33,6 @@ type Resources = {
   loading: boolean;
 };
 
-type useResourcesArgs = {
-  token_id: number | undefined;
-  resources: any | undefined;
-};
-
 const useResources = (realm: Realm | undefined): Resources => {
   const [realmsResourcesDetails, setRealmsResourcesDetails] =
     useState<AvailableResources>({
@@ -49,6 +45,8 @@ const useResources = (realm: Realm | undefined): Resources => {
     });
 
   const { contract: resourcesContract } = useResourcesContract();
+
+  const txQueue = useTransactionQueue();
 
   const claimResourcesAction = useStarknetInvoke({
     contract: resourcesContract,
@@ -97,16 +95,14 @@ const useResources = (realm: Realm | undefined): Resources => {
   // });
 
   const cachedDaysAccrued = parseInt(
-    ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed()
+    ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
   );
 
   const cachedDaysRemained =
     (new Date().getTime() - realm?.lastClaimTime) % DAY;
 
-  console.log(cachedDaysRemained);
-
   const cachedVaultDaysAccrued = parseInt(
-    ((new Date().getTime() - realm?.lastVaultTime) / DAY / 1000).toFixed()
+    ((new Date().getTime() - realm?.lastVaultTime) / DAY / 1000).toFixed(2)
   );
 
   useEffect(() => {
@@ -143,13 +139,11 @@ const useResources = (realm: Realm | undefined): Resources => {
   return {
     realmsResourcesDetails,
     claim: () => {
-      claimResourcesAction.invoke({
-        args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-        metadata: {
-          action: 'harvest_resources',
-          realmId: realm?.realmId ?? 0,
-        },
-      });
+      txQueue.add(
+        createCall.claim({
+          realmId: realm?.realmId,
+        })
+      );
     },
     loading: claimableLoading || vaultLoading,
   };

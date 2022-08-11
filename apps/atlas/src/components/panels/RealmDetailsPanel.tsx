@@ -1,33 +1,15 @@
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  CardStats,
-  CardIcon,
-  Donut,
-  CountdownTimer,
-} from '@bibliotheca-dao/ui-lib';
-import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
-import { useStarknetCall } from '@starknet-react/core';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSpring } from 'react-spring';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { toBN } from 'starknet/utils/number';
-import { RealmCard } from '@/components/cards/RealmCard';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
-import { RealmResources } from '@/components/tables/RealmResources';
-import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
-import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
+import type { Realm } from '@/generated/graphql';
+import { useGetRealmQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
@@ -35,14 +17,7 @@ import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
 import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
-import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
-import SidebarHeader from '@/shared/SidebarHeader';
-import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
-import { SquadBuilder } from '@/shared/squad/Squad';
-import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
-import { RealmBuildings } from '../tables/RealmBuildings';
 import Army from './RealmDetails/Army';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
