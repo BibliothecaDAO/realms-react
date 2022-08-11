@@ -18,14 +18,6 @@ type Row = {
 };
 
 export function RealmVault(props: RealmsCardProps): ReactElement {
-  const {
-    claim,
-
-    loadingClaimable,
-  } = useResources({
-    token_id: props.realm.realmId,
-    resources: props.realm.resources,
-  });
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
       const resourceId =
