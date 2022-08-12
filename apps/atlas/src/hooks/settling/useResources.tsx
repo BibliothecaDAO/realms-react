@@ -4,7 +4,12 @@ import type BN from 'bn.js';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
+import {
+  DAY,
+  MAX_DAYS_ACCURED,
+  BASE_RESOURCES_PER_DAY,
+  PILLAGE_AMOUNT,
+} from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import {
@@ -50,25 +55,25 @@ const useResources = (realm: Realm | undefined): Resources => {
       vaultResources: [],
     });
 
-  const {
-    data: allOutputData,
-    loading: claimableLoading,
-    error: outputError,
-  } = useStarknetCall({
-    contract: resourcesContract,
-    method: 'get_all_resource_claimable',
-    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  });
+  // const {
+  //   data: allOutputData,
+  //   loading: claimableLoading,
+  //   error: outputError,
+  // } = useStarknetCall({
+  //   contract: resourcesContract,
+  //   method: 'get_all_resource_claimable',
+  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
+  // });
 
-  const {
-    data: allResourceVault,
-    loading: vaultLoading,
-    error: allResourceVaultError,
-  } = useStarknetCall({
-    contract: resourcesContract,
-    method: 'get_all_vault_raidable',
-    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  });
+  // const {
+  //   data: allResourceVault,
+  //   loading: vaultLoading,
+  //   error: allResourceVaultError,
+  // } = useStarknetCall({
+  //   contract: resourcesContract,
+  //   method: 'get_all_vault_raidable',
+  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
+  // });
 
   // CACHED IN INDEXER
   // const {
@@ -102,22 +107,27 @@ const useResources = (realm: Realm | undefined): Resources => {
     ((new Date().getTime() - realm?.lastVaultTime) / DAY / 1000).toFixed(2)
   );
 
+  // adds the base amount tot he claimable
+  const maxResources =
+    cachedDaysAccrued > MAX_DAYS_ACCURED
+      ? BASE_RESOURCES_PER_DAY * MAX_DAYS_ACCURED
+      : 0;
+
+  const resourcesAccrued = cachedDaysAccrued * BASE_RESOURCES_PER_DAY;
+
+  const vaultAccrued = resourcesAccrued * (PILLAGE_AMOUNT / 100);
+
   useEffect(() => {
-    if (
-      !allResourceVault ||
-      !allResourceVault[0] ||
-      !allOutputData ||
-      !allOutputData[0]
-    ) {
+    if (!realm) {
       return;
     }
 
-    const resources = allOutputData[0]?.map((a) => {
-      return (+formatEther(uint256ToBN(a).toString(10))).toLocaleString();
+    const resources = realm?.resources?.map((a) => {
+      return (resourcesAccrued + maxResources).toLocaleString();
     });
 
-    const vault = allResourceVault[0]?.map((a) => {
-      return (+formatEther(uint256ToBN(a).toString(10))).toLocaleString();
+    const vault = realm?.resources?.map((a) => {
+      return vaultAccrued.toLocaleString();
     });
 
     setRealmsResourcesDetails({
@@ -131,7 +141,7 @@ const useResources = (realm: Realm | undefined): Resources => {
       claimableResources: resources,
       vaultResources: vault,
     });
-  }, [allResourceVault, allOutputData]);
+  }, [realm]);
 
   return {
     realmsResourcesDetails,
@@ -143,7 +153,7 @@ const useResources = (realm: Realm | undefined): Resources => {
         })
       );
     },
-    loading: claimableLoading || vaultLoading,
+    loading: false,
   };
 };
 

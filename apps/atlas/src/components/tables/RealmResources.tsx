@@ -65,7 +65,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           claimableResources: (
             <span className="w-full text-center">
-              {(props.availableResources.claimableResources[index] &&
+              {(props.availableResources.claimableResources &&
+                props.availableResources.claimableResources[index] &&
                 props.availableResources.claimableResources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}
@@ -77,7 +78,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           raidableResources: (
             <span className="w-full text-center">
-              {(props.availableResources.vaultResources[index] &&
+              {(props.availableResources.vaultResources &&
+                props.availableResources.vaultResources[index] &&
                 props.availableResources.vaultResources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}

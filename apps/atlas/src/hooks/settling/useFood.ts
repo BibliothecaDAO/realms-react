@@ -59,8 +59,8 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     metadata: {
       ...args,
       action: entrypoints.harvest,
-      title: `Harvest farms on Realm ${args.tokenId}`,
-      description: `${args.harvestType} farms on Realm ${args.tokenId}`,
+      title: `Harvesting on Realm ${args.tokenId}`,
+      description: `Harvesting  ${args.tokenId}`,
     },
   }),
 };
