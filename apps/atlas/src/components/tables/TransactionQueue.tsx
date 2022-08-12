@@ -2,6 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib/base';
 import useSound from 'use-sound';
 import { TxCartItem } from '@/components/tables/Transactions';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 
 type Prop = {
   onSubmit?: () => void;
@@ -9,10 +10,7 @@ type Prop = {
 
 export const TransactionQueue: React.FC<Prop> = (props) => {
   const txQueue = useTransactionQueue();
-
-  const [play, { stop }] = useSound('/music/ui/SignFor2Command2.mp3', {
-    volume: 0.2,
-  });
+  const { play } = useUiSounds(soundSelector.sign);
 
   const signDecree = () => {
     play();

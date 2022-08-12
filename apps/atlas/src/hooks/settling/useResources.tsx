@@ -13,6 +13,7 @@ import {
 } from '@/hooks/settling/stark-contracts';
 import type { RealmsCall, AvailableResources } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
+import { useUiSounds, soundSelector } from '../useUiSounds';
 
 export const Entrypoints = {
   claim: 'claim_resources',
@@ -34,6 +35,8 @@ type Resources = {
 };
 
 const useResources = (realm: Realm | undefined): Resources => {
+  const { play } = useUiSounds(soundSelector.claim);
+
   const { contract: resourcesContract } = useResourcesContract();
   const txQueue = useTransactionQueue();
 
@@ -133,6 +136,7 @@ const useResources = (realm: Realm | undefined): Resources => {
   return {
     realmsResourcesDetails,
     claim: () => {
+      play();
       txQueue.add(
         createCall.claim({
           realmId: realm?.realmId,

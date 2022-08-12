@@ -20,7 +20,7 @@ import {
   WORK_HUT_COST,
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import type { GetRealmQuery } from '@/generated/graphql';
+import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useBuildings, {
   createBuildingCall,
@@ -56,7 +56,10 @@ interface ResourceAndFoodInput {
 const Harvests: React.FC<Prop> = (props) => {
   const realm = props.realm?.realm;
 
+  const { create, harvest } = useFood(realm as Realm);
+
   const isOwner = useIsOwner(realm?.settledOwner);
+
   const txQueue = useTransactionQueue();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
@@ -251,12 +254,10 @@ const Harvests: React.FC<Prop> = (props) => {
             <div className="flex mt-2 space-x-2">
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.create({
-                      tokenId: realm?.realmId,
-                      quantity: input.farmsToBuild,
-                      foodBuildingId: RealmBuildingId.Farm,
-                    })
+                  create(
+                    realm?.realmId,
+                    input.farmsToBuild,
+                    RealmBuildingId.Farm
                   );
                 }}
                 size="xs"
@@ -283,12 +284,10 @@ const Harvests: React.FC<Prop> = (props) => {
               {/* eslint-disable */}
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.harvest({
-                      tokenId: realm?.realmId,
-                      harvestType: HarvestType.Export,
-                      foodBuildingId: RealmBuildingId.Farm,
-                    })
+                  harvest(
+                    realm?.realmId,
+                    HarvestType.Export,
+                    RealmBuildingId.Farm
                   );
                 }}
                 size="xs"
@@ -300,12 +299,10 @@ const Harvests: React.FC<Prop> = (props) => {
               {/* eslint-disable */}
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.harvest({
-                      tokenId: realm?.realmId,
-                      harvestType: HarvestType.Store,
-                      foodBuildingId: RealmBuildingId.Farm,
-                    })
+                  harvest(
+                    realm?.realmId,
+                    HarvestType.Store,
+                    RealmBuildingId.Farm
                   );
                 }}
                 size="xs"
@@ -358,12 +355,10 @@ const Harvests: React.FC<Prop> = (props) => {
             <div className="flex space-x-2">
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.create({
-                      tokenId: realm?.realmId,
-                      quantity: input.fishingVillagesToBuild,
-                      foodBuildingId: RealmBuildingId.FishingVillage,
-                    })
+                  create(
+                    realm?.realmId,
+                    input.fishingVillagesToBuild,
+                    RealmBuildingId.FishingVillage
                   );
                 }}
                 size="xs"
@@ -389,12 +384,10 @@ const Harvests: React.FC<Prop> = (props) => {
               />{' '}
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.harvest({
-                      tokenId: realm?.realmId,
-                      harvestType: HarvestType.Export,
-                      foodBuildingId: RealmBuildingId.FishingVillage,
-                    })
+                  harvest(
+                    realm?.realmId,
+                    HarvestType.Export,
+                    RealmBuildingId.FishingVillage
                   );
                 }}
                 size="xs"
@@ -405,12 +398,10 @@ const Harvests: React.FC<Prop> = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  txQueue.add(
-                    createFoodCall.harvest({
-                      tokenId: realm?.realmId,
-                      harvestType: HarvestType.Store,
-                      foodBuildingId: RealmBuildingId.FishingVillage,
-                    })
+                  harvest(
+                    realm?.realmId,
+                    HarvestType.Store,
+                    RealmBuildingId.FishingVillage
                   );
                 }}
                 size="xs"

@@ -2,6 +2,8 @@ import { useStarknetCall } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
+import { RealmBuildingId, HarvestType } from '@/constants/buildings';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import type {
   RealmsCall,
@@ -10,6 +12,7 @@ import type {
   AvailableResources,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
+import { useUiSounds, soundSelector } from '../useUiSounds';
 import {
   ModuleAddr,
   useCalculatorContract,
@@ -66,9 +69,17 @@ type UseRealmFoodDetails = {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
   loading: boolean;
+  create: (tokenId, quantity, foodBuildingId) => void;
+  harvest: (tokenId, harvestType, foodBuildingId) => void;
 };
 
 const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
+  const { play: harvestFish } = useUiSounds(soundSelector.harvestFish);
+  const { play: harvestWheat } = useUiSounds(soundSelector.harvestWheat);
+  const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
+
+  const txQueue = useTransactionQueue();
+
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,
     totalTimeRemainingUntilFarmHarvest: 0,
@@ -147,6 +158,38 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   return {
     realmFoodDetails,
     availableFood,
+    create: (tokenId, quantity, foodBuildingId) => {
+      txQueue.add(
+        createFoodCall.create({
+          tokenId,
+          quantity,
+          foodBuildingId,
+        })
+      );
+    },
+    harvest: (tokenId, harvestType, foodBuildingId) => {
+      if (harvestType === RealmBuildingId.FishingVillage) {
+        if (harvestType === HarvestType.Export) {
+          harvestFish();
+        } else {
+          exportFood();
+        }
+      } else {
+        if (harvestType === HarvestType.Export) {
+          harvestWheat();
+        } else {
+          exportFood();
+        }
+      }
+
+      txQueue.add(
+        createFoodCall.harvest({
+          tokenId,
+          harvestType,
+          foodBuildingId,
+        })
+      );
+    },
     loading: foodLoading || populationLoading || storehouseLoading,
   };
 };
