@@ -53,7 +53,10 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           <p className="text-3xl font-lords md:text-6xl">
             {props.title || '...'}
           </p>
-          <div>relic owner: 2</div>
+          <div className={`flex gap-6`}>
+            <div>realm #{props.realmId || '...'}</div>
+            <div>relic owner:2</div>
+          </div>
         </div>
 
         {!props.hideSearchFilter && (
