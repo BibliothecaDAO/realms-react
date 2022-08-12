@@ -203,7 +203,6 @@ const Army: React.FC<Prop> = (props) => {
         <Card loading={props.loading} className="col-span-12 md:col-span-4">
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
-            availableResources={props.availableResources}
             realm={realm}
             loading={false}
             hideLordsClaimable

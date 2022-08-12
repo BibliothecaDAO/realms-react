@@ -213,7 +213,6 @@ const Survey: React.FC<Prop> = (props) => {
               <RealmResources
                 showClaimable
                 showRaidable
-                availableResources={props.availableResources}
                 realm={realm}
                 loading={false}
               />
