@@ -129,6 +129,7 @@
     "@bibliotheca-dao/deckgl-typings": "^4.9.22",
     "@bibliotheca-dao/postcss-100vh-fix": "^1.0.3",
     "@bibliotheca-dao/ui-lib": "workspace:^",
+    "@bundlr-network/client": "0.7.17",
     "@codemirror/lang-markdown": "6.0.1",
     "@codemirror/theme-one-dark": "6.0.0",
     "@deck.gl/core": "^8.8.6",

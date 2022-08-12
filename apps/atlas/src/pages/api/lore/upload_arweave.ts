@@ -1,6 +1,14 @@
+import Bundlr from '@bundlr-network/client';
 import Arweave from 'arweave';
+import { JWKInterface } from 'arweave/node/lib/wallet';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import arweaveKey from '../../../arweave_key.json';
+import secrets from '@/util/secrets';
+
+const bundlr = new Bundlr(
+  'http://node1.bundlr.network',
+  'arweave',
+  secrets.arweaveKey
+);
 
 const arweave = Arweave.init({
   host: 'arweave.net',
@@ -12,25 +20,21 @@ export type UploadArweaveResponse = {
   arweaveId: string;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
-    const tx = await arweave.createTransaction(
-      {
-        data: JSON.stringify(req.body),
-      },
-      arweaveKey
-    );
+    const transaction = bundlr.createTransaction(JSON.stringify(req.body));
 
-    await arweave.transactions.sign(tx, arweaveKey);
+    await transaction.sign();
+    const resp = await transaction.upload();
 
-    const arweaveResponse = await arweave.transactions.post(tx);
-
-    console.log(tx);
-    console.log(arweaveResponse);
+    console.log(resp.data);
 
     res.send(
       JSON.stringify({
-        arweaveId: tx.id,
+        arweaveId: resp.data.id,
       })
     );
   } catch (error) {
@@ -43,4 +47,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     return;
   }
-};
+}
