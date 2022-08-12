@@ -120,7 +120,11 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   return (
     <div className={clsx(props.className, 'w-full')}>
-      <div className={clsx('w-full flex space-x-1  md:space-x-4 md:pl-44 ')}>
+      <div
+        className={clsx(
+          'w-full justify-center sm:justify-start flex space-x-1  md:space-x-4 md:pl-44 '
+        )}
+      >
         {toolBarItems.map((a, i) => {
           return (
             <ToolbarItem

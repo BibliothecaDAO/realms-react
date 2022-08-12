@@ -32,15 +32,15 @@ type Row = {
 export const ArmoryBuilder = (props: Props) => {
   const troopCostCell = (cost: ItemCost) => {
     return (
-      <div className="w-24">
+      <div className="flex flex-col">
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="inline-block">
+            <div key={index} className="flex w-full my-3 text-2xl">
               <ResourceIcon
                 resource={
                   findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
                 }
-                size="xs"
+                size="md"
                 className="self-center mr-4"
               />
               <span>{a.amount}</span>
@@ -72,30 +72,32 @@ export const ArmoryBuilder = (props: Props) => {
   const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
       name: (
-        <span className="tracking-wider ">
-          <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+        <span className="flex p-1">
+          <div className="flex w-1/3 p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
             <Image
-              height={50}
-              width={50}
-              className="object-contain h-auto"
+              height={100}
+              width={100}
+              className="self-center object-contain h-auto"
               src={`/realm-troops/${re.troopName}.png`}
               alt=""
             />
-          </div>{' '}
-          <div className="mt-4 text-xl font-display"> {re.troopName}</div>
-          <div>Agility: {re.agility}</div>
-          <div>Attack: {re.attack}</div>
-          <div>Armor: {re.armor}</div>
-          <div>Vitality: {re.vitality}</div>
-          <div>Wisdom: {re.wisdom}</div>
+          </div>
+          <div className="w-2/3 px-4 py-2">
+            <div className="text-xl font-display"> {re.troopName}</div>
+            <div>Agility: {re.agility}</div>
+            <div>Attack: {re.attack}</div>
+            <div>Armor: {re.armor}</div>
+            <div>Vitality: {re.vitality}</div>
+            <div>Wisdom: {re.wisdom}</div>
+          </div>
         </span>
       ),
       troopCost: troopCostCell(re.troopCost!),
       add: (
         <Button
           disabled={reachedMaxNumberOfTroopsInTier}
-          variant="secondary"
-          size="xs"
+          variant="primary"
+          size="md"
           onClick={() => {
             props.onBuildTroop &&
               props.onBuildTroop({

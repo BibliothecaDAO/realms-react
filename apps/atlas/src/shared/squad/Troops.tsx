@@ -125,42 +125,27 @@ export const Troop = (props: TroopProps) => {
       ),
     };
   });
-  const style = {
-    '--image-url': `url('/realm-troops/${getTroop()?.troopName}.png')`,
-  } as React.CSSProperties;
+
   return (
-    <div className="p-2 bg-red-700 rounded-2xl">
+    <div>
       <div
         role={'button'}
         tabIndex={0}
         onClick={() => props.onClick && props.onClick(props.troop)}
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
-        style={style}
         className={`${twMerge(
           STYLES.tier[props.troop.tier],
           props.className
-        )} bg-[image:var(--image-url)] object-cover bg-contain bg-center bg-no-repeat rounded cursor-pointer flex `}
+        )} rounded cursor-pointer flex border p-2 bg-white`}
       >
-        {getTroop()?.troopName && (
-          <div className="flex items-end w-full justify-bottom">
-            {/* <HealthBar
-            troopId={props.troop.troopId}
-            vitality={props.troop.vitality}
-      /> */}
-          </div>
-        )}
-        {/* {!props.withPurchase && (
-        <Button
-          variant="secondary"
-          size="xs"
-          onClick={() => {
-            props.onRemove(props.troop);
-          }}
-        >
-          x
-        </Button>
-      )} */}
+        <Image
+          src={`/realm-troops/${props.troop.troopName}.png`}
+          alt=""
+          width="200"
+          height="200"
+          className="object-contain h-auto"
+        />
 
         {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
         <Popover className="relative top-0">
@@ -185,9 +170,28 @@ export const Troop = (props: TroopProps) => {
         </Popover>
         {/* )} */}
       </div>
-      <div className="mt-4 mt-auto text-xs text-center text-black uppercase align-bottom sm:text-sm text-clip font-display">
+      <div className="mt-4 text-center align-bottom sm:text-sm text-clip font-display">
         {getTroop()?.troopName}
       </div>
+      {/* {getTroop()?.troopName && (
+          <div className="flex items-end w-full justify-bottom">
+            <HealthBar
+              troopId={props.troop.troopId}
+              vitality={props.troop.vitality}
+            />
+          </div>
+        )} */}
+      {/* {!props.withPurchase && (
+        <Button
+          variant="secondary"
+          size="xs"
+          onClick={() => {
+            props.onRemove(props.troop);
+          }}
+        >
+          x
+        </Button>
+      )} */}
     </div>
   );
 };

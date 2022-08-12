@@ -107,7 +107,7 @@ const useResources = (realm: Realm | undefined): Resources => {
     ((new Date().getTime() - realm?.lastVaultTime) / DAY / 1000).toFixed(2)
   );
 
-  // adds the base amount tot he claimable
+  // adds the base amount to the claimable
   const maxResources =
     cachedDaysAccrued > MAX_DAYS_ACCURED
       ? BASE_RESOURCES_PER_DAY * MAX_DAYS_ACCURED

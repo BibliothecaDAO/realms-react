@@ -15,9 +15,11 @@ import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
 import useResources from '@/hooks/settling/useResources';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
+import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
@@ -28,6 +30,14 @@ interface RealmDetailsPanelProps {
 }
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
+  const {
+    isDisplayLarge,
+    selectedId,
+    selectedPanel,
+    openDetails,
+    togglePanelType,
+  } = useAtlasContext();
+
   const router = useRouter();
 
   const { data: realmData, loading } = useGetRealmQuery({
@@ -72,7 +82,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         { shallow: true }
       );
     }
-    console.log(realm);
   }, [subview]);
 
   const pushPage = (value) => {
@@ -141,8 +150,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   ];
 
   return (
-    <>
-      <div className="absolute z-20 grid w-full h-full overflow-auto bg-cover">
+    <BasePanel open={selectedPanel === 'realm'}>
+      <div className="grid w-full h-full overflow-auto bg-cover">
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}
@@ -241,6 +250,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </div>
         </div>
       </div>
-    </>
+    </BasePanel>
   );
 }
