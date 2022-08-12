@@ -1,7 +1,7 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
 import Image from 'next/image';
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import type { ItemCost, TroopInterface } from '@/types/index';
@@ -30,6 +30,8 @@ type Row = {
   troopCost: JSX.Element;
 };
 export const ArmoryBuilder = (props: Props) => {
+  const [tier, setTier] = useState(1);
+
   const troopCostCell = (cost: ItemCost) => {
     return (
       <div className="flex flex-col">
@@ -52,22 +54,18 @@ export const ArmoryBuilder = (props: Props) => {
   };
 
   const filteredTroops =
-    props.filterTier !== undefined
-      ? props.statistics.filter((v) => v.tier == props.filterTier)
+    tier !== undefined
+      ? props.statistics.filter((v) => v.tier == tier)
       : props.statistics;
 
-  const filteredCurrentTroops = props.troops.filter(
-    (v) => v.tier == props.filterTier
-  );
+  const filteredCurrentTroops = props.troops.filter((v) => v.tier == tier);
 
-  const filteredQueuedTroops = props.troopsQueued.filter(
-    (v) => v.tier == props.filterTier
-  );
+  const filteredQueuedTroops = props.troopsQueued.filter((v) => v.tier == tier);
 
   const reachedMaxNumberOfTroopsInTier =
-    props.filterTier != undefined &&
+    tier != undefined &&
     filteredCurrentTroops.length + filteredQueuedTroops.length >=
-      TroopTierMax[props.filterTier - 1];
+      TroopTierMax[tier - 1];
 
   const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
@@ -97,7 +95,7 @@ export const ArmoryBuilder = (props: Props) => {
         <Button
           disabled={reachedMaxNumberOfTroopsInTier}
           variant="primary"
-          size="md"
+          size="xs"
           onClick={() => {
             props.onBuildTroop &&
               props.onBuildTroop({
@@ -107,7 +105,7 @@ export const ArmoryBuilder = (props: Props) => {
               });
           }}
         >
-          train
+          {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
         </Button>
       ),
     };
@@ -166,6 +164,18 @@ export const ArmoryBuilder = (props: Props) => {
       )}
 
       <div className="my-4 overflow-y-scroll">
+        <div className="flex justify-center mb-3 space-x-3">
+          <Button variant="outline" onClick={() => setTier(1)}>
+            tier 1
+          </Button>
+          <Button variant="outline" onClick={() => setTier(2)}>
+            tier 2
+          </Button>
+          <Button variant="outline" onClick={() => setTier(3)}>
+            tier 3
+          </Button>
+        </div>
+
         {mappedRowData && (
           <Table
             columns={columns}

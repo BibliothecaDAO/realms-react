@@ -1,5 +1,4 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import clsx from 'clsx';
 import { OrdersFilter } from '@/components/filters/OrdersFilter';
 import { RealmsRarityFilter } from '@/components/filters/RealmsRarityFilter';
 import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
@@ -16,22 +15,12 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between px-2 bg-black/90">
-        <div className="w-full my-1 sm:w-auto">
-          <SearchFilter
-            placeholder="SEARCH BY ID"
-            onSubmit={(value) => {
-              actions.updateSearchIdFilter(parseInt(value) ? value : '');
-            }}
-            defaultValue={state.searchIdFilter + ''}
-          />
-        </div>
+      <div className="flex flex-wrap justify-between px-2 py-2 bg-black">
         <div className="flex flex-wrap self-center gap-2 md:flex-nowrap">
           <div>
             <Button
-              variant="outline"
-              size="sm"
-              className={clsx('', state.isRaidableFilter ? 'bg-black' : '')}
+              variant={state.isRaidableFilter ? 'primary' : 'outline'}
+              size="xs"
               onClick={actions.toggleIsRaidableFilter}
             >
               Raidable
@@ -39,9 +28,8 @@ export function RealmsFilter(props: RealmsFilterProps) {
           </div>
           <div>
             <Button
-              variant="outline"
-              size="sm"
-              className={clsx('', state.isSettledFilter ? 'bg-black' : '')}
+              variant={state.isSettledFilter ? 'primary' : 'outline'}
+              size="xs"
               onClick={actions.toggleIsSettledFilter}
             >
               Settled
@@ -49,9 +37,8 @@ export function RealmsFilter(props: RealmsFilterProps) {
           </div>
           <div>
             <Button
-              variant="outline"
-              size="sm"
-              className={clsx('', state.hasWonderFilter ? 'bg-black' : '')}
+              variant={state.hasWonderFilter ? 'primary' : 'outline'}
+              size="xs"
               onClick={actions.toggleHasWonderFilter}
             >
               Wonder

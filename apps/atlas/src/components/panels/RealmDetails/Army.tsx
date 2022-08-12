@@ -226,25 +226,33 @@ const Army: React.FC<Prop> = (props) => {
           )}
         </Card>
         <Card loading={props.loading} className="col-span-12 md:col-span-8">
-          <CardTitle>{squadSlot}ing Army</CardTitle>
+          <div className="flex justify-between">
+            <CardTitle>{squadSlot}ing Army</CardTitle>
 
-          {/* TODO: add back for indexer */}
-          {/* {isOwner && ( */}
-          <button
-            onClick={() =>
-              setSquadSlot((prev) => (prev == 'Attack' ? 'Defend' : 'Attack'))
-            }
-            className="text-blue-300 hover:underline"
-          >
-            View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
-          </button>
-          {/* )} */}
+            {isOwner && (
+              <div>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    setSquadSlot((prev) =>
+                      prev == 'Attack' ? 'Defend' : 'Attack'
+                    )
+                  }
+                >
+                  View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
+                </Button>
+              </div>
+            )}
+          </div>
+
           <SquadBuilder
             squad={squadSlot}
             realm={realm}
             withPurchase={true}
             troops={troops}
             troopsStats={troopStatsData?.getTroopStats}
+            onClose={() => setIsRaiding(false)}
           />
         </Card>
 

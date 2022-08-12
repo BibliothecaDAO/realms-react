@@ -97,8 +97,10 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
         label: 'Resources',
         component: (
           <RealmResources
-            availableResources={realmsResourcesDetails}
-            {...props}
+            showRaidable
+            showClaimable
+            realm={props.realm}
+            loading={props.loading}
           />
         ),
       },

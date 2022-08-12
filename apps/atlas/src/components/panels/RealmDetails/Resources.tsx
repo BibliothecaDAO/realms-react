@@ -18,6 +18,7 @@ import {
   HARVEST_LENGTH,
   WORK_HUT_OUTPUT,
   WORK_HUT_COST,
+  MAX_HARVESTS,
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
@@ -164,12 +165,7 @@ const Harvests: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-span-12 md:col-start-4 md:col-end-8 ">
           <CardTitle>Resources</CardTitle>
-          <RealmResources
-            availableResources={props.availableResources}
-            showClaimable
-            realm={realm}
-            loading={false}
-          />
+          <RealmResources showClaimable realm={realm} loading={false} />
         </Card>
 
         <Card className="col-span-12 md:col-start-1 md:col-end-4">
@@ -214,24 +210,27 @@ const Harvests: React.FC<Prop> = (props) => {
           </div>
         </Card>
         <Card className="flex col-span-12 md:col-start-4 md:col-end-8 ">
-          <CardTitle>Farms Built - Capacity {farmCapacity}</CardTitle>
-
+          <CardTitle>Farms Built</CardTitle>
+          <p className="px-2">
+            You can build as many farms as you have rivers [{farmCapacity}].
+            Harvest before you max, otherwise your yield will decay.
+          </p>
           <div className="flex flex-wrap justify-between p-2">
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>farms built </h5>
               <div className="text-5xl">
                 {props.realmFoodDetails.farmsBuilt}
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>farms to harvest </h5>
               <div className="text-5xl">
-                {props.realmFoodDetails.totalFarmHarvest}
+                {props.realmFoodDetails.totalFarmHarvest} / {MAX_HARVESTS}
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>time till next harvest </h5>
-              <div className="text-5xl">
+              <div className="text-3xl">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
@@ -243,9 +242,9 @@ const Harvests: React.FC<Prop> = (props) => {
                 />
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>decayed farms</h5>
-              <div className="text-5xl">
+              <div className="text-3xl">
                 {props.realmFoodDetails.decayedFarms}
               </div>
             </div>
@@ -317,22 +316,27 @@ const Harvests: React.FC<Prop> = (props) => {
           <CardTitle className="mt-10">
             Fishing Villages - Capacity {fishingVillageCapacity}
           </CardTitle>
+          <p className="px-2">
+            You can build as many Fishing Villages as you have rivers [
+            {fishingVillageCapacity}]. Harvest before you max, otherwise your
+            yield will decay.
+          </p>
           <div className="flex flex-wrap justify-between p-2">
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>villages built </h5>
-              <div className="text-5xl">
+              <div className="sm:text-5xl">
                 {props.realmFoodDetails.villagesBuilt}
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>villages to harvest </h5>
-              <div className="text-5xl">
-                {props.realmFoodDetails.totalVillageHarvest}
+              <div className="sm:text-5xl">
+                {props.realmFoodDetails.totalVillageHarvest} / {MAX_HARVESTS}
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>time till next harvest </h5>
-              <div className="text-5xl">
+              <div className="sm:text-3xl">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
@@ -344,9 +348,9 @@ const Harvests: React.FC<Prop> = (props) => {
                 />
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 my-2">
               <h5>decayed villages</h5>
-              <div className="text-5xl">
+              <div className="sm:text-3xl">
                 {props.realmFoodDetails.decayedVillages}
               </div>
             </div>

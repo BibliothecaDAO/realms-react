@@ -37,7 +37,7 @@ export const BASE_RESOURCES_PER_DAY = 250;
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;
 
 export const VAULT_LENGTH = 7;
-export const DAY = 1800;
+export const DAY = 7200;
 export const VAULT_LENGTH_SECONDS = VAULT_LENGTH * DAY;
 
 export const BASE_LORDS_PER_DAY = 25;

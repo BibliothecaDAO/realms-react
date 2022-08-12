@@ -60,9 +60,8 @@ export function OrdersFilter(props: OrdersFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="outline"
-          size="sm"
-          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
+          variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
+          size="xs"
           onClick={() => {
             setIsOpen(!isOpen);
           }}
