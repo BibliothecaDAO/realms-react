@@ -1264,6 +1264,16 @@ export type GetRealmQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
   };
 };
 
@@ -1409,6 +1419,16 @@ export type GetRealmsQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
   }>;
 };
 
@@ -1487,6 +1507,16 @@ export type RealmFragmentFragment = {
     vitality: number;
     wisdom: number;
     squadSlot: number;
+  }> | null;
+  relic?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  relicsOwned?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
   }> | null;
 };
 
@@ -1595,6 +1625,14 @@ export const RealmFragmentFragmentDoc = gql`
       vitality
       wisdom
       squadSlot
+    }
+    relic {
+      realmId
+      heldByRealm
+    }
+    relicsOwned {
+      realmId
+      heldByRealm
     }
   }
 `;
