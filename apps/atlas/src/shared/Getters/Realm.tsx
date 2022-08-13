@@ -194,14 +194,14 @@ export const relicsOwnedByRealm = (
 
 export const resourcePillaged = (resources: any) => {
   return (
-    <div className="my-4">
-      {resources.map((resource, index) => {
+    <div className="w-full my-4">
+      {resources?.map((resource, index) => {
         const info = findResourceName(resource.resourceId);
         return (
-          <div className="flex justify-between my-1" key={index}>
-            <div className="flex w-full">
+          <div className="flex justify-between my-1 text-xl " key={index}>
+            <div className="flex">
               <ResourceIcon
-                size="xs"
+                size="sm"
                 className="self-center"
                 resource={info?.trait?.replace('_', '') as string}
               />{' '}
@@ -210,9 +210,9 @@ export const resourcePillaged = (resources: any) => {
               </span>
             </div>
 
-            <span className="self-center ml-4 font-semibold uppercase">
-              {(+formatEther(resource.amount)).toFixed()} units
-            </span>
+            <div className="self-center font-semibold uppercase">
+              {(+formatEther(resource.amount)).toFixed()}
+            </div>
           </div>
         );
       })}
