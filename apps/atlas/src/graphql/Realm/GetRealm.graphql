@@ -9,6 +9,7 @@ query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
     realmId
     buildingId
     buildingName
+    buildingIntegrity
     limit
     limitTraitId
     limitTraitName

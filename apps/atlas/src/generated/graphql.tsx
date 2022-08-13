@@ -1242,6 +1242,7 @@ export type GetRealmQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1288,6 +1289,7 @@ export type GetBuildingsByRealmIdQuery = {
     realmId: number;
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     limit?: number | null;
     limitTraitId: number;
     limitTraitName: string;
@@ -1397,6 +1399,7 @@ export type GetRealmsQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1486,6 +1489,7 @@ export type RealmFragmentFragment = {
     __typename?: 'Building';
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     count: number;
     population: number;
     culture: number;
@@ -1604,8 +1608,8 @@ export const RealmFragmentFragmentDoc = gql`
     buildings {
       buildingId
       buildingName
+      buildingIntegrity
       count
-      buildingName
       population
       culture
       food
@@ -2072,6 +2076,7 @@ export const GetBuildingsByRealmIdDocument = gql`
       realmId
       buildingId
       buildingName
+      buildingIntegrity
       limit
       limitTraitId
       limitTraitName
