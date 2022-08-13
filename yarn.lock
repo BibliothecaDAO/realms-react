@@ -13692,7 +13692,6 @@ __metadata:
     loot-sdk: "npm:^0.1.2"
     mapbox-gl: "npm:^2.9.2"
     meshline: "npm:2.0.4"
-    moment: "npm:2.29.4"
     msw: "npm:^0.44.2"
     next: "npm:12.2.4"
     next-seo: "npm:5.5.0"
@@ -13709,7 +13708,6 @@ __metadata:
     react-joyride: "npm:^2.5.0"
     react-map-gl: "npm:^7.0.18"
     react-markdown: "npm:8.0.3"
-    react-moment: "npm:1.1.2"
     react-popper: "npm:2.3.0"
     react-query: "npm:3.39.2"
     react-spring: "npm:^9.5.2"
@@ -15924,6 +15922,13 @@ __metadata:
   version: 3.0.0
   resolution: "cli-width@npm:3.0.0"
   checksum: fea352954833d6a9ea97e464135adb687dc96bc0c062603fe1e20c8e4400b7c2eb4dfbbd4b07a9a0dcd9c45c592dc6026e96835afd3bfb56c49455e12fb8fa59
+  languageName: node
+  linkType: hard
+
+"clipboard-copy@npm:4.0.1":
+  version: 4.0.1
+  resolution: "clipboard-copy@npm:4.0.1"
+  checksum: ade0b69a0cf868c4e6dd7159cc92be3ef582206ce29f2fcc5bac99dc71bc06391366133a73f966f6df26365c0d3573d1f8bd853211f2bd76e118885ae78d2f94
   languageName: node
   linkType: hard
 
@@ -27353,13 +27358,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.29.4":
-  version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: d275537a30f155cae7f53f6e6d164ccb59b560935f3c6ed0f4a2e6f3503063b491ffa6b4f7e7207501f6fcab92a2d0bb78ed539cde33cadcb91df6b254f7328d
-  languageName: node
-  linkType: hard
-
 "moment@npm:>= 2.9.0, moment@npm:^2.29.2":
   version: 2.29.3
   resolution: "moment@npm:2.29.3"
@@ -31187,17 +31185,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-moment@npm:1.1.2":
-  version: 1.1.2
-  resolution: "react-moment@npm:1.1.2"
-  peerDependencies:
-    moment: ^2.29.0
-    prop-types: ^15.7.0
-    react: ^16.0 || ^17.0.0 || ^18.0.0
-  checksum: 6b02a7151388d98774ee71d73c2d562b7a5edb81b8624c5276ccb7e0f62e6191f7d69e338db5cbe78f952aca6c9380036ed0795cc41b9f13d1bb96ea81b9786c
-  languageName: node
-  linkType: hard
-
 "react-native-crypto-js@npm:1.0.0":
   version: 1.0.0
   resolution: "react-native-crypto-js@npm:1.0.0"
@@ -31603,6 +31590,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:17.0.3"
     "@types/prettier": "npm:2.7.0"
     "@types/shell-quote": "npm:1.7.1"
+    clipboard-copy: "npm:4.0.1"
     cross-env: "npm:7.0.3"
     eslint: "npm:8.21.0"
     husky: "npm:8.0.1"
