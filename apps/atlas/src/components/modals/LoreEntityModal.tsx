@@ -1,5 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import toast from 'react-hot-toast';
 import { LoreScrollEntity } from '@/components/panels/LoreComponents/LoreScrollEntity';
 import { useGetLoreEntityQuery } from '@/generated/graphql';
 
@@ -12,50 +13,68 @@ export const LoreEntityModal = ({ entityId }) => {
 
   const loreEntity = data?.getLoreEntity;
 
+  const getShareUrl = () => {
+    return `${
+      window.location.origin
+    }/lore/${entityId}-${loreEntity?.revisions[0].title
+      ?.toLowerCase()
+      .replace(/\s/g, '-')
+      .replace('.', '')}`;
+  };
+
+  const getTwitterParams = () => {
+    const params = Object.entries({
+      url: getShareUrl(),
+      text: 'New @lootrealms Lore:',
+    })
+      .filter(([, value]) => value !== undefined && value !== null)
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`
+      );
+
+    return params.join('&');
+  };
+
   return (
     <div className={``}>
       {loreEntity && (
         <div className={`-mt-12 mb-1`}>
-          <button
-            className={`bg-blue-600 px-4 py-2 text-lg rounded-lg font-semibold hover:bg-blue-800 transition-all outline-none shadow-md upper`}
+          <Button
+            href="/lore"
+            size="lg"
+            className="bg-blue-600"
+            variant={'primary'}
             onClick={() => {
-              const params = Object.entries({
-                url: `${
-                  window.location.origin
-                }/lore/${entityId}-${loreEntity?.revisions[0].title
-                  ?.toLowerCase()
-                  .replace(/\s/g, '-')}`,
-                text: 'New Loot Realms Lore:',
-              })
-                .filter(([, value]) => value !== undefined && value !== null)
-                .map(
-                  ([key, value]) =>
-                    `${encodeURIComponent(key)}=${encodeURIComponent(
-                      String(value)
-                    )}`
-                );
-
               window.open(
-                `https://twitter.com/share?${params.join('&')}`,
+                `https://twitter.com/share?${getTwitterParams()}`,
                 'sharer',
                 'toolbar=0,status=0,width=550,height=400'
               );
             }}
           >
             Share on Twitter
-          </button>
-          {/* <button
-            className={`bg-blue-600 px-4 py-2 text-lg rounded-lg font-semibold hover:bg-blue-800 transition-all outline-none shadow-md upper`}
+          </Button>
+          <Button
+            href="/lore"
+            size="lg"
+            className="bg-gray-800 ml-2"
+            variant={'primary'}
             onClick={() => {
-              const url = `${
-                window.location.origin
-              }/lore/${entityId}-${loreEntity?.revisions[0].title
-                ?.toLowerCase()
-                .replace(/\s/g, '-')}`;
+              navigator.clipboard.writeText(getShareUrl());
+
+              toast(`Link is copied to clipboard`, {
+                position: 'top-right',
+                style: {
+                  borderRadius: '2px',
+                  background: '#000',
+                  color: '#fff',
+                },
+              });
             }}
           >
             Copy link for sharing
-          </button> */}
+          </Button>
         </div>
       )}
 
