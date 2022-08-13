@@ -26,7 +26,7 @@ const SquadStatistics = (props: Props) => {
     <div
       className={clsx(
         props.className,
-        'self-center w-full font-semibold tracking-widest uppercase'
+        'self-center w-full font-semibold tracking-widest uppercase px-2'
       )}
     >
       <div
@@ -35,7 +35,7 @@ const SquadStatistics = (props: Props) => {
           props.reversed && 'flex-row-reverse'
         )}
       >
-        Vitality:{' '}
+        Vitality{' '}
         <span>
           {squadStats(props.troops).vitality}
           {vitalityQueued
@@ -49,7 +49,7 @@ const SquadStatistics = (props: Props) => {
           props.reversed && 'flex-row-reverse'
         )}
       >
-        Attack:{' '}
+        Attack{' '}
         <span>
           {squadStats(props.troops).attack}
           {attackQueued
@@ -63,7 +63,7 @@ const SquadStatistics = (props: Props) => {
           props.reversed && 'flex-row-reverse'
         )}
       >
-        Defense:{' '}
+        Defense{' '}
         <span>
           {squadStats(props.troops).armor}
           {armorQueued
@@ -77,7 +77,7 @@ const SquadStatistics = (props: Props) => {
           props.reversed && 'flex-row-reverse'
         )}
       >
-        Wisdom:{' '}
+        Wisdom{' '}
         <span>
           {squadStats(props.troops).wisdom}
           {wisdomQueued
@@ -91,7 +91,7 @@ const SquadStatistics = (props: Props) => {
           props.reversed && 'flex-row-reverse'
         )}
       >
-        Agility:{' '}
+        Agility{' '}
         <span>
           {squadStats(props.troops).agility}
           {agilityQueued

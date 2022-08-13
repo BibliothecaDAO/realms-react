@@ -110,9 +110,9 @@ function RealmsModule() {
     <RealmProvider>
       {realmId > 0 &&
         (segments[2] === 'combat' ? (
-          <RaidResultsPanel defendId={realmId} tx={segments[3]} />
+          <RaidResultsPanel key={realmId} defendId={realmId} tx={segments[3]} />
         ) : (
-          <RealmDetailsPanel realmId={realmId} />
+          <RealmDetailsPanel key={realmId} realmId={realmId} />
         ))}
       {realmId === 0 && (
         <>

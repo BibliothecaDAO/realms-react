@@ -22,7 +22,7 @@ const DateTimeDisplay = (props: TimeDisplay) => {
     <div className={`mr-1 ${props.isDanger ? 'text-red-200' : 'countdown'}`}>
       <p>
         {props.value}
-        <span className="text-gray-500">{props.type}</span>
+        <span className="text-stone-400">{props.type}</span>
       </p>
     </div>
   );
@@ -34,7 +34,7 @@ const ExpiredNotice = () => {
 
 const ShowCounter = (props: Counter) => {
   return (
-    <div className="flex text-3xl">
+    <div className="flex ">
       {/* <DateTimeDisplay
         value={props.days}
         type={'D'}

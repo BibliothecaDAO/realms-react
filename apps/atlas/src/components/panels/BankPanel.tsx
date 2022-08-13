@@ -84,14 +84,14 @@ export function BankPanel(): ReactElement {
       ),
       action: (
         <Button
-          variant="secondary"
+          variant="primary"
           size="xs"
           onClick={() => {
             addSelectedSwapResources(resource.resourceId);
           }}
           disabled={!availableResourceIds.includes(resource.resourceId)}
         >
-          Add
+          Add +
         </Button>
       ),
     };

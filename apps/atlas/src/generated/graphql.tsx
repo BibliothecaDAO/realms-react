@@ -626,6 +626,8 @@ export type Realm = {
   rarityRank: Scalars['Int'];
   rarityScore: Scalars['Float'];
   realmId: Scalars['Int'];
+  relic?: Maybe<Array<Relic>>;
+  relicsOwned?: Maybe<Array<Relic>>;
   resources?: Maybe<Array<Resource>>;
   settledOwner?: Maybe<Scalars['String']>;
   squad?: Maybe<Array<Troop>>;
@@ -698,6 +700,8 @@ export type RealmOrderByWithRelationInput = {
   rarityRank?: InputMaybe<SortOrder>;
   rarityScore?: InputMaybe<SortOrder>;
   realmId?: InputMaybe<SortOrder>;
+  relic?: InputMaybe<RelicOrderByWithRelationInput>;
+  relicsOwned?: InputMaybe<RelicOrderByRelationAggregateInput>;
   resources?: InputMaybe<ResourceOrderByRelationAggregateInput>;
   settledOwner?: InputMaybe<SortOrder>;
   squad?: InputMaybe<TroopOrderByRelationAggregateInput>;
@@ -766,12 +770,55 @@ export type RealmWhereInput = {
   rarityRank?: InputMaybe<IntFilter>;
   rarityScore?: InputMaybe<FloatFilter>;
   realmId?: InputMaybe<IntFilter>;
+  relic?: InputMaybe<RelicRelationFilter>;
+  relicsOwned?: InputMaybe<RelicListRelationFilter>;
   resources?: InputMaybe<ResourceListRelationFilter>;
   settledOwner?: InputMaybe<StringNullableFilter>;
   squad?: InputMaybe<TroopListRelationFilter>;
   traits?: InputMaybe<RealmTraitListRelationFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
   wonder?: InputMaybe<StringNullableFilter>;
+};
+
+/** The Relic Model */
+export type Relic = {
+  __typename?: 'Relic';
+  heldByRealm?: Maybe<Scalars['Float']>;
+  originRealm: Realm;
+  realmHolder: Realm;
+  realmId?: Maybe<Scalars['Float']>;
+};
+
+export type RelicListRelationFilter = {
+  every?: InputMaybe<RelicWhereInput>;
+  none?: InputMaybe<RelicWhereInput>;
+  some?: InputMaybe<RelicWhereInput>;
+};
+
+export type RelicOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type RelicOrderByWithRelationInput = {
+  heldByRealm?: InputMaybe<SortOrder>;
+  originRealm?: InputMaybe<RealmOrderByWithRelationInput>;
+  realmHolder?: InputMaybe<RealmOrderByWithRelationInput>;
+  realmId?: InputMaybe<SortOrder>;
+};
+
+export type RelicRelationFilter = {
+  is?: InputMaybe<RelicWhereInput>;
+  isNot?: InputMaybe<RelicWhereInput>;
+};
+
+export type RelicWhereInput = {
+  AND?: InputMaybe<Array<RelicWhereInput>>;
+  NOT?: InputMaybe<Array<RelicWhereInput>>;
+  OR?: InputMaybe<Array<RelicWhereInput>>;
+  heldByRealm?: InputMaybe<IntFilter>;
+  originRealm?: InputMaybe<RealmRelationFilter>;
+  realmHolder?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntFilter>;
 };
 
 /** The Resource Model */
@@ -1217,6 +1264,16 @@ export type GetRealmQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
   };
 };
 
@@ -1362,6 +1419,16 @@ export type GetRealmsQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
   }>;
 };
 
@@ -1440,6 +1507,16 @@ export type RealmFragmentFragment = {
     vitality: number;
     wisdom: number;
     squadSlot: number;
+  }> | null;
+  relic?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  relicsOwned?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
   }> | null;
 };
 
@@ -1548,6 +1625,14 @@ export const RealmFragmentFragmentDoc = gql`
       vitality
       wisdom
       squadSlot
+    }
+    relic {
+      realmId
+      heldByRealm
+    }
+    relicsOwned {
+      realmId
+      heldByRealm
     }
   }
 `;

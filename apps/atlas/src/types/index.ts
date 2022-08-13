@@ -262,6 +262,6 @@ export type AvailableResources = {
   daysRemainder: number;
   vaultAccrued: number;
   vaultRemainder: number;
-  claimableResources: number[];
-  vaultResources: number[];
+  claimableResources: string[] | undefined;
+  vaultResources: string[] | undefined;
 };

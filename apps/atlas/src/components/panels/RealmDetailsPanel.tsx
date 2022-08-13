@@ -1,48 +1,26 @@
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  CardStats,
-  CardIcon,
-  Donut,
-  CountdownTimer,
-} from '@bibliotheca-dao/ui-lib';
-import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
-import { useStarknetCall } from '@starknet-react/core';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSpring } from 'react-spring';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { toBN } from 'starknet/utils/number';
-import { RealmCard } from '@/components/cards/RealmCard';
-import { RealmHistory } from '@/components/tables/RealmHistory';
-import { RealmResources } from '@/components/tables/RealmResources';
-import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
-import { useGetTroopStatsQuery, useGetRealmQuery } from '@/generated/graphql';
+import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
+import type { Realm } from '@/generated/graphql';
+import { useGetRealmQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
 import useResources from '@/hooks/settling/useResources';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
-import { RealmOwner, RealmStatus, TraitTable } from '@/shared/Getters/Realm';
+import { trimmedOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
-import SidebarHeader from '@/shared/SidebarHeader';
-import { dummySquad, dummyDefenceSquad } from '@/shared/squad/DummySquad';
-import { SquadBuilder } from '@/shared/squad/Squad';
-import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
-import { RealmBuildings } from '../tables/RealmBuildings';
+import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
@@ -53,6 +31,14 @@ interface RealmDetailsPanelProps {
 }
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
+  const {
+    isDisplayLarge,
+    selectedId,
+    selectedPanel,
+    openDetails,
+    togglePanelType,
+  } = useAtlasContext();
+
   const router = useRouter();
 
   const { data: realmData, loading } = useGetRealmQuery({
@@ -62,20 +48,27 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const realm = realmData?.realm;
 
-  const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
+  const {
+    buildings,
+    buildingUtilisation,
+    loading: loadingBuildings,
+  } = useBuildings(realm as Realm);
+
   const {
     realmFoodDetails,
     availableFood,
     loading: loadingFood,
   } = useFood(realm as Realm);
-  const { realmsResourcesDetails } = useResources({
-    token_id: realm?.realmId,
-    resources: realm?.resources,
-  });
+
+  const { realmsResourcesDetails, loading: loadingResources } = useResources(
+    realm as Realm
+  );
 
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
   );
+
+  const loadingHooks = loadingBuildings || loadingFood || loadingResources;
 
   useEffect(() => {
     if (realm) {
@@ -94,7 +87,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const pushPage = (value) => {
     if (!loading) {
-      router.push('/realm/' + value, undefined, { shallow: true });
+      router.push('/realm/' + value + '?tab=Survey', undefined, {
+        shallow: true,
+      });
     }
   };
 
@@ -114,10 +109,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     }
   }, [leftPressed, rightPressed]);
 
-  const order = realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? '';
+  const order = trimmedOrder(realm);
 
-  const color = `bg-order-${order.replace('the ', '').replace('the_', '')} 
-    text-order-secondary-${order.replace('the ', '').replace('the_', '')}`;
+  const color = `bg-order-${order} text-order-secondary-${order}`;
 
   const s =
     'absolute self-center px-3 py-2 rounded-full font-semibold text-white fill-current stroke-current hover:bg-white/10 ';
@@ -156,20 +150,18 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   ];
 
   return (
-    <>
-      <div className="absolute z-20 grid w-full h-full overflow-auto bg-cover">
+    <BasePanel open={selectedPanel === 'realm'}>
+      <div className="grid w-full h-full overflow-auto bg-cover">
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}
-            key={realm?.realmId ?? ''}
-            order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
-            title={realm?.name ?? ''}
-            realmId={realmId}
+            realm={realmData}
             hideSearchFilter
           />
+
           <div className="fixed z-50 text-black bottom-10 right-10">
             <div
-              className={`w-40 h-40 rounded-full ${color} flex justify-center align-middle text-black bg-opacity-70 shadow-2xl`}
+              className={`w-40 h-40 rounded-full border-4 border-double ${color} flex justify-center align-middle text-black bg-opacity-95 shadow-2xl`}
             >
               {quickActions.map((a, i) => {
                 return (
@@ -225,6 +217,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableResources={realmsResourcesDetails}
                     buildings={buildings}
                     realm={realmData?.realm}
+                    loading={loadingHooks}
                   />
 
                   <ResourceDetails
@@ -234,6 +227,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableFood={availableFood}
                     buildings={buildings}
                     realm={realmData}
+                    loading={loadingHooks}
                   />
 
                   <Survey
@@ -244,16 +238,16 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     availableFood={availableFood}
                     buildings={buildings}
                     realm={realmData}
-                    loading={loadingFood}
+                    loading={loadingHooks}
                   />
 
-                  {subview == 'History' && <RealmHistory realmId={realmId} />}
+                  <RealmHistory open={subview == 'History'} realmId={realmId} />
                 </>
               ) : null}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </BasePanel>
   );
 }

@@ -1,8 +1,11 @@
 import { Spinner } from '@bibliotheca-dao/ui-lib';
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { COMBAT_OUTCOME_ATTACKER_WINS } from '@/constants/troops';
+import type { GetRealmCombatResultQuery } from '@/generated/graphql';
 import { useGetRealmCombatResultQuery } from '@/generated/graphql';
 import useTxCallback from '@/hooks/useTxCallback';
+import { resourcePillaged } from '@/shared/Getters/Realm';
 
 export const RaidResults = ({ defendId, tx }) => {
   const { tx: txCallback, loading } = useTxCallback(tx, (status) => {
@@ -30,6 +33,7 @@ export const RaidResults = ({ defendId, tx }) => {
     if (combatResult?.getRealmCombatResult) {
       stopPolling();
     }
+    console.log(combatResult);
     return () => {
       stopPolling();
     };
@@ -43,23 +47,36 @@ export const RaidResults = ({ defendId, tx }) => {
       : [];
   };
 
+  const success =
+    combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
+
   return (
-    <div className="relative flex flex-wrap px-40">
-      {combatResult?.getRealmCombatResult ? (
-        <div>
-          {getCombatSteps().map((a, index) => {
-            return (
-              <BattleReportItem
-                key={index}
-                realm={'1'}
-                hitPoints={a.hitPoints}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <Spinner size="md" scheme="white" variant="bricks" />
-      )}
+    <div className="pt-10">
+      <h2 className="mb-4">{success ? 'Successful' : 'Unsuccessful'} Raid</h2>
+      <h3>Raid Results</h3>
+      <div className="relative flex flex-wrap ">
+        {combatResult?.getRealmCombatResult ? (
+          <div className="w-full">
+            {getCombatSteps().map((a, index) => {
+              return (
+                <BattleReportItem
+                  key={index}
+                  realm={'1'}
+                  hitPoints={a.hitPoints}
+                  result={combatResult?.getRealmCombatResult}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <Spinner size="md" scheme="white" variant="bricks" />
+        )}
+      </div>
+
+      <div className="pt-4">
+        <h3>Pillaged</h3>
+        {resourcePillaged(combatResult?.getRealmCombatResult.resourcesPillaged)}
+      </div>
     </div>
   );
 };
@@ -67,14 +84,15 @@ export const RaidResults = ({ defendId, tx }) => {
 interface BattleReportItem {
   realm: string;
   hitPoints: number | null | undefined;
+  result: GetRealmCombatResultQuery['getRealmCombatResult'];
 }
 
 export function BattleReportItem(props: BattleReportItem): ReactElement {
   return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 text-black uppercase bg-white border rounded shadow-inner">
+    <div className="flex justify-between w-full px-4 py-3 my-1 text-2xl uppercase bg-red-800 border-4 border-double rounded shadow-inner border-white/30">
       {' '}
-      <span>Realm {props.realm}</span>
-      <span>deals </span>
+      <span>Realm {props.result.attackRealmId}</span>
+      <span className="font-semibold">deals </span>
       <span>{props.hitPoints} damage</span>
     </div>
   );

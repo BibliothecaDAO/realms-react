@@ -1,6 +1,7 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
-import { useReducer } from 'react';
+import Image from 'next/image';
+import { useReducer, useState } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import type { ItemCost, TroopInterface } from '@/types/index';
@@ -29,17 +30,19 @@ type Row = {
   troopCost: JSX.Element;
 };
 export const ArmoryBuilder = (props: Props) => {
+  const [tier, setTier] = useState(1);
+
   const troopCostCell = (cost: ItemCost) => {
     return (
-      <div className="w-24">
+      <div className="flex flex-col">
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="inline-block">
+            <div key={index} className="flex w-full my-3 text-2xl">
               <ResourceIcon
                 resource={
                   findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
                 }
-                size="xs"
+                size="md"
                 className="self-center mr-4"
               />
               <span>{a.amount}</span>
@@ -51,31 +54,47 @@ export const ArmoryBuilder = (props: Props) => {
   };
 
   const filteredTroops =
-    props.filterTier !== undefined
-      ? props.statistics.filter((v) => v.tier == props.filterTier)
+    tier !== undefined
+      ? props.statistics.filter((v) => v.tier == tier)
       : props.statistics;
 
-  const filteredCurrentTroops = props.troops.filter(
-    (v) => v.tier == props.filterTier
-  );
+  const filteredCurrentTroops = props.troops.filter((v) => v.tier == tier);
 
-  const filteredQueuedTroops = props.troopsQueued.filter(
-    (v) => v.tier == props.filterTier
-  );
+  const filteredQueuedTroops = props.troopsQueued.filter((v) => v.tier == tier);
 
   const reachedMaxNumberOfTroopsInTier =
-    props.filterTier != undefined &&
+    tier != undefined &&
     filteredCurrentTroops.length + filteredQueuedTroops.length >=
-      TroopTierMax[props.filterTier - 1];
+      TroopTierMax[tier - 1];
 
   const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
-      name: <span className="tracking-wider uppercase ">{re.troopName}</span>,
+      name: (
+        <span className="flex p-1">
+          <div className="flex w-1/3 p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+            <Image
+              height={100}
+              width={100}
+              className="self-center object-contain h-auto"
+              src={`/realm-troops/${re.troopName}.png`}
+              alt=""
+            />
+          </div>
+          <div className="w-2/3 px-4 py-2">
+            <div className="text-xl font-display"> {re.troopName}</div>
+            <div>Agility: {re.agility}</div>
+            <div>Attack: {re.attack}</div>
+            <div>Armor: {re.armor}</div>
+            <div>Vitality: {re.vitality}</div>
+            <div>Wisdom: {re.wisdom}</div>
+          </div>
+        </span>
+      ),
       troopCost: troopCostCell(re.troopCost!),
       add: (
         <Button
           disabled={reachedMaxNumberOfTroopsInTier}
-          variant="secondary"
+          variant="primary"
           size="xs"
           onClick={() => {
             props.onBuildTroop &&
@@ -86,7 +105,7 @@ export const ArmoryBuilder = (props: Props) => {
               });
           }}
         >
-          train
+          {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
         </Button>
       ),
     };
@@ -145,6 +164,18 @@ export const ArmoryBuilder = (props: Props) => {
       )}
 
       <div className="my-4 overflow-y-scroll">
+        <div className="flex justify-center mb-3 space-x-3">
+          <Button variant="outline" onClick={() => setTier(1)}>
+            tier 1
+          </Button>
+          <Button variant="outline" onClick={() => setTier(2)}>
+            tier 2
+          </Button>
+          <Button variant="outline" onClick={() => setTier(3)}>
+            tier 3
+          </Button>
+        </div>
+
         {mappedRowData && (
           <Table
             columns={columns}

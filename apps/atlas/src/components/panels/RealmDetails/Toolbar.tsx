@@ -9,6 +9,7 @@ import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import { HotKeys } from '@/hooks/settling/useRealmDetailHotkeys';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { Scroll } from '@/shared/Icons';
 
 type ToolbarItemProps = {
@@ -23,6 +24,8 @@ type ToolbarItemProps = {
 };
 
 const ToolbarItem = (props: ToolbarItemProps) => {
+  const { play } = useUiSounds(soundSelector.pageTurn);
+
   const pressed = useKeyPress({ key: props.hotkey });
 
   const prev = usePrevious(pressed);
@@ -33,13 +36,17 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     }
   }, [pressed]);
 
+  const pressedTab = () => {
+    play();
+    props.onClick();
+  };
   return (
     <div>
       <button
-        onClick={props.onClick}
-        className={`md:px-6 px-4 py-2 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-4 shadow-xl ${
+        onClick={pressedTab}
+        className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl ${
           props.color
-        }  ${props.selected ? 'bg-opacity-90 py-4' : 'bg-opacity-50'} `}
+        }  ${props.selected ? 'bg-opacity-95 py-5' : 'bg-opacity-70'} `}
       >
         <span className="flex">
           {' '}
@@ -78,7 +85,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       hotkey: HotKeys.Survey,
       click: () => props.onSetSubview('Survey'),
       title: 'Overview',
-      icon: <Castle className="self-center w-4 h-4 fill-current" />,
+      icon: <Castle className="self-center w-6 h-6 fill-current" />,
       tabName: 'Survey',
     },
     {
@@ -86,7 +93,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       click: () => props.onSetSubview('Army'),
       title: 'Military',
       icon: (
-        <Helm className="self-center w-4 h-4 fill-current stroke-current" />
+        <Helm className="self-center w-6 h-6 fill-current stroke-current" />
       ),
       tabName: 'Army',
     },
@@ -95,7 +102,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       hotkey: HotKeys.Resources,
       click: () => props.onSetSubview('Resources'),
       title: 'Economics',
-      icon: <Lords className="self-center w-4 h-4 fill-current" />,
+      icon: <Lords className="self-center w-6 h-6 fill-current" />,
       tabName: 'Resources',
     },
     {
@@ -103,7 +110,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       click: () => props.onSetSubview('History'),
       title: 'History',
       icon: (
-        <Scroll className="self-center w-4 h-4 fill-current stroke-current" />
+        <Scroll className="self-center w-6 h-6 fill-current stroke-current" />
       ),
       tabName: 'History',
     },
@@ -112,7 +119,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       click: () => props.onSetSubview('Lore'),
       title: 'Lore',
       icon: (
-        <Scroll className="self-center w-4 h-4 fill-current stroke-current" />
+        <Scroll className="self-center w-6 h-6 fill-current stroke-current" />
       ),
       tabName: 'Lore',
     },
@@ -120,7 +127,11 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   return (
     <div className={clsx(props.className, 'w-full')}>
-      <div className={clsx('w-full flex space-x-1  md:space-x-4 md:pl-44 ')}>
+      <div
+        className={clsx(
+          'w-full justify-center sm:justify-start flex space-x-1  md:space-x-4 md:pl-44 '
+        )}
+      >
         {toolBarItems.map((a, i) => {
           return (
             <ToolbarItem

@@ -7,7 +7,7 @@ import { Squad } from '@/constants/index';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
-import { createCall } from '@/hooks/settling/useCombat';
+import useCombat, { createCall } from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
@@ -24,24 +24,25 @@ interface SquadProps {
   realm?: GetRealmQuery['realm'];
   troopsStats: any;
   squad: keyof typeof Squad;
+  onClose: () => void;
 }
 
 const EmptyTroopId = 0;
 
 export const SquadBuilder = (props: SquadProps) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
+  const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
+    null
+  );
 
-  useEffect(() => {
-    setToBuy([]);
-  }, [props.squad]);
-
+  const { build } = useCombat();
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
-  const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
-    null
-  );
+  useEffect(() => {
+    setToBuy([]);
+  }, [props.squad]);
 
   const fillGap = (tier: number, length: number) => {
     const emptyTroop: TroopInterface = {
@@ -119,7 +120,7 @@ export const SquadBuilder = (props: SquadProps) => {
       <div
         className={`${
           props.flipped ? 'order-last' : ''
-        } max-w-full flex gap-2 my-2`}
+        } flex gap-2 my-2 w-full justify-evenly`}
       >
         {tier1()}
       </div>
@@ -145,22 +146,12 @@ export const SquadBuilder = (props: SquadProps) => {
 
         {selectedTroopIsEmpty && troopStatsData?.getTroopStats && isOwner && (
           <>
-            <ArmoryBuilder
-              onBuildTroop={(t) => setToBuy(toBuy.concat(t))}
-              squad={props.squad}
-              troops={props.troops}
-              troopsQueued={toBuy}
-              statistics={troopStatsData.getTroopStats}
-              realmId={props.realm?.realmId as number}
-              hideSquadToggle
-              filterTier={selectedTroop?.tier}
-            />
-            <div className="flex flex-wrap">
-              <div className="w-full">
-                <h3>Statistics Preview</h3>
+            <div className="flex flex-wrap mb-5">
+              <div className="w-1/2 px-3">
+                <h3>Statistics</h3>
                 <SquadStatistics troops={props.troops} troopsQueued={toBuy} />
               </div>
-              <div className="w-full mt-2">
+              <div className="w-1/2 px-3">
                 <h3>Costs</h3>
                 {getCostSums(toBuy).map((a, index) => {
                   return (
@@ -168,7 +159,7 @@ export const SquadBuilder = (props: SquadProps) => {
                       <span className="">
                         <ResourceIcon
                           resource={findResourceName(a.resourceId)?.trait || ''}
-                          size="xs"
+                          size="sm"
                           className="self-center mr-4"
                         />
                         <span>{a.amount}</span>
@@ -178,21 +169,20 @@ export const SquadBuilder = (props: SquadProps) => {
                 })}
               </div>
             </div>
-
             <div className="flex">
               <Button
                 disabled={toBuy.length == 0}
                 onClick={() => {
-                  txQueue.add(
-                    createCall.buildSquad({
-                      realmId: props.realm?.realmId,
-                      troopIds: toBuy.map((t) => t.troopId),
-                      squadSlot: Squad[props.squad],
-                    })
+                  props.onClose;
+                  build(
+                    props.realm?.realmId,
+                    toBuy.map((t) => t.troopId),
+                    Squad[props.squad]
                   );
                   setToBuy([]);
                 }}
                 variant="primary"
+                size="xs"
                 className="flex-1 w-full mr-2"
               >
                 {toBuy.length == 0
@@ -203,30 +193,43 @@ export const SquadBuilder = (props: SquadProps) => {
                 onClick={() => setToBuy([])}
                 disabled={toBuy.length == 0}
                 variant="outline"
+                size="xs"
               >
                 Clear
               </Button>
             </div>
+            <ArmoryBuilder
+              onBuildTroop={(t) => setToBuy(toBuy.concat(t))}
+              squad={props.squad}
+              troops={props.troops}
+              troopsQueued={toBuy}
+              statistics={troopStatsData.getTroopStats}
+              realmId={props.realm?.realmId as number}
+              hideSquadToggle
+              filterTier={selectedTroop?.tier}
+            />
           </>
         )}
 
         {selectedTroop && !selectedTroopIsEmpty && (
           <>
-            <div className="p-2 text-white uppercase rounded bg-black/30">
-              <div className="mx-auto sm:w-1/2">
+            <div className="flex p-2">
+              <div className="mx-auto bg-red-600 rounded sm:w-1/3">
                 <Image
                   src={`/realm-troops/${selectedTroop.troopName}.png`}
-                  alt=""
+                  className="object-contain h-auto"
                   width="200"
                   height="200"
                   layout={'responsive'}
                 />
               </div>
-              <div>Agility: {selectedTroop.agility}</div>
-              <div>Attack: {selectedTroop.attack}</div>
-              <div>Armor: {selectedTroop.armor}</div>
-              <div>Vitality: {selectedTroop.vitality}</div>
-              <div>Wisdom: {selectedTroop.wisdom}</div>
+              <div className="mr-auto text-2xl text-left">
+                <div>Agility: {selectedTroop.agility}</div>
+                <div>Attack: {selectedTroop.attack}</div>
+                <div>Armor: {selectedTroop.armor}</div>
+                <div>Vitality: {selectedTroop.vitality}</div>
+                <div>Wisdom: {selectedTroop.wisdom}</div>
+              </div>
             </div>
           </>
         )}

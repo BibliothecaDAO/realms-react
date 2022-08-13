@@ -44,9 +44,8 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="outline"
-          size="sm"
-          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
+          size="xs"
+          variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
           onClick={() => {
             setIsOpen(!isOpen);
           }}

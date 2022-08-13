@@ -14,6 +14,7 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
+import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
 export const RealmsPanel = () => {
@@ -73,6 +74,8 @@ export const RealmsPanel = () => {
       }));
 
     const filter = {} as any;
+    const orderBy = {} as any;
+
     if (state.searchIdFilter) {
       filter.realmId = { equals: parseInt(state.searchIdFilter) };
     } else if (state.selectedTab === 2) {
@@ -98,6 +101,13 @@ export const RealmsPanel = () => {
       filter.NOT = {
         settledOwner: { equals: null },
       };
+    }
+
+    if (state.isRaidableFilter) {
+      filter.NOT = {
+        lastVaultTime: { equals: null },
+      };
+      orderBy.lastVaultTime = 'asc';
     }
 
     if (
@@ -128,6 +138,7 @@ export const RealmsPanel = () => {
     return {
       filter,
       take: limit,
+      orderBy,
       skip: limit * (page - 1),
     };
   }, [account, state, page]);
@@ -135,6 +146,7 @@ export const RealmsPanel = () => {
   const { data, loading } = useGetRealmsQuery({
     variables,
     skip: !isRealmPanel,
+    pollInterval: 5000,
   });
 
   useEffect(() => {
@@ -174,6 +186,15 @@ export const RealmsPanel = () => {
       <div className="flex justify-between px-6 py-10 bg-black/90">
         <div className="sm:hidden"></div>
         <h2>Loot Realms</h2>
+        <div className="w-full my-1 sm:w-auto">
+          <SearchFilter
+            placeholder="SEARCH BY ID"
+            onSubmit={(value) => {
+              actions.updateSearchIdFilter(parseInt(value) ? value : '');
+            }}
+            defaultValue={state.searchIdFilter + ''}
+          />
+        </div>
         <Link href="/">
           <button className="z-50 transition-all rounded top-4">
             <Close />

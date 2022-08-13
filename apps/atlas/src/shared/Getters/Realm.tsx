@@ -1,16 +1,25 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
+import { DAY } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
-
+import { findResourceName } from '@/util/resources';
 interface TraitProps {
   trait: string;
   traitAmount?: number;
 }
 
 export const RealmStatus = (realm: RealmFragmentFragment) => {
+  return [RealmStateStatus(realm), RealmVaultStatus(realm)]
+    .filter(Boolean)
+    .join(', ');
+};
+
+export const RealmStateStatus = (realm: RealmFragmentFragment) => {
   if (realm.bridgedOwner) {
     return 'Bridge Pending';
   }
@@ -32,6 +41,28 @@ export const RealmOwner = (realm: RealmFragmentFragment) => {
     realm?.owner ||
     '0'
   );
+};
+
+export const RealmVaultStatus = (realm: RealmFragmentFragment) => {
+  if (!realm.lastVaultTime) {
+    return '';
+  }
+  const now = Date.now();
+  const lastVaultTime = new Date(realm.lastVaultTime);
+  const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
+  const minutesToVault = DAY / 60; // 24 hours
+  if (minutesSinceLastVault >= minutesToVault) {
+    return `Raidable`;
+  }
+
+  const minutesRemaining = minutesToVault - minutesSinceLastVault;
+  const hours = Math.floor(minutesRemaining / 60);
+  const minutes = Math.floor(minutesRemaining % 60);
+  if (hours > 0) {
+    return `Raidable in ${hours}h ${minutes}m`;
+  } else {
+    return `Raidable in ${minutes}m`;
+  }
 };
 
 export const TraitTable = (props: TraitProps) => {
@@ -133,6 +164,58 @@ export const getTrait = (realm: any, trait: string) => {
     : '0';
 };
 
-export const trimmedOrder = (order: string) => {
-  return order.replace('the ', '').replace('the_', '');
+export const trimmedOrder = (realm: RealmFragmentFragment | undefined) => {
+  return (
+    realm?.orderType
+      ?.replaceAll('_', ' ')
+      .replace('the ', '')
+      .replace('the_', '')
+      .toLowerCase() ?? ''
+  );
+};
+
+export const ownerRelic = (realm: RealmFragmentFragment | undefined) => {
+  return realm?.relic && realm?.relic[0] && realm?.relic[0].heldByRealm
+    ? realm?.relic[0].heldByRealm
+    : realm?.realmId;
+};
+
+export const relicsOwnedByRealm = (
+  realm: RealmFragmentFragment | undefined
+) => {
+  return (
+    <div>
+      {realm?.relicsOwned && realm?.relicsOwned[0] && realm?.relicsOwned.length
+        ? realm?.relicsOwned.length
+        : 0}
+    </div>
+  );
+};
+
+export const resourcePillaged = (resources: any) => {
+  return (
+    <div className="my-4">
+      {resources.map((resource, index) => {
+        const info = findResourceName(resource.resourceId);
+        return (
+          <div className="flex justify-between my-1" key={index}>
+            <div className="flex w-full">
+              <ResourceIcon
+                size="xs"
+                className="self-center"
+                resource={info?.trait?.replace('_', '') as string}
+              />{' '}
+              <span className="self-center ml-4 font-semibold uppercase">
+                {info?.trait}
+              </span>
+            </div>
+
+            <span className="self-center ml-4 font-semibold uppercase">
+              {(+formatEther(resource.amount)).toFixed()} units
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
 };

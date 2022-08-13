@@ -14,7 +14,7 @@ const inlineStyle = {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all  hover:bg-gray-900/80 p-3  bg-black/90 rounded-xl shadow-xl group flex flex-col`}
+      className={`${className} duration-150 transition-all border-4 border-double border-white/40  hover:bg-stone-900 p-3  bg-black/95 rounded-2xl shadow-xl group flex flex-col`}
     >
       {children}
     </div>
@@ -24,24 +24,28 @@ export function Card({ children, className }: Props) {
 export function CardBody({ children, className, loading }: Props) {
   if (loading) {
     return (
-      <div className="p-6">
-        <div className="w-full h-64 mb-4 bg-gray-400 rounded animate-pulse" />
-        <div className="w-full h-16 mb-4 bg-gray-400 rounded animate-pulse" />
-        <div className="w-full h-16 mb-4 bg-gray-400 rounded animate-pulse" />
-        <div className="w-full h-16 bg-gray-400 rounded animate-pulse" />
+      <div>
+        <div className="w-full h-12 mb-2 bg-gray-800 rounded-xl animate-pulse" />
+        <div className="w-full h-12 mb-2 bg-gray-800 rounded-xl animate-pulse" />
+        <div className="w-full h-12 mb-2 bg-gray-800 rounded-xl animate-pulse" />
       </div>
     );
   }
   return (
-    <div
-      className={`${className} flex flex-col flex-grow  p-3 rounded-xl bg-black/80 `}
-    >
+    <div className={`${className} flex flex-col flex-grow  p-3 rounded-xl  `}>
       {children}
     </div>
   );
 }
 
-export function CardTitle({ children, className }: Props) {
+export function CardTitle({ children, className, loading }: Props) {
+  if (loading) {
+    return (
+      <div>
+        <div className="w-full h-12 mb-2 bg-gray-800 rounded-xl animate-pulse" />
+      </div>
+    );
+  }
   return (
     <div className={`${className} w-full mb-1 pt-2`}>
       <h3 className="px-2 py-1 text-left rounded font-display">{children}</h3>
@@ -53,7 +57,14 @@ export function CardText({ children, className }: Props) {
   return <div className={`${className} text-gray-500`}>{children}</div>;
 }
 
-export function CardStats({ children, className }: Props) {
+export function CardStats({ children, className, loading }: Props) {
+  if (loading) {
+    return (
+      <div>
+        <div className="w-full h-12 mb-2 bg-gray-800 rounded-xl animate-pulse " />
+      </div>
+    );
+  }
   return (
     <div
       className={`${className} w-full pt-4 pr-4 text-right text-stone-200 font-semibold mt-auto`}

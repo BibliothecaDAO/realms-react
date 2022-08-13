@@ -74,14 +74,13 @@ export function TraitsFilter(props: TraitsFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="outline"
-          size="sm"
-          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
+          variant={hasSelectedFilters ? 'primary' : 'outline'}
+          size="xs"
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         >
-          TRAITS
+          traits
         </Button>
 
         {isOpen && (

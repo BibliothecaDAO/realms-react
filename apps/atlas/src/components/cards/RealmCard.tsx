@@ -3,8 +3,9 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
 import { number } from 'starknet';
-import { RealmHistory } from '@/components/tables/RealmHistory';
+import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
+import type { Realm } from '@/generated/graphql';
 import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
@@ -12,7 +13,6 @@ import { DownloadAssets } from '@/shared/DownloadAssets';
 import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { findResourceName } from '@/util/resources';
-import { Realm } from '../../types';
 import type { RealmsCardProps } from '../../types';
 
 const variantMaps: any = {
@@ -85,10 +85,7 @@ function Overview(props: RealmsCardProps): ReactElement {
 
 export function RealmCard(props: RealmsCardProps): ReactElement {
   const ensData = useEnsResolver(props.realm?.owner as string);
-  const { realmsResourcesDetails } = useResources({
-    token_id: props.realm?.realmId,
-    resources: props.realm?.resources,
-  });
+  const { realmsResourcesDetails } = useResources(props.realm as Realm);
 
   const tabs = useMemo(
     () => [
@@ -100,8 +97,10 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
         label: 'Resources',
         component: (
           <RealmResources
-            availableResources={realmsResourcesDetails}
-            {...props}
+            showRaidable
+            showClaimable
+            realm={props.realm}
+            loading={props.loading}
           />
         ),
       },
@@ -115,7 +114,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       // },
       {
         label: 'History',
-        component: <RealmHistory realmId={props.realm.realmId} />,
+        component: <RealmHistory open={true} realmId={props.realm.realmId} />,
       },
     ],
     [props.realm?.realmId]

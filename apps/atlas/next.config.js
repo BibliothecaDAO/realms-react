@@ -63,7 +63,7 @@ if (disableSourceMaps) {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   productionBrowserSourceMaps: !disableSourceMaps,
   optimizeFonts: true,
 

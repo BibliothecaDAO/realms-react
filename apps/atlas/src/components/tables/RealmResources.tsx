@@ -7,18 +7,29 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
-import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
+import { useEffect, useState } from 'react';
+
+import {
+  BASE_RESOURCES_PER_DAY,
+  DAY,
+  MAX_DAYS_ACCURED,
+  PILLAGE_AMOUNT,
+} from '@/constants/buildings';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import useResources from '@/hooks/settling/useResources';
+import type { Realm } from '@/generated/graphql';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
+import { RateChange } from '@/shared/Getters/Market';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
 import { resources, findResourceName } from '@/util/resources';
+
 type Row = {
   resource: ReactElement;
   // baseOutput: number;
   claimableResources: string | ReactElement;
   // totalOutput: number;
-  level: number;
 };
 
 type Prop = {
@@ -28,17 +39,57 @@ type Prop = {
   hideLordsClaimable?: boolean;
   hideDaysAccrued?: boolean;
   header?: React.ReactNode;
-  availableResources: AvailableResources;
+  size?: string;
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const isOwner = useIsOwner(props.realm?.ownerL2);
+  const { balance } = useResourcesContext();
 
+  const { claim } = useResources(props.realm as Realm);
+  const isOwner = useIsOwner(props.realm?.settledOwner);
+
+  const cachedDaysAccrued = parseInt(
+    ((new Date().getTime() - props.realm?.lastClaimTime) / DAY / 1000).toFixed(
+      2
+    )
+  );
+
+  const cachedDaysRemained =
+    (new Date().getTime() - props.realm?.lastClaimTime) % DAY;
+
+  const cachedVaultDaysAccrued = parseInt(
+    ((new Date().getTime() - props.realm?.lastVaultTime) / DAY / 1000).toFixed(
+      2
+    )
+  );
+
+  // adds the base amount to the claimable
+  const maxResources =
+    cachedDaysAccrued > MAX_DAYS_ACCURED
+      ? BASE_RESOURCES_PER_DAY * MAX_DAYS_ACCURED
+      : 0;
+
+  const resourcesAccrued = cachedDaysAccrued * BASE_RESOURCES_PER_DAY;
+
+  const vaultAccrued = resourcesAccrued * (PILLAGE_AMOUNT / 100);
+
+  const days =
+    cachedDaysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : cachedDaysAccrued;
+
+  const resources = props.realm.resources?.map((a) => {
+    return (resourcesAccrued + maxResources).toLocaleString();
+  });
+
+  const vault = props.realm.resources?.map((a) => {
+    return vaultAccrued.toLocaleString();
+  });
+  console.log(balance);
+
+  const getRate = (id) => {
+    return balance.find((a) => a.resourceId === id)?.percentChange || 0;
+  };
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
-      const resourceId =
-        resources.find((res) => res.trait === re.type)?.id || 0;
-
       const mappedData = {
         resource: (
           <span className="flex">
@@ -47,15 +98,15 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
               size="md"
-              className="mr-4"
+              className="self-center mr-4"
             />
-            <span className="self-center text-xl font-semibold tracking-widest uppercase">
-              {re.resourceName || ''}
+            <span className="self-center tracking-widest uppercase">
+              {re.resourceName || ''} <br />{' '}
+              {RateChange(getRate(re.resourceId))}
             </span>
           </span>
         ),
         // baseOutput: 100,
-        level: re.level,
       };
       {
         /* eslint-disable */
@@ -64,8 +115,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           claimableResources: (
             <span className="w-full text-center">
-              {(props.availableResources.claimableResources[index] &&
-                props.availableResources.claimableResources[index]) || (
+              {(resources && resources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}
             </span>
@@ -76,8 +126,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         Object.assign(mappedData, {
           raidableResources: (
             <span className="w-full text-center">
-              {(props.availableResources.vaultResources[index] &&
-                props.availableResources.vaultResources[index]) || (
+              {(vault && vault[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
               )}
             </span>
@@ -88,7 +137,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     }
   );
 
-  /* const txQueue = useTransactionQueue();
+  const txQueue = useTransactionQueue();
+  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
   useEffect(() => {
     setEnqueuedHarvestTx(
@@ -100,15 +150,15 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       )
     );
   }, [txQueue.transactions]);
-*/
+
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     props.showClaimable
-      ? { Header: 'Claimable Resources', id: 2, accessor: 'claimableResources' }
+      ? { Header: 'Claimable', id: 2, accessor: 'claimableResources' }
       : undefined,
     props.showRaidable
-      ? { Header: 'Raidable Resources', id: 3, accessor: 'raidableResources' }
+      ? { Header: 'Raidable', id: 3, accessor: 'raidableResources' }
       : undefined,
     props.showLevel ? { Header: 'level', id: 4, accessor: 'level' } : undefined,
   ].filter((i) => i !== undefined);
@@ -116,34 +166,51 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <div className="w-full">
-      <div className="flex flex-wrap justify-between p-2">
-        <div className="mb-5">
-          <h6>Days:</h6>
-          <span className="text-2xl">
-            {props.availableResources.daysAccrued == MAX_DAYS_ACCURED
-              ? `${MAX_DAYS_ACCURED} days accrued, you must claim now.`
-              : 'Days:' + props.availableResources.daysAccrued}
-          </span>{' '}
-          {props.availableResources.daysAccrued != MAX_DAYS_ACCURED && (
-            <CountdownTimer
-              date={(
-                (DAY - props.availableResources.daysRemainder) * 1000 +
-                new Date().getTime()
-              ).toString()}
-            />
+    <div className="w-full bg-black">
+      <div className="flex justify-around flex-grow w-full p-4 text-center">
+        <div className="w-1/2">
+          <h6>days</h6>
+          <div className="mt-3 font-semibold sm:text-5xl">
+            {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
+            <span className="opacity-50"> / 3</span>
+          </div>{' '}
+          {days != MAX_DAYS_ACCURED && (
+            <div className="flex justify-between px-3 uppercase text-body">
+              next day
+              <CountdownTimer
+                date={(
+                  (DAY - cachedDaysRemained) * 1000 +
+                  new Date().getTime()
+                ).toString()}
+              />
+            </div>
           )}
         </div>
-
-        <div>
-          <h6>vault: </h6>
-          <span className="text-2xl">
-            {props.availableResources.vaultAccrued} days accrued
-          </span>{' '}
+        <div className="border-r-4 border-white border-double border-white/30"></div>
+        <div className="w-1/2">
+          <h6>vault </h6>
+          <div className="mt-3 font-semibold sm:text-5xl">
+            {cachedVaultDaysAccrued}
+          </div>{' '}
         </div>
       </div>
       {props.header}
       <Table columns={columns} data={mappedRowData} options={tableOptions} />
+      {isOwner && (
+        <div className="flex w-full mt-4 space-x-3">
+          <Button
+            disabled={enqueuedHarvestTx || days === 0}
+            size="xs"
+            variant="primary"
+            className="w-full"
+            onClick={() => {
+              claim();
+            }}
+          >
+            {days === 0 ? 'nothing to harvest' : 'Harvest Resources'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

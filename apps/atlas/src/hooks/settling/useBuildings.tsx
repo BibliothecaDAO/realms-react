@@ -65,7 +65,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     if (!allOutputData || !allOutputData[0]) {
       return;
     }
-
+    console.log(realm);
     setBuildings([
       {
         name: 'Archer Tower',

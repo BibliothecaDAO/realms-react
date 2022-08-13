@@ -40,41 +40,47 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     if (combatData) {
       setTxSubmitted(true);
     }
+    console.log(combatData);
   }, [combatData]);
 
   return (
     <div>
       {(!txSubmitted || combatError) && (
         <div>
-          <h3>Attacking Realm</h3>
           <RealmSelector onSelect={(r) => setSelectedRealms(r)} />
           <div className="flex justify-between">
-            <h3>
-              Defender{' '}
-              <OrderIcon
-                withTooltip
-                containerClassName="inline-block"
-                size="sm"
-                order={realm?.orderType || ''}
-              />
-            </h3>
-            <h3>
-              {attackingRealm && (
+            <div className="w-1/2 p-3 bg-black rounded">
+              <h5 className="mb-4">Defender</h5>
+              <h3>
                 <OrderIcon
-                  containerClassName="inline-block"
                   withTooltip
+                  containerClassName="inline-block"
                   size="sm"
-                  order={attackingRealm?.orderType}
+                  order={realm?.orderType || ''}
                 />
-              )}{' '}
-              Attacker
-            </h3>
+                {realm?.name}
+              </h3>
+            </div>
+            <div className="w-1/2 p-3 bg-black rounded">
+              <h5 className="mb-4">Attacker</h5>
+              <h3>
+                {attackingRealm && (
+                  <OrderIcon
+                    containerClassName="inline-block"
+                    withTooltip
+                    size="sm"
+                    order={attackingRealm?.orderType}
+                  />
+                )}{' '}
+                {attackingRealm?.name}
+              </h3>
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 divide-x-2 divide-dotted divide-slate-200">
+          <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
             <SquadStatistics troops={realm?.troops || []}></SquadStatistics>
             {attackingRealm ? (
               <SquadStatistics
-                className="pl-2"
+                className="pl-4"
                 reversed
                 troops={attackingRealm?.troops || []}
               ></SquadStatistics>
@@ -99,7 +105,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
             variant="primary"
             className="w-full mt-2"
           >
-            Start Raid
+            raid raid for war!!!!!!
           </Button>
           <p className="mt-3 text-red-400">{combatError}</p>
           {!raidButtonEnabled && attackingRealm && (
@@ -121,7 +127,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
       )}
       {txSubmitted && (
         <div>
-          <p>Tx Hash: {combatData} </p>
+          {/* <p>Tx Hash: {combatData} </p> */}
           <RaidResults defendId={realm?.realmId} tx={combatData} />
         </div>
       )}

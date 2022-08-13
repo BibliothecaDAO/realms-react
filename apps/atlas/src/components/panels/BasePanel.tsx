@@ -9,13 +9,15 @@ type Props = {
 export const BasePanel = (props: Props) => {
   const animation = useSpring({
     opacity: props.open ? 1 : 0,
-    transform: props.open ? `translateY(0)` : `translateY(-200%)`,
+    transform: props.open ? `translateY(0)` : `translateY(5%)`,
     delay: 150,
   });
 
   return (
     <animated.div
-      className="absolute top-0 z-30 w-full h-full bg-center bg-cover"
+      className={`absolute top-0 w-full h-full bg-center bg-cover ${
+        props.open ? 'z-30' : ''
+      }`}
       style={animation}
     >
       <div

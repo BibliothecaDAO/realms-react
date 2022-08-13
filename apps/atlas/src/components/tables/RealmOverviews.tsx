@@ -7,6 +7,7 @@ import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmStatus, squadStats } from '@/shared/Getters/Realm';
 import { findResourceName } from '@/util/resources';
+import { RealmResources } from './RealmResources';
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
   isYourRealms?: boolean;
@@ -99,12 +100,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               </div>
             )}
             <div className="flex w-full p-3 py-4 text-white bg-black ">
-              <h3 className="self-center mb-1 ml-4 font-lords">
+              <h2 className="self-center mb-1 ml-4 font-lords">
                 <span className="mr-1 font-semibold text-gray-400 font-body opacity-70">
                   {realm.realmId} |{' '}
                 </span>
                 {realm.name}
-              </h3>
+              </h2>
 
               {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
@@ -161,7 +162,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 />
               </div>
             </div>
-            <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
+            {/* <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
               <div className="self-center">
                 {realm.resources?.map((resource, index) => {
                   const info = findResourceName(resource.resourceId);
@@ -179,7 +180,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
             {/* <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
               {' '}
               <div className="self-center w-full">
@@ -197,7 +198,15 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div> */}
-            <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
+            <div className="w-2/3 p-1 bg-gray-1000">
+              <RealmResources
+                showRaidable
+                showClaimable
+                realm={realm}
+                loading={false}
+              />
+            </div>
+            {/* <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
               <div className="self-center w-full tracking-widest uppercase opacity-80">
                 <div className="flex justify-between ">
                   Vitality: <span> {squadStats(realm.troops).vitality}</span>
@@ -215,7 +224,8 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   Agility: <span>{squadStats(realm.troops).agility}</span>
                 </div>
               </div>
-            </div>
+            </div> */}
+
             <div className="flex justify-center flex-grow w-full px-6 space-x-2 shadow-inner bg-gray-1000 sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3">
               {' '}
               {isYourRealm(realm) && (

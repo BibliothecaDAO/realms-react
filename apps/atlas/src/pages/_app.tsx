@@ -10,7 +10,7 @@ import React, { useEffect } from 'react';
 import { Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Provider } from 'starknet';
+import { Provider, RpcProvider } from 'starknet';
 import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
@@ -74,11 +74,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ApolloProvider client={apolloClient}>
           <StarknetProvider
             defaultProvider={
-              new Provider({
-                rpc: {
-                  nodeUrl:
-                    'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
-                },
+              new RpcProvider({
+                nodeUrl:
+                  'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
               })
             }
             autoConnect

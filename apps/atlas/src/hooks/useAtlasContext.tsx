@@ -14,6 +14,7 @@ import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
+import { useUiSounds, soundSelector } from './useUiSounds';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | undefined;
 
 export type PanelType =
@@ -23,6 +24,7 @@ export type PanelType =
   | 'lore'
   | 'combat'
   | 'realm'
+  | 'realmDetail'
   | AssetType;
 
 export type MenuType =
@@ -146,6 +148,7 @@ function useCoordinates() {
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function useAtlas(): Atlas {
+  const { play: pageTurn } = useUiSounds(soundSelector.pageTurn);
   const router = useRouter();
   // const poiQuery = useQueryPOI();
   const [selectedId, setSelectedId] = useState('');
@@ -208,6 +211,7 @@ function useAtlas(): Atlas {
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   const togglePanelType = (panelType: PanelType) => {
+    pageTurn();
     setMainMenu(false);
     if (selectedPanel === panelType) {
       setPanelType(undefined);
