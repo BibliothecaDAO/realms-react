@@ -1,3 +1,5 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY } from '@/constants/buildings';
@@ -5,6 +7,7 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
+import { findResourceName } from '@/util/resources';
 interface TraitProps {
   trait: string;
   traitAmount?: number;
@@ -185,6 +188,34 @@ export const relicsOwnedByRealm = (
       {realm?.relicsOwned && realm?.relicsOwned[0] && realm?.relicsOwned.length
         ? realm?.relicsOwned.length
         : 0}
+    </div>
+  );
+};
+
+export const resourcePillaged = (resources: any) => {
+  return (
+    <div className="my-4">
+      {resources.map((resource, index) => {
+        const info = findResourceName(resource.resourceId);
+        return (
+          <div className="flex justify-between my-1" key={index}>
+            <div className="flex w-full">
+              <ResourceIcon
+                size="xs"
+                className="self-center"
+                resource={info?.trait?.replace('_', '') as string}
+              />{' '}
+              <span className="self-center ml-4 font-semibold uppercase">
+                {info?.trait}
+              </span>
+            </div>
+
+            <span className="self-center ml-4 font-semibold uppercase">
+              {(+formatEther(resource.amount)).toFixed()} units
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 };

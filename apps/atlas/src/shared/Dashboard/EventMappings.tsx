@@ -2,39 +2,12 @@ import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { GetRealmHistoryQuery } from '@/generated/graphql';
 import { findResourceName } from '@/util/resources';
+import { resourcePillaged } from '../Getters/Realm';
 
 export const EventNa = {
   realmCombatAttack: 'realm_combat_attack',
   realmCombatDefend: 'realm_combat_defend',
   realmBuildingBuilt: 'realm_building_built',
-};
-
-const resourcePillaged = (resources: any) => {
-  return (
-    <div className="my-4">
-      {resources.map((resource, index) => {
-        const info = findResourceName(resource.resourceId);
-        return (
-          <div className="flex justify-between my-1 text-white" key={index}>
-            <div className="flex w-full">
-              <ResourceIcon
-                size="xs"
-                className="self-center"
-                resource={info?.trait?.replace('_', '') as string}
-              />{' '}
-              <span className="self-center ml-4 font-semibold uppercase">
-                {info?.trait}
-              </span>
-            </div>
-
-            <span className="self-center ml-4 font-semibold uppercase">
-              {(+formatEther(resource.amount)).toFixed()} units
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
 };
 
 const successClass = '';
@@ -56,7 +29,7 @@ export function genMilitaryRealmEvent(event) {
           <Button
             size="xs"
             variant="outline"
-            href={'/ream/' + event.data?.defendRealmId}
+            href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
           >
             Pillage and plunder again
           </Button>
@@ -64,7 +37,7 @@ export function genMilitaryRealmEvent(event) {
           <Button
             size="xs"
             variant="outline"
-            href={'/ream/' + event.data?.defendRealmId}
+            href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
           >
             Try again
           </Button>
@@ -87,7 +60,7 @@ export function genMilitaryRealmEvent(event) {
           <Button
             size="xs"
             variant="outline"
-            href={'/ream/' + event.data?.attackRealmId}
+            href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
           >
             Try again
           </Button>
@@ -95,7 +68,7 @@ export function genMilitaryRealmEvent(event) {
           <Button
             size="xs"
             variant="outline"
-            href={'/ream/' + event.data?.attackRealmId}
+            href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
           >
             muster the troops!
           </Button>
@@ -128,7 +101,11 @@ export function genEconomicRealmEvent(event) {
         event: `Minted Realm ${event.realmId}`,
         class: successClass,
         action: (
-          <Button size="xs" variant="outline" href={'/ream/' + event.realmId}>
+          <Button
+            size="xs"
+            variant="outline"
+            href={'/realm/' + event.realmId + '?tab=Survey'}
+          >
             Manage Realm
           </Button>
         ),

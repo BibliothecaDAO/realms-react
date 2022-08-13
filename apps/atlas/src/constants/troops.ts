@@ -3,6 +3,9 @@
 // Baseline square meter for building capacity calculations.
 import { RealmBuildingId } from './buildings';
 
+export const COMBAT_OUTCOME_ATTACKER_WINS = 1;
+export const COMBAT_OUTCOME_DEFENDER_WINS = 2;
+
 export enum Tiers {
   One = 1,
   Two = 2,

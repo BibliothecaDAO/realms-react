@@ -40,6 +40,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     if (combatData) {
       setTxSubmitted(true);
     }
+    console.log(combatData);
   }, [combatData]);
 
   return (
@@ -126,7 +127,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
       )}
       {txSubmitted && (
         <div>
-          <p>Tx Hash: {combatData} </p>
+          {/* <p>Tx Hash: {combatData} </p> */}
           <RaidResults defendId={realm?.realmId} tx={combatData} />
         </div>
       )}

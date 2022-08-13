@@ -262,7 +262,7 @@ const Army: React.FC<Prop> = (props) => {
 
         <AtlasSidebar isOpen={isRaiding}>
           <SidebarHeader
-            title="Raiding Plan"
+            title="Raiding"
             onClose={() => setIsRaiding(false)}
           ></SidebarHeader>
 

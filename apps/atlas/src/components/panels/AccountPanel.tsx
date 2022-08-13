@@ -42,6 +42,8 @@ export function AccountPanel() {
     pollInterval: 10000,
   });
 
+  console.log(accountData);
+
   /* const getRealmDetails = (realmId: number) =>
     realms.features.find((a: any) => a.properties.realm_idx === realmId)
       ?.properties; */
@@ -237,7 +239,7 @@ export function AccountPanel() {
             })}
           </CardBody>
         </Card>
-        {/* <Card className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9`}>
+        <Card className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9`}>
           <CardTitle>Battle History</CardTitle>
           <CardBody>
             {militaryEventData.map((a, index) => {
@@ -247,11 +249,13 @@ export function AccountPanel() {
                   timeStamp={a.timestamp}
                   event={a.event}
                   action={a.action}
-                />
+                >
+                  {a.resources}
+                </HistoryCard>
               );
             })}
           </CardBody>
-        </Card> */}
+        </Card>
       </animated.div>
     </BasePanel>
   );

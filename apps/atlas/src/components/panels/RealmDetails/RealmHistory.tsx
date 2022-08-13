@@ -1,12 +1,4 @@
-import {
-  Table,
-  Button,
-  ResourceIcon,
-  Card,
-  CardBody,
-  CardTitle,
-} from '@bibliotheca-dao/ui-lib';
-import { formatEther } from '@ethersproject/units';
+import { Card, CardTitle } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import {
@@ -14,8 +6,6 @@ import {
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 interface RealmHistoryProps {
@@ -59,7 +49,7 @@ export function RealmHistory({
   return (
     <BaseRealmDetailPanel open={open}>
       <div className="grid grid-cols-12 gap-6 py-4">
-        <Card className="col-start-1 col-end-6">
+        <Card className="col-start-1 col-end-7">
           <CardTitle>Mercantile History</CardTitle>
           {economicEventData.map((a, index) => {
             return (
@@ -69,24 +59,10 @@ export function RealmHistory({
                 event={a.event}
                 action={a.action}
               />
-              // <Card
-              //   key={index}
-              //   className={`w-full ${loadingData ?? 'animate-pulse'}`}
-              // >
-              //   <CardBody className={`flex ${a.event.class} `}>
-              //     <span className="py-1 mb-1 text-xs font-semibold text-white">
-              //       {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
-              //       {new Date(a.timestamp).toLocaleDateString('en-US')}
-              //     </span>
-              //     <h5 className="text-white">{a.event.event}</h5>
-              //     {a.event?.resources && a.event.resources}
-              //     <div className="mt-4">{a.event.action}</div>
-              //   </CardBody>
-              // </Card>
             );
           })}
         </Card>
-        {/* <Card className="col-start-7 col-end-13">
+        <Card className="col-start-7 col-end-13">
           <CardTitle>Military History</CardTitle>
           {militaryEventData.map((a, index) => {
             return (
@@ -95,10 +71,12 @@ export function RealmHistory({
                 timeStamp={a.timestamp}
                 event={a.event}
                 action={a.action}
-              />
+              >
+                {a.resources}
+              </HistoryCard>
             );
           })}
-        </Card> */}
+        </Card>
       </div>
     </BaseRealmDetailPanel>
   );
