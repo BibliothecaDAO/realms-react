@@ -161,6 +161,30 @@ export const getTrait = (realm: any, trait: string) => {
     : '0';
 };
 
-export const trimmedOrder = (order: string) => {
-  return order.replace('the ', '').replace('the_', '');
+export const trimmedOrder = (realm: RealmFragmentFragment | undefined) => {
+  return (
+    realm?.orderType
+      ?.replaceAll('_', ' ')
+      .replace('the ', '')
+      .replace('the_', '')
+      .toLowerCase() ?? ''
+  );
+};
+
+export const ownerRelic = (realm: RealmFragmentFragment | undefined) => {
+  return realm?.relic && realm?.relic[0] && realm?.relic[0].heldByRealm
+    ? realm?.relic[0].heldByRealm
+    : realm?.realmId;
+};
+
+export const relicsOwnedByRealm = (
+  realm: RealmFragmentFragment | undefined
+) => {
+  return (
+    <div>
+      {realm?.relicsOwned && realm?.relicsOwned[0] && realm?.relicsOwned.length
+        ? realm?.relicsOwned.length
+        : 0}
+    </div>
+  );
 };

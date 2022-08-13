@@ -60,6 +60,8 @@ const Survey: React.FC<Prop> = (props) => {
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
+  console.log(realm);
+
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6 py-4">

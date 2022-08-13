@@ -200,7 +200,10 @@ const Army: React.FC<Prop> = (props) => {
           </Card>
         )}
 
-        <Card loading={props.loading} className="col-span-12 md:col-span-4">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-1 md:col-end-5"
+        >
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
             realm={realm}
@@ -220,7 +223,9 @@ const Army: React.FC<Prop> = (props) => {
               >
                 Raid Vault
               </Button>
-              <p>Pillage this vault.</p>
+              <p className="p-3">
+                Pillage this vault for 25% of it's resources.
+              </p>
             </div>
           )}
         </Card>
