@@ -11,7 +11,11 @@ import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useIsOwner from '@/hooks/useIsOwner';
-import { TraitTable, squadStats } from '@/shared/Getters/Realm';
+import {
+  TraitTable,
+  squadStats,
+  RealmVaultStatus,
+} from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -101,6 +105,9 @@ const Survey: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
           <CardTitle>Military Strength</CardTitle>
+          <div className="w-full text-center uppercase sm:text-2xl">
+            {realm && RealmVaultStatus(realm)}
+          </div>
           <div className="flex justify-around flex-grow w-full p-4 text-center">
             <div>
               <h5>Attacking</h5>
