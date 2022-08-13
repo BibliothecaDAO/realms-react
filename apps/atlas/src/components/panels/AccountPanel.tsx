@@ -64,7 +64,7 @@ export function AccountPanel() {
   const militaryEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
       return {
-        ...genMilitaryRealmEvent(realmEvent),
+        ...genMilitaryRealmEvent(realmEvent, true),
         timestamp: realmEvent.timestamp,
       };
     })
