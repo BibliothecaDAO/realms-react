@@ -10,7 +10,9 @@ import { hexToDecimalString } from 'starknet/dist/utils/number';
 import { LoreCreateEntityForm } from '@/components/panels/LoreComponents/LoreCreateEntityForm';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import { useLoreContext } from '@/context/LoreContext';
+import type { LoreEntityWhereInput } from '@/generated/graphql';
 import {
+  GetLoreEntitiesQueryVariables,
   RealmTraitType,
   useGetLoreEntitiesLazyQuery,
   useGetLoreEntitiesQuery,
@@ -19,6 +21,7 @@ import {
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
+import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
 export const LorePanel = () => {
@@ -29,7 +32,12 @@ export const LorePanel = () => {
   const { account: starknetAccount } = useStarknet();
   const { state, actions } = useLoreContext();
 
-  const limit = 50;
+  // Filters
+  const [searchByContent, setSearchByContent] = useState('');
+  const [searchByAuthor, setSearchByAuthor] = useState('');
+
+  // Pagination
+  const limit = 20;
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
   const nextPage = () => setPage(page + 1);
@@ -43,10 +51,26 @@ export const LorePanel = () => {
   const tabs = ['All Scrolls', 'Your Scrolls', 'Create'];
 
   const variables = useMemo(() => {
-    const filter = {} as any;
+    const filter: LoreEntityWhereInput = {};
 
     if (state.selectedTab == 1 && starknetAccount) {
       filter.owner = { equals: hexToDecimalString(starknetAccount) };
+    }
+
+    if (searchByContent) {
+      filter.revisions = {
+        every: {
+          OR: [
+            { title: { contains: searchByContent } },
+            { excerpt: { contains: searchByContent } },
+            { markdown: { contains: searchByContent } },
+          ],
+        },
+      };
+    }
+
+    if (searchByAuthor) {
+      filter.ownerDisplayName = { contains: searchByAuthor };
     }
 
     return {
@@ -54,7 +78,7 @@ export const LorePanel = () => {
       take: limit,
       skip: limit * (page - 1),
     };
-  }, [account, state, page]);
+  }, [account, state, page, searchByContent, searchByAuthor]);
 
   const [resyncEntities, { data, loading }] = useGetLoreEntitiesLazyQuery({
     variables,
@@ -83,7 +107,7 @@ export const LorePanel = () => {
   }, []);
 
   const showPagination = () =>
-    state.selectedTab === 1 &&
+    state.selectedTab != 2 &&
     (page > 1 || (data?.getLoreEntities?.length ?? 0) === limit);
 
   const hasNoResults = () =>
@@ -92,10 +116,15 @@ export const LorePanel = () => {
   return (
     <BasePanel
       open={isLorePanel}
-      style={clsx({ 'lg:w-7/12': state.selectedTab !== 2 })}
+      // style={clsx({ 'lg:w-7/12': state.selectedTab !== 2 })}
     >
-      <div className="flex justify-between pt-2 px-4">
-        <h1>Lore</h1>
+      <div className="flex justify-between">
+        <div className="w-full p-10 pt-20 bg-black/90">
+          <h2 className="w-full">Lore</h2>
+          <p className="mt-4 sm:text-xl opacity-70">
+            Write stories about your favourite Realms, Loot Bags, GA, and more!
+          </p>
+        </div>
       </div>
       <Tabs
         selectedIndex={state.selectedTab}
@@ -109,58 +138,78 @@ export const LorePanel = () => {
           ))}
         </Tabs.List>
       </Tabs>
-      <div className={`mt-2`}>
+
+      <div className="px-2">
+        <div className="flex flex-wrap justify-between mb-2">
+          <div className="grid grid-cols-2 gap-2">
+            <SearchFilter
+              placeholder="Search by content"
+              onSubmit={(value) => {
+                setSearchByContent(value);
+              }}
+              defaultValue={searchByContent}
+            />
+            <SearchFilter
+              placeholder="Search by author"
+              onSubmit={(value) => {
+                setSearchByAuthor(value);
+              }}
+              defaultValue={searchByAuthor}
+            />
+          </div>
+        </div>
+
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        {state.selectedTab === 2 ? (
-          <LoreCreateEntityForm />
-        ) : (
-          <div className="grid grid-cols-2 gap-3">
+        {state.selectedTab === 2 && <LoreCreateEntityForm />}
+
+        {state.selectedTab !== 2 && (
+          <div className="grid grid-cols-3 gap-3">
             <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
           </div>
         )}
-      </div>
 
-      {/* don't show feedback and menu at the "create" tab */}
-      {hasNoResults() && state.selectedTab != 2 && (
-        <div className="flex flex-col items-center justify-center gap-8 my-8">
-          <h2>No results.</h2>
-          <div className="flex gap-4">
-            <Button
-              className="whitespace-nowrap"
-              onClick={actions.clearFilters}
-            >
-              Clear Filters
-            </Button>
-            {state.selectedTab !== 1 && (
+        {/* don't show feedback and menu at the "create" tab */}
+        {hasNoResults() && state.selectedTab != 2 && (
+          <div className="flex flex-col items-center justify-center gap-8 my-8">
+            <h2>No results.</h2>
+            <div className="flex gap-4">
               <Button
                 className="whitespace-nowrap"
-                onClick={() => actions.updateSelectedTab(1)}
+                onClick={actions.clearFilters}
               >
-                See All Realms
+                Clear Filters
               </Button>
-            )}
+              {state.selectedTab !== 1 && (
+                <Button
+                  className="whitespace-nowrap"
+                  onClick={() => actions.updateSelectedTab(1)}
+                >
+                  See All Realms
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {showPagination() && (
-        <div className="flex gap-2 my-8">
-          <Button onClick={previousPage} disabled={page === 1}>
-            Previous
-          </Button>
-          <Button
-            onClick={nextPage}
-            disabled={data?.getLoreEntities?.length !== limit}
-          >
-            Next
-          </Button>
-        </div>
-      )}
+        {showPagination() && (
+          <div className="flex gap-2 my-8">
+            <Button onClick={previousPage} disabled={page === 1}>
+              Previous
+            </Button>
+            <Button
+              onClick={nextPage}
+              disabled={data?.getLoreEntities?.length !== limit}
+            >
+              Next
+            </Button>
+          </div>
+        )}
+      </div>
     </BasePanel>
   );
 };
