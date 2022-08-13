@@ -22,7 +22,7 @@ export function LoreEntitiesOverview(props: LoreEntitiesOverviewsProps) {
   const { setModal } = useAtlasContext();
 
   return (
-    <div className={`grid grid-cols-2 gap-3`}>
+    <>
       {props.entities &&
         props.entities.map((loreEntity: LoreEntityFragmentFragment, index) => (
           <div
@@ -57,7 +57,7 @@ export function LoreEntitiesOverview(props: LoreEntitiesOverviewsProps) {
             {loreEntity.revisions[0]?.excerpt}
           </div>
         ))}
-    </div>
+    </>
   );
 }
 

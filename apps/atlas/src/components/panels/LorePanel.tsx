@@ -64,10 +64,12 @@ export const LorePanel = () => {
     resyncEntities();
 
     // Open Modal if the path is: /lore/{id}-some-slugged-header-for-ux
-    if (router.query.segment && router.query.segment.length >= 2) {
+    if (
+      router.query.segment &&
+      router.query.segment.length >= 2 &&
+      router.query.segment[0] === 'lore'
+    ) {
       const spl = router.query.segment[1].split('-');
-
-      console.log(router);
 
       if (spl.length > 0) {
         const id = parseInt(spl[0], 10) || 1;
@@ -92,7 +94,7 @@ export const LorePanel = () => {
       open={isLorePanel}
       style={clsx({ 'lg:w-7/12': state.selectedTab !== 2 })}
     >
-      <div className="flex justify-between pt-2">
+      <div className="flex justify-between pt-2 px-4">
         <h1>Lore</h1>
       </div>
       <Tabs
@@ -117,7 +119,9 @@ export const LorePanel = () => {
         {state.selectedTab === 2 ? (
           <LoreCreateEntityForm />
         ) : (
-          <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
+          <div className="grid grid-cols-2 gap-3">
+            <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
+          </div>
         )}
       </div>
 

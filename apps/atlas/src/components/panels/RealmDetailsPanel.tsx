@@ -22,6 +22,7 @@ import { trimmedOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
+import RealmLore from './RealmDetails/Lore';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
@@ -242,6 +243,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                   />
 
                   <RealmHistory open={subview == 'History'} realmId={realmId} />
+
+                  <RealmLore open={subview == 'Lore'} realm={realmData} />
                 </>
               ) : null}
             </div>

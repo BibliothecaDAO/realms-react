@@ -1105,6 +1105,7 @@ export type GetExchangeRatesQuery = {
 };
 
 export type GetLoreEntitiesQueryVariables = Exact<{
+  filter?: InputMaybe<LoreEntityWhereInput>;
   take?: InputMaybe<Scalars['Float']>;
   skip?: InputMaybe<Scalars['Float']>;
 }>;
@@ -1115,6 +1116,7 @@ export type GetLoreEntitiesQuery = {
     __typename?: 'LoreEntity';
     id: string;
     owner: string;
+    ownerDisplayName?: string | null;
     kind: number;
     revisions: Array<{
       __typename?: 'LoreEntityRevision';
@@ -1136,6 +1138,7 @@ export type GetLoreEntityQuery = {
     __typename?: 'LoreEntity';
     id: string;
     owner: string;
+    ownerDisplayName?: string | null;
     kind: number;
     revisions: Array<{
       __typename?: 'LoreEntityRevision';
@@ -1167,6 +1170,7 @@ export type LoreEntityFragmentFragment = {
   __typename?: 'LoreEntity';
   id: string;
   owner: string;
+  ownerDisplayName?: string | null;
   kind: number;
   revisions: Array<{
     __typename?: 'LoreEntityRevision';
@@ -1560,6 +1564,7 @@ export const LoreEntityFragmentFragmentDoc = gql`
   fragment LoreEntityFragment on LoreEntity {
     id
     owner
+    ownerDisplayName
     kind
     revisions {
       revisionNumber
@@ -1764,8 +1769,12 @@ export type GetExchangeRatesQueryResult = Apollo.QueryResult<
   GetExchangeRatesQueryVariables
 >;
 export const GetLoreEntitiesDocument = gql`
-  query getLoreEntities($take: Float, $skip: Float) @api(name: starkIndexer) {
-    getLoreEntities(take: $take, skip: $skip) {
+  query getLoreEntities(
+    $filter: LoreEntityWhereInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    getLoreEntities(filter: $filter, take: $take, skip: $skip) {
       ...LoreEntityFragment
     }
   }
@@ -1784,6 +1793,7 @@ export const GetLoreEntitiesDocument = gql`
  * @example
  * const { data, loading, error } = useGetLoreEntitiesQuery({
  *   variables: {
+ *      filter: // value for 'filter'
  *      take: // value for 'take'
  *      skip: // value for 'skip'
  *   },

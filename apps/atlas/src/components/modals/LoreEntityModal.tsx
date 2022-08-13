@@ -59,14 +59,24 @@ export const LoreEntityModal = ({ entityId }) => {
         </div>
       )}
 
-      {loading && (
-        <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-          <Castle className="block w-20 fill-current" />
-          <h2>Loading</h2>
-        </div>
-      )}
+      <div className="bg-black/90 w-full rounded-md">
+        {loading && (
+          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+            <Castle className="block w-20 fill-current" />
+            <h2>Loading</h2>
+          </div>
+        )}
 
-      {loreEntity ? <LoreScrollEntity entity={loreEntity} /> : null}
+        {loreEntity && (
+          <div
+            className={
+              'p-4 text-xl prose prose-stone prose-sm brightness-200 mt-2'
+            }
+          >
+            <LoreScrollEntity entity={loreEntity} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
