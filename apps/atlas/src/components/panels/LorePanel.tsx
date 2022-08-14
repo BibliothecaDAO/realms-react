@@ -140,24 +140,26 @@ export const LorePanel = () => {
       </Tabs>
 
       <div className="px-2">
-        <div className="flex flex-wrap justify-between mb-2">
-          <div className="grid grid-cols-2 gap-2">
-            <SearchFilter
-              placeholder="Search by content"
-              onSubmit={(value) => {
-                setSearchByContent(value);
-              }}
-              defaultValue={searchByContent}
-            />
-            <SearchFilter
-              placeholder="Search by author"
-              onSubmit={(value) => {
-                setSearchByAuthor(value);
-              }}
-              defaultValue={searchByAuthor}
-            />
+        {state.selectedTab !== 2 && (
+          <div className="flex flex-wrap justify-between mb-2">
+            <div className="grid grid-cols-2 gap-2">
+              <SearchFilter
+                placeholder="Search by content"
+                onSubmit={(value) => {
+                  setSearchByContent(value);
+                }}
+                defaultValue={searchByContent}
+              />
+              <SearchFilter
+                placeholder="Search by author"
+                onSubmit={(value) => {
+                  setSearchByAuthor(value);
+                }}
+                defaultValue={searchByAuthor}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
