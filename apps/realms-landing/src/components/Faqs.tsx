@@ -5,7 +5,7 @@ const faqs = [
     title: 'What will I need to play?',
     text: (
       <>
-        To play the building and raiding game you will require a{' '}
+        To play the Realms: Eternum game you will require a{' '}
         <a
           rel="noreferrer"
           target="_blank"
@@ -289,7 +289,7 @@ const faqs = [
 export const FaqBlock = () => {
   return (
     <div className="mx-auto my-20 ">
-      <h2 className="mb-8">Frequently Asked Questionsy</h2>
+      <h2 className="mb-8">Frequently Asked Questions</h2>
 
       {faqs.map((a, index) => {
         return (

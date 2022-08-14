@@ -38,7 +38,7 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
     <div
       data-scrollspy-id={image}
       id={image}
-      className="relative w-full h-screen snap-always snap-center "
+      className="relative w-full h-screen snap-center "
     >
       <Image
         alt=""

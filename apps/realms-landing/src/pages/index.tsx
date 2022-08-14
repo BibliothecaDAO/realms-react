@@ -16,13 +16,16 @@ const slides = [
     image: 'warRoom',
     link: 'https://atlas.bibliothecadao.xyz/',
     priority: true,
+    imagePosition: 'top',
     content: (
       <div className="flex flex-col justify-between h-full px-6 text-center">
-        <div className="mt-32 uppercase" data-content>
+        <div className="mt-16 uppercase" data-content>
           <h1 className="duration-700 opacity-0 text-7xl sm:text-9xl">
             Realms
           </h1>
-          <h1 className="duration-700 delay-100 opacity-0">Imperion</h1>
+          <h1 className="duration-700 delay-100 opacity-0 drop-shadow-2xl">
+            Eternum
+          </h1>
         </div>
         <div className="text-xl text-gray-900" data-content>
           <p className="duration-700 delay-200 opacity-0">
@@ -57,8 +60,8 @@ const slides = [
           An Eternal World
         </h2>
         <p className="duration-700 delay-300 opacity-0">
-          The Realms are your fantasy universe. [GAME NAME] is the first module
-          in an infinitely expanding player-owned game world.
+          The Realms are your fantasy universe. Realms: Eternum is the first
+          module in an infinitely expanding player-owned game world.
         </p>
       </div>
     ),
@@ -72,7 +75,7 @@ const slides = [
         data-content
       >
         <h2 className="mb-4 duration-700 opacity-0 delay-0">
-          Introducing [GAME NAME]
+          Introducing Realms: Eternum
         </h2>
         <p className="duration-700 delay-300 opacity-0">
           A next generation MMO. Raise empires, raid resources, control Relics.
@@ -238,22 +241,23 @@ function Home() {
   };
   return (
     <MainLayout>
-      <WithNavMenu />
+      <div className="h-screen overflow-y-auto scrollbar-hide snap-y snap-mandatory">
+        <WithNavMenu />
 
-      <ScrollSpy handleScroll={onScrollUpdate} />
+        <ScrollSpy handleScroll={onScrollUpdate} />
 
-      {slides.slice(0, 5).map((slide) => {
-        return (
-          <FullPageSlide
-            key={slide.image}
-            image={slide.image}
-            priority={slide.priority}
-            content={slide.content}
-          />
-        );
-      })}
-      <section className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-start align-center">
-        {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
+        {slides.slice(0, 5).map((slide) => {
+          return (
+            <FullPageSlide
+              key={slide.image}
+              image={slide.image}
+              priority={slide.priority}
+              content={slide.content}
+            />
+          );
+        })}
+        <section className="container relative flex flex-col justify-center max-w-xl min-h-full px-8 pt-20 pb-24 mx-auto sm:px-0 snap-proximity snap-start align-center">
+          {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
         <div className="pl-8 sm:pl-0">
           <ImageCarousel loader={carouselLoader} items={mockData.items} />
     </div> 
@@ -262,44 +266,46 @@ function Home() {
           production capacities. Build the city that suits the territory, the
           metagame and your playstyle
         </p> */}
-        <h2>Bibliotheca: Stewards of on-chain gaming</h2>
-        <BibliothecaBook className="h-48 py-6 mx-auto" />
-        <p className="pb-4">
-          Bibliotheca DAO is a pioneering web3 game studio building eternal
-          games on Starknet.
-        </p>
-        <p className="hidden pb-4 sm:block">
-          We are making games for gamers. We are open source. We are community
-          funded. We are Starknet Hackathon winners. We are winners of the Game7
-          Gitcoin Grant. We are proud recipients of the Loot Ecosystem Grant. We
-          are proud to have received grants and investment from StarkWare.{' '}
-        </p>
-        <p className="pb-4">
-          Our first mission: build a massively multiplayer on-chain gaming
-          universe, leveraging the composability of the Loot hyperverse.
-        </p>
-        <Button
-          className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
-          href="https://bibliothecadao.xyz"
-          variant="dao"
-          texture={false}
-        >
-          Visit Us{' '}
-        </Button>
-        <PartnerBanner />
-      </section>
-      {/* eslint-disable-next-line sonarjs/no-identical-functions */}
-      {slides.slice(5).map((slide) => {
-        return (
-          <FullPageSlide
-            key={slide.image}
-            image={slide.image}
-            priority={slide.priority}
-            content={slide.content}
-          />
-        );
-      })}
-      <div className="container px-8 py-5 mx-auto snap-start sm:w-1/2 sm:px-0 lg:w-1/4">
+          <h2>Bibliotheca: Stewards of on-chain gaming</h2>
+          <BibliothecaBook className="h-48 py-6 mx-auto" />
+          <p className="pb-4">
+            Bibliotheca DAO is a pioneering web3 game studio building eternal
+            games on Starknet.
+          </p>
+          <p className="hidden pb-4 sm:block">
+            We are making games for gamers. We are open source. We are community
+            funded. We are Starknet Hackathon winners. We are winners of the
+            Game7 Gitcoin Grant. We are proud recipients of the Loot Ecosystem
+            Grant. We are proud to have received grants and investment from
+            StarkWare.{' '}
+          </p>
+          <p className="pb-4">
+            Our first mission: build a massively multiplayer on-chain gaming
+            universe, leveraging the composability of the Loot hyperverse.
+          </p>
+          <Button
+            className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
+            href="https://bibliothecadao.xyz"
+            variant="dao"
+            texture={false}
+          >
+            Visit Us{' '}
+          </Button>
+          <PartnerBanner />
+        </section>
+        {/* eslint-disable-next-line sonarjs/no-identical-functions */}
+        {slides.slice(5).map((slide) => {
+          return (
+            <FullPageSlide
+              key={slide.image}
+              image={slide.image}
+              priority={slide.priority}
+              content={slide.content}
+            />
+          );
+        })}
+      </div>
+      <div className="container relative px-8 py-5 mx-auto snap-start sm:w-1/2 sm:px-0 lg:w-1/4">
         <FaqBlock />
         <div className="max-w-lg mx-auto">
           <h1 className="text-xl font-semibold font-display lg:text-4xl">
