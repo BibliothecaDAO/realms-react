@@ -1,7 +1,8 @@
 import { Button, Card, CardBody, CardTitle } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import { useMemo, useState } from 'react';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
-import type { GetRealmQuery } from '@/generated/graphql';
+import type { GetRealmQuery, LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesQuery } from '@/generated/graphql';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
@@ -11,13 +12,42 @@ type Prop = {
 };
 
 const RealmLore: React.FC<Prop> = ({ realm, open }) => {
-  const { loading, data } = useGetLoreEntitiesQuery({
-    variables: {
-      filter: {
-        id: { equals: realm?.realm.realmId },
+  const limit = 20;
+  const [page, setPage] = useState(1);
+  const previousPage = () => setPage(page - 1);
+  const nextPage = () => setPage(page + 1);
+
+  const variables = useMemo(() => {
+    const filter: LoreEntityWhereInput = {};
+
+    filter.revisions = {
+      every: {
+        pois: {
+          some: {
+            poiId: {
+              equals: 1000,
+            },
+            assetId: {
+              equals: realm?.realm.realmId.toString(),
+            },
+          },
+        },
       },
-    },
+    };
+
+    return {
+      filter,
+      take: limit,
+      skip: limit * (page - 1),
+    };
+  }, [page]);
+
+  const { loading, data } = useGetLoreEntitiesQuery({
+    variables,
   });
+
+  const showPagination = () =>
+    page > 1 || (data?.getLoreEntities?.length ?? 0) === limit;
 
   const hasNoResults = () =>
     !loading && (data?.getLoreEntities?.length ?? 0) === 0;
@@ -39,6 +69,7 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
       <div className="grid grid-cols-3 gap-3">
         <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
       </div>
+
       {hasNoResults() && (
         <div className="grid grid-cols-12 gap-6 py-4">
           <Card className="col-start-1 col-end-7">
@@ -59,6 +90,20 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
               </div>
             </CardBody>
           </Card>
+        </div>
+      )}
+
+      {showPagination() && (
+        <div className="flex gap-2 my-8">
+          <Button onClick={previousPage} disabled={page === 1}>
+            Previous
+          </Button>
+          <Button
+            onClick={nextPage}
+            disabled={data?.getLoreEntities?.length !== limit}
+          >
+            Next
+          </Button>
         </div>
       )}
       {/* </div> */}
