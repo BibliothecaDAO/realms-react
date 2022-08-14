@@ -2,7 +2,7 @@ import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import type { GetRealmsQuery } from '@/generated/graphql';
-import useRealms from '@/hooks/settling/useRealms';
+import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
 import SidebarHeader from './SidebarHeader';
 import SquadStatistics from './squad/SquadStatistics';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const RealmSelector = (props: Props) => {
-  const realms = useRealms();
+  const realms = useMySettledRealms({ pageSize: 10 });
   const [selectedRealms, setSelectedRealms] = useState<
     GetRealmsQuery['realms']
   >([]);
@@ -68,6 +68,14 @@ const RealmSelector = (props: Props) => {
               </Card>
             ))}
         </div>
+        <Button
+          onClick={() => {
+            realms.hasNext ? realms.loadNext() : realms.reset();
+          }}
+          className="w-full mt-4"
+        >
+          {realms.hasNext ? 'Load More' : 'Back to First Page'}
+        </Button>
       </AtlasSidebar>
     </div>
   );
