@@ -1186,6 +1186,7 @@ export type LorePoiFragmentFragment = {
 
 export type GetAccountQueryVariables = Exact<{
   account: Scalars['String'];
+  realmIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
 }>;
 
 export type GetAccountQuery = {
@@ -1948,14 +1949,13 @@ export type GetLorePoisQueryResult = Apollo.QueryResult<
   GetLorePoisQueryVariables
 >;
 export const GetAccountDocument = gql`
-  query getAccount($account: String!) @api(name: starkIndexer) {
+  query getAccount($account: String!, $realmIds: [Int!])
+  @api(name: starkIndexer) {
     ownedRealmsCount: realmsCount(filter: { ownerL2: { equals: $account } })
     settledRealmsCount: realmsCount(
       filter: { settledOwner: { equals: $account } }
     )
-    accountHistory: getRealmHistory(
-      filter: { realmOwner: { equals: $account } }
-    ) {
+    accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
       id
       eventType
       realmId
@@ -1981,6 +1981,7 @@ export const GetAccountDocument = gql`
  * const { data, loading, error } = useGetAccountQuery({
  *   variables: {
  *      account: // value for 'account'
+ *      realmIds: // value for 'realmIds'
  *   },
  * });
  */

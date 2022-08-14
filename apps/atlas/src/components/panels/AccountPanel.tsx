@@ -1,11 +1,9 @@
 import {
   Button,
-  ResourceIcon,
   Card,
   CardBody,
   CardTitle,
   CardStats,
-  Donut,
 } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown-color.svg';
 import { animated, useSpring } from '@react-spring/web';
@@ -14,7 +12,7 @@ import Image from 'next/future/image';
 import { useState } from 'react';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import { useGetAccountQuery } from '@/generated/graphql';
+import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -28,8 +26,6 @@ import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
-  /* const { state, actions } = useJourneyContext(); */
-
   const { mintRealm } = useSettling();
 
   const { account } = useStarknet();
@@ -37,8 +33,17 @@ export function AccountPanel() {
 
   const [selectedId, setSelectedId] = useState(0);
 
+  const filter = {
+    OR: [
+      { ownerL2: { equals: account } },
+      { settledOwner: { equals: account } },
+    ],
+  };
+  const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
+  const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
+
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: account ? getAccountHex(account) : '' },
+    variables: { account: account ? getAccountHex(account) : '', realmIds },
     pollInterval: 10000,
   });
 
