@@ -120,7 +120,10 @@ export const MenuSideBar = () => {
         ))}
 
         <div className="grow" />
-        <TransactionNavItem />
+        <div className="block sm:hidden">
+          <TransactionNavItem />
+        </div>
+
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton
             className={buttonClasses}

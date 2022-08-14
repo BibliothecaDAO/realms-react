@@ -20,7 +20,7 @@ const TransactionNavItem = () => {
     <span>
       <Button
         variant="outline"
-        className="relative flex flex-col sm:inline-flex"
+        className="relative flex flex-col sm:flex-row sm:inline-flex"
         onClick={() => toggleMenuType('transactionCart')}
       >
         <Scroll className="inline-block w-6 fill-white" />
