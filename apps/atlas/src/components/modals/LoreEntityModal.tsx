@@ -80,16 +80,16 @@ export const LoreEntityModal = ({ entityId }) => {
 
       <div className="bg-black/90 w-full rounded-md">
         {loading && (
-          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+          <div className="flex flex-col items-center gap-2 mx-auto animate-pulse py-8">
             <Castle className="block w-20 fill-current" />
-            <h2>Loading</h2>
+            <h2>Loading Lore...</h2>
           </div>
         )}
 
         {loreEntity && (
           <div
             className={
-              'p-4 text-xl prose prose-stone prose-sm brightness-200 mt-2'
+              'p-4 text-xl prose prose-stone prose-sm brightness-200 mt-2 mb-2'
             }
           >
             <LoreScrollEntity entity={loreEntity} />
