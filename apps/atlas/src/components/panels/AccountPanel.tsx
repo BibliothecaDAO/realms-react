@@ -41,8 +41,8 @@ export function AccountPanel() {
 
   const filter = {
     OR: [
-      { ownerL2: { equals: account } },
-      { settledOwner: { equals: account } },
+      { ownerL2: { equals: getAccountHex(account || '0x0') } },
+      { settledOwner: { equals: getAccountHex(account || '0x0') } },
     ],
   };
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
