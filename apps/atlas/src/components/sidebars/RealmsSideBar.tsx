@@ -82,16 +82,18 @@ export const RealmSideBar = () => {
                   <LoreEntityCard entity={entity} />
                 </div>
               ))}
-              <div className="mt-2">
-                <Button
-                  href="/lore"
-                  size="lg"
-                  className="w-full"
-                  variant={'primary'}
-                >
-                  Start writing Lore for {data!.realm?.name}
-                </Button>
-              </div>
+              {data && (
+                <div className="mt-2">
+                  <Button
+                    href="/lore"
+                    size="lg"
+                    className="w-full"
+                    variant={'primary'}
+                  >
+                    Start writing Lore for {data!.realm?.name}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
