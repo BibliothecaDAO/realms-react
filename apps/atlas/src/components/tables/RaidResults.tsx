@@ -1,4 +1,5 @@
 import { Spinner } from '@bibliotheca-dao/ui-lib';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { COMBAT_OUTCOME_ATTACKER_WINS } from '@/constants/troops';
@@ -29,7 +30,7 @@ export const RaidResults = ({ defendId, tx }) => {
     },
   });
   useEffect(() => {
-    startPolling(5000); // TODO poll interval after transaction accepted on l2
+    startPolling(2000); // TODO poll interval after transaction accepted on l2
     if (combatResult?.getRealmCombatResult) {
       stopPolling();
     }
@@ -52,31 +53,51 @@ export const RaidResults = ({ defendId, tx }) => {
 
   return (
     <div className="pt-10">
-      <h2 className="mb-4">{success ? 'Successful' : 'Unsuccessful'} Raid</h2>
-      <h3>Raid Results</h3>
-      <div className="relative flex flex-wrap ">
-        {combatResult?.getRealmCombatResult ? (
-          <div className="w-full">
-            {getCombatSteps().map((a, index) => {
-              return (
-                <BattleReportItem
-                  key={index}
-                  realm={'1'}
-                  hitPoints={a.hitPoints}
-                  result={combatResult?.getRealmCombatResult}
-                />
-              );
-            })}
+      <Image
+        className="w-full rounded"
+        width={500}
+        objectFit={'cover'}
+        layout="responsive"
+        height={250}
+        src="/createOrDestroy-desktop.webp"
+      />
+      {combatResult?.getRealmCombatResult ? (
+        <div className="mt-5">
+          <h2 className="mb-4">
+            {success ? 'Successful' : 'Unsuccessful'} Raid
+          </h2>
+          <h3>Combat outcome</h3>
+          <div className="relative flex flex-wrap ">
+            <div className="w-full">
+              {getCombatSteps().map((a, index) => {
+                return (
+                  <BattleReportItem
+                    key={index}
+                    realm={'1'}
+                    hitPoints={a.hitPoints}
+                    result={combatResult?.getRealmCombatResult}
+                  />
+                );
+              })}
+            </div>
           </div>
-        ) : (
-          <Spinner size="md" scheme="white" variant="bricks" />
-        )}
-      </div>
+          <div className="pt-4">
+            <h3>Pillaged Resources</h3>
+            {resourcePillaged(
+              combatResult?.getRealmCombatResult.resourcesPillaged
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="my-10">
+          <div className="text-3xl ">Running on-chain battle simulation...</div>
 
-      <div className="pt-4">
-        <h3>Pillaged</h3>
-        {resourcePillaged(combatResult?.getRealmCombatResult.resourcesPillaged)}
-      </div>
+          <p className="mt-2 text-xl">
+            Your army is on route to the enemy and your general will report back
+            very soon.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
@@ -92,7 +113,7 @@ export function BattleReportItem(props: BattleReportItem): ReactElement {
     <div className="flex justify-between w-full px-4 py-3 my-1 text-2xl uppercase bg-red-800 border-4 border-double rounded shadow-inner border-white/30">
       {' '}
       <span>Realm {props.result.attackRealmId}</span>
-      <span className="font-semibold">deals </span>
+      <span className="font-semibold">dealt </span>
       <span>{props.hitPoints} damage</span>
     </div>
   );

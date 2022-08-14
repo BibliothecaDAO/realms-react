@@ -42,7 +42,7 @@ export function RealmHistory({
   const militaryEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
       return {
-        ...genMilitaryRealmEvent(realmEvent),
+        ...genMilitaryRealmEvent(realmEvent, false),
         timestamp: realmEvent.timestamp,
       };
     })

@@ -92,14 +92,14 @@ export function RealmOverviews(props: RealmOverviewsProps) {
         props.realms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
-            className="flex flex-wrap w-full h-auto max-w-full border-2 border-black justify-evenly"
+            className="flex flex-wrap w-full h-auto max-w-full p-2 bg-black/95 shadow-black justify-evenly "
           >
             {realm?.wonder && (
-              <div className="w-full p-2 text-xl font-semibold text-center text-gray-200 uppercase shadow-inner tracking-veryWide bg-black/90">
+              <div className="w-full p-2 text-xl font-semibold text-center uppercase shadow-inner tracking-veryWide bg-black/90">
                 {realm?.wonder}
               </div>
             )}
-            <div className="flex w-full p-3 py-4 text-white bg-black ">
+            <div className="flex w-full p-3 py-4 bg-black border-4 border-b-4 border-double border-white/10 ">
               <h2 className="self-center mb-1 ml-4 font-lords">
                 <span className="mr-1 font-semibold text-gray-400 font-body opacity-70">
                   {realm.realmId} |{' '}
@@ -110,11 +110,11 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
                 rank: {realm.rarityRank}
               </h4> */}
-              <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 sm:block">
+              {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs sm:block">
                 {RealmStatus(realm)}
-              </h4>
+              </h4> */}
 
-              <div className="flex ml-auto ">
+              <div className="flex self-center ml-auto">
                 <div className="flex self-center space-x-2">
                   <div>
                     {!isFavourite(realm) && (
@@ -198,16 +198,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                 })}
               </div>
             </div> */}
-            <div className="w-2/3 p-1 bg-gray-1000">
-              <RealmResources
-                showRaidable
-                showClaimable
-                realm={realm}
-                loading={false}
-              />
+            <div className="w-full p-1 bg-black sm:w-2/3">
+              <RealmResources showRaidable realm={realm} loading={false} />
             </div>
-            {/* <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
-              <div className="self-center w-full tracking-widest uppercase opacity-80">
+            <div className="w-1/2 p-6 bg-black shadow-inner sm:w-1/3">
+              <h3 className="mb-4">Defending Army</h3>
+              <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
                 <div className="flex justify-between ">
                   Vitality: <span> {squadStats(realm.troops).vitality}</span>
                 </div>
@@ -224,50 +220,49 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   Agility: <span>{squadStats(realm.troops).agility}</span>
                 </div>
               </div>
-            </div> */}
-
-            <div className="flex justify-center flex-grow w-full px-6 space-x-2 shadow-inner bg-gray-1000 sm:flex-col sm:w-1/3 sm:py-4 sm:space-x-0 sm:space-y-3">
-              {' '}
-              {isYourRealm(realm) && (
-                <div>
-                  {RealmStatus(realm) === 'Layer 1' && (
-                    <Button
-                      size="xs"
-                      variant="secondary"
-                      className="w-full uppercase"
-                      onClick={() => toggleMenuType('bridgeRealms')}
-                    >
-                      Bridge Realm
-                    </Button>
-                  )}
-                  {RealmStatus(realm) === 'Unsettled L2' && (
-                    <Button
-                      size="xs"
-                      variant="secondary"
-                      className="w-full uppercase"
-                      onClick={() => toggleMenuType('settleRealms')}
-                    >
-                      Settle Realm
-                    </Button>
-                  )}
-                </div>
-              )}
-              <Button
-                onClick={() => openRealmDetails(realm.realmId)}
-                variant="secondary"
-                size="xs"
-                className="w-full "
-              >
-                quick view
-              </Button>
-              <Button
-                href={`/realm/${realm.realmId}?tab=Survey`}
-                variant="primary"
-                size="xs"
-                className="w-full "
-              >
-                {isYourRealm(realm) ? 'manage' : 'details'}
-              </Button>
+              <div className="flex justify-center flex-grow w-full px-6 py-2 space-x-2 sm:flex-col sm:w-full sm:py-4 sm:space-x-0 sm:space-y-3">
+                {' '}
+                {isYourRealm(realm) && (
+                  <div>
+                    {RealmStatus(realm) === 'Layer 1' && (
+                      <Button
+                        size="xs"
+                        variant="secondary"
+                        className="w-full uppercase"
+                        onClick={() => toggleMenuType('bridgeRealms')}
+                      >
+                        Bridge Realm
+                      </Button>
+                    )}
+                    {RealmStatus(realm) === 'Unsettled L2' && (
+                      <Button
+                        size="xs"
+                        variant="secondary"
+                        className="w-full uppercase"
+                        onClick={() => toggleMenuType('settleRealms')}
+                      >
+                        Settle Realm
+                      </Button>
+                    )}
+                  </div>
+                )}
+                <Button
+                  onClick={() => openRealmDetails(realm.realmId)}
+                  variant="outline"
+                  size="xs"
+                  className="w-full "
+                >
+                  quick view
+                </Button>
+                <Button
+                  href={`/realm/${realm.realmId}?tab=Survey`}
+                  variant="primary"
+                  size="xs"
+                  className="w-full "
+                >
+                  {isYourRealm(realm) ? 'manage' : 'details'}
+                </Button>
+              </div>
             </div>
           </div>
         ))}

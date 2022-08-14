@@ -31,6 +31,18 @@ export enum HarvestType {
   Store = 2,
 }
 
+export enum RealmBuildingIntegrity {
+  House = 3600,
+  StoreHouse = 2000,
+  Granary = 2000,
+  Farm = 2000,
+  FishingVillage = 2000,
+  Barracks = 37319,
+  MageTower = 37319,
+  ArcherTower = 37319,
+  Castle = 37319,
+}
+
 export const BASE_SQM = 100;
 export const MAX_DAYS_ACCURED = 3;
 export const BASE_RESOURCES_PER_DAY = 250;

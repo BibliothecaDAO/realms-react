@@ -1,4 +1,4 @@
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useStarknet } from '@starknet-react/core';
@@ -13,7 +13,6 @@ import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import Button from '@/shared/Button';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
@@ -183,8 +182,12 @@ export const RealmsPanel = () => {
 
   return (
     <BasePanel open={isRealmPanel} style="lg:w-7/12">
-      <div className="flex justify-between px-6 py-10 bg-black/90">
-        <div className="sm:hidden"></div>
+      <div className="flex flex-wrap justify-between px-3 pt-20 sm:px-6 bg-black/90">
+        {/* <Link href="/">
+          <button className="z-50 transition-all rounded top-4">
+            <Close />
+          </button>
+        </Link> */}
         <h2>Loot Realms</h2>
         <div className="w-full my-1 sm:w-auto">
           <SearchFilter
@@ -195,11 +198,6 @@ export const RealmsPanel = () => {
             defaultValue={state.searchIdFilter + ''}
           />
         </div>
-        <Link href="/">
-          <button className="z-50 transition-all rounded top-4">
-            <Close />
-          </button>
-        </Link>
       </div>
       <Tabs
         selectedIndex={state.selectedTab}
@@ -233,8 +231,8 @@ export const RealmsPanel = () => {
       </div>
 
       {hasNoResults() && (
-        <div className="flex flex-col items-center justify-center gap-8 my-8">
-          <h2>No results.</h2>
+        <div className="flex flex-col items-center justify-center gap-8 py-8 bg-black">
+          <h2>No results... Try remove some filters</h2>
           <div className="flex gap-4">
             <Button
               className="whitespace-nowrap"
@@ -255,11 +253,19 @@ export const RealmsPanel = () => {
       )}
 
       {showPagination() && (
-        <div className="flex gap-2 my-8">
-          <Button onClick={previousPage} disabled={page === 1}>
+        <div className="flex justify-center w-full gap-2 py-8 bg-black">
+          <Button
+            variant="outline"
+            onClick={previousPage}
+            disabled={page === 1}
+          >
             Previous
           </Button>
-          <Button onClick={nextPage} disabled={data?.realms?.length !== limit}>
+          <Button
+            variant="outline"
+            onClick={nextPage}
+            disabled={data?.realms?.length !== limit}
+          >
             Next
           </Button>
         </div>

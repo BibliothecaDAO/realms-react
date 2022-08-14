@@ -83,7 +83,6 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const vault = props.realm.resources?.map((a) => {
     return vaultAccrued.toLocaleString();
   });
-  console.log(balance);
 
   const getRate = (id) => {
     return balance.find((a) => a.resourceId === id)?.percentChange || 0;
@@ -168,7 +167,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   return (
     <div className="w-full bg-black">
       <div className="flex justify-around flex-grow w-full p-4 text-center">
-        <div className="w-1/2">
+        <div className="w-full sm:w-1/2">
           <h6>days</h6>
           <div className="mt-3 font-semibold sm:text-5xl">
             {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
@@ -187,7 +186,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           )}
         </div>
         <div className="border-r-4 border-white border-double border-white/30"></div>
-        <div className="w-1/2">
+        <div className="w-full sm:w-1/2">
           <h6>vault </h6>
           <div className="mt-3 font-semibold sm:text-5xl">
             {cachedVaultDaysAccrued}

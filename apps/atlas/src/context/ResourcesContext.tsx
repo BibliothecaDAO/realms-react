@@ -149,7 +149,7 @@ function useResources() {
     });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
-    pollInterval: 5000,
+    pollInterval: 10000,
   });
 
   const addSelectedSwapResources = (resourceId?: number) => {

@@ -1,5 +1,5 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { OrderType } from '@/generated/graphql';
@@ -57,21 +57,27 @@ export function OrdersFilter(props: OrdersFilterProps) {
   ];
 
   return (
-    <Popover className="relative">
+    <Popover className="relative z-50">
       <div ref={ref}>
-        <Button
-          variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
-          size="xs"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          Orders
-        </Button>
+        <Popover.Button as="div">
+          <Button
+            size="xs"
+            variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
+          >
+            orders
+          </Button>
+        </Popover.Button>
 
-        {isOpen && (
+        <Transition
+          enter="transition duration-350 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-350 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
+        >
           <Popover.Panel
-            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 shadow-2xl"
+            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4 border-double border-white/20 rounded"
             static
           >
             <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded shadow-sm">
@@ -101,7 +107,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
               </div>
             </div>
           </Popover.Panel>
-        )}
+        </Transition>
       </div>
     </Popover>
   );

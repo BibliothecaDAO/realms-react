@@ -211,7 +211,7 @@ export const resourcePillaged = (resources: any) => {
             </div>
 
             <div className="self-center font-semibold uppercase">
-              {(+formatEther(resource.amount)).toFixed()}
+              {(+formatEther(resource.amount)).toLocaleString()}
             </div>
           </div>
         );

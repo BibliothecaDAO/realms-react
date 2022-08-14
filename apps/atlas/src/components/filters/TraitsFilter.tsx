@@ -1,6 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
-import clsx from 'clsx';
+import { Popover, Transition } from '@headlessui/react';
 import React, { useRef, useState } from 'react';
 import { RealmsMax } from '@/constants/index';
 import { RealmTraitType } from '@/generated/graphql';
@@ -71,21 +70,29 @@ export function TraitsFilter(props: TraitsFilterProps) {
     props.traits.Region.max < RealmsMax.Region;
 
   return (
-    <Popover className="relative">
+    <Popover className="relative z-50">
       <div ref={ref}>
-        <Button
-          variant={hasSelectedFilters ? 'primary' : 'outline'}
-          size="xs"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
+        <Popover.Button as="div">
+          <Button
+            size="xs"
+            variant={hasSelectedFilters ? 'primary' : 'outline'}
+          >
+            traits
+          </Button>
+        </Popover.Button>
+        <Transition
+          enter="transition duration-350 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-350 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
         >
-          traits
-        </Button>
-
-        {isOpen && (
-          <Popover.Panel className="absolute z-10 mt-2 md:right-0" static>
-            <div className="flex flex-col px-8 py-4 pb-6 font-medium text-white bg-black rounded-sm shadow-sm w-60">
+          <Popover.Panel
+            className="absolute z-10 mt-2 border-4 border-double rounded md:right-0 border-white/20"
+            static
+          >
+            <div className="flex flex-col px-8 py-4 font-medium text-white bg-black rounded-sm shadow-sm w-60">
               <h4 className="text-center">Traits</h4>
               <RangeSliderFilter
                 name="Regions"
@@ -133,7 +140,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
               />
             </div>
           </Popover.Panel>
-        )}
+        </Transition>
       </div>
     </Popover>
   );
