@@ -1206,6 +1206,36 @@ export type GetAccountQuery = {
   }>;
 };
 
+export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGameConstantsQuery = {
+  __typename?: 'Query';
+  troopStats: Array<{
+    __typename?: 'TroopStats';
+    troopId: number;
+    troopName: string;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    troopCost?: {
+      __typename?: 'TroopCost';
+      amount: number;
+      resources: any;
+    } | null;
+  }>;
+  buildingCosts: Array<{
+    __typename?: 'BuildingCost';
+    buildingId: number;
+    buildingName: string;
+    amount: number;
+    resources: any;
+  }>;
+};
+
 export type GetRealmQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
@@ -2016,6 +2046,81 @@ export type GetAccountLazyQueryHookResult = ReturnType<
 export type GetAccountQueryResult = Apollo.QueryResult<
   GetAccountQuery,
   GetAccountQueryVariables
+>;
+export const GetGameConstantsDocument = gql`
+  query getGameConstants @api(name: starkIndexer) {
+    troopStats: getTroopStats {
+      troopId
+      troopName
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      troopCost {
+        amount
+        resources
+      }
+    }
+    buildingCosts: getBuildingCosts {
+      buildingId
+      buildingName
+      amount
+      resources
+    }
+  }
+`;
+
+/**
+ * __useGetGameConstantsQuery__
+ *
+ * To run a query within a React component, call `useGetGameConstantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGameConstantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGameConstantsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGameConstantsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(
+    GetGameConstantsDocument,
+    options
+  );
+}
+export function useGetGameConstantsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >(GetGameConstantsDocument, options);
+}
+export type GetGameConstantsQueryHookResult = ReturnType<
+  typeof useGetGameConstantsQuery
+>;
+export type GetGameConstantsLazyQueryHookResult = ReturnType<
+  typeof useGetGameConstantsLazyQuery
+>;
+export type GetGameConstantsQueryResult = Apollo.QueryResult<
+  GetGameConstantsQuery,
+  GetGameConstantsQueryVariables
 >;
 export const GetRealmDocument = gql`
   query getRealm($id: Float!) @api(name: starkIndexer) {

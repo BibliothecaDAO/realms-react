@@ -1,0 +1,23 @@
+query getGameConstants @api(name: starkIndexer) {
+  troopStats: getTroopStats {
+    troopId
+    troopName
+    type
+    tier
+    agility
+    attack
+    armor
+    vitality
+    wisdom
+    troopCost {
+      amount
+      resources
+    }
+  }
+  buildingCosts: getBuildingCosts {
+    buildingId
+    buildingName
+    amount
+    resources
+  }
+}
