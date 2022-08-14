@@ -64,16 +64,21 @@ export const RaidResults = ({ defendId, tx }) => {
       {combatResult?.getRealmCombatResult ? (
         <div className="mt-5">
           <h2 className="mb-4">
-            {success ? 'Successful' : 'Unsuccessful'} Raid
+            {success ? 'Successful' : 'Unsuccessful'} Raid!!
           </h2>
-          <h3>Combat outcome</h3>
+          <h3>Battle report</h3>
           <div className="relative flex flex-wrap ">
             <div className="w-full">
               {getCombatSteps().map((a, index) => {
                 return (
                   <BattleReportItem
                     key={index}
-                    realm={'1'}
+                    index={index}
+                    realm={
+                      index & 1
+                        ? combatResult?.getRealmCombatResult.defendRealmId
+                        : combatResult?.getRealmCombatResult.attackRealmId
+                    }
                     hitPoints={a.hitPoints}
                     result={combatResult?.getRealmCombatResult}
                   />
@@ -81,15 +86,27 @@ export const RaidResults = ({ defendId, tx }) => {
               })}
             </div>
           </div>
-          <div className="pt-4">
-            <h3>Pillaged Resources</h3>
-            {resourcePillaged(
-              combatResult?.getRealmCombatResult.resourcesPillaged
-            )}
-          </div>
+
+          {combatResult?.getRealmCombatResult.resourcesPillaged?.length ? (
+            <div className="pt-4">
+              <div className="mb-4 text-3xl">
+                Hurray!! You slayed all of Realm{' '}
+                {combatResult?.getRealmCombatResult.defendRealmId} troops and
+                took off with the following resources. The citizens are
+                trembling and in awe of your victory.
+              </div>
+              <div className="flex justify-center w-72">
+                {resourcePillaged(
+                  combatResult?.getRealmCombatResult.resourcesPillaged
+                )}
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       ) : (
-        <div className="my-10">
+        <div className="p-10">
           <div className="text-3xl ">Running on-chain battle simulation...</div>
 
           <p className="mt-2 text-xl">
@@ -103,18 +120,28 @@ export const RaidResults = ({ defendId, tx }) => {
 };
 
 interface BattleReportItem {
-  realm: string;
+  realm: number;
+  index: number;
   hitPoints: number | null | undefined;
   result: GetRealmCombatResultQuery['getRealmCombatResult'];
 }
 
 export function BattleReportItem(props: BattleReportItem): ReactElement {
+  const isOwnRealm = props.index & 1 ? false : true;
+
   return (
-    <div className="flex justify-between w-full px-4 py-3 my-1 text-2xl uppercase bg-red-800 border-4 border-double rounded shadow-inner border-white/30">
+    <div
+      className={`flex justify-between w-full px-4 py-1 my-1 text-2xl border-4 border-double rounded shadow-inner border-white/30 font-display ${
+        isOwnRealm ? 'bg-green-900' : 'bg-red-900'
+      }`}
+    >
       {' '}
-      <span>Realm {props.result.attackRealmId}</span>
-      <span className="font-semibold">dealt </span>
-      <span>{props.hitPoints} damage</span>
+      <span>
+        <span>
+          {props.index + 1}. Your troops {isOwnRealm ? 'dealt' : 'took'}{' '}
+          <span className="font-semibold">{props.hitPoints}</span> damage
+        </span>
+      </span>
     </div>
   );
 }

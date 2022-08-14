@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { TroopSlot } from '@/constants/troops';
 import { squadStats } from '@/shared/Getters/Realm';
 import type { TroopInterface } from '@/types/index';
 
@@ -7,20 +8,24 @@ type Props = {
   troopsQueued?: TroopInterface[];
   className?: string;
   reversed?: boolean;
+  slot?: number;
 };
 
 const SquadStatistics = (props: Props) => {
+  // attacking or defending
+  const filteredArmy = props.troops.filter((a) => a.squadSlot === props.slot);
+  console.log(filteredArmy);
   const vitalityQueued = squadStats(props.troopsQueued).vitality;
   const attackQueued = squadStats(props.troopsQueued).attack;
   const armorQueued = squadStats(props.troopsQueued).armor;
   const wisdomQueued = squadStats(props.troopsQueued).wisdom;
   const agilityQueued = squadStats(props.troopsQueued).agility;
 
-  const vitalitySum = squadStats(props.troops).vitality + vitalityQueued;
-  const attackSum = squadStats(props.troops).attack + attackQueued;
-  const armorSum = squadStats(props.troops).armor + armorQueued;
-  const wisdomSum = squadStats(props.troops).wisdom + wisdomQueued;
-  const agilitySum = squadStats(props.troops).agility + agilityQueued;
+  const vitalitySum = squadStats(filteredArmy).vitality + vitalityQueued;
+  const attackSum = squadStats(filteredArmy).attack + attackQueued;
+  const armorSum = squadStats(filteredArmy).armor + armorQueued;
+  const wisdomSum = squadStats(filteredArmy).wisdom + wisdomQueued;
+  const agilitySum = squadStats(filteredArmy).agility + agilityQueued;
 
   return (
     <div
@@ -37,7 +42,7 @@ const SquadStatistics = (props: Props) => {
       >
         Vitality{' '}
         <span>
-          {squadStats(props.troops).vitality}
+          {squadStats(filteredArmy).vitality}
           {vitalityQueued
             ? `+${squadStats(props.troopsQueued).vitality}=${vitalitySum}`
             : ''}
@@ -51,7 +56,7 @@ const SquadStatistics = (props: Props) => {
       >
         Attack{' '}
         <span>
-          {squadStats(props.troops).attack}
+          {squadStats(filteredArmy).attack}
           {attackQueued
             ? `+${squadStats(props.troopsQueued).attack}=${attackSum}`
             : ''}
@@ -65,7 +70,7 @@ const SquadStatistics = (props: Props) => {
       >
         Defense{' '}
         <span>
-          {squadStats(props.troops).armor}
+          {squadStats(filteredArmy).armor}
           {armorQueued
             ? `+${squadStats(props.troopsQueued).armor}=${armorSum}`
             : ''}
@@ -79,7 +84,7 @@ const SquadStatistics = (props: Props) => {
       >
         Wisdom{' '}
         <span>
-          {squadStats(props.troops).wisdom}
+          {squadStats(filteredArmy).wisdom}
           {wisdomQueued
             ? `+${squadStats(props.troopsQueued).wisdom}=${wisdomSum}`
             : ''}
@@ -93,7 +98,7 @@ const SquadStatistics = (props: Props) => {
       >
         Agility{' '}
         <span>
-          {squadStats(props.troops).agility}
+          {squadStats(filteredArmy).agility}
           {agilityQueued
             ? `+${squadStats(props.troopsQueued).agility}=${agilitySum}`
             : ''}

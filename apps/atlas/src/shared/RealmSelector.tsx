@@ -1,6 +1,7 @@
 import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
+import { TroopSlot } from '@/constants/troops';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import useRealms from '@/hooks/settling/useRealms';
 import SidebarHeader from './SidebarHeader';
@@ -41,14 +42,21 @@ const RealmSelector = (props: Props) => {
             realms.data.realms.map((r) => (
               <Card className="col-span-12 md:col-span-6" key={r.realmId}>
                 <div className="flex">
-                  <OrderIcon size="md" order={r.orderType} />
-                  <h2 className="ml-3">
+                  <OrderIcon
+                    className="self-center"
+                    size="sm"
+                    order={r.orderType}
+                  />
+                  <h3 className="ml-3">
                     {' '}
                     {r.name} | {r.realmId}
-                  </h2>
+                  </h3>
                 </div>
                 <div className="pt-2">
-                  <SquadStatistics troops={r.troops || []}></SquadStatistics>
+                  <SquadStatistics
+                    slot={TroopSlot.attacking}
+                    troops={r.troops || []}
+                  />
                 </div>
 
                 <div className="w-full mt-2">
