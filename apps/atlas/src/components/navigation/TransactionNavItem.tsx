@@ -19,11 +19,11 @@ const TransactionNavItem = () => {
   return (
     <span>
       <Button
-        variant="primary"
-        className="relative inline-flex"
+        variant="outline"
+        className="relative flex flex-col sm:inline-flex"
         onClick={() => toggleMenuType('transactionCart')}
       >
-        <Scroll className="inline-block w-6 mr-1 fill-white" />
+        <Scroll className="inline-block w-6 fill-white" />
         {txQueue.transactions.length > 0 ? (
           <div className="absolute flex items-center justify-center h-4 px-1 text-xs text-center bg-gray-800 rounded-full -left-1 -top-1">
             <span className="text-center">{txQueue.transactions.length}</span>
@@ -31,7 +31,7 @@ const TransactionNavItem = () => {
         ) : (
           ' '
         )}
-        <span className="flex w-3 h-3 ml-1">
+        <span className="flex w-3 h-3 mt-3 sm:ml-1 sm:mt-0">
           <span
             className={`absolute inline-flex w-3 h-3 duration-300 rounded-full opacity-75 ${TxStyle()}`}
           ></span>

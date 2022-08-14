@@ -73,14 +73,15 @@ export const TransactionCartSideBar = () => {
     <BaseSideBar open={isSettleRealms}>
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div>
-          <div className="flex justify-between mb-2">
+          <div className="flex justify-between mt-8 mb-2">
             <h2>
-              <ScrollIcon className="inline-block w-16 mr-4 fill-slate-200" />
+              <ScrollIcon className="inline-block w-8 mr-4 sm:w-16 fill-slate-200" />
               Thee Royal Decree
             </h2>
             <div className="flex justify-end mb-2 mr-1">
               <Button
-                size="sm"
+                size="xs"
+                variant="outline"
                 onClick={() => toggleMenuType('transactionCart')}
               >
                 <Close />
