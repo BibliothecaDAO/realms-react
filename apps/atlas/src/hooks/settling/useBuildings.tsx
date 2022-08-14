@@ -9,6 +9,7 @@ import {
   RealmBuildingIntegrity,
 } from '@/constants/buildings';
 import type { Realm } from '@/generated/graphql';
+import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import {
   ModuleAddr,
   useBuildingContract,
@@ -46,13 +47,10 @@ export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
 };
 
 const useBuildings = (realm: Realm | undefined): Building => {
-  const { contract: buildingContract } = useBuildingContract();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
 
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
-
-  console.log(realm);
 
   const currentTime = new Date().getTime();
 
@@ -74,7 +72,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     if (!realm) {
       return;
     }
-
+    console.log(realm);
     const barracks = getRealmBuildings(
       pluckBuilding(realm, RealmBuildingId.Barracks),
       RealmBuildingIntegrity.Barracks
