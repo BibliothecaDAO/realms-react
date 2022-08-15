@@ -5,20 +5,29 @@ import {
 } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSpring } from 'react-spring';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
-import type { Realm } from '@/generated/graphql';
+import type { GetRealmsQuery, Realm } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
+import type { Playlists } from '@/hooks/settling/useRealmsPlaylist';
+import useRealmPlaylist, {
+  RealmPlaylistCursorKey,
+  RealmPlaylistNameKey,
+} from '@/hooks/settling/useRealmsPlaylist';
 import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
+import usePrevious from '@/hooks/usePrevious';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
+import SidebarHeader from '@/shared/SidebarHeader';
+import { storage } from '@/util/localStorage';
+import AtlasSidebar from '../sidebars/AtlasSideBar';
 import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
 import ResourceDetails from './RealmDetails/Resources';
@@ -69,42 +78,85 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const loadingHooks = loadingBuildings || loadingFood || loadingResources;
 
-  useEffect(() => {
-    if (realm) {
-      router.push(
-        {
-          pathname: `realm/${realm?.realmId}`,
-          query: {
-            tab: subview,
-          },
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
-  }, [subview]);
+  // useEffect(() => {
+  //   if (realm) {
+  //     router.push(
+  //       {
+  //         pathname: `realm/${realm?.realmId}`,
+  //         query: {
+  //           tab: subview,
+  //         },
+  //       },
+  //       undefined,
+  //       { shallow: true }
+  //     );
+  //   }
+  // }, [subview]);
+
+  const [showPlaylists, setShowPlaylists] = useState(false);
+  const [cursor, setCursor] = useState(
+    storage<number>(RealmPlaylistCursorKey, 0).get()
+  );
+
+  const [navigationLock, setNavigationLock] = useState(false);
+  const [currentPlaylist, setCurrentPlaylist] = useState<
+    keyof typeof Playlists
+  >((router.query['playlist'] as any) ?? 'AllRealms');
+
+  console.log('router query is', router.query['playlist']);
+
+  const prevPlaylist = usePrevious<string>(currentPlaylist);
+  // const [playlistDirty, setPlaylistDirty] = useState(false);
+  // useEffect(()=>{
+  //   if(currentPlaylist !== prevPlaylist){
+  //     setPlaylistDirty(true);
+  //   }
+  // }, [currentPlaylist]);
 
   const pushPage = (value) => {
-    if (!loading) {
-      router.push('/realm/' + value + '?tab=Survey', undefined, {
+    router.replace(
+      {
+        pathname: `/realm/${value}`,
+        query: {
+          tab: subview,
+          playlist: currentPlaylist,
+        },
+      },
+      undefined,
+      {
         shallow: true,
-      });
-    }
+      }
+    );
   };
 
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
   const isOwner = useIsOwner(realm?.settledOwner);
 
+  const playlistPressed = useKeyPress({ key: 'p' });
+  const prevPlaylistPressed = usePrevious(playlistPressed);
+
+  useEffect(() => {
+    if (playlistPressed && !prevPlaylistPressed) {
+      setShowPlaylists(true);
+    }
+  }, [playlistPressed]);
+
   useEffect(() => {
     if (!realm) {
       return;
     }
     if (leftPressed) {
-      pushPage(realm.realmId - 1);
+      // pushPage(realm.realmId - 1);
+      // pushPage(realmsPlaylist.prev())
+      setCursor(cursor - 1);
+      // realmsPlaylist.prev()
     }
     if (rightPressed) {
-      pushPage(realm.realmId + 1);
+      // pushPage(realmsPlaylist.next());
+      // pushPage(realm.realmId + 1);
+      setCursor(cursor + 1);
+      // realmsPlaylist.next()
     }
   }, [leftPressed, rightPressed]);
 
@@ -188,6 +240,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                       pathname: `realm/${realm?.realmId}`,
                       query: {
                         tab: s,
+                        playlist: currentPlaylist,
                       },
                     },
                     undefined,
