@@ -10,7 +10,7 @@ import { useGetTroopStatsQuery } from '@/generated/graphql';
 import useCombat, { createCall } from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Troop } from '@/shared/squad/Troops';
-import type { TroopInterface } from '@/types/index';
+import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { getCostSums } from '@/util/armory';
 import { findResourceName } from '@/util/resources';
 import SidebarHeader from '../SidebarHeader';
@@ -25,6 +25,7 @@ interface SquadProps {
   troopsStats: any;
   squad: keyof typeof Squad;
   onClose: () => void;
+  militaryBuildingsBuilt: Array<number> | undefined;
 }
 
 const EmptyTroopId = 0;
@@ -109,8 +110,6 @@ export const SquadBuilder = (props: SquadProps) => {
   const tier3 = () => {
     return fillGap(3, 1);
   };
-
-  const txQueue = useTransactionQueue();
 
   const selectedTroopIsEmpty =
     selectedTroop && selectedTroop.troopId == EmptyTroopId;
@@ -207,6 +206,7 @@ export const SquadBuilder = (props: SquadProps) => {
               realmId={props.realm?.realmId as number}
               hideSquadToggle
               filterTier={selectedTroop?.tier}
+              militaryBuildingsBuilt={props.militaryBuildingsBuilt}
             />
           </>
         )}

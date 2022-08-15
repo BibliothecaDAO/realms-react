@@ -100,6 +100,7 @@ export type CombatResult = {
   defendRealmId: Scalars['Int'];
   history?: Maybe<Array<CombatHistory>>;
   outcome?: Maybe<Scalars['Int']>;
+  relicLost?: Maybe<Scalars['Int']>;
   resourcesPillaged?: Maybe<Array<ResourceAmount>>;
   timestamp?: Maybe<Scalars['Timestamp']>;
   transactionHash: Scalars['String'];
@@ -1190,6 +1191,7 @@ export type LorePoiFragmentFragment = {
 
 export type GetAccountQueryVariables = Exact<{
   account: Scalars['String'];
+  realmIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
 }>;
 
 export type GetAccountQuery = {
@@ -1206,6 +1208,36 @@ export type GetAccountQuery = {
     realmOrder?: string | null;
     data?: any | null;
     timestamp?: any | null;
+  }>;
+};
+
+export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGameConstantsQuery = {
+  __typename?: 'Query';
+  troopStats: Array<{
+    __typename?: 'TroopStats';
+    troopId: number;
+    troopName: string;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    troopCost?: {
+      __typename?: 'TroopCost';
+      amount: number;
+      resources: any;
+    } | null;
+  }>;
+  buildingCosts: Array<{
+    __typename?: 'BuildingCost';
+    buildingId: number;
+    buildingName: string;
+    amount: number;
+    resources: any;
   }>;
 };
 
@@ -1246,6 +1278,7 @@ export type GetRealmQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1292,6 +1325,7 @@ export type GetBuildingsByRealmIdQuery = {
     realmId: number;
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     limit?: number | null;
     limitTraitId: number;
     limitTraitName: string;
@@ -1339,6 +1373,7 @@ export type GetRealmCombatResultQuery = {
     defendRealmId: number;
     attackRealmId: number;
     transactionHash: string;
+    relicLost?: number | null;
     outcome?: number | null;
     timestamp?: any | null;
     history?: Array<{
@@ -1401,6 +1436,7 @@ export type GetRealmsQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1490,6 +1526,7 @@ export type RealmFragmentFragment = {
     __typename?: 'Building';
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     count: number;
     population: number;
     culture: number;
@@ -1609,8 +1646,8 @@ export const RealmFragmentFragmentDoc = gql`
     buildings {
       buildingId
       buildingName
+      buildingIntegrity
       count
-      buildingName
       population
       culture
       food
@@ -1954,14 +1991,13 @@ export type GetLorePoisQueryResult = Apollo.QueryResult<
   GetLorePoisQueryVariables
 >;
 export const GetAccountDocument = gql`
-  query getAccount($account: String!) @api(name: starkIndexer) {
+  query getAccount($account: String!, $realmIds: [Int!])
+  @api(name: starkIndexer) {
     ownedRealmsCount: realmsCount(filter: { ownerL2: { equals: $account } })
     settledRealmsCount: realmsCount(
       filter: { settledOwner: { equals: $account } }
     )
-    accountHistory: getRealmHistory(
-      filter: { realmOwner: { equals: $account } }
-    ) {
+    accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
       id
       eventType
       realmId
@@ -1987,6 +2023,7 @@ export const GetAccountDocument = gql`
  * const { data, loading, error } = useGetAccountQuery({
  *   variables: {
  *      account: // value for 'account'
+ *      realmIds: // value for 'realmIds'
  *   },
  * });
  */
@@ -2021,6 +2058,81 @@ export type GetAccountLazyQueryHookResult = ReturnType<
 export type GetAccountQueryResult = Apollo.QueryResult<
   GetAccountQuery,
   GetAccountQueryVariables
+>;
+export const GetGameConstantsDocument = gql`
+  query getGameConstants @api(name: starkIndexer) {
+    troopStats: getTroopStats {
+      troopId
+      troopName
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      troopCost {
+        amount
+        resources
+      }
+    }
+    buildingCosts: getBuildingCosts {
+      buildingId
+      buildingName
+      amount
+      resources
+    }
+  }
+`;
+
+/**
+ * __useGetGameConstantsQuery__
+ *
+ * To run a query within a React component, call `useGetGameConstantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGameConstantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGameConstantsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGameConstantsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(
+    GetGameConstantsDocument,
+    options
+  );
+}
+export function useGetGameConstantsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >(GetGameConstantsDocument, options);
+}
+export type GetGameConstantsQueryHookResult = ReturnType<
+  typeof useGetGameConstantsQuery
+>;
+export type GetGameConstantsLazyQueryHookResult = ReturnType<
+  typeof useGetGameConstantsLazyQuery
+>;
+export type GetGameConstantsQueryResult = Apollo.QueryResult<
+  GetGameConstantsQuery,
+  GetGameConstantsQueryVariables
 >;
 export const GetRealmDocument = gql`
   query getRealm($id: Float!) @api(name: starkIndexer) {
@@ -2082,6 +2194,7 @@ export const GetBuildingsByRealmIdDocument = gql`
       realmId
       buildingId
       buildingName
+      buildingIntegrity
       limit
       limitTraitId
       limitTraitName
@@ -2241,6 +2354,7 @@ export const GetRealmCombatResultDocument = gql`
         resourceName
         amount
       }
+      relicLost
       outcome
       timestamp
     }

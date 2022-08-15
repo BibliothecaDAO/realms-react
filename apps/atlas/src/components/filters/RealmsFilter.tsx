@@ -15,8 +15,8 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between px-2 py-2 bg-black">
-        <div className="flex flex-wrap self-center gap-2 md:flex-nowrap">
+      <div className="flex flex-wrap justify-between py-2 bg-black sm:px-2">
+        <div className="flex self-center w-full gap-2 px-2 overflow-scroll sm:flex-wrap md:flex-nowrap scrollbar-hide">
           <div>
             <Button
               variant={state.isRaidableFilter ? 'primary' : 'outline'}

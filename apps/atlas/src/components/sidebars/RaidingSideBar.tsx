@@ -1,7 +1,9 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { RaidResults } from '@/components/tables/RaidResults';
 import { Squad } from '@/constants/index';
+import { TroopSlot } from '@/constants/troops';
 import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import RealmSelector from '@/shared/RealmSelector';
@@ -42,47 +44,62 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     }
     console.log(combatData);
   }, [combatData]);
-
+  console.log(attackingRealm?.troops);
   return (
     <div>
       {(!txSubmitted || combatError) && (
         <div>
-          <RealmSelector onSelect={(r) => setSelectedRealms(r)} />
-          <div className="flex justify-between">
-            <div className="w-1/2 p-3 bg-black rounded">
-              <h5 className="mb-4">Defender</h5>
-              <h3>
-                <OrderIcon
-                  withTooltip
-                  containerClassName="inline-block"
-                  size="sm"
-                  order={realm?.orderType || ''}
-                />
-                {realm?.name}
-              </h3>
-            </div>
-            <div className="w-1/2 p-3 bg-black rounded">
-              <h5 className="mb-4">Attacker</h5>
-              <h3>
-                {attackingRealm && (
+          <Image
+            className="w-full rounded"
+            width={500}
+            objectFit={'cover'}
+            layout="responsive"
+            height={250}
+            src="/siege-tablet.png"
+          />
+          <div className="flex justify-between mt-4">
+            <div className="w-1/2 ">
+              <h4 className="mb-4 opacity-60">Defender</h4>
+              <div className="p-2">
+                <h2>
                   <OrderIcon
-                    containerClassName="inline-block"
                     withTooltip
-                    size="sm"
-                    order={attackingRealm?.orderType}
+                    containerClassName="inline-block mr-4"
+                    size="md"
+                    order={realm?.orderType || ''}
                   />
-                )}{' '}
-                {attackingRealm?.name}
-              </h3>
+                  {realm?.name}
+                </h2>
+              </div>
+            </div>
+            <div className="w-1/2 bg-black rounded">
+              <h4 className="mb-4 opacity-60">Attacker</h4>
+              <div className="p-2">
+                <h2>
+                  {attackingRealm && (
+                    <OrderIcon
+                      containerClassName="inline-block mr-4"
+                      withTooltip
+                      size="md"
+                      order={attackingRealm?.orderType}
+                    />
+                  )}{' '}
+                  {attackingRealm?.name}
+                </h2>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
-            <SquadStatistics troops={realm?.troops || []}></SquadStatistics>
+            <SquadStatistics
+              slot={TroopSlot.defending}
+              troops={realm?.troops || []}
+            ></SquadStatistics>
             {attackingRealm ? (
               <SquadStatistics
                 className="pl-4"
                 reversed
                 troops={attackingRealm?.troops || []}
+                slot={TroopSlot.attacking}
               ></SquadStatistics>
             ) : (
               <div className="flex items-center justify-center">
@@ -91,7 +108,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
               </div>
             )}
           </div>
-
+          <RealmSelector onSelect={(r) => setSelectedRealms(r)} />
           <Button
             onClick={() => {
               initiateCombat({
@@ -105,11 +122,11 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
             variant="primary"
             className="w-full mt-2"
           >
-            raid raid for war!!!!!!
+            pillage {realm?.name}
           </Button>
           <p className="mt-3 text-red-400">{combatError}</p>
           {!raidButtonEnabled && attackingRealm && (
-            <div className="p-2 my-2 text-orange-800 bg-red-200 rounded">
+            <div className="p-2 my-2 font-semibold text-orange-800 bg-red-200 rounded">
               {isSameOrder && (
                 <p>
                   Ser, {attackingRealm.name} cannot Attack a Realm of the same

@@ -9,6 +9,7 @@ query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
     realmId
     buildingId
     buildingName
+    buildingIntegrity
     limit
     limitTraitId
     limitTraitName
@@ -62,6 +63,7 @@ query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
       resourceName
       amount
     }
+    relicLost
     outcome
     timestamp
   }

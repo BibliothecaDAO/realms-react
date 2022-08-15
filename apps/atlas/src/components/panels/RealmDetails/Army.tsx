@@ -4,6 +4,7 @@ import {
   Card,
   CardTitle,
   InputNumber,
+  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
@@ -92,6 +93,15 @@ const Army: React.FC<Prop> = (props) => {
   const troops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
+  const getMilitaryBuildingsBuilt = (
+    buildings: BuildingDetail[] | undefined
+  ) => {
+    return buildings
+      ?.filter((a) => a.type === 'military')
+      .filter((b) => b.quantityBuilt > 0)
+      .map((c) => c.id);
+  };
+
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
@@ -170,6 +180,23 @@ const Army: React.FC<Prop> = (props) => {
                               })
                             }
                           />{' '}
+                        </div>
+                        <div className="flex mt-4">
+                          {a.cost &&
+                            a.cost.map((a, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className="px-1 font-extrabold text-center"
+                                >
+                                  <ResourceIcon
+                                    size="xs"
+                                    resource={a.resourceName}
+                                  />
+                                  {a.amount}
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                       <div className="flex w-full space-x-3">
@@ -257,6 +284,7 @@ const Army: React.FC<Prop> = (props) => {
             troops={troops}
             troopsStats={troopStatsData?.getTroopStats}
             onClose={() => setIsRaiding(false)}
+            militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
           />
         </Card>
 
