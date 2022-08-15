@@ -7,7 +7,7 @@ import { links } from '@/data/Projects';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MainHeader = () => {
-  const { lordsPrice } = useWalletContext();
+  const { lordsPrice, connectWallet } = useWalletContext();
   const headerElements = [
     // {
     //   title: 'DAO',
@@ -37,13 +37,26 @@ export const MainHeader = () => {
         <Link href="/">
           <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
         </Link>
+
         <Link href="/treasury">
-          <a className="flex self-center px-4 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
+          <a className="flex self-center px-4 py-1 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
             <span className="hidden sm:block">DAO | </span> ${lordsPrice}{' '}
             <Lords className="self-center h-4 ml-4 fill-current" />
           </a>
         </Link>
+
         <div className="flex space-x-4">
+          <button
+            className="flex self-center px-4 py-1 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900"
+            onClick={connectWallet}
+          >
+            connect
+          </button>
+          <Link href="/claim">
+            <a className="flex self-center px-4 py-1 mr-auto transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900">
+              claim
+            </a>
+          </Link>
           {headerElements.map((a, index) => {
             return (
               <a

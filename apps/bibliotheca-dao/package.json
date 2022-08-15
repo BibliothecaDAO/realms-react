@@ -119,9 +119,11 @@
     "axios": "^0.27.2",
     "babel-plugin-glsl": "^1.0.0",
     "classnames": "^2.3.1",
+    "ethereumjs-util": "7.1.5",
     "gl-matrix": "^3.4.3",
     "graphql": "^16.5.0",
     "heroicons": "^1.0.6",
+    "lodash": "4.17.21",
     "next": "12.2.3",
     "next-auth": "^4.10.2",
     "next-seo": "5.5.0",
@@ -131,6 +133,7 @@
     "react-dom": "18.2.0",
     "react-scroll": "1.8.7",
     "react-typist-component": "1.0.1",
-    "sharp": "0.30.7"
+    "sharp": "0.30.7",
+    "web3-utils": "1.7.5"
   }
 }

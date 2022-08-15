@@ -42,3 +42,7 @@ hr {
   font-family: Lords;
   src: url('fontforlordsn.otf');
 }
+
+.web3modal-modal-lightbox {
+  z-index: 50 !important;
+}
