@@ -11,7 +11,11 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useGetExchangeRatesQuery } from '@/generated/graphql';
+import type { GetGameConstantsQuery } from '@/generated/graphql';
+import {
+  useGetExchangeRatesQuery,
+  useGetGameConstantsQuery,
+} from '@/generated/graphql';
 import {
   useLordsContract,
   useResources1155Contract,
@@ -77,6 +81,7 @@ const ResourcesContext = createContext<{
   lordsBalance: string;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
+  buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -96,6 +101,17 @@ function useResources() {
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
+
+  // TODO: Move costs into own provider...
+  const [buildingCosts, setBuildingCosts] =
+    useState<GetGameConstantsQuery['buildingCosts']>();
+
+  const [troopCosts, setTroopCosts] =
+    useState<GetGameConstantsQuery['troopStats']>();
+
+  const { data: gameConstants } = useGetGameConstantsQuery();
+
+  console.log(gameConstants);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -223,7 +239,8 @@ function useResources() {
       !lpBalanceData ||
       !lpBalanceData[0] ||
       !exchangePairData ||
-      !exchangePairData[0]
+      !exchangePairData[0] ||
+      !gameConstants
     ) {
       return;
     }
@@ -259,6 +276,8 @@ function useResources() {
         };
       })
     );
+
+    setBuildingCosts(gameConstants?.buildingCosts);
   }, [resourceBalanceData, resourcesBalanceError, exchangeRateData]);
 
   const getResourceById = useCallback(
@@ -290,6 +309,7 @@ function useResources() {
     updateBalance,
     getResourceById,
     lordsBalance,
+    buildingCosts,
   };
 }
 

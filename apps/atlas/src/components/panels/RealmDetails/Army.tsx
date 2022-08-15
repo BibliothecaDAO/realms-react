@@ -4,6 +4,7 @@ import {
   Card,
   CardTitle,
   InputNumber,
+  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
@@ -170,6 +171,23 @@ const Army: React.FC<Prop> = (props) => {
                               })
                             }
                           />{' '}
+                        </div>
+                        <div className="flex mt-4">
+                          {a.cost &&
+                            a.cost.map((a, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className="px-1 font-extrabold text-center"
+                                >
+                                  <ResourceIcon
+                                    size="xs"
+                                    resource={a.resourceName}
+                                  />
+                                  {a.amount}
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                       <div className="flex w-full space-x-3">

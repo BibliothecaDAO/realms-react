@@ -14,7 +14,7 @@ type Props = {
 const SquadStatistics = (props: Props) => {
   // attacking or defending
   const filteredArmy = props.troops.filter((a) => a.squadSlot === props.slot);
-  console.log(filteredArmy);
+
   const vitalityQueued = squadStats(props.troopsQueued).vitality;
   const attackQueued = squadStats(props.troopsQueued).attack;
   const armorQueued = squadStats(props.troopsQueued).armor;
