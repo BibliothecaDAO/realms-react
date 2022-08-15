@@ -1,24 +1,36 @@
 import { useState } from 'react';
-import type { RealmWhereInput } from '@/generated/graphql';
+import type {
+  RealmOrderByWithRelationInput,
+  RealmWhereInput,
+} from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
 export type Args = {
   filter: RealmWhereInput;
-  pageSize: number;
+  orderBy?: RealmOrderByWithRelationInput;
+  pageSize?: number;
+  page?: number;
+  skip?: boolean;
 };
 
 const useRealms = (args: Args) => {
   const [page, setPage] = useState(1);
+
+  const resolvedPage = args.page ?? page;
+
   const { data, loading, error } = useGetRealmsQuery({
     variables: {
       filter: args.filter,
       take: args.pageSize,
-      skip: (page - 1) * args.pageSize,
+      orderBy: args.orderBy,
+      skip: (resolvedPage - 1) * (args.pageSize || 0),
     },
+    skip: args.skip,
   });
 
   const hasNext =
-    data?.total !== undefined && page * args.pageSize < data.total;
+    data?.total !== undefined &&
+    resolvedPage * (args.pageSize || 1) < data.total;
 
   const loadNext = () => {
     setPage((prev) => prev + 1);
