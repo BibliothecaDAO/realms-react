@@ -21,7 +21,7 @@ const slides = [
     imagePosition: 'top',
     content: (
       <div className="flex flex-col justify-between h-full px-6 text-center">
-        <div className="mt-16 uppercase" data-content>
+        <div className="mt-24 uppercase" data-content>
           <h1 className="duration-700 opacity-0 text-7xl sm:text-9xl">
             Realms
           </h1>
@@ -245,7 +245,7 @@ function Home() {
     <MainLayout>
       <ReactFullpage
         // fullpage options
-        licenseKey={'YOUR_KEY_HERE'}
+        licenseKey={'gplv3-license'}
         scrollingSpeed={1000} /* Options here */
         render={({ state, fullpageApi }) => {
           return (
@@ -264,7 +264,10 @@ function Home() {
                   />
                 );
               })}
-              <section className="container relative flex flex-col justify-center max-w-xl min-h-screen px-8 pt-20 pb-24 mx-auto section sm:px-0 align-center">
+              <section
+                fp-auto-height
+                className="container relative flex flex-col justify-center max-w-xl min-h-screen px-8 py-16 mx-auto overflow-y-scroll section sm:px-0 align-center"
+              >
                 {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
                         <div className="pl-8 sm:pl-0">
                           <ImageCarousel loader={carouselLoader} items={mockData.items} />
@@ -275,7 +278,9 @@ function Home() {
                           metagame and your playstyle
                         </p> */}
                 <h2>Bibliotheca: Stewards of on-chain gaming</h2>
-                <BibliothecaBook className="h-48 py-6 mx-auto" />
+                <div className="w-48 h-48 mx-auto mt-6">
+                  <BibliothecaBook className="fill-current " />
+                </div>
                 <p className="pb-4">
                   Bibliotheca DAO is a pioneering web3 game studio building
                   eternal games on Starknet.

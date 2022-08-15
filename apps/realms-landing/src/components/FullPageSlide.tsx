@@ -50,7 +50,7 @@ export const FullPageSlide = ({ image, content, priority }: Props) => {
         sizes="100vw"
         priority={priority}
       />
-      <div className="absolute top-0 w-full h-full py-14">
+      <div className="absolute top-0 w-full h-full sm:py-14">
         <div className="container h-full mx-auto ">{content}</div>
       </div>
     </div>
