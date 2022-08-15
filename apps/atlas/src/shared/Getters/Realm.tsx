@@ -5,7 +5,7 @@ import { ethers, BigNumber } from 'ethers';
 import { DAY } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { TroopInterface } from '@/types/index';
+import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 interface TraitProps {

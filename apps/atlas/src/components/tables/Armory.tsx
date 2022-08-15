@@ -3,6 +3,7 @@ import { Switch } from '@headlessui/react';
 import Image from 'next/image';
 import { useReducer, useState } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
+import { TroopBuildings } from '@/constants/troops';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
@@ -16,6 +17,7 @@ interface Props {
   troops: TroopInterface[];
   squad: keyof typeof Squad;
   onBuildTroop?: (t: TroopInterface) => void;
+  militaryBuildingsBuilt: Array<number> | undefined;
 }
 const columns = [
   { Header: 'name', id: 1, accessor: 'name' },
@@ -37,12 +39,12 @@ export const ArmoryBuilder = (props: Props) => {
       <div className="flex flex-col">
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="flex w-full my-3 text-2xl">
+            <div key={index} className="flex w-full my-3 sm:text-xl">
               <ResourceIcon
                 resource={
                   findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
                 }
-                size="md"
+                size="sm"
                 className="self-center mr-4"
               />
               <span>{a.amount}</span>
@@ -66,6 +68,13 @@ export const ArmoryBuilder = (props: Props) => {
     tier != undefined &&
     filteredCurrentTroops.length + filteredQueuedTroops.length >=
       TroopTierMax[tier - 1];
+
+  const checkCanBuilt = (id) => {
+    return props.militaryBuildingsBuilt &&
+      props.militaryBuildingsBuilt?.filter((a) => a === id).length > 0
+      ? false
+      : true;
+  };
 
   const mappedRowData: Row[] = filteredTroops.map((re, index) => {
     return {
@@ -92,21 +101,29 @@ export const ArmoryBuilder = (props: Props) => {
       ),
       troopCost: troopCostCell(re.troopCost!),
       add: (
-        <Button
-          disabled={reachedMaxNumberOfTroopsInTier}
-          variant="primary"
-          size="xs"
-          onClick={() => {
-            props.onBuildTroop &&
-              props.onBuildTroop({
-                ...re,
-                squadSlot: Squad[props.squad],
-                index,
-              });
-          }}
-        >
-          {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
-        </Button>
+        <div>
+          <Button
+            disabled={
+              reachedMaxNumberOfTroopsInTier ||
+              checkCanBuilt(TroopBuildings[re.troopName])
+            }
+            variant="primary"
+            size="xs"
+            onClick={() => {
+              props.onBuildTroop &&
+                props.onBuildTroop({
+                  ...re,
+                  squadSlot: Squad[props.squad],
+                  index,
+                });
+            }}
+          >
+            {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
+          </Button>
+          {checkCanBuilt(TroopBuildings[re.troopName]) && (
+            <p>build required building first</p>
+          )}
+        </div>
       ),
     };
   });

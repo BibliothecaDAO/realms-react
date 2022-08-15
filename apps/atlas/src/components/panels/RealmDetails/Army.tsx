@@ -93,6 +93,15 @@ const Army: React.FC<Prop> = (props) => {
   const troops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
+  const getMilitaryBuildingsBuilt = (
+    buildings: BuildingDetail[] | undefined
+  ) => {
+    return buildings
+      ?.filter((a) => a.type === 'military')
+      .filter((b) => b.quantityBuilt > 0)
+      .map((c) => c.id);
+  };
+
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
@@ -275,6 +284,7 @@ const Army: React.FC<Prop> = (props) => {
             troops={troops}
             troopsStats={troopStatsData?.getTroopStats}
             onClose={() => setIsRaiding(false)}
+            militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
           />
         </Card>
 
