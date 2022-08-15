@@ -85,13 +85,17 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }
 
   // Filtering out old realms
+  const usedRealms = [897, 5455, 555];
 
+  const filteredRealms = props.realms.filter(
+    (item) => !usedRealms.includes(item.realmId)
+  );
   return (
     <div>
       {/* {bridgeRow} */}
 
       {props.realms &&
-        props.realms.map((realm: RealmFragmentFragment, index) => (
+        filteredRealms.map((realm: RealmFragmentFragment, index) => (
           <div
             key={index}
             className="flex flex-wrap w-full h-auto max-w-full p-2 bg-black/95 shadow-black justify-evenly "

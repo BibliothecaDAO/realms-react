@@ -8,7 +8,6 @@ import {
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import CloseX from '@bibliotheca-dao/ui-lib/icons/close.svg';
-
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
@@ -24,6 +23,8 @@ import {
 } from '@/hooks/settling/useApprovals';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
+import { MarketSelect } from '@/shared/Market/MarketSelect';
+import type { ResourceCost } from '@/types/index';
 
 type ResourceRowProps = {
   resource: Resource & ResourceQty;
@@ -170,7 +171,10 @@ export function SwapResources(): ReactElement {
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
+    buildingCosts,
+    batchAddResources,
   } = useResourcesContext();
+
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
@@ -266,30 +270,42 @@ export function SwapResources(): ReactElement {
     }
   }
 
+  function onClickCostRecipe(cost: ResourceCost[]) {
+    batchAddResources(cost);
+  }
+
   return (
     <div className="flex flex-col justify-between h-full">
+      <div className="w-full">
+        <MarketSelect update={onClickCostRecipe} cost={buildingCosts} />
+      </div>
+
       <div className="flex mx-auto mb-8 text-sm tracking-widest">
         <div
-          className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
+          className={`px-4 uppercase self-center ${
+            tradeType === 'buy' && 'font-semibold'
+          }`}
         >
-          Buy Resources
+          Buy
         </div>
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
           className={`${
             isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
-          } relative inline-flex h-6 w-11 items-center rounded-full shadow-inner`}
+          } relative inline-flex h-6 w-11 items-center rounded shadow-inner`}
         >
           <span className="sr-only">Buy/Sell</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white`}
+            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
           />
         </Switch>
-        <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
-          Sell Resources
+        <div
+          className={`px-4 uppercase self-center ${isSell && 'font-semibold'}`}
+        >
+          Sell
         </div>
       </div>
       <div>

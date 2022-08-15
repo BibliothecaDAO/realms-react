@@ -21,8 +21,8 @@ import {
   useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
+import type { ResourceCost, NetworkState } from '@/types/index';
 import { resources } from '@/util/resources';
-import type { NetworkState } from '../types';
 
 export type Resource = {
   resourceId: number;
@@ -69,7 +69,7 @@ const ResourcesContext = createContext<{
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
   selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
-  addSelectedSwapResources: (resourceId?: number) => void;
+  addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
   updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
   updateSelectedSwapResource: (
@@ -82,6 +82,7 @@ const ResourcesContext = createContext<{
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
+  batchAddResources: (cost: ResourceCost[]) => void;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -168,14 +169,39 @@ function useResources() {
     pollInterval: 10000,
   });
 
-  const addSelectedSwapResources = (resourceId?: number) => {
+  // batch add a cost
+  const batchAddResources = (cost: ResourceCost[]) => {
+    const mapped: ResourceQty[] = cost?.map((a) => {
+      return {
+        resourceId: a.resourceId,
+        qty: a.amount * 1.1,
+      };
+    });
+
+    const result: ResourceQty[] = Object.values(
+      [...selectedSwapResources, ...mapped].reduce(
+        (acc, { resourceId, qty }) => {
+          acc[resourceId] = {
+            resourceId,
+            qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
+          };
+          return acc;
+        },
+        {}
+      )
+    );
+
+    setSelectedSwapResources([...result]);
+  };
+
+  const addSelectedSwapResources = (resourceId?: number, qty?: number) => {
     if (availableResourceIds.length === 0) {
       return;
     }
     const select = resourceId ?? availableResourceIds[0];
     setSelectedSwapResources([
       ...selectedSwapResources,
-      { resourceId: select, qty: 0 },
+      { resourceId: select, qty: qty ? qty : 0 },
     ]);
   };
 
@@ -310,6 +336,7 @@ function useResources() {
     getResourceById,
     lordsBalance,
     buildingCosts,
+    batchAddResources,
   };
 }
 
