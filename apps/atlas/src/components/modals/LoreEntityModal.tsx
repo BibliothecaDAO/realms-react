@@ -56,7 +56,6 @@ export const LoreEntityModal = ({ entityId }) => {
             Share on Twitter
           </Button>
           <Button
-            href="/lore"
             size="lg"
             className="bg-gray-800 ml-2"
             variant={'primary'}
