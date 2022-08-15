@@ -100,6 +100,7 @@ export type CombatResult = {
   defendRealmId: Scalars['Int'];
   history?: Maybe<Array<CombatHistory>>;
   outcome?: Maybe<Scalars['Int']>;
+  relicLost?: Maybe<Scalars['Int']>;
   resourcesPillaged?: Maybe<Array<ResourceAmount>>;
   timestamp?: Maybe<Scalars['Timestamp']>;
   transactionHash: Scalars['String'];
@@ -1368,6 +1369,7 @@ export type GetRealmCombatResultQuery = {
     defendRealmId: number;
     attackRealmId: number;
     transactionHash: string;
+    relicLost?: number | null;
     outcome?: number | null;
     timestamp?: any | null;
     history?: Array<{
@@ -2342,6 +2344,7 @@ export const GetRealmCombatResultDocument = gql`
         resourceName
         amount
       }
+      relicLost
       outcome
       timestamp
     }
