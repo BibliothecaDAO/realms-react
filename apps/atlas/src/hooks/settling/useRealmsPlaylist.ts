@@ -16,6 +16,7 @@ import useRealms from './useRealms';
 
 export const realmPlaylistCursorKey = 'realm.playlist.cursor';
 export const realmPlaylistNameKey = 'realm.playlist.name';
+export const realmPlaylistKey = 'realm.playlist';
 
 export const playlists = {
   AllRealms: () => ({}),
@@ -32,7 +33,7 @@ export const playlists = {
 };
 
 type Args = {
-  cursor: number;
+  cursor?: number;
   playlist: keyof typeof playlists;
 };
 
@@ -71,14 +72,21 @@ const useRealmPlaylist = (args: Args) => {
     }
   }, [args.playlist]);
 
-  const direction =
-    args.cursor % pageSize > pageSize / 2 ? 'forwards' : 'backwards';
-  const page = Math.floor(args.cursor / pageSize);
+  // const direction =
+  //   args.cursor % pageSize > pageSize / 2 ? 'forwards' : 'backwards';
+  // const page = Math.floor(args.cursor / pageSize);
 
   const realms = useRealms({
     filter,
   });
 
+  useEffect(() => {
+    if (realms.data) {
+      storage<number[]>(realmPlaylistKey, []).set(
+        realms.data?.realms.map((r) => r.realmId)
+      );
+    }
+  }, [realms.data]);
   return {
     pageSize,
     playlists: Object.keys(playlists),
