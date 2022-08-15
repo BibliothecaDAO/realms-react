@@ -1886,6 +1886,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/polyfill@npm:^7.2.5":
+  version: 7.12.1
+  resolution: "@babel/polyfill@npm:7.12.1"
+  dependencies:
+    core-js: "npm:^2.6.5"
+    regenerator-runtime: "npm:^0.13.4"
+  checksum: 731c91f46346f8fa022ca3b4ccd23f564a57806162ba393452d14c41c74fca2629cedccce93cf2e202efe3a2c00da6e570155ca06f1eb7e47a8b399512ce48f8
+  languageName: node
+  linkType: hard
+
 "@babel/preset-env@npm:^7.12.11":
   version: 7.18.6
   resolution: "@babel/preset-env@npm:7.18.6"
@@ -3959,6 +3969,16 @@ __metadata:
     "@ethersproject/properties": "npm:^5.6.0"
     "@ethersproject/strings": "npm:^5.6.1"
   checksum: 6b25a0dc0491540e1094ff6157e3cc6c1fef5d18f3af6706253a45b492cd9f733a1775f60759db89402dfa2739ddcaa081df91ada5c264e484513223fbc68720
+  languageName: node
+  linkType: hard
+
+"@fullpage/react-fullpage@npm:0.1.27":
+  version: 0.1.27
+  resolution: "@fullpage/react-fullpage@npm:0.1.27"
+  dependencies:
+    "@babel/polyfill": "npm:^7.2.5"
+    fullpage.js: "npm:^4.0.10"
+  checksum: affa981e02e48376a76480efe67aa97bf6deaa1c9e4a878f616dce44cfabc2408aa73fb7a51682c9d168549ade9527767dd49cc3d37775e0506c1f8ccbd2825b
   languageName: node
   linkType: hard
 
@@ -13631,6 +13651,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^2.6.5":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: 1cab48644f8b5d4c58c9ce82b045d1c683ba0b8025abd7df1b6a91a4dd24c64ea4194cc769849fedc71c0f56e1645cf6bc36808cbadd53b9a6dcb48c821df811
+  languageName: node
+  linkType: hard
+
 "core-js@npm:^3.0.4, core-js@npm:^3.6.5, core-js@npm:^3.8.2":
   version: 3.23.3
   resolution: "core-js@npm:3.23.3"
@@ -17391,6 +17418,13 @@ __metadata:
   dependencies:
     node-gyp: "npm:latest"
   conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"fullpage.js@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "fullpage.js@npm:4.0.10"
+  checksum: 899083db57a457d98f9dd7d97f1f65ebd6f6fcf0adc31cad070486f3ee0b60fa7056a94b88c09e9e07e4a9dee72e1eb0170176cb565d93018995dfd60a769aae
   languageName: node
   linkType: hard
 
@@ -26373,6 +26407,7 @@ __metadata:
     "@emotion/babel-plugin": "npm:11.9.2"
     "@emotion/react": "npm:11.9.3"
     "@emotion/styled": "npm:11.9.3"
+    "@fullpage/react-fullpage": "npm:0.1.27"
     "@headlessui/react": "npm:1.6.6"
     "@heroicons/react": "npm:^1.0.6"
     "@next/bundle-analyzer": "npm:12.2.3"

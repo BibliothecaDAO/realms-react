@@ -38,6 +38,10 @@ hr {
   @apply my-8;
 }
 
+.fp-watermark {
+  @apply hidden;
+}
+
 @font-face {
   font-family: Lords;
   src: url('fontforlordsn.otf');
