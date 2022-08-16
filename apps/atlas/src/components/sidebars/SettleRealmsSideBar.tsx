@@ -172,7 +172,7 @@ export const SettleRealmsSideBar = () => {
         </div>
         <div className="w-full">
           {/* Remove when needed  */}
-          {/* {isRealmsApproved != 'approved' && (
+          {isRealmsApproved != 'approved' && (
             <Button
               className="w-full"
               variant="primary"
@@ -180,7 +180,7 @@ export const SettleRealmsSideBar = () => {
             >
               Approve Realms for Settling
             </Button>
-          )} */}
+          )}
           {isRealmsApproved == 'approved' && (
             <Button
               className="w-full"

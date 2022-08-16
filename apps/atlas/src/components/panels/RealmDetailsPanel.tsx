@@ -31,6 +31,7 @@ import { useAtlasContext } from '@/hooks/useAtlasContext';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
+import { trimmedOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import SidebarHeader from '@/shared/SidebarHeader';
 import apolloClient from '@/util/apolloClient';
@@ -121,10 +122,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     }
   }, [playlistPressed]);
 
-  const order = realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? '';
+  const order = trimmedOrder(realm);
 
-  const color = `bg-order-${order.replace('the ', '').replace('the_', '')} 
-    text-order-secondary-${order.replace('the ', '').replace('the_', '')}`;
+  const color = `bg-order-${order} text-order-secondary-${order}`;
 
   const s = `absolute self-center px-3 py-2 rounded-full font-semibold fill-current stroke-current hover:bg-white/10 ${color} `;
   const s_icons = 'w-5 h-5 stroke-current';
@@ -195,12 +195,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}
-            key={realm?.realmId ?? ''}
-            order={realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? ''}
-            title={realm?.name ?? ''}
-            realmId={realmId}
+            realm={realmData}
             hideSearchFilter
           />
+
           <div className="fixed z-50 text-black bottom-10 right-10">
             <div
               className={`w-40 h-40 rounded-full border-4 border-double ${color} flex justify-center align-middle text-black bg-opacity-95 shadow-2xl`}

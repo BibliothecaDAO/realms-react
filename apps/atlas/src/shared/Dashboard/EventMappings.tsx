@@ -2,105 +2,101 @@ import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { GetRealmHistoryQuery } from '@/generated/graphql';
 import { findResourceName } from '@/util/resources';
+import { resourcePillaged } from '../Getters/Realm';
 
-export const EventNa = {
+export const Event = {
   realmCombatAttack: 'realm_combat_attack',
   realmCombatDefend: 'realm_combat_defend',
   realmBuildingBuilt: 'realm_building_built',
-};
-
-const resourcePillaged = (resources: any) => {
-  return (
-    <div className="my-4">
-      {resources.map((resource, index) => {
-        const info = findResourceName(resource.resourceId);
-        return (
-          <div className="flex justify-between my-1 text-white" key={index}>
-            <div className="flex w-full">
-              <ResourceIcon
-                size="xs"
-                className="self-center"
-                resource={info?.trait?.replace('_', '') as string}
-              />{' '}
-              <span className="self-center ml-4 font-semibold uppercase">
-                {info?.trait}
-              </span>
-            </div>
-
-            <span className="self-center ml-4 font-semibold uppercase">
-              {(+formatEther(resource.amount)).toFixed()} units
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
+  realmTransfer: 'realm_transfer',
 };
 
 const successClass = '';
 const negativeClass = '';
-export function genMilitaryRealmEvent(event) {
+
+export function genMilitaryRealmEvent(event, user?: boolean) {
   switch (event.eventType) {
-    case 'realm_combat_attack':
+    case Event.realmCombatAttack:
       return {
-        event: event.data?.success ? (
+        event: (
           <span className="">
-            Raid successful on Realm {event.data?.defendRealmId}
-          </span>
-        ) : (
-          `Unsuccessful Raid`
-        ),
-        class: event.data?.success ? successClass : negativeClass,
-        resources: resourcePillaged(event.data?.pillagedResources),
-        action: event.data?.success ? (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/ream/' + event.data?.defendRealmId}
-          >
-            Pillage and plunder again
-          </Button>
-        ) : (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/ream/' + event.data?.defendRealmId}
-          >
-            Try again
-          </Button>
-        ),
-      };
-    case 'realm_combat_defend':
-      return {
-        event: event.data?.success ? (
-          <span className="">
-            We have been Pillaged by Realm {event.data?.attackRealmId}
-          </span>
-        ) : (
-          <span className="">
-            Defended raid from {event.data?.defendRealmId}
+            {event.data?.success
+              ? `Raid successful on Realm ${event.data?.defendRealmId}`
+              : `Raid failed on Realm ${event.data?.defendRealmId}`}
           </span>
         ),
         class: event.data?.success ? successClass : negativeClass,
         resources: resourcePillaged(event.data?.pillagedResources),
-        action: event.data?.success ? (
+        relic: event.data?.relicClaimed ? (
+          <span className="pl-10 text-xl font-semibold uppercase">
+            Relic {event.data?.relicClaimed}
+          </span>
+        ) : null,
+        action: (
           <Button
             size="xs"
             variant="outline"
-            href={'/ream/' + event.data?.attackRealmId}
+            href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
           >
-            Try again
-          </Button>
-        ) : (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/ream/' + event.data?.attackRealmId}
-          >
-            muster the troops!
+            {event.data?.success ? 'Pillage and plunder again' : 'try again'}
           </Button>
         ),
       };
+
+    case Event.realmCombatDefend:
+      if (user) {
+        return {
+          event: (
+            <span>
+              {event.data?.success
+                ? `Defend raid from ${event.data?.attackRealmId}`
+                : `We have been Pillaged by Realm ${event.data?.attackRealmId}`}
+            </span>
+          ),
+          class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicLost ? (
+            <span className="pl-10 text-xl font-semibold uppercase">
+              Relic {event.data?.relicLost}
+            </span>
+          ) : null,
+          action: (
+            <Button
+              size="xs"
+              variant="outline"
+              href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
+            >
+              {event.data?.success ? 'Try again' : 'muster the troops!'}
+            </Button>
+          ),
+        };
+      } else {
+        return {
+          event: (
+            <span>
+              {event.data?.success
+                ? `Realm Pillaged by Realm ${event.data?.attackRealmId}`
+                : `Defended raid from ${event.data?.attackRealmId}`}
+            </span>
+          ),
+          class: event.data?.success ? successClass : negativeClass,
+          resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicLost ? (
+            <span className="pl-10 text-xl font-semibold uppercase">
+              Relic {event.data?.relicLost}
+            </span>
+          ) : null,
+          action: (
+            <Button
+              size="xs"
+              variant="outline"
+              href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
+            >
+              {event.data?.success ? 'Try again' : 'muster the troops!'}
+            </Button>
+          ),
+        };
+      }
     default:
       return {
         event: '',
@@ -128,7 +124,11 @@ export function genEconomicRealmEvent(event) {
         event: `Minted Realm ${event.realmId}`,
         class: successClass,
         action: (
-          <Button size="xs" variant="outline" href={'/ream/' + event.realmId}>
+          <Button
+            size="xs"
+            variant="outline"
+            href={'/realm/' + event.realmId + '?tab=Survey'}
+          >
             Manage Realm
           </Button>
         ),

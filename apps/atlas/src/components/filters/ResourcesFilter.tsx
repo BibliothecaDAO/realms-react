@@ -1,5 +1,5 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
@@ -41,26 +41,30 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
   }));
 
   return (
-    <Popover className="relative">
+    <Popover className="relative z-50">
       <div ref={ref}>
-        <Button
-          variant="outline"
-          size="sm"
-          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
+        <Popover.Button as="div">
+          <Button
+            size="xs"
+            variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
+          >
+            Resources
+          </Button>
+        </Popover.Button>
+        <Transition
+          enter="transition duration-350 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-350 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
         >
-          Resources
-        </Button>
-
-        {isOpen && (
           <Popover.Panel
-            className="absolute z-10 mt-2 w-[420px] ml-2 -translate-x-1/3"
+            className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4 border-double border-white/20 rounded"
             static
           >
             <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white bg-black rounded shadow-lg">
-              <h4 className="text-center">Resources</h4>
+              <h4 className="text-center">Select Resources</h4>
 
               <div className="relative grid items-center justify-center grid-cols-2 gap-4">
                 {resourcesOptions.map((resource, idx) => (
@@ -69,8 +73,8 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                     key={resource.value}
                     tabIndex={idx}
                     className={clsx(
-                      'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide',
-                      isSelected(resource) ? 'bg-gray-200/20' : ''
+                      'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-1000 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
+                      isSelected(resource) ? 'bg-gray-1000' : ''
                     )}
                     onClick={() => handleOnClickResourceOption(resource)}
                     aria-hidden="true"
@@ -85,7 +89,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
               </div>
             </div>
           </Popover.Panel>
-        )}
+        </Transition>
       </div>
     </Popover>
   );

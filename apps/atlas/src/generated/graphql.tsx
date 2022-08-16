@@ -100,6 +100,7 @@ export type CombatResult = {
   defendRealmId: Scalars['Int'];
   history?: Maybe<Array<CombatHistory>>;
   outcome?: Maybe<Scalars['Int']>;
+  relicLost?: Maybe<Scalars['Int']>;
   resourcesPillaged?: Maybe<Array<ResourceAmount>>;
   timestamp?: Maybe<Scalars['Timestamp']>;
   transactionHash: Scalars['String'];
@@ -626,6 +627,8 @@ export type Realm = {
   rarityRank: Scalars['Int'];
   rarityScore: Scalars['Float'];
   realmId: Scalars['Int'];
+  relic?: Maybe<Array<Relic>>;
+  relicsOwned?: Maybe<Array<Relic>>;
   resources?: Maybe<Array<Resource>>;
   settledOwner?: Maybe<Scalars['String']>;
   squad?: Maybe<Array<Troop>>;
@@ -698,6 +701,8 @@ export type RealmOrderByWithRelationInput = {
   rarityRank?: InputMaybe<SortOrder>;
   rarityScore?: InputMaybe<SortOrder>;
   realmId?: InputMaybe<SortOrder>;
+  relic?: InputMaybe<RelicOrderByWithRelationInput>;
+  relicsOwned?: InputMaybe<RelicOrderByRelationAggregateInput>;
   resources?: InputMaybe<ResourceOrderByRelationAggregateInput>;
   settledOwner?: InputMaybe<SortOrder>;
   squad?: InputMaybe<TroopOrderByRelationAggregateInput>;
@@ -766,12 +771,55 @@ export type RealmWhereInput = {
   rarityRank?: InputMaybe<IntFilter>;
   rarityScore?: InputMaybe<FloatFilter>;
   realmId?: InputMaybe<IntFilter>;
+  relic?: InputMaybe<RelicRelationFilter>;
+  relicsOwned?: InputMaybe<RelicListRelationFilter>;
   resources?: InputMaybe<ResourceListRelationFilter>;
   settledOwner?: InputMaybe<StringNullableFilter>;
   squad?: InputMaybe<TroopListRelationFilter>;
   traits?: InputMaybe<RealmTraitListRelationFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
   wonder?: InputMaybe<StringNullableFilter>;
+};
+
+/** The Relic Model */
+export type Relic = {
+  __typename?: 'Relic';
+  heldByRealm?: Maybe<Scalars['Float']>;
+  originRealm: Realm;
+  realmHolder: Realm;
+  realmId?: Maybe<Scalars['Float']>;
+};
+
+export type RelicListRelationFilter = {
+  every?: InputMaybe<RelicWhereInput>;
+  none?: InputMaybe<RelicWhereInput>;
+  some?: InputMaybe<RelicWhereInput>;
+};
+
+export type RelicOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type RelicOrderByWithRelationInput = {
+  heldByRealm?: InputMaybe<SortOrder>;
+  originRealm?: InputMaybe<RealmOrderByWithRelationInput>;
+  realmHolder?: InputMaybe<RealmOrderByWithRelationInput>;
+  realmId?: InputMaybe<SortOrder>;
+};
+
+export type RelicRelationFilter = {
+  is?: InputMaybe<RelicWhereInput>;
+  isNot?: InputMaybe<RelicWhereInput>;
+};
+
+export type RelicWhereInput = {
+  AND?: InputMaybe<Array<RelicWhereInput>>;
+  NOT?: InputMaybe<Array<RelicWhereInput>>;
+  OR?: InputMaybe<Array<RelicWhereInput>>;
+  heldByRealm?: InputMaybe<IntFilter>;
+  originRealm?: InputMaybe<RealmRelationFilter>;
+  realmHolder?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntFilter>;
 };
 
 /** The Resource Model */
@@ -1139,6 +1187,7 @@ export type LorePoiFragmentFragment = {
 
 export type GetAccountQueryVariables = Exact<{
   account: Scalars['String'];
+  realmIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
 }>;
 
 export type GetAccountQuery = {
@@ -1155,6 +1204,36 @@ export type GetAccountQuery = {
     realmOrder?: string | null;
     data?: any | null;
     timestamp?: any | null;
+  }>;
+};
+
+export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGameConstantsQuery = {
+  __typename?: 'Query';
+  troopStats: Array<{
+    __typename?: 'TroopStats';
+    troopId: number;
+    troopName: string;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    troopCost?: {
+      __typename?: 'TroopCost';
+      amount: number;
+      resources: any;
+    } | null;
+  }>;
+  buildingCosts: Array<{
+    __typename?: 'BuildingCost';
+    buildingId: number;
+    buildingName: string;
+    amount: number;
+    resources: any;
   }>;
 };
 
@@ -1195,6 +1274,7 @@ export type GetRealmQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1217,6 +1297,16 @@ export type GetRealmQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
   };
 };
 
@@ -1231,6 +1321,7 @@ export type GetBuildingsByRealmIdQuery = {
     realmId: number;
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     limit?: number | null;
     limitTraitId: number;
     limitTraitName: string;
@@ -1278,6 +1369,7 @@ export type GetRealmCombatResultQuery = {
     defendRealmId: number;
     attackRealmId: number;
     transactionHash: string;
+    relicLost?: number | null;
     outcome?: number | null;
     timestamp?: any | null;
     history?: Array<{
@@ -1340,6 +1432,7 @@ export type GetRealmsQuery = {
       __typename?: 'Building';
       buildingId: number;
       buildingName: string;
+      buildingIntegrity: number;
       count: number;
       population: number;
       culture: number;
@@ -1361,6 +1454,16 @@ export type GetRealmsQuery = {
       vitality: number;
       wisdom: number;
       squadSlot: number;
+    }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
     }> | null;
   }>;
 };
@@ -1419,6 +1522,7 @@ export type RealmFragmentFragment = {
     __typename?: 'Building';
     buildingId: number;
     buildingName: string;
+    buildingIntegrity: number;
     count: number;
     population: number;
     culture: number;
@@ -1440,6 +1544,16 @@ export type RealmFragmentFragment = {
     vitality: number;
     wisdom: number;
     squadSlot: number;
+  }> | null;
+  relic?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  relicsOwned?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
   }> | null;
 };
 
@@ -1527,8 +1641,8 @@ export const RealmFragmentFragmentDoc = gql`
     buildings {
       buildingId
       buildingName
+      buildingIntegrity
       count
-      buildingName
       population
       culture
       food
@@ -1548,6 +1662,14 @@ export const RealmFragmentFragmentDoc = gql`
       vitality
       wisdom
       squadSlot
+    }
+    relic {
+      realmId
+      heldByRealm
+    }
+    relicsOwned {
+      realmId
+      heldByRealm
     }
   }
 `;
@@ -1859,14 +1981,13 @@ export type GetLorePoisQueryResult = Apollo.QueryResult<
   GetLorePoisQueryVariables
 >;
 export const GetAccountDocument = gql`
-  query getAccount($account: String!) @api(name: starkIndexer) {
+  query getAccount($account: String!, $realmIds: [Int!])
+  @api(name: starkIndexer) {
     ownedRealmsCount: realmsCount(filter: { ownerL2: { equals: $account } })
     settledRealmsCount: realmsCount(
       filter: { settledOwner: { equals: $account } }
     )
-    accountHistory: getRealmHistory(
-      filter: { realmOwner: { equals: $account } }
-    ) {
+    accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
       id
       eventType
       realmId
@@ -1892,6 +2013,7 @@ export const GetAccountDocument = gql`
  * const { data, loading, error } = useGetAccountQuery({
  *   variables: {
  *      account: // value for 'account'
+ *      realmIds: // value for 'realmIds'
  *   },
  * });
  */
@@ -1926,6 +2048,81 @@ export type GetAccountLazyQueryHookResult = ReturnType<
 export type GetAccountQueryResult = Apollo.QueryResult<
   GetAccountQuery,
   GetAccountQueryVariables
+>;
+export const GetGameConstantsDocument = gql`
+  query getGameConstants @api(name: starkIndexer) {
+    troopStats: getTroopStats {
+      troopId
+      troopName
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      troopCost {
+        amount
+        resources
+      }
+    }
+    buildingCosts: getBuildingCosts {
+      buildingId
+      buildingName
+      amount
+      resources
+    }
+  }
+`;
+
+/**
+ * __useGetGameConstantsQuery__
+ *
+ * To run a query within a React component, call `useGetGameConstantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGameConstantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGameConstantsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGameConstantsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetGameConstantsQuery, GetGameConstantsQueryVariables>(
+    GetGameConstantsDocument,
+    options
+  );
+}
+export function useGetGameConstantsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetGameConstantsQuery,
+    GetGameConstantsQueryVariables
+  >(GetGameConstantsDocument, options);
+}
+export type GetGameConstantsQueryHookResult = ReturnType<
+  typeof useGetGameConstantsQuery
+>;
+export type GetGameConstantsLazyQueryHookResult = ReturnType<
+  typeof useGetGameConstantsLazyQuery
+>;
+export type GetGameConstantsQueryResult = Apollo.QueryResult<
+  GetGameConstantsQuery,
+  GetGameConstantsQueryVariables
 >;
 export const GetRealmDocument = gql`
   query getRealm($id: Float!) @api(name: starkIndexer) {
@@ -1987,6 +2184,7 @@ export const GetBuildingsByRealmIdDocument = gql`
       realmId
       buildingId
       buildingName
+      buildingIntegrity
       limit
       limitTraitId
       limitTraitName
@@ -2146,6 +2344,7 @@ export const GetRealmCombatResultDocument = gql`
         resourceName
         amount
       }
+      relicLost
       outcome
       timestamp
     }

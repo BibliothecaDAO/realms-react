@@ -20,55 +20,55 @@ import TransactionNavItem from './TransactionNavItem';
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { togglePanelType } = useAtlasContext();
+  const { togglePanelType, toggleMenuType } = useAtlasContext();
 
   const [player, currentTrack] = usePlayer([
     {
       title: 'Order of Enlightenment',
       artist: 'Casey',
-      src: '/music/OrderOfEnlightenment_idea1_casey.mp3',
+      src: '/music/pads.mp3',
     },
-    {
-      title: 'The Minstrels - Order of Enlightenment',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-enlightenment.mp3',
-    },
-    {
-      title: 'The Minstrels - Order of Power',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-power.mp3',
-    },
-    {
-      title: 'The Minstrels - Order of Anger',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-anger.mp3',
-    },
-    {
-      title: 'The Minstrels - Order of Protection',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-protection.mp3',
-    },
-    {
-      title: 'The Minstrels - Order of Rage',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-rage.mp3',
-    },
-    {
-      title: 'The Minstrels - Order of Brilliance',
-      album: 'The 16 Orders',
-      artist: 'The Minstrels',
-      src: '/music/minstrels/minstrels-brilliance.mp3',
-    },
-    {
-      title: 'I walk with ghosts',
-      artist: 'Scott Buckley',
-      src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
-    },
+    // {
+    //   title: 'The Minstrels - Order of Enlightenment',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-enlightenment.mp3',
+    // },
+    // {
+    //   title: 'The Minstrels - Order of Power',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-power.mp3',
+    // },
+    // {
+    //   title: 'The Minstrels - Order of Anger',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-anger.mp3',
+    // },
+    // {
+    //   title: 'The Minstrels - Order of Protection',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-protection.mp3',
+    // },
+    // {
+    //   title: 'The Minstrels - Order of Rage',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-rage.mp3',
+    // },
+    // {
+    //   title: 'The Minstrels - Order of Brilliance',
+    //   album: 'The 16 Orders',
+    //   artist: 'The Minstrels',
+    //   src: '/music/minstrels/minstrels-brilliance.mp3',
+    // },
+    // {
+    //   title: 'I walk with ghosts',
+    //   artist: 'Scott Buckley',
+    //   src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
+    // },
   ]);
 
   return (
@@ -78,9 +78,9 @@ export function Header() {
           <Link href={'/'}>
             <span className="flex">
               {' '}
-              {/* <BibliothecaBook className="self-center h-5 ml-2 mr-4 stroke-white fill-white " /> */}
+              <BibliothecaBook className="self-center h-5 ml-2 mr-4 stroke-white fill-white " />
               <div className="self-center text-3xl font-lords">
-                Eternal Reign
+                Realms: Eternum
               </div>
               {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
             </span>
@@ -144,7 +144,7 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={() => togglePanelType('bank')} variant="outline">
+          <Button onClick={() => toggleMenuType('bank')} variant="outline">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}

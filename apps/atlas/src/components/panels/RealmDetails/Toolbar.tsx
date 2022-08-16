@@ -9,6 +9,7 @@ import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import { HotKeys } from '@/hooks/settling/useRealmDetailHotkeys';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { Scroll } from '@/shared/Icons';
 
 type ToolbarItemProps = {
@@ -23,6 +24,8 @@ type ToolbarItemProps = {
 };
 
 const ToolbarItem = (props: ToolbarItemProps) => {
+  const { play } = useUiSounds(soundSelector.pageTurn);
+
   const pressed = useKeyPress({ key: props.hotkey });
 
   const prev = usePrevious(pressed);
@@ -33,10 +36,14 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     }
   }, [pressed]);
 
+  const pressedTab = () => {
+    play();
+    props.onClick();
+  };
   return (
     <div>
       <button
-        onClick={props.onClick}
+        onClick={pressedTab}
         className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl ${
           props.color
         }  ${props.selected ? 'bg-opacity-95 py-5' : 'bg-opacity-70'} `}

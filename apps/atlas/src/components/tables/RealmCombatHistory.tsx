@@ -70,6 +70,9 @@ export function RealmCombatHistory({
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicClaimed
+            ? `Relic ${event.data?.relicClaimed}`
+            : '',
           action: (
             <Button
               size="xs"
@@ -98,6 +101,7 @@ export function RealmCombatHistory({
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicLost ? `Relic ${event.data?.relicLost}` : '',
           action: (
             <Button
               size="xs"
@@ -120,14 +124,12 @@ export function RealmCombatHistory({
 
   const realmEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
-      console.log(historyData?.getRealmHistory);
       return {
         event: genRealmEvent(realmEvent),
         timestamp: realmEvent.timestamp,
       };
     })
     .filter((row) => row.event.event !== '');
-
   const tableOptions = { is_striped: true, search: false };
   return (
     <div className="flex flex-wrap w-full p-2 space-y-2">
@@ -144,6 +146,9 @@ export function RealmCombatHistory({
               </span>
               <h5 className="text-white">{a.event.event}</h5>
               {a.event?.resources && a.event.resources}
+              {a.event?.relic && (
+                <h5 className="text-white">{a.event.relic}</h5>
+              )}
               <div className="mt-4">{a.event.action}</div>
             </CardBody>
           </Card>

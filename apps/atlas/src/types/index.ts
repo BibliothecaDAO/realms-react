@@ -238,6 +238,7 @@ export interface BuildingDetail {
   key: string;
   sqmUsage: number;
   buildingSize: number;
+  cost: ResourceCost[];
 }
 
 export interface RealmFoodDetails {

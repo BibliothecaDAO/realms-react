@@ -1,10 +1,13 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { TroopInterface } from '@/types/index';
+import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
+import { findResourceName } from '@/util/resources';
 interface TraitProps {
   trait: string;
   traitAmount?: number;
@@ -161,6 +164,58 @@ export const getTrait = (realm: any, trait: string) => {
     : '0';
 };
 
-export const trimmedOrder = (order: string) => {
-  return order.replace('the ', '').replace('the_', '');
+export const trimmedOrder = (realm: RealmFragmentFragment | undefined) => {
+  return (
+    realm?.orderType
+      ?.replaceAll('_', ' ')
+      .replace('the ', '')
+      .replace('the_', '')
+      .toLowerCase() ?? ''
+  );
+};
+
+export const ownerRelic = (realm: RealmFragmentFragment | undefined) => {
+  return realm?.relic && realm?.relic[0] && realm?.relic[0].heldByRealm
+    ? realm?.relic[0].heldByRealm
+    : realm?.realmId;
+};
+
+export const relicsOwnedByRealm = (
+  realm: RealmFragmentFragment | undefined
+) => {
+  return (
+    <div>
+      {realm?.relicsOwned && realm?.relicsOwned[0] && realm?.relicsOwned.length
+        ? realm?.relicsOwned.length
+        : 0}
+    </div>
+  );
+};
+
+export const resourcePillaged = (resources: any) => {
+  return (
+    <div className="w-full my-4">
+      {resources?.map((resource, index) => {
+        const info = findResourceName(resource.resourceId);
+        return (
+          <div className="flex justify-between my-1 text-xl " key={index}>
+            <div className="flex">
+              <ResourceIcon
+                size="sm"
+                className="self-center"
+                resource={info?.trait?.replace('_', '') as string}
+              />{' '}
+              <span className="self-center ml-4 font-semibold uppercase">
+                {info?.trait}
+              </span>
+            </div>
+
+            <div className="self-center font-semibold uppercase">
+              {(+formatEther(resource.amount)).toLocaleString()}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };

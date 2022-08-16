@@ -11,7 +11,7 @@ export const DownloadAssets = (props: Props) => {
         className="w-full text-xs"
         target={'_blank'}
         size="xs"
-        variant="secondary"
+        variant="outline"
         href={`https://realms-assets.s3.eu-west-3.amazonaws.com/${props.id}.zip`}
         rel="noreferrer"
       >
