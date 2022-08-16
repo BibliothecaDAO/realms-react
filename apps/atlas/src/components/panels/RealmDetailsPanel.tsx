@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
+import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import type { Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
@@ -127,6 +128,27 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const s = `absolute self-center px-3 py-2 rounded-full font-semibold fill-current stroke-current hover:bg-white/10 ${color} `;
   const s_icons = 'w-5 h-5 stroke-current';
+
+  const toggleFavourite = () => {
+    const favs: number[] = storage<number[]>(
+      RealmFavoriteLocalStorageKey,
+      []
+    ).get();
+    const isFavourite = favs.indexOf(realmId) > -1;
+
+    if (isFavourite) {
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set(
+        favs.filter((f) => f !== realmId)
+      );
+      toast('Removed from Favorites');
+    } else {
+      storage<number[]>(RealmFavoriteLocalStorageKey, []).set(
+        favs.concat(realmId)
+      );
+      toast('Added to Favorites');
+    }
+  };
+
   const quickActions = [
     {
       icon: <ArrowNarrowRightIcon className={s_icons} />,
@@ -142,7 +164,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     },
     {
       icon: <BookmarkIcon className={s_icons} />,
-      action: () => next(),
+      action: () => toggleFavourite(),
       class: `-mb-24 -mr-14 ${s}`,
     },
     {
