@@ -1,4 +1,4 @@
-import { Card } from '@bibliotheca-dao/ui-lib/base';
+import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { useStarknet } from '@starknet-react/core';
@@ -12,9 +12,10 @@ import type {
   GetRealmsQueryVariables,
   RealmWhereInput,
 } from '@/generated/graphql';
-import { GetRealmsDocument, SortOrder } from '@/generated/graphql';
+import { GetRealmsDocument } from '@/generated/graphql';
+import type { PlaylistQueryType } from '@/hooks/settling/useRealmsPlaylist';
 import {
-  playlists,
+  playlistQueryStrategy,
   realmPlaylistCursorKey,
   realmPlaylistKey,
   realmPlaylistNameKey,
@@ -31,23 +32,68 @@ type Prop = {
   currentRealmId: number;
 };
 
+type BasePlaylist = {
+  name: string;
+  description?: string;
+  getFilter: (args?: any) => RealmWhereInput;
+};
+
+type SystemPlaylist = {
+  playlistType: PlaylistQueryType;
+} & BasePlaylist;
+
+type LocalStoragePlaylist = {
+  playlistType: 'LocalStorage';
+  storageKey: string;
+} & BasePlaylist;
+
+type Playlist = SystemPlaylist | LocalStoragePlaylist;
+
+const systemPlaylists: Playlist[] = [
+  {
+    playlistType: 'AllRealms',
+    name: 'All Realms',
+    description: 'IDs 1-8000',
+    getFilter: () => playlistQueryStrategy['AllRealms'](),
+  },
+  {
+    playlistType: 'Account',
+    name: 'My Empire',
+    description: 'Realms under your Lordship',
+    getFilter: (account) => playlistQueryStrategy['Account'](account),
+  },
+  {
+    playlistType: 'LocalStorage',
+    name: 'Favorites',
+    description: 'Realms saved to Favorites',
+    storageKey: RealmFavoriteLocalStorageKey,
+    getFilter: (ids) => playlistQueryStrategy['Ids'](ids),
+  },
+  {
+    playlistType: 'Raidable',
+    name: 'Now Raidable',
+    description: 'Realms vulnerable to Raid',
+    getFilter: () => playlistQueryStrategy['Raidable'](),
+  },
+];
+
 const getFilterForPlaylist: (
-  playlistName: string,
+  playlistName: PlaylistQueryType | 'LocalStorage',
   args: any
 ) => RealmWhereInput = (name, args) => {
   let filter: RealmWhereInput = {};
   switch (name) {
     case 'AllRealms':
-      filter = playlists['AllRealms']();
+      filter = playlistQueryStrategy['AllRealms']();
       break;
-    case 'MyRealms':
-      filter = playlists['MyRealms'](args.starknetWallet);
+    case 'Account':
+      filter = playlistQueryStrategy['Account'](args.starknetWallet);
       break;
-    case 'Favorites':
-      filter = playlists['Favorites'](args.realmIds);
+    case 'LocalStorage':
+      filter = playlistQueryStrategy['Ids'](args.realmIds);
       break;
     case 'Raidable':
-      filter = playlists['Raidable']();
+      filter = playlistQueryStrategy['Raidable']();
       break;
   }
   return filter;
@@ -64,6 +110,16 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   const queryWithoutSegment = { ...router.query };
   delete queryWithoutSegment['segment'];
 
+  // const [firstButton, setFirstButton] = useState<HTMLElement | null>(null);
+  // useEffect(()=>{
+  //   const fb = document.getElementById("playlist-0")
+  //   console.log("Got first button", fb);
+  //   if(fb){
+  //     fb?.focus()
+  //     setFirstButton(fb);
+  //   }
+  // }, [props.isOpen])
+
   return (
     <AtlasSidebar isOpen={props.isOpen}>
       <SidebarHeader
@@ -75,6 +131,9 @@ const RealmsPlaylistSidebar = (props: Prop) => {
               <span>the</span>
             </span>{' '}
             Realms
+            {loading ? (
+              <LoadingBricks className="inline-block w-8 ml-2" />
+            ) : null}
           </h1>
         }
         title="Journey through the Realms"
@@ -88,16 +147,17 @@ const RealmsPlaylistSidebar = (props: Prop) => {
       />
       <h2 className="my-6 text-center">
         What route should we take today, ser?{' '}
-        {loading ? <LoadingBricks className="inline-block w-4" /> : null}
       </h2>
       <div className="grid grid-cols-3 gap-4 mt-4">
-        {Object.keys(playlists).map((k) => (
-          <Card key={k}>
-            <button
-              className="p"
-              key={k}
+        {systemPlaylists.map((rp, i) => (
+          <Card key={rp.name}>
+            <h3>{rp.name}</h3>
+            <p className="my-2">{rp.description}</p>
+            <Button
+              variant="primary"
+              id={`playlist-${i}`}
               onClick={() => {
-                if (k == 'AllRealms') {
+                if (rp.playlistType == 'AllRealms') {
                   resetPlaylistState();
                   router.push(
                     {
@@ -116,18 +176,15 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                 const args: any = {
                   starknetWallet,
                 };
-                if (k == 'Favorites') {
-                  args.realmIds = storage<number[]>(
-                    RealmFavoriteLocalStorageKey,
-                    []
-                  ).get();
+                if (rp.playlistType == 'LocalStorage') {
+                  args.realmIds = storage<number[]>(rp.storageKey, []).get();
                 }
 
                 apolloClient
                   .query<GetRealmsQuery, GetRealmsQueryVariables>({
                     query: GetRealmsDocument,
                     variables: {
-                      filter: getFilterForPlaylist(k as string, args),
+                      filter: getFilterForPlaylist(rp.playlistType, args),
                     },
                   })
                   .then((res) => {
@@ -136,7 +193,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                       const realmIds = res.data.realms.map((r) => r.realmId);
 
                       storage(realmPlaylistCursorKey, 0).set(0);
-                      storage(realmPlaylistNameKey, '').set(k);
+                      storage(realmPlaylistNameKey, '').set(rp.name);
                       storage<number[]>(realmPlaylistKey, []).set(realmIds);
                       router.replace(
                         {
@@ -150,13 +207,14 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                       );
                     }
                     if (!res.loading && res.data.realms.length == 0) {
-                      toast(`Playlist ${k} has no Realms`);
+                      toast(`Playlist ${rp.name} has no Realms`);
                     }
                   });
               }}
             >
-              <CollectionIcon className="inline-block w-6" /> {k}
-            </button>
+              <CollectionIcon className="inline-block w-6 mr-2" /> Start
+              Playlist
+            </Button>
           </Card>
         ))}
       </div>

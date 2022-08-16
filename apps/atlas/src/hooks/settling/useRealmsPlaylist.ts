@@ -4,6 +4,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import type { RealmWhereInput } from '@/generated/graphql';
 import { storage } from '@/util/localStorage';
 import useKeyPress from '../useKeyPress';
 import usePrevious from '../usePrevious';
@@ -12,10 +13,16 @@ export const realmPlaylistCursorKey = 'realm.playlist.cursor';
 export const realmPlaylistNameKey = 'realm.playlist.name';
 export const realmPlaylistKey = 'realm.playlist';
 
-export const playlists = {
+export type PlaylistQueryType = 'AllRealms' | 'Account' | 'Ids' | 'Raidable';
+type GetPlaylistQueryFilterFunction = (args?: any) => RealmWhereInput;
+
+export const playlistQueryStrategy: Record<
+  PlaylistQueryType,
+  GetPlaylistQueryFilterFunction
+> = {
   AllRealms: () => ({}),
-  MyRealms: (account: string) => ({ settledOwner: { equals: account } }),
-  Favorites: (favorites: number[]) => ({ realmId: { in: favorites } }),
+  Account: (account: string) => ({ settledOwner: { equals: account } }),
+  Ids: (ids: number[]) => ({ realmId: { in: ids } }),
   Raidable: () => ({
     NOT: [
       {
