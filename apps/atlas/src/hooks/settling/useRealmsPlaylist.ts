@@ -51,54 +51,65 @@ const useRealmPlaylist = (args: Args) => {
 
   const realmIds = storage<number[]>(realmPlaylistKey, []).get();
 
-  useEffect(() => {
+  const next = () => {
     const currentPlaylist = storage<string>(realmPlaylistNameKey, '').get();
     const noPlaylistSpecified = currentPlaylist == '';
 
-    if (leftPressed) {
-      if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
-        // use realm id
-        router.replace(
-          {
-            pathname: `/realm/${realmIdFromRoute - 1}`,
-            query: queryWithoutSegment,
-          },
-          undefined,
-          { shallow: true }
-        );
+    if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
+      router.replace(
+        {
+          pathname: `/realm/${realmIdFromRoute + 1}`,
+          query: queryWithoutSegment,
+        },
+        undefined,
+        { shallow: true }
+      );
+    } else {
+      if (cursor < realmIds.length - 1) {
+        setCursor(cursor + 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
       } else {
-        if (cursor > 0) {
-          setCursor(cursor - 1);
-          storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
-        } else {
-          toast(`Already at start of Playlist: ${currentPlaylist}`, {
-            duration: 1000,
-            position: 'bottom-right',
-          });
-        }
+        toast(`Reached end of Realm Playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'top-left',
+        });
       }
     }
-    if (rightPressed) {
-      if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
-        router.replace(
-          {
-            pathname: `/realm/${realmIdFromRoute + 1}`,
-            query: queryWithoutSegment,
-          },
-          undefined,
-          { shallow: true }
-        );
+  };
+
+  const prev = () => {
+    const currentPlaylist = storage<string>(realmPlaylistNameKey, '').get();
+    const noPlaylistSpecified = currentPlaylist == '';
+
+    if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
+      // use realm id
+      router.replace(
+        {
+          pathname: `/realm/${realmIdFromRoute - 1}`,
+          query: queryWithoutSegment,
+        },
+        undefined,
+        { shallow: true }
+      );
+    } else {
+      if (cursor > 0) {
+        setCursor(cursor - 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
       } else {
-        if (cursor < realmIds.length - 1) {
-          setCursor(cursor + 1);
-          storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
-        } else {
-          toast(`Reached end of Realm Playlist: ${currentPlaylist}`, {
-            duration: 1000,
-            position: 'bottom-right',
-          });
-        }
+        toast(`Already at start of Playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'top-left',
+        });
       }
+    }
+  };
+
+  useEffect(() => {
+    if (leftPressed) {
+      prev();
+    }
+    if (rightPressed) {
+      next();
     }
   }, [leftPressed, rightPressed]);
 
@@ -131,5 +142,6 @@ const useRealmPlaylist = (args: Args) => {
       resetPlaylistState();
     }
   }, [cursor]);
+  return { next, prev };
 };
 export default useRealmPlaylist;

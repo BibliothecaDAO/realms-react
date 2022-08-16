@@ -1,5 +1,10 @@
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import {
+  StarIcon,
+  BookmarkIcon,
+  CollectionIcon,
+} from '@heroicons/react/outline';
+import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
@@ -100,7 +105,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
-  useRealmPlaylist({
+  const { next, prev } = useRealmPlaylist({
     onChange: (navigateToRealmId) => {
       pushPage(navigateToRealmId);
     },
@@ -120,38 +125,39 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const color = `bg-order-${order.replace('the ', '').replace('the_', '')} 
     text-order-secondary-${order.replace('the ', '').replace('the_', '')}`;
 
-  const s =
-    'absolute self-center px-3 py-2 rounded-full font-semibold text-white fill-current stroke-current hover:bg-white/10 ';
-  const s_icons = 'w-5 h-5 text-white fill-current stroke-current';
+  const s = `absolute self-center px-3 py-2 rounded-full font-semibold fill-current stroke-current hover:bg-white/10 ${color} `;
+  const s_icons = 'w-5 h-5 stroke-current';
   const quickActions = [
     {
       icon: <ArrowNarrowRightIcon className={s_icons} />,
-      action: () => pushPage(realm ? realm?.realmId + 1 : ''),
+      action: () => next(),
       class: `-mr-28 ${s}`,
     },
     {
-      icon: <Helm className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? ''),
+      icon: <CollectionIcon className={s_icons} />,
+      action: () => {
+        setShowPlaylists(true);
+      },
       class: `-mt-24 -mr-14 ${s}`,
     },
     {
-      icon: <Helm className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? ''),
+      icon: <BookmarkIcon className={s_icons} />,
+      action: () => next(),
       class: `-mb-24 -mr-14 ${s}`,
     },
     {
       icon: <ArrowNarrowLeftIcon className={s_icons} />,
-      action: () => pushPage(realm ? realm?.realmId - 1 : ''),
+      action: () => prev(),
       class: `-ml-28 ${s}`,
     },
     {
-      icon: <Helm className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? ''),
+      icon: <Helm className={s_icons + ' fill-current'} />,
+      action: () => next(),
       class: `mt-24 -ml-14 ${s}`,
     },
     {
-      icon: <Helm className={s_icons} />,
-      action: () => pushPage(realm?.realmId ?? ''),
+      icon: <Helm className={s_icons + ' fill-current'} />,
+      action: () => next(),
       class: `mb-24 -ml-14 ${s}`,
     },
   ];
