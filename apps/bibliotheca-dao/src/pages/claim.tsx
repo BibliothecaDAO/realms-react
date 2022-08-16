@@ -20,6 +20,9 @@ const paymentList = [
     amount: Web3Utils.toBN('600000000000000000000000'),
   },
 ];
+const contractAddress =
+  process.env.NEXT_PUBLIC_POOL_ADDRESS ||
+  '0x55A69A21C44B1922D3F96B961AE567C789c4399e';
 
 function Claim() {
   const [claiming, setClaiming] = useState(false);
@@ -29,18 +32,16 @@ function Claim() {
   const [week, setWeek] = useState(0);
   const [claimAmount, setClaimAmount] = useState('0');
   const [currentClaimable, setCurrentClaimable] = useState(0);
-  const { signer, account, provider, isConnected } = useWalletContext();
+  const { signer, account, provider, isConnected, network } =
+    useWalletContext();
   const [withdrawnAmount, setWithdrawnAmount] = useState('0');
 
-  const amountPerWeekCalc = (amount: any) => {
-    return;
-  };
   const totalClaimable = UserClaim.find(
     (a) => a.payee === account.toLowerCase()
   )?.amount;
 
   const paymentPool = new ethers.Contract(
-    PaymentPool.address,
+    contractAddress,
     PaymentPool.abi,
     signer
   );
@@ -86,7 +87,7 @@ function Claim() {
   async function claim() {
     setClaiming(true);
     const paymentPool = new ethers.Contract(
-      PaymentPool.address,
+      contractAddress,
       PaymentPool.abi,
       signer
     );
