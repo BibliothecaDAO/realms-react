@@ -10,7 +10,7 @@ import { useGetTroopStatsQuery } from '@/generated/graphql';
 import useCombat, { createCall } from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Troop } from '@/shared/squad/Troops';
-import type { TroopInterface } from '@/types/index';
+import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { getCostSums } from '@/util/armory';
 import { findResourceName } from '@/util/resources';
 import SidebarHeader from '../SidebarHeader';
@@ -24,26 +24,26 @@ interface SquadProps {
   realm?: GetRealmQuery['realm'];
   troopsStats: any;
   squad: keyof typeof Squad;
+  onClose: () => void;
+  militaryBuildingsBuilt: Array<number> | undefined;
 }
 
 const EmptyTroopId = 0;
 
 export const SquadBuilder = (props: SquadProps) => {
   const [toBuy, setToBuy] = useState<TroopInterface[]>([]);
+  const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
+    null
+  );
 
   const { build } = useCombat();
-
-  useEffect(() => {
-    setToBuy([]);
-  }, [props.squad]);
-
   const { data: troopStatsData } = useGetTroopStatsQuery();
 
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
-  const [selectedTroop, setSelectedTroop] = useState<TroopInterface | null>(
-    null
-  );
+  useEffect(() => {
+    setToBuy([]);
+  }, [props.squad]);
 
   const fillGap = (tier: number, length: number) => {
     const emptyTroop: TroopInterface = {
@@ -111,8 +111,6 @@ export const SquadBuilder = (props: SquadProps) => {
     return fillGap(3, 1);
   };
 
-  const txQueue = useTransactionQueue();
-
   const selectedTroopIsEmpty =
     selectedTroop && selectedTroop.troopId == EmptyTroopId;
 
@@ -147,12 +145,12 @@ export const SquadBuilder = (props: SquadProps) => {
 
         {selectedTroopIsEmpty && troopStatsData?.getTroopStats && isOwner && (
           <>
-            <div className="flex flex-wrap px-4">
-              <div className="w-full">
-                <h2>Statistics Preview</h2>
+            <div className="flex flex-wrap mb-5">
+              <div className="w-1/2 px-3">
+                <h3>Statistics</h3>
                 <SquadStatistics troops={props.troops} troopsQueued={toBuy} />
               </div>
-              <div className="w-full mt-2">
+              <div className="w-1/2 px-3">
                 <h3>Costs</h3>
                 {getCostSums(toBuy).map((a, index) => {
                   return (
@@ -174,18 +172,12 @@ export const SquadBuilder = (props: SquadProps) => {
               <Button
                 disabled={toBuy.length == 0}
                 onClick={() => {
+                  props.onClose;
                   build(
                     props.realm?.realmId,
                     toBuy.map((t) => t.troopId),
                     Squad[props.squad]
                   );
-                  // txQueue.add(
-                  //   createCall.buildSquad({
-                  //     realmId: props.realm?.realmId,
-                  //     troopIds: toBuy.map((t) => t.troopId),
-                  //     squadSlot: Squad[props.squad],
-                  //   })
-                  // );
                   setToBuy([]);
                 }}
                 variant="primary"
@@ -214,6 +206,7 @@ export const SquadBuilder = (props: SquadProps) => {
               realmId={props.realm?.realmId as number}
               hideSquadToggle
               filterTier={selectedTroop?.tier}
+              militaryBuildingsBuilt={props.militaryBuildingsBuilt}
             />
           </>
         )}

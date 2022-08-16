@@ -4,6 +4,7 @@ import {
   Card,
   CardTitle,
   InputNumber,
+  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
@@ -92,6 +93,15 @@ const Army: React.FC<Prop> = (props) => {
   const troops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
+  const getMilitaryBuildingsBuilt = (
+    buildings: BuildingDetail[] | undefined
+  ) => {
+    return buildings
+      ?.filter((a) => a.type === 'military')
+      .filter((b) => b.quantityBuilt > 0)
+      .map((c) => c.id);
+  };
+
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
@@ -171,6 +181,23 @@ const Army: React.FC<Prop> = (props) => {
                             }
                           />{' '}
                         </div>
+                        <div className="flex mt-4">
+                          {a.cost &&
+                            a.cost.map((a, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className="px-1 font-extrabold text-center"
+                                >
+                                  <ResourceIcon
+                                    size="xs"
+                                    resource={a.resourceName}
+                                  />
+                                  {a.amount}
+                                </div>
+                              );
+                            })}
+                        </div>
                       </div>
                       <div className="flex w-full space-x-3">
                         {troopList
@@ -200,10 +227,12 @@ const Army: React.FC<Prop> = (props) => {
           </Card>
         )}
 
-        <Card loading={props.loading} className="col-span-12 md:col-span-4">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-1 md:col-end-5"
+        >
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
-            availableResources={props.availableResources}
             realm={realm}
             loading={false}
             hideLordsClaimable
@@ -221,36 +250,47 @@ const Army: React.FC<Prop> = (props) => {
               >
                 Raid Vault
               </Button>
-              <p>Pillage this vault.</p>
+              <p className="p-3">
+                Pillage this vault for 25% of it's resources.
+              </p>
             </div>
           )}
         </Card>
         <Card loading={props.loading} className="col-span-12 md:col-span-8">
-          <CardTitle>{squadSlot}ing Army</CardTitle>
+          <div className="flex justify-between">
+            <CardTitle>{squadSlot}ing Army</CardTitle>
 
-          {/* TODO: add back for indexer */}
-          {/* {isOwner && ( */}
-          <button
-            onClick={() =>
-              setSquadSlot((prev) => (prev == 'Attack' ? 'Defend' : 'Attack'))
-            }
-            className="text-blue-300 hover:underline"
-          >
-            View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
-          </button>
-          {/* )} */}
+            {isOwner && (
+              <div>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    setSquadSlot((prev) =>
+                      prev == 'Attack' ? 'Defend' : 'Attack'
+                    )
+                  }
+                >
+                  View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
+                </Button>
+              </div>
+            )}
+          </div>
+
           <SquadBuilder
             squad={squadSlot}
             realm={realm}
             withPurchase={true}
             troops={troops}
             troopsStats={troopStatsData?.getTroopStats}
+            onClose={() => setIsRaiding(false)}
+            militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
           />
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>
           <SidebarHeader
-            title="Raiding Plan"
+            title="Raiding"
             onClose={() => setIsRaiding(false)}
           ></SidebarHeader>
 

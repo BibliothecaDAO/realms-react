@@ -87,8 +87,8 @@ const defaultFilters = {
   selectedResources: [] as number[],
   searchIdFilter: '',
   hasWonderFilter: false,
-  isSettledFilter: false,
-  isRaidableFilter: false,
+  isSettledFilter: true,
+  isRaidableFilter: true,
 };
 
 const defaultRealmState = {

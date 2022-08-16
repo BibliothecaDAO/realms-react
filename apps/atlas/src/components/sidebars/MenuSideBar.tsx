@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import TransactionNavItem from '../navigation/TransactionNavItem';
 
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
@@ -119,6 +120,10 @@ export const MenuSideBar = () => {
         ))}
 
         <div className="grow" />
+        <div className="block sm:hidden">
+          <TransactionNavItem />
+        </div>
+
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
           <IconButton
             className={buttonClasses}

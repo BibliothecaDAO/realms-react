@@ -1,5 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { RealmsMax } from '@/constants/index';
@@ -50,22 +50,26 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
     props.rarity.score.max < RealmsMax.Score;
 
   return (
-    <Popover className="relative">
+    <Popover className="relative z-50">
       <div ref={ref}>
-        <Button
-          variant="outline"
-          size="sm"
-          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
+        <Popover.Button as="div">
+          <Button
+            size="xs"
+            variant={hasSelectedFilters ? 'primary' : 'outline'}
+          >
+            Rarity
+          </Button>
+        </Popover.Button>
+        <Transition
+          enter="transition duration-350 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-350 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
         >
-          Rarity
-        </Button>
-
-        {isOpen && (
           <Popover.Panel
-            className="absolute z-10 mt-2 ml-2 sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2"
+            className="absolute z-10 mt-2 ml-2 border-4 border-double rounded sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2 border-white/20"
             static
           >
             <div className="flex flex-col px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
@@ -90,7 +94,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
               />
             </div>
           </Popover.Panel>
-        )}
+        </Transition>
       </div>
     </Popover>
   );

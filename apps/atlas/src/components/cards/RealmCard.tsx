@@ -97,8 +97,10 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
         label: 'Resources',
         component: (
           <RealmResources
-            availableResources={realmsResourcesDetails}
-            {...props}
+            showRaidable
+            showClaimable
+            realm={props.realm}
+            loading={props.loading}
           />
         ),
       },
@@ -128,7 +130,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       ) : (
         <div>
           {props.realm?.wonder && (
-            <div className="w-full p-4 text-2xl font-semibold text-center text-gray-200 uppercase border-4 border-gray-500 rounded shadow-inner tracking-veryWide bg-white/10">
+            <div className="w-full p-4 text-2xl font-semibold text-center uppercase bg-black border-4 border-gray-500 rounded shadow-inner tracking-veryWide">
               {props.realm?.wonder}
             </div>
           )}
@@ -168,7 +170,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
                 </Tabs.Tab>
               ))}
             </Tabs.List>
-            <div className="flex flex-col justify-between px-4 py-2 mb-2 uppercase rounded shadow-inner sm:flex-row bg-black/20">
+            <div className="flex flex-col justify-between px-4 py-2 mb-2 uppercase bg-black rounded shadow-inner sm:flex-row">
               <span>
                 Id:<span className="">{props.realm.realmId}</span>
               </span>

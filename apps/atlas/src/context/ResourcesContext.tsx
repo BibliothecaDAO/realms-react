@@ -11,14 +11,18 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useGetExchangeRatesQuery } from '@/generated/graphql';
+import type { GetGameConstantsQuery } from '@/generated/graphql';
+import {
+  useGetExchangeRatesQuery,
+  useGetGameConstantsQuery,
+} from '@/generated/graphql';
 import {
   useLordsContract,
   useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
+import type { ResourceCost, NetworkState } from '@/types/index';
 import { resources } from '@/util/resources';
-import type { NetworkState } from '../types';
 
 export type Resource = {
   resourceId: number;
@@ -65,7 +69,7 @@ const ResourcesContext = createContext<{
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
   selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
-  addSelectedSwapResources: (resourceId?: number) => void;
+  addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
   updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
   updateSelectedSwapResource: (
@@ -77,6 +81,9 @@ const ResourcesContext = createContext<{
   lordsBalance: string;
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
+  buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
+  troopCosts: GetGameConstantsQuery['troopStats'] | undefined;
+  batchAddResources: (cost: ResourceCost[]) => void;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -96,6 +103,17 @@ function useResources() {
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
+
+  // TODO: Move costs into own provider...
+  const [buildingCosts, setBuildingCosts] =
+    useState<GetGameConstantsQuery['buildingCosts']>();
+
+  const [troopCosts, setTroopCosts] =
+    useState<GetGameConstantsQuery['troopStats']>();
+
+  const { data: gameConstants } = useGetGameConstantsQuery();
+
+  console.log(gameConstants);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -149,17 +167,42 @@ function useResources() {
     });
 
   const { data: exchangeRateData } = useGetExchangeRatesQuery({
-    pollInterval: 5000,
+    pollInterval: 10000,
   });
 
-  const addSelectedSwapResources = (resourceId?: number) => {
+  // batch add a cost
+  const batchAddResources = (cost: ResourceCost[]) => {
+    const mapped: ResourceQty[] = cost?.map((a) => {
+      return {
+        resourceId: a.resourceId,
+        qty: a.amount * 1.1,
+      };
+    });
+
+    const result: ResourceQty[] = Object.values(
+      [...selectedSwapResources, ...mapped].reduce(
+        (acc, { resourceId, qty }) => {
+          acc[resourceId] = {
+            resourceId,
+            qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
+          };
+          return acc;
+        },
+        {}
+      )
+    );
+
+    setSelectedSwapResources([...result]);
+  };
+
+  const addSelectedSwapResources = (resourceId?: number, qty?: number) => {
     if (availableResourceIds.length === 0) {
       return;
     }
     const select = resourceId ?? availableResourceIds[0];
     setSelectedSwapResources([
       ...selectedSwapResources,
-      { resourceId: select, qty: 0 },
+      { resourceId: select, qty: qty ? qty : 0 },
     ]);
   };
 
@@ -223,7 +266,8 @@ function useResources() {
       !lpBalanceData ||
       !lpBalanceData[0] ||
       !exchangePairData ||
-      !exchangePairData[0]
+      !exchangePairData[0] ||
+      !gameConstants
     ) {
       return;
     }
@@ -259,6 +303,9 @@ function useResources() {
         };
       })
     );
+
+    setBuildingCosts(gameConstants?.buildingCosts);
+    setTroopCosts(gameConstants?.troopStats);
   }, [resourceBalanceData, resourcesBalanceError, exchangeRateData]);
 
   const getResourceById = useCallback(
@@ -290,6 +337,9 @@ function useResources() {
     updateBalance,
     getResourceById,
     lordsBalance,
+    buildingCosts,
+    troopCosts,
+    batchAddResources,
   };
 }
 
