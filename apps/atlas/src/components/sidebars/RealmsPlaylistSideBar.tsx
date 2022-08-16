@@ -154,11 +154,19 @@ const curatedPlaylists: Playlist[] = [
     description: '[alpha-test]',
     getFilter: (owner) => playlistQueryStrategy['Account'](owner),
   },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Dham',
+    address:
+      '0x007D3246639ed9e666c5Ceb9B4dc533f731AF1c866487977E0474d0465A73426',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  // TODO: Add dham and squiddy
 ];
-// TODO: Add Fomentador
 
 const getFilterForPlaylist: (
-  playlistName: PlaylistQueryType | 'LocalStorage' | 'OwnedBy',
+  playlistName: Playlist['playlistType'],
   args: any
 ) => RealmWhereInput = (name, args) => {
   let filter: RealmWhereInput = {};
