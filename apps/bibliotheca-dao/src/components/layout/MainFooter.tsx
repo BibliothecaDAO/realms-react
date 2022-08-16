@@ -40,8 +40,11 @@ export const MainFooter = () => {
               Staking
             </a>
           </li>
-         <li className={footerLinkStyles}>
-            <a className={footerHREFStyles} href={'https://old.biblioithecadao.xyz'}>
+          <li className={footerLinkStyles}>
+            <a
+              className={footerHREFStyles}
+              href={'https://old.biblioithecadao.xyz'}
+            >
               Old Bibliotheca DAO site
             </a>
           </li>
