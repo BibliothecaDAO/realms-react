@@ -16,6 +16,7 @@ import {
   realmPlaylistCursorKey,
   realmPlaylistKey,
   realmPlaylistNameKey,
+  resetPlaylistState,
 } from '@/hooks/settling/useRealmsPlaylist';
 import SidebarHeader from '@/shared/SidebarHeader';
 import apolloClient from '@/util/apolloClient';
@@ -25,6 +26,7 @@ import AtlasSidebar from './AtlasSideBar';
 type Prop = {
   isOpen: boolean;
   onClose: () => void;
+  currentRealmId: number;
 };
 
 const getFilterForPlaylist: (
@@ -57,6 +59,9 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const queryWithoutSegment = { ...router.query };
+  delete queryWithoutSegment['segment'];
+
   return (
     <AtlasSidebar isOpen={props.isOpen}>
       <SidebarHeader
@@ -71,6 +76,21 @@ const RealmsPlaylistSidebar = (props: Prop) => {
         <div key={k} className="p-4 my-2 border border-red-500 rounded-lg">
           <button
             onClick={() => {
+              if (k == 'AllRealms') {
+                resetPlaylistState();
+                router.push(
+                  {
+                    pathname: `/realm/1`,
+                    query: queryWithoutSegment,
+                  },
+                  undefined,
+                  {
+                    shallow: false,
+                  }
+                );
+                return;
+              }
+
               setLoading(true);
               const args: any = {
                 starknetWallet,
@@ -87,15 +107,10 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   query: GetRealmsDocument,
                   variables: {
                     filter: getFilterForPlaylist(k as string, args),
-                    orderBy:
-                      k == 'AllRealms'
-                        ? {
-                            id: SortOrder.Asc,
-                          }
-                        : undefined,
                   },
                 })
                 .then((res) => {
+                  setLoading(false);
                   if (res.data.realms && res.data.realms.length > 0) {
                     const realmIds = res.data.realms.map((r) => r.realmId);
 
@@ -105,9 +120,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                     router.replace(
                       {
                         pathname: `/realm/${realmIds[0]}`,
-                        query: {
-                          playlist: k,
-                        },
+                        query: queryWithoutSegment,
                       },
                       undefined,
                       {
@@ -118,9 +131,6 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   if (!res.loading && res.data.realms.length == 0) {
                     toast(`Playlist ${k} has no Realms`);
                   }
-                })
-                .finally(() => {
-                  setLoading(false);
                 });
             }}
             className=""

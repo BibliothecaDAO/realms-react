@@ -18,6 +18,7 @@ import useRealmPlaylist, {
   realmPlaylistCursorKey,
   realmPlaylistKey,
   realmPlaylistNameKey,
+  resetPlaylistState,
 } from '@/hooks/settling/useRealmsPlaylist';
 import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -81,14 +82,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const loadingHooks = loadingBuildings || loadingFood || loadingResources;
 
   const [showPlaylists, setShowPlaylists] = useState(false);
-  const [cursor, setCursor] = useState(
-    storage<number>(realmPlaylistCursorKey, 0).get()
-  );
-
-  // const [navigationLock, setNavigationLock] = useState(false);
-  const [currentPlaylist, setCurrentPlaylist] = useState<string>(
-    storage(realmPlaylistNameKey, '').get()
-  );
 
   const pushPage = (value) => {
     router.replace(
@@ -105,21 +98,13 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     );
   };
 
-  const leftPressed = useKeyPress({ keycode: 'LEFT' });
-  const rightPressed = useKeyPress({ keycode: 'RIGHT' });
   const isOwner = useIsOwner(realm?.settledOwner);
 
-  // const realmsPlaylist = useRealmPlaylist({
-  //   playlist: currentPlaylist as any,
-  // });
-
-  const realmIds = storage<number[]>(realmPlaylistKey, []).get();
-
-  useEffect(() => {
-    if (realmIds && realmIds[cursor]) {
-      pushPage(realmIds[cursor]);
-    }
-  }, [cursor]);
+  useRealmPlaylist({
+    onChange: (navigateToRealmId) => {
+      pushPage(navigateToRealmId);
+    },
+  });
 
   const playlistPressed = useKeyPress({ key: 'p' });
   const prevPlaylistPressed = usePrevious(playlistPressed);
@@ -129,34 +114,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       setShowPlaylists(true);
     }
   }, [playlistPressed]);
-
-  useEffect(() => {
-    if (!realm) {
-      return;
-    }
-    if (leftPressed) {
-      if (cursor > 0) {
-        setCursor(cursor - 1);
-        storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
-      } else {
-        toast(`Already at start of Playlist: ${currentPlaylist}`, {
-          duration: 1000,
-          position: 'bottom-right',
-        });
-      }
-    }
-    if (rightPressed) {
-      if (cursor < realmIds.length - 1) {
-        setCursor(cursor + 1);
-        storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
-      } else {
-        toast(`No more Realms in playlist: ${currentPlaylist}`, {
-          duration: 1000,
-          position: 'bottom-right',
-        });
-      }
-    }
-  }, [leftPressed, rightPressed]);
 
   const order = realm?.orderType?.replaceAll('_', ' ').toLowerCase() ?? '';
 
@@ -202,6 +159,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   return (
     <BasePanel open={selectedPanel === 'realm'}>
       <RealmsPlaylistSidebar
+        currentRealmId={realmId}
         isOpen={showPlaylists}
         onClose={() => setShowPlaylists(false)}
       />

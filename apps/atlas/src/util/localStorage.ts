@@ -19,8 +19,16 @@ export function storage<T>(key: string, initialValue: T) {
     window.localStorage.setItem(key, JSON.stringify(value));
   }
 
+  function remove() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    window.localStorage.removeItem(key);
+  }
+
   return {
     get,
     set,
+    remove,
   };
 }
