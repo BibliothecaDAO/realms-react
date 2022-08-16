@@ -22,21 +22,22 @@ const paymentList = [
 ];
 
 function Claim() {
-  const [userClaim, setUserClaim] = useState({ payee: '', amount: 0 });
+  const [claiming, setClaiming] = useState(false);
+  const [formattedClaim, setFormattedClaim] = useState([
+    { payee: '', amount: toBN(0) },
+  ]);
+  const [week, setWeek] = useState(0);
   const [claimAmount, setClaimAmount] = useState('0');
-  const [totalClaimable, setTotalClaimable] = useState(0);
   const [currentClaimable, setCurrentClaimable] = useState(0);
-  const { signer, account } = useWalletContext();
+  const { signer, account, provider, isConnected } = useWalletContext();
   const [withdrawnAmount, setWithdrawnAmount] = useState('0');
-  const week = 2;
 
   const amountPerWeekCalc = (amount: any) => {
-    const pre = amount * (week / 10);
-
-    const toEth = Web3Utils.toWei(pre.toString());
-
-    return Web3Utils.toBN(toEth);
+    return;
   };
+  const totalClaimable = UserClaim.find(
+    (a) => a.payee === account.toLowerCase()
+  )?.amount;
 
   const paymentPool = new ethers.Contract(
     PaymentPool.address,
@@ -44,44 +45,46 @@ function Claim() {
     signer
   );
 
-  const formattedClaim = UserClaim.map((a: any) => {
-    return {
-      payee: a.payee,
-      amount: amountPerWeekCalc(a.amount),
-    };
-  });
+  const getUserData = async () => {
+    if (account) {
+      const cycles = (await paymentPool.numPaymentCycles()).toNumber();
+      setWeek(cycles - 1);
+
+      const formatClaim = UserClaim.map((a: any) => {
+        const pre = a.amount * ((cycles - 1) / 10);
+        const toEth = Web3Utils.toWei(pre.toString());
+
+        return {
+          payee: a.payee,
+          amount: Web3Utils.toBN(toEth),
+        };
+      });
+      setFormattedClaim(formatClaim);
+      const fetchBalances: any = formatClaim.find(
+        (a) => a.payee === account.toLowerCase()
+      )?.amount;
+
+      console.log(fetchBalances);
+      const toEth = ethers.utils.formatEther(fetchBalances.toString() || 0);
+      try {
+        const history = await paymentPool.withdrawals(account);
+        setWithdrawnAmount(ethers.utils.formatEther(history));
+        const claimable =
+          parseFloat(toEth) - parseFloat(ethers.utils.formatEther(history));
+        setCurrentClaimable(claimable);
+        setClaimAmount(claimable.toString());
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchBalances: any =
-      formattedClaim.find((a: any) => a.payee === account.toLowerCase()) ||
-      toBN(0);
-    if (fetchBalances.amount) {
-      setTotalClaimable(
-        ((ethers.utils.formatEther(fetchBalances.amount.toString()) as any) *
-          10) /
-          week
-      );
-      const toEth = ethers.utils.formatEther(
-        fetchBalances.amount.toString() || 0
-      );
-      const fetchWithdrawals = async () => {
-        try {
-          const history = await paymentPool.withdrawals(account);
-          setWithdrawnAmount(ethers.utils.formatEther(history));
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      fetchWithdrawals();
-      console.log(parseInt(toEth));
-      console.log(parseInt(withdrawnAmount));
-      const claimable = parseFloat(toEth) - parseFloat(withdrawnAmount);
-      setCurrentClaimable(claimable);
-      setClaimAmount(claimable.toString());
-    }
+    getUserData();
   }, [account]);
 
   async function claim() {
+    setClaiming(true);
     const paymentPool = new ethers.Contract(
       PaymentPool.address,
       PaymentPool.abi,
@@ -96,10 +99,13 @@ function Claim() {
 
     console.log(proof);
     try {
-      await paymentPool.withdraw(formatAmount, proof);
+      const withdraw = await paymentPool.withdraw(formatAmount, proof);
+      const receipt = await withdraw.wait();
+      getUserData();
     } catch (e) {
       console.log(e);
     }
+    setClaiming(false);
   }
 
   return (
@@ -139,6 +145,7 @@ function Claim() {
             <Button
               className="w-full"
               onClick={claim}
+              loading={claiming}
               size="sm"
               variant="dao"
               texture={false}

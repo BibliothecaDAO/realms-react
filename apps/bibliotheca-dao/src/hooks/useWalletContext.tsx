@@ -168,7 +168,6 @@ function useWallet() {
   }
 
   async function getLordsPrice() {
-    console.log(process.env.GRAPH_API);
     const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${apikey}`;
     await fetch(url)
       .then((response) => response.json())
