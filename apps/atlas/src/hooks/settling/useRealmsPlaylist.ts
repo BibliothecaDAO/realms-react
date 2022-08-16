@@ -36,10 +36,6 @@ type Args = {
 };
 
 const useRealmPlaylist = (args: Args) => {
-  // const [currentPlaylist] = useState<string>(
-  //   storage(realmPlaylistNameKey, '').get()
-  // );
-
   const router = useRouter();
   const segments = router.query?.segment ?? [];
   const realmIdFromRoute = segments[1] ? Number(segments[1]) : undefined;
@@ -51,7 +47,6 @@ const useRealmPlaylist = (args: Args) => {
   );
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
-  // const [forceAllRealms, setForceAllRealms] = useState(false);
 
   const realmIds = storage<number[]>(realmPlaylistKey, []).get();
 
@@ -97,7 +92,7 @@ const useRealmPlaylist = (args: Args) => {
           setCursor(cursor + 1);
           storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
         } else {
-          toast(`No more Realms in playlist: ${currentPlaylist}`, {
+          toast(`Reached end of Realm Playlist: ${currentPlaylist}`, {
             duration: 1000,
             position: 'bottom-right',
           });
