@@ -47,7 +47,12 @@ type LocalStoragePlaylist = {
   storageKey: string;
 } & BasePlaylist;
 
-type Playlist = SystemPlaylist | LocalStoragePlaylist;
+type AddressPlaylist = {
+  playlistType: 'OwnedBy';
+  address: string;
+} & BasePlaylist;
+
+type Playlist = SystemPlaylist | LocalStoragePlaylist | AddressPlaylist;
 
 const systemPlaylists: Playlist[] = [
   {
@@ -77,8 +82,75 @@ const systemPlaylists: Playlist[] = [
   },
 ];
 
+// Curated playlists
+const curatedPlaylists: Playlist[] = [
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord of a Few',
+    address:
+      '0x0380f7644a98f9d9915dbaa0bbd4b3fe8671a46fbf9f9ab7a7b1dc3b7ce9ec72',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Redbeard',
+    address:
+      '0x037c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Unidendefi',
+    address: '0xe9b53ad255f02c6eecabab7edbc4f7fe9fc85f5281feec461d587b3461ddfe',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Milan',
+    address:
+      '0x0380f7644a98f9d9915dbaa0bbd4b3fe8671a46fbf9f9ab7a7b1dc3b7ce9ec72',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Abrax',
+    address: '0x5979f502578dbcc1df80fb189548560b5a363e1ec8c760caa784497e9e6979',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Secretive',
+    address:
+      '0x01f447b1d086c66533b481311813a68cde116aacf39fb9611636f18c79502241',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Amaro',
+    address:
+      '0x031c15a4dd86c0c3bc2de4c5407a7277e1519768d8fe95574a03dd8fc32d95a4',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Tenox',
+    address:
+      '0x07deb0da237ee37276489278fe16eff3e6a3d62f830446104d93c892df771ca2',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
+];
+// TODO: Add Fomentador
+
 const getFilterForPlaylist: (
-  playlistName: PlaylistQueryType | 'LocalStorage',
+  playlistName: PlaylistQueryType | 'LocalStorage' | 'OwnedBy',
   args: any
 ) => RealmWhereInput = (name, args) => {
   let filter: RealmWhereInput = {};
@@ -87,6 +159,9 @@ const getFilterForPlaylist: (
       filter = playlistQueryStrategy['AllRealms']();
       break;
     case 'Account':
+      filter = playlistQueryStrategy['Account'](args.starknetWallet);
+      break;
+    case 'OwnedBy':
       filter = playlistQueryStrategy['Account'](args.starknetWallet);
       break;
     case 'LocalStorage':
@@ -149,7 +224,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
         What route should we take today, ser?{' '}
       </h2>
       <div className="grid grid-cols-3 gap-4 mt-4">
-        {systemPlaylists.map((rp, i) => (
+        {systemPlaylists.concat(curatedPlaylists).map((rp, i) => (
           <Card key={rp.name}>
             <h3>{rp.name}</h3>
             <p className="my-2">{rp.description}</p>
@@ -174,7 +249,8 @@ const RealmsPlaylistSidebar = (props: Prop) => {
 
                 setLoading(true);
                 const args: any = {
-                  starknetWallet,
+                  starknetWallet:
+                    rp.playlistType == 'OwnedBy' ? rp.address : starknetWallet,
                 };
                 if (rp.playlistType == 'LocalStorage') {
                   args.realmIds = storage<number[]>(rp.storageKey, []).get();
