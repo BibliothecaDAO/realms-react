@@ -28,7 +28,7 @@ function Claim() {
   const [currentClaimable, setCurrentClaimable] = useState(0);
   const { signer, account } = useWalletContext();
   const [withdrawnAmount, setWithdrawnAmount] = useState('0');
-  const week = 1;
+  const week = 2;
 
   const amountPerWeekCalc = (amount: any) => {
     const pre = amount * (week / 10);
@@ -73,7 +73,9 @@ function Claim() {
         }
       };
       fetchWithdrawals();
-      const claimable = parseInt(toEth) - parseInt(withdrawnAmount);
+      console.log(parseInt(toEth));
+      console.log(parseInt(withdrawnAmount));
+      const claimable = parseFloat(toEth) - parseFloat(withdrawnAmount);
       setCurrentClaimable(claimable);
       setClaimAmount(claimable.toString());
     }
