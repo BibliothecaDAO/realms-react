@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { storage } from '@/util/localStorage';
 import useKeyPress from '../useKeyPress';
+import usePrevious from '../usePrevious';
 
 export const realmPlaylistCursorKey = 'realm.playlist.cursor';
 export const realmPlaylistNameKey = 'realm.playlist.name';
@@ -22,7 +23,6 @@ export const playlists = {
       },
     ],
   }),
-  // Order: (orderType: string[]) => ({ orderType: { in: orderType } }),
 };
 
 export const resetPlaylistState = () => {
@@ -45,6 +45,7 @@ const useRealmPlaylist = (args: Args) => {
   const [cursor, setCursor] = useState(
     storage<number>(realmPlaylistCursorKey, 0).get()
   );
+  const prevCursor = usePrevious<number>(cursor);
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
 
@@ -102,11 +103,18 @@ const useRealmPlaylist = (args: Args) => {
   }, [leftPressed, rightPressed]);
 
   useEffect(() => {
+    const prevRealmId = realmIds[prevCursor as number];
+
+    // Need to handle case where user was in a playlist but navigated to a realm
+    // not in the current playlist. Variables such as prevCursor are kept track of
+    // to determine if there is a difference between the playlist and the realmId page param.
+    // If there is a conflict, the page param takes precedent, and playlist state is reset.
     const conflictingRealmIds =
       realmIdFromRoute !== undefined &&
       realmIds[cursor] !== undefined &&
       realmIdFromRoute != realmIds[cursor] &&
-      Math.abs(realmIdFromRoute - realmIds[cursor]) !== 1; // allow keyboard navigation but anything else is a conflict
+      prevCursor == undefined &&
+      realmIdFromRoute != prevRealmId;
 
     if (realmIds && realmIds[cursor] && !conflictingRealmIds) {
       args.onChange(realmIds[cursor]);
