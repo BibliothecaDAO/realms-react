@@ -249,6 +249,9 @@ const RealmsPlaylistSidebar = (props: Prop) => {
               id={`playlist-${i}`}
               onClick={() => {
                 if (rp.playlistType == 'AllRealms') {
+                  toast(`Realm Playlist: ${rp.name}`, {
+                    icon: <CollectionIcon className="w-6" />,
+                  });
                   resetPlaylistState();
                   router.push(
                     {
@@ -282,6 +285,9 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   .then((res) => {
                     setLoading(false);
                     if (res.data.realms && res.data.realms.length > 0) {
+                      toast(`Realm Playlist: ${rp.name}`, {
+                        icon: <CollectionIcon className="w-6" />,
+                      });
                       const realmIds = res.data.realms.map((r) => r.realmId);
 
                       storage(realmPlaylistCursorKey, 0).set(0);
