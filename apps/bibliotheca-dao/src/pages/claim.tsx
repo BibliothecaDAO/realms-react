@@ -22,9 +22,12 @@ const paymentList = [
 ];
 
 function Claim() {
-  const [claimAmount, setClaimAmount] = useState('200000000000000000000000');
+  const [userClaim, setUserClaim] = useState({ payee: '', amount: 0 });
+  const [claimAmount, setClaimAmount] = useState('0');
+  const [totalClaimable, setTotalClaimable] = useState(0);
+  const [currentClaimable, setCurrentClaimable] = useState(0);
   const { signer, account } = useWalletContext();
-
+  const [withdrawnAmount, setWithdrawnAmount] = useState('0');
   const week = 1;
 
   const amountPerWeekCalc = (amount: any) => {
@@ -34,6 +37,12 @@ function Claim() {
 
     return Web3Utils.toBN(toEth);
   };
+
+  const paymentPool = new ethers.Contract(
+    PaymentPool.address,
+    PaymentPool.abi,
+    signer
+  );
 
   const formattedClaim = UserClaim.map((a: any) => {
     return {
@@ -46,14 +55,29 @@ function Claim() {
     const fetchBalances: any =
       formattedClaim.find((a: any) => a.payee === account.toLowerCase()) ||
       toBN(0);
-
     if (fetchBalances.amount) {
+      setTotalClaimable(
+        ((ethers.utils.formatEther(fetchBalances.amount.toString()) as any) *
+          10) /
+          week
+      );
       const toEth = ethers.utils.formatEther(
         fetchBalances.amount.toString() || 0
       );
-      setClaimAmount(toEth);
+      const fetchWithdrawals = async () => {
+        try {
+          const history = await paymentPool.withdrawals(account);
+          setWithdrawnAmount(ethers.utils.formatEther(history));
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchWithdrawals();
+      const claimable = parseInt(toEth) - parseInt(withdrawnAmount);
+      setCurrentClaimable(claimable);
+      setClaimAmount(claimable.toString());
     }
-  });
+  }, [account]);
 
   async function claim() {
     const paymentPool = new ethers.Contract(
@@ -79,13 +103,21 @@ function Claim() {
   return (
     <MainLayout>
       <div className="container px-10 py-20 pt-40 mx-auto sm:px-20 sm:py-40 sm:pt-60">
-        <h1 className="mb-8">Claim Airdrop</h1>
+        <h1 className="mb-8">Claim $LORDS Airdrop</h1>
+        <div className="flex flex-wrap">
+          <div className="mb-4 md:w-1/2">
+            <h4>10 Week Total</h4>
+            <h2>{totalClaimable && totalClaimable.toLocaleString()}</h2>
+          </div>
 
-        <div className="mb-4">
-          <h4>Your total claimable</h4>
-          <h2>
-            {(parseInt(claimAmount) * (10 / week)).toLocaleString()} $LORDS
-          </h2>
+          <div className="mb-4 md:w-1/2">
+            <h4>Amount Claimed</h4>
+            <h2>{parseFloat(withdrawnAmount).toLocaleString()} </h2>
+          </div>
+          <div className="mb-4 md:w-1/2">
+            <h4>Claimable Amount</h4>
+            <h2>{currentClaimable.toLocaleString()} </h2>
+          </div>
         </div>
         <p>
           Your total claimable unlocks 10% per week. You do not need to claim
@@ -111,6 +143,7 @@ function Claim() {
             >
               Claim
             </Button>
+            <div></div>
           </div>
         </div>
       </div>
