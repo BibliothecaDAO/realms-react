@@ -193,9 +193,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               <div className="self-center w-8 h-8 border rounded-full"></div>
             </div>
           </div>
-          <div className="fixed bottom-0 z-50 px-2 py-1 uppercase bg-gray-800 rounded-t-md font-display right-8">
-            <span className="opacity-30">P</span> Playlist
-          </div>
           <UserAgent>
             {({ mobile }) => (
               <RealmToolbar

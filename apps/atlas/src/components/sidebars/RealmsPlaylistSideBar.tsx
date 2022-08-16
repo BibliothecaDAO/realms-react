@@ -1,4 +1,6 @@
+import { Card } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
+import { CollectionIcon } from '@heroicons/react/outline';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
@@ -78,77 +80,86 @@ const RealmsPlaylistSidebar = (props: Prop) => {
         title="Journey through the Realms"
         onClose={props.onClose}
       ></SidebarHeader>
-      <h2>
-        What path should we take, ser?{' '}
+
+      <img
+        alt="Lord sitting on throne in war room"
+        style={{ textIndent: '100%', fontSize: 0 }} //  to hide alt
+        className="w-full overflow-hidden bg-bottom bg-cover whitespace-nowrap h-80 bg-warRoom"
+      />
+      <h2 className="my-6 text-center">
+        What route should we take today, ser?{' '}
         {loading ? <LoadingBricks className="inline-block w-4" /> : null}
       </h2>
-      {Object.keys(playlists).map((k) => (
-        <div key={k} className="p-4 my-2 border border-red-500 rounded-lg">
-          <button
-            onClick={() => {
-              if (k == 'AllRealms') {
-                resetPlaylistState();
-                router.push(
-                  {
-                    pathname: `/realm/1`,
-                    query: queryWithoutSegment,
-                  },
-                  undefined,
-                  {
-                    shallow: false,
-                  }
-                );
-                return;
-              }
+      <div className="grid grid-cols-3 gap-4 mt-4">
+        {Object.keys(playlists).map((k) => (
+          <Card key={k}>
+            <button
+              className="p"
+              key={k}
+              onClick={() => {
+                if (k == 'AllRealms') {
+                  resetPlaylistState();
+                  router.push(
+                    {
+                      pathname: `/realm/1`,
+                      query: queryWithoutSegment,
+                    },
+                    undefined,
+                    {
+                      shallow: false,
+                    }
+                  );
+                  return;
+                }
 
-              setLoading(true);
-              const args: any = {
-                starknetWallet,
-              };
-              if (k == 'Favorites') {
-                args.realmIds = storage<number[]>(
-                  RealmFavoriteLocalStorageKey,
-                  []
-                ).get();
-              }
+                setLoading(true);
+                const args: any = {
+                  starknetWallet,
+                };
+                if (k == 'Favorites') {
+                  args.realmIds = storage<number[]>(
+                    RealmFavoriteLocalStorageKey,
+                    []
+                  ).get();
+                }
 
-              apolloClient
-                .query<GetRealmsQuery, GetRealmsQueryVariables>({
-                  query: GetRealmsDocument,
-                  variables: {
-                    filter: getFilterForPlaylist(k as string, args),
-                  },
-                })
-                .then((res) => {
-                  setLoading(false);
-                  if (res.data.realms && res.data.realms.length > 0) {
-                    const realmIds = res.data.realms.map((r) => r.realmId);
+                apolloClient
+                  .query<GetRealmsQuery, GetRealmsQueryVariables>({
+                    query: GetRealmsDocument,
+                    variables: {
+                      filter: getFilterForPlaylist(k as string, args),
+                    },
+                  })
+                  .then((res) => {
+                    setLoading(false);
+                    if (res.data.realms && res.data.realms.length > 0) {
+                      const realmIds = res.data.realms.map((r) => r.realmId);
 
-                    storage(realmPlaylistCursorKey, 0).set(0);
-                    storage(realmPlaylistNameKey, '').set(k);
-                    storage<number[]>(realmPlaylistKey, []).set(realmIds);
-                    router.replace(
-                      {
-                        pathname: `/realm/${realmIds[0]}`,
-                        query: queryWithoutSegment,
-                      },
-                      undefined,
-                      {
-                        shallow: true,
-                      }
-                    );
-                  }
-                  if (!res.loading && res.data.realms.length == 0) {
-                    toast(`Playlist ${k} has no Realms`);
-                  }
-                });
-            }}
-            className=""
-          >
-            {k}
-          </button>
-        </div>
-      ))}
+                      storage(realmPlaylistCursorKey, 0).set(0);
+                      storage(realmPlaylistNameKey, '').set(k);
+                      storage<number[]>(realmPlaylistKey, []).set(realmIds);
+                      router.replace(
+                        {
+                          pathname: `/realm/${realmIds[0]}`,
+                          query: queryWithoutSegment,
+                        },
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
+                    }
+                    if (!res.loading && res.data.realms.length == 0) {
+                      toast(`Playlist ${k} has no Realms`);
+                    }
+                  });
+              }}
+            >
+              <CollectionIcon className="inline-block w-6" /> {k}
+            </button>
+          </Card>
+        ))}
+      </div>
     </AtlasSidebar>
   );
 };
