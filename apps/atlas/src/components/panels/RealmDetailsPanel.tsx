@@ -6,15 +6,14 @@ import {
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
-import { useSpring } from 'react-spring';
+import toast from 'react-hot-toast';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
-import type { GetRealmsQuery, Realm } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
+import type { Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
-import type { playlists } from '@/hooks/settling/useRealmsPlaylist';
 import useRealmPlaylist, {
   realmPlaylistCursorKey,
   realmPlaylistKey,
@@ -27,8 +26,10 @@ import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import SidebarHeader from '@/shared/SidebarHeader';
+import apolloClient from '@/util/apolloClient';
 import { storage } from '@/util/localStorage';
 import AtlasSidebar from '../sidebars/AtlasSideBar';
+import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
 import ResourceDetails from './RealmDetails/Resources';
@@ -79,42 +80,15 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const loadingHooks = loadingBuildings || loadingFood || loadingResources;
 
-  // useEffect(() => {
-  //   if (realm) {
-  //     router.push(
-  //       {
-  //         pathname: `realm/${realm?.realmId}`,
-  //         query: {
-  //           tab: subview,
-  //         },
-  //       },
-  //       undefined,
-  //       { shallow: true }
-  //     );
-  //   }
-  // }, [subview]);
-
   const [showPlaylists, setShowPlaylists] = useState(false);
   const [cursor, setCursor] = useState(
     storage<number>(realmPlaylistCursorKey, 0).get()
   );
 
-  const [navigationLock, setNavigationLock] = useState(false);
-  const [currentPlaylist, setCurrentPlaylist] = useState<
-    keyof typeof playlists
-  >(
-    (router.query['playlist'] as any) ?? storage(realmPlaylistNameKey, '').get()
+  // const [navigationLock, setNavigationLock] = useState(false);
+  const [currentPlaylist, setCurrentPlaylist] = useState<string>(
+    storage(realmPlaylistNameKey, '').get()
   );
-
-  // console.log("router query is", router.query["playlist"])
-
-  const prevPlaylist = usePrevious<string>(currentPlaylist);
-  // const [playlistDirty, setPlaylistDirty] = useState(false);
-  // useEffect(()=>{
-  //   if(currentPlaylist !== prevPlaylist){
-  //     setPlaylistDirty(true);
-  //   }
-  // }, [currentPlaylist]);
 
   const pushPage = (value) => {
     router.replace(
@@ -122,7 +96,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         pathname: `/realm/${value}`,
         query: {
           tab: subview,
-          playlist: currentPlaylist,
         },
       },
       undefined,
@@ -136,93 +109,17 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
   const isOwner = useIsOwner(realm?.settledOwner);
 
-  const realmsPlaylist = useRealmPlaylist({
-    playlist: currentPlaylist as any,
-  });
+  // const realmsPlaylist = useRealmPlaylist({
+  //   playlist: currentPlaylist as any,
+  // });
 
-  const realmIds = useMemo(() => {
-    return realmsPlaylist.data?.realms.map((rea) => rea.realmId);
-  }, [realmsPlaylist.data]);
+  const realmIds = storage<number[]>(realmPlaylistKey, []).get();
 
   useEffect(() => {
-    console.log('realmIds changed', realmsPlaylist.data, realmIds);
-    if (realmIds && realmIds[cursor]) {
-      pushPage(realmIds[cursor]);
-      setNavigationLock(false);
-    }
-  }, [realmIds]);
-
-  useEffect(() => {
-    console.log('cursor changed', navigationLock, realmIds);
-    if (navigationLock) {
-      return;
-    }
     if (realmIds && realmIds[cursor]) {
       pushPage(realmIds[cursor]);
     }
   }, [cursor]);
-
-  /*
-
-  useEffect(() => {
-    
-    console.log(
-      'realmsPlaylist data changed',
-      realmsPlaylist.data,
-      realmsPlaylist.loading
-    );
-    
-    const resolvedCursor = cursor % realmsPlaylist.pageSize;
-
-    const shouldNavigateToCursor =
-        (prevPlaylist !== currentPlaylist &&
-        navigationLock) || navigationLock &&
-        !realmsPlaylist.loading;
-    console.log("navigationLock", navigationLock);
-    console.log("shouldNavigate", shouldNavigateToCursor)
-    
-    if (realmsPlaylist.data?.realms && shouldNavigateToCursor) {
-      console.log(
-        'data changed, navigating to cursor',
-        resolvedCursor,
-        'realm Id',
-        realmsPlaylist.data.realms[resolvedCursor]?.realmId
-      );
-      if (
-        realmsPlaylist.data?.realms &&
-        realmsPlaylist.data.realms[resolvedCursor]
-      ) {
-        pushPage(realmsPlaylist.data.realms[resolvedCursor].realmId);
-      }      
-      setNavigationLock(false);
-    }
-  }, [realmIds]);
-  */
-
-  /*
-  useEffect(() => {
-    console.log('cursor changed', cursor);
-    console.log('Navigation locked', navigationLock);
-    // console.log('playlist dirty', playlistDirty)
-    // Don't navigate to page if a new playlist is loading
-    if (navigationLock) {
-      return;
-    }
-    const resolvedCursor = cursor % realmsPlaylist.pageSize;
-    storage<number>(RealmPlaylistCursorKey, 0).set(cursor);
-
-    if (
-      realmsPlaylist.data?.realms &&
-      realmsPlaylist.data.realms[resolvedCursor]
-    ) {
-      console.log(
-        'changing page route due to cursor change',
-        realmsPlaylist.data.realms[resolvedCursor]?.realmId
-      );
-      pushPage(realmsPlaylist.data.realms[resolvedCursor].realmId);
-    }
-  }, [cursor]);
-  */
 
   const playlistPressed = useKeyPress({ key: 'p' });
   const prevPlaylistPressed = usePrevious(playlistPressed);
@@ -238,18 +135,26 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       return;
     }
     if (leftPressed) {
-      // pushPage(realm.realmId - 1);
-      // pushPage(realmsPlaylist.prev())
-      setCursor(cursor - 1);
-      storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
-      // realmsPlaylist.prev()
+      if (cursor > 0) {
+        setCursor(cursor - 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
+      } else {
+        toast(`Already at start of Playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'bottom-right',
+        });
+      }
     }
     if (rightPressed) {
-      // pushPage(realmsPlaylist.next());
-      // pushPage(realm.realmId + 1);
-      setCursor(cursor + 1);
-      storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
-      // realmsPlaylist.next()
+      if (cursor < realmIds.length - 1) {
+        setCursor(cursor + 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
+      } else {
+        toast(`No more Realms in playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'bottom-right',
+        });
+      }
     }
   }, [leftPressed, rightPressed]);
 
@@ -296,30 +201,10 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   return (
     <BasePanel open={selectedPanel === 'realm'}>
-      <AtlasSidebar isOpen={showPlaylists}>
-        <SidebarHeader
-          title="Journey through the Realms"
-          onClose={() => setShowPlaylists(false)}
-        ></SidebarHeader>
-        <h2>What path should we take, ser?</h2>
-        {realmsPlaylist.playlists.map((k) => (
-          <div key={k} className="p-4 my-2 border border-red-500 rounded-lg">
-            <button
-              onClick={() => {
-                // setNavigationLock(true);
-                setCurrentPlaylist(k as any);
-                storage(realmPlaylistCursorKey, 0).set(0);
-                storage(realmPlaylistNameKey, 'MyRealms').set(k);
-                // setCursor(0);
-                setShowPlaylists(false);
-              }}
-              className=""
-            >
-              {k}
-            </button>
-          </div>
-        ))}
-      </AtlasSidebar>
+      <RealmsPlaylistSidebar
+        isOpen={showPlaylists}
+        onClose={() => setShowPlaylists(false)}
+      />
       <div className="grid w-full h-full overflow-auto bg-cover">
         <div className="relative col-span-6">
           <RealmBannerHeading
@@ -360,7 +245,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                       pathname: `realm/${realm?.realmId}`,
                       query: {
                         tab: s,
-                        playlist: currentPlaylist,
                       },
                     },
                     undefined,
