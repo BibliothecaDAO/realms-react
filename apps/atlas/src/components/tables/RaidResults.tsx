@@ -100,6 +100,11 @@ export const RaidResults = ({ defendId, tx }) => {
                   combatResult?.getRealmCombatResult.resourcesPillaged
                 )}
               </div>
+              {(combatResult?.getRealmCombatResult?.relicLost ?? 0) > 0 && (
+                <div className="flex pl-10 text-xl uppercase w-72">
+                  Relic {combatResult?.getRealmCombatResult.relicLost}
+                </div>
+              )}
             </div>
           ) : (
             ''

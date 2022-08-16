@@ -28,8 +28,6 @@ export function RealmHistory({
     pollInterval: 5000,
   });
 
-  console.log(historyData);
-
   const economicEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
       return {
@@ -75,6 +73,7 @@ export function RealmHistory({
                 action={a.action}
               >
                 {a.resources}
+                {a.relic}
               </HistoryCard>
             );
           })}
