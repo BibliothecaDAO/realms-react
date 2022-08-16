@@ -65,6 +65,16 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   return (
     <AtlasSidebar isOpen={props.isOpen}>
       <SidebarHeader
+        titleComponent={
+          <h1 className="flex">
+            Journey{' '}
+            <span className="flex flex-col items-center justify-center mx-2 text-lg leading-4">
+              <span>through</span>
+              <span>the</span>
+            </span>{' '}
+            Realms
+          </h1>
+        }
         title="Journey through the Realms"
         onClose={props.onClose}
       ></SidebarHeader>
