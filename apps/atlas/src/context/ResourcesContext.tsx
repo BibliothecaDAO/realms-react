@@ -113,8 +113,6 @@ function useResources() {
 
   const { data: gameConstants } = useGetGameConstantsQuery();
 
-  console.log(gameConstants);
-
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
   );
@@ -273,7 +271,6 @@ function useResources() {
     }
 
     const rates = exchangeRateData?.getExchangeRates ?? [];
-
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
         return {
@@ -284,10 +281,9 @@ function useResources() {
     const userLp = pluckData(lpBalanceData[0]);
     const currencyExchangeData = pluckData(exchangePairData[0]);
     const tokenExchangeData = pluckData(exchangePairData[1]);
-
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
-        const resourceId = index + 1;
+        const resourceId = resources[index]?.id ?? 0;
         const rate = rates.find((rate) => rate.tokenId === resourceId);
         const rateAmount = rate?.amount ?? '0';
         const resourceName = rate?.tokenName ?? '';
