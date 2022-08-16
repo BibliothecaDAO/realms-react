@@ -91,21 +91,15 @@ export const RealmsPanel = () => {
     }
 
     if (state.hasWonderFilter) {
-      filter.NOT = {
-        wonder: { equals: null },
-      };
+      filter.wonder = { not: null };
     }
 
     if (state.isSettledFilter) {
-      filter.NOT = {
-        settledOwner: { equals: null },
-      };
+      filter.settledOwner = { not: null };
     }
 
     if (state.isRaidableFilter) {
-      filter.NOT = {
-        lastVaultTime: { equals: null },
-      };
+      filter.lastVaultTime = { not: null };
       orderBy.lastVaultTime = 'asc';
     }
 
