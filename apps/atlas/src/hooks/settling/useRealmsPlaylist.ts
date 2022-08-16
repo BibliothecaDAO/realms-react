@@ -1,23 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
-import { useStarknet } from '@starknet-react/core';
-import { BigNumber } from 'ethers';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
-import type { RealmWhereInput } from '@/generated/graphql';
-import {
-  OrderByDirectionInput,
-  RealmOrderByInput,
-  RealmOrderByWithRelationInput,
-  useGetRealmsQuery,
-} from '@/generated/graphql';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { storage } from '@/util/localStorage';
-import useRealms from './useRealms';
+import useKeyPress from '../useKeyPress';
 
 export const realmPlaylistCursorKey = 'realm.playlist.cursor';
 export const realmPlaylistNameKey = 'realm.playlist.name';
 export const realmPlaylistKey = 'realm.playlist';
 
+/* eslint-disable @typescript-eslint/naming-convention */
 export const playlists = {
   AllRealms: () => ({}),
   MyRealms: (account: string) => ({ settledOwner: { equals: account } }),
@@ -29,69 +19,55 @@ export const playlists = {
       },
     ],
   }),
-  Order: (orderType: string[]) => ({ orderType: { in: orderType } }),
+  // Order: (orderType: string[]) => ({ orderType: { in: orderType } }),
 };
 
 type Args = {
-  cursor?: number;
-  playlist: keyof typeof playlists;
+  onChange: (id: number) => void;
 };
 
 const useRealmPlaylist = (args: Args) => {
-  const pageSize = 10;
+  const [currentPlaylist] = useState<string>(
+    storage(realmPlaylistNameKey, '').get()
+  );
 
-  const { account: starkAccount } = useStarknet();
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
+  const [cursor, setCursor] = useState(
+    storage<number>(realmPlaylistCursorKey, 0).get()
+  );
+  const leftPressed = useKeyPress({ keycode: 'LEFT' });
+  const rightPressed = useKeyPress({ keycode: 'RIGHT' });
 
-  const [filter, setFilter] = useState<RealmWhereInput>({});
-
-  useEffect(() => {
-    if (!args.playlist) {
-      return;
-    }
-    console.log('playlist changed to', args.playlist);
-    switch (args.playlist) {
-      case 'AllRealms':
-        setFilter(playlists['AllRealms']());
-        break;
-      case 'MyRealms':
-        setFilter(playlists['MyRealms'](starknetWallet));
-        break;
-      case 'Favorites':
-        setFilter(
-          playlists['Favorites'](
-            storage<number[]>(RealmFavoriteLocalStorageKey, []).get()
-          )
-        );
-        break;
-      case 'Raidable':
-        setFilter(playlists['Raidable']());
-        break;
-    }
-  }, [args.playlist]);
-
-  // const direction =
-  //   args.cursor % pageSize > pageSize / 2 ? 'forwards' : 'backwards';
-  // const page = Math.floor(args.cursor / pageSize);
-
-  const realms = useRealms({
-    filter,
-  });
+  const realmIds = storage<number[]>(realmPlaylistKey, []).get();
 
   useEffect(() => {
-    if (realms.data) {
-      storage<number[]>(realmPlaylistKey, []).set(
-        realms.data?.realms.map((r) => r.realmId)
-      );
+    if (leftPressed) {
+      if (cursor > 0) {
+        setCursor(cursor - 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor - 1);
+      } else {
+        toast(`Already at start of Playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'bottom-right',
+        });
+      }
     }
-  }, [realms.data]);
-  return {
-    pageSize,
-    playlists: Object.keys(playlists),
-    ...realms,
-  };
+    if (rightPressed) {
+      if (cursor < realmIds.length - 1) {
+        setCursor(cursor + 1);
+        storage<number>(realmPlaylistCursorKey, 0).set(cursor + 1);
+      } else {
+        toast(`No more Realms in playlist: ${currentPlaylist}`, {
+          duration: 1000,
+          position: 'bottom-right',
+        });
+      }
+    }
+  }, [leftPressed, rightPressed]);
+
+  useEffect(() => {
+    if (realmIds && realmIds[cursor]) {
+      args.onChange(realmIds[cursor]);
+    }
+  }, [cursor]);
 };
-
 export default useRealmPlaylist;
