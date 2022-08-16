@@ -20,7 +20,7 @@ import TransactionNavItem from './TransactionNavItem';
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { togglePanelType } = useAtlasContext();
+  const { togglePanelType, toggleMenuType } = useAtlasContext();
 
   const [player, currentTrack] = usePlayer([
     {
@@ -144,7 +144,7 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={() => togglePanelType('bank')} variant="outline">
+          <Button onClick={() => toggleMenuType('bank')} variant="outline">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}
