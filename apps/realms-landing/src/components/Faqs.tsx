@@ -33,12 +33,12 @@ const faqs = [
           LooksRare
         </a>
         ). The 'Adventurers' game expansions in the roadmap will provide a low
-        cost way to play in the Realms.
+        cost way to play in the Realms universe.
       </>
     ),
   },
   {
-    title: 'Why Starknet?',
+    title: 'Why StarkNet?',
     text: (
       <>
         We picked StarkNet for its superior computational capacity and
@@ -62,7 +62,7 @@ const faqs = [
         An on-chain game has game-logic and game-state immutably stored
         on-chain. Once deployed it will run forever. Our game will not have an
         end state. It will be a perpetual, player-owned reality. Made possible
-        by Starknet’s scaling of computation and Ethereum’s network security.{' '}
+        by StarkNet’s scaling of computation and Ethereum’s network security.{' '}
         <a
           rel="noreferrer"
           target="_blank"
@@ -112,9 +112,9 @@ const faqs = [
     title: 'Wen Starknet?',
     text: (
       <>
-        Starknet is in Alpha. Starkware anticipates the network being in a good
+        StarkNet is in Alpha. StarkWare anticipates the network being in a good
         state for gameplay before the end of 2022. We speak to the leadership
-        team at Starknet regularly and update our{' '}
+        team at StarkNet regularly and update our{' '}
         <a
           rel="noreferrer"
           target="_blank"
@@ -128,10 +128,10 @@ const faqs = [
     ),
   },
   {
-    title: 'What does the $Lords token do?',
+    title: 'What does the $LORDS token do?',
     text: (
       <>
-        The $Lords token is central to the game economy. It is emitted by Realms
+        The $LORDS token is central to the game economy. It is emitted by Realms
         based upon gameplay choices, and used for trading in the resource
         marketplace. Read more on the tokens and economy{' '}
         <a
@@ -212,8 +212,8 @@ const faqs = [
       <>
         The community bought Realms NFTs from the DAO which started the
         treasury. The community voted for us to be awarded grants (Game7 Gitcoin
-        Grant, the Loot Ecosystem Grant). We won the inaugural Starknet
-        Hackathon, and have been awarded a grant from Starkware. You can see our
+        Grant, the Loot Ecosystem Grant). We won the inaugural StarkNet
+        Hackathon, and have been awarded a grant from StarkWare. You can see our
         treasury{' '}
         <a
           rel="noreferrer"
@@ -264,7 +264,7 @@ const faqs = [
           role
         </a>{' '}
         in the Adventurers game, and other Loot projects are integral to the
-        Realms universe.',
+        Realms universe.
       </>
     ),
   },

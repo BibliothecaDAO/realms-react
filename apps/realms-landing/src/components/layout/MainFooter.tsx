@@ -35,7 +35,15 @@ export const MainFooter = () => {
       </div>
 
       <div className="flex pb-4 mx-auto text-white text-body">
-        Made with <Heart className="h-8 px-2 fill-current" /> by BibliothecaDAO
+        Made with <Heart className="h-8 px-2 fill-current" /> by{' '}
+        <a
+          href="https://bibliothecadao.xyz"
+          target="_blank"
+          rel="noreferrer"
+          className="ml-2"
+        >
+          {'  '}Bibliotheca DAO
+        </a>
       </div>
     </div>
   );

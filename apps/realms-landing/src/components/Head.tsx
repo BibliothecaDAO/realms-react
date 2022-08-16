@@ -3,7 +3,7 @@ import { default as HTMLHead } from 'next/head'; // Meta
 import type { ReactElement } from 'react';
 
 const meta = {
-  title: 'Realms: Eternal Game',
+  title: 'Realms: ETERNUM game',
   description:
     'Realms are building a MMOCCG (massively-multiplayer on-chain composable game) on L2 StarkNet',
   website: 'https://realms.xyz/',

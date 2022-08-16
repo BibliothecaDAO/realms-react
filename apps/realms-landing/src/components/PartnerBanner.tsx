@@ -1,7 +1,9 @@
+import Briq from '@bibliotheca-dao/ui-lib/icons/briq.svg';
 import Cartridge from '@bibliotheca-dao/ui-lib/icons/cartridge.svg';
 import Starkware from '@bibliotheca-dao/ui-lib/icons/starkware.svg';
 import Topology from '@bibliotheca-dao/ui-lib/icons/topology.svg';
 import Yagi from '@bibliotheca-dao/ui-lib/icons/yagi.svg';
+
 export const PartnerBanner = () => {
   const partners = [
     {
@@ -21,11 +23,7 @@ export const PartnerBanner = () => {
       url: 'https://yagi.fi/',
     },
     {
-      icon: (
-        <span className="text-4xl hover:text-orange-600 grayscale brightness-[0.4] hover:brightness-100 hover:grayscale-0">
-          Briq
-        </span>
-      ),
+      icon: <Briq className="w-28 grayscale hover:grayscale-0" />,
       url: 'https://briq.construction',
     },
     {

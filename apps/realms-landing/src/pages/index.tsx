@@ -1,5 +1,7 @@
 import { Button, ImageCarousel } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/bibliotheca-book.svg';
+import Eternum from '@bibliotheca-dao/ui-lib/icons/eternum-lockup.svg';
+
 import LooksRare from '@bibliotheca-dao/ui-lib/icons/social/looks-rare.svg';
 import OpenSea from '@bibliotheca-dao/ui-lib/icons/social/open-sea.svg';
 import ReactFullpage from '@fullpage/react-fullpage';
@@ -21,13 +23,8 @@ const slides = [
     imagePosition: 'top',
     content: (
       <div className="flex flex-col justify-between h-full px-6 text-center">
-        <div className="mt-24 uppercase" data-content>
-          <h1 className="duration-700 opacity-0 text-7xl sm:text-9xl">
-            Realms
-          </h1>
-          <h1 className="duration-700 delay-100 opacity-0 drop-shadow-2xl">
-            Eternum
-          </h1>
+        <div className="mt-20 text-center lg:mt-28" data-content>
+          <Eternum className="w-1/2 mx-auto fill-current lg:w-1/3" />
         </div>
         <div className="text-xl text-gray-900" data-content>
           <p className="duration-700 delay-200 opacity-0">
@@ -62,7 +59,7 @@ const slides = [
           An Eternal World
         </h2>
         <p className="duration-700 delay-300 opacity-0">
-          The Realms are your fantasy universe. Realms: Eternum is the first
+          The Realms are your fantasy universe. Realms: ETERNUM is the first
           module in an infinitely expanding player-owned game world.
         </p>
       </div>
@@ -77,10 +74,10 @@ const slides = [
         data-content
       >
         <h2 className="mb-4 duration-700 opacity-0 delay-0">
-          Introducing Realms: Eternum
+          Introducing Realms: ETERNUM
         </h2>
         <p className="duration-700 delay-300 opacity-0">
-          A next generation MMO. Raise empires, raid resources, control Relics.
+          A next generation MMO. Raise empires, raid resources, control relics.
           Maintain your cities and finesse your forces, or fall into ruin.
         </p>
       </div>
@@ -98,7 +95,7 @@ const slides = [
         <h2 className="mb-4 duration-700 opacity-0 delay-0">
           Play with Freedom
         </h2>
-        <p className="duration-700 delay-300 opacity-0">
+        <p className="font-semibold duration-700 delay-300 opacity-0">
           Dominate the battlefield. Out-smart the market. Exercise diplomacy.
           Take down the powerful or prey on the weak? Your world, your choice.
         </p>
@@ -136,7 +133,7 @@ const slides = [
         <h2 className="mb-4 duration-700 opacity-0 delay-0">
           Built on StarkNet
         </h2>
-        <p className="duration-700 delay-300 opacity-0">
+        <p className="font-semibold duration-700 delay-300 opacity-0">
           Real-time, deeply strategic gameplay. On-chain and unstoppable.
           Eternal play is made possible by StarkNet and Ethereum.
         </p>
@@ -266,9 +263,10 @@ function Home() {
               })}
               <section
                 fp-auto-height
-                className="container relative flex flex-col justify-center max-w-xl min-h-screen px-8 py-16 mx-auto overflow-y-scroll section sm:px-0 align-center"
+                className="w-full min-h-screen overflow-y-scroll section"
               >
-                {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
+                <div className="container relative flex flex-col justify-center max-w-xl min-h-screen px-8 py-16 mx-auto sm:px-0 align-center">
+                  {/* <h2 className="mb-10">Settle, Raid, Trade</h2>
                         <div className="pl-8 sm:pl-0">
                           <ImageCarousel loader={carouselLoader} items={mockData.items} />
                     </div> 
@@ -277,35 +275,37 @@ function Home() {
                           production capacities. Build the city that suits the territory, the
                           metagame and your playstyle
                         </p> */}
-                <h2>Bibliotheca: Stewards of on-chain gaming</h2>
-                <div className="w-48 h-48 mx-auto mt-6">
-                  <BibliothecaBook className="fill-current " />
+                  <h2>Bibliotheca: Stewards of on-chain gaming</h2>
+                  <div className="w-48 h-48 mx-auto mt-6">
+                    <BibliothecaBook className="fill-current " />
+                  </div>
+                  <p className="pb-4">
+                    Bibliotheca DAO is a pioneering web3 game studio building
+                    eternal games on Starknet.
+                  </p>
+                  <p className="hidden pb-4 sm:block">
+                    We are making games for gamers. We are open source. We are
+                    community funded. We are Starknet Hackathon winners. We are
+                    winners of the Game7 Gitcoin Grant. We are proud recipients
+                    of the Loot Ecosystem Grant. We are proud to have received
+                    grants and investment from StarkWare.{' '}
+                  </p>
+                  <p className="pb-4">
+                    Our first mission: build a massively multiplayer on-chain
+                    gaming universe, leveraging the composability of the Loot
+                    hyperverse.
+                  </p>
+                  <Button
+                    className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
+                    href="https://bibliothecadao.xyz"
+                    target="_blank"
+                    variant="dao"
+                    texture={false}
+                  >
+                    Visit Us{' '}
+                  </Button>
+                  <PartnerBanner />
                 </div>
-                <p className="pb-4">
-                  Bibliotheca DAO is a pioneering web3 game studio building
-                  eternal games on Starknet.
-                </p>
-                <p className="hidden pb-4 sm:block">
-                  We are making games for gamers. We are open source. We are
-                  community funded. We are Starknet Hackathon winners. We are
-                  winners of the Game7 Gitcoin Grant. We are proud recipients of
-                  the Loot Ecosystem Grant. We are proud to have received grants
-                  and investment from StarkWare.{' '}
-                </p>
-                <p className="pb-4">
-                  Our first mission: build a massively multiplayer on-chain
-                  gaming universe, leveraging the composability of the Loot
-                  hyperverse.
-                </p>
-                <Button
-                  className="py-2 mx-auto my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl w-36 bg-white/50"
-                  href="https://bibliothecadao.xyz"
-                  variant="dao"
-                  texture={false}
-                >
-                  Visit Us{' '}
-                </Button>
-                <PartnerBanner />
               </section>
               {/* eslint-disable-next-line sonarjs/no-identical-functions */}
               {slides.slice(5).map((slide) => {
