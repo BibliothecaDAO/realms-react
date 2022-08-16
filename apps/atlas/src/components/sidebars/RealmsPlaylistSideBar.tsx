@@ -146,6 +146,14 @@ const curatedPlaylists: Playlist[] = [
     description: '[alpha-test]',
     getFilter: (owner) => playlistQueryStrategy['Account'](owner),
   },
+  {
+    playlistType: 'OwnedBy',
+    name: 'Lord Fomentador',
+    address:
+      '0x02523823d93EC483231b5F9756953c527E396a347f18e2218dd339b0f2911cF5',
+    description: '[alpha-test]',
+    getFilter: (owner) => playlistQueryStrategy['Account'](owner),
+  },
 ];
 // TODO: Add Fomentador
 
