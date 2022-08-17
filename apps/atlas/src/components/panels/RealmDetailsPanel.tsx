@@ -149,6 +149,14 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     }
   };
 
+  const favoritesPressed = useKeyPress({ key: 'f' });
+  const prevFavoritesPressed = usePrevious(favoritesPressed);
+  useEffect(() => {
+    if (favoritesPressed && !prevFavoritesPressed) {
+      toggleFavourite();
+    }
+  }, [favoritesPressed]);
+
   const quickActions = [
     {
       icon: <ArrowNarrowRightIcon className={s_icons} />,

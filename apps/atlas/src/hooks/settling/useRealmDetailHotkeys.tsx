@@ -6,10 +6,7 @@ import useKeyPress from '../useKeyPress';
 export const HotKeys = {
   Army: 'a',
   Resources: 'r',
-  Food: 'f',
   History: 'h',
-  Buildings: 'b',
-  Goblins: 'g',
   Survey: 's',
   Lore: 'l',
 };
@@ -20,10 +17,7 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
   const [subview, setSubview] = useState<Subview>(initialSubview || null);
 
   const attackPress = useKeyPress({ key: HotKeys.Army});
-  const foodPress = useKeyPress({ key: HotKeys.Food});
-  const buildingsPress = useKeyPress({ key: HotKeys.Buildings});
   const historyPress = useKeyPress({ key: HotKeys.History });
-  const goblinPress = useKeyPress({ key: HotKeys.Goblins});
   const surveyPress = useKeyPress({ key: HotKeys.Survey});
   const resourcesPress = useKeyPress({ key: HotKeys.Resources});
   const lorePress = useKeyPress({ key: HotKeys.Lore});
@@ -32,20 +26,11 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
     if (attackPress) {
       subview == 'Army' ? setSubview(null) : setSubview('Army');
     }
-    if (foodPress) {
-      subview == 'Food' ? setSubview(null) : setSubview('Food');
-    }
-    if (buildingsPress) {
-      subview == 'Buildings' ? setSubview(null) : setSubview('Buildings');
-    }
     if (resourcesPress) {
       subview == 'Resources' ? setSubview(null) : setSubview('Resources');
     }
     if (surveyPress) {
       subview == 'Survey' ? setSubview(null) : setSubview('Survey');
-    }
-    if (goblinPress) {
-      subview == 'Goblins' ? setSubview(null) : setSubview('Goblins');
     }
     if (lorePress) {
       subview == 'Lore' ? setSubview(null) : setSubview('Lore');
@@ -55,9 +40,6 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
     }
   }, [
     attackPress,
-    foodPress,
-    buildingsPress,
-    goblinPress,
     surveyPress,
     resourcesPress,
     historyPress,
@@ -69,9 +51,6 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
     clear: () => setSubview(null),
     set: (val: Subview) => setSubview(val),
     attackPress,
-    foodPress,
-    buildingsPress,
-    goblinPress,
     surveyPress,
     resourcesPress,
     historyPress,
