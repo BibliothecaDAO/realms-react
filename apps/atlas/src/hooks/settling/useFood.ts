@@ -138,6 +138,8 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       return;
     }
 
+    console.log(foodInformation);
+
     setRealmFoodDetails({
       totalFarmHarvest: foodInformation['total_farm_harvest'].toNumber(),
       totalTimeRemainingUntilFarmHarvest:
@@ -159,6 +161,11 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     realmFoodDetails,
     availableFood,
     create: (tokenId, quantity, foodBuildingId) => {
+      if (foodBuildingId === RealmBuildingId.FishingVillage) {
+        harvestFish();
+      } else {
+        harvestWheat();
+      }
       txQueue.add(
         createFoodCall.create({
           tokenId,

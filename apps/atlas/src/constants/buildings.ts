@@ -49,14 +49,14 @@ export const BASE_RESOURCES_PER_DAY = 250;
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;
 
 export const VAULT_LENGTH = 7;
-export const DAY = 7200;
+export const DAY = 14400;
 export const VAULT_LENGTH_SECONDS = VAULT_LENGTH * DAY;
 
 export const BASE_LORDS_PER_DAY = 25;
 
 export const WORK_HUT_COST_IN_BP = 5;
 export const WORK_HUT_COST = 75;
-export const WORK_HUT_OUTPUT = 200;
+export const WORK_HUT_OUTPUT = 50;
 
 export const PILLAGE_AMOUNT = 25;
 
