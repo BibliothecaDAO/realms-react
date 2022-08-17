@@ -225,7 +225,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
       <img
         alt="Lord sitting on throne in war room"
         style={{ textIndent: '100%', fontSize: 0 }} //  to hide alt
-        className="w-full overflow-hidden bg-bottom bg-cover whitespace-nowrap h-80 bg-warRoom"
+        className="w-full overflow-hidden bg-bottom bg-cover whitespace-nowrap h-48 lg:h-60 bg-warRoom"
       />
       <h2 className="my-6 text-center">
         What route should we take today, ser?{' '}
