@@ -18,6 +18,7 @@ import {
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -43,7 +44,7 @@ type Prop = {
 };
 
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
-  const { balance } = useResourcesContext();
+  const { exchangeInfo } = useMarketRate();
 
   const { claim } = useResources(props.realm as Realm);
   const isOwner = useIsOwner(props.realm?.settledOwner);
@@ -84,8 +85,13 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     return vaultAccrued.toLocaleString();
   });
 
+  const getRateChange = (id) => {
+    return exchangeInfo?.find((a) => a.tokenId === id)?.percentChange24Hr || 0;
+  };
   const getRate = (id) => {
-    return balance.find((a) => a.resourceId === id)?.percentChange || 0;
+    return (+formatEther(
+      exchangeInfo?.find((a) => a.tokenId === id)?.sellAmount || 0
+    )).toFixed(3);
   };
   const mappedRowData: Row[] = (props.realm.resources as any).map(
     (re, index) => {
@@ -101,7 +107,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             />
             <span className="self-center tracking-widest uppercase">
               {re.resourceName || ''} <br />{' '}
-              {RateChange(getRate(re.resourceId))}
+              {RateChange(getRateChange(re.resourceId))}{' '}
+              <span className="text-xs ">[{getRate(re.resourceId)}]</span>
             </span>
           </span>
         ),
@@ -116,7 +123,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             <span className="w-full text-center">
               {(resources && resources[index]) || (
                 <Spinner size="md" scheme="white" variant="circle" />
-              )}
+              )}{' '}
             </span>
           ),
         });
@@ -168,7 +175,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     <div className="w-full bg-black">
       <div className="flex justify-around flex-grow w-full p-4 text-center">
         <div className="w-full sm:w-1/2">
-          <h6>days</h6>
+          <h6>work days</h6>
           <div className="mt-3 font-semibold sm:text-5xl">
             {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
             <span className="opacity-50"> / 3</span>
@@ -187,10 +194,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
         </div>
         <div className="border-r-4 border-white border-double border-white/30"></div>
         <div className="w-full sm:w-1/2">
-          <h6>vault </h6>
-          <div className="mt-3 font-semibold sm:text-5xl">
-            {cachedVaultDaysAccrued}
-          </div>{' '}
+          <h6>vault days</h6>
+          <div className="mt-3 sm:text-5xl">{cachedVaultDaysAccrued}</div>{' '}
         </div>
       </div>
       {props.header}

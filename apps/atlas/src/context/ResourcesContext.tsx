@@ -16,6 +16,7 @@ import {
   useGetExchangeRatesQuery,
   useGetGameConstantsQuery,
 } from '@/generated/graphql';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import {
   useLordsContract,
   useResources1155Contract,
@@ -164,9 +165,7 @@ function useResources() {
       },
     });
 
-  const { data: exchangeRateData } = useGetExchangeRatesQuery({
-    pollInterval: 10000,
-  });
+  const { exchangeInfo } = useMarketRate();
 
   // batch add a cost
   const batchAddResources = (cost: ResourceCost[]) => {
@@ -270,7 +269,7 @@ function useResources() {
       return;
     }
 
-    const rates = exchangeRateData?.getExchangeRates ?? [];
+    const rates = exchangeInfo ?? [];
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
         return {
@@ -302,7 +301,7 @@ function useResources() {
 
     setBuildingCosts(gameConstants?.buildingCosts);
     setTroopCosts(gameConstants?.troopStats);
-  }, [resourceBalanceData, resourcesBalanceError, exchangeRateData]);
+  }, [resourceBalanceData, resourcesBalanceError, exchangeInfo]);
 
   const getResourceById = useCallback(
     (resourceId: number) => {

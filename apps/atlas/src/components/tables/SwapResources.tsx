@@ -17,6 +17,7 @@ import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import { useCosts } from '@/hooks/costs/useCosts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -155,6 +156,8 @@ export function SwapResources(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
+  const { costs } = useCosts();
+
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
     useSellResources();
@@ -171,8 +174,6 @@ export function SwapResources(): ReactElement {
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
-    buildingCosts,
-    troopCosts,
     batchAddResources,
   } = useResourcesContext();
 
@@ -275,7 +276,7 @@ export function SwapResources(): ReactElement {
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
         <h5>quick add building cost</h5>
-        {buildingCosts
+        {costs?.buildingCosts
           ?.filter((b) => b.resources.length)
           .map((a, i) => {
             return (
@@ -290,7 +291,7 @@ export function SwapResources(): ReactElement {
             );
           })}
         <h5 className="mt-2">quick add troop cost</h5>
-        {troopCosts?.map((a, i) => {
+        {costs?.troopStats?.map((a, i) => {
           return (
             <Button
               key={i}

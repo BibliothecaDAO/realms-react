@@ -23,6 +23,7 @@ import type {
   BuildingDetail,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
+import { useCosts } from '../costs/useCosts';
 
 type Building = {
   buildings: BuildingDetail[] | undefined;
@@ -50,7 +51,9 @@ export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
 const useBuildings = (realm: Realm | undefined): Building => {
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
 
-  const { buildingCosts } = useResourcesContext();
+  const { costs } = useCosts();
+
+  console.log(costs);
 
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
@@ -72,10 +75,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
   };
 
   useEffect(() => {
-    if (!realm) {
+    if (!costs || !realm) {
       return;
     }
-    console.log(realm);
+    console.log(costs);
     const barracks = getRealmBuildings(
       pluckBuilding(realm, RealmBuildingId.Barracks),
       RealmBuildingIntegrity.Barracks
@@ -108,7 +111,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'military',
         buildingSize: RealmBuildingsSize.ArcherTower,
         sqmUsage: archerTowers * RealmBuildingsSize.ArcherTower,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.ArcherTower
         )?.resources,
       },
@@ -121,7 +124,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'military',
         buildingSize: RealmBuildingsSize.Barracks,
         sqmUsage: barracks * RealmBuildingsSize.Barracks,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.Barracks
         )?.resources,
       },
@@ -134,7 +137,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'military',
         buildingSize: RealmBuildingsSize.Castle,
         sqmUsage: castles * RealmBuildingsSize.Castle,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.Castle
         )?.resources,
       },
@@ -147,8 +150,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'economic',
         buildingSize: RealmBuildingsSize.Farm,
         sqmUsage: 0 * RealmBuildingsSize.Farm,
-        cost: buildingCosts?.find((a) => a.buildingId === RealmBuildingId.Farm)
-          ?.resources,
+        cost: costs?.buildingCosts.find(
+          (a) => a.buildingId === RealmBuildingId.Farm
+        )?.resources,
       },
       {
         name: 'Fishing Village',
@@ -159,7 +163,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'economic',
         buildingSize: RealmBuildingsSize.FishingVillage,
         sqmUsage: 0 * RealmBuildingsSize.FishingVillage,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.FishingVillage
         )?.resources,
       },
@@ -172,8 +176,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'economic',
         buildingSize: RealmBuildingsSize.House,
         sqmUsage: huts * RealmBuildingsSize.House,
-        cost: buildingCosts?.find((a) => a.buildingId === RealmBuildingId.House)
-          ?.resources,
+        cost: costs?.buildingCosts.find(
+          (a) => a.buildingId === RealmBuildingId.House
+        )?.resources,
       },
       {
         name: 'Mage Tower',
@@ -184,7 +189,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'military',
         buildingSize: RealmBuildingsSize.MageTower,
         sqmUsage: mageTowers * RealmBuildingsSize.MageTower,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.MageTower
         )?.resources,
       },
@@ -197,7 +202,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         type: 'economic',
         buildingSize: RealmBuildingsSize.StoreHouse,
         sqmUsage: 0 * RealmBuildingsSize.StoreHouse,
-        cost: buildingCosts?.find(
+        cost: costs?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.StoreHouse
         )?.resources,
       },
@@ -215,9 +220,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
     const regions = getTrait(realm, 'Region');
 
     const max = cities * (regions / 2) + 100;
-
+    console.log(buildings);
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
-  }, [realm]);
+  }, [realm, costs]);
 
   return {
     buildings,

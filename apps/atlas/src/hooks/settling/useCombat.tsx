@@ -1,5 +1,4 @@
 import { useStarknetInvoke } from '@starknet-react/core';
-
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
@@ -40,10 +39,9 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 };
 
 const useCombat = () => {
-  const { play: raidSound } = useUiSounds(soundSelector.raid);
   const txQueue = useTransactionQueue();
-
-  const { contract: combatContract } = useCombatContract();
+  const { contract } = useCombatContract();
+  const { play: raidSound } = useUiSounds(soundSelector.raid);
 
   const {
     data: combatData,
@@ -51,7 +49,7 @@ const useCombat = () => {
     loading: combatLoading,
     invoke: combatInvoke,
   } = useStarknetInvoke({
-    contract: combatContract,
+    contract: contract,
     method: 'initiate_combat',
   });
 
