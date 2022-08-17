@@ -88,7 +88,10 @@ export const TxCartItem = (props: TxCartItem) => {
                 props.transaction.transactionHash
               }
             >
-              <a className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/50 hover:bg-white/20">
+              <a
+                target={'_blank'}
+                className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/50 hover:bg-white/20"
+              >
                 See on Voyager <ExternalLink className="inline-block w-4" />
               </a>
             </Link>
