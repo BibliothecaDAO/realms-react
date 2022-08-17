@@ -56,3 +56,7 @@ hr {
   opacity: 1;
   transform: translate3d(0, -3rem, 0);
 }
+
+p {
+  @apply leading-loose;
+}

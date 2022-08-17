@@ -44,12 +44,12 @@ export const PartnerBanner = () => {
     },
   ];
   return (
-    <div className="relative text-gray-900 shadow-inner text-off-300">
-      <h4 className="top-0 self-center mt-12">We work with</h4>
+    <div className="container relative p-4 mx-auto my-10 border rounded border-white/30">
       <div className="flex flex-wrap justify-center text-center">
+        <h4 className="self-center pt-4 ">We work with</h4>
         {partners.map((a, index) => {
           return (
-            <div key={index} className="self-center p-4 ">
+            <div key={index} className="self-center p-4 px-6">
               {' '}
               <a href={a.url} target="_blank" rel="noreferrer">
                 {a.icon}

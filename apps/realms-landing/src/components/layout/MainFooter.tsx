@@ -34,8 +34,8 @@ export const MainFooter = () => {
         </a>
       </div>
 
-      <div className="flex pb-4 mx-auto text-white text-body">
-        Made with <Heart className="h-8 px-2 fill-current" /> by{' '}
+      <div className="flex pb-4 mx-auto text-body">
+        Made with <Heart className="h-6 px-2 fill-current" /> by{' '}
         <a
           href="https://bibliothecadao.xyz"
           target="_blank"
