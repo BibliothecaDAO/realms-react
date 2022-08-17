@@ -28,7 +28,7 @@ const slides = [
           <Eternum className="w-1/2 mx-auto fill-current lg:w-1/3" />
         </div>
         <div className="text-gray-900 " data-content>
-          <p className="text-5xl duration-700 delay-200 opacity-0">
+          <p className="duration-700 delay-200 opacity-0 sm:text-5xl">
             Build empires inside your browser
           </p>
           <p className="pb-6 duration-700 delay-500 opacity-0 sm:text-3xl ">
@@ -271,7 +271,7 @@ function Home() {
                     </h2>
                     <div className="w-1/2 mx-auto">
                       {' '}
-                      <p className="pt-4 mb-4 text-2xl">
+                      <p className="pt-4 mb-4 sm:text-2xl">
                         Bibliotheca DAO is a pioneering web3 game studio <br />
                         building eternal games on StarkNet.
                       </p>
