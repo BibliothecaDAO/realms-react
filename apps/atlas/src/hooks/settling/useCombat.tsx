@@ -70,6 +70,7 @@ const useCombat = () => {
           squadSlot: 1,
           troopColour: pluckClientTroop(a.troopId)?.colour,
           troopImage: pluckClientTroop(a.troopId)?.img,
+          buildingId: pluckClientTroop(a.troopId)?.buildingId,
         };
       })
     );

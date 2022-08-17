@@ -207,6 +207,7 @@ export interface TroopInterface {
   troopCost?: ItemCost | null;
   troopColour?: string;
   troopImage?: string;
+  buildingId?: number | undefined;
 }
 
 export interface ItemCost {

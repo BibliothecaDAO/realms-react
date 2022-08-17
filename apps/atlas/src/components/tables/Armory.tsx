@@ -5,12 +5,13 @@ import { useReducer, useState } from 'react';
 import { Squad, TroopTierMax } from '@/constants/index';
 import { TroopBuildings } from '@/constants/troops';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
+import useCombat from '@/hooks/settling/useCombat';
 import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
 
 interface Props {
   realmId: number;
-  statistics: GetTroopStatsQuery['getTroopStats'];
+  statistics: TroopInterface[];
   hideSquadToggle?: boolean;
   filterTier?: number;
   troopsQueued: TroopInterface[];
@@ -36,10 +37,10 @@ export const ArmoryBuilder = (props: Props) => {
 
   const troopCostCell = (cost: ItemCost) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col my-2">
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="flex w-full my-3 sm:text-xl">
+            <div key={index} className="flex w-full my-1 sm:text-xl">
               <ResourceIcon
                 resource={
                   findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
@@ -80,7 +81,9 @@ export const ArmoryBuilder = (props: Props) => {
     return {
       name: (
         <span className="flex p-1">
-          <div className="flex w-1/3 p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+          <div
+            className={`flex w-1/3 p-2 border-4 border-double rounded-xl border-white/40 ${re.troopColour}`}
+          >
             <Image
               height={100}
               width={100}
@@ -90,12 +93,14 @@ export const ArmoryBuilder = (props: Props) => {
             />
           </div>
           <div className="w-2/3 px-4 py-2">
-            <div className="text-xl font-display"> {re.troopName}</div>
-            <div>Agility: {re.agility}</div>
-            <div>Attack: {re.attack}</div>
-            <div>Armor: {re.armor}</div>
-            <div>Vitality: {re.vitality}</div>
-            <div>Wisdom: {re.wisdom}</div>
+            <div className="text-2xl font-display"> {re.troopName}</div>
+            <div className="text-xs tracking-widest uppercase opacity-80">
+              <div>Agility: {re.agility}</div>
+              <div>Attack: {re.attack}</div>
+              <div>Armor: {re.armor}</div>
+              <div>Vitality: {re.vitality}</div>
+              <div>Wisdom: {re.wisdom}</div>
+            </div>
           </div>
         </span>
       ),
@@ -105,7 +110,7 @@ export const ArmoryBuilder = (props: Props) => {
           <Button
             disabled={
               reachedMaxNumberOfTroopsInTier ||
-              checkCanBuilt(TroopBuildings[re.troopName])
+              checkCanBuilt(TroopBuildings[re.troopName ?? ''])
             }
             variant="primary"
             size="xs"
@@ -120,8 +125,8 @@ export const ArmoryBuilder = (props: Props) => {
           >
             {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
           </Button>
-          {checkCanBuilt(TroopBuildings[re.troopName]) && (
-            <p>build required building first</p>
+          {checkCanBuilt(TroopBuildings[re.troopName ?? '']) && (
+            <p className="mt-4">Requires building</p>
           )}
         </div>
       ),
@@ -182,13 +187,22 @@ export const ArmoryBuilder = (props: Props) => {
 
       <div className="my-4 overflow-y-scroll">
         <div className="flex justify-center mb-3 space-x-3">
-          <Button variant="outline" onClick={() => setTier(1)}>
+          <Button
+            variant={tier === 1 ? 'primary' : 'outline'}
+            onClick={() => setTier(1)}
+          >
             tier 1
           </Button>
-          <Button variant="outline" onClick={() => setTier(2)}>
+          <Button
+            variant={tier === 2 ? 'primary' : 'outline'}
+            onClick={() => setTier(2)}
+          >
             tier 2
           </Button>
-          <Button variant="outline" onClick={() => setTier(3)}>
+          <Button
+            variant={tier === 3 ? 'primary' : 'outline'}
+            onClick={() => setTier(3)}
+          >
             tier 3
           </Button>
         </div>
