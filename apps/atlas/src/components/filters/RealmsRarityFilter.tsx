@@ -1,9 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover, Transition } from '@headlessui/react';
-import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { RealmsMax } from '@/constants/index';
-import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 import type { MinMaxRange } from '@/types/index';
 import { RangeSliderFilter } from './RangeSliderFilter';
 
@@ -18,14 +16,7 @@ type RealmsRarityFilterProps = {
 };
 
 export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { rarity } = props;
-
-  const ref = useRef(null);
-  useOnClickOutsideElement(ref, () => {
-    setIsOpen(false);
-  });
 
   const onScoreFilterChange = (value: number[]) => {
     const updatedRarity = {
@@ -51,51 +42,46 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
 
   return (
     <Popover className="relative z-50">
-      <div ref={ref}>
-        <Popover.Button as="div">
-          <Button
-            size="xs"
-            variant={hasSelectedFilters ? 'primary' : 'outline'}
-          >
-            Rarity
-          </Button>
-        </Popover.Button>
-        <Transition
-          enter="transition duration-350 ease-out"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-350 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
+      <Popover.Button as="div">
+        <Button size="xs" variant={hasSelectedFilters ? 'primary' : 'outline'}>
+          Rarity
+        </Button>
+      </Popover.Button>
+      <Transition
+        enter="transition duration-350 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-350 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Popover.Panel
+          className="absolute z-10 mt-2 ml-2 border-4 border-double rounded sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2 border-white/20"
+          static
         >
-          <Popover.Panel
-            className="absolute z-10 mt-2 ml-2 border-4 border-double rounded sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2 border-white/20"
-            static
-          >
-            <div className="flex flex-col px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
-              <h4 className="text-center">Rarity</h4>
-              <RangeSliderFilter
-                name="Score"
-                min={0}
-                max={RealmsMax.Score}
-                stepSize={50}
-                values={[rarity.score.min, rarity.score.max]}
-                defaultValues={[0, RealmsMax.Score]}
-                onChange={onScoreFilterChange}
-              />
-              <RangeSliderFilter
-                name="Rank"
-                min={0}
-                max={RealmsMax.Rank}
-                stepSize={50}
-                values={[rarity.rank.min, rarity.rank.max]}
-                defaultValues={[0, RealmsMax.Rank]}
-                onChange={onRankFilterChange}
-              />
-            </div>
-          </Popover.Panel>
-        </Transition>
-      </div>
+          <div className="flex flex-col px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+            <h4 className="text-center">Rarity</h4>
+            <RangeSliderFilter
+              name="Score"
+              min={0}
+              max={RealmsMax.Score}
+              stepSize={50}
+              values={[rarity.score.min, rarity.score.max]}
+              defaultValues={[0, RealmsMax.Score]}
+              onChange={onScoreFilterChange}
+            />
+            <RangeSliderFilter
+              name="Rank"
+              min={0}
+              max={RealmsMax.Rank}
+              stepSize={50}
+              values={[rarity.rank.min, rarity.rank.max]}
+              defaultValues={[0, RealmsMax.Rank]}
+              onChange={onRankFilterChange}
+            />
+          </div>
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 }
