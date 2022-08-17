@@ -111,6 +111,25 @@
       {
         "name": "token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "quantity",
+        "type": "felt"
+      },
+      {
+        "name": "resource_id",
+        "type": "felt"
+      }
+    ],
+    "name": "convert_food_tokens_to_store",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
       }
     ],
     "name": "food_in_store",
@@ -258,6 +277,10 @@
         "type": "felt"
       },
       {
+        "name": "get_farm_harvests_left",
+        "type": "felt"
+      },
+      {
         "name": "total_village_harvest",
         "type": "felt"
       },
@@ -271,6 +294,10 @@
       },
       {
         "name": "villages_built",
+        "type": "felt"
+      },
+      {
+        "name": "fishing_collections_left",
         "type": "felt"
       }
     ],
