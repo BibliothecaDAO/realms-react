@@ -244,6 +244,18 @@ function Home() {
                   />
                 );
               })}
+
+              {/* eslint-disable-next-line sonarjs/no-identical-functions */}
+              {slides.slice(5).map((slide) => {
+                return (
+                  <FullPageSlide
+                    key={slide.image}
+                    image={slide.image}
+                    priority={slide.priority}
+                    content={slide.content}
+                  />
+                );
+              })}
               <section
                 fp-auto-height
                 className="w-full min-h-screen overflow-y-scroll section"
@@ -304,17 +316,6 @@ function Home() {
                   <PartnerBanner />
                 </div>
               </section>
-              {/* eslint-disable-next-line sonarjs/no-identical-functions */}
-              {slides.slice(5).map((slide) => {
-                return (
-                  <FullPageSlide
-                    key={slide.image}
-                    image={slide.image}
-                    priority={slide.priority}
-                    content={slide.content}
-                  />
-                );
-              })}
               <div className="min-h-screen section">
                 <div className="container relative px-8 py-5 mx-auto sm:w-1/2 sm:px-0 lg:w-1/2">
                   <FaqBlock />
