@@ -20,7 +20,7 @@ export const MarketSelect = (props: ResourceRowProps): ReactElement => {
             size="xs"
             variant="outline"
           >
-            {a.buildingName} +
+            {a.buildingName}
           </Button>
         );
       })}

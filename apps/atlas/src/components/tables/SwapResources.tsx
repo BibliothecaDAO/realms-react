@@ -17,6 +17,7 @@ import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import { useCosts } from '@/hooks/costs/useCosts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -155,6 +156,8 @@ export function SwapResources(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
+  const { costs } = useCosts();
+
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
     useSellResources();
@@ -171,7 +174,6 @@ export function SwapResources(): ReactElement {
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
-    buildingCosts,
     batchAddResources,
   } = useResourcesContext();
 
@@ -270,14 +272,38 @@ export function SwapResources(): ReactElement {
     }
   }
 
-  function onClickCostRecipe(cost: ResourceCost[]) {
-    batchAddResources(cost);
-  }
-
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="w-full">
-        <MarketSelect update={onClickCostRecipe} cost={buildingCosts} />
+      <div className="w-full my-4">
+        <h5>quick add building cost</h5>
+        {costs?.buildingCosts
+          ?.filter((b) => b.resources.length)
+          .map((a, i) => {
+            return (
+              <Button
+                key={i}
+                onClick={() => batchAddResources(a.resources)}
+                size="xs"
+                variant="outline"
+              >
+                {a.buildingName}
+              </Button>
+            );
+          })}
+        <h5 className="mt-2">quick add troop cost</h5>
+        {costs?.troopStats?.map((a, i) => {
+          return (
+            <Button
+              key={i}
+              onClick={() => batchAddResources(a.troopCost?.resources)}
+              size="xs"
+              variant="outline"
+            >
+              {a.troopName}
+            </Button>
+          );
+        })}
+        {/* <MarketSelect update={onClickCostRecipe} cost={buildingCosts} /> */}
       </div>
 
       <div className="flex mx-auto mb-8 text-sm tracking-widest">
@@ -335,11 +361,11 @@ export function SwapResources(): ReactElement {
           <Button
             aria-label="Add Row"
             size="xs"
-            variant="primary"
+            variant="outline"
             className="mx-auto"
             onClick={() => addSelectedSwapResources()}
           >
-            add +
+            add resource
           </Button>
         </div>
       </div>
@@ -349,7 +375,9 @@ export function SwapResources(): ReactElement {
             <div className="flex justify-end text-2xl font-semibold">
               <span>
                 <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
-                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
+                  {isBuy
+                    ? 'Total cost of resources in $LORDS'
+                    : 'Approximate lords received'}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}
               </span>
@@ -357,7 +385,7 @@ export function SwapResources(): ReactElement {
             <div>
               <div className="flex justify-end text-md">
                 <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your lords Balance:
+                  Your current $LORDS balance
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>

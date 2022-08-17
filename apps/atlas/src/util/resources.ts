@@ -245,4 +245,24 @@ export const resources: Array<Resources> = [
       'Dragons are the hidden guardians of our reality. No mortal can witness their work, lest they be purged by dragonfire. If you find one of these scales, flee. Only death can be found in their presence or by the forces they fight in secret.',
     img: 'https://github.com/BibliothecaForAdventurers/voxel-resources/blob/main/compressed/dragonhide.gif?raw=true',
   },
+
+  {
+    trait: 'Wheat',
+    value: 10000,
+    colour: '#ec4899',
+    colourClass: '',
+    id: 10000,
+    description: 'Wheat.',
+    img: 'https://github.com/BibliothecaForAdventurers/voxel-resources/blob/main/compressed/wheat.gif?raw=true',
+  },
+
+  {
+    trait: 'Fish',
+    value: 10001,
+    colour: '#ec4899',
+    colourClass: '',
+    id: 10001,
+    description: 'Fish.',
+    img: 'https://github.com/BibliothecaForAdventurers/voxel-resources/blob/main/compressed/.gif?raw=true',
+  },
 ];

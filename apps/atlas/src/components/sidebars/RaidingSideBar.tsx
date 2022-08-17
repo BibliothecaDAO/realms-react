@@ -44,7 +44,7 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     }
     console.log(combatData);
   }, [combatData]);
-  console.log(attackingRealm?.troops);
+
   return (
     <div>
       {(!txSubmitted || combatError) && (

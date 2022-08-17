@@ -16,6 +16,7 @@ import {
   useGetExchangeRatesQuery,
   useGetGameConstantsQuery,
 } from '@/generated/graphql';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import {
   useLordsContract,
   useResources1155Contract,
@@ -82,6 +83,7 @@ const ResourcesContext = createContext<{
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
+  troopCosts: GetGameConstantsQuery['troopStats'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
 }>(null!);
 
@@ -111,8 +113,6 @@ function useResources() {
     useState<GetGameConstantsQuery['troopStats']>();
 
   const { data: gameConstants } = useGetGameConstantsQuery();
-
-  console.log(gameConstants);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -165,9 +165,7 @@ function useResources() {
       },
     });
 
-  const { data: exchangeRateData } = useGetExchangeRatesQuery({
-    pollInterval: 10000,
-  });
+  const { exchangeInfo } = useMarketRate();
 
   // batch add a cost
   const batchAddResources = (cost: ResourceCost[]) => {
@@ -271,8 +269,7 @@ function useResources() {
       return;
     }
 
-    const rates = exchangeRateData?.getExchangeRates ?? [];
-
+    const rates = exchangeInfo ?? [];
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
         return {
@@ -283,10 +280,9 @@ function useResources() {
     const userLp = pluckData(lpBalanceData[0]);
     const currencyExchangeData = pluckData(exchangePairData[0]);
     const tokenExchangeData = pluckData(exchangePairData[1]);
-
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
-        const resourceId = index + 1;
+        const resourceId = resources[index]?.id ?? 0;
         const rate = rates.find((rate) => rate.tokenId === resourceId);
         const rateAmount = rate?.amount ?? '0';
         const resourceName = rate?.tokenName ?? '';
@@ -304,7 +300,8 @@ function useResources() {
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
-  }, [resourceBalanceData, resourcesBalanceError, exchangeRateData]);
+    setTroopCosts(gameConstants?.troopStats);
+  }, [resourceBalanceData, resourcesBalanceError, exchangeInfo]);
 
   const getResourceById = useCallback(
     (resourceId: number) => {
@@ -336,6 +333,7 @@ function useResources() {
     getResourceById,
     lordsBalance,
     buildingCosts,
+    troopCosts,
     batchAddResources,
   };
 }

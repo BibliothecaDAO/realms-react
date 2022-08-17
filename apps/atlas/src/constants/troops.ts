@@ -62,12 +62,18 @@ export enum TroopIds {
   Arcanist = 12,
 }
 
+const Barracks = 'bg-red-600';
+const ArcherTower = 'bg-yellow-600';
+const Castle = 'bg-orange-600';
+const MageTower = 'bg-purple-600';
+
 export const troopList = [
   {
     name: 'Skirmisher',
     type: 'ranged',
     img: 'Skirmisher.png',
     troopId: TroopIds.Skirmisher,
+    colour: Barracks,
     tier: TroopTier.Skirmisher,
     agility: 2,
     attack: 7,
@@ -82,6 +88,7 @@ export const troopList = [
     img: 'Longbow.png',
     tier: TroopTier.Longbow,
     troopId: TroopIds.Longbow,
+    colour: ArcherTower,
     agility: 4,
     attack: 7,
     armor: 3,
@@ -95,6 +102,7 @@ export const troopList = [
     img: 'Crossbow.png',
     tier: TroopTier.Crossbow,
     troopId: TroopIds.Crossbow,
+    colour: ArcherTower,
     agility: 6,
     attack: 9,
     armor: 4,
@@ -108,6 +116,7 @@ export const troopList = [
     img: 'Pikeman.png',
     tier: TroopTier.Pikeman,
     troopId: TroopIds.Pikeman,
+    colour: Barracks,
     agility: 7,
     attack: 4,
     armor: 5,
@@ -122,6 +131,7 @@ export const troopList = [
     img: 'Knight.png',
     tier: TroopTier.Knight,
     troopId: TroopIds.Knight,
+    colour: Barracks,
     agility: 9,
     attack: 7,
     armor: 8,
@@ -135,6 +145,7 @@ export const troopList = [
     img: 'Paladin.png',
     tier: TroopTier.Paladin,
     troopId: TroopIds.Paladin,
+    colour: Barracks,
     agility: 9,
     attack: 9,
     armor: 9,
@@ -148,6 +159,7 @@ export const troopList = [
     img: 'Ballista.png',
     tier: TroopTier.Ballista,
     troopId: TroopIds.Ballista,
+    colour: Castle,
     agility: 4,
     attack: 11,
     armor: 4,
@@ -161,6 +173,7 @@ export const troopList = [
     img: 'Mangonel.png',
     tier: TroopTier.Mangonel,
     troopId: TroopIds.Mangonel,
+    colour: Castle,
     agility: 4,
     attack: 10,
     armor: 5,
@@ -174,6 +187,7 @@ export const troopList = [
     img: 'Trebuchet.png',
     tier: TroopTier.Trebuchet,
     troopId: TroopIds.Trebuchet,
+    colour: Castle,
     agility: 4,
     attack: 12,
     armor: 6,
@@ -187,6 +201,7 @@ export const troopList = [
     img: 'Apprentice.png',
     tier: TroopTier.Apprentice,
     troopId: TroopIds.Apprentice,
+    colour: MageTower,
     agility: 7,
     attack: 7,
     armor: 2,
@@ -200,6 +215,7 @@ export const troopList = [
     img: 'Mage.png',
     tier: TroopTier.Mage,
     troopId: TroopIds.Mage,
+    colour: MageTower,
     agility: 7,
     attack: 9,
     armor: 2,
@@ -213,6 +229,7 @@ export const troopList = [
     img: 'Arcanist.png',
     tier: TroopTier.Arcanist,
     troopId: TroopIds.Arcanist,
+    colour: MageTower,
     agility: 7,
     attack: 11,
     armor: 2,

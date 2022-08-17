@@ -1,14 +1,16 @@
 import { useStarknetInvoke } from '@starknet-react/core';
-
+import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { troopList } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall } from '@/types/index';
+import type { RealmsCall, TroopInterface } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
+import { useCosts } from '../costs/useCosts';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 
 export const Entrypoints = {
@@ -40,10 +42,38 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 };
 
 const useCombat = () => {
-  const { play: raidSound } = useUiSounds(soundSelector.raid);
   const txQueue = useTransactionQueue();
+  const { contract } = useCombatContract();
+  const { costs } = useCosts();
+  const { play: raidSound } = useUiSounds(soundSelector.raid);
 
-  const { contract: combatContract } = useCombatContract();
+  const [troops, setTroops] = useState<TroopInterface[]>();
+
+  const pluckClientTroop = (id) => {
+    return troopList.find((a) => a.troopId === id);
+  };
+  useEffect(() => {
+    setTroops(
+      costs?.troopStats.map((a, i) => {
+        return {
+          troopId: a.troopId,
+          index: i,
+          type: a.type,
+          tier: a.tier,
+          agility: a.agility,
+          attack: a.attack,
+          armor: a.armor,
+          vitality: a.vitality,
+          wisdom: a.wisdom,
+          troopName: a.troopName,
+          troopCost: a.troopCost,
+          squadSlot: 1,
+          troopColour: pluckClientTroop(a.troopId)?.colour,
+          troopImage: pluckClientTroop(a.troopId)?.img,
+        };
+      })
+    );
+  }, [costs]);
 
   const {
     data: combatData,
@@ -51,10 +81,9 @@ const useCombat = () => {
     loading: combatLoading,
     invoke: combatInvoke,
   } = useStarknetInvoke({
-    contract: combatContract,
+    contract: contract,
     method: 'initiate_combat',
   });
-
   return {
     initiateCombat: (args: { attackingRealmId; defendingRealmId }) => {
       raidSound();
@@ -76,6 +105,7 @@ const useCombat = () => {
     combatLoading,
     combatError: error,
     combatData: combatData,
+    troops,
   };
 };
 

@@ -17,49 +17,31 @@ const negativeClass = '';
 export function genMilitaryRealmEvent(event, user?: boolean) {
   switch (event.eventType) {
     case Event.realmCombatAttack:
-      if (user) {
-        return {
-          event: (
-            <span className="">
-              {event.data?.success
-                ? `Raid failed on Realm ${event.data?.defendRealmId}`
-                : `Raid successful on Realm ${event.data?.defendRealmId}`}
-            </span>
-          ),
-          class: event.data?.success ? successClass : negativeClass,
-          resources: resourcePillaged(event.data?.pillagedResources),
-          action: (
-            <Button
-              size="xs"
-              variant="outline"
-              href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
-            >
-              {event.data?.success ? 'Pillage and plunder again' : 'try again'}
-            </Button>
-          ),
-        };
-      } else {
-        return {
-          event: (
-            <span className="">
-              {event.data?.success
-                ? `Raid successful  on Realm ${event.data?.defendRealmId}`
-                : `Raid failed on Realm ${event.data?.defendRealmId}`}
-            </span>
-          ),
-          class: event.data?.success ? successClass : negativeClass,
-          resources: resourcePillaged(event.data?.pillagedResources),
-          action: (
-            <Button
-              size="xs"
-              variant="outline"
-              href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
-            >
-              {event.data?.success ? 'Pillage and plunder again' : 'try again'}
-            </Button>
-          ),
-        };
-      }
+      return {
+        event: (
+          <span className="">
+            {event.data?.success
+              ? `Raid successful on Realm ${event.data?.defendRealmId}`
+              : `Raid failed on Realm ${event.data?.defendRealmId}`}
+          </span>
+        ),
+        class: event.data?.success ? successClass : negativeClass,
+        resources: resourcePillaged(event.data?.pillagedResources),
+        relic: event.data?.relicClaimed ? (
+          <span className="pl-10 text-xl font-semibold uppercase">
+            Relic {event.data?.relicClaimed}
+          </span>
+        ) : null,
+        action: (
+          <Button
+            size="xs"
+            variant="outline"
+            href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
+          >
+            {event.data?.success ? 'Pillage and plunder again' : 'try again'}
+          </Button>
+        ),
+      };
 
     case Event.realmCombatDefend:
       if (user) {
@@ -73,6 +55,11 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicLost ? (
+            <span className="pl-10 text-xl font-semibold uppercase">
+              Relic {event.data?.relicLost}
+            </span>
+          ) : null,
           action: (
             <Button
               size="xs"
@@ -94,6 +81,11 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
+          relic: event.data?.relicLost ? (
+            <span className="pl-10 text-xl font-semibold uppercase">
+              Relic {event.data?.relicLost}
+            </span>
+          ) : null,
           action: (
             <Button
               size="xs"
