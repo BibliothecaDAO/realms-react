@@ -187,20 +187,11 @@ const RealmsPlaylistSidebar = (props: Prop) => {
     ? BigNumber.from(starkAccount).toHexString()
     : '';
   const [loading, setLoading] = useState(false);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
   const router = useRouter();
 
   const queryWithoutSegment = { ...router.query };
   delete queryWithoutSegment['segment'];
-
-  // const [firstButton, setFirstButton] = useState<HTMLElement | null>(null);
-  // useEffect(()=>{
-  //   const fb = document.getElementById("playlist-0")
-  //   console.log("Got first button", fb);
-  //   if(fb){
-  //     fb?.focus()
-  //     setFirstButton(fb);
-  //   }
-  // }, [props.isOpen])
 
   return (
     <AtlasSidebar isOpen={props.isOpen}>
@@ -225,17 +216,22 @@ const RealmsPlaylistSidebar = (props: Prop) => {
       <img
         alt="Lord sitting on throne in war room"
         style={{ textIndent: '100%', fontSize: 0 }} //  to hide alt
-        className="w-full overflow-hidden bg-bottom bg-cover whitespace-nowrap h-48 lg:h-60 bg-warRoom"
+        className="w-full h-48 overflow-hidden bg-bottom bg-cover whitespace-nowrap lg:h-80 bg-warRoom"
       />
       <h2 className="my-6 text-center">
         What route should we take today, ser?{' '}
       </h2>
-      <div className="grid grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-6 gap-4 mt-4">
         {systemPlaylists.concat(curatedPlaylists).map((rp, i) => (
-          <Card key={rp.name}>
+          <Card
+            key={rp.name}
+            className="col-span-6 xl:col-span-3 2xl:col-span-2"
+          >
             <h3>{rp.name}</h3>
             <p className="my-2">{rp.description}</p>
             <Button
+              disabled={loading}
+              className={loading ? 'animate-pulse' : ''}
               variant="primary"
               id={`playlist-${i}`}
               onClick={() => {
@@ -256,7 +252,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   );
                   return;
                 }
-
+                setSelectedPlaylist(rp.name);
                 setLoading(true);
                 const args: any = {
                   starknetWallet:
@@ -275,6 +271,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   })
                   .then((res) => {
                     setLoading(false);
+                    setSelectedPlaylist(undefined);
                     if (res.data.realms && res.data.realms.length > 0) {
                       toast(`Realm Playlist: ${rp.name}`, {
                         icon: <CollectionIcon className="w-6" />,
@@ -301,8 +298,10 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   });
               }}
             >
-              <CollectionIcon className="inline-block w-6 mr-2" /> Start
-              Playlist
+              <CollectionIcon className="inline-block w-6 mr-2" />{' '}
+              {loading && selectedPlaylist == rp.name
+                ? 'Loading...'
+                : 'Start Playlist'}
             </Button>
           </Card>
         ))}
