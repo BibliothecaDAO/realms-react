@@ -23,13 +23,7 @@ export const playlistQueryStrategy: Record<
   AllRealms: () => ({}),
   Account: (account: string) => ({ settledOwner: { equals: account } }),
   Ids: (ids: number[]) => ({ realmId: { in: ids } }),
-  Raidable: () => ({
-    NOT: [
-      {
-        lastVaultTime: { equals: null },
-      },
-    ],
-  }),
+  Raidable: () => ({ lastVaultTime: { not: null } }),
 };
 
 export const resetPlaylistState = () => {
