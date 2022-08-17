@@ -205,6 +205,8 @@ export interface TroopInterface {
   squadSlot: number;
   troopName?: string;
   troopCost?: ItemCost | null;
+  troopColour?: string;
+  troopImage?: string;
 }
 
 export interface ItemCost {

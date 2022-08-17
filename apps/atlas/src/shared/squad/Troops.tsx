@@ -7,6 +7,7 @@ import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { troopList } from '@/constants/troops';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
+import useCombat from '@/hooks/settling/useCombat';
 import type { ItemCost, TroopInterface } from '@/types/index';
 interface HealthBarProps {
   vitality: number;
@@ -33,7 +34,7 @@ export const HealthBar = (props: HealthBarProps) => {
   const getColour = () => {
     const vit = getVitality();
     if (vit > 70) {
-      return 'bg-green-400 ';
+      return 'bg-green-800/70 ';
     } else if (vit > 50) {
       return 'bg-yellow-200 ';
     } else if (vit > 25) {
@@ -44,20 +45,22 @@ export const HealthBar = (props: HealthBarProps) => {
   };
 
   return (
-    <div
-      style={{
-        marginTop: `${100 - getVitality()}%`,
-      }}
-      className={`relative bottom-0 w-1 rounded-tl rounded-br rotate-180 transform mr-1 ${getColour()}`}
-    ></div>
+    <div className="absolute bottom-0 flex h-full transform rotate-180">
+      <div
+        style={{
+          height: `${getVitality()}%`,
+        }}
+        className={`${getColour()} transform w-2 rounded border border-white/30`}
+      ></div>
+    </div>
   );
 };
 
 const STYLES = {
   tier: {
-    1: 'h-24 w-16',
-    2: 'h-24 w-24',
-    3: 'mx-auto w-24 h-24',
+    1: 'h-24 w-20',
+    2: 'h-24 w-32',
+    3: 'mx-auto w-24 h-32',
   },
 } as const;
 
@@ -74,6 +77,7 @@ type Row = {
 };
 
 export const Troop = (props: TroopProps) => {
+  const { troops } = useCombat();
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const getTroop = () => {
@@ -102,6 +106,10 @@ export const Troop = (props: TroopProps) => {
       </div>
     );
   };
+
+  const getBaseTroopInfo = troops?.find(
+    (a) => a.troopId === props.troop.troopId
+  );
 
   const mappedRowData: Row[] = (getTroopTierList() as any)?.map((re, index) => {
     return {
@@ -137,15 +145,25 @@ export const Troop = (props: TroopProps) => {
         className={`${twMerge(
           STYLES.tier[props.troop.tier],
           props.className
-        )} rounded cursor-pointer flex border p-2 bg-white`}
+        )} rounded-2xl cursor-pointer flex border-4 border-double border-white/30 shadow-black p-2 ${
+          getBaseTroopInfo?.troopColour
+        }`}
       >
-        <Image
-          src={`/realm-troops/${props.troop.troopName}.png`}
-          alt=""
-          width="200"
-          height="200"
-          className="object-contain h-auto"
-        />
+        <div className="relative flex">
+          <Image
+            src={`/realm-troops/${props.troop.troopName}.png`}
+            alt=""
+            width="200"
+            height="200"
+            className="z-10 object-contain object-center h-full"
+          />
+          {getTroop()?.troopName && (
+            <HealthBar
+              troopId={props.troop.troopId}
+              vitality={props.troop.vitality}
+            />
+          )}
+        </div>
 
         {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
         <Popover className="relative top-0">
@@ -155,9 +173,9 @@ export const Troop = (props: TroopProps) => {
                 className="absolute z-50 m-auto bottom-10 md:left-0"
                 static
               >
-                <div className="p-2 text-sm text-white bg-black rounded shadow-sm">
-                  <h5>{props.troop.troopName}</h5>
-                  Vitality: {props.troop.vitality}
+                <div className="p-2 text-lg text-white bg-black rounded shadow-sm">
+                  <h4>Vitality {props.troop.vitality}</h4>
+
                   {/* <Table
                     columns={columns}
                     data={mappedRowData}
@@ -170,28 +188,9 @@ export const Troop = (props: TroopProps) => {
         </Popover>
         {/* )} */}
       </div>
-      <div className="mt-4 text-center align-bottom sm:text-sm text-clip font-display">
+      <div className="mt-1 text-center align-bottom sm:text-sm text-clip font-display">
         {getTroop()?.troopName}
       </div>
-      {/* {getTroop()?.troopName && (
-          <div className="flex items-end w-full justify-bottom">
-            <HealthBar
-              troopId={props.troop.troopId}
-              vitality={props.troop.vitality}
-            />
-          </div>
-        )} */}
-      {/* {!props.withPurchase && (
-        <Button
-          variant="secondary"
-          size="xs"
-          onClick={() => {
-            props.onRemove(props.troop);
-          }}
-        >
-          x
-        </Button>
-      )} */}
     </div>
   );
 };
