@@ -15,7 +15,7 @@ import { PartnerBanner } from '@/components/PartnerBanner';
 import Tourus from '@/components/Tourus';
 import { ScrollSpy } from '@/util/ScrollSpy';
 
-function slides(fullpageApi) {
+function slides(fullpageApi: any) {
   return [
     {
       title: '',
