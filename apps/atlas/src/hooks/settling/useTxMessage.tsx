@@ -1,5 +1,6 @@
 import { buildingIdToString } from '@/constants/buildings';
 import { ENQUEUED_STATUS, Squad } from '@/constants/index';
+import { Entrypoints as AMMMethods } from '../useSwapResources';
 import { Entrypoints as BuildingMethods } from './useBuildings';
 import { Entrypoints as CombatMethods } from './useCombat';
 import { Entrypoints as ResourceMethods } from './useResources';
@@ -69,6 +70,34 @@ export function getTxMessage(tx: TxWithMetadata): TxMessage {
           } ${metadata.troopIds.length} troops for ${
             Squad[metadata.squadSlot]
           }ing army.`,
+        };
+      case AMMMethods.buyTokens:
+        return {
+          title: 'Buy Resources',
+          description: `${isQueued ? 'Buy' : 'Buying'} ${
+            metadata.tokenIds?.length ?? ''
+          } resources from the market.`,
+        };
+      case AMMMethods.sellTokens:
+        return {
+          title: 'Sell Resources',
+          description: `${isQueued ? 'Sell' : 'Selling'} ${
+            metadata.tokenIds?.length ?? ''
+          } resources from the market.`,
+        };
+      case AMMMethods.addLiquidity:
+        return {
+          title: 'Add Liquidity Pair',
+          description: `${
+            isQueued ? 'Add' : 'Adding'
+          } liquidity for the resource market.`,
+        };
+      case AMMMethods.removeLiquidity:
+        return {
+          title: 'Remove Liquidity Pair',
+          description: `${
+            isQueued ? 'Remove' : 'Removing'
+          } liquidity for the resource market`,
         };
       case 'raid':
         return {

@@ -94,7 +94,7 @@ const useCombat = () => {
           bnToUint256(toBN(args.defendingRealmId)),
         ],
         metadata: {
-          title: `Initate combat with Realm ${args.defendingRealmId}`,
+          title: `Initiate combat with Realm ${args.defendingRealmId}`,
           action: Entrypoints.initiateCombat,
           ...args,
         },

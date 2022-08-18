@@ -16,6 +16,13 @@ export type LpQty = {
   currencyqty: number;
 };
 
+export const Entrypoints = {
+  buyTokens: 'buy_tokens',
+  sellTokens: 'sell_tokens',
+  addLiquidity: 'add_liquidity',
+  removeLiquidity: 'remove_liquidity',
+};
+
 const useSwapResourcesTransaction = (method: string) => {
   const { contract: exchangeContract } = useExchangeContract();
   const {
@@ -41,7 +48,7 @@ const useSwapResourcesTransaction = (method: string) => {
 
 export const useBuyResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
-    useSwapResourcesTransaction('buy_tokens');
+    useSwapResourcesTransaction(Entrypoints.buyTokens);
   const buyTokens = (
     maxAmount: BigNumber,
     tokenIds: number[],
@@ -53,8 +60,9 @@ export const useBuyResources = () => {
     }
     invoke({
       metadata: {
-        action: 'buy_tokens',
-        description: 'Buying tokens',
+        action: Entrypoints.buyTokens,
+        tokenIds,
+        tokenAmounts,
       },
       args: [
         bnToUint256(maxAmount.toHexString()),
@@ -77,7 +85,7 @@ export const useBuyResources = () => {
 
 export const useSellResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
-    useSwapResourcesTransaction('sell_tokens');
+    useSwapResourcesTransaction(Entrypoints.sellTokens);
 
   const sellTokens = (
     minAmount: BigNumber,
@@ -90,9 +98,9 @@ export const useSellResources = () => {
     }
     invoke({
       metadata: {
-        action: 'sell_tokens',
-        title: 'Sell Tokens',
-        description: 'Selling tokens',
+        action: Entrypoints.sellTokens,
+        tokenIds,
+        tokenAmounts,
       },
       args: [
         bnToUint256(minAmount.toHexString()),
@@ -115,7 +123,7 @@ export const useSellResources = () => {
 
 export const useAddLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
-    useSwapResourcesTransaction('add_liquidity');
+    useSwapResourcesTransaction(Entrypoints.addLiquidity);
 
   const addLiquidity = (
     maxCurrencyAmount: BigNumber[],
@@ -128,9 +136,9 @@ export const useAddLiquidity = () => {
     }
     invoke({
       metadata: {
-        action: 'add_liquidity',
-        title: 'Adding Liquidity',
-        description: 'Adding Liquidity',
+        action: Entrypoints.addLiquidity,
+        tokenIds,
+        tokenAmounts,
       },
       args: [
         maxCurrencyAmount.map((value) =>
@@ -155,7 +163,7 @@ export const useAddLiquidity = () => {
 
 export const useRemoveLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
-    useSwapResourcesTransaction('remove_liquidity');
+    useSwapResourcesTransaction(Entrypoints.removeLiquidity);
 
   const removeLiquidity = (
     minCurrencyAmount: BigNumber[],
@@ -169,8 +177,10 @@ export const useRemoveLiquidity = () => {
     }
     invoke({
       metadata: {
-        action: 'remove_liquidity',
-        title: 'Removing Liquidity',
+        action: Entrypoints.removeLiquidity,
+        tokenIds,
+        tokenAmounts,
+        lpAmounts,
       },
       args: [
         minCurrencyAmount.map((value) =>
