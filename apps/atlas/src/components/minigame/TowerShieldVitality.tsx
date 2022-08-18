@@ -32,7 +32,7 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
       </p>
       <p className="text-4xl">
         {zeroShield && !zeroVitality ? (
-          <span className="inline-block px-2 py-1 mb-2 text-sm text-white bg-red-600 rounded-sm animate-pulse">
+          <span className="inline-block px-2 py-1 mb-2 text-sm bg-red-600 rounded-sm animate-pulse">
             Shield is down!
           </span>
         ) : props.shield ? (
@@ -79,7 +79,7 @@ export const CityVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
         ) : (
           <>
             {zeroVitality ? (
-              <span className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
+              <span className="inline-block px-2 py-1 bg-purple-900 rounded-sm">
                 Dark Wins
               </span>
             ) : (

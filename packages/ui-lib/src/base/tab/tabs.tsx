@@ -10,17 +10,16 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150  rounded border hover:border-cta-100 hover:shadow text-gray-700',
-      active:
-        ' focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-100 ring-cta-100 ring-opacity-90 text-white border-cta-100 border',
-      inactive: 'text-white border-transparent',
+      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150 hover:shadow border-b-4 border-transparent hover:border-cta-100 font-semibold',
+      active: ' border-cta-100',
+      inactive: ' border-transparent text-white/50',
     },
     tabList: 'flex space-x-3 sm:space-x-4 bg-black/90 p-2 shadow-inner ',
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-150 hover:text-white rounded    focus-visible:ring-yellow-700 border-cta-100 hover:border',
-      active: ' shadow-md text-white border',
+      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350  rounded focus-visible:ring-yellow-700  hover:border hover:bg-black border-transparent border',
+      active: ' shadow-md bg-black border font-semibold border-cta-100/60',
       inactive: 'bg-transparent text-gray-200',
     },
     tabList: 'flex py-2 space-x-2',

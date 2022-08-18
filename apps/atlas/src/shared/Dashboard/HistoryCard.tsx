@@ -17,7 +17,7 @@ export const HistoryCard = (props: Props) => {
           {new Date(props.timeStamp).toLocaleTimeString('en-US')}{' '}
           {new Date(props.timeStamp).toLocaleDateString('en-US')}
         </div>
-        <h3 className="text-white">{props.event}</h3>
+        <h3 className="">{props.event}</h3>
       </div>
       {props.children}
       <div className="pt-5">{props.action}</div>

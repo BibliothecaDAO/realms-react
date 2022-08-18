@@ -59,7 +59,7 @@ export function RealmsRarityFilter(props: RealmsRarityFilterProps) {
           className="absolute z-10 mt-2 ml-2 border-4 border-double rounded sm:translate-x-0 sm:left-0 md:-translate-x-1/2 md:left-1/2 border-white/20"
           static
         >
-          <div className="flex flex-col px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+          <div className="flex flex-col px-8 py-4 pb-10 font-medium bg-black rounded shadow-sm w-60">
             <h4 className="text-center">Rarity</h4>
             <RangeSliderFilter
               name="Score"

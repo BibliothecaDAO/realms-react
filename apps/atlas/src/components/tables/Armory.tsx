@@ -148,7 +148,7 @@ export const ArmoryBuilder = (props: Props) => {
       {!props.hideSquadToggle && (
         <div className="flex space-x-2">
           {/* <input
-            className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
+            className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
             type="text"
             value={value}
             onChange={(e) => {

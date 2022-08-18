@@ -24,11 +24,11 @@ export function LootOverviews(props: LootOverviewsProps) {
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-2 px-2 bg-black rounded sm:grid-cols-2">
       {props.bags &&
         props.bags.map((loot: Loot, index) => (
           <div key={index} className="w-full rounded">
-            <div className="w-full p-2 rounded-t bg-black/70 font-display">
+            <div className="w-full p-2 bg-black rounded-t font-display">
               {[
                 loot.weapon,
                 loot.chest,
@@ -59,13 +59,13 @@ export function LootOverviews(props: LootOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex w-full p-3 text-white bg-black/60">
+            <div className="flex w-full p-3 py-2 bg-black">
               <div className="flex self-center w-full">
                 <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
                 <div className="ml-auto"></div>
               </div>
             </div>
-            <div className="flex justify-center w-full p-2 space-x-2 rounded-b bg-gray-600/70">
+            <div className="flex justify-center w-full p-2 space-x-2 rounded-b">
               {' '}
               <Button
                 onClick={() => {
@@ -73,7 +73,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                   gotoAssetId(loot.id, 'loot');
                 }}
                 variant="primary"
-                size="sm"
+                size="xs"
                 className="w-full uppercase"
               >
                 fly to
@@ -81,7 +81,7 @@ export function LootOverviews(props: LootOverviewsProps) {
               <Button
                 onClick={() => openDetails('loot', loot.id)}
                 variant="secondary"
-                size="sm"
+                size="xs"
                 className="w-full uppercase"
               >
                 details
@@ -90,6 +90,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 <Button
                   className="text-xs"
                   variant="secondary"
+                  size="xs"
                   onClick={() => actions.addFavouriteLoot(loot.id)}
                 >
                   add
@@ -99,6 +100,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 <Button
                   className="text-xs"
                   variant="secondary"
+                  size="xs"
                   onClick={() => actions.removeFavouriteLoot(loot.id)}
                 >
                   Remove

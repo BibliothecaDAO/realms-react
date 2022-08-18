@@ -8,15 +8,6 @@ export function GaFilters() {
 
   return (
     <div className="flex flex-wrap justify-between mb-2">
-      <div className="w-full my-1 sm:w-auto">
-        <SearchFilter
-          placeholder="SEARCH BY ID"
-          onSubmit={(value) => {
-            actions.updateSearchIdFilter(parseInt(value) ? value : '');
-          }}
-          defaultValue={state.searchIdFilter + ''}
-        />
-      </div>
       <div className="flex items-center justify-center gap-2">
         <OrdersFilter
           selectedValues={state.selectedOrders}

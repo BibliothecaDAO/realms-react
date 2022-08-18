@@ -52,7 +52,7 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
       <div ref={ref}>
         <Button
           variant="primary"
-          size="sm"
+          size="xs"
           className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);

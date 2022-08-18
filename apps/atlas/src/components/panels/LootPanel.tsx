@@ -13,6 +13,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
+import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const LootPanel = () => {
   const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
@@ -88,16 +89,12 @@ export const LootPanel = () => {
 
   return (
     <BasePanel open={isLootPanel} style="lg:w-7/12">
-      <div className="flex justify-between pt-2">
-        <div className="sm:hidden"></div>
-        <h1>Loot</h1>
+      <PanelHeading
+        heading="Loot"
+        action={actions.updateSearchIdFilter}
+        searchFilterValue={state.searchIdFilter}
+      />
 
-        <Link href="/">
-          <button className="z-50 transition-all rounded top-4">
-            <Close />
-          </button>
-        </Link>
-      </div>
       <Tabs
         selectedIndex={state.selectedTab}
         onChange={actions.updateSelectedTab as any}

@@ -37,7 +37,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           <OrderIcon
             withTooltip
             containerClassName="my-4 flex flex-col items-center justify-center"
-            className="self-center mt-auto text-white fill-white"
+            className="self-center mt-auto fill-white"
             size={'lg'}
             order={realm?.orderType.toLowerCase() ?? ''}
           />

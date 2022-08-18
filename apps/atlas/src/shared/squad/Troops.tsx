@@ -173,7 +173,7 @@ export const Troop = (props: TroopProps) => {
                 className="absolute z-50 m-auto bottom-10 md:left-0"
                 static
               >
-                <div className="p-2 text-lg text-white bg-black rounded shadow-sm">
+                <div className="p-2 text-lg bg-black rounded shadow-sm">
                   <h4>Vitality {props.troop.vitality}</h4>
 
                   {/* <Table

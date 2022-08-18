@@ -179,7 +179,7 @@ const ChatComponent = (props: ChatComponentProps) => {
           onKeyPress={handleKeyPress}
         ></textarea>
         <button
-          className="px-2 py-1 text-white transition-colors bg-blue-500 rounded-sm disabled:cursor-not-allowed disabled:bg-blue-300"
+          className="px-2 py-1 transition-colors bg-blue-500 rounded-sm disabled:cursor-not-allowed disabled:bg-blue-300"
           type="submit"
           disabled={messageTextIsEmpty}
         >

@@ -23,7 +23,7 @@ export function SearchFilter(props: SearchFilterProps) {
   return (
     <div className="flex items-center justify-center gap-1 px-2 py-1 rounded shadow-inner bg-black/10">
       <input
-        className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest text-white uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
+        className="w-full px-3 py-2 text-sm font-bold leading-tight tracking-widest uppercase transition-all duration-300 rounded shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
         type="text"
         value={value}
         onChange={(e) => {
