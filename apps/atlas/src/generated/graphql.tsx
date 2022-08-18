@@ -164,6 +164,7 @@ export type ExchangeRate = {
   buyAmount: Scalars['String'];
   date: Scalars['String'];
   hour: Scalars['Int'];
+  lpAmount: Scalars['String'];
   percentChange24Hr?: Maybe<Scalars['Float']>;
   sellAmount: Scalars['String'];
   tokenId: Scalars['Int'];
@@ -1101,6 +1102,7 @@ export type GetExchangeRatesQuery = {
     amount: string;
     buyAmount: string;
     sellAmount: string;
+    lpAmount: string;
     percentChange24Hr?: number | null;
   }>;
 };
@@ -1751,6 +1753,7 @@ export const GetExchangeRatesDocument = gql`
       amount
       buyAmount
       sellAmount
+      lpAmount
       percentChange24Hr
     }
   }
