@@ -3,7 +3,7 @@ import { useStarknetTransactionManager } from '@starknet-react/core';
 import Link from 'next/link';
 import type { Status, TransactionStatus } from 'starknet';
 import type { ENQUEUED_STATUS } from '@/constants/index';
-import { getTxMessage } from '@/hooks/settling/useTxMessage';
+import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { ExternalLink } from '@/shared/Icons';
 
 interface Metadata {
@@ -35,7 +35,7 @@ const STYLES = {
 } as const;
 
 export const TxCartItem = (props: TxCartItem) => {
-  const { title, description } = getTxMessage(props.transaction);
+  const { title, description } = getTxRenderConfig(props.transaction);
 
   const resolvedTitle = props.transaction.metadata?.title || title;
   const resolvedMsg = props.transaction.metadata?.description || description;

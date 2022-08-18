@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { useStarknetCall } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
-import { RealmBuildingId, HarvestType } from '@/constants/buildings';
+import {
+  RealmBuildingId,
+  HarvestType,
+  buildingIdToString,
+} from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
@@ -11,6 +16,7 @@ import type {
   BuildingDetail,
   RealmFoodDetails,
   AvailableResources,
+  RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
@@ -20,7 +26,7 @@ import {
   useFoodContract,
 } from './stark-contracts';
 
-export const entrypoints = {
+export const Entrypoints = {
   create: 'create',
   harvest: 'harvest',
   convert: 'convert_food_tokens_to_store',
@@ -33,7 +39,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     foodBuildingId: number;
   }) => ({
     contractAddress: ModuleAddr.Food,
-    entrypoint: entrypoints.create,
+    entrypoint: Entrypoints.create,
     calldata: [
       ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
       args.quantity,
@@ -41,9 +47,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     ],
     metadata: {
       ...args,
-      action: entrypoints.create,
-      title: 'Build',
-      description: `Build ${args.quantity} x ${args.foodBuildingId} buildings`,
+      action: Entrypoints.create,
     },
   }),
   harvest: (args: {
@@ -52,7 +56,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     foodBuildingId: number;
   }) => ({
     contractAddress: ModuleAddr.Food,
-    entrypoint: entrypoints.harvest,
+    entrypoint: Entrypoints.harvest,
     calldata: [
       ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
       args.harvestType,
@@ -60,9 +64,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     ],
     metadata: {
       ...args,
-      action: entrypoints.harvest,
-      title: `Harvesting on Realm ${args.tokenId}`,
-      description: `Harvesting  ${args.tokenId}`,
+      action: Entrypoints.harvest,
     },
   }),
   convert: (args: {
@@ -71,7 +73,7 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     resourceId: number;
   }) => ({
     contractAddress: ModuleAddr.Food,
-    entrypoint: entrypoints.convert,
+    entrypoint: Entrypoints.convert,
     calldata: [
       ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
       args.quantity,
@@ -79,10 +81,23 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     ],
     metadata: {
       ...args,
-      action: entrypoints.harvest,
+      action: Entrypoints.harvest,
       title: `Converting food on Realm ${args.tokenId}`,
       description: `Harvesting  ${args.tokenId}`,
     },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.create]: (tx, _context) => ({
+    title: 'Construct building',
+    description: `Build ${tx.metadata.quantity} ${buildingIdToString(
+      tx.metadata.foodBuildingId
+    )}${tx.metadata.quantity > 1 ? 's' : ''}`,
+  }),
+  [Entrypoints.harvest]: (tx, _context) => ({
+    title: `Harvest on Realm ${tx.metadata.tokenId}`,
+    description: `Harvesting ${tx.metadata.tokenId}`,
   }),
 };
 

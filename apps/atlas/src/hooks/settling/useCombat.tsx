@@ -2,13 +2,18 @@ import { useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { Squad } from '@/constants/index';
 import { troopList } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, TroopInterface } from '@/types/index';
+import type {
+  RealmsCall,
+  RealmsTransactionRenderConfig,
+  TroopInterface,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useCosts } from '../costs/useCosts';
 import { useUiSounds, soundSelector } from '../useUiSounds';
@@ -38,6 +43,21 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
       ...uint256ToRawCalldata(bnToUint256(toBN(args.defendingRealmId))),
     ],
     metadata: { ...args, action: Entrypoints.initiateCombat },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.buildSquad]: ({ metadata }, { isQueued }) => ({
+    title: `Troop Training`,
+    description: `Realm #${metadata.realmId} ${
+      isQueued ? 'ordered to train' : 'is training'
+    } ${metadata.troopIds.length} troops for ${
+      Squad[metadata.squadSlot]
+    }ing army.`,
+  }),
+  [Entrypoints.initiateCombat]: ({ metadata }, ctx) => ({
+    title: 'Combat',
+    description: `Initiate combat with Realm ${metadata.defendingRealmId}`,
   }),
 };
 
@@ -83,7 +103,7 @@ const useCombat = () => {
     invoke: combatInvoke,
   } = useStarknetInvoke({
     contract: contract,
-    method: 'initiate_combat',
+    method: Entrypoints.initiateCombat,
   });
   return {
     initiateCombat: (args: { attackingRealmId; defendingRealmId }) => {
@@ -94,7 +114,6 @@ const useCombat = () => {
           bnToUint256(toBN(args.defendingRealmId)),
         ],
         metadata: {
-          title: `Initiate combat with Realm ${args.defendingRealmId}`,
           action: Entrypoints.initiateCombat,
           ...args,
         },

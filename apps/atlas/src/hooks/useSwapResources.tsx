@@ -2,7 +2,8 @@ import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useExchangeContract } from './settling/stark-contracts';
+import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
+import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
 export type ResourceQty = {
@@ -21,6 +22,64 @@ export const Entrypoints = {
   sellTokens: 'sell_tokens',
   addLiquidity: 'add_liquidity',
   removeLiquidity: 'remove_liquidity',
+};
+
+export const createCall: Record<string, (args: any) => RealmsCall> = {
+  [Entrypoints.buyTokens]: (args: {
+    maxAmount: BigNumber;
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.buyTokens,
+    calldata: [],
+    metadata: {
+      ...args,
+      action: Entrypoints.buyTokens,
+    },
+  }),
+  [Entrypoints.sellTokens]: (args: {
+    minAmount: BigNumber;
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.sellTokens,
+    calldata: [],
+    metadata: {
+      ...args,
+      action: Entrypoints.sellTokens,
+    },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.buyTokens]: ({ metadata }, { isQueued }) => ({
+    title: 'Buy Resources',
+    description: `${isQueued ? 'Buy' : 'Buying'} ${
+      metadata.tokenIds?.length ?? ''
+    } resources from the market.`,
+  }),
+  [Entrypoints.sellTokens]: ({ metadata }, { isQueued }) => ({
+    title: 'Sell Resources',
+    description: `${isQueued ? 'Sell' : 'Selling'} ${
+      metadata.tokenIds?.length ?? ''
+    } resources from the market.`,
+  }),
+  [Entrypoints.addLiquidity]: ({ metadata }, { isQueued }) => ({
+    title: 'Add Liquidity Pair',
+    description: `${
+      isQueued ? 'Add' : 'Adding'
+    } liquidity for the resource market.`,
+  }),
+  [Entrypoints.removeLiquidity]: ({ metadata }, { isQueued }) => ({
+    title: 'Remove Liquidity Pair',
+    description: `${
+      isQueued ? 'Remove' : 'Removing'
+    } liquidity for the resource market`,
+  }),
 };
 
 const useSwapResourcesTransaction = (method: string) => {
