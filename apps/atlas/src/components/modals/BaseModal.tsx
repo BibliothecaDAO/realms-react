@@ -2,6 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { HelpModal } from './HelpModal';
 import { LoreEntityModal } from './LoreEntityModal';
 import { RaidResultModal } from './RaidResultModal';
 
@@ -22,6 +23,22 @@ export const BaseModal = () => {
   let component;
 
   const props: any = selectedModal.props;
+
+  switch (selectedModal.type) {
+    case 'lore-entity':
+      component = <LoreEntityModal entityId={parseInt(props.id)} />;
+      break;
+
+    case 'raid-result':
+      component = (
+        <RaidResultModal defendId={parseInt(props.defendId)} tx={props.tx} />
+      );
+      break;
+
+    case 'help':
+      component = <HelpModal content={props.content} />;
+      break;
+  }
 
   if (selectedModal.type === 'lore-entity' && props) {
     component = <LoreEntityModal entityId={parseInt(props.id)} />;

@@ -14,6 +14,7 @@ import type { Abi } from 'starknet';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import loreContractABI from '@/abi/lore/Lore.json';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
 // import erc20Abi from 'abi/l2/erc20.json';
@@ -23,6 +24,7 @@ import {
   shortStringToBigIntUtil,
   slateToMarkdown,
 } from './helpers';
+import { LoreEditorFAQ } from './LoreEditorFAQ';
 import { LoreScrollEntity } from './LoreScrollEntity';
 
 enum CREATING_STEPS {
@@ -46,6 +48,9 @@ const LOCAL_STORAGE_LORE_DRAFT_KEY = 'lore.draft';
 const LOCAL_STORAGE_LORE_DRAFT_ARWEAVE_KEY = 'lore.draft.arweaveId';
 
 export const LoreCreateEntityForm = () => {
+  // Contexts
+  const { setModal } = useAtlasContext();
+
   // States
   const isMounted = useRef(false);
   const [entityTitle, setEntityTitle] = useState('');
@@ -458,7 +463,18 @@ export const LoreCreateEntityForm = () => {
           </div>
         </div>
         <div className={`text-gray-400 text-base rounded-md px-2 mt-1`}>
-          Write backslash / to open a context menu or read editor FAQ
+          Write backslash / to open a context menu or{' '}
+          <button
+            className="underline"
+            onClick={() =>
+              setModal({
+                type: 'help',
+                props: { content: <LoreEditorFAQ /> },
+              })
+            }
+          >
+            read editor FAQ
+          </button>
         </div>
       </div>
 

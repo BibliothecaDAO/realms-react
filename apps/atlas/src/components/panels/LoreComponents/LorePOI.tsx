@@ -18,8 +18,18 @@ const pois = {
     class: 'bg-orange-500',
     openDetailsName: 'crypt',
   },
-  3000: { name: 'Lords', class: 'bg-sky-500' },
+  3000: { name: 'Lords/Wallet', class: 'bg-sky-500' },
+  // Loot
+  4000: { name: 'Loot Bags', class: 'bg-sky-500' },
+  4001: { name: 'Loot Bags', class: 'bg-sky-500' },
+  //
+  5000: { name: 'GA', class: 'bg-sky-500' },
+  6000: { name: 'Loot Bags', class: 'bg-sky-500' },
+  // 4000: { name: 'Loot Bags', class: 'bg-sky-500' },
+  // 4000: { name: 'Loot Bags', class: 'bg-sky-500' },
 };
+
+// GAs, Atlas co-ordinates, Raid ID)
 
 type LorePOIProps = {
   poiId: string;
@@ -37,29 +47,31 @@ export const LorePOI = ({
   const { openDetails } = useAtlasContext();
 
   const openSideBar = () => {
-    const openDetailsName = pois[poiId]?.openDetailsName;
-    if (assetId && openDetailsName) {
-      openDetails(openDetailsName, assetId);
+    switch (poiId) {
+      case '1000':
+        openDetails('realm', assetId || '');
+        break;
+      case '2000':
+        openDetails('crypt', assetId || '');
+        break;
+
+      default:
     }
   };
-
-  // if (!poisLoading) {
-  //   return null;
-  // }
 
   let poiName;
   let loadQuery = false;
   let query = getRealmQuery;
-  let variablesParams = { id: assetId };
+  let variables = { id: assetId };
 
   // change the useLazyQuery params if needed
   if (poiId == ('2000' || 'crypt')) {
     query = getCryptQuery;
-    variablesParams = { id: assetId };
+    variables = { id: assetId };
   }
 
   const [load, { data }] = useLazyQuery(query, {
-    variables: variablesParams,
+    variables,
   });
 
   // actually set the poiName
