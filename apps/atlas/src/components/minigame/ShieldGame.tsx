@@ -87,7 +87,7 @@ const ShieldGame: React.FC<Prop> = (props) => {
           setModalOpen(false);
         }}
       >
-        <div className="flex-row w-full py-4 text-white bg-gray-900/70 sm:m-8 sm:w-1/2 rounded-xl">
+        <div className="flex-row w-full py-4 bg-gray-900/70 sm:m-8 sm:w-1/2 rounded-xl">
           <h1 className="flex flex-row items-center justify-between px-8">
             <span>{view?.toUpperCase()}</span>
             <button

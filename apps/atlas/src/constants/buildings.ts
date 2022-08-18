@@ -26,6 +26,40 @@ export enum RealmBuildingId {
   Castle = 9,
 }
 
+export const buildingIdToString = (id: RealmBuildingId) => {
+  let name = 'n/a';
+  switch (id) {
+    case RealmBuildingId.House:
+      name = 'House';
+      break;
+    case RealmBuildingId.StoreHouse:
+      name = 'Store House';
+      break;
+    case RealmBuildingId.Granary:
+      name = 'Granary';
+      break;
+    case RealmBuildingId.Farm:
+      name = 'Farm';
+      break;
+    case RealmBuildingId.FishingVillage:
+      name = 'Fishing Village';
+      break;
+    case RealmBuildingId.Barracks:
+      name = 'Barracks';
+      break;
+    case RealmBuildingId.MageTower:
+      name = 'Mage Tower';
+      break;
+    case RealmBuildingId.ArcherTower:
+      name = 'Archer Tower';
+      break;
+    case RealmBuildingId.Castle:
+      name = 'Castle';
+      break;
+  }
+  return name;
+};
+
 export enum HarvestType {
   Export = 1,
   Store = 2,

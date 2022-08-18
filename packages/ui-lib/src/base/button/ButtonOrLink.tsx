@@ -36,7 +36,8 @@ const STYLES = {
       'text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:text-gray-900 hover:text-gray-900 border-0',
     attack:
       'text-red-600 bg-red-400 hover:bg-red-500 active:bg-red-300 active:text-red-900 hover:text-red-900 text-white border-red-300 hover:text-red-200',
-    primary: 'text-white bg-cta-100 hover:bg-red-700 ',
+    primary:
+      'text-white bg-cta-100 hover:bg-red-700 hover:shadow-red-800 shadow-lg',
     secondary:
       ' text-white border-gray-600 hover:bg-gray-400 hover:text-gray-800 active:text-gray-900  active:bg-gray-200 rounded  border-0',
     tertiary:
@@ -45,7 +46,7 @@ const STYLES = {
       'text-red-600 focus-visible:bg-red-100 focus-visible:ring-red-600 active:bg-red-200 hover:bg-red-100',
     link: '!p-0 font-semibold text-green-600 focus-visible:ring-transparent focus:underline hover:underline',
     outline:
-      ' hover:text-stone-200 hover:bg-cta-100 active:bg-gray-200 active:text-gray-900 rounded border border-cta-100/60',
+      ' hover:text-stone-200 hover:bg-cta-100 active:bg-gray-200 active:text-gray-900 rounded border border-cta-100/60 hover:shadow-red-800 shadow-lg',
     unstyled: '',
   },
 } as const;

@@ -9,16 +9,7 @@ export function CryptFilter() {
   const { state, actions } = useCryptContext();
 
   return (
-    <div className="flex flex-wrap justify-between mb-2">
-      <div className="w-full my-1 sm:w-auto">
-        <SearchFilter
-          placeholder="SEARCH BY ID"
-          onSubmit={(value) => {
-            actions.updateSearchIdFilter(parseInt(value) ? value : '');
-          }}
-          defaultValue={state.searchIdFilter + ''}
-        />
-      </div>
+    <div className="flex flex-wrap justify-between p-2 mb-2 bg-black">
       <div className="flex flex-wrap items-center gap-2 md:flex-nowrap">
         <div>
           <Button

@@ -55,7 +55,7 @@ export function GAdventurer(props: GAProps): ReactElement {
   }, [props.ga.id]);
 
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
+    <div className="z-10 w-full h-auto p-1  rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />

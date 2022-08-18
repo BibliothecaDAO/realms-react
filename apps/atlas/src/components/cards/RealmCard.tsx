@@ -120,7 +120,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
     [props.realm?.realmId]
   );
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
+    <div className="z-10 w-full h-auto p-1 rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -144,25 +144,33 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
               layout={'responsive'}
             />
           </div>
-          {RealmStatus(props.realm)}
-          <div className="flex">
-            <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
-            <h2
+          <div className="my-2 text-xs font-semibold tracking-widest uppercase">
+            {RealmStatus(props.realm)}
+          </div>
+
+          <div className="flex justify-between">
+            <h1
               className={
-                `ml-4 self-center` +
+                `ml-4 my-2` +
                 (props.size ? variantMaps[props.size]?.heading : '')
               }
             >
-              {props.realm.name}{' '}
-            </h2>
+              {props.realm.realmId} | {props.realm.name}{' '}
+            </h1>
             {props.realm.owner && (
               <h3 className="self-center my-2 ml-auto">
                 {ensData.displayName}
               </h3>
             )}
+            <div className="self-center">
+              <OrderIcon
+                size="lg"
+                order={props.realm.orderType.toLowerCase()}
+              />
+            </div>
           </div>
 
-          <Tabs variant="primary">
+          <Tabs variant="default">
             <Tabs.List className="">
               {tabs.map((tab) => (
                 <Tabs.Tab key={tab.label} className="uppercase">
@@ -170,10 +178,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
                 </Tabs.Tab>
               ))}
             </Tabs.List>
-            <div className="flex flex-col justify-between px-4 py-2 mb-2 uppercase bg-black rounded shadow-inner sm:flex-row">
-              <span>
-                Id:<span className="">{props.realm.realmId}</span>
-              </span>
+            <div className="flex flex-col justify-between px-4 py-2 mb-2 font-semibold uppercase bg-black rounded shadow-inner sm:flex-row">
               <span>
                 Rank:
                 <span className="">{props.realm.rarityRank}</span>

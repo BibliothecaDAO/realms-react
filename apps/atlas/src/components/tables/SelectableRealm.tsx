@@ -22,7 +22,7 @@ export function SelectableRealm(props: SelectableRealmProps) {
     >
       <div
         className={clsx(
-          `flex w-full p-2 text-white shadow-inner rounded-t-l`,
+          `flex w-full p-2  shadow-inner rounded-t-l`,
           isSelected ? `bg-black/60` : `bg-black/40`
         )}
       >

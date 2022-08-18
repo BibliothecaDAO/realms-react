@@ -36,8 +36,7 @@ export const SquadBuilder = (props: SquadProps) => {
     null
   );
 
-  const { build } = useCombat();
-  const { data: troopStatsData } = useGetTroopStatsQuery();
+  const { build, troops } = useCombat();
 
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
@@ -143,7 +142,7 @@ export const SquadBuilder = (props: SquadProps) => {
           }
         />
 
-        {selectedTroopIsEmpty && troopStatsData?.getTroopStats && isOwner && (
+        {selectedTroopIsEmpty && troops && isOwner && (
           <>
             <div className="flex flex-wrap mb-5">
               <div className="w-1/2 px-3">
@@ -202,7 +201,7 @@ export const SquadBuilder = (props: SquadProps) => {
               squad={props.squad}
               troops={props.troops}
               troopsQueued={toBuy}
-              statistics={troopStatsData.getTroopStats}
+              statistics={troops}
               realmId={props.realm?.realmId as number}
               hideSquadToggle
               filterTier={selectedTroop?.tier}

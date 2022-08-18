@@ -64,7 +64,7 @@ export const ManaBall = (props: Props) => {
   return (
     <div
       id={`mana-ball-${props.side}`}
-      className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-2 text-white shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
+      className={`rounded-full w-48 h-48 bottom-6 right-6 bg-conic-to-t shimmer slow background-animate fast transition-all duration-150 flex justify-center p-2  shadow-inner  outline-double outline-3 outline-offset-2 self-center ${
         props.side === 'dark' ? darkColours : lightColours
       }`}
     >

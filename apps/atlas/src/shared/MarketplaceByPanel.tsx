@@ -9,10 +9,9 @@ interface Props {
 
 export const MarketplaceByPanel = (props: Props) => {
   return (
-    <div className="flex mt-4 space-x-2 rounded">
+    <div className="flex justify-around mt-4 space-x-2 rounded">
       {props.collection && (
         <Button
-          className="w-full text-xs text-xl"
           target={'_blank'}
           size="xs"
           variant="primary"
@@ -29,7 +28,6 @@ export const MarketplaceByPanel = (props: Props) => {
       )}
 
       <Button
-        className="w-full text-xs text-xl"
         target={'_blank'}
         size="xs"
         variant="outline"
@@ -39,7 +37,6 @@ export const MarketplaceByPanel = (props: Props) => {
         Opensea
       </Button>
       <Button
-        className="w-full text-xs text-xl"
         target={'_blank'}
         variant="outline"
         size="xs"

@@ -217,7 +217,7 @@ export function AccountPanel() {
           </CardBody>
         </Card>
 
-        <Card className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13`}>
+        {/* <Card className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13`}>
           <CardTitle>Mercantile History</CardTitle>
           <CardBody>
             {economicEventData.map((a, index) => {
@@ -231,7 +231,7 @@ export function AccountPanel() {
               );
             })}
           </CardBody>
-        </Card>
+        </Card> */}
         <Card className="col-span-12 sm:col-start-1 sm:col-end-4">
           <CardTitle>Mint Test Realms</CardTitle>
 

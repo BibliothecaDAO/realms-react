@@ -13,6 +13,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
+import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const GaPanel = () => {
   const { isDisplayLarge, selectedId, openDetails, selectedPanel } =
@@ -98,15 +99,11 @@ export const GaPanel = () => {
 
   return (
     <BasePanel open={isGaPanel} style="lg:w-7/12">
-      <div className="flex justify-between pt-2">
-        <div className="sm:hidden"></div>
-        <h1>Genesis Adventurers</h1>
-        <Link href="/">
-          <button className="z-50 transition-all rounded top-4">
-            <Close />
-          </button>
-        </Link>
-      </div>
+      <PanelHeading
+        heading="Genesis Adventurers"
+        action={actions.updateSearchIdFilter}
+        searchFilterValue={state.searchIdFilter}
+      />
       <Tabs
         selectedIndex={state.selectedTab}
         onChange={actions.updateSelectedTab as any}

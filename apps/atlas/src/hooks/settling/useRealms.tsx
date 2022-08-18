@@ -1,37 +1,46 @@
-import { useStarknet } from '@starknet-react/core';
-import { BigNumber } from 'ethers';
-import type { RealmWhereInput } from '@/generated/graphql';
+import { useState } from 'react';
+import type {
+  RealmOrderByWithRelationInput,
+  RealmWhereInput,
+} from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
-const MyRealms = 'My Realms';
+export type Args = {
+  filter: RealmWhereInput;
+  orderBy?: RealmOrderByWithRelationInput;
+  pageSize?: number;
+  page?: number;
+  skip?: boolean;
+};
 
-// TODO: Get lists from local storage
-const staticLists = [MyRealms];
+const useRealms = (args: Args) => {
+  const [page, setPage] = useState(1);
 
-const useRealms = () => {
-  const { account: starkAccount } = useStarknet();
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
-
-  const filter: RealmWhereInput = {};
-  // filter.OR = [
-  //   { owner: { equals: account?.toLowerCase() } },
-  //   { bridgedOwner: { equals: account?.toLowerCase() } },
-  //   { ownerL2: { equals: starknetWallet } },
-  //   { settledOwner: { equals: starknetWallet } },
-  // ];
-  filter.settledOwner = {
-    equals: starknetWallet,
-  };
+  const resolvedPage = args.page ?? page;
 
   const { data, loading, error } = useGetRealmsQuery({
     variables: {
-      filter,
-      take: 10,
+      filter: args.filter,
+      take: args.pageSize,
+      orderBy: args.orderBy,
+      skip: (resolvedPage - 1) * (args.pageSize || 0),
     },
+    skip: args.skip,
   });
-  return { data, loading, error };
+
+  const hasNext =
+    data?.total !== undefined &&
+    resolvedPage * (args.pageSize || 1) < data.total;
+
+  const loadNext = () => {
+    setPage((prev) => prev + 1);
+  };
+
+  const reset = () => {
+    setPage(1);
+  };
+
+  return { data, loading, error, loadNext, hasNext, reset };
 };
 
 export default useRealms;

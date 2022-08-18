@@ -80,7 +80,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
           className="absolute z-10 mt-2 border-4 border-double rounded md:right-0 border-white/20"
           static
         >
-          <div className="flex flex-col px-8 py-4 font-medium text-white bg-black rounded-sm shadow-sm w-60">
+          <div className="flex flex-col px-8 py-4 font-medium bg-black rounded-sm shadow-sm w-60">
             <h4 className="text-center">Traits</h4>
             <RangeSliderFilter
               name="Regions"

@@ -5,7 +5,7 @@ import type { OrderType } from '@/generated/graphql';
 import { RealmTraitType } from '@/generated/graphql';
 import { storage } from '@/util/localStorage';
 import type { MinMaxRange } from '../types';
-const RealmFavoriteLocalStorageKey = 'realm.favourites';
+export const RealmFavoriteLocalStorageKey = 'realm.favourites';
 
 type RarityFilter = {
   score: MinMaxRange;

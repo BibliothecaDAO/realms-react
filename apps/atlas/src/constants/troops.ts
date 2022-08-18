@@ -73,7 +73,7 @@ export const troopList = [
     type: 'ranged',
     img: 'Skirmisher.png',
     troopId: TroopIds.Skirmisher,
-    colour: Barracks,
+    colour: ArcherTower,
     tier: TroopTier.Skirmisher,
     agility: 2,
     attack: 7,

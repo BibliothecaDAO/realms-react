@@ -35,7 +35,7 @@ export function RealmCombatHistory({
         {resources.map((resource, index) => {
           const info = findResourceName(resource.resourceId);
           return (
-            <div className="flex justify-between my-1 text-white" key={index}>
+            <div className="flex justify-between my-1 " key={index}>
               <div className="flex">
                 <ResourceIcon
                   size="xs"
@@ -140,15 +140,13 @@ export function RealmCombatHistory({
             className={`w-full ${loadingData ?? 'animate-pulse'}`}
           >
             <CardBody className={`flex ${a.event.class} `}>
-              <span className="py-1 mb-1 text-xs font-semibold text-white">
+              <span className="py-1 mb-1 text-xs font-semibold ">
                 {new Date(a.timestamp).toLocaleTimeString('en-US')}{' '}
                 {new Date(a.timestamp).toLocaleDateString('en-US')}
               </span>
-              <h5 className="text-white">{a.event.event}</h5>
+              <h5 className="">{a.event.event}</h5>
               {a.event?.resources && a.event.resources}
-              {a.event?.relic && (
-                <h5 className="text-white">{a.event.relic}</h5>
-              )}
+              {a.event?.relic && <h5 className="">{a.event.relic}</h5>}
               <div className="mt-4">{a.event.action}</div>
             </CardBody>
           </Card>

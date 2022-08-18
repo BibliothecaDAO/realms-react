@@ -74,9 +74,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           <Select.Button
             label={props.resource?.resourceName ?? ''}
             variant={props.resource?.resourceName ? 'default' : 'placeholder'}
-            icon={
-              <ChevronRight className="w-5 h-5 text-white transform -rotate-90 " />
-            }
+            icon={<ChevronRight className="w-5 h-5 transform -rotate-90 " />}
             labelIcon={
               <ResourceIcon
                 size="sm"

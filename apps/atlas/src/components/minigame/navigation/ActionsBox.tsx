@@ -259,7 +259,7 @@ const ActionsBox = (props) => {
             {getBoost.data !== undefined ? (
               <div
                 id="action-boost"
-                className="w-1/2 p-1 text-sm font-semibold text-center text-white transition-colors to-gray-900 bg-gradient-to-r from-purple-900"
+                className="w-1/2 p-1 text-sm font-semibold text-center transition-colors to-gray-900 bg-gradient-to-r from-purple-900"
               >
                 Boost <LightningBoltIcon className="inline-block w-4" />
                 {`${getBoost.data / 100}%`}
@@ -278,7 +278,7 @@ const ActionsBox = (props) => {
           </div>
           {contractApproval.approvalStatus == 'approved' ? (
             <button
-              className="h-12 text-white uppercase transition-all duration-300 transform rounded shadow-xl bg-gradient-to-l bg-blue-900/90 from-blue-400 hover:-translate-y-1 hover:bg-blue-600 disabled:opacity-60 disabled:hover:translate-y-0"
+              className="h-12 uppercase transition-all duration-300 transform rounded shadow-xl bg-gradient-to-l bg-blue-900/90 from-blue-400 hover:-translate-y-1 hover:bg-blue-600 disabled:opacity-60 disabled:hover:translate-y-0"
               color={'primary'}
               disabled={
                 account == undefined ||

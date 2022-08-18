@@ -21,6 +21,7 @@ import type { GetRealmQuery } from '@/generated/graphql';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
+import useCombat from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
@@ -47,6 +48,8 @@ const Army: React.FC<Prop> = (props) => {
 
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
+
+  const { troops } = useCombat();
 
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
@@ -90,7 +93,7 @@ const Army: React.FC<Prop> = (props) => {
   if (!realm) {
     return null;
   }
-  const troops =
+  const realmTroops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
   const getMilitaryBuildingsBuilt = (
@@ -200,22 +203,27 @@ const Army: React.FC<Prop> = (props) => {
                         </div>
                       </div>
                       <div className="flex w-full space-x-3">
-                        {troopList
-                          .filter((b) => b.buildingId === a.id)
+                        {troops
+                          ?.filter((b) => b.buildingId === a.id)
                           .map((c, i) => {
                             return (
-                              <div key={i} className="flex flex-col w-full">
-                                <div className="flex justify-center p-2 bg-red-700 border-4 border-double rounded-xl border-white/40">
+                              <div
+                                key={i}
+                                className="flex flex-col w-full text-center"
+                              >
+                                <div
+                                  className={`flex justify-center p-2 border-4 border-double rounded-xl border-white/40 ${c.troopColour}`}
+                                >
                                   <Image
                                     height={75}
                                     width={75}
                                     className="object-contain h-auto"
-                                    src={'/realm-troops/' + c.img}
+                                    src={'/realm-troops/' + c.troopImage}
                                     alt=""
                                   />
                                 </div>
 
-                                <h5 className="">{c.name}</h5>
+                                <h5 className="">{c.troopName}</h5>
                               </div>
                             );
                           })}
@@ -281,7 +289,7 @@ const Army: React.FC<Prop> = (props) => {
             squad={squadSlot}
             realm={realm}
             withPurchase={true}
-            troops={troops}
+            troops={realmTroops}
             troopsStats={troopStatsData?.getTroopStats}
             onClose={() => setIsRaiding(false)}
             militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
