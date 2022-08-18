@@ -172,12 +172,16 @@ function slides(fullpageApi: any) {
               <a
                 className="inline-block ml-4 mr-2 align-middle"
                 href="https://opensea.io/collection/lootrealms"
+                target="_blank"
+                rel="noreferrer"
               >
                 <OpenSea className="w-12 fill-current hover:opacity-70" />
               </a>
               <a
                 className="inline-block align-middle"
                 href="https://looksrare.org/collections/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
+                target="_blank"
+                rel="noreferrer"
               >
                 <LooksRare className="w-12 fill-current hover:opacity-70" />
               </a>

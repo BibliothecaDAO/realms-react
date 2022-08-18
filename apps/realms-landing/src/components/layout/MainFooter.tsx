@@ -17,7 +17,7 @@ export const MainFooter = () => {
           <Discord className="fill-current w-7 hover:animate-bounce sm:mr-4" />
         </a>
         <a
-          href="https://discord.gg/WpwYzsT8Jv"
+          href="https://github.com/BibliothecaForAdventurers"
           target="_blank"
           rel="noreferrer"
           className="self-center"

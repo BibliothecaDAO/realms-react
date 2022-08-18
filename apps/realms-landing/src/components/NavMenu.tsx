@@ -9,7 +9,7 @@ import { ScrollSpy } from '@/util/ScrollSpy';
 const NavMenu = ({ options }: any) => {
   // control the click event
   const onClick = (e: any) => {
-    e.preventDefault();
+    /*  e.preventDefault();
     // Set the hash
     window.location.hash = e.target.hash;
 
@@ -20,7 +20,7 @@ const NavMenu = ({ options }: any) => {
     );
     if (targetSection) {
       window.scrollTo(0, targetSection.offsetTop + 1);
-    }
+    } */
   };
 
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -78,7 +78,7 @@ const NavMenu = ({ options }: any) => {
             <Discord className="fill-current w-7 hover:animate-bounce sm:mr-4" />
           </a>
           <a
-            href="https://discord.gg/WpwYzsT8Jv"
+            href="https://github.com/BibliothecaForAdventurers"
             target="_blank"
             rel="noreferrer"
             className="self-center"
@@ -98,6 +98,7 @@ const NavMenu = ({ options }: any) => {
           className="py-2 my-3 text-base font-normal tracking-wide text-white normal-case border border-black rounded-lg shadow-xl bg-white/50"
           href="https://atlas.bibliothecadao.xyz"
           variant="dao"
+          target="_blank"
           texture={false}
         >
           Explore the Atlas
