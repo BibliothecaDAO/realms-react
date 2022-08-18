@@ -1,10 +1,14 @@
 import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import { Switch } from '@headlessui/react';
 import Image from 'next/image';
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { buildingIdToString } from '@/constants/buildings';
 import { Squad, TroopTierMax } from '@/constants/index';
 import { TroopBuildings } from '@/constants/troops';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
@@ -70,9 +74,25 @@ export const ArmoryBuilder = (props: Props) => {
     filteredCurrentTroops.length + filteredQueuedTroops.length >=
       TroopTierMax[tier - 1];
 
+  const txQueue = useTransactionQueue();
+  const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
+  useEffect(() => {
+    setBuildingIdsEnqueued(
+      txQueue.transactions
+        .filter(
+          (tx) =>
+            tx.contractAddress == ModuleAddr.Building &&
+            tx.entrypoint == Entrypoints.build &&
+            tx.metadata['realmId'] == props.realmId
+        )
+        .map((t) => t.metadata['buildingId'])
+    );
+  }, [txQueue.transactions]);
+
   const checkCanBuilt = (id) => {
-    return props.militaryBuildingsBuilt &&
-      props.militaryBuildingsBuilt?.filter((a) => a === id).length > 0
+    const militaryBuildings = props.militaryBuildingsBuilt ?? [];
+    return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
+      .length > 0
       ? false
       : true;
   };
@@ -126,7 +146,9 @@ export const ArmoryBuilder = (props: Props) => {
             {reachedMaxNumberOfTroopsInTier ? 'max troop tier' : 'add'}
           </Button>
           {checkCanBuilt(TroopBuildings[re.troopName ?? '']) && (
-            <p className="mt-4">Requires building</p>
+            <p className="mt-4">
+              Requires {buildingIdToString(TroopBuildings[re.troopName ?? ''])}
+            </p>
           )}
         </div>
       ),

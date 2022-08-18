@@ -1,3 +1,4 @@
+import { buildingIdToString } from '@/constants/buildings';
 import { ENQUEUED_STATUS, Squad } from '@/constants/index';
 import { Entrypoints as BuildingMethods } from './useBuildings';
 import { Entrypoints as CombatMethods } from './useCombat';
@@ -50,8 +51,8 @@ export function getTxMessage(tx: TxWithMetadata): TxMessage {
         return {
           title: isQueued ? 'Construct Building' : 'Constructing Building',
           description: `Realm #${metadata.realmId} ${
-            isQueued ? 'commanded to build' : 'has commenced'
-          } building ${metadata.buildingId}`,
+            isQueued ? `commanded to build ` : 'has commenced building '
+          } ${buildingIdToString(metadata.buildingId)}`,
         };
 
       case 'upgrade_resource':
