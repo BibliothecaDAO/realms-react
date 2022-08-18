@@ -350,7 +350,7 @@ export const LoreCreateEntityForm = () => {
   };
 
   return (
-    <div className="flex flex-col p-4 rounded bg-black/95 mt-3 mb-3">
+    <div className="flex flex-col p-4 mb-3 rounded bg-black/95">
       {hasDraft ? (
         <div className={`bg-green-200 text-black p-2 rounded-md mb-2`}>
           You have saved draft. Do you want to restore it?{' '}
@@ -376,7 +376,7 @@ export const LoreCreateEntityForm = () => {
         <div className="col-span-2">
           <div className={`text-white text-sm uppercase pl-1 mb-1`}>Title</div>
           <input
-            className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-900 placeholder:text-gray-700"
+            className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white bg-gray-900 rounded appearance-none focus:outline-none placeholder:text-gray-700"
             type="text"
             value={entityTitle}
             onChange={(ev) => setEntityTitle(ev.target.value)}
@@ -388,7 +388,7 @@ export const LoreCreateEntityForm = () => {
             Author
           </div>
           <input
-            className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-900 placeholder:text-gray-700"
+            className="w-full px-4 py-4 text-xl font-bold leading-tight tracking-widest text-white bg-gray-900 rounded appearance-none focus:outline-none placeholder:text-gray-700"
             type="text"
             value={entityAuthor}
             onChange={(ev) => setEntityAuthor(ev.target.value)}
@@ -402,7 +402,7 @@ export const LoreCreateEntityForm = () => {
           Excerpt
         </div>
         <TextareaAutosize
-          className="w-full px-2 py-2 text-lg font-bold leading-tight tracking-widest text-white rounded appearance-none focus:outline-none bg-gray-900 overflow-hidden placeholder:text-gray-700"
+          className="w-full px-2 py-2 overflow-hidden text-lg font-bold leading-tight tracking-widest text-white bg-gray-900 rounded appearance-none focus:outline-none placeholder:text-gray-700"
           onChange={(ev) => setEntityExcerpt(ev.target.value)}
           placeholder="Write a short description of your story..."
           minRows={3}
@@ -432,7 +432,7 @@ export const LoreCreateEntityForm = () => {
           style={{ minHeight: '150px' }}
         >
           <div>
-            <div className="text-white outline-none bg-gray-900 p-4 rounded-md text-xl">
+            <div className="p-4 text-xl text-white bg-gray-900 rounded-md outline-none">
               <LoreEditor
                 onChange={(value) => {
                   setEditorValue(value);

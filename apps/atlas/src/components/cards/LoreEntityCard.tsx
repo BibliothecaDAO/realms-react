@@ -26,7 +26,7 @@ export function LoreEntityCard(props: LoreEntitiesProps) {
 
   return (
     <div
-      className={`px-4 py-3 rounded-md text-white cursor-pointer bg-black/95`}
+      className={`p-6 rounded-md border-white/30 cursor-pointer bg-black/95 border-4 border-double hover:bg-white/10 transition-all duration-300`}
       style={{
         boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
       }}
@@ -40,23 +40,21 @@ export function LoreEntityCard(props: LoreEntitiesProps) {
         });
       }}
     >
-      <div className={`flex justify-between mb-3`}>
+      <h2 className={`mb-1`}>{entity.revisions[0]?.title}</h2>
+      <div className={`flex justify-between mb-3 uppercase text-white/40`}>
         <div className={`flex`}>
-          <div className={`mr-2 border border-gray-700 px-2`}>#{entity.id}</div>
+          <div className={`mr-2  border-white/30`}>#{entity.id}</div>
           {formatDate(entity.revisions[0]?.createdAt)}
         </div>
         <div>
           {entity.ownerDisplayName && (
-            <div className={`flex justify-end`}>
+            <div className={`flex justify-end tracking-widest`}>
               Author: {entity.ownerDisplayName}
             </div>
           )}
         </div>
       </div>
-
-      <h1 className={`text-4xl`}>{entity.revisions[0]?.title}</h1>
-
-      <div className="leading-tight">{entity.revisions[0]?.excerpt}</div>
+      <div className="leading-loosest">{entity.revisions[0]?.excerpt}</div>
     </div>
   );
 }

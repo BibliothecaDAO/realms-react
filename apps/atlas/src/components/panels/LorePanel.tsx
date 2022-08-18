@@ -1,4 +1,4 @@
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useStarknet } from '@starknet-react/core';
@@ -20,7 +20,6 @@ import {
 } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import Button from '@/shared/Button';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
@@ -139,9 +138,9 @@ export const LorePanel = () => {
         </Tabs.List>
       </Tabs>
 
-      <div className="px-2">
+      <div className="h-full px-2 bg-black">
         {state.selectedTab !== 2 && (
-          <div className="flex flex-wrap justify-between mb-2">
+          <div className="flex flex-wrap justify-between mb-2 ">
             <div className="grid grid-cols-2 gap-2">
               <SearchFilter
                 placeholder="Search by content"
@@ -170,7 +169,7 @@ export const LorePanel = () => {
         {state.selectedTab === 2 && <LoreCreateEntityForm />}
 
         {state.selectedTab !== 2 && (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
           </div>
         )}
@@ -181,6 +180,7 @@ export const LorePanel = () => {
             <h2>No results.</h2>
             <div className="flex gap-4">
               <Button
+                variant="primary"
                 className="whitespace-nowrap"
                 onClick={actions.clearFilters}
               >
@@ -189,6 +189,7 @@ export const LorePanel = () => {
               {state.selectedTab !== 1 && (
                 <Button
                   className="whitespace-nowrap"
+                  variant="primary"
                   onClick={() => actions.updateSelectedTab(1)}
                 >
                   See All Realms
@@ -200,10 +201,15 @@ export const LorePanel = () => {
 
         {showPagination() && (
           <div className="flex gap-2 my-8">
-            <Button onClick={previousPage} disabled={page === 1}>
+            <Button
+              variant="primary"
+              onClick={previousPage}
+              disabled={page === 1}
+            >
               Previous
             </Button>
             <Button
+              variant="primary"
               onClick={nextPage}
               disabled={data?.getLoreEntities?.length !== limit}
             >

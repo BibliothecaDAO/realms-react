@@ -65,7 +65,7 @@ export const RealmSideBar = () => {
           </div>
         )}
 
-        {!loading && !loreEntitiesLoading && (
+        {/* {!loading && !loreEntitiesLoading && (
           <div className={`mt-2`}>
             <div className={`bg-black/10 rounded-md p-2`}>
               <h2 className={`text-2xl`}>Lore</h2>
@@ -96,7 +96,7 @@ export const RealmSideBar = () => {
               )}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </BaseSideBar>
   );

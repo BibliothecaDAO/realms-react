@@ -38,48 +38,9 @@ export const LoreEntityModal = ({ entityId }) => {
 
   return (
     <div className={``}>
-      {loreEntity && (
-        <div className={`-mt-12 mb-1`}>
-          <Button
-            href="/lore"
-            size="lg"
-            className="bg-blue-600"
-            variant={'primary'}
-            onClick={() => {
-              window.open(
-                `https://twitter.com/share?${getTwitterParams()}`,
-                'sharer',
-                'toolbar=0,status=0,width=550,height=400'
-              );
-            }}
-          >
-            Share on Twitter
-          </Button>
-          <Button
-            size="lg"
-            className="bg-gray-800 ml-2"
-            variant={'primary'}
-            onClick={() => {
-              navigator.clipboard.writeText(getShareUrl());
-
-              toast(`Link is copied to clipboard`, {
-                position: 'top-right',
-                style: {
-                  borderRadius: '2px',
-                  background: '#000',
-                  color: '#fff',
-                },
-              });
-            }}
-          >
-            Copy link for sharing
-          </Button>
-        </div>
-      )}
-
-      <div className="bg-black/90 w-full rounded-md">
+      <div className="w-full rounded-md">
         {loading && (
-          <div className="flex flex-col items-center gap-2 mx-auto animate-pulse py-8">
+          <div className="flex flex-col items-center gap-2 py-8 mx-auto animate-pulse">
             <Castle className="block w-20 fill-current" />
             <h2>Loading Lore...</h2>
           </div>
@@ -88,10 +49,47 @@ export const LoreEntityModal = ({ entityId }) => {
         {loreEntity && (
           <div
             className={
-              'p-4 text-xl prose prose-stone prose-sm brightness-200 mt-2 mb-2'
+              'p-10 w-full text-xl prose prose-stone prose-sm brightness-200 mt-2 mb-2 bg-black border-double border-white/30 border-4 rounded-xl'
             }
           >
             <LoreScrollEntity entity={loreEntity} />
+          </div>
+        )}
+        {loreEntity && (
+          <div className={`mb-1 p-4`}>
+            <Button
+              href="/lore"
+              size="xs"
+              variant={'outline'}
+              onClick={() => {
+                window.open(
+                  `https://twitter.com/share?${getTwitterParams()}`,
+                  'sharer',
+                  'toolbar=0,status=0,width=550,height=400'
+                );
+              }}
+            >
+              Share on Twitter
+            </Button>
+            <Button
+              size="xs"
+              className="ml-2"
+              variant={'outline'}
+              onClick={() => {
+                navigator.clipboard.writeText(getShareUrl());
+
+                toast(`Link is copied to clipboard`, {
+                  position: 'top-right',
+                  style: {
+                    borderRadius: '2px',
+                    background: '#000',
+                    color: '#fff',
+                  },
+                });
+              }}
+            >
+              Copy link for sharing
+            </Button>
           </div>
         )}
       </div>

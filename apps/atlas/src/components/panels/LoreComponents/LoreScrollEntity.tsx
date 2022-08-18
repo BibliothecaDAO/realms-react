@@ -20,9 +20,7 @@ export const LoreScrollEntity = ({ entity }) => {
   return (
     <>
       {entity.revisions[0].title ? (
-        <h1 className={`text-6xl font-bold mb-6`}>
-          {entity.revisions[0].title}
-        </h1>
+        <h2 className={``}>{entity.revisions[0].title}</h2>
       ) : null}
 
       <LoreMarkdownRenderer>

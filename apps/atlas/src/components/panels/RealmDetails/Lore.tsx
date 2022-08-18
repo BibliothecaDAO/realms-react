@@ -9,9 +9,11 @@ import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 type Prop = {
   realm?: GetRealmQuery;
   open: boolean;
+  realmId: number;
+  realmName: string;
 };
 
-const RealmLore: React.FC<Prop> = ({ realm, open }) => {
+const RealmLore: React.FC<Prop> = ({ realm, open, realmId, realmName }) => {
   const limit = 20;
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
@@ -28,7 +30,7 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
               equals: 1000,
             },
             assetId: {
-              equals: realm?.realm.realmId.toString(),
+              equals: realmId?.toString(),
             },
           },
         },
@@ -55,12 +57,12 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
   return (
     <BaseRealmDetailPanel open={open}>
       {/* <div className="grid grid-cols-12 gap-6"> */}
-      {/* <div className="col-span-12 col-start-1 col-end-12 flex"> */}
+      {/* <div className="flex col-span-12 col-start-1 col-end-12"> */}
       {loading && (
         <div className="grid grid-cols-12 gap-6 py-4">
           <Card className="col-start-1 col-end-7">
             <CardBody className="text-center">
-              <Castle className="block w-20 fill-current mx-auto" />
+              <Castle className="block w-20 mx-auto fill-current" />
               <div className="text-4xl">Loading...</div>
             </CardBody>
           </Card>
@@ -73,9 +75,7 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
       {hasNoResults() && (
         <div className="grid grid-cols-12 gap-6 py-4">
           <Card className="col-start-1 col-end-7">
-            <CardTitle>
-              No Lore for {realm?.realm.name} has written yet!
-            </CardTitle>
+            <CardTitle>No Lore for {realmName} has written yet!</CardTitle>
             <CardBody>
               Want to be the first?
               <div className="mt-2">
@@ -85,7 +85,7 @@ const RealmLore: React.FC<Prop> = ({ realm, open }) => {
                   className="w-full"
                   variant={'primary'}
                 >
-                  Start writing Lore for {realm?.realm.name}
+                  Start writing Lore for {realmName}
                 </Button>
               </div>
             </CardBody>
