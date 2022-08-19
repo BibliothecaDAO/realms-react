@@ -149,6 +149,19 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       toast('Added to Favorites');
     }
   };
+  const onSetSubview = (s) => {
+    router.push(
+      {
+        pathname: `realm/${realm?.realmId}`,
+        query: {
+          tab: s,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
+    set(s);
+  };
 
   const favoritesPressed = useKeyPress({ key: 'f' });
   const prevFavoritesPressed = usePrevious(favoritesPressed);
@@ -229,19 +242,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                 isOwnerOfRealm={isOwner}
                 isMobile={mobile}
                 color={color}
-                onSetSubview={(s) => {
-                  router.push(
-                    {
-                      pathname: `realm/${realm?.realmId}`,
-                      query: {
-                        tab: s,
-                      },
-                    },
-                    undefined,
-                    { shallow: true }
-                  );
-                  set(s);
-                }}
+                onSetSubview={(s) => onSetSubview(s)}
                 className=""
                 onNavigateIntent={(dir) => {
                   if (!realm) {
@@ -281,6 +282,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
                   <Survey
                     open={subview == 'Survey'}
+                    onSetSubview={(s) => onSetSubview(s)}
                     availableResources={realmsResourcesDetails}
                     buildingUtilisation={buildingUtilisation}
                     realmFoodDetails={realmFoodDetails}
