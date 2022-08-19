@@ -14,6 +14,7 @@ import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import { findResourceName } from '@/util/resources';
 import type { RealmsCardProps } from '../../types';
+import RealmLore from '../panels/RealmDetails/Lore';
 
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
@@ -115,6 +116,16 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       {
         label: 'History',
         component: <RealmHistory open={true} realmId={props.realm.realmId} />,
+      },
+      {
+        label: 'Lore',
+        component: (
+          <RealmLore
+            open={true}
+            realmName={props.realm.name || ''}
+            realmId={props.realm.realmId || 0}
+          />
+        ),
       },
     ],
     [props.realm?.realmId]

@@ -299,6 +299,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     loading={loadingHooks}
                   />
                   <RealmHistory open={subview == 'History'} realmId={realmId} />
+
+                  {/* <RealmLore open={subview == 'Lore'} realm={realmData} /> */}
                 </>
               ) : null}
             </div>
