@@ -275,7 +275,7 @@ const Food: React.FC<Prop> = (props) => {
           </div>
         </Card>
         <Card className="col-span-12 md:col-start-5 md:col-end-9 ">
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between w-full my-4">
             <h3>
               Fishing villages {props.realmFoodDetails.villagesBuilt}/
               {fishingVillageCapacity}
@@ -296,15 +296,17 @@ const Food: React.FC<Prop> = (props) => {
               </div>
             )}
           </div>
+          <div className="w-full">
+            <p className="px-1 mb-2 text-xl">
+              {realm.name} has {props.realmFoodDetails.villagesBuilt} Fishing
+              Villages catching{' '}
+              {(
+                BASE_FOOD_PRODUCTION * props.realmFoodDetails.villagesBuilt
+              ).toLocaleString()}{' '}
+              $FISH every {HARVEST_LENGTH / 60} minutes.
+            </p>
+          </div>
 
-          <p className="px-1 mb-2 text-xl">
-            {realm.name} has {props.realmFoodDetails.villagesBuilt} Fishing
-            Villages catching{' '}
-            {(
-              BASE_FOOD_PRODUCTION * props.realmFoodDetails.villagesBuilt
-            ).toLocaleString()}{' '}
-            $FISH every {HARVEST_LENGTH / 60} minutes.
-          </p>
           <div className="flex flex-wrap">
             {cropLand({
               level: fishingVillageCapacity,
@@ -376,7 +378,7 @@ const Food: React.FC<Prop> = (props) => {
                   );
                 })}
               </div>
-              <p className="mt-4 text-xl">
+              <p className="w-full mt-4 text-xl">
                 {(
                   BASE_FOOD_PRODUCTION *
                   props.realmFoodDetails.villagesBuilt *
