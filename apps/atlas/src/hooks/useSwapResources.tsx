@@ -2,6 +2,8 @@ import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
@@ -25,7 +27,7 @@ export const Entrypoints = {
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  [Entrypoints.buyTokens]: (args: {
+  buyTokens: (args: {
     maxAmount: BigNumber;
     tokenIds: number[];
     tokenAmounts: BigNumber[];
@@ -33,13 +35,26 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
   }) => ({
     contractAddress: ModuleAddr.Exchange,
     entrypoint: Entrypoints.buyTokens,
-    calldata: [],
+    calldata: [
+      ...uint256ToRawCalldata(bnToUint256(args.maxAmount.toHexString())),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
     metadata: {
       ...args,
       action: Entrypoints.buyTokens,
     },
   }),
-  [Entrypoints.sellTokens]: (args: {
+  sellTokens: (args: {
     minAmount: BigNumber;
     tokenIds: number[];
     tokenAmounts: BigNumber[];
@@ -47,7 +62,20 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
   }) => ({
     contractAddress: ModuleAddr.Exchange,
     entrypoint: Entrypoints.sellTokens,
-    calldata: [],
+    calldata: [
+      ...uint256ToRawCalldata(bnToUint256(args.minAmount.toHexString())),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
     metadata: {
       ...args,
       action: Entrypoints.sellTokens,
@@ -108,6 +136,9 @@ const useSwapResourcesTransaction = (method: string) => {
 export const useBuyResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.buyTokens);
+
+  const txQueue = useTransactionQueue();
+
   const buyTokens = (
     maxAmount: BigNumber,
     tokenIds: number[],
@@ -117,21 +148,14 @@ export const useBuyResources = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.buyTokens,
+    txQueue.add(
+      createCall.buyTokens({
+        maxAmount,
         tokenIds,
         tokenAmounts,
-      },
-      args: [
-        bnToUint256(maxAmount.toHexString()),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {
@@ -146,6 +170,8 @@ export const useSellResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.sellTokens);
 
+  const txQueue = useTransactionQueue();
+
   const sellTokens = (
     minAmount: BigNumber,
     tokenIds: number[],
@@ -155,21 +181,14 @@ export const useSellResources = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.sellTokens,
+    txQueue.add(
+      createCall.sellTokens({
+        minAmount,
         tokenIds,
         tokenAmounts,
-      },
-      args: [
-        bnToUint256(minAmount.toHexString()),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {

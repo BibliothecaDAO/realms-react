@@ -30,6 +30,7 @@ export function getTxRenderConfig(
   const renderConfig =
     render[tx.metadata?.action] ||
     function (tx, ctx) {
+      console.error('No render configuration', tx);
       throw new Error(
         'No render configuration defined for transaction metadata:',
         tx.metadata
