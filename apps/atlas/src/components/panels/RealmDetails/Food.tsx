@@ -167,7 +167,11 @@ const Food: React.FC<Prop> = (props) => {
               <h5>harvests left</h5>
               <div className="text-5xl">
                 {props.realmFoodDetails.farmHarvestsLeft -
-                  props.realmFoodDetails.decayedFarms}
+                  props.realmFoodDetails.decayedFarms >
+                0
+                  ? props.realmFoodDetails.farmHarvestsLeft -
+                    props.realmFoodDetails.decayedFarms
+                  : 0}
               </div>
             </div>
             {isOwner && (
@@ -321,7 +325,11 @@ const Food: React.FC<Prop> = (props) => {
               <h5>Harvests Left</h5>
               <div className="sm:text-5xl">
                 {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                  props.realmFoodDetails.decayedVillages}
+                  props.realmFoodDetails.decayedVillages >
+                0
+                  ? props.realmFoodDetails.fishingVillagesHarvestsLeft -
+                    props.realmFoodDetails.decayedVillages
+                  : 0}
               </div>
             </div>
           </div>
