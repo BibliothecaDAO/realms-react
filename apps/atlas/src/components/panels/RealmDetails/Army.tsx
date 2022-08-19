@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardTitle,
+  CountdownTimer,
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
@@ -109,43 +110,46 @@ const Army: React.FC<Prop> = (props) => {
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
         {isOwner && (
-          <Card loading={props.loading} className="col-span-12 md:col-span-9">
+          <Card
+            loading={props.loading}
+            className="col-span-12 row-span-3 md:col-span-5"
+          >
             <CardTitle>Military Buildings</CardTitle>
             <div className="flex flex-wrap">
               {props.buildings
                 ?.filter((a) => a.type === 'military')
                 .map((a, i) => {
                   return (
-                    <div
-                      key={i}
-                      className="flex flex-wrap w-1/2 p-3 border rounded border-white/20"
-                    >
+                    <div key={i} className="flex flex-wrap w-full p-3 rounded">
                       <div className="self-center">
                         <Image
                           height={200}
                           width={200}
-                          className="w-64 h-auto bg-white rounded"
+                          className="object-fill bg-white rounded-2xl"
                           src={a.img}
                           alt=""
                         />
                       </div>
 
                       <div className="p-4 capitalize">
-                        <h2>{a.name}</h2>
+                        <h3>{a.name}</h3>
 
                         <div className="flex flex-wrap">
-                          <div className="w-1/2">
-                            <h5>Quantity:</h5>
-                            <p className="text-2xl">{a.quantityBuilt}</p>
+                          <div className="w-1/3">
+                            <p className="sm:text-4xl">{a.quantityBuilt}</p>
+
+                            <CountdownTimer
+                              date={(a.buildingDecay * 1000).toString()}
+                            />
                           </div>
-                          <div className="w-1/2">
+                          {/* <div className="w-1/3">
                             <h5>Usage:</h5>
-                            <p className="text-2xl">{a.sqmUsage} sqm</p>
-                          </div>
-                          <div className="w-1/2">
+                            <p className="text-xl">{a.sqmUsage} sqm</p>
+                          </div> */}
+                          {/* <div className="w-1/3">
                             <h5>size:</h5>
-                            <p className="text-2xl">{a.buildingSize} sqm</p>
-                          </div>
+                            <p className="text-xl">{a.buildingSize} sqm</p>
+                          </div> */}
                         </div>
 
                         {/* <h5 className="my-2">Decay time:</h5> */}
@@ -237,7 +241,7 @@ const Army: React.FC<Prop> = (props) => {
 
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-1 md:col-end-5"
+          className="col-span-12 md:col-start-6 md:col-end-13"
         >
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
@@ -264,7 +268,10 @@ const Army: React.FC<Prop> = (props) => {
             </div>
           )}
         </Card>
-        <Card loading={props.loading} className="col-span-12 md:col-span-8">
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-6 md:col-end-13"
+        >
           <div className="flex justify-between">
             <CardTitle>{squadSlot}ing Army</CardTitle>
 

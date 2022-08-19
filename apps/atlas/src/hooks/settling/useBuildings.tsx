@@ -53,8 +53,6 @@ const useBuildings = (realm: Realm | undefined): Building => {
 
   const { costs } = useCosts();
 
-  console.log(costs);
-
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
 
@@ -109,6 +107,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: archerTowers,
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.ArcherTower),
         buildingSize: RealmBuildingsSize.ArcherTower,
         sqmUsage: archerTowers * RealmBuildingsSize.ArcherTower,
         cost: costs?.buildingCosts.find(
@@ -122,6 +121,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: barracks,
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.Barracks),
         buildingSize: RealmBuildingsSize.Barracks,
         sqmUsage: barracks * RealmBuildingsSize.Barracks,
         cost: costs?.buildingCosts.find(
@@ -135,6 +135,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: castles,
         img: '/realm-buildings/barracks.png',
         type: 'military',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.Castle),
         buildingSize: RealmBuildingsSize.Castle,
         sqmUsage: castles * RealmBuildingsSize.Castle,
         cost: costs?.buildingCosts.find(
@@ -148,6 +149,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: 0,
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.Farm),
         buildingSize: RealmBuildingsSize.Farm,
         sqmUsage: 0 * RealmBuildingsSize.Farm,
         cost: costs?.buildingCosts.find(
@@ -161,6 +163,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: 0,
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.FishingVillage),
         buildingSize: RealmBuildingsSize.FishingVillage,
         sqmUsage: 0 * RealmBuildingsSize.FishingVillage,
         cost: costs?.buildingCosts.find(
@@ -174,6 +177,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: huts,
         img: '/realm-buildings/barracks.png',
         type: 'economic',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.House),
         buildingSize: RealmBuildingsSize.House,
         sqmUsage: huts * RealmBuildingsSize.House,
         cost: costs?.buildingCosts.find(
@@ -187,6 +191,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: mageTowers,
         img: '/realm-buildings/mageTower.png',
         type: 'military',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.MageTower),
         buildingSize: RealmBuildingsSize.MageTower,
         sqmUsage: mageTowers * RealmBuildingsSize.MageTower,
         cost: costs?.buildingCosts.find(
@@ -200,6 +205,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         quantityBuilt: 0,
         img: '/realm-buildings/storeHouse.png',
         type: 'economic',
+        buildingDecay: pluckBuilding(realm, RealmBuildingId.StoreHouse),
         buildingSize: RealmBuildingsSize.StoreHouse,
         sqmUsage: 0 * RealmBuildingsSize.StoreHouse,
         cost: costs?.buildingCosts.find(
@@ -220,7 +226,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     const regions = getTrait(realm, 'Region');
 
     const max = cities * (regions / 2) + 100;
-    console.log(buildings);
+
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
   }, [realm, costs]);
 

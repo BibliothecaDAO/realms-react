@@ -277,7 +277,7 @@
         "type": "felt"
       },
       {
-        "name": "get_farm_harvests_left",
+        "name": "farm_harvests_left",
         "type": "felt"
       },
       {
@@ -297,7 +297,7 @@
         "type": "felt"
       },
       {
-        "name": "fishing_collections_left",
+        "name": "fishing_villages_harvests_left",
         "type": "felt"
       }
     ],

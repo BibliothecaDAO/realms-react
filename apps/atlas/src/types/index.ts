@@ -242,6 +242,7 @@ export interface BuildingDetail {
   sqmUsage: number;
   buildingSize: number;
   cost: ResourceCost[];
+  buildingDecay: number;
 }
 
 export interface RealmFoodDetails {
@@ -254,6 +255,8 @@ export interface RealmFoodDetails {
   decayedVillages: number;
   villagesBuilt: number;
   population: number;
+  fishingVillagesHarvestsLeft: number;
+  farmHarvestsLeft: number;
 }
 
 export interface BuildingFootprint {

@@ -101,9 +101,16 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
     {
       hotkey: HotKeys.Resources,
       click: () => props.onSetSubview('Resources'),
-      title: 'Economics',
+      title: 'Resources',
       icon: <Lords className="self-center w-6 h-6 fill-current" />,
       tabName: 'Resources',
+    },
+    {
+      hotkey: HotKeys.Resources,
+      click: () => props.onSetSubview('Food'),
+      title: 'Farming',
+      icon: <Lords className="self-center w-6 h-6 fill-current" />,
+      tabName: 'Food',
     },
     {
       hotkey: HotKeys.History,

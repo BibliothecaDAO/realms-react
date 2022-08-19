@@ -9,18 +9,20 @@ export const HotKeys = {
   History: 'h',
   Survey: 's',
   Lore: 'l',
+  Food: 'f',
 };
 
 export type Subview = keyof typeof HotKeys | null;
 
-const useRealmDetailHotkeys = (initialSubview?:Subview) => {
+const useRealmDetailHotkeys = (initialSubview?: Subview) => {
   const [subview, setSubview] = useState<Subview>(initialSubview || null);
 
-  const attackPress = useKeyPress({ key: HotKeys.Army});
+  const attackPress = useKeyPress({ key: HotKeys.Army });
   const historyPress = useKeyPress({ key: HotKeys.History });
-  const surveyPress = useKeyPress({ key: HotKeys.Survey});
-  const resourcesPress = useKeyPress({ key: HotKeys.Resources});
-  const lorePress = useKeyPress({ key: HotKeys.Lore});
+  const surveyPress = useKeyPress({ key: HotKeys.Survey });
+  const resourcesPress = useKeyPress({ key: HotKeys.Resources });
+  const lorePress = useKeyPress({ key: HotKeys.Lore });
+  const foodPress = useKeyPress({ key: HotKeys.Food });
 
   useEffect(() => {
     if (attackPress) {
@@ -35,8 +37,11 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
     if (lorePress) {
       subview == 'Lore' ? setSubview(null) : setSubview('Lore');
     }
-    if(historyPress){
-      subview == "History" ? setSubview(null) : setSubview("History");
+    if (historyPress) {
+      subview == 'History' ? setSubview(null) : setSubview('History');
+    }
+    if (foodPress) {
+      subview == 'Food' ? setSubview(null) : setSubview('Food');
     }
   }, [
     attackPress,
@@ -44,6 +49,7 @@ const useRealmDetailHotkeys = (initialSubview?:Subview) => {
     resourcesPress,
     historyPress,
     lorePress,
+    foodPress,
   ]);
 
   return {

@@ -40,7 +40,7 @@ import AtlasSidebar from '../sidebars/AtlasSideBar';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
-import RealmLore from './RealmDetails/Lore';
+import Food from './RealmDetails/Food';
 import ResourceDetails from './RealmDetails/Resources';
 import Survey from './RealmDetails/Survey';
 import RealmToolbar from './RealmDetails/Toolbar';
@@ -291,10 +291,18 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     realm={realmData}
                     loading={loadingHooks}
                   />
-
+                  <Food
+                    open={subview == 'Food'}
+                    availableResources={realmsResourcesDetails}
+                    realmFoodDetails={realmFoodDetails}
+                    availableFood={availableFood}
+                    buildings={buildings}
+                    realm={realmData}
+                    loading={loadingHooks}
+                  />
                   <RealmHistory open={subview == 'History'} realmId={realmId} />
 
-                  <RealmLore open={subview == 'Lore'} realm={realmData} />
+                  {/* <RealmLore open={subview == 'Lore'} realm={realmData} /> */}
                 </>
               ) : null}
             </div>
