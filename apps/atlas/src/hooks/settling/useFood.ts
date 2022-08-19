@@ -83,11 +83,13 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,
     totalTimeRemainingUntilFarmHarvest: 0,
+    farmHarvestsLeft: 0,
     decayedFarms: 0,
     farmsBuilt: 0,
     totalVillageHarvest: 0,
     totalTimeRemainingUntilVillageHarvest: 0,
     decayedVillages: 0,
+    fishingVillagesHarvestsLeft: 0,
     villagesBuilt: 0,
     population: 0,
   });
@@ -138,19 +140,35 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       return;
     }
 
-    console.log(foodInformation);
+    const fishingVillagesHarvestsLeft =
+      foodInformation['fishing_villages_harvests_left'].toNumber();
+    const isFishingVillagesLeft =
+      fishingVillagesHarvestsLeft > 0 ? true : false;
+
+    const farmHarvestsLeft = foodInformation['farm_harvests_left'].toNumber();
+    const isFarmHarvestsLeft = farmHarvestsLeft > 0 ? true : false;
 
     setRealmFoodDetails({
-      totalFarmHarvest: foodInformation['total_farm_harvest'].toNumber(),
+      totalFarmHarvest: isFarmHarvestsLeft
+        ? foodInformation['total_farm_harvest'].toNumber()
+        : 0,
+      farmHarvestsLeft: farmHarvestsLeft,
       totalTimeRemainingUntilFarmHarvest:
         foodInformation['total_farm_remaining'].toNumber(),
       decayedFarms: foodInformation['decayed_farms'].toNumber(),
-      farmsBuilt: foodInformation['farms_built'].toNumber(),
-      totalVillageHarvest: foodInformation['total_village_harvest'].toNumber(),
+      farmsBuilt: isFarmHarvestsLeft
+        ? foodInformation['farms_built'].toNumber()
+        : 0,
+      totalVillageHarvest: isFishingVillagesLeft
+        ? foodInformation['total_village_harvest'].toNumber()
+        : 0,
       totalTimeRemainingUntilVillageHarvest:
         foodInformation['total_village_remaining'].toNumber(),
       decayedVillages: foodInformation['decayed_villages'].toNumber(),
-      villagesBuilt: foodInformation['villages_built'].toNumber(),
+      villagesBuilt: isFishingVillagesLeft
+        ? foodInformation['villages_built'].toNumber()
+        : 0,
+      fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
       population: population[0].toNumber(),
     });
 

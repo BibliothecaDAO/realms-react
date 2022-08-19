@@ -37,7 +37,7 @@ const STYLES = {
     attack:
       'text-red-600 bg-red-400 hover:bg-red-500 active:bg-red-300 active:text-red-900 hover:text-red-900 text-white border-red-300 hover:text-red-200',
     primary:
-      'text-white bg-cta-100 hover:bg-red-700 hover:shadow-red-800 shadow-lg',
+      'text-white bg-cta-100 hover:bg-red-700 hover:shadow-purple-800 shadow-lg',
     secondary:
       ' text-white border-gray-600 hover:bg-gray-400 hover:text-gray-800 active:text-gray-900  active:bg-gray-200 rounded  border-0',
     tertiary:

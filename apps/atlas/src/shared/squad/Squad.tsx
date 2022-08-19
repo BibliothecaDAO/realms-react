@@ -171,7 +171,7 @@ export const SquadBuilder = (props: SquadProps) => {
               <Button
                 disabled={toBuy.length == 0}
                 onClick={() => {
-                  props.onClose;
+                  props.onClose();
                   build(
                     props.realm?.realmId,
                     toBuy.map((t) => t.troopId),

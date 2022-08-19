@@ -15,7 +15,12 @@ export const useCosts = () => {
     setCosts(data);
   }, [data]);
 
+  const getBuildingCostById = (id) => {
+    return costs?.buildingCosts.find((a) => a.buildingId === id);
+  };
+
   return {
     costs,
+    getBuildingCostById,
   };
 };

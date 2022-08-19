@@ -38,10 +38,10 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    ' border-none text-gray-300 w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:text-stone-200 hover:bg-stone-800 shadow-inner rounded ';
+    'border-4 border-double border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-xl hover:shadow-purple-800/20 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40';
   const iconClasses = 'w-6 mx-auto sm:w-8 fill-current';
   const textClasses =
-    'hidden font-bold text-center text-gray-300 uppercase text-shadow-xs tracking-veryWide sm:block mt-2 mb-5 ';
+    'hidden font-display text-center lowercase sm:block mb-5 text-xl ';
 
   const menus = useMemo(() => {
     return [
@@ -105,7 +105,9 @@ export const MenuSideBar = () => {
             <div className="flex flex-col place-items-center ">
               <IconButton
                 className={`${buttonClasses} ${
-                  isPage(menu.page) ? 'bg-stone-800 shadow-2xl' : ''
+                  isPage(menu.page)
+                    ? 'bg-cta-100 shadow-purple-900/80 -translate-y-1 border-yellow-200/40  '
+                    : ''
                 }`}
                 aria-label={menu.text}
                 variant="unstyled"

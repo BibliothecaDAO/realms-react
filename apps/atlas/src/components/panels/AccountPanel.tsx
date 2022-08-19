@@ -216,23 +216,7 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-
-        {/* <Card className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13`}>
-          <CardTitle>Mercantile History</CardTitle>
-          <CardBody>
-            {economicEventData.map((a, index) => {
-              return (
-                <HistoryCard
-                  key={index}
-                  timeStamp={a.timestamp}
-                  event={a.event}
-                  action={a.action}
-                />
-              );
-            })}
-          </CardBody>
-        </Card> */}
-        <Card className="col-span-12 sm:col-start-1 sm:col-end-4">
+        <Card className="col-span-12 sm:col-start-9 sm:col-end-13">
           <CardTitle>Mint Test Realms</CardTitle>
 
           <CardBody>
@@ -286,6 +270,22 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
+        {/* <Card className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13`}>
+          <CardTitle>Mercantile History</CardTitle>
+          <CardBody>
+            {economicEventData.map((a, index) => {
+              return (
+                <HistoryCard
+                  key={index}
+                  timeStamp={a.timestamp}
+                  event={a.event}
+                  action={a.action}
+                />
+              );
+            })}
+          </CardBody>
+        </Card> */}
+
         <Card className="col-start-1 col-end-13 row-span-3 md:col-start-4 md:col-end-9">
           <div className="relative overflow-x-auto">
             {balance && (
