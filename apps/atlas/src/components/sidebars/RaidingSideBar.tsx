@@ -120,7 +120,8 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
             loadingText={'Raiding'}
             disabled={!raidButtonEnabled}
             variant="primary"
-            className="w-full mt-2"
+            size="lg"
+            className="w-full mt-2 border-4 border-yellow-600 border-double"
           >
             pillage {realm?.name}
           </Button>

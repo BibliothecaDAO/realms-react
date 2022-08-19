@@ -2,6 +2,7 @@ import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import {
   Button,
   Card,
+  CardBody,
   CardTitle,
   CountdownTimer,
   InputNumber,
@@ -24,6 +25,7 @@ import useBuildings, {
 } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
+import { hasOwnRelic } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import type { BuildingDetail, AvailableResources } from '@/types/index';
@@ -238,7 +240,72 @@ const Army: React.FC<Prop> = (props) => {
             </div>
           </Card>
         )}
+        <Card className="col-span-12 md:col-start-6 md:col-end-10">
+          <CardTitle>
+            {realm.name} owns a total of {realm.relicsOwned?.length} Realms
+          </CardTitle>
 
+          <CardBody>
+            <p>
+              Capture other Realms Relics by raiding them. It is frowned upon to
+              not hold your Relic. You must get it back at all costs!
+            </p>{' '}
+            {realm.relicsOwned?.map((a, i) => {
+              return (
+                <div key={i} className="mb-4">
+                  {' '}
+                  <h3>Realm {a.realmId}</h3>
+                  <Button
+                    href={'/realm/' + a.realmId + '?tab=Army'}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Visit {a.realmId}
+                  </Button>
+                </div>
+              );
+            })}
+          </CardBody>
+        </Card>
+        <Card className="col-span-12 md:col-start-10 md:col-end-13">
+          <CardBody>
+            {hasOwnRelic(realm) ? (
+              <div>
+                <h2>Not conquered!</h2>
+                <p className="text-xl">
+                  Citizens of {realm?.name} are living peacefully on its lands.
+                  The Lord of {realm?.name} is keeping them safe from Goblins
+                  and other warmongering realms.
+                </p>
+              </div>
+            ) : (
+              <div>
+                {realm?.relic?.map((a, i) => {
+                  return (
+                    <div key={i} className="mb-4">
+                      <h2>Conquered by Realm {a.heldByRealm}</h2>{' '}
+                      <p className="text-xl">
+                        {realm?.name} has been Conquered by Realm{' '}
+                        {a.heldByRealm}. The citizens shake in fear everyday
+                        thinking it will be their last... won't someone think of
+                        the children!
+                      </p>
+                      <div className="mt-4">
+                        <Button
+                          href={'/realm/' + a.heldByRealm + '?tab=Army'}
+                          variant="outline"
+                          size="sm"
+                        >
+                          Visit realm {a.heldByRealm}
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </CardBody>
+        </Card>
         <Card
           loading={props.loading}
           className="col-span-12 md:col-start-6 md:col-end-13"
@@ -268,6 +335,7 @@ const Army: React.FC<Prop> = (props) => {
             </div>
           )}
         </Card>
+
         <Card
           loading={props.loading}
           className="col-span-12 md:col-start-6 md:col-end-13"
