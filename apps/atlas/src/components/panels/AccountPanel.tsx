@@ -34,9 +34,8 @@ import { BasePanel } from './BasePanel';
 export function AccountPanel() {
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
-  let { account } = useStarknet();
+  const { account } = useStarknet();
   const { toggleMenuType, selectedPanel } = useAtlasContext();
-  account = '0x380f7644a98f9d9915dbaa0bbd4b3fe8671a46fbf9f9ab7a7b1dc3b7ce9ec72';
   const [selectedId, setSelectedId] = useState(0);
 
   const filter = {
@@ -51,6 +50,7 @@ export function AccountPanel() {
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
     variables: { account: account ? getAccountHex(account) : '', realmIds },
     pollInterval: 10000,
+    skip: !account,
   });
 
   /* const getRealmDetails = (realmId: number) =>
