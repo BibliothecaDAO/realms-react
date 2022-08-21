@@ -26,7 +26,6 @@ interface RealmState {
   selectedResources: number[];
   favouriteRealms: number[];
   searchIdFilter: string;
-  selectedTab: number;
   hasWonderFilter: boolean;
   isSettledFilter: boolean;
   isRaidableFilter: boolean;
@@ -45,7 +44,6 @@ type RealmAction =
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
   | { type: 'updateSearchIdFilter'; payload: string }
-  | { type: 'updateSelectedTab'; payload: number }
   | { type: 'toggleRealmSelection'; payload: number }
   | { type: 'toggleSelectAllRealms'; payload: number[] };
 
@@ -61,7 +59,6 @@ interface RealmActions {
   addFavouriteRealm(realmId: number): void;
   removeFavouriteRealm(realmId: number): void;
   updateSearchIdFilter(realmId: string): void;
-  updateSelectedTab(tab: number): void;
   toggleRealmSelection(realmId: number): void;
   toggleSelectAllRealms(realmIds: number[]): void;
 }
@@ -95,7 +92,6 @@ const defaultRealmState = {
   ...defaultFilters,
   favouriteRealms: [] as number[],
   selectedRealms: [] as number[],
-  selectedTab: 1,
 };
 
 function realmReducer(state: RealmState, action: RealmAction): RealmState {
@@ -106,8 +102,6 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, searchIdFilter: action.payload };
     case 'updateTraitsFilter':
       return { ...state, traitsFilter: action.payload };
-    case 'updateSelectedTab':
-      return { ...state, selectedTab: action.payload };
     case 'toggleHasWonderFilter':
       return { ...state, hasWonderFilter: !state.hasWonderFilter };
     case 'toggleIsSettledFilter':
@@ -168,8 +162,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     }),
   updateSearchIdFilter: (realmId: string) =>
     dispatch({ type: 'updateSearchIdFilter', payload: realmId }),
-  updateSelectedTab: (tab: number) =>
-    dispatch({ type: 'updateSelectedTab', payload: tab }),
+
   toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
   toggleIsSettledFilter: () => dispatch({ type: 'toggleIsSettledFilter' }),
   toggleIsRaidableFilter: () => dispatch({ type: 'toggleIsRaidableFilter' }),

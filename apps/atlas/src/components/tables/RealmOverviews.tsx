@@ -1,6 +1,7 @@
 import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -17,6 +18,7 @@ const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
 export function RealmOverviews(props: RealmOverviewsProps) {
+  const router = useRouter();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
   const {
@@ -261,7 +263,9 @@ export function RealmOverviews(props: RealmOverviewsProps) {
                   quick view
                 </Button>
                 <Button
-                  href={`/realm/${realm.realmId}?tab=Survey`}
+                  onClick={() => {
+                    router.push(`/realm/${realm.realmId}?tab=Survey`);
+                  }}
                   variant="primary"
                   size="xs"
                   className="w-full "
