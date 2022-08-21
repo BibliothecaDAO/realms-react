@@ -330,7 +330,7 @@ const Army: React.FC<Prop> = (props) => {
                 Raid Vault
               </Button>
               <p className="p-3">
-                Pillage this vault for 25% of it's resources.
+                Pillage this vault for 25% of its resources.
               </p>
             </div>
           )}
