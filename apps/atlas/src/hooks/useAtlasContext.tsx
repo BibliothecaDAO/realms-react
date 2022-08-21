@@ -258,9 +258,7 @@ function useAtlas(): Atlas {
       case 'transactionCart':
     }
 
-    router.push(`/${panel}?id=${assetId}`, undefined, {
-      shallow: true,
-    });
+    router.push(`/${panel}?id=${assetId}`);
   };
 
   const setSelectedAssetType = (assetType: AssetType) =>

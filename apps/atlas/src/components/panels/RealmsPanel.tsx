@@ -1,9 +1,8 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
@@ -16,25 +15,151 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
-export const RealmsPanel = () => {
-  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
-    useAtlasContext();
+const TABS = [
+  { key: 'Your', name: 'Your Realms' },
+  { key: 'All', name: 'All Realms' },
+  { key: 'Favourite', name: 'Favourite Realms' },
+];
+
+function useRealmsQueryVariables(
+  selectedTabIndex: number,
+  page: number,
+  limit: number
+) {
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
-  const { state, actions } = useRealmContext();
 
-  const limit = 20;
-  const [page, setPage] = useState(1);
-  const previousPage = () => setPage(page - 1);
-  const nextPage = () => setPage(page + 1);
-
+  const { state } = useRealmContext();
   const starknetWallet = starkAccount
     ? BigNumber.from(starkAccount).toHexString()
     : '';
+  return useMemo(() => {
+    const resourceFilters = state.selectedResources.map((resource) => ({
+      resources: { some: { resourceId: { equals: resource } } },
+    }));
+
+    const filter = {} as any;
+    const orderBy = {} as any;
+
+    if (state.searchIdFilter) {
+      filter.realmId = { equals: parseInt(state.searchIdFilter) };
+    } else {
+      // Your realms
+      if (selectedTabIndex === 0) {
+        filter.OR = [
+          { owner: { equals: account?.toLowerCase() } },
+          { bridgedOwner: { equals: account?.toLowerCase() } },
+          { ownerL2: { equals: starknetWallet } },
+          { settledOwner: { equals: starknetWallet } },
+        ];
+      } else if (selectedTabIndex === 2) {
+        filter.realmId = { in: [...state.favouriteRealms] };
+      }
+
+      if (state.hasWonderFilter) filter.wonder = { not: null };
+      if (state.isSettledFilter) filter.settledOwner = { not: null };
+      if (state.isRaidableFilter) {
+        filter.lastVaultTime = { not: null };
+        orderBy.lastVaultTime = 'asc';
+      }
+      if (
+        state.rarityFilter.rank.min > 0 ||
+        state.rarityFilter.rank.max < RealmsMax.Rank
+      ) {
+        filter.rarityRank = {
+          gte: state.rarityFilter.rank.min,
+          lte: state.rarityFilter.rank.max,
+        };
+      }
+      if (
+        state.rarityFilter.score.min > 0 ||
+        state.rarityFilter.score.max < RealmsMax.Score
+      ) {
+        filter.rarityScore = {
+          gte: state.rarityFilter.score.min,
+          lte: state.rarityFilter.score.max,
+        };
+      }
+
+      const traitsFilters = Object.keys(state.traitsFilter)
+        // Filter 0 entries
+        .filter((key: string) => state.traitsFilter[key])
+        .map((key: string) => ({
+          traits: {
+            some: {
+              type: { equals: key as RealmTraitType },
+              qty: {
+                gte: state.traitsFilter[key].min,
+                lte: state.traitsFilter[key].max,
+              },
+            },
+          },
+        }));
+      filter.orderType =
+        state.selectedOrders.length > 0
+          ? { in: [...state.selectedOrders] }
+          : undefined;
+      filter.AND = [...resourceFilters, ...traitsFilters];
+    }
+
+    return {
+      filter,
+      take: limit,
+      orderBy,
+      skip: limit * (page - 1),
+    };
+  }, [account, state, page, selectedTabIndex, starknetWallet]);
+}
+
+function useRealmsPanelPagination() {
+  const limit = 20;
+  const [page, setPage] = useState(1);
+  const goBack = () => setPage(page - 1);
+  const goForward = () => setPage(page + 1);
+
+  return {
+    page,
+    setPage,
+    limit,
+    goBack,
+    goForward,
+  };
+}
+
+function useRealmsPanelTabs() {
+  const router = useRouter();
+  const selectedTabKey = (router.query['tab'] as string) ?? TABS[1].key;
+  const selectedTabIndex = TABS.findIndex(
+    ({ key }) => key.toLowerCase() === selectedTabKey.toLowerCase()
+  );
+
+  function onTabChange(index: number) {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        tab: TABS[index].key,
+      },
+    });
+  }
+
+  return {
+    selectedTabIndex,
+    onTabChange,
+  };
+}
+
+export const RealmsPanel = () => {
+  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
+    useAtlasContext();
+  const { state, actions } = useRealmContext();
+  const pagination = useRealmsPanelPagination();
+
+  const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
-    setPage(1);
+    pagination.setPage(1);
   }, [
     state.favouriteRealms,
     state.selectedOrders,
@@ -46,142 +171,50 @@ export const RealmsPanel = () => {
     state.traitsFilter.Harbor,
     state.traitsFilter.Region,
     state.traitsFilter.River,
-    state.selectedTab,
+    selectedTabIndex,
   ]);
 
   const isRealmPanel = selectedPanel === 'realm';
-  const tabs = ['Your Realms', 'All Realms', 'Favourite Realms'];
 
-  const variables = useMemo(() => {
-    const resourceFilters = state.selectedResources.map((resource) => ({
-      resources: { some: { resourceId: { equals: resource } } },
-    }));
+  const variables = useRealmsQueryVariables(
+    selectedTabIndex,
+    pagination.page,
+    pagination.limit
+  );
 
-    const traitsFilters = Object.keys(state.traitsFilter)
-      // Filter 0 entries
-      .filter((key: string) => state.traitsFilter[key])
-      .map((key: string) => ({
-        traits: {
-          some: {
-            type: { equals: key as RealmTraitType },
-            qty: {
-              gte: state.traitsFilter[key].min,
-              lte: state.traitsFilter[key].max,
-            },
-          },
-        },
-      }));
-
-    const filter = {} as any;
-    const orderBy = {} as any;
-
-    if (state.searchIdFilter) {
-      filter.realmId = { equals: parseInt(state.searchIdFilter) };
-    } else if (state.selectedTab === 2) {
-      filter.realmId = { in: [...state.favouriteRealms] };
-    }
-
-    if (state.selectedTab === 0) {
-      filter.OR = [
-        { owner: { equals: account?.toLowerCase() } },
-        { bridgedOwner: { equals: account?.toLowerCase() } },
-        { ownerL2: { equals: starknetWallet } },
-        { settledOwner: { equals: starknetWallet } },
-      ];
-    }
-
-    if (state.hasWonderFilter) {
-      filter.wonder = { not: null };
-    }
-
-    if (state.isSettledFilter) {
-      filter.settledOwner = { not: null };
-    }
-
-    if (state.isRaidableFilter) {
-      filter.lastVaultTime = { not: null };
-      orderBy.lastVaultTime = 'asc';
-    }
-
-    if (
-      state.rarityFilter.rank.min > 0 ||
-      state.rarityFilter.rank.max < RealmsMax.Rank
-    ) {
-      filter.rarityRank = {
-        gte: state.rarityFilter.rank.min,
-        lte: state.rarityFilter.rank.max,
-      };
-    }
-    if (
-      state.rarityFilter.score.min > 0 ||
-      state.rarityFilter.score.max < RealmsMax.Score
-    ) {
-      filter.rarityScore = {
-        gte: state.rarityFilter.score.min,
-        lte: state.rarityFilter.score.max,
-      };
-    }
-
-    filter.orderType =
-      state.selectedOrders.length > 0
-        ? { in: [...state.selectedOrders] }
-        : undefined;
-    filter.AND = [...resourceFilters, ...traitsFilters];
-
-    return {
-      filter,
-      take: limit,
-      orderBy,
-      skip: limit * (page - 1),
-    };
-  }, [account, state, page]);
-
-  const { data, loading } = useGetRealmsQuery({
+  const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
     skip: !isRealmPanel,
-    pollInterval: 5000,
   });
 
   useEffect(() => {
-    if (
-      !selectedId &&
-      isDisplayLarge &&
-      page === 1 &&
-      (data?.realms?.length ?? 0) > 0
-    ) {
+    if (loading) stopPolling();
+    else startPolling(5000);
+
+    return stopPolling;
+  }, [loading, data]);
+
+  const shouldOpenPage =
+    !selectedId &&
+    isDisplayLarge &&
+    pagination.page === 1 &&
+    (data?.realms?.length ?? 0) > 0;
+
+  useEffect(() => {
+    if (shouldOpenPage) {
       openDetails('realm', data?.realms[0].realmId + '');
     }
-  }, [data, page, selectedId]);
+  }, [data, pagination.page, selectedId]);
 
   const showPagination = () =>
-    state.selectedTab === 1 &&
-    (page > 1 || (data?.realms?.length ?? 0) === limit);
+    selectedTabIndex === 1 &&
+    (pagination.page > 1 || (data?.realms?.length ?? 0) === pagination.limit);
 
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
-
-  const displayResults = () => {
-    if (!data) {
-      return '';
-    }
-    const resultStr = `${data?.total?.toLocaleString()} Results`;
-    if (data.total <= limit) {
-      return resultStr;
-    }
-    const start = (page - 1) * limit;
-    const count = Math.min(data.realms.length, limit);
-    return `${start.toLocaleString()} - ${(
-      start + count
-    ).toLocaleString()} of ${resultStr}`;
-  };
 
   return (
     <BasePanel open={isRealmPanel} style="lg:w-7/12">
       <div className="flex flex-wrap justify-between px-3 pt-20 sm:px-6 bg-black/90">
-        {/* <Link href="/">
-          <button className="z-50 transition-all rounded top-4">
-            <Close />
-          </button>
-        </Link> */}
         <h2>Loot Realms</h2>
         <div className="w-full my-1 sm:w-auto">
           <SearchFilter
@@ -194,24 +227,21 @@ export const RealmsPanel = () => {
         </div>
       </div>
       <Tabs
-        selectedIndex={state.selectedTab}
-        onChange={actions.updateSelectedTab as any}
+        key={selectedTabIndex}
+        selectedIndex={selectedTabIndex}
+        onChange={onTabChange as any}
       >
         <Tabs.List>
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab} className="uppercase">
-              {tab}
+          {TABS.map((tab) => (
+            <Tabs.Tab key={tab.key} className="uppercase">
+              {tab.name}
             </Tabs.Tab>
           ))}
         </Tabs.List>
       </Tabs>
       <div>
-        <RealmsFilter isYourRealms={state.selectedTab === 0} />
-        {/* {data && (
-          <div className="pb-4 font-semibold text-right">
-            {displayResults()}
-          </div>
-        )} */}
+        <RealmsFilter isYourRealms={selectedTabIndex === 0} />
+
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Castle className="block w-20 fill-current" />
@@ -219,8 +249,9 @@ export const RealmsPanel = () => {
           </div>
         )}
         <RealmOverviews
+          key={selectedTabIndex}
           realms={data?.realms ?? []}
-          isYourRealms={state.selectedTab === 0}
+          isYourRealms={selectedTabIndex === 0}
         />
       </div>
 
@@ -234,10 +265,10 @@ export const RealmsPanel = () => {
             >
               Clear Filters
             </Button>
-            {state.selectedTab !== 1 && (
+            {selectedTabIndex !== 1 && (
               <Button
                 className="whitespace-nowrap"
-                onClick={() => actions.updateSelectedTab(1)}
+                onClick={() => onTabChange(1)}
               >
                 See All Realms
               </Button>
@@ -250,15 +281,15 @@ export const RealmsPanel = () => {
         <div className="flex justify-center w-full gap-2 py-8 bg-black">
           <Button
             variant="outline"
-            onClick={previousPage}
-            disabled={page === 1}
+            onClick={pagination.goBack}
+            disabled={pagination.page === 1}
           >
             Previous
           </Button>
           <Button
             variant="outline"
-            onClick={nextPage}
-            disabled={data?.realms?.length !== limit}
+            onClick={pagination.goForward}
+            disabled={data?.realms?.length !== pagination.limit}
           >
             Next
           </Button>
