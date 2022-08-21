@@ -16,6 +16,7 @@ import {
   TraitTable,
   squadStats,
   RealmVaultStatus,
+  hasOwnRelic,
 } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
@@ -139,46 +140,46 @@ const Survey: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-        <Card className="col-span-12 row-span-2 md:col-start-8 md:col-end-13 ">
-          <CardTitle>Landscape of {realm?.name}</CardTitle>{' '}
-          <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
-            alt="map"
-            className="w-full -scale-x-100"
-            width={500}
-            height={320}
-            layout={'responsive'}
-          />
-          <CardTitle>Realm Traits</CardTitle>
+        <Card className="col-span-12 md:col-start-8 md:col-end-13">
           <CardBody>
-            <div className="flex flex-wrap">
-              <div className="p-1 my-1 sm:w-1/2">
-                <TraitTable
-                  trait="Region"
-                  traitAmount={getTrait(realm, 'Region')}
-                />
+            {hasOwnRelic(realm) ? (
+              <div>
+                <h2>Not conquered!</h2>
+                <p className="text-xl">
+                  Citizens of {realm?.name} are living peacefully on its lands.
+                  The Lord of {realm?.name} is keeping them safe from Goblins
+                  and other warmongering realms.
+                </p>
               </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
-                <TraitTable
-                  trait="City"
-                  traitAmount={getTrait(realm, 'City')}
-                />
+            ) : (
+              <div>
+                {realm?.relic?.map((a, i) => {
+                  return (
+                    <div key={i} className="mb-4">
+                      <h2>Conquered by Realm {a.heldByRealm}</h2>{' '}
+                      <p className="text-xl">
+                        {realm?.name} has been Conquered by Realm{' '}
+                        {a.heldByRealm}. The citizens shake in fear everyday
+                        thinking it will be their last... won't someone think of
+                        the children!
+                      </p>
+                      <div className="mt-4">
+                        <Button
+                          href={'/realm/' + a.heldByRealm + '?tab=Army'}
+                          variant="outline"
+                          size="sm"
+                        >
+                          Visit realm {a.heldByRealm}
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
-                <TraitTable
-                  trait="Harbor"
-                  traitAmount={getTrait(realm, 'Harbor')}
-                />
-              </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
-                <TraitTable
-                  trait="River"
-                  traitAmount={getTrait(realm, 'River')}
-                />
-              </div>
-            </div>
+            )}
           </CardBody>
         </Card>
+
         {/* <Card
           loading={props.loading}
           className="col-span-12 row-span-2 md:col-start-8 md:col-end-13"
@@ -234,6 +235,46 @@ const Survey: React.FC<Prop> = (props) => {
                 loading={false}
               />
             )}
+          </CardBody>
+        </Card>
+        <Card className="col-span-12 row-span-1 md:col-start-8 md:col-end-13 ">
+          <CardTitle>Landscape of {realm?.name}</CardTitle>{' '}
+          <Image
+            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
+            alt="map"
+            className="w-full -scale-x-100"
+            width={500}
+            height={320}
+            layout={'responsive'}
+          />
+          <CardTitle>Realm Traits</CardTitle>
+          <CardBody>
+            <div className="flex flex-wrap">
+              <div className="p-1 my-1 sm:w-1/2">
+                <TraitTable
+                  trait="Region"
+                  traitAmount={getTrait(realm, 'Region')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="City"
+                  traitAmount={getTrait(realm, 'City')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="Harbor"
+                  traitAmount={getTrait(realm, 'Harbor')}
+                />
+              </div>
+              <div className="p-1 my-1 sm:w-1/2 ">
+                <TraitTable
+                  trait="River"
+                  traitAmount={getTrait(realm, 'River')}
+                />
+              </div>
+            </div>
           </CardBody>
         </Card>
       </div>

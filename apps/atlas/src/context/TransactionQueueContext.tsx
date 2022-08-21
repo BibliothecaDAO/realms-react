@@ -30,17 +30,11 @@ export const TransactionQueueProvider = ({
   const [txs, setTx] = useState<Tx[]>([]);
 
   const add = (tx: Call[] | Call) => {
-    const scrollIcon = <Scroll className="w-4" />;
+    const scrollIcon = <Scroll className="w-6 fill-current" />;
 
     if (Array.isArray(tx)) {
       toast(`${tx.length} Command(s) Queued`, {
         icon: scrollIcon,
-        position: 'top-right',
-        style: {
-          borderRadius: '2px',
-          background: '#000',
-          color: '#fff',
-        },
       });
       setTx((prev) =>
         prev.concat(tx.map((t) => ({ ...t, status: ENQUEUED_STATUS })))
@@ -48,12 +42,6 @@ export const TransactionQueueProvider = ({
     } else {
       toast('Command Queued: ' + tx.metadata?.action, {
         icon: scrollIcon,
-        position: 'top-right',
-        style: {
-          borderRadius: '2px',
-          background: '#000',
-          color: '#fff',
-        },
       });
       setTx((prev) => prev.concat({ ...tx, status: ENQUEUED_STATUS }));
     }

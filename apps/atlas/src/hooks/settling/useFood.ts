@@ -22,6 +22,7 @@ import {
 export const entrypoints = {
   create: 'create',
   harvest: 'harvest',
+  convert: 'convert_food_tokens_to_store',
 };
 
 export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
@@ -63,6 +64,25 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
       description: `Harvesting  ${args.tokenId}`,
     },
   }),
+  convert: (args: {
+    tokenId: number;
+    quantity: number;
+    resourceId: number;
+  }) => ({
+    contractAddress: ModuleAddr.Food,
+    entrypoint: entrypoints.convert,
+    calldata: [
+      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      args.quantity,
+      args.resourceId,
+    ],
+    metadata: {
+      ...args,
+      action: entrypoints.harvest,
+      title: `Converting food on Realm ${args.tokenId}`,
+      description: `Harvesting  ${args.tokenId}`,
+    },
+  }),
 };
 
 type UseRealmFoodDetails = {
@@ -71,6 +91,7 @@ type UseRealmFoodDetails = {
   loading: boolean;
   create: (tokenId, quantity, foodBuildingId) => void;
   harvest: (tokenId, harvestType, foodBuildingId) => void;
+  convert: (tokenId, quantity, resourceId) => void;
 };
 
 const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
@@ -212,6 +233,15 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
           tokenId,
           harvestType,
           foodBuildingId,
+        })
+      );
+    },
+    convert: (tokenId, quantity, resourceId) => {
+      txQueue.add(
+        createFoodCall.convert({
+          tokenId,
+          quantity,
+          resourceId,
         })
       );
     },

@@ -7,7 +7,7 @@ import {
 import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
-import { Toaster, ToastBar } from 'react-hot-toast';
+import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, RpcProvider } from 'starknet';
@@ -68,6 +68,18 @@ function MyApp({ Component, pageProps }: AppProps) {
       });
     });
   }, []);
+
+  const customToast = () =>
+    toast.custom((t) => (
+      <div
+        className={`bg-white px-6 py-4 shadow-md rounded-full ${
+          t.visible ? 'animate-enter' : 'animate-leave'
+        }`}
+      >
+        Hello TailwindCSS! 👋
+      </div>
+    ));
+
   return (
     <BreakpointProvider queries={queries}>
       <WalletProvider>
@@ -99,8 +111,25 @@ function MyApp({ Component, pageProps }: AppProps) {
           </StarknetProvider>
         </ApolloProvider>
       </WalletProvider>
-      <Toaster gutter={12} containerClassName="mt-16 right-0">
-        {(t) => <ToastBar position="top-right" toast={t} />}
+      <Toaster
+        gutter={12}
+        toastOptions={{
+          className: '',
+          style: {
+            padding: '0px',
+          },
+        }}
+      >
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <div className="flex p-3 rounded shadow-lg stroke-current font-display bg-cta-100 shadow-purple-800/30 text-stone-200">
+                {icon}
+                {message}
+              </div>
+            )}
+          </ToastBar>
+        )}
       </Toaster>
     </BreakpointProvider>
   );

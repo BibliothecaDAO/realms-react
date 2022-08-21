@@ -206,5 +206,16 @@ export const getApproveAllGameContracts = () => {
     },
   });
 
+  // Combat
+
+  txs.push({
+    contractAddress: CM.ResourcesToken,
+    entrypoint: 'setApprovalForAll',
+    calldata: [toBN(CM.Food).toString(), toFelt(1)],
+    metadata: {
+      title: 'Food approval',
+      description: 'Approve spending by Food Module',
+    },
+  });
   return txs;
 };

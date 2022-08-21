@@ -219,3 +219,11 @@ export const resourcePillaged = (resources: any) => {
     </div>
   );
 };
+
+export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
+  return realm?.relic && realm?.relic.length ? false : true;
+};
+
+export const fetchRealmNameById = (id: number) => {
+  return;
+};

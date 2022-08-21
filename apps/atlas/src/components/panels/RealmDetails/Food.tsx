@@ -8,6 +8,7 @@ import {
   CardBody,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
@@ -20,7 +21,10 @@ import {
   WORK_HUT_COST,
   MAX_HARVESTS,
   BASE_FOOD_PRODUCTION,
+  FISH_ID,
+  WHEAT_ID,
 } from '@/constants/buildings';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
@@ -54,13 +58,21 @@ const getTrait = (realm: any, trait: string) => {
 interface ResourceAndFoodInput {
   farmsToBuild: string;
   fishingVillagesToBuild: string;
-  workHutsToBuild: string;
+  fishConversion: string;
+  wheatConversion: string;
 }
 
 const Food: React.FC<Prop> = (props) => {
   const realm = props.realm?.realm;
 
-  const { create, harvest } = useFood(realm as Realm);
+  const { balance } = useResourcesContext();
+
+  const getFishBalance = balance.find((a) => a.resourceId === FISH_ID)?.amount;
+  const getWheatBalance = balance.find(
+    (a) => a.resourceId === WHEAT_ID
+  )?.amount;
+
+  const { create, harvest, convert } = useFood(realm as Realm);
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
@@ -76,7 +88,8 @@ const Food: React.FC<Prop> = (props) => {
   const [input, setInput] = useState<ResourceAndFoodInput>({
     farmsToBuild: '1',
     fishingVillagesToBuild: '1',
-    workHutsToBuild: '1',
+    fishConversion: '0',
+    wheatConversion: '0',
   });
 
   useEffect(() => {
@@ -92,7 +105,8 @@ const Food: React.FC<Prop> = (props) => {
     setInput({
       farmsToBuild: farmCapacity,
       fishingVillagesToBuild: fishingVillageCapacity,
-      workHutsToBuild: '1',
+      fishConversion: '0',
+      wheatConversion: '0',
     });
   }, [txQueue.transactions]);
 
@@ -167,7 +181,11 @@ const Food: React.FC<Prop> = (props) => {
               <h5>harvests left</h5>
               <div className="text-5xl">
                 {props.realmFoodDetails.farmHarvestsLeft -
-                  props.realmFoodDetails.decayedFarms}
+                  props.realmFoodDetails.decayedFarms >
+                0
+                  ? props.realmFoodDetails.farmHarvestsLeft -
+                    props.realmFoodDetails.decayedFarms
+                  : 0}
               </div>
             </div>
             {isOwner && (
@@ -195,10 +213,11 @@ const Food: React.FC<Prop> = (props) => {
                     max={farmCapacity}
                     stringMode // to support high precision decimals
                     onChange={(value: ValueType) =>
-                      setInput({
-                        farmsToBuild: value.toString(),
-                        fishingVillagesToBuild: input.fishingVillagesToBuild,
-                        workHutsToBuild: input.workHutsToBuild,
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          farmsToBuild: value.toString(),
+                        };
                       })
                     }
                   />{' '}
@@ -271,7 +290,7 @@ const Food: React.FC<Prop> = (props) => {
           </div>
         </Card>
         <Card className="col-span-12 md:col-start-5 md:col-end-9 ">
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between w-full my-4">
             <h3>
               Fishing villages {props.realmFoodDetails.villagesBuilt}/
               {fishingVillageCapacity}
@@ -292,15 +311,17 @@ const Food: React.FC<Prop> = (props) => {
               </div>
             )}
           </div>
+          <div className="w-full">
+            <p className="px-1 mb-2 text-xl">
+              {realm.name} has {props.realmFoodDetails.villagesBuilt} Fishing
+              Villages catching{' '}
+              {(
+                BASE_FOOD_PRODUCTION * props.realmFoodDetails.villagesBuilt
+              ).toLocaleString()}{' '}
+              $FISH every {HARVEST_LENGTH / 60} minutes.
+            </p>
+          </div>
 
-          <p className="px-1 mb-2 text-xl">
-            {realm.name} has {props.realmFoodDetails.villagesBuilt} Fishing
-            Villages catching{' '}
-            {(
-              BASE_FOOD_PRODUCTION * props.realmFoodDetails.villagesBuilt
-            ).toLocaleString()}{' '}
-            $FISH every {HARVEST_LENGTH / 60} minutes.
-          </p>
           <div className="flex flex-wrap">
             {cropLand({
               level: fishingVillageCapacity,
@@ -321,7 +342,11 @@ const Food: React.FC<Prop> = (props) => {
               <h5>Harvests Left</h5>
               <div className="sm:text-5xl">
                 {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                  props.realmFoodDetails.decayedVillages}
+                  props.realmFoodDetails.decayedVillages >
+                0
+                  ? props.realmFoodDetails.fishingVillagesHarvestsLeft -
+                    props.realmFoodDetails.decayedVillages
+                  : 0}
               </div>
             </div>
           </div>
@@ -350,10 +375,11 @@ const Food: React.FC<Prop> = (props) => {
                   max={fishingVillageCapacity}
                   stringMode
                   onChange={(value: ValueType) =>
-                    setInput({
-                      farmsToBuild: input.farmsToBuild,
-                      fishingVillagesToBuild: value.toString(),
-                      workHutsToBuild: input.workHutsToBuild,
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishingVillagesToBuild: value.toString(),
+                      };
                     })
                   }
                 />{' '}
@@ -368,7 +394,7 @@ const Food: React.FC<Prop> = (props) => {
                   );
                 })}
               </div>
-              <p className="mt-4 text-xl">
+              <p className="w-full mt-4 text-xl">
                 {(
                   BASE_FOOD_PRODUCTION *
                   props.realmFoodDetails.villagesBuilt *
@@ -408,10 +434,15 @@ const Food: React.FC<Prop> = (props) => {
               </div>
             </div>
           )}
-          <p className="p-2">
-            You can build as many Fishing Villages as you have rivers [
-            {fishingVillageCapacity}]. Harvest before you max, otherwise your
-            yield will decay.
+          <p className="mt-4">
+            <span className="font-semibold">Building:</span> You can only build
+            batches of farms at a time. Meaning, if you have 1 farm built
+            already then built 10, your original 1 farm will be wiped.
+            <br />
+            <span className="font-semibold">Export:</span> Converts your farmed
+            food into $FISH <br />
+            <span className="font-semibold">Harvest:</span> Converts your food
+            directly into the store house for immediate usage.
           </p>
         </Card>
 
@@ -446,13 +477,75 @@ const Food: React.FC<Prop> = (props) => {
                 {props.availableFood?.toLocaleString()}
               </div>
             </div>
-            <p className="p-2">
-              You consume 1 food per second according to your population. Build
-              and harvest Farms and Fishing Villages in order to keep your
-              citizens fed. <br /> If you do not have food you are capped at 250
-              resources per day and your troops have half health.
-            </p>
           </div>
+          <div className="flex flex-wrap w-full p-2">
+            <div className="w-full mb-2 text-2xl">
+              {(+formatEther(getFishBalance ?? 0)).toLocaleString()} $FISH
+            </div>
+            <Button
+              onClick={() => {
+                convert(realm?.realmId, input.fishConversion, FISH_ID);
+              }}
+              size="xs"
+              variant="primary"
+            >
+              Convert $FISH into Storehouse
+            </Button>
+            <InputNumber
+              value={input.fishConversion}
+              inputSize="sm"
+              colorScheme="transparent"
+              className="w-24 bg-white border rounded-r border-white/40"
+              min={1}
+              max={+formatEther(getFishBalance ?? 0)}
+              stringMode
+              onChange={(value: ValueType) =>
+                setInput((current) => {
+                  return {
+                    ...current,
+                    fishConversion: value.toString(),
+                  };
+                })
+              }
+            />{' '}
+          </div>
+          <div className="flex flex-wrap w-full p-2">
+            <div className="w-full mb-2 text-2xl">
+              {(+formatEther(getWheatBalance ?? 0)).toLocaleString()} $WHEAT
+            </div>
+            <Button
+              onClick={() => {
+                convert(realm?.realmId, input.fishConversion, WHEAT_ID);
+              }}
+              size="xs"
+              variant="primary"
+            >
+              Convert $WHEAT into Storehouse
+            </Button>
+            <InputNumber
+              value={input.wheatConversion}
+              inputSize="sm"
+              colorScheme="transparent"
+              className="w-24 bg-white border rounded-r border-white/40"
+              min={1}
+              max={+formatEther(getFishBalance ?? 0)}
+              stringMode
+              onChange={(value: ValueType) =>
+                setInput((current) => {
+                  return {
+                    ...current,
+                    wheatConversion: value.toString(),
+                  };
+                })
+              }
+            />{' '}
+          </div>
+          <p className="p-2">
+            You consume 1 food per second according to your population. Build
+            and harvest Farms and Fishing Villages in order to keep your
+            citizens fed. <br /> If you do not have food you are capped at 250
+            resources per day and your troops have half health.
+          </p>
         </Card>
       </div>
     </BaseRealmDetailPanel>
