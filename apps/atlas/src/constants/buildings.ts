@@ -103,3 +103,6 @@ export const HARVEST_LENGTH = DAY / 10;
 export const FARM_LENGTH = (DAY / 3) * BASE_HARVESTS;
 export const FISHING_TRAPS = (DAY / 3) * BASE_HARVESTS;
 export const BASE_FOOD_PRODUCTION = 2000;
+
+export const FISH_ID = 10001;
+export const WHEAT_ID = 10000;
