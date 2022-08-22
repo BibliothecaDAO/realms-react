@@ -82,8 +82,6 @@ export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
     metadata: {
       ...args,
       action: Entrypoints.harvest,
-      title: `Converting food on Realm ${args.tokenId}`,
-      description: `Harvesting  ${args.tokenId}`,
     },
   }),
 };
@@ -96,8 +94,8 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     )}${tx.metadata.quantity > 1 ? 's' : ''}`,
   }),
   [Entrypoints.harvest]: (tx, _context) => ({
-    title: `Harvest on Realm ${tx.metadata.tokenId}`,
-    description: `Harvesting ${tx.metadata.tokenId}`,
+    title: `Harvesting Food`,
+    description: `Harvesting food for Realm #${tx.metadata.tokenId}`,
   }),
 };
 
