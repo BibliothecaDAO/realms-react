@@ -5,6 +5,7 @@ import { toBN } from 'starknet/utils/number';
 import { RealmBuildingId, HarvestType } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
+import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import type {
   RealmsCall,
   BuildingDetail,
@@ -100,6 +101,11 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
 
   const txQueue = useTransactionQueue();
+
+  const { data: foodData } = useGetFoodByRealmIdQuery({
+    variables: { id: realm?.realmId as number },
+    skip: !realm,
+  });
 
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,

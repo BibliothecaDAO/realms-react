@@ -162,6 +162,7 @@ export type ExchangeRate = {
   __typename?: 'ExchangeRate';
   amount: Scalars['String'];
   buyAmount: Scalars['String'];
+  currencyReserve: Scalars['String'];
   date: Scalars['String'];
   hour: Scalars['Int'];
   lpAmount: Scalars['String'];
@@ -169,6 +170,7 @@ export type ExchangeRate = {
   sellAmount: Scalars['String'];
   tokenId: Scalars['Int'];
   tokenName: Scalars['String'];
+  tokenReserve: Scalars['String'];
 };
 
 export type FloatFilter = {
@@ -180,6 +182,17 @@ export type FloatFilter = {
   lte?: InputMaybe<Scalars['Float']>;
   not?: InputMaybe<NestedFloatFilter>;
   notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+/** The Food Model */
+export type Food = {
+  __typename?: 'Food';
+  buildingId: Scalars['Int'];
+  buildingName: Scalars['String'];
+  createdAt: Scalars['Timestamp'];
+  harvests?: Maybe<Scalars['Float']>;
+  qty?: Maybe<Scalars['Float']>;
+  realmId: Scalars['Float'];
 };
 
 export type IntFilter = {
@@ -509,6 +522,7 @@ export type Query = {
   getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
   getExchangeRates: Array<ExchangeRate>;
+  getFoodByRealmId: Array<Food>;
   getLoreEntities: Array<LoreEntity>;
   getLoreEntity: LoreEntity;
   getLorePois: Array<LorePoi>;
@@ -533,6 +547,10 @@ export type QueryGetBuildingsByRealmIdArgs = {
 };
 
 export type QueryGetDesiegeArgs = {
+  id: Scalars['Float'];
+};
+
+export type QueryGetFoodByRealmIdArgs = {
   id: Scalars['Float'];
 };
 
@@ -1102,7 +1120,8 @@ export type GetExchangeRatesQuery = {
     amount: string;
     buyAmount: string;
     sellAmount: string;
-    lpAmount: string;
+    currencyReserve: string;
+    tokenReserve: string;
     percentChange24Hr?: number | null;
   }>;
 };
@@ -1340,6 +1359,23 @@ export type GetBuildingsByRealmIdQuery = {
       amount: number;
       resources: any;
     };
+  }>;
+};
+
+export type GetFoodByRealmIdQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+export type GetFoodByRealmIdQuery = {
+  __typename?: 'Query';
+  getFoodByRealmId: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
   }>;
 };
 
@@ -1753,7 +1789,8 @@ export const GetExchangeRatesDocument = gql`
       amount
       buyAmount
       sellAmount
-      lpAmount
+      currencyReserve
+      tokenReserve
       percentChange24Hr
     }
   }
@@ -2262,6 +2299,69 @@ export type GetBuildingsByRealmIdLazyQueryHookResult = ReturnType<
 export type GetBuildingsByRealmIdQueryResult = Apollo.QueryResult<
   GetBuildingsByRealmIdQuery,
   GetBuildingsByRealmIdQueryVariables
+>;
+export const GetFoodByRealmIdDocument = gql`
+  query getFoodByRealmId($id: Float!) @api(name: starkIndexer) {
+    getFoodByRealmId(id: $id) {
+      realmId
+      buildingId
+      buildingName
+      qty
+      harvests
+      createdAt
+    }
+  }
+`;
+
+/**
+ * __useGetFoodByRealmIdQuery__
+ *
+ * To run a query within a React component, call `useGetFoodByRealmIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFoodByRealmIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFoodByRealmIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetFoodByRealmIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetFoodByRealmIdQuery, GetFoodByRealmIdQueryVariables>(
+    GetFoodByRealmIdDocument,
+    options
+  );
+}
+export function useGetFoodByRealmIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetFoodByRealmIdQuery,
+    GetFoodByRealmIdQueryVariables
+  >(GetFoodByRealmIdDocument, options);
+}
+export type GetFoodByRealmIdQueryHookResult = ReturnType<
+  typeof useGetFoodByRealmIdQuery
+>;
+export type GetFoodByRealmIdLazyQueryHookResult = ReturnType<
+  typeof useGetFoodByRealmIdLazyQuery
+>;
+export type GetFoodByRealmIdQueryResult = Apollo.QueryResult<
+  GetFoodByRealmIdQuery,
+  GetFoodByRealmIdQueryVariables
 >;
 export const GetRealmHistoryDocument = gql`
   query getRealmHistory(
