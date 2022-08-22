@@ -5,7 +5,8 @@ query getExchangeRates @api(name: starkIndexer) {
     amount
     buyAmount
     sellAmount
-    lpAmount
+    currencyReserve
+    tokenReserve
     percentChange24Hr
   }
 }

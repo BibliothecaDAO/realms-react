@@ -24,6 +24,17 @@ query getBuildingsByRealmId($id: Float!) @api(name: starkIndexer) {
   }
 }
 
+query getFoodByRealmId($id: Float!) @api(name: starkIndexer) {
+  getFoodByRealmId(id: $id) {
+    realmId
+    buildingId
+    buildingName
+    qty
+    harvests
+    createdAt
+  }
+}
+
 query getRealmHistory(
   $filter: RealmHistoryWhereInput
   $take: Float
