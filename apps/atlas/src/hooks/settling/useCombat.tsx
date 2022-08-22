@@ -10,6 +10,7 @@ import {
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
 import type {
+  ItemCost,
   RealmsCall,
   RealmsTransactionRenderConfig,
   TroopInterface,
@@ -24,7 +25,7 @@ export const Entrypoints = {
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  buildSquad: (args: { realmId; troopIds; squadSlot }) => ({
+  buildSquad: (args: { realmId; troopIds; squadSlot; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildSquad,
     calldata: [
@@ -119,8 +120,35 @@ const useCombat = () => {
         },
       });
     },
-    build: (realmId, troopIds, squadSlot) => {
-      txQueue.add(createCall.buildSquad({ realmId, troopIds, squadSlot }));
+    build: (
+      realmId,
+      troopIdsAndCosts: { id: any; cost?: ItemCost }[],
+      squadSlot
+    ) => {
+      const totalCost: ItemCost = troopIdsAndCosts.reduce<ItemCost>(
+        (agg, curr) => {
+          if (!curr.cost) {
+            return agg;
+          }
+          return {
+            amount: agg.amount + curr.cost.amount,
+            resources: agg.resources.concat(curr.cost.resources),
+          };
+        },
+        {
+          amount: 0,
+          resources: [],
+        }
+      );
+
+      txQueue.add(
+        createCall.buildSquad({
+          realmId,
+          troopIds: troopIdsAndCosts.map((t) => t.id),
+          squadSlot,
+          costs: totalCost,
+        })
+      );
     },
     combatLoading,
     combatError: error,

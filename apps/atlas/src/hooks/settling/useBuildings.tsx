@@ -38,7 +38,7 @@ export const Entrypoints = {
 };
 
 export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
-  build: (args: { realmId; buildingId; qty }) => ({
+  build: (args: { realmId; buildingId; qty; costs }) => ({
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,
     calldata: [

@@ -174,7 +174,7 @@ export const SquadBuilder = (props: SquadProps) => {
                   props.onClose();
                   build(
                     props.realm?.realmId,
-                    toBuy.map((t) => t.troopId),
+                    toBuy.map((t) => ({ id: t.troopId, cost: t.troopCost! })),
                     Squad[props.squad]
                   );
                   setToBuy([]);

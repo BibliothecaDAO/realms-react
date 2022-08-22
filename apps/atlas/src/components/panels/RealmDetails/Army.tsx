@@ -252,6 +252,11 @@ const Army: React.FC<Prop> = (props) => {
                                   realmId: realm.realmId,
                                   buildingId: a.id,
                                   qty: buildQty[a.key],
+                                  costs: {
+                                    // Mimic ItemCost interface
+                                    amount: 0,
+                                    resources: a.cost,
+                                  },
                                 })
                               )
                             }
