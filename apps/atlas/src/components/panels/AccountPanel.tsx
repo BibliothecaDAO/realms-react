@@ -200,7 +200,7 @@ export function AccountPanel() {
             <CardStats className="mb-4 text-5xl">
               {settledRealmsCount}
             </CardStats>
-            <Button variant="outline" size="xs" href="/realm">
+            <Button variant="outline" size="xs" href="/realm?tab=Your">
               See Realms
             </Button>
           </CardBody>
