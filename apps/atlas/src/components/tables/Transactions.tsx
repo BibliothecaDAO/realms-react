@@ -28,10 +28,23 @@ const STYLES = {
     NOT_RECEIVED: 'bg-red-200',
     RECEIVED: 'bg-green-800/40 animate-pulse',
     PENDING: 'bg-orange-500 animate-pulse',
-    ACCEPTED_ON_L2: 'bg-green-600/90',
+    ACCEPTED_ON_L2: 'bg-green-800/90',
     ACCEPTED_ON_L1: 'bg-green-900',
     TRANSACTION_RECEIVED: 'bg-green-700 animate-pulse',
-    ENQUEUED: 'border-white/20 border-2 bg-black',
+    ENQUEUED: 'border-white/20 border-4 border-double bg-black/80',
+  },
+} as const;
+
+const FORMATED_STATUS = {
+  status: {
+    REJECTED: 'Rejected',
+    NOT_RECEIVED: 'No received',
+    RECEIVED: 'received',
+    PENDING: 'pending',
+    ACCEPTED_ON_L2: 'Accepted on StarkNet',
+    ACCEPTED_ON_L1: 'Accepted on MainNet',
+    TRANSACTION_RECEIVED: 'Transaction Received',
+    ENQUEUED: 'ENQUEUED',
   },
 } as const;
 
@@ -55,13 +68,43 @@ export const TxCartItem = (props: TxCartItem) => {
     <div
       className={`${
         STYLES.status[props.transaction.status]
-      }  rounded flex p-4 w-full font-semibold mb-2`}
+      }  rounded-xl flex p-4 w-full mb-2`}
     >
-      <div className="flex justify-between w-full p-1 rounded bg-black/19">
-        <div>
-          <h5 className="mb-3 text-xs opacity-80">
-            {props.transaction.status}
+      <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
+        <div className="flex justify-between w-full pb-4 mb-4 border-b border-white/40">
+          <h5 className="self-center text-xs uppercase">
+            {FORMATED_STATUS.status[props.transaction.status]}
           </h5>
+          <div className="self-center ">
+            {props.transaction.transactionHash ? (
+              <Button
+                target={'_blank'}
+                size="xs"
+                variant="outline"
+                rel="noreferrer noopener"
+                href={
+                  // TODO: use network aware link using @/util/blockExplorer
+                  'https://goerli.voyager.online/tx/' +
+                  props.transaction.transactionHash
+                }
+              >
+                See on Voyager <ExternalLink className="inline-block w-4" />
+              </Button>
+            ) : null}
+            {props.onRemove && (
+              <Button
+                size="xs"
+                variant="outline"
+                texture={false}
+                onClick={props.onRemove}
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div>
           <h2 className="sm:text-3xl">{title}</h2>
           {multicalls ? (
             multicalls.map((tx, i) => {
@@ -72,7 +115,7 @@ export const TxCartItem = (props: TxCartItem) => {
                     className="py-2"
                     key={`${props.transaction.transactionHash}:${i}`}
                   >
-                    <h4>{renderConfig.title}</h4>
+                    <h5>{renderConfig.title}</h5>
                     <p className="text-lg opacity-75">
                       {renderConfig.description}
                     </p>
@@ -85,37 +128,8 @@ export const TxCartItem = (props: TxCartItem) => {
             <p>{description}</p>
           )}
         </div>
-        <div>
-          {props.transaction.transactionHash ? (
-            <Link
-              target={'_blank'}
-              rel="noreferrer noopener"
-              href={
-                // TODO: use network aware link using @/util/blockExplorer
-                'https://goerli.voyager.online/tx/' +
-                props.transaction.transactionHash
-              }
-            >
-              <a
-                target={'_blank'}
-                className="p-2 tracking-widest uppercase border rounded opacity-60 border-white/50 hover:bg-white/20"
-              >
-                See on Voyager <ExternalLink className="inline-block w-4" />
-              </a>
-            </Link>
-          ) : null}
-          {props.onRemove && (
-            <Button
-              size="sm"
-              variant="outline"
-              texture={false}
-              onClick={props.onRemove}
-            >
-              Remove
-            </Button>
-          )}
-        </div>
       </div>
+
       {/* <span>{props.transaction.lastUpdatedAt}</span> */}
     </div>
   );

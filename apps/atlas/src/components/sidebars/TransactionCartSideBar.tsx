@@ -75,7 +75,7 @@ export const TransactionCartSideBar = () => {
         <div>
           <div className="flex justify-between mt-8 mb-2">
             <h2>
-              <ScrollIcon className="inline-block w-8 mr-4 sm:w-16 fill-slate-200" />
+              <ScrollIcon className="inline-block w-8 mr-4 sm:w-10 fill-slate-200" />
               Thee Royal Decree
             </h2>
             <div className="flex justify-end mb-2 mr-1">
@@ -92,7 +92,7 @@ export const TransactionCartSideBar = () => {
           <Tabs
             selectedIndex={selectedTab}
             onChange={(index) => setSelectedTab(index as number)}
-            variant="primary"
+            variant="default"
           >
             <Tabs.List className="">
               {tabs.map((tab) => (

@@ -25,8 +25,10 @@ const TransactionNavItem = () => {
       >
         <Scroll className="inline-block w-6 fill-white" />
         {txQueue.transactions.length > 0 ? (
-          <div className="absolute flex items-center justify-center h-4 px-1 text-xs text-center bg-gray-800 rounded-full -left-1 -top-1">
-            <span className="text-center">{txQueue.transactions.length}</span>
+          <div className="absolute flex items-center justify-center h-5 text-xs text-center border rounded-full bg-white/40 border-cta-100 -left-2 -top-2">
+            <span className="p-1 text-center">
+              {txQueue.transactions.length}
+            </span>
           </div>
         ) : (
           ' '

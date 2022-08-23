@@ -209,7 +209,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
         ? foodInformation['villages_built'].toNumber()
         : 0,
       fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
-      population: population[0].toNumber(),
+      population: population[0].toNumber() + 1,
     });
 
     setAvailableFood(storehouse[0].toNumber());

@@ -102,7 +102,7 @@ const Survey: React.FC<Prop> = (props) => {
           )}
           {isOwner && (
             <Button
-              onClick={() => props.onSetSubview('Farming')}
+              onClick={() => props.onSetSubview('Food')}
               variant="outline"
               size="xs"
             >
