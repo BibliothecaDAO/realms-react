@@ -55,47 +55,6 @@ const useResources = (realm: Realm | undefined): Resources => {
       vaultResources: [],
     });
 
-  // const {
-  //   data: allOutputData,
-  //   loading: claimableLoading,
-  //   error: outputError,
-  // } = useStarknetCall({
-  //   contract: resourcesContract,
-  //   method: 'get_all_resource_claimable',
-  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  // });
-
-  // const {
-  //   data: allResourceVault,
-  //   loading: vaultLoading,
-  //   error: allResourceVaultError,
-  // } = useStarknetCall({
-  //   contract: resourcesContract,
-  //   method: 'get_all_vault_raidable',
-  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  // });
-
-  // CACHED IN INDEXER
-  // const {
-  //   data: daysAccrued,
-  //   loading: daysAccruedLoading,
-  //   error,
-  // } = useStarknetCall({
-  //   contract: resourcesContract,
-  //   method: 'days_accrued',
-  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  // });
-
-  // const {
-  //   data: availableVaultDays,
-  //   loading: availableVaultDaysLoading,
-  //   error: errorVaultDays,
-  // } = useStarknetCall({
-  //   contract: resourcesContract,
-  //   method: 'get_available_vault_days',
-  //   args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  // });
-
   const cachedDaysAccrued = parseInt(
     ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
   );
