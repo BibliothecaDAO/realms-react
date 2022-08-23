@@ -12,7 +12,7 @@ import {
   useRealms721Contract,
   ModuleAddr,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall } from '@/types/index';
+import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Settling = {
@@ -47,6 +47,21 @@ export const createSettlingCall: Record<string, (args: any) => RealmsCall> = {
     entrypoint: Entrypoints.unsettle,
     calldata: uint256ToRawCalldata(bnToUint256(realmId)),
     metadata: { realmId, action: Entrypoints.unsettle },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  mint: (tx, ctx) => ({
+    title: 'Minting',
+    description: `Terraforming Realm #${tx.metadata.realmId}.`,
+  }),
+  settle: (tx, ctx) => ({
+    title: 'Settling',
+    description: `Realm #${tx.metadata.realmId} is being populated.`,
+  }),
+  unsettle: (tx, ctx) => ({
+    title: 'Unsettling',
+    description: `Abandoning Realm #${tx.metadata.realmId}.`,
   }),
 };
 

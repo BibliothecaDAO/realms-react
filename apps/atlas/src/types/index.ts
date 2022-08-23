@@ -230,6 +230,24 @@ export interface RealmsCall extends StarknetCall {
   metadata: { title: string; description: string } | any;
 }
 
+export type RealmsTransaction = { status: string; metadata?: any };
+export interface RealmsTransactionRender {
+  title: string;
+  description: string;
+}
+
+export interface RealmsTransactionQueueContext {
+  isQueued: boolean;
+}
+
+export type RealmsTransactionRenderConfig = Record<
+  string,
+  (
+    tx: RealmsTransaction,
+    context: RealmsTransactionQueueContext
+  ) => RealmsTransactionRender
+>;
+
 export type NetworkState = 'loading' | 'success' | 'error';
 
 export interface BuildingDetail {

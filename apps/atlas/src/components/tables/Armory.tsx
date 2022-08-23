@@ -9,7 +9,6 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
-import useCombat from '@/hooks/settling/useCombat';
 import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
 

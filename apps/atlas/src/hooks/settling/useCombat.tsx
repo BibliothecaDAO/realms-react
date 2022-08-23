@@ -2,13 +2,19 @@ import { useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { Squad } from '@/constants/index';
 import { troopList } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, TroopInterface } from '@/types/index';
+import type {
+  ItemCost,
+  RealmsCall,
+  RealmsTransactionRenderConfig,
+  TroopInterface,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useCosts } from '../costs/useCosts';
 import { useUiSounds, soundSelector } from '../useUiSounds';
@@ -19,7 +25,7 @@ export const Entrypoints = {
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  buildSquad: (args: { realmId; troopIds; squadSlot }) => ({
+  buildSquad: (args: { realmId; troopIds; squadSlot; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildSquad,
     calldata: [
@@ -38,6 +44,21 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
       ...uint256ToRawCalldata(bnToUint256(toBN(args.defendingRealmId))),
     ],
     metadata: { ...args, action: Entrypoints.initiateCombat },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.buildSquad]: ({ metadata }, { isQueued }) => ({
+    title: `Troop Training`,
+    description: `Realm #${metadata.realmId} ${
+      isQueued ? 'ordered to train' : 'is training'
+    } ${metadata.troopIds.length} troops for ${
+      Squad[metadata.squadSlot]
+    }ing army.`,
+  }),
+  [Entrypoints.initiateCombat]: ({ metadata }, ctx) => ({
+    title: 'Combat',
+    description: `Initiate combat with Realm ${metadata.defendingRealmId}`,
   }),
 };
 
@@ -83,7 +104,7 @@ const useCombat = () => {
     invoke: combatInvoke,
   } = useStarknetInvoke({
     contract: contract,
-    method: 'initiate_combat',
+    method: Entrypoints.initiateCombat,
   });
   return {
     initiateCombat: (args: { attackingRealmId; defendingRealmId }) => {
@@ -94,14 +115,40 @@ const useCombat = () => {
           bnToUint256(toBN(args.defendingRealmId)),
         ],
         metadata: {
-          title: `Initate combat with Realm ${args.defendingRealmId}`,
           action: Entrypoints.initiateCombat,
           ...args,
         },
       });
     },
-    build: (realmId, troopIds, squadSlot) => {
-      txQueue.add(createCall.buildSquad({ realmId, troopIds, squadSlot }));
+    build: (
+      realmId,
+      troopIdsAndCosts: { id: any; cost?: ItemCost }[],
+      squadSlot
+    ) => {
+      const totalCost: ItemCost = troopIdsAndCosts.reduce<ItemCost>(
+        (agg, curr) => {
+          if (!curr.cost) {
+            return agg;
+          }
+          return {
+            amount: agg.amount + curr.cost.amount,
+            resources: agg.resources.concat(curr.cost.resources),
+          };
+        },
+        {
+          amount: 0,
+          resources: [],
+        }
+      );
+
+      txQueue.add(
+        createCall.buildSquad({
+          realmId,
+          troopIds: troopIdsAndCosts.map((t) => t.id),
+          squadSlot,
+          costs: totalCost,
+        })
+      );
     },
     combatLoading,
     combatError: error,

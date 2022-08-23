@@ -7,6 +7,7 @@ import {
   HarvestType,
   RealmBuildingsSize,
   RealmBuildingIntegrity,
+  buildingIdToString,
 } from '@/constants/buildings';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Realm } from '@/generated/graphql';
@@ -21,6 +22,7 @@ import type {
   RealmsCall,
   BuildingFootprint,
   BuildingDetail,
+  RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useCosts } from '../costs/useCosts';
@@ -36,7 +38,7 @@ export const Entrypoints = {
 };
 
 export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
-  build: (args: { realmId; buildingId; qty }) => ({
+  build: (args: { realmId; buildingId; qty; costs }) => ({
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,
     calldata: [
@@ -45,6 +47,15 @@ export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
       args.qty,
     ],
     metadata: { ...args, action: Entrypoints.build },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.build]: ({ metadata }, ctx) => ({
+    title: ctx.isQueued ? 'Construct Building' : 'Constructing Building',
+    description: `Realm #${metadata.realmId} ${
+      ctx.isQueued ? `commanded to build ` : 'has commenced building '
+    } ${buildingIdToString(metadata.buildingId)}`,
   }),
 };
 

@@ -13,7 +13,7 @@ export const HistoryCard = (props: Props) => {
       className={`flex flex-wrap mb-2 justify-between border border-white/10 rounded-xl p-6 bg-black/80 w-full`}
     >
       <div className="justify-between w-full">
-        <div className="text-sm font-semibold text-stone-400/40">
+        <div className="text-sm font-semibold text-stone-300/40">
           {new Date(props.timeStamp).toLocaleTimeString('en-US')}{' '}
           {new Date(props.timeStamp).toLocaleDateString('en-US')}
         </div>

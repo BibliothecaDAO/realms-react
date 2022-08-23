@@ -10,6 +10,7 @@ import Image from 'next/image';
 import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import type { GetRealmQuery } from '@/generated/graphql';
+import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   TraitTable,
@@ -30,6 +31,7 @@ type Prop = {
   buildingUtilisation: BuildingFootprint | undefined;
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
+  onSetSubview: (string: Subview) => void;
   availableFood: number | undefined;
   availableResources: AvailableResources;
   open: boolean;
@@ -60,8 +62,6 @@ const Survey: React.FC<Prop> = (props) => {
   const defensiveSquad = realm?.troops?.filter((a) => a.squadSlot === 2);
 
   const isOwner = useIsOwner(realm?.settledOwner);
-
-  console.log(realm);
 
   return (
     <BaseRealmDetailPanel open={props.open}>
@@ -101,7 +101,11 @@ const Survey: React.FC<Prop> = (props) => {
             </CardStats>
           )}
           {isOwner && (
-            <Button variant="outline" size="xs">
+            <Button
+              onClick={() => props.onSetSubview('Farming')}
+              variant="outline"
+              size="xs"
+            >
               manage
             </Button>
           )}
@@ -127,7 +131,11 @@ const Survey: React.FC<Prop> = (props) => {
             </div>
           </div>
           {isOwner && (
-            <Button variant="outline" size="xs">
+            <Button
+              onClick={() => props.onSetSubview('Army')}
+              variant="outline"
+              size="xs"
+            >
               manage
             </Button>
           )}

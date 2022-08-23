@@ -28,8 +28,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         class: event.data?.success ? successClass : negativeClass,
         resources: resourcePillaged(event.data?.pillagedResources),
         relic: event.data?.relicClaimed ? (
-          <span className="pl-10 text-xl font-semibold uppercase">
-            Relic {event.data?.relicClaimed}
+          <span className="pl-10 text-xl font-semibold">
+            Captured Relic {event.data?.relicClaimed}
           </span>
         ) : null,
         action: (
@@ -44,17 +44,18 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
       };
 
     case Event.realmCombatDefend:
+      console.log(event.data);
       if (user) {
         return {
           event: (
             <span>
               {event.data?.success
-                ? `Defend raid from ${event.data?.attackRealmId}`
+                ? `Defended raid from ${event.data?.attackRealmId}`
                 : `We have been Pillaged by Realm ${event.data?.attackRealmId}`}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
-          resources: resourcePillaged(event.data?.pillagedResources),
+          resources: resourcePillaged(event.data.pillagedResources),
           relic: event.data?.relicLost ? (
             <span className="pl-10 text-xl font-semibold uppercase">
               Relic {event.data?.relicLost}
@@ -75,8 +76,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           event: (
             <span>
               {event.data?.success
-                ? `Realm Pillaged by Realm ${event.data?.attackRealmId}`
-                : `Defended raid from ${event.data?.attackRealmId}`}
+                ? `Defended raid from ${event.data?.attackRealmId}`
+                : `Realm Pillaged by Realm ${event.data?.attackRealmId}`}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
@@ -92,7 +93,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
               variant="outline"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
-              {event.data?.success ? 'Try again' : 'muster the troops!'}
+              {event.data?.success ? 'Retaliate' : 'muster the troops!'}
             </Button>
           ),
         };

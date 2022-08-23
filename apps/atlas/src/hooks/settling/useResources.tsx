@@ -16,7 +16,11 @@ import {
   ModuleAddr,
   useResourcesContract,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, AvailableResources } from '@/types/index';
+import type {
+  RealmsCall,
+  AvailableResources,
+  RealmsTransactionRenderConfig,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 
@@ -30,6 +34,13 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
     entrypoint: Entrypoints.claim,
     calldata: uint256ToRawCalldata(bnToUint256(toBN(realmId))),
     metadata: { realmId, action: Entrypoints.claim },
+  }),
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  [Entrypoints.claim]: (tx, ctx) => ({
+    title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} Resources`,
+    description: `Serfs gathering resources on Realm #${tx.metadata.realmId}.`,
   }),
 };
 

@@ -23,6 +23,12 @@ export type LpQty = {
   currencyqty: number;
 };
 
+export const Entrypoints = {
+  deposit: 'deposit',
+  redeem: 'redeem',
+  approve: 'approve',
+};
+
 const useNexusTransaction = (method: string) => {
   const { contract: lordsContract } = useLordsContract();
   const {
@@ -60,7 +66,7 @@ const useNexusTransaction = (method: string) => {
 
 export const useStakeLords = () => {
   const { transactionHash, invoke, invokeError, loading, nexusContract } =
-    useNexusTransaction('deposit');
+    useNexusTransaction(Entrypoints.deposit);
   const txQueue = useTransactionQueue();
 
   const stakeLords = (lordsAmount: BigNumber, receiver: string) => {
@@ -73,7 +79,7 @@ export const useStakeLords = () => {
 
     txs.push({
       contractAddress: ModuleAddr.Lords,
-      entrypoint: 'approve',
+      entrypoint: Entrypoints.approve,
       calldata: [
         toBN(ModuleAddr.Nexus).toString(),
         lordsAmount.toHexString(),
@@ -89,7 +95,7 @@ export const useStakeLords = () => {
 
     txs.push({
       contractAddress: ModuleAddr.Nexus,
-      entrypoint: 'deposit',
+      entrypoint: Entrypoints.deposit,
       calldata: [lordsAmount.toHexString(), 0, toFelt(receiver)],
       metadata: {
         title: 'Deposit into Nexus',
@@ -106,7 +112,7 @@ export const useStakeLords = () => {
     transactionHash: redeemTxHash,
     invoke: redeemInvoke,
     loading: redeemLoading,
-  } = useNexusTransaction('redeem');
+  } = useNexusTransaction(Entrypoints.redeem);
 
   const withdrawLords = (lordsAmount: BigNumber, receiver: string) => {
     if (loading) {

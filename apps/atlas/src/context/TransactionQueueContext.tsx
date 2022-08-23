@@ -3,7 +3,6 @@ import { getStarknet } from 'get-starknet';
 import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
-import { getTxMessage } from '@/hooks/settling/useTxMessage';
 import { Scroll } from '@/shared/Icons';
 import { ENQUEUED_STATUS } from '../constants';
 import type { RealmsCall } from '../types';
@@ -75,10 +74,7 @@ export const TransactionQueueProvider = ({
       status: 'TRANSACTION_RECEIVED',
       transactionHash: resp.transaction_hash,
       metadata: {
-        title: 'Multicall',
-        description: t.map((t) =>
-          getTxMessage({ ...t, status: 'TRANSACTION_RECEIVED' })
-        ),
+        multicalls: t.map((tt) => ({ ...tt, status: 'TRANSACTION_RECEIVED' })),
       },
     });
     setTx([]);
