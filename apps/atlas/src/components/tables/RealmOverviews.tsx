@@ -2,11 +2,13 @@ import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import { TroopSlot } from '@/constants/troops';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmStatus, squadStats } from '@/shared/Getters/Realm';
+import SquadStatistics from '@/shared/squad/SquadStatistics';
 import { findResourceName } from '@/util/resources';
 import { RealmResources } from './RealmResources';
 interface RealmOverviewsProps {
@@ -212,21 +214,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             <div className="w-1/2 p-6 bg-black shadow-inner sm:w-1/3">
               <h3 className="mb-4">Defending Army</h3>
               <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
-                <div className="flex justify-between ">
-                  Vitality: <span> {squadStats(realm.troops).vitality}</span>
-                </div>
-                <div className="flex justify-between">
-                  Attack: <span>{squadStats(realm.troops).attack}</span>
-                </div>
-                <div className="flex justify-between">
-                  Armor: <span>{squadStats(realm.troops).armor}</span>
-                </div>
-                <div className="flex justify-between">
-                  Wisdom: <span>{squadStats(realm.troops).wisdom}</span>
-                </div>
-                <div className="flex justify-between">
-                  Agility: <span>{squadStats(realm.troops).agility}</span>
-                </div>
+                <SquadStatistics
+                  className="pl-4"
+                  reversed
+                  troops={realm.troops || []}
+                  slot={TroopSlot.defending}
+                ></SquadStatistics>
               </div>
               <div className="flex justify-center flex-grow w-full px-6 py-2 space-x-2 sm:flex-col sm:w-full sm:py-4 sm:space-x-0 sm:space-y-3">
                 {' '}

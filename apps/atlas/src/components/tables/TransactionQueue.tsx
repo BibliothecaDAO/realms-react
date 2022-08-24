@@ -52,7 +52,7 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
   return (
     <>
       {txQueue.transactions.length > 0 ? (
-        <p className="z-0 p-2 font-semibold sm:text-xl">
+        <p className="z-0 p-2 sm:text-xl">
           Ser, your royal signature is requested to execute the following
           commands:
         </p>
@@ -83,6 +83,25 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           Remove All
         </Button>
       </div>
+
+      {txQueue.transactions.length ? (
+        <div className="mb-4 ">
+          <h4>Your resource costs in these transactions</h4>
+          <div className="flex gap-4 mt-2">
+            {Object.keys(resourceCostsById).map((resourceId) => {
+              const resource = resourceCostsById[resourceId];
+              return (
+                <div className="flex flex-col items-center" key={resourceId}>
+                  <ResourceIcon size="sm" resource={resource.resourceName} />
+                  <span>{resource.amount}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
       {txQueue.transactions.map((c, i) => (
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
@@ -92,22 +111,6 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
           onRemove={() => txQueue.remove(c)}
         />
       ))}
-      <div className="">
-        {' '}
-        {/* absolute bottom-0 left-0 w-full p-4 */}
-        <h3>Total Resource Costs</h3>
-        <div className="flex gap-4 mt-2">
-          {Object.keys(resourceCostsById).map((resourceId) => {
-            const resource = resourceCostsById[resourceId];
-            return (
-              <div className="flex flex-col items-center" key={resourceId}>
-                <ResourceIcon size="sm" resource={resource.resourceName} />
-                <span>{resource.amount}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </>
   );
 };

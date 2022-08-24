@@ -270,7 +270,9 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-        {/* <Card className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13`}>
+        <Card
+          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
+        >
           <CardTitle>Mercantile History</CardTitle>
           <CardBody>
             {economicEventData.map((a, index) => {
@@ -284,9 +286,9 @@ export function AccountPanel() {
               );
             })}
           </CardBody>
-        </Card> */}
+        </Card>
 
-        <Card className="col-start-1 col-end-13 row-span-3 md:col-start-4 md:col-end-9">
+        {/* <Card className="col-start-1 col-end-13 row-span-3 md:col-start-4 md:col-end-9">
           <div className="relative overflow-x-auto">
             {balance && (
               <Table
@@ -296,9 +298,9 @@ export function AccountPanel() {
               />
             )}
           </div>
-        </Card>
+        </Card> */}
         <Card
-          className={`col-start-1 col-end-13 md:col-start-9 md:col-end-13 `}
+          className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
         >
           <CardTitle>Battle History</CardTitle>
           <CardBody>

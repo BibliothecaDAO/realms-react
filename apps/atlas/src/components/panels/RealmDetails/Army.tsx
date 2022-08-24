@@ -8,6 +8,7 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import { ArrowSmRightIcon } from '@heroicons/react/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +17,7 @@ import { RaidingSideBar } from '@/components/sidebars/RaidingSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmBuildingId, HarvestType } from '@/constants/buildings';
 import { Squad } from '@/constants/index';
-import { troopList } from '@/constants/troops';
+import { troopList, TroopSlot } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery } from '@/generated/graphql';
@@ -28,6 +29,7 @@ import useIsOwner from '@/hooks/useIsOwner';
 import { hasOwnRelic } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
+import SquadStatistics from '@/shared/squad/SquadStatistics';
 import type { BuildingDetail, AvailableResources } from '@/types/index';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
@@ -338,21 +340,30 @@ const Army: React.FC<Prop> = (props) => {
           loading={props.loading}
           className="col-span-12 md:col-start-6 md:col-end-13"
         >
-          <CardTitle>
-            {realm.name} {squadSlot}ing Army
-          </CardTitle>
+          <div className="flex justify-between w-full">
+            <CardTitle>
+              {realm.name} {squadSlot}ing Army
+            </CardTitle>
 
-          {isOwner && (
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() =>
-                setSquadSlot((prev) => (prev == 'Attack' ? 'Defend' : 'Attack'))
-              }
-            >
-              View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army
-            </Button>
-          )}
+            <div className="flex justify-end w-1/2">
+              {isOwner && (
+                <Button
+                  variant="primary"
+                  size="xs"
+                  onClick={() =>
+                    setSquadSlot((prev) =>
+                      prev == 'Attack' ? 'Defend' : 'Attack'
+                    )
+                  }
+                >
+                  <ArrowSmRightIcon className="w-4 mr-4" />
+                  <span>
+                    View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army{' '}
+                  </span>
+                </Button>
+              )}
+            </div>
+          </div>
 
           <SquadBuilder
             squad={squadSlot}
@@ -363,6 +374,24 @@ const Army: React.FC<Prop> = (props) => {
             onClose={() => setIsRaiding(false)}
             militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
           />
+          <div className="flex justify-between">
+            <div className="px-4">
+              <h3>Attacking Army</h3>
+              <SquadStatistics
+                className="pl-4"
+                troops={realmTroops || []}
+                slot={TroopSlot.attacking}
+              />
+            </div>
+            <div className="px-4">
+              <h3>Defending Army</h3>
+              <SquadStatistics
+                className="pl-4"
+                troops={realmTroops || []}
+                slot={TroopSlot.defending}
+              />
+            </div>
+          </div>
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>

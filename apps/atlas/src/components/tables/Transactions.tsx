@@ -31,7 +31,7 @@ const STYLES = {
     ACCEPTED_ON_L2: 'bg-green-800/90',
     ACCEPTED_ON_L1: 'bg-green-900',
     TRANSACTION_RECEIVED: 'bg-green-700 animate-pulse',
-    ENQUEUED: 'border-white/20 border-4 border-double bg-black/80',
+    ENQUEUED: '  bg-black/80',
   },
 } as const;
 
@@ -68,7 +68,7 @@ export const TxCartItem = (props: TxCartItem) => {
     <div
       className={`${
         STYLES.status[props.transaction.status]
-      }  rounded-xl flex p-4 w-full mb-2`}
+      }  rounded-xl flex p-4 w-full mb-2 border-4 border-double border-white/20`}
     >
       <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
         <div className="flex justify-between w-full pb-4 mb-4 border-b border-white/40">
@@ -105,7 +105,7 @@ export const TxCartItem = (props: TxCartItem) => {
         </div>
 
         <div>
-          <h2 className="sm:text-3xl">{title}</h2>
+          <h3 className="uppercase">{title}</h3>
           {multicalls ? (
             multicalls.map((tx, i) => {
               const renderConfig = getTxRenderConfig(tx);
@@ -115,7 +115,7 @@ export const TxCartItem = (props: TxCartItem) => {
                     className="py-2"
                     key={`${props.transaction.transactionHash}:${i}`}
                   >
-                    <h5>{renderConfig.title}</h5>
+                    <h5 className="uppercase">{renderConfig.title}</h5>
                     <p className="text-lg opacity-75">
                       {renderConfig.description}
                     </p>
