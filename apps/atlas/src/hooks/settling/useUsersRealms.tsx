@@ -13,12 +13,13 @@ import { useUiSounds, soundSelector } from '../useUiSounds';
 import { createResourcesCall } from './useResources';
 
 type UserRealmsDetailedData = {
-  relicsCaptured: number;
+  resourcesClaimable: boolean;
 };
 
 const useUsersRealms = () => {
   const { play } = useUiSounds(soundSelector.claim);
   const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
+  const [userData, setUserData] = useState<UserRealmsDetailedData>();
   const { account } = useStarknet();
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
   const txQueue = useTransactionQueue();
@@ -51,6 +52,10 @@ const useUsersRealms = () => {
       return;
     }
     setUserRealms(userRealmsData);
+    const isClaimable = () => {
+      return userRealms?.realms.filter((a) => RealmClaimable(a)) ? true : false;
+    };
+    setUserData({ resourcesClaimable: isClaimable() });
   }, [userRealmsData]);
 
   const claimAll = () => {
@@ -67,13 +72,7 @@ const useUsersRealms = () => {
     });
   };
 
-  const isClaimable = () => {
-    return userRealms?.realms.filter((a) => RealmClaimable(a)).length
-      ? true
-      : false;
-  };
-
-  return { userRealms, claimAll, isClaimable };
+  return { userRealms, claimAll, userData };
 };
 
 export default useUsersRealms;

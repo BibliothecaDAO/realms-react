@@ -240,6 +240,5 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
   const cachedDaysAccrued = parseInt(
     ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
   );
-
-  return cachedDaysAccrued > 1 ? true : false;
+  return cachedDaysAccrued >= 1 ? true : false;
 };

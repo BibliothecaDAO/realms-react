@@ -7,10 +7,6 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   loading?: boolean;
 }
 
-const inlineStyle = {
-  boxShadow: '0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%)',
-};
-
 export function Card({ children, className }: Props) {
   return (
     <div
@@ -48,7 +44,9 @@ export function CardTitle({ children, className, loading }: Props) {
   }
   return (
     <div className={`${className} w-full mb-1 pt-2`}>
-      <h3 className="px-2 py-1 text-left rounded font-display">{children}</h3>
+      <h3 className="px-2 py-1 text-left uppercase rounded font-display">
+        {children}
+      </h3>
     </div>
   );
 }

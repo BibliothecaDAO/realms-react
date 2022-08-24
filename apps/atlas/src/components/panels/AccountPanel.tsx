@@ -34,7 +34,7 @@ import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
-  const { claimAll, isClaimable } = useUsersRealms();
+  const { claimAll, userData } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
@@ -160,7 +160,7 @@ export function AccountPanel() {
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
   ];
   const tableOptions = { is_striped: true };
-
+  console.log(userData?.resourcesClaimable);
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <animated.div
@@ -204,12 +204,14 @@ export function AccountPanel() {
               {settledRealmsCount}
             </CardStats>
             <Button
-              disabled={!isClaimable()}
+              disabled={!userData?.resourcesClaimable}
               variant="primary"
               size="md"
               onClick={() => claimAll()}
             >
-              {isClaimable() ? 'Harvest All Resources' : 'nothing to claim'}
+              {userData?.resourcesClaimable
+                ? 'Harvest All Resources'
+                : 'nothing to claim'}
             </Button>
           </CardBody>
         </Card>
