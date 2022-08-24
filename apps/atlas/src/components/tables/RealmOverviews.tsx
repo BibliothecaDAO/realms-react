@@ -216,7 +216,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
               <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
                 <SquadStatistics
                   className="pl-4"
-                  reversed
                   troops={realm.troops || []}
                   slot={TroopSlot.defending}
                 ></SquadStatistics>

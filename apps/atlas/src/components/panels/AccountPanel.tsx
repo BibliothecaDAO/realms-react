@@ -19,7 +19,9 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
+import useResources from '@/hooks/settling/useResources';
 import useSettling from '@/hooks/settling/useSettling';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import {
   genEconomicRealmEvent,
@@ -32,6 +34,7 @@ import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
+  const { claimAll, isClaimable } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
@@ -200,8 +203,13 @@ export function AccountPanel() {
             <CardStats className="mb-4 text-5xl">
               {settledRealmsCount}
             </CardStats>
-            <Button variant="outline" size="xs" href="/realm?tab=Your">
-              See Realms
+            <Button
+              disabled={!isClaimable()}
+              variant="primary"
+              size="md"
+              onClick={() => claimAll()}
+            >
+              {isClaimable() ? 'Harvest All Resources' : 'nothing to claim'}
             </Button>
           </CardBody>
         </Card>
@@ -216,8 +224,8 @@ export function AccountPanel() {
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-span-12 sm:col-start-9 sm:col-end-13">
-          <CardTitle>Mint Test Realms</CardTitle>
+        <Card className="col-span-12 row-span-2 sm:col-start-9 sm:col-end-13">
+          <CardTitle>Quick Actions</CardTitle>
 
           <CardBody>
             <p className="mb-3 font-semibold">

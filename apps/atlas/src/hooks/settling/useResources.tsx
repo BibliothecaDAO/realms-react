@@ -1,9 +1,6 @@
-import { formatEther } from '@ethersproject/units';
-import { useStarknetInvoke, useStarknetCall } from '@starknet-react/core';
-import type BN from 'bn.js';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
   DAY,
   MAX_DAYS_ACCURED,
@@ -12,10 +9,7 @@ import {
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
-import {
-  ModuleAddr,
-  useResourcesContract,
-} from '@/hooks/settling/stark-contracts';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import type {
   RealmsCall,
   AvailableResources,
@@ -28,7 +22,7 @@ export const Entrypoints = {
   claim: 'claim_resources',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createResourcesCall: Record<string, (args: any) => RealmsCall> = {
   claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,
@@ -53,7 +47,6 @@ type Resources = {
 const useResources = (realm: Realm | undefined): Resources => {
   const { play } = useUiSounds(soundSelector.claim);
 
-  const { contract: resourcesContract } = useResourcesContract();
   const txQueue = useTransactionQueue();
 
   const [realmsResourcesDetails, setRealmsResourcesDetails] =
@@ -118,7 +111,7 @@ const useResources = (realm: Realm | undefined): Resources => {
     claim: () => {
       play();
       txQueue.add(
-        createCall.claim({
+        createResourcesCall.claim({
           realmId: realm?.realmId,
         })
       );

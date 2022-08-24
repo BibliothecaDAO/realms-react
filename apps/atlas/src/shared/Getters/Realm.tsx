@@ -2,7 +2,7 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
-import { DAY } from '@/constants/buildings';
+import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
@@ -230,4 +230,16 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
 
 export const fetchRealmNameById = (id: number) => {
   return;
+};
+
+export const RealmClaimable = (realm: RealmFragmentFragment) => {
+  if (!realm.lastClaimTime) {
+    return false;
+  }
+
+  const cachedDaysAccrued = parseInt(
+    ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
+  );
+
+  return cachedDaysAccrued > 1 ? true : false;
 };
