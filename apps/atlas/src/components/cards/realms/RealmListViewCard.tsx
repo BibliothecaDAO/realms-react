@@ -1,4 +1,5 @@
 import { Button, OrderIcon, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
@@ -8,6 +9,7 @@ import { TroopSlot } from '@/constants/troops';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmStatus, squadStats, trimmedOrder } from '@/shared/Getters/Realm';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
@@ -22,6 +24,8 @@ const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
 export function RealmListCardView(props: RealmOverviewsProps) {
+  const { play } = useUiSounds(soundSelector.pageTurn);
+
   const router = useRouter();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
@@ -129,29 +133,57 @@ export function RealmListCardView(props: RealmOverviewsProps) {
     [selectedTab]
   );
 
+  const pressedTab = (index) => {
+    play();
+    setSelectedTab(index as number);
+  };
+
   return (
     <div
-      className={`h-auto max-w-full col-span-4 p-6 bg-black border-4 border-double rounded-2xl shadow-md border-white/40  justify-evenly flex flex-col`}
+      className={`h-auto max-w-full col-span-12 sm:col-span-6 md:col-span-4 p-6 bg-black border-4 border-double   border-white/40  justify-evenly flex flex-col hover:shadow-sm shadow-lg rounded-xl  transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:shadow-order-${trimmedOrder(
+        props.realm
+      )}`}
     >
       {props.realm?.wonder && (
         <div className="w-full p-2 text-xl font-semibold text-center uppercase shadow-inner tracking-veryWide bg-black/90">
           {props.realm?.wonder}
         </div>
       )}
-      <div className="flex justify-center w-full pb-4 border-b border-stone-500">
+      <div className="flex justify-center w-full pb-4">
         <OrderIcon
           withTooltip
-          className="self-center mx-3"
+          className="self-center mr-3"
           size={'md'}
           order={props.realm.orderType.toLowerCase()}
         />
         <h2 className="flex">
           {props.realm.name} #{props.realm.realmId}
         </h2>
+        <div className="self-center px-3">
+          {!isFavourite(props.realm) && (
+            <Button
+              size="xs"
+              variant="unstyled"
+              onClick={() => actions.addFavouriteRealm(props.realm.realmId)}
+            >
+              <HeartIcon className="w-6 fill-black stroke-white/20 hover:fill-current" />
+            </Button>
+          )}{' '}
+          {isFavourite(props.realm) && (
+            <Button
+              size="xs"
+              variant="unstyled"
+              className="w-full"
+              onClick={() => actions.removeFavouriteRealm(props.realm.realmId)}
+            >
+              <HeartIcon className="w-6" />
+            </Button>
+          )}
+        </div>
       </div>
       <Tabs
         selectedIndex={selectedTab}
-        onChange={(index) => setSelectedTab(index as number)}
+        onChange={(index) => pressedTab(index as number)}
         variant="default"
       >
         <Tabs.List className="">
@@ -199,46 +231,26 @@ export function RealmListCardView(props: RealmOverviewsProps) {
               )}
             </div>
           )}
+          <div className="w-full">
+            <Button
+              onClick={() => {
+                router.push(`/realm/${props.realm.realmId}?tab=Survey`);
+              }}
+              variant="primary"
+              size="xs"
+              className="w-full"
+            >
+              {isYourRealm(props.realm) ? 'manage' : 'details'}
+            </Button>
+          </div>
           <Button
             onClick={() => openRealmDetails(props.realm.realmId)}
             variant="outline"
             size="xs"
           >
-            quick view
-          </Button>
-          <Button
-            onClick={() => {
-              router.push(`/realm/${props.realm.realmId}?tab=Survey`);
-            }}
-            variant="primary"
-            size="xs"
-          >
-            {isYourRealm(props.realm) ? 'manage' : 'details'}
+            quick
           </Button>
           <div className="flex self-center space-x-2">
-            <div>
-              {!isFavourite(props.realm) && (
-                <Button
-                  size="xs"
-                  variant="secondary"
-                  onClick={() => actions.addFavouriteRealm(props.realm.realmId)}
-                >
-                  +
-                </Button>
-              )}{' '}
-              {isFavourite(props.realm) && (
-                <Button
-                  size="xs"
-                  variant="secondary"
-                  className="w-full"
-                  onClick={() =>
-                    actions.removeFavouriteRealm(props.realm.realmId)
-                  }
-                >
-                  -
-                </Button>
-              )}
-            </div>
             <div>
               <Button
                 onClick={() => {

@@ -46,7 +46,7 @@ export const RealmSideBar = () => {
     });
 
   return (
-    <BaseSideBar open={isRealmsSelected}>
+    <BaseSideBar open={false}>
       <div className="top-0 bottom-0 right-0 w-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end">
           <div className="flex justify-end mb-2 mr-1">
