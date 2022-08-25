@@ -29,8 +29,8 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import useFood, { createFoodCall } from '@/hooks/settling/useFood';
-import { createCall, Entrypoints } from '@/hooks/settling/useResources';
+import useFood from '@/hooks/settling/useFood';
+import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import type {
   BuildingDetail,
