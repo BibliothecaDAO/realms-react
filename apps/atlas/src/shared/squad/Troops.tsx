@@ -5,13 +5,13 @@ import { Popover } from '@headlessui/react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { troopList } from '@/constants/troops';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import type { ItemCost, TroopInterface } from '@/types/index';
 interface HealthBarProps {
   vitality: number;
   troopId: number;
+  baseVitality: number;
 }
 
 interface TroopProps {
@@ -26,9 +26,7 @@ interface TroopProps {
 
 export const HealthBar = (props: HealthBarProps) => {
   const getVitality = () => {
-    const vit =
-      troopList.find((a) => a.troopId === props.troopId)?.vitality ?? 0;
-    return (props.vitality / vit) * 100;
+    return (props.vitality / props.baseVitality) * 100;
   };
 
   const getColour = () => {
@@ -161,6 +159,7 @@ export const Troop = (props: TroopProps) => {
             <HealthBar
               troopId={props.troop.troopId}
               vitality={props.troop.vitality}
+              baseVitality={getTroop()?.vitality || 0}
             />
           )}
         </div>
