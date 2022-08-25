@@ -1,4 +1,4 @@
-import { Button, ImageCarousel } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/bibliotheca-book.svg';
 import Eternum from '@bibliotheca-dao/ui-lib/icons/eternum-lockup.svg';
 
@@ -6,6 +6,7 @@ import LooksRare from '@bibliotheca-dao/ui-lib/icons/social/looks-rare.svg';
 import OpenSea from '@bibliotheca-dao/ui-lib/icons/social/open-sea.svg';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { useEffect } from 'react';
+import { EmailForm } from '@/components/EmailForm';
 import { FaqBlock } from '@/components/Faqs';
 import { FullPageSlide } from '@/components/FullPageSlide';
 import { MainFooter } from '@/components/layout/MainFooter';
@@ -331,33 +332,7 @@ function Home() {
                 <div className="container relative px-8 py-5 mx-auto sm:w-1/2 sm:px-0 lg:w-1/2">
                   <FaqBlock />
                   <div className="mx-auto ">
-                    <h1 className="text-xl font-semibold font-display lg:text-4xl">
-                      Stay up to Date
-                    </h1>
-                    <p className="py-1">
-                      Sign up to the newsletter and be the first one to know
-                      about new developments in the ecosystem.
-                    </p>
-                    <div className="flex justify-center mt-6">
-                      <div className="flex-row w-full">
-                        <div className="bg-white rounded-lg">
-                          <div className="flex justify-between w-full flex-warp md:flex-row">
-                            <input
-                              type="email"
-                              className="p-3 m-1 text-sm font-medium text-gray-700 border-none appearance-none focus:outline-none focus:border-white focus:rounded focus:placeholder-transparent"
-                              placeholder="Enter your email"
-                              aria-label="Enter your email"
-                            />
-                            <button className="right-0 w-full p-2 m-1 text-sm font-semibold bg-gray-800 rounded-lg lg:w-auto hover:bg-gray-700">
-                              Subscribe
-                            </button>
-                          </div>
-                        </div>
-                        <p className="mt-2 ml-1 text-sm font-light text-gray-300">
-                          Unsubscribe at any time
-                        </p>
-                      </div>
-                    </div>
+                    <EmailForm />
                     <MainFooter />
                   </div>
                 </div>

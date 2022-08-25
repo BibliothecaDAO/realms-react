@@ -8732,6 +8732,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:>=8.0.0 <15":
+  version: 14.18.26
+  resolution: "@types/node@npm:14.18.26"
+  checksum: 7ed44aa4a0a0f6574b5c260b00657c3480ee079953faf76659b8300441a68b1d8b503b6212521491a28121463be772d65c713e1de74fbef6fbf8e560425d587b
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^10.0.3":
   version: 10.17.60
   resolution: "@types/node@npm:10.17.60"
@@ -10244,6 +10251,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"abortcontroller-polyfill@npm:^1.4.0":
+  version: 1.7.3
+  resolution: "abortcontroller-polyfill@npm:1.7.3"
+  checksum: b9b1e2413273b0ac494fc72ad0e1a91af8c71c447a0331cb429b3649b94188ff04992a3a29202686b755ff0cee6d506bc31c29763f012df6e0324bb92e7c9739
+  languageName: node
+  linkType: hard
+
 "abstract-leveldown@npm:~2.6.0":
   version: 2.6.3
   resolution: "abstract-leveldown@npm:2.6.3"
@@ -10415,6 +10429,19 @@ __metadata:
     string.prototype.padstart: "npm:^3.0.0"
     symbol.prototype.description: "npm:^1.0.0"
   checksum: 3fbd19077429d6946da5f2ac9db066f918fc0b670d59e631009b9795c16cc4f17d3c0f7577530ad2ef858117edd0f0e8848c136083a944cbb3f5e2a22c32bd28
+  languageName: node
+  linkType: hard
+
+"airtable@npm:0.11.4":
+  version: 0.11.4
+  resolution: "airtable@npm:0.11.4"
+  dependencies:
+    "@types/node": "npm:>=8.0.0 <15"
+    abort-controller: "npm:^3.0.0"
+    abortcontroller-polyfill: "npm:^1.4.0"
+    lodash: "npm:^4.17.21"
+    node-fetch: "npm:^2.6.7"
+  checksum: 71bd5ad1104a756d65601fca2ccc40cfc2dfe975b0e75192e4614486f906469f3c99921c2287a4c1339e03f7367f03ae0e0aa24fd637bd63d10fa737287b72ad
   languageName: node
   linkType: hard
 
@@ -26490,6 +26517,7 @@ __metadata:
     "@types/react-dom": "npm:18.0.6"
     "@typescript-eslint/eslint-plugin": "npm:5.31.0"
     "@typescript-eslint/parser": "npm:5.31.0"
+    airtable: "npm:0.11.4"
     autoprefixer: "npm:10.4.7"
     axios: "npm:^0.27.2"
     babel-plugin-glsl: "npm:^1.0.0"
