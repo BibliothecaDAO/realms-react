@@ -33,10 +33,7 @@ export const EmailForm = () => {
         <h1 className="text-xl font-semibold text-center font-display lg:text-4xl">
           Stay up to Date
         </h1>
-        <p className="py-1">
-          Sign up to the newsletter and be the first one to know about new
-          developments in the ecosystem.
-        </p>
+
         <div className="mx-auto bg-white rounded-lg">
           <div className="flex justify-between flex-warp md:flex-row">
             <input
