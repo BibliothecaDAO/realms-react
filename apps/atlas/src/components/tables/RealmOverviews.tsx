@@ -1,16 +1,13 @@
-import { Button, OrderIcon, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import { TroopSlot } from '@/constants/troops';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { RealmStatus, squadStats } from '@/shared/Getters/Realm';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
-import { findResourceName } from '@/util/resources';
-import { RealmResources } from './RealmResources';
+import { RealmListCardView } from '../cards/realms/RealmListViewCard';
+
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
   isYourRealms?: boolean;
@@ -94,179 +91,12 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const filteredRealms = props.realms.filter(
     (item) => !usedRealms.includes(item.realmId)
   );
-  return (
-    <div>
-      {/* {bridgeRow} */}
 
+  return (
+    <div className="grid grid-cols-12 gap-6 p-6 bg-black">
       {props.realms &&
         filteredRealms.map((realm: RealmFragmentFragment, index) => (
-          <div
-            key={index}
-            className="flex flex-wrap w-full h-auto max-w-full p-2 bg-black/95 shadow-black justify-evenly "
-          >
-            {realm?.wonder && (
-              <div className="w-full p-2 text-xl font-semibold text-center uppercase shadow-inner tracking-veryWide bg-black/90">
-                {realm?.wonder}
-              </div>
-            )}
-            <div className="flex w-full p-3 py-4 bg-black border-4 border-b-4 border-double border-white/10 ">
-              <h2 className="self-center mb-1 ml-4 font-lords">
-                <span className="mr-1 font-semibold text-gray-400 font-body opacity-70">
-                  {realm.realmId} |{' '}
-                </span>
-                {realm.name}
-              </h2>
-
-              {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs text-gray-400 border border-gray-400 rounded sm:block">
-                rank: {realm.rarityRank}
-              </h4> */}
-              {/* <h4 className="self-center hidden p-1 px-4 mx-auto text-xs sm:block">
-                {RealmStatus(realm)}
-              </h4> */}
-
-              <div className="flex self-center ml-auto">
-                <div className="flex self-center space-x-2">
-                  <div>
-                    {!isFavourite(realm) && (
-                      <Button
-                        size="xs"
-                        variant="secondary"
-                        onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                      >
-                        +
-                      </Button>
-                    )}{' '}
-                    {isFavourite(realm) && (
-                      <Button
-                        size="xs"
-                        variant="secondary"
-                        className="w-full"
-                        onClick={() =>
-                          actions.removeFavouriteRealm(realm.realmId)
-                        }
-                      >
-                        -
-                      </Button>
-                    )}
-                  </div>
-                  <div>
-                    <Button
-                      onClick={() => {
-                        togglePanelType('realm');
-                        gotoAssetId(realm.realmId, 'realm');
-                      }}
-                      variant="outline"
-                      size="xs"
-                      className="w-full uppercase"
-                    >
-                      fly
-                    </Button>
-                  </div>
-                </div>
-
-                <OrderIcon
-                  withTooltip
-                  className="self-center mx-3"
-                  size={'md'}
-                  order={realm.orderType.toLowerCase()}
-                />
-              </div>
-            </div>
-            {/* <div className="flex w-1/2 p-6 shadow-inner bg-gray-1000 sm:w-1/3">
-              <div className="self-center">
-                {realm.resources?.map((resource, index) => {
-                  const info = findResourceName(resource.resourceId);
-                  return (
-                    <div className="flex my-1 font-bold " key={index}>
-                      <ResourceIcon
-                        size="xs"
-                        className="self-center"
-                        resource={info?.trait?.replace('_', '') as string}
-                      />{' '}
-                      <span className="ml-4 uppercase tracking-veryWide opacity-80">
-                        {info?.trait}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div> */}
-            {/* <div className="flex w-1/2 px-6 shadow-inner sm:w-1/3 bg-gray-800/60">
-              {' '}
-              <div className="self-center w-full">
-                {realm.traits?.map((trait, index) => {
-                  return (
-                    <div className="flex my-4 font-bold " key={index}>
-                      <span className="ml-4 uppercase tracking-veryWide">
-                        {trait.type}
-                      </span>
-                      <span className="self-end px-4 ml-auto uppercase tracking-veryWide">
-                        {trait.qty}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div> */}
-            <div className="w-full p-1 bg-black sm:w-2/3">
-              <RealmResources showRaidable realm={realm} loading={false} />
-            </div>
-            <div className="w-1/2 p-6 bg-black shadow-inner sm:w-1/3">
-              <h3 className="mb-4">Defending Army</h3>
-              <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
-                <SquadStatistics
-                  className="pl-4"
-                  troops={realm.troops || []}
-                  slot={TroopSlot.defending}
-                ></SquadStatistics>
-              </div>
-              <div className="flex justify-center flex-grow w-full px-6 py-2 space-x-2 sm:flex-col sm:w-full sm:py-4 sm:space-x-0 sm:space-y-3">
-                {' '}
-                {isYourRealm(realm) && (
-                  <div>
-                    {RealmStatus(realm) === 'Layer 1' && (
-                      <Button
-                        size="xs"
-                        variant="secondary"
-                        className="w-full uppercase"
-                        onClick={() => toggleMenuType('bridgeRealms')}
-                      >
-                        Bridge Realm
-                      </Button>
-                    )}
-                    {RealmStatus(realm) === 'Unsettled L2' && (
-                      <Button
-                        size="xs"
-                        variant="secondary"
-                        className="w-full uppercase"
-                        onClick={() => toggleMenuType('settleRealms')}
-                      >
-                        Settle Realm
-                      </Button>
-                    )}
-                  </div>
-                )}
-                <Button
-                  onClick={() => openRealmDetails(realm.realmId)}
-                  variant="outline"
-                  size="xs"
-                  className="w-full "
-                >
-                  quick view
-                </Button>
-                <Button
-                  onClick={() => {
-                    router.push(`/realm/${realm.realmId}?tab=Survey`);
-                  }}
-                  variant="primary"
-                  size="xs"
-                  className="w-full "
-                >
-                  {isYourRealm(realm) ? 'manage' : 'details'}
-                </Button>
-              </div>
-            </div>
-          </div>
+          <RealmListCardView key={index} realm={realm} />
         ))}
     </div>
   );

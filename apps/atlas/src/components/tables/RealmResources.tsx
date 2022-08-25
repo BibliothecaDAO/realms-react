@@ -205,7 +205,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           <Button
             disabled={enqueuedHarvestTx || days === 0}
             size="xs"
-            variant="primary"
+            variant={days === 0 ? 'outline' : 'primary'}
             className="w-full"
             onClick={() => {
               claim();
