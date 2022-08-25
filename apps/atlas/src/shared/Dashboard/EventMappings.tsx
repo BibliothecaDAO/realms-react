@@ -19,11 +19,13 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
     case Event.realmCombatAttack:
       return {
         event: (
-          <span className="">
-            {event.data?.success
-              ? `Raid successful on Realm ${event.data?.defendRealmId}`
-              : `Raid failed on Realm ${event.data?.defendRealmId}`}
-          </span>
+          <div>
+            <span className="">
+              {event.data?.success
+                ? `Raid successful on Realm ${event.data?.defendRealmId}`
+                : `Raid failed on Realm ${event.data?.defendRealmId}`}
+            </span>
+          </div>
         ),
         class: event.data?.success ? successClass : negativeClass,
         resources: resourcePillaged(event.data?.pillagedResources),

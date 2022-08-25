@@ -33,7 +33,6 @@ type Prop = {
   realmFoodDetails: RealmFoodDetails;
   onSetSubview: (string: Subview) => void;
   availableFood: number | undefined;
-  availableResources: AvailableResources;
   open: boolean;
   loading: boolean;
 };

@@ -264,7 +264,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                 <>
                   <Army
                     open={subview == 'Army'}
-                    availableResources={realmsResourcesDetails}
                     buildings={buildings}
                     realm={realmData?.realm}
                     loading={loadingHooks}
@@ -272,7 +271,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
                   <ResourceDetails
                     open={subview == 'Resources'}
-                    availableResources={realmsResourcesDetails}
                     realmFoodDetails={realmFoodDetails}
                     availableFood={availableFood}
                     buildings={buildings}
@@ -283,7 +281,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                   <Survey
                     open={subview == 'Survey'}
                     onSetSubview={(s) => onSetSubview(s)}
-                    availableResources={realmsResourcesDetails}
                     buildingUtilisation={buildingUtilisation}
                     realmFoodDetails={realmFoodDetails}
                     availableFood={availableFood}

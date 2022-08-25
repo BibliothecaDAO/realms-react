@@ -36,7 +36,6 @@ import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
-  availableResources: AvailableResources;
   open: boolean;
   loading: boolean;
 };

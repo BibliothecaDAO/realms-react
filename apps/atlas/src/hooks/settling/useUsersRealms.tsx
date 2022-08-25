@@ -12,14 +12,24 @@ import { RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 import { createResourcesCall } from './useResources';
 
-type UserRealmsDetailedData = {
+interface UserRealmsDetailedData {
   resourcesClaimable: boolean;
-};
+  relicsHeld: number;
+  resourcesAcrossEmpire: Resource[];
+}
 
+interface Resource {
+  resourceName: string;
+  resourceCount: number;
+}
 const useUsersRealms = () => {
   const { play } = useUiSounds(soundSelector.claim);
   const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
-  const [userData, setUserData] = useState<UserRealmsDetailedData>();
+  const [userData, setUserData] = useState<UserRealmsDetailedData>({
+    resourcesClaimable: false,
+    relicsHeld: 0,
+    resourcesAcrossEmpire: [],
+  });
   const { account } = useStarknet();
   const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
   const txQueue = useTransactionQueue();
@@ -51,11 +61,45 @@ const useUsersRealms = () => {
     if (!userRealmsData) {
       return;
     }
+
     setUserRealms(userRealmsData);
+
     const isClaimable = () => {
-      return userRealms?.realms.filter((a) => RealmClaimable(a)) ? true : false;
+      return userRealmsData.realms.filter((a) => RealmClaimable(a))
+        ? true
+        : false;
     };
-    setUserData({ resourcesClaimable: isClaimable() });
+
+    const relicsHeld = () => {
+      return userRealmsData.realms.map((a) => a.relicsOwned).flat().length || 0;
+    };
+
+    const resourcesAcrossRealms = () => {
+      const allResources =
+        userRealmsData.realms.map((a) => a.resources).flat() || [];
+
+      const countUnique = (arr) => {
+        const counts = {};
+        for (let i = 0; i < arr.length; i++) {
+          counts[arr[i]['resourceName']] =
+            1 + (counts[arr[i]['resourceName']] || 0);
+        }
+        return Object.keys(counts).map((a) => {
+          return {
+            resourceName: a,
+            resourceCount: counts[a],
+          };
+        });
+      };
+
+      return countUnique(allResources);
+    };
+
+    setUserData({
+      resourcesClaimable: isClaimable(),
+      relicsHeld: relicsHeld(),
+      resourcesAcrossEmpire: resourcesAcrossRealms(),
+    });
   }, [userRealmsData]);
 
   const claimAll = () => {

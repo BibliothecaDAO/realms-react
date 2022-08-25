@@ -29,7 +29,7 @@ import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
 import useFood, { createFoodCall } from '@/hooks/settling/useFood';
-import { createCall, Entrypoints } from '@/hooks/settling/useResources';
+import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
 import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
@@ -45,7 +45,6 @@ type Prop = {
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
-  availableResources: AvailableResources;
   open: boolean;
   loading: boolean;
 };
