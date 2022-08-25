@@ -264,17 +264,17 @@ export interface BuildingDetail {
 }
 
 export interface RealmFoodDetails {
-  totalFarmHarvest: number | null | undefined;
-  totalTimeRemainingUntilFarmHarvest: number | null | undefined;
-  decayedFarms: number | null | undefined;
-  farmsBuilt: number | null | undefined;
-  totalVillageHarvest: number | null | undefined;
-  totalTimeRemainingUntilVillageHarvest: number | null | undefined;
-  decayedVillages: number | null | undefined;
-  villagesBuilt: number | null | undefined;
-  population: number | null | undefined;
-  fishingVillagesHarvestsLeft: number | null | undefined;
-  farmHarvestsLeft: number | null | undefined;
+  totalFarmHarvest: number;
+  totalTimeRemainingUntilFarmHarvest: number;
+  decayedFarms: number;
+  farmsBuilt: number;
+  totalVillageHarvest: number;
+  totalTimeRemainingUntilVillageHarvest: number;
+  decayedVillages: number;
+  villagesBuilt: number;
+  population: number;
+  fishingVillagesHarvestsLeft: number;
+  farmHarvestsLeft: number;
 }
 
 export interface BuildingFootprint {
