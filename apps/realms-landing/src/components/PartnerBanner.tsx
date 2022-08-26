@@ -1,5 +1,6 @@
 import Briq from '@bibliotheca-dao/ui-lib/icons/briq.svg';
 import Cartridge from '@bibliotheca-dao/ui-lib/icons/cartridge.svg';
+import Matchbox from '@bibliotheca-dao/ui-lib/icons/Matchbox.svg';
 import Starkware from '@bibliotheca-dao/ui-lib/icons/starkware.svg';
 import Topology from '@bibliotheca-dao/ui-lib/icons/topology.svg';
 import Yagi from '@bibliotheca-dao/ui-lib/icons/yagi.svg';
@@ -34,11 +35,7 @@ export const PartnerBanner = () => {
     },
     {
       icon: (
-        <img
-          src="/match.png"
-          className="w-12 grayscale hover:grayscale-0"
-          alt=""
-        />
+        <Matchbox className="w-12 grayscale brightness-[0.4] hover:brightness-100 hover:grayscale-0" />
       ),
       url: 'https://www.matchboxdao.com/',
     },
