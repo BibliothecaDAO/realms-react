@@ -293,7 +293,7 @@ function Home() {
                       Bibliotheca DAO
                       <br /> Stewards of on-chain gaming
                     </h2>
-                    <div className="w-1/2 mx-auto">
+                    <div className="mx-auto sm:w-1/2">
                       {' '}
                       <p className="pt-4 mb-4 sm:text-2xl">
                         Bibliotheca DAO is a pioneering web3 game studio <br />

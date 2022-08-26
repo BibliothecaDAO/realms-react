@@ -34,7 +34,7 @@ const NavMenu = ({ options }: any) => {
           className={`justify-center gap-4 lg:gap-8 my-auto text-base text-center flex lg:flex-row grow
             ${
               showMobileMenu
-                ? 'absolute top-16 mx-auto flex-col left-0 right-0 bg-black/50 py-6'
+                ? 'absolute top-16 mx-auto flex-col left-0 right-0 bg-black/90 py-6'
                 : 'hidden lg:flex'
             }
           `}
