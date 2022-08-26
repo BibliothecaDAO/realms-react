@@ -17,6 +17,7 @@ import {
   squadStats,
   RealmVaultStatus,
   hasOwnRelic,
+  RealmCombatStatus,
 } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
@@ -112,7 +113,7 @@ const Survey: React.FC<Prop> = (props) => {
         <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
           <CardTitle>Military Strength</CardTitle>
           <div className="w-full text-center uppercase sm:text-2xl">
-            {realm && RealmVaultStatus(realm)}
+            {realm && RealmCombatStatus(realm)}
           </div>
           <div className="flex justify-around flex-grow w-full p-4 text-center">
             <div>

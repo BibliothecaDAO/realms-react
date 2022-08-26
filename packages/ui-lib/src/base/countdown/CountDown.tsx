@@ -45,7 +45,7 @@ const ShowCounter = (props: Counter) => {
 
       <DateTimeDisplay value={props.minutes} type={'M'} isDanger={true} />
 
-      <DateTimeDisplay value={props.seconds} type={'S'} isDanger={true} />
+      {/* <DateTimeDisplay value={props.seconds} type={'S'} isDanger={true} /> */}
     </div>
   );
 };

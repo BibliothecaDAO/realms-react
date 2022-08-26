@@ -242,3 +242,25 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
   );
   return cachedDaysAccrued >= 1 ? true : false;
 };
+
+export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
+  if (!realm.lastAttacked) {
+    return '';
+  }
+  const now = Date.now();
+  const lastVaultTime = new Date(realm.lastAttacked);
+  const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
+  const minutesToVault = DAY / 60; // 24 hours
+  if (minutesSinceLastVault >= minutesToVault) {
+    return `Raidable`;
+  }
+
+  const minutesRemaining = minutesToVault - minutesSinceLastVault;
+  const hours = Math.floor(minutesRemaining / 60);
+  const minutes = Math.floor(minutesRemaining % 60);
+  if (hours > 0) {
+    return `Raidable in ${hours}h ${minutes}m`;
+  } else {
+    return `Raidable in ${minutes}m`;
+  }
+};

@@ -11,7 +11,13 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { RealmStatus, squadStats, trimmedOrder } from '@/shared/Getters/Realm';
+import {
+  RealmCombatStatus,
+  RealmStatus,
+  RealmVaultStatus,
+  squadStats,
+  trimmedOrder,
+} from '@/shared/Getters/Realm';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 import { findResourceName } from '@/util/resources';
 
@@ -180,6 +186,9 @@ export function RealmListCardView(props: RealmOverviewsProps) {
             </Button>
           )}
         </div>
+      </div>
+      <div className="w-full text-center uppercase sm:text-2xl">
+        {props.realm && RealmCombatStatus(props.realm)}
       </div>
       <Tabs
         selectedIndex={selectedTab}

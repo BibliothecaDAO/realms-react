@@ -478,74 +478,79 @@ const Food: React.FC<Prop> = (props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap w-full p-2">
-            <div className="w-full mb-2 text-2xl">
-              {(+formatEther(getFishBalance ?? 0)).toLocaleString()} $FISH
+          {isOwner && (
+            <div>
+              {' '}
+              <div className="flex flex-wrap w-full p-2">
+                <div className="w-full mb-2 text-2xl">
+                  {(+formatEther(getFishBalance ?? 0)).toLocaleString()} $FISH
+                </div>
+                <Button
+                  onClick={() => {
+                    convert(realm?.realmId, input.fishConversion, FISH_ID);
+                  }}
+                  size="xs"
+                  variant="primary"
+                >
+                  Convert $FISH into Storehouse
+                </Button>
+                <InputNumber
+                  value={input.fishConversion}
+                  inputSize="sm"
+                  colorScheme="transparent"
+                  className="w-24 bg-white border rounded-r border-white/40"
+                  min={1}
+                  max={+formatEther(getFishBalance ?? 0)}
+                  stringMode
+                  onChange={(value: ValueType) =>
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishConversion: value.toString(),
+                      };
+                    })
+                  }
+                />{' '}
+              </div>
+              <div className="flex flex-wrap w-full p-2">
+                <div className="w-full mb-2 text-2xl">
+                  {(+formatEther(getWheatBalance ?? 0)).toLocaleString()} $WHEAT
+                </div>
+                <Button
+                  onClick={() => {
+                    convert(realm?.realmId, input.fishConversion, WHEAT_ID);
+                  }}
+                  size="xs"
+                  variant="primary"
+                >
+                  Convert $WHEAT into Storehouse
+                </Button>
+                <InputNumber
+                  value={input.wheatConversion}
+                  inputSize="sm"
+                  colorScheme="transparent"
+                  className="w-24 bg-white border rounded-r border-white/40"
+                  min={1}
+                  max={+formatEther(getFishBalance ?? 0)}
+                  stringMode
+                  onChange={(value: ValueType) =>
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        wheatConversion: value.toString(),
+                      };
+                    })
+                  }
+                />{' '}
+              </div>
+              <p className="p-2">
+                You consume 1 food per second according to your population.
+                Build and harvest Farms and Fishing Villages in order to keep
+                your citizens fed. <br /> If you do not have food you are capped
+                at 250 resources per day and your troops have half health.
+              </p>
             </div>
-            <Button
-              onClick={() => {
-                convert(realm?.realmId, input.fishConversion, FISH_ID);
-              }}
-              size="xs"
-              variant="primary"
-            >
-              Convert $FISH into Storehouse
-            </Button>
-            <InputNumber
-              value={input.fishConversion}
-              inputSize="sm"
-              colorScheme="transparent"
-              className="w-24 bg-white border rounded-r border-white/40"
-              min={1}
-              max={+formatEther(getFishBalance ?? 0)}
-              stringMode
-              onChange={(value: ValueType) =>
-                setInput((current) => {
-                  return {
-                    ...current,
-                    fishConversion: value.toString(),
-                  };
-                })
-              }
-            />{' '}
-          </div>
-          <div className="flex flex-wrap w-full p-2">
-            <div className="w-full mb-2 text-2xl">
-              {(+formatEther(getWheatBalance ?? 0)).toLocaleString()} $WHEAT
-            </div>
-            <Button
-              onClick={() => {
-                convert(realm?.realmId, input.fishConversion, WHEAT_ID);
-              }}
-              size="xs"
-              variant="primary"
-            >
-              Convert $WHEAT into Storehouse
-            </Button>
-            <InputNumber
-              value={input.wheatConversion}
-              inputSize="sm"
-              colorScheme="transparent"
-              className="w-24 bg-white border rounded-r border-white/40"
-              min={1}
-              max={+formatEther(getFishBalance ?? 0)}
-              stringMode
-              onChange={(value: ValueType) =>
-                setInput((current) => {
-                  return {
-                    ...current,
-                    wheatConversion: value.toString(),
-                  };
-                })
-              }
-            />{' '}
-          </div>
-          <p className="p-2">
-            You consume 1 food per second according to your population. Build
-            and harvest Farms and Fishing Villages in order to keep your
-            citizens fed. <br /> If you do not have food you are capped at 250
-            resources per day and your troops have half health.
-          </p>
+          )}
         </Card>
       </div>
     </BaseRealmDetailPanel>
