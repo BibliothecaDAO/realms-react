@@ -224,7 +224,7 @@ export const resourcePillaged = (resources: any) => {
   );
 };
 
-export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
+export const hasOwnRelic = (realm: RealmFragmentFragment) => {
   return realm?.relic && realm?.relic.length ? false : true;
 };
 
@@ -245,7 +245,7 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
 
 export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
   if (!realm.lastAttacked) {
-    return '';
+    return 'Raidable';
   }
   const now = Date.now();
   const lastVaultTime = new Date(realm.lastAttacked);

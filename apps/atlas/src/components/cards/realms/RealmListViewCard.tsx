@@ -1,4 +1,5 @@
 import { Button, OrderIcon, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
@@ -12,6 +13,7 @@ import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import {
+  hasOwnRelic,
   RealmCombatStatus,
   RealmStatus,
   RealmVaultStatus,
@@ -115,7 +117,14 @@ export function RealmListCardView(props: RealmOverviewsProps) {
         label: 'Military',
         component: (
           <div>
-            {' '}
+            <div className="flex justify-center w-full text-center uppercase sm:text-2xl">
+              {props.realm && RealmCombatStatus(props.realm)}
+              <Relic
+                className={`ml-4 w-5 ${
+                  hasOwnRelic(props.realm) ? 'fill-yellow-500' : 'fill-red-600'
+                }`}
+              />
+            </div>
             <h3 className="mb-1">Defending Army</h3>
             <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
               <SquadStatistics
@@ -187,9 +196,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           )}
         </div>
       </div>
-      <div className="w-full text-center uppercase sm:text-2xl">
-        {props.realm && RealmCombatStatus(props.realm)}
-      </div>
+
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}

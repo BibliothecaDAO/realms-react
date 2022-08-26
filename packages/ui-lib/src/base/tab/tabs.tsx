@@ -11,10 +11,10 @@ export const VARIANTS = {
   default: {
     tab: {
       base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150 hover:shadow border-b-4 border-transparent hover:border-cta-100 font-semibold',
-      active: ' border-cta-100',
+      active: ' border-cta-100 shadow-purple-800/10 shadow-md rounded',
       inactive: ' border-transparent text-white/50',
     },
-    tabList: 'flex space-x-3 sm:space-x-4 bg-black/90 p-2 shadow-inner ',
+    tabList: 'flex space-x-3 sm:space-x-4  p-2 shadow-inner ',
   },
   primary: {
     tab: {
@@ -46,10 +46,7 @@ export const Tabs = ({
       {onChange ? (
         <HeadlessTab.Group
           as="div"
-          className={clsx(
-            'flex flex-1 flex-col border-t border-b border-black',
-            className
-          )}
+          className={clsx('flex flex-1 flex-col', className)}
           selectedIndex={selectedIndex}
           onChange={onChange}
         >

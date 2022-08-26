@@ -1,10 +1,11 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
-import { Combobox } from '@headlessui/react';
-import { useState, Fragment } from 'react';
+
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
+
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { OrderAffinity, LightDark } from '@/constants/orders';
 import type { GetRealmQuery } from '@/generated/graphql';
-import { Realm } from '@/generated/graphql';
+
 import { ownerRelic, trimmedOrder, relicsOwnedByRealm } from './Getters/Realm';
 
 interface HeaderProps {
@@ -48,12 +49,11 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           </p>
         </div>
         <div className="flex justify-between space-x-5">
-          <div className="self-center ">
-            Relics Owned <br />{' '}
+          <div className="flex self-center">
             <span className="text-4xl">{relicsOwnedByRealm(realm)}</span>
+            <Relic className={` w-4 ml-4 fill-yellow-500`} />
           </div>
           <div className="self-center ">
-            Owned by <br />{' '}
             <button
               onClick={() => {
                 props.onSubmit(relicOwned ?? '0');

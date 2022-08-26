@@ -230,12 +230,11 @@ export const RealmsPanel = () => {
         key={selectedTabIndex}
         selectedIndex={selectedTabIndex}
         onChange={onTabChange as any}
+        className="bg-black"
       >
         <Tabs.List>
           {TABS.map((tab) => (
-            <Tabs.Tab key={tab.key} className="uppercase">
-              {tab.name}
-            </Tabs.Tab>
+            <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
           ))}
         </Tabs.List>
       </Tabs>

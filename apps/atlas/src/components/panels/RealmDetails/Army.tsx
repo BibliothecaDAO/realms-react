@@ -8,6 +8,7 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { ArrowSmRightIcon } from '@heroicons/react/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
@@ -153,23 +154,25 @@ const Army: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-span-12 md:col-start-4 md:col-end-7">
           <CardTitle>
-            {realm.name} owns a total of {realm.relicsOwned?.length} Realms
+            {realm.name} rules a total of {realm.relicsOwned?.length} Realms
           </CardTitle>
           <CardBody>
-            {realm.relicsOwned?.map((a, i) => {
-              return (
-                <div key={i} className="mb-4">
-                  {' '}
-                  <Button
-                    href={'/realm/' + a.realmId + '?tab=Army'}
-                    variant="outline"
-                    size="sm"
-                  >
-                    <h5>Realm {a.realmId}</h5>
-                  </Button>
-                </div>
-              );
-            })}
+            <div className="flex flex-wrap">
+              {realm.relicsOwned?.map((a, i) => {
+                return (
+                  <div key={i} className="p-2 mb-4 ">
+                    <Button
+                      href={'/realm/' + a.realmId + '?tab=Army'}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <Relic className={` w-3 mr-4 fill-yellow-500`} />{' '}
+                      <h5>Realm {a.realmId}</h5>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </CardBody>
         </Card>
         <Card
