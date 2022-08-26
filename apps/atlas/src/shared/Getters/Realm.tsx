@@ -224,7 +224,7 @@ export const resourcePillaged = (resources: any) => {
   );
 };
 
-export const hasOwnRelic = (realm: RealmFragmentFragment) => {
+export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
   return realm?.relic && realm?.relic.length ? false : true;
 };
 
