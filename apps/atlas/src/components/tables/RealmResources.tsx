@@ -158,7 +158,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   }, [txQueue.transactions]);
 
   const columns = [
-    { Header: 'Resource', id: 1, accessor: 'resource' },
+    { Header: '', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     props.showClaimable
       ? { Header: 'Claimable', id: 2, accessor: 'claimableResources' }
@@ -172,7 +172,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <div className="w-full bg-black">
+    <div className="w-full ">
       <div className="flex justify-around flex-grow w-full p-4 text-center">
         <div className="w-full sm:w-1/2">
           <h6>work days</h6>
