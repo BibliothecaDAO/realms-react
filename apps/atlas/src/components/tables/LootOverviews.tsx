@@ -1,4 +1,4 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Button, Card } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useLootContext } from '@/context/LootContext';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -24,11 +24,11 @@ export function LootOverviews(props: LootOverviewsProps) {
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 
   return (
-    <div className="grid grid-cols-1 gap-2 px-2 bg-black rounded sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-2 px-2 rounded sm:grid-cols-2">
       {props.bags &&
         props.bags.map((loot: Loot, index) => (
-          <div key={index} className="w-full rounded">
-            <div className="w-full p-2 bg-black rounded-t font-display">
+          <Card key={index} className="w-full rounded">
+            <div className="w-full p-2 rounded-t font-display">
               {[
                 loot.weapon,
                 loot.chest,
@@ -40,7 +40,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 loot.ring,
               ]?.map((itemName, index) => {
                 return (
-                  <div className="flex px-2 my-1 font-bold" key={index}>
+                  <div className="flex px-2 my-1 uppercase" key={index}>
                     <LootItemIcon
                       className="self-center"
                       size="sm"
@@ -59,7 +59,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex w-full p-3 py-2 bg-black">
+            <div className="flex w-full p-3 py-2 ">
               <div className="flex self-center w-full">
                 <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
                 <div className="ml-auto"></div>
@@ -107,7 +107,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 </Button>
               )}
             </div>
-          </div>
+          </Card>
         ))}
     </div>
   );

@@ -147,7 +147,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
 
   return (
     <div
-      className={`h-auto max-w-full col-span-12 sm:col-span-6 md:col-span-4 p-6 bg-black/90 border-4 border-double   border-white/10  justify-evenly flex flex-col hover:shadow-sm shadow-lg rounded-xl  transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:shadow-order-${trimmedOrder(
+      className={`h-auto max-w-full col-span-12 sm:col-span-6 md:col-span-4 p-6 bg-black/90 border-4 border-double border-white/10  justify-evenly flex flex-col hover:shadow-sm shadow-lg rounded-xl  transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 rounded-t-3xl hover:shadow-order-${trimmedOrder(
         props.realm
       )}`}
     >

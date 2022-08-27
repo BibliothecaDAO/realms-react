@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
-import BibliothecaDAO from '@bibliotheca-dao/ui-lib/icons/BibliothecaDAO.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
 import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
@@ -72,16 +72,14 @@ export function Header() {
   ]);
 
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden shadow-2xl bg-gray-1000 sm:flex">
+    <div className="top-0 left-0 z-20 justify-end hidden shadow-lg bg-gray-1100 sm:flex shadow-purple-800">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mr-auto">
           <Link href={'/'}>
             <span className="flex">
               {' '}
-              <BibliothecaBook className="self-center h-5 ml-2 mr-4 stroke-white fill-white " />
-              <div className="self-center text-3xl font-lords">
-                Realms: Eternum
-              </div>
+              <Ouroboros className="self-center h-10 ml-2 mr-4 fill-yellow-600 " />
+              <div className="self-center text-3xl font-lords">Eternum</div>
               {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
             </span>
           </Link>

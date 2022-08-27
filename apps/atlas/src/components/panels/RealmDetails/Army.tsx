@@ -27,7 +27,7 @@ import useBuildings, {
 } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
-import { hasOwnRelic } from '@/shared/Getters/Realm';
+import { hasOwnRelic, RealmCombatStatus } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
@@ -197,9 +197,9 @@ const Army: React.FC<Prop> = (props) => {
                 disabled={!vaultCountdown.expired}
                 variant={'primary'}
               >
-                Raid Vault
+                {realm && RealmCombatStatus(realm)}
               </Button>
-              <p className="p-3">
+              <p className="p-3 text-center uppercase font-display">
                 Pillage this vault for 25% of its resources.
               </p>
             </div>

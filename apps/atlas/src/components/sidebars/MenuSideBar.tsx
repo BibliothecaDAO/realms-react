@@ -111,7 +111,7 @@ export const MenuSideBar = () => {
               <IconButton
                 className={`${buttonClasses} ${
                   isPage(menu.page)
-                    ? 'bg-cta-100 shadow-purple-900/80 -translate-y-1 border-yellow-200/40  '
+                    ? 'bg-cta-100 shadow-purple-900/80 -translate-y-1 border-yellow-200/40   '
                     : ''
                 }`}
                 aria-label={menu.text}

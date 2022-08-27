@@ -63,10 +63,10 @@ export const RaidResults = ({ defendId, tx }) => {
     combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
 
   const getFlatHitpoints = combatResult?.getRealmCombatResult.history
-    ?.slice(1)
-    .map((a) => {
-      return a.hitPoints;
-    });
+    ? combatResult?.getRealmCombatResult.history?.slice(1).map((a) => {
+        return a.hitPoints;
+      })
+    : [];
 
   const combatStart = combatResult?.getRealmCombatResult.history?.find(
     (a) => a.eventType === 'combat_start'
@@ -77,10 +77,6 @@ export const RaidResults = ({ defendId, tx }) => {
         combatResult?.getRealmCombatResult.history.length - 1
       ]
     : [];
-
-  const getTroopById = (id) => {
-    return troopList.find((a) => a.troopId === id);
-  };
 
   console.log(combatStart);
 
@@ -101,9 +97,12 @@ export const RaidResults = ({ defendId, tx }) => {
 
   return (
     <div className="pt-10">
-      <h2 className="mb-4 text-center">
-        {success ? 'Successful' : 'Unsuccessful'} Raid!!
-      </h2>
+      {combatResult?.getRealmCombatResult && (
+        <h2 className="mb-4 text-center">
+          {success ? 'Successful' : 'Unsuccessful'} Raid!!
+        </h2>
+      )}
+
       <div className="flex flex-wrap justify-between">
         {mapped
           ?.filter((b) => b.outcome !== 1)

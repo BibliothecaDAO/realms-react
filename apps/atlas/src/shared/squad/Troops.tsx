@@ -82,55 +82,55 @@ export const Troop = (props: TroopProps) => {
     return props.troopsStats?.find((a) => a.troopId === props.troop.troopId);
   };
 
-  const getTroopTierList = () => {
-    return props?.troopsStats?.filter((a) => a.tier === props.troop.tier);
-  };
+  // const getTroopTierList = () => {
+  //   return props?.troopsStats?.filter((a) => a.tier === props.troop.tier);
+  // };
 
-  const troopCostCell = (cost: ItemCost) => {
-    // console.log(cost);
-    return (
-      <div className="w-24">
-        <div className="flex justify-between">
-          <Lords className="w-4" /> {cost.amount}
-        </div>
+  // const troopCostCell = (cost: ItemCost) => {
+  //   // console.log(cost);
+  //   return (
+  //     <div className="w-24">
+  //       <div className="flex justify-between">
+  //         <Lords className="w-4" /> {cost.amount}
+  //       </div>
 
-        {cost.resources.map((a, index) => {
-          return (
-            <div key={index} className="flex justify-between">
-              <span>{a.resourceName}</span> <span>{a.amount}</span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+  //       {cost.resources.map((a, index) => {
+  //         return (
+  //           <div key={index} className="flex justify-between">
+  //             <span>{a.resourceName}</span> <span>{a.amount}</span>
+  //           </div>
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // };
 
   const getBaseTroopInfo = troops?.find(
     (a) => a.troopId === props.troop.troopId
   );
 
-  const mappedRowData: Row[] = (getTroopTierList() as any)?.map((re, index) => {
-    return {
-      name: <span className="tracking-wider uppercase">{re.troopName}</span>,
-      // agility: re.agility,
-      // attack: re.attack,
-      // defense: re.defense,
-      // vitality: re.vitality,
-      // wisdom: re.wisdom,
-      troopCost: troopCostCell(re.troopCost),
-      add: (
-        <Button
-          variant="secondary"
-          size="xs"
-          onClick={() => {
-            props.onSubmit ? props.onSubmit(re) : console.log('s');
-          }}
-        >
-          add
-        </Button>
-      ),
-    };
-  });
+  // const mappedRowData: Row[] = (getTroopTierList() as any)?.map((re, index) => {
+  //   return {
+  //     name: <span className="tracking-wider uppercase">{re.troopName}</span>,
+  //     // agility: re.agility,
+  //     // attack: re.attack,
+  //     // defense: re.defense,
+  //     // vitality: re.vitality,
+  //     // wisdom: re.wisdom,
+  //     troopCost: troopCostCell(re.troopCost),
+  //     add: (
+  //       <Button
+  //         variant="secondary"
+  //         size="xs"
+  //         onClick={() => {
+  //           props.onSubmit ? props.onSubmit(re) : console.log('s');
+  //         }}
+  //       >
+  //         add
+  //       </Button>
+  //     ),
+  //   };
+  // });
 
   return (
     <div>
