@@ -1,10 +1,11 @@
 import { Spinner } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
-import { COMBAT_OUTCOME_ATTACKER_WINS } from '@/constants/troops';
+import { COMBAT_OUTCOME_ATTACKER_WINS, troopList } from '@/constants/troops';
 import type { GetRealmCombatResultQuery } from '@/generated/graphql';
 import { useGetRealmCombatResultQuery } from '@/generated/graphql';
+import { useCosts } from '@/hooks/costs/useCosts';
 import useTxCallback from '@/hooks/useTxCallback';
 import { resourcePillaged } from '@/shared/Getters/Realm';
 import { Troop } from '@/shared/squad/Troops';
@@ -15,6 +16,9 @@ export const CombatTroop = (props: TroopInterface) => {
 };
 
 export const RaidResults = ({ defendId, tx }) => {
+  const { costs } = useCosts();
+  const [result, setResult] =
+    useState<GetRealmCombatResultQuery['getRealmCombatResult']>();
   const { tx: txCallback, loading } = useTxCallback(tx, (status) => {
     // Update state changes?
     console.log(loading);
@@ -39,8 +43,9 @@ export const RaidResults = ({ defendId, tx }) => {
     startPolling(2000); // TODO poll interval after transaction accepted on l2
     if (combatResult?.getRealmCombatResult) {
       stopPolling();
+      setResult(combatResult?.getRealmCombatResult);
     }
-    console.log(combatResult);
+
     return () => {
       stopPolling();
     };
@@ -57,107 +62,110 @@ export const RaidResults = ({ defendId, tx }) => {
   const success =
     combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
 
-  const getFlatHitpoints = () => {
-    return combatResult?.getRealmCombatResult.history?.map((a) => {
+  const getFlatHitpoints = combatResult?.getRealmCombatResult.history
+    ?.slice(1)
+    .map((a) => {
       return a.hitPoints;
     });
+
+  const combatStart = combatResult?.getRealmCombatResult.history?.find(
+    (a) => a.eventType === 'combat_start'
+  );
+
+  const lastEvent = combatResult?.getRealmCombatResult.history
+    ? combatResult?.getRealmCombatResult.history[
+        combatResult?.getRealmCombatResult.history.length - 1
+      ]
+    : [];
+
+  const getTroopById = (id) => {
+    return troopList.find((a) => a.troopId === id);
   };
 
-  console.log(getFlatHitpoints());
+  console.log(combatStart);
+
+  const mapped = combatResult?.getRealmCombatResult.history?.map((a, i) => {
+    return {
+      ...a,
+      hitPoints: getFlatHitpoints[i],
+      realm:
+        i % 2 === 0
+          ? combatResult?.getRealmCombatResult.attackRealmId
+          : combatResult?.getRealmCombatResult.defendRealmId,
+      unitAttacking: a.attackSquad.find((b) => b.vitality !== 0),
+      unitDefending: a.defendSquad.find((b) => b.vitality !== 0),
+    };
+  });
+  console.log(combatResult?.getRealmCombatResult, 'hh');
+  console.log(mapped);
+
   return (
     <div className="pt-10">
-      {/* <div className="flex justify-between space-x-3">
-        <div>
-          {combatResult?.getRealmCombatResult.history?.slice(1).map((a, i) => {
+      <h2 className="mb-4 text-center">
+        {success ? 'Successful' : 'Unsuccessful'} Raid!!
+      </h2>
+      <div className="flex flex-wrap justify-between">
+        {mapped
+          ?.filter((b) => b.outcome !== 1)
+          .filter((b) => b.unitDefending)
+          .map((a, i) => {
             return (
-              <div className="p-2 border mb-2l" key={i}>
-                {i % 2 == 0 ? (
-                  <div>
-                    HIT: {a.hitPoints}
-                    {a.attackSquad.map((c, index) => {
-                      return (
-                        <BattleTroop
-                          key={index}
-                          hitsTaken={index === 0 ? getFlatHitpoints[i - 1] : 0}
-                          troopId={c.troopId}
-                          vitality={c.vitality}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div>
-                    DAMAGE: {a.hitPoints}
-                    {a.defendSquad.map((c, index) => {
-                      return (
-                        <BattleTroop
-                          key={index}
-                          hitsTaken={index === 0 ? getFlatHitpoints[i] : 0}
-                          troopId={c.troopId}
-                          vitality={c.vitality}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          {combatResult?.getRealmCombatResult.history?.slice(1).map((a, i) => {
-            return (
-              <div className="p-2 mb-2 border" key={i}>
-                {Math.abs(i % 2) != 1 ? (
-                  <div>
-                    DAMAGE: {a.hitPoints}
-                    {a.defendSquad.map((c, i) => {
-                      return (
-                        <BattleTroop
-                          key={i}
-                          hitsTaken={i === 0 ? a.hitPoints : 0}
-                          troopId={c.troopId}
-                          vitality={c.vitality}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div>
-                    HIT: {a.hitPoints}
-                    {a.attackSquad.map((c, i) => {
-                      return (
-                        <BattleTroop
-                          key={i}
-                          hitsTaken={i === 0 ? a.hitPoints : 0}
-                          troopId={c.troopId}
-                          vitality={c.vitality}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div> */}
+              <div
+                className="w-full p-4 mb-2 text-center border-4 border-double rounded-xl border-white/20"
+                key={i}
+              >
+                <h3>
+                  [{i + 1}] Attacking Realm # {a.realm}
+                </h3>
 
-      <Image
+                <div className="flex justify-around mt-10 space-x-2">
+                  <div>
+                    <Troop
+                      className="w-48 h-64"
+                      troopsStats={costs?.troopStats}
+                      troop={a.unitAttacking}
+                    />
+                    <div className="flex flex-wrap w-full mx-auto mt-2">
+                      {a.attackSquad.map((b: TroopInterface, i) => {
+                        return <TroopIcon key={i} vitality={b.vitality} />;
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="self-center w-12">
+                    <h1>{a.hitPoints}</h1>
+                    <h3>hits</h3>
+                  </div>
+
+                  <div>
+                    <Troop
+                      className="w-48 h-64"
+                      troopsStats={costs?.troopStats}
+                      troop={a.unitDefending}
+                    />
+                    <div className="flex flex-wrap w-full mx-auto mt-2">
+                      {a.defendSquad.map((b: TroopInterface, i) => {
+                        return <TroopIcon key={i} vitality={b.vitality} />;
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+
+      {/* <Image
         className="w-full rounded"
         width={500}
         objectFit={'cover'}
         layout="responsive"
         height={250}
         src="/createOrDestroy-desktop.webp"
-      />
+      /> */}
       {combatResult?.getRealmCombatResult ? (
         <div className="mt-5">
-          <h2 className="mb-4">
-            {success ? 'Successful' : 'Unsuccessful'} Raid!!
-          </h2>
-          <h3>Battle report</h3>
-          <div className="relative flex flex-wrap ">
+          {/* <div className="relative flex flex-wrap ">
             <div className="w-full">
               {getCombatSteps().map((a, index) => {
                 return (
@@ -175,8 +183,12 @@ export const RaidResults = ({ defendId, tx }) => {
                 );
               })}
             </div>
-          </div>
-
+          </div> */}
+          {(combatResult?.getRealmCombatResult?.relicLost ?? 0) > 0 && (
+            <h1>
+              Relic {combatResult?.getRealmCombatResult.relicLost} Captured
+            </h1>
+          )}
           {combatResult?.getRealmCombatResult.resourcesPillaged?.length ? (
             <div className="pt-4">
               <div className="mb-4 text-3xl">
@@ -190,11 +202,6 @@ export const RaidResults = ({ defendId, tx }) => {
                   combatResult?.getRealmCombatResult.resourcesPillaged
                 )}
               </div>
-              {(combatResult?.getRealmCombatResult?.relicLost ?? 0) > 0 && (
-                <div className="flex pl-10 text-xl uppercase w-72">
-                  Relic {combatResult?.getRealmCombatResult.relicLost}
-                </div>
-              )}
             </div>
           ) : (
             ''
@@ -256,6 +263,21 @@ export function BattleTroop(props: BattleTroopItem): ReactElement {
           ID: {props.troopId} {props.vitality} {props.hitsTaken}
         </span>
       </span>
+    </div>
+  );
+}
+
+export function TroopIcon(vitality): ReactElement {
+  return (
+    <div className="m-1">
+      {' '}
+      <div
+        className={`w-1 h-1 ${
+          vitality === 0
+            ? 'bg-gray-500'
+            : 'bg-green-800 shadow-green-200 shadow-lg'
+        } rounded-full`}
+      ></div>
     </div>
   );
 }

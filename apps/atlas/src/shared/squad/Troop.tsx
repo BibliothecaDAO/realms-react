@@ -21,7 +21,7 @@ interface TroopProps {
   onClick?: (value: TroopInterface) => void;
   onSubmit?: (value: TroopInterface) => void;
   onRemove?: (value: TroopInterface) => void;
-  troopsStats?: GetTroopStatsQuery['getTroopStats'];
+  troopsStats: GetTroopStatsQuery['getTroopStats'];
 }
 
 export const HealthBar = (props: HealthBarProps) => {
@@ -74,7 +74,7 @@ type Row = {
   troopCost: any[];
 };
 
-export const Troop = (props: TroopProps) => {
+export const TroopCard = (props: TroopProps) => {
   const { troops } = useCombat();
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
@@ -143,13 +143,13 @@ export const Troop = (props: TroopProps) => {
         className={`${twMerge(
           STYLES.tier[props.troop.tier],
           props.className
-        )} rounded-2xl cursor-pointer flex border-4 border-double border-white/30 shadow-md shadow-purple-800 p-2 skew-y-3 ${
+        )} rounded-2xl cursor-pointer flex border-4 border-double border-white/30 shadow-black p-2 ${
           getBaseTroopInfo?.troopColour
         }`}
       >
         <div className="relative flex">
           <Image
-            src={`/realm-troops/${getTroop()?.troopName}.png`}
+            src={`/realm-troops/${props.troop.troopName}.png`}
             alt=""
             width="200"
             height="200"
@@ -172,9 +172,8 @@ export const Troop = (props: TroopProps) => {
                 className="absolute z-50 m-auto bottom-10 md:left-0"
                 static
               >
-                <div className="p-4 text-lg bg-black shadow-lg rounded-xl shadow-purple-800">
-                  <h6>Vitality</h6>
-                  <h2> {props.troop.vitality}</h2>
+                <div className="p-2 text-lg bg-black rounded shadow-sm">
+                  <h4>Vitality {props.troop.vitality}</h4>
 
                   {/* <Table
                     columns={columns}
