@@ -22,6 +22,7 @@ import { useUiSounds, soundSelector } from '../useUiSounds';
 export const Entrypoints = {
   buildSquad: 'build_squad_from_troops_in_realm',
   initiateCombat: 'initiate_combat',
+  attackGoblins: 'attack_goblin_town',
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
@@ -45,6 +46,14 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
     ],
     metadata: { ...args, action: Entrypoints.initiateCombat },
   }),
+  attackGoblins: (args: { attackingRealmId }) => ({
+    contractAddress: ModuleAddr.Combat,
+    entrypoint: Entrypoints.attackGoblins,
+    calldata: [
+      ...uint256ToRawCalldata(bnToUint256(toBN(args.attackingRealmId))),
+    ],
+    metadata: { ...args, action: Entrypoints.attackGoblins },
+  }),
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
@@ -59,6 +68,10 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.initiateCombat]: ({ metadata }, ctx) => ({
     title: 'Combat',
     description: `Initiate combat with Realm ${metadata.defendingRealmId}`,
+  }),
+  [Entrypoints.attackGoblins]: ({ metadata }, ctx) => ({
+    title: 'Attack Goblins',
+    description: `${metadata.attackingRealmId} has setout to crush the Goblins`,
   }),
 };
 
@@ -106,7 +119,16 @@ const useCombat = () => {
     contract: contract,
     method: Entrypoints.initiateCombat,
   });
+
   return {
+    attackGoblins: (attackingRealmId) => {
+      raidSound();
+      txQueue.add(
+        createCall.attackGoblins({
+          attackingRealmId,
+        })
+      );
+    },
     initiateCombat: (args: { attackingRealmId; defendingRealmId }) => {
       raidSound();
       combatInvoke({

@@ -54,7 +54,7 @@ const Army: React.FC<Prop> = (props) => {
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
 
-  const { troops } = useCombat();
+  const { troops, attackGoblins } = useCombat();
 
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
@@ -156,6 +156,7 @@ const Army: React.FC<Prop> = (props) => {
           <CardTitle>
             {realm.name} rules a total of {realm.relicsOwned?.length} Realms
           </CardTitle>
+
           <CardBody>
             <div className="flex flex-wrap">
               {realm.relicsOwned?.map((a, i) => {
@@ -394,6 +395,19 @@ const Army: React.FC<Prop> = (props) => {
               />
             </div>
           </div>
+        </Card>
+        <Card className="col-span-12 md:col-start-6 md:col-end-13">
+          <CardTitle>Goblins</CardTitle>
+          <CardBody>
+            Goblins emit Lords after defeating them. You must use your Attacking
+            Army.
+          </CardBody>
+          <Button
+            variant="primary"
+            onClick={() => attackGoblins(realm.realmId)}
+          >
+            Attack Goblins
+          </Button>
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>

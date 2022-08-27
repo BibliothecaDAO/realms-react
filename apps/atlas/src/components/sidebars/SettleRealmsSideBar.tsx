@@ -138,6 +138,12 @@ export const SettleRealmsSideBar = () => {
     });
   };
 
+  const usSettleAll = () => {
+    selectedRealms.forEach((a) => {
+      unsettleRealm(a);
+    });
+  };
+
   return (
     <BaseSideBar open={isSettleRealms}>
       <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
@@ -172,7 +178,7 @@ export const SettleRealmsSideBar = () => {
         </div>
         <div className="w-full">
           {/* Remove when needed  */}
-          {isRealmsApproved != 'approved' && (
+          {/* {isRealmsApproved != 'approved' && (
             <Button
               className="w-full"
               variant="primary"
@@ -180,16 +186,12 @@ export const SettleRealmsSideBar = () => {
             >
               Approve Realms for Settling
             </Button>
-          )}
+          )} */}
           {isRealmsApproved == 'approved' && (
             <Button
               className="w-full"
               variant="primary"
-              onClick={() =>
-                selectedTab === 0
-                  ? settleAll()
-                  : unsettleRealm(selectedRealms[0])
-              }
+              onClick={() => (selectedTab === 0 ? settleAll() : usSettleAll())}
             >
               {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
             </Button>
