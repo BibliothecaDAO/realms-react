@@ -213,9 +213,9 @@ export const RealmsPanel = () => {
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isRealmPanel} style="lg:w-12/12">
-      <div className="flex flex-wrap justify-between px-3 pt-20 sm:px-6 bg-black/90">
-        <h2>Loot Realms</h2>
+    <BasePanel open={isRealmPanel} style="lg:w-12/12 bg-black/90 ">
+      <div className="flex flex-wrap justify-between px-3 pt-16 sm:px-6">
+        <h1>Realms</h1>
         <div className="w-full my-1 sm:w-auto">
           <SearchFilter
             placeholder="SEARCH BY ID"
@@ -230,7 +230,6 @@ export const RealmsPanel = () => {
         key={selectedTabIndex}
         selectedIndex={selectedTabIndex}
         onChange={onTabChange as any}
-        className="bg-black"
       >
         <Tabs.List>
           {TABS.map((tab) => (
@@ -255,11 +254,12 @@ export const RealmsPanel = () => {
       </div>
 
       {hasNoResults() && (
-        <div className="flex flex-col items-center justify-center gap-8 py-8 bg-black">
+        <div className="flex flex-col items-center justify-center gap-8 py-8">
           <h2>No results... Try remove some filters</h2>
           <div className="flex gap-4">
             <Button
               className="whitespace-nowrap"
+              variant="outline"
               onClick={actions.clearFilters}
             >
               Clear Filters
@@ -267,6 +267,7 @@ export const RealmsPanel = () => {
             {selectedTabIndex !== 1 && (
               <Button
                 className="whitespace-nowrap"
+                variant="outline"
                 onClick={() => onTabChange(1)}
               >
                 See All Realms
@@ -277,7 +278,7 @@ export const RealmsPanel = () => {
       )}
 
       {showPagination() && (
-        <div className="flex justify-center w-full gap-2 py-8 bg-black">
+        <div className="flex justify-center w-full gap-2 py-8">
           <Button
             variant="outline"
             onClick={pagination.goBack}

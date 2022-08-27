@@ -93,7 +93,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   );
 
   return (
-    <div className="grid grid-cols-12 gap-6 p-6 bg-black">
+    <div className="grid grid-cols-12 gap-6 p-6 ">
       {props.realms &&
         filteredRealms.map((realm: RealmFragmentFragment, index) => (
           <RealmListCardView key={index} realm={realm} />

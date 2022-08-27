@@ -10,7 +10,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export function Card({ children, className }: Props) {
   return (
     <div
-      className={`${className} duration-150 transition-all border-4 border-double border-white/40  hover:bg-stone-900 p-3  bg-black/95 rounded-2xl shadow-xl group flex flex-col`}
+      className={`${className} duration-150 transition-all border-4 border-double border-white/20  hover:opacity-90 p-3  bg-black/90 rounded-2xl shadow-xl group flex flex-col`}
     >
       {children}
     </div>

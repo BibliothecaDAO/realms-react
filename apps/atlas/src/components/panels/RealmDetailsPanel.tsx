@@ -213,7 +213,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
         isOpen={showPlaylists}
         onClose={() => setShowPlaylists(false)}
       />
-      <div className="grid w-full h-full overflow-auto bg-cover">
+      <div className="grid w-full h-full overflow-auto bg-cover bg-black/90">
         <div className="relative col-span-6">
           <RealmBannerHeading
             onSubmit={(value) => pushPage(parseInt(value))}

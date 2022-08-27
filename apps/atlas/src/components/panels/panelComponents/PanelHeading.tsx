@@ -8,7 +8,7 @@ interface Props {
 
 export const PanelHeading = (props: Props) => {
   return (
-    <div className="flex flex-wrap justify-between px-3 pt-20 sm:px-6 bg-black/90">
+    <div className="flex flex-wrap justify-between px-3 pt-20 sm:px-6">
       {/* <Link href="/">
       <button className="z-50 transition-all rounded top-4">
         <Close />

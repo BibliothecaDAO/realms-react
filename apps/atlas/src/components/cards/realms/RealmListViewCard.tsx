@@ -117,14 +117,6 @@ export function RealmListCardView(props: RealmOverviewsProps) {
         label: 'Military',
         component: (
           <div>
-            <div className="flex justify-center w-full text-center uppercase sm:text-2xl">
-              {props.realm && RealmCombatStatus(props.realm)}
-              <Relic
-                className={`ml-4 w-5 ${
-                  hasOwnRelic(props.realm) ? 'fill-yellow-500' : 'fill-red-600'
-                }`}
-              />
-            </div>
             <h3 className="mb-1">Defending Army</h3>
             <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
               <SquadStatistics
@@ -155,7 +147,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
 
   return (
     <div
-      className={`h-auto max-w-full col-span-12 sm:col-span-6 md:col-span-4 p-6 bg-black border-4 border-double   border-white/40  justify-evenly flex flex-col hover:shadow-sm shadow-lg rounded-xl  transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:shadow-order-${trimmedOrder(
+      className={`h-auto max-w-full col-span-12 sm:col-span-6 md:col-span-4 p-6 bg-black/90 border-4 border-double   border-white/10  justify-evenly flex flex-col hover:shadow-sm shadow-lg rounded-xl  transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:shadow-order-${trimmedOrder(
         props.realm
       )}`}
     >
@@ -168,11 +160,13 @@ export function RealmListCardView(props: RealmOverviewsProps) {
         <OrderIcon
           withTooltip
           className="self-center mr-3"
-          size={'md'}
+          size={'lg'}
           order={props.realm.orderType.toLowerCase()}
         />
-        <h2 className="flex">
-          {props.realm.name} #{props.realm.realmId}
+        <h2 className="self-center ">
+          {props.realm.name}
+          {'   '}
+          <span className="opacity-30"> #{props.realm.realmId}</span>
         </h2>
         <div className="self-center px-3">
           {!isFavourite(props.realm) && (
@@ -196,7 +190,17 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           )}
         </div>
       </div>
+      <div className="flex justify-center w-full text-center uppercase bg-black font-display">
+        <span className="self-center">
+          {props.realm && RealmCombatStatus(props.realm)}
+        </span>
 
+        <Relic
+          className={`ml-4 w-5 ${
+            hasOwnRelic(props.realm) ? 'fill-yellow-500' : 'fill-red-600'
+          }`}
+        />
+      </div>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
@@ -259,13 +263,13 @@ export function RealmListCardView(props: RealmOverviewsProps) {
               {isYourRealm(props.realm) ? 'manage' : 'details'}
             </Button>
           </div>
-          <Button
+          {/* <Button
             onClick={() => openRealmDetails(props.realm.realmId)}
             variant="outline"
             size="xs"
           >
             quick
-          </Button>
+          </Button> */}
           <div className="flex self-center space-x-2">
             <div>
               <Button
