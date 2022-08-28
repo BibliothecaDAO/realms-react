@@ -11,7 +11,7 @@ import type {
 } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
-import { RealmClaimable } from '@/shared/Getters/Realm';
+import { getAccountHex, RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 import { createResourcesCall } from './useResources';
 
@@ -68,7 +68,9 @@ const useUsersRealms = () => {
     setUserRealms(userRealmsData);
 
     const isClaimable = () => {
-      return userRealmsData.realms.filter((a) => RealmClaimable(a))
+      return userRealmsData.realms
+        .filter((a) => RealmClaimable(a))
+        .filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
         ? true
         : false;
     };
@@ -79,7 +81,10 @@ const useUsersRealms = () => {
 
     const resourcesAcrossRealms = () => {
       const allResources =
-        userRealmsData.realms.map((a) => a.resources).flat() || [];
+        userRealmsData.realms
+          .filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
+          .map((a) => a.resources)
+          .flat() || [];
 
       const countUnique = (arr) => {
         const counts = {};
@@ -108,15 +113,17 @@ const useUsersRealms = () => {
   const claimAll = () => {
     play();
 
-    userRealms?.realms?.forEach((a) => {
-      if (RealmClaimable(a)) {
-        txQueue.add(
-          createResourcesCall.claim({
-            realmId: a.realmId,
-          })
-        );
-      }
-    });
+    userRealms?.realms
+      ?.filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
+      .forEach((a) => {
+        if (RealmClaimable(a)) {
+          txQueue.add(
+            createResourcesCall.claim({
+              realmId: a.realmId,
+            })
+          );
+        }
+      });
   };
   const { contract } = useResources1155Contract();
 
