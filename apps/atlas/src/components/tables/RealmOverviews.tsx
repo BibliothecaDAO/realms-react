@@ -2,6 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
@@ -91,6 +92,8 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const filteredRealms = props.realms.filter(
     (item) => !usedRealms.includes(item.realmId)
   );
+
+  const [tab, setTab] = useState(0);
 
   return (
     <div className="grid grid-cols-12 gap-6 p-6 ">

@@ -1,6 +1,7 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import type { ReactElement } from 'react';
@@ -109,7 +110,7 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
       hotkey: HotKeys.Resources,
       click: () => props.onSetSubview('Food'),
       title: 'Farming',
-      icon: <Lords className="self-center w-6 h-6 fill-current" />,
+      icon: <Sickle className="self-center w-6 h-6 fill-current" />,
       tabName: 'Food',
     },
     {

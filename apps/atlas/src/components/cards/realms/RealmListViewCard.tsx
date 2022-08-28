@@ -1,5 +1,9 @@
 import { Button, OrderIcon, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
+import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
@@ -106,7 +110,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
   const tabs = useMemo(
     () => [
       {
-        label: 'Resources',
+        label: <Castle className="self-center w-6 h-6 fill-current" />,
         component: (
           <div className="w-full p-1">
             <RealmResources showRaidable realm={props.realm} loading={false} />
@@ -114,7 +118,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
         ),
       },
       {
-        label: 'Military',
+        label: <Helm className="self-center w-6 h-6 fill-current" />,
         component: (
           <div>
             <h3 className="mb-1">Defending Army</h3>
@@ -136,6 +140,10 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           </div>
         ),
       },
+      {
+        label: <Sickle className="self-center w-6 h-6 fill-current" />,
+        component: <div className="w-full p-1"></div>,
+      },
     ],
     [selectedTab]
   );
@@ -156,7 +164,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           {props.realm?.wonder}
         </div>
       )}
-      <div className="flex justify-center w-full pb-4">
+      <div className="flex justify-center w-full pb-4 mb-4 border-b-4 border-double border-white/20">
         <OrderIcon
           withTooltip
           className="self-center mr-3"
@@ -190,7 +198,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           )}
         </div>
       </div>
-      <div className="flex justify-center w-full text-center uppercase bg-black font-display">
+      <div className="flex justify-center w-full text-center uppercase font-display">
         <span className="self-center">
           {props.realm && RealmCombatStatus(props.realm)}
         </span>
@@ -207,13 +215,13 @@ export function RealmListCardView(props: RealmOverviewsProps) {
         variant="default"
       >
         <Tabs.List className="">
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab.label}>{tab.label}</Tabs.Tab>
+          {tabs.map((tab, index) => (
+            <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
           ))}
         </Tabs.List>
         <Tabs.Panels>
-          {tabs.map((tab) => (
-            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+          {tabs.map((tab, index) => (
+            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
           ))}
         </Tabs.Panels>
       </Tabs>
