@@ -147,7 +147,7 @@ export const Troop = (props: TroopProps) => {
           getBaseTroopInfo?.troopColour
         }`}
       >
-        <div className="relative flex">
+        <div className="relative z-10 flex ">
           <Image
             src={`/realm-troops/${getTroop()?.troopName}.png`}
             alt=""
@@ -165,11 +165,11 @@ export const Troop = (props: TroopProps) => {
         </div>
 
         {/* {props.withPurchase && props.troop.vitality === 0 && ( */}
-        <Popover className="relative top-0">
+        <Popover className="relative top-0 z-20 ">
           <div ref={ref}>
             {isOpen && (
               <Popover.Panel
-                className="absolute z-50 m-auto bottom-10 md:left-0"
+                className="absolute m-auto bottom-10 md:left-0"
                 static
               >
                 <div className="p-4 text-lg bg-black shadow-lg rounded-xl shadow-purple-800">

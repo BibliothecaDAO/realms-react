@@ -80,18 +80,20 @@ export const RaidResults = ({ defendId, tx }) => {
 
   console.log(combatStart);
 
-  const mapped = combatResult?.getRealmCombatResult.history?.map((a, i) => {
-    return {
-      ...a,
-      hitPoints: getFlatHitpoints[i],
-      realm:
-        i % 2 === 0
-          ? combatResult?.getRealmCombatResult.attackRealmId
-          : combatResult?.getRealmCombatResult.defendRealmId,
-      unitAttacking: a.attackSquad.find((b) => b.vitality !== 0),
-      unitDefending: a.defendSquad.find((b) => b.vitality !== 0),
-    };
-  });
+  const mapped = combatResult?.getRealmCombatResult.history
+    ?.filter((a) => a.eventType === 'combat_step')
+    .map((a, i) => {
+      return {
+        ...a,
+        hitPoints: getFlatHitpoints[i],
+        realm:
+          i % 2 === 0
+            ? combatResult?.getRealmCombatResult.attackRealmId
+            : combatResult?.getRealmCombatResult.defendRealmId,
+        unitAttacking: a.attackSquad.find((b) => b.vitality !== 0),
+        unitDefending: a.defendSquad.find((b) => b.vitality !== 0),
+      };
+    });
   console.log(combatResult?.getRealmCombatResult, 'hh');
   console.log(mapped);
 
@@ -154,14 +156,6 @@ export const RaidResults = ({ defendId, tx }) => {
           })}
       </div>
 
-      {/* <Image
-        className="w-full rounded"
-        width={500}
-        objectFit={'cover'}
-        layout="responsive"
-        height={250}
-        src="/createOrDestroy-desktop.webp"
-      /> */}
       {combatResult?.getRealmCombatResult ? (
         <div className="mt-5">
           {/* <div className="relative flex flex-wrap ">
@@ -191,7 +185,7 @@ export const RaidResults = ({ defendId, tx }) => {
           {combatResult?.getRealmCombatResult.resourcesPillaged?.length ? (
             <div className="pt-4">
               <div className="mb-4 text-3xl">
-                Hurray!! You slayed all of Realm{' '}
+                Successful Raid!! Hurray!! You slayed all of Realm{' '}
                 {combatResult?.getRealmCombatResult.defendRealmId} troops and
                 took off with the following resources. The citizens are
                 trembling and in awe of your victory.
@@ -207,8 +201,18 @@ export const RaidResults = ({ defendId, tx }) => {
           )}
         </div>
       ) : (
-        <div className="p-10">
-          <div className="text-3xl ">Running on-chain battle simulation...</div>
+        <div className="text-center">
+          <Image
+            className="w-full rounded-full"
+            width={500}
+            objectFit={'cover'}
+            layout="responsive"
+            height={250}
+            src="/createOrDestroy-desktop.webp"
+          />
+          <div className="mt-4 text-3xl">
+            Running on-chain battle simulation...
+          </div>
 
           <p className="mt-2 text-xl">
             Your army is on route to the enemy and your general will report back
@@ -266,7 +270,7 @@ export function BattleTroop(props: BattleTroopItem): ReactElement {
   );
 }
 
-export function TroopIcon(vitality): ReactElement {
+export function TroopIcon({ vitality }): ReactElement {
   return (
     <div className="m-1">
       {' '}
