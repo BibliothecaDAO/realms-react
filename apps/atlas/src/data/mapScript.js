@@ -9,7 +9,7 @@ const mappedRealms = {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: a.geometry.coordinates,
+        coordinates: a.coordinates,
       },
       properties: {
         tokenId: a.properties.tokenId,

@@ -6,7 +6,7 @@ const mappedRealms = {
   type: 'FeatureCollection',
   features: realms.features.map((a) => {
     return {
-      coordinates: a.geometry.coordinates,
+      coordinates: a.coordinates,
       id: a.properties.bag_id,
     };
   }),
