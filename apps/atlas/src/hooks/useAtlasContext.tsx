@@ -135,8 +135,8 @@ function useCoordinates() {
     const asset = getAssetById(assetId + '', assetType);
     if (asset && asset[0]) {
       setCoordinates({
-        longitude: asset[0].geometry.coordinates[0],
-        latitude: asset[0].geometry.coordinates[1],
+        longitude: asset[0].coordinates[0],
+        latitude: asset[0].coordinates[1],
       });
     }
   }
