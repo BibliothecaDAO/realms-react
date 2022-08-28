@@ -44,7 +44,6 @@ type Prop = {
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
-  availableResources: AvailableResources;
   open: boolean;
   loading: boolean;
 };

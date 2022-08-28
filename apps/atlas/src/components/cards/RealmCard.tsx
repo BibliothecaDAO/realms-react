@@ -2,11 +2,8 @@ import { OrderIcon, Tabs, ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
-import { number } from 'starknet';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
-import type { Realm } from '@/generated/graphql';
-import useResources from '@/hooks/settling/useResources';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { DownloadAssets } from '@/shared/DownloadAssets';
@@ -86,7 +83,6 @@ function Overview(props: RealmsCardProps): ReactElement {
 
 export function RealmCard(props: RealmsCardProps): ReactElement {
   const ensData = useEnsResolver(props.realm?.owner as string);
-  const { realmsResourcesDetails } = useResources(props.realm as Realm);
 
   const tabs = useMemo(
     () => [

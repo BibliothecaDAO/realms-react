@@ -71,8 +71,9 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       : 0;
 
   const resourcesAccrued = cachedDaysAccrued * BASE_RESOURCES_PER_DAY;
+  const resourceVaultAccrued = cachedVaultDaysAccrued * BASE_RESOURCES_PER_DAY;
 
-  const vaultAccrued = resourcesAccrued * (PILLAGE_AMOUNT / 100);
+  const vaultAccrued = resourceVaultAccrued * (PILLAGE_AMOUNT / 100);
 
   const days =
     cachedDaysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : cachedDaysAccrued;
@@ -97,12 +98,12 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     (re, index) => {
       const mappedData = {
         resource: (
-          <span className="flex">
+          <span className="flex text-xs">
             <ResourceIcon
               resource={
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
               }
-              size="md"
+              size="sm"
               className="self-center mr-4"
             />
             <span className="self-center tracking-widest uppercase">
@@ -192,7 +193,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             </div>
           )}
         </div>
-        <div className="border-r-4 border-white border-double border-white/30"></div>
+        <div className="border-r-4 border-double border-white/30"></div>
         <div className="w-full sm:w-1/2">
           <h6>vault days</h6>
           <div className="mt-3 sm:text-5xl">{cachedVaultDaysAccrued}</div>{' '}
