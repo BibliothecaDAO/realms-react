@@ -1,3 +1,4 @@
+import { useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
@@ -9,7 +10,10 @@ import {
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
-import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import {
+  ModuleAddr,
+  useResources1155Contract,
+} from '@/hooks/settling/stark-contracts';
 import type {
   RealmsCall,
   AvailableResources,

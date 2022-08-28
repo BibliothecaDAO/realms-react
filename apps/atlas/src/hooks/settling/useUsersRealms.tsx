@@ -1,6 +1,8 @@
-import { useStarknet } from '@starknet-react/core';
+import { useStarknet, useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
+import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type {
   GetRealmsQuery,
@@ -8,6 +10,7 @@ import type {
   RealmWhereInput,
 } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
+import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
 import { RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 import { createResourcesCall } from './useResources';
@@ -115,8 +118,36 @@ const useUsersRealms = () => {
       }
     });
   };
+  const { contract } = useResources1155Contract();
 
-  return { userRealms, claimAll, userData };
+  const {
+    data: combatData,
+    error,
+    loading: combatLoading,
+    invoke,
+  } = useStarknetInvoke({
+    contract: contract,
+    method: 'burnBatch',
+  });
+
+  return {
+    userRealms,
+    claimAll,
+    userData,
+    burnAll: (args: { ids; amounts }) => {
+      invoke({
+        args: [
+          account,
+          args.ids.map((a) => bnToUint256(toBN(a))),
+          args.amounts.map((a) => bnToUint256(toBN(a))),
+        ],
+        metadata: {
+          action: 'burnAll',
+          ...args,
+        },
+      });
+    },
+  };
 };
 
 export default useUsersRealms;

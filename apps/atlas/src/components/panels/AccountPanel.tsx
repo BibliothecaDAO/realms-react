@@ -36,7 +36,7 @@ import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
-  const { claimAll, userData } = useUsersRealms();
+  const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
@@ -162,7 +162,7 @@ export function AccountPanel() {
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
   ];
   const tableOptions = { is_striped: true };
-  console.log(userData?.resourcesClaimable);
+  console.log(balance);
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <animated.div
@@ -376,6 +376,21 @@ export function AccountPanel() {
             >
               3. Settle Realms
             </Button>
+
+            <div className="w-full mt-4">
+              <Button
+                variant="danger"
+                size="xs"
+                onClick={() =>
+                  burnAll({
+                    ids: balance?.map((a) => a.resourceId),
+                    amounts: balance?.map((a) => a.amount),
+                  })
+                }
+              >
+                burn ALl resources!
+              </Button>
+            </div>
           </CardBody>
         </Card>
       </animated.div>
