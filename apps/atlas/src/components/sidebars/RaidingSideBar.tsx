@@ -93,14 +93,14 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
             <SquadStatistics
               slot={TroopSlot.defending}
               troops={realm?.troops || []}
-            ></SquadStatistics>
+            />
             {attackingRealm ? (
               <SquadStatistics
                 className="pl-4"
                 reversed
                 troops={attackingRealm?.troops || []}
                 slot={TroopSlot.attacking}
-              ></SquadStatistics>
+              />
             ) : (
               <div className="flex items-center justify-center">
                 Select <br />

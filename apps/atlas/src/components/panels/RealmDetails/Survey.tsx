@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
+import { RealmBuildingId } from '@/constants/buildings';
 import type { GetRealmQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -62,6 +63,18 @@ const Survey: React.FC<Prop> = (props) => {
   const defensiveSquad = realm?.troops?.filter((a) => a.squadSlot === 2);
 
   const isOwner = useIsOwner(realm?.settledOwner);
+
+  const cropLand = ({ level, color, built }) => {
+    return Array.from({ length: level }, (item, index) => (
+      <div className="m-0.5" key={index}>
+        <div
+          className={`h-2 p-2 border border-white/40 rounded ${
+            index < built ? color : ''
+          }`}
+        ></div>
+      </div>
+    ));
+  };
 
   return (
     <BaseRealmDetailPanel open={props.open}>
@@ -200,30 +213,40 @@ const Survey: React.FC<Prop> = (props) => {
           loading={props.loading}
           className="col-span-12 md:col-start-1 md:col-end-4 "
         >
-          <CardTitle>Building</CardTitle>
+          <CardTitle>Used Sqm</CardTitle>
 
           <CardBody>
-            {props.buildings?.map((a, i) => {
-              return (
-                <div key={i} className="flex justify-between font-semibold">
-                  <span>{a.name}</span>{' '}
-                  <span>
-                    {a.quantityBuilt} - {a.sqmUsage} sqm
-                  </span>
-                </div>
-              );
-            })}
+            <div className="flex flex-wrap">
+              {cropLand({
+                level:
+                  props.buildingUtilisation && props.buildingUtilisation.maxSqm,
+                color: 'bg-green-800',
+                built:
+                  props.buildingUtilisation &&
+                  props.buildingUtilisation.currentSqm,
+              })}
+            </div>
+            <div className="mt-3">
+              {props.buildings?.map((a, i) => {
+                return (
+                  <div key={i} className="flex justify-between font-semibold">
+                    <span>{a.name}</span>{' '}
+                    <span>
+                      {a.quantityBuilt} - {a.sqmUsage} sqm
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </CardBody>
-          <CardStats className="flex justify-between text-2xl">
-            <h5>sqm used</h5>
-            {props.buildingUtilisation &&
-              props.buildingUtilisation.currentSqm}/{' '}
+          <CardStats className="flex justify-between px-4 text-4xl">
+            {props.buildingUtilisation && props.buildingUtilisation.currentSqm}/{' '}
             {props.buildingUtilisation && props.buildingUtilisation.maxSqm}
           </CardStats>
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-4 md:col-end-8 "
+          className="col-span-12 row-span-1 md:col-start-4 md:col-end-8"
         >
           <CardTitle>Resources</CardTitle>
           <CardBody>

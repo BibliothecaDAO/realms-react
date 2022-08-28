@@ -76,14 +76,16 @@ const RealmSelector = (props: Props) => {
               </Card>
             ))}
         </div>
-        <Button
-          onClick={() => {
-            realms.hasNext ? realms.loadNext() : realms.reset();
-          }}
-          className="w-full mt-4"
-        >
-          {realms.hasNext ? 'Load More' : 'Back to First Page'}
-        </Button>
+        {realms.hasNext && (
+          <Button
+            onClick={() => {
+              realms.hasNext ? realms.loadNext() : realms.reset();
+            }}
+            className="w-full mt-4"
+          >
+            {realms.hasNext ? 'Load More' : 'Back to First Page'}
+          </Button>
+        )}
       </AtlasSidebar>
     </div>
   );

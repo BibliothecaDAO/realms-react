@@ -6,7 +6,6 @@ import { COMBAT_OUTCOME_ATTACKER_WINS, troopList } from '@/constants/troops';
 import type { GetRealmCombatResultQuery } from '@/generated/graphql';
 import { useGetRealmCombatResultQuery } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
-import useTxCallback from '@/hooks/useTxCallback';
 import { resourcePillaged } from '@/shared/Getters/Realm';
 import { Troop } from '@/shared/squad/Troops';
 import type { TroopInterface } from '@/types/index';
@@ -19,16 +18,7 @@ export const RaidResults = ({ defendId, tx }) => {
   const { costs } = useCosts();
   const [result, setResult] =
     useState<GetRealmCombatResultQuery['getRealmCombatResult']>();
-  const { tx: txCallback, loading } = useTxCallback(tx, (status) => {
-    // Update state changes?
-    console.log(loading);
-    console.log(status);
-    console.log(txCallback);
-    if (status !== 'REJECTED') {
-      console.log('rejected');
-    }
-  });
-  // Sample combat result query
+
   const {
     data: combatResult,
     startPolling,
@@ -45,19 +35,7 @@ export const RaidResults = ({ defendId, tx }) => {
       stopPolling();
       setResult(combatResult?.getRealmCombatResult);
     }
-
-    return () => {
-      stopPolling();
-    };
   }, [combatResult, startPolling, stopPolling]);
-
-  const getCombatSteps = () => {
-    return combatResult?.getRealmCombatResult?.history
-      ? combatResult?.getRealmCombatResult?.history?.filter((a) => {
-          return a.eventType == 'combat_step';
-        })
-      : [];
-  };
 
   const success =
     combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
@@ -78,8 +56,6 @@ export const RaidResults = ({ defendId, tx }) => {
       ]
     : [];
 
-  console.log(combatStart);
-
   const mapped = combatResult?.getRealmCombatResult.history
     ?.filter((a) => a.eventType === 'combat_step')
     .map((a, i) => {
@@ -94,8 +70,6 @@ export const RaidResults = ({ defendId, tx }) => {
         unitDefending: a.defendSquad.find((b) => b.vitality !== 0),
       };
     });
-  console.log(combatResult?.getRealmCombatResult, 'hh');
-  console.log(mapped);
 
   return (
     <div className="pt-10">
@@ -203,7 +177,7 @@ export const RaidResults = ({ defendId, tx }) => {
       ) : (
         <div className="text-center">
           <Image
-            className="w-full rounded-full"
+            className="w-full"
             width={500}
             objectFit={'cover'}
             layout="responsive"
@@ -218,6 +192,7 @@ export const RaidResults = ({ defendId, tx }) => {
             Your army is on route to the enemy and your general will report back
             very soon.
           </p>
+          <Spinner />
         </div>
       )}
     </div>
