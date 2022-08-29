@@ -32,6 +32,7 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useFood from '@/hooks/settling/useFood';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
+import { CostBlock } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -224,10 +225,13 @@ const Food: React.FC<Prop> = (props) => {
                 <div className="flex mt-4">
                   {farmCosts?.resources.map((a, i) => {
                     return (
-                      <div key={i} className="px-1 font-extrabold text-center">
-                        <ResourceIcon size="xs" resource={a.resourceName} />
-                        {a.amount * parseInt(input.farmsToBuild)}
-                      </div>
+                      <CostBlock
+                        key={i}
+                        resourceName={a.resourceName}
+                        amount={a.amount}
+                        id={a.resourceId}
+                        qty={parseInt(input.farmsToBuild)}
+                      />
                     );
                   })}
                 </div>
@@ -386,10 +390,13 @@ const Food: React.FC<Prop> = (props) => {
               <div className="flex mt-4">
                 {fishingVillageCosts?.resources.map((a, i) => {
                   return (
-                    <div key={i} className="px-1 font-extrabold text-center">
-                      <ResourceIcon size="xs" resource={a.resourceName} />
-                      {a.amount * parseInt(input.fishingVillagesToBuild)}
-                    </div>
+                    <CostBlock
+                      key={i}
+                      resourceName={a.resourceName}
+                      amount={a.amount}
+                      id={a.resourceId}
+                      qty={parseInt(input.fishingVillagesToBuild)}
+                    />
                   );
                 })}
               </div>

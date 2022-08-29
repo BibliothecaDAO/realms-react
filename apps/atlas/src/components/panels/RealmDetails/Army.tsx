@@ -16,18 +16,28 @@ import React, { useEffect, useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { RaidingSideBar } from '@/components/sidebars/RaidingSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId, HarvestType } from '@/constants/buildings';
+import {
+  RealmBuildingId,
+  HarvestType,
+  RealmBuildingIntegrity,
+  buildingIntegrity,
+} from '@/constants/buildings';
 import { Squad } from '@/constants/index';
 import { troopList, TroopSlot } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery } from '@/generated/graphql';
+import { useCosts } from '@/hooks/costs/useCosts';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import useIsOwner from '@/hooks/useIsOwner';
-import { hasOwnRelic, RealmCombatStatus } from '@/shared/Getters/Realm';
+import {
+  CostBlock,
+  hasOwnRelic,
+  RealmCombatStatus,
+} from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import { SquadBuilder } from '@/shared/squad/Squad';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
@@ -55,6 +65,7 @@ const Army: React.FC<Prop> = (props) => {
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
 
   const { troops, attackGoblins } = useCombat();
+  const { checkUserHasResources } = useCosts();
 
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
@@ -227,11 +238,14 @@ const Army: React.FC<Prop> = (props) => {
                         />
                       </div>
 
-                      <div className="p-4 capitalize">
-                        <h3>{a.name}</h3>
-
-                        <div className="flex flex-wrap">
-                          <div className="w-1/3">
+                      <div className="p-6 capitalize">
+                        <h2>{a.name}</h2>
+                        <div className="w-full text-xs font-semibold uppercase">
+                          {(buildingIntegrity(a.id) / 60 / 60).toFixed(2)} hours
+                          per building
+                        </div>
+                        <div className="flex flex-wrap my-5">
+                          <div>
                             <p className="sm:text-4xl">{a.quantityBuilt}</p>
 
                             <CountdownTimer
@@ -293,16 +307,13 @@ const Army: React.FC<Prop> = (props) => {
                           {a.cost &&
                             a.cost.map((b, i) => {
                               return (
-                                <div
+                                <CostBlock
                                   key={i}
-                                  className="px-1 font-extrabold text-center"
-                                >
-                                  <ResourceIcon
-                                    size="xs"
-                                    resource={b.resourceName}
-                                  />
-                                  {b.amount * buildQty[a.key]}
-                                </div>
+                                  resourceName={b.resourceName}
+                                  amount={b.amount}
+                                  id={a.id}
+                                  qty={buildQty[a.key]}
+                                />
                               );
                             })}
                         </div>

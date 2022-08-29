@@ -9,6 +9,7 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
+import { CostBlock } from '@/shared/Getters/Realm';
 import type { ItemCost, TroopInterface } from '@/types/index';
 import { findResourceName } from '@/util/resources';
 
@@ -40,19 +41,16 @@ export const ArmoryBuilder = (props: Props) => {
 
   const troopCostCell = (cost: ItemCost) => {
     return (
-      <div className="flex flex-col my-2">
+      <div className="flex flex-col my-4 text-center">
         {cost.resources.map((a, index) => {
           return (
-            <div key={index} className="flex w-full my-1 sm:text-xl">
-              <ResourceIcon
-                resource={
-                  findResourceName(a.resourceId)?.trait.replace(' ', '') || ''
-                }
-                size="sm"
-                className="self-center mr-4"
-              />
-              <span>{a.amount}</span>
-            </div>
+            <CostBlock
+              key={index}
+              resourceName={a.resourceName}
+              amount={a.amount}
+              id={a.resourceId}
+              qty={1}
+            />
           );
         })}
       </div>

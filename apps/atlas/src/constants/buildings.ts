@@ -60,6 +60,28 @@ export const buildingIdToString = (id: RealmBuildingId) => {
   return name;
 };
 
+export const buildingIntegrity = (id: RealmBuildingId) => {
+  let name = 0;
+  switch (id) {
+    case RealmBuildingId.House:
+      name = 3600;
+      break;
+    case RealmBuildingId.Barracks:
+      name = 37319;
+      break;
+    case RealmBuildingId.MageTower:
+      name = 37319;
+      break;
+    case RealmBuildingId.ArcherTower:
+      name = 37319;
+      break;
+    case RealmBuildingId.Castle:
+      name = 37319;
+      break;
+  }
+  return name;
+};
+
 export enum HarvestType {
   Export = 1,
   Store = 2,

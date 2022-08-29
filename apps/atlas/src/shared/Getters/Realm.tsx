@@ -4,6 +4,7 @@ import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import { useCosts } from '@/hooks/costs/useCosts';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
@@ -263,4 +264,26 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
   } else {
     return `Raidable in ${minutes}m`;
   }
+};
+
+export const CostBlock = ({ resourceName, amount, id, qty }) => {
+  const { checkUserHasResources } = useCosts();
+
+  return (
+    <div className="px-1 font-extrabold text-center">
+      <ResourceIcon size="xs" resource={resourceName} />
+      <span
+        className={
+          checkUserHasResources({
+            cost: amount * qty,
+            id: id,
+          })
+            ? 'text-green-200'
+            : 'text-red-200'
+        }
+      >
+        {amount * qty}
+      </span>
+    </div>
+  );
 };
