@@ -42,6 +42,7 @@ export function RealmHistory({
       return {
         ...genMilitaryRealmEvent(realmEvent, false),
         timestamp: realmEvent.timestamp,
+        eventId: realmEvent.eventId,
       };
     })
     .filter((row) => row.event !== '');
@@ -49,7 +50,7 @@ export function RealmHistory({
   return (
     <BaseRealmDetailPanel open={open}>
       <div className="grid grid-cols-12 gap-6 py-4">
-        <Card className="col-start-1 col-end-7">
+        <Card className="col-span-12 md:col-start-1 md:col-end-7">
           <CardTitle>Mercantile History</CardTitle>
           {economicEventData.map((a, index) => {
             return (
@@ -62,13 +63,14 @@ export function RealmHistory({
             );
           })}
         </Card>
-        <Card className="col-start-7 col-end-13">
+        <Card className="col-span-12 md:col-start-7 md:col-end-13">
           <CardTitle>Military History</CardTitle>
           {militaryEventData.map((a, index) => {
             return (
               <HistoryCard
                 key={index}
                 timeStamp={a.timestamp}
+                eventId={a.eventId}
                 event={a.event}
                 action={a.action}
               >

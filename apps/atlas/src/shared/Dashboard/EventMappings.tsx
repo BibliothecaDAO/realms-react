@@ -1,5 +1,6 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
+import Image from 'next/image';
 import { GetRealmHistoryQuery } from '@/generated/graphql';
 import { findResourceName } from '@/util/resources';
 import { resourcePillaged } from '../Getters/Realm';
@@ -46,7 +47,6 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
       };
 
     case Event.realmCombatDefend:
-      console.log(event.data);
       if (user) {
         return {
           event: (

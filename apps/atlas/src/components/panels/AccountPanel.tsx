@@ -80,6 +80,7 @@ export function AccountPanel() {
       return {
         ...genMilitaryRealmEvent(realmEvent, true),
         timestamp: realmEvent.timestamp,
+        eventId: realmEvent.eventId,
       };
     })
     .filter((row) => row.event !== '');
@@ -162,7 +163,6 @@ export function AccountPanel() {
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
   ];
   const tableOptions = { is_striped: true };
-  console.log(balance);
   return (
     <BasePanel open={selectedPanel === 'account'}>
       <animated.div
@@ -315,6 +315,7 @@ export function AccountPanel() {
                   key={index}
                   timeStamp={a.timestamp}
                   event={a.event}
+                  eventId={a.eventId}
                   action={a.action}
                 >
                   {a.resources}

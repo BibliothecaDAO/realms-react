@@ -94,6 +94,10 @@ const nextConfig = {
           protocol: 'https',
           hostname: 'avatars.githubusercontent.com',
         },
+        {
+          protocol: 'https',
+          hostname: 'ingave-images.s3.eu-west-3.amazonaws.com',
+        },
       ],
       unoptimized: false,
     },
