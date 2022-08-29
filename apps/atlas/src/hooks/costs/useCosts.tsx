@@ -1,4 +1,5 @@
 import { formatEther } from '@ethersproject/units';
+import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { useResourcesContext } from '@/context/ResourcesContext';
@@ -24,9 +25,10 @@ export const useCosts = () => {
   };
 
   const checkUserHasResources = ({ cost, id }) => {
+    const co = BigNumber.from((cost * 10 ** 18).toString());
     const currentBalance =
       balance.find((a) => a.resourceId === id)?.amount || 0;
-    return toBN(currentBalance) >= toBN(cost) ? true : false;
+    return BigNumber.from(currentBalance).gte(co) ? true : false;
   };
 
   return {

@@ -71,7 +71,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
 
   const getRealmBuildings = (integrity, buildingLength) => {
     const buildings = Math.floor(
-      (integrity - currentTime / 1000) / buildingLength
+      (integrity - currentTime / 1000) / (buildingLength * 2)
     );
     return buildings < 0 ? 0 : buildings;
   };

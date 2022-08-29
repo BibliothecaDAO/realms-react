@@ -252,17 +252,7 @@ const Army: React.FC<Prop> = (props) => {
                               date={(a.buildingDecay * 1000).toString()}
                             />
                           </div>
-                          {/* <div className="w-1/3">
-                            <h5>Usage:</h5>
-                            <p className="text-xl">{a.sqmUsage} sqm</p>
-                          </div> */}
-                          {/* <div className="w-1/3">
-                            <h5>size:</h5>
-                            <p className="text-xl">{a.buildingSize} sqm</p>
-                          </div> */}
                         </div>
-
-                        {/* <h5 className="my-2">Decay time:</h5> */}
                         <div className="flex w-full mt-3 space-x-2">
                           <Button
                             onClick={() =>
@@ -425,11 +415,7 @@ const Army: React.FC<Prop> = (props) => {
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>
-          <SidebarHeader
-            title="Raiding"
-            onClose={() => setIsRaiding(false)}
-          ></SidebarHeader>
-
+          <SidebarHeader title="Raiding" onClose={() => setIsRaiding(false)} />
           <RaidingSideBar realm={realm} />
         </AtlasSidebar>
       </div>
