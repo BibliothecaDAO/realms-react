@@ -339,6 +339,22 @@ const Army: React.FC<Prop> = (props) => {
             </div>
           </Card>
         )}
+        {isOwner && (
+          <Card className="col-span-12 md:col-start-6 md:col-end-13">
+            <CardTitle>Goblins</CardTitle>
+            <CardBody>
+              Goblins emit Lords after defeating them. You must use your
+              Attacking Army.
+            </CardBody>
+            <Button
+              variant="primary"
+              onClick={() => attackGoblins(realm.realmId)}
+            >
+              Attack Goblins
+            </Button>
+          </Card>
+        )}
+
         <Card
           loading={props.loading}
           className="col-span-12 md:col-start-6 md:col-end-13"
@@ -395,19 +411,6 @@ const Army: React.FC<Prop> = (props) => {
               />
             </div>
           </div>
-        </Card>
-        <Card className="col-span-12 md:col-start-6 md:col-end-13">
-          <CardTitle>Goblins</CardTitle>
-          <CardBody>
-            Goblins emit Lords after defeating them. You must use your Attacking
-            Army.
-          </CardBody>
-          <Button
-            variant="primary"
-            onClick={() => attackGoblins(realm.realmId)}
-          >
-            Attack Goblins
-          </Button>
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>

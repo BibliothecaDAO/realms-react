@@ -206,7 +206,7 @@ export const resourcePillaged = (resources: any) => {
                   className="self-center"
                   resource={info?.trait?.replace('_', '') as string}
                 />{' '}
-                <span className="self-center ml-4 font-semibold uppercase">
+                <span className="self-center ml-4 font-semibold tracking-widest uppercase">
                   {info?.trait}
                 </span>
               </div>
