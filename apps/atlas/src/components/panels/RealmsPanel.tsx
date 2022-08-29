@@ -1,5 +1,6 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
@@ -165,6 +166,7 @@ export const RealmsPanel = () => {
     state.selectedOrders,
     state.searchIdFilter,
     state.hasWonderFilter,
+    state.isSettledFilter,
     state.rarityFilter.rank,
     state.rarityFilter.score,
     state.traitsFilter.City,
@@ -242,7 +244,7 @@ export const RealmsPanel = () => {
 
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <Castle className="block w-20 fill-current" />
+            <Ouroboros className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}

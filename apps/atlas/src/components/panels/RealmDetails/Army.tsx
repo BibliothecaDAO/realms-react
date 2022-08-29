@@ -291,7 +291,7 @@ const Army: React.FC<Prop> = (props) => {
                         </div>
                         <div className="flex mt-4">
                           {a.cost &&
-                            a.cost.map((a, i) => {
+                            a.cost.map((b, i) => {
                               return (
                                 <div
                                   key={i}
@@ -299,9 +299,9 @@ const Army: React.FC<Prop> = (props) => {
                                 >
                                   <ResourceIcon
                                     size="xs"
-                                    resource={a.resourceName}
+                                    resource={b.resourceName}
                                   />
-                                  {a.amount}
+                                  {b.amount * buildQty[a.key]}
                                 </div>
                               );
                             })}

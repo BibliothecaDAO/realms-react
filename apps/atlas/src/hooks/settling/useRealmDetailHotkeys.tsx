@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import useKeyPress from '../useKeyPress';
 
 export const HotKeys = {
-  Army: 'a',
-  Resources: 'r',
-  History: 'h',
-  Survey: 's',
-  Lore: 'l',
-  Food: 'f',
+  Army: 'w',
+  Resources: 'e',
+  History: 't',
+  Survey: 'q',
+  Lore: 'y',
+  Food: 'r',
 };
 
 export type Subview = keyof typeof HotKeys | null;

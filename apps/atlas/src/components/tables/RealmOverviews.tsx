@@ -87,7 +87,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }
 
   // Filtering out old realms
-  const usedRealms = [897, 5455, 555];
+  const usedRealms = [897, 5455, 555, 7, 2];
 
   const filteredRealms = props.realms.filter(
     (item) => !usedRealms.includes(item.realmId)

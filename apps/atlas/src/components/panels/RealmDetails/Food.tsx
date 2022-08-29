@@ -226,7 +226,7 @@ const Food: React.FC<Prop> = (props) => {
                     return (
                       <div key={i} className="px-1 font-extrabold text-center">
                         <ResourceIcon size="xs" resource={a.resourceName} />
-                        {a.amount}
+                        {a.amount * parseInt(input.farmsToBuild)}
                       </div>
                     );
                   })}
@@ -369,7 +369,7 @@ const Food: React.FC<Prop> = (props) => {
                   value={input.fishingVillagesToBuild}
                   inputSize="sm"
                   colorScheme="transparent"
-                  className="w-12 bg-white border rounded border-white/40"
+                  className="w-12 border rounded border-white/40"
                   min={1}
                   max={fishingVillageCapacity}
                   stringMode
@@ -388,7 +388,7 @@ const Food: React.FC<Prop> = (props) => {
                   return (
                     <div key={i} className="px-1 font-extrabold text-center">
                       <ResourceIcon size="xs" resource={a.resourceName} />
-                      {a.amount}
+                      {a.amount * parseInt(input.fishingVillagesToBuild)}
                     </div>
                   );
                 })}

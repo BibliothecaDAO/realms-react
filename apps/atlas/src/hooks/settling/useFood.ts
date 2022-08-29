@@ -113,6 +113,11 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const { play: harvestWheat } = useUiSounds(soundSelector.harvestWheat);
   const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
 
+  const { contract: foodContract } = useFoodContract();
+  const { contract: calculatorContract } = useCalculatorContract();
+
+  const [availableFood, setAvailableFood] = useState();
+
   const txQueue = useTransactionQueue();
 
   const { data: foodData } = useGetFoodByRealmIdQuery({
@@ -133,10 +138,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     villagesBuilt: 0,
     population: 0,
   });
-  const { contract: foodContract } = useFoodContract();
-
-  const { contract: calculatorContract } = useCalculatorContract();
-  const [availableFood, setAvailableFood] = useState();
 
   const {
     data: population,
@@ -175,7 +176,8 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       !storehouse ||
       !storehouse[0] ||
       !population ||
-      !population[0]
+      !population[0] ||
+      !realm
     ) {
       return;
     }

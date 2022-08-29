@@ -192,7 +192,9 @@ export const RaidResults = ({ defendId, tx }) => {
             Your army is on route to the enemy and your general will report back
             very soon.
           </p>
-          <Spinner />
+          <div className="flex justify-center">
+            <Spinner scheme="white" variant="circle" size="xl" className="" />
+          </div>
         </div>
       )}
     </div>
