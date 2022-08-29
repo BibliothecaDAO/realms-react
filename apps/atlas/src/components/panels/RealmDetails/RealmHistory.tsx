@@ -42,6 +42,7 @@ export function RealmHistory({
       return {
         ...genMilitaryRealmEvent(realmEvent, false),
         timestamp: realmEvent.timestamp,
+        eventId: realmEvent.eventId,
       };
     })
     .filter((row) => row.event !== '');
@@ -69,6 +70,7 @@ export function RealmHistory({
               <HistoryCard
                 key={index}
                 timeStamp={a.timestamp}
+                eventId={a.eventId}
                 event={a.event}
                 action={a.action}
               >

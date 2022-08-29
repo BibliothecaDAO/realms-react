@@ -979,6 +979,7 @@ export type Troop = {
   agility: Scalars['Int'];
   armor: Scalars['Int'];
   attack: Scalars['Int'];
+  building: Scalars['Int'];
   index: Scalars['Int'];
   realmId: Scalars['Int'];
   squadSlot: Scalars['Int'];
@@ -1016,6 +1017,7 @@ export type TroopStats = {
   agility: Scalars['Int'];
   armor: Scalars['Int'];
   attack: Scalars['Int'];
+  building: Scalars['Int'];
   tier: Scalars['Int'];
   troopCost?: Maybe<TroopCost>;
   troopId: Scalars['Int'];
@@ -1223,6 +1225,7 @@ export type GetAccountQuery = {
     __typename?: 'RealmHistory';
     id: number;
     eventType?: string | null;
+    eventId?: string | null;
     realmId: number;
     realmOwner?: string | null;
     realmName?: string | null;
@@ -1390,6 +1393,7 @@ export type GetRealmHistoryQuery = {
   getRealmHistory: Array<{
     __typename?: 'RealmHistory';
     id: number;
+    eventId?: string | null;
     eventType?: string | null;
     realmId: number;
     realmOwner?: string | null;
@@ -2040,6 +2044,7 @@ export const GetAccountDocument = gql`
     accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
       id
       eventType
+      eventId
       realmId
       realmOwner
       realmName
@@ -2371,6 +2376,7 @@ export const GetRealmHistoryDocument = gql`
   ) @api(name: starkIndexer) {
     getRealmHistory(filter: $filter, take: $take, skip: $skip) {
       id
+      eventId
       eventType
       realmId
       realmOwner
