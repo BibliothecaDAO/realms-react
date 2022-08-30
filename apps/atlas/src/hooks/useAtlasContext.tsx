@@ -171,21 +171,21 @@ function useAtlas(): Atlas {
   const { coordinates, updateCoordinatesByAsset } = useCoordinates();
   const [selectedModal, setSelectedModal] = useState<ModalType>(null);
 
-  useEffect(() => {
-    const panel = router.query.segment && router.query.segment[0];
-    const id = router.query?.id as string;
+  // useEffect(() => {
+  //   const panel = router.query.segment && router.query.segment[0];
+  //   const id = router.query?.id as string;
 
-    if (selectedPanel !== panel) {
-      setShowDetails(true);
-      togglePanelType((panel || selectedPanel) as PanelType);
-    }
+  //   if (selectedPanel !== panel) {
+  //     setShowDetails(true);
+  //     togglePanelType((panel || selectedPanel) as PanelType);
+  //   }
 
-    if (id) {
-      setShowDetails(true);
-      setSelectedAssetFilter(assetFilterByType(panel as AssetType));
-      setSelectedId(id);
-    }
-  }, [router.query]);
+  //   if (id) {
+  //     setShowDetails(true);
+  //     setSelectedAssetFilter(assetFilterByType(panel as AssetType));
+  //     setSelectedId(id);
+  //   }
+  // }, [router.query]);
 
   const closeAll = (exclude?: MenuType) => {
     if (!exclude) {
@@ -257,8 +257,17 @@ function useAtlas(): Atlas {
         break;
       case 'transactionCart':
     }
+    setMenuType(menuType);
+    setShowDetails(true);
 
-    router.push(`/${panel}?id=${assetId}`);
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        id: assetId,
+      },
+    });
+    // router.push(`/${panel}?id=${assetId}`);
   };
 
   const setSelectedAssetType = (assetType: AssetType) =>

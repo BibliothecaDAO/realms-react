@@ -26,7 +26,7 @@ import { BasePanel } from './BasePanel';
 export const LorePanel = () => {
   const router = useRouter();
 
-  const { setModal, selectedPanel } = useAtlasContext();
+  const { setModal } = useAtlasContext();
   const { account } = useWalletContext();
   const { account: starknetAccount } = useStarknet();
   const { state, actions } = useLoreContext();
@@ -46,7 +46,7 @@ export const LorePanel = () => {
     setPage(1);
   }, [state.selectedTab]);
 
-  const isLorePanel = selectedPanel === 'lore';
+  const isLorePanel = true;
   const tabs = ['All Scrolls', 'Your Scrolls', 'Create'];
 
   const variables = useMemo(() => {

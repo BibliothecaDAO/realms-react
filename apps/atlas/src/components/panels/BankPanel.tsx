@@ -30,13 +30,9 @@ export const RateChange = (change: number) => {
 };
 
 export function BankPanel(): ReactElement {
-  const { selectedPanel, toggleMenuType } = useAtlasContext();
-  const {
-    lordsBalance,
-    balance,
-    availableResourceIds,
-    addSelectedSwapResources,
-  } = useResourcesContext();
+  const { toggleMenuType } = useAtlasContext();
+  const { balance, availableResourceIds, addSelectedSwapResources } =
+    useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
     return {
@@ -109,7 +105,7 @@ export function BankPanel(): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <BasePanel open={selectedPanel === 'bank'} style="lg:w-7/12">
+    <BasePanel open={true} style="lg:w-7/12">
       <div className="flex justify-between">
         <div className="w-full p-10 pt-20 bg-black/90">
           <h2 className="w-full">The Resource Emporium</h2>

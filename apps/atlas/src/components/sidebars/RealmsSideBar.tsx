@@ -1,26 +1,24 @@
-import { useQuery } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import { useRouter } from 'next/router';
 import { useGetLoreEntitiesQuery, useGetRealmQuery } from '@/generated/graphql';
-import { getRealmQuery } from '@/hooks/graphql/queries';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
-import type { Data } from '@/types/index';
 import { LoreEntityCard } from '../cards/LoreEntityCard';
 import { RealmCard } from '../cards/RealmCard';
 import { BaseSideBar } from './BaseSideBar';
 
-export const RealmSideBar = () => {
-  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
-    useAtlasContext();
-  const isRealmsSelected = selectedMenuType === 'realm' && showDetails;
+export const RealmSideBar = ({ realmId }: { realmId: string }) => {
+  const { toggleMenuType } = useAtlasContext();
+  const router = useRouter();
+  const { id } = router.query;
+  const isRealmsSelected = !!id;
   const { data, loading } = useGetRealmQuery({
     variables: {
-      id: parseInt(selectedId),
+      id: parseInt(realmId ?? '0'),
     },
     skip: !isRealmsSelected,
   });
-
   const { data: loreEntitiesData, loading: loreEntitiesLoading } =
     useGetLoreEntitiesQuery({
       variables: {
@@ -33,7 +31,7 @@ export const RealmSideBar = () => {
                     equals: 1000,
                   },
                   assetId: {
-                    equals: selectedId.toString(),
+                    equals: (id as string) ?? '',
                   },
                 },
               },

@@ -89,17 +89,17 @@ export function AccountPanel() {
   const approveTxs = getApproveAllGameContracts();
 
   const animationUp = useSpring({
-    opacity: selectedPanel === 'account' ? 1 : 0,
-    transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(+10%)`,
-    delay: 350,
+    // opacity: selectedPanel === 'account' ? 1 : 0,
+    // transform:
+    //   selectedPanel === 'account' ? `translateY(0)` : `translateY(+10%)`,
+    // delay: 350,
   });
 
   const animation = useSpring({
-    opacity: selectedPanel === 'account' ? 1 : 0,
-    transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(-20%)`,
-    delay: 150,
+    // opacity: selectedPanel === 'account' ? 1 : 0,
+    // transform:
+    //   selectedPanel === 'account' ? `translateY(0)` : `translateY(-20%)`,
+    // delay: 150,
   });
 
   type Row = {
@@ -164,7 +164,7 @@ export function AccountPanel() {
   ];
   const tableOptions = { is_striped: true };
   return (
-    <BasePanel open={selectedPanel === 'account'}>
+    <BasePanel open={true}>
       <animated.div
         style={animation}
         className="w-full p-10 py-10 border-b-4 shadow-xl bg-black/60 border-black/40"

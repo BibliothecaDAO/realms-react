@@ -16,8 +16,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const LootPanel = () => {
-  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
-    useAtlasContext();
+  const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -37,7 +36,7 @@ export const LootPanel = () => {
     state.selectedTab,
   ]);
 
-  const isLootPanel = selectedPanel === 'loot';
+  const isLootPanel = true;
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
@@ -88,7 +87,7 @@ export const LootPanel = () => {
   const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isLootPanel} style="lg:w-7/12">
+    <BasePanel open={isLootPanel}>
       <PanelHeading
         heading="Loot"
         action={actions.updateSearchIdFilter}

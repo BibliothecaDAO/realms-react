@@ -16,8 +16,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const GaPanel = () => {
-  const { isDisplayLarge, selectedId, openDetails, selectedPanel } =
-    useAtlasContext();
+  const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -38,7 +37,7 @@ export const GaPanel = () => {
     state.selectedTab,
   ]);
 
-  const isGaPanel = selectedPanel === 'ga';
+  const isGaPanel = true;
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
@@ -98,7 +97,7 @@ export const GaPanel = () => {
     !loading && (data?.gadventurers?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isGaPanel} style="lg:w-7/12">
+    <BasePanel open={isGaPanel}>
       <PanelHeading
         heading="Genesis Adventurers"
         action={actions.updateSearchIdFilter}

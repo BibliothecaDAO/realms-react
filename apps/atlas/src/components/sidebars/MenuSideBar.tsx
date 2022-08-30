@@ -94,7 +94,7 @@ export const MenuSideBar = () => {
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2"
-          onClick={() => toggleMainMenu()}
+          // onClick={() => toggleMainMenu()}
         >
           {mainMenu ? <Close /> : <Menu />}
         </button>

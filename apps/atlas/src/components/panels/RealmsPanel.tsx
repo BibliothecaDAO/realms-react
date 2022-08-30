@@ -135,13 +135,17 @@ function useRealmsPanelTabs() {
   );
 
   function onTabChange(index: number) {
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        tab: TABS[index].key,
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          tab: TABS[index].key,
+        },
       },
-    });
+      undefined,
+      { shallow: true }
+    );
   }
 
   return {
@@ -151,13 +155,14 @@ function useRealmsPanelTabs() {
 }
 
 export const RealmsPanel = () => {
-  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
-    useAtlasContext();
+  const { isDisplayLarge, openDetails } = useAtlasContext();
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
+  const router = useRouter();
 
   const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
-
+  const { id } = router.query;
+  const selectedId = id ?? '';
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
     pagination.setPage(1);
@@ -176,8 +181,6 @@ export const RealmsPanel = () => {
     selectedTabIndex,
   ]);
 
-  const isRealmPanel = selectedPanel === 'realm';
-
   const variables = useRealmsQueryVariables(
     selectedTabIndex,
     pagination.page,
@@ -186,7 +189,6 @@ export const RealmsPanel = () => {
 
   const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
-    skip: !isRealmPanel,
   });
 
   useEffect(() => {
@@ -196,17 +198,15 @@ export const RealmsPanel = () => {
     return stopPolling;
   }, [loading, data]);
 
-  const shouldOpenPage =
-    !selectedId &&
-    isDisplayLarge &&
-    pagination.page === 1 &&
-    (data?.realms?.length ?? 0) > 0;
+  // const shouldOpenPage =
+  //   // !selectedId &&
+  //   isDisplayLarge && pagination.page === 1 && (data?.realms?.length ?? 0) > 0;
 
-  useEffect(() => {
-    if (shouldOpenPage) {
-      openDetails('realm', data?.realms[0].realmId + '');
-    }
-  }, [data, pagination.page, selectedId]);
+  // useEffect(() => {
+  //   if (shouldOpenPage) {
+  //     openDetails('realm', data?.realms[0].realmId + '');
+  //   }
+  // }, [data, pagination.page, selectedId]);
 
   const showPagination = () =>
     selectedTabIndex === 1 &&
@@ -215,7 +215,7 @@ export const RealmsPanel = () => {
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isRealmPanel} style="lg:w-12/12 ">
+    <BasePanel open={true} style="lg:w-12/12 ">
       <div className="flex flex-wrap justify-between px-3 pt-16 sm:px-6">
         <h1>Realms</h1>
         <div className="w-full my-1 sm:w-auto">

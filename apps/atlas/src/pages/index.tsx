@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FlyToInterpolator } from '@deck.gl/core';
-import { ScatterplotLayer, IconLayer } from '@deck.gl/layers';
+import { ScatterplotLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
@@ -8,163 +8,66 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Map, { FullscreenControl } from 'react-map-gl';
 import Layout from '@/components/Layout';
-import { ArtBackground } from '@/components/map/ArtBackground';
-import { FlyTo } from '@/components/map/FlyTo';
-import { BaseModal } from '@/components/modals/BaseModal';
-import { Header } from '@/components/navigation/header';
-import { AccountPanel } from '@/components/panels/AccountPanel';
-import { BankPanel } from '@/components/panels/BankPanel';
-import { CryptsPanel } from '@/components/panels/CryptsPanel';
-import { GaPanel } from '@/components/panels/GaPanel';
-import { LootPanel } from '@/components/panels/LootPanel';
 import { LorePanel } from '@/components/panels/LorePanel';
-import { RaidResultsPanel } from '@/components/panels/RaidResultsPanel';
-import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
-import { RealmsPanel } from '@/components/panels/RealmsPanel';
-import { TradePanel } from '@/components/panels/TradePanel';
 import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
 import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
-import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
-import { MilitarySideBar } from '@/components/sidebars/MilitarySideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
-import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
-import { TransactionCartSideBar } from '@/components/sidebars/TransactionCartSideBar';
-import { CryptProvider } from '@/context/CryptContext';
-import { GaProvider } from '@/context/GaContext';
-import { LootProvider } from '@/context/LootContext';
 import { LoreProvider } from '@/context/LoreContext';
-import { RealmProvider } from '@/context/RealmContext';
-import { ResourceProvider } from '@/context/ResourcesContext';
+
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
-import { useAtlasContext, AtlasProvider } from '@/hooks/useAtlasContext';
+import { useAtlasContext } from '@/hooks/useAtlasContext';
 
 // import order_highlights from '@/geodata/order_highlights.json';
-import type { RealmFeatures } from '@/types/index';
+// import type { RealmFeatures } from '@/types/index';
 
 export default function AtlasPage() {
   return (
-    <AtlasProvider>
-      <Layout>
-        <div className="relative flex h-full overflow-hidden sm:h-screen">
-          <MenuSideBar />
-          <div className="relative flex flex-col w-full">
-            <ResourceProvider>
-              <Header />
-
-              <AtlasMain />
-            </ResourceProvider>
-          </div>
-        </div>
-      </Layout>
-    </AtlasProvider>
-  );
-}
-
-function AtlasMain() {
-  return (
-    <div className="relative w-full h-full">
+    <Layout>
       <UserAgent>
         {(ua: UserAgentProps) => (
           <>
-            <ArtBackground />
-            <AccountModule />
-            <LootModule />
-            <GaModule />
-            <RealmsModule />
-            <CryptModule />
-            <BankPanel />
-            <ResourceSwapSideBar />
-            <TradePanel />
-            <LoreModule />
-            {/* <FlyTo /> */}
-            {/* Hide the map on mobile devices */}
             {!ua.mobile ? (
               <MapModule />
             ) : (
               <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
             )}
-            <BaseModal />
-            <TransactionCartSideBar />
-            <MilitarySideBar />
-            <div id="sidebar-root">
-              {/* Render children here using the AtlasSideBar component */}
-            </div>
+            <AtlasSidebars />
           </>
         )}
       </UserAgent>
-    </div>
+    </Layout>
   );
 }
 
-function RealmsModule() {
-  const { query } = useRouter();
-  const segments = query?.segment ?? [];
-  const realmId = segments[1] ? Number(segments[1]) : 0;
+function AtlasSidebars() {
+  const { selectedMenuType } = useAtlasContext();
+  const router = useRouter();
+  const { id } = router.query;
+  const assetSelected = !!id;
   return (
-    <RealmProvider>
-      {realmId > 0 &&
-        (segments[2] === 'combat' ? (
-          <RaidResultsPanel key={realmId} defendId={realmId} tx={segments[3]} />
-        ) : (
-          <RealmDetailsPanel key={realmId} realmId={realmId} />
-        ))}
-      {realmId === 0 && (
-        <>
-          <RealmsPanel />
-          {/* <LorePanel /> */}
-          <RealmSideBar />
-          <BridgeRealmsSideBar />
-          <SettleRealmsSideBar />
-        </>
+    <>
+      {selectedMenuType === 'realm' && assetSelected && (
+        <RealmSideBar realmId={id as string} />
       )}
-    </RealmProvider>
+      {selectedMenuType === 'loot' && assetSelected && (
+        <LootSideBar lootId={id as string} />
+      )}
+      {selectedMenuType === 'ga' && assetSelected && (
+        <GASideBar gaId={id as string} />
+      )}
+      {selectedMenuType === 'crypt' && assetSelected && (
+        <CryptsSideBar cryptId={id as string} />
+      )}
+      {selectedMenuType === 'bridgeRealms' && <BridgeRealmsSideBar />}
+      {selectedMenuType === 'settleRealms' && <SettleRealmsSideBar />}
+    </>
   );
-}
-
-function GaModule() {
-  return (
-    <GaProvider>
-      <GaPanel />
-      <GASideBar />
-    </GaProvider>
-  );
-}
-
-function CryptModule() {
-  return (
-    <CryptProvider>
-      <CryptsPanel />
-      <CryptsSideBar />
-    </CryptProvider>
-  );
-}
-
-function BankModule() {
-  return (
-    <ResourceProvider>
-      <BankPanel />
-      <ResourceSwapSideBar />
-    </ResourceProvider>
-  );
-}
-
-function LootModule() {
-  return (
-    <LootProvider>
-      <LootPanel />
-      <LootSideBar />
-    </LootProvider>
-  );
-}
-
-function AccountModule() {
-  return <AccountPanel />;
 }
 
 function MapModule() {

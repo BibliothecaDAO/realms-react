@@ -1,16 +1,12 @@
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import {
-  StarIcon,
-  BookmarkIcon,
-  CollectionIcon,
-} from '@heroicons/react/outline';
+import { BookmarkIcon, CollectionIcon } from '@heroicons/react/outline';
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
 } from '@heroicons/react/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
@@ -20,23 +16,15 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys from '@/hooks/settling/useRealmDetailHotkeys';
-import useRealmPlaylist, {
-  realmPlaylistCursorKey,
-  realmPlaylistKey,
-  realmPlaylistNameKey,
-  resetPlaylistState,
-} from '@/hooks/settling/useRealmsPlaylist';
+import useRealmPlaylist from '@/hooks/settling/useRealmsPlaylist';
 import useResources from '@/hooks/settling/useResources';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
 import { trimmedOrder } from '@/shared/Getters/Realm';
 import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
-import SidebarHeader from '@/shared/SidebarHeader';
-import apolloClient from '@/util/apolloClient';
+
 import { storage } from '@/util/localStorage';
-import AtlasSidebar from '../sidebars/AtlasSideBar';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
 import Army from './RealmDetails/Army';
@@ -50,14 +38,6 @@ interface RealmDetailsPanelProps {
 }
 
 export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
-  const {
-    isDisplayLarge,
-    selectedId,
-    selectedPanel,
-    openDetails,
-    togglePanelType,
-  } = useAtlasContext();
-
   const router = useRouter();
 
   const { data: realmData, loading } = useGetRealmQuery({
@@ -150,7 +130,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   const onSetSubview = (s) => {
     router.push(
       {
-        pathname: `realm/${realm?.realmId}`,
+        pathname: `/realm/${realm?.realmId}`,
         query: {
           tab: s,
         },
@@ -205,7 +185,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
   ];
 
   return (
-    <BasePanel open={selectedPanel === 'realm'}>
+    <BasePanel open={true}>
       <RealmsPlaylistSidebar
         currentRealmId={realmId}
         isOpen={showPlaylists}

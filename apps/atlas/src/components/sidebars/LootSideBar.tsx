@@ -8,17 +8,16 @@ import type { LootData } from '@/types/index';
 import { Loot } from '../cards/Loot';
 import { BaseSideBar } from './BaseSideBar';
 
-export const LootSideBar = () => {
-  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
-    useAtlasContext();
-  const isLootSelected = selectedMenuType === 'loot' && showDetails;
+export const LootSideBar = ({ lootId }: { lootId: string }) => {
+  const { toggleMenuType } = useAtlasContext();
+
   const { loading, error, data } = useQuery<LootData>(getLootQuery, {
-    variables: { id: selectedId.toString() },
-    skip: !isLootSelected,
+    variables: { id: lootId ?? '' },
+    skip: !lootId,
   });
 
   return (
-    <BaseSideBar open={isLootSelected}>
+    <BaseSideBar open={true}>
       <div className="top-0 bottom-0 right-0 z-20 w-full h-screen p-6 pt-10 overflow-auto lg:w-5/12 rounded-r-2xl">
         <div className="flex justify-end mb-2 mr-1">
           <Button size="sm" onClick={() => toggleMenuType('loot')}>

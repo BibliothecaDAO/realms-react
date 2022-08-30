@@ -1,28 +1,31 @@
-import { useQuery } from '@apollo/client';
+// import { useQuery } from '@apollo/client';
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
+// import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
-import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
-import { getRealmQuery } from '@/hooks/graphql/queries';
+// import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
+// import { getRealmQuery } from '@/hooks/graphql/queries';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+// import { useAtlasContext } from '@/hooks/useAtlasContext';
 import type { Data } from '@/types/index';
+import AtlasSideBar from '../sidebars/AtlasSideBar';
 import { LpMerchant } from '../tables/LpMerchant';
 import { Nexus } from '../tables/Nexus';
-import { BaseSideBar } from './BaseSideBar';
+// import { BaseSideBar } from './BaseSideBar';
+
 type Props = {
   resources?: string[];
+  isOpen: boolean;
 };
 
 export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
-    useAtlasContext();
-  const isBankSelected = selectedMenuType === 'bank' && showDetails;
+  // const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
+  // useAtlasContext();
+  // const isBankSelected = selectedMenuType === 'bank' && showDetails;
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
 
@@ -49,14 +52,19 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={isBankSelected}>
-      <div className="top-0 bottom-0 right-0 w-full h-auto p-2 pt-10 md:p-6 lg:w-5/12 rounded-r-2xl">
+    <AtlasSideBar
+      isOpen={props.isOpen}
+      containerClassName={
+        'top-0 bottom-0 right-0 w-full h-auto p-2 pt-10 mt-10 md:p-6 lg:w-5/12'
+      }
+    >
+      <div className="w-full h-auto p-2 pt-10 rounded-r-2xl">
         <div className="flex justify-between w-full">
           <Button
             variant="secondary"
             size="xs"
             className="ml-auto"
-            onClick={() => toggleMenuType('bank')}
+            // onClick={() => toggleMenuType('bank')}
           >
             <Close />
           </Button>
@@ -107,6 +115,6 @@ export const ResourceSwapSideBar = (props: Props) => {
           </Tabs>
         </div>
       </div>
-    </BaseSideBar>
+    </AtlasSideBar>
   );
 };

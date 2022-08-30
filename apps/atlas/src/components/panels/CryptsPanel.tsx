@@ -16,8 +16,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const CryptsPanel = () => {
-  const { selectedId, selectedPanel, openDetails, isDisplayLarge } =
-    useAtlasContext();
+  const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -40,7 +39,7 @@ export const CryptsPanel = () => {
     state.selectedTab,
   ]);
 
-  const isCryptPanel = selectedPanel === 'crypt';
+  const isCryptPanel = true;
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
   const variables = useMemo(() => {
@@ -102,7 +101,7 @@ export const CryptsPanel = () => {
   const hasNoResults = () => !loading && (data?.dungeons?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isCryptPanel} style="lg:w-7/12">
+    <BasePanel open={isCryptPanel}>
       <PanelHeading
         heading="Crypts"
         action={actions.updateSearchIdFilter}

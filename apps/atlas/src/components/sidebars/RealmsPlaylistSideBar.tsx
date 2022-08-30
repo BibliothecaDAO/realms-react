@@ -240,16 +240,16 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                     icon: <CollectionIcon className="w-6" />,
                   });
                   resetPlaylistState();
-                  router.push(
-                    {
-                      pathname: `/realm/1`,
-                      query: queryWithoutSegment,
-                    },
-                    undefined,
-                    {
-                      shallow: false,
-                    }
-                  );
+                  // router.push(
+                  //   {
+                  //     pathname: `/realm/[realmId]`,
+                  //     query: queryWithoutSegment,
+                  //   },
+                  //   undefined,
+                  //   {
+                  //     shallow: false,
+                  //   }
+                  // );
                   return;
                 }
                 setSelectedPlaylist(rp.name);
@@ -277,14 +277,15 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                         icon: <CollectionIcon className="w-6" />,
                       });
                       const realmIds = res.data.realms.map((r) => r.realmId);
-
                       storage(realmPlaylistCursorKey, 0).set(0);
                       storage(realmPlaylistNameKey, '').set(rp.name);
                       storage<number[]>(realmPlaylistKey, []).set(realmIds);
                       router.replace(
                         {
                           pathname: `/realm/${realmIds[0]}`,
-                          query: queryWithoutSegment,
+                          query: {
+                            ...queryWithoutSegment,
+                          },
                         },
                         undefined,
                         {
