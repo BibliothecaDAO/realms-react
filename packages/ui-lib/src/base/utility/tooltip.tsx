@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export interface TooltipProps {
   children: ReactElement;
@@ -9,9 +10,10 @@ export interface TooltipProps {
 export const Tooltip = ({ children, tooltipText, className }: TooltipProps) => {
   return (
     <div
-      className={
-        className + ' relative flex flex-col items-center justify-center group'
-      }
+      className={twMerge(
+        className,
+        ' relative flex flex-col items-center justify-center group'
+      )}
     >
       {children}
       <div className="absolute top-0 -translate-y-full w-max flex flex-col items-center hidden group-hover:flex">
