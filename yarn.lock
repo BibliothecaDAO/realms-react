@@ -13664,6 +13664,7 @@ __metadata:
     bn.js: "npm:^5.2.1"
     classnames: "npm:^2.3.1"
     cross-env: "npm:7.0.3"
+    d3-scale: "npm:^2.0.0"
     deck.gl: "npm:^8.8.6"
     es-check: "npm:7.0.0"
     eslint: "npm:8.21.0"
@@ -17294,6 +17295,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-array@npm:^1.2.0":
+  version: 1.2.4
+  resolution: "d3-array@npm:1.2.4"
+  checksum: 2759cac215535760462482fd4efe64c4fadc833cc1a74a7b1e3be1c3eec43327d9cbb7640db8a387233cd9b31d891403b295ee088787a1c9e1ff964e26aafe55
+  languageName: node
+  linkType: hard
+
+"d3-collection@npm:1":
+  version: 1.0.7
+  resolution: "d3-collection@npm:1.0.7"
+  checksum: 13de6343d68155e665484684e9db3557c3c9647e72dbf5bda8452d73e97c0c794d82d883926ed6a52456d68cb805f1585b1b722fe8b8442cd3f8f58f5f261001
+  languageName: node
+  linkType: hard
+
+"d3-color@npm:1":
+  version: 1.4.1
+  resolution: "d3-color@npm:1.4.1"
+  checksum: 423561239fc7a30ebd03dbffc0bdcdd956e608097e4f9a8f183a6d1575e53412f488a299e1b731d0a40a3bf434f5592766f6fb475c61aab884483d6c6007a451
+  languageName: node
+  linkType: hard
+
 "d3-color@npm:1 - 2, d3-color@npm:^2.0.0":
   version: 2.0.0
   resolution: "d3-color@npm:2.0.0"
@@ -17322,6 +17344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-format@npm:1":
+  version: 1.4.5
+  resolution: "d3-format@npm:1.4.5"
+  checksum: 3fcfd2c29f6227dfd9daa88ac3977db0b3293500b8f9a28670f78a3422a73e95ef720ff5741dfc30be0b3dece47d6a5cc4c2387bcb1d82e78f0b79abd59df661
+  languageName: node
+  linkType: hard
+
 "d3-format@npm:1 - 2, d3-format@npm:^2.0.0":
   version: 2.0.0
   resolution: "d3-format@npm:2.0.0"
@@ -17336,12 +17365,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-interpolate@npm:1":
+  version: 1.4.0
+  resolution: "d3-interpolate@npm:1.4.0"
+  dependencies:
+    d3-color: "npm:1"
+  checksum: 12910cc9da32ae9293ceb6520137b1fa56cff0d86a28008402ef74c7ce284cfb57eee83079abd07c185bedfcc6caa5690c79fc995ce25cfcee90747116d0cf6b
+  languageName: node
+  linkType: hard
+
 "d3-interpolate@npm:1.2.0 - 2":
   version: 2.0.1
   resolution: "d3-interpolate@npm:2.0.1"
   dependencies:
     d3-color: "npm:1 - 2"
   checksum: e4c493a308ec7907996d0506257e6ee773513052a9716f2b98fa03da784c340bd33d78a2e10f851d9d37a847613a77fc70c304e53ceea1a6e6f18cf015c58cf6
+  languageName: node
+  linkType: hard
+
+"d3-scale@npm:^2.0.0":
+  version: 2.2.2
+  resolution: "d3-scale@npm:2.2.2"
+  dependencies:
+    d3-array: "npm:^1.2.0"
+    d3-collection: "npm:1"
+    d3-format: "npm:1"
+    d3-interpolate: "npm:1"
+    d3-time: "npm:1"
+    d3-time-format: "npm:2"
+  checksum: 8f5935c4e4a907e0004a47ce68dea8ad0596486390f078e125abdfa5a9c12931f24946af53fb5c5210f8c30e23a5a846874db205871df2f09142f72b487aaae5
   languageName: node
   linkType: hard
 
@@ -17358,12 +17410,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-time-format@npm:2":
+  version: 2.3.0
+  resolution: "d3-time-format@npm:2.3.0"
+  dependencies:
+    d3-time: "npm:1"
+  checksum: 1bf100edb78c88e72595891c7903a1a5c5ead395a0cac749a6b752965e4ee0da996715d8b4dbb9472fed2be789166daff8839f34d0ef575d5c8570d68662e12d
+  languageName: node
+  linkType: hard
+
 "d3-time-format@npm:2 - 3":
   version: 3.0.0
   resolution: "d3-time-format@npm:3.0.0"
   dependencies:
     d3-time: "npm:1 - 2"
   checksum: b306fabf650c516c71e62820f8599b7de64f4b42fb9a2014cab676d031a719e2624fea72fc26152973fc285d15ea13cf1fe4fd6b058f1a8e58f95985005bb1ad
+  languageName: node
+  linkType: hard
+
+"d3-time@npm:1":
+  version: 1.1.0
+  resolution: "d3-time@npm:1.1.0"
+  checksum: b714a10c67467c86b18e778df6ac8fe9066e5eadf0a90c9b85d577d2ef27a061e45d74a4cc7d287ccc95c4798755729e266c376a6f454920a8a37e138c26a752
   languageName: node
   linkType: hard
 

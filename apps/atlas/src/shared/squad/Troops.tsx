@@ -143,7 +143,7 @@ export const Troop = (props: TroopProps) => {
         className={`${twMerge(
           STYLES.tier[props.troop.tier],
           props.className
-        )} rounded-2xl cursor-pointer flex border-4 border-double border-white/30 shadow-md shadow-purple-800 p-2 skew-y-3 ${
+        )} rounded-2xl cursor-pointer flex border-4 border-double border-white/30 shadow-md shadow-purple-800 p-2 ${
           getBaseTroopInfo?.troopColour
         }`}
       >

@@ -39,24 +39,6 @@ type Row = {
 export const ArmoryBuilder = (props: Props) => {
   const [tier, setTier] = useState(1);
 
-  const troopCostCell = (cost: ItemCost) => {
-    return (
-      <div className="flex flex-col my-4 text-center">
-        {cost.resources.map((a, index) => {
-          return (
-            <CostBlock
-              key={index}
-              resourceName={a.resourceName}
-              amount={a.amount}
-              id={a.resourceId}
-              qty={1}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-
   const filteredTroops =
     tier !== undefined
       ? props.statistics.filter((v) => v.tier == tier)
@@ -121,7 +103,21 @@ export const ArmoryBuilder = (props: Props) => {
           </div>
         </span>
       ),
-      troopCost: troopCostCell(re.troopCost!),
+      troopCost: (
+        <div className="flex flex-col my-4 text-center">
+          {re.troopCost?.resources.map((a, index) => {
+            return (
+              <CostBlock
+                key={index}
+                resourceName={a.resourceName}
+                amount={a.amount}
+                id={a.resourceId}
+                qty={1}
+              />
+            );
+          })}
+        </div>
+      ),
       add: (
         <div>
           <Button

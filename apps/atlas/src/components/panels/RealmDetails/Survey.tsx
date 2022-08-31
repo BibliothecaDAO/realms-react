@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId } from '@/constants/buildings';
+import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
 import type { GetRealmQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -223,10 +223,12 @@ const Survey: React.FC<Prop> = (props) => {
                 color: 'bg-green-800',
                 built:
                   props.buildingUtilisation &&
-                  props.buildingUtilisation.currentSqm,
+                  props.availableFood &&
+                  props.buildingUtilisation.currentSqm +
+                    props.availableFood / STORE_HOUSE_SIZE,
               })}
             </div>
-            <div className="mt-3">
+            {/* <div className="mt-3">
               {props.buildings?.map((a, i) => {
                 return (
                   <div key={i} className="flex justify-between font-semibold">
@@ -237,7 +239,7 @@ const Survey: React.FC<Prop> = (props) => {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
           </CardBody>
           <CardStats className="flex justify-between px-4 text-4xl">
             {props.buildingUtilisation && props.buildingUtilisation.currentSqm}/{' '}
