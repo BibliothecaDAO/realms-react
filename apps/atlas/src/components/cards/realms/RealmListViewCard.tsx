@@ -1,18 +1,10 @@
-import {
-  Button,
-  OrderIcon,
-  ResourceIcon,
-  Tabs,
-  IconButton,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
 import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
