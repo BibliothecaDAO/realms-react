@@ -80,6 +80,11 @@ export const MenuSideBar = () => {
         icon: <Library className={iconClasses} />,
         text: 'Lore',
       },
+      // {
+      //   page: 'noticeBoard',
+      //   icon: <Library className={iconClasses} />,
+      //   text: 'Rulers',
+      // },
 
       // {
       //   page: 'combat',

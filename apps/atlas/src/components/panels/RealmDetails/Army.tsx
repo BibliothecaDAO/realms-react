@@ -106,9 +106,11 @@ const Army: React.FC<Prop> = (props) => {
   }, [realm?.realmId]);
 
   const { data: troopStatsData } = useGetTroopStatsQuery();
+
   if (!realm) {
     return null;
   }
+
   const realmTroops =
     realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 

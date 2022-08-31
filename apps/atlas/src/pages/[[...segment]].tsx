@@ -18,6 +18,7 @@ import { CryptsPanel } from '@/components/panels/CryptsPanel';
 import { GaPanel } from '@/components/panels/GaPanel';
 import { LootPanel } from '@/components/panels/LootPanel';
 import { LorePanel } from '@/components/panels/LorePanel';
+import { NoticeBoard } from '@/components/panels/NoticeBoard';
 import { RaidResultsPanel } from '@/components/panels/RaidResultsPanel';
 import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
@@ -79,6 +80,7 @@ function AtlasMain() {
             <RealmsModule />
             <CryptModule />
             <BankPanel />
+            <NoticeBoard />
             <ResourceSwapSideBar />
             <TradePanel />
             <LoreModule />

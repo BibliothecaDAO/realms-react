@@ -25,6 +25,7 @@ export type PanelType =
   | 'combat'
   | 'realm'
   | 'realmDetail'
+  | 'noticeBoard'
   | AssetType;
 
 export type MenuType =
@@ -229,7 +230,11 @@ function useAtlas(): Atlas {
         if (breakpoints.lg) {
           setMenuType(panelType);
         }
-      } else if (panelType === 'trade' || panelType === 'combat') {
+      } else if (
+        panelType === 'trade' ||
+        panelType === 'combat' ||
+        panelType === 'noticeBoard'
+      ) {
         setArtBackground('realm');
         if (breakpoints.lg) {
           setMenuType(panelType);
