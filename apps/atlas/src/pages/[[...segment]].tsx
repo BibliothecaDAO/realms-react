@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  FlyToInterpolator,
-  MapView,
-  _GlobeView as GlobeView,
-} from '@deck.gl/core';
+import { FlyToInterpolator, MapView } from '@deck.gl/core';
 import { ScatterplotLayer, IconLayer, ArcLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { UserAgent } from '@quentin-sommer/react-useragent';
