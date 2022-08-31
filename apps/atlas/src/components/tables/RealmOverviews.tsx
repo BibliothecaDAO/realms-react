@@ -1,11 +1,15 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { RealmListCardView } from '../cards/realms/RealmListViewCard';
 
@@ -18,6 +22,7 @@ const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
 const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
 export function RealmOverviews(props: RealmOverviewsProps) {
+  const { play } = useUiSounds(soundSelector.pageTurn);
   const router = useRouter();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
@@ -95,12 +100,46 @@ export function RealmOverviews(props: RealmOverviewsProps) {
 
   const [tab, setTab] = useState(0);
 
+  const [cardRefs, setCardRefs] = useState<any>([]);
+
+  useEffect(() => {
+    // add or remove refs
+    setCardRefs((elRefs) =>
+      Array(filteredRealms.length)
+        .fill({})
+        .map((_, i) => elRefs[i] || createRef())
+    );
+  }, [filteredRealms]);
+
   return (
-    <div className="grid grid-cols-12 gap-6 p-6 ">
-      {props.realms &&
-        filteredRealms.map((realm: RealmFragmentFragment, index) => (
-          <RealmListCardView key={index} realm={realm} />
+    <div>
+      <div className="flex mt-4 ml-5 w-full justify-center">
+        Quick switch:
+        {cardRefs[0]?.current?.getTabs().map((tab, index) => (
+          <button
+            className="ml-4"
+            key={index}
+            onClick={() => {
+              play();
+              cardRefs.forEach((el) => {
+                el.current?.selectTab(index);
+              });
+            }}
+          >
+            {tab.label}
+          </button>
         ))}
+      </div>
+      <div className="grid grid-cols-12 gap-6 p-6 ">
+        {props.realms &&
+          filteredRealms.map((realm: RealmFragmentFragment, index) => (
+            <RealmListCardView
+              ref={cardRefs[index]}
+              key={index}
+              realm={realm}
+            />
+          ))}
+      </div>
     </div>
   );
 }
