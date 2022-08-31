@@ -1,11 +1,15 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 
+import React from 'react';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { OrderAffinity, LightDark } from '@/constants/orders';
 import type { GetRealmQuery } from '@/generated/graphql';
-
+import useIsOwner from '@/hooks/useIsOwner';
+import { shortenAddressWidth } from '@/util/formatters';
 import { ownerRelic, trimmedOrder, relicsOwnedByRealm } from './Getters/Realm';
 
 interface HeaderProps {
@@ -20,6 +24,8 @@ export const RealmBannerHeading = (props: HeaderProps) => {
   const trimmed = trimmedOrder(realm);
 
   const relicOwned = realm ? ownerRelic(realm)?.toString() : '0';
+
+  const isOwner = useIsOwner(realm?.settledOwner);
 
   return (
     <div
@@ -43,10 +49,20 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             order={realm?.orderType.toLowerCase() ?? ''}
           />
         </div>
-        <div className="pl-16 text-left md:pl-40">
+        <div className="pl-16 text-left md:pl-40 flex items-center">
           <p className="text-3xl font-lords md:text-6xl">
             {realm?.realmId || '...'} || {realm?.name || '...'}
           </p>
+          {!isOwner && (
+            <Tooltip
+              className="ml-3"
+              tooltipText={
+                'Lord: ' + shortenAddressWidth(realm?.settledOwner || '', 6)
+              }
+            >
+              <Crown className="fill-white w-8" />
+            </Tooltip>
+          )}
         </div>
         <div className="flex justify-between space-x-5">
           <div className="flex self-center">

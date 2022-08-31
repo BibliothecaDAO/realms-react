@@ -1,14 +1,18 @@
 import type { ReactElement } from 'react';
 
-export const Tooltip = ({
-  children,
-  tooltipText,
-}: {
+export interface TooltipProps {
   children: ReactElement;
   tooltipText: string;
-}) => {
+  className?: string;
+}
+
+export const Tooltip = ({ children, tooltipText, className }: TooltipProps) => {
   return (
-    <div className="relative flex flex-col items-center justify-center group">
+    <div
+      className={
+        className + ' relative flex flex-col items-center justify-center group'
+      }
+    >
       {children}
       <div className="absolute top-0 -translate-y-full w-max flex flex-col items-center hidden group-hover:flex">
         <span className="relative rounded z-100 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">

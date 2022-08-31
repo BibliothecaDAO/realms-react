@@ -1,14 +1,23 @@
-import { Button, OrderIcon, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import {
+  Button,
+  OrderIcon,
+  ResourceIcon,
+  Tabs,
+  IconButton,
+} from '@bibliotheca-dao/ui-lib';
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
+import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
 import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { TroopSlot } from '@/constants/troops';
 import { useRealmContext } from '@/context/RealmContext';
@@ -17,6 +26,7 @@ import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import {
+  getAccountHex,
   hasOwnRelic,
   RealmCombatStatus,
   RealmStatus,
@@ -25,6 +35,7 @@ import {
   trimmedOrder,
 } from '@/shared/Getters/Realm';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
+import { shortenAddressWidth } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
 
 interface RealmOverviewsProps {
@@ -63,8 +74,15 @@ export function RealmListCardView(props: RealmOverviewsProps) {
       (account.toLowerCase() === realm.owner ||
         account.toLowerCase() === realm.bridgedOwner)) ||
     (starkAccount &&
-      (starkAccount.toLowerCase() === realm.ownerL2 ||
-        starkAccount.toLowerCase() === realm.settledOwner));
+      (getAccountHex(starkAccount).toLowerCase() === realm.ownerL2 ||
+        getAccountHex(starkAccount).toLowerCase() === realm.settledOwner));
+
+  const getRealmOwner = (realm: RealmFragmentFragment) =>
+    realm.settledOwner ||
+    realm.bridgedOwner ||
+    realm.owner ||
+    realm.ownerL2 ||
+    '';
 
   const openRealmDetails = (realmId: number) => {
     openDetails('realm', realmId.toString());
@@ -164,7 +182,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           {props.realm?.wonder}
         </div>
       )}
-      <div className="flex justify-center w-full pb-4 mb-4 border-b-4 border-double border-white/20">
+      <div className="flex justify-center items-center w-full pb-4 mb-4 border-b-4 border-double border-white/20">
         <OrderIcon
           withTooltip
           className="self-center mr-3"
@@ -176,7 +194,17 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           {'   '}
           <span className="opacity-30"> #{props.realm.realmId}</span>
         </h2>
-        <div className="self-center px-3">
+        {!isYourRealm(props.realm) && (
+          <Tooltip
+            className="ml-3"
+            tooltipText={
+              'Lord: ' + shortenAddressWidth(getRealmOwner(props.realm), 6)
+            }
+          >
+            <Crown className="fill-white w-8" />
+          </Tooltip>
+        )}
+        <div className="self-center items-center flex px-3">
           {!isFavourite(props.realm) && (
             <Button
               size="xs"
@@ -268,7 +296,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
               size="xs"
               className="w-full"
             >
-              {isYourRealm(props.realm) ? 'manage' : 'details'}
+              {isYourRealm(props.realm) ? 'manage' : 'more actions'}
             </Button>
           </div>
           {/* <Button
