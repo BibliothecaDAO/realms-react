@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
@@ -72,7 +73,7 @@ export const ResourceSwapSideBar = (props: Props) => {
                 variant="primary"
                 onClick={approveLords}
               >
-                APPROVE LORDS
+                APPROVE LORDS <Lords className="w-4" />
               </Button>
             </div>
           )}

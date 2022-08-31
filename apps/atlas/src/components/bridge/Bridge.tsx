@@ -203,7 +203,10 @@ export const Bridge: React.FC<Prop> = (props) => {
             >
               <div className="flex">
                 <Lords className="mr-4 fill-current w-7" />
-                <span className="flex">2. Lords Balance</span>
+                <span className="flex">
+                  2. Lords
+                  <Lords className="w-3 mr-2" /> Balance
+                </span>
               </div>
               {balance >= MINIMUM_LORDS_REQUIRED ? Checkmark : null}
             </button>
