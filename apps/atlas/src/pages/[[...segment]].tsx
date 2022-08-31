@@ -426,7 +426,6 @@ function MapModule() {
       getCursor={({ isHovering }) => {
         return isHovering ? 'pointer' : 'grabbing';
       }}
-      views={new GlobeView()}
       pickingRadius={25}
       viewState={viewState}
       controller={true}
