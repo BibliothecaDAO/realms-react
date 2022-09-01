@@ -124,10 +124,6 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
     const [selectedTab, setSelectedTab] = useState(0);
 
     useImperativeHandle(ref, () => ({
-      getTabs() {
-        return tabs;
-      },
-
       selectTab(index) {
         setSelectedTab(index);
       },

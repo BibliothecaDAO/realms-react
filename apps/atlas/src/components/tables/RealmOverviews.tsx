@@ -100,33 +100,36 @@ export function RealmOverviews(props: RealmOverviewsProps) {
 
   const [tab, setTab] = useState(0);
 
-  const [cardRefs, setCardRefs] = useState<any>([]);
+  const cardRefs = useRef<any>([]);
 
   useEffect(() => {
     // add or remove refs
-    setCardRefs((elRefs) =>
-      Array(filteredRealms.length)
-        .fill({})
-        .map((_, i) => elRefs[i] || createRef())
-    );
+    cardRefs.current = Array(filteredRealms.length)
+      .fill({})
+      .map((_, i) => cardRefs.current[i] || createRef());
   }, [filteredRealms]);
 
+  const tabs = [
+    <Castle key={0} className="self-center w-6 h-6 fill-current" />,
+    <Helm key={1} className="self-center w-6 h-6 fill-current" />,
+    <Sickle key={2} className="self-center w-6 h-6 fill-current" />,
+  ];
   return (
     <div>
       <div className="flex mt-4 ml-5 w-full justify-center">
         Quick switch:
-        {cardRefs[0]?.current?.getTabs().map((tab, index) => (
+        {tabs.map((tab, index) => (
           <button
             className="ml-4"
             key={index}
             onClick={() => {
               play();
-              cardRefs.forEach((el) => {
-                el.current?.selectTab(index);
+              cardRefs.current?.forEach((el) => {
+                el.selectTab(index);
               });
             }}
           >
-            {tab.label}
+            {tab}
           </button>
         ))}
       </div>
@@ -134,8 +137,8 @@ export function RealmOverviews(props: RealmOverviewsProps) {
         {props.realms &&
           filteredRealms.map((realm: RealmFragmentFragment, index) => (
             <RealmListCardView
-              ref={cardRefs[index]}
-              key={index}
+              ref={(el) => (cardRefs.current[index] = el)}
+              key={realm.realmId}
               realm={realm}
             />
           ))}
