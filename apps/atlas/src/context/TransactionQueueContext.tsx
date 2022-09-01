@@ -14,6 +14,7 @@ interface TransactionQueue {
   transactions: Tx[];
   remove: (tx: Tx) => void;
   empty: () => void;
+  reorderQueue: (dragIndex: number, hoverIndex: number) => void;
   executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
@@ -55,6 +56,14 @@ export const TransactionQueueProvider = ({
     });
   };
 
+  const reorderQueue = (dragIndex: number, hoverIndex: number) => {
+    setTx((prev) => {
+      const next = [...prev];
+      next.splice(hoverIndex, 0, ...next.splice(dragIndex, 1));
+      return next;
+    });
+  };
+
   const empty = () => {
     setTx([]);
   };
@@ -83,7 +92,14 @@ export const TransactionQueueProvider = ({
 
   return (
     <TransactionQueueContext.Provider
-      value={{ add, remove, empty, transactions: txs, executeMulticall }}
+      value={{
+        add,
+        remove,
+        empty,
+        reorderQueue,
+        transactions: txs,
+        executeMulticall,
+      }}
     >
       {children}
     </TransactionQueueContext.Provider>

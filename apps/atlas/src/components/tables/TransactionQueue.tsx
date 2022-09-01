@@ -1,5 +1,5 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import { TxCartItem } from '@/components/tables/Transactions';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
@@ -36,6 +36,10 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
 
     setResourceCostsById(costsByResourceId);
   }, [txQueue.transactions]);
+
+  const reorderCards = useCallback((dragIndex: number, hoverIndex: number) => {
+    txQueue.reorderQueue(dragIndex, hoverIndex);
+  }, []);
 
   const signDecree = () => {
     play();
@@ -106,8 +110,10 @@ export const TransactionQueue: React.FC<Prop> = (props) => {
         <TxCartItem
           key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
             ?.map((bignum) => bignum.toString())
-            .join(':')}::${i}`}
+            .join(':')}`}
           transaction={c}
+          index={i}
+          onReorder={reorderCards}
           onRemove={() => txQueue.remove(c)}
         />
       ))}

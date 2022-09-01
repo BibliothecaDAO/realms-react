@@ -3,6 +3,10 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
 
+export const dndTypes = {
+  TX: 'tx',
+};
+
 interface Owner {
   address: string;
   realmsHeld: number;

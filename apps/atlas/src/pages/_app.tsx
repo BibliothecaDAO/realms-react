@@ -7,6 +7,8 @@ import {
 import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -16,7 +18,7 @@ import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 import apolloClient from '@/util/apolloClient';
-/* import PageTransition from '@/components/navigation/PageTransition'; 
+/* import PageTransition from '@/components/navigation/PageTransition';
 import { animated, Transition } from '@react-spring/web'; */
 
 // Create a react-query client
@@ -96,7 +98,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <QueryClientProvider client={queryClient}>
               <TransactionQueueProvider>
-                <Component {...pageProps} />
+                <DndProvider backend={HTML5Backend}>
+                  <Component {...pageProps} />
+                </DndProvider>
               </TransactionQueueProvider>
 
               {/* <PageTransition
