@@ -1,20 +1,14 @@
-// import { useQuery } from '@apollo/client';
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-// import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-// import { useAtlasContext } from '@/hooks/useAtlasContext';
-import type { Data } from '@/types/index';
 import AtlasSideBar from '../sidebars/AtlasSideBar';
 import { LpMerchant } from '../tables/LpMerchant';
 import { Nexus } from '../tables/Nexus';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
-// import { BaseSideBar } from './BaseSideBar';
 
 type ResourceSwapSideBarProps = {
   resources?: string[];
@@ -28,7 +22,7 @@ export const ResourceSwapSideBar = ({
   resources,
 }: ResourceSwapSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-[100]">
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
       )}

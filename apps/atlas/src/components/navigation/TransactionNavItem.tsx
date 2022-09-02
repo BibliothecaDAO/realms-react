@@ -4,7 +4,7 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { Scroll } from '@/shared/Icons';
 import { TxStyles } from '@/shared/Validators/styles';
 
-const TransactionNavItem = () => {
+const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   const { transactions } = useStarknetTransactionManager();
   const txQueue = useTransactionQueue();
 
@@ -19,9 +19,7 @@ const TransactionNavItem = () => {
       <Button
         variant="outline"
         className="relative flex flex-col sm:flex-row sm:inline-flex"
-        onClick={() => {
-          // toggleMenuType('transactionCart');
-        }}
+        onClick={onClick}
       >
         <Scroll className="inline-block w-6 fill-white" />
         {txQueue.transactions.length > 0 ? (

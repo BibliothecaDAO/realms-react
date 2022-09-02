@@ -10,18 +10,23 @@ import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 // import { useAtlasContext } from '@/hooks/useAtlas';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
+import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
+import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
 import TransactionNavItem from './TransactionNavItem';
+
+type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
   // const { togglePanelType, toggleMenuType } = useAtlasContext();
-
+  const { pathname } = useRouter();
   const [player, currentTrack] = usePlayer([
     {
       title: 'Order of Enlightenment',
@@ -70,6 +75,21 @@ export function Header() {
     //   src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
     // },
   ]);
+
+  const [selectedSideBar, setSelectedSideBar] =
+    useState<HeaderSidePanelType>('');
+
+  function onTransactionNavClick() {
+    setSelectedSideBar(selectedSideBar === 'transaction' ? '' : 'transaction');
+  }
+
+  function onLordsNavClick() {
+    // Bank swap panel is already open
+    if (pathname.slice(1).split('/')[0] === 'bank') {
+      return;
+    }
+    setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
+  }
 
   return (
     <div className="top-0 left-0 z-40 justify-end hidden shadow-lg bg-gray-1100 sm:flex ">
@@ -142,20 +162,24 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button
-            onClick={() => {
-              // toggleMenuType('bank');
-            }}
-            variant="outline"
-          >
+          <Button onClick={onLordsNavClick} variant="outline">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}
             </span>
           </Button>
         </span>
-        <TransactionNavItem />
+        <TransactionNavItem onClick={onTransactionNavClick} />
       </div>
+
+      <ResourceSwapSideBar
+        isOpen={selectedSideBar === 'bank'}
+        onClose={onLordsNavClick}
+      />
+      <TransactionCartSideBar
+        isOpen={selectedSideBar === 'transaction'}
+        onClose={onTransactionNavClick}
+      />
     </div>
   );
 }

@@ -7,7 +7,6 @@ import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
 export default function RealmPage() {
   const router = useRouter();
   const { realmId } = router.query;
-  console.log(router.query);
   return (
     <Layout>
       <RealmDetailsPanel

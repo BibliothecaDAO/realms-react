@@ -1,40 +1,27 @@
-import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
-
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import ScrollIcon from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
-import { useStarknet } from '@starknet-react/core';
-import { BigNumber } from 'ethers';
+import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useState, useMemo } from 'react';
-import type { RealmFragmentFragment } from '@/generated/graphql';
 import { TransactionQueue } from '../tables/TransactionQueue';
 import { TransactionCartTable } from '../tables/Transactions';
-import { BaseSideBar } from './AssetSideBar';
+import AtlasSideBar from './AtlasSideBar';
+import { BaseSideBarPanel } from './BaseSideBarPanel';
 
-type Props = {
-  id: string;
+interface TransactionCartSideBarProps {
+  isOpen: boolean;
+  onClose?: () => void;
+}
+
+export const TransactionCartSideBar = ({
+  isOpen,
+  onClose,
+}: TransactionCartSideBarProps) => {
+  return (
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-[100]">
+      {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
+    </AtlasSideBar>
+  );
 };
-type RealmsSelectableProps = {
-  realms?: RealmFragmentFragment[];
-  selectedTab: number;
-};
-type OwnerFilter =
-  | {
-      ownerL2: {
-        equals: string | undefined;
-      };
-    }[]
-  | {
-      settledOwner: {
-        equals: string | undefined;
-      };
-    }[];
 
-/* TBD Should this be merged with Bridge Realms Sidebar */
-export const TransactionCartSideBar = () => {
-  const { account } = useStarknet();
-
-  const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
-
+const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const tabs = useMemo(
@@ -58,53 +45,25 @@ export const TransactionCartSideBar = () => {
   );
 
   return (
-    // <BaseSideBar open={isSettleRealms}>
-    <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
-      <div>
-        <div className="flex justify-between mt-8 mb-2">
-          <h2>
-            <ScrollIcon className="inline-block w-8 mr-4 sm:w-10 fill-slate-200" />
-            Thee Royal Decree
-          </h2>
-          <div className="flex justify-end mb-2 mr-1">
-            <Button
-              size="xs"
-              variant="outline"
-              onClick={() => {
-                // toggleMenuType('transactionCart')
-              }}
-            >
-              <Close />
-            </Button>
-          </div>
-        </div>
-
-        <Tabs
-          selectedIndex={selectedTab}
-          onChange={(index) => setSelectedTab(index as number)}
-          variant="default"
-        >
-          <Tabs.List className="">
-            {tabs.map((tab) => (
-              <Tabs.Tab key={tab.label} className="uppercase">
-                {tab.label}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels>
-            {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
-      </div>
-
-      {/* {loading && (
-          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <h2>Loading</h2>
-          </div>
-        )} */}
-    </div>
-    // </BaseSideBar>
+    <BaseSideBarPanel onClose={onClose}>
+      <Tabs
+        selectedIndex={selectedTab}
+        onChange={(index) => setSelectedTab(index as number)}
+        variant="default"
+      >
+        <Tabs.List className="">
+          {tabs.map((tab) => (
+            <Tabs.Tab key={tab.label} className="uppercase">
+              {tab.label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        <Tabs.Panels>
+          {tabs.map((tab) => (
+            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+          ))}
+        </Tabs.Panels>
+      </Tabs>
+    </BaseSideBarPanel>
   );
 };

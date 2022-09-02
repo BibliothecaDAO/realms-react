@@ -116,10 +116,9 @@ export function BankPanel(): ReactElement {
               variant="secondary"
               size="xs"
               className="ml-auto"
-              onClick={() => {
-                // TODO
-                // toggleMenuType('bank');
-              }}
+              // onClick={() => {
+              //   // toggleMenuType('bank');
+              // }}
             >
               <ChevronRight />
             </Button>
