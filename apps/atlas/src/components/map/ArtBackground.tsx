@@ -15,13 +15,8 @@ type ArtBackgroundProps = {
   background?: BackgroundOptions;
 };
 
-const defaultProps: ArtBackgroundProps = {
-  background: 'hero',
-};
 export const ArtBackground = (props: ArtBackgroundProps) => {
-  // const { artBackground } = useAtlasContext();
-  // TODO: Fix
-  const artBackground = '';
+  const artBackground = props.background ?? 'hero';
   const opacityAnimation = useSpring({
     zIndex: artBackground ? 10 : 0,
     opacity: artBackground ? 1 : 0,

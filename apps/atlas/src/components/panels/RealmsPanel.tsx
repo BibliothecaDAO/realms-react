@@ -1,5 +1,4 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
-import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
@@ -11,7 +10,6 @@ import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
-// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
@@ -58,7 +56,9 @@ function useRealmsQueryVariables(
       }
 
       if (state.hasWonderFilter) filter.wonder = { not: null };
-      if (state.isSettledFilter) filter.settledOwner = { not: null };
+      if (state.isSettledFilter) {
+        filter.settledOwner = { not: null };
+      }
       if (state.isRaidableFilter) {
         filter.lastVaultTime = { not: null };
         orderBy.lastVaultTime = 'asc';
@@ -109,7 +109,24 @@ function useRealmsQueryVariables(
       orderBy,
       skip: limit * (page - 1),
     };
-  }, [account, state, page, selectedTabIndex, starknetWallet]);
+  }, [
+    account,
+    state.favouriteRealms,
+    state.selectedOrders,
+    state.searchIdFilter,
+    state.hasWonderFilter,
+    state.isSettledFilter,
+    state.isRaidableFilter,
+    state.rarityFilter.rank,
+    state.rarityFilter.score,
+    state.traitsFilter.City,
+    state.traitsFilter.Harbor,
+    state.traitsFilter.Region,
+    state.traitsFilter.River,
+    page,
+    selectedTabIndex,
+    starknetWallet,
+  ]);
 }
 
 function useRealmsPanelPagination() {
@@ -155,14 +172,11 @@ function useRealmsPanelTabs() {
 }
 
 export const RealmsPanel = () => {
-  // const { isDisplayLarge, openDetails } = useAtlasContext();
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
-  const router = useRouter();
 
   const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
-  const { id } = router.query;
-  const selectedId = id ?? '';
+
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
     pagination.setPage(1);
@@ -197,16 +211,6 @@ export const RealmsPanel = () => {
 
     return stopPolling;
   }, [loading, data]);
-
-  // const shouldOpenPage =
-  //   // !selectedId &&
-  //   isDisplayLarge && pagination.page === 1 && (data?.realms?.length ?? 0) > 0;
-
-  // useEffect(() => {
-  //   if (shouldOpenPage) {
-  //     openDetails('realm', data?.realms[0].realmId + '');
-  //   }
-  // }, [data, pagination.page, selectedId]);
 
   const showPagination = () =>
     selectedTabIndex === 1 &&
