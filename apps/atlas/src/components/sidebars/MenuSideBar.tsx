@@ -111,7 +111,7 @@ export const MenuSideBar = () => {
         }`}
       >
         {menus.map((menu) => (
-          <Link href={getPageHref(menu.page)} key={menu.page}>
+          <Link href={getPageHref(menu.page)} key={menu.page} shallow={true}>
             <div className="flex flex-col place-items-center ">
               <IconButton
                 className={`${buttonClasses} ${
@@ -133,7 +133,8 @@ export const MenuSideBar = () => {
 
         <div className="grow" />
         <div className="block sm:hidden">
-          <TransactionNavItem />
+          {/* TODO: Re-enable */}
+          {/* <TransactionNavItem onClick={() => {}} /> */}
         </div>
 
         <div className="flex flex-col mb-2 sm:hidden place-items-center">

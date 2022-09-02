@@ -213,7 +213,11 @@ export function RealmListCardView(props: RealmOverviewsProps) {
           <div className="w-full">
             <Button
               onClick={() => {
-                router.push(`/realm/${props.realm.realmId}?tab=Survey`);
+                router.push(
+                  `/realm/${props.realm.realmId}?tab=Survey`,
+                  undefined,
+                  { shallow: true }
+                );
               }}
               variant="primary"
               size="xs"

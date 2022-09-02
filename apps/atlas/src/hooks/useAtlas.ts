@@ -63,7 +63,7 @@ export function useAtlas() {
     if (!assetId) {
       return;
     }
-    router.push(`/?asset=${assetType}${assetId}`);
+    router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
   }
   console.log(selectedAsset);
 

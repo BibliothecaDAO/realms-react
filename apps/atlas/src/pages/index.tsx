@@ -42,35 +42,31 @@ export default function AtlasPage() {
 function AtlasSidebars() {
   const { selectedAsset } = useAtlas();
   const router = useRouter();
+
+  function onClose() {
+    router.push('/', undefined, { shallow: true });
+  }
   return (
     <>
       <RealmSideBar
         realmId={selectedAsset?.id as string}
         isOpen={selectedAsset?.type === 'realm'}
-        onClose={() => {
-          router.push('/');
-        }}
+        onClose={onClose}
       />
       <LootSideBar
         lootId={selectedAsset?.id as string}
         isOpen={selectedAsset?.type === 'loot'}
-        onClose={() => {
-          router.push('/');
-        }}
+        onClose={onClose}
       />
       <CryptSideBar
         cryptId={selectedAsset?.id as string}
         isOpen={selectedAsset?.type === 'crypt'}
-        onClose={() => {
-          router.push('/');
-        }}
+        onClose={onClose}
       />
       <GASideBar
         gaId={selectedAsset?.id as string}
         isOpen={selectedAsset?.type === 'ga'}
-        onClose={() => {
-          router.push('/');
-        }}
+        onClose={onClose}
       />
     </>
   );
