@@ -9,24 +9,24 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
-import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
+// import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
+// import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import TransactionNavItem from '../navigation/TransactionNavItem';
 
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
-  const { mainMenu, toggleMainMenu } = useAtlasContext();
-  const { query } = useRouter();
+  // const { mainMenu, toggleMainMenu } = useAtlasContext();
+  const { query, pathname } = useRouter();
+  const mainMenu = true;
 
   const isPage = useCallback(
-    (name: string) => name === (query.segment && query.segment[0]),
-    [query]
+    (name: string) => name === pathname.slice(1).split('/')[0],
+    [pathname]
   );
   const getPageHref = useCallback(
     (name: string) =>
@@ -45,6 +45,11 @@ export const MenuSideBar = () => {
 
   const menus = useMemo(() => {
     return [
+      {
+        page: '',
+        icon: <Crown className={`${iconClasses}`} />,
+        text: 'atlas',
+      },
       {
         page: 'account',
         icon: <Crown className={`${iconClasses}`} />,

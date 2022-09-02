@@ -1,10 +1,12 @@
 import { Button, Card } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
+import { useState } from 'react';
 import { useLootContext } from '@/context/LootContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { Loot } from '@/types/index';
+import { LootSideBar } from '../sidebars/LootSideBar';
 
 interface LootOverviewsProps {
   bags: Loot[];
@@ -12,7 +14,8 @@ interface LootOverviewsProps {
 
 export function LootOverviews(props: LootOverviewsProps) {
   const { account } = useWalletContext();
-  const { openDetails, gotoAssetId, togglePanelType } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
+  const [selectedLootId, setSelectedLootId] = useState('');
   const {
     state: { favouriteLoot },
     actions,
@@ -69,8 +72,7 @@ export function LootOverviews(props: LootOverviewsProps) {
               {' '}
               <Button
                 onClick={() => {
-                  togglePanelType('loot');
-                  gotoAssetId(loot.id, 'loot');
+                  navigateToAsset(+loot.id, 'loot');
                 }}
                 variant="primary"
                 size="xs"
@@ -79,7 +81,9 @@ export function LootOverviews(props: LootOverviewsProps) {
                 fly to
               </Button>
               <Button
-                onClick={() => openDetails('loot', loot.id)}
+                onClick={() => {
+                  setSelectedLootId(loot.id);
+                }}
                 variant="secondary"
                 size="xs"
                 className="w-full uppercase"
@@ -109,6 +113,13 @@ export function LootOverviews(props: LootOverviewsProps) {
             </div>
           </Card>
         ))}
+      <LootSideBar
+        lootId={selectedLootId}
+        isOpen={!!selectedLootId}
+        onClose={() => {
+          setSelectedLootId('');
+        }}
+      />
     </div>
   );
 }

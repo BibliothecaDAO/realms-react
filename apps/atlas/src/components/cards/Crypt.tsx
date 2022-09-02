@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import {
@@ -15,16 +15,13 @@ const variantMaps: any = {
 };
 
 export function Crypt(props: CryptProps): ReactElement {
-  const { gotoAssetId } = useAtlasContext();
-
+  const { navigateToAsset } = useAtlas();
   const ensData = useEnsResolver(props.crypt.currentOwner.address);
-
   const image = props.crypt.svg;
-
   const environment = findEnvironment(props.crypt.environment);
 
   return (
-    <div className="z-10 w-full h-auto p-1  rounded-xl">
+    <div className="z-10 w-full h-auto p-1 rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -85,7 +82,7 @@ export function Crypt(props: CryptProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      gotoAssetId(props.crypt.id, 'crypt');
+                      navigateToAsset(+props.crypt.id, 'crypt');
                     }}
                   >
                     fly to

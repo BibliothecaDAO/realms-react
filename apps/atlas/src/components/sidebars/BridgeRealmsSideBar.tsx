@@ -1,25 +1,36 @@
-import { useQuery } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useState, useMemo } from 'react';
 import { SelectableRealm } from '@/components/tables/SelectableRealm';
-import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useSelections } from '@/hooks/useSelectable';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { RealmCard } from '../cards/RealmCard';
-import { BaseSideBar } from './BaseSideBar';
-type Props = {
-  id: string;
+import AtlasSideBar from './AtlasSideBar';
+import { BaseSideBarPanel } from './BaseSideBarPanel';
+
+interface BridgeRealmsSideBarProps {
+  isOpen: boolean;
+  onClose?: () => void;
+}
+
+export const BridgeRealmsSideBar = ({
+  isOpen,
+  onClose,
+}: BridgeRealmsSideBarProps) => {
+  return (
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+      {isOpen && <BridgeRealmsSideBarPanel onClose={onClose} />}
+    </AtlasSideBar>
+  );
 };
 
-export const BridgeRealmsSideBar = () => {
-  const { toggleMenuType, selectedMenuType, showDetails } = useAtlasContext();
+export const BridgeRealmsSideBarPanel = ({
+  onClose,
+}: {
+  onClose?: () => void;
+}) => {
   const { account } = useWalletContext();
-  const [selectedResource, setResource] = useState<number>();
-  const isBridgeRealms = selectedMenuType === 'bridgeRealms' && showDetails;
   const limit = 50;
   const [page, setPage] = useState(1);
 
@@ -37,62 +48,41 @@ export const BridgeRealmsSideBar = () => {
 
   const { data, loading } = useGetRealmsQuery({
     variables,
-    skip: !isBridgeRealms,
   });
-  const {
-    state: { selectedRealms },
-    actions,
-  } = useRealmContext();
+  const { setSelections, toggleSelection, isSelected, selections } =
+    useSelections();
 
   const toggleSelectAllRealms = () =>
-    actions.toggleSelectAllRealms(
-      (data?.realms || []).map((realm) => realm.realmId)
-    );
+    setSelections((data?.realms || []).map((realm) => realm.realmId));
 
   return (
-    <BaseSideBar open={isBridgeRealms}>
-      <div className="relative top-0 bottom-0 right-0 flex flex-col justify-between w-full h-full p-6 pt-8 overflow-auto lg:w-5/12 rounded-r-2xl">
-        <div>
-          <div className="flex justify-between mb-2">
-            <h2>Bridge Realms</h2>
-            <div className="flex justify-end mb-2 mr-1">
-              <Button size="sm" onClick={() => toggleMenuType('bridgeRealms')}>
-                <Close />
-              </Button>
-            </div>
-          </div>
-          <div className="flex justify-end mb-6">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={toggleSelectAllRealms}
-            >
-              {selectedRealms.length > 0 ? `Deselect All` : `Select All`}
-            </Button>
-          </div>
-          {data &&
-            data.realms &&
-            data.realms.map((realm: RealmFragmentFragment, index) => (
-              <SelectableRealm
-                key={index}
-                realm={realm}
-                actions={actions}
-                isSelected={selectedRealms.indexOf(realm.realmId) > -1}
-              />
-            ))}
-        </div>
-        <div className="w-full">
-          <Button className="w-full" variant="primary" onClick={() => null}>
-            Bridge Realms
-          </Button>
-        </div>
-        {loading && (
-          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <Castle className="block w-20 fill-current" />
-            <h2>Loading</h2>
-          </div>
-        )}
+    <BaseSideBarPanel title="Bridge Realms" onClose={onClose}>
+      <div className="flex justify-end mb-6">
+        <Button variant="secondary" size="sm" onClick={toggleSelectAllRealms}>
+          {selections.length > 0 ? `Deselect All` : `Select All`}
+        </Button>
       </div>
-    </BaseSideBar>
+      {data &&
+        data.realms &&
+        data.realms.map((realm: RealmFragmentFragment, index) => (
+          <SelectableRealm
+            key={index}
+            realm={realm}
+            onSelect={toggleSelection}
+            isSelected={isSelected(realm.realmId)}
+          />
+        ))}
+      <div className="w-full">
+        <Button className="w-full" variant="primary" onClick={() => null}>
+          Bridge Realms
+        </Button>
+      </div>
+      {loading && (
+        <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+          <Castle className="block w-20 fill-current" />
+          <h2>Loading</h2>
+        </div>
+      )}
+    </BaseSideBarPanel>
   );
 };

@@ -18,7 +18,7 @@ import {
   useGetLoreEntitiesQuery,
   useGetRealmsQuery,
 } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
@@ -26,7 +26,7 @@ import { BasePanel } from './BasePanel';
 export const LorePanel = () => {
   const router = useRouter();
 
-  const { setModal } = useAtlasContext();
+  // const { setModal } = useAtlasContext();
   const { account } = useWalletContext();
   const { account: starknetAccount } = useStarknet();
   const { state, actions } = useLoreContext();
@@ -97,10 +97,11 @@ export const LorePanel = () => {
       if (spl.length > 0) {
         const id = parseInt(spl[0], 10) || 1;
 
-        setModal({
-          type: 'lore-entity',
-          props: { id },
-        });
+        // TODO
+        // setModal({
+        //   type: 'lore-entity',
+        //   props: { id },
+        // });
       }
     }
   }, []);

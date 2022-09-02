@@ -1,12 +1,10 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { useStarknetTransactionManager } from '@starknet-react/core';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { Scroll } from '@/shared/Icons';
 import { TxStyles } from '@/shared/Validators/styles';
 
 const TransactionNavItem = () => {
-  const { toggleMenuType } = useAtlasContext();
   const { transactions } = useStarknetTransactionManager();
   const txQueue = useTransactionQueue();
 
@@ -21,7 +19,9 @@ const TransactionNavItem = () => {
       <Button
         variant="outline"
         className="relative flex flex-col sm:flex-row sm:inline-flex"
-        onClick={() => toggleMenuType('transactionCart')}
+        onClick={() => {
+          // toggleMenuType('transactionCart');
+        }}
       >
         <Scroll className="inline-block w-6 fill-white" />
         {txQueue.transactions.length > 0 ? (

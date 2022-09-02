@@ -1,12 +1,8 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { formatEther } from '@ethersproject/units';
-import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useGetRealmQuery } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { BasePanel } from './BasePanel';
 
 type Row = {
@@ -30,7 +26,6 @@ export const RateChange = (change: number) => {
 };
 
 export function BankPanel(): ReactElement {
-  const { toggleMenuType } = useAtlasContext();
   const { balance, availableResourceIds, addSelectedSwapResources } =
     useResourcesContext();
 
@@ -121,7 +116,10 @@ export function BankPanel(): ReactElement {
               variant="secondary"
               size="xs"
               className="ml-auto"
-              onClick={() => toggleMenuType('bank')}
+              onClick={() => {
+                // TODO
+                // toggleMenuType('bank');
+              }}
             >
               <ChevronRight />
             </Button>

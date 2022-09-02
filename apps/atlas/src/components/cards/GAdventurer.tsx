@@ -2,20 +2,16 @@ import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import type { GAProps } from '../../types';
 
-const variantMaps: any = {
-  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
-};
-
 export function GAdventurer(props: GAProps): ReactElement {
   const [metaData, setMetaData] = useState(null);
-  const { gotoAssetId } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
 
   const ensData = useEnsResolver(props.ga.currentOwner.address);
 
@@ -55,7 +51,7 @@ export function GAdventurer(props: GAProps): ReactElement {
   }, [props.ga.id]);
 
   return (
-    <div className="z-10 w-full h-auto p-1  rounded-xl">
+    <div className="z-10 w-full h-auto p-1 rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -87,7 +83,7 @@ export function GAdventurer(props: GAProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      gotoAssetId(props.ga.id, 'ga');
+                      navigateToAsset(+props.ga.id, 'ga');
                     }}
                   >
                     fly to

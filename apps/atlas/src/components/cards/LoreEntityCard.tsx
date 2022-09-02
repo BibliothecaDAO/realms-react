@@ -4,7 +4,7 @@ import type {
   LoreEntityFragmentFragment,
   RealmFragmentFragment,
 } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 interface LoreEntitiesProps {
@@ -12,7 +12,7 @@ interface LoreEntitiesProps {
 }
 
 export function LoreEntityCard(props: LoreEntitiesProps) {
-  const { setModal } = useAtlasContext();
+  // const { setModal } = useAtlasContext();
 
   const { entity } = props;
 
@@ -33,12 +33,12 @@ export function LoreEntityCard(props: LoreEntitiesProps) {
       role="button"
       onKeyUp={() => ({})}
       tabIndex={0}
-      onClick={() => {
-        setModal({
-          type: 'lore-entity',
-          props: { id: entity.id },
-        });
-      }}
+      // onClick={() => {
+      //   setModal({
+      //     type: 'lore-entity',
+      //     props: { id: entity.id },
+      //   });
+      // }}
     >
       <h2 className={`mb-1`}>{entity.revisions[0]?.title}</h2>
       <div className={`flex justify-between mb-3 uppercase text-white/40`}>

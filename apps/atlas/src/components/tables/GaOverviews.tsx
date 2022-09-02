@@ -1,10 +1,12 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
+import { useState } from 'react';
 import { useGaContext } from '@/context/GaContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
+import { GASideBar } from '../sidebars/GASideBar';
 
 interface GaOverviewsProps {
   bags: GAdventurer[];
@@ -12,29 +14,16 @@ interface GaOverviewsProps {
 
 export function GaOverviews(props: GaOverviewsProps) {
   const { account } = useWalletContext();
-  const {
-    toggleMenuType,
-    selectedMenuType,
-    setSelectedId,
-    setSelectedAssetType,
-    gotoAssetId,
-    togglePanelType,
-  } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
   const {
     state: { favouriteGa },
     actions,
   } = useGaContext();
 
+  const [selectedGAId, setSelectedGAId] = useState('');
+
   const isYourGA = (ga: GAdventurer) =>
     account && account === ga.currentOwner?.address?.toLowerCase();
-
-  const openGaDetails = (id: string) => {
-    setSelectedAssetType('ga');
-    setSelectedId(id);
-    if (selectedMenuType !== 'ga') {
-      toggleMenuType('ga');
-    }
-  };
 
   const isFavourite = (ga: GAdventurer) => favouriteGa.indexOf(ga.id) > -1;
 
@@ -92,8 +81,7 @@ export function GaOverviews(props: GaOverviewsProps) {
               {' '}
               <Button
                 onClick={() => {
-                  togglePanelType('ga');
-                  gotoAssetId(ga.id, 'ga');
+                  navigateToAsset(+ga.id, 'ga');
                 }}
                 variant="primary"
                 className="w-full text-xs"
@@ -101,7 +89,9 @@ export function GaOverviews(props: GaOverviewsProps) {
                 fly to
               </Button>
               <Button
-                onClick={() => openGaDetails(ga.id)}
+                onClick={() => {
+                  setSelectedGAId(ga.id);
+                }}
                 variant="secondary"
                 className="w-full text-xs"
               >
@@ -130,6 +120,14 @@ export function GaOverviews(props: GaOverviewsProps) {
             </div>
           </div>
         ))}
+
+      <GASideBar
+        gaId={selectedGAId}
+        isOpen={!!selectedGAId}
+        onClose={() => {
+          setSelectedGAId('');
+        }}
+      />
     </div>
   );
 }

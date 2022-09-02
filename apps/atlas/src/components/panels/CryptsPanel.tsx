@@ -8,7 +8,6 @@ import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
 import { getCryptsQuery } from '@/hooks/graphql/queries';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Crypt } from '@/types/index';
@@ -16,7 +15,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const CryptsPanel = () => {
-  const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
+  // const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useCryptContext();
 
@@ -83,16 +82,16 @@ export const CryptsPanel = () => {
     skip: !isCryptPanel,
   });
 
-  useEffect(() => {
-    if (
-      !selectedId &&
-      isDisplayLarge &&
-      page === 1 &&
-      (data?.dungeons?.length ?? 0) > 0
-    ) {
-      openDetails('crypt', data?.dungeons[0].id as string);
-    }
-  }, [data, page, selectedId]);
+  // useEffect(() => {
+  //   if (
+  //     !selectedId &&
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.dungeons?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('crypt', data?.dungeons[0].id as string);
+  //   }
+  // }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&

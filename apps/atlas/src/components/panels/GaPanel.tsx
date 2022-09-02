@@ -8,7 +8,6 @@ import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
@@ -16,7 +15,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const GaPanel = () => {
-  const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
+  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -78,16 +77,16 @@ export const GaPanel = () => {
     skip: !isGaPanel,
   });
 
-  useEffect(() => {
-    if (
-      !selectedId &&
-      isDisplayLarge &&
-      page === 1 &&
-      (data?.gadventurers?.length ?? 0) > 0
-    ) {
-      openDetails('ga', data?.gadventurers[0].id as string);
-    }
-  }, [data, page, selectedId]);
+  // useEffect(() => {
+  //   if (
+  //     !selectedId &&
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.gadventurers?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('ga', data?.gadventurers[0].id as string);
+  //   }
+  // }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&

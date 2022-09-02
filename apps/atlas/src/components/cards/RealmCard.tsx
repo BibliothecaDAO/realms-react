@@ -4,7 +4,6 @@ import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
 import { RealmHistory } from '@/components/panels/RealmDetails/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { DownloadAssets } from '@/shared/DownloadAssets';
 import { RealmStatus, TraitTable } from '@/shared/Getters/Realm';
@@ -18,7 +17,6 @@ const variantMaps: any = {
 };
 
 function Overview(props: RealmsCardProps): ReactElement {
-  const { gotoAssetId } = useAtlasContext();
   const regions = props.realm.traits?.find((o) => o.type === 'Region');
   const cities = props.realm.traits?.find((o) => o.type === 'City');
   const rivers = props.realm.traits?.find((o) => o.type === 'River');
@@ -26,24 +24,6 @@ function Overview(props: RealmsCardProps): ReactElement {
 
   return (
     <div>
-      {/* <div>
-        <div className="flex justify-between">
-          {!props.realm?.owner && (
-            <div>
-              <button
-                className={
-                  'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
-                }
-                onClick={() => {
-                  gotoAssetId(props.realm?.realmId as number, 'realm');
-                }}
-              >
-                fly to
-              </button>
-            </div>
-          )}
-        </div>
-      </div> */}
       <div className="flex flex-wrap mb-2 tracking-widest uppercase">
         {props.realm.resources?.map((re, index) => (
           <div key={index} className="flex mb-4 mr-4 text-xl">

@@ -21,10 +21,8 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
-import useResources from '@/hooks/settling/useResources';
 import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
@@ -33,6 +31,7 @@ import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
+import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
@@ -40,8 +39,9 @@ export function AccountPanel() {
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
-  const { toggleMenuType, selectedPanel } = useAtlasContext();
   const [selectedId, setSelectedId] = useState(0);
+  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
+    useState(false);
 
   const filter = {
     OR: [
@@ -373,7 +373,9 @@ export function AccountPanel() {
             <Button
               variant="primary"
               size="xs"
-              onClick={() => toggleMenuType('settleRealms')}
+              onClick={() => {
+                setIsSettleRealmsSideBarOpen(true);
+              }}
             >
               3. Settle Realms
             </Button>
@@ -395,6 +397,12 @@ export function AccountPanel() {
           </CardBody>
         </Card>
       </animated.div>
+      <SettleRealmsSideBar
+        isOpen={isSettleRealmsSideBarOpen}
+        onClose={() => {
+          setIsSettleRealmsSideBarOpen(false);
+        }}
+      />
     </BasePanel>
   );
 }

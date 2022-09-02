@@ -1,14 +1,11 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { useState } from 'react';
 import { useCryptContext } from '@/context/CryptContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
-import {
-  environments,
-  findEnvironment,
-  isLegendary,
-  legendaryColourClass,
-} from '@/util/cryptsEnvironments';
+import { environments, findEnvironment } from '@/util/cryptsEnvironments';
+import { CryptSideBar } from '../sidebars/CryptsSideBar';
 
 interface CryptOverviewsProps {
   dungeons: Crypt[];
@@ -16,11 +13,12 @@ interface CryptOverviewsProps {
 
 export function CryptsOverviews(props: CryptOverviewsProps) {
   const { account } = useWalletContext();
-  const { openDetails, gotoAssetId, togglePanelType } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
   const {
     state: { favouriteCrypt },
     actions,
   } = useCryptContext();
+  const [selectedCryptId, setSelectedCryptId] = useState('');
 
   const isYourCrypt = (crypt: Crypt) =>
     account && account === crypt.currentOwner?.address?.toLowerCase();
@@ -76,8 +74,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
               {' '}
               <Button
                 onClick={() => {
-                  togglePanelType('crypt');
-                  gotoAssetId(crypt.id, 'crypt');
+                  navigateToAsset(+crypt.id, 'crypt');
                 }}
                 variant="primary"
                 size="xs"
@@ -86,7 +83,9 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 fly to
               </Button>
               <Button
-                onClick={() => openDetails('crypt', crypt.id)}
+                onClick={() => {
+                  setSelectedCryptId(crypt.id);
+                }}
                 variant="secondary"
                 size="xs"
                 className="w-full "
@@ -114,6 +113,13 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
             </div>
           </div>
         ))}
+      <CryptSideBar
+        cryptId={selectedCryptId}
+        isOpen={!!selectedCryptId}
+        onClose={() => {
+          setSelectedCryptId('');
+        }}
+      />
     </div>
   );
 }

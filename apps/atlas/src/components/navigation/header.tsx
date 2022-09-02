@@ -12,7 +12,7 @@ import { formatEther } from '@ethersproject/units';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import TransactionNavItem from './TransactionNavItem';
@@ -20,7 +20,7 @@ import TransactionNavItem from './TransactionNavItem';
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { togglePanelType, toggleMenuType } = useAtlasContext();
+  // const { togglePanelType, toggleMenuType } = useAtlasContext();
 
   const [player, currentTrack] = usePlayer([
     {
@@ -142,7 +142,12 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={() => toggleMenuType('bank')} variant="outline">
+          <Button
+            onClick={() => {
+              // toggleMenuType('bank');
+            }}
+            variant="outline"
+          >
             <Lords className="w-6" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}

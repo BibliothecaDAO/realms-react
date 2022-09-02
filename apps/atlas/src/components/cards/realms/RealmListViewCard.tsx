@@ -1,39 +1,31 @@
-import { Button, OrderIcon, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button, OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { HeartIcon } from '@heroicons/react/solid';
 import { useStarknet } from '@starknet-react/core';
-import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { TroopSlot } from '@/constants/troops';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import {
   hasOwnRelic,
   RealmCombatStatus,
   RealmStatus,
-  RealmVaultStatus,
-  squadStats,
   trimmedOrder,
 } from '@/shared/Getters/Realm';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
-import { findResourceName } from '@/util/resources';
 
 interface RealmOverviewsProps {
   realm: RealmFragmentFragment;
   isYourRealms?: boolean;
 }
-
-const JOURNEY_1_ADDRESS = '0x17963290db8c30552d0cfa2a6453ff20a28c31a2';
-const JOURNEY_2_ADDRESS = '0xcdfe3d7ebfa793675426f150e928cd395469ca53';
 
 export function RealmListCardView(props: RealmOverviewsProps) {
   const { play } = useUiSounds(soundSelector.pageTurn);
@@ -41,22 +33,12 @@ export function RealmListCardView(props: RealmOverviewsProps) {
   const router = useRouter();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
-  const {
-    openDetails,
-    toggleMenuType,
-    selectedMenuType,
-    gotoAssetId,
-    togglePanelType,
-  } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
+
   const {
     state: { favouriteRealms },
     actions,
   } = useRealmContext();
-
-  const isBridgedViaGalleon = (realm: RealmFragmentFragment) =>
-    realm.owner === JOURNEY_1_ADDRESS;
-  const isBridgedViaCarrack = (realm: RealmFragmentFragment) =>
-    realm.owner === JOURNEY_2_ADDRESS;
 
   const isYourRealm = (realm: RealmFragmentFragment) =>
     (account &&
@@ -66,45 +48,8 @@ export function RealmListCardView(props: RealmOverviewsProps) {
       (starkAccount.toLowerCase() === realm.ownerL2 ||
         starkAccount.toLowerCase() === realm.settledOwner));
 
-  const openRealmDetails = (realmId: number) => {
-    openDetails('realm', realmId.toString());
-    if (selectedMenuType !== 'realm') {
-      toggleMenuType('realm');
-    }
-  };
-
   const isFavourite = (realm: RealmFragmentFragment) =>
     favouriteRealms.indexOf(realm.realmId) > -1;
-  let bridgeRow;
-
-  if (props.isYourRealms) {
-    bridgeRow = (
-      <div className={`justify-between mb-3`}>
-        <div className="flex">
-          You have X Realms on L1 (Ethereum)
-          <Button
-            variant="primary"
-            size="sm"
-            className={clsx('')}
-            onClick={() => toggleMenuType('bridgeRealms')}
-          >
-            Bridge L1 {'><'} L2
-          </Button>
-        </div>
-        <div className="flex">
-          You have X unsettled Realms
-          <Button
-            variant="primary"
-            size="sm"
-            className=""
-            onClick={() => toggleMenuType('settleRealms')}
-          >
-            Settle Realms
-          </Button>
-        </div>
-      </div>
-    );
-  }
   const [selectedTab, setSelectedTab] = useState(0);
 
   const tabs = useMemo(
@@ -242,7 +187,10 @@ export function RealmListCardView(props: RealmOverviewsProps) {
                   size="xs"
                   variant="secondary"
                   className="w-full uppercase"
-                  onClick={() => toggleMenuType('bridgeRealms')}
+                  onClick={() => {
+                    // TODO: Re-enable
+                    // toggleMenuType('bridgeRealms');
+                  }}
                 >
                   Bridge Realm
                 </Button>
@@ -252,7 +200,10 @@ export function RealmListCardView(props: RealmOverviewsProps) {
                   size="xs"
                   variant="secondary"
                   className="w-full uppercase"
-                  onClick={() => toggleMenuType('settleRealms')}
+                  onClick={() => {
+                    // TODO: Re-enable
+                    // toggleMenuType('settleRealms');
+                  }}
                 >
                   Settle Realm
                 </Button>
@@ -282,8 +233,7 @@ export function RealmListCardView(props: RealmOverviewsProps) {
             <div>
               <Button
                 onClick={() => {
-                  togglePanelType('realm');
-                  gotoAssetId(props.realm.realmId, 'realm');
+                  navigateToAsset(props.realm.realmId, 'realm');
                 }}
                 variant="outline"
                 size="xs"

@@ -301,7 +301,11 @@ function useResources() {
 
     setBuildingCosts(gameConstants?.buildingCosts);
     setTroopCosts(gameConstants?.troopStats);
-  }, [resourceBalanceData, resourcesBalanceError, exchangeInfo]);
+  }, [
+    resourceBalanceData && resourceBalanceData[0],
+    resourcesBalanceError,
+    exchangeInfo,
+  ]);
 
   const getResourceById = useCallback(
     (resourceId: number) => {

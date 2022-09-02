@@ -11,7 +11,7 @@ import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
@@ -155,7 +155,7 @@ function useRealmsPanelTabs() {
 }
 
 export const RealmsPanel = () => {
-  const { isDisplayLarge, openDetails } = useAtlasContext();
+  // const { isDisplayLarge, openDetails } = useAtlasContext();
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
   const router = useRouter();

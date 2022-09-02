@@ -8,23 +8,17 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Map, { FullscreenControl } from 'react-map-gl';
 import Layout from '@/components/Layout';
-import { LorePanel } from '@/components/panels/LorePanel';
-import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
-import { CryptsSideBar } from '@/components/sidebars/CryptsSideBar';
+import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
-import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
-import { LoreProvider } from '@/context/LoreContext';
 
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
-
-// import order_highlights from '@/geodata/order_highlights.json';
-// import type { RealmFeatures } from '@/types/index';
+import type { AssetType } from '@/hooks/useAtlas';
+import { useAtlas } from '@/hooks/useAtlas';
 
 export default function AtlasPage() {
   return (
@@ -46,40 +40,47 @@ export default function AtlasPage() {
 }
 
 function AtlasSidebars() {
-  const { selectedMenuType } = useAtlasContext();
+  const { selectedAsset } = useAtlas();
   const router = useRouter();
-  const { id } = router.query;
-  const assetSelected = !!id;
   return (
     <>
-      {selectedMenuType === 'realm' && assetSelected && (
-        <RealmSideBar realmId={id as string} />
-      )}
-      {selectedMenuType === 'loot' && assetSelected && (
-        <LootSideBar lootId={id as string} />
-      )}
-      {selectedMenuType === 'ga' && assetSelected && (
-        <GASideBar gaId={id as string} />
-      )}
-      {selectedMenuType === 'crypt' && assetSelected && (
-        <CryptsSideBar cryptId={id as string} />
-      )}
-      {selectedMenuType === 'bridgeRealms' && <BridgeRealmsSideBar />}
-      {selectedMenuType === 'settleRealms' && <SettleRealmsSideBar />}
+      <RealmSideBar
+        realmId={selectedAsset?.id as string}
+        isOpen={selectedAsset?.type === 'realm'}
+        onClose={() => {
+          router.push('/');
+        }}
+      />
+      <LootSideBar
+        lootId={selectedAsset?.id as string}
+        isOpen={selectedAsset?.type === 'loot'}
+        onClose={() => {
+          router.push('/');
+        }}
+      />
+      <CryptSideBar
+        cryptId={selectedAsset?.id as string}
+        isOpen={selectedAsset?.type === 'crypt'}
+        onClose={() => {
+          router.push('/');
+        }}
+      />
+      <GASideBar
+        gaId={selectedAsset?.id as string}
+        isOpen={selectedAsset?.type === 'ga'}
+        onClose={() => {
+          router.push('/');
+        }}
+      />
     </>
   );
 }
 
 function MapModule() {
   const ItemViewLevel = 5;
-  const { openDetails, selectedId, coordinates } = useAtlasContext();
-  const [resource] = useState<Array<string>>([]);
+  const { navigateToAsset, coordinates, selectedAsset } = useAtlas();
 
-  /* const filteredData = () => {
-    return realms.features.filter((a: RealmFeatures) =>
-      a.properties.resources.some((b: string) => resource.includes(b))
-    );
-  }; */
+  const selectedId = selectedAsset?.id ?? '0';
 
   const [viewState, setViewState] = useState({
     longitude: 0,
@@ -95,97 +96,34 @@ function MapModule() {
     transitionInterpolator: new FlyToInterpolator(),
   });
 
-  const cryptsLayer = new ScatterplotLayer({
-    id: 'crypts-layer',
-    data: crypts.features,
-    stroked: true,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    opacity: 1,
-    visible: viewState.zoom < ItemViewLevel ? false : true,
-    getPosition: (d: any) => d.coordinates,
-    getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
-    getElevation: 10000,
-    lineWidthMinPixels: 1,
-    getFillColor: [0, 0, 0, 0],
-    updateTriggers: {
-      getRadius: parseInt(selectedId),
-      getVisible: viewState,
-    },
-    onClick: (info: any) => {
-      openDetails('crypt', info.object.id);
-    },
-  });
+  const createScatterPlot = (assetType: AssetType, data: any[]) =>
+    new ScatterplotLayer({
+      id: `${assetType}-layer`,
+      data,
+      stroked: true,
+      filled: true,
+      extruded: true,
+      pickable: true,
+      opacity: 1,
+      visible: viewState.zoom < ItemViewLevel ? false : true,
+      getPosition: (d: any) => d.coordinates,
+      getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
+      getElevation: 10000,
+      lineWidthMinPixels: 1,
+      getFillColor: [0, 0, 0, 0],
+      updateTriggers: {
+        getRadius: parseInt(selectedId),
+        getVisible: viewState,
+      },
+      onClick: (info: any) => {
+        navigateToAsset(info.object.id, assetType);
+      },
+    });
 
-  const realmsLayer = new ScatterplotLayer({
-    id: 'realms-layer',
-    data: (realms as any).features,
-    stroked: true,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    opacity: 1,
-    visible: viewState.zoom < ItemViewLevel ? false : true,
-    getPosition: (d: any) => d.coordinates,
-    getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 1),
-    getElevation: 10000,
-    lineWidthMinPixels: 1,
-    getFillColor: [0, 0, 0, 0],
-    updateTriggers: {
-      getRadius: parseInt(selectedId),
-      getVisible: viewState,
-    },
-    onClick: (info: any) => {
-      openDetails('realm', info.object.id);
-    },
-  });
-
-  const lootBagLayer = new ScatterplotLayer({
-    id: 'loot-layer',
-    data: loot_bags.features,
-    stroked: true,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    visible: viewState.zoom < ItemViewLevel ? false : true,
-    opacity: 1,
-    getPosition: (d: any) => d.coordinates,
-    getRadius: 1,
-    getElevation: 10000,
-    lineWidthMinPixels: 1,
-    getFillColor: [255, 0, 0, 0],
-    updateTriggers: {
-      getRadius: parseInt(selectedId),
-      getVisible: viewState,
-    },
-    onClick: (info: any) => {
-      openDetails('loot', info.object.id);
-    },
-  });
-
-  const gaBagLayer = new ScatterplotLayer({
-    id: 'ga-layer',
-    data: ga_bags.features,
-    stroked: true,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    visible: viewState.zoom < ItemViewLevel ? false : true,
-    opacity: 1,
-    getPosition: (d: any) => d.coordinates,
-    getRadius: 1,
-    getElevation: 10000,
-    lineWidthMinPixels: 1,
-    getFillColor: [0, 255, 0, 0],
-    updateTriggers: {
-      getRadius: parseInt(selectedId),
-      getVisible: viewState,
-    },
-    onClick: (info: any) => {
-      openDetails('ga', info.object.id);
-    },
-  });
+  const cryptsLayer = createScatterPlot('crypt', crypts.features);
+  const realmsLayer = createScatterPlot('realm', (realms as any).features);
+  const lootBagLayer = createScatterPlot('loot', loot_bags.features);
+  const gaBagLayer = createScatterPlot('ga', ga_bags.features);
 
   /* const iconMapping = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
@@ -222,7 +160,7 @@ function MapModule() {
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator(),
     });
-  }, [coordinates]);
+  }, [coordinates?.latitude, coordinates?.latitude]);
   const [loaded, setLoaded] = useState<boolean>(false);
 
   return (
@@ -256,13 +194,5 @@ function MapModule() {
         <FullscreenControl position="bottom-right" />
       </Map>
     </DeckGL>
-  );
-}
-
-function LoreModule() {
-  return (
-    <LoreProvider>
-      <LorePanel />
-    </LoreProvider>
   );
 }
