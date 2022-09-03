@@ -81,12 +81,12 @@ function MapModule() {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
-    zoom: 4,
-    pitch: 55,
+    zoom: 3,
+    pitch: 0,
     bearing: 0,
     bounds: [
-      [-180, -60], // Southwest coordinates
-      [180, 60], // Northeast coordinates
+      [-180, -180], // Southwest coordinates
+      [180, 180], // Northeast coordinates
     ],
     transitionDuration: 0,
     transitionInterpolator: new FlyToInterpolator(),
@@ -152,8 +152,8 @@ function MapModule() {
       pitch: 20,
       bearing: 0,
       bounds: [
-        [-180, -60], // Southwest coordinates
-        [180, 60], // Northeast coordinates
+        [-180, -180], // Southwest coordinates
+        [180, 180], // Northeast coordinates
       ],
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator(),

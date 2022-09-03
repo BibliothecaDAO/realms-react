@@ -5,6 +5,7 @@ import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -47,7 +48,7 @@ export const MenuSideBar = () => {
     return [
       {
         page: '',
-        icon: <Crown className={`${iconClasses}`} />,
+        icon: <Globe className={`${iconClasses}`} />,
         text: 'atlas',
       },
       {
