@@ -116,10 +116,12 @@ function MapModule() {
       },
     });
 
-  const cryptsLayer = createScatterPlot('crypt', crypts.features);
-  const realmsLayer = createScatterPlot('realm', (realms as any).features);
-  const lootBagLayer = createScatterPlot('loot', loot_bags.features);
-  const gaBagLayer = createScatterPlot('ga', ga_bags.features);
+  const layers = [
+    createScatterPlot('crypt', crypts.features),
+    createScatterPlot('realm', (realms as any).features),
+    createScatterPlot('loot', loot_bags.features),
+    createScatterPlot('ga', ga_bags.features),
+  ];
 
   /* const iconMapping = {
     marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
@@ -169,7 +171,7 @@ function MapModule() {
       controller={true}
       // onLoad={() => setLoaded(true)}
       onViewStateChange={(e) => setViewState(e.viewState)}
-      layers={[realmsLayer, cryptsLayer, lootBagLayer, gaBagLayer]}
+      layers={layers}
     >
       {!loaded ? (
         <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1000">
@@ -180,15 +182,12 @@ function MapModule() {
         ''
       )}
       <Map
+        projection={'globe'}
         attributionControl={false}
         onLoad={() => setLoaded(true)}
-        mapStyle="mapbox://styles/ponderingdemocritus/ckzjumbjo000914ogvsqzcjd2/draft"
-        mapboxAccessToken={
-          'pk.eyJ1IjoicG9uZGVyaW5nZGVtb2NyaXR1cyIsImEiOiJja3l0eGF6aXYwYmd4Mm5yejN5c2plaWR4In0.4ZTsKDrs0T8OTkbByUIo1A'
-        }
-      >
-        <FullscreenControl position="bottom-right" />
-      </Map>
+        mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
+      />
     </DeckGL>
   );
 }
