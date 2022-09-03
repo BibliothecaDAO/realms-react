@@ -15,8 +15,7 @@ const mappedRealms = {
         ],
       },
       properties: {
-        tokenId: a.properties.tokenId,
-        environment: a.properties.environment,
+        tokenId: a.properties.realm_idx,
       },
     };
   }),
