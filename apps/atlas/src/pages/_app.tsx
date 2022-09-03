@@ -70,17 +70,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
   }, []);
 
-  const customToast = () =>
-    toast.custom((t) => (
-      <div
-        className={`bg-white px-6 py-4 shadow-md rounded-full ${
-          t.visible ? 'animate-enter' : 'animate-leave'
-        }`}
-      >
-        Hello TailwindCSS! 👋
-      </div>
-    ));
-
   return (
     <BreakpointProvider queries={queries}>
       <WalletProvider>

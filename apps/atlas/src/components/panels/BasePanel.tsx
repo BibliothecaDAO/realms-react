@@ -9,7 +9,9 @@ type Props = {
 export const BasePanel = (props: Props) => {
   const animation = useSpring({
     opacity: props.open ? 1 : 0,
-    transform: props.open ? `translateY(0)` : `translateY(5%)`,
+    from: { opacity: 0, transform: 'translateY(5%)' },
+    to: { opacity: 1, transform: 'translateY(0)' },
+    // transform: props.open ? `translateY(0)` : `translateY(5%)`,
     delay: 150,
   });
 

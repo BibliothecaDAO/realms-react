@@ -21,10 +21,8 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
-import useResources from '@/hooks/settling/useResources';
 import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
@@ -33,6 +31,7 @@ import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
+import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
@@ -40,8 +39,9 @@ export function AccountPanel() {
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
-  const { toggleMenuType, selectedPanel } = useAtlasContext();
   const [selectedId, setSelectedId] = useState(0);
+  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
+    useState(false);
 
   const filter = {
     OR: [
@@ -89,17 +89,17 @@ export function AccountPanel() {
   const approveTxs = getApproveAllGameContracts();
 
   const animationUp = useSpring({
-    opacity: selectedPanel === 'account' ? 1 : 0,
-    transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(+10%)`,
-    delay: 350,
+    // opacity: selectedPanel === 'account' ? 1 : 0,
+    // transform:
+    //   selectedPanel === 'account' ? `translateY(0)` : `translateY(+10%)`,
+    // delay: 350,
   });
 
   const animation = useSpring({
-    opacity: selectedPanel === 'account' ? 1 : 0,
-    transform:
-      selectedPanel === 'account' ? `translateY(0)` : `translateY(-20%)`,
-    delay: 150,
+    // opacity: selectedPanel === 'account' ? 1 : 0,
+    // transform:
+    //   selectedPanel === 'account' ? `translateY(0)` : `translateY(-20%)`,
+    // delay: 150,
   });
 
   type Row = {
@@ -164,7 +164,7 @@ export function AccountPanel() {
   ];
   const tableOptions = { is_striped: true };
   return (
-    <BasePanel open={selectedPanel === 'account'}>
+    <BasePanel open={true}>
       <animated.div
         style={animation}
         className="w-full p-10 py-10 border-b-4 shadow-xl bg-black/60 border-black/40"
@@ -373,7 +373,9 @@ export function AccountPanel() {
             <Button
               variant="primary"
               size="xs"
-              onClick={() => toggleMenuType('settleRealms')}
+              onClick={() => {
+                setIsSettleRealmsSideBarOpen(true);
+              }}
             >
               3. Settle Realms
             </Button>
@@ -395,6 +397,12 @@ export function AccountPanel() {
           </CardBody>
         </Card>
       </animated.div>
+      <SettleRealmsSideBar
+        isOpen={isSettleRealmsSideBarOpen}
+        onClose={() => {
+          setIsSettleRealmsSideBarOpen(false);
+        }}
+      />
     </BasePanel>
   );
 }

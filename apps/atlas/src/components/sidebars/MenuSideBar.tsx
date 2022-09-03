@@ -9,24 +9,24 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
-import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
+// import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
+// import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import TransactionNavItem from '../navigation/TransactionNavItem';
 
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
-  const { mainMenu, toggleMainMenu } = useAtlasContext();
-  const { query } = useRouter();
+  // const { mainMenu, toggleMainMenu } = useAtlasContext();
+  const { query, pathname } = useRouter();
+  const mainMenu = true;
 
   const isPage = useCallback(
-    (name: string) => name === (query.segment && query.segment[0]),
-    [query]
+    (name: string) => name === pathname.slice(1).split('/')[0],
+    [pathname]
   );
   const getPageHref = useCallback(
     (name: string) =>
@@ -45,6 +45,11 @@ export const MenuSideBar = () => {
 
   const menus = useMemo(() => {
     return [
+      {
+        page: '',
+        icon: <Crown className={`${iconClasses}`} />,
+        text: 'atlas',
+      },
       {
         page: 'account',
         icon: <Crown className={`${iconClasses}`} />,
@@ -99,7 +104,7 @@ export const MenuSideBar = () => {
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2"
-          onClick={() => toggleMainMenu()}
+          // onClick={() => toggleMainMenu()}
         >
           {mainMenu ? <Close /> : <Menu />}
         </button>
@@ -111,7 +116,7 @@ export const MenuSideBar = () => {
         }`}
       >
         {menus.map((menu) => (
-          <Link href={getPageHref(menu.page)} key={menu.page}>
+          <Link href={getPageHref(menu.page)} key={menu.page} shallow={true}>
             <div className="flex flex-col place-items-center ">
               <IconButton
                 className={`${buttonClasses} ${
@@ -133,7 +138,8 @@ export const MenuSideBar = () => {
 
         <div className="grow" />
         <div className="block sm:hidden">
-          <TransactionNavItem />
+          {/* TODO: Re-enable */}
+          {/* <TransactionNavItem onClick={() => {}} /> */}
         </div>
 
         <div className="flex flex-col mb-2 sm:hidden place-items-center">

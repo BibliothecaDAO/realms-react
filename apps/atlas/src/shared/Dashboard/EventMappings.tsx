@@ -122,20 +122,20 @@ export function genEconomicRealmEvent(event) {
         class: successClass,
         action: '',
       };
-    case 'realm_mint':
-      return {
-        event: `Minted Realm ${event.realmId}`,
-        class: successClass,
-        action: (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/realm/' + event.realmId + '?tab=Survey'}
-          >
-            Manage Realm
-          </Button>
-        ),
-      };
+    // case 'realm_mint':
+    //   return {
+    //     event: `Minted Realm ${event.realmId}`,
+    //     class: successClass,
+    //     action: (
+    //       <Button
+    //         size="xs"
+    //         variant="outline"
+    //         href={'/realm/' + event.realmId + '?tab=Survey'}
+    //       >
+    //         Manage Realm
+    //       </Button>
+    //     ),
+    //   };
     case 'realm_settle':
       return {
         event: 'Settled',

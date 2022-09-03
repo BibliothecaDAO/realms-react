@@ -8,7 +8,7 @@ import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
@@ -16,8 +16,7 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './panelComponents/PanelHeading';
 
 export const LootPanel = () => {
-  const { isDisplayLarge, selectedId, selectedPanel, openDetails } =
-    useAtlasContext();
+  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -37,7 +36,7 @@ export const LootPanel = () => {
     state.selectedTab,
   ]);
 
-  const isLootPanel = selectedPanel === 'loot';
+  const isLootPanel = true;
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
@@ -70,16 +69,16 @@ export const LootPanel = () => {
     skip: !isLootPanel,
   });
 
-  useEffect(() => {
-    if (
-      !selectedId &&
-      isDisplayLarge &&
-      page === 1 &&
-      (data?.bags?.length ?? 0) > 0
-    ) {
-      openDetails('loot', data?.bags[0].id as string);
-    }
-  }, [data, page]);
+  // useEffect(() => {
+  //   if (
+  //     !selectedId &&
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.bags?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('loot', data?.bags[0].id as string);
+  //   }
+  // }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -88,7 +87,7 @@ export const LootPanel = () => {
   const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isLootPanel} style="lg:w-7/12">
+    <BasePanel open={isLootPanel}>
       <PanelHeading
         heading="Loot"
         action={actions.updateSearchIdFilter}

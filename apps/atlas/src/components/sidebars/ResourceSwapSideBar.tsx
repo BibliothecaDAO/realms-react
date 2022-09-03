@@ -1,36 +1,47 @@
-import { useQuery } from '@apollo/client';
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
-import { useGetRealmQuery, useGetDesiegeQuery } from '@/generated/graphql';
-import { getRealmQuery } from '@/hooks/graphql/queries';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
-import type { Data } from '@/types/index';
+import AtlasSideBar from '../sidebars/AtlasSideBar';
 import { LpMerchant } from '../tables/LpMerchant';
 import { Nexus } from '../tables/Nexus';
-import { BaseSideBar } from './BaseSideBar';
-type Props = {
+import { BaseSideBarPanel } from './BaseSideBarPanel';
+
+type ResourceSwapSideBarProps = {
   resources?: string[];
+  isOpen: boolean;
+  onClose?: () => void;
 };
 
-export const ResourceSwapSideBar = (props: Props) => {
-  const { toggleMenuType, selectedMenuType, showDetails, selectedId } =
-    useAtlasContext();
-  const isBankSelected = selectedMenuType === 'bank' && showDetails;
+export const ResourceSwapSideBar = ({
+  isOpen,
+  onClose,
+  resources,
+}: ResourceSwapSideBarProps) => {
+  return (
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-[100]">
+      {isOpen && (
+        <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
+      )}
+    </AtlasSideBar>
+  );
+};
+
+type ResourceSwapSideBarPanelProps = {
+  resources?: string[];
+  onClose?: () => void;
+};
+export const ResourceSwapSideBarPanel = (
+  props: ResourceSwapSideBarPanelProps
+) => {
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
 
   const { approveResources, isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
-  /* const { loading, error, data } = useQuery<Data>(getRealmQuery, {
-    variables: { id: props.id.toString() },
-  }); */
   const tabs = useMemo(
     () => [
       {
@@ -49,64 +60,46 @@ export const ResourceSwapSideBar = (props: Props) => {
     []
   );
   return (
-    <BaseSideBar open={isBankSelected}>
-      <div className="top-0 bottom-0 right-0 w-full h-auto p-2 pt-10 md:p-6 lg:w-5/12 rounded-r-2xl">
-        <div className="flex justify-between w-full">
-          <Button
-            variant="secondary"
-            size="xs"
-            className="ml-auto"
-            onClick={() => toggleMenuType('bank')}
-          >
-            <Close />
-          </Button>
-        </div>
-        <div>
-          <h2 className="mt-8 mb-2 text-center">Swap</h2>
-        </div>
-        <div>
-          {!isLordsApprovedForExchange && (
-            <div>
-              <Button
-                className="w-full"
-                variant="primary"
-                onClick={approveLords}
-              >
-                APPROVE LORDS
-              </Button>
-            </div>
-          )}
-          {/* TODO: NOT WORKING */}
-          {!isResourcesApprovedForExchange && (
-            <div>
-              <Button
-                className="w-full"
-                variant="primary"
-                onClick={approveResources}
-              >
-                APPROVE RESOURCES
-              </Button>
-            </div>
-          )}
-        </div>
-
-        <div className="relative">
-          <Tabs className="h-full" variant="primary">
-            <Tabs.List className="">
-              {tabs.map((tab) => (
-                <Tabs.Tab key={tab.label} className="">
-                  {tab.label}
-                </Tabs.Tab>
-              ))}
-            </Tabs.List>
-            <Tabs.Panels className="h-full p-2 rounded shadow-inner bg-black/10">
-              {tabs.map((tab) => (
-                <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-              ))}
-            </Tabs.Panels>
-          </Tabs>
-        </div>
+    <BaseSideBarPanel onClose={props.onClose}>
+      <div>
+        <h2 className="mt-2 mb-4 text-center">Swap</h2>
+        {!isLordsApprovedForExchange && (
+          <div>
+            <Button className="w-full" variant="primary" onClick={approveLords}>
+              APPROVE LORDS
+            </Button>
+          </div>
+        )}
+        {/* TODO: NOT WORKING */}
+        {!isResourcesApprovedForExchange && (
+          <div>
+            <Button
+              className="w-full"
+              variant="primary"
+              onClick={approveResources}
+            >
+              APPROVE RESOURCES
+            </Button>
+          </div>
+        )}
       </div>
-    </BaseSideBar>
+
+      <div className="relative">
+        <Tabs className="h-full" variant="primary">
+          <Tabs.List className="">
+            {tabs.map((tab) => (
+              <Tabs.Tab key={tab.label} className="">
+                {tab.label}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <Tabs.Panels className="h-full p-2 rounded shadow-inner bg-black/10">
+            {tabs.map((tab) => (
+              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+            ))}
+          </Tabs.Panels>
+        </Tabs>
+      </div>
+    </BaseSideBarPanel>
   );
 };

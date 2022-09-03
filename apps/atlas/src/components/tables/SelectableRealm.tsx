@@ -5,14 +5,14 @@ import { RealmStatus } from '@/shared/Getters/Realm';
 type SelectableRealmProps = {
   realm: RealmFragmentFragment;
   isSelected: boolean;
-  actions: any;
+  onSelect: (val: number) => void;
 };
 
 export function SelectableRealm(props: SelectableRealmProps) {
-  const { realm, actions, isSelected } = props;
+  const { realm, isSelected, onSelect } = props;
 
   function selectRealm() {
-    actions.toggleRealmSelection(realm.realmId);
+    onSelect(realm.realmId);
   }
 
   return (

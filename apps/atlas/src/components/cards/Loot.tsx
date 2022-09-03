@@ -2,7 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
@@ -11,7 +11,7 @@ import type { LootProps } from '../../types';
 
 export function Loot(props: LootProps): ReactElement {
   const [metaData, setMetaData] = useState(null);
-  const { gotoAssetId } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
   const ensData = useEnsResolver(props.loot.currentOwner.address);
 
   const mappedProperties = [
@@ -77,7 +77,7 @@ export function Loot(props: LootProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      gotoAssetId(props.loot.id, 'loot');
+                      navigateToAsset(+props.loot.id, 'loot');
                     }}
                   >
                     fly to

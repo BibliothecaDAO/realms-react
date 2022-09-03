@@ -9,13 +9,10 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { Contract, defaultProvider } from 'starknet';
+import { defaultProvider } from 'starknet';
 import type { Abi } from 'starknet';
-import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import loreContractABI from '@/abi/lore/Lore.json';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
 // import erc20Abi from 'abi/l2/erc20.json';
 import { initialValue, LoreEditor } from './editor';
@@ -49,7 +46,7 @@ const LOCAL_STORAGE_LORE_DRAFT_ARWEAVE_KEY = 'lore.draft.arweaveId';
 
 export const LoreCreateEntityForm = () => {
   // Contexts
-  const { setModal } = useAtlasContext();
+  // const { setModal } = useAtlasContext();
 
   // States
   const isMounted = useRef(false);
@@ -466,12 +463,13 @@ export const LoreCreateEntityForm = () => {
           Write backslash / to open a context menu or{' '}
           <button
             className="underline"
-            onClick={() =>
-              setModal({
-                type: 'help',
-                props: { content: <LoreEditorFAQ /> },
-              })
-            }
+            onClick={() => {
+              // TODO setmodal
+              // setModal({
+              //   type: 'help',
+              //   props: { content: <LoreEditorFAQ /> },
+              // })
+            }}
           >
             read editor FAQ
           </button>

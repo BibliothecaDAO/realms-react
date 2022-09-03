@@ -2,7 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import type { LorePoiFragmentFragment } from '@/generated/graphql';
 import { getRealmQuery, getCryptQuery } from '@/hooks/graphql/queries';
-import { useAtlasContext } from '@/hooks/useAtlasContext';
+import { useAtlas } from '@/hooks/useAtlas';
 import { resources } from '../../../util/resources';
 import { theOrders } from '../../../util/theOrders';
 
@@ -44,15 +44,16 @@ export const LorePOI = ({
   // pois,
   poisLoading,
 }: LorePOIProps) => {
-  const { openDetails } = useAtlasContext();
+  const { navigateToAsset } = useAtlas();
 
   const openSideBar = () => {
+    if (!assetId) return;
     switch (poiId) {
       case '1000':
-        openDetails('realm', assetId || '');
+        navigateToAsset(+assetId, 'realm');
         break;
       case '2000':
-        openDetails('crypt', assetId || '');
+        navigateToAsset(+assetId, 'crypt');
         break;
 
       default:
