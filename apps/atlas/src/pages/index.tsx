@@ -174,7 +174,7 @@ function MapModule() {
       layers={layers}
     >
       {!loaded ? (
-        <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1000">
+        <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1100">
           {' '}
           <h1 className="self-center">loading Atlas...</h1>{' '}
         </div>
