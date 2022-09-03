@@ -1,4 +1,4 @@
-const realms = require('./crypts_all.json');
+const realms = require('./realms.json');
 const realms_data = require('./continents.js');
 const fs = require('fs');
 
@@ -9,17 +9,19 @@ const mappedRealms = {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: a.coordinates,
+        coordinates: [
+          (a.geometry.coordinates[0] * 10000).toFixed(),
+          (a.geometry.coordinates[1] * 10000).toFixed(),
+        ],
       },
       properties: {
-        tokenId: a.properties.tokenId,
-        environment: a.properties.environment,
+        tokenId: a.properties.realm_idx,
       },
     };
   }),
 };
 
-fs.writeFile('crypts_all.json', JSON.stringify(mappedRealms), (err) => {
+fs.writeFile('coords.json', JSON.stringify(mappedRealms), (err) => {
   if (err) {
     console.error(err);
   }

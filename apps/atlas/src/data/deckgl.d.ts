@@ -1,4 +1,4 @@
-import * as DeckTypings from '@bibliotheca-dao/deckgl-typings';
+import * as DeckTypings from '@danmarshall/deckgl-typings';
 
 declare module 'deck.gl' {
   export namespace DeckTypings {}

@@ -86,10 +86,10 @@ const Food: React.FC<Prop> = (props) => {
   const fishingVillageCapacity = getTrait(realm, 'Harbor');
 
   const [input, setInput] = useState<ResourceAndFoodInput>({
-    farmsToBuild: '1',
-    fishingVillagesToBuild: '1',
-    fishConversion: '0',
-    wheatConversion: '0',
+    farmsToBuild: farmCapacity,
+    fishingVillagesToBuild: fishingVillageCapacity,
+    fishConversion: '1000',
+    wheatConversion: '1000',
   });
 
   useEffect(() => {
@@ -102,12 +102,6 @@ const Food: React.FC<Prop> = (props) => {
           toBN(t.calldata[0]).eq(toBN(realm?.realmId))
       )
     );
-    setInput({
-      farmsToBuild: farmCapacity,
-      fishingVillagesToBuild: fishingVillageCapacity,
-      fishConversion: '0',
-      wheatConversion: '0',
-    });
   }, [txQueue.transactions]);
 
   if (!realm) {
@@ -192,6 +186,7 @@ const Food: React.FC<Prop> = (props) => {
               <div className="flex flex-wrap mt-2">
                 <div className="flex w-full space-x-2">
                   <Button
+                    disabled={enqueuedHarvestTx}
                     onClick={() => {
                       create(
                         realm?.realmId,
@@ -262,7 +257,7 @@ const Food: React.FC<Prop> = (props) => {
                       Export $WHEAT{' '}
                     </Button>
                     {/* eslint-disable */}
-                    <Button
+                    {/* <Button
                       onClick={() => {
                         harvest(
                           realm?.realmId,
@@ -275,7 +270,7 @@ const Food: React.FC<Prop> = (props) => {
                       variant="primary"
                     >
                       Harvest $WHEAT
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
@@ -423,7 +418,7 @@ const Food: React.FC<Prop> = (props) => {
                 >
                   Export $FISH
                 </Button>
-                <Button
+                {/* <Button
                   onClick={() => {
                     harvest(
                       realm?.realmId,
@@ -436,7 +431,7 @@ const Food: React.FC<Prop> = (props) => {
                   variant="primary"
                 >
                   Harvest $FISH
-                </Button>
+                </Button> */}
               </div>
             </div>
           )}
@@ -506,7 +501,7 @@ const Food: React.FC<Prop> = (props) => {
                   colorScheme="transparent"
                   className="w-24 bg-white border rounded-r border-white/40"
                   min={1}
-                  max={+formatEther(getFishBalance ?? 0)}
+                  max={100000}
                   stringMode
                   onChange={(value: ValueType) =>
                     setInput((current) => {
@@ -537,7 +532,7 @@ const Food: React.FC<Prop> = (props) => {
                   colorScheme="transparent"
                   className="w-24 bg-white border rounded-r border-white/40"
                   min={1}
-                  max={+formatEther(getFishBalance ?? 0)}
+                  max={100000}
                   stringMode
                   onChange={(value: ValueType) =>
                     setInput((current) => {

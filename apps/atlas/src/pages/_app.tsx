@@ -15,6 +15,7 @@ import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
 /* import PageTransition from '@/components/navigation/PageTransition'; 
 import { animated, Transition } from '@react-spring/web'; */
