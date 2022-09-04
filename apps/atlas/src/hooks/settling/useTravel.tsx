@@ -36,7 +36,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
   }),
 };
 
-type Travel = {
+export type Travel = {
   travel: (travellerId: number, destinationId: number) => void;
   setTravelArcs: (location: number, assets: number[]) => void;
   travelArcs: TravelArc[] | undefined;
@@ -64,6 +64,7 @@ const useTravel = (): Travel => {
       );
     },
     setTravelArcs: (location: number, assets: number[]) => {
+      console.log(getTravelArcs(location, assets));
       setTravelArcs(() => getTravelArcs(location, assets) as any);
     },
     travelArcs,

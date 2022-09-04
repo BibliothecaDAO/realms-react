@@ -1,4 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  COORDINATE_SYSTEM,
+  _GlobeView as GlobeView,
+  LightingEffect,
+  AmbientLight,
+  _SunLight as SunLight,
+} from '@deck.gl/core';
 import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { UserAgent } from '@quentin-sommer/react-useragent';

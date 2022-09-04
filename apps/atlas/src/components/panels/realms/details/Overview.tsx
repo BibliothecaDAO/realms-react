@@ -21,6 +21,7 @@ import {
   getTrait,
 } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
+import TerrainLayer from '@/shared/Terrain';
 import type { RealmsCardProps } from '@/types/index';
 import { findResourceName } from '@/util/resources';
 
@@ -31,15 +32,16 @@ const variantMaps: any = {
 export function RealmOverview(props: RealmsCardProps): ReactElement {
   return (
     <div>
-      <div className="w-auto my-4">
-        <Image
+      <div className="w-auto my-4 h-96">
+        <TerrainLayer />
+        {/* <Image
           src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.realmId}.webp`}
           alt="map"
           className="w-full mt-4 rounded-xl -scale-x-100"
           width={500}
           height={320}
           layout={'responsive'}
-        />
+        /> */}
       </div>
       <div className="flex flex-wrap mb-2 tracking-widest uppercase">
         {props.realm.resources?.map((re, index) => (

@@ -318,10 +318,10 @@ export const GetTravelTime = ({ travellerId, destinationId }) => {
 export const getTravelArcs = (location: number, assets: number[]) => {
   return assets.map((a) => {
     return {
-      source: getCoordinates(location)?.geometry.coordinates.push(0),
-      target: getCoordinates(a)?.geometry.coordinates.push(0),
-      value: 5,
-      gain: 1,
+      source: getCoordinates(location)?.geometry.coordinates,
+      target: getCoordinates(a)?.geometry.coordinates,
+      value: 2,
+      gain: 3,
       quantile: 1,
     };
   });
