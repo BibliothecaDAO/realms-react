@@ -190,8 +190,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
   const router = useRouter();
 
-  const queryWithoutSegment = { ...router.query };
-  delete queryWithoutSegment['segment'];
+  const query = { ...router.query };
 
   return (
     <AtlasSidebar isOpen={props.isOpen}>
@@ -283,9 +282,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                       router.replace(
                         {
                           pathname: `/realm/${realmIds[0]}`,
-                          query: {
-                            ...queryWithoutSegment,
-                          },
+                          query: { ...query },
                         },
                         undefined,
                         {
