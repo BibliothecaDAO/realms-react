@@ -38,10 +38,10 @@ type Args = {
 
 const useRealmPlaylist = (args: Args) => {
   const router = useRouter();
-  const segments = router.query?.segment ?? [];
-  const realmIdFromRoute = segments[1] ? Number(segments[1]) : undefined;
-  const queryWithoutSegment = { ...router.query };
-  delete queryWithoutSegment['segment'];
+  const realmIdFromRoute = router.query?.realmId
+    ? Number(router.query?.realmId)
+    : undefined;
+  const query = { ...router.query };
 
   const [cursor, setCursor] = useState(
     storage<number>(realmPlaylistCursorKey, 0).get()
@@ -59,8 +59,8 @@ const useRealmPlaylist = (args: Args) => {
     if (noPlaylistSpecified && realmIdFromRoute !== undefined) {
       router.replace(
         {
-          pathname: `/realm/${realmIdFromRoute + 1}`,
-          query: queryWithoutSegment,
+          pathname: `/realm/[realmId]`,
+          query: { ...query, realmId: realmIdFromRoute + 1 },
         },
         undefined,
         { shallow: true }
@@ -86,8 +86,8 @@ const useRealmPlaylist = (args: Args) => {
       // use realm id
       router.replace(
         {
-          pathname: `/realm/${realmIdFromRoute - 1}`,
-          query: queryWithoutSegment,
+          pathname: `/realm/[realmId]`,
+          query: { ...query, realmId: realmIdFromRoute - 1 },
         },
         undefined,
         { shallow: true }

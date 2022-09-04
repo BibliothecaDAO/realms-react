@@ -39,7 +39,8 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
     >
       {props.children}
     </animated.div>,
-    props.container || document.getElementById('sidebar-root')!
+    props.container || document.getElementById('sidebar-root')!,
+    'sidebar-root'
   );
 };
 

@@ -11,6 +11,7 @@ import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, RpcProvider } from 'starknet';
+import { ResourceProvider } from '@/context/ResourcesContext';
 import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
@@ -85,10 +86,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             connectors={connectors}
           >
             <QueryClientProvider client={queryClient}>
-              <TransactionQueueProvider>
-                <Component {...pageProps} />
-              </TransactionQueueProvider>
-
+              <ResourceProvider>
+                <TransactionQueueProvider>
+                  <Component {...pageProps} />
+                </TransactionQueueProvider>
+              </ResourceProvider>
               {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}

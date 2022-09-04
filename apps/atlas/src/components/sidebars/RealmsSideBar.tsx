@@ -15,7 +15,6 @@ export const RealmSideBar = ({
   isOpen,
   onClose,
 }: RealmSideBarProps) => {
-  console.log(realmId, 'sidebar');
   return (
     <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
       {isOpen && <RealmsQuickView realmId={realmId} onClose={onClose} />}

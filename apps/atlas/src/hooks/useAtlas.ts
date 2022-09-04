@@ -65,7 +65,6 @@ export function useAtlas() {
     }
     router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
   }
-  console.log(selectedAsset);
 
   return {
     navigateToAsset,

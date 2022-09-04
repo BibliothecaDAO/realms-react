@@ -15,7 +15,7 @@ export const TransactionCartSideBar = ({
   onClose,
 }: TransactionCartSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-[100]">
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-[31]">
       {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
   );
