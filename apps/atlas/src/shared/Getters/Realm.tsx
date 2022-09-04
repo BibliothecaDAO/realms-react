@@ -2,13 +2,15 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
-import { DAY, MAX_DAYS_ACCURED } from '@/constants/buildings';
+import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
+import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
+
 interface TraitProps {
   trait: string;
   traitAmount?: number;
@@ -286,4 +288,31 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
       </span>
     </div>
   );
+};
+
+export const GetTravelTime = ({ travellerId, destinationId }) => {
+  const distance = (x1, y1, x2, y2) => {
+    const a = x1 - x2;
+    const b = y1 - y2;
+
+    return Math.sqrt(a * a + b * b);
+  };
+
+  const getCoordinates = (id) => {
+    return RealmsData.features.find(
+      (a) => a.properties.realm_idx === parseInt(id)
+    );
+  };
+
+  const travellerCoordinates = getCoordinates(travellerId);
+  const destinationCoordinates = getCoordinates(destinationId);
+
+  const d = distance(
+    travellerCoordinates?.geometry.coordinates[0],
+    travellerCoordinates?.geometry.coordinates[1],
+    destinationCoordinates?.geometry.coordinates[0],
+    destinationCoordinates?.geometry.coordinates[1]
+  ).toFixed(2);
+
+  return { distance: d, time: parseInt(d) * SECONDS_PER_KM };
 };

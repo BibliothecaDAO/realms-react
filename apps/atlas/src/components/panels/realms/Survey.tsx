@@ -19,6 +19,7 @@ import {
   RealmVaultStatus,
   hasOwnRelic,
   RealmCombatStatus,
+  getTrait,
 } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
@@ -40,11 +41,6 @@ type Prop = {
 };
 
 const Survey: React.FC<Prop> = (props) => {
-  const getTrait = (realm: any, trait: string) => {
-    return realm?.traits?.find((o) => o.type === trait)
-      ? realm.traits?.find((o) => o.type === trait).qty
-      : '0';
-  };
   const getPopulation = () => {
     return realm?.buildings
       ?.map((a) => a.population)

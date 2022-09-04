@@ -1,0 +1,319 @@
+[
+  {
+    "members": [
+      {
+        "name": "x",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "y",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Point",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "destination_asset_id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "destination_token_id",
+        "offset": 1,
+        "type": "Uint256"
+      },
+      {
+        "name": "travel_time",
+        "offset": 3,
+        "type": "felt"
+      }
+    ],
+    "name": "TravelInformation",
+    "size": 4,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "traveller_coordinates",
+        "type": "Point"
+      },
+      {
+        "name": "destination_coordinates",
+        "type": "Point"
+      }
+    ],
+    "name": "assert_same_points",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "data": [
+      {
+        "name": "traveller_asset_id",
+        "type": "felt"
+      },
+      {
+        "name": "traveller_token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "destination_asset_id",
+        "type": "felt"
+      },
+      {
+        "name": "destination_token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "arrival_time",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "TravelAction",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "traveller_contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "traveller_token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "destination_contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "destination_token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "travel",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_coordinates",
+    "outputs": [
+      {
+        "name": "point",
+        "type": "Point"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_travel_information",
+    "outputs": [
+      {
+        "name": "travel_information",
+        "type": "TravelInformation"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "traveller_coordinates",
+        "type": "Point"
+      },
+      {
+        "name": "destination_coordinates",
+        "type": "Point"
+      }
+    ],
+    "name": "get_travel_time",
+    "outputs": [
+      {
+        "name": "time",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "traveller_coordinates",
+        "type": "Point"
+      },
+      {
+        "name": "destination_coordinates",
+        "type": "Point"
+      }
+    ],
+    "name": "get_travel_distance",
+    "outputs": [
+      {
+        "name": "distance",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "assert_arrived",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "traveller_contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "traveller_token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "destination_contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "destination_token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "assert_traveller_is_at_location",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "point",
+        "type": "Point"
+      }
+    ],
+    "name": "set_coordinates",
+    "outputs": [],
+    "type": "function"
+  }
+]

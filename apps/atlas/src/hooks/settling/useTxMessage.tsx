@@ -6,6 +6,7 @@ import { renderTransaction as renderCombatTxs } from './useCombat';
 import { renderTransaction as renderFoodTxs } from './useFood';
 import { renderTransaction as renderResourceTxs } from './useResources';
 import { renderTransaction as renderSettlingTxs } from './useSettling';
+import { renderTransaction as renderTravelTxs } from './useTravel';
 
 export function getTxRenderConfig(
   tx: RealmsTransaction
@@ -19,6 +20,7 @@ export function getTxRenderConfig(
     ...renderAmmTxs,
     ...renderCombatTxs,
     ...renderSettlingTxs,
+    ...renderTravelTxs,
   };
 
   const metadata = tx.metadata;

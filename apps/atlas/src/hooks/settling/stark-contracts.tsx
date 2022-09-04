@@ -15,6 +15,7 @@ import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Relics from '@/abi/settling/Relics.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
+import Travel from '@/abi/settling/Travel.json';
 
 // Note: Can use process.env | static definition if needed
 // Lords: process.env.LORDS_ADDR | "0x..."
@@ -42,7 +43,19 @@ export const ModuleAddr = {
   Relics: '0x027d0dd8dbe02f8dec5ff64b873eb78993c520f7c6f10b95f86cb061857769d0',
   Calculator:
     '0x05a74143789f2b8d2a95234318d7072062e449d37f9e882af68af663f9078ef7',
+  Travel: '0x004055c26281d7afdd6249bb0f2f65e3551fdfcbb1a02ac051cb7173c4d63424',
 };
+
+/**
+ * Load the Travel contract.
+ * @returns The `Travel` contract or undefined.
+ */
+export function useTravelContract() {
+  return useContract({
+    abi: Travel as Abi,
+    address: ModuleAddr.Travel,
+  });
+}
 
 /**
  * Load the Calculator contract.

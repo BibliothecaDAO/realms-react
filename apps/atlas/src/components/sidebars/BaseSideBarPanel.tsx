@@ -2,7 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 
 interface BaseSideBarPanel {
-  title?: string;
+  title?: string | null | undefined;
   children: React.ReactNode[] | React.ReactNode;
   onClose?: () => void;
 }
@@ -16,16 +16,17 @@ export const BaseSideBarPanel = ({
     <div className="relative w-full">
       <div>
         <div className="flex justify-between mb-2">
-          <h2>{title}</h2>
-          <div className="flex justify-end mb-2 mr-1">
+          <h1>{title}</h1>
+          <div className="self-center justify-end">
             {onClose && (
               <Button
-                size="sm"
+                size="xs"
+                variant="outline"
                 onClick={() => {
                   onClose();
                 }}
               >
-                <Close />
+                <Close className="w-6" />
               </Button>
             )}
           </div>
