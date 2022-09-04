@@ -12,10 +12,7 @@ import React, {
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
-import {
-  useGetExchangeRatesQuery,
-  useGetGameConstantsQuery,
-} from '@/generated/graphql';
+import { useGetGameConstantsQuery } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import {
   useLordsContract,
@@ -257,15 +254,8 @@ function useResources() {
     if (resourcesBalanceError) {
       setBalanceStatus('error');
     }
-    if (
-      !resourceBalanceData ||
-      !resourceBalanceData[0] ||
-      !lpBalanceData ||
-      !lpBalanceData[0] ||
-      !exchangePairData ||
-      !exchangePairData[0] ||
-      !gameConstants
-    ) {
+
+    if (!resourceBalanceData || !resourceBalanceData[0] || !gameConstants) {
       return;
     }
 
@@ -277,9 +267,14 @@ function useResources() {
         };
       });
     };
-    const userLp = pluckData(lpBalanceData[0]);
-    const currencyExchangeData = pluckData(exchangePairData[0]);
-    const tokenExchangeData = pluckData(exchangePairData[1]);
+    const userLp = lpBalanceData ? pluckData(lpBalanceData[0]) : [];
+    const currencyExchangeData = exchangePairData
+      ? pluckData(exchangePairData[0])
+      : [];
+    const tokenExchangeData = exchangePairData
+      ? pluckData(exchangePairData[1])
+      : [];
+
     setBalance(
       resourceBalanceData[0].map((resourceBalance, index) => {
         const resourceId = resources[index]?.id ?? 0;
@@ -291,9 +286,9 @@ function useResources() {
           resourceName,
           amount: uint256ToBN(resourceBalance).toString(10),
           rate: rateAmount ?? '0',
-          lp: userLp[index].amount,
-          currencyAmount: currencyExchangeData[index].amount,
-          tokenAmount: tokenExchangeData[index].amount,
+          lp: userLp[index]?.amount ?? '0',
+          currencyAmount: currencyExchangeData[index]?.amount ?? '0',
+          tokenAmount: tokenExchangeData[index]?.amount ?? '0',
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
@@ -303,6 +298,8 @@ function useResources() {
     setTroopCosts(gameConstants?.troopStats);
   }, [
     resourceBalanceData && resourceBalanceData[0],
+    lpBalanceData && lpBalanceData[0],
+    exchangePairData && exchangePairData[0],
     resourcesBalanceError,
     exchangeInfo,
   ]);

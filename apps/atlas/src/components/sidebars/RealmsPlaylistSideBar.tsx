@@ -193,7 +193,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   const query = { ...router.query };
 
   return (
-    <AtlasSidebar isOpen={props.isOpen}>
+    <AtlasSidebar isOpen={props.isOpen} containerClassName="z-[40]">
       <SidebarHeader
         titleComponent={
           <h1 className="flex">
