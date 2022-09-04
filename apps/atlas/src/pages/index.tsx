@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FlyToInterpolator } from '@deck.gl/core';
 import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Map, { FullscreenControl } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
@@ -13,13 +12,12 @@ import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 
+import { useAtlasContext } from '@/context/AtlasContext';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
-import useTravel from '@/hooks/settling/useTravel';
-import type { AssetType } from '@/hooks/useAtlas';
-import { useAtlas } from '@/hooks/useAtlas';
+import type { AssetType } from '@/hooks/useAtlasMap';
 
 export default function AtlasPage() {
   return (
@@ -41,8 +39,10 @@ export default function AtlasPage() {
 }
 
 function AtlasSidebars() {
-  const { selectedAsset } = useAtlas();
+  const { mapContext } = useAtlasContext();
   const router = useRouter();
+
+  const selectedAsset = mapContext.selectedAsset;
 
   function onClose() {
     router.push('/', undefined, { shallow: true });
@@ -74,120 +74,71 @@ function AtlasSidebars() {
 }
 
 function MapModule() {
-  const { travelArcs } = useTravel();
+  const { travelContext, mapContext } = useAtlasContext();
   const ItemViewLevel = 5;
-  const { navigateToAsset, coordinates, selectedAsset } = useAtlas();
+  const selectedId = mapContext.selectedAsset?.id ?? '0';
 
-  const selectedId = selectedAsset?.id ?? '0';
+  const createScatterPlot = useCallback(
+    (assetType: AssetType, data: any[]) =>
+      new ScatterplotLayer({
+        id: `${assetType}-layer`,
+        data,
+        stroked: true,
+        filled: true,
+        extruded: true,
+        pickable: true,
+        opacity: 1,
+        visible: mapContext.viewState.zoom < ItemViewLevel ? false : true,
+        getPosition: (d: any) => d.coordinates,
+        getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
+        getElevation: 10000,
+        lineWidthMinPixels: 1,
+        getFillColor: [0, 0, 0, 0],
+        updateTriggers: {
+          getRadius: parseInt(selectedId),
+          getVisible: mapContext.viewState,
+        },
+        onClick: (info: any) => {
+          mapContext.navigateToAsset(info.object.id, assetType);
+        },
+      }),
+    [mapContext.viewState]
+  );
 
-  const [viewState, setViewState] = useState({
-    longitude: 0,
-    latitude: 0,
-    zoom: 3,
-    pitch: 0,
-    bearing: 0,
-    bounds: [
-      [-180, -180], // Southwest coordinates
-      [180, 180], // Northeast coordinates
-    ],
-    transitionDuration: 0,
-    transitionInterpolator: new FlyToInterpolator(),
-  });
-
-  const createScatterPlot = (assetType: AssetType, data: any[]) =>
-    new ScatterplotLayer({
-      id: `${assetType}-layer`,
-      data,
-      stroked: true,
-      filled: true,
-      extruded: true,
-      pickable: true,
-      opacity: 1,
-      visible: viewState.zoom < ItemViewLevel ? false : true,
-      getPosition: (d: any) => d.coordinates,
-      getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
-      getElevation: 10000,
-      lineWidthMinPixels: 1,
-      getFillColor: [0, 0, 0, 0],
-      updateTriggers: {
-        getRadius: parseInt(selectedId),
-        getVisible: viewState,
-      },
-      onClick: (info: any) => {
-        navigateToAsset(info.object.id, assetType);
-      },
+  const arcsLayer = useMemo(() => {
+    return new ArcLayer({
+      id: 'arc',
+      data: travelContext.travelArcs,
+      getSourcePosition: (d: any) => d.source,
+      getTargetPosition: (d: any) => d.target,
+      getSourceColor: [255, 255, 204],
+      getTargetColor: [255, 255, 204],
+      getWidth: 2,
     });
+  }, [travelContext.travelArcs]);
 
-  const arcsLayer = new ArcLayer({
-    id: 'arc',
-    data: travelArcs,
-    getSourcePosition: (d: any) => d.source,
-    getTargetPosition: (d: any) => d.target,
-    getSourceColor: [255, 255, 204],
-    getTargetColor: [255, 255, 204],
-    getWidth: 2,
-  });
-
-  const layers = [
-    createScatterPlot('crypt', crypts.features),
-    createScatterPlot('realm', (realms as any).features),
-    createScatterPlot('loot', loot_bags.features),
-    createScatterPlot('ga', ga_bags.features),
-    arcsLayer,
-  ];
-
-  /* const iconMapping = {
-    marker: { x: 0, y: 0, width: 128, height: 128, mask: true },
-  };
-
-   const resourceLayer = new IconLayer({
-    id: 'icon-layer',
-    data: filteredData(),
-    pickable: false,
-    iconAtlas:
-      'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
-    iconMapping: iconMapping,
-    getIcon: () => 'marker',
-    sizeScale: 5,
-    getPosition: (d: any) => d.coordinates,
-    getSize: () => 5,
-    getColor: () => [255, 255, 255],
-  }); */
-
-  useEffect(() => {
-    if (!coordinates) {
-      return;
-    }
-
-    setViewState({
-      ...coordinates,
-      zoom: 8,
-      pitch: 20,
-      bearing: 0,
-      bounds: [
-        [-180, -180], // Southwest coordinates
-        [180, 180], // Northeast coordinates
-      ],
-      transitionDuration: 5000,
-      transitionInterpolator: new FlyToInterpolator(),
-    });
-  }, [coordinates?.latitude, coordinates?.latitude]);
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const layers = useMemo(() => {
+    return [
+      createScatterPlot('crypt', crypts.features),
+      createScatterPlot('realm', (realms as any).features),
+      createScatterPlot('loot', loot_bags.features),
+      createScatterPlot('ga', ga_bags.features),
+      arcsLayer,
+    ];
+  }, [arcsLayer, mapContext.viewState]);
 
   return (
     <DeckGL
-      // views={new GlobeView()}
       getCursor={({ isHovering }) => {
         return isHovering ? 'pointer' : 'grabbing';
       }}
       pickingRadius={25}
-      viewState={viewState}
+      viewState={mapContext.viewState}
       controller={true}
-      // onLoad={() => setLoaded(true)}
-      onViewStateChange={(e) => setViewState(e.viewState)}
+      onViewStateChange={(e) => mapContext.setViewState(e.viewState)}
       layers={layers}
     >
-      {!loaded ? (
+      {!mapContext.isMapLoaded ? (
         <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1100">
           {' '}
           <h1 className="self-center">loading Atlas...</h1>{' '}
@@ -198,7 +149,7 @@ function MapModule() {
       <Map
         // projection={'globe'}
         attributionControl={false}
-        onLoad={() => setLoaded(true)}
+        onLoad={() => mapContext.setIsMapLoaded(true)}
         mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
       />

@@ -2,7 +2,7 @@ import { OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
-import { useAtlas } from '@/hooks/useAtlas';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
@@ -11,8 +11,9 @@ import type { GAProps } from '../../types';
 
 export function GAdventurer(props: GAProps): ReactElement {
   const [metaData, setMetaData] = useState(null);
-  const { navigateToAsset } = useAtlas();
-
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const ensData = useEnsResolver(props.ga.currentOwner.address);
 
   const mappedProperties = [

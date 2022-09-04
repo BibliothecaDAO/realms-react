@@ -9,9 +9,9 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { TroopSlot } from '@/constants/troops';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useAtlas } from '@/hooks/useAtlas';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import {
@@ -33,8 +33,9 @@ export function RealmListCardView(props: RealmOverviewsProps) {
   const router = useRouter();
   const { account } = useWalletContext();
   const { account: starkAccount } = useStarknet();
-  const { navigateToAsset } = useAtlas();
-
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const {
     state: { favouriteRealms },
     actions,

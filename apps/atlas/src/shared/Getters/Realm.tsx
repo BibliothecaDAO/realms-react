@@ -290,10 +290,8 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   );
 };
 
-const getCoordinates = (id) => {
-  return RealmsData.features.find(
-    (a) => a.properties.realm_idx === parseInt(id)
-  );
+const getCoordinates = (id: number) => {
+  return RealmsData.features.find((a) => a.properties.realm_idx === id);
 };
 
 export const GetTravelTime = ({ travellerId, destinationId }) => {
@@ -320,8 +318,8 @@ export const GetTravelTime = ({ travellerId, destinationId }) => {
 export const getTravelArcs = (location: number, assets: number[]) => {
   return assets.map((a) => {
     return {
-      source: getCoordinates(location).geometry.coordinates.push(0),
-      target: getCoordinates(a).geometry.coordinates.push(0),
+      source: getCoordinates(location)?.geometry.coordinates.push(0),
+      target: getCoordinates(a)?.geometry.coordinates.push(0),
       value: 5,
       gain: 1,
       quantile: 1,

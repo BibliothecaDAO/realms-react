@@ -11,6 +11,7 @@ import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, RpcProvider } from 'starknet';
+import { AtlasProvider } from '@/context/AtlasContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
@@ -88,7 +89,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <QueryClientProvider client={queryClient}>
               <ResourceProvider>
                 <TransactionQueueProvider>
-                  <Component {...pageProps} />
+                  <AtlasProvider>
+                    <Component {...pageProps} />
+                  </AtlasProvider>
                 </TransactionQueueProvider>
               </ResourceProvider>
               {/* <PageTransition

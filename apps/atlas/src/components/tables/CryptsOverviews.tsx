@@ -1,7 +1,7 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { useState } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useCryptContext } from '@/context/CryptContext';
-import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
 import { environments, findEnvironment } from '@/util/cryptsEnvironments';
@@ -13,7 +13,9 @@ interface CryptOverviewsProps {
 
 export function CryptsOverviews(props: CryptOverviewsProps) {
   const { account } = useWalletContext();
-  const { navigateToAsset } = useAtlas();
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const {
     state: { favouriteCrypt },
     actions,

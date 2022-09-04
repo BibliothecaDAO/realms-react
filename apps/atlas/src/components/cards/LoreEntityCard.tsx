@@ -4,7 +4,6 @@ import type {
   LoreEntityFragmentFragment,
   RealmFragmentFragment,
 } from '@/generated/graphql';
-import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 interface LoreEntitiesProps {

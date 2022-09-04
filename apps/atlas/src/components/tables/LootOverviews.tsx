@@ -1,8 +1,8 @@
 import { Button, Card } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useLootContext } from '@/context/LootContext';
-import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { Loot } from '@/types/index';
@@ -14,7 +14,9 @@ interface LootOverviewsProps {
 
 export function LootOverviews(props: LootOverviewsProps) {
   const { account } = useWalletContext();
-  const { navigateToAsset } = useAtlas();
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const [selectedLootId, setSelectedLootId] = useState('');
   const {
     state: { favouriteLoot },

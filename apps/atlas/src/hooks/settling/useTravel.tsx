@@ -1,27 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useStarknetCall } from '@starknet-react/core';
-import { isConstValueNode } from 'graphql';
-import { useEffect, useState } from 'react';
+
+import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { toBN } from 'starknet/utils/number';
-import {
-  RealmBuildingId,
-  HarvestType,
-  buildingIdToString,
-} from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import type { Realm } from '@/generated/graphql';
-import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import { getTravelArcs } from '@/shared/Getters/Realm';
-import type {
-  RealmsCall,
-  BuildingDetail,
-  RealmFoodDetails,
-  AvailableResources,
-  RealmsTransactionRenderConfig,
-} from '@/types/index';
+import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import { useUiSounds, soundSelector } from '../useUiSounds';
 import { ModuleAddr } from './stark-contracts';
 
 export const Entrypoints = {
@@ -58,10 +42,6 @@ type Travel = {
   travelArcs: TravelArc[] | undefined;
 };
 
-// type Props = {
-//   token_id?: number;
-// };
-
 type TravelArc = {
   source: number[];
   target: number[];
@@ -84,7 +64,7 @@ const useTravel = (): Travel => {
       );
     },
     setTravelArcs: (location: number, assets: number[]) => {
-      setTravelArcs(() => getTravelArcs(location, assets));
+      setTravelArcs(() => getTravelArcs(location, assets) as any);
     },
     travelArcs,
   };

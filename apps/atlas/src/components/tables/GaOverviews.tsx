@@ -1,8 +1,8 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useGaContext } from '@/context/GaContext';
-import { useAtlas } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
@@ -14,7 +14,9 @@ interface GaOverviewsProps {
 
 export function GaOverviews(props: GaOverviewsProps) {
   const { account } = useWalletContext();
-  const { navigateToAsset } = useAtlas();
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const {
     state: { favouriteGa },
     actions,

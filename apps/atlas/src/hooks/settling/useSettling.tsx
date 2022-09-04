@@ -95,7 +95,7 @@ const useSettling = (): Settling => {
 
   useEffect(() => {
     if (realmsApprovalData !== undefined && account !== undefined) {
-      console.log(realmsApprovalData.toString());
+      // console.log(realmsApprovalData.toString());
       setIsRealmsApproved(
         realmsApprovalData.toString() === '1' ? 'approved' : 'not-approved'
       );

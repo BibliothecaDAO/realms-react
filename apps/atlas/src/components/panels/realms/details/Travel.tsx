@@ -10,9 +10,9 @@ import Image from 'next/image';
 import React from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
+import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery, RealmFragmentFragment } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
-import useTravel from '@/hooks/settling/useTravel';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
@@ -38,7 +38,9 @@ type Prop = {
 
 export const RealmTravel = ({ realm }: Prop) => {
   const { userRealms } = useUsersRealms();
-  const { travel, setTravelArcs } = useTravel();
+  const {
+    travelContext: { travel, setTravelArcs },
+  } = useAtlasContext();
 
   const ids = userRealms?.realms.map((a) => a.realmId) || [];
   return (

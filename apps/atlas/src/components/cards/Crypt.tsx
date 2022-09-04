@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
-import { useAtlas } from '@/hooks/useAtlas';
+
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import {
@@ -15,7 +16,9 @@ const variantMaps: any = {
 };
 
 export function Crypt(props: CryptProps): ReactElement {
-  const { navigateToAsset } = useAtlas();
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const ensData = useEnsResolver(props.crypt.currentOwner.address);
   const image = props.crypt.svg;
   const environment = findEnvironment(props.crypt.environment);
