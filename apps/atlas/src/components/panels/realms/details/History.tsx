@@ -9,13 +9,9 @@ import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 
 interface RealmHistoryProps {
   realmId: number;
-  open: boolean;
 }
 
-export function RealmHistory({
-  realmId,
-  open,
-}: RealmHistoryProps): ReactElement {
+export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
   const { data: historyData, loading: loadingData } = useGetRealmHistoryQuery({
     variables: { filter: { realmId: { equals: realmId } } },
     pollInterval: 5000,

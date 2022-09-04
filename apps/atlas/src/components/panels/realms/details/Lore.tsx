@@ -4,16 +4,15 @@ import { useMemo, useState } from 'react';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import type { GetRealmQuery, LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesQuery } from '@/generated/graphql';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 type Prop = {
   realm?: GetRealmQuery;
-  open: boolean;
   realmId: number;
   realmName: string;
 };
 
-const RealmLore: React.FC<Prop> = ({ realm, open, realmId, realmName }) => {
+export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
   const limit = 20;
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);
@@ -55,9 +54,7 @@ const RealmLore: React.FC<Prop> = ({ realm, open, realmId, realmName }) => {
     !loading && (data?.getLoreEntities?.length ?? 0) === 0;
 
   return (
-    <BaseRealmDetailPanel open={open}>
-      {/* <div className="grid grid-cols-12 gap-6"> */}
-      {/* <div className="flex col-span-12 col-start-1 col-end-12"> */}
+    <div>
       {loading && (
         <div className="grid grid-cols-12 gap-6 py-4">
           <Card className="col-start-1 col-end-7">
@@ -106,10 +103,6 @@ const RealmLore: React.FC<Prop> = ({ realm, open, realmId, realmName }) => {
           </Button>
         </div>
       )}
-      {/* </div> */}
-      {/* </div> */}
-    </BaseRealmDetailPanel>
+    </div>
   );
 };
-
-export default RealmLore;

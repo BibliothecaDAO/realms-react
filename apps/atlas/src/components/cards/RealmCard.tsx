@@ -5,30 +5,17 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
-import { RealmHistory } from '@/components/panels/realms/RealmHistory';
+import {
+  RealmHistory,
+  RealmOverview,
+  RealmTravel,
+  RealmLore,
+} from '@/components/panels/realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
-
-import {
-  TraitTable,
-  squadStats,
-  RealmVaultStatus,
-  RealmStatus,
-  hasOwnRelic,
-  RealmCombatStatus,
-  getTrait,
-} from '@/shared/Getters/Realm';
 import type { RealmsCardProps } from '../../types';
-import RealmOverview from '../panels/realms/details/RealmOverview';
-import RealmLore from '../panels/realms/Lore';
-import { RealmTravel } from '../panels/realms/Travel';
-
-const variantMaps: any = {
-  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
-};
 
 export function RealmCard(props: RealmsCardProps): ReactElement {
   const ensData = useEnsResolver(props.realm?.owner as string);
@@ -56,13 +43,12 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       },
       {
         label: <Library className="self-center w-6 h-6 fill-current" />,
-        component: <RealmHistory open={true} realmId={props.realm.realmId} />,
+        component: <RealmHistory realmId={props.realm.realmId} />,
       },
       {
         label: <Library className="self-center w-6 h-6 fill-current" />,
         component: (
           <RealmLore
-            open={true}
             realmName={props.realm.name || ''}
             realmId={props.realm.realmId || 0}
           />

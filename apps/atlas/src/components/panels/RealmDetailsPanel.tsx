@@ -8,7 +8,7 @@ import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { RealmHistory } from '@/components/panels/realms/RealmHistory';
+import { RealmHistoryPanel } from '@/components/panels/realms/panels/RealmHistoryPanel';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import type { Realm } from '@/generated/graphql';
@@ -27,8 +27,9 @@ import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { storage } from '@/util/localStorage';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
-import Army from './realms/Army';
 import Food from './realms/Food';
+import RealmArmyPanel from './realms/panels/RealmArmyPanel';
+import RealmLorePanel from './realms/panels/RealmLorePanel';
 import ResourceDetails from './realms/Resources';
 import Survey from './realms/Survey';
 import RealmToolbar from './realms/Toolbar';
@@ -240,7 +241,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (
                 <>
-                  <Army
+                  <RealmArmyPanel
                     open={subview == 'Army'}
                     buildings={buildings}
                     realm={realmData?.realm}
@@ -274,9 +275,12 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     realm={realmData}
                     loading={loadingHooks}
                   />
-                  <RealmHistory open={subview == 'History'} realmId={realmId} />
+                  <RealmHistoryPanel
+                    open={subview == 'History'}
+                    realmId={realmId}
+                  />
 
-                  {/* <RealmLore open={subview == 'Lore'} realm={realmData} /> */}
+                  <RealmLorePanel open={subview == 'Lore'} realm={realmData} />
                 </>
               ) : null}
             </div>

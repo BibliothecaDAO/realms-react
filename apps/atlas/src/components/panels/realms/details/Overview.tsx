@@ -8,7 +8,6 @@ import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
-import { RealmHistory } from '@/components/panels/realms/RealmHistory';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { DownloadAssets } from '@/shared/DownloadAssets';
@@ -29,7 +28,7 @@ const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
 
-function RealmOverview(props: RealmsCardProps): ReactElement {
+export function RealmOverview(props: RealmsCardProps): ReactElement {
   return (
     <div>
       <div className="w-auto my-4">
@@ -87,5 +86,3 @@ function RealmOverview(props: RealmsCardProps): ReactElement {
     </div>
   );
 }
-
-export default RealmOverview;

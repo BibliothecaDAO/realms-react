@@ -30,7 +30,7 @@ import type {
   BuildingFootprint,
   AvailableResources,
 } from '@/types/index';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 type Prop = {
   realm: RealmFragmentFragment;
