@@ -25,7 +25,11 @@ export const RateChange = (change: number) => {
   );
 };
 
-export function BankPanel(): ReactElement {
+interface BankPanel {
+  onOpenSwap?: () => void;
+}
+
+export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   const { balance, availableResourceIds, addSelectedSwapResources } =
     useResourcesContext();
 
@@ -116,9 +120,9 @@ export function BankPanel(): ReactElement {
               variant="secondary"
               size="xs"
               className="ml-auto"
-              // onClick={() => {
-              //   // toggleMenuType('bank');
-              // }}
+              onClick={() => {
+                if (onOpenSwap) onOpenSwap();
+              }}
             >
               <ChevronRight />
             </Button>

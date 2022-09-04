@@ -15,15 +15,15 @@ import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import TransactionNavItem from '../navigation/TransactionNavItem';
 
 export const MenuSideBar = () => {
   const { connectWallet } = useWalletContext();
-  // const { mainMenu, toggleMainMenu } = useAtlasContext();
+  const breakpoints: any = useBreakpoint();
+  const [showMenu, setShowMenu] = useState(breakpoints.lg);
   const { query, pathname } = useRouter();
-  const mainMenu = true;
 
   const isPage = useCallback(
     (name: string) => name === pathname.slice(1).split('/')[0],
@@ -35,7 +35,7 @@ export const MenuSideBar = () => {
     [query]
   );
   const animation = useSpring({
-    opacity: mainMenu ? 1 : 0.7,
+    opacity: showMenu ? 1 : 0.7,
   });
 
   const buttonClasses =
@@ -105,15 +105,15 @@ export const MenuSideBar = () => {
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2"
-          // onClick={() => toggleMainMenu()}
+          onClick={() => setShowMenu(!showMenu)}
         >
-          {mainMenu ? <Close /> : <Menu />}
+          {showMenu ? <Close /> : <Menu />}
         </button>
       </div>
       <animated.div
         style={animation}
         className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100 z-40 shadow-2xl flex flex-col transform  overflow-auto ${
-          mainMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
+          showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
         {menus.map((menu) => (
