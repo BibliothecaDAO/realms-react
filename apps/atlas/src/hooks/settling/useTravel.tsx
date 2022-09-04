@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useStarknetCall } from '@starknet-react/core';
+import { isConstValueNode } from 'graphql';
 import { useEffect, useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { toBN } from 'starknet/utils/number';
@@ -11,6 +12,7 @@ import {
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
+import { getTravelArcs } from '@/shared/Getters/Realm';
 import type {
   RealmsCall,
   BuildingDetail,
@@ -52,17 +54,28 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 
 type Travel = {
   travel: (travellerId: number, destinationId: number) => void;
+  setTravelArcs: (location: number, assets: number[]) => void;
+  travelArcs: TravelArc[] | undefined;
 };
 
 // type Props = {
 //   token_id?: number;
 // };
 
+type TravelArc = {
+  source: number[];
+  target: number[];
+  value: number;
+  gain: number;
+  quantile: number;
+};
+
 const useTravel = (): Travel => {
   const txQueue = useTransactionQueue();
+  const [travelArcs, setTravelArcs] = useState<TravelArc[]>();
+
   return {
     travel: (travellerId, destinationId) => {
-      console.log(travellerId, destinationId);
       txQueue.add(
         createCall.travel({
           travellerId,
@@ -70,6 +83,10 @@ const useTravel = (): Travel => {
         })
       );
     },
+    setTravelArcs: (location: number, assets: number[]) => {
+      setTravelArcs(() => getTravelArcs(location, assets));
+    },
+    travelArcs,
   };
 };
 

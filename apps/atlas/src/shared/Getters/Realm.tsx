@@ -290,18 +290,18 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   );
 };
 
+const getCoordinates = (id) => {
+  return RealmsData.features.find(
+    (a) => a.properties.realm_idx === parseInt(id)
+  );
+};
+
 export const GetTravelTime = ({ travellerId, destinationId }) => {
   const distance = (x1, y1, x2, y2) => {
     const a = x1 - x2;
     const b = y1 - y2;
 
     return Math.sqrt(a * a + b * b);
-  };
-
-  const getCoordinates = (id) => {
-    return RealmsData.features.find(
-      (a) => a.properties.realm_idx === parseInt(id)
-    );
   };
 
   const travellerCoordinates = getCoordinates(travellerId);
@@ -315,4 +315,16 @@ export const GetTravelTime = ({ travellerId, destinationId }) => {
   ).toFixed(2);
 
   return { distance: d, time: parseInt(d) * SECONDS_PER_KM };
+};
+
+export const getTravelArcs = (location: number, assets: number[]) => {
+  return assets.map((a) => {
+    return {
+      source: getCoordinates(location).geometry.coordinates.push(0),
+      target: getCoordinates(a).geometry.coordinates.push(0),
+      value: 5,
+      gain: 1,
+      quantile: 1,
+    };
+  });
 };

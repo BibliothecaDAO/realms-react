@@ -38,10 +38,18 @@ type Prop = {
 
 export const RealmTravel = ({ realm }: Prop) => {
   const { userRealms } = useUsersRealms();
-  const { travel } = useTravel();
+  const { travel, setTravelArcs } = useTravel();
+
+  const ids = userRealms?.realms.map((a) => a.realmId) || [];
   return (
     <div>
       <h3>Your realms</h3>
+      <Button
+        onClick={() => setTravelArcs(realm.realmId, ids)}
+        variant="primary"
+      >
+        see travel distance
+      </Button>
       {userRealms?.realms.map((a, index) => {
         const travel_information = GetTravelTime({
           travellerId: realm.realmId,

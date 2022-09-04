@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FlyToInterpolator } from '@deck.gl/core';
-import { ScatterplotLayer } from '@deck.gl/layers';
+import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Map, { FullscreenControl } from 'react-map-gl';
 import Layout from '@/components/Layout';
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
@@ -17,6 +17,7 @@ import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
+import useTravel from '@/hooks/settling/useTravel';
 import type { AssetType } from '@/hooks/useAtlas';
 import { useAtlas } from '@/hooks/useAtlas';
 
@@ -73,6 +74,7 @@ function AtlasSidebars() {
 }
 
 function MapModule() {
+  const { travelArcs } = useTravel();
   const ItemViewLevel = 5;
   const { navigateToAsset, coordinates, selectedAsset } = useAtlas();
 
@@ -116,11 +118,22 @@ function MapModule() {
       },
     });
 
+  const arcsLayer = new ArcLayer({
+    id: 'arc',
+    data: travelArcs,
+    getSourcePosition: (d: any) => d.source,
+    getTargetPosition: (d: any) => d.target,
+    getSourceColor: [255, 255, 204],
+    getTargetColor: [255, 255, 204],
+    getWidth: 2,
+  });
+
   const layers = [
     createScatterPlot('crypt', crypts.features),
     createScatterPlot('realm', (realms as any).features),
     createScatterPlot('loot', loot_bags.features),
     createScatterPlot('ga', ga_bags.features),
+    arcsLayer,
   ];
 
   /* const iconMapping = {
@@ -163,6 +176,7 @@ function MapModule() {
 
   return (
     <DeckGL
+      // views={new GlobeView()}
       getCursor={({ isHovering }) => {
         return isHovering ? 'pointer' : 'grabbing';
       }}
@@ -182,7 +196,7 @@ function MapModule() {
         ''
       )}
       <Map
-        projection={'globe'}
+        // projection={'globe'}
         attributionControl={false}
         onLoad={() => setLoaded(true)}
         mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
