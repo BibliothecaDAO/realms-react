@@ -87,7 +87,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     if (!costs || !realm) {
       return;
     }
-    console.log(costs);
+
     const barracks = getRealmBuildings(
       pluckBuilding(realm, RealmBuildingId.Barracks),
       RealmBuildingIntegrity.Barracks
