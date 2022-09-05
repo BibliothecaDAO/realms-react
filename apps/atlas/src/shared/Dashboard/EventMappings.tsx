@@ -30,6 +30,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         ),
         class: event.data?.success ? successClass : negativeClass,
         resources: resourcePillaged(event.data?.pillagedResources),
+        txHash: event.transactionHash,
+        defendRealmId: event.data?.defendRealmId,
         relic: event.data?.relicClaimed ? (
           <span className="pl-10 text-xl font-semibold">
             Captured Relic {event.data?.relicClaimed}
@@ -63,6 +65,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
               Relic {event.data?.relicLost}
             </span>
           ) : null,
+          txHash: event.transactionHash,
+          defendRealmId: event.realmId,
           action: (
             <Button
               size="xs"
@@ -89,6 +93,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
               Relic {event.data?.relicLost}
             </span>
           ) : null,
+          txHash: event.transactionHash,
+          defendRealmId: event.realmId,
           action: (
             <Button
               size="xs"

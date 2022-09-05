@@ -1,11 +1,15 @@
-import { Card, CardTitle } from '@bibliotheca-dao/ui-lib';
+import { Button, Card, CardTitle } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
+import { useState } from 'react';
+import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
+import { RaidDetailsSideBar } from '@/components/sidebars/RaidDetailsSidebar';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
+import SidebarHeader from '@/shared/SidebarHeader';
 
 interface RealmHistoryProps {
   realmId: number;
@@ -16,6 +20,8 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
     variables: { filter: { realmId: { equals: realmId } } },
     pollInterval: 5000,
   });
+  const [raidDetails, setRaidDetails] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState({});
 
   const economicEventData = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
@@ -35,6 +41,11 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
       };
     })
     .filter((row) => row.event !== '');
+
+  const handleRaidDetailsClick = (event) => {
+    setSelectedEvent(event);
+    setRaidDetails(true);
+  };
 
   return (
     <div className="grid grid-cols-12 gap-6 py-4">
@@ -68,11 +79,23 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                 >
                   {a.resources}
                   {a.relic}
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    onClick={() => handleRaidDetailsClick(a)}
+                  >
+                    Raid Details
+                  </Button>
                 </HistoryCard>
               );
             })
           : 'No History yet'}
       </Card>
+
+      <AtlasSidebar isOpen={raidDetails}>
+        <SidebarHeader title="Raiding" onClose={() => setRaidDetails(false)} />
+        <RaidDetailsSideBar event={selectedEvent} />
+      </AtlasSidebar>
     </div>
   );
 }
