@@ -214,13 +214,15 @@ export const SquadBuilder = (props: SquadProps) => {
           <>
             <div className="flex p-2">
               <div className="mx-auto bg-red-600 rounded sm:w-1/3">
-                <Image
-                  src={`/realm-troops/${selectedTroop.troopName}.png`}
-                  className="object-contain h-auto"
-                  width="200"
-                  height="200"
-                  layout={'responsive'}
-                />
+                {selectedTroop.troopName && (
+                  <Image
+                    src={`/realm-troops/${selectedTroop.troopName}.png`}
+                    className="object-contain h-auto"
+                    width="200"
+                    height="200"
+                    layout={'responsive'}
+                  />
+                )}
               </div>
               <div className="mr-auto text-2xl text-left">
                 <div>Agility: {selectedTroop.agility}</div>

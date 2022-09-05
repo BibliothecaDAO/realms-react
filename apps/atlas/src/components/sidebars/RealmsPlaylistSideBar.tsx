@@ -1,6 +1,6 @@
 import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
-import { CollectionIcon } from '@heroicons/react/24/outline';
+import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
@@ -236,7 +236,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
               onClick={() => {
                 if (rp.playlistType == 'AllRealms') {
                   toast(`Realm Playlist: ${rp.name}`, {
-                    icon: <CollectionIcon className="w-6" />,
+                    icon: <RectangleStackIcon className="w-6" />,
                   });
                   resetPlaylistState();
                   // router.push(
@@ -273,7 +273,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                     setSelectedPlaylist(undefined);
                     if (res.data.realms && res.data.realms.length > 0) {
                       toast(`Realm Playlist: ${rp.name}`, {
-                        icon: <CollectionIcon className="w-6" />,
+                        icon: <RectangleStackIcon className="w-6" />,
                       });
                       const realmIds = res.data.realms.map((r) => r.realmId);
                       storage(realmPlaylistCursorKey, 0).set(0);
@@ -296,7 +296,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                   });
               }}
             >
-              <CollectionIcon className="inline-block w-6 mr-2" />{' '}
+              <RectangleStackIcon className="inline-block w-6 mr-2" />{' '}
               {loading && selectedPlaylist == rp.name
                 ? 'Loading...'
                 : 'Start Playlist'}

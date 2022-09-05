@@ -9,7 +9,7 @@ import {
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import { ArrowSmRightIcon } from '@heroicons/react/20/solid';
+import { ArrowSmallRightIcon } from '@heroicons/react/20/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -322,13 +322,15 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                                 <div
                                   className={`flex justify-center p-2 border-4 border-double rounded-xl border-white/40 ${c.troopColour}`}
                                 >
-                                  <Image
-                                    height={75}
-                                    width={75}
-                                    className="object-contain h-auto"
-                                    src={'/realm-troops/' + c.troopImage}
-                                    alt=""
-                                  />
+                                  {c.troopImage && (
+                                    <Image
+                                      height={75}
+                                      width={75}
+                                      className="object-contain h-auto"
+                                      src={'/realm-troops/' + c.troopImage}
+                                      alt=""
+                                    />
+                                  )}
                                 </div>
 
                                 <h5 className="">{c.troopName}</h5>
@@ -378,7 +380,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                     )
                   }
                 >
-                  <ArrowSmRightIcon className="w-4 mr-4" />
+                  <ArrowSmallRightIcon className="w-4 mr-4" />
                   <span>
                     View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army{' '}
                   </span>

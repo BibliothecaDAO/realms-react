@@ -148,13 +148,15 @@ export const TroopCard = (props: TroopProps) => {
         }`}
       >
         <div className="relative flex">
-          <Image
-            src={`/realm-troops/${props.troop.troopName}.png`}
-            alt=""
-            width="200"
-            height="200"
-            className="z-10 object-contain object-center h-full"
-          />
+          {props.troop.troopName && (
+            <Image
+              src={`/realm-troops/${props.troop.troopName}.png`}
+              alt=""
+              width="200"
+              height="200"
+              className="z-10 object-contain object-center h-full"
+            />
+          )}
           {getTroop()?.troopName && (
             <HealthBar
               troopId={props.troop.troopId}

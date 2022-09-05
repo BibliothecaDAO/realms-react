@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unknown-property */
+
 import {
   Torus,
   MeshWobbleMaterial,

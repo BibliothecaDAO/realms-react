@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unknown-property */
+
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import ZoomReset from '@bibliotheca-dao/ui-lib/icons/zoom-reset.svg';
 import {

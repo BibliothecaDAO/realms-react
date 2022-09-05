@@ -148,19 +148,21 @@ export const Troop = (props: TroopProps) => {
         }`}
       >
         <div className="relative z-10 flex ">
-          <Image
-            src={`/realm-troops/${getTroop()?.troopName}.png`}
-            alt=""
-            width="200"
-            height="200"
-            className="z-10 object-contain object-center h-full"
-          />
           {getTroop()?.troopName && (
-            <HealthBar
-              troopId={props.troop.troopId}
-              vitality={props.troop.vitality}
-              baseVitality={getTroop()?.vitality || 0}
-            />
+            <>
+              <Image
+                src={`/realm-troops/${getTroop()?.troopName}.png`}
+                alt=""
+                width="200"
+                height="200"
+                className="z-10 object-contain object-center h-full"
+              />
+              <HealthBar
+                troopId={props.troop.troopId}
+                vitality={props.troop.vitality}
+                baseVitality={getTroop()?.vitality || 0}
+              />
+            </>
           )}
         </div>
 

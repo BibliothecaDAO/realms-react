@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { Plane, OrbitControls, Sky } from '@react-three/drei';
 import { Canvas, useLoader } from '@react-three/fiber';
 import React, { Suspense } from 'react';

@@ -83,13 +83,15 @@ export const ArmoryBuilder = (props: Props) => {
           <div
             className={`flex w-1/3 p-2 border-4 border-double rounded-xl border-white/40 ${re.troopColour}`}
           >
-            <Image
-              height={100}
-              width={100}
-              className="self-center object-contain h-auto"
-              src={`/realm-troops/${re.troopName}.png`}
-              alt=""
-            />
+            {re.troopName && (
+              <Image
+                height={100}
+                width={100}
+                className="self-center object-contain h-auto"
+                src={`/realm-troops/${re.troopName}.png`}
+                alt=""
+              />
+            )}
           </div>
           <div className="w-2/3 px-4 py-2">
             <div className="text-2xl font-display"> {re.troopName}</div>
