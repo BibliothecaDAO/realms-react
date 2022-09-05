@@ -31,7 +31,7 @@ const Terrain = () => {
 
 export default function TerrainLayer() {
   return (
-    <Canvas>
+    <Canvas className="rounded-xl">
       <fog attach="fog" args={['white', 0, 80]} />
       <OrbitControls autoRotate />
       <pointLight intensity={2} position={[1, 20, 6]} />

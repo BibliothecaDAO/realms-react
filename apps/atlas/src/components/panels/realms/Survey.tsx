@@ -21,6 +21,7 @@ import {
   RealmCombatStatus,
   getTrait,
 } from '@/shared/Getters/Realm';
+import TerrainLayer from '@/shared/Terrain';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -259,16 +260,11 @@ const Survey: React.FC<Prop> = (props) => {
           </CardBody>
         </Card>
         <Card className="col-span-12 row-span-1 md:col-start-8 md:col-end-13 ">
-          <CardTitle>Landscape of {realm?.name}</CardTitle>{' '}
-          <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${realm?.realmId}.webp`}
-            alt="map"
-            className="w-full -scale-x-100"
-            width={500}
-            height={320}
-            layout={'responsive'}
-          />
-          <CardTitle>Realm Traits</CardTitle>
+          <div className="rounded h-96">
+            <TerrainLayer />
+          </div>
+
+          <CardTitle>Traits</CardTitle>
           <CardBody>
             <div className="flex flex-wrap">
               <div className="p-1 my-1 sm:w-1/2">
