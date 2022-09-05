@@ -1,9 +1,9 @@
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import { BookmarkIcon, CollectionIcon } from '@heroicons/react/outline';
 import {
-  ArrowNarrowLeftIcon,
-  ArrowNarrowRightIcon,
-} from '@heroicons/react/solid';
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+} from '@heroicons/react/20/solid';
+import { BookmarkIcon, RectangleStackIcon } from '@heroicons/react/24/outline';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -152,12 +152,12 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
   const quickActions = [
     {
-      icon: <ArrowNarrowRightIcon className={s_icons} />,
+      icon: <ArrowLongRightIcon className={s_icons} />,
       action: () => next(),
       class: `-mr-28 ${s}`,
     },
     {
-      icon: <CollectionIcon className={s_icons} />,
+      icon: <RectangleStackIcon className={s_icons} />,
       action: () => {
         setShowPlaylists(true);
       },
@@ -169,7 +169,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       class: `-mb-24 -mr-14 ${s}`,
     },
     {
-      icon: <ArrowNarrowLeftIcon className={s_icons} />,
+      icon: <ArrowLongLeftIcon className={s_icons} />,
       action: () => prev(),
       class: `-ml-28 ${s}`,
     },

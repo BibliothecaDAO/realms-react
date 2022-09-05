@@ -3,7 +3,7 @@
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Menu, Transition, Popover } from '@headlessui/react';
-import { MapIcon } from '@heroicons/react/outline';
+import { MapIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';

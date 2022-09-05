@@ -1,6 +1,6 @@
 import { Card, CardTitle, CardStats } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import { ExclamationCircleIcon, PlusIcon } from '@heroicons/react/solid';
+import { ExclamationCircleIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 // import { formatEther } from '@ethersproject/units';
 import { toBN } from 'starknet/dist/utils/number';

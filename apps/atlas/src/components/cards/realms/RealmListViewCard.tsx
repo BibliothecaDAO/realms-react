@@ -3,7 +3,7 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import { HeartIcon } from '@heroicons/react/solid';
+import { HeartIcon } from '@heroicons/react/20/solid';
 import { useStarknet } from '@starknet-react/core';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';

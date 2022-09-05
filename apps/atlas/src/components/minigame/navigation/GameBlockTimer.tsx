@@ -1,4 +1,4 @@
-import { LightningBoltIcon } from '@heroicons/react/outline';
+import { BoltIcon } from '@heroicons/react/24/outline';
 import { useStarknetBlock } from '@starknet-react/core';
 import classNames from 'classnames';
 import type { GameContext } from '@/util/minigameApi';
@@ -40,9 +40,7 @@ const GameBlockTimer: React.FC<Prop> = (props) => {
           isCurrentHour ? 'text-gray-100' : 'text-transparent'
         )}
       >
-        {isCurrentHour ? (
-          <LightningBoltIcon className="inline-block w-2" />
-        ) : null}
+        {isCurrentHour ? <BoltIcon className="inline-block w-2" /> : null}
         {/* 
         Show boost at hour interval
         using same formula as used in contract.

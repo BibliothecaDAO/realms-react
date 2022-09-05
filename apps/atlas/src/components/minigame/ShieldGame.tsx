@@ -1,4 +1,4 @@
-import { XCircleIcon } from '@heroicons/react/solid';
+import { XCircleIcon } from '@heroicons/react/20/solid';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

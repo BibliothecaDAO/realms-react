@@ -1,7 +1,7 @@
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
-import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/solid';
+import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/20/solid';
 import {
   useStarknet,
   useStarknetTransactionManager,

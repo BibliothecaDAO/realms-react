@@ -1,5 +1,5 @@
 import { useChannel } from '@ably-labs/react-hooks';
-import { LightningBoltIcon } from '@heroicons/react/outline';
+import { BoltIcon } from '@heroicons/react/24/outline';
 import {
   useStarknet,
   useStarknetInvoke,
@@ -261,7 +261,7 @@ const ActionsBox = (props) => {
                 id="action-boost"
                 className="w-1/2 p-1 text-sm font-semibold text-center transition-colors to-gray-900 bg-gradient-to-r from-purple-900"
               >
-                Boost <LightningBoltIcon className="inline-block w-4" />
+                Boost <BoltIcon className="inline-block w-4" />
                 {`${getBoost.data / 100}%`}
               </div>
             ) : null}

@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useStarknet } from '@starknet-react/core';
 import classNames from 'classnames';

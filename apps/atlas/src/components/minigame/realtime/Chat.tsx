@@ -1,6 +1,6 @@
 import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
-import { CheckCircleIcon } from '@heroicons/react/outline';
-import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/solid';
+import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/20/solid';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
 import type { Types } from 'ably';
 import classNames from 'classnames';

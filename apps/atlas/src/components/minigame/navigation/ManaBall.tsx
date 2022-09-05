@@ -1,4 +1,4 @@
-import { LightningBoltIcon } from '@heroicons/react/outline';
+import { BoltIcon } from '@heroicons/react/24/outline';
 import { useSpring, animated, config } from 'react-spring';
 import { ElementToken } from '@/constants/index';
 import useGameStatus from '@/hooks/desiege/useGameStatus';
@@ -78,7 +78,7 @@ export const ManaBall = (props: Props) => {
               <span className="text-4xl font-bold">
                 {totalMinted !== undefined ? (
                   <>
-                    <LightningBoltIcon className="inline-block h-6 ml-1" />
+                    <BoltIcon className="inline-block h-6 ml-1" />
                     <animated.div className={'inline-block'}>
                       {totalMintedSpring.to((n) => n.toFixed(0))}
                     </animated.div>

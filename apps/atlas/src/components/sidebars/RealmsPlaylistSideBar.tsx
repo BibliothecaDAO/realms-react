@@ -1,6 +1,6 @@
 import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
-import { CollectionIcon } from '@heroicons/react/outline';
+import { CollectionIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';

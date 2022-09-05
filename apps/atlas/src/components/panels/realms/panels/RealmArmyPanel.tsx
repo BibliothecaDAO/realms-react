@@ -9,7 +9,7 @@ import {
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import { ArrowSmRightIcon } from '@heroicons/react/solid';
+import { ArrowSmRightIcon } from '@heroicons/react/20/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
