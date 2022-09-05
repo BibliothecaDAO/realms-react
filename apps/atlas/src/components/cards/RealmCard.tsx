@@ -4,6 +4,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
+import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import type { ReactElement } from 'react';
 import React, { useMemo } from 'react';
@@ -42,7 +43,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
         component: <RealmTravel realm={props.realm} />,
       },
       {
-        label: <Library className="self-center w-6 h-6 fill-current" />,
+        label: <Scroll className="self-center w-6 h-6 fill-current" />,
         component: <RealmHistory realmId={props.realm.realmId} />,
       },
       {
