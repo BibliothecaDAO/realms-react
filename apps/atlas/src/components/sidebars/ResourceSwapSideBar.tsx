@@ -1,4 +1,5 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/tables/SwapResources';
 import {
@@ -66,7 +67,7 @@ export const ResourceSwapSideBarPanel = (
         {!isLordsApprovedForExchange && (
           <div>
             <Button className="w-full" variant="primary" onClick={approveLords}>
-              APPROVE LORDS
+              APPROVE LORDS <Lords className="w-4" />
             </Button>
           </div>
         )}

@@ -1,5 +1,6 @@
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
@@ -57,8 +58,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       ),
       rate: (
         <span className="text-xs sm:text-lg">
-          <span className="uppercase text-stone-500 sm:text-sm">
-            $LORDS | {resource?.resourceName}
+          <span className="flex uppercase text-stone-500 sm:text-sm">
+            $LORDS <Lords className="w-3 ml-1 opacity-50" /> |{' '}
+            {resource?.resourceName}
           </span>
           <br />1 = {(+formatEther(resource.rate)).toFixed(4)}
           <span className="ml-4 text-xs sm:text-sm">

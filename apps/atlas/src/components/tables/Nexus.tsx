@@ -9,6 +9,7 @@ import {
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
 import { useStarknetCall, useStarknet } from '@starknet-react/core';
@@ -193,9 +194,13 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       <div className="sm:w-full">
         <div className="flex flex-wrap w-full">
           <div className="flex flex-wrap justify-end w-full mb-1">
-            <span className="text-xs font-semibold tracking-widest text-right uppercase opacity-60 ">
+            <span className="text-xs flex font-semibold tracking-widest text-right uppercase opacity-60 ">
               {props.stake
-                ? 'enter lords to stake'
+                ? [
+                    'enter lords',
+                    <Lords key={1} className="w-3 mr-2 fill-white" />,
+                    'to stake',
+                  ]
                 : 'enter stk-lords to redeem'}
             </span>{' '}
             <InputNumber
@@ -214,10 +219,13 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
             />{' '}
           </div>
           <div className="w-full pt-2 font-semibold text-right border-t border-white/30">
-            <span className="text-xs tracking-widest uppercase opacity-60">
+            <span className="text-xs flex items-center justify-end tracking-widest uppercase opacity-60">
               {props.stake
                 ? 'your will receive stk-lords '
-                : 'you will receive lords'}
+                : [
+                    'you will receive lords',
+                    <Lords key={1} className="w-3 fill-white" />,
+                  ]}
             </span>{' '}
             <br />{' '}
             <span className="text-xl">
@@ -241,7 +249,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
               </Button>
             </div>
             <div className="w-full mt-2 text-right border-t border-white/30">
-              <span className="flex justify-between font-semibold uppercase text-body ">
+              <span className="flex mt-1 justify-between font-semibold uppercase text-body ">
                 <span className="text-left">
                   <span className="text-xs opacity-60"> stk-lords </span>
                   <br />
@@ -257,11 +265,12 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
                   </span>
                 </span>
                 <span>
-                  <span className="text-xs opacity-60">equv. lords</span>
+                  <span className="flex items-center text-xs opacity-60">
+                    equv. lords
+                    <Lords className="w-3 fill-white" />{' '}
+                  </span>
                   <br />{' '}
-                  {(+formatEther(
-                    balances.previewTotalRedeem
-                  )).toLocaleString()}{' '}
+                  {(+formatEther(balances.previewTotalRedeem)).toLocaleString()}{' '}
                   {/* {(
                     (parseInt(balances.stLords) /
                       parseInt(balances.totalStkLords)) *
@@ -292,7 +301,7 @@ export function Nexus(): ReactElement {
       <div className="mb-4 text-5xl tracking-widest text-center uppercase font-lords">
         Nexus
       </div>
-      <div className="flex mx-auto mb-4 text-sm tracking-widest">
+      <div className="flex items-center mx-auto mb-4 text-sm tracking-widest">
         <div
           className={`px-4 uppercase ${tradeType === 'buy' && 'font-semibold'}`}
         >
@@ -312,8 +321,13 @@ export function Nexus(): ReactElement {
             } inline-block h-4 w-4 transform rounded-full bg-white`}
           />
         </Switch>
-        <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
+        <div
+          className={`flex items-center px-4 uppercase ${
+            isSell && 'font-semibold'
+          }`}
+        >
           withdraw Lords
+          <Lords className="w-3 mr-2 fill-white" />
         </div>
       </div>
       <div className="w-full mx-auto md:w-1/2">

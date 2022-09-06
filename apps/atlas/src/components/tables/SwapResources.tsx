@@ -131,7 +131,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                 ).toLocaleString()}{' '}
                 Lords
               </span>{' '}
-              {/* <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" /> */}
+              <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" />
             </div>
           </div>
           <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
@@ -371,19 +371,26 @@ export function SwapResources(): ReactElement {
         <div className="flex flex-col justify-end w-full">
           <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
-              <span>
-                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
+              <span className="flex">
+                <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
                   {isBuy
-                    ? 'Total cost of resources in $LORDS'
-                    : 'Approximate lords received'}
+                    ? [
+                        'Total cost of resources in LORDS',
+                        <LordsIcon key={1} className="w-3 mr-2" />,
+                      ]
+                    : [
+                        'Approximate lords',
+                        <LordsIcon key={1} className="w-3 mr-2" />,
+                        ' received',
+                      ]}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
-                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  Your current $LORDS balance
+                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  Your current LORDS <LordsIcon className="w-3 mr-2" /> balance
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>

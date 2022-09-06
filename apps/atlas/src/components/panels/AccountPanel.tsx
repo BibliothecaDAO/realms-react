@@ -132,7 +132,7 @@ export function AccountPanel() {
       rate: (
         <span className="text-xs sm:text-lg">
           <span className="uppercase text-stone-500 sm:text-sm">
-            $LORDS | {resource?.resourceName}
+            $LORDS <Lords className="w-3 ml-1" /> | {resource?.resourceName}
           </span>
           <br />1 = {(+formatEther(resource.rate)).toFixed(4)}
           <span className="ml-4 text-xs sm:text-sm">

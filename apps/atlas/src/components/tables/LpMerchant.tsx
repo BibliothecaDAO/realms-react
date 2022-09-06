@@ -8,7 +8,7 @@ import {
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
 import { useStarknetCall } from '@starknet-react/core';
@@ -174,12 +174,15 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             <br />
             <span className="opacity-60">
               {' '}
-              -LORDS:{' '}
-              {loading
-                ? 'loading...'
-                : (+formatEther(
-                    currencyAndTokenBalance.currency
-                  )).toLocaleString()}{' '}
+              <span className="flex">
+                -LORDS
+                <Lords className="w-3 mr-1" />:{' '}
+                {loading
+                  ? 'loading...'
+                  : (+formatEther(
+                      currencyAndTokenBalance.currency
+                    )).toLocaleString()}{' '}
+              </span>
               <br />-{props.resource.resourceName}:{' '}
               {loading
                 ? 'loading...'
@@ -393,17 +396,27 @@ export function LpMerchant(): ReactElement {
         <div className="flex flex-col justify-end w-full">
           <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
-              <span>
-                <span className="mr-6 text-xs tracking-widest uppercase opacity-80">
-                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
+              <span className="flex">
+                <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
+                  {isBuy
+                    ? [
+                        'Total lords',
+                        <Lords key={1} className="w-3 mr-2" />,
+                        ' to spend:',
+                      ]
+                    : [
+                        'Total lords',
+                        <Lords key={1} className="w-3 mr-2" />,
+                        ' received:',
+                      ]}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
-                <span className="self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your lords Balance:
+                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  your lords <Lords className="w-3 mr-2" /> Balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>
