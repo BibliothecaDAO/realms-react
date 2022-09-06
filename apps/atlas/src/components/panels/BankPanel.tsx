@@ -38,32 +38,33 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     return {
       resource: (
         <div>
-          <div className="flex flex-wrap sm:text-xl">
+          <div className="flex sm:text-xl">
             <ResourceIcon
-              className="self-center"
+              className="self-center w-4"
               resource={resource?.resourceName?.replace(' ', '') || ''}
               size="md"
             />
-            <div className="flex flex-col w-full pt-2 md:ml-4 sm:w-2/3 md:mt-0">
-              {' '}
+            <div className="flex pt-2 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
               <span className="self-center w-full tracking-widest uppercase text-stone-200">
                 {resource?.resourceName}
-              </span>{' '}
-              <span className="w-full text-xs tracking-widest uppercase sm:text-sm text-stone-400">
-                {(+formatEther(resource.amount)).toLocaleString()}
+                <span className="block w-full tracking-widest uppercase sm:flex sm:text-sm text-stone-400">
+                  {(+formatEther(resource.amount)).toLocaleString()}
+                </span>
               </span>
             </div>
           </div>
         </div>
       ),
       rate: (
-        <span className="text-xs sm:text-lg">
-          <span className="flex uppercase text-stone-500 sm:text-sm">
-            $LORDS <Lords className="w-3 ml-1 opacity-50" /> |{' '}
-            {resource?.resourceName}
+        <span className="text-sm sm:text-lg">
+          <span className="flex">
+            {(+formatEther(resource.rate)).toFixed(4)}
+            <span className="hidden ml-1.5 uppercase text-stone-500 sm:block">
+              $LORDS
+            </span>
+            <Lords className="w-4 ml-3 text-white opacity-50" />
           </span>
-          <br />1 = {(+formatEther(resource.rate)).toFixed(4)}
-          <span className="ml-4 text-xs sm:text-sm">
+          <span className="w-full text-xs sm:text-sm">
             {RateChange(resource.percentChange)}
           </span>
         </span>
@@ -88,7 +89,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           }}
           disabled={!availableResourceIds.includes(resource.resourceId)}
         >
-          Add +
+          Add <span className="hidden sm:block">+</span>
         </Button>
       ),
     };
@@ -97,7 +98,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     { Header: 'Resource', id: 1, accessor: 'resource' },
     // { Header: 'Balance', id: 2, accessor: 'balance' },
     // { Header: 'Output', id: 3, accessor: 'output' },
-    { Header: 'Rate', id: 5, accessor: 'rate' },
+    { Header: 'Price', id: 5, accessor: 'rate' },
     // { Header: 'Change', id: 4, accessor: 'change' },
 
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
