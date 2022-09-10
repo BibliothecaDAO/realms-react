@@ -1,29 +1,29 @@
-import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Table, Button, ResourceIcon, Switch } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import {
+  useGroupByRealmHistoryQuery,
+  useGetRealmsQuery,
+  RealmHistoryScalarFieldEnum,
+  SortOrder,
+} from '@/generated/graphql';
+import { relicsOwnedByRealm } from '@/shared/Getters/Realm';
 import { BasePanel } from './BasePanel';
 
 type Row = {
-  resource: ReactElement;
+  realm: number;
   // balance: string;
   // output: number;
   // change: ReactElement;
-  rate: ReactElement;
+  owner: string;
+  successfulRaid?: number;
+  relics?: number;
   action: ReactElement;
-};
-
-export const RateChange = (change: number) => {
-  const x = (change * 100).toFixed(2);
-  return (
-    <span
-      className={`${parseFloat(x) < 0 ? 'text-red-200' : 'text-green-200/80'}`}
-    >
-      24hr {x} %
-    </span>
-  );
 };
 
 interface BankPanel {
@@ -31,9 +31,68 @@ interface BankPanel {
 }
 
 export function LeaderboardPanel(): ReactElement {
-  const { balance, availableResourceIds, addSelectedSwapResources } =
-    useResourcesContext();
+  const router = useRouter();
 
+  const [raidSuccessOwnerToggle, setRaidSuccessOwnerToggle] = useState(false);
+  const { data: raidSuccessData, loading: loadingData } =
+    useGroupByRealmHistoryQuery({
+      variables: {
+        by: RealmHistoryScalarFieldEnum.RealmId,
+        where: {
+          eventType: { equals: 'realm_combat_attack' },
+          data: { path: ['success'], equals: true },
+        },
+        orderBy: { _count: { realmId: SortOrder.Desc } },
+      },
+    });
+  const { data: relicData } = useGetRealmsQuery({
+    variables: {
+      orderBy: { relicsOwned: { _count: SortOrder.Desc } },
+      take: 10,
+    },
+  });
+  const defaultRaidData: Row[] = (
+    raidSuccessData?.groupByRealmHistory ?? []
+  ).map((realm) => {
+    return {
+      realm: realm?.realmId || 0,
+      owner: '0x00test',
+      successfulRaid: realm?._count?._all || 0,
+      action: (
+        <Button
+          variant="primary"
+          size="xs"
+          onClick={() => {
+            router.push(`/realm/${realm?.realmId}`, undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          View Realm
+        </Button>
+      ),
+    };
+  });
+  const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
+    return {
+      realm: realm?.realmId || 0,
+      owner: realm?.ownerL2 || 'unknown',
+      relics: relicsOwnedByRealm(realm) || 0,
+      action: (
+        <Button
+          variant="primary"
+          size="xs"
+          onClick={() => {
+            router.push(`/realm/${realm?.realmId}`, undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          View Realm
+        </Button>
+      ),
+    };
+  });
   const sections = [
     {
       name: 'successfulRaids',
@@ -43,14 +102,7 @@ export function LeaderboardPanel(): ReactElement {
         { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
         { Header: 'Action', id: 7, accessor: 'action' },
       ],
-      defaultData: [
-        {
-          realm: 1,
-          owner: '0x0000',
-          goblinTowns: '12',
-          action: <div>view all</div>,
-        },
-      ],
+      defaultData: defaultRaidData,
     },
     {
       name: 'relicsHeld',
@@ -60,14 +112,7 @@ export function LeaderboardPanel(): ReactElement {
         { Header: 'Relics Held', id: 6, accessor: 'relics' },
         { Header: 'Action', id: 7, accessor: 'action' },
       ],
-      defaultData: [
-        {
-          realm: 1,
-          owner: '0x0000',
-          goblinTowns: '12',
-          action: <div>view all</div>,
-        },
-      ],
+      defaultData: defaultRelicData,
     },
     {
       name: 'farmsHarvested',
@@ -132,7 +177,7 @@ export function LeaderboardPanel(): ReactElement {
         </div>
 
         <div className="relative">
-          {sections.map((section) => (
+          {sections.map((section, index) => (
             <div
               key={section.name}
               className="p-4 mb-10 border-4 border-double cursor-pointer rounded-2xl border-white/30 shadow-black"
@@ -140,6 +185,28 @@ export function LeaderboardPanel(): ReactElement {
               <h3 className="text-3xl capitalize">
                 {section.name.replace(/([A-Z])/g, ' $1')}
               </h3>
+              {index === 0 && (
+                <div className="flex mx-auto mb-8 text-sm tracking-widest">
+                  <div
+                    className={`px-4 uppercase self-center ${
+                      raidSuccessOwnerToggle && 'font-semibold'
+                    }`}
+                  >
+                    Realm
+                  </div>
+                  <Switch
+                    checked={raidSuccessOwnerToggle}
+                    onChange={setRaidSuccessOwnerToggle}
+                  ></Switch>
+                  <div
+                    className={`px-4 uppercase self-center ${
+                      !raidSuccessOwnerToggle && 'font-semibold'
+                    }`}
+                  >
+                    Adventurer
+                  </div>
+                </div>
+              )}
               <Table
                 columns={section.columns}
                 data={section.defaultData}

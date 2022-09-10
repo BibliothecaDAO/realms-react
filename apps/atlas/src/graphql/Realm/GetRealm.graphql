@@ -51,6 +51,26 @@ query getRealmHistory(
     transactionHash
   }
 }
+query groupByRealmHistory(
+  $by: [RealmHistoryScalarFieldEnum!]!
+  $orderBy: [RealmHistoryOrderByWithAggregationInput!]
+  $where: RealmHistoryWhereInput
+  $take: Int
+  $skip: Int
+) @api(name: starkIndexer) {
+  groupByRealmHistory(
+    by: $by
+    where: $where
+    orderBy: $orderBy
+    take: $take
+    skip: $skip
+  ) {
+    realmId
+    _count {
+      _all
+    }
+  }
+}
 
 query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
 @api(name: starkIndexer) {

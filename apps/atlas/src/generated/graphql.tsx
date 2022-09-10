@@ -23,6 +23,15 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type AggregateRealmHistory = {
+  __typename?: 'AggregateRealmHistory';
+  _avg?: Maybe<RealmHistoryAvgAggregate>;
+  _count?: Maybe<RealmHistoryCountAggregate>;
+  _max?: Maybe<RealmHistoryMaxAggregate>;
+  _min?: Maybe<RealmHistoryMinAggregate>;
+  _sum?: Maybe<RealmHistorySumAggregate>;
+};
+
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
@@ -128,6 +137,20 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
+export type DateTimeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedDateTimeFilter>;
+  _min?: InputMaybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
+  not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
+};
+
 /** The Desiege Model */
 export type Desiege = {
   __typename?: 'Desiege';
@@ -147,6 +170,16 @@ export type EnumOrderTypeNullableFilter = {
   equals?: InputMaybe<OrderType>;
   in?: InputMaybe<Array<OrderType>>;
   not?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  notIn?: InputMaybe<Array<OrderType>>;
+};
+
+export type EnumOrderTypeNullableWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  _min?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  equals?: InputMaybe<OrderType>;
+  in?: InputMaybe<Array<OrderType>>;
+  not?: InputMaybe<NestedEnumOrderTypeNullableWithAggregatesFilter>;
   notIn?: InputMaybe<Array<OrderType>>;
 };
 
@@ -217,9 +250,55 @@ export type IntNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
+export type IntWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedIntFilter>;
+  _min?: InputMaybe<NestedIntFilter>;
+  _sum?: InputMaybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
 export type JsonFilter = {
+  array_contains?: InputMaybe<Scalars['JSON']>;
+  array_ends_with?: InputMaybe<Scalars['JSON']>;
+  array_starts_with?: InputMaybe<Scalars['JSON']>;
   equals?: InputMaybe<Scalars['JSON']>;
+  gt?: InputMaybe<Scalars['JSON']>;
+  gte?: InputMaybe<Scalars['JSON']>;
+  lt?: InputMaybe<Scalars['JSON']>;
+  lte?: InputMaybe<Scalars['JSON']>;
   not?: InputMaybe<Scalars['JSON']>;
+  path?: InputMaybe<Array<Scalars['String']>>;
+  string_contains?: InputMaybe<Scalars['String']>;
+  string_ends_with?: InputMaybe<Scalars['String']>;
+  string_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+export type JsonWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedJsonFilter>;
+  _min?: InputMaybe<NestedJsonFilter>;
+  array_contains?: InputMaybe<Scalars['JSON']>;
+  array_ends_with?: InputMaybe<Scalars['JSON']>;
+  array_starts_with?: InputMaybe<Scalars['JSON']>;
+  equals?: InputMaybe<Scalars['JSON']>;
+  gt?: InputMaybe<Scalars['JSON']>;
+  gte?: InputMaybe<Scalars['JSON']>;
+  lt?: InputMaybe<Scalars['JSON']>;
+  lte?: InputMaybe<Scalars['JSON']>;
+  not?: InputMaybe<Scalars['JSON']>;
+  path?: InputMaybe<Array<Scalars['String']>>;
+  string_contains?: InputMaybe<Scalars['String']>;
+  string_ends_with?: InputMaybe<Scalars['String']>;
+  string_starts_with?: InputMaybe<Scalars['String']>;
 };
 
 /** Lore Entity */
@@ -413,10 +492,34 @@ export type NestedDateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
 };
 
+export type NestedDateTimeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedDateTimeFilter>;
+  _min?: InputMaybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['Timestamp']>;
+  gt?: InputMaybe<Scalars['Timestamp']>;
+  gte?: InputMaybe<Scalars['Timestamp']>;
+  in?: InputMaybe<Array<Scalars['Timestamp']>>;
+  lt?: InputMaybe<Scalars['Timestamp']>;
+  lte?: InputMaybe<Scalars['Timestamp']>;
+  not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Timestamp']>>;
+};
+
 export type NestedEnumOrderTypeNullableFilter = {
   equals?: InputMaybe<OrderType>;
   in?: InputMaybe<Array<OrderType>>;
   not?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  notIn?: InputMaybe<Array<OrderType>>;
+};
+
+export type NestedEnumOrderTypeNullableWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  _min?: InputMaybe<NestedEnumOrderTypeNullableFilter>;
+  equals?: InputMaybe<OrderType>;
+  in?: InputMaybe<Array<OrderType>>;
+  not?: InputMaybe<NestedEnumOrderTypeNullableWithAggregatesFilter>;
   notIn?: InputMaybe<Array<OrderType>>;
 };
 
@@ -460,6 +563,38 @@ export type NestedIntNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
+export type NestedIntWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatFilter>;
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedIntFilter>;
+  _min?: InputMaybe<NestedIntFilter>;
+  _sum?: InputMaybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type NestedJsonFilter = {
+  array_contains?: InputMaybe<Scalars['JSON']>;
+  array_ends_with?: InputMaybe<Scalars['JSON']>;
+  array_starts_with?: InputMaybe<Scalars['JSON']>;
+  equals?: InputMaybe<Scalars['JSON']>;
+  gt?: InputMaybe<Scalars['JSON']>;
+  gte?: InputMaybe<Scalars['JSON']>;
+  lt?: InputMaybe<Scalars['JSON']>;
+  lte?: InputMaybe<Scalars['JSON']>;
+  not?: InputMaybe<Scalars['JSON']>;
+  path?: InputMaybe<Array<Scalars['String']>>;
+  string_contains?: InputMaybe<Scalars['String']>;
+  string_ends_with?: InputMaybe<Scalars['String']>;
+  string_starts_with?: InputMaybe<Scalars['String']>;
+};
+
 export type NestedStringFilter = {
   contains?: InputMaybe<Scalars['String']>;
   endsWith?: InputMaybe<Scalars['String']>;
@@ -484,6 +619,23 @@ export type NestedStringNullableFilter = {
   lt?: InputMaybe<Scalars['String']>;
   lte?: InputMaybe<Scalars['String']>;
   not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type NestedStringWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedStringFilter>;
+  _min?: InputMaybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
 };
@@ -515,6 +667,7 @@ export enum OrderType {
 
 export type Query = {
   __typename?: 'Query';
+  aggregateRealmHistory: AggregateRealmHistory;
   getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
   getBuildingsByRealmId: Array<Building>;
@@ -535,11 +688,20 @@ export type Query = {
   getResourcesByAddress: Array<Resource>;
   getTroopStats: Array<TroopStats>;
   getWallet: Wallet;
+  groupByRealmHistory: Array<RealmHistoryGroupBy>;
   realm: Realm;
   realmHistory: Array<RealmHistory>;
   realms: Array<Realm>;
   realmsCount: Scalars['Int'];
   troopStats: Array<TroopStats>;
+};
+
+export type QueryAggregateRealmHistoryArgs = {
+  cursor?: InputMaybe<RealmHistoryWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<RealmHistoryOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RealmHistoryWhereInput>;
 };
 
 export type QueryGetBuildingsByRealmIdArgs = {
@@ -601,6 +763,15 @@ export type QueryGetResourcesByAddressArgs = {
 
 export type QueryGetWalletArgs = {
   address: Scalars['String'];
+};
+
+export type QueryGroupByRealmHistoryArgs = {
+  by: Array<RealmHistoryScalarFieldEnum>;
+  having?: InputMaybe<RealmHistoryScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<RealmHistoryOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RealmHistoryWhereInput>;
 };
 
 export type QueryRealmArgs = {
@@ -673,6 +844,190 @@ export type RealmHistory = {
   transactionHash?: Maybe<Scalars['String']>;
 };
 
+export type RealmHistoryAvgAggregate = {
+  __typename?: 'RealmHistoryAvgAggregate';
+  id?: Maybe<Scalars['Float']>;
+  realmId?: Maybe<Scalars['Float']>;
+};
+
+export type RealmHistoryAvgOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+};
+
+export type RealmHistoryCountAggregate = {
+  __typename?: 'RealmHistoryCountAggregate';
+  _all: Scalars['Int'];
+  data: Scalars['Int'];
+  eventId: Scalars['Int'];
+  eventType: Scalars['Int'];
+  id: Scalars['Int'];
+  realmId: Scalars['Int'];
+  realmName: Scalars['Int'];
+  realmOrder: Scalars['Int'];
+  realmOwner: Scalars['Int'];
+  timestamp: Scalars['Int'];
+  transactionHash: Scalars['Int'];
+};
+
+export type RealmHistoryCountOrderByAggregateInput = {
+  data?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  eventType?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  realmName?: InputMaybe<SortOrder>;
+  realmOrder?: InputMaybe<SortOrder>;
+  realmOwner?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionHash?: InputMaybe<SortOrder>;
+};
+
+export type RealmHistoryEventIdEventTypeCompoundUniqueInput = {
+  eventId: Scalars['String'];
+  eventType: Scalars['String'];
+};
+
+export type RealmHistoryGroupBy = {
+  __typename?: 'RealmHistoryGroupBy';
+  _avg?: Maybe<RealmHistoryAvgAggregate>;
+  _count?: Maybe<RealmHistoryCountAggregate>;
+  _max?: Maybe<RealmHistoryMaxAggregate>;
+  _min?: Maybe<RealmHistoryMinAggregate>;
+  _sum?: Maybe<RealmHistorySumAggregate>;
+  data: Scalars['JSON'];
+  eventId: Scalars['String'];
+  eventType: Scalars['String'];
+  id: Scalars['Int'];
+  realmId: Scalars['Int'];
+  realmName: Scalars['String'];
+  realmOrder?: Maybe<OrderType>;
+  realmOwner: Scalars['String'];
+  timestamp: Scalars['Timestamp'];
+  transactionHash: Scalars['String'];
+};
+
+export type RealmHistoryMaxAggregate = {
+  __typename?: 'RealmHistoryMaxAggregate';
+  eventId?: Maybe<Scalars['String']>;
+  eventType?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  realmId?: Maybe<Scalars['Int']>;
+  realmName?: Maybe<Scalars['String']>;
+  realmOrder?: Maybe<OrderType>;
+  realmOwner?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['Timestamp']>;
+  transactionHash?: Maybe<Scalars['String']>;
+};
+
+export type RealmHistoryMaxOrderByAggregateInput = {
+  eventId?: InputMaybe<SortOrder>;
+  eventType?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  realmName?: InputMaybe<SortOrder>;
+  realmOrder?: InputMaybe<SortOrder>;
+  realmOwner?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionHash?: InputMaybe<SortOrder>;
+};
+
+export type RealmHistoryMinAggregate = {
+  __typename?: 'RealmHistoryMinAggregate';
+  eventId?: Maybe<Scalars['String']>;
+  eventType?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  realmId?: Maybe<Scalars['Int']>;
+  realmName?: Maybe<Scalars['String']>;
+  realmOrder?: Maybe<OrderType>;
+  realmOwner?: Maybe<Scalars['String']>;
+  timestamp?: Maybe<Scalars['Timestamp']>;
+  transactionHash?: Maybe<Scalars['String']>;
+};
+
+export type RealmHistoryMinOrderByAggregateInput = {
+  eventId?: InputMaybe<SortOrder>;
+  eventType?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  realmName?: InputMaybe<SortOrder>;
+  realmOrder?: InputMaybe<SortOrder>;
+  realmOwner?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionHash?: InputMaybe<SortOrder>;
+};
+
+export type RealmHistoryOrderByWithAggregationInput = {
+  _avg?: InputMaybe<RealmHistoryAvgOrderByAggregateInput>;
+  _count?: InputMaybe<RealmHistoryCountOrderByAggregateInput>;
+  _max?: InputMaybe<RealmHistoryMaxOrderByAggregateInput>;
+  _min?: InputMaybe<RealmHistoryMinOrderByAggregateInput>;
+  _sum?: InputMaybe<RealmHistorySumOrderByAggregateInput>;
+  data?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  eventType?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  realmName?: InputMaybe<SortOrder>;
+  realmOrder?: InputMaybe<SortOrder>;
+  realmOwner?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionHash?: InputMaybe<SortOrder>;
+};
+
+export type RealmHistoryOrderByWithRelationInput = {
+  data?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  eventType?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+  realmName?: InputMaybe<SortOrder>;
+  realmOrder?: InputMaybe<SortOrder>;
+  realmOwner?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  transactionHash?: InputMaybe<SortOrder>;
+};
+
+export enum RealmHistoryScalarFieldEnum {
+  Data = 'data',
+  EventId = 'eventId',
+  EventType = 'eventType',
+  Id = 'id',
+  RealmId = 'realmId',
+  RealmName = 'realmName',
+  RealmOrder = 'realmOrder',
+  RealmOwner = 'realmOwner',
+  Timestamp = 'timestamp',
+  TransactionHash = 'transactionHash',
+}
+
+export type RealmHistoryScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
+  data?: InputMaybe<JsonWithAggregatesFilter>;
+  eventId?: InputMaybe<StringWithAggregatesFilter>;
+  eventType?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<IntWithAggregatesFilter>;
+  realmId?: InputMaybe<IntWithAggregatesFilter>;
+  realmName?: InputMaybe<StringWithAggregatesFilter>;
+  realmOrder?: InputMaybe<EnumOrderTypeNullableWithAggregatesFilter>;
+  realmOwner?: InputMaybe<StringWithAggregatesFilter>;
+  timestamp?: InputMaybe<DateTimeWithAggregatesFilter>;
+  transactionHash?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type RealmHistorySumAggregate = {
+  __typename?: 'RealmHistorySumAggregate';
+  id?: Maybe<Scalars['Int']>;
+  realmId?: Maybe<Scalars['Int']>;
+};
+
+export type RealmHistorySumOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  realmId?: InputMaybe<SortOrder>;
+};
+
 export type RealmHistoryWhereInput = {
   AND?: InputMaybe<Array<RealmHistoryWhereInput>>;
   NOT?: InputMaybe<Array<RealmHistoryWhereInput>>;
@@ -687,6 +1042,11 @@ export type RealmHistoryWhereInput = {
   realmOwner?: InputMaybe<StringFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   transactionHash?: InputMaybe<StringFilter>;
+};
+
+export type RealmHistoryWhereUniqueInput = {
+  eventId_eventType?: InputMaybe<RealmHistoryEventIdEventTypeCompoundUniqueInput>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 export type RealmListRelationFilter = {
@@ -973,6 +1333,24 @@ export type StringNullableListFilter = {
   isEmpty?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type StringWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedStringFilter>;
+  _min?: InputMaybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
 /** Troop */
 export type Troop = {
   __typename?: 'Troop';
@@ -1040,6 +1418,7 @@ export type TroopWhereInput = {
   realmId?: InputMaybe<IntFilter>;
   squadSlot?: InputMaybe<IntFilter>;
   tier?: InputMaybe<IntFilter>;
+  timestamp?: InputMaybe<DateTimeNullableFilter>;
   troopId?: InputMaybe<IntFilter>;
   type?: InputMaybe<IntFilter>;
   vitality?: InputMaybe<IntFilter>;
@@ -1400,6 +1779,26 @@ export type GetRealmHistoryQuery = {
     data?: any | null;
     timestamp?: any | null;
     transactionHash?: string | null;
+  }>;
+};
+
+export type GroupByRealmHistoryQueryVariables = Exact<{
+  by: Array<RealmHistoryScalarFieldEnum> | RealmHistoryScalarFieldEnum;
+  orderBy?: InputMaybe<
+    | Array<RealmHistoryOrderByWithAggregationInput>
+    | RealmHistoryOrderByWithAggregationInput
+  >;
+  where?: InputMaybe<RealmHistoryWhereInput>;
+  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type GroupByRealmHistoryQuery = {
+  __typename?: 'Query';
+  groupByRealmHistory: Array<{
+    __typename?: 'RealmHistoryGroupBy';
+    realmId: number;
+    _count?: { __typename?: 'RealmHistoryCountAggregate'; _all: number } | null;
   }>;
 };
 
@@ -2438,6 +2837,83 @@ export type GetRealmHistoryLazyQueryHookResult = ReturnType<
 export type GetRealmHistoryQueryResult = Apollo.QueryResult<
   GetRealmHistoryQuery,
   GetRealmHistoryQueryVariables
+>;
+export const GroupByRealmHistoryDocument = gql`
+  query groupByRealmHistory(
+    $by: [RealmHistoryScalarFieldEnum!]!
+    $orderBy: [RealmHistoryOrderByWithAggregationInput!]
+    $where: RealmHistoryWhereInput
+    $take: Int
+    $skip: Int
+  ) @api(name: starkIndexer) {
+    groupByRealmHistory(
+      by: $by
+      where: $where
+      orderBy: $orderBy
+      take: $take
+      skip: $skip
+    ) {
+      realmId
+      _count {
+        _all
+      }
+    }
+  }
+`;
+
+/**
+ * __useGroupByRealmHistoryQuery__
+ *
+ * To run a query within a React component, call `useGroupByRealmHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupByRealmHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupByRealmHistoryQuery({
+ *   variables: {
+ *      by: // value for 'by'
+ *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useGroupByRealmHistoryQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export function useGroupByRealmHistoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export type GroupByRealmHistoryQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryQuery
+>;
+export type GroupByRealmHistoryLazyQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryLazyQuery
+>;
+export type GroupByRealmHistoryQueryResult = Apollo.QueryResult<
+  GroupByRealmHistoryQuery,
+  GroupByRealmHistoryQueryVariables
 >;
 export const GetRealmCombatResultDocument = gql`
   query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)
