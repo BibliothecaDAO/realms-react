@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://localhost:3333/graphql'
+schema: 'https://dev-indexer-gu226.ondigitalocean.app/graphql'
 documents: 'src/graphql/**/*.graphql'
 generates:
   src/generated/graphql.tsx:

@@ -57,6 +57,7 @@ query groupByRealmHistory(
   $where: RealmHistoryWhereInput
   $take: Int
   $skip: Int
+  $isOwner: Boolean!
 ) @api(name: starkIndexer) {
   groupByRealmHistory(
     by: $by
@@ -65,7 +66,8 @@ query groupByRealmHistory(
     take: $take
     skip: $skip
   ) {
-    realmId
+    realmId @skip(if: $isOwner)
+    realmOwner @include(if: $isOwner)
     _count {
       _all
     }

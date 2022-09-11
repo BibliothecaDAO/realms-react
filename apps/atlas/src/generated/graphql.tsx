@@ -32,6 +32,85 @@ export type AggregateRealmHistory = {
   _sum?: Maybe<RealmHistorySumAggregate>;
 };
 
+/** Army */
+export type Army = {
+  __typename?: 'Army';
+  arcanistHealth: Scalars['Int'];
+  arcanistQty: Scalars['Int'];
+  archerHealth: Scalars['Int'];
+  archerQty: Scalars['Int'];
+  armyId: Scalars['Int'];
+  armyPacked: Scalars['Int'];
+  callSign: Scalars['Int'];
+  heavyCavalryHealth: Scalars['Int'];
+  heavyCavalryQty: Scalars['Int'];
+  heavyInfantryHealth: Scalars['Int'];
+  heavyInfantryQty: Scalars['Int'];
+  lastAttacked: Scalars['Int'];
+  level: Scalars['Int'];
+  lightCavalryHealth: Scalars['Int'];
+  lightCavalryQty: Scalars['Int'];
+  lightInfantryHealth: Scalars['Int'];
+  lightInfantryQty: Scalars['Int'];
+  longbowHealth: Scalars['Int'];
+  longbowQty: Scalars['Int'];
+  mageHealth: Scalars['Int'];
+  mageQty: Scalars['Int'];
+  realmId: Scalars['Int'];
+  visitingRealmId: Scalars['Int'];
+  xp: Scalars['Int'];
+};
+
+export type ArmyListRelationFilter = {
+  every?: InputMaybe<ArmyWhereInput>;
+  none?: InputMaybe<ArmyWhereInput>;
+  some?: InputMaybe<ArmyWhereInput>;
+};
+
+export type ArmyOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type ArmyWhereInput = {
+  AND?: InputMaybe<Array<ArmyWhereInput>>;
+  NOT?: InputMaybe<Array<ArmyWhereInput>>;
+  OR?: InputMaybe<Array<ArmyWhereInput>>;
+  arcanistHealth?: InputMaybe<IntFilter>;
+  arcanistQty?: InputMaybe<IntFilter>;
+  archerHealth?: InputMaybe<IntFilter>;
+  archerQty?: InputMaybe<IntFilter>;
+  armyId?: InputMaybe<IntFilter>;
+  armyPacked?: InputMaybe<IntFilter>;
+  callSign?: InputMaybe<IntFilter>;
+  heavyCavalryHealth?: InputMaybe<IntFilter>;
+  heavyCavalryQty?: InputMaybe<IntFilter>;
+  heavyInfantryHealth?: InputMaybe<IntFilter>;
+  heavyInfantryQty?: InputMaybe<IntFilter>;
+  lastAttacked?: InputMaybe<IntFilter>;
+  level?: InputMaybe<IntFilter>;
+  lightCavalryHealth?: InputMaybe<IntFilter>;
+  lightCavalryQty?: InputMaybe<IntFilter>;
+  lightInfantryHealth?: InputMaybe<IntFilter>;
+  lightInfantryQty?: InputMaybe<IntFilter>;
+  longbowHealth?: InputMaybe<IntFilter>;
+  longbowQty?: InputMaybe<IntFilter>;
+  mageHealth?: InputMaybe<IntFilter>;
+  mageQty?: InputMaybe<IntFilter>;
+  ownRealm?: InputMaybe<RealmRelationFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  visitingRealmId?: InputMaybe<IntFilter>;
+  xp?: InputMaybe<IntFilter>;
+};
+
+/** Battalion Cost Model */
+export type BattalionCost = {
+  __typename?: 'BattalionCost';
+  amount: Scalars['Float'];
+  battalionId: Scalars['Int'];
+  battalionName: Scalars['String'];
+  resources: Scalars['JSON'];
+};
+
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
@@ -668,6 +747,7 @@ export enum OrderType {
 export type Query = {
   __typename?: 'Query';
   aggregateRealmHistory: AggregateRealmHistory;
+  battalionCosts: Array<BattalionCost>;
   getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
   getBuildingsByRealmId: Array<Building>;
@@ -690,6 +770,7 @@ export type Query = {
   getWallet: Wallet;
   groupByRealmHistory: Array<RealmHistoryGroupBy>;
   realm: Realm;
+  realmCombatHistory: CombatResult;
   realmHistory: Array<RealmHistory>;
   realms: Array<Realm>;
   realmsCount: Scalars['Int'];
@@ -778,6 +859,11 @@ export type QueryRealmArgs = {
   id: Scalars['Float'];
 };
 
+export type QueryRealmCombatHistoryArgs = {
+  defendRealmId: Scalars['Float'];
+  transactionHash: Scalars['String'];
+};
+
 export type QueryRealmHistoryArgs = {
   filter?: InputMaybe<RealmHistoryWhereInput>;
   skip?: InputMaybe<Scalars['Float']>;
@@ -812,6 +898,7 @@ export type Realm = {
   lastVaultTime?: Maybe<Scalars['Timestamp']>;
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
+  ownArmies: Array<Army>;
   owner?: Maybe<Scalars['String']>;
   ownerL2?: Maybe<Scalars['String']>;
   rarityRank: Scalars['Int'];
@@ -1075,6 +1162,7 @@ export type RealmOrderByWithRelationInput = {
   lastVaultTime?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   orderType?: InputMaybe<SortOrder>;
+  ownArmies?: InputMaybe<ArmyOrderByRelationAggregateInput>;
   owner?: InputMaybe<SortOrder>;
   ownerL2?: InputMaybe<SortOrder>;
   rarityRank?: InputMaybe<SortOrder>;
@@ -1145,6 +1233,7 @@ export type RealmWhereInput = {
   lastVaultTime?: InputMaybe<DateTimeNullableFilter>;
   name?: InputMaybe<StringNullableFilter>;
   orderType?: InputMaybe<EnumOrderTypeNullableFilter>;
+  ownArmies?: InputMaybe<ArmyListRelationFilter>;
   owner?: InputMaybe<StringNullableFilter>;
   ownerL2?: InputMaybe<StringNullableFilter>;
   rarityRank?: InputMaybe<IntFilter>;
@@ -1791,13 +1880,15 @@ export type GroupByRealmHistoryQueryVariables = Exact<{
   where?: InputMaybe<RealmHistoryWhereInput>;
   take?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
+  isOwner: Scalars['Boolean'];
 }>;
 
 export type GroupByRealmHistoryQuery = {
   __typename?: 'Query';
   groupByRealmHistory: Array<{
     __typename?: 'RealmHistoryGroupBy';
-    realmId: number;
+    realmId?: number;
+    realmOwner?: string;
     _count?: { __typename?: 'RealmHistoryCountAggregate'; _all: number } | null;
   }>;
 };
@@ -2845,6 +2936,7 @@ export const GroupByRealmHistoryDocument = gql`
     $where: RealmHistoryWhereInput
     $take: Int
     $skip: Int
+    $isOwner: Boolean!
   ) @api(name: starkIndexer) {
     groupByRealmHistory(
       by: $by
@@ -2853,7 +2945,8 @@ export const GroupByRealmHistoryDocument = gql`
       take: $take
       skip: $skip
     ) {
-      realmId
+      realmId @skip(if: $isOwner)
+      realmOwner @include(if: $isOwner)
       _count {
         _all
       }
@@ -2878,6 +2971,7 @@ export const GroupByRealmHistoryDocument = gql`
  *      where: // value for 'where'
  *      take: // value for 'take'
  *      skip: // value for 'skip'
+ *      isOwner: // value for 'isOwner'
  *   },
  * });
  */
