@@ -13071,7 +13071,6 @@ __metadata:
     three-stdlib: "npm:2.15.0"
     three.meshline: "npm:1.4.0"
     threejs-meshline: "npm:2.0.12"
-    ts-jest: "npm:28.0.8"
     typescript: "npm:4.8.2"
     use-sound: "npm:^4.0.1"
     vite-plugin-svgr: "npm:2.2.1"
