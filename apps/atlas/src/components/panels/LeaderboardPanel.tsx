@@ -1,29 +1,29 @@
 import { Table, Button, ResourceIcon, Switch } from '@bibliotheca-dao/ui-lib';
-import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import { formatEther } from '@ethersproject/units';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useGroupByRealmHistoryQuery,
+  useGroupByRealmHistoryLazyQuery,
   useGetRealmsQuery,
   RealmHistoryScalarFieldEnum,
   SortOrder,
 } from '@/generated/graphql';
 import { relicsOwnedByRealm } from '@/shared/Getters/Realm';
 import { BasePanel } from './BasePanel';
+import { RaidSuccess } from './Leaderboard/RaidSuccess';
 
 type Row = {
-  realm: number;
+  realm?: number;
   // balance: string;
   // output: number;
   // change: ReactElement;
-  owner: string;
+  owner?: string | undefined;
   successfulRaid?: number;
   relics?: number;
   action: ReactElement;
+  onChange?: (checked: boolean) => void;
 };
 
 interface BankPanel {
@@ -33,50 +33,17 @@ interface BankPanel {
 export function LeaderboardPanel(): ReactElement {
   const router = useRouter();
 
-  const [raidSuccessOwnerToggle, setRaidSuccessOwnerToggle] = useState(false);
-  const { data: raidSuccessData, loading: loadingData } =
-    useGroupByRealmHistoryQuery({
-      variables: {
-        by: RealmHistoryScalarFieldEnum.RealmId,
-        where: {
-          eventType: { equals: 'realm_combat_attack' },
-          data: { path: ['success'], equals: true },
-        },
-        orderBy: { _count: { realmId: SortOrder.Desc } },
-      },
-    });
   const { data: relicData } = useGetRealmsQuery({
     variables: {
       orderBy: { relicsOwned: { _count: SortOrder.Desc } },
       take: 10,
     },
   });
-  const defaultRaidData: Row[] = (
-    raidSuccessData?.groupByRealmHistory ?? []
-  ).map((realm) => {
-    return {
-      realm: realm?.realmId || 0,
-      owner: '0x00test',
-      successfulRaid: realm?._count?._all || 0,
-      action: (
-        <Button
-          variant="primary"
-          size="xs"
-          onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
-              shallow: true,
-            });
-          }}
-        >
-          View Realm
-        </Button>
-      ),
-    };
-  });
+
   const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
     return {
       realm: realm?.realmId || 0,
-      owner: realm?.ownerL2 || 'unknown',
+      owner: realm?.settledOwner || 'unknown',
       relics: relicsOwnedByRealm(realm) || 0,
       action: (
         <Button
@@ -94,16 +61,6 @@ export function LeaderboardPanel(): ReactElement {
     };
   });
   const sections = [
-    {
-      name: 'successfulRaids',
-      columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm' },
-        { Header: 'Current Owner', id: 5, accessor: 'owner' },
-        { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
-        { Header: 'Action', id: 7, accessor: 'action' },
-      ],
-      defaultData: defaultRaidData,
-    },
     {
       name: 'relicsHeld',
       columns: [
@@ -145,6 +102,7 @@ export function LeaderboardPanel(): ReactElement {
           owner: '0x0000',
           goblinTowns: '12',
           action: <div>view all</div>,
+          onChange: () => null,
         },
       ],
     },
@@ -162,6 +120,7 @@ export function LeaderboardPanel(): ReactElement {
           owner: '0x0000',
           goblinTowns: '12',
           action: <div>view all</div>,
+          onChange: () => null,
         },
       ],
     },
@@ -175,8 +134,8 @@ export function LeaderboardPanel(): ReactElement {
         <div className="w-full pb-10 bg-black/90">
           <h2 className="w-full">The Leaderboard</h2>
         </div>
-
         <div className="relative">
+          <RaidSuccess />
           {sections.map((section, index) => (
             <div
               key={section.name}
@@ -185,28 +144,6 @@ export function LeaderboardPanel(): ReactElement {
               <h3 className="text-3xl capitalize">
                 {section.name.replace(/([A-Z])/g, ' $1')}
               </h3>
-              {index === 0 && (
-                <div className="flex mx-auto mb-8 text-sm tracking-widest">
-                  <div
-                    className={`px-4 uppercase self-center ${
-                      raidSuccessOwnerToggle && 'font-semibold'
-                    }`}
-                  >
-                    Realm
-                  </div>
-                  <Switch
-                    checked={raidSuccessOwnerToggle}
-                    onChange={setRaidSuccessOwnerToggle}
-                  ></Switch>
-                  <div
-                    className={`px-4 uppercase self-center ${
-                      !raidSuccessOwnerToggle && 'font-semibold'
-                    }`}
-                  >
-                    Adventurer
-                  </div>
-                </div>
-              )}
               <Table
                 columns={section.columns}
                 data={section.defaultData}

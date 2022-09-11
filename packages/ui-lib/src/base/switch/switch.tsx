@@ -1,21 +1,23 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react';
-import type { ReactNode } from 'react';
+import type { ComponentType } from 'react';
 
-export interface SwitchProps {
-  children?: ReactNode;
-  checked: boolean;
-  className?: string;
-  onChange(checked: boolean): void;
-}
+type SwitchProps<T> = T extends ComponentType<infer P> ? P : T;
 
-export const Switch = ({ checked, children, onChange }: SwitchProps) => {
+export const Switch = ({
+  checked,
+  className,
+  onChange,
+}: SwitchProps<typeof HeadlessSwitch>): JSX.Element => {
   return (
     <HeadlessSwitch
       checked={checked}
-      onChange={() => onChange(!checked)}
-      className={`${
-        checked ? 'bg-green-600/40' : 'bg-blue-600/40'
-      } relative inline-flex h-6 w-11 text-xs items-center rounded shadow-inner`}
+      onChange={onChange}
+      className={
+        `${
+          checked ? 'bg-green-600/40' : 'bg-blue-600/40'
+        } relative inline-flex h-6 w-11 text-xs items-center rounded shadow-inner` +
+        className
+      }
     >
       <span
         className={`${
