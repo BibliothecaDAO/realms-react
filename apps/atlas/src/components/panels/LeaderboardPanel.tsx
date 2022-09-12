@@ -6,7 +6,6 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useGetRealmsQuery,
   SortOrder,
-  useGetRealmsFoodQuery,
   RealmHistoryScalarFieldEnum,
   useGroupByRealmHistoryQuery,
 } from '@/generated/graphql';
@@ -40,12 +39,7 @@ export function LeaderboardPanel(): ReactElement {
       take: 10,
     },
   });
-  const { data: foodData } = useGetRealmsFoodQuery({
-    variables: {
-      orderBy: { qty: SortOrder.Desc },
-      take: 10,
-    },
-  });
+
   const { data: goblinSuccessData, loading: loadingData } =
     useGroupByRealmHistoryQuery({
       variables: {
