@@ -113,6 +113,8 @@ function useRealmsQueryVariables(
     account,
     state.favouriteRealms,
     state.selectedOrders,
+    state.selectedResources,
+
     state.searchIdFilter,
     state.hasWonderFilter,
     state.isSettledFilter,
@@ -183,6 +185,7 @@ export const RealmsPanel = () => {
   }, [
     state.favouriteRealms,
     state.selectedOrders,
+    state.selectedResources,
     state.searchIdFilter,
     state.hasWonderFilter,
     state.isSettledFilter,

@@ -30,12 +30,15 @@ export const RaidResults = ({ defendId, tx }) => {
     },
   });
   useEffect(() => {
+    if (!defendId) {
+      return;
+    }
     startPolling(2000); // TODO poll interval after transaction accepted on l2
     if (combatResult?.getRealmCombatResult) {
       stopPolling();
       setResult(combatResult?.getRealmCombatResult);
     }
-  }, [combatResult, startPolling, stopPolling]);
+  }, [combatResult, startPolling, stopPolling, defendId]);
 
   const success =
     combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
