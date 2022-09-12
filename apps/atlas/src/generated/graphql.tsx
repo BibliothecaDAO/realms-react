@@ -541,12 +541,7 @@ export type LorePropsOnEntityRevisionsWhereInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOrUpdateResources: Resource;
   reindexDesiege: Scalars['Boolean'];
-};
-
-export type MutationCreateOrUpdateResourcesArgs = {
-  data: ResourceInput;
 };
 
 export type NestedDateTimeFilter = {
@@ -774,6 +769,7 @@ export type Query = {
   realmHistory: Array<RealmHistory>;
   realms: Array<Realm>;
   realmsCount: Scalars['Int'];
+  travels: Array<Travel>;
   troopStats: Array<TroopStats>;
 };
 
@@ -881,6 +877,15 @@ export type QueryRealmsCountArgs = {
   filter?: InputMaybe<RealmWhereInput>;
 };
 
+export type QueryTravelsArgs = {
+  cursor?: InputMaybe<TravelWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TravelScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TravelOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TravelWhereInput>;
+};
+
 export enum QueryMode {
   Default = 'default',
   Insensitive = 'insensitive',
@@ -896,6 +901,8 @@ export type Realm = {
   lastAttacked?: Maybe<Scalars['Timestamp']>;
   lastClaimTime?: Maybe<Scalars['Timestamp']>;
   lastVaultTime?: Maybe<Scalars['Timestamp']>;
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
   name?: Maybe<Scalars['String']>;
   orderType: Scalars['String'];
   ownArmies: Array<Army>;
@@ -1160,6 +1167,8 @@ export type RealmOrderByWithRelationInput = {
   lastAttacked?: InputMaybe<SortOrder>;
   lastClaimTime?: InputMaybe<SortOrder>;
   lastVaultTime?: InputMaybe<SortOrder>;
+  latitude?: InputMaybe<SortOrder>;
+  longitude?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   orderType?: InputMaybe<SortOrder>;
   ownArmies?: InputMaybe<ArmyOrderByRelationAggregateInput>;
@@ -1231,6 +1240,8 @@ export type RealmWhereInput = {
   lastAttacked?: InputMaybe<DateTimeNullableFilter>;
   lastClaimTime?: InputMaybe<DateTimeNullableFilter>;
   lastVaultTime?: InputMaybe<DateTimeNullableFilter>;
+  latitude?: InputMaybe<FloatFilter>;
+  longitude?: InputMaybe<FloatFilter>;
   name?: InputMaybe<StringNullableFilter>;
   orderType?: InputMaybe<EnumOrderTypeNullableFilter>;
   ownArmies?: InputMaybe<ArmyListRelationFilter>;
@@ -1308,12 +1319,6 @@ export type ResourceAmount = {
   amount: Scalars['String'];
   resourceId: Scalars['Int'];
   resourceName: Scalars['String'];
-};
-
-export type ResourceInput = {
-  id?: InputMaybe<Scalars['ID']>;
-  realmId: Scalars['Float'];
-  resourceId: Scalars['Int'];
 };
 
 export type ResourceListRelationFilter = {
@@ -1438,6 +1443,64 @@ export type StringWithAggregatesFilter = {
   not?: InputMaybe<NestedStringWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type Travel = {
+  __typename?: 'Travel';
+  arrivalTime: Scalars['Timestamp'];
+  contractId: Scalars['Int'];
+  destinationContractId: Scalars['Int'];
+  destinationNestedId: Scalars['Int'];
+  destinationRealm?: Maybe<Realm>;
+  destinationTokenId: Scalars['Int'];
+  eventId: Scalars['String'];
+  nestedId: Scalars['Int'];
+  originRealm?: Maybe<Realm>;
+  timestamp: Scalars['Timestamp'];
+  tokenId: Scalars['Int'];
+};
+
+export type TravelOrderByWithRelationInput = {
+  arrivalTime?: InputMaybe<SortOrder>;
+  contractId?: InputMaybe<SortOrder>;
+  destinationContractId?: InputMaybe<SortOrder>;
+  destinationNestedId?: InputMaybe<SortOrder>;
+  destinationTokenId?: InputMaybe<SortOrder>;
+  eventId?: InputMaybe<SortOrder>;
+  nestedId?: InputMaybe<SortOrder>;
+  timestamp?: InputMaybe<SortOrder>;
+  tokenId?: InputMaybe<SortOrder>;
+};
+
+export enum TravelScalarFieldEnum {
+  ArrivalTime = 'arrivalTime',
+  ContractId = 'contractId',
+  DestinationContractId = 'destinationContractId',
+  DestinationNestedId = 'destinationNestedId',
+  DestinationTokenId = 'destinationTokenId',
+  EventId = 'eventId',
+  NestedId = 'nestedId',
+  Timestamp = 'timestamp',
+  TokenId = 'tokenId',
+}
+
+export type TravelWhereInput = {
+  AND?: InputMaybe<Array<TravelWhereInput>>;
+  NOT?: InputMaybe<Array<TravelWhereInput>>;
+  OR?: InputMaybe<Array<TravelWhereInput>>;
+  arrivalTime?: InputMaybe<DateTimeFilter>;
+  contractId?: InputMaybe<IntFilter>;
+  destinationContractId?: InputMaybe<IntFilter>;
+  destinationNestedId?: InputMaybe<IntFilter>;
+  destinationTokenId?: InputMaybe<IntFilter>;
+  eventId?: InputMaybe<StringFilter>;
+  nestedId?: InputMaybe<IntFilter>;
+  timestamp?: InputMaybe<DateTimeFilter>;
+  tokenId?: InputMaybe<IntFilter>;
+};
+
+export type TravelWhereUniqueInput = {
+  eventId?: InputMaybe<Scalars['String']>;
 };
 
 /** Troop */
@@ -1731,6 +1794,12 @@ export type GetGameConstantsQuery = {
     amount: number;
     resources: any;
   }>;
+  battalionCosts: Array<{
+    __typename?: 'BattalionCost';
+    battalionId: number;
+    battalionName: string;
+    resources: any;
+  }>;
 };
 
 export type GetRealmQueryVariables = Exact<{
@@ -1754,6 +1823,8 @@ export type GetRealmQuery = {
     lastAttacked?: any | null;
     lastClaimTime?: any | null;
     lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -1803,6 +1874,32 @@ export type GetRealmQuery = {
       realmId?: number | null;
       heldByRealm?: number | null;
     }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      xp: number;
+      armyPacked: number;
+      lastAttacked: number;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+    }>;
   };
 };
 
@@ -1952,6 +2049,8 @@ export type GetRealmsQuery = {
     lastAttacked?: any | null;
     lastClaimTime?: any | null;
     lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
     resources?: Array<{
       __typename?: 'Resource';
       resourceId: number;
@@ -2001,6 +2100,32 @@ export type GetRealmsQuery = {
       realmId?: number | null;
       heldByRealm?: number | null;
     }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      xp: number;
+      armyPacked: number;
+      lastAttacked: number;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+    }>;
   }>;
 };
 
@@ -2042,6 +2167,8 @@ export type RealmFragmentFragment = {
   lastAttacked?: any | null;
   lastClaimTime?: any | null;
   lastVaultTime?: any | null;
+  longitude: number;
+  latitude: number;
   resources?: Array<{
     __typename?: 'Resource';
     resourceId: number;
@@ -2091,6 +2218,32 @@ export type RealmFragmentFragment = {
     realmId?: number | null;
     heldByRealm?: number | null;
   }> | null;
+  ownArmies: Array<{
+    __typename?: 'Army';
+    armyId: number;
+    realmId: number;
+    xp: number;
+    armyPacked: number;
+    lastAttacked: number;
+    level: number;
+    callSign: number;
+    lightCavalryQty: number;
+    lightCavalryHealth: number;
+    heavyCavalryQty: number;
+    heavyCavalryHealth: number;
+    archerQty: number;
+    archerHealth: number;
+    longbowQty: number;
+    longbowHealth: number;
+    mageQty: number;
+    mageHealth: number;
+    arcanistQty: number;
+    arcanistHealth: number;
+    lightInfantryQty: number;
+    lightInfantryHealth: number;
+    heavyInfantryQty: number;
+    heavyInfantryHealth: number;
+  }>;
 };
 
 export type ResourceFragmentFragment = {
@@ -2165,6 +2318,8 @@ export const RealmFragmentFragmentDoc = gql`
     lastAttacked
     lastClaimTime
     lastVaultTime
+    longitude
+    latitude
     resources {
       resourceId
       resourceName
@@ -2207,6 +2362,32 @@ export const RealmFragmentFragmentDoc = gql`
     relicsOwned {
       realmId
       heldByRealm
+    }
+    ownArmies {
+      armyId
+      realmId
+      xp
+      armyPacked
+      lastAttacked
+      xp
+      level
+      callSign
+      lightCavalryQty
+      lightCavalryHealth
+      heavyCavalryQty
+      heavyCavalryHealth
+      archerQty
+      archerHealth
+      longbowQty
+      longbowHealth
+      mageQty
+      mageHealth
+      arcanistQty
+      arcanistHealth
+      lightInfantryQty
+      lightInfantryHealth
+      heavyInfantryQty
+      heavyInfantryHealth
     }
   }
 `;
@@ -2615,6 +2796,11 @@ export const GetGameConstantsDocument = gql`
       buildingId
       buildingName
       amount
+      resources
+    }
+    battalionCosts {
+      battalionId
+      battalionName
       resources
     }
   }

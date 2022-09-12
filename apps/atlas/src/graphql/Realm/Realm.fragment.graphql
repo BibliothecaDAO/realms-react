@@ -12,6 +12,8 @@ fragment RealmFragment on Realm {
   lastAttacked
   lastClaimTime
   lastVaultTime
+  longitude
+  latitude
   resources {
     resourceId
     resourceName
@@ -54,5 +56,35 @@ fragment RealmFragment on Realm {
   relicsOwned {
     realmId
     heldByRealm
+  }
+  ownArmies {
+    armyId
+    realmId
+    xp
+
+    # // ArmyData
+    armyPacked
+    lastAttacked
+    xp
+    level
+    callSign
+
+    # Battallion stats
+    lightCavalryQty
+    lightCavalryHealth
+    heavyCavalryQty
+    heavyCavalryHealth
+    archerQty
+    archerHealth
+    longbowQty
+    longbowHealth
+    mageQty
+    mageHealth
+    arcanistQty
+    arcanistHealth
+    lightInfantryQty
+    lightInfantryHealth
+    heavyInfantryQty
+    heavyInfantryHealth
   }
 }
