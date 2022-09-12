@@ -34,6 +34,7 @@ export const RaidSuccess = () => {
         },
         orderBy: { _count: { realmId: SortOrder.Desc } },
         isOwner: false,
+        take: 10,
       },
     });
   const [fetchAdventurerRaidSuccess, { loading, data: adventurerSuccessData }] =
@@ -46,6 +47,7 @@ export const RaidSuccess = () => {
         },
         orderBy: { _count: { realmOwner: SortOrder.Desc } },
         isOwner: true,
+        take: 10,
       },
     });
   const defaultRaidData: Row[] = (
@@ -91,79 +93,84 @@ export const RaidSuccess = () => {
     };
   });
 
-  const sections = [
-    {
-      name: 'successfulRaids',
-      columns: raidSuccessOwnerToggle
-        ? [
-            {
-              Header: 'Realm',
-              id: 1,
-              accessor: 'realm',
-            },
-            { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
-            { Header: 'Action', id: 7, accessor: 'action' },
-          ]
-        : [
-            {
-              Header: 'Adventurer',
-              id: 1,
-              accessor: 'owner',
-            },
-            { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
-            { Header: 'Action', id: 7, accessor: 'action' },
-          ],
-      defaultData: raidSuccessOwnerToggle
-        ? defaultRaidData
-        : adventurerRaidData,
-      onChange: () => {
-        console.log('changing ' + raidSuccessOwnerToggle);
-        setRaidSuccessOwnerToggle(!raidSuccessOwnerToggle);
-        fetchAdventurerRaidSuccess();
-      },
+  const section = {
+    name: 'successfulRaids',
+    columns: raidSuccessOwnerToggle
+      ? [
+          {
+            Header: 'Realm',
+            id: 1,
+            accessor: 'realm',
+          },
+          { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
+          { Header: 'Action', id: 7, accessor: 'action' },
+        ]
+      : [
+          {
+            Header: 'Adventurer',
+            id: 1,
+            accessor: 'owner',
+          },
+          { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
+          { Header: 'Action', id: 7, accessor: 'action' },
+        ],
+    onChange: () => {
+      setRaidSuccessOwnerToggle(!raidSuccessOwnerToggle);
+      fetchAdventurerRaidSuccess();
     },
-  ];
+  };
   const tableOptions = { is_striped: true };
 
   return (
     <>
-      {sections.map((section, index) => (
-        <div
-          key={section.name}
-          className="p-4 mb-10 border-4 border-double cursor-pointer rounded-2xl border-white/30 shadow-black"
-        >
-          <h3 className="text-3xl capitalize">
-            {section.name.replace(/([A-Z])/g, ' $1')}
-          </h3>
-          {index === 0 && section.onChange && (
-            <div className="flex mx-auto mb-8 text-sm tracking-widest">
-              <div
-                className={`px-4 uppercase self-center ${
-                  raidSuccessOwnerToggle && 'font-semibold'
-                }`}
-              >
-                Realm
-              </div>
-              <Switch
-                checked={raidSuccessOwnerToggle}
-                onChange={() => section.onChange()}
-              ></Switch>
-              <div
-                className={`px-4 uppercase self-center ${
-                  !raidSuccessOwnerToggle && 'font-semibold'
-                }`}
-              >
-                Adventurer
-              </div>
-            </div>
-          )}
+      <div
+        key={section.name}
+        className="p-4 mb-10 border-4 border-double cursor-pointer rounded-2xl border-white/30 shadow-black"
+      >
+        <h3 className="text-3xl capitalize">
+          {section.name.replace(/([A-Z])/g, ' $1')}
+        </h3>
+
+        <div className="flex mx-auto mb-8 text-sm tracking-widest">
+          <div
+            className={`px-4 uppercase self-center ${
+              raidSuccessOwnerToggle && 'font-semibold'
+            }`}
+          >
+            Realm
+          </div>
+          <Switch
+            checked={raidSuccessOwnerToggle}
+            onChange={() => section.onChange()}
+          ></Switch>
+          <div
+            className={`px-4 uppercase self-center ${
+              !raidSuccessOwnerToggle && 'font-semibold'
+            }`}
+          >
+            Adventurer
+          </div>
+        </div>
+        {raidSuccessOwnerToggle ? (
           <Table
             columns={section.columns}
-            data={section.defaultData}
+            data={defaultRaidData}
             options={tableOptions}
           />
-        </div>
-      ))}
+        ) : (
+          <>
+            {!loading ? (
+              <Table
+                columns={section.columns}
+                data={adventurerRaidData}
+                options={tableOptions}
+              />
+            ) : (
+              'loading'
+            )}
+          </>
+        )}
+      </div>
     </>
   );
 };

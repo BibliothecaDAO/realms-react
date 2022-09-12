@@ -4,11 +4,11 @@ import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
-  useGroupByRealmHistoryQuery,
-  useGroupByRealmHistoryLazyQuery,
   useGetRealmsQuery,
-  RealmHistoryScalarFieldEnum,
   SortOrder,
+  useGetRealmsFoodQuery,
+  RealmHistoryScalarFieldEnum,
+  useGroupByRealmHistoryQuery,
 } from '@/generated/graphql';
 import { relicsOwnedByRealm } from '@/shared/Getters/Realm';
 import { BasePanel } from './BasePanel';
@@ -21,6 +21,7 @@ type Row = {
   // change: ReactElement;
   owner?: string | undefined;
   successfulRaid?: number;
+  goblinTowns?: number;
   relics?: number;
   action: ReactElement;
   onChange?: (checked: boolean) => void;
@@ -39,7 +40,32 @@ export function LeaderboardPanel(): ReactElement {
       take: 10,
     },
   });
-
+  const { data: foodData } = useGetRealmsFoodQuery({
+    variables: {
+      orderBy: { qty: SortOrder.Desc },
+      take: 10,
+    },
+  });
+  const { data: goblinSuccessData, loading: loadingData } =
+    useGroupByRealmHistoryQuery({
+      variables: {
+        by: RealmHistoryScalarFieldEnum.RealmId,
+        where: {
+          eventType: { equals: 'realm_combat_attack' },
+          AND: [
+            {
+              data: { path: ['success'], equals: true },
+            },
+            {
+              data: { path: ['defendRealmId'], equals: 0 },
+            },
+          ],
+        },
+        orderBy: { _count: { realmId: SortOrder.Desc } },
+        isOwner: false,
+        take: 10,
+      },
+    });
   const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
     return {
       realm: realm?.realmId || 0,
@@ -60,6 +86,28 @@ export function LeaderboardPanel(): ReactElement {
       ),
     };
   });
+  const defaultGoblinData: Row[] = (
+    goblinSuccessData?.groupByRealmHistory ?? []
+  ).map((realm) => {
+    return {
+      realm: realm?.realmId || 0,
+      goblinTowns: realm?._count?._all || 0,
+      action: (
+        <Button
+          variant="primary"
+          size="xs"
+          onClick={() => {
+            router.push(`/realm/${realm?.realmId}`, undefined, {
+              shallow: true,
+            });
+          }}
+        >
+          View Realm
+        </Button>
+      ),
+    };
+  });
+
   const sections = [
     {
       name: 'relicsHeld',
@@ -110,19 +158,10 @@ export function LeaderboardPanel(): ReactElement {
       name: 'goblinTownsDestroyed',
       columns: [
         { Header: 'Realm', id: 1, accessor: 'realm' },
-        { Header: 'Current Owner', id: 5, accessor: 'owner' },
         { Header: 'Goblin Towns', id: 6, accessor: 'goblinTowns' },
         { Header: 'Action', id: 7, accessor: 'action' },
       ],
-      defaultData: [
-        {
-          realm: 1,
-          owner: '0x0000',
-          goblinTowns: '12',
-          action: <div>view all</div>,
-          onChange: () => null,
-        },
-      ],
+      defaultData: defaultGoblinData,
     },
   ];
 
