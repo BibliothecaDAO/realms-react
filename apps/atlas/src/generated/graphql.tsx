@@ -1968,6 +1968,28 @@ export type GetRealmHistoryQuery = {
   }>;
 };
 
+export type GroupByRealmHistoryQueryVariables = Exact<{
+  by: Array<RealmHistoryScalarFieldEnum> | RealmHistoryScalarFieldEnum;
+  orderBy?: InputMaybe<
+    | Array<RealmHistoryOrderByWithAggregationInput>
+    | RealmHistoryOrderByWithAggregationInput
+  >;
+  where?: InputMaybe<RealmHistoryWhereInput>;
+  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  isOwner: Scalars['Boolean'];
+}>;
+
+export type GroupByRealmHistoryQuery = {
+  __typename?: 'Query';
+  groupByRealmHistory: Array<{
+    __typename?: 'RealmHistoryGroupBy';
+    realmId?: number;
+    realmOwner?: string;
+    _count?: { __typename?: 'RealmHistoryCountAggregate'; _all: number } | null;
+  }>;
+};
+
 export type GetRealmCombatResultQueryVariables = Exact<{
   defendRealmId: Scalars['Float'];
   transactionHash: Scalars['String'];
@@ -3092,6 +3114,86 @@ export type GetRealmHistoryLazyQueryHookResult = ReturnType<
 export type GetRealmHistoryQueryResult = Apollo.QueryResult<
   GetRealmHistoryQuery,
   GetRealmHistoryQueryVariables
+>;
+export const GroupByRealmHistoryDocument = gql`
+  query groupByRealmHistory(
+    $by: [RealmHistoryScalarFieldEnum!]!
+    $orderBy: [RealmHistoryOrderByWithAggregationInput!]
+    $where: RealmHistoryWhereInput
+    $take: Int
+    $skip: Int
+    $isOwner: Boolean!
+  ) @api(name: starkIndexer) {
+    groupByRealmHistory(
+      by: $by
+      where: $where
+      orderBy: $orderBy
+      take: $take
+      skip: $skip
+    ) {
+      realmId @skip(if: $isOwner)
+      realmOwner @include(if: $isOwner)
+      _count {
+        _all
+      }
+    }
+  }
+`;
+
+/**
+ * __useGroupByRealmHistoryQuery__
+ *
+ * To run a query within a React component, call `useGroupByRealmHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupByRealmHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupByRealmHistoryQuery({
+ *   variables: {
+ *      by: // value for 'by'
+ *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *      isOwner: // value for 'isOwner'
+ *   },
+ * });
+ */
+export function useGroupByRealmHistoryQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export function useGroupByRealmHistoryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GroupByRealmHistoryQuery,
+    GroupByRealmHistoryQueryVariables
+  >(GroupByRealmHistoryDocument, options);
+}
+export type GroupByRealmHistoryQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryQuery
+>;
+export type GroupByRealmHistoryLazyQueryHookResult = ReturnType<
+  typeof useGroupByRealmHistoryLazyQuery
+>;
+export type GroupByRealmHistoryQueryResult = Apollo.QueryResult<
+  GroupByRealmHistoryQuery,
+  GroupByRealmHistoryQueryVariables
 >;
 export const GetRealmCombatResultDocument = gql`
   query getRealmCombatResult($defendRealmId: Float!, $transactionHash: String!)

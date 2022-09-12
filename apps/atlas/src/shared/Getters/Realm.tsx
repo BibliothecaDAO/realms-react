@@ -186,13 +186,11 @@ export const ownerRelic = (realm: RealmFragmentFragment | undefined) => {
 export const relicsOwnedByRealm = (
   realm: RealmFragmentFragment | undefined
 ) => {
-  return (
-    <div>
-      {realm?.relicsOwned && realm?.relicsOwned[0] && realm?.relicsOwned.length
-        ? realm?.relicsOwned.length
-        : 0}
-    </div>
-  );
+  return realm?.relicsOwned &&
+    realm?.relicsOwned[0] &&
+    realm?.relicsOwned.length
+    ? realm?.relicsOwned.length
+    : 0;
 };
 
 export const resourcePillaged = (resources: any) => {

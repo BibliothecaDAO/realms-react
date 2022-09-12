@@ -7,6 +7,7 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Laurel from '@bibliotheca-dao/ui-lib/icons/laurel.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
@@ -85,6 +86,11 @@ export const MenuSideBar = () => {
         page: 'lore',
         icon: <Library className={iconClasses} />,
         text: 'Lore',
+      },
+      {
+        page: 'leaderboard',
+        icon: <Laurel className={iconClasses} />,
+        text: 'Leaderboard',
       },
       // {
       //   page: 'noticeBoard',
