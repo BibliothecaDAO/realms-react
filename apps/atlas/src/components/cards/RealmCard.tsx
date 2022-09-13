@@ -38,10 +38,10 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
           />
         ),
       },
-      {
+      /* {
         label: <Globe className="self-center w-6 h-6 fill-current" />,
         component: <RealmTravel realm={props.realm} />,
-      },
+      }, 
       {
         label: <Scroll className="self-center w-6 h-6 fill-current" />,
         component: <RealmHistory realmId={props.realm.realmId} />,
@@ -54,7 +54,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
             realmId={props.realm.realmId || 0}
           />
         ),
-      },
+      }, */
     ],
     [props.realm?.realmId]
   );

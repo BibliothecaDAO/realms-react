@@ -15,13 +15,19 @@ const NetworkConnectButton = () => {
   return (
     <Popover className="relative">
       <Popover.Button as="div">
-        <Button variant="outline">
+        {/* <Button variant="outline">
           {' '}
-          <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
+          <Ethereum className={'inline-block w-4 mr-2 -ml-2'} />{' '}
           {account
             ? removeHexPrefix(shortenAddressWidth(account, 4))
             : 'Connect'}
-        </Button>{' '}
+          </Button>{' '} */}
+        <Button variant="outline">
+          <>
+            <Ethereum className={'inline-block w-4 mr-2 -ml-2'} />{' '}
+            {isConnected ? displayName : 'Connect'}
+          </>
+        </Button>
       </Popover.Button>
       <Transition
         enter="transition duration-100 ease-out"
@@ -65,13 +71,14 @@ const NetworkConnectButton = () => {
                 )}
               </div>
             </div>
-          ) : null} */}
+          ) : null} 
 
           {error ? (
             <p className="text-red-300">Error: {error.message}</p>
           ) : null}
-
-          <hr className="my-4" />
+          
+          <hr className="my-4" /> */}
+          <div className="my-4" />
           {isConnected && (
             <>
               {displayName ? (
