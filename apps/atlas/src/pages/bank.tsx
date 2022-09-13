@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { BankPanel } from '@/components/panels/BankPanel';
@@ -26,4 +26,5 @@ export default function RealmPage() {
       <ArtBackground background="bank" />
     </Layout>
   );
-}
+} */
+export default {};

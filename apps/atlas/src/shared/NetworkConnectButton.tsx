@@ -34,7 +34,7 @@ const NetworkConnectButton = () => {
         <Popover.Panel className="absolute right-0 w-64 p-6 mt-2 rounded-md z-100 bg-gray-1000">
           <h3>Game Networks</h3>
           <hr />
-          {account ? (
+          {/* {account ? (
             <>
               <p>StarkNet</p>
 
@@ -65,7 +65,7 @@ const NetworkConnectButton = () => {
                 )}
               </div>
             </div>
-          ) : null}
+          ) : null} */}
 
           {error ? (
             <p className="text-red-300">Error: {error.message}</p>

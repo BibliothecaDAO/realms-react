@@ -79,16 +79,16 @@ export function Header() {
   const [selectedSideBar, setSelectedSideBar] =
     useState<HeaderSidePanelType>('');
 
-  function onTransactionNavClick() {
+  /* function onTransactionNavClick() {
     setSelectedSideBar(selectedSideBar === 'transaction' ? '' : 'transaction');
-  }
+  } */
 
   function onLordsNavClick() {
     // Bank swap panel is already open
-    if (pathname.slice(1).split('/')[0] === 'bank') {
+    /* if (pathname.slice(1).split('/')[0] === 'bank') {
       return;
     }
-    setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
+    setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank'); */
   }
 
   return (
@@ -169,17 +169,17 @@ export function Header() {
             </span>
           </Button>
         </span>
-        <TransactionNavItem onClick={onTransactionNavClick} />
+        {/* <TransactionNavItem onClick={onTransactionNavClick} /> */}
       </div>
 
-      <ResourceSwapSideBar
+      {/* <ResourceSwapSideBar
         isOpen={selectedSideBar === 'bank'}
         onClose={onLordsNavClick}
       />
       <TransactionCartSideBar
         isOpen={selectedSideBar === 'transaction'}
         onClose={onTransactionNavClick}
-      />
+      /> */}
     </div>
   );
 }

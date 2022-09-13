@@ -16,7 +16,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
   return (
     <BaseFilter>
-      <div>
+      {/* <div>
         <Button
           variant={state.isRaidableFilter ? 'primary' : 'outline'}
           size="xs"
@@ -33,7 +33,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
         >
           Settled
         </Button>
-      </div>
+  </div> */}
       <div>
         <Button
           variant={state.hasWonderFilter ? 'primary' : 'outline'}
@@ -63,7 +63,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
       <div className="md:ml-4">
         <Button variant="outline" size="xs" onClick={actions.clearFilters}>
-          Clear <span className="hidden md:block ml-2">Filters</span>
+          Clear <span className="hidden ml-2 md:block">Filters</span>
         </Button>
       </div>
     </BaseFilter>

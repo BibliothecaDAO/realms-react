@@ -39,7 +39,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   ];
   return (
     <div>
-      <div className="flex justify-center w-full mt-4">
+      {/* <div className="flex justify-center w-full mt-4">
         Quick switch:
         {tabs.map((tab, index) => (
           <button
@@ -55,7 +55,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
             {tab}
           </button>
         ))}
-      </div>
+          </div> */}
       <div className="grid grid-cols-12 gap-6 p-6 ">
         {props.realms &&
           filteredRealms.map((realm: RealmFragmentFragment, index) => (

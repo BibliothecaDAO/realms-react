@@ -90,7 +90,7 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
             </div>
           ),
         },
-        {
+        /* {
           label: <Helm className="self-center w-6 h-6 fill-current" />,
           component: (
             <div>
@@ -116,7 +116,7 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
         {
           label: <Sickle className="self-center w-6 h-6 fill-current" />,
           component: <div className="w-full p-1"></div>,
-        },
+        }, */
       ],
       [selectedTab]
     );
@@ -184,7 +184,7 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
             )}
           </div>
         </div>
-        <div className="flex justify-center w-full text-center uppercase font-display">
+        {/* <div className="flex justify-center w-full text-center uppercase font-display">
           <span className="self-center">
             {props.realm && RealmCombatStatus(props.realm)}
           </span>
@@ -194,7 +194,7 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
               hasOwnRelic(props.realm) ? 'fill-yellow-500' : 'fill-red-600'
             }`}
           />
-        </div>
+          </div> */}
         <Tabs
           selectedIndex={selectedTab}
           onChange={(index) => pressedTab(index as number)}

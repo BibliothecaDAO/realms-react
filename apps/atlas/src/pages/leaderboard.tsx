@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { LeaderboardPanel } from '@/components/panels/LeaderboardPanel';
@@ -12,4 +12,5 @@ export default function LeaderboardPage() {
       <ArtBackground background="bank" />
     </Layout>
   );
-}
+} */
+export default null;
