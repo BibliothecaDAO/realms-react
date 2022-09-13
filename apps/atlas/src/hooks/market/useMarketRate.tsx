@@ -12,9 +12,10 @@ interface ExchangeRate {
 
 export const useMarketRate = () => {
   const [exchangeInfo, setExchangeInfo] = useState<Array<ExchangeRate>>();
-  const { data: exchangeRateData } = useGetExchangeRatesQuery({
+  const { data: exchangeRateData } =
+    useGetExchangeRatesQuery(/* {
     pollInterval: 10000,
-  });
+  } */);
 
   useEffect(() => {
     if (!exchangeRateData) {

@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 // import { useAtlasContext } from '@/hooks/useAtlas';
 import { usePlayer } from '@/hooks/usePlayer';
+import { useWalletContext } from '@/hooks/useWalletContext';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
 import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
@@ -24,6 +25,8 @@ type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export function Header() {
   const { lordsBalance } = useResourcesContext();
+
+  const { balance } = useWalletContext();
   const [soundOn, setSoundOn] = useState(false);
   // const { togglePanelType, toggleMenuType } = useAtlasContext();
   const { pathname } = useRouter();
@@ -165,7 +168,8 @@ export function Header() {
           <Button onClick={onLordsNavClick} variant="outline">
             <Lords className="w-6" />{' '}
             <span className="pl-4">
-              {(+formatEther(lordsBalance)).toLocaleString()}
+              {/* {(+formatEther(lordsBalance)).toLocaleString()} */}
+              {balance}
             </span>
           </Button>
         </span>
