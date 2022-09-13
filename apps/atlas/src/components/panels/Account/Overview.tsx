@@ -15,6 +15,7 @@ import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { ReactElement, useState, useMemo } from 'react';
 
+import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
@@ -98,20 +99,18 @@ export function AccountOverview() {
     <div>
       <animated.div
         style={animationUp}
-        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:p-6"
+        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
         <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-3">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
-            <CardStats className="mb-4 text-5xl">
-              {settledRealmsCount}
-            </CardStats>
+            <CardStats>{settledRealmsCount}</CardStats>
           </CardBody>
         </Card>
         <Card className="col-start-1 col-end-13 md:col-start-3 md:col-end-6">
           <CardTitle className="flex">Lords Balance</CardTitle>
           <CardBody>
-            <CardStats className="flex justify-end mb-4 text-3xl ">
+            <CardStats className="flex justify-end ">
               {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               <Lords className="self-center w-6 h-6 ml-4" />
             </CardStats>
@@ -124,7 +123,7 @@ export function AccountOverview() {
           <CardTitle>Relics Held</CardTitle>
 
           <CardBody>
-            <CardStats className="mb-4 text-3xl">
+            <CardStats>
               <span>{userData?.relicsHeld as ReactNode}</span>
             </CardStats>
             <Button variant="outline" size="xs" href="/bank">
