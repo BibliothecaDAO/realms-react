@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { RealmHistory } from '@/components/panels/realms/details';
+import { RealmHistory } from '@/components/panels/Realms/details';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 interface RealmHistoryProps {

@@ -29,10 +29,18 @@ export function LootOverviews(props: LootOverviewsProps) {
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 
   return (
-    <div className="grid grid-cols-1 gap-2 px-2 rounded sm:grid-cols-2">
+    <div className="grid grid-cols-12 gap-6 px-2 rounded ">
       {props.bags &&
         props.bags.map((loot: Loot, index) => (
-          <Card key={index} className="w-full rounded">
+          <Card
+            key={index}
+            className="rounded sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3"
+          >
+            <div className="flex w-full mt-3">
+              <div className="flex self-center w-full">
+                <h2 className="ml-4 ">Bag #{loot.id}</h2>
+              </div>
+            </div>
             <div className="w-full p-2 rounded-t font-display">
               {[
                 loot.weapon,
@@ -45,7 +53,10 @@ export function LootOverviews(props: LootOverviewsProps) {
                 loot.ring,
               ]?.map((itemName, index) => {
                 return (
-                  <div className="flex px-2 my-1 uppercase" key={index}>
+                  <div
+                    className="flex px-2 my-1 uppercase border-b border-white/20"
+                    key={index}
+                  >
                     <LootItemIcon
                       className="self-center"
                       size="sm"
@@ -53,7 +64,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                     />{' '}
                     <span
                       className={
-                        'mt-1 flex self-center ml-4  font-display text-[' +
+                        'mt-1 flex self-center ml-4 text-md font-display text-[' +
                         rarityColor(itemName) +
                         ']'
                       }
@@ -64,12 +75,7 @@ export function LootOverviews(props: LootOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex w-full p-3 py-2 ">
-              <div className="flex self-center w-full">
-                <h3 className="mb-3 ml-4">Bag #{loot.id}</h3>
-                <div className="ml-auto"></div>
-              </div>
-            </div>
+
             <div className="flex justify-center w-full p-2 space-x-2 rounded-b">
               {' '}
               <Button

@@ -8,7 +8,7 @@ import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { RealmHistoryPanel } from '@/components/panels/realms/panels/RealmHistoryPanel';
+import { RealmHistoryPanel } from '@/components/panels/Realms/panels/RealmHistoryPanel';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import type { Realm } from '@/generated/graphql';
@@ -27,12 +27,12 @@ import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
 import { storage } from '@/util/localStorage';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
-import Food from './realms/Food';
-import RealmArmyPanel from './realms/panels/RealmArmyPanel';
-import RealmLorePanel from './realms/panels/RealmLorePanel';
-import ResourceDetails from './realms/Resources';
-import Survey from './realms/Survey';
-import RealmToolbar from './realms/Toolbar';
+import Food from './Realms/Food';
+import RealmArmyPanel from './Realms/panels/RealmArmyPanel';
+import RealmLorePanel from './Realms/panels/RealmLorePanel';
+import ResourceDetails from './Realms/Resources';
+import Survey from './Realms/Survey';
+import RealmToolbar from './Realms/Toolbar';
 
 interface RealmDetailsPanelProps {
   realmId: number;

@@ -14,7 +14,7 @@ export const PanelHeading = (props: Props) => {
         <Close />
       </button>
     </Link> */}
-      <h2>{props.heading}</h2>
+      <h1>{props.heading}</h1>
       <div className="w-full my-1 sm:w-auto">
         <SearchFilter
           placeholder="SEARCH BY ID"

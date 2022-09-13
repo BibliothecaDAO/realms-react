@@ -1,4 +1,4 @@
-import { RealmLore } from '@/components/panels/realms/details';
+import { RealmLore } from '@/components/panels/Realms/details';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
