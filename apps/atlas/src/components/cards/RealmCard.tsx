@@ -13,7 +13,7 @@ import {
   RealmOverview,
   RealmTravel,
   RealmLore,
-} from '@/components/panels/realms/details';
+} from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import type { RealmsCardProps } from '../../types';

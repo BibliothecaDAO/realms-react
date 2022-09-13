@@ -10,7 +10,7 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 py-1 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150 hover:shadow border-b-4 border-transparent hover:border-cta-100 font-semibold',
+      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150 hover:shadow border-b-4 border-transparent hover:border-cta-100 font-semibold',
       active: ' border-cta-100 shadow-purple-800/10 shadow-md rounded',
       inactive: ' border-transparent text-white/50',
     },
@@ -18,7 +18,7 @@ export const VARIANTS = {
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-1 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350  rounded focus-visible:ring-yellow-700  hover:border hover:bg-black border-transparent border',
+      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350  rounded focus-visible:ring-yellow-700  hover:border hover:bg-black border-transparent border',
       active: ' shadow-md bg-black border font-semibold border-cta-100/60',
       inactive: 'bg-transparent text-gray-200',
     },

@@ -13,7 +13,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
-import { PanelHeading } from './panelComponents/PanelHeading';
+import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const LootPanel = () => {
   // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();

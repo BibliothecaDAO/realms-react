@@ -10,7 +10,7 @@ import {
   legendaryColourClass,
   findEnvironment,
 } from '@/util/cryptsEnvironments';
-import type { CryptProps } from '../../types';
+import type { CryptProps } from '../../../types';
 const variantMaps: any = {
   small: { heading: 'lg:text-2xl', regions: 'lg:text-xl' },
 };
@@ -61,7 +61,7 @@ export function Crypt(props: CryptProps): ReactElement {
             )}
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row">
               <h4>
-                Id: <span className="">{props.crypt.id}</span>
+                Id:<span className="">{props.crypt.id}</span>
               </h4>
               <h4>
                 <span

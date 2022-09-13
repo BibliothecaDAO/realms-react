@@ -12,7 +12,7 @@ import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
-import { PanelHeading } from './panelComponents/PanelHeading';
+import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const CryptsPanel = () => {
   // const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
