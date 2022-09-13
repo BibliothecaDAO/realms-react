@@ -87,20 +87,6 @@ const nextConfig = {
   experimental: {
     browsersListForSwc: true,
     legacyBrowsers: false,
-    images: {
-      allowFutureImage: true,
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'avatars.githubusercontent.com',
-        },
-        {
-          protocol: 'https',
-          hostname: 'ingave-images.s3.eu-west-3.amazonaws.com',
-        },
-      ],
-      unoptimized: false,
-    },
 
     // React 18 server components
     // @link https://nextjs.org/docs/advanced-features/react-18/server-components
@@ -153,6 +139,17 @@ const nextConfig = {
     minimumCacheTTL: 60,
     // Allowed domains for next/image
     domains: ['d23fdhqc1jb9no.cloudfront.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ingave-images.s3.eu-west-3.amazonaws.com',
+      },
+    ],
+    unoptimized: false,
   },
 
   webpack: (config, { webpack, isServer }) => {
