@@ -8,19 +8,29 @@ import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { ModuleAddr } from './stark-contracts';
 
+export const Assets = {
+  realms: 3,
+};
+
 export const Entrypoints = {
   travel: 'travel',
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  travel: (args: { travellerId: number; destinationId: number }) => ({
+  travel: (args: {
+    armyId: number;
+    travellerId: number;
+    destinationId: number;
+  }) => ({
     contractAddress: ModuleAddr.Travel,
     entrypoint: Entrypoints.travel,
     calldata: [
-      3,
+      Assets.realms,
       ...uint256ToRawCalldata(bnToUint256(args.travellerId)),
-      3,
+      args.armyId,
+      Assets.realms,
       ...uint256ToRawCalldata(bnToUint256(args.destinationId)),
+      0, // nested destination is always 0 for now.
     ],
     metadata: {
       ...args,

@@ -1,0 +1,466 @@
+[
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "LightCavalry",
+        "offset": 0,
+        "type": "Battalion"
+      },
+      {
+        "name": "HeavyCavalry",
+        "offset": 2,
+        "type": "Battalion"
+      },
+      {
+        "name": "Archer",
+        "offset": 4,
+        "type": "Battalion"
+      },
+      {
+        "name": "Longbow",
+        "offset": 6,
+        "type": "Battalion"
+      },
+      {
+        "name": "Mage",
+        "offset": 8,
+        "type": "Battalion"
+      },
+      {
+        "name": "Arcanist",
+        "offset": 10,
+        "type": "Battalion"
+      },
+      {
+        "name": "LightInfantry",
+        "offset": 12,
+        "type": "Battalion"
+      },
+      {
+        "name": "HeavyInfantry",
+        "offset": 14,
+        "type": "Battalion"
+      }
+    ],
+    "name": "Army",
+    "size": 16,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "Quantity",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "Health",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Battalion",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "ArmyPacked",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "LastAttacked",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "XP",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "Level",
+        "offset": 3,
+        "type": "felt"
+      },
+      {
+        "name": "CallSign",
+        "offset": 4,
+        "type": "felt"
+      }
+    ],
+    "name": "ArmyData",
+    "size": 5,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "resource_count",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "bits",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "packed_ids",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "packed_amounts",
+        "offset": 3,
+        "type": "felt"
+      }
+    ],
+    "name": "Cost",
+    "size": 4,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "attacking_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "attacking_army",
+        "type": "Army"
+      },
+      {
+        "name": "defending_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_army",
+        "type": "Army"
+      }
+    ],
+    "keys": [],
+    "name": "CombatStart_4",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "combat_outcome",
+        "type": "felt"
+      },
+      {
+        "name": "attacking_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "attacking_army",
+        "type": "Army"
+      },
+      {
+        "name": "defending_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_army",
+        "type": "Army"
+      }
+    ],
+    "keys": [],
+    "name": "CombatEnd_4",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "army_id",
+        "type": "felt"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "army_data",
+        "type": "ArmyData"
+      }
+    ],
+    "keys": [],
+    "name": "ArmyMetadata",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "army_id",
+        "type": "felt"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "army",
+        "type": "Army"
+      },
+      {
+        "name": "battalion_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "battalion_ids",
+        "type": "felt*"
+      },
+      {
+        "name": "battalion_quantity_len",
+        "type": "felt"
+      },
+      {
+        "name": "battalion_quantity",
+        "type": "felt*"
+      }
+    ],
+    "keys": [],
+    "name": "BuildArmy",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "army_id",
+        "type": "felt"
+      },
+      {
+        "name": "battalion_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "battalion_ids",
+        "type": "felt*"
+      },
+      {
+        "name": "battalion_quantity_len",
+        "type": "felt"
+      },
+      {
+        "name": "battalion_quantity",
+        "type": "felt*"
+      }
+    ],
+    "name": "build_army_from_battalions",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "attacking_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "initiate_combat",
+    "outputs": [
+      {
+        "name": "combat_outcome",
+        "type": "felt"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "battalion_id",
+        "type": "felt"
+      }
+    ],
+    "name": "get_battalion_cost",
+    "outputs": [
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "army_id",
+        "type": "felt"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_realm_army_combat_data",
+    "outputs": [
+      {
+        "name": "army_data",
+        "type": "ArmyData"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "attacking_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_army_id",
+        "type": "felt"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "Realm_can_be_attacked",
+    "outputs": [
+      {
+        "name": "yesno",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_id",
+        "type": "felt"
+      },
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "name": "set_troop_cost",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "xoroshiro",
+        "type": "felt"
+      }
+    ],
+    "name": "set_xoroshiro",
+    "outputs": [],
+    "type": "function"
+  }
+]
