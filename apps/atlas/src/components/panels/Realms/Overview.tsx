@@ -41,7 +41,7 @@ type Prop = {
   loading: boolean;
 };
 
-const Survey: React.FC<Prop> = (props) => {
+const Overview: React.FC<Prop> = (props) => {
   const getPopulation = () => {
     return realm?.buildings
       ?.map((a) => a.population)
@@ -299,4 +299,4 @@ const Survey: React.FC<Prop> = (props) => {
   );
 };
 
-export default Survey;
+export default Overview;

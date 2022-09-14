@@ -83,11 +83,11 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   const toolBarItems = [
     {
-      hotkey: HotKeys.Survey,
-      click: () => props.onSetSubview('Survey'),
+      hotkey: HotKeys.Overview,
+      click: () => props.onSetSubview('Overview'),
       title: 'Overview',
       icon: <Castle className="self-center w-6 h-6 fill-current" />,
-      tabName: 'Survey',
+      tabName: 'Overview',
     },
     {
       hotkey: HotKeys.Army,

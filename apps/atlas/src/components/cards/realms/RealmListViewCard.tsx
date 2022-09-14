@@ -268,7 +268,7 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
               <Button
                 onClick={() => {
                   router.push(
-                    `/realm/${props.realm.realmId}?tab=Survey`,
+                    `/realm/${props.realm.realmId}?tab=Overview`,
                     undefined,
                     { shallow: true }
                   );

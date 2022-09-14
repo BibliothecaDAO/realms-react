@@ -28,10 +28,10 @@ import { storage } from '@/util/localStorage';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import { BasePanel } from './BasePanel';
 import Food from './Realms/Food';
+import Overview from './Realms/Overview';
 import RealmArmyPanel from './Realms/panels/RealmArmyPanel';
 import RealmLorePanel from './Realms/panels/RealmLorePanel';
 import ResourceDetails from './Realms/Resources';
-import Survey from './Realms/Survey';
 import RealmToolbar from './Realms/Toolbar';
 
 interface RealmDetailsPanelProps {
@@ -257,8 +257,8 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     loading={loadingHooks}
                   />
 
-                  <Survey
-                    open={subview == 'Survey'}
+                  <Overview
+                    open={subview == 'Overview'}
                     onSetSubview={(s) => onSetSubview(s)}
                     buildingUtilisation={buildingUtilisation}
                     realmFoodDetails={realmFoodDetails}

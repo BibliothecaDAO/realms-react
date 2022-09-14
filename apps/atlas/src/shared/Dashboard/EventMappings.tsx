@@ -136,7 +136,7 @@ export function genEconomicRealmEvent(event) {
     //       <Button
     //         size="xs"
     //         variant="outline"
-    //         href={'/realm/' + event.realmId + '?tab=Survey'}
+    //         href={'/realm/' + event.realmId + '?tab=Overview'}
     //       >
     //         Manage Realm
     //       </Button>
