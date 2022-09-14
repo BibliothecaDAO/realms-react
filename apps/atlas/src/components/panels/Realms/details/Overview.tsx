@@ -1,25 +1,19 @@
-import { OrderIcon, Tabs, ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
-import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
-import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
+import {
+  OrderIcon,
+  Tabs,
+  ResourceIcon,
+  Button,
+  Menu,
+} from '@bibliotheca-dao/ui-lib';
+
+import { Transition } from '@headlessui/react';
+import clsx from 'clsx';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
-import React, { useMemo } from 'react';
-import { RealmResources } from '@/components/tables/RealmResources';
-import { useEnsResolver } from '@/hooks/useEnsResolver';
+import React, { useState } from 'react';
+
 import { DownloadAssets } from '@/shared/DownloadAssets';
-import {
-  TraitTable,
-  squadStats,
-  RealmVaultStatus,
-  RealmStatus,
-  hasOwnRelic,
-  RealmCombatStatus,
-  getTrait,
-} from '@/shared/Getters/Realm';
+import { TraitTable, getTrait } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import TerrainLayer from '@/shared/Terrain';
 import type { RealmsCardProps } from '@/types/index';
@@ -28,24 +22,72 @@ import { findResourceName } from '@/util/resources';
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
+const menuItems = ['3D', 'Render', 'SVG'];
 
 export function RealmOverview(props: RealmsCardProps): ReactElement {
+  const [imageView, setImageView] = useState(menuItems[1]);
   return (
-    <div>
-      <div className="w-auto my-4 h-96">
-        <TerrainLayer />
-        {/* <Image
-          src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.realmId}.webp`}
-          alt="map"
-          className="w-full mt-4 rounded-xl -scale-x-100"
-          width={500}
-          height={320}
-          layout={'responsive'}
-        /> */}
+    <>
+      <div className="relative w-auto h-96">
+        <Menu className="!absolute z-10 !w-auto right-1 top-1">
+          <Menu.Button
+            variant="outline"
+            className={clsx(imageView === '3D' && 'text-red-600/60')}
+            size="xs"
+          >
+            View
+          </Menu.Button>
+          <Transition
+            enter="transition duration-100 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-75 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Menu.Items className="right-0 w-48 border bg-white/0 border-cta-100/60">
+              <Menu.Group className="flex">
+                {menuItems.map((menuItem) => {
+                  return (
+                    <Menu.Item key={menuItem}>
+                      {({ active }) => (
+                        <Button
+                          variant="unstyled"
+                          size="xs"
+                          className={clsx(
+                            'block flex-1',
+                            active ? 'text-red-900' : 'text-gray-500',
+                            imageView === menuItem && 'text-red-500/60'
+                          )}
+                          fullWidth
+                          onClick={() => setImageView(menuItem)}
+                        >
+                          {menuItem}
+                        </Button>
+                      )}
+                    </Menu.Item>
+                  );
+                })}
+              </Menu.Group>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+        {imageView === '3D' && <TerrainLayer />}
+
+        {imageView === 'Render' && (
+          <Image
+            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.realmId}.webp`}
+            alt="map"
+            className="w-full mt-4 rounded-xl -scale-x-100"
+            width={500}
+            height={320}
+            layout={'responsive'}
+          />
+        )}
       </div>
       <div className="flex flex-wrap mb-2 tracking-widest uppercase">
         {props.realm.resources?.map((re, index) => (
-          <div key={index} className="flex mb-4 mr-4 text-xl">
+          <div key={index} className="z-10 flex mb-4 mr-4 text-xl">
             <ResourceIcon
               resource={
                 findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
@@ -85,6 +127,6 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
       <DownloadAssets id={props.realm.realmId}></DownloadAssets>
-    </div>
+    </>
   );
 }

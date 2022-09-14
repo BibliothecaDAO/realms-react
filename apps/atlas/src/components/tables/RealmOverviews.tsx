@@ -1,7 +1,9 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
+
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
@@ -33,9 +35,10 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }, [filteredRealms]);
 
   const tabs = [
-    <Castle key={0} className="self-center w-6 h-6 fill-current" />,
-    <Helm key={1} className="self-center w-6 h-6 fill-current" />,
-    <Sickle key={2} className="self-center w-6 h-6 fill-current" />,
+    <Map key={0} className="self-center w-6 h-6 fill-current" />,
+    <Castle key={1} className="self-center w-6 h-6 fill-current" />,
+    <Helm key={2} className="self-center w-6 h-6 fill-current" />,
+    <Sickle key={3} className="self-center w-6 h-6 fill-current" />,
   ];
   return (
     <div>

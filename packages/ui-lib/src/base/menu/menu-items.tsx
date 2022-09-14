@@ -12,7 +12,7 @@ export const MenuItems = forwardRef<HTMLDivElement, MenuItemsProps>(
       <HeadlessMenu.Items
         className={twMerge(
           clsx(
-            'focus:outline-none mt-2 w-56 divide-y-2 divide-gray-100 rounded-lg bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5',
+            'absolute focus:outline-none mt-2 w-56 divide-y-2 divide-gray-100 rounded-lg py-1 shadow-lg ring-1 ring-black ring-opacity-5',
             className
           )
         )}
