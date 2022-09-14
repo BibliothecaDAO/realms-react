@@ -23,7 +23,7 @@ function Home() {
   const [content, setContent] = useState<string[]>([]);
 
   const time = () => {
-    const END = 1651327190000;
+    const END = 1664418839000;
     const NOW_IN_MS = new Date().getTime();
     const MS_UNTIL = END - NOW_IN_MS;
 
