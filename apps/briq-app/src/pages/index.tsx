@@ -14,6 +14,7 @@ import { FooterBlock } from '@/components/FooterBlock';
 import { Head } from '@/components/Head';
 import { WithNavMenu } from '@/components/NavMenu';
 import { ProjectBlock } from '@/components/ProjectBlock';
+import Tourus from '@/components/Tourus';
 import { WonderBlock } from '@/components/WonderBlock';
 import { wonders } from '@/data/Orders';
 function Home() {
@@ -31,109 +32,80 @@ function Home() {
 
   return (
     <div className="h-full bg-black">
+      <div className="fixed z-0 w-screen h-screen">
+        <Tourus />
+      </div>
       <Head />
-      <div className="relative w-full bg-bottom bg-cover h-screen-30 bg-hero "></div>
-      <div className="container flex flex-wrap mx-auto">
-        <div className="w-full p-8 sm:w-1/2 sm:py-20">
-          <h4>A starknet nft competition</h4>
-          <h1>Build a Wonder & Win</h1>
-          <p className="mt-8 font-display sm:text-2xl">
-            Realms, Briq, PlayOasis & StarkWare present to you the first
-            cross-project, on-chain, collaborative competition for builders and
-            artists on StarkNet.
-          </p>
+      <div className="relative z-20">
+        {/* <div className="relative w-full bg-bottom bg-cover h-screen-30 bg-hero "></div> */}
+        <div className="container flex flex-wrap justify-center mx-auto text-center">
+          <div className="w-full p-8 sm:w-1/2 sm:py-20">
+            <h4 className="font-semibold text-green-200">
+              on-chain gaming Hackathon
+            </h4>
+            <h1>Build a the future of Gaming.</h1>
+            <p className="mt-8 font-display sm:text-2xl">
+              Hack the planet... One game at a time.
+            </p>
+          </div>
         </div>
-        <div className="self-center w-full p-10 text-center rounded sm:w-1/2 bg-gray-800/10">
-          <h2>
-            16 Winners <br /> 48k $LORDS <br />& 1.6 ETH in prizes
-          </h2>
-        </div>
-      </div>
-      <div className="flex w-full h-auto px-20 py-8 shadow-inner bg-off-200">
-        <h4 className="mx-auto font-semibold uppercase">
-          the lore, the builder, the marketplace, the roll-up
-        </h4>
-      </div>
-      <div className="container flex flex-wrap py-20 mx-auto text-center">
+
+        {/* <div className="container flex flex-wrap py-20 mx-auto text-center">
         <ProjectBlock />
-      </div>
-      <iframe
-        scrolling="no"
-        src="https://realms.briq.construction/share?set_id=0x35ee90ec08fa17ab562a06406fc391f574e2a94805403b84000000000000000&network=testnet&version=2&embed=1"
-        className="w-full h-screen-65"
-        title="Briqs"
-      ></iframe>
-      <div className="container flex flex-wrap p-10 mx-auto sm:p-20">
-        <div className="w-full sm:w-1/2">
-          <div className="mb-20">
-            <h4 className="mb-8">the competition</h4>
-            <ol className="text-3xl list-decimal list-inside sm:text-5xl font-display">
-              <li>Pick a Wonder</li>
-              <li>Build and mint it with briqs</li>
-              <li>Showcase it on PlayOasis</li>
-            </ol>
+      </div> */}
+
+        <div className="container flex flex-wrap p-10 mx-auto sm:p-20">
+          <div className="w-full sm:w-1/2">
+            <div className="mb-20">
+              <h4 className="mb-8 text-green-200">
+                the hack: Choose your adventurer
+              </h4>
+              <ol className="text-3xl list-decimal list-inside sm:text-5xl font-display">
+                <li>Build a module</li>
+                <li>Build an adventurer</li>
+                <li>Build a tool</li>
+              </ol>
+            </div>
+            <hr />
+            <div className="my-20">
+              <h4 className="mb-8">what is an on-chain game?</h4>
+              <p className="mb-8 text-3xl sm:text-5xl font-display">
+                On-chain games run for the life of a blockchain. Yes, literally
+                forever.
+              </p>
+            </div>
+            <hr />
+            <div className="my-20">
+              <h4 className="mb-8">Calling all builders & artists</h4>
+              <p className="mb-8 text-3xl sm:text-5xl font-display">
+                BibliothecaDAO is developing the next generation of on-chain
+                gaming running on StarkNet.
+              </p>
+            </div>
+            <hr />
+            <div className="my-20">
+              <h4 className="mb-8">Build on top of our modular game.</h4>
+              <p className="mb-8 text-3xl sm:text-5xl font-display">
+                Submissions close on the 30th of April at midnight,then the 16
+                winners will be chosen by Realm Holders via quadratic voting.
+              </p>
+            </div>
+            <hr />
+            <div className="my-20">
+              <h4 className="mb-8">Prizes</h4>
+              <p className="mb-8 text-3xl sm:text-5xl font-display">
+                Bounty of LORDS for all that enter and score over a certain
+                amount.
+              </p>
+              <p className="mb-4 sm:text-2xl">
+                Bibliotheca DAO will award 3000 $LORDS and StarkWare 0.1 eth to
+                each of the winners. The winning NFTs will be minted on StarkNet
+                mainnet and transferred to the winners free of cost. There are
+                no prerequisites; everyone is welcome to participate.
+              </p>
+            </div>
           </div>
-          <hr />
-          <div className="my-20">
-            <h4 className="mb-8">what is a wonder?</h4>
-            <p className="mb-8 text-3xl sm:text-5xl font-display">
-              Wonders are mythical structures, both man-made and naturally
-              formed, scattered throughout the Realmverse.
-            </p>
-            <p className="sm:text-2xl">
-              While they have been admired and worshipped for eons, their true
-              beauty and image have never been transcribed to share with the
-              wider world.{' '}
-            </p>
-          </div>
-          <hr />
-          <div className="my-20">
-            <h4 className="mb-8">Calling all builders & artists</h4>
-            <p className="mb-8 text-3xl sm:text-5xl font-display">
-              We are calling on all builders, artists and layer 2 trailblazers
-              to create their own visual representation of these sacred sites
-              with briqs, directly on StarkNet.
-            </p>
-            <p className="sm:text-2xl">
-              Of the 50 Wonders, there will be 16 to choose from to build: one
-              from each of the Orders.
-              <br />
-              All creations will be displayed on PlayOasis in a special Realms
-              category for all to see and worship.
-            </p>
-          </div>
-          <hr />
-          <div className="my-20">
-            <h4 className="mb-8">Voting</h4>
-            <p className="mb-8 text-3xl sm:text-5xl font-display">
-              Submissions close on the 30th of April at midnight,then the 16
-              winners will be chosen by Realm Holders via quadratic voting.
-            </p>
-            <p className="sm:text-2xl">
-              There will be 16 separate snapshots to decide the winner from each
-              of the Orders.
-            </p>
-          </div>
-          <hr />
-          <div className="my-20">
-            <h4 className="mb-8">Prizes</h4>
-            <p className="mb-8 text-3xl sm:text-5xl font-display">
-              There is a total prize pool of 48k $LORDS and 1.6 ETH split evenly
-              across the 16 winners.
-            </p>
-            <p className="mb-4 sm:text-2xl">
-              Bibliotheca DAO will award 3000 $LORDS and StarkWare 0.1 eth to
-              each of the winners. The winning NFTs will be minted on StarkNet
-              mainnet and transferred to the winners free of cost. There are no
-              prerequisites; everyone is welcome to participate.
-            </p>
-            <p className="sm:text-2xl">
-              You can submit as many as you like and, if voted by the DAO, can
-              win multiple across the different Wonders of the Orders.
-            </p>
-          </div>
-        </div>
-        <div className="w-full px-8 sm:w-1/2 sm:px-12">
+          {/* <div className="w-full px-8 sm:w-1/2 sm:px-12">
           <div className="sticky top-10">
             <h4>
               Time left in <br /> competition submission
@@ -141,12 +113,12 @@ function Home() {
             <CountdownTimer date={time()} />
             <EntryCTA />
           </div>
+        </div> */}
         </div>
-      </div>
-      <div className="flex w-full h-auto py-8 shadow-inner bg-off-200">
-        <h4 className="mx-auto tracking-widest uppercase">how to enter</h4>
-      </div>
-      <div className="container justify-center mx-auto">
+        {/* <div className="flex w-full h-auto py-8 bg-green-700 shadow-inner">
+          <h4 className="mx-auto tracking-widest uppercase">how to enter</h4>
+        </div> */}
+        {/* <div className="container justify-center mx-auto">
         <div className="self-start p-16 mx-auto sm:w-2/3">
           <ol className="space-y-4 text-xl leading-loose list-decimal list-inside sm:text-3xl font-display">
             <li>
@@ -246,32 +218,13 @@ function Home() {
             <li>One creator can win more than once with multiple entries</li>
           </ul>
         </div>
-        <div className="flex justify-center w-full">
-          <EntryCTA />
-        </div>
-      </div>
-      <div id="wonders" className="flex justify-center">
-        <div className="w-1/2 py-8 mt-20 text-center">
-          <h1 className="mb-4">The Wonders</h1>
-          <p className="sm:text-2xl">
-            While they have been admired and worshipped for eons, their true
-            beauty and image have never been transcribed to share with the wider
-            world.{' '}
-          </p>
-        </div>
-      </div>
+      </div> */}
 
-      <div className="grid grid-cols-2 gap-2 px-2 sm:grid-cols-4">
-        {wonders.map((a, index) => {
-          return (
-            <WonderBlock key={index} name={a.name} id={a.id} order={a.order} />
-          );
-        })}
+        <FaqBlock />
+        <hr className="mt-10" />
+        <FooterBlock />
+        <div className="relative w-full bg-bottom bg-cover h-screen-30 bg-hero "></div>
       </div>
-      <FaqBlock />
-      <hr className="mt-10" />
-      <FooterBlock />
-      <div className="relative w-full bg-bottom bg-cover h-screen-30 bg-hero "></div>
     </div>
   );
 }

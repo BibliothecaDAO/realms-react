@@ -37,14 +37,9 @@ const queries = {
   xl: '(min-width: 1280px)',
   '2xl': '(min-width: 1536px)',
 };
-const connectors = [new InjectedConnector()];
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <StarknetProvider autoConnect connectors={connectors}>
-      <Component {...pageProps} />
-    </StarknetProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default PageWrapper(MyApp);
