@@ -22,7 +22,7 @@ import {
   RealmBuildingIntegrity,
   buildingIntegrity,
 } from '@/constants/buildings';
-import { Squad } from '@/constants/index';
+import type { Squad } from '@/constants/index';
 import { troopList, TroopSlot } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
@@ -110,9 +110,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   if (!realm) {
     return null;
   }
-
-  const realmTroops =
-    realm.troops?.filter((squad) => squad.squadSlot === Squad[squadSlot]) ?? [];
 
   const getMilitaryBuildingsBuilt = (
     buildings: BuildingDetail[] | undefined
@@ -366,30 +363,28 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         >
           <div className="flex justify-between w-full">
             <CardTitle>
-              {realm.name} {squadSlot}ing Army
+              Your Armies{/* {realm.name} {squadSlot}ing Arm */}
             </CardTitle>
-
-            <div className="flex justify-end w-1/2">
-              {isOwner && (
-                <Button
-                  variant="primary"
-                  size="xs"
-                  onClick={() =>
-                    setSquadSlot((prev) =>
-                      prev == 'Attack' ? 'Defend' : 'Attack'
-                    )
-                  }
-                >
-                  <ArrowSmallRightIcon className="w-4 mr-4" />
-                  <span>
-                    View {squadSlot == 'Attack' ? 'Defend' : 'Attack'}ing Army{' '}
-                  </span>
-                </Button>
-              )}
-            </div>
           </div>
-
-          <SquadBuilder
+          <div className="grid grid-cols-3 gap-4">
+            {realm.ownArmies.map((army) => {
+              return (
+                <div
+                  key={army.armyId}
+                  className="flex flex-col p-4 border col-1"
+                >
+                  <span className="uppercase">Location: In Transit to X</span>
+                  <span className="text-xl">Statistics</span>
+                  <span className="text-xl uppercase">Army {army.armyId}</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant="primary">Add</Button>
+                    <Button variant="outline">Travel</Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* <SquadBuilder
             squad={squadSlot}
             realm={realm}
             withPurchase={true}
@@ -415,7 +410,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 slot={TroopSlot.defending}
               />
             </div>
-          </div>
+          </div> */}
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>
