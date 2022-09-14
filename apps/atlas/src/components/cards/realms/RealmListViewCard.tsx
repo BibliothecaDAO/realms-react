@@ -3,8 +3,10 @@ import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
+
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useStarknet } from '@starknet-react/core';
 import { useRouter } from 'next/router';
@@ -14,6 +16,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { RealmOverview } from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { TroopSlot } from '@/constants/troops';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -31,7 +34,6 @@ import {
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 import { shortenAddressWidth } from '@/util/formatters';
 import { findResourceName } from '@/util/resources';
-
 interface RealmOverviewsProps {
   realm: RealmFragmentFragment;
   isYourRealms?: boolean;
@@ -78,6 +80,14 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
 
     const tabs = useMemo(
       () => [
+        {
+          label: <Map className="self-center w-6 h-6 fill-current" />,
+          component: (
+            <div className="w-full p-1">
+              <RealmOverview realm={props.realm} loading={false} />
+            </div>
+          ),
+        },
         {
           label: <Castle className="self-center w-6 h-6 fill-current" />,
           component: (

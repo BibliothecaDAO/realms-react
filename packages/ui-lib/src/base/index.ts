@@ -8,7 +8,7 @@ export { Select } from './select/select';
 export { InputNumber } from './input-number/input-number';
 export { Spinner } from './spinner';
 export { Switch } from './switch/switch';
-
+export { Menu } from './menu/menu';
 export {
   Card,
   CardBody,
