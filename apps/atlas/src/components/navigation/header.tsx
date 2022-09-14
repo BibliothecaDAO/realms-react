@@ -31,7 +31,7 @@ export function Header() {
     {
       title: 'Order of Enlightenment',
       artist: 'Casey',
-      src: '/music/pads.mp3',
+      src: '/music/Realms_Report_Idea_1.mp3',
     },
     // {
     //   title: 'The Minstrels - Order of Enlightenment',
