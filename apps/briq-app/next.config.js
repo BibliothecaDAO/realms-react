@@ -25,13 +25,12 @@ const disableSourceMaps = trueEnv.includes(
 );
 
 if (disableSourceMaps) {
-  console.info(
-    `${pc.green(
+  console.warn(
+    `${pc.yellow(
       'notice'
     )}- Sourcemaps generation have been disabled through NEXT_DISABLE_SOURCEMAPS`
   );
 }
-
 // Tell webpack to compile those packages
 // @link https://www.npmjs.com/package/next-transpile-modules
 const tmModules = [
@@ -51,11 +50,6 @@ const tmModules = [
     // ie: newer versions of https://github.com/sindresorhus packages
   ],
 ];
-
-const withNextTranspileModules = require('next-transpile-modules')(tmModules, {
-  resolveSymlinks: true,
-  debug: false,
-});
 
 if (disableSourceMaps) {
   console.info(
@@ -81,6 +75,10 @@ const nextConfig = {
   // @link https://nextjs.org/docs/advanced-features/compiler#minification
   swcMinify: true,
 
+  // Standalone build
+  // @link https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files-experimental
+  output: 'standalone',
+
   compiler: {
     // @https://nextjs.org/docs/advanced-features/compiler#remove-react-properties
     // Rust regexes, the syntax is different from js, see https://docs.rs/regex.
@@ -91,18 +89,21 @@ const nextConfig = {
   },
 
   experimental: {
-    // React 18
-    // @link https://nextjs.org/docs/advanced-features/react-18
-    reactRoot: true,
-    // React 18 streaming
-    // @link https://nextjs.org/docs/advanced-features/react-18/streaming
-    runtime: undefined,
+    browsersListForSwc: true,
+    legacyBrowsers: false,
+    images: {
+      allowFutureImage: true,
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'avatars.githubusercontent.com',
+        },
+      ],
+      unoptimized: false,
+    },
     // React 18 server components
     // @link https://nextjs.org/docs/advanced-features/react-18/server-components
     serverComponents: false,
-    // Standalone build
-    // @link https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files-experimental
-    outputStandalone: false,
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
     outputFileTracingRoot: undefined, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS
@@ -117,6 +118,7 @@ const nextConfig = {
 
   typescript: {
     ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
+    tsconfigPath: './tsconfig.json',
   },
 
   eslint: {
@@ -142,19 +144,20 @@ const nextConfig = {
 
   // @link https://nextjs.org/docs/basic-features/image-optimization
   images: {
-    loader: 'default',
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     disableStaticImages: false,
-    // https://nextjs.org/docs/api-reference/next/image#caching-behavior
     minimumCacheTTL: 60,
-    // Allowed domains for next/image
     domains: ['d23fdhqc1jb9no.cloudfront.net'],
+    path: '/_next/image',
+    formats: ['image/webp'],
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Add specific config for server mode
+  webpack: (config, { webpack, isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = { ...config.resolve.fallback, fs: false };
     }
 
     config.module.rules.push(
@@ -193,18 +196,37 @@ const nextConfig = {
   env: {
     APP_NAME: packageJson.name,
     APP_VERSION: packageJson.version,
-    BUILD_TIME: new Date().getTime().toString(10),
+    BUILD_TIME: new Date().toISOString(),
+  },
+  serverRuntimeConfig: {
+    // to bypass https://github.com/zeit/next.js/issues/8251
+    PROJECT_ROOT: __dirname,
   },
 };
 
-const config = withNextTranspileModules(nextConfig);
+let config = nextConfig;
+
+if (tmModules.length > 0) {
+  console.info(
+    `${pc.green('notice')}- Will transpile [${tmModules.join(',')}]`
+  );
+
+  const withNextTranspileModules = require('next-transpile-modules')(
+    tmModules,
+    {
+      resolveSymlinks: true,
+      debug: false,
+    }
+  );
+  config = withNextTranspileModules(config);
+}
 
 if (process.env.ANALYZE === 'true') {
   // @ts-ignore
   const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: true,
   });
-  module.exports = withBundleAnalyzer(config);
-} else {
-  module.exports = config;
+  config = withBundleAnalyzer(config);
 }
+
+module.exports = config;
