@@ -26,22 +26,16 @@ export const Entrypoints = {
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  buildArmy: (args: {
-    realmId;
-    armyId;
-    battalionIds;
-    battalionQty;
-    costs;
-  }) => ({
+  buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildArmy,
     calldata: [
       ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
       args.armyId,
-      args.battalionIds.length,
-      ...args.battalionIds,
-      args.battalionQty.length,
-      ...args.battalionQty,
+      args.ids.length,
+      ...args.ids,
+      args.qty.length,
+      ...args.qty,
     ],
     metadata: { ...args, action: Entrypoints.buildArmy },
   }),
@@ -67,11 +61,7 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buildArmy]: ({ metadata }, { isQueued }) => ({
     title: `Troop Training`,
-    description: `Realm #${metadata.realmId} ${
-      isQueued ? 'ordered to train' : 'is training'
-    } ${metadata.battalionIds.length} troops for ${
-      Squad[metadata.squadSlot]
-    }ing army.`,
+    description: `ssd`,
   }),
   [Entrypoints.initiateCombat]: ({ metadata }, ctx) => ({
     title: 'Combat',
@@ -161,31 +151,33 @@ const useCombat = () => {
     build: (
       realmId,
       armyId,
-      battalionIdsQtyCosts: { ids: number[]; qty: number[]; cost?: ItemCost }[]
+      ids,
+      qty
+      // battalionIdsQtyCosts: { ids: any; qty: any; cost?: ItemCost }[]
     ) => {
-      const totalCost: ItemCost = battalionIdsQtyCosts.reduce<ItemCost>(
-        (agg, curr) => {
-          if (!curr.cost) {
-            return agg;
-          }
-          return {
-            amount: agg.amount + curr.cost.amount,
-            resources: agg.resources.concat(curr.cost.resources),
-          };
-        },
-        {
-          amount: 0,
-          resources: [],
-        }
-      );
+      // const totalCost: ItemCost = battalionIdsQtyCosts.reduce<ItemCost>(
+      //   (agg, curr) => {
+      //     if (!curr.cost) {
+      //       return agg;
+      //     }
+      //     return {
+      //       amount: agg.amount + curr.cost.amount,
+      //       resources: agg.resources.concat(curr.cost.resources),
+      //     };
+      //   },
+      //   {
+      //     amount: 0,
+      //     resources: [],
+      //   }
+      // );
 
       txQueue.add(
         createCall.buildArmy({
           realmId,
           armyId,
-          battalionIds: battalionIdsQtyCosts.map((a) => a.ids),
-          battalionQty: battalionIdsQtyCosts.map((a) => a.qty),
-          costs: totalCost,
+          ids,
+          qty,
+          // costs: totalCost,
         })
       );
     },

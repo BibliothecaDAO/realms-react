@@ -31,7 +31,7 @@ import { useCosts } from '@/hooks/costs/useCosts';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
-import useCombat from '@/hooks/settling/useCombat';
+import useCombat from '@/hooks/settling/useCombatV2';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   CostBlock,
@@ -59,6 +59,7 @@ interface BuildQuantity {
 }
 
 const RealmArmyPanel: React.FC<Prop> = (props) => {
+  const { build } = useCombat();
   const realm = props.realm;
 
   // Always initialize with defending army
@@ -384,6 +385,22 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
               );
             })}
           </div>
+          <Button
+            variant="primary"
+            onClick={() => {
+              build(realm?.realmId, 0, [1, 2], [2, 2]);
+            }}
+          >
+            build defence
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
+            }}
+          >
+            add Attacking {realm.ownArmies.length}
+          </Button>
           {/* <SquadBuilder
             squad={squadSlot}
             realm={realm}
