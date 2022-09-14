@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
@@ -40,57 +41,63 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'border-4 border-double border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-xl hover:shadow-purple-800/20 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40';
-  const iconClasses = 'w-6 mx-auto sm:w-8 fill-current';
+    'border-b-4  border-l-2 border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer';
+
   const textClasses =
-    'hidden font-display text-center lowercase sm:block mb-5 text-xl ';
+    'hidden invisible font-display text-center lowercase sm:block mb-5 text-xl group-hover:visible ';
+
+  const iconClasses = (page) => {
+    return `w-6 mx-auto sm:w-8 ${
+      isPage(page) ? ' fill-yellow-100' : 'fill-gray-300'
+    }`;
+  };
 
   const menus = useMemo(() => {
     return [
       {
         page: '',
-        icon: <Globe className={`${iconClasses}`} />,
+        icon: <Globe className={`${iconClasses('')}`} />,
         text: 'atlas',
       },
       {
         page: 'account',
-        icon: <Crown className={`${iconClasses}`} />,
+        icon: <Crown className={`${iconClasses('account')}`} />,
         text: 'empire',
       },
       {
         page: 'realm',
-        icon: <Castle className={`${iconClasses}`} />,
+        icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
       },
       {
         page: 'bank',
-        icon: <Lords className={iconClasses} />,
+        icon: <Lords className={iconClasses('bank')} />,
         text: 'Bank',
       },
       {
         page: 'loot',
-        icon: <Bag className={`${iconClasses}`} />,
+        icon: <Bag className={`${iconClasses('loot')}`} />,
         text: 'Loot',
       },
       {
         page: 'ga',
-        icon: <Helm className={iconClasses} />,
+        icon: <Helm className={iconClasses('ga')} />,
         text: 'GA',
       },
       {
         page: 'crypt',
-        icon: <Danger className={iconClasses} />,
+        icon: <Danger className={iconClasses('crypt')} />,
         text: 'Crypts',
       },
       {
         page: 'lore',
-        icon: <Library className={iconClasses} />,
+        icon: <Library className={iconClasses('lore')} />,
         text: 'Lore',
       },
       {
         page: 'leaderboard',
-        icon: <Laurel className={iconClasses} />,
-        text: 'Leaderboard',
+        icon: <Laurel className={iconClasses('leaderboard')} />,
+        text: 'Leaders',
       },
       // {
       //   page: 'noticeBoard',
@@ -118,17 +125,17 @@ export const MenuSideBar = () => {
       </div>
       <animated.div
         style={animation}
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100 z-40 shadow-2xl flex flex-col transform  overflow-auto ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100 z-50 shadow-md flex flex-col transform  overflow-auto border-r-2 border-stone-800 shadow-white ${
           showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
         {menus.map((menu) => (
           <Link href={getPageHref(menu.page)} key={menu.page} shallow={true}>
-            <div className="flex flex-col place-items-center ">
+            <div className="flex flex-col place-items-center group">
               <IconButton
-                className={`${buttonClasses} ${
+                className={`${buttonClasses}  ${
                   isPage(menu.page)
-                    ? 'bg-cta-100 shadow-purple-900/80 -translate-y-1 border-yellow-200/40   '
+                    ? 'bg-cta-100 bg-gradient-to-r from-orange-500 shadow-purple-500 -translate-y-1 border-yellow-700 fill-yellow-600    '
                     : ''
                 }`}
                 aria-label={menu.text}
