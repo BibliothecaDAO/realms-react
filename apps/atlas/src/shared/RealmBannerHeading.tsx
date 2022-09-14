@@ -49,7 +49,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             order={realm?.orderType.toLowerCase() ?? ''}
           />
         </div>
-        <div className="pl-16 text-left md:pl-40 flex items-center">
+        <div className="flex items-center pl-16 text-left md:pl-40">
           <p className="text-3xl font-lords md:text-6xl">
             {realm?.realmId || '...'} || {realm?.name || '...'}
           </p>
@@ -57,10 +57,12 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <Tooltip
               className="ml-3"
               tooltipText={
-                'Lord: ' + shortenAddressWidth(realm?.settledOwner || '', 6)
+                <span>
+                  'Lord: ' + shortenAddressWidth(realm?.settledOwner || '', 6)
+                </span>
               }
             >
-              <Crown className="fill-white w-8" />
+              <Crown className="w-8 fill-white" />
             </Tooltip>
           )}
         </div>
