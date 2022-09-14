@@ -2,23 +2,6 @@
   {
     "members": [
       {
-        "name": "x",
-        "offset": 0,
-        "type": "felt"
-      },
-      {
-        "name": "y",
-        "offset": 1,
-        "type": "felt"
-      }
-    ],
-    "name": "Point",
-    "size": 2,
-    "type": "struct"
-  },
-  {
-    "members": [
-      {
         "name": "low",
         "offset": 0,
         "type": "felt"
@@ -36,6 +19,23 @@
   {
     "members": [
       {
+        "name": "x",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "y",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Point",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
         "name": "destination_asset_id",
         "offset": 0,
         "type": "felt"
@@ -46,13 +46,18 @@
         "type": "Uint256"
       },
       {
-        "name": "travel_time",
+        "name": "destination_nested_asset_id",
         "offset": 3,
+        "type": "felt"
+      },
+      {
+        "name": "travel_time",
+        "offset": 4,
         "type": "felt"
       }
     ],
     "name": "TravelInformation",
-    "size": 4,
+    "size": 5,
     "type": "struct"
   },
   {
@@ -82,25 +87,9 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "name": "traveller_coordinates",
-        "type": "Point"
-      },
-      {
-        "name": "destination_coordinates",
-        "type": "Point"
-      }
-    ],
-    "name": "assert_same_points",
-    "outputs": [],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "data": [
       {
-        "name": "traveller_asset_id",
+        "name": "traveller_contract_id",
         "type": "felt"
       },
       {
@@ -108,12 +97,20 @@
         "type": "Uint256"
       },
       {
-        "name": "destination_asset_id",
+        "name": "traveller_nested_id",
+        "type": "felt"
+      },
+      {
+        "name": "destination_contract_id",
         "type": "felt"
       },
       {
         "name": "destination_token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "destination_nested_id",
+        "type": "felt"
       },
       {
         "name": "arrival_time",
@@ -161,12 +158,20 @@
         "type": "Uint256"
       },
       {
+        "name": "traveller_nested_id",
+        "type": "felt"
+      },
+      {
         "name": "destination_contract_id",
         "type": "felt"
       },
       {
         "name": "destination_token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "destination_nested_id",
+        "type": "felt"
       }
     ],
     "name": "travel",
@@ -182,6 +187,10 @@
       {
         "name": "token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "nested_id",
+        "type": "felt"
       }
     ],
     "name": "get_coordinates",
@@ -203,6 +212,10 @@
       {
         "name": "token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "nested_id",
+        "type": "felt"
       }
     ],
     "name": "get_travel_information",
@@ -266,6 +279,10 @@
       {
         "name": "token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "nested_id",
+        "type": "felt"
       }
     ],
     "name": "assert_arrived",
@@ -284,12 +301,20 @@
         "type": "Uint256"
       },
       {
+        "name": "traveller_nested_id",
+        "type": "felt"
+      },
+      {
         "name": "destination_contract_id",
         "type": "felt"
       },
       {
         "name": "destination_token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "destination_nested_id",
+        "type": "felt"
       }
     ],
     "name": "assert_traveller_is_at_location",
@@ -306,6 +331,10 @@
       {
         "name": "token_id",
         "type": "Uint256"
+      },
+      {
+        "name": "nested_id",
+        "type": "felt"
       },
       {
         "name": "point",
