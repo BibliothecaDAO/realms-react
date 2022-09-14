@@ -364,7 +364,8 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         >
           <div className="flex justify-between w-full">
             <CardTitle>
-              Your Armies{/* {realm.name} {squadSlot}ing Arm */}
+              {isOwner ? 'Your' : 'Realm'} Armies
+              {/* {realm.name} {squadSlot}ing Arm */}
             </CardTitle>
           </div>
           <div className="grid grid-cols-3 gap-4">
@@ -385,22 +386,26 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
               );
             })}
           </div>
-          <Button
-            variant="primary"
-            onClick={() => {
-              build(realm?.realmId, 0, [1, 2], [2, 2]);
-            }}
-          >
-            build defence
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
-            }}
-          >
-            add Attacking {realm.ownArmies.length}
-          </Button>
+          {isOwner && (
+            <>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  build(realm?.realmId, 0, [1, 2], [2, 2]);
+                }}
+              >
+                build defence
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
+                }}
+              >
+                add Attacking {realm.ownArmies.length}
+              </Button>
+            </>
+          )}
           {/* <SquadBuilder
             squad={squadSlot}
             realm={realm}
@@ -430,7 +435,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           </div> */}
         </Card>
 
-        <AtlasSidebar isOpen={isRaiding}>
+        <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isRaiding}>
           <SidebarHeader
             title={'Attacking Realm ' + realm.realmId}
             onClose={() => setIsRaiding(false)}

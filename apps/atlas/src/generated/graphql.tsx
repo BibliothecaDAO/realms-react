@@ -1837,6 +1837,16 @@ export type GetRealmQuery = {
       type: string;
       qty: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
     buildings?: Array<{
       __typename?: 'Building';
       buildingId: number;
@@ -1864,21 +1874,12 @@ export type GetRealmQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
-    relic?: Array<{
-      __typename?: 'Relic';
-      realmId?: number | null;
-      heldByRealm?: number | null;
-    }> | null;
-    relicsOwned?: Array<{
-      __typename?: 'Relic';
-      realmId?: number | null;
-      heldByRealm?: number | null;
-    }> | null;
     ownArmies: Array<{
       __typename?: 'Army';
       armyId: number;
       realmId: number;
       xp: number;
+      visitingRealmId: number;
       armyPacked: number;
       lastAttacked: number;
       level: number;
@@ -2063,6 +2064,16 @@ export type GetRealmsQuery = {
       type: string;
       qty: number;
     }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
     buildings?: Array<{
       __typename?: 'Building';
       buildingId: number;
@@ -2090,21 +2101,12 @@ export type GetRealmsQuery = {
       wisdom: number;
       squadSlot: number;
     }> | null;
-    relic?: Array<{
-      __typename?: 'Relic';
-      realmId?: number | null;
-      heldByRealm?: number | null;
-    }> | null;
-    relicsOwned?: Array<{
-      __typename?: 'Relic';
-      realmId?: number | null;
-      heldByRealm?: number | null;
-    }> | null;
     ownArmies: Array<{
       __typename?: 'Army';
       armyId: number;
       realmId: number;
       xp: number;
+      visitingRealmId: number;
       armyPacked: number;
       lastAttacked: number;
       level: number;
@@ -2181,6 +2183,16 @@ export type RealmFragmentFragment = {
     type: string;
     qty: number;
   }> | null;
+  relic?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
+  relicsOwned?: Array<{
+    __typename?: 'Relic';
+    realmId?: number | null;
+    heldByRealm?: number | null;
+  }> | null;
   buildings?: Array<{
     __typename?: 'Building';
     buildingId: number;
@@ -2208,21 +2220,12 @@ export type RealmFragmentFragment = {
     wisdom: number;
     squadSlot: number;
   }> | null;
-  relic?: Array<{
-    __typename?: 'Relic';
-    realmId?: number | null;
-    heldByRealm?: number | null;
-  }> | null;
-  relicsOwned?: Array<{
-    __typename?: 'Relic';
-    realmId?: number | null;
-    heldByRealm?: number | null;
-  }> | null;
   ownArmies: Array<{
     __typename?: 'Army';
     armyId: number;
     realmId: number;
     xp: number;
+    visitingRealmId: number;
     armyPacked: number;
     lastAttacked: number;
     level: number;
@@ -2244,6 +2247,72 @@ export type RealmFragmentFragment = {
     heavyInfantryQty: number;
     heavyInfantryHealth: number;
   }>;
+};
+
+export type RealmArmiesFragmentFragment = {
+  __typename?: 'Realm';
+  ownArmies: Array<{
+    __typename?: 'Army';
+    armyId: number;
+    realmId: number;
+    xp: number;
+    visitingRealmId: number;
+    armyPacked: number;
+    lastAttacked: number;
+    level: number;
+    callSign: number;
+    lightCavalryQty: number;
+    lightCavalryHealth: number;
+    heavyCavalryQty: number;
+    heavyCavalryHealth: number;
+    archerQty: number;
+    archerHealth: number;
+    longbowQty: number;
+    longbowHealth: number;
+    mageQty: number;
+    mageHealth: number;
+    arcanistQty: number;
+    arcanistHealth: number;
+    lightInfantryQty: number;
+    lightInfantryHealth: number;
+    heavyInfantryQty: number;
+    heavyInfantryHealth: number;
+  }>;
+};
+
+export type RealmBuildingsFragmentFragment = {
+  __typename?: 'Realm';
+  buildings?: Array<{
+    __typename?: 'Building';
+    buildingId: number;
+    buildingName: string;
+    buildingIntegrity: number;
+    count: number;
+    population: number;
+    culture: number;
+    food: number;
+    limitTraitId: number;
+    limitTraitName: string;
+  }> | null;
+};
+
+export type RealmTroopsFragmentFragment = {
+  __typename?: 'Realm';
+  troops?: Array<{
+    __typename?: 'Troop';
+    realmId: number;
+    troopId: number;
+    troopName: string;
+    index: number;
+    type: number;
+    tier: number;
+    agility: number;
+    attack: number;
+    armor: number;
+    vitality: number;
+    wisdom: number;
+    squadSlot: number;
+  }> | null;
 };
 
 export type ResourceFragmentFragment = {
@@ -2303,6 +2372,70 @@ export const LorePoiFragmentFragmentDoc = gql`
     assetType
   }
 `;
+export const RealmBuildingsFragmentFragmentDoc = gql`
+  fragment RealmBuildingsFragment on Realm {
+    buildings {
+      buildingId
+      buildingName
+      buildingIntegrity
+      count
+      population
+      culture
+      food
+      limitTraitId
+      limitTraitName
+    }
+  }
+`;
+export const RealmTroopsFragmentFragmentDoc = gql`
+  fragment RealmTroopsFragment on Realm {
+    troops {
+      realmId
+      troopId
+      troopName
+      index
+      type
+      tier
+      agility
+      attack
+      armor
+      vitality
+      wisdom
+      squadSlot
+    }
+  }
+`;
+export const RealmArmiesFragmentFragmentDoc = gql`
+  fragment RealmArmiesFragment on Realm {
+    ownArmies {
+      armyId
+      realmId
+      xp
+      visitingRealmId
+      armyPacked
+      lastAttacked
+      xp
+      level
+      callSign
+      lightCavalryQty
+      lightCavalryHealth
+      heavyCavalryQty
+      heavyCavalryHealth
+      archerQty
+      archerHealth
+      longbowQty
+      longbowHealth
+      mageQty
+      mageHealth
+      arcanistQty
+      arcanistHealth
+      lightInfantryQty
+      lightInfantryHealth
+      heavyInfantryQty
+      heavyInfantryHealth
+    }
+  }
+`;
 export const RealmFragmentFragmentDoc = gql`
   fragment RealmFragment on Realm {
     realmId
@@ -2330,31 +2463,6 @@ export const RealmFragmentFragmentDoc = gql`
       type
       qty
     }
-    buildings {
-      buildingId
-      buildingName
-      buildingIntegrity
-      count
-      population
-      culture
-      food
-      limitTraitId
-      limitTraitName
-    }
-    troops {
-      realmId
-      troopId
-      troopName
-      index
-      type
-      tier
-      agility
-      attack
-      armor
-      vitality
-      wisdom
-      squadSlot
-    }
     relic {
       realmId
       heldByRealm
@@ -2363,33 +2471,13 @@ export const RealmFragmentFragmentDoc = gql`
       realmId
       heldByRealm
     }
-    ownArmies {
-      armyId
-      realmId
-      xp
-      armyPacked
-      lastAttacked
-      xp
-      level
-      callSign
-      lightCavalryQty
-      lightCavalryHealth
-      heavyCavalryQty
-      heavyCavalryHealth
-      archerQty
-      archerHealth
-      longbowQty
-      longbowHealth
-      mageQty
-      mageHealth
-      arcanistQty
-      arcanistHealth
-      lightInfantryQty
-      lightInfantryHealth
-      heavyInfantryQty
-      heavyInfantryHealth
-    }
+    ...RealmBuildingsFragment
+    ...RealmTroopsFragment
+    ...RealmArmiesFragment
   }
+  ${RealmBuildingsFragmentFragmentDoc}
+  ${RealmTroopsFragmentFragmentDoc}
+  ${RealmArmiesFragmentFragmentDoc}
 `;
 export const ResourceFragmentFragmentDoc = gql`
   fragment ResourceFragment on Resource {

@@ -51,9 +51,6 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
         <div>
           <div className="flex justify-between mt-4">
             <div className="w-1/2 ">
-              <h4 className="mb-4 opacity-60">
-                Attacking Realm {realm?.realmId}
-              </h4>
               <div className="p-2">
                 <h2>
                   <OrderIcon
@@ -66,43 +63,14 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
                 </h2>
               </div>
             </div>
-            <div className="w-1/2 bg-black rounded">
-              <h4 className="mb-4 opacity-60">Attacker</h4>
-              <div className="p-2">
-                <h2>
-                  {attackingRealm && (
-                    <OrderIcon
-                      containerClassName="inline-block mr-4"
-                      withTooltip
-                      size="md"
-                      order={attackingRealm?.orderType}
-                    />
-                  )}{' '}
-                  {attackingRealm?.name}
-                </h2>
-              </div>
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
             <SquadStatistics
               slot={TroopSlot.defending}
               troops={realm?.troops || []}
             />
-            {attackingRealm ? (
-              <SquadStatistics
-                className="pl-4"
-                reversed
-                troops={attackingRealm?.troops || []}
-                slot={TroopSlot.attacking}
-              />
-            ) : (
-              <div className="flex items-center justify-center">
-                Select <br />
-                Realm
-              </div>
-            )}
           </div>
-          <RealmSelector onSelect={(r) => setSelectedRealms(r)} />
+          {/* <RealmSelector onSelect={(r) => setSelectedRealms(r)} /> */}
           <Button
             onClick={() => {
               initiateCombat({
