@@ -162,9 +162,12 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
           </h2>
           {!isYourRealm(props.realm) && (
             <Tooltip
-              className="ml-3"
+              placement="top"
+              className="ml-3 text-xs"
               tooltipText={
-                'Lord: ' + shortenAddressWidth(getRealmOwner(props.realm), 6)
+                <span>
+                  Lord: {shortenAddressWidth(getRealmOwner(props.realm), 6)}
+                </span>
               }
             >
               <Crown className="w-8 fill-white" />
