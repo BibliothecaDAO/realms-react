@@ -71,7 +71,7 @@ export const MenuSideBar = () => {
       },
       {
         page: 'bank',
-        icon: <Lords className={iconClasses('bank')} />,
+        icon: <Lords className={`${iconClasses('bank')}`} />,
         text: 'Bank',
       },
       {
@@ -81,22 +81,22 @@ export const MenuSideBar = () => {
       },
       {
         page: 'ga',
-        icon: <Helm className={iconClasses('ga')} />,
+        icon: <Helm className={`${iconClasses('ga')}`} />,
         text: 'GA',
       },
       {
         page: 'crypt',
-        icon: <Danger className={iconClasses('crypt')} />,
+        icon: <Danger className={`${iconClasses('crypt')}`} />,
         text: 'Crypts',
       },
       {
         page: 'lore',
-        icon: <Library className={iconClasses('lore')} />,
+        icon: <Library className={`${iconClasses('lore')}`} />,
         text: 'Lore',
       },
       {
         page: 'leaderboard',
-        icon: <Laurel className={iconClasses('leaderboard')} />,
+        icon: <Laurel className={`${iconClasses('leaderboard')}`} />,
         text: 'Leaders',
       },
       // {
