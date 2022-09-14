@@ -1,8 +1,8 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
+import { findResourceById } from '@/constants/resources';
 import { GetRealmHistoryQuery } from '@/generated/graphql';
-import { findResourceName } from '@/util/resources';
 import { resourcePillaged } from '../Getters/Realm';
 
 export const Event = {

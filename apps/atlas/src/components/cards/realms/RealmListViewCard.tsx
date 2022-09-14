@@ -25,7 +25,6 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import {
-  getAccountHex,
   hasOwnRelic,
   RealmCombatStatus,
   RealmStatus,
@@ -33,7 +32,6 @@ import {
 } from '@/shared/Getters/Realm';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 import { shortenAddressWidth } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
 interface RealmOverviewsProps {
   realm: RealmFragmentFragment;
   isYourRealms?: boolean;

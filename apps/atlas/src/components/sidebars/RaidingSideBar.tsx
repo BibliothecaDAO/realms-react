@@ -49,17 +49,11 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     <div>
       {(!txSubmitted || combatError) && (
         <div>
-          <Image
-            className="w-full rounded"
-            width={500}
-            objectFit={'cover'}
-            layout="responsive"
-            height={250}
-            src="/siege-tablet.png"
-          />
           <div className="flex justify-between mt-4">
             <div className="w-1/2 ">
-              <h4 className="mb-4 opacity-60">Defender</h4>
+              <h4 className="mb-4 opacity-60">
+                Attacking Realm {realm?.realmId}
+              </h4>
               <div className="p-2">
                 <h2>
                   <OrderIcon

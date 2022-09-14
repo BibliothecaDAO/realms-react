@@ -2,7 +2,7 @@ import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React from 'react';
-import { resources } from '@/util/resources';
+import { resources } from '@/constants/resources';
 
 type ResourcesFilterProps = {
   selectedValues: number[];

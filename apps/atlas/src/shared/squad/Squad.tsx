@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { ArmoryBuilder } from '@/components/tables/Armory';
 import { Squad } from '@/constants/index';
+import { findResourceById } from '@/constants/resources';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
@@ -12,7 +13,6 @@ import useIsOwner from '@/hooks/useIsOwner';
 import { Troop } from '@/shared/squad/Troops';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { getCostSums } from '@/util/armory';
-import { findResourceName } from '@/util/resources';
 import SidebarHeader from '../SidebarHeader';
 import SquadStatistics from './SquadStatistics';
 
@@ -156,7 +156,7 @@ export const SquadBuilder = (props: SquadProps) => {
                     <div key={index} className="inline-block mb-2">
                       <span className="">
                         <ResourceIcon
-                          resource={findResourceName(a.resourceId)?.trait || ''}
+                          resource={findResourceById(a.resourceId)?.trait || ''}
                           size="sm"
                           className="self-center mr-4"
                         />

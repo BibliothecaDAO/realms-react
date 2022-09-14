@@ -431,7 +431,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         </Card>
 
         <AtlasSidebar isOpen={isRaiding}>
-          <SidebarHeader title="Raiding" onClose={() => setIsRaiding(false)} />
+          <SidebarHeader
+            title={'Attacking Realm ' + realm.realmId}
+            onClose={() => setIsRaiding(false)}
+          />
           <RaidingSideBar realm={realm} />
         </AtlasSidebar>
       </div>

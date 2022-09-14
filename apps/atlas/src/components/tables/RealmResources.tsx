@@ -15,6 +15,7 @@ import {
   MAX_DAYS_ACCURED,
   PILLAGE_AMOUNT,
 } from '@/constants/buildings';
+import { resources, findResourceById } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
@@ -24,7 +25,6 @@ import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { RateChange } from '@/shared/Getters/Market';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
-import { resources, findResourceName } from '@/util/resources';
 
 type Row = {
   resource: ReactElement;
@@ -101,7 +101,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           <span className="flex text-xs">
             <ResourceIcon
               resource={
-                findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
+                findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
               }
               size="sm"
               className="self-center mr-4"

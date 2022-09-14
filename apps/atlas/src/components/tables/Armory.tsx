@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useReducer, useState } from 'react';
 import { buildingIdToString } from '@/constants/buildings';
 import { Squad, TroopTierMax } from '@/constants/index';
+import { findResourceById } from '@/constants/resources';
 import { TroopBuildings } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetTroopStatsQuery } from '@/generated/graphql';
@@ -11,7 +12,6 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
 import { CostBlock } from '@/shared/Getters/Realm';
 import type { ItemCost, TroopInterface } from '@/types/index';
-import { findResourceName } from '@/util/resources';
 
 interface Props {
   realmId: number;
