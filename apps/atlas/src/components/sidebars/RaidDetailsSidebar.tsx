@@ -1,13 +1,6 @@
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { RaidResults } from '@/components/tables/RaidResults';
-import { Squad } from '@/constants/index';
-import { TroopSlot } from '@/constants/troops';
-import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
-import useCombat from '@/hooks/settling/useCombat';
-import RealmSelector from '@/shared/RealmSelector';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
+import type { GetRealmsQuery } from '@/generated/graphql';
 
 type Prop = {
   event?: any;
