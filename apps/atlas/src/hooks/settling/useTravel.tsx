@@ -47,7 +47,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 export type Travel = {
-  travel: (travellerId: number, destinationId: number) => void;
+  travel: (armyId: number, travellerId: number, destinationId: number) => void;
   setTravelArcs: (location: number, assets: number[]) => void;
   travelArcs: TravelArc[] | undefined;
 };
@@ -65,9 +65,10 @@ const useTravel = (): Travel => {
   const [travelArcs, setTravelArcs] = useState<TravelArc[]>();
 
   return {
-    travel: (travellerId, destinationId) => {
+    travel: (armyId, travellerId, destinationId) => {
       txQueue.add(
         createCall.travel({
+          armyId,
           travellerId,
           destinationId,
         })

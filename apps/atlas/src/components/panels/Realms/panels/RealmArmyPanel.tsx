@@ -14,6 +14,7 @@ import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
+import { Travel } from '@/components/panels/Realms/details/Travel';
 import { ArmyBuilderSideBar } from '@/components/sidebars/ArmyBuilderSideBar';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
@@ -35,6 +36,7 @@ import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombatV2';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   CostBlock,
@@ -46,7 +48,6 @@ import { SquadBuilder } from '@/shared/squad/Squad';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 import type { BuildingDetail, AvailableResources } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
-
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
@@ -64,9 +65,15 @@ interface BuildQuantity {
 const RealmArmyPanel: React.FC<Prop> = (props) => {
   const { build } = useCombat();
   const realm = props.realm;
+  const { userAttackingArmies } = useUsersRealms();
+
   const [selectedArmy, setSelectedArmy] = useState<Army>();
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
+
+  const userArmiesAtLocation = userAttackingArmies?.filter(
+    (army) => army.visitingRealmId == realm.realmId
+  );
 
   const { troops, attackGoblins } = useCombat();
   const { checkUserHasResources } = useCosts();
@@ -90,6 +97,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
   const [isRaiding, setIsRaiding] = useState(false);
   const [isArmyBuilding, setIsArmyBuilding] = useState(false);
+  const [isTravel, setIsTravel] = useState(false);
 
   const txQueue = useTransactionQueue();
   const isOwner = useIsOwner(realm?.settledOwner);
@@ -207,7 +215,11 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           {!isOwner && (
             <div className="w-full mt-3">
               <Button
-                onClick={() => setIsRaiding(true)}
+                onClick={() => {
+                  userArmiesAtLocation && userArmiesAtLocation.length
+                    ? setIsRaiding(true)
+                    : setIsTravel(true);
+                }}
                 size="lg"
                 className="w-full"
                 disabled={!vaultCountdown.expired}
@@ -452,6 +464,13 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             onClose={() => setIsArmyBuilding(false)}
           />
           <ArmyBuilderSideBar army={selectedArmy} />
+        </AtlasSidebar>
+        <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
+          <SidebarHeader
+            title={'Army Builder'}
+            onClose={() => setIsTravel(false)}
+          />
+          <Travel realm={realm} />
         </AtlasSidebar>
       </div>
     </BaseRealmDetailPanel>

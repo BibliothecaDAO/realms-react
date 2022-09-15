@@ -1,6 +1,7 @@
 import { RealmHistory } from './History';
 import { RealmLore } from './Lore';
 import { RealmOverview } from './Overview';
-import { RealmTravel } from './Travel';
+import { RealmsTravel } from './RealmsTravel';
+import { Travel } from './Travel';
 
-export { RealmHistory, RealmOverview, RealmTravel, RealmLore };
+export { RealmHistory, RealmOverview, Travel, RealmsTravel, RealmLore };
