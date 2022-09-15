@@ -24,6 +24,29 @@ function Hack() {
     return (NOW_IN_MS + MS_UNTIL).toString();
   };
 
+  const items = [
+    {
+      title: 'Blockchain games are due their ‘broadband moment’',
+      description:
+        'Most web3 games are rubbish. Hardly fun and barely on-chain. Join our hack and help us build rich and enjoyable on-chain games. Games that push the boundaries of the new design space opened by ZK roll ups and STARK proofs.',
+    },
+    {
+      title: 'On-chain games',
+      description:
+        'All state and logic exist on the blockchain. There is no central server where game information is stored. Players, developers and producers become one in a permissionless game environment. These are ‘eternal games’ that will last for the length of the blockchain itself.   Interoperability at the function level.',
+    },
+    {
+      title: 'Realms Gaming Ecosystem',
+      description:
+        'For the past 9 months we have been laying the foundation for an ever expanding on-chain gaming reality.  We have two game modules for you to hack (details in the FAQs). ',
+    },
+    {
+      title: 'Why StarkNet',
+      description:
+        'The EVM is a limiting factor for game design.  Fun games require rich computation.  For true on-chain realities and worlds to emerge we require a new technology, and we believe that STARKS show the greatest promise to achieve this.',
+    },
+  ];
+
   return (
     <div className="h-full bg-black">
       <div className="fixed z-0 w-screen h-screen">
@@ -36,7 +59,9 @@ function Hack() {
             <h4 className="font-semibold text-green-200">
               on-chain gaming Hackathon
             </h4>
-            <h1>Build a the future of Gaming.</h1>
+            <h1>
+              Build the next generation of web3 games with a $20,000 bounty
+            </h1>
             <p className="mt-8 font-display sm:text-2xl">
               Hack the planet... One game at a time.
             </p>
@@ -60,43 +85,18 @@ function Hack() {
               </ol>
             </div>
             <hr />
-            <div className="my-20">
-              <h4 className="mb-8">what is an on-chain game?</h4>
-              <p className="mb-8 text-3xl sm:text-5xl font-display">
-                On-chain games run for the life of a blockchain. Yes, literally
-                forever.
-              </p>
-            </div>
+            {items.map((a, index) => {
+              return (
+                <div key={index} className="my-20">
+                  <h4 className="mb-8">{a.title}</h4>
+                  <p className="mb-8 text-3xl sm:text-2xl font-display">
+                    {a.description}
+                  </p>
+                </div>
+              );
+            })}
+
             <hr />
-            <div className="my-20">
-              <h4 className="mb-8">Calling all builders & artists</h4>
-              <p className="mb-8 text-3xl sm:text-5xl font-display">
-                BibliothecaDAO is developing the next generation of on-chain
-                gaming running on StarkNet.
-              </p>
-            </div>
-            <hr />
-            <div className="my-20">
-              <h4 className="mb-8">Build on top of our modular game.</h4>
-              <p className="mb-8 text-3xl sm:text-5xl font-display">
-                Submissions close on the 30th of April at midnight,then the 16
-                winners will be chosen by Realm Holders via quadratic voting.
-              </p>
-            </div>
-            <hr />
-            <div className="my-20">
-              <h4 className="mb-8">Prizes</h4>
-              <p className="mb-8 text-3xl sm:text-5xl font-display">
-                Bounty of LORDS for all that enter and score over a certain
-                amount.
-              </p>
-              <p className="mb-4 sm:text-2xl">
-                Bibliotheca DAO will award 3000 $LORDS and StarkWare 0.1 eth to
-                each of the winners. The winning NFTs will be minted on StarkNet
-                mainnet and transferred to the winners free of cost. There are
-                no prerequisites; everyone is welcome to participate.
-              </p>
-            </div>
           </div>
           {/* <div className="w-full px-8 sm:w-1/2 sm:px-12">
           <div className="sticky top-10">
