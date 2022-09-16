@@ -49,10 +49,10 @@ interface Counter {
 
 const DateTimeDisplay = (props: TimeDisplay) => {
   return (
-    <div className={`mr-1 ${props.isDanger ? 'text-red-200' : 'countdown'}`}>
+    <div className={`mr-1 ${props.isDanger ? 'text-red-400' : 'countdown'}`}>
       <p>
         {props.value}
-        <span className="text-gray-500">{props.type}</span>
+        <span className="text-gray-200">{props.type}</span>
       </p>
     </div>
   );
@@ -60,8 +60,8 @@ const DateTimeDisplay = (props: TimeDisplay) => {
 
 const ExpiredNotice = () => {
   return (
-    <div className="w-full p-2 text-center uppercase bg-red-500 rounded animate-pulse">
-      <p>Realm can be Attacked</p>
+    <div className="w-full p-2 text-center uppercase bg-red-200 rounded animate-pulse">
+      <p>expired</p>
     </div>
   );
 };
@@ -69,11 +69,11 @@ const ExpiredNotice = () => {
 const ShowCounter = (props: Counter) => {
   return (
     <div className="flex text-3xl">
-      {/* <DateTimeDisplay
+      <DateTimeDisplay
         value={props.days}
         type={'D'}
         isDanger={props.days <= 3}
-      /> */}
+      />
 
       <DateTimeDisplay value={props.hours} type={'H'} isDanger={true} />
 

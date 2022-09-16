@@ -1,4 +1,4 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Button, CountdownTimer } from '@bibliotheca-dao/ui-lib';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { useStarknet } from '@starknet-react/core';
@@ -9,7 +9,9 @@ import ReactMarkdown from 'react-markdown';
 
 import { FaqBlock } from '@/components/Faqs';
 
+import { MainLayout } from '@/components/layout/MainLayout';
 import Tourus from '@/components/Tourus';
+import { hackPage } from '@/data/Information';
 
 function Hack() {
   const { account, error: starknetConnectionError } = useStarknet();
@@ -26,9 +28,9 @@ function Hack() {
 
   const items = [
     {
-      title: 'Blockchain games are due their ‘broadband moment’',
+      title: 'Realms Gaming Ecosystem',
       description:
-        'Most web3 games are rubbish. Hardly fun and barely on-chain. Join our hack and help us build rich and enjoyable on-chain games. Games that push the boundaries of the new design space opened by ZK roll ups and STARK proofs.',
+        'For the past 9 months we have been laying the foundation for an ever expanding on-chain gaming reality. We have built the tools and tooling to allow developers to jump in and start building games. Now it is time for you to build.',
     },
     {
       title: 'On-chain games',
@@ -36,35 +38,39 @@ function Hack() {
         'All state and logic exist on the blockchain. There is no central server where game information is stored. Players, developers and producers become one in a permissionless game environment. These are ‘eternal games’ that will last for the length of the blockchain itself.   Interoperability at the function level.',
     },
     {
-      title: 'Realms Gaming Ecosystem',
+      title: 'Build "Real" web3 games',
       description:
-        'For the past 9 months we have been laying the foundation for an ever expanding on-chain gaming reality.  We have two game modules for you to hack (details in the FAQs). ',
+        'Most web3 games are rubbish. Hardly fun and barely on-chain. Join our hack and help us build rich and enjoyable on-chain games. Games that push the boundaries of the new design space opened by ZK-Rollups and STARK proofs.',
     },
+
     {
-      title: 'Why StarkNet',
+      title: 'Why StarkNet?',
       description:
         'The EVM is a limiting factor for game design.  Fun games require rich computation.  For true on-chain realities and worlds to emerge we require a new technology, and we believe that STARKS show the greatest promise to achieve this.',
     },
   ];
 
   return (
-    <div className="h-full bg-black">
-      <div className="fixed z-0 w-screen h-screen">
-        <Tourus />
-      </div>
-      <div className="relative z-20">
-        {/* <div className="relative w-full bg-bottom bg-cover h-screen-30 bg-hero "></div> */}
+    <MainLayout>
+      <div className="relative z-20 ">
         <div className="container flex flex-wrap justify-center mx-auto text-center">
-          <div className="w-full p-8 sm:w-1/2 sm:py-20">
-            <h4 className="font-semibold text-green-200">
-              on-chain gaming Hackathon
-            </h4>
+          <div className="w-full px-10 pt-40 sm:w-2/3 sm:py-40 sm:pb-20">
+            <h4 className="font-semibold ">on-chain gaming Hackathon</h4>
             <h1>
-              Build the next generation of web3 games with a $20,000 bounty
+              Build the next generation <br /> of web3 games with <br /> a
+              $20,000 bounty.
             </h1>
             <p className="mt-8 font-display sm:text-2xl">
-              Hack the planet... One game at a time.
+              On-chain and eternal.
             </p>
+            <div className="mx-auto mt-8">
+              <Button
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeYhpcC65RbSxqKnjGEXiIkdoI_F5_HUFHxlJqlv8CN--wejg/viewform"
+                variant="dao"
+              >
+                Do you commit to this challenge?
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -73,151 +79,78 @@ function Hack() {
       </div> */}
 
         <div className="container flex flex-wrap p-10 mx-auto sm:p-20">
-          <div className="w-full sm:w-1/2">
+          <div className="w-full sm:w-2/3">
             <div className="mb-20">
-              <h4 className="mb-8 text-green-200">
-                the hack: Choose your adventurer
-              </h4>
+              <h4 className="mb-8 text-green-200">Choose your adventurer</h4>
               <ol className="text-3xl list-decimal list-inside sm:text-5xl font-display">
-                <li>Build a module</li>
-                <li>Build an adventurer</li>
-                <li>Build a tool</li>
+                <li>Build a game module</li>
+                <li>Build an on-chain experience</li>
+                <li>Build a game tool</li>
               </ol>
             </div>
+
+            <div className="flex mt-8 space-x-3">
+              <Button
+                href="https://scroll.bibliothecadao.xyz"
+                variant="dao"
+                size="sm"
+              >
+                white paper
+              </Button>
+              <Button
+                href="https://scroll.bibliothecadao.xyz/docs/technology/the-stack"
+                variant="dao"
+                size="sm"
+              >
+                see our tech stack
+              </Button>
+              <Button
+                href="https://github.com/BibliothecaForAdventurers"
+                variant="dao"
+                size="sm"
+              >
+                github
+              </Button>
+            </div>
             <hr />
+            <Image
+              width="300"
+              height="170"
+              alt=""
+              layout={'responsive'}
+              src="/promo_card.png"
+            />
+
             {items.map((a, index) => {
               return (
                 <div key={index} className="my-20">
-                  <h4 className="mb-8">{a.title}</h4>
+                  <h2 className="mb-8">{a.title}</h2>
                   <p className="mb-8 text-3xl sm:text-2xl font-display">
                     {a.description}
                   </p>
                 </div>
               );
             })}
-
-            <hr />
           </div>
-          {/* <div className="w-full px-8 sm:w-1/2 sm:px-12">
-          <div className="sticky top-10">
-            <h4>
-              Time left in <br /> competition submission
-            </h4>
-            <CountdownTimer date={time()} />
-            <EntryCTA />
-          </div>
-        </div> */}
-        </div>
-        {/* <div className="flex w-full h-auto py-8 bg-green-700 shadow-inner">
-          <h4 className="mx-auto tracking-widest uppercase">how to enter</h4>
-        </div> */}
-        {/* <div className="container justify-center mx-auto">
-        <div className="self-start p-16 mx-auto sm:w-2/3">
-          <ol className="space-y-4 text-xl leading-loose list-decimal list-inside sm:text-3xl font-display">
-            <li>
-              Connect your Argent X StarkNet Wallet <br />{' '}
-              <span className="text-lg text-gray-700 sm:text-2xl">
-                (create one{' '}
-                <a
-                  className="hover:underline"
-                  href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
+          <div className="w-full px-8 sm:w-1/3 sm:px-12">
+            <div className="sticky top-32">
+              <h4>Time left to register</h4>
+              <CountdownTimer date={time()} />
+              <div className="mt-8">
+                <Button
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSeYhpcC65RbSxqKnjGEXiIkdoI_F5_HUFHxlJqlv8CN--wejg/viewform"
+                  variant="dao"
                 >
-                  here
-                </a>{' '}
-                if you don’t have one and install the browser extension)
-              </span>
-            </li>
-            <li>
-              Complete the form <br />{' '}
-              <span className="text-lg text-gray-700 sm:text-2xl">
-                {account ? (
-                  <a
-                    target={'_blank'}
-                    href={`https://docs.google.com/forms/d/e/1FAIpQLSc66txDM8Ei3w83p3kLJL30VoBS6P7Xep4cIDVACZAbLY05mg/viewform?usp=pp_url&entry.2005620554=${account}`}
-                    className=" hover:underline"
-                    rel="noreferrer"
-                  >
-                    Sign up and & build
-                  </a>
-                ) : (
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    className="hover:underline"
-                    href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                  >
-                    First download and install Argent
-                  </a>
-                )}
-              </span>
-            </li>
-            <li>
-              20k Briqs will be airdropped to your address (within 24 hours)
-            </li>
-            <li>
-              Choose one of the{' '}
-              <a className="underline" href="#wonders">
-                16 Wonders
-              </a>{' '}
-            </li>
-            <li>
-              Head to{' '}
-              <a
-                className="hover:underline text-[#eb5600]"
-                href="https://realms.briq.construction/"
-              >
-                briq
-              </a>{' '}
-            </li>
-            <li>
-              Build your chosen Wonder with briqs <br />
-              <a
-                className="text-lg text-gray-700 hover:underline sm:text-2xl"
-                target={'_blank'}
-                href="https://briqnft.notion.site/Help-center-4a4958337970483dbfc2c1184290b42f"
-                rel="noreferrer"
-              >
-                (how to build guide)
-              </a>{' '}
-            </li>
-            <li>Mint your masterpiece on briq (no fees)</li>
-            <li>
-              Tweet your masterpiece with the following text: <br />{' '}
-              <div className="py-8">
-                "I built the @lootrealms Wonder [NAME] with @briqNFT. We’re
-                trailblazing the way to layer 2 #StarkNet @starkwareLTD. View it
-                on @PlayOasisXYZ.”
+                  sign up to hack
+                </Button>
               </div>
-            </li>
-            <li> View your entry on PlayOasis</li>
-          </ol>
-          <hr className="my-10" />
-          <h3 className="my-4">Voting</h3>
-          <ul>
-            <li>
-              Voting will be done via a quadratic snapshot vote by the Realm
-              holders
-            </li>
-            <li>
-              There will be a snapshot per 16 submissions (one from each Order)
-            </li>
-            <li>Voting will be open for 7 days</li>
-          </ul>
-          <h3 className="my-4">Conditions</h3>
-          <ul>
-            <li>Open to everyone</li>
-            <li>Should you need more briqs send a DM to the team</li>
-            <li>Unlimited entries</li>
-            <li>One creator can win more than once with multiple entries</li>
-          </ul>
+            </div>
+          </div>
         </div>
-      </div> */}
 
-        {/* <FaqBlock /> */}
-        <hr className="mt-10" />
-        {/* <FooterBlock /> */}
+        <FaqBlock heading="FAQS" faqs={hackPage} />
       </div>
-    </div>
+    </MainLayout>
   );
 }
 
