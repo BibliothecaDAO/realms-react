@@ -1,11 +1,12 @@
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
-import Image from 'next/image';
+import { OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
+import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RaidResults } from '@/components/tables/RaidResults';
 import { Squad } from '@/constants/index';
 import { TroopSlot } from '@/constants/troops';
 import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
+import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
 import RealmSelector from '@/shared/RealmSelector';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 
@@ -13,8 +14,9 @@ type Prop = {
   realm?: GetRealmQuery['realm'];
 };
 
-export const RaidingSideBar: React.FC<Prop> = (props) => {
+export const CombatSideBar: React.FC<Prop> = (props) => {
   const realm = props.realm;
+  const myRealms = useMySettledRealms({ pageSize: 200 });
 
   const [selectedRealms, setSelectedRealms] = useState<
     GetRealmsQuery['realms']
@@ -49,17 +51,8 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
     <div>
       {(!txSubmitted || combatError) && (
         <div>
-          <Image
-            className="w-full rounded"
-            width={500}
-            objectFit={'cover'}
-            layout="responsive"
-            height={250}
-            src="/siege-tablet.png"
-          />
           <div className="flex justify-between mt-4">
             <div className="w-1/2 ">
-              <h4 className="mb-4 opacity-60">Defender</h4>
               <div className="p-2">
                 <h2>
                   <OrderIcon
@@ -72,43 +65,14 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
                 </h2>
               </div>
             </div>
-            <div className="w-1/2 bg-black rounded">
-              <h4 className="mb-4 opacity-60">Attacker</h4>
-              <div className="p-2">
-                <h2>
-                  {attackingRealm && (
-                    <OrderIcon
-                      containerClassName="inline-block mr-4"
-                      withTooltip
-                      size="md"
-                      order={attackingRealm?.orderType}
-                    />
-                  )}{' '}
-                  {attackingRealm?.name}
-                </h2>
-              </div>
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
             <SquadStatistics
               slot={TroopSlot.defending}
               troops={realm?.troops || []}
             />
-            {attackingRealm ? (
-              <SquadStatistics
-                className="pl-4"
-                reversed
-                troops={attackingRealm?.troops || []}
-                slot={TroopSlot.attacking}
-              />
-            ) : (
-              <div className="flex items-center justify-center">
-                Select <br />
-                Realm
-              </div>
-            )}
           </div>
-          <RealmSelector onSelect={(r) => setSelectedRealms(r)} />
+          {/* <RealmSelector onSelect={(r) => setSelectedRealms(r)} /> 
           <Button
             onClick={() => {
               initiateCombat({
@@ -124,7 +88,10 @@ export const RaidingSideBar: React.FC<Prop> = (props) => {
             className="w-full mt-2 border-4 border-yellow-600 border-double"
           >
             pillage {realm?.name}
-          </Button>
+          </Button> */}
+          <h2 className="mt-4">Armies at this Realm</h2>
+          <h2 className="mt-4">Armies elsewhere</h2>
+
           <p className="mt-3 text-red-400">{combatError}</p>
           {!raidButtonEnabled && attackingRealm && (
             <div className="p-2 my-2 font-semibold text-orange-800 bg-red-200 rounded">

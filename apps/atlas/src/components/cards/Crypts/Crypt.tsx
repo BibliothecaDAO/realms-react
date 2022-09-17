@@ -2,14 +2,14 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 
-import { useAtlasContext } from '@/context/AtlasContext';
-import { useEnsResolver } from '@/hooks/useEnsResolver';
-import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import {
   isLegendary,
   legendaryColourClass,
   findEnvironment,
-} from '@/util/cryptsEnvironments';
+} from '@/constants/cryptsEnvironments';
+import { useAtlasContext } from '@/context/AtlasContext';
+import { useEnsResolver } from '@/hooks/useEnsResolver';
+import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import type { CryptProps } from '../../../types';
 const variantMaps: any = {
   small: { heading: 'lg:text-2xl', regions: 'lg:text-xl' },

@@ -7,9 +7,9 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
+import { findResourceById } from '@/constants/resources';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
 
 interface RealmCombatHistoryProps {
   realmId: number;
@@ -33,7 +33,7 @@ export function RealmCombatHistory({
     return (
       <div className="my-4">
         {resources.map((resource, index) => {
-          const info = findResourceName(resource.resourceId);
+          const info = findResourceById(resource.resourceId);
           return (
             <div className="flex justify-between my-1 " key={index}>
               <div className="flex">

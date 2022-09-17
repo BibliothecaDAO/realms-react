@@ -13,8 +13,12 @@ import { ArrowSmallRightIcon } from '@heroicons/react/20/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { ArmyCard } from '@/components/cards/realms/ArmyCard';
+import { Travel } from '@/components/panels/Realms/details/Travel';
+import { ArmyBuilderSideBar } from '@/components/sidebars/ArmyBuilderSideBar';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
-import { RaidingSideBar } from '@/components/sidebars/RaidingSideBar';
+import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
+
 import { RealmResources } from '@/components/tables/RealmResources';
 import {
   RealmBuildingId,
@@ -26,12 +30,13 @@ import type { Squad } from '@/constants/index';
 import { troopList, TroopSlot } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
-import type { GetRealmQuery } from '@/generated/graphql';
+import type { GetRealmQuery, Army } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombatV2';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   CostBlock,
@@ -43,7 +48,6 @@ import { SquadBuilder } from '@/shared/squad/Squad';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 import type { BuildingDetail, AvailableResources } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
-
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
@@ -61,9 +65,15 @@ interface BuildQuantity {
 const RealmArmyPanel: React.FC<Prop> = (props) => {
   const { build } = useCombat();
   const realm = props.realm;
+  const { userAttackingArmies } = useUsersRealms();
 
+  const [selectedArmy, setSelectedArmy] = useState<Army>();
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
+
+  const userArmiesAtLocation = userAttackingArmies?.filter(
+    (army) => army.visitingRealmId == realm.realmId
+  );
 
   const { troops, attackGoblins } = useCombat();
   const { checkUserHasResources } = useCosts();
@@ -86,6 +96,9 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   });
 
   const [isRaiding, setIsRaiding] = useState(false);
+  const [isArmyBuilding, setIsArmyBuilding] = useState(false);
+  const [isTravel, setIsTravel] = useState(false);
+
   const txQueue = useTransactionQueue();
   const isOwner = useIsOwner(realm?.settledOwner);
 
@@ -202,7 +215,11 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           {!isOwner && (
             <div className="w-full mt-3">
               <Button
-                onClick={() => setIsRaiding(true)}
+                onClick={() => {
+                  userArmiesAtLocation && userArmiesAtLocation.length
+                    ? setIsRaiding(true)
+                    : setIsTravel(true);
+                }}
                 size="lg"
                 className="w-full"
                 disabled={!vaultCountdown.expired}
@@ -364,43 +381,44 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         >
           <div className="flex justify-between w-full">
             <CardTitle>
-              Your Armies{/* {realm.name} {squadSlot}ing Arm */}
+              {isOwner ? 'Your' : 'Realm'} Armies
+              {/* {realm.name} {squadSlot}ing Arm */}
             </CardTitle>
           </div>
           <div className="grid grid-cols-3 gap-4">
             {realm.ownArmies.map((army) => {
               return (
-                <div
+                <ArmyCard
+                  onBuildArmy={() => {
+                    setSelectedArmy(army);
+                    setIsArmyBuilding(true);
+                  }}
                   key={army.armyId}
-                  className="flex flex-col p-4 border col-1"
-                >
-                  <span className="uppercase">Location: In Transit to X</span>
-                  <span className="text-xl">Statistics</span>
-                  <span className="text-xl uppercase">Army {army.armyId}</span>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button variant="primary">Add</Button>
-                    <Button variant="outline">Travel</Button>
-                  </div>
-                </div>
+                  army={army}
+                />
               );
             })}
           </div>
-          <Button
-            variant="primary"
-            onClick={() => {
-              build(realm?.realmId, 0, [1, 2], [2, 2]);
-            }}
-          >
-            build defence
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
-            }}
-          >
-            add Attacking {realm.ownArmies.length}
-          </Button>
+          {isOwner && (
+            <>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  build(realm?.realmId, 0, [1, 2], [2, 2]);
+                }}
+              >
+                build defence
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
+                }}
+              >
+                add Attacking {realm.ownArmies.length}
+              </Button>
+            </>
+          )}
           {/* <SquadBuilder
             squad={squadSlot}
             realm={realm}
@@ -430,9 +448,29 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           </div> */}
         </Card>
 
-        <AtlasSidebar isOpen={isRaiding}>
-          <SidebarHeader title="Raiding" onClose={() => setIsRaiding(false)} />
-          <RaidingSideBar realm={realm} />
+        <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
+          <SidebarHeader
+            title={'Attacking Realm ' + realm.realmId}
+            onClose={() => setIsRaiding(false)}
+          />
+          <CombatSideBar realm={realm} />
+        </AtlasSidebar>
+        <AtlasSidebar
+          containerClassName="w-full md:w-3/4"
+          isOpen={isArmyBuilding}
+        >
+          <SidebarHeader
+            title={'Army Builder'}
+            onClose={() => setIsArmyBuilding(false)}
+          />
+          <ArmyBuilderSideBar army={selectedArmy} />
+        </AtlasSidebar>
+        <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
+          <SidebarHeader
+            title={'Army Builder'}
+            onClose={() => setIsTravel(false)}
+          />
+          <Travel realm={realm} />
         </AtlasSidebar>
       </div>
     </BaseRealmDetailPanel>

@@ -1,11 +1,11 @@
 import { Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import { useState } from 'react';
+import { environments, findEnvironment } from '@/constants/cryptsEnvironments';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCryptContext } from '@/context/CryptContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
-import { environments, findEnvironment } from '@/util/cryptsEnvironments';
 import { CryptSideBar } from '../sidebars/CryptsSideBar';
 
 interface CryptOverviewsProps {

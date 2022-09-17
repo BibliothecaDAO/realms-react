@@ -8,7 +8,7 @@ export interface Resources {
   img: string;
 }
 
-export const findResourceName = (value: number) => {
+export const findResourceById = (value: number) => {
   return resources.find((e) => e.id === value);
 };
 

@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { resources } from '@/constants/resources';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
@@ -20,7 +21,6 @@ import {
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 import type { ResourceCost, NetworkState } from '@/types/index';
-import { resources } from '@/util/resources';
 
 export type Resource = {
   resourceId: number;

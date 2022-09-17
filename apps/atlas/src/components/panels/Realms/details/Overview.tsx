@@ -1,10 +1,4 @@
-import {
-  OrderIcon,
-  Tabs,
-  ResourceIcon,
-  Button,
-  Menu,
-} from '@bibliotheca-dao/ui-lib';
+import { ResourceIcon, Button, Menu } from '@bibliotheca-dao/ui-lib';
 
 import { Transition } from '@headlessui/react';
 import clsx from 'clsx';
@@ -12,12 +6,12 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React, { useState } from 'react';
 
+import { findResourceById } from '@/constants/resources';
 import { DownloadAssets } from '@/shared/DownloadAssets';
 import { TraitTable, getTrait } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import TerrainLayer from '@/shared/Terrain';
 import type { RealmsCardProps } from '@/types/index';
-import { findResourceName } from '@/util/resources';
 
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
@@ -90,13 +84,13 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           <div key={index} className="z-10 flex mb-4 mr-4 text-xl">
             <ResourceIcon
               resource={
-                findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
+                findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
               }
               size="md"
             />
 
             <span className="self-center ml-4">
-              {findResourceName(re.resourceId)?.trait}
+              {findResourceById(re.resourceId)?.trait}
             </span>
           </div>
         ))}

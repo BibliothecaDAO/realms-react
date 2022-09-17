@@ -127,6 +127,10 @@ const useUsersRealms = () => {
   };
   const { contract } = useResources1155Contract();
 
+  const userAttackingArmies = userRealms?.realms.flatMap(({ ownArmies }) =>
+    ownArmies.length ? ownArmies.filter((army) => army.armyId != 0) : []
+  );
+
   const {
     data: combatData,
     error,
@@ -139,6 +143,7 @@ const useUsersRealms = () => {
 
   return {
     userRealms,
+    userAttackingArmies,
     claimAll,
     userData,
     burnAll: (args: { ids; amounts }) => {

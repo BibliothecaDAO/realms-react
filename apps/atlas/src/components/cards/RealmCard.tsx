@@ -11,7 +11,7 @@ import React, { useMemo } from 'react';
 import {
   RealmHistory,
   RealmOverview,
-  RealmTravel,
+  Travel,
   RealmLore,
 } from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
@@ -40,7 +40,7 @@ export function RealmCard(props: RealmsCardProps): ReactElement {
       },
       {
         label: <Globe className="self-center w-6 h-6 fill-current" />,
-        component: <RealmTravel realm={props.realm} />,
+        component: <Travel realm={props.realm} />,
       },
       {
         label: <Scroll className="self-center w-6 h-6 fill-current" />,

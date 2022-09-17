@@ -2,9 +2,9 @@ import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
+import type { Environment } from '@/constants/cryptsEnvironments';
+import { environments } from '@/constants/cryptsEnvironments';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
-import type { Environment } from '@/util/cryptsEnvironments';
-import { environments } from '@/util/cryptsEnvironments';
 
 type CryptEnvironmentFilterProps = {
   selectedValues: number[];

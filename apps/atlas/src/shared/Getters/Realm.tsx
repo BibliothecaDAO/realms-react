@@ -3,13 +3,13 @@ import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
+import { findResourceById } from '@/constants/resources';
 import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useCosts } from '@/hooks/costs/useCosts';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
 
 interface TraitProps {
   trait: string;
@@ -198,7 +198,7 @@ export const resourcePillaged = (resources: any) => {
     <div className="w-full my-4">
       {resources.length ? (
         resources?.map((resource, index) => {
-          const info = findResourceName(resource.resourceId);
+          const info = findResourceById(resource.resourceId);
           return (
             <div className="flex justify-between my-1 text-xl " key={index}>
               <div className="flex">

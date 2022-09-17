@@ -1,9 +1,9 @@
 import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
+import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { LorePoiFragmentFragment } from '@/generated/graphql';
 import { getRealmQuery, getCryptQuery } from '@/hooks/graphql/queries';
-import { resources } from '../../../util/resources';
 import { theOrders } from '../../../util/theOrders';
 
 const pois = {

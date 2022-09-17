@@ -24,31 +24,7 @@ fragment RealmFragment on Realm {
     type
     qty
   }
-  buildings {
-    buildingId
-    buildingName
-    buildingIntegrity
-    count
-    population
-    culture
-    food
-    limitTraitId
-    limitTraitName
-  }
-  troops {
-    realmId
-    troopId
-    troopName
-    index
-    type
-    tier
-    agility
-    attack
-    armor
-    vitality
-    wisdom
-    squadSlot
-  }
+
   relic {
     realmId
     heldByRealm
@@ -57,34 +33,7 @@ fragment RealmFragment on Realm {
     realmId
     heldByRealm
   }
-  ownArmies {
-    armyId
-    realmId
-    xp
-
-    # // ArmyData
-    armyPacked
-    lastAttacked
-    xp
-    level
-    callSign
-
-    # Battallion stats
-    lightCavalryQty
-    lightCavalryHealth
-    heavyCavalryQty
-    heavyCavalryHealth
-    archerQty
-    archerHealth
-    longbowQty
-    longbowHealth
-    mageQty
-    mageHealth
-    arcanistQty
-    arcanistHealth
-    lightInfantryQty
-    lightInfantryHealth
-    heavyInfantryQty
-    heavyInfantryHealth
-  }
+  ...RealmBuildingsFragment
+  ...RealmTroopsFragment
+  ...RealmArmiesFragment
 }
