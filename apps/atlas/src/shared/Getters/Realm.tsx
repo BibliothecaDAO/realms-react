@@ -8,7 +8,7 @@ import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { BuildingDetail, TroopInterface } from '@/types/index';
+import type { BuildingDetail, ArmyInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
 
 interface TraitProps {
@@ -138,12 +138,12 @@ export const getAccountHex = (account: string) => {
   return ethers.BigNumber.from(account).toHexString();
 };
 
-export const squadStats = (squad: TroopInterface[] | undefined | null) => {
+export const squadStats = (squad: ArmyInterface[] | undefined | null) => {
   if (!squad) {
     return { agility: 0, attack: 0, armor: 0, vitality: 0, wisdom: 0 };
   }
   return {
-    agility: squad
+    /* agility: squad
       .map((troop) => troop.agility)
       .reduce((prev, curr) => prev + curr, 0),
     attack: squad
@@ -157,7 +157,7 @@ export const squadStats = (squad: TroopInterface[] | undefined | null) => {
       .reduce((prev, curr) => prev + curr, 0),
     wisdom: squad
       .map((troop) => troop.wisdom)
-      .reduce((prev, curr) => prev + curr, 0),
+      .reduce((prev, curr) => prev + curr, 0), */
   };
 };
 
@@ -267,7 +267,7 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const CostBlock = ({ resourceName, amount, id, qty }) => {
-  const { checkUserHasResources } = useCosts();
+  const { checkUserHasResources } = useGameConstants();
 
   return (
     <div className="px-1 font-extrabold text-center">

@@ -74,7 +74,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
     (army) => army.visitingRealmId == realm.realmId
   );
 
-  const { troops, attackGoblins } = useCombat();
+  const { attackGoblins } = useCombat();
   const { checkUserHasResources } = useGameConstants();
 
   const timeAttacked = realm?.lastAttacked
@@ -324,7 +324,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                             })}
                         </div>
                       </div>
-                      <div className="flex w-full space-x-3">
+                      {/* <div className="flex w-full space-x-3">
                         {troops
                           ?.filter((b) => b.buildingId === a.id)
                           .map((c, i) => {
@@ -351,7 +351,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                               </div>
                             );
                           })}
-                      </div>
+                        </div> */}
                     </div>
                   );
                 })}
