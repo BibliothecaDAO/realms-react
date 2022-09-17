@@ -81,11 +81,43 @@ function Hack() {
         <div className="container flex flex-wrap p-10 mx-auto sm:p-20">
           <div className="w-full sm:w-2/3">
             <div className="mb-20">
-              <h4 className="mb-8 text-green-200">Choose your adventurer</h4>
-              <ol className="text-3xl list-decimal list-inside sm:text-5xl font-display">
-                <li>Build a game module</li>
-                <li>Build an on-chain experience</li>
-                <li>Build a game tool</li>
+              <h4 className="mb-8 text-green-200">
+                Choose one of these paths in the hack
+              </h4>
+              <ol className="text-3xl leading-10 list-decimal list-inside sm:text-4xl font-display ">
+                <li>
+                  Build a game forked from, or interacting with, the existing
+                  Realms game modules.
+                  <p className="mt-4 text-xl text-gray-400">
+                    There are two Realms games (details of Realms: ETERNUM and
+                    Realms: ADVENTURERS below). You can add a module that calls
+                    these contracts, adding a new game mode. Or you can fork
+                    these contracts and create a new game from them.
+                  </p>
+                </li>
+                <hr />
+                <li>
+                  Create a tool to help gamers play one of the Realms games.
+                  <p className="mt-4 text-xl text-gray-400">
+                    The Realms games are complex and involve deep interaction
+                    with the blockchain. Perhaps you can design and build a
+                    module to reduce friction, increase enjoyability or give
+                    players an edge.
+                  </p>
+                </li>
+                <hr />
+                <li>
+                  Create an on-chain game.{' '}
+                  <p className="mt-4 text-xl text-gray-400">
+                    Any mini-game you want. Perhaps a PVP auto battler? Or an
+                    ephemeral conquest game.
+                  </p>
+                </li>
+                <hr />
+                <li>
+                  Create primitive tools on your choice (anything that be used
+                  anyhow in a game).{' '}
+                </li>
               </ol>
             </div>
 
@@ -134,7 +166,7 @@ function Hack() {
           </div>
           <div className="w-full px-8 sm:w-1/3 sm:px-12">
             <div className="sticky top-32">
-              <h4>Time left to register</h4>
+              <h4>Time left to start</h4>
               <CountdownTimer date={time()} />
               <div className="mt-8">
                 <Button
