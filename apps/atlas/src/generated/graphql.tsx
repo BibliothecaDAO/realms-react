@@ -111,6 +111,18 @@ export type BattalionCost = {
   resources: Scalars['JSON'];
 };
 
+/** BattalionStats */
+export type BattalionStats = {
+  __typename?: 'BattalionStats';
+  battalionId: Scalars['Int'];
+  battalionName: Scalars['String'];
+  combatType: Scalars['String'];
+  requiredBuildingId: Scalars['Int'];
+  requiredBuildingName: Scalars['String'];
+  type: Scalars['String'];
+  value: Scalars['Int'];
+};
+
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
@@ -743,6 +755,7 @@ export type Query = {
   __typename?: 'Query';
   aggregateRealmHistory: AggregateRealmHistory;
   battalionCosts: Array<BattalionCost>;
+  battalionStats: Array<BattalionStats>;
   getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
   getBuildingsByRealmId: Array<Building>;
@@ -1770,22 +1783,14 @@ export type GetGameConstantsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetGameConstantsQuery = {
   __typename?: 'Query';
-  troopStats: Array<{
-    __typename?: 'TroopStats';
-    troopId: number;
-    troopName: string;
-    type: number;
-    tier: number;
-    agility: number;
-    attack: number;
-    armor: number;
-    vitality: number;
-    wisdom: number;
-    troopCost?: {
-      __typename?: 'TroopCost';
-      amount: number;
-      resources: any;
-    } | null;
+  battalionStats: Array<{
+    __typename?: 'BattalionStats';
+    battalionId: number;
+    battalionName: string;
+    type: string;
+    value: number;
+    requiredBuildingId: number;
+    requiredBuildingName: string;
   }>;
   buildingCosts: Array<{
     __typename?: 'BuildingCost';
@@ -2131,6 +2136,123 @@ export type GetRealmsQuery = {
   }>;
 };
 
+export type GetRealmsWithTravelsQueryVariables = Exact<{
+  filter?: InputMaybe<RealmWhereInput>;
+  travelsWhere?: InputMaybe<TravelWhereInput>;
+  orderBy?: InputMaybe<RealmOrderByWithRelationInput>;
+  take?: InputMaybe<Scalars['Float']>;
+  skip?: InputMaybe<Scalars['Float']>;
+}>;
+
+export type GetRealmsWithTravelsQuery = {
+  __typename?: 'Query';
+  total: number;
+  realms: Array<{
+    __typename?: 'Realm';
+    realmId: number;
+    owner?: string | null;
+    bridgedOwner?: string | null;
+    ownerL2?: string | null;
+    settledOwner?: string | null;
+    name?: string | null;
+    rarityRank: number;
+    rarityScore: number;
+    orderType: string;
+    wonder?: string | null;
+    lastAttacked?: any | null;
+    lastClaimTime?: any | null;
+    lastVaultTime?: any | null;
+    longitude: number;
+    latitude: number;
+    resources?: Array<{
+      __typename?: 'Resource';
+      resourceId: number;
+      resourceName: string;
+      level: number;
+      upgrades: Array<string>;
+    }> | null;
+    traits?: Array<{
+      __typename?: 'RealmTrait';
+      type: string;
+      qty: number;
+    }> | null;
+    relic?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    relicsOwned?: Array<{
+      __typename?: 'Relic';
+      realmId?: number | null;
+      heldByRealm?: number | null;
+    }> | null;
+    buildings?: Array<{
+      __typename?: 'Building';
+      buildingId: number;
+      buildingName: string;
+      buildingIntegrity: number;
+      count: number;
+      population: number;
+      culture: number;
+      food: number;
+      limitTraitId: number;
+      limitTraitName: string;
+    }> | null;
+    troops?: Array<{
+      __typename?: 'Troop';
+      realmId: number;
+      troopId: number;
+      troopName: string;
+      index: number;
+      type: number;
+      tier: number;
+      agility: number;
+      attack: number;
+      armor: number;
+      vitality: number;
+      wisdom: number;
+      squadSlot: number;
+    }> | null;
+    ownArmies: Array<{
+      __typename?: 'Army';
+      armyId: number;
+      realmId: number;
+      xp: number;
+      visitingRealmId: number;
+      armyPacked: number;
+      lastAttacked: number;
+      level: number;
+      callSign: number;
+      lightCavalryQty: number;
+      lightCavalryHealth: number;
+      heavyCavalryQty: number;
+      heavyCavalryHealth: number;
+      archerQty: number;
+      archerHealth: number;
+      longbowQty: number;
+      longbowHealth: number;
+      mageQty: number;
+      mageHealth: number;
+      arcanistQty: number;
+      arcanistHealth: number;
+      lightInfantryQty: number;
+      lightInfantryHealth: number;
+      heavyInfantryQty: number;
+      heavyInfantryHealth: number;
+    }>;
+  }>;
+  travels: Array<{
+    __typename?: 'Travel';
+    contractId: number;
+    tokenId: number;
+    nestedId: number;
+    destinationContractId: number;
+    destinationTokenId: number;
+    destinationNestedId: number;
+    arrivalTime: any;
+  }>;
+};
+
 export type GetTroopStatsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTroopStatsQuery = {
@@ -2315,6 +2437,17 @@ export type RealmTroopsFragmentFragment = {
   }> | null;
 };
 
+export type TravelFragmentFragment = {
+  __typename?: 'Travel';
+  contractId: number;
+  tokenId: number;
+  nestedId: number;
+  destinationContractId: number;
+  destinationTokenId: number;
+  destinationNestedId: number;
+  arrivalTime: any;
+};
+
 export type ResourceFragmentFragment = {
   __typename?: 'Resource';
   id: string;
@@ -2478,6 +2611,17 @@ export const RealmFragmentFragmentDoc = gql`
   ${RealmBuildingsFragmentFragmentDoc}
   ${RealmTroopsFragmentFragmentDoc}
   ${RealmArmiesFragmentFragmentDoc}
+`;
+export const TravelFragmentFragmentDoc = gql`
+  fragment TravelFragment on Travel {
+    contractId
+    tokenId
+    nestedId
+    destinationContractId
+    destinationTokenId
+    destinationNestedId
+    arrivalTime
+  }
 `;
 export const ResourceFragmentFragmentDoc = gql`
   fragment ResourceFragment on Resource {
@@ -2865,20 +3009,13 @@ export type GetAccountQueryResult = Apollo.QueryResult<
 >;
 export const GetGameConstantsDocument = gql`
   query getGameConstants @api(name: starkIndexer) {
-    troopStats: getTroopStats {
-      troopId
-      troopName
+    battalionStats: battalionStats {
+      battalionId
+      battalionName
       type
-      tier
-      agility
-      attack
-      armor
-      vitality
-      wisdom
-      troopCost {
-        amount
-        resources
-      }
+      value
+      requiredBuildingId
+      requiredBuildingName
     }
     buildingCosts: getBuildingCosts {
       buildingId
@@ -3427,6 +3564,80 @@ export type GetRealmsLazyQueryHookResult = ReturnType<
 export type GetRealmsQueryResult = Apollo.QueryResult<
   GetRealmsQuery,
   GetRealmsQueryVariables
+>;
+export const GetRealmsWithTravelsDocument = gql`
+  query getRealmsWithTravels(
+    $filter: RealmWhereInput
+    $travelsWhere: TravelWhereInput
+    $orderBy: RealmOrderByWithRelationInput
+    $take: Float
+    $skip: Float
+  ) @api(name: starkIndexer) {
+    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+      ...RealmFragment
+    }
+    travels(where: $travelsWhere) {
+      ...TravelFragment
+    }
+    total: realmsCount(filter: $filter)
+  }
+  ${RealmFragmentFragmentDoc}
+  ${TravelFragmentFragmentDoc}
+`;
+
+/**
+ * __useGetRealmsWithTravelsQuery__
+ *
+ * To run a query within a React component, call `useGetRealmsWithTravelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRealmsWithTravelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRealmsWithTravelsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      travelsWhere: // value for 'travelsWhere'
+ *      orderBy: // value for 'orderBy'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useGetRealmsWithTravelsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >(GetRealmsWithTravelsDocument, options);
+}
+export function useGetRealmsWithTravelsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetRealmsWithTravelsQuery,
+    GetRealmsWithTravelsQueryVariables
+  >(GetRealmsWithTravelsDocument, options);
+}
+export type GetRealmsWithTravelsQueryHookResult = ReturnType<
+  typeof useGetRealmsWithTravelsQuery
+>;
+export type GetRealmsWithTravelsLazyQueryHookResult = ReturnType<
+  typeof useGetRealmsWithTravelsLazyQuery
+>;
+export type GetRealmsWithTravelsQueryResult = Apollo.QueryResult<
+  GetRealmsWithTravelsQuery,
+  GetRealmsWithTravelsQueryVariables
 >;
 export const GetTroopStatsDocument = gql`
   query getTroopStats @api(name: starkIndexer) {

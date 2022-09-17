@@ -23,12 +23,12 @@ import {
 } from '@/constants/buildings';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
-import { useCosts } from '@/hooks/costs/useCosts';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
 import useFood, { createFoodCall } from '@/hooks/settling/useFood';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
@@ -62,7 +62,7 @@ const Harvests: React.FC<Prop> = (props) => {
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
-  const { getBuildingCostById } = useCosts();
+  const { getBuildingCostById } = useGameConstants();
 
   const txQueue = useTransactionQueue();
 

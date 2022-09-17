@@ -17,6 +17,7 @@ import {
   useBuildingContract,
   useFoodContract,
 } from '@/hooks/settling/stark-contracts';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTrait } from '@/shared/Getters/Realm';
 import type {
   RealmsCall,
@@ -25,7 +26,6 @@ import type {
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import { useCosts } from '../costs/useCosts';
 
 type Building = {
   buildings: BuildingDetail[] | undefined;
@@ -62,7 +62,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 const useBuildings = (realm: Realm | undefined): Building => {
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
 
-  const { costs } = useCosts();
+  const { gameConstants } = useGameConstants();
 
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
@@ -84,7 +84,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
   };
 
   useEffect(() => {
-    if (!costs || !realm) {
+    if (!gameConstants || !realm) {
       return;
     }
 
@@ -121,7 +121,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.ArcherTower),
         buildingSize: RealmBuildingsSize.ArcherTower,
         sqmUsage: archerTowers * RealmBuildingsSize.ArcherTower,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.ArcherTower
         )?.resources,
       },
@@ -135,7 +135,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Barracks),
         buildingSize: RealmBuildingsSize.Barracks,
         sqmUsage: barracks * RealmBuildingsSize.Barracks,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.Barracks
         )?.resources,
       },
@@ -149,7 +149,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Castle),
         buildingSize: RealmBuildingsSize.Castle,
         sqmUsage: castles * RealmBuildingsSize.Castle,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.Castle
         )?.resources,
       },
@@ -163,7 +163,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Farm),
         buildingSize: RealmBuildingsSize.Farm,
         sqmUsage: 0 * RealmBuildingsSize.Farm,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.Farm
         )?.resources,
       },
@@ -177,7 +177,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.FishingVillage),
         buildingSize: RealmBuildingsSize.FishingVillage,
         sqmUsage: 0 * RealmBuildingsSize.FishingVillage,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.FishingVillage
         )?.resources,
       },
@@ -191,7 +191,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.House),
         buildingSize: RealmBuildingsSize.House,
         sqmUsage: huts * RealmBuildingsSize.House,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.House
         )?.resources,
       },
@@ -205,7 +205,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.MageTower),
         buildingSize: RealmBuildingsSize.MageTower,
         sqmUsage: mageTowers * RealmBuildingsSize.MageTower,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.MageTower
         )?.resources,
       },
@@ -219,7 +219,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         buildingDecay: pluckBuilding(realm, RealmBuildingId.StoreHouse),
         buildingSize: RealmBuildingsSize.StoreHouse,
         sqmUsage: 0 * RealmBuildingsSize.StoreHouse,
-        cost: costs?.buildingCosts.find(
+        cost: gameConstants?.buildingCosts.find(
           (a) => a.buildingId === RealmBuildingId.StoreHouse
         )?.resources,
       },
@@ -239,7 +239,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     const max = cities * (regions / 2) + 100;
 
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
-  }, [realm, costs]);
+  }, [realm, gameConstants]);
 
   return {
     buildings,

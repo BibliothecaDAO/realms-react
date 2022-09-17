@@ -18,7 +18,7 @@ import React, {
 } from 'react';
 import { RealmOverview } from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { TroopSlot } from '@/constants/troops';
+import { TroopSlot } from '@/constants/army';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';

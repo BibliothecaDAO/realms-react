@@ -2,8 +2,8 @@ import { OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RaidResults } from '@/components/tables/RaidResults';
+import { TroopSlot } from '@/constants/army';
 import { Squad } from '@/constants/index';
-import { TroopSlot } from '@/constants/troops';
 import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
@@ -66,13 +66,13 @@ export const CombatSideBar: React.FC<Prop> = (props) => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
+          {/* <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
             <SquadStatistics
               slot={TroopSlot.defending}
               troops={realm?.troops || []}
             />
           </div>
-          {/* <RealmSelector onSelect={(r) => setSelectedRealms(r)} /> 
+           <RealmSelector onSelect={(r) => setSelectedRealms(r)} /> 
           <Button
             onClick={() => {
               initiateCombat({

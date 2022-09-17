@@ -27,15 +27,14 @@ import {
   buildingIntegrity,
 } from '@/constants/buildings';
 import type { Squad } from '@/constants/index';
-import { troopList, TroopSlot } from '@/constants/troops';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery, Army } from '@/generated/graphql';
-import { useCosts } from '@/hooks/costs/useCosts';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
-import useCombat from '@/hooks/settling/useCombatV2';
+import useCombat from '@/hooks/settling/useCombat';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
@@ -76,7 +75,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   );
 
   const { troops, attackGoblins } = useCombat();
-  const { checkUserHasResources } = useCosts();
+  const { checkUserHasResources } = useGameConstants();
 
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
@@ -467,7 +466,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         </AtlasSidebar>
         <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
           <SidebarHeader
-            title={'Army Builder'}
+            title={'Travel to Realm ' + realm.realmId}
             onClose={() => setIsTravel(false)}
           />
           <Travel realm={realm} />
