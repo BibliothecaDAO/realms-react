@@ -13,16 +13,11 @@ type Battalion = {
   name: string;
   quantity: string;
   health: string;
-  onMouseEnter?: () => void;
 };
 
 export const Battalion: React.FC<Battalion> = (props) => {
   return (
-    <Card
-      onMouseEnter={props.onMouseEnter}
-      key={props.id}
-      className="flex-col "
-    >
+    <Card key={props.id} className="flex-col ">
       <h3 className="uppercase">{props.name}</h3>
       <div>Battlions: {props.quantity}</div>
       <div>Battlion Health: {props.health}</div>
@@ -43,33 +38,26 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       <div className="w-2/3">
         <h2 className="mt-4">Realm {army?.realmId}</h2>
         <h2>Current Army #{army?.armyId}</h2>
-        {/* <div className="grid w-full grid-cols-2 gap-4">
-          {troopList.map((troop, index) => (
-            <Battalion
+
+        <div className="grid w-full grid-cols-4 gap-4">
+          {armyBattalions?.map((battalion, index) => (
+            <div
               onMouseEnter={() =>
                 setActiveBattalion({
-                  id: troop.troopId,
-                  name: troop.name,
+                  id: battalion.battalionId,
+                  name: battalion.battalionName,
                   quantity: '2',
                   health: '100',
                 })
               }
               key={index}
-              id={troop.troopId}
-              name={troop.name}
-              quantity={army ? army[troop.name + 'Qty'] : ''}
-              health={army ? army[troop.name + 'Health'] : ''}
-            /> */}
-        <div className="grid w-full grid-cols-4 gap-4">
-          {armyBattalions?.map((battalion) => (
-            <div key={battalion.battalionId} className="flex-col p-4 border">
-              {battalion.battalionName}
-              {army && (
-                <div>
-                  Qty: {army[battalion.battalionName + 'Qty']}
-                  Health: {army[battalion.battalionName + 'Health']}
-                </div>
-              )}
+            >
+              <Battalion
+                id={battalion.battalionId}
+                name={battalion.battalionName}
+                quantity={army ? army[battalion.battalionName + 'Qty'] : ''}
+                health={army ? army[battalion.battalionName + 'Health'] : ''}
+              />
             </div>
           ))}
         </div>
