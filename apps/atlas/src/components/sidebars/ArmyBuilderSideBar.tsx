@@ -39,7 +39,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         <h2 className="mt-4">Realm {army?.realmId}</h2>
         <h2>Current Army #{army?.armyId}</h2>
 
-        <div className="grid w-full grid-cols-4 gap-4">
+        <div className="grid w-full grid-cols-2 gap-4">
           {armyBattalions?.map((battalion, index) => (
             <div
               onMouseEnter={() =>
