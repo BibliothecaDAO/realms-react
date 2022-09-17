@@ -6,9 +6,9 @@ import { useResourcesContext } from '@/context/ResourcesContext';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';
 
-export const useCosts = () => {
+export const useGameConstants = () => {
   const { balance } = useResourcesContext();
-  const [costs, setCosts] = useState<GetGameConstantsQuery>();
+  const [gameConstants, setGameConstants] = useState<GetGameConstantsQuery>();
 
   const { data } = useGetGameConstantsQuery();
 
@@ -17,11 +17,11 @@ export const useCosts = () => {
       return;
     }
 
-    setCosts(data);
+    setGameConstants(data);
   }, [data]);
 
   const getBuildingCostById = (id) => {
-    return costs?.buildingCosts.find((a) => a.buildingId === id);
+    return gameConstants?.buildingCosts.find((a) => a.buildingId === id);
   };
 
   const checkUserHasResources = ({ cost, id }) => {
@@ -32,7 +32,7 @@ export const useCosts = () => {
   };
 
   return {
-    costs,
+    gameConstants,
     checkUserHasResources,
     getBuildingCostById,
   };

@@ -1,8 +1,7 @@
 import { Card } from '@bibliotheca-dao/ui-lib/base';
 import React, { useState } from 'react';
-import { troopList } from '@/constants/troops';
 import type { Army } from '@/generated/graphql';
-
+import { useArmy } from '@/hooks/settling/useArmy';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
 
 type Prop = {
@@ -37,13 +36,14 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [activeBattalion, setActiveBattalion] = useState<Battalion>(blankB);
 
   const army = props.army;
+  const { armyBattalions } = useArmy();
 
   return (
     <div className="flex space-x-10">
       <div className="w-2/3">
         <h2 className="mt-4">Realm {army?.realmId}</h2>
         <h2>Current Army #{army?.armyId}</h2>
-        <div className="grid w-full grid-cols-2 gap-4">
+        {/* <div className="grid w-full grid-cols-2 gap-4">
           {troopList.map((troop, index) => (
             <Battalion
               onMouseEnter={() =>
@@ -59,7 +59,18 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
               name={troop.name}
               quantity={army ? army[troop.name + 'Qty'] : ''}
               health={army ? army[troop.name + 'Health'] : ''}
-            />
+            /> */}
+        <div className="grid w-full grid-cols-4 gap-4">
+          {armyBattalions?.map((battalion) => (
+            <div key={battalion.battalionId} className="flex-col p-4 border">
+              {battalion.battalionName}
+              {army && (
+                <div>
+                  Qty: {army[battalion.battalionName + 'Qty']}
+                  Health: {army[battalion.battalionName + 'Health']}
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </div>

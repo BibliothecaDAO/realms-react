@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { TroopSlot } from '@/constants/troops';
+import { TroopSlot } from '@/constants/army';
 import { squadStats } from '@/shared/Getters/Realm';
 import type { TroopInterface } from '@/types/index';
 

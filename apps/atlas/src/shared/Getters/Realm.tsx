@@ -6,7 +6,7 @@ import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
 import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useCosts } from '@/hooks/costs/useCosts';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { BuildingDetail, TroopInterface } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';

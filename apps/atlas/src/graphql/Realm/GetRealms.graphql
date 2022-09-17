@@ -10,3 +10,19 @@ query getRealms(
   }
   total: realmsCount(filter: $filter)
 }
+
+query getRealmsWithTravels(
+  $filter: RealmWhereInput
+  $travelsWhere: TravelWhereInput
+  $orderBy: RealmOrderByWithRelationInput
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+    ...RealmFragment
+  }
+  travels(where: $travelsWhere) {
+    ...TravelFragment
+  }
+  total: realmsCount(filter: $filter)
+}

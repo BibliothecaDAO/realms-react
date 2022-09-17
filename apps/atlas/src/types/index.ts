@@ -1,5 +1,5 @@
 import type { Call as StarknetCall } from 'starknet';
-import type { RealmFragmentFragment } from '@/generated/graphql';
+import type { RealmFragmentFragment, Army } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
 
@@ -196,21 +196,17 @@ export type RealmFeatureProperties = {
   resources: string[];
 };
 
-export interface TroopInterface {
-  troopId: number;
+export interface ArmyInterface {
+  battalionId: number;
   index: number;
-  type: number | string;
-  tier: number;
-  agility: number;
+  battalionName: string;
+  battalionCost: any;
+  type: string;
   attack: number;
-  armor: number;
-  vitality: number;
-  wisdom: number;
-  squadSlot: number;
-  troopName?: string;
-  troopCost?: ItemCost | null;
-  troopColour?: string;
-  troopImage?: string;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
   buildingId?: number | undefined;
 }
 
