@@ -9,8 +9,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
-import type { ArmyInterface } from '@/types/index';
+import type { ArmyInterface, BattalionInterface } from '@/types/index';
 
 type Prop = {
   army?: Army;
@@ -24,7 +23,7 @@ type Battalion = {
 const blankB = { battalionId: 1, battalionName: 'sss' };
 
 export const Battalion: React.FC<
-  ArmyInterface & { add: (id) => void; quantity; health }
+  BattalionInterface & { add: (id) => void; quantity; health }
 > = (props) => {
   return (
     <Card key={props.battalionId} className="relative flex-col group">
@@ -92,7 +91,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
 
   const army = props.army;
-  const { armyBattalions } = useArmy();
+  const { battalions, getArmyStats } = useArmy();
 
   return (
     <div className="grid grid-cols-12 gap-6">
@@ -104,7 +103,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         </h4>
 
         <div className="grid w-full grid-cols-2 gap-4">
-          {armyBattalions?.map((battalion, index) => (
+          {battalions?.map((battalion, index) => (
             <div
               onMouseEnter={() =>
                 setActiveBattalion({
@@ -165,8 +164,11 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card>
-      <div className="relative col-span-5 rounded-xl">
-        <RadarMap width={400} height={400} />
+      <div className="col-span-5">
+        <span>
+          Cavalry Attack: {army?.armyId && getArmyStats(army).cavalryAttack}
+        </span>
+        <RadarMap height={400} width={400} />
       </div>
       <div className="col-span-5">
         <Button variant="primary" size="lg">

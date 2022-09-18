@@ -80,7 +80,7 @@ const ResourcesContext = createContext<{
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
-  troopCosts: GetGameConstantsQuery['troopStats'] | undefined;
+  battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
 }>(null!);
 
@@ -106,8 +106,8 @@ function useResources() {
   const [buildingCosts, setBuildingCosts] =
     useState<GetGameConstantsQuery['buildingCosts']>();
 
-  const [troopCosts, setTroopCosts] =
-    useState<GetGameConstantsQuery['troopStats']>();
+  const [battalionCosts, setBattalionCosts] =
+    useState<GetGameConstantsQuery['battalionCosts']>();
 
   const { data: gameConstants } = useGetGameConstantsQuery();
 
@@ -295,7 +295,7 @@ function useResources() {
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
-    setTroopCosts(gameConstants?.troopStats);
+    setBattalionCosts(gameConstants?.battalionCosts);
   }, [
     resourceBalanceData && resourceBalanceData[0],
     lpBalanceData && lpBalanceData[0],
@@ -334,7 +334,7 @@ function useResources() {
     getResourceById,
     lordsBalance,
     buildingCosts,
-    troopCosts,
+    battalionCosts,
     batchAddResources,
   };
 }

@@ -3,16 +3,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { COMBAT_OUTCOME_ATTACKER_WINS } from '@/constants/army';
-import type { GetRealmCombatResultQuery } from '@/generated/graphql';
+import type { GetRealmCombatResultQuery, Army } from '@/generated/graphql';
 import { useGetRealmCombatResultQuery } from '@/generated/graphql';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { resourcePillaged } from '@/shared/Getters/Realm';
-import { Troop } from '@/shared/squad/Troops';
 import type { ArmyInterface } from '@/types/index';
-
-export const CombatTroop = (props: ArmyInterface) => {
-  return <div>{props.vitality}</div>;
-};
 
 export const RaidResults = ({ defendId, tx }) => {
   const { gameConstants } = useGameConstants();
@@ -96,13 +91,13 @@ export const RaidResults = ({ defendId, tx }) => {
                   [{i + 1}] Attacking Realm # {a.realm}
                 </h3>
 
-                <div className="flex justify-around mt-10 space-x-2">
+                {/* <div className="flex justify-around mt-10 space-x-2">
                   <div>
-                    {/* <Troop
+                     <Troop
                       className="w-48 h-64"
                       troopsStats={gameConstants?.troopStats}
                       troop={a.unitAttacking}
-            /> */}
+            /> 
                     <div className="flex flex-wrap w-full mx-auto mt-2">
                       {a.attackSquad.map((b: TroopInterface, i) => {
                         return <TroopIcon key={i} vitality={b.vitality} />;
@@ -116,18 +111,18 @@ export const RaidResults = ({ defendId, tx }) => {
                   </div>
 
                   <div>
-                    {/* <Troop
+                   <Troop
                       className="w-48 h-64"
                       troopsStats={costs?.troopStats}
                       troop={a.unitDefending}
-                    /> */}
+                    /> 
                     <div className="flex flex-wrap w-full mx-auto mt-2">
                       {a.defendSquad.map((b: TroopInterface, i) => {
                         return <TroopIcon key={i} vitality={b.vitality} />;
                       })}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             );
           })}

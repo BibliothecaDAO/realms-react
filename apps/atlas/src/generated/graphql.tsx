@@ -1788,6 +1788,7 @@ export type GetGameConstantsQuery = {
     battalionId: number;
     battalionName: string;
     type: string;
+    combatType: string;
     value: number;
     requiredBuildingId: number;
     requiredBuildingName: string;
@@ -3013,6 +3014,7 @@ export const GetGameConstantsDocument = gql`
       battalionId
       battalionName
       type
+      combatType
       value
       requiredBuildingId
       requiredBuildingName

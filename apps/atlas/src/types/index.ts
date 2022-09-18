@@ -196,20 +196,35 @@ export type RealmFeatureProperties = {
   resources: string[];
 };
 
-export interface ArmyInterface {
-  battalionId: number;
-  index: number;
-  battalionName: string;
-  battalionCost: any;
+export interface BattalionStatistics {
   type: string;
   attack: number;
   cavalryDefence: number;
   archeryDefence: number;
   magicDefence: number;
   infantryDefence: number;
-  buildingId?: number | undefined;
 }
 
+export interface BattalionInterface extends BattalionStatistics {
+  battalionId: number;
+  index: number;
+  battalionName: string;
+  battalionCost: any;
+  buildingId?: number | undefined;
+}
+export interface ArmyStatistics {
+  cavalryAttack: number;
+  archeryAttack: number;
+  magicAttack: number;
+  infantryAttack: number;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+export interface ArmyInterface extends Army {
+  statistics: ArmyStatistics;
+}
 export interface ItemCost {
   amount: number;
   resources: ResourceCost[];

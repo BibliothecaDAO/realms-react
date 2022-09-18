@@ -1,7 +1,7 @@
-import type { TroopInterface } from '../types';
+import type { BattalionInterface } from '../types';
 
-export const getCostSums = (squad: TroopInterface[]) => {
-  const troopIds = squad?.map((a: TroopInterface) => {
+export const getCostSums = (battalion: BattalionInterface[]) => {
+  /* const troopIds = squad?.map((a: TroopInterface) => {
     return a?.troopCost;
   });
 
@@ -20,5 +20,6 @@ export const getCostSums = (squad: TroopInterface[]) => {
           amount: curr.amount,
         });
     return acc;
-  }, []);
+  }, []); */
+  return [];
 };

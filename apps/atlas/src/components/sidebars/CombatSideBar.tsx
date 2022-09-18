@@ -8,7 +8,6 @@ import type { GetRealmQuery, GetRealmsQuery } from '@/generated/graphql';
 import useCombat from '@/hooks/settling/useCombat';
 import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
 import RealmSelector from '@/shared/RealmSelector';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
 
 type Prop = {
   realm?: GetRealmQuery['realm'];

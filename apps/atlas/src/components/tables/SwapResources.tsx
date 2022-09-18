@@ -289,15 +289,15 @@ export function SwapResources(): ReactElement {
             );
           })}
         <h5 className="mt-2">quick add troop cost</h5>
-        {gameConstants?.battalionStats?.map((a, i) => {
+        {gameConstants?.battalionCosts?.map((a, i) => {
           return (
             <Button
               key={i}
-              onClick={() => batchAddResources(a.troopCost?.resources)}
+              onClick={() => batchAddResources(a.resources)}
               size="xs"
               variant="outline"
             >
-              {a.troopName}
+              {a.battalionName}
             </Button>
           );
         })}

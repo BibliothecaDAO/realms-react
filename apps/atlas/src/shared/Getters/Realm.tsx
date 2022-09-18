@@ -8,7 +8,7 @@ import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { BuildingDetail, ArmyInterface } from '@/types/index';
+import type { BuildingDetail } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
 
 interface TraitProps {
@@ -138,7 +138,7 @@ export const getAccountHex = (account: string) => {
   return ethers.BigNumber.from(account).toHexString();
 };
 
-export const squadStats = (squad: ArmyInterface[] | undefined | null) => {
+export const squadStats = (squad: any) => {
   if (!squad) {
     return { agility: 0, attack: 0, armor: 0, vitality: 0, wisdom: 0 };
   }

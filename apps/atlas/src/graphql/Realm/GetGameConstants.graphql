@@ -3,6 +3,7 @@ query getGameConstants @api(name: starkIndexer) {
     battalionId
     battalionName
     type
+    combatType
     value
     requiredBuildingId
     requiredBuildingName

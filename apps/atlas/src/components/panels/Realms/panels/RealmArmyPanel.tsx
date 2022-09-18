@@ -43,8 +43,6 @@ import {
   RealmCombatStatus,
 } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
-import { SquadBuilder } from '@/shared/squad/Squad';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
 import type { BuildingDetail, AvailableResources } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 type Prop = {

@@ -30,7 +30,6 @@ import {
   RealmStatus,
   trimmedOrder,
 } from '@/shared/Getters/Realm';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
 import { shortenAddressWidth } from '@/util/formatters';
 interface RealmOverviewsProps {
   realm: RealmFragmentFragment;
@@ -104,19 +103,19 @@ export const RealmListCardView = forwardRef<any, RealmOverviewsProps>(
             <div>
               <h3 className="mb-1">Defending Army</h3>
               <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
-                <SquadStatistics
+                {/* <SquadStatistics
                   className="pl-4"
                   troops={props.realm.troops || []}
                   slot={TroopSlot.defending}
-                />
+                /> */}
               </div>
               <h3 className="mt-4 mb-1">Attacking Army</h3>
               <div className="self-center w-full font-semibold tracking-widest uppercase opacity-80">
-                <SquadStatistics
+                {/* <SquadStatistics
                   className="pl-4"
                   troops={props.realm.troops || []}
                   slot={TroopSlot.attacking}
-                />
+                /> */}
               </div>
             </div>
           ),
