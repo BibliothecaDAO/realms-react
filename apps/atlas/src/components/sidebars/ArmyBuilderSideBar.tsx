@@ -13,7 +13,6 @@ import { battalionInformation } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
-import SquadStatistics from '@/shared/squad/SquadStatistics';
 import type { ArmyInterface, BattalionInterface } from '@/types/index';
 
 type Prop = {
@@ -26,7 +25,7 @@ type Battalion = {
   battalionQty: number;
 };
 
-const blankB = { battalionId: 1, battalionName: 'sss' };
+const MAX_BATTALIONS = 23;
 
 export const Battalion: React.FC<
   BattalionInterface & { add: (id) => void; quantity; health }
@@ -39,8 +38,8 @@ export const Battalion: React.FC<
       key={props.battalionId}
       className={`relative flex-col group ${data?.color}`}
     >
-      <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-3xl opacity-90 group-hover:visible">
-        <div className="flex self-center">
+      <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-2xl opacity-90 group-hover:visible">
+        <div className="flex self-center space-x-3">
           <Button
             onClick={() =>
               props.add({
@@ -61,19 +60,25 @@ export const Battalion: React.FC<
             colorScheme="transparent"
             className="self-center w-12 h-full bg-white border rounded border-white/40"
             min={1}
-            max={23}
+            max={MAX_BATTALIONS}
             stringMode // to support high precision decimals
             onChange={(value: any) => setInput(value)}
           />{' '}
         </div>
       </div>
-      <CardTitle>{props.battalionName}</CardTitle>
+      <CardTitle className="flex justify-center text-center">
+        {props.battalionName}
+      </CardTitle>
       <CardBody>
-        <div>Battlions: {props.quantity}</div>
-        <div>Battlion Health: {props.health}</div>
-        <div>
-          <h5>Strong vs {data?.strength}</h5>
-          <h5>Weak vs {data?.weakness}</h5>
+        <div className="flex justify-center space-x-3 text-center">
+          <div className="px-4 border-r">
+            <h5 className="">qty</h5>
+            <h1>{props.quantity}</h1>
+          </div>
+          <div className="pr-4">
+            <h5 className="">health</h5>
+            <h1>{props.health}</h1>
+          </div>
         </div>
       </CardBody>
     </Card>
@@ -99,15 +104,30 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     ]);
   };
 
+  const armyStats = getArmyStats(props.army);
+
+  // TODO hack around mix between camel and sentence case names
+  const nameArray = [
+    'lightCavalry',
+    'heavyCavalry',
+    'archer',
+    'longbow',
+    'mage',
+    'arcanist',
+    'lightInfantry',
+    'heavyInfantry',
+  ];
+
   return (
-    <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-7">
+    <div className="grid grid-cols-12 gap-6 pt-10">
+      <div className="col-span-12">
         <h2>Realm {army?.realmId}</h2>
         <h4>
           Army #{army?.armyId} | Location:{' '}
           {army?.visitingRealmId != 0 ? army?.visitingRealmId : 'Home Realm'}
         </h4>
-
+      </div>
+      <div className="col-span-7">
         <div className="grid w-full grid-cols-2 gap-4">
           {battalions?.map((battalion, index) => (
             <div
@@ -125,17 +145,15 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 add={(value) =>
                   setAddedBattalions((current) => [...current, value])
                 }
-                quantity={army ? army[battalion.battalionName + 'Qty'] : ''}
-                health={army ? army[battalion.battalionName + 'Health'] : ''}
+                quantity={army ? army[nameArray[index] + 'Qty'] : ''}
+                health={army ? army[nameArray[index] + 'Health'] : ''}
               />
             </div>
           ))}
         </div>
       </div>
       <div className="col-span-5">
-        <Card
-          className={`shadow-white shadow-lg ${activeBattalionData?.color}`}
-        >
+        <Card className={`card ${activeBattalionData?.color}`}>
           <Image
             className="rounded-xl "
             src={activeBattalionData?.image ? activeBattalionData.image : ''}
@@ -170,11 +188,8 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card>
-      <div className="col-span-5">
-        <span>
-          Cavalry Attack: {army?.armyId && getArmyStats(army).cavalryAttack}
-        </span>
-        <RadarMap height={400} width={400} />
+      <div className="relative col-span-5">
+        <RadarMap armyOne={armyStats} height={400} width={400} />
       </div>
       <div className="col-span-5">
         <Button

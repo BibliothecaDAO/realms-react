@@ -108,3 +108,12 @@ html {
   font-family: Lords;
   src: url('fontforlordsn.otf');
 }
+
+/* button {
+  border-image-slice: 15 15 15 15 fill;
+border-image-width: 4px;
+border-image-outset:0px 0px 0px 0px;
+border-image-repeat:round round;
+border-image-source:url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/58198e4d-4439-4964-bdbe-c16878ee1702/d2oara-64ae7029-4c08-45b6-8f1d-8bfb367930b5.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU4MTk4ZTRkLTQ0MzktNDk2NC1iZGJlLWMxNjg3OGVlMTcwMlwvZDJvYXJhLTY0YWU3MDI5LTRjMDgtNDViNi04ZjFkLThiZmIzNjc5MzBiNS5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.hvo4XbNCfaARciPOoIXDbgAJ5aey-_stWkiV-lI7ojo");
+border-style:solid;
+} */

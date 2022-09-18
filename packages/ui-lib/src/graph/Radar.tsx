@@ -7,6 +7,17 @@ import { useTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
 import type { ReactNode } from 'react';
 import React, { useCallback } from 'react';
 
+export interface ArmyStatistics {
+  cavalryAttack: number;
+  archeryAttack: number;
+  magicAttack: number;
+  infantryAttack: number;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+
 const orange = '#ff9933';
 export const pumpkin = '#f5810c';
 const silver = '#d9d9d9';
@@ -59,6 +70,8 @@ export type RadarProps = {
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   levels?: number;
+  armyOne?: ArmyStatistics;
+  armyTwo?: ArmyStatistics;
 };
 
 export const RadarMap = ({
@@ -66,19 +79,22 @@ export const RadarMap = ({
   height,
   levels = 3,
   margin = defaultMargin,
+  armyOne,
+  armyTwo,
 }: RadarProps) => {
+  console.log(armyOne);
   const data = [
-    { key: 'Cav', value: 100 },
-    { key: 'Inf', value: 10 },
-    { key: 'Mag', value: 500 },
-    { key: 'Arch', value: 100 },
+    { key: 'Cav D', value: armyOne?.cavalryDefence },
+    { key: 'Inf D', value: armyOne?.infantryDefence },
+    { key: 'Mag D', value: armyOne?.magicDefence },
+    { key: 'Arch D', value: armyOne?.archeryDefence },
   ];
 
   const data2 = [
-    { key: 'Cav', value: 100 },
-    { key: 'Inf', value: 200 },
-    { key: 'Mag', value: 200 },
-    { key: 'Arch', value: 100 },
+    { key: 'Cav A', value: armyOne?.cavalryAttack },
+    { key: 'Inf A', value: armyOne?.infantryAttack },
+    { key: 'Mag A', value: armyOne?.magicAttack },
+    { key: 'Arch A', value: armyOne?.archeryAttack },
   ];
 
   const {
@@ -188,9 +204,9 @@ export const RadarMap = ({
           ))}
           <polygon
             points={polygonPoints2.pointString}
-            fill={orange}
+            fill={'blue'}
             fillOpacity={0.3}
-            stroke={orange}
+            stroke={'blue'}
             strokeWidth={1}
           />
           {polygonPoints2.points.map((point, i) => (
@@ -199,11 +215,11 @@ export const RadarMap = ({
               cx={point.x}
               cy={point.y}
               r={4}
-              fill={pumpkin}
+              fill={'#f1810c'}
               onMouseOver={() => {
                 console.log({ i });
-                console.log({ data: data[i] });
-                handleMouseOver(point, `${data[i].key}: ${data[i].value}`);
+                console.log({ data: data2[i] });
+                handleMouseOver(point, `${data2[i].key}: ${data2[i].value}`);
               }}
               onMouseOut={hideTooltip}
             />

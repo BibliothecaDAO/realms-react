@@ -82,22 +82,27 @@ export const useArmy = () => {
   };
 
   // TODO Dirty - to improve once stabilised
-  const getArmyStats = (army: Army): ArmyStatistics => {
+  const getArmyStats = (army?: Army): ArmyStatistics => {
     return {
-      cavalryAttack:
-        army.lightCavalryQty * (getBattalionStat('LightCavalry')?.attack || 0) +
-        army.heavyCavalryQty * (getBattalionStat('HeavyCavalry')?.attack || 0),
-      archeryAttack:
-        army.archerQty * (getBattalionStat('Archer')?.attack || 0) +
-        army.longbowQty * (getBattalionStat('Longbow')?.attack || 0),
-      magicAttack:
-        army.mageQty * (getBattalionStat('Mage')?.attack || 0) +
-        army.arcanistQty * (getBattalionStat('Arcanist')?.attack || 0),
-      infantryAttack:
-        army.lightInfantryQty *
-          (getBattalionStat('LightInfantry')?.attack || 0) +
-        army.heavyInfantryQty *
-          (getBattalionStat('HeavyInfantry')?.attack || 0),
+      cavalryAttack: army
+        ? army.lightCavalryQty *
+            (getBattalionStat('LightCavalry')?.attack || 0) +
+          army.heavyCavalryQty * (getBattalionStat('HeavyCavalry')?.attack || 0)
+        : 0,
+      archeryAttack: army
+        ? army.archerQty * (getBattalionStat('Archer')?.attack || 0) +
+          army.longbowQty * (getBattalionStat('Longbow')?.attack || 0)
+        : 0,
+      magicAttack: army
+        ? army.mageQty * (getBattalionStat('Mage')?.attack || 0) +
+          army.arcanistQty * (getBattalionStat('Arcanist')?.attack || 0)
+        : 0,
+      infantryAttack: army
+        ? army.lightInfantryQty *
+            (getBattalionStat('LightInfantry')?.attack || 0) +
+          army.heavyInfantryQty *
+            (getBattalionStat('HeavyInfantry')?.attack || 0)
+        : 0,
       cavalryDefence: 0,
       archeryDefence: 0,
       magicDefence: 0,
