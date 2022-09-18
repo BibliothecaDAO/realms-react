@@ -1,20 +1,18 @@
 import { Group } from '@visx/group';
-import type { LetterFrequency } from '@visx/mock-data/lib/mocks/letterFrequency';
-import letterFrequency from '@visx/mock-data/lib/mocks/letterFrequency';
 import { Point } from '@visx/point';
 import { scaleLinear } from '@visx/scale';
 import { Line, LineRadial } from '@visx/shape';
-import React from 'react';
+import { Text } from '@visx/text';
+import { useTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
+import React, { useCallback } from 'react';
 
 const orange = '#ff9933';
 export const pumpkin = '#f5810c';
 const silver = '#d9d9d9';
 export const background = '#FAF7E9';
-
 const degrees = 360;
-const data = letterFrequency.slice(2, 12);
 
-const y = (d: LetterFrequency) => d.frequency;
+const y = (d: { key: string; value: number }) => d.value;
 
 const genAngles = (length: number) =>
   [...new Array(length + 1)].map((_, i) => ({
@@ -39,21 +37,21 @@ function genPolygonPoints<Datum>(
     x: 0,
     y: 0,
   });
-  const pointString: string = new Array(dataArray.length + 1)
+  const pointString: string = new Array(dataArray.length)
     .fill('')
     .reduce((res, _, i) => {
       if (i > dataArray.length) return res;
-      const xVal = scale(getValue(dataArray[i - 1])) * Math.sin(i * step);
-      const yVal = scale(getValue(dataArray[i - 1])) * Math.cos(i * step);
-      points[i - 1] = { x: xVal, y: yVal };
+      const xVal = scale(getValue(dataArray[i])) * Math.sin(i * step);
+      const yVal = scale(getValue(dataArray[i])) * Math.cos(i * step);
+      points[i] = { x: xVal, y: yVal };
       res += `${xVal},${yVal} `;
       return res;
-    });
+    }, []);
 
   return { points, pointString };
 }
 
-const defaultMargin = { top: 40, left: 40, right: 40, bottom: 40 };
+const defaultMargin = { top: 40, left: 80, right: 80, bottom: 80 };
 
 export type RadarProps = {
   width: number;
@@ -62,12 +60,52 @@ export type RadarProps = {
   levels?: number;
 };
 
-export default function RadarMap({
+export const RadarMap = ({
   width,
   height,
-  levels = 5,
+  levels = 3,
   margin = defaultMargin,
-}: RadarProps) {
+}: RadarProps) => {
+  const data = [
+    { key: 'Cav', value: 100 },
+    { key: 'Inf', value: 10 },
+    { key: 'Mag', value: 500 },
+    { key: 'Arch', value: 100 },
+  ];
+
+  const data2 = [
+    { key: 'Cav', value: 100 },
+    { key: 'Inf', value: 200 },
+    { key: 'Mag', value: 200 },
+    { key: 'Arch', value: 100 },
+  ];
+
+  const {
+    tooltipData,
+    tooltipLeft,
+    tooltipTop,
+    tooltipOpen,
+    showTooltip,
+    hideTooltip,
+  } = useTooltip();
+  const handleMouseOver = useCallback(
+    (coords: any, datum: any) => {
+      showTooltip({
+        tooltipLeft: coords.x,
+        tooltipTop: coords.y,
+        tooltipData: datum,
+      });
+    },
+    [showTooltip]
+  );
+
+  const tooltipStyles = {
+    ...defaultStyles,
+    backgroundColor: 'rgba(53,71,125,0.8)',
+    color: 'white',
+    padding: 12,
+  };
+
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
   const radius = Math.min(xMax, yMax) / 2;
@@ -82,53 +120,105 @@ export default function RadarMap({
     domain: [0, Math.max(...data.map(y))],
   });
 
-  const webs = genAngles(data.length);
-  const points = genPoints(data.length, radius);
+  const webs = genAngles(4);
+  const points = genPoints(4, radius);
   const polygonPoints = genPolygonPoints(data, (d) => yScale(d) ?? 0, y);
   const zeroPoint = new Point({ x: 0, y: 0 });
 
+  const polygonPoints2 = genPolygonPoints(data2, (d) => yScale(d) ?? 0, y);
+
   return width < 10 ? null : (
-    <svg width={width} height={height}>
-      <rect fill={background} width={width} height={height} rx={14} />
-      <Group top={height / 2 - margin.top} left={width / 2}>
-        {[...new Array(levels)].map((_, i) => (
-          <LineRadial
-            key={`web-${i}`}
-            data={webs}
-            angle={(d) => radialScale(d.angle) ?? 0}
-            radius={((i + 1) * radius) / levels}
-            fill="none"
-            stroke={silver}
-            strokeWidth={2}
-            strokeOpacity={0.8}
-            strokeLinecap="round"
+    <div>
+      <svg width={width} height={height}>
+        <rect fill={background} width={width} height={height} rx={14} />
+        <Group top={height / 2 - margin.top} left={width / 2}>
+          {[...new Array(levels)].map((_, i) => (
+            <LineRadial
+              key={`web-${i}`}
+              data={webs}
+              angle={(d) => radialScale(d.angle) ?? 0}
+              radius={((i + 1) * radius) / levels}
+              fill="none"
+              stroke={silver}
+              strokeWidth={2}
+              strokeOpacity={0.8}
+              strokeLinecap="round"
+            />
+          ))}
+          {data.map((_, i) => (
+            <>
+              <Line
+                key={`radar-line-${i}`}
+                from={zeroPoint}
+                to={points[i]}
+                stroke={silver}
+              />
+              <Text
+                textAnchor="middle"
+                verticalAnchor="middle"
+                dx={points[i].x}
+                dy={points[i].y}
+              >
+                {data[i].key}
+              </Text>
+            </>
+          ))}
+          <polygon
+            points={polygonPoints.pointString}
+            fill={orange}
+            fillOpacity={0.3}
+            stroke={orange}
+            strokeWidth={1}
           />
-        ))}
-        {[...new Array(data.length)].map((_, i) => (
-          <Line
-            key={`radar-line-${i}`}
-            from={zeroPoint}
-            to={points[i]}
-            stroke={silver}
+          {polygonPoints.points.map((point, i) => (
+            <circle
+              key={`radar-point-${i}`}
+              cx={point.x}
+              cy={point.y}
+              r={4}
+              fill={pumpkin}
+              onMouseOver={() => {
+                console.log({ i });
+                console.log({ data: data[i] });
+                handleMouseOver(point, `${data[i].key}: ${data[i].value}`);
+              }}
+              onMouseOut={hideTooltip}
+            />
+          ))}
+          <polygon
+            points={polygonPoints2.pointString}
+            fill={orange}
+            fillOpacity={0.3}
+            stroke={orange}
+            strokeWidth={1}
           />
-        ))}
-        <polygon
-          points={polygonPoints.pointString}
-          fill={orange}
-          fillOpacity={0.3}
-          stroke={orange}
-          strokeWidth={1}
-        />
-        {polygonPoints.points.map((point, i) => (
-          <circle
-            key={`radar-point-${i}`}
-            cx={point.x}
-            cy={point.y}
-            r={3}
-            fill={pumpkin}
-          />
-        ))}
-      </Group>
-    </svg>
+          {polygonPoints2.points.map((point, i) => (
+            <circle
+              key={`radar-point-${i}`}
+              cx={point.x}
+              cy={point.y}
+              r={4}
+              fill={pumpkin}
+              onMouseOver={() => {
+                console.log({ i });
+                console.log({ data: data[i] });
+                handleMouseOver(point, `${data[i].key}: ${data[i].value}`);
+              }}
+              onMouseOut={hideTooltip}
+            />
+          ))}
+        </Group>
+      </svg>
+      {tooltipOpen && (
+        <Tooltip
+          key={Math.random()}
+          top={tooltipTop ? tooltipTop + height / 2 - margin.top : 0}
+          left={tooltipLeft ? tooltipLeft + width / 2 : 0}
+          style={tooltipStyles}
+        >
+          <strong>{tooltipData}</strong>
+        </Tooltip>
+      )}
+    </div>
   );
-}
+};

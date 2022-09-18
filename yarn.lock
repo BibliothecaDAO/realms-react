@@ -10609,7 +10609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.6":
+"@types/react-dom@npm:*, @types/react-dom@npm:18.0.6":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
   dependencies:
@@ -11126,6 +11126,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@visx/bounds@npm:2.10.0":
+  version: 2.10.0
+  resolution: "@visx/bounds@npm:2.10.0"
+  dependencies:
+    "@types/react": "npm:*"
+    "@types/react-dom": "npm:*"
+    prop-types: "npm:^15.5.10"
+  peerDependencies:
+    react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+    react-dom: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 73fb54232fc696d2920c3de6451e9334c31c716d660e152151616c4c09a1620ba404e75814b57dc87695455d7431f048c0c5e503ee07244a69daddaee18afbe5
+  languageName: node
+  linkType: hard
+
 "@visx/curve@npm:2.1.0":
   version: 2.1.0
   resolution: "@visx/curve@npm:2.1.0"
@@ -11199,6 +11213,38 @@ __metadata:
   peerDependencies:
     react: ^16.3.0-0 || ^17.0.0-0 || ^18.0.0-0
   checksum: f857583daa6f350ad7f1525a46aa899fc139a6e439a74a1a730354cd74b5f8e52b79405279763e1297ccef33f6ab65f250f0fbb9f4629660cec749811f35de51
+  languageName: node
+  linkType: hard
+
+"@visx/text@npm:2.12.2":
+  version: 2.12.2
+  resolution: "@visx/text@npm:2.12.2"
+  dependencies:
+    "@types/lodash": "npm:^4.14.172"
+    "@types/react": "npm:*"
+    classnames: "npm:^2.3.1"
+    lodash: "npm:^4.17.21"
+    prop-types: "npm:^15.7.2"
+    reduce-css-calc: "npm:^1.3.0"
+  peerDependencies:
+    react: ^16.3.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: e5efb50ca3dff6ce8d15a6e8c76f39344c8ca58151997270f29d65227cd531a85d6731ab67db44e32d5bfded6273d337a42bee11dbce14d938def9c59956c17e
+  languageName: node
+  linkType: hard
+
+"@visx/tooltip@npm:2.10.0":
+  version: 2.10.0
+  resolution: "@visx/tooltip@npm:2.10.0"
+  dependencies:
+    "@types/react": "npm:*"
+    "@visx/bounds": "npm:2.10.0"
+    classnames: "npm:^2.3.1"
+    prop-types: "npm:^15.5.10"
+    react-use-measure: "npm:^2.0.4"
+  peerDependencies:
+    react: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+    react-dom: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 660c99686e8b8977449e6a4b6e1e9d73a9bfa882c07dd8d9b2a71f117cffea13a6be9f2a6984e2c8078aaff0df79cc16652e102d23b5f6365e2aa55bd2ec81e3
   languageName: node
   linkType: hard
 
@@ -13131,6 +13177,8 @@ __metadata:
     "@visx/point": "npm:2.6.0"
     "@visx/scale": "npm:2.2.2"
     "@visx/shape": "npm:2.12.2"
+    "@visx/text": "npm:2.12.2"
+    "@visx/tooltip": "npm:2.10.0"
     "@vitejs/plugin-react": "npm:2.0.1"
     "@vitest/ui": "npm:0.23.0"
     "@walletconnect/web3-provider": "npm:^1.8.0"
@@ -13703,6 +13751,13 @@ __metadata:
   version: 2.0.2
   resolution: "bail@npm:2.0.2"
   checksum: 3c30e439b8eee58acf1596ba176b0a2d2e77e1b52df945da20ed13f223e55632eb17ed508539895972e26340343a00f621eb53e72d58066cc26b5ccbc62b7b8f
+  languageName: node
+  linkType: hard
+
+"balanced-match@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "balanced-match@npm:0.4.2"
+  checksum: c69b617985be84fa9f80d903a6c5dd468465ca1c39f4e51b42ed5c79843b8f1c5af1aa3c23ee41aaceec20132f58dec12d5fb09b32b8d71f44b0fb11e3c63e94
   languageName: node
   linkType: hard
 
@@ -24227,6 +24282,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"math-expression-evaluator@npm:^1.2.14":
+  version: 1.4.0
+  resolution: "math-expression-evaluator@npm:1.4.0"
+  checksum: 1b648bf85c9b5fda123a3e98d5fcf2e829a9571ad215e5ca6f5bab2189a1bae743b31e0d1ad832772396589ff589fef90dc602ce0208c898ca6984be3787c985
+  languageName: node
+  linkType: hard
+
 "math.gl@npm:^3.6.2":
   version: 3.6.2
   resolution: "math.gl@npm:3.6.2"
@@ -28595,7 +28657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use-measure@npm:^2.1.1":
+"react-use-measure@npm:^2.0.4, react-use-measure@npm:^2.1.1":
   version: 2.1.1
   resolution: "react-use-measure@npm:2.1.1"
   dependencies:
@@ -28840,10 +28902,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"reduce-css-calc@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "reduce-css-calc@npm:1.3.0"
+  dependencies:
+    balanced-match: "npm:^0.4.2"
+    math-expression-evaluator: "npm:^1.2.14"
+    reduce-function-call: "npm:^1.0.1"
+  checksum: 90f56132412c5ce8121cedbe5f1c23b8ac70f0938eb5302a3d7af4af00e5b657500d513e6149736d91179cfbe877882a05889929b9782389371cc6da58d7f23e
+  languageName: node
+  linkType: hard
+
 "reduce-flatten@npm:^2.0.0":
   version: 2.0.0
   resolution: "reduce-flatten@npm:2.0.0"
   checksum: 3dafea8cb78277df9d12e8fd80c62733eda2aaf5c6f8c538b6982b0d92b290f9a388887588d65bf81abb48223d65f1fcbf8f59706c30b436caa1b639bd6955f1
+  languageName: node
+  linkType: hard
+
+"reduce-function-call@npm:^1.0.1":
+  version: 1.0.3
+  resolution: "reduce-function-call@npm:1.0.3"
+  dependencies:
+    balanced-match: "npm:^1.0.0"
+  checksum: b13275ad988e30d3ec864073ed9d2a7dee6d71895b3facdfd897855cd076f6825da4c438d8ba69108b0b1e75484d0e7802045b053a144a655f9d6833cd13a741
   languageName: node
   linkType: hard
 

@@ -4,7 +4,8 @@ import {
   CardBody,
   CardTitle,
 } from '@bibliotheca-dao/ui-lib/base';
-import RadarMap from '@bibliotheca-dao/ui-lib/graph/Radar';
+import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
@@ -27,7 +28,7 @@ export const Battalion: React.FC<
 > = (props) => {
   return (
     <Card key={props.battalionId} className="relative flex-col group">
-      <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-3xl opacity-90 group-hover:visible">
+      {/* <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-3xl opacity-90 group-hover:visible">
         <Button
           onClick={() =>
             props.add({
@@ -40,15 +41,51 @@ export const Battalion: React.FC<
         >
           add to army +
         </Button>
-      </div>
+      </div> */}
       <CardTitle>{props.battalionName}</CardTitle>
       <CardBody>
         <div>Battlions: {props.quantity}</div>
         <div>Battlion Health: {props.health}</div>
+        <div>
+          <h5>Strong vs Archers</h5>
+        </div>
       </CardBody>
     </Card>
   );
 };
+
+const test = [
+  {
+    taste: 'fruity',
+    chardonay: 82,
+    carmenere: 32,
+    syrah: 117,
+  },
+  {
+    taste: 'bitter',
+    chardonay: 66,
+    carmenere: 43,
+    syrah: 55,
+  },
+  {
+    taste: 'heavy',
+    chardonay: 53,
+    carmenere: 93,
+    syrah: 58,
+  },
+  {
+    taste: 'strong',
+    chardonay: 102,
+    carmenere: 114,
+    syrah: 36,
+  },
+  {
+    taste: 'sunny',
+    chardonay: 100,
+    carmenere: 66,
+    syrah: 83,
+  },
+];
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [activeBattalion, setActiveBattalion] = useState<Battalion>(blankB);
@@ -60,10 +97,10 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   return (
     <div className="grid grid-cols-12 gap-6">
       <div className="col-span-7">
-        <h2 className="mt-4">Realm {army?.realmId}</h2>
+        <h2>Realm {army?.realmId}</h2>
         <h4>
-          Current Army #{army?.armyId} | Location:{' '}
-          {army?.visitingRealmId != 0 ? army?.visitingRealmId : 'Home'}
+          Army #{army?.armyId} | Location:{' '}
+          {army?.visitingRealmId != 0 ? army?.visitingRealmId : 'Home Realm'}
         </h4>
 
         <div className="grid w-full grid-cols-2 gap-4">
@@ -90,8 +127,13 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         </div>
       </div>
       <div className="col-span-5">
-        <h2>Battalion Details</h2>
         <Card className="">
+          <Image
+            className="rounded-xl"
+            src={'/stableai/paladin.jpeg'}
+            width={400}
+            height={400}
+          />
           <CardTitle>{activeBattalion.battalionName}</CardTitle>
           <CardBody>
             <p>
@@ -123,8 +165,8 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card>
-      <div className="col-span-5">
-        <RadarMap height={400} width={400} />
+      <div className="relative col-span-5 rounded-xl">
+        <RadarMap width={400} height={400} />
       </div>
       <div className="col-span-5">
         <Button variant="primary" size="lg">

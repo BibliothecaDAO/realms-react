@@ -161,7 +161,7 @@ export const MenuSideBar = () => {
             className={buttonClasses}
             aria-label="Connect Wallet"
             onClick={connectWallet}
-            icon={<Eth className={iconClasses} />}
+            icon={<Eth className={'w-6 mx-auto sm:w-8'} />}
             size="lg"
           />
           <span className={textClasses}></span>
