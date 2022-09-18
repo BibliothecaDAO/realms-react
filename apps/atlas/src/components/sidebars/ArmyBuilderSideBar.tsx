@@ -7,6 +7,7 @@ import {
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { battalionInformation } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import SquadStatistics from '@/shared/squad/SquadStatistics';
@@ -26,8 +27,12 @@ const blankB = { battalionId: 1, battalionName: 'sss' };
 export const Battalion: React.FC<
   ArmyInterface & { add: (id) => void; quantity; health }
 > = (props) => {
+  const data = battalionInformation.find((a) => a.id === props.battalionId);
   return (
-    <Card key={props.battalionId} className="relative flex-col group">
+    <Card
+      key={props.battalionId}
+      className={`relative flex-col group ${data?.color}`}
+    >
       {/* <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-3xl opacity-90 group-hover:visible">
         <Button
           onClick={() =>
@@ -53,39 +58,6 @@ export const Battalion: React.FC<
     </Card>
   );
 };
-
-const test = [
-  {
-    taste: 'fruity',
-    chardonay: 82,
-    carmenere: 32,
-    syrah: 117,
-  },
-  {
-    taste: 'bitter',
-    chardonay: 66,
-    carmenere: 43,
-    syrah: 55,
-  },
-  {
-    taste: 'heavy',
-    chardonay: 53,
-    carmenere: 93,
-    syrah: 58,
-  },
-  {
-    taste: 'strong',
-    chardonay: 102,
-    carmenere: 114,
-    syrah: 36,
-  },
-  {
-    taste: 'sunny',
-    chardonay: 100,
-    carmenere: 66,
-    syrah: 83,
-  },
-];
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [activeBattalion, setActiveBattalion] = useState<Battalion>(blankB);

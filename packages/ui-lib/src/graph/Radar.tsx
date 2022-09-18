@@ -4,6 +4,7 @@ import { scaleLinear } from '@visx/scale';
 import { Line, LineRadial } from '@visx/shape';
 import { Text } from '@visx/text';
 import { useTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
+import type { ReactNode } from 'react';
 import React, { useCallback } from 'react';
 
 const orange = '#ff9933';
@@ -216,7 +217,7 @@ export const RadarMap = ({
           left={tooltipLeft ? tooltipLeft + width / 2 : 0}
           style={tooltipStyles}
         >
-          <strong>{tooltipData}</strong>
+          <strong>{tooltipData as ReactNode}</strong>
         </Tooltip>
       )}
     </div>
