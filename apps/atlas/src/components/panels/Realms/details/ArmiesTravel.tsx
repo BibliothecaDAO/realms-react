@@ -86,10 +86,10 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
         show armies distance on atlas
       </Button>
       <div className="relative grid grid-cols-2 gap-4 mt-4 overflow-x-auto">
-        {allArmies?.map((army) => {
+        {allArmies?.map((army, index) => {
           return (
             <ArmyCard
-              key={army.armyId}
+              key={index}
               army={army}
               onTravel={() => travel(army.armyId, army.realmId, realm.realmId)}
             />

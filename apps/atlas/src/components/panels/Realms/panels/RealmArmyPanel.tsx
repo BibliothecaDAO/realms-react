@@ -395,8 +395,13 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 />
               );
             })}
+            <Card className="flex justify-center">
+              <Button variant="primary" className="self-center">
+                Muster New Army
+              </Button>{' '}
+            </Card>
           </div>
-          {isOwner && (
+          {/* {isOwner && (
             <>
               <Button
                 variant="primary"
@@ -415,34 +420,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 add Attacking {realm.ownArmies.length}
               </Button>
             </>
-          )}
-          {/* <SquadBuilder
-            squad={squadSlot}
-            realm={realm}
-            withPurchase={true}
-            troops={realmTroops}
-            troopsStats={troopStatsData?.getTroopStats}
-            onClose={() => setIsRaiding(false)}
-            militaryBuildingsBuilt={getMilitaryBuildingsBuilt(props.buildings)}
-          />
-          <div className="flex justify-between">
-            <div className="px-4">
-              <h3>Attacking Army</h3>
-              <SquadStatistics
-                className="pl-4"
-                troops={realmTroops || []}
-                slot={TroopSlot.attacking}
-              />
-            </div>
-            <div className="px-4">
-              <h3>Defending Army</h3>
-              <SquadStatistics
-                className="pl-4"
-                troops={realmTroops || []}
-                slot={TroopSlot.defending}
-              />
-            </div>
-          </div> */}
+          )} */}
         </Card>
 
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>

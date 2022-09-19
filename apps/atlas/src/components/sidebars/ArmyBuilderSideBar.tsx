@@ -87,7 +87,7 @@ export const Battalion: React.FC<
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const { build } = useCombat();
-  const [activeBattalion, setActiveBattalion] = useState<Battalion>();
+  const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
 
   const army = props.army;
@@ -133,9 +133,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
             <div
               onMouseEnter={() =>
                 setActiveBattalion({
-                  battalionId: battalion.battalionId,
-                  battalionName: battalion.battalionName,
-                  battalionQty: 1,
+                  ...battalion,
                 })
               }
               key={index}
@@ -155,16 +153,50 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       <div className="col-span-5">
         <Card className={`card ${activeBattalionData?.color}`}>
           <Image
-            className="rounded-xl "
+            className="rounded-xl"
             src={activeBattalionData?.image ? activeBattalionData.image : ''}
             width={400}
             height={400}
+            objectFit={'cover'}
           />
           <div className="p-3">
-            <h2>{activeBattalion?.battalionName}</h2>
+            <h1>{activeBattalion?.battalionName}</h1>
           </div>
 
-          <CardBody>{activeBattalionData?.description}</CardBody>
+          <CardBody>
+            <div className="text-xl font-lords">
+              <p>
+                Attack:{' '}
+                <span className="text-3xl">{activeBattalion?.attack}</span>{' '}
+              </p>{' '}
+              <p>
+                Cavalry Defence:{' '}
+                <span className="text-3xl">
+                  {activeBattalion?.cavalryDefence}
+                </span>
+              </p>{' '}
+              <p>
+                Archery Defence:{' '}
+                <span className="text-3xl">
+                  {activeBattalion?.archeryDefence}
+                </span>
+              </p>{' '}
+              <p>
+                Magic Defence:{' '}
+                <span className="text-3xl">
+                  {activeBattalion?.magicDefence}
+                </span>
+              </p>{' '}
+              <p>
+                Infantry Defence:{' '}
+                <span className="text-3xl">
+                  {activeBattalion?.infantryDefence}
+                </span>
+              </p>
+            </div>
+
+            <p className="mt-4 text-xl">{activeBattalionData?.description}</p>
+          </CardBody>
         </Card>
       </div>
       <Card className="col-span-7">

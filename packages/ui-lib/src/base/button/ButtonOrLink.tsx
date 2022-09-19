@@ -13,7 +13,7 @@ import { Spinner } from '../spinner';
 
 const STYLES = {
   icon: 'rounded-2xl border-gray-600 text-gray-200 ',
-  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase',
+  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase hover:-translate-y-0.5',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
   disabled: 'disabled:opacity-70 disabled:pointer-events-none',
@@ -46,7 +46,7 @@ const STYLES = {
       'text-red-600 focus-visible:bg-red-100 focus-visible:ring-red-600 active:bg-red-200 hover:bg-red-100',
     link: '!p-0 font-semibold text-green-600 focus-visible:ring-transparent focus:underline hover:underline',
     outline:
-      ' hover:text-stone-200 hover:bg-cta-100 active:bg-gray-200 active:text-gray-900 rounded border border-cta-100/60 hover:shadow-red-800 shadow-lg',
+      ' hover:text-stone-200 hover:bg-red-700 active:bg-gray-200 active:text-gray-900 rounded border border-yellow-700 hover:shadow-red-800 shadow-lg hover:text-yellow-100',
     unstyled: '',
   },
 } as const;
