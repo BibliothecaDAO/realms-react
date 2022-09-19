@@ -209,7 +209,7 @@ export interface BattalionInterface extends BattalionStatistics {
   battalionId: number;
   index: number;
   battalionName: string;
-  battalionCost: any;
+  battalionCost: ResourceCost[];
   buildingId?: number | undefined;
 }
 export interface ArmyStatistics {
@@ -225,6 +225,19 @@ export interface ArmyStatistics {
 export interface ArmyInterface extends Army {
   statistics: ArmyStatistics;
 }
+
+export type ArmyBattalionQty = Pick<
+  Army,
+  | 'heavyCavalryQty'
+  | 'lightCavalryQty'
+  | 'archerQty'
+  | 'longbowQty'
+  | 'mageQty'
+  | 'arcanistQty'
+  | 'lightInfantryQty'
+  | 'heavyInfantryQty'
+>;
+
 export interface ItemCost {
   amount: number;
   resources: ResourceCost[];

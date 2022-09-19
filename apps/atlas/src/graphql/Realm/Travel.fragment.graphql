@@ -5,5 +5,5 @@ fragment TravelFragment on Travel {
   destinationContractId
   destinationTokenId
   destinationNestedId
-  arrivalTime
+  destinationArrivalTime
 }

@@ -69,7 +69,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
 
   const userArmiesAtLocation = userAttackingArmies?.filter(
-    (army) => army.visitingRealmId == realm.realmId
+    (army) => army.destinationRealmId == realm.realmId
   );
 
   const { attackGoblins } = useCombat();

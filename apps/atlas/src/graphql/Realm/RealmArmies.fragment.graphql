@@ -3,8 +3,8 @@ fragment RealmArmiesFragment on Realm {
     armyId
     realmId
     xp
-    visitingRealmId
-
+    destinationRealmId
+    destinationArrivalTime
     # // ArmyData
     armyPacked
     lastAttacked

@@ -42,6 +42,9 @@ export type Army = {
   armyId: Scalars['Int'];
   armyPacked: Scalars['Int'];
   callSign: Scalars['Int'];
+  destinationArrivalTime?: Maybe<Scalars['Timestamp']>;
+  destinationRealm?: Maybe<Realm>;
+  destinationRealmId: Scalars['Int'];
   heavyCavalryHealth: Scalars['Int'];
   heavyCavalryQty: Scalars['Int'];
   heavyInfantryHealth: Scalars['Int'];
@@ -57,7 +60,6 @@ export type Army = {
   mageHealth: Scalars['Int'];
   mageQty: Scalars['Int'];
   realmId: Scalars['Int'];
-  visitingRealmId: Scalars['Int'];
   xp: Scalars['Int'];
 };
 
@@ -71,6 +73,35 @@ export type ArmyOrderByRelationAggregateInput = {
   _count?: InputMaybe<SortOrder>;
 };
 
+export type ArmyOrderByWithRelationInput = {
+  arcanistHealth?: InputMaybe<SortOrder>;
+  arcanistQty?: InputMaybe<SortOrder>;
+  archerHealth?: InputMaybe<SortOrder>;
+  archerQty?: InputMaybe<SortOrder>;
+  armyId?: InputMaybe<SortOrder>;
+  armyPacked?: InputMaybe<SortOrder>;
+  callSign?: InputMaybe<SortOrder>;
+  destinationArrivalTime?: InputMaybe<SortOrder>;
+  destinationRealmId?: InputMaybe<SortOrder>;
+  heavyCavalryHealth?: InputMaybe<SortOrder>;
+  heavyCavalryQty?: InputMaybe<SortOrder>;
+  heavyInfantryHealth?: InputMaybe<SortOrder>;
+  heavyInfantryQty?: InputMaybe<SortOrder>;
+  lastAttacked?: InputMaybe<SortOrder>;
+  level?: InputMaybe<SortOrder>;
+  lightCavalryHealth?: InputMaybe<SortOrder>;
+  lightCavalryQty?: InputMaybe<SortOrder>;
+  lightInfantryHealth?: InputMaybe<SortOrder>;
+  lightInfantryQty?: InputMaybe<SortOrder>;
+  longbowHealth?: InputMaybe<SortOrder>;
+  longbowQty?: InputMaybe<SortOrder>;
+  mageHealth?: InputMaybe<SortOrder>;
+  mageQty?: InputMaybe<SortOrder>;
+  ownRealm?: InputMaybe<RealmOrderByWithRelationInput>;
+  realmId?: InputMaybe<SortOrder>;
+  xp?: InputMaybe<SortOrder>;
+};
+
 export type ArmyWhereInput = {
   AND?: InputMaybe<Array<ArmyWhereInput>>;
   NOT?: InputMaybe<Array<ArmyWhereInput>>;
@@ -82,6 +113,8 @@ export type ArmyWhereInput = {
   armyId?: InputMaybe<IntFilter>;
   armyPacked?: InputMaybe<IntFilter>;
   callSign?: InputMaybe<IntFilter>;
+  destinationArrivalTime?: InputMaybe<DateTimeNullableFilter>;
+  destinationRealmId?: InputMaybe<IntFilter>;
   heavyCavalryHealth?: InputMaybe<IntFilter>;
   heavyCavalryQty?: InputMaybe<IntFilter>;
   heavyInfantryHealth?: InputMaybe<IntFilter>;
@@ -98,7 +131,6 @@ export type ArmyWhereInput = {
   mageQty?: InputMaybe<IntFilter>;
   ownRealm?: InputMaybe<RealmRelationFilter>;
   realmId?: InputMaybe<IntFilter>;
-  visitingRealmId?: InputMaybe<IntFilter>;
   xp?: InputMaybe<IntFilter>;
 };
 
@@ -754,6 +786,7 @@ export enum OrderType {
 export type Query = {
   __typename?: 'Query';
   aggregateRealmHistory: AggregateRealmHistory;
+  armies: Array<Army>;
   battalionCosts: Array<BattalionCost>;
   battalionStats: Array<BattalionStats>;
   getBuildingCostById: BuildingCost;
@@ -792,6 +825,13 @@ export type QueryAggregateRealmHistoryArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<RealmHistoryWhereInput>;
+};
+
+export type QueryArmiesArgs = {
+  orderBy?: InputMaybe<ArmyOrderByWithRelationInput>;
+  skip?: InputMaybe<Scalars['Float']>;
+  take?: InputMaybe<Scalars['Float']>;
+  where?: InputMaybe<ArmyWhereInput>;
 };
 
 export type QueryGetBuildingsByRealmIdArgs = {
@@ -1460,8 +1500,8 @@ export type StringWithAggregatesFilter = {
 
 export type Travel = {
   __typename?: 'Travel';
-  arrivalTime: Scalars['Timestamp'];
   contractId: Scalars['Int'];
+  destinationArrivalTime: Scalars['Timestamp'];
   destinationContractId: Scalars['Int'];
   destinationNestedId: Scalars['Int'];
   destinationRealm?: Maybe<Realm>;
@@ -1474,8 +1514,8 @@ export type Travel = {
 };
 
 export type TravelOrderByWithRelationInput = {
-  arrivalTime?: InputMaybe<SortOrder>;
   contractId?: InputMaybe<SortOrder>;
+  destinationArrivalTime?: InputMaybe<SortOrder>;
   destinationContractId?: InputMaybe<SortOrder>;
   destinationNestedId?: InputMaybe<SortOrder>;
   destinationTokenId?: InputMaybe<SortOrder>;
@@ -1486,8 +1526,8 @@ export type TravelOrderByWithRelationInput = {
 };
 
 export enum TravelScalarFieldEnum {
-  ArrivalTime = 'arrivalTime',
   ContractId = 'contractId',
+  DestinationArrivalTime = 'destinationArrivalTime',
   DestinationContractId = 'destinationContractId',
   DestinationNestedId = 'destinationNestedId',
   DestinationTokenId = 'destinationTokenId',
@@ -1501,8 +1541,8 @@ export type TravelWhereInput = {
   AND?: InputMaybe<Array<TravelWhereInput>>;
   NOT?: InputMaybe<Array<TravelWhereInput>>;
   OR?: InputMaybe<Array<TravelWhereInput>>;
-  arrivalTime?: InputMaybe<DateTimeFilter>;
   contractId?: InputMaybe<IntFilter>;
+  destinationArrivalTime?: InputMaybe<DateTimeFilter>;
   destinationContractId?: InputMaybe<IntFilter>;
   destinationNestedId?: InputMaybe<IntFilter>;
   destinationTokenId?: InputMaybe<IntFilter>;
@@ -1885,7 +1925,8 @@ export type GetRealmQuery = {
       armyId: number;
       realmId: number;
       xp: number;
-      visitingRealmId: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
       armyPacked: number;
       lastAttacked: number;
       level: number;
@@ -2112,7 +2153,8 @@ export type GetRealmsQuery = {
       armyId: number;
       realmId: number;
       xp: number;
-      visitingRealmId: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
       armyPacked: number;
       lastAttacked: number;
       level: number;
@@ -2219,7 +2261,8 @@ export type GetRealmsWithTravelsQuery = {
       armyId: number;
       realmId: number;
       xp: number;
-      visitingRealmId: number;
+      destinationRealmId: number;
+      destinationArrivalTime?: any | null;
       armyPacked: number;
       lastAttacked: number;
       level: number;
@@ -2250,7 +2293,7 @@ export type GetRealmsWithTravelsQuery = {
     destinationContractId: number;
     destinationTokenId: number;
     destinationNestedId: number;
-    arrivalTime: any;
+    destinationArrivalTime: any;
   }>;
 };
 
@@ -2348,7 +2391,8 @@ export type RealmFragmentFragment = {
     armyId: number;
     realmId: number;
     xp: number;
-    visitingRealmId: number;
+    destinationRealmId: number;
+    destinationArrivalTime?: any | null;
     armyPacked: number;
     lastAttacked: number;
     level: number;
@@ -2379,7 +2423,8 @@ export type RealmArmiesFragmentFragment = {
     armyId: number;
     realmId: number;
     xp: number;
-    visitingRealmId: number;
+    destinationRealmId: number;
+    destinationArrivalTime?: any | null;
     armyPacked: number;
     lastAttacked: number;
     level: number;
@@ -2446,7 +2491,7 @@ export type TravelFragmentFragment = {
   destinationContractId: number;
   destinationTokenId: number;
   destinationNestedId: number;
-  arrivalTime: any;
+  destinationArrivalTime: any;
 };
 
 export type ResourceFragmentFragment = {
@@ -2545,7 +2590,8 @@ export const RealmArmiesFragmentFragmentDoc = gql`
       armyId
       realmId
       xp
-      visitingRealmId
+      destinationRealmId
+      destinationArrivalTime
       armyPacked
       lastAttacked
       xp
@@ -2621,7 +2667,7 @@ export const TravelFragmentFragmentDoc = gql`
     destinationContractId
     destinationTokenId
     destinationNestedId
-    arrivalTime
+    destinationArrivalTime
   }
 `;
 export const ResourceFragmentFragmentDoc = gql`

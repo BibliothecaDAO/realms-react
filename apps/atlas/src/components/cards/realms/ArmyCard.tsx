@@ -13,14 +13,16 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   return (
     <div key={army.armyId} className="flex flex-col p-4 border col-1">
       <span className="uppercase">
-        Location: {army?.visitingRealmId != 0 ? army?.visitingRealmId : 'Home'}
+        Location:{' '}
+        {army?.destinationRealmId != 0 ? army?.destinationRealmId : 'Home'}
       </span>
       <span className="text-xl">Statistics</span>
       <span className="text-xl uppercase">Army {army.armyId}</span>
       <div className="grid grid-cols-2 gap-2">
         <Button
           disabled={
-            army.visitingRealmId != 0 && army.visitingRealmId != army.realmId
+            army.destinationRealmId != 0 &&
+            army.destinationRealmId != army.realmId
           }
           variant="primary"
           onClick={() => props.onBuildArmy && props.onBuildArmy()}
