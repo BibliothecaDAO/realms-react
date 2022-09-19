@@ -17,7 +17,7 @@ import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type {
   ItemCost,
   RealmsCall,
-  RealmsTransactionRenderConfig,
+  ResourceCost,
   BattalionInterface,
   ArmyStatistics,
   ArmyBattalionQty,
@@ -82,19 +82,23 @@ export const useArmy = () => {
     return battalions;
   };
 
-  const getArmyCost = (
-    armyQtys: ArmyBattalionQty
-  ): BattalionInterface[] | void => {
-    /*  const troopIds = squad?.map((a: TroopInterface) => {
-      return a?.troopCost;
+  const getArmyCost = (armyQtys: ArmyBattalionQty): ResourceCost[] => {
+    const info: any = [];
+    Object.keys(armyQtys).forEach((key) => {
+      const correctKey = (key.charAt(0).toUpperCase() + key.slice(1)).slice(
+        0,
+        -3
+      );
+      const battalionStat = getBattalionStat(correctKey)?.battalionCost.map(
+        (cost) => {
+          return { ...cost, amount: cost.amount * armyQtys[key] };
+        }
+      );
+      if (battalionStat) {
+        info.push(...battalionStat.flat());
+      }
     });
-    const resources = troopIds
-      .map((a: any) => {
-        return a.resources;
-      })
-      .flat();
-
-    return resources.reduce((acc, curr) => {
+    return info.reduce((acc, curr) => {
       const index = acc.findIndex(
         (item) => item.resourceId === curr.resourceId
       );
@@ -103,15 +107,10 @@ export const useArmy = () => {
         : acc.push({
             resourceId: curr.resourceId,
             amount: curr.amount,
+            resourceName: curr.resourceName,
           });
       return acc;
-    }, []); */
-
-    return Object.keys(armyQtys).forEach((key) => {
-      const info = getBattalionStat(key.slice(0, -3));
-      console.log(key, armyQtys[key], info);
-      return info;
-    });
+    }, []);
   };
 
   // TODO Dirty - to improve once stabilised

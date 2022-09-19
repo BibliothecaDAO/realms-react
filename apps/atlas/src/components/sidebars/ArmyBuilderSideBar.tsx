@@ -8,13 +8,17 @@ import {
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { battalionInformation } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import { CostBlock } from '@/shared/Getters/Realm';
-import type { ArmyBattalionQty, BattalionInterface } from '@/types/index';
+import type {
+  ArmyBattalionQty,
+  BattalionInterface,
+  ResourceCost,
+} from '@/types/index';
 
 type Prop = {
   army?: Army;
@@ -104,7 +108,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const { build } = useCombat();
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
-
+  const [totalCost, setTotalCost] = useState<ResourceCost[]>();
   const army = props.army;
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
@@ -120,14 +124,14 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   };
 
   const battalionQtys: ArmyBattalionQty = {
-    heavyCavalryQty: 1,
-    lightCavalryQty: 1,
-    archerQty: 1,
-    longbowQty: 1,
-    mageQty: 1,
-    arcanistQty: 1,
-    lightInfantryQty: 1,
-    heavyInfantryQty: 1,
+    heavyCavalryQty: 0,
+    lightCavalryQty: 0,
+    archerQty: 0,
+    longbowQty: 0,
+    mageQty: 0,
+    arcanistQty: 0,
+    lightInfantryQty: 0,
+    heavyInfantryQty: 0,
   };
 
   /* addedBattalions.map((battalion) => {
@@ -135,7 +139,21 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   }); */
 
   const armyStats = getArmyStats(props.army);
-  const totalCost = getArmyCost(battalionQtys);
+
+  useEffect(() => {
+    if (addedBattalions) {
+      const reMapped = {};
+      addedBattalions.forEach((b) => {
+        reMapped[
+          b.battalionName.charAt(0).toLowerCase() +
+            b.battalionName.slice(1) +
+            'Qty'
+        ] = Number(b.battalionQty);
+      });
+      console.log({ ...battalionQtys, ...reMapped });
+      setTotalCost(getArmyCost({ ...battalionQtys, ...reMapped }));
+    }
+  }, [addedBattalions]);
 
   // TODO hack around mix between camel and sentence case names
   const nameArray = [
@@ -149,7 +167,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     'heavyInfantry',
   ];
 
-  console.log(army);
   return (
     <div className="grid grid-cols-12 gap-6 pt-10">
       <div className="col-span-12">
@@ -254,6 +271,22 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           </div>
           <div>
             <p className="text-xl uppercase">Total Cost</p>
+            <div className="flex">
+              {totalCost?.length &&
+                totalCost.map((b, i) => {
+                  if (b.amount != 0) {
+                    return (
+                      <CostBlock
+                        key={i}
+                        resourceName={b.resourceName}
+                        amount={b.amount}
+                        id={b.resourceId}
+                        qty={1}
+                      />
+                    );
+                  }
+                })}
+            </div>
           </div>
         </CardBody>
       </Card>
