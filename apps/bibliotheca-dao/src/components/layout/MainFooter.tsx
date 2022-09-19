@@ -1,5 +1,6 @@
 import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 import { links } from '@/data/Projects';
 
 const footerLinkStyles = ' transition-all duration-300';
@@ -15,6 +16,11 @@ export const MainFooter = () => {
       <div className="my-10 tracking-widest uppercase">
         <h4 className="mb-6">Links</h4>
         <ul>
+          <li className={footerLinkStyles}>
+            <Link className={footerHREFStyles} href={'/hack'}>
+              Hackathon
+            </Link>
+          </li>
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].website}>
               The Atlas

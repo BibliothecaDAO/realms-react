@@ -57,8 +57,9 @@ function Hack() {
           <div className="w-full px-10 pt-40 sm:w-2/3 sm:py-40 sm:pb-20">
             <h4 className="font-semibold ">on-chain gaming Hackathon</h4>
             <h1>
-              Build the next generation <br /> of web3 games with <br /> a
-              $20,000 bounty.
+              Build the next generation <br /> of web3 games with a<br />
+              $10,000 prize + <br />
+              50,000 LORDS bounty
             </h1>
             <p className="mt-8 font-display sm:text-2xl">
               On-chain and eternal.
@@ -127,7 +128,7 @@ function Hack() {
                 variant="dao"
                 size="sm"
               >
-                white paper
+                game white paper
               </Button>
               <Button
                 href="https://scroll.bibliothecadao.xyz/docs/technology/the-stack"
@@ -163,6 +164,20 @@ function Hack() {
                 </div>
               );
             })}
+            <div className="mt-20">
+              <h2 className="mb-8">Prize Fund and bounty</h2>
+              <h4>Hackathon Prizes</h4>
+              <p className="mb-8 text-3xl sm:text-2xl font-display">
+                First place: $5,000 <br />
+                Second place: $3,000
+                <br />
+                Third place: $2,000 <br />
+                The $LORDS Bounty: 50,000 <br />
+                <hr />* $LORDs tokens will be split equally among teams that
+                create a Realms related hackathon entry that scores over 70% in
+                the judging (full detail TBA).
+              </p>
+            </div>
           </div>
           <div className="w-full px-8 sm:w-1/3 sm:px-12">
             <div className="sticky top-32">

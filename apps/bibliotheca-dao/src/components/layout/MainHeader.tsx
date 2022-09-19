@@ -25,6 +25,12 @@ export const MainHeader = () => {
     //   icon: <Discord className="self-center w-6 mr-3 fill-current" />,
     // },
     {
+      title: 'Hack',
+      icon: '',
+      link: '/hack',
+      class: ' hidden sm:block',
+    },
+    {
       title: 'Staking',
       icon: '',
       link: 'https://staking.bibliothecadao.xyz',
@@ -109,6 +115,9 @@ export const MainHeader = () => {
             }
           `}
           >
+            <Link href="/hack">
+              <a className={`hover:text-gray-400`}>Hack</a>
+            </Link>
             <a
               href="https://staking.bibliothecadao.xyz/"
               className={`hover:text-gray-400`}
