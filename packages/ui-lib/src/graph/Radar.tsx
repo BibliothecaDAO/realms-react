@@ -82,19 +82,18 @@ export const RadarMap = ({
   armyOne,
   armyTwo,
 }: RadarProps) => {
-  console.log(armyOne);
   const data = [
-    { key: 'Cav D', value: armyOne?.cavalryDefence },
-    { key: 'Inf D', value: armyOne?.infantryDefence },
-    { key: 'Mag D', value: armyOne?.magicDefence },
-    { key: 'Arch D', value: armyOne?.archeryDefence },
+    { key: 'Cav D', value: armyOne?.cavalryDefence || 0 },
+    { key: 'Inf D', value: armyOne?.infantryDefence || 0 },
+    { key: 'Mag D', value: armyOne?.magicDefence || 0 },
+    { key: 'Arch D', value: armyOne?.archeryDefence || 0 },
   ];
 
   const data2 = [
-    { key: 'Cav A', value: armyOne?.cavalryAttack },
-    { key: 'Inf A', value: armyOne?.infantryAttack },
-    { key: 'Mag A', value: armyOne?.magicAttack },
-    { key: 'Arch A', value: armyOne?.archeryAttack },
+    { key: 'Cav A', value: armyOne?.cavalryAttack || 0 },
+    { key: 'Inf A', value: armyOne?.infantryAttack || 0 },
+    { key: 'Mag A', value: armyOne?.magicAttack || 0 },
+    { key: 'Arch A', value: armyOne?.archeryAttack || 0 },
   ];
 
   const {
@@ -195,8 +194,6 @@ export const RadarMap = ({
               r={4}
               fill={pumpkin}
               onMouseOver={() => {
-                console.log({ i });
-                console.log({ data: data[i] });
                 handleMouseOver(point, `${data[i].key}: ${data[i].value}`);
               }}
               onMouseOut={hideTooltip}
@@ -217,8 +214,6 @@ export const RadarMap = ({
               r={4}
               fill={'#f1810c'}
               onMouseOver={() => {
-                console.log({ i });
-                console.log({ data: data2[i] });
                 handleMouseOver(point, `${data2[i].key}: ${data2[i].value}`);
               }}
               onMouseOut={hideTooltip}

@@ -150,7 +150,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
             'Qty'
         ] = Number(b.battalionQty);
       });
-      console.log({ ...battalionQtys, ...reMapped });
       setTotalCost(getArmyCost({ ...battalionQtys, ...reMapped }));
     }
   }, [addedBattalions]);
