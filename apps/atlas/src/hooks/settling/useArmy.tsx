@@ -20,6 +20,7 @@ import type {
   RealmsTransactionRenderConfig,
   BattalionInterface,
   ArmyStatistics,
+  ArmyBattalionQty,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
@@ -73,12 +74,44 @@ export const useArmy = () => {
     };
   };
 
-  const getBattalionStat = (name) => {
+  const getBattalionStat = (name): BattalionInterface | undefined => {
     return battalions?.find((a) => a.battalionName === name);
   };
 
   const calcArmyDefence = (type) => {
     return battalions;
+  };
+
+  const getArmyCost = (
+    armyQtys: ArmyBattalionQty
+  ): BattalionInterface[] | void => {
+    /*  const troopIds = squad?.map((a: TroopInterface) => {
+      return a?.troopCost;
+    });
+    const resources = troopIds
+      .map((a: any) => {
+        return a.resources;
+      })
+      .flat();
+
+    return resources.reduce((acc, curr) => {
+      const index = acc.findIndex(
+        (item) => item.resourceId === curr.resourceId
+      );
+      index > -1
+        ? (acc[index].amount += curr.amount)
+        : acc.push({
+            resourceId: curr.resourceId,
+            amount: curr.amount,
+          });
+      return acc;
+    }, []); */
+
+    return Object.keys(armyQtys).forEach((key) => {
+      const info = getBattalionStat(key.slice(0, -3));
+      console.log(key, armyQtys[key], info);
+      return info;
+    });
   };
 
   // TODO Dirty - to improve once stabilised
@@ -157,5 +190,6 @@ export const useArmy = () => {
     },
     battalions,
     getArmyStats,
+    getArmyCost,
   };
 };

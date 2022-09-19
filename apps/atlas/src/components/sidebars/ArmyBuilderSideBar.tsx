@@ -13,7 +13,8 @@ import { battalionInformation } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
-import type { ArmyInterface, BattalionInterface } from '@/types/index';
+import { CostBlock } from '@/shared/Getters/Realm';
+import type { ArmyBattalionQty, BattalionInterface } from '@/types/index';
 
 type Prop = {
   army?: Army;
@@ -38,7 +39,21 @@ export const Battalion: React.FC<
       key={props.battalionId}
       className={`relative flex-col group ${data?.color}`}
     >
-      <div className="absolute flex justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-2xl opacity-90 group-hover:visible">
+      <div className="absolute flex flex-col justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-2xl opacity-90 group-hover:visible">
+        <div className="flex self-center py-4">
+          {props.battalionCost &&
+            props.battalionCost.map((b, i) => {
+              return (
+                <CostBlock
+                  key={i}
+                  resourceName={b.resourceName}
+                  amount={b.amount}
+                  id={b.resourceId}
+                  qty={input}
+                />
+              );
+            })}
+        </div>
         <div className="flex self-center space-x-3">
           <Button
             onClick={() =>
@@ -91,7 +106,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
 
   const army = props.army;
-  const { battalions, getArmyStats } = useArmy();
+  const { battalions, getArmyStats, getArmyCost } = useArmy();
 
   const activeBattalionData = battalionInformation.find(
     (a) => a.id === activeBattalion?.battalionId
@@ -104,7 +119,23 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     ]);
   };
 
+  const battalionQtys: ArmyBattalionQty = {
+    heavyCavalryQty: 1,
+    lightCavalryQty: 1,
+    archerQty: 1,
+    longbowQty: 1,
+    mageQty: 1,
+    arcanistQty: 1,
+    lightInfantryQty: 1,
+    heavyInfantryQty: 1,
+  };
+
+  /* addedBattalions.map((battalion) => {
+    return { [battalion.battalionName + 'qty']: battalion.battalionQty };
+  }); */
+
   const armyStats = getArmyStats(props.army);
+  const totalCost = getArmyCost(battalionQtys);
 
   // TODO hack around mix between camel and sentence case names
   const nameArray = [
@@ -118,13 +149,16 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     'heavyInfantry',
   ];
 
+  console.log(army);
   return (
     <div className="grid grid-cols-12 gap-6 pt-10">
       <div className="col-span-12">
         <h2>Realm {army?.realmId}</h2>
         <h4>
           Army #{army?.armyId} | Location:{' '}
-          {army?.visitingRealmId != 0 ? army?.visitingRealmId : 'Home Realm'}
+          {army?.destinationRealmId != 0
+            ? army?.destinationRealmId
+            : 'Home Realm'}
         </h4>
       </div>
       <div className="col-span-7">
@@ -201,7 +235,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       </div>
       <Card className="col-span-7">
         <CardTitle>Adding Battalions to build</CardTitle>
-        <CardBody>
+        <CardBody className="justify-between">
           <div className="grid w-full grid-cols-2 gap-4">
             {addedBattalions?.map((battalion, index) => (
               <Card className="" key={index}>
@@ -217,6 +251,9 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 </Button>
               </Card>
             ))}
+          </div>
+          <div>
+            <p className="text-xl uppercase">Total Cost</p>
           </div>
         </CardBody>
       </Card>
