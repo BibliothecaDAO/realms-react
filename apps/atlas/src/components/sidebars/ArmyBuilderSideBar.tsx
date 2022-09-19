@@ -191,7 +191,23 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
               <Battalion
                 {...battalion}
                 add={(value) =>
-                  setAddedBattalions((current) => [...current, value])
+                  setAddedBattalions((current) => {
+                    if (
+                      current.find((b) => b.battalionId === value.battalionId)
+                    ) {
+                      // eslint-disable-next-line sonarjs/no-ignored-return
+                      return addedBattalions.map((object) => {
+                        if (object.battalionId === value.battalionId) {
+                          return {
+                            ...object,
+                            battalionQty:
+                              Number(object.battalionQty) +
+                              Number(value.battalionQty),
+                          };
+                        } else return object;
+                      });
+                    } else return [...current, value];
+                  })
                 }
                 quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                 health={army ? army[nameArray[index] + 'Health'] : ''}

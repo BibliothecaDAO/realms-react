@@ -24,7 +24,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   } = useAtlasContext();
   const armyStats = getArmyStats(props.army);
 
-  console.log(army);
   return (
     <Card key={army.armyId} className="flex flex-col col-1">
       <div className="text-xl ">
