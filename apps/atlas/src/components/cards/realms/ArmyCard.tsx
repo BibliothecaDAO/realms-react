@@ -3,6 +3,7 @@ import {
   Card,
   CardBody,
   CardTitle,
+  CountdownTimer,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -23,8 +24,12 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   } = useAtlasContext();
   const armyStats = getArmyStats(props.army);
 
+  console.log(army);
   return (
     <Card key={army.armyId} className="flex flex-col col-1">
+      <div className="text-xl ">
+        <CountdownTimer date={army?.destinationArrivalTime} />
+      </div>
       <span className="uppercase">
         Location:{' '}
         {army?.destinationRealmId != 0 ? army?.destinationRealmId : 'Home'}
