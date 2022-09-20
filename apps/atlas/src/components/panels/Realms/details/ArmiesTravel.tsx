@@ -10,6 +10,7 @@ import type {
   GetRealmsQuery,
   RealmFragmentFragment,
 } from '@/generated/graphql';
+import { useArmy } from '@/hooks/settling/useArmy';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import { GetTravelTime } from '@/shared/Getters/Realm';
@@ -21,14 +22,12 @@ type Prop = {
 
 export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const router = useRouter();
-
+  const { findRealmsAttackingArmies } = useArmy();
   const {
     travelContext: { travel, setTravelArcs },
   } = useAtlasContext();
 
-  const allArmies = userRealms?.realms.flatMap(({ ownArmies }) =>
-    ownArmies.length ? ownArmies.filter((army) => army.armyId != 0) : []
-  );
+  const allArmies = findRealmsAttackingArmies(userRealms?.realms);
 
   const travelTable = allArmies?.map((a) => {
     const travel_information = GetTravelTime({

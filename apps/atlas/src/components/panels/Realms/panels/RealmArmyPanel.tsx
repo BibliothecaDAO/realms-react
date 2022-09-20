@@ -432,7 +432,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             title={'Attacking Realm ' + realm.realmId}
             onClose={() => setIsRaiding(false)}
           />
-          <CombatSideBar realm={realm} />
+          <CombatSideBar defendingRealm={realm} />
         </AtlasSidebar>
         <AtlasSidebar
           containerClassName="w-full md:w-10/12"

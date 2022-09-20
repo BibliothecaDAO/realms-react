@@ -13,6 +13,7 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
 import { getAccountHex, RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
+import { useArmy } from './useArmy';
 import { createResourcesCall } from './useResources';
 
 interface UserRealmsDetailedData {
@@ -27,6 +28,7 @@ interface Resource {
 }
 const useUsersRealms = () => {
   const { play } = useUiSounds(soundSelector.claim);
+  const { findRealmsAttackingArmies } = useArmy();
   const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
   const [userData, setUserData] = useState<UserRealmsDetailedData>({
     resourcesClaimable: false,
@@ -127,9 +129,7 @@ const useUsersRealms = () => {
   };
   const { contract } = useResources1155Contract();
 
-  const userAttackingArmies = userRealms?.realms.flatMap(({ ownArmies }) =>
-    ownArmies.length ? ownArmies.filter((army) => army.armyId != 0) : []
-  );
+  const userAttackingArmies = findRealmsAttackingArmies(userRealms?.realms);
 
   const {
     data: combatData,

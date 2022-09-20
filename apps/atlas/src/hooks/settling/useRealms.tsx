@@ -23,13 +23,12 @@ const useRealms = (args: Args) => {
 
   const resolvedPage = args.page ?? page;
 
-  const { data, loading, error } = useGetRealmsWithTravelsQuery({
+  const { data, loading, error } = useGetRealmsQuery({
     variables: {
       filter: args.filter,
       take: args.pageSize,
       orderBy: args.orderBy,
       skip: (resolvedPage - 1) * (args.pageSize || 0),
-      travelsWhere: args.travelsWhere,
     },
     skip: args.skip,
   });

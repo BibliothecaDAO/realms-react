@@ -6,7 +6,7 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type {
   GetGameConstantsQuery,
   BattalionCost,
-  BattalionStats,
+  GetRealmsQuery,
   Army,
 } from '@/generated/graphql';
 import {
@@ -28,6 +28,21 @@ import { useUiSounds, soundSelector } from '../useUiSounds';
 export const Entrypoints = {
   buildArmy: 'build_army_from_battalions',
 };
+
+export interface ArmyAndOrder extends Army {
+  orderType?: string;
+}
+// TODO hack around mix between camel and sentence case names
+export const nameArray = [
+  'lightCavalry',
+  'heavyCavalry',
+  'archer',
+  'longbow',
+  'mage',
+  'arcanist',
+  'lightInfantry',
+  'heavyInfantry',
+];
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
   buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
@@ -76,6 +91,20 @@ export const useArmy = () => {
 
   const getBattalionStat = (name): BattalionInterface | undefined => {
     return battalions?.find((a) => a.battalionName === name);
+  };
+
+  const findRealmsAttackingArmies = (
+    realms?: GetRealmsQuery['realms']
+  ): ArmyAndOrder[] | undefined => {
+    return realms?.flatMap(({ orderType, ownArmies }) =>
+      ownArmies.length
+        ? ownArmies
+            .filter((army) => army.armyId != 0)
+            .map((army) => {
+              return { ...army, orderType };
+            })
+        : []
+    );
   };
 
   const calcArmyDefence = (type) => {
@@ -190,5 +219,6 @@ export const useArmy = () => {
     battalions,
     getArmyStats,
     getArmyCost,
+    findRealmsAttackingArmies,
   };
 };

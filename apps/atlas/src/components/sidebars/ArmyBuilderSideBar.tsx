@@ -11,7 +11,7 @@ import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
-import { useArmy } from '@/hooks/settling/useArmy';
+import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import { CostBlock } from '@/shared/Getters/Realm';
 import type {
@@ -153,18 +153,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       setTotalCost(getArmyCost({ ...battalionQtys, ...reMapped }));
     }
   }, [addedBattalions]);
-
-  // TODO hack around mix between camel and sentence case names
-  const nameArray = [
-    'lightCavalry',
-    'heavyCavalry',
-    'archer',
-    'longbow',
-    'mage',
-    'arcanist',
-    'lightInfantry',
-    'heavyInfantry',
-  ];
 
   return (
     <div className="grid grid-cols-12 gap-6 pt-10">
