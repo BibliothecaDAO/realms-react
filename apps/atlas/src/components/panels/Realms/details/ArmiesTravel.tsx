@@ -1,4 +1,4 @@
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
+import { Button, OrderIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -21,27 +21,30 @@ type Prop = {
 
 export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const router = useRouter();
+
   const {
     travelContext: { travel, setTravelArcs },
   } = useAtlasContext();
+
   const allArmies = userRealms?.realms.flatMap(({ ownArmies }) =>
     ownArmies.length ? ownArmies.filter((army) => army.armyId != 0) : []
   );
 
-  const travelTable = userRealms?.realms.map((a) => {
+  const travelTable = allArmies?.map((a) => {
     const travel_information = GetTravelTime({
       travellerId: realm.realmId,
-      destinationId: a.realmId,
+      destinationId: a.destinationRealmId,
     });
+
     return {
       name: (
         <span className="flex space-x-2 text-lg font-display">
-          <OrderIcon
+          {/* <OrderIcon
             className="mr-2"
             size="sm"
             order={a.orderType.toLowerCase()}
-          />{' '}
-          {a.name}
+          />{' '} */}
+          {a.realmId} | {a.armyId}
         </span>
       ),
       distance: travel_information.distance,
@@ -56,7 +59,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
           variant="outline"
           size="xs"
         >
-          View Realm
+          Armies Realm
         </Button>
       ),
     };
@@ -73,7 +76,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   ];
   const tableOptions = { is_striped: true };
 
-  const ids = allArmies?.map((a) => a.realmId) || [];
+  const ids = allArmies?.map((a) => a.destinationRealmId) || [];
 
   return (
     <div>
@@ -85,12 +88,22 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
       >
         show armies distance on atlas
       </Button>
+      <div className="relative mt-4 overflow-x-auto">
+        {userRealms?.realms && (
+          <Table
+            columns={columns}
+            data={travelTableFiltered}
+            options={tableOptions}
+          />
+        )}
+      </div>
       <div className="relative grid grid-cols-2 gap-4 mt-4 overflow-x-auto">
         {allArmies?.map((army, index) => {
           return (
             <ArmyCard
               key={index}
               army={army}
+              selectedRealm={realm.realmId}
               onTravel={() => travel(army.armyId, army.realmId, realm.realmId)}
             />
           );

@@ -14,6 +14,7 @@ type Prop = {
   army: Army;
   onBuildArmy?: () => void;
   onTravel?: () => void;
+  selectedRealm?: number;
 };
 
 export const ArmyCard: React.FC<Prop> = (props) => {
@@ -29,28 +30,37 @@ export const ArmyCard: React.FC<Prop> = (props) => {
       <div className="text-xl ">
         <CountdownTimer date={army?.destinationArrivalTime} />
       </div>
-      <span className="uppercase">
+      <h5>
         Location:{' '}
         {army?.destinationRealmId != 0 ? army?.destinationRealmId : 'Home'}
-      </span>
-      <CardTitle>
-        {army.realmId} | Army {army.armyId}{' '}
-      </CardTitle>
+      </h5>
+      <h3 className="px-4 text-3xl">
+        {army.realmId} | {army.armyId}{' '}
+      </h3>
+
       <CardBody>
-        {' '}
         <RadarMap armyOne={armyStats} height={200} width={200} />
         <div className="grid grid-cols-2 gap-2 mt-4">
-          <Button
-            disabled={
-              army.destinationRealmId != 0 &&
-              army.destinationRealmId != army.realmId
-            }
-            variant="primary"
-            size="xs"
-            onClick={() => props.onBuildArmy && props.onBuildArmy()}
-          >
-            Recruit
-          </Button>
+          {army.destinationRealmId == 0 &&
+            army.destinationRealmId == army.realmId && (
+              <Button
+                disabled={
+                  army.destinationRealmId != 0 &&
+                  army.destinationRealmId != army.realmId
+                }
+                variant="primary"
+                size="xs"
+                onClick={() => props.onBuildArmy && props.onBuildArmy()}
+              >
+                Recruit
+              </Button>
+            )}
+          {army.destinationRealmId === props.selectedRealm && (
+            <Button variant="primary" size="xs" className="w-full uppercase">
+              muster
+            </Button>
+          )}
+
           <Button
             variant="outline"
             size="xs"
