@@ -73,7 +73,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
               variant="outline"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
-              {event.data?.success ? 'Try again' : 'muster the troops!'}
+              {event.data?.success ? 'Try again' : 'summon the troops!'}
             </Button>
           ),
         };
@@ -101,7 +101,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
               variant="outline"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
-              {event.data?.success ? 'Retaliate' : 'muster the troops!'}
+              {event.data?.success ? 'Retaliate' : 'summon the troops!'}
             </Button>
           ),
         };

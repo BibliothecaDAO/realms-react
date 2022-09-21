@@ -310,7 +310,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           variant="primary"
           size="lg"
         >
-          muster the battalions
+          summon the battalions
         </Button>
       </div>
     </div>

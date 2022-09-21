@@ -401,7 +401,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 variant="primary"
                 className="self-center"
               >
-                Muster New Army
+                Summon New Army
               </Button>{' '}
             </Card>
           </div>

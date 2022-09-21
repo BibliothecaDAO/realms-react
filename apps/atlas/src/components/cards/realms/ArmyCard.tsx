@@ -57,7 +57,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             )}
           {army.destinationRealmId === props.selectedRealm && (
             <Button variant="primary" size="xs" className="w-full uppercase">
-              muster
+              summon
             </Button>
           )}
 
