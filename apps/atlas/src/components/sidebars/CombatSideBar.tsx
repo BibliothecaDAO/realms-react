@@ -28,7 +28,7 @@ export const CombatSideBar: React.FC<Prop> = ({
   defendingRealm,
   attackingArmy,
 }) => {
-  const { userAttackingArmies } = useUsersRealms();
+  const { userData } = useUsersRealms();
   const { battalions, getArmyStats } = useArmy();
 
   const {
@@ -36,27 +36,27 @@ export const CombatSideBar: React.FC<Prop> = ({
   } = useAtlasContext();
 
   const attackingRealmsAtLocation =
-    userAttackingArmies?.filter(
+    userData.attackingArmies?.filter(
       (army) => army.destinationRealmId === defendingRealm?.realmId
     ) || [];
 
+  const firstArmy = attackingRealmsAtLocation[0];
+
   const [selectedArmy, setSelectedArmy] = useState<ArmyAndOrder | undefined>(
-    attackingRealmsAtLocation[0]
+    firstArmy
   );
 
   useEffect(() => {
-    if (attackingArmy) {
-      setSelectedArmy(attackingArmy);
-    } else if (attackingRealmsAtLocation.length) {
-      setSelectedArmy(attackingRealmsAtLocation[0]);
+    if (firstArmy) {
+      setSelectedArmy(firstArmy);
     }
-  }, [attackingArmy, attackingRealmsAtLocation]);
+  }, [firstArmy]);
 
   const defendingRealmArmy = defendingRealm?.ownArmies[0];
   const defendingArmyStats = getArmyStats(defendingRealmArmy);
 
   // Can probably split using reduce function instead
-  const attackingRealmsNotAtLocation = userAttackingArmies?.filter(
+  const attackingRealmsNotAtLocation = userData.attackingArmies?.filter(
     (army) => army.destinationRealmId !== defendingRealm?.realmId
   );
 
@@ -79,7 +79,6 @@ export const CombatSideBar: React.FC<Prop> = ({
     if (combatData) {
       setTxSubmitted(true);
     }
-    console.log(combatData);
   }, [combatData]);
 
   return (
@@ -88,38 +87,39 @@ export const CombatSideBar: React.FC<Prop> = ({
         <div className="grid grid-cols-3">
           <div>
             <h2 className="mt-4">Armies at this Realm</h2>
-            {defendingRealm &&
-              attackingRealmsAtLocation?.map((army, index) => {
-                return (
-                  <>
-                    <OrderIcon
-                      withTooltip
-                      containerClassName="inline-block mr-4"
-                      size="md"
-                      order={army.orderType || ''}
-                    />
-                    <ArmyCard
-                      key={index}
-                      army={army}
-                      selectedRealm={defendingRealm?.realmId}
-                      onTravel={() =>
-                        travel(
-                          army.armyId,
-                          army.realmId,
-                          defendingRealm.realmId
-                        )
-                      }
-                    />
-                  </>
-                );
-              })}
+            <div className="grid grid-cols-2">
+              {defendingRealm &&
+                attackingRealmsAtLocation?.map((army, index) => {
+                  return (
+                    <div key={army.armyId}>
+                      <OrderIcon
+                        withTooltip
+                        containerClassName="inline-block mr-4"
+                        size="md"
+                        order={army.orderType || ''}
+                      />
+                      <ArmyCard
+                        key={index}
+                        army={army}
+                        selectedRealm={defendingRealm?.realmId}
+                        onTravel={() =>
+                          travel(
+                            army.armyId,
+                            army.realmId,
+                            defendingRealm.realmId
+                          )
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </div>
 
             <h2 className="mt-4">Armies elsewhere</h2>
           </div>
           <div className="mx-auto">
             <RadarMap armyOne={defendingArmyStats} height={400} width={400} />
-            same order: {isSameOrder.toString()}
-            army id: {selectedArmy?.armyId}
+
             <Button
               onClick={() => {
                 initiateCombat({
@@ -228,7 +228,10 @@ export const CombatSideBar: React.FC<Prop> = ({
       {txSubmitted && (
         <div>
           {/* <p>Tx Hash: {combatData} </p> */}
-          <RaidResults defendId={defendingRealm?.realmId} tx={combatData} />
+          <RaidResults
+            fromAttackRealmId={selectedArmy?.armyId}
+            tx={combatData}
+          />
         </div>
       )}
     </div>

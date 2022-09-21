@@ -313,9 +313,22 @@ export type EnumRealmTraitTypeFilter = {
   notIn?: InputMaybe<Array<RealmTraitType>>;
 };
 
-/** Exchange Rate */
 export type ExchangeRate = {
   __typename?: 'ExchangeRate';
+  amount: Scalars['String'];
+  buyAmount: Scalars['String'];
+  currencyReserve: Scalars['String'];
+  date: Scalars['String'];
+  hour: Scalars['Int'];
+  lpAmount: Scalars['String'];
+  sellAmount: Scalars['String'];
+  tokenId: Scalars['Int'];
+  tokenReserve: Scalars['String'];
+};
+
+/** Exchange Rate */
+export type ExchangeRate24Hr = {
+  __typename?: 'ExchangeRate24Hr';
   amount: Scalars['String'];
   buyAmount: Scalars['String'];
   currencyReserve: Scalars['String'];
@@ -327,6 +340,55 @@ export type ExchangeRate = {
   tokenId: Scalars['Int'];
   tokenName: Scalars['String'];
   tokenReserve: Scalars['String'];
+};
+
+export type ExchangeRateDateHourTokenIdCompoundUniqueInput = {
+  date: Scalars['String'];
+  hour: Scalars['Int'];
+  tokenId: Scalars['Int'];
+};
+
+export type ExchangeRateOrderByWithRelationInput = {
+  amount?: InputMaybe<SortOrder>;
+  buyAmount?: InputMaybe<SortOrder>;
+  currencyReserve?: InputMaybe<SortOrder>;
+  date?: InputMaybe<SortOrder>;
+  hour?: InputMaybe<SortOrder>;
+  lpAmount?: InputMaybe<SortOrder>;
+  sellAmount?: InputMaybe<SortOrder>;
+  tokenId?: InputMaybe<SortOrder>;
+  tokenReserve?: InputMaybe<SortOrder>;
+};
+
+export enum ExchangeRateScalarFieldEnum {
+  Amount = 'amount',
+  BuyAmount = 'buyAmount',
+  CurrencyReserve = 'currencyReserve',
+  Date = 'date',
+  Hour = 'hour',
+  LpAmount = 'lpAmount',
+  SellAmount = 'sellAmount',
+  TokenId = 'tokenId',
+  TokenReserve = 'tokenReserve',
+}
+
+export type ExchangeRateWhereInput = {
+  AND?: InputMaybe<Array<ExchangeRateWhereInput>>;
+  NOT?: InputMaybe<Array<ExchangeRateWhereInput>>;
+  OR?: InputMaybe<Array<ExchangeRateWhereInput>>;
+  amount?: InputMaybe<StringFilter>;
+  buyAmount?: InputMaybe<StringFilter>;
+  currencyReserve?: InputMaybe<StringFilter>;
+  date?: InputMaybe<StringFilter>;
+  hour?: InputMaybe<IntFilter>;
+  lpAmount?: InputMaybe<StringFilter>;
+  sellAmount?: InputMaybe<StringFilter>;
+  tokenId?: InputMaybe<IntFilter>;
+  tokenReserve?: InputMaybe<StringFilter>;
+};
+
+export type ExchangeRateWhereUniqueInput = {
+  date_hour_tokenId?: InputMaybe<ExchangeRateDateHourTokenIdCompoundUniqueInput>;
 };
 
 export type FloatFilter = {
@@ -789,13 +851,14 @@ export type Query = {
   armies: Array<Army>;
   battalionCosts: Array<BattalionCost>;
   battalionStats: Array<BattalionStats>;
+  exchangeRates: Array<ExchangeRate>;
   getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
   getBuildingsByRealmId: Array<Building>;
   getDesiege: Desiege;
   getDesiegeCurrent: Desiege;
   getDesiegeGames: Array<Desiege>;
-  getExchangeRates: Array<ExchangeRate>;
+  getExchangeRates: Array<ExchangeRate24Hr>;
   getFoodByRealmId: Array<Food>;
   getLoreEntities: Array<LoreEntity>;
   getLoreEntity: LoreEntity;
@@ -832,6 +895,15 @@ export type QueryArmiesArgs = {
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
   where?: InputMaybe<ArmyWhereInput>;
+};
+
+export type QueryExchangeRatesArgs = {
+  cursor?: InputMaybe<ExchangeRateWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ExchangeRateScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ExchangeRateOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ExchangeRateWhereInput>;
 };
 
 export type QueryGetBuildingsByRealmIdArgs = {
@@ -1700,7 +1772,7 @@ export type GetExchangeRatesQueryVariables = Exact<{ [key: string]: never }>;
 export type GetExchangeRatesQuery = {
   __typename?: 'Query';
   getExchangeRates: Array<{
-    __typename?: 'ExchangeRate';
+    __typename?: 'ExchangeRate24Hr';
     tokenId: number;
     tokenName: string;
     amount: string;

@@ -11,12 +11,14 @@ import type {
 } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
+import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { getAccountHex, RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 import { useArmy } from './useArmy';
 import { createResourcesCall } from './useResources';
 
 interface UserRealmsDetailedData {
+  attackingArmies?: ArmyAndOrder[];
   resourcesClaimable: boolean;
   relicsHeld: number;
   resourcesAcrossEmpire: Resource[];
@@ -31,6 +33,7 @@ const useUsersRealms = () => {
   const { findRealmsAttackingArmies } = useArmy();
   const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
   const [userData, setUserData] = useState<UserRealmsDetailedData>({
+    attackingArmies: [],
     resourcesClaimable: false,
     relicsHeld: 0,
     resourcesAcrossEmpire: [],
@@ -106,6 +109,7 @@ const useUsersRealms = () => {
     };
 
     setUserData({
+      attackingArmies: findRealmsAttackingArmies(userRealmsData.realms),
       resourcesClaimable: isClaimable(),
       relicsHeld: relicsHeld(),
       resourcesAcrossEmpire: resourcesAcrossRealms(),
@@ -129,8 +133,6 @@ const useUsersRealms = () => {
   };
   const { contract } = useResources1155Contract();
 
-  const userAttackingArmies = findRealmsAttackingArmies(userRealms?.realms);
-
   const {
     data: combatData,
     error,
@@ -143,7 +145,6 @@ const useUsersRealms = () => {
 
   return {
     userRealms,
-    userAttackingArmies,
     claimAll,
     userData,
     burnAll: (args: { ids; amounts }) => {

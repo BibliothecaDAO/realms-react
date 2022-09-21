@@ -62,13 +62,13 @@ interface BuildQuantity {
 const RealmArmyPanel: React.FC<Prop> = (props) => {
   const { build } = useCombat();
   const realm = props.realm;
-  const { userAttackingArmies } = useUsersRealms();
+  const { userData } = useUsersRealms();
 
   const [selectedArmy, setSelectedArmy] = useState<Army>();
   // Always initialize with defending army
   const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
 
-  const userArmiesAtLocation = userAttackingArmies?.filter(
+  const userArmiesAtLocation = userData.attackingArmies?.filter(
     (army) => army.destinationRealmId == realm.realmId
   );
 
