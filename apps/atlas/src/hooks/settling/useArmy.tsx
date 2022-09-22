@@ -143,7 +143,7 @@ export const useArmy = () => {
   };
 
   // TODO Dirty - to improve once stabilised
-  const getArmyStats = (army?: Army): ArmyStatistics => {
+  const getArmyStats = (army?: Army | ArmyBattalionQty): ArmyStatistics => {
     return {
       cavalryAttack: army
         ? army.lightCavalryQty *

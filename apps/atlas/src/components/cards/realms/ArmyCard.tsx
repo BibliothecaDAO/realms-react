@@ -27,9 +27,11 @@ export const ArmyCard: React.FC<Prop> = (props) => {
 
   return (
     <Card key={army.armyId} className="flex flex-col col-1">
-      <div className="text-xl ">
-        <CountdownTimer date={army?.destinationArrivalTime} />
-      </div>
+      {army?.destinationArrivalTime && (
+        <div className="text-xl ">
+          <CountdownTimer date={army?.destinationArrivalTime} />
+        </div>
+      )}
       <h5>
         Location:{' '}
         {army?.destinationRealmId != 0 ? army?.destinationRealmId : 'Home'}
@@ -41,20 +43,20 @@ export const ArmyCard: React.FC<Prop> = (props) => {
       <CardBody>
         <RadarMap armyOne={armyStats} height={200} width={200} />
         <div className="grid grid-cols-2 gap-2 mt-4">
-          {army.destinationRealmId == 0 &&
-            army.destinationRealmId == army.realmId && (
-              <Button
-                disabled={
-                  army.destinationRealmId != 0 &&
-                  army.destinationRealmId != army.realmId
-                }
-                variant="primary"
-                size="xs"
-                onClick={() => props.onBuildArmy && props.onBuildArmy()}
-              >
-                Recruit
-              </Button>
-            )}
+          {(army.destinationRealmId == 0 ||
+            army.destinationRealmId == army.realmId) && (
+            <Button
+              disabled={
+                army.destinationRealmId != 0 &&
+                army.destinationRealmId != army.realmId
+              }
+              variant="primary"
+              size="xs"
+              onClick={() => props.onBuildArmy && props.onBuildArmy()}
+            >
+              Recruit
+            </Button>
+          )}
           {army.destinationRealmId === props.selectedRealm && (
             <Button variant="primary" size="xs" className="w-full uppercase">
               summon

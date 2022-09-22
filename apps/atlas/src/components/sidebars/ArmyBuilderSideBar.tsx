@@ -9,7 +9,7 @@ import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
-import { battalionInformation } from '@/constants/army';
+import { battalionInformation, defaultArmy } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
@@ -30,7 +30,7 @@ type Battalion = {
   battalionQty: number;
 };
 
-const MAX_BATTALIONS = 23;
+const MAX_BATTALIONS = 30;
 
 export const Battalion: React.FC<
   BattalionInterface & { add: (id) => void; quantity; health }
@@ -109,6 +109,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
   const [totalCost, setTotalCost] = useState<ResourceCost[]>();
+
   const army = props.army;
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
@@ -123,36 +124,65 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     ]);
   };
 
-  const battalionQtys: ArmyBattalionQty = {
-    heavyCavalryQty: 0,
-    lightCavalryQty: 0,
-    archerQty: 0,
-    longbowQty: 0,
-    mageQty: 0,
-    arcanistQty: 0,
-    lightInfantryQty: 0,
-    heavyInfantryQty: 0,
+  const filterArmytoQtys = (army) => {
+    return (
+      army &&
+      (Object.keys(army)
+        .filter((key) => key.includes('Qty'))
+        .reduce((cur, key) => {
+          return Object.assign(cur, { [key]: army[key] });
+        }, {}) as ArmyBattalionQty)
+    );
   };
 
+  const battalionQtys: ArmyBattalionQty = filterArmytoQtys(defaultArmy);
+  const [totalBattalionQty, setTotalBattalionQty] =
+    useState<ArmyBattalionQty>(battalionQtys);
   /* addedBattalions.map((battalion) => {
     return { [battalion.battalionName + 'qty']: battalion.battalionQty };
   }); */
 
+  const mapBattalionsToArmyQtys = (
+    battalions: Battalion[]
+  ): ArmyBattalionQty => {
+    const reMapped = {};
+    battalions.forEach((b) => {
+      reMapped[
+        b.battalionName.charAt(0).toLowerCase() +
+          b.battalionName.slice(1) +
+          'Qty'
+      ] = Number(b.battalionQty);
+    });
+    return { ...battalionQtys, ...reMapped };
+  };
+
   const armyStats = getArmyStats(props.army);
+
+  const sumTotalBattalions = (armyQtys: ArmyBattalionQty) =>
+    Object.values(armyQtys).reduce((a, b) => a + b);
+
+  const summonDisabled = () => {
+    return (
+      sumTotalBattalions(totalBattalionQty) > MAX_BATTALIONS ||
+      !addedBattalions.length
+    );
+  };
 
   useEffect(() => {
     if (addedBattalions) {
-      const reMapped = {};
-      addedBattalions.forEach((b) => {
-        reMapped[
-          b.battalionName.charAt(0).toLowerCase() +
-            b.battalionName.slice(1) +
-            'Qty'
-        ] = Number(b.battalionQty);
-      });
-      setTotalCost(getArmyCost({ ...battalionQtys, ...reMapped }));
+      const mappedBattalions = mapBattalionsToArmyQtys(addedBattalions);
+      setTotalCost(getArmyCost(mappedBattalions));
+      setTotalBattalionQty(
+        Object.entries(mappedBattalions).reduce(
+          (acc, [k, v]) => {
+            acc[k] = (acc[k] || 0) + v;
+            return acc;
+          },
+          { ...filterArmytoQtys(props.army) }
+        )
+      );
     }
-  }, [addedBattalions]);
+  }, [addedBattalions, props.army]);
 
   return (
     <div className="grid grid-cols-12 gap-6 pt-10">
@@ -256,21 +286,28 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       <Card className="col-span-7">
         <CardTitle>Adding Battalions to build</CardTitle>
         <CardBody className="justify-between">
-          <div className="grid w-full grid-cols-2 gap-4">
-            {addedBattalions?.map((battalion, index) => (
-              <Card className="" key={index}>
-                <CardTitle>{battalion.battalionName} </CardTitle>
-                <CardBody>Battalions: {battalion.battalionQty}</CardBody>
+          <div>
+            <div className="text-xl">
+              Battalion Qty:
+              {totalBattalionQty && sumTotalBattalions(totalBattalionQty)} /
+              {MAX_BATTALIONS}
+            </div>
+            <div className="grid w-full grid-cols-2 gap-4">
+              {addedBattalions?.map((battalion, index) => (
+                <Card className="" key={index}>
+                  <CardTitle>{battalion.battalionName} </CardTitle>
+                  <CardBody>Battalions: {battalion.battalionQty}</CardBody>
 
-                <Button
-                  size="xs"
-                  variant="primary"
-                  onClick={() => removeFromArray(index)}
-                >
-                  remove
-                </Button>
-              </Card>
-            ))}
+                  <Button
+                    size="xs"
+                    variant="primary"
+                    onClick={() => removeFromArray(index)}
+                  >
+                    remove
+                  </Button>
+                </Card>
+              ))}
+            </div>
           </div>
           <div>
             <p className="text-xl uppercase">Total Cost</p>
@@ -309,6 +346,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           }}
           variant="primary"
           size="lg"
+          disabled={summonDisabled()}
         >
           summon the battalions
         </Button>
