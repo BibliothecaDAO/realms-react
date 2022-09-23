@@ -140,7 +140,9 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         </div>
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-xs font-semibold tracking-widest text-right uppercase sm:text-sm opacity-80">
-        <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
+        <div className="flex justify-end w-full">
+          1 = {displayRate(props.resource.rate)} <LordsIcon className="w-3" />
+        </div>
       </div>
     </div>
   );
