@@ -120,7 +120,7 @@ export const LorePanel = () => {
     >
       <div className="flex justify-between">
         <div className="w-full p-10 pt-20 bg-black/90">
-          <h2 className="w-full">Lore</h2>
+          <h1 className="w-full">Bibliopedia</h1>
           <p className="mt-4 sm:text-xl opacity-70">
             Write stories about your favourite Realms, Loot Bags, GA, and more!
           </p>
@@ -128,6 +128,7 @@ export const LorePanel = () => {
       </div>
       <Tabs
         selectedIndex={state.selectedTab}
+        className={'bg-gray-1100'}
         onChange={actions.updateSelectedTab as any}
       >
         <Tabs.List>
@@ -170,7 +171,7 @@ export const LorePanel = () => {
         {state.selectedTab === 2 && <LoreCreateEntityForm />}
 
         {state.selectedTab !== 2 && (
-          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid gap-8 px-4 sm:grid-cols-2 md:grid-cols-3">
             <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
           </div>
         )}
