@@ -6,6 +6,7 @@ import {
   CountdownTimer,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
@@ -25,20 +26,41 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   } = useAtlasContext();
   const armyStats = getArmyStats(props.army);
 
+  // bools
+  const isAtLocation = army.destinationRealmId === props.selectedRealm;
+
   return (
-    <Card key={army.armyId} className="flex flex-col col-1">
+    <Card key={army.armyId} className="flex flex-col">
       {army?.destinationArrivalTime && (
         <div className="text-xl ">
           <CountdownTimer date={army?.destinationArrivalTime} />
         </div>
       )}
-      <h5>
-        Location:{' '}
-        {army?.destinationRealmId != 0 ? army?.destinationRealmId : 'Home'}
-      </h5>
-      <h3 className="px-4 text-3xl">
-        {army.realmId} | {army.armyId}{' '}
-      </h3>
+      <div className="flex justify-between px-4">
+        <h5 className="">
+          {army.armyId == 0 ? '' : army.realmId}{' '}
+          {army.armyId == 0 ? 'Defending' : ' | ' + army.armyId}{' '}
+        </h5>
+        <div>
+          {isAtLocation ? (
+            <h5>here</h5>
+          ) : (
+            <Button
+              onClick={() => {
+                navigateToAsset(army?.destinationRealmId, 'realm');
+              }}
+              variant="outline"
+              size="xs"
+              className="w-full uppercase"
+            >
+              <Globe className="w-3 mr-2 fill-current" />
+              {army?.destinationRealmId != 0
+                ? army?.destinationRealmId
+                : 'Home'}
+            </Button>
+          )}
+        </div>
+      </div>
 
       <CardBody>
         <RadarMap armyOne={armyStats} height={200} width={200} />
@@ -57,7 +79,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               Recruit
             </Button>
           )}
-          {army.destinationRealmId === props.selectedRealm && (
+          {isAtLocation && (
             <Button variant="primary" size="xs" className="w-full uppercase">
               summon
             </Button>
@@ -69,16 +91,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             onClick={() => props.onTravel && props.onTravel()}
           >
             Travel
-          </Button>
-          <Button
-            onClick={() => {
-              navigateToAsset(army?.destinationRealmId, 'realm');
-            }}
-            variant="outline"
-            size="xs"
-            className="w-full uppercase"
-          >
-            fly
           </Button>
         </div>
       </CardBody>

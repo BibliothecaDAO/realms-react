@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import Helm from '../../icons/helm.svg';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -6,16 +7,17 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   loading?: boolean;
 }
-
-export function Card({ children, className }: Props) {
+export const Card = forwardRef<any, Props>((props: Props, ref) => {
   return (
     <div
-      className={`${className} card duration-150 transition-all   border-white/20  hover:opacity-90 p-1 sm:p-3  bg-black/90 rounded-2xl  group flex flex-col border-4`}
+      ref={ref}
+      className={`${props.className} card duration-150 transition-all   border-white/20  hover:opacity-90 p-1 sm:p-3  bg-black/90 rounded-2xl  group flex flex-col border-4`}
     >
-      {children}
+      {props.children}
     </div>
   );
-}
+});
+Card.displayName = 'Card';
 
 export function CardBody({ children, className, loading }: Props) {
   if (loading) {

@@ -1,6 +1,6 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { RealmCard } from '../cards/RealmCard';
+import { RealmCard } from '../cards/realms/RealmCard';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 
@@ -29,8 +29,6 @@ function RealmsQuickView({
   realmId: string;
   onClose?: () => void;
 }) {
-  console.log(realmId, 'sidebar panel');
-
   const { data, loading } = useGetRealmQuery({
     variables: {
       id: parseInt(realmId ?? '0'),
@@ -38,10 +36,7 @@ function RealmsQuickView({
   });
 
   return (
-    <BaseSideBarPanel
-      title={data && data.realm && data!.realm.name}
-      onClose={onClose}
-    >
+    <BaseSideBarPanel onClose={onClose}>
       {data && data.realm && (
         <RealmCard realm={data!.realm} loading={loading} />
       )}

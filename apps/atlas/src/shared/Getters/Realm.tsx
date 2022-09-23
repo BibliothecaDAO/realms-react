@@ -72,20 +72,20 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-green-200',
+      colour: 'bg-green-200/50',
       traitMax: 7,
       title: 'Regions',
     },
-    { trait: 'City', colour: 'bg-amber-300', traitMax: 21, title: 'Cities' },
+    { trait: 'City', colour: 'bg-amber-300/50', traitMax: 21, title: 'Cities' },
     {
       trait: 'Harbor',
-      colour: 'bg-amber-500',
+      colour: 'bg-amber-500/50',
       traitMax: 35,
       title: 'Harbors',
     },
     {
       trait: 'River',
-      colour: 'bg-blue-700',
+      colour: 'bg-blue-700/50',
       traitMax: 60,
       title: 'Rivers',
     },
@@ -101,15 +101,15 @@ export const TraitTable = (props: TraitProps) => {
 
   return (
     <div>
-      <span className="flex justify-between font-semibold font-body">
-        <span className="tracking-widest uppercase">{getTrait()?.title} </span>
+      <span className="flex justify-between">
+        <span className="uppercase">{getTrait()?.title} </span>
         <span>
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
         </span>
       </span>
       <div className="w-full my-1 rounded-full bg-stone-100/10">
         <div
-          className={`h-3 ${getTrait()?.colour} shadow-inner rounded-full`}
+          className={`h-1 ${getTrait()?.colour} shadow-inner rounded-full`}
           style={{
             width: `${getWidth()}%`,
           }}
@@ -324,3 +324,20 @@ export const getTravelArcs = (location: number, assets: number[]) => {
     };
   });
 };
+
+export const isYourRealm = (
+  realm: RealmFragmentFragment,
+  account: string,
+  starkAccount: string
+) =>
+  (account &&
+    (account.toLowerCase() === realm.owner ||
+      account.toLowerCase() === realm.bridgedOwner)) ||
+  (starkAccount &&
+    (starkAccount.toLowerCase() === realm.ownerL2 ||
+      starkAccount.toLowerCase() === realm.settledOwner));
+
+export const isFavourite = (
+  realm: RealmFragmentFragment,
+  favouriteRealms: number[]
+) => favouriteRealms.indexOf(realm.realmId) > -1;

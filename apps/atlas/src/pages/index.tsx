@@ -13,6 +13,7 @@ import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 
 import { useAtlasContext } from '@/context/AtlasContext';
+import { RealmProvider } from '@/context/RealmContext';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
@@ -22,18 +23,20 @@ import type { AssetType } from '@/hooks/useAtlasMap';
 export default function AtlasPage() {
   return (
     <Layout>
-      <UserAgent>
-        {(ua: UserAgentProps) => (
-          <>
-            {!ua.mobile ? (
-              <MapModule />
-            ) : (
-              <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
-            )}
-            <AtlasSidebars />
-          </>
-        )}
-      </UserAgent>
+      <RealmProvider>
+        <UserAgent>
+          {(ua: UserAgentProps) => (
+            <>
+              {!ua.mobile ? (
+                <MapModule />
+              ) : (
+                <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
+              )}
+              <AtlasSidebars />
+            </>
+          )}
+        </UserAgent>
+      </RealmProvider>
     </Layout>
   );
 }
