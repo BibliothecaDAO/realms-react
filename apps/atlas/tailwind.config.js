@@ -123,6 +123,8 @@ module.exports = {
         100: '100',
       },
       backgroundImage: {
+        ink: "url('/textures/ink.jpg')",
+        paperTexture: "url('/textures/paperTexture.jpg')",
         texture: "url('/texture-button.png')",
         hero: "url('/createOrDestroy-desktop.webp')",
         warRoom: "url('/warRoom-desktop.png')",
