@@ -88,7 +88,7 @@ export const Battalion: React.FC<
         </div>
       </div>
       <CardTitle className="flex justify-center text-center">
-        {props.battalionName}
+        {data?.name}
       </CardTitle>
       <CardBody>
         <div className="flex justify-center space-x-3 text-center">
@@ -250,54 +250,52 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
             objectFit={'cover'}
           />
           <div className="p-3">
-            <h2>{activeBattalion?.battalionName}</h2>
+            <h2>{activeBattalionData?.name}</h2>
+
+            <h5>Strong vs {activeBattalionData?.strength}</h5>
+            <h5>Weak vs {activeBattalionData?.weakness}</h5>
           </div>
           {/* <p className="px-4 text-xl">{activeBattalionData?.description}</p> */}
           <CardBody>
-            <div className="text-2xl font-lords">
-              <p className="flex justify-between">
-                Attack{' '}
-                <span className="text-4xl">{activeBattalion?.attack}</span>{' '}
-              </p>{' '}
-              <hr />
-              <p className="flex justify-between">
+            <div className="text-xl font-display">
+              <div className="flex justify-between">
+                Attack Points{' '}
+                <span className="text-2xl">{activeBattalion?.attack}</span>{' '}
+              </div>{' '}
+              <div className="flex justify-between">
                 Cavalry Defence{' '}
-                <span className="text-4xl">
+                <span className="text-2xl">
                   {activeBattalion?.cavalryDefence}
                 </span>
-              </p>{' '}
-              <hr />
-              <p className="flex justify-between">
+              </div>{' '}
+              <div className="flex justify-between">
                 Archery Defence{' '}
-                <span className="text-4xl">
+                <span className="text-2xl">
                   {activeBattalion?.archeryDefence}
                 </span>
-              </p>{' '}
-              <hr />
-              <p className="flex justify-between">
+              </div>{' '}
+              <div className="flex justify-between">
                 Magic Defence{' '}
-                <span className="text-4xl">
+                <span className="text-2xl">
                   {activeBattalion?.magicDefence}
                 </span>
-              </p>{' '}
-              <hr />
-              <p className="flex justify-between">
+              </div>{' '}
+              <div className="flex justify-between">
                 Infantry Defence{' '}
-                <span className="text-4xl">
+                <span className="text-2xl">
                   {activeBattalion?.infantryDefence}
                 </span>
-              </p>
-              <hr />
+              </div>
               {activeBattalion && (
-                <p className="flex justify-between">
+                <div className="flex justify-between">
                   Total Defence{' '}
-                  <span className="text-4xl">
+                  <span className="text-2xl">
                     {activeBattalion?.infantryDefence +
                       activeBattalion?.magicDefence +
                       activeBattalion?.archeryDefence +
                       activeBattalion?.cavalryDefence}
                   </span>
-                </p>
+                </div>
               )}
             </div>
           </CardBody>

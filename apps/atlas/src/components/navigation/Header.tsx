@@ -92,7 +92,7 @@ export function Header() {
   }
 
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden border-b-4 border-white/20 bg-gray-1100 sm:flex ">
+    <div className="top-0 left-0 z-40 justify-end hidden border-b-4 card border-white/20 bg-gray-1100 sm:flex ">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mr-auto">
           <Link href={'/'}>
@@ -111,20 +111,20 @@ export function Header() {
             <IconButton
               aria-label="Bank"
               variant="unstyled"
-              className="fill-current"
+              className="fill-yellow-600"
               texture={false}
               onClick={() => {
                 if (soundOn) {
                   player.prev();
                 }
               }}
-              icon={<PlayBack className="mr-3" />}
-              size="lg"
+              icon={<PlayBack className="mr-3 fill-yellow-600" />}
+              size="md"
             />
             <IconButton
               aria-label="Bank"
               variant="unstyled"
-              className="fill-current"
+              className="fill-yellow-600"
               texture={false}
               onClick={() => {
                 if (soundOn) {
@@ -141,7 +141,7 @@ export function Header() {
                   <VolumeOff className="w-6" />
                 )
               }
-              size="lg"
+              size="md"
             />
             <IconButton
               aria-label="Bank"
@@ -154,7 +154,7 @@ export function Header() {
                 }
               }}
               icon={<PlayForward className="ml-3" />}
-              size="lg"
+              size="md"
             />
           </div>
         </div>
@@ -162,8 +162,12 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button onClick={onLordsNavClick} variant="outline">
-            <Lords className="w-6" />{' '}
+          <Button
+            className="font-display"
+            onClick={onLordsNavClick}
+            variant="primary"
+          >
+            <Lords className="w-6 fill-current" />{' '}
             <span className="pl-4">
               {(+formatEther(lordsBalance)).toLocaleString()}
             </span>

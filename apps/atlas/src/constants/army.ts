@@ -22,6 +22,7 @@ const description =
 export const battalionInformation = [
   {
     id: 1,
+    name: 'Light Cavalry',
     color: Barracks,
     image: image,
     description: description,
@@ -30,6 +31,7 @@ export const battalionInformation = [
   },
   {
     id: 2,
+    name: 'Heavy Cavalry',
     color: Barracks,
     image: image,
     description: description,
@@ -38,6 +40,7 @@ export const battalionInformation = [
   },
   {
     id: 3,
+    name: 'Archer',
     color: ArcherTower,
     image: image,
     description: description,
@@ -46,6 +49,7 @@ export const battalionInformation = [
   },
   {
     id: 4,
+    name: 'Long Bow',
     color: ArcherTower,
     image: image,
     description: description,
@@ -54,6 +58,7 @@ export const battalionInformation = [
   },
   {
     id: 5,
+    name: 'Mage',
     color: Castle,
     image: '/realm-troops/mage.png',
     description: description,
@@ -62,6 +67,7 @@ export const battalionInformation = [
   },
   {
     id: 6,
+    name: 'Archanist',
     color: Castle,
     image: image,
     description: description,
@@ -70,6 +76,7 @@ export const battalionInformation = [
   },
   {
     id: 7,
+    name: 'Light Infantry',
     color: MageTower,
     image: image,
     description: description,
@@ -78,6 +85,7 @@ export const battalionInformation = [
   },
   {
     id: 8,
+    name: 'Heavy Infantry',
     color: MageTower,
     image: image,
     description: description,

@@ -57,7 +57,7 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
     <div>
       {loading && (
         <div className="grid grid-cols-12 gap-6 py-4">
-          <Card className="col-start-1 col-end-7">
+          <Card className="">
             <CardBody className="text-center">
               <Castle className="block w-20 mx-auto fill-current" />
               <div className="text-4xl">Loading...</div>
@@ -71,7 +71,7 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
 
       {hasNoResults() && (
         <div className="grid grid-cols-12 gap-6 py-4">
-          <Card className="col-start-1 col-end-7">
+          <Card className="col-span-12">
             <CardTitle>No Lore for {realmName} has written yet!</CardTitle>
             <CardBody>
               Want to be the first?

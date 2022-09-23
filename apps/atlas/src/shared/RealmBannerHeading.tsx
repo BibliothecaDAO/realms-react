@@ -29,7 +29,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
 
   return (
     <div
-      className={`bg-opacity-98 flex py-4 md:py-8 p-4 flex-wrap shadow rounded-b-2xl ${
+      className={`bg-opacity-98 flex py-4 md:py-8 p-4 flex-wrap shadow border card ${
         OrderAffinity[trimmed] === LightDark.light
           ? 'border-white'
           : 'border-black'
@@ -37,7 +37,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
     >
       <div className="flex justify-between w-full tracking-widest text-center uppercase ">
         <div
-          className={`absolute ml-12 md:ml-4 z-10 justify-center w-10 h-16 md:w-24 md:h-40 -mt-2 border-4 border-double hidden sm:flex c-order-${trimmed} border-order-${trimmed} rounded-b-full shadow-2xl ${
+          className={`absolute ml-12 md:ml-4 z-10 justify-center w-10 h-16 md:w-24 md:h-40 -mt-2 border-4 border-double hidden sm:flex c-order-${trimmed} border-order-${trimmed}  shadow-2xl card ${
             OrderAffinity[trimmed] === LightDark.light ? 'bg-white' : 'bg-black'
           }`}
         >

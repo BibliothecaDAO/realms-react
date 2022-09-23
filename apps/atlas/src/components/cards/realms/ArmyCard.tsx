@@ -84,14 +84,15 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               summon
             </Button>
           )}
-
-          <Button
-            variant="outline"
-            size="xs"
-            onClick={() => props.onTravel && props.onTravel()}
-          >
-            Travel
-          </Button>
+          {props.onTravel && (
+            <Button
+              variant="outline"
+              size="xs"
+              onClick={() => props.onTravel && props.onTravel()}
+            >
+              Travel
+            </Button>
+          )}
         </div>
       </CardBody>
     </Card>

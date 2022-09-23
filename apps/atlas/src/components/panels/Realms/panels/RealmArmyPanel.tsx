@@ -20,6 +20,7 @@ import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 
 import { RealmResources } from '@/components/tables/RealmResources';
+import { defaultArmy } from '@/constants/army';
 import {
   RealmBuildingId,
   HarvestType,
@@ -125,38 +126,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
       .map((c) => c.id);
   };
 
-  const blankArmy = {
-    armyId: 0,
-    realmId: 26,
-    xp: 0,
-    destinationRealmId: 0,
-    destinationArrivalTime: null,
-    armyPacked: 0,
-    lastAttacked: 0,
-    level: 0,
-    callSign: 0,
-    lightCavalryQty: 0,
-    lightCavalryHealth: 0,
-    heavyCavalryQty: 0,
-    heavyCavalryHealth: 0,
-    archerQty: 0,
-    archerHealth: 0,
-    longbowQty: 0,
-    longbowHealth: 0,
-    mageQty: 0,
-    mageHealth: 0,
-    arcanistQty: 0,
-    arcanistHealth: 0,
-    lightInfantryQty: 0,
-    lightInfantryHealth: 0,
-    heavyInfantryQty: 0,
-    heavyInfantryHealth: 0,
-  };
-
   const buildNewArmy = () => {
-    blankArmy.realmId = realm.realmId;
-    blankArmy.armyId = realm.ownArmies.length;
-    setSelectedArmy(blankArmy);
+    defaultArmy.realmId = realm.realmId;
+    defaultArmy.armyId = realm.ownArmies.length;
+    setSelectedArmy(defaultArmy);
   };
 
   return (
@@ -384,7 +357,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             </div>
           </Card>
         )}
-        {isOwner && (
+        {/* {isOwner && (
           <Card className="col-span-12 md:col-start-6 md:col-end-13">
             <CardTitle>Goblins</CardTitle>
             <CardBody>
@@ -398,7 +371,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
               Attack Goblins
             </Button>
           </Card>
-        )}
+        )} */}
 
         <Card
           loading={props.loading}
@@ -423,18 +396,20 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 />
               );
             })}
-            <Card className="flex justify-center">
-              <Button
-                onClick={() => {
-                  buildNewArmy();
-                  setIsArmyBuilding(true);
-                }}
-                variant="primary"
-                className="self-center"
-              >
-                Summon New Army
-              </Button>{' '}
-            </Card>
+            {isOwner && (
+              <Card className="flex justify-center">
+                <Button
+                  onClick={() => {
+                    buildNewArmy();
+                    setIsArmyBuilding(true);
+                  }}
+                  variant="primary"
+                  className="self-center"
+                >
+                  Summon New Army
+                </Button>{' '}
+              </Card>
+            )}
           </div>
           {/* {isOwner && (
             <>

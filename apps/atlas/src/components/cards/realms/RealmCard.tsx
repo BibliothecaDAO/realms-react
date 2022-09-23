@@ -107,7 +107,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     return (
       <Card ref={ref}>
         {props.realm?.wonder && (
-          <div className="w-full p-4 text-2xl font-semibold text-center uppercase bg-black border-4 rounded shadow-inner tracking-veryWide">
+          <div className="w-full p-2 mb-2 text-2xl font-semibold text-center uppercase rounded shadow-inner bg-gray-1000 tracking-veryWide">
             {props.realm?.wonder}
           </div>
         )}
