@@ -116,12 +116,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
     });
   }, [realm?.realmId]);
 
-  const { data: troopStatsData } = useGetTroopStatsQuery();
-
-  if (!realm) {
-    return null;
-  }
-
   const getMilitaryBuildingsBuilt = (
     buildings: BuildingDetail[] | undefined
   ) => {
@@ -129,6 +123,40 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
       ?.filter((a) => a.type === 'military')
       .filter((b) => b.quantityBuilt > 0)
       .map((c) => c.id);
+  };
+
+  const blankArmy = {
+    armyId: 0,
+    realmId: 26,
+    xp: 0,
+    destinationRealmId: 0,
+    destinationArrivalTime: null,
+    armyPacked: 0,
+    lastAttacked: 0,
+    level: 0,
+    callSign: 0,
+    lightCavalryQty: 0,
+    lightCavalryHealth: 0,
+    heavyCavalryQty: 0,
+    heavyCavalryHealth: 0,
+    archerQty: 0,
+    archerHealth: 0,
+    longbowQty: 0,
+    longbowHealth: 0,
+    mageQty: 0,
+    mageHealth: 0,
+    arcanistQty: 0,
+    arcanistHealth: 0,
+    lightInfantryQty: 0,
+    lightInfantryHealth: 0,
+    heavyInfantryQty: 0,
+    heavyInfantryHealth: 0,
+  };
+
+  const buildNewArmy = () => {
+    blankArmy.realmId = realm.realmId;
+    blankArmy.armyId = realm.ownArmies.length;
+    setSelectedArmy(blankArmy);
   };
 
   return (
@@ -397,7 +425,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             })}
             <Card className="flex justify-center">
               <Button
-                onClick={() => setIsArmyBuilding(true)}
+                onClick={() => {
+                  buildNewArmy();
+                  setIsArmyBuilding(true);
+                }}
                 variant="primary"
                 className="self-center"
               >
@@ -439,7 +470,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           isOpen={isArmyBuilding}
         >
           <SidebarHeader
-            title={'Army Builder'}
+            title={'Army Builder | ' + realm.name + ' | #' + realm.realmId}
             onClose={() => setIsArmyBuilding(false)}
           />
           <ArmyBuilderSideBar army={selectedArmy} />

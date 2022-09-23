@@ -4,8 +4,10 @@ import {
   CardBody,
   CardTitle,
   InputNumber,
+  Table,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
@@ -185,15 +187,19 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   }, [addedBattalions, props.army]);
 
   return (
-    <div className="grid grid-cols-12 gap-6 pt-10">
-      <div className="col-span-12">
-        <h2>Realm {army?.realmId}</h2>
-        <h4>
-          Army #{army?.armyId} | Location:{' '}
+    <div className="grid grid-cols-12 gap-6 pt-4">
+      <hr />
+      <div className="flex justify-between col-span-12">
+        <h2>
+          {army?.armyId == 0 ? 'Defending Army' : ' Army ' + army?.armyId}{' '}
+        </h2>
+        <Button variant="outline">
+          {' '}
+          <Globe className="w-4 mr-4 fill-current" />
           {army?.destinationRealmId != 0
             ? army?.destinationRealmId
             : 'Home Realm'}
-        </h4>
+        </Button>
       </div>
       <div className="col-span-7">
         <div className="grid w-full grid-cols-2 gap-4">
@@ -244,42 +250,56 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
             objectFit={'cover'}
           />
           <div className="p-3">
-            <h1>{activeBattalion?.battalionName}</h1>
+            <h2>{activeBattalion?.battalionName}</h2>
           </div>
-
+          {/* <p className="px-4 text-xl">{activeBattalionData?.description}</p> */}
           <CardBody>
-            <div className="text-xl font-lords">
-              <p>
-                Attack:{' '}
-                <span className="text-3xl">{activeBattalion?.attack}</span>{' '}
+            <div className="text-2xl font-lords">
+              <p className="flex justify-between">
+                Attack{' '}
+                <span className="text-4xl">{activeBattalion?.attack}</span>{' '}
               </p>{' '}
-              <p>
-                Cavalry Defence:{' '}
-                <span className="text-3xl">
+              <hr />
+              <p className="flex justify-between">
+                Cavalry Defence{' '}
+                <span className="text-4xl">
                   {activeBattalion?.cavalryDefence}
                 </span>
               </p>{' '}
-              <p>
-                Archery Defence:{' '}
-                <span className="text-3xl">
+              <hr />
+              <p className="flex justify-between">
+                Archery Defence{' '}
+                <span className="text-4xl">
                   {activeBattalion?.archeryDefence}
                 </span>
               </p>{' '}
-              <p>
-                Magic Defence:{' '}
-                <span className="text-3xl">
+              <hr />
+              <p className="flex justify-between">
+                Magic Defence{' '}
+                <span className="text-4xl">
                   {activeBattalion?.magicDefence}
                 </span>
               </p>{' '}
-              <p>
-                Infantry Defence:{' '}
-                <span className="text-3xl">
+              <hr />
+              <p className="flex justify-between">
+                Infantry Defence{' '}
+                <span className="text-4xl">
                   {activeBattalion?.infantryDefence}
                 </span>
               </p>
+              <hr />
+              {activeBattalion && (
+                <p className="flex justify-between">
+                  Total Defence{' '}
+                  <span className="text-4xl">
+                    {activeBattalion?.infantryDefence +
+                      activeBattalion?.magicDefence +
+                      activeBattalion?.archeryDefence +
+                      activeBattalion?.cavalryDefence}
+                  </span>
+                </p>
+              )}
             </div>
-
-            <p className="mt-4 text-xl">{activeBattalionData?.description}</p>
           </CardBody>
         </Card>
       </div>

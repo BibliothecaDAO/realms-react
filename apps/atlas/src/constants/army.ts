@@ -14,7 +14,7 @@ const ArcherTower = 'bg-yellow-600/20';
 const Castle = 'bg-orange-600/20';
 const MageTower = 'bg-purple-600/20';
 
-const image = '/stableai/paladin.jpeg';
+const image = '/realm-troops/archanist.png';
 
 const description =
   'Paladins are the most loyal and talented horseback riders that exist. With their superior horsemanship skills, they are able to wield a lance or polearm effectively with just one hand, allowing them to use their other hand to carry a shield or sheathe a weapon.';
@@ -23,7 +23,7 @@ export const battalionInformation = [
   {
     id: 1,
     color: Barracks,
-    image: '/stableai/knight.jpeg',
+    image: image,
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
@@ -39,7 +39,7 @@ export const battalionInformation = [
   {
     id: 3,
     color: ArcherTower,
-    image: '/stableai/archer.jpeg',
+    image: image,
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
@@ -47,7 +47,7 @@ export const battalionInformation = [
   {
     id: 4,
     color: ArcherTower,
-    image: '/stableai/archer.jpeg',
+    image: image,
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
@@ -55,7 +55,7 @@ export const battalionInformation = [
   {
     id: 5,
     color: Castle,
-    image: '/stableai/apprentice.png',
+    image: '/realm-troops/mage.png',
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
@@ -63,7 +63,7 @@ export const battalionInformation = [
   {
     id: 6,
     color: Castle,
-    image: '/stableai/archanist.png',
+    image: image,
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
@@ -71,7 +71,7 @@ export const battalionInformation = [
   {
     id: 7,
     color: MageTower,
-    image: '/stableai/light-infantry.png',
+    image: image,
     description: description,
     strength: 'Cavalary',
     weakness: 'Magic',
@@ -79,7 +79,7 @@ export const battalionInformation = [
   {
     id: 8,
     color: MageTower,
-    image: '/stableai/light-infantry.png',
+    image: image,
     description: description,
     strength: 'Cavalary',
     weakness: 'Magic',

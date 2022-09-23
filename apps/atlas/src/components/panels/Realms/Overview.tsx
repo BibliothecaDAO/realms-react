@@ -264,28 +264,27 @@ const Overview: React.FC<Prop> = (props) => {
             <TerrainLayer />
           </div>
 
-          <CardTitle>Traits</CardTitle>
           <CardBody>
-            <div className="flex flex-wrap">
-              <div className="p-1 my-1 sm:w-1/2">
+            <div className="flex grid grid-cols-2 gap-4 font-display">
+              <div className="my-1 ">
                 <TraitTable
                   trait="Region"
                   traitAmount={getTrait(realm, 'Region')}
                 />
               </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
+              <div className="my-1 ">
                 <TraitTable
                   trait="City"
                   traitAmount={getTrait(realm, 'City')}
                 />
               </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
+              <div className="my-1 ">
                 <TraitTable
                   trait="Harbor"
                   traitAmount={getTrait(realm, 'Harbor')}
                 />
               </div>
-              <div className="p-1 my-1 sm:w-1/2 ">
+              <div className="my-1 ">
                 <TraitTable
                   trait="River"
                   traitAmount={getTrait(realm, 'River')}
