@@ -10,8 +10,9 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md font-body uppercase tracking-widest transition-all duration-150 hover:shadow border-b-4 border-transparent hover:border-cta-100 font-semibold',
-      active: ' border-cta-100 shadow-purple-800/10 shadow-md rounded',
+      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 hover:shadow border-b-2 border-transparent hover:border-cta-100 font-display',
+      active:
+        'border-orange-700 shadow-purple-800/10 shadow-md text-orange-700',
       inactive: ' border-transparent text-white/50',
     },
     tabList: 'flex space-x-3 sm:space-x-4  p-2 shadow-inner ',

@@ -39,8 +39,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         ) : null,
         action: (
           <Button
-            size="xs"
-            variant="outline"
+            size="sm"
+            variant="primary"
             href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
           >
             {event.data?.success ? 'Pillage and plunder again' : 'try again'}
@@ -70,7 +70,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           action: (
             <Button
               size="xs"
-              variant="outline"
+              variant="primary"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
               {event.data?.success ? 'Try again' : 'summon the troops!'}
@@ -98,7 +98,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           action: (
             <Button
               size="xs"
-              variant="outline"
+              variant="primary"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
               {event.data?.success ? 'Retaliate' : 'summon the troops!'}

@@ -85,7 +85,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
 
         {imageView === 'Render' && (
           <Image
-            src={`https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${props.realm.realmId}.webp`}
+            src={`https://realms-assets.s3.eu-west-3.amazonaws.com/renders/${props.realm.realmId}.webp`}
             alt="map"
             className="w-full mt-4 rounded-xl -scale-x-100"
             width={500}

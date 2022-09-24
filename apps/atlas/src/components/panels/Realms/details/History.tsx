@@ -81,7 +81,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                   {a.relic}
                   <Button
                     size="xs"
-                    variant="outline"
+                    variant="primary"
                     onClick={() => handleRaidDetailsClick(a)}
                   >
                     Raid Details

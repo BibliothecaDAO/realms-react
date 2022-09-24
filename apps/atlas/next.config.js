@@ -138,7 +138,10 @@ const nextConfig = {
     // https://nextjs.org/docs/api-reference/next/image#caching-behavior
     minimumCacheTTL: 60,
     // Allowed domains for next/image
-    domains: ['d23fdhqc1jb9no.cloudfront.net'],
+    domains: [
+      'd23fdhqc1jb9no.cloudfront.net',
+      'realms-assets.s3.eu-west-3.amazonaws.com',
+    ],
     remotePatterns: [
       {
         protocol: 'https',

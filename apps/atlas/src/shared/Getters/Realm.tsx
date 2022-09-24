@@ -200,7 +200,10 @@ export const resourcePillaged = (resources: any) => {
         resources?.map((resource, index) => {
           const info = findResourceById(resource.resourceId);
           return (
-            <div className="flex justify-between my-1 text-xl " key={index}>
+            <div
+              className="flex justify-between my-1 font-display "
+              key={index}
+            >
               <div className="flex">
                 <ResourceIcon
                   size="sm"

@@ -3,6 +3,7 @@ import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import Image from 'next/future/image';
@@ -12,6 +13,7 @@ import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
+import { MyArmies } from './Account/MyArmies';
 import { MyCrypts } from './Account/MyCrypts';
 import { MyLoot } from './Account/MyLoot';
 import { MyRealms } from './Account/MyRealms';
@@ -62,6 +64,15 @@ export function AccountPanel() {
       },
       {
         label: (
+          <div className="flex no-wrap">
+            <Helm className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">My Armies</div>
+          </div>
+        ),
+        component: <MyArmies />,
+      },
+      {
+        label: (
           <div className="flex ">
             <Danger className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
             <div className="hidden sm:block">My Crypts</div>
@@ -89,7 +100,7 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={true}>
-      <animated.div
+      {/* <animated.div
         style={animation}
         className="w-full p-4 pt-10 border-b-4 shadow-xl sm:p-10 bg-black/60 border-black/40"
       >
@@ -118,7 +129,7 @@ export function AccountPanel() {
             </div>
           </div>
         </div>
-      </animated.div>
+      </animated.div> */}
 
       <Tabs
         selectedIndex={selectedTab}
