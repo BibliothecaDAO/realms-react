@@ -12,6 +12,7 @@ import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { ArrowSmallRightIcon } from '@heroicons/react/20/solid';
 import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { Travel } from '@/components/panels/Realms/details/Travel';
@@ -28,9 +29,11 @@ import {
   buildingIntegrity,
 } from '@/constants/buildings';
 import type { Squad } from '@/constants/index';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery, Army } from '@/generated/graphql';
+import { useArmy } from '@/hooks/settling/useArmy';
 import useBuildings, {
   createBuildingCall,
 } from '@/hooks/settling/useBuildings';
@@ -61,10 +64,20 @@ interface BuildQuantity {
 }
 
 const RealmArmyPanel: React.FC<Prop> = (props) => {
+  const router = useRouter();
+
+  const { findRealmsAttackingArmies } = useArmy();
+
   const { build } = useCombat();
   const realm = props.realm;
-  const { userData } = useUsersRealms();
+  const { userData, userRealms } = useUsersRealms();
 
+  const allArmies = findRealmsAttackingArmies(userRealms?.realms)?.filter(
+    (a) => a.realmId !== realm.realmId
+  );
+  const {
+    travelContext: { travel, setTravelArcs },
+  } = useAtlasContext();
   const [selectedArmy, setSelectedArmy] = useState<Army>();
 
   const userArmiesAtLocation = userData.attackingArmies?.filter(
@@ -347,7 +360,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           className="col-span-12 md:col-start-6 md:col-end-13"
         >
           <div className="flex justify-between w-full">
-            <CardTitle>{isOwner ? 'Your' : 'Realm'} Armies</CardTitle>
+            <CardTitle>Realm Armies</CardTitle>
           </div>
           <div className="grid grid-cols-3 gap-4">
             {realm.ownArmies.map((army) => {
@@ -378,12 +391,35 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             )}
           </div>
         </Card>
-
+        <Card
+          loading={props.loading}
+          className="col-span-12 md:col-start-6 md:col-end-13"
+        >
+          <div className="flex justify-between w-full">
+            <CardTitle>All Your Armies</CardTitle>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {allArmies?.map((army) => {
+              return (
+                <ArmyCard
+                  onBuildArmy={() => {
+                    router.push(`/realm/${realm.realmId}?tab=Army`, undefined, {
+                      shallow: true,
+                    });
+                  }}
+                  selectedRealm={realm.realmId}
+                  onTravel={() =>
+                    travel(army.armyId, army.realmId, realm.realmId)
+                  }
+                  key={army.armyId}
+                  army={army}
+                />
+              );
+            })}
+          </div>
+        </Card>
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
-          <SidebarHeader
-            title={'Attacking Realm ' + realm.realmId}
-            onClose={() => setIsRaiding(false)}
-          />
+          <SidebarHeader onClose={() => setIsRaiding(false)} />
           <CombatSideBar defendingRealm={realm} />
         </AtlasSidebar>
         <AtlasSidebar

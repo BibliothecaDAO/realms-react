@@ -3,24 +3,20 @@ import {
   Card,
   CardBody,
   CardTitle,
-  InputNumber,
-  Table,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
-import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation, defaultArmy } from '@/constants/army';
-import { buildingIdToString } from '@/constants/buildings';
 import type { Army } from '@/generated/graphql';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import { CostBlock } from '@/shared/Getters/Realm';
+import { Battalion } from '@/shared/squad/Battalion';
 import type {
   ArmyBattalionQty,
   BattalionInterface,
-  BuildingDetail,
   ResourceCost,
 } from '@/types/index';
 
@@ -36,85 +32,6 @@ type Battalion = {
 };
 
 const MAX_BATTALIONS = 30;
-
-export const Battalion: React.FC<
-  BattalionInterface & { add: (id) => void; quantity; health; disabled }
-> = (props) => {
-  const data = battalionInformation.find((a) => a.id === props.battalionId);
-
-  const [input, setInput] = useState('1');
-
-  return (
-    <Card
-      key={props.battalionId}
-      className={`relative flex-col group ${data?.color}`}
-    >
-      <div className="absolute z-50 flex flex-col justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer group-hover:visible">
-        <div className="flex self-center py-4">
-          {props.battalionCost &&
-            props.battalionCost.map((b, i) => {
-              return (
-                <CostBlock
-                  key={i}
-                  resourceName={b.resourceName}
-                  amount={b.amount}
-                  id={b.resourceId}
-                  qty={input}
-                />
-              );
-            })}
-        </div>
-        <div className="flex self-center space-x-3">
-          <Button
-            onClick={() =>
-              props.add({
-                battalionId: props.battalionId,
-                battalionName: props.battalionName,
-                battalionQty: input,
-              })
-            }
-            variant="primary"
-            size="xs"
-            className="self-center"
-            disabled={props.disabled}
-          >
-            add to army +
-          </Button>
-          <InputNumber
-            value={input}
-            inputSize="md"
-            colorScheme="transparent"
-            className="self-center w-12 h-full bg-white border rounded border-white/40"
-            min={1}
-            max={MAX_BATTALIONS}
-            stringMode // to support high precision decimals
-            onChange={(value: any) => setInput(value)}
-          />{' '}
-        </div>
-        {props.disabled && (
-          <div className="mt-4 text-center">
-            Build a {buildingIdToString(props.buildingId || 0)} first
-          </div>
-        )}
-      </div>
-      <CardTitle className="flex justify-center text-center">
-        {data?.name}
-      </CardTitle>
-      <CardBody>
-        <div className="flex justify-center space-x-3 text-center">
-          <div className="px-4 border-r">
-            <h5 className="">qty</h5>
-            <h1>{props.quantity}</h1>
-          </div>
-          <div className="pr-4">
-            <h5 className="">health</h5>
-            <h1>{props.health}</h1>
-          </div>
-        </div>
-      </CardBody>
-    </Card>
-  );
-};
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const { build } = useCombat();
@@ -226,6 +143,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
             >
               <Battalion
                 {...battalion}
+                show
                 add={(value) =>
                   setAddedBattalions((current) => {
                     if (

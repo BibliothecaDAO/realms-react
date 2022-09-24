@@ -34,6 +34,14 @@ button {
 
 body {
   @apply text-stone-300 font-body;
+
+  /* The second value here is a fallback. */
+  cursor: url('/arrow.png'), default;
+
+  /* You may need coordinates to adjust the pointer
+       for example, the custom cursor is circular and you want
+       the middle to be where you click */
+  cursor: url('/arrow.png') -18 -18, default;
 }
 
 #deckgl-wrapper {

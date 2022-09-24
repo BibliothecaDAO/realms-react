@@ -94,10 +94,14 @@ export const RadarMap = ({
   ];
 
   const data2 = [
-    { key: 'Cav A', value: armyTwo?.cavalryAttack || 0 },
-    { key: 'Inf A', value: armyTwo?.infantryAttack || 0 },
-    { key: 'Mag A', value: armyTwo?.magicAttack || 0 },
-    { key: 'Arch A', value: armyTwo?.archeryAttack || 0 },
+    { key: 'C.D', value: armyTwo?.cavalryDefence || 0 },
+    { key: 'I.D', value: armyTwo?.infantryDefence || 0 },
+    { key: 'M.D', value: armyTwo?.magicDefence || 0 },
+    { key: 'A.D', value: armyTwo?.archeryDefence || 0 },
+    { key: 'C.A', value: armyTwo?.cavalryAttack || 0 },
+    { key: 'I.A', value: armyTwo?.infantryAttack || 0 },
+    { key: 'M.A', value: armyTwo?.magicAttack || 0 },
+    { key: 'A.A', value: armyTwo?.archeryAttack || 0 },
   ];
 
   const {
@@ -203,7 +207,7 @@ export const RadarMap = ({
               onMouseOut={hideTooltip}
             />
           ))}
-          {/* <polygon
+          <polygon
             points={polygonPoints2.pointString}
             fill={'blue'}
             fillOpacity={0.3}
@@ -215,14 +219,14 @@ export const RadarMap = ({
               key={`radar-point-${i}`}
               cx={point.x}
               cy={point.y}
-              r={4}
+              r={2}
               fill={'#f1810c'}
               onMouseOver={() => {
                 handleMouseOver(point, `${data2[i].key}: ${data2[i].value}`);
               }}
               onMouseOut={hideTooltip}
             />
-          ))} */}
+          ))}
         </Group>
       </svg>
       {tooltipOpen && (

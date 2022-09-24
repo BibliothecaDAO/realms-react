@@ -18,6 +18,7 @@ import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import RealmSelector from '@/shared/RealmSelector';
+import { Battalion } from '@/shared/squad/Battalion';
 
 type Prop = {
   defendingRealm?: GetRealmQuery['realm'];
@@ -54,7 +55,7 @@ export const CombatSideBar: React.FC<Prop> = ({
 
   const defendingRealmArmy = defendingRealm?.ownArmies[0];
   const defendingArmyStats = getArmyStats(defendingRealmArmy);
-
+  const attackingArmyStats = getArmyStats(selectedArmy);
   // Can probably split using reduce function instead
   const attackingRealmsNotAtLocation = userData.attackingArmies?.filter(
     (army) => army.destinationRealmId !== defendingRealm?.realmId
@@ -84,20 +85,46 @@ export const CombatSideBar: React.FC<Prop> = ({
   return (
     <div>
       {(!txSubmitted || combatError) && (
-        <div className="grid grid-cols-3">
-          <div>
-            <h2 className="mt-4">Armies at this Realm</h2>
-            <div className="grid grid-cols-2">
-              {defendingRealm &&
-                attackingRealmsAtLocation?.map((army, index) => {
-                  return (
-                    <div key={army.armyId}>
-                      <OrderIcon
-                        withTooltip
-                        containerClassName="inline-block mr-4"
-                        size="md"
-                        order={army.orderType || ''}
+        <div>
+          <div className="grid w-full grid-cols-3">
+            <div>
+              <div className="">
+                <h1 className="w-full mb-8 text-center">
+                  {selectedArmy?.realmId}
+                  <OrderIcon
+                    withTooltip
+                    containerClassName="inline-block mr-4"
+                    size="md"
+                    order={selectedArmy?.orderType || ''}
+                  />
+                </h1>
+                <div className="grid grid-cols-2">
+                  {battalions?.map((battalion, index) => {
+                    return (
+                      <Battalion
+                        key={index}
+                        {...battalion}
+                        quantity={
+                          selectedArmy
+                            ? selectedArmy[nameArray[index] + 'Qty']
+                            : ''
+                        }
+                        health={
+                          selectedArmy
+                            ? selectedArmy[nameArray[index] + 'Health']
+                            : ''
+                        }
                       />
+                    );
+                  })}
+                </div>
+              </div>
+              <h2 className="mt-4">Armies at this Realm</h2>
+              <div className="grid grid-cols-2">
+                {defendingRealm &&
+                  attackingRealmsAtLocation?.map((army, index) => {
+                    return (
+                      // <div onClick={() => setSelectedArmy(army)} key={index}>
                       <ArmyCard
                         key={index}
                         army={army}
@@ -110,86 +137,70 @@ export const CombatSideBar: React.FC<Prop> = ({
                           )
                         }
                       />
-                    </div>
-                  );
-                })}
-            </div>
-
-            <h2 className="mt-4">Armies elsewhere</h2>
-          </div>
-          <div className="mx-auto">
-            <RadarMap armyOne={defendingArmyStats} height={400} width={400} />
-
-            <Button
-              onClick={() => {
-                initiateCombat({
-                  attackingArmyId: selectedArmy?.armyId,
-                  attackingRealmId: selectedArmy?.realmId,
-                  defendingRealmId: defendingRealm?.realmId,
-                });
-              }}
-              loading={combatLoading}
-              loadingText={'Raiding'}
-              disabled={!raidButtonEnabled}
-              variant="primary"
-              size="lg"
-              className="w-full mt-6 border-4 border-yellow-600 border-double"
-            >
-              Attack
-            </Button>
-          </div>
-          <div className="flex justify-between mt-4">
-            <div className="w-1/2 ">
-              <div className="p-2">
-                <h2>
-                  <OrderIcon
-                    withTooltip
-                    containerClassName="inline-block mr-4"
-                    size="md"
-                    order={defendingRealm?.orderType || ''}
-                  />
-                  {defendingRealm?.name}
-                </h2>
-                <div className="grid grid-cols-2">
-                  {battalions?.map((battalion, index) => {
-                    return (
-                      <Card
-                        key={battalion.battalionId}
-                        className={`relative flex-col group `}
-                      >
-                        <CardTitle className="flex justify-center text-center">
-                          {battalion.battalionName}
-                        </CardTitle>
-                        <CardBody>
-                          <div className="flex justify-center space-x-3 text-center">
-                            <div className="px-4 border-r">
-                              <h5 className="">qty</h5>
-                              <h1>
-                                {defendingRealmArmy
-                                  ? defendingRealmArmy[nameArray[index] + 'Qty']
-                                  : 0}
-                              </h1>
-                            </div>
-                            <div className="pr-4">
-                              <h5 className="">health</h5>
-                              <h1>
-                                {defendingRealmArmy
-                                  ? defendingRealmArmy[
-                                      nameArray[index] + 'Health'
-                                    ]
-                                  : ''}
-                              </h1>
-                            </div>
-                          </div>
-                        </CardBody>
-                      </Card>
+                      // </div>
                     );
                   })}
-                </div>
               </div>
             </div>
-          </div>
-          {/* <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
+            <div className="mx-auto">
+              <h1 className="pb-20 mt-4 text-center">Raiding</h1>
+              <RadarMap
+                armyOne={defendingArmyStats}
+                armyTwo={attackingArmyStats}
+                height={400}
+                width={400}
+              />
+
+              <Button
+                onClick={() => {
+                  initiateCombat({
+                    attackingArmyId: selectedArmy?.armyId,
+                    attackingRealmId: selectedArmy?.realmId,
+                    defendingRealmId: defendingRealm?.realmId,
+                  });
+                }}
+                loading={combatLoading}
+                loadingText={'Raiding'}
+                disabled={!raidButtonEnabled}
+                variant="primary"
+                size="lg"
+                className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double font-lords"
+              >
+                Raid
+              </Button>
+            </div>
+            <div className="">
+              <h1 className="w-full mb-8 text-center">
+                {defendingRealm?.name}
+                <OrderIcon
+                  withTooltip
+                  containerClassName="inline-block mr-4"
+                  size="md"
+                  order={defendingRealm?.orderType || ''}
+                />
+              </h1>
+              <div className="grid grid-cols-2">
+                {battalions?.map((battalion, index) => {
+                  return (
+                    <Battalion
+                      key={index}
+                      {...battalion}
+                      quantity={
+                        defendingRealmArmy
+                          ? defendingRealmArmy[nameArray[index] + 'Qty']
+                          : ''
+                      }
+                      health={
+                        defendingRealmArmy
+                          ? defendingRealmArmy[nameArray[index] + 'Health']
+                          : ''
+                      }
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            {/* <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
             <SquadStatistics
               slot={TroopSlot.defending}
               troops={realm?.troops || []}
@@ -212,17 +223,18 @@ export const CombatSideBar: React.FC<Prop> = ({
           >
             pillage {realm?.name}
           </Button> */}
-          <p className="mt-3 text-red-400">{combatError}</p>
-          {!raidButtonEnabled && selectedArmy && (
-            <div className="p-2 my-2 font-semibold text-orange-800 bg-red-200 rounded">
-              {isSameOrder && (
-                <p>
-                  Ser, {selectedArmy.armyId} cannot Attack a Realm of the same
-                  order!
-                </p>
-              )}
-            </div>
-          )}
+            <p className="mt-3 text-red-400">{combatError}</p>
+            {!raidButtonEnabled && selectedArmy && (
+              <div className="p-2 my-2 font-semibold text-orange-800 bg-red-200 rounded">
+                {isSameOrder && (
+                  <p>
+                    Ser, {selectedArmy.armyId} cannot Attack a Realm of the same
+                    order!
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
       {txSubmitted && (
