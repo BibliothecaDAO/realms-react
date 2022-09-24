@@ -164,14 +164,15 @@ export const useArmy = () => {
           army.heavyInfantryQty *
             (getBattalionStat('HeavyInfantry')?.attack || 0)
         : 0,
-      cavalryDefence: 0,
+      cavalryDefence: 100,
       archeryDefence: 0,
-      magicDefence: 0,
+      magicDefence: 20,
       infantryDefence: 0,
     };
   };
 
   useEffect(() => {
+    console.log(gameConstants);
     setBattalions(
       gameConstants?.battalionCosts.map((a, i) => {
         return {

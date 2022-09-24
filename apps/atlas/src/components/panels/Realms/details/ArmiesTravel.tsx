@@ -87,7 +87,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
       >
         show armies distance on atlas
       </Button>
-      <div className="relative mt-4 overflow-x-auto">
+      {/* <div className="relative mt-4 overflow-x-auto">
         {userRealms?.realms && (
           <Table
             columns={columns}
@@ -95,7 +95,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
             options={tableOptions}
           />
         )}
-      </div>
+      </div> */}
       <div className="relative grid grid-cols-2 gap-4 mt-4 overflow-x-auto">
         {allArmies?.map((army, index) => {
           return (
@@ -104,6 +104,11 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
               army={army}
               selectedRealm={realm.realmId}
               onTravel={() => travel(army.armyId, army.realmId, realm.realmId)}
+              onBuildArmy={() => {
+                router.push(`/realm/${realm.realmId}?tab=Army`, undefined, {
+                  shallow: true,
+                });
+              }}
             />
           );
         })}

@@ -10,6 +10,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
+import { GetTravelTime } from '@/shared/Getters/Realm';
 
 type Prop = {
   army: Army;
@@ -29,25 +30,32 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   // bools
   const isAtLocation = army.destinationRealmId === props.selectedRealm;
 
+  const travel_information = GetTravelTime({
+    travellerId: props.army.realmId,
+    destinationId: props.selectedRealm,
+  });
+
+  const hasArrived = army?.destinationArrivalTime > new Date().getTime();
+  console.log(army);
   return (
     <Card key={army.armyId} className="flex flex-col">
-      {army?.destinationArrivalTime && (
-        <div className="text-xl ">
-          <CountdownTimer date={army?.destinationArrivalTime} />
-        </div>
-      )}
-      <div className="flex justify-between px-4">
-        <h5 className="">
+      <div className="flex justify-between">
+        <h3 className="">
           {army.armyId == 0 ? '' : army.realmId}{' '}
           {army.armyId == 0 ? 'Defending' : ' | ' + army.armyId}{' '}
-        </h5>
+        </h3>
         <div>
           {isAtLocation ? (
-            <h5>here</h5>
+            <h5>{hasArrived ? 'on the way' : 'here'}</h5>
           ) : (
             <Button
               onClick={() => {
-                navigateToAsset(army?.destinationRealmId, 'realm');
+                navigateToAsset(
+                  army?.destinationRealmId
+                    ? army?.destinationRealmId
+                    : army.realmId,
+                  'realm'
+                );
               }}
               variant="outline"
               size="xs"
@@ -62,39 +70,38 @@ export const ArmyCard: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <CardBody>
+      <div className="relative">
         <RadarMap armyOne={armyStats} height={200} width={200} />
-        <div className="grid grid-cols-2 gap-2 mt-4">
-          {(army.destinationRealmId == 0 ||
-            army.destinationRealmId == army.realmId) && (
-            <Button
-              disabled={
-                army.destinationRealmId != 0 &&
-                army.destinationRealmId != army.realmId
-              }
-              variant="primary"
-              size="xs"
-              onClick={() => props.onBuildArmy && props.onBuildArmy()}
-            >
-              Recruit
-            </Button>
-          )}
-          {isAtLocation && (
-            <Button variant="primary" size="xs" className="w-full uppercase">
-              summon
-            </Button>
-          )}
-          {props.onTravel && (
-            <Button
-              variant="outline"
-              size="xs"
-              onClick={() => props.onTravel && props.onTravel()}
-            >
-              Travel
-            </Button>
-          )}
+      </div>
+      {hasArrived && (
+        <div className="flex px-2 my-1 text-sm rounded bg-gray-1000">
+          Traveling for: <CountdownTimer date={army?.destinationArrivalTime} />
         </div>
-      </CardBody>
+      )}
+      <div className="grid grid-cols-1 gap-2 mt-4">
+        <Button
+          variant="primary"
+          size="xs"
+          onClick={() => props.onBuildArmy && props.onBuildArmy()}
+        >
+          Recruit Army
+        </Button>
+
+        {isAtLocation && !hasArrived && (
+          <Button variant="primary" size="xs" className="w-full uppercase">
+            summon
+          </Button>
+        )}
+        {props.onTravel && !isAtLocation && (
+          <Button
+            variant="outline"
+            size="xs"
+            onClick={() => props.onTravel && props.onTravel()}
+          >
+            Travel here: {travel_information.time / 60}m
+          </Button>
+        )}
+      </div>
     </Card>
   );
 };
