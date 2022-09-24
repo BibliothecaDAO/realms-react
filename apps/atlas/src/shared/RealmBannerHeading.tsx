@@ -33,7 +33,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
   return (
     <div className="bg-cover bg-ink">
       <div
-        className={`bg-opacity-80 flex py-4 md:py-8 p-4 flex-wrap shadow border card  ${
+        className={`bg-opacity-80 flex py-4 md:py-8 p-4 flex-wrap shadow     ${
           OrderAffinity[trimmed] === LightDark.light
             ? 'border-white'
             : 'border-black'
@@ -41,7 +41,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
       >
         <div className="flex justify-between w-full tracking-widest text-center uppercase ">
           <div
-            className={`absolute ml-12 md:ml-4 z-10 justify-center w-10 h-16 md:w-24 md:h-40 -mt-2 border-4 border-double hidden sm:flex c-order-${trimmed} border-order-${trimmed}  shadow-2xl card ${
+            className={`absolute ml-12 md:ml-4 z-20 justify-center w-10 h-16 md:w-24 md:h-40 -mt-2 border-4 border-double hidden sm:flex c-order-${trimmed} border-order-${trimmed}  shadow-2xl card ${
               OrderAffinity[trimmed] === LightDark.light
                 ? 'bg-white'
                 : 'bg-black'
@@ -56,22 +56,17 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             />
           </div>
           <div className="flex items-center justify-between pl-16 text-left md:pl-40">
-            <p className="text-3xl font-lords md:text-6xl">
-              {realm?.name || '...'} | {realm?.realmId || '...'}
-            </p>
-
-            {/* {!isOwner && (
-            <Tooltip
-              className="ml-3"
-              tooltipText={
-                <span>
-                  'Lord: ' + shortenAddressWidth(realm?.settledOwner || '', 6)
-                </span>
-              }
-            >
-              <Crown className="w-8 fill-white" />
-            </Tooltip>
-          )} */}
+            <div>
+              <span className="flex font-display">
+                <Crown className="w-6 mr-3 fill-white" />{' '}
+                {isOwner
+                  ? 'you'
+                  : shortenAddressWidth(realm?.settledOwner || '', 6)}
+              </span>
+              <h1 className="font-semibold">
+                {realm?.name || '...'} | {realm?.realmId || '...'}
+              </h1>
+            </div>
           </div>
           {realm?.realmId && (
             <div className="self-center">

@@ -6,6 +6,7 @@ module.exports = {
     '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
+    'paper',
     'shadow-order-perfection',
     'shadow-order-power',
     'shadow-order-giants',

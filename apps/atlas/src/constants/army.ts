@@ -19,6 +19,17 @@ const image = '/realm-troops/archanist.png';
 const description =
   'Paladins are the most loyal and talented horseback riders that exist. With their superior horsemanship skills, they are able to wield a lance or polearm effectively with just one hand, allowing them to use their other hand to carry a shield or sheathe a weapon.';
 
+export enum BattalionIds {
+  LightCavalry = 1,
+  HeavyCavalry = 2,
+  Archer = 3,
+  LongBow = 4,
+  Mage = 5,
+  Archanist = 6,
+  LightInfantry = 7,
+  HeavyInfantry = 8,
+}
+
 export const battalionInformation = [
   {
     id: 1,
@@ -119,4 +130,39 @@ export const defaultArmy: Army = {
   mageQty: 0,
   realmId: 0,
   xp: 0,
+};
+
+export const battalionIdToString = (id: BattalionIds) => {
+  let name = 'n/a';
+  switch (id) {
+    case BattalionIds.LightCavalry:
+      name = 'Light Cavalry';
+      break;
+    case BattalionIds.HeavyCavalry:
+      name = 'Heavy Cavalry';
+      break;
+    case BattalionIds.Archer:
+      name = 'Archer';
+      break;
+    case BattalionIds.LongBow:
+      name = 'LongBow';
+      break;
+    case BattalionIds.Mage:
+      name = 'Mage';
+      break;
+    case BattalionIds.Archanist:
+      name = 'Archanist';
+      break;
+    case BattalionIds.LightInfantry:
+      name = 'Light Infantry';
+      break;
+    case BattalionIds.HeavyInfantry:
+      name = 'Heavy Infantry';
+      break;
+  }
+  return name;
+};
+
+export const getUnitImage = (id: number) => {
+  return battalionInformation.find((a) => a.id === id)?.image;
 };

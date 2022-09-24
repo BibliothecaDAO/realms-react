@@ -3,6 +3,7 @@ import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
 import { useStarknetTransactionManager } from '@starknet-react/core';
 import type { Identifier, XYCoord } from 'dnd-core';
 import Link from 'next/link';
+import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import type { Status, TransactionStatus } from 'starknet';
@@ -69,7 +70,7 @@ export const TxCartItem = (props: TxCartItem) => {
 
   const multicalls = props.transaction.metadata?.multicalls;
   let title: string;
-  let description: string;
+  let description: string | ReactElement;
   if (multicalls) {
     title = 'Actions';
     description = '';
@@ -77,7 +78,11 @@ export const TxCartItem = (props: TxCartItem) => {
     const { title: configTitle, description: configDescription } =
       getTxRenderConfig(props.transaction);
     title = props.transaction.metadata?.title || configTitle;
-    description = props.transaction.metadata?.description || configDescription;
+    description = (
+      <span>
+        {props.transaction.metadata?.description || configDescription}
+      </span>
+    );
   }
 
   const [{ handlerId }, drop] = useDrop<
@@ -162,7 +167,7 @@ export const TxCartItem = (props: TxCartItem) => {
       data-handler-id={handlerId}
       className={twMerge(
         STYLES.status[props.transaction.status],
-        `rounded-xl flex p-4 w-full mb-2 border-4 border-double border-white/20`,
+        `rounded-xl flex p-4 w-full mb-2  border card`,
         isDragging ? 'opacity-0' : 'opacity-100'
       )}
     >
@@ -170,8 +175,8 @@ export const TxCartItem = (props: TxCartItem) => {
         <DragIcon className="fill-current w-5 -translate-x-1.5 cursor-grab" />
       )}
       <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
-        <div className="flex justify-between w-full pb-4 mb-4 border-b border-white/40">
-          <h5 className="self-center text-xs uppercase">
+        <div className="flex justify-between w-full pb-2 mb-2 border-b border-white/20">
+          <h5 className="self-center uppercase">
             {FORMATED_STATUS.status[props.transaction.status]}
           </h5>
           <div className="self-center ">
@@ -204,7 +209,7 @@ export const TxCartItem = (props: TxCartItem) => {
         </div>
 
         <div>
-          <h3 className="uppercase">{title}</h3>
+          <h3>{title}</h3>
           {multicalls ? (
             multicalls.map((tx, i) => {
               const renderConfig = getTxRenderConfig(tx);
@@ -215,7 +220,7 @@ export const TxCartItem = (props: TxCartItem) => {
                     key={`${props.transaction.transactionHash}:${i}`}
                   >
                     <h5 className="uppercase">{renderConfig.title}</h5>
-                    <p className="text-lg opacity-75">
+                    <p className="text-lg font-semibold opacity-75">
                       {renderConfig.description}
                     </p>
                   </div>

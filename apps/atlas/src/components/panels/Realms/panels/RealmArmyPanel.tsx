@@ -66,8 +66,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   const { userData } = useUsersRealms();
 
   const [selectedArmy, setSelectedArmy] = useState<Army>();
-  // Always initialize with defending army
-  const [squadSlot, setSquadSlot] = useState<keyof typeof Squad>('Defend');
 
   const userArmiesAtLocation = userData.attackingArmies?.filter(
     (army) => army.destinationRealmId == realm.realmId
@@ -108,7 +106,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   });
 
   useEffect(() => {
-    setSquadSlot('Defend');
     setBuildQty({
       barracks: '1',
       archerTower: '1',
@@ -242,12 +239,12 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 ?.filter((a) => a.type === 'military')
                 .map((a, i) => {
                   return (
-                    <div key={i} className="flex flex-wrap w-full p-3 rounded">
-                      <div className="self-center">
+                    <div key={i} className="flex flex-wrap w-full ">
+                      <div className="self-center p-1 border card ">
                         <Image
                           height={200}
                           width={200}
-                          className="object-fill bg-white rounded-2xl"
+                          className="object-fill bg-white border rounded paper"
                           src={a.img}
                           alt=""
                         />
@@ -323,34 +320,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                             })}
                         </div>
                       </div>
-                      {/* <div className="flex w-full space-x-3">
-                        {troops
-                          ?.filter((b) => b.buildingId === a.id)
-                          .map((c, i) => {
-                            return (
-                              <div
-                                key={i}
-                                className="flex flex-col w-full text-center"
-                              >
-                                <div
-                                  className={`flex justify-center p-2 border-4 border-double rounded-xl border-white/40 ${c.troopColour}`}
-                                >
-                                  {c.troopImage && (
-                                    <Image
-                                      height={75}
-                                      width={75}
-                                      className="object-contain h-auto"
-                                      src={'/realm-troops/' + c.troopImage}
-                                      alt=""
-                                    />
-                                  )}
-                                </div>
-
-                                <h5 className="">{c.troopName}</h5>
-                              </div>
-                            );
-                          })}
-                        </div> */}
                     </div>
                   );
                 })}
@@ -378,10 +347,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           className="col-span-12 md:col-start-6 md:col-end-13"
         >
           <div className="flex justify-between w-full">
-            <CardTitle>
-              {isOwner ? 'Your' : 'Realm'} Armies
-              {/* {realm.name} {squadSlot}ing Arm */}
-            </CardTitle>
+            <CardTitle>{isOwner ? 'Your' : 'Realm'} Armies</CardTitle>
           </div>
           <div className="grid grid-cols-3 gap-4">
             {realm.ownArmies.map((army) => {
@@ -411,26 +377,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
               </Card>
             )}
           </div>
-          {/* {isOwner && (
-            <>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  build(realm?.realmId, 0, [1, 2], [2, 2]);
-                }}
-              >
-                build defence
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  build(realm?.realmId, realm.ownArmies.length, [1, 2], [2, 2]);
-                }}
-              >
-                add Attacking {realm.ownArmies.length}
-              </Button>
-            </>
-          )} */}
         </Card>
 
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
@@ -448,7 +394,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             title={'Army Builder | ' + realm.name + ' | #' + realm.realmId}
             onClose={() => setIsArmyBuilding(false)}
           />
-          <ArmyBuilderSideBar army={selectedArmy} />
+          <ArmyBuilderSideBar
+            buildings={getMilitaryBuildingsBuilt(props.buildings)}
+            army={selectedArmy}
+          />
         </AtlasSidebar>
         <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
           <SidebarHeader

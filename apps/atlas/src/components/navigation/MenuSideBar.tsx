@@ -41,7 +41,7 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'border-b-4  border-l-2 border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer';
+    'border-b-4  border-l-2 border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
 
   const textClasses =
     'hidden invisible font-display text-center lowercase sm:block mb-5 text-xl group-hover:visible ';

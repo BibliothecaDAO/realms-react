@@ -13,7 +13,7 @@ import { Spinner } from '../spinner';
 
 const STYLES = {
   icon: 'rounded-2xl border-gray-600 text-gray-200 ',
-  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase hover:-translate-y-0.5',
+  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase hover:-translate-y-0.5 paper',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
   disabled: 'disabled:opacity-70 disabled:pointer-events-none',

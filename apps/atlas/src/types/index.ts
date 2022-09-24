@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import type { Call as StarknetCall } from 'starknet';
 import type { RealmFragmentFragment, Army } from '@/generated/graphql';
 
@@ -261,7 +262,7 @@ export interface RealmsCall extends StarknetCall {
 export type RealmsTransaction = { status: string; metadata?: any };
 export interface RealmsTransactionRender {
   title: string;
-  description: string;
+  description: string | ReactElement;
 }
 
 export interface RealmsTransactionQueueContext {

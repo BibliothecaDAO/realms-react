@@ -1,8 +1,10 @@
 import { useStarknetInvoke } from '@starknet-react/core';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
+import { battalionIdToString, getUnitImage } from '@/constants/army';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import {
   ModuleAddr,
@@ -58,8 +60,29 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buildArmy]: ({ metadata }, { isQueued }) => ({
-    title: `Troop Training`,
-    description: `ssd`,
+    title: `Summon Army ${metadata.armyId} on Realm ${metadata.realmId}`,
+    description: (
+      <span>
+        {/* Building Army {metadata.armyId} on Realm {metadata.realmId} */}
+        {metadata.ids.map((a, index) => {
+          return (
+            <div className="flex my-1" key={index}>
+              <Image
+                height={80}
+                width={80}
+                className="object-fill border rounded"
+                src={getUnitImage(a) || ''}
+                alt=""
+              />
+              <div className="self-center ml-4">
+                <h3>{battalionIdToString(a)}</h3>
+                <h5>{metadata.qty[index]} battalions</h5>
+              </div>
+            </div>
+          );
+        })}
+      </span>
+    ),
   }),
   [Entrypoints.initiateCombat]: ({ metadata }, ctx) => ({
     title: 'Combat',
@@ -76,6 +99,7 @@ const useCombat = () => {
   const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);
+  const { play: buildArmySound } = useUiSounds(soundSelector.raid);
 
   const {
     data: combatData,
@@ -124,6 +148,7 @@ const useCombat = () => {
       qty
       // battalionIdsQtyCosts: { ids: any; qty: any; cost?: ItemCost }[]
     ) => {
+      buildArmySound();
       // const totalCost: ItemCost = battalionIdsQtyCosts.reduce<ItemCost>(
       //   (agg, curr) => {
       //     if (!curr.cost) {

@@ -45,7 +45,7 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     <div>
       <button
         onClick={pressedTab}
-        className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl card border ${
+        className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl card border paper ${
           props.color
         }  ${props.selected ? 'bg-opacity-95 py-5' : 'bg-opacity-70'} `}
       >

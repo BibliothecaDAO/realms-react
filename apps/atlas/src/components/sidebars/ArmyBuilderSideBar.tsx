@@ -12,6 +12,7 @@ import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation, defaultArmy } from '@/constants/army';
+import { buildingIdToString } from '@/constants/buildings';
 import type { Army } from '@/generated/graphql';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
@@ -19,11 +20,13 @@ import { CostBlock } from '@/shared/Getters/Realm';
 import type {
   ArmyBattalionQty,
   BattalionInterface,
+  BuildingDetail,
   ResourceCost,
 } from '@/types/index';
 
 type Prop = {
   army?: Army;
+  buildings?: number[];
 };
 
 type Battalion = {
@@ -35,17 +38,18 @@ type Battalion = {
 const MAX_BATTALIONS = 30;
 
 export const Battalion: React.FC<
-  BattalionInterface & { add: (id) => void; quantity; health }
+  BattalionInterface & { add: (id) => void; quantity; health; disabled }
 > = (props) => {
   const data = battalionInformation.find((a) => a.id === props.battalionId);
 
   const [input, setInput] = useState('1');
+
   return (
     <Card
       key={props.battalionId}
       className={`relative flex-col group ${data?.color}`}
     >
-      <div className="absolute flex flex-col justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer rounded-2xl opacity-90 group-hover:visible">
+      <div className="absolute z-50 flex flex-col justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer group-hover:visible">
         <div className="flex self-center py-4">
           {props.battalionCost &&
             props.battalionCost.map((b, i) => {
@@ -72,6 +76,7 @@ export const Battalion: React.FC<
             variant="primary"
             size="xs"
             className="self-center"
+            disabled={props.disabled}
           >
             add to army +
           </Button>
@@ -86,6 +91,11 @@ export const Battalion: React.FC<
             onChange={(value: any) => setInput(value)}
           />{' '}
         </div>
+        {props.disabled && (
+          <div className="mt-4 text-center">
+            Build a {buildingIdToString(props.buildingId || 0)} first
+          </div>
+        )}
       </div>
       <CardTitle className="flex justify-center text-center">
         {data?.name}
@@ -186,6 +196,8 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     }
   }, [addedBattalions, props.army]);
 
+  console.log(props.buildings);
+
   return (
     <div className="grid grid-cols-12 gap-6 pt-4">
       <hr />
@@ -235,6 +247,11 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 }
                 quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                 health={army ? army[nameArray[index] + 'Health'] : ''}
+                disabled={
+                  props.buildings?.find((a) => a === battalion.buildingId)
+                    ? false
+                    : true
+                }
               />
             </div>
           ))}

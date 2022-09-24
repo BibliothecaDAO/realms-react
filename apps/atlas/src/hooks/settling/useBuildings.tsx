@@ -1,4 +1,5 @@
 import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
@@ -8,6 +9,7 @@ import {
   RealmBuildingsSize,
   RealmBuildingIntegrity,
   buildingIdToString,
+  buildingImageById,
 } from '@/constants/buildings';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Realm } from '@/generated/graphql';
@@ -52,10 +54,27 @@ export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.build]: ({ metadata }, ctx) => ({
-    title: ctx.isQueued ? 'Construct Building' : 'Constructing Building',
-    description: `Realm #${metadata.realmId} ${
-      ctx.isQueued ? `commanded to build ` : 'has commenced building '
-    } ${buildingIdToString(metadata.buildingId)}`,
+    title: ctx.isQueued
+      ? `Construct ${metadata.qty} ${buildingIdToString(
+          metadata.buildingId
+        )} on Realm ${metadata.realmId}`
+      : 'Constructing Building',
+    description: (
+      <span>
+        <div className="flex my-1">
+          <Image
+            height={80}
+            width={80}
+            className="object-fill border rounded paper"
+            src={buildingImageById(metadata.buildingId)}
+            alt=""
+          />
+          <div className="self-center ml-4">
+            <h3>{buildingIdToString(metadata.buildingId)}</h3>
+          </div>
+        </div>
+      </span>
+    ),
   }),
 };
 
@@ -71,7 +90,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
 
   const getRealmBuildings = (integrity, buildingLength) => {
     const buildings = Math.floor(
-      (integrity - currentTime / 1000) / (buildingLength * 2)
+      (integrity - currentTime / 1000) / buildingLength
     );
     return buildings < 0 ? 0 : buildings;
   };
@@ -116,7 +135,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'archerTower',
         id: RealmBuildingId.ArcherTower,
         quantityBuilt: archerTowers,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.ArcherTower),
         type: 'military',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.ArcherTower),
         buildingSize: RealmBuildingsSize.ArcherTower,
@@ -130,7 +149,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'barracks',
         id: RealmBuildingId.Barracks,
         quantityBuilt: barracks,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.Barracks),
         type: 'military',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Barracks),
         buildingSize: RealmBuildingsSize.Barracks,
@@ -144,7 +163,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'castle',
         id: RealmBuildingId.Castle,
         quantityBuilt: castles,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.Castle),
         type: 'military',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Castle),
         buildingSize: RealmBuildingsSize.Castle,
@@ -158,7 +177,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'farm',
         id: RealmBuildingId.Farm,
         quantityBuilt: 0,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.Farm),
         type: 'economic',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.Farm),
         buildingSize: RealmBuildingsSize.Farm,
@@ -172,7 +191,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'fishingVillage',
         id: RealmBuildingId.FishingVillage,
         quantityBuilt: 0,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.FishingVillage),
         type: 'economic',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.FishingVillage),
         buildingSize: RealmBuildingsSize.FishingVillage,
@@ -186,7 +205,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'house',
         id: RealmBuildingId.House,
         quantityBuilt: huts,
-        img: '/realm-buildings/barracks.png',
+        img: buildingImageById(RealmBuildingId.House),
         type: 'economic',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.House),
         buildingSize: RealmBuildingsSize.House,
@@ -200,7 +219,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'mageTower',
         id: RealmBuildingId.MageTower,
         quantityBuilt: mageTowers,
-        img: '/realm-buildings/mageTower.png',
+        img: buildingImageById(RealmBuildingId.MageTower),
         type: 'military',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.MageTower),
         buildingSize: RealmBuildingsSize.MageTower,
@@ -214,7 +233,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
         key: 'storeHouse',
         id: RealmBuildingId.StoreHouse,
         quantityBuilt: 0,
-        img: '/realm-buildings/storeHouse.png',
+        img: buildingImageById(RealmBuildingId.StoreHouse),
         type: 'economic',
         buildingDecay: pluckBuilding(realm, RealmBuildingId.StoreHouse),
         buildingSize: RealmBuildingsSize.StoreHouse,
