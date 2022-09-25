@@ -139,7 +139,7 @@ export function AccountOverview() {
           <CardBody>
             <CardStats className="flex justify-end ">
               {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-              <Lords className="self-center w-6 h-6 ml-4" />
+              <Lords className="self-center w-6 h-6 ml-4 fill-current" />
             </CardStats>
             <Button variant="outline" size="xs" href="/bank">
               Bank

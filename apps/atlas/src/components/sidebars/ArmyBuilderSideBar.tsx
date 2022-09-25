@@ -9,8 +9,11 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation, defaultArmy } from '@/constants/army';
+import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Army } from '@/generated/graphql';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
+import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { CostBlock } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
@@ -19,7 +22,6 @@ import type {
   BattalionInterface,
   ResourceCost,
 } from '@/types/index';
-
 type Prop = {
   army?: Army;
   buildings?: number[];
@@ -34,6 +36,29 @@ type Battalion = {
 const MAX_BATTALIONS = 30;
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
+  const txQueue = useTransactionQueue();
+  const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
+  useEffect(() => {
+    setBuildingIdsEnqueued(
+      txQueue.transactions
+        .filter(
+          (tx) =>
+            tx.contractAddress == ModuleAddr.Building &&
+            tx.entrypoint == Entrypoints.build &&
+            tx.metadata['realmId'] == props.army?.realmId
+        )
+        .map((t) => t.metadata['buildingId'])
+    );
+  }, [txQueue.transactions]);
+
+  const checkCanBuilt = (id) => {
+    const militaryBuildings = props.buildings ?? [];
+    return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
+      .length > 0
+      ? false
+      : true;
+  };
+
   const { build } = useCombat();
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
@@ -165,11 +190,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 }
                 quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                 health={army ? army[nameArray[index] + 'Health'] : ''}
-                disabled={
-                  props.buildings?.find((a) => a === battalion.buildingId)
-                    ? false
-                    : true
-                }
+                disabled={checkCanBuilt(battalion.buildingId)}
               />
             </div>
           ))}

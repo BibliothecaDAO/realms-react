@@ -54,7 +54,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="right-0 w-48 border bg-white/0 border-cta-100/60">
+            <Menu.Items className="right-0 w-48 bg-white border border-cta-100/60">
               <Menu.Group className="flex">
                 {menuItems.map((menuItem) => {
                   return (
