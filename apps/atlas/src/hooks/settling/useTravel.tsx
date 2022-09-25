@@ -41,8 +41,8 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.travel]: (tx, _context) => ({
-    title: 'Travelling',
-    description: ``,
+    title: `Travelling`,
+    description: `Army ${tx.metadata.armyId} of Realm ${tx.metadata.travellerId} -> Realm ${tx.metadata.destinationId}`,
   }),
 };
 

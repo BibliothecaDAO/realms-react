@@ -25,7 +25,7 @@ import type { RealmsCardProps } from '@/types/index';
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
-const menuItems = ['3D', 'Render', 'SVG'];
+const menuItems = ['Render', 'Map'];
 
 export function RealmOverview(props: RealmsCardProps): ReactElement {
   const router = useRouter();
@@ -34,10 +34,25 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
-  const [imageView, setImageView] = useState(menuItems[1]);
+  const [imageView, setImageView] = useState(menuItems[0]);
+
+  const keyStr =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+  const triplet = (e1: number, e2: number, e3: number) =>
+    keyStr.charAt(e1 >> 2) +
+    keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+    keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+    keyStr.charAt(e3 & 63);
+
+  const rgbDataURL = (r: number, g: number, b: number) =>
+    `data:image/gif;base64,R0lGODlhAQABAPAA${
+      triplet(0, r, g) + triplet(b, 255, 255)
+    }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
+
   return (
     <>
-      <div className="relative w-auto h-96">
+      <div className="relative w-auto">
         <Menu className="!absolute z-10 !w-auto right-1 top-1">
           <Menu.Button
             variant="outline"
@@ -54,7 +69,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="right-0 w-48 bg-white border border-cta-100/60">
+            <Menu.Items className="right-0 w-48 bg-black border border-cta-100/60">
               <Menu.Group className="flex">
                 {menuItems.map((menuItem) => {
                   return (
@@ -64,7 +79,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
                           variant="unstyled"
                           size="xs"
                           className={clsx(
-                            'block flex-1',
+                            'block flex-1 font-display',
                             active ? 'text-red-900' : 'text-gray-500',
                             imageView === menuItem && 'text-red-500/60'
                           )}
@@ -81,7 +96,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
             </Menu.Items>
           </Transition>
         </Menu>
-        {imageView === '3D' && <TerrainLayer />}
+        {/* {imageView === '3D' && <TerrainLayer />} */}
 
         {imageView === 'Render' && (
           <Image
@@ -89,12 +104,28 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
             alt="map"
             className="w-full mt-4 rounded-xl -scale-x-100"
             width={500}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(20, 20, 20)}
             height={320}
+            loading="lazy"
+            layout={'responsive'}
+          />
+        )}
+        {imageView === 'Map' && (
+          <Image
+            src={`https://d23fdhqc1jb9no.cloudfront.net/_Realms/${props.realm.realmId}.svg`}
+            alt="map"
+            className="w-full mt-4 rounded-xl"
+            width={350}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(20, 20, 20)}
+            height={350}
+            loading="lazy"
             layout={'responsive'}
           />
         )}
       </div>
-      <div className="flex flex-col justify-between py-2 uppercase rounded shadow-inner sm:flex-row font-display">
+      <div className="flex flex-col justify-between py-2 mt-auto uppercase rounded shadow-inner sm:flex-row font-display">
         <span>
           Rank:
           <span className="">{props.realm.rarityRank}</span>
@@ -144,7 +175,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           traitAmount={getTrait(props.realm, 'River')}
         />
       </div>
-      <div className="w-full pt-4 mt-auto bg-black shadow-inner">
+      <div className="w-full pt-4 bg-black shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
           {isYourRealm(props.realm, account, starkAccount || '') && (
@@ -211,11 +242,11 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           </div>
         </div>
       </div>
-      {/* <MarketplaceByPanel
+      <MarketplaceByPanel
         id={props.realm.realmId.toString()}
         address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
       />
-      <DownloadAssets id={props.realm.realmId}></DownloadAssets> */}
+      {/* <DownloadAssets id={props.realm.realmId}></DownloadAssets> */}
     </>
   );
 }
