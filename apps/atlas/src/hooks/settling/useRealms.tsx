@@ -2,8 +2,12 @@ import { useState } from 'react';
 import type {
   RealmOrderByWithRelationInput,
   RealmWhereInput,
+  TravelWhereInput,
 } from '@/generated/graphql';
-import { useGetRealmsQuery } from '@/generated/graphql';
+import {
+  useGetRealmsQuery,
+  useGetRealmsWithTravelsQuery,
+} from '@/generated/graphql';
 
 export type Args = {
   filter: RealmWhereInput;
@@ -11,6 +15,7 @@ export type Args = {
   pageSize?: number;
   page?: number;
   skip?: boolean;
+  travelsWhere?: TravelWhereInput;
 };
 
 const useRealms = (args: Args) => {

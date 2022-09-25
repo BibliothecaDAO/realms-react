@@ -2,64 +2,77 @@ import { Spinner } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
-import { COMBAT_OUTCOME_ATTACKER_WINS, troopList } from '@/constants/troops';
-import type { GetRealmCombatResultQuery } from '@/generated/graphql';
-import { useGetRealmCombatResultQuery } from '@/generated/graphql';
-import { useCosts } from '@/hooks/costs/useCosts';
+import { COMBAT_OUTCOME_ATTACKER_WINS } from '@/constants/army';
+import type { RealmHistory, RealmHistoryWhereInput } from '@/generated/graphql';
+import { useGetRealmHistoryQuery } from '@/generated/graphql';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { resourcePillaged } from '@/shared/Getters/Realm';
-import { Troop } from '@/shared/squad/Troops';
-import type { TroopInterface } from '@/types/index';
+import type { ArmyInterface } from '@/types/index';
 
-export const CombatTroop = (props: TroopInterface) => {
-  return <div>{props.vitality}</div>;
-};
+interface RaidResultsProps {
+  fromAttackRealmId?: number;
+  fromDefendRealmId?: number;
+  tx?: string;
+  data?: RealmHistory;
+}
 
-export const RaidResults = ({ defendId, tx }) => {
-  const { costs } = useCosts();
-  const [result, setResult] =
-    useState<GetRealmCombatResultQuery['getRealmCombatResult']>();
+export const RaidResults = (props: RaidResultsProps) => {
+  const { gameConstants } = useGameConstants();
+  const [result, setResult] = useState<RealmHistory>();
 
+  const filter: RealmHistoryWhereInput = {
+    transactionHash: { equals: props.tx },
+  };
+  if (props.fromAttackRealmId) {
+    filter.realmId = { equals: props.fromAttackRealmId };
+    filter.eventType = { in: ['realm_combat_attack'] };
+  }
+  if (props.fromDefendRealmId) {
+    filter.realmId = { equals: props.fromDefendRealmId };
+    filter.eventType = { in: ['realm_combat_defend'] };
+  }
   const {
     data: combatResult,
     startPolling,
     stopPolling,
-  } = useGetRealmCombatResultQuery({
+    loading,
+  } = useGetRealmHistoryQuery({
     variables: {
-      defendRealmId: defendId,
-      transactionHash: tx,
+      filter,
     },
   });
   useEffect(() => {
-    if (!defendId) {
+    if (!(props.fromAttackRealmId || props.fromDefendRealmId) && props.data) {
+      setResult(props.data);
       return;
     }
+    console.log('start polling');
     startPolling(2000); // TODO poll interval after transaction accepted on l2
-    if (combatResult?.getRealmCombatResult) {
+    if (combatResult?.getRealmHistory) {
       stopPolling();
-      setResult(combatResult?.getRealmCombatResult);
+      setResult(combatResult?.getRealmHistory[0]);
     }
-  }, [combatResult, startPolling, stopPolling, defendId]);
+  }, [combatResult, startPolling, stopPolling]);
 
-  const success =
-    combatResult?.getRealmCombatResult.outcome === COMBAT_OUTCOME_ATTACKER_WINS;
+  const success = result?.data?.success;
 
-  const getFlatHitpoints = combatResult?.getRealmCombatResult.history
-    ? combatResult?.getRealmCombatResult.history?.slice(1).map((a) => {
+  /* const getFlatHitpoints = result.history
+    ? result.history?.slice(1).map((a) => {
         return a.hitPoints;
       })
     : [];
 
-  const combatStart = combatResult?.getRealmCombatResult.history?.find(
+  const combatStart = result.history?.find(
     (a) => a.eventType === 'combat_start'
   );
 
-  const lastEvent = combatResult?.getRealmCombatResult.history
-    ? combatResult?.getRealmCombatResult.history[
-        combatResult?.getRealmCombatResult.history.length - 1
+  const lastEvent = result.history
+    ? result.history[
+        result.history.length - 1
       ]
     : [];
 
-  const mapped = combatResult?.getRealmCombatResult.history
+  const mapped = result.history
     ?.filter((a) => a.eventType === 'combat_step')
     .map((a, i) => {
       return {
@@ -67,23 +80,23 @@ export const RaidResults = ({ defendId, tx }) => {
         hitPoints: getFlatHitpoints[i],
         realm:
           i % 2 === 0
-            ? combatResult?.getRealmCombatResult.attackRealmId
-            : combatResult?.getRealmCombatResult.defendRealmId,
+            ? result.attackRealmId
+            : result.defendRealmId,
         unitAttacking: a.attackSquad.find((b) => b.vitality !== 0),
         unitDefending: a.defendSquad.find((b) => b.vitality !== 0),
       };
-    });
+    }); */
 
   return (
     <div className="pt-10">
-      {combatResult?.getRealmCombatResult && (
+      {result && (
         <h2 className="mb-4 text-center">
-          {success ? 'Successful' : 'Unsuccessful'} Raid!!
+          {success ? 'Successful Raid' : 'Raid Defended'}!!
         </h2>
       )}
 
       <div className="flex flex-wrap justify-between">
-        {mapped
+        {/* {mapped
           ?.filter((b) => b.outcome !== 1)
           .filter((b) => b.unitDefending)
           .map((a, i) => {
@@ -96,13 +109,13 @@ export const RaidResults = ({ defendId, tx }) => {
                   [{i + 1}] Attacking Realm # {a.realm}
                 </h3>
 
-                <div className="flex justify-around mt-10 space-x-2">
+                 <div className="flex justify-around mt-10 space-x-2">
                   <div>
-                    <Troop
+                     <Troop
                       className="w-48 h-64"
-                      troopsStats={costs?.troopStats}
+                      troopsStats={gameConstants?.troopStats}
                       troop={a.unitAttacking}
-                    />
+            /> 
                     <div className="flex flex-wrap w-full mx-auto mt-2">
                       {a.attackSquad.map((b: TroopInterface, i) => {
                         return <TroopIcon key={i} vitality={b.vitality} />;
@@ -116,24 +129,24 @@ export const RaidResults = ({ defendId, tx }) => {
                   </div>
 
                   <div>
-                    <Troop
+                   <Troop
                       className="w-48 h-64"
                       troopsStats={costs?.troopStats}
                       troop={a.unitDefending}
-                    />
+                    /> 
                     <div className="flex flex-wrap w-full mx-auto mt-2">
                       {a.defendSquad.map((b: TroopInterface, i) => {
                         return <TroopIcon key={i} vitality={b.vitality} />;
                       })}
                     </div>
                   </div>
-                </div>
+                </div> 
               </div>
             );
-          })}
+          })} */}
       </div>
 
-      {combatResult?.getRealmCombatResult ? (
+      {result ? (
         <div className="mt-5">
           {/* <div className="relative flex flex-wrap ">
             <div className="w-full">
@@ -144,33 +157,31 @@ export const RaidResults = ({ defendId, tx }) => {
                     index={index}
                     realm={
                       index & 1
-                        ? combatResult?.getRealmCombatResult.defendRealmId
-                        : combatResult?.getRealmCombatResult.attackRealmId
+                        ? result.defendRealmId
+                        : result.attackRealmId
                     }
                     hitPoints={a.hitPoints}
-                    result={combatResult?.getRealmCombatResult}
+                    result={result}
                   />
                 );
               })}
             </div>
           </div> */}
-          {(combatResult?.getRealmCombatResult?.relicLost ?? 0) > 0 && (
-            <h1>
-              Relic {combatResult?.getRealmCombatResult.relicLost} Captured
-            </h1>
+          {(result?.data.relicLost ?? 0) > 0 && (
+            <h1>Relic {result.data.relicLost} Captured</h1>
           )}
-          {combatResult?.getRealmCombatResult.resourcesPillaged?.length ? (
+          {result.data.pillagedResources?.length ? (
             <div className="pt-4">
               <div className="mb-4 text-3xl">
-                Successful Raid!! Hurray!! You slayed all of Realm{' '}
-                {combatResult?.getRealmCombatResult.defendRealmId} troops and
-                took off with the following resources. The citizens are
-                trembling and in awe of your victory.
+                Successful Raid!! The troops of Realm{' '}
+                {result.data.defendRealmId} were slayed and Realm{' '}
+                {result.data.attackRealmId} took off with the following
+                resources.
+                {/* TODO GENERALISE
+                 The citizens are trembling and in awe of your victory. */}
               </div>
               <div className="flex justify-center w-72">
-                {resourcePillaged(
-                  combatResult?.getRealmCombatResult.resourcesPillaged
-                )}
+                {resourcePillaged(result.data.pillagedResources)}
               </div>
             </div>
           ) : (
@@ -204,7 +215,7 @@ export const RaidResults = ({ defendId, tx }) => {
   );
 };
 
-interface BattleReportItem {
+/* interface BattleReportItem {
   realm: number;
   index: number;
   hitPoints: number | null | undefined;
@@ -264,3 +275,4 @@ export function TroopIcon({ vitality }): ReactElement {
     </div>
   );
 }
+*/

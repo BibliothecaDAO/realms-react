@@ -56,7 +56,6 @@ export interface AtlasMap {
   navigateToAsset: (assetId: number, assetType: AssetType) => void;
   setViewState: (viewState: any) => void;
   viewState: any;
-  coordinates: Coordinate;
   selectedAsset: Asset;
   isMapLoaded: boolean;
   setIsMapLoaded: (loaded: boolean) => void;
@@ -83,6 +82,7 @@ export function useAtlasMap(): AtlasMap {
     transitionInterpolator: new FlyToInterpolator(),
   });
 
+  // check for asset in query string
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -103,6 +103,26 @@ export function useAtlasMap(): AtlasMap {
     }
   }, [router.isReady, asset]);
 
+  // Update view state on coordinates change
+  useEffect(() => {
+    if (!coordinates) {
+      return;
+    }
+
+    setViewState({
+      ...coordinates,
+      zoom: 8,
+      pitch: 20,
+      bearing: 0,
+      bounds: [
+        [-180, -180], // Southwest coordinates
+        [180, 180], // Northeast coordinates
+      ],
+      transitionDuration: 5000,
+      transitionInterpolator: new FlyToInterpolator(),
+    });
+  }, [coordinates?.latitude, coordinates?.latitude]);
+
   function navigateToAsset(assetId: number, assetType: AssetType) {
     if (!assetId) {
       return;
@@ -114,7 +134,6 @@ export function useAtlasMap(): AtlasMap {
     setViewState,
     viewState,
     navigateToAsset,
-    coordinates,
     selectedAsset,
     isMapLoaded,
     setIsMapLoaded,

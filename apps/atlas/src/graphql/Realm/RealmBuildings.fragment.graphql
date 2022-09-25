@@ -1,0 +1,13 @@
+fragment RealmBuildingsFragment on Realm {
+  buildings {
+    buildingId
+    buildingName
+    buildingIntegrity
+    count
+    population
+    culture
+    food
+    limitTraitId
+    limitTraitName
+  }
+}

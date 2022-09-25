@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { resources } from '@/constants/resources';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
@@ -20,7 +21,6 @@ import {
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 import type { ResourceCost, NetworkState } from '@/types/index';
-import { resources } from '@/util/resources';
 
 export type Resource = {
   resourceId: number;
@@ -80,7 +80,7 @@ const ResourcesContext = createContext<{
   updateBalance: () => void;
   getResourceById: (resourceId: number) => Resource | undefined;
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
-  troopCosts: GetGameConstantsQuery['troopStats'] | undefined;
+  battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
 }>(null!);
 
@@ -106,8 +106,8 @@ function useResources() {
   const [buildingCosts, setBuildingCosts] =
     useState<GetGameConstantsQuery['buildingCosts']>();
 
-  const [troopCosts, setTroopCosts] =
-    useState<GetGameConstantsQuery['troopStats']>();
+  const [battalionCosts, setBattalionCosts] =
+    useState<GetGameConstantsQuery['battalionCosts']>();
 
   const { data: gameConstants } = useGetGameConstantsQuery();
 
@@ -295,7 +295,7 @@ function useResources() {
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
-    setTroopCosts(gameConstants?.troopStats);
+    setBattalionCosts(gameConstants?.battalionCosts);
   }, [
     resourceBalanceData && resourceBalanceData[0],
     lpBalanceData && lpBalanceData[0],
@@ -334,7 +334,7 @@ function useResources() {
     getResourceById,
     lordsBalance,
     buildingCosts,
-    troopCosts,
+    battalionCosts,
     batchAddResources,
   };
 }

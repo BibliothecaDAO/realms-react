@@ -15,6 +15,7 @@ import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { ReactElement, useState, useMemo } from 'react';
 
+import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
@@ -98,33 +99,58 @@ export function AccountOverview() {
     <div>
       <animated.div
         style={animationUp}
-        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:p-6"
+        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-3">
+        <Card className="flex col-start-1 col-end-6">
+          <div className="flex">
+            <div className="relative">
+              <Image
+                src={'/stableai/archanist.png'}
+                alt="map"
+                height={300}
+                width={300}
+                className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
+              />
+              <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
+                1
+              </div>
+            </div>
+
+            <div className="flex flex-wrap">
+              <div className="self-center">
+                {account && (
+                  <span className="self-center text-center sm:text-xl font-lords">
+                    {shortenAddressWidth(account, 6)}
+                  </span>
+                )}
+                <h2 className="w-full sm:text-4xl">Ser, Your Vast Empire</h2>
+              </div>
+            </div>
+          </div>
+        </Card>
+        <Card className="col-start-1 col-end-13 md:col-start-6 md:col-end-8">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
-            <CardStats className="mb-4 text-5xl">
-              {settledRealmsCount}
-            </CardStats>
+            <CardStats>{settledRealmsCount}</CardStats>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-3 md:col-end-6">
+        <Card className="col-start-1 col-end-13 md:col-start-8 md:col-end-11">
           <CardTitle className="flex">Lords Balance</CardTitle>
           <CardBody>
-            <CardStats className="flex justify-end mb-4 text-3xl ">
+            <CardStats className="flex justify-end ">
               {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-              <Lords className="self-center w-6 h-6 ml-4" />
+              <Lords className="self-center w-6 h-6 ml-4 fill-current" />
             </CardStats>
             <Button variant="outline" size="xs" href="/bank">
               Bank
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-6 md:col-end-9">
+        <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
           <CardTitle>Relics Held</CardTitle>
 
           <CardBody>
-            <CardStats className="mb-4 text-3xl">
+            <CardStats>
               <span>{userData?.relicsHeld as ReactNode}</span>
             </CardStats>
             <Button variant="outline" size="xs" href="/bank">
@@ -132,7 +158,7 @@ export function AccountOverview() {
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-13 row-span-2 md:col-start-9 md:col-end-13">
+        {/* <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-13">
           <CardTitle>Production rate daily</CardTitle>
 
           <CardBody>
@@ -165,7 +191,7 @@ export function AccountOverview() {
               ? 'Harvest All Resources'
               : 'nothing to claim'}
           </Button>
-        </Card>
+        </Card> */}
         {/* <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-4">
             <CardTitle>Raided in past 24hrs</CardTitle>
             <CardBody>

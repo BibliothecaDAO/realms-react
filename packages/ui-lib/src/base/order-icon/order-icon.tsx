@@ -48,10 +48,10 @@ const Components: { [key: string]: ReactElement } = Object.freeze({
 
 const STYLES = {
   size: {
-    xs: 'w-4 h-4 flex justify-center',
-    sm: 'w-6 h-6 flex justify-center',
-    md: 'w-8 h-8 flex justify-center',
-    lg: 'w-12 h-12 flex justify-center',
+    xs: 'w-4 h-4 flex justify-center paper',
+    sm: 'w-6 h-6 flex justify-center paper',
+    md: 'w-8 h-8 flex justify-center paper',
+    lg: 'w-12 h-12 flex justify-center paper',
   },
 } as const;
 

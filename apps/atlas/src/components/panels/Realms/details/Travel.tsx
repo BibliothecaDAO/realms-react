@@ -1,111 +1,65 @@
-import {
-  Card,
-  CardTitle,
-  CardStats,
-  CardBody,
-  Button,
-  CountdownTimer,
-  Table,
-  OrderIcon,
-} from '@bibliotheca-dao/ui-lib/base';
+import { OrderIcon, Tabs, Table, Button } from '@bibliotheca-dao/ui-lib';
+import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
+import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import Image from 'next/image';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery, RealmFragmentFragment } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import useIsOwner from '@/hooks/useIsOwner';
-import {
-  TraitTable,
-  squadStats,
-  RealmVaultStatus,
-  hasOwnRelic,
-  RealmCombatStatus,
-  getTrait,
-  GetTravelTime,
-} from '@/shared/Getters/Realm';
-import type {
-  BuildingDetail,
-  RealmFoodDetails,
-  BuildingFootprint,
-  AvailableResources,
-} from '@/types/index';
-import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
-
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
+import { ArmiesTravel } from './ArmiesTravel';
+import { RealmsTravel } from './RealmsTravel';
 type Prop = {
   realm: RealmFragmentFragment;
 };
 
-export const RealmTravel = ({ realm }: Prop) => {
+export const Travel = ({ realm }: Prop) => {
   const { userRealms } = useUsersRealms();
-  const {
-    travelContext: { travel, setTravelArcs },
-  } = useAtlasContext();
+  const { play } = useUiSounds(soundSelector.pageTurn);
+  const [selectedTab, setSelectedTab] = useState(0);
 
-  const ids = userRealms?.realms.map((a) => a.realmId) || [];
+  const pressedTab = (index) => {
+    play();
+    setSelectedTab(index as number);
+  };
 
-  const travelTable = userRealms?.realms.map((a) => {
-    const travel_information = GetTravelTime({
-      travellerId: realm.realmId,
-      destinationId: a.realmId,
-    });
-    return {
-      name: (
-        <span className="flex space-x-2 text-lg font-display">
-          <OrderIcon
-            className="mr-2"
-            size="sm"
-            order={a.orderType.toLowerCase()}
-          />{' '}
-          {a.name}
-        </span>
-      ),
-      distance: travel_information.distance,
-      time: <span>{travel_information.time / 60} min</span>,
-      action: (
-        <Button
-          onClick={() => travel(a.realmId, realm.realmId)}
-          variant="outline"
-          size="xs"
-        >
-          Move Army{' '}
-        </Button>
-      ),
-    };
-  });
-
-  const travelTableFiltered = travelTable?.sort(
-    (a, b) => parseInt(a.distance) - parseInt(b.distance)
+  const tabs = useMemo(
+    () => [
+      {
+        label: <Map className="self-center w-6 h-6 fill-current" />,
+        component: <RealmsTravel realm={realm} userRealms={userRealms} />,
+      },
+      {
+        label: <Head className="self-center w-6 h-6 fill-current" />,
+        component: <ArmiesTravel realm={realm} userRealms={userRealms} />,
+      },
+    ],
+    [realm?.realmId, userRealms]
   );
-  const columns = [
-    { Header: 'Name', id: 1, accessor: 'name' },
-    { Header: 'Distance', id: 2, accessor: 'distance' },
-    { Header: 'Time', id: 3, accessor: 'time' },
-    { Header: 'Action', id: 4, accessor: 'action' },
-  ];
-  const tableOptions = { is_striped: true };
-
   return (
     <div>
-      <h3>Your realms</h3>
-      <Button
-        onClick={() => setTravelArcs(realm.realmId, ids)}
-        variant="primary"
-        size="xs"
+      <Tabs
+        selectedIndex={selectedTab}
+        onChange={(index) => pressedTab(index as number)}
+        variant="default"
       >
-        show travel distance to realms
-      </Button>
-      <div className="relative mt-4 overflow-x-auto">
-        {userRealms?.realms && (
-          <Table
-            columns={columns}
-            data={travelTableFiltered}
-            options={tableOptions}
-          />
-        )}
-      </div>
+        <Tabs.List className="">
+          {tabs.map((tab, index) => (
+            <Tabs.Tab key={index} className="uppercase">
+              {tab.label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+
+        <Tabs.Panels>
+          {tabs.map((tab, index) => (
+            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+          ))}
+        </Tabs.Panels>
+      </Tabs>
     </div>
   );
 };

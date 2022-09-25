@@ -45,7 +45,7 @@ const ToolbarItem = (props: ToolbarItemProps) => {
     <div>
       <button
         onClick={pressedTab}
-        className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl ${
+        className={`md:px-6 px-4 py-3 uppercase rounded-b-xl group font-display tracking-wide hover:bg-opacity-90 transition-all duration-300 hover:py-5 shadow-xl card border paper ${
           props.color
         }  ${props.selected ? 'bg-opacity-95 py-5' : 'bg-opacity-70'} `}
       >
@@ -83,11 +83,11 @@ const RealmToolbar: React.FC<ToolbarProps> = (props) => {
 
   const toolBarItems = [
     {
-      hotkey: HotKeys.Survey,
-      click: () => props.onSetSubview('Survey'),
+      hotkey: HotKeys.Overview,
+      click: () => props.onSetSubview('Overview'),
       title: 'Overview',
       icon: <Castle className="self-center w-6 h-6 fill-current" />,
-      tabName: 'Survey',
+      tabName: 'Overview',
     },
     {
       hotkey: HotKeys.Army,

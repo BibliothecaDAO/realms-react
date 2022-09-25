@@ -11,7 +11,7 @@ import React, { useMemo } from 'react';
 import {
   RealmHistory,
   RealmOverview,
-  RealmTravel,
+  RealmsTravel,
   RealmLore,
 } from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';

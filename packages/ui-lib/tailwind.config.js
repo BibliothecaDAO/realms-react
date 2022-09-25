@@ -29,6 +29,7 @@ const tailwindV3Colors = Object.entries(
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   safelist: [
+    'paper',
     'text-[#838383]',
     'text-[#00DC82]',
     'text-[#2e82ff]',

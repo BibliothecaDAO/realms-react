@@ -3,6 +3,7 @@ import type { Abi } from 'starknet';
 
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
+import Combat from '@/abi/settling/Combat.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Food from '@/abi/settling/Food.json';
 import Settling from '@/abi/settling/L01_Settling.json';
@@ -10,7 +11,6 @@ import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
 import Calculator from '@/abi/settling/L04_Calculator.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
-import Combat from '@/abi/settling/L06_Combat.json';
 import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Relics from '@/abi/settling/Relics.json';
@@ -34,7 +34,7 @@ export const ModuleAddr = {
     '0x07144f39e676656e81d482dc2cc9f68c98d768fe1beaad28438b43142cc9ff9e',
   Building:
     '0x07e6ef6eae7a6d03baaace2fe8b5747ed52fa6c7ae615f3e3bd3311ac98d139a',
-  Combat: '0x0139bad2b0b220d71ea1fc48fa2858e993b3d471a3b03be609c54ff0c9795d71',
+  Combat: '0x04d4e010850d0df3c6fd9672a72328514acc5e1285935104a29d215184903582',
   Wonder: '0x0096cae38dd01a1e381c9e57db09669298fa079cfdb45e1a429c4020a6515549',
   Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
   Splitter:
@@ -43,7 +43,7 @@ export const ModuleAddr = {
   Relics: '0x027d0dd8dbe02f8dec5ff64b873eb78993c520f7c6f10b95f86cb061857769d0',
   Calculator:
     '0x05a74143789f2b8d2a95234318d7072062e449d37f9e882af68af663f9078ef7',
-  Travel: '0x004055c26281d7afdd6249bb0f2f65e3551fdfcbb1a02ac051cb7173c4d63424',
+  Travel: '0x05f273c4a45dab6e8112e2370bd84f58cfd2f1ff83752c2582241c0c0acba9be',
 };
 
 /**

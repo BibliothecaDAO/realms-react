@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import React from 'react';
-import { Header } from '@/components/navigation/header';
-import { MenuSideBar } from '@/components/sidebars/MenuSideBar';
+import { Header } from '@/components/navigation/Header';
+import { MenuSideBar } from '@/components/navigation/MenuSideBar';
 import { Head } from './Head';
 
 export default function Layout({

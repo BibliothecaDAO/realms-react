@@ -3,13 +3,13 @@ import { formatEther } from '@ethersproject/units';
 import { useStarknet } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
+import { findResourceById } from '@/constants/resources';
 import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import { useCosts } from '@/hooks/costs/useCosts';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import type { BuildingDetail, TroopInterface } from '@/types/index';
+import type { BuildingDetail } from '@/types/index';
 import { shortenAddress } from '@/util/formatters';
-import { findResourceName } from '@/util/resources';
 
 interface TraitProps {
   trait: string;
@@ -72,20 +72,20 @@ export const TraitTable = (props: TraitProps) => {
   const traitSet = [
     {
       trait: 'Region',
-      colour: 'bg-green-200',
+      colour: 'bg-green-200/50',
       traitMax: 7,
       title: 'Regions',
     },
-    { trait: 'City', colour: 'bg-amber-300', traitMax: 21, title: 'Cities' },
+    { trait: 'City', colour: 'bg-amber-300/50', traitMax: 21, title: 'Cities' },
     {
       trait: 'Harbor',
-      colour: 'bg-amber-500',
+      colour: 'bg-amber-500/50',
       traitMax: 35,
       title: 'Harbors',
     },
     {
       trait: 'River',
-      colour: 'bg-blue-700',
+      colour: 'bg-blue-700/50',
       traitMax: 60,
       title: 'Rivers',
     },
@@ -101,15 +101,15 @@ export const TraitTable = (props: TraitProps) => {
 
   return (
     <div>
-      <span className="flex justify-between font-semibold font-body">
-        <span className="tracking-widest uppercase">{getTrait()?.title} </span>
+      <span className="flex justify-between">
+        <span className="uppercase">{getTrait()?.title} </span>
         <span>
           {props.traitAmount} / {getTrait()?.traitMax}{' '}
         </span>
       </span>
       <div className="w-full my-1 rounded-full bg-stone-100/10">
         <div
-          className={`h-3 ${getTrait()?.colour} shadow-inner rounded-full`}
+          className={`h-1 ${getTrait()?.colour} shadow-inner rounded-full`}
           style={{
             width: `${getWidth()}%`,
           }}
@@ -138,12 +138,12 @@ export const getAccountHex = (account: string) => {
   return ethers.BigNumber.from(account).toHexString();
 };
 
-export const squadStats = (squad: TroopInterface[] | undefined | null) => {
+export const squadStats = (squad: any) => {
   if (!squad) {
     return { agility: 0, attack: 0, armor: 0, vitality: 0, wisdom: 0 };
   }
   return {
-    agility: squad
+    /* agility: squad
       .map((troop) => troop.agility)
       .reduce((prev, curr) => prev + curr, 0),
     attack: squad
@@ -157,7 +157,7 @@ export const squadStats = (squad: TroopInterface[] | undefined | null) => {
       .reduce((prev, curr) => prev + curr, 0),
     wisdom: squad
       .map((troop) => troop.wisdom)
-      .reduce((prev, curr) => prev + curr, 0),
+      .reduce((prev, curr) => prev + curr, 0), */
   };
 };
 
@@ -198,9 +198,12 @@ export const resourcePillaged = (resources: any) => {
     <div className="w-full my-4">
       {resources.length ? (
         resources?.map((resource, index) => {
-          const info = findResourceName(resource.resourceId);
+          const info = findResourceById(resource.resourceId);
           return (
-            <div className="flex justify-between my-1 text-xl " key={index}>
+            <div
+              className="flex justify-between my-1 font-display "
+              key={index}
+            >
               <div className="flex">
                 <ResourceIcon
                   size="sm"
@@ -267,7 +270,7 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const CostBlock = ({ resourceName, amount, id, qty }) => {
-  const { checkUserHasResources } = useCosts();
+  const { checkUserHasResources } = useGameConstants();
 
   return (
     <div className="px-1 font-extrabold text-center">
@@ -324,3 +327,20 @@ export const getTravelArcs = (location: number, assets: number[]) => {
     };
   });
 };
+
+export const isYourRealm = (
+  realm: RealmFragmentFragment,
+  account: string,
+  starkAccount: string
+) =>
+  (account &&
+    (account.toLowerCase() === realm.owner ||
+      account.toLowerCase() === realm.bridgedOwner)) ||
+  (starkAccount &&
+    (starkAccount.toLowerCase() === realm.ownerL2 ||
+      starkAccount.toLowerCase() === realm.settledOwner));
+
+export const isFavourite = (
+  realm: RealmFragmentFragment,
+  favouriteRealms: number[]
+) => favouriteRealms.indexOf(realm.realmId) > -1;

@@ -15,6 +15,7 @@ import {
   MAX_DAYS_ACCURED,
   PILLAGE_AMOUNT,
 } from '@/constants/buildings';
+import { resources, findResourceById } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
@@ -24,7 +25,6 @@ import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { RateChange } from '@/shared/Getters/Market';
 import type { AvailableResources, RealmsCardProps } from '@/types/index';
-import { resources, findResourceName } from '@/util/resources';
 
 type Row = {
   resource: ReactElement;
@@ -101,7 +101,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           <span className="flex text-xs">
             <ResourceIcon
               resource={
-                findResourceName(re.resourceId)?.trait.replace(' ', '') || ''
+                findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
               }
               size="sm"
               className="self-center mr-4"
@@ -181,12 +181,12 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       {/*<div className="flex justify-around flex-grow w-full p-4 text-center">
         <div className="w-full sm:w-1/2">
           <h6>work days</h6>
-          <div className="mt-3 font-semibold sm:text-5xl">
+          <div className="mt-3 sm:text-5xl">
             {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
             <span className="opacity-50"> / 3</span>
           </div>{' '}
           {days != MAX_DAYS_ACCURED && (
-            <div className="flex justify-between px-3 uppercase text-body">
+            <div className="flex justify-between px-3 uppercase">
               next day
               <CountdownTimer
                 date={(

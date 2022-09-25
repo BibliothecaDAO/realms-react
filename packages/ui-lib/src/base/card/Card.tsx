@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import Helm from '../../icons/helm.svg';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -6,16 +7,17 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   loading?: boolean;
 }
-
-export function Card({ children, className }: Props) {
+export const Card = forwardRef<any, Props>((props: Props, ref) => {
   return (
     <div
-      className={`${className} duration-150 transition-all border-4 border-double border-white/20  hover:opacity-90 p-3  bg-black/90 rounded-2xl shadow-xl group flex flex-col`}
+      ref={ref}
+      className={`${props.className} card duration-150 transition-all   border-white/20  hover:opacity-90 p-1 sm:p-3  bg-black/90   group flex flex-col border-4`}
     >
-      {children}
+      {props.children}
     </div>
   );
-}
+});
+Card.displayName = 'Card';
 
 export function CardBody({ children, className, loading }: Props) {
   if (loading) {
@@ -44,7 +46,7 @@ export function CardTitle({ children, className, loading }: Props) {
   }
   return (
     <div className={`${className} w-full mb-1 pt-2`}>
-      <h3 className="px-2 py-1 text-left uppercase rounded font-display">
+      <h3 className="px-2 py-1 text-xs text-left uppercase rounded sm:text-lg font-display">
         {children}
       </h3>
     </div>
@@ -65,7 +67,7 @@ export function CardStats({ children, className, loading }: Props) {
   }
   return (
     <div
-      className={`${className} w-full pt-4 pr-4 text-right text-stone-200 font-semibold mt-auto`}
+      className={`${className} w-full pt-4 pr-4 text-2xl text-right text-stone-200 mt-auto sm:text-3xl mb-4`}
     >
       {children}
     </div>

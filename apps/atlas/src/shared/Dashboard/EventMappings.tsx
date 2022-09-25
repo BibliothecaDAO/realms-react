@@ -1,8 +1,8 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
+import { findResourceById } from '@/constants/resources';
 import { GetRealmHistoryQuery } from '@/generated/graphql';
-import { findResourceName } from '@/util/resources';
 import { resourcePillaged } from '../Getters/Realm';
 
 export const Event = {
@@ -31,7 +31,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         class: event.data?.success ? successClass : negativeClass,
         resources: resourcePillaged(event.data?.pillagedResources),
         txHash: event.transactionHash,
-        defendRealmId: event.data?.defendRealmId,
+        attackRealmId: event.data?.attackRealmId,
         relic: event.data?.relicClaimed ? (
           <span className="pl-10 text-xl font-semibold">
             Captured Relic {event.data?.relicClaimed}
@@ -39,8 +39,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         ) : null,
         action: (
           <Button
-            size="xs"
-            variant="outline"
+            size="sm"
+            variant="primary"
             href={'/realm/' + event.data?.defendRealmId + '?tab=Army'}
           >
             {event.data?.success ? 'Pillage and plunder again' : 'try again'}
@@ -66,14 +66,14 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
             </span>
           ) : null,
           txHash: event.transactionHash,
-          defendRealmId: event.realmId,
+          attackRealmId: event.data?.attackRealmId,
           action: (
             <Button
               size="xs"
-              variant="outline"
+              variant="primary"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
-              {event.data?.success ? 'Try again' : 'muster the troops!'}
+              {event.data?.success ? 'Try again' : 'summon the troops!'}
             </Button>
           ),
         };
@@ -94,14 +94,14 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
             </span>
           ) : null,
           txHash: event.transactionHash,
-          defendRealmId: event.realmId,
+          attackRealmId: event.data?.attackRealmId,
           action: (
             <Button
               size="xs"
-              variant="outline"
+              variant="primary"
               href={'/realm/' + event.data?.attackRealmId + '?tab=Army'}
             >
-              {event.data?.success ? 'Retaliate' : 'muster the troops!'}
+              {event.data?.success ? 'Retaliate' : 'summon the troops!'}
             </Button>
           ),
         };
@@ -136,7 +136,7 @@ export function genEconomicRealmEvent(event) {
     //       <Button
     //         size="xs"
     //         variant="outline"
-    //         href={'/realm/' + event.realmId + '?tab=Survey'}
+    //         href={'/realm/' + event.realmId + '?tab=Overview'}
     //       >
     //         Manage Realm
     //       </Button>

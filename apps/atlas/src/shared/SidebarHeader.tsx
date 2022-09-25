@@ -9,7 +9,8 @@ type Props = {
 const SidebarHeader = (props: Props) => {
   return (
     <div className="flex justify-between mb-2">
-      {props.titleComponent ?? <h1> {props.title}</h1>}
+      {props.titleComponent ?? <h2> {props.title}</h2>}
+
       <div>
         <Button variant="outline" size="xs" onClick={props.onClose}>
           X

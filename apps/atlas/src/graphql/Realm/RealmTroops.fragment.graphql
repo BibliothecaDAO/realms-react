@@ -1,0 +1,16 @@
+fragment RealmTroopsFragment on Realm {
+  troops {
+    realmId
+    troopId
+    troopName
+    index
+    type
+    tier
+    agility
+    attack
+    armor
+    vitality
+    wisdom
+    squadSlot
+  }
+}

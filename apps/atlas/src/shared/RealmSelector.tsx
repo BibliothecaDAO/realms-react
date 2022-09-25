@@ -1,11 +1,10 @@
 import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
-import { TroopSlot } from '@/constants/troops';
+import { TroopSlot } from '@/constants/army';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
 import SidebarHeader from './SidebarHeader';
-import SquadStatistics from './squad/SquadStatistics';
 
 type Props = {
   onSelect: (selected: GetRealmsQuery['realms']) => void;
@@ -53,10 +52,10 @@ const RealmSelector = (props: Props) => {
                   </h3>
                 </div>
                 <div className="pt-2">
-                  <SquadStatistics
+                  {/* <SquadStatistics
                     slot={TroopSlot.attacking}
                     troops={r.troops || []}
-                  />
+            /> */}
                 </div>
 
                 <div className="w-full mt-2">

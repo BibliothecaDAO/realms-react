@@ -57,7 +57,7 @@ const NetworkConnectButton = () => {
                 {connectors.map((connector) =>
                   connector.available() ? (
                     <Button
-                      variant="outline"
+                      variant="primary"
                       className="w-full text-xs"
                       key={connector.id()}
                       onClick={() => connect(connector)}
@@ -94,7 +94,7 @@ const NetworkConnectButton = () => {
           {!isConnected && (
             <>
               <Button
-                variant="outline"
+                variant="primary"
                 className="w-full text-xs"
                 onClick={connectWallet}
               >

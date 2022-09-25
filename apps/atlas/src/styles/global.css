@@ -11,6 +11,8 @@ h6 {
 }
 
 h1 {
+  mask-image: url('https://ucarecdn.com/9514f9b1-3bf9-4b7c-b31d-9fb8cd6af8bf/');
+  mask-mode: match-source;
   @apply text-3xl sm:text-4xl md:text-6xl font-lords;
 }
 
@@ -32,6 +34,14 @@ button {
 
 body {
   @apply text-stone-300 font-body;
+
+  /* The second value here is a fallback. */
+  cursor: url('/arrow.png'), default;
+
+  /* You may need coordinates to adjust the pointer
+       for example, the custom cursor is circular and you want
+       the middle to be where you click */
+  cursor: url('/arrow.png') -18 -18, default;
 }
 
 #deckgl-wrapper {
@@ -98,18 +108,30 @@ html {
 
 *::-webkit-scrollbar {
   width: 1em;
-}
-
-*::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0 0 0 / 90%);
-  @apply bg-black;
+  border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
+    12 / 3px 3px 3px 3px / 0 repeat repeat;
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply bg-stone-500;
+  @apply cursor-move rounded-2xl hover:bg-cta-100;
+
+  border-style: solid;
+  border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
+    12 / 3px 3px 3px 3px / 0 repeat repeat;
 }
 
 @font-face {
   font-family: Lords;
   src: url('fontforlordsn.otf');
+}
+
+.card {
+  border-style: solid;
+  border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
+    12 / 3px 3px 3px 3px / 0 repeat repeat;
+}
+
+.paper {
+  mask-image: url('https://ucarecdn.com/9514f9b1-3bf9-4b7c-b31d-9fb8cd6af8bf/');
+  mask-mode: match-source;
 }

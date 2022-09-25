@@ -17,11 +17,11 @@ import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useCosts } from '@/hooks/costs/useCosts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 import { MarketSelect } from '@/shared/Market/MarketSelect';
@@ -154,7 +154,7 @@ export function SwapResources(): ReactElement {
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
-  const { costs } = useCosts();
+  const { gameConstants } = useGameConstants();
 
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
@@ -274,7 +274,7 @@ export function SwapResources(): ReactElement {
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
         <h5>quick add building cost</h5>
-        {costs?.buildingCosts
+        {gameConstants?.buildingCosts
           ?.filter((b) => b.resources.length)
           .map((a, i) => {
             return (
@@ -289,15 +289,15 @@ export function SwapResources(): ReactElement {
             );
           })}
         <h5 className="mt-2">quick add troop cost</h5>
-        {costs?.troopStats?.map((a, i) => {
+        {gameConstants?.battalionCosts?.map((a, i) => {
           return (
             <Button
               key={i}
-              onClick={() => batchAddResources(a.troopCost?.resources)}
+              onClick={() => batchAddResources(a.resources)}
               size="xs"
               variant="outline"
             >
-              {a.troopName}
+              {a.battalionName}
             </Button>
           );
         })}

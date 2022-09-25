@@ -8,19 +8,29 @@ import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { ModuleAddr } from './stark-contracts';
 
+export const Assets = {
+  realms: 3,
+};
+
 export const Entrypoints = {
   travel: 'travel',
 };
 
 export const createCall: Record<string, (args: any) => RealmsCall> = {
-  travel: (args: { travellerId: number; destinationId: number }) => ({
+  travel: (args: {
+    armyId: number;
+    travellerId: number;
+    destinationId: number;
+  }) => ({
     contractAddress: ModuleAddr.Travel,
     entrypoint: Entrypoints.travel,
     calldata: [
-      3,
+      Assets.realms,
       ...uint256ToRawCalldata(bnToUint256(args.travellerId)),
-      3,
+      args.armyId,
+      Assets.realms,
       ...uint256ToRawCalldata(bnToUint256(args.destinationId)),
+      0, // nested destination is always 0 for now.
     ],
     metadata: {
       ...args,
@@ -31,13 +41,13 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.travel]: (tx, _context) => ({
-    title: 'Travelling',
-    description: ``,
+    title: `Travelling`,
+    description: `Army ${tx.metadata.armyId} of Realm ${tx.metadata.travellerId} -> Realm ${tx.metadata.destinationId}`,
   }),
 };
 
 export type Travel = {
-  travel: (travellerId: number, destinationId: number) => void;
+  travel: (armyId: number, travellerId: number, destinationId: number) => void;
   setTravelArcs: (location: number, assets: number[]) => void;
   travelArcs: TravelArc[] | undefined;
 };
@@ -55,9 +65,10 @@ const useTravel = (): Travel => {
   const [travelArcs, setTravelArcs] = useState<TravelArc[]>();
 
   return {
-    travel: (travellerId, destinationId) => {
+    travel: (armyId, travellerId, destinationId) => {
       txQueue.add(
         createCall.travel({
+          armyId,
           travellerId,
           destinationId,
         })

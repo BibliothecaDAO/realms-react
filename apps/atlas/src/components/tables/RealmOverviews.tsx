@@ -1,11 +1,13 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import { RealmListCardView } from '../cards/realms/RealmListViewCard';
+import { RealmCard } from '../cards/realms/RealmCard';
 
 interface RealmOverviewsProps {
   realms: RealmFragmentFragment[];
@@ -21,8 +23,6 @@ export function RealmOverviews(props: RealmOverviewsProps) {
     (item) => !usedRealms.includes(item.realmId)
   );
 
-  const [tab, setTab] = useState(0);
-
   const cardRefs = useRef<any>([]);
 
   useEffect(() => {
@@ -33,33 +33,41 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   }, [filteredRealms]);
 
   const tabs = [
-    <Castle key={0} className="self-center w-6 h-6 fill-current" />,
-    <Helm key={1} className="self-center w-6 h-6 fill-current" />,
-    <Sickle key={2} className="self-center w-6 h-6 fill-current" />,
+    <Castle key={2} className="self-center w-6 h-6 fill-current" />,
+    <Sickle key={1} className="self-center w-6 h-6 fill-current" />,
+    <Globe key={0} className="self-center w-6 h-6 fill-current" />,
   ];
+  const tabNames = ['Overview', 'Resources', 'Military', 'Farming'];
   return (
     <div>
       {/* <div className="flex justify-center w-full mt-4">
         Quick switch:
         {tabs.map((tab, index) => (
-          <button
-            className="ml-4"
+          <Tooltip
             key={index}
-            onClick={() => {
-              play();
-              cardRefs.current?.forEach((el) => {
-                el.selectTab(index);
-              });
-            }}
+            placement="top"
+            className="ml-3 text-xs"
+            tooltipText={<span className="text-sm">{tabNames[index]}</span>}
           >
-            {tab}
-          </button>
+            <button
+              className="ml-4"
+              onClick={() => {
+                play();
+                cardRefs.current?.forEach((el) => {
+                  el.selectTab(index);
+                });
+              }}
+            >
+              {tab}
+            </button>
+          </Tooltip>
         ))}
           </div> */}
-      <div className="grid grid-cols-12 gap-6 p-6 ">
+      <div className="grid gap-6 p-6 md:grid-cols-3 ">
         {props.realms &&
           filteredRealms.map((realm: RealmFragmentFragment, index) => (
-            <RealmListCardView
+            <RealmCard
+              loading={false}
               ref={(el) => (cardRefs.current[index] = el)}
               key={realm.realmId}
               realm={realm}

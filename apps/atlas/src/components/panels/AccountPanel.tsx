@@ -1,64 +1,28 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardStats,
-  ResourceIcon,
-  Table,
-  Tabs,
-} from '@bibliotheca-dao/ui-lib';
-
+import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-
-import Laurel from '@bibliotheca-dao/ui-lib/icons/laurel.svg';
-import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-
-import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import Image from 'next/future/image';
-import type { ReactNode } from 'react';
-import { ReactElement, useState, useMemo } from 'react';
-import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
-import { ENQUEUED_STATUS } from '@/constants/index';
-import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
-import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
-import useSettling from '@/hooks/settling/useSettling';
-import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { useState, useMemo } from 'react';
+import { useGetRealmsQuery } from '@/generated/graphql';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import {
-  genEconomicRealmEvent,
-  genMilitaryRealmEvent,
-} from '@/shared/Dashboard/EventMappings';
-import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
+import { MyArmies } from './Account/MyArmies';
+import { MyCrypts } from './Account/MyCrypts';
+import { MyLoot } from './Account/MyLoot';
 import { MyRealms } from './Account/MyRealms';
 import { AccountOverview } from './Account/Overview';
 import { BasePanel } from './BasePanel';
 
 export function AccountPanel() {
   const { play } = useUiSounds(soundSelector.pageTurn);
-
-  const { claimAll, userData, burnAll } = useUsersRealms();
-  const { mintRealm } = useSettling();
-  const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
-  const [selectedId, setSelectedId] = useState(0);
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
     useState(false);
 
@@ -70,48 +34,6 @@ export function AccountPanel() {
   };
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
   const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
-
-  const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: account ? getAccountHex(account) : '', realmIds },
-    pollInterval: 10000,
-    skip: !account,
-  });
-
-  /* const getRealmDetails = (realmId: number) =>
-    realms.features.find((a: any) => a.properties.realm_idx === realmId)
-      ?.properties; */
-
-  const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
-
-  const unSettledRealmsCount = accountData?.ownedRealmsCount ?? 0;
-
-  const economicEventData = (accountData?.accountHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...genEconomicRealmEvent(realmEvent),
-        timestamp: realmEvent.timestamp,
-      };
-    })
-    .filter((row) => row.event !== '');
-
-  const militaryEventData = (accountData?.accountHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...genMilitaryRealmEvent(realmEvent, true),
-        timestamp: realmEvent.timestamp,
-        eventId: realmEvent.eventId,
-      };
-    })
-    .filter((row) => row.event !== '');
-
-  const txQueue = useTransactionQueue();
-  const approveTxs = getApproveAllGameContracts();
-
-  const animationUp = useSpring({
-    // opacity: true === 'account' ? 1 : 0,
-    // transform: true === 'account' ? `translateY(0)` : `translateY(+10%)`,
-    // delay: 350,
-  });
 
   const animation = useSpring({
     // opacity: true === 'account' ? 1 : 0,
@@ -125,7 +47,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex">
-            <Crown className="self-center w-6 h-6 mr-4 fill-current" /> Empire
+            <Crown className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">Empire</div>
           </div>
         ),
         component: <AccountOverview />,
@@ -133,28 +56,38 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex">
-            <Castle className="self-center w-6 h-6 mr-4 fill-current" /> My
-            Realms
+            <Castle className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">My Realms</div>
           </div>
         ),
         component: <MyRealms />,
       },
       {
         label: (
-          <div className="flex ">
-            <Danger className="self-center w-6 h-6 mr-4 fill-current" /> My
-            Crypts
+          <div className="flex no-wrap">
+            <Helm className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">My Armies</div>
           </div>
         ),
-        component: <div />,
+        component: <MyArmies />,
       },
       {
         label: (
           <div className="flex ">
-            <Bag className="self-center w-6 h-6 mr-4 fill-current" /> My Loot
+            <Danger className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">My Crypts</div>
           </div>
         ),
-        component: <div />,
+        component: <MyCrypts />,
+      },
+      {
+        label: (
+          <div className="flex no-wrap">
+            <Bag className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
+            <div className="hidden sm:block">My Loot</div>
+          </div>
+        ),
+        component: <MyLoot />,
       },
     ],
     [selectedTab]
@@ -167,9 +100,9 @@ export function AccountPanel() {
 
   return (
     <BasePanel open={true}>
-      <animated.div
+      {/* <animated.div
         style={animation}
-        className="w-full p-10 py-10 border-b-4 shadow-xl bg-black/60 border-black/40"
+        className="w-full p-4 pt-10 border-b-4 shadow-xl sm:p-10 bg-black/60 border-black/40"
       >
         <div className="flex justify-start">
           <div className="relative hidden sm:block">
@@ -187,23 +120,23 @@ export function AccountPanel() {
 
           <div className="flex flex-wrap mt-10">
             <div className="self-center">
-              <h2 className="w-full sm:text-5xl">Ser, Your Vast Empire</h2>
               {account && (
-                <span className="self-center font-semibold text-center sm:text-xl">
+                <span className="self-center text-center sm:text-xl opacity-80">
                   {shortenAddressWidth(account, 6)}
                 </span>
               )}
+              <h2 className="w-full sm:text-5xl">Ser, Your Vast Empire</h2>
             </div>
           </div>
         </div>
-      </animated.div>
+      </animated.div> */}
 
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
         variant="default"
       >
-        <div className="border-t border-white/20">
+        <div className="w-full overflow-y-auto bg-black border-t border-white/20">
           <Tabs.List className="">
             {tabs.map((tab, index) => (
               <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>

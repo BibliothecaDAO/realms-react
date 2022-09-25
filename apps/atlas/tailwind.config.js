@@ -6,6 +6,7 @@ module.exports = {
     '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
+    'paper',
     'shadow-order-perfection',
     'shadow-order-power',
     'shadow-order-giants',
@@ -123,6 +124,8 @@ module.exports = {
         100: '100',
       },
       backgroundImage: {
+        ink: "url('/textures/ink.jpg')",
+        paperTexture: "url('/textures/paperTexture.jpg')",
         texture: "url('/texture-button.png')",
         hero: "url('/createOrDestroy-desktop.webp')",
         warRoom: "url('/warRoom-desktop.png')",

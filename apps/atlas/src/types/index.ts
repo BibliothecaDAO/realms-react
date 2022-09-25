@@ -1,5 +1,6 @@
+import type { ReactElement } from 'react';
 import type { Call as StarknetCall } from 'starknet';
-import type { RealmFragmentFragment } from '@/generated/graphql';
+import type { RealmFragmentFragment, Army } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
 
@@ -196,23 +197,47 @@ export type RealmFeatureProperties = {
   resources: string[];
 };
 
-export interface TroopInterface {
-  troopId: number;
-  index: number;
-  type: number | string;
-  tier: number;
-  agility: number;
+export interface BattalionStatistics {
+  type: string;
   attack: number;
-  armor: number;
-  vitality: number;
-  wisdom: number;
-  squadSlot: number;
-  troopName?: string;
-  troopCost?: ItemCost | null;
-  troopColour?: string;
-  troopImage?: string;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+
+export interface BattalionInterface extends BattalionStatistics {
+  battalionId: number;
+  index: number;
+  battalionName: string;
+  battalionCost: ResourceCost[];
   buildingId?: number | undefined;
 }
+export interface ArmyStatistics {
+  cavalryAttack: number;
+  archeryAttack: number;
+  magicAttack: number;
+  infantryAttack: number;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+export interface ArmyInterface extends Army {
+  statistics: ArmyStatistics;
+}
+
+export type ArmyBattalionQty = Pick<
+  Army,
+  | 'heavyCavalryQty'
+  | 'lightCavalryQty'
+  | 'archerQty'
+  | 'longbowQty'
+  | 'mageQty'
+  | 'arcanistQty'
+  | 'lightInfantryQty'
+  | 'heavyInfantryQty'
+>;
 
 export interface ItemCost {
   amount: number;
@@ -237,7 +262,7 @@ export interface RealmsCall extends StarknetCall {
 export type RealmsTransaction = { status: string; metadata?: any };
 export interface RealmsTransactionRender {
   title: string;
-  description: string;
+  description: string | ReactElement;
 }
 
 export interface RealmsTransactionQueueContext {
