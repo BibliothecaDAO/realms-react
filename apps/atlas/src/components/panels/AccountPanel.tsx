@@ -47,8 +47,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex">
-            <Crown className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
-            <div className="hidden sm:block">Empire</div>
+            <Crown className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">Empire</div>
           </div>
         ),
         component: <AccountOverview />,
@@ -56,8 +56,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex">
-            <Castle className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
-            <div className="hidden sm:block">My Realms</div>
+            <Castle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">My Realms</div>
           </div>
         ),
         component: <MyRealms />,
@@ -65,8 +65,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex no-wrap">
-            <Helm className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
-            <div className="hidden sm:block">My Armies</div>
+            <Helm className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">My Armies</div>
           </div>
         ),
         component: <MyArmies />,
@@ -74,8 +74,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex ">
-            <Danger className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
-            <div className="hidden sm:block">My Crypts</div>
+            <Danger className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">My Crypts</div>
           </div>
         ),
         component: <MyCrypts />,
@@ -83,8 +83,8 @@ export function AccountPanel() {
       {
         label: (
           <div className="flex no-wrap">
-            <Bag className="self-center w-6 h-6 fill-current sm:mr-4" />{' '}
-            <div className="hidden sm:block">My Loot</div>
+            <Bag className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">My Loot</div>
           </div>
         ),
         component: <MyLoot />,
@@ -105,7 +105,7 @@ export function AccountPanel() {
         className="w-full p-4 pt-10 border-b-4 shadow-xl sm:p-10 bg-black/60 border-black/40"
       >
         <div className="flex justify-start">
-          <div className="relative hidden sm:block">
+          <div className="relative hidden md:block">
             <Image
               src={'/keyImage-tablet.png'}
               alt="map"
@@ -136,7 +136,7 @@ export function AccountPanel() {
         onChange={(index) => pressedTab(index as number)}
         variant="default"
       >
-        <div className="w-full overflow-y-auto bg-black border-t border-white/20">
+        <div className="w-full overflow-y-auto bg-black border-t pt-14 sm:pt-0 border-white/20">
           <Tabs.List className="">
             {tabs.map((tab, index) => (
               <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>

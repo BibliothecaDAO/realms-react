@@ -10,6 +10,7 @@ import {
   useGroupByRealmHistoryQuery,
 } from '@/generated/graphql';
 import { relicsOwnedByRealm } from '@/shared/Getters/Realm';
+import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 import { RaidSuccess } from './Leaderboard/RaidSuccess';
 
@@ -63,7 +64,7 @@ export function LeaderboardPanel(): ReactElement {
   const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
     return {
       realm: realm?.realmId || 0,
-      owner: realm?.settledOwner || 'unknown',
+      owner: shortenAddressWidth(realm?.settledOwner || '', 6),
       relics: relicsOwnedByRealm(realm) || 0,
       action: (
         <Button
@@ -163,7 +164,7 @@ export function LeaderboardPanel(): ReactElement {
 
   return (
     <BasePanel open={true} style="lg:w-7/12">
-      <div className="p-10">
+      <div className="p-4 md:p-10">
         <div className="w-full pb-10 bg-black/90">
           <h2 className="w-full">The Leaderboard</h2>
         </div>

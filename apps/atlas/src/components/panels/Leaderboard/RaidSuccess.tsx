@@ -8,6 +8,7 @@ import {
   RealmHistoryScalarFieldEnum,
   SortOrder,
 } from '@/generated/graphql';
+import { shortenAddressWidth } from '@/util/formatters';
 
 type Row = {
   realm?: number;
@@ -75,7 +76,7 @@ export const RaidSuccess = () => {
     adventurerSuccessData?.groupByRealmHistory ?? []
   ).map((realm) => {
     return {
-      owner: realm?.realmOwner || 'unknown',
+      owner: shortenAddressWidth(realm?.realmOwner || '', 6),
       successfulRaid: realm?._count?._all || 0,
       action: (
         <Button

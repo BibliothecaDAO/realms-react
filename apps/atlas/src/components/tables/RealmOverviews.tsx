@@ -62,7 +62,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
           </Tooltip>
         ))}
       </div>
-      <div className="grid gap-6 p-6 md:grid-cols-3 ">
+      <div className="grid gap-6 p-4 sm:p-6 md:grid-cols-3 ">
         {props.realms &&
           filteredRealms.map((realm: RealmFragmentFragment, index) => (
             <RealmCard

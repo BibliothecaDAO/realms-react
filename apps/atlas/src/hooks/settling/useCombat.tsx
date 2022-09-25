@@ -145,7 +145,8 @@ const useCombat = () => {
       realmId,
       armyId,
       ids,
-      qty
+      qty,
+      costs
       // battalionIdsQtyCosts: { ids: any; qty: any; cost?: ItemCost }[]
     ) => {
       buildArmySound();
