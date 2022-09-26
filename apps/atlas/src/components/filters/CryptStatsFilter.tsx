@@ -74,7 +74,10 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute z-10 m-auto mt-2 md:right-0 " static>
+        <Popover.Panel
+          className="absolute z-10 m-auto mt-2 -left-40 sm:left-0 md:right-0"
+          static
+        >
           <div className="flex flex-col px-8 py-4 pb-6 font-medium bg-black rounded-sm shadow-sm w-60">
             <div className="mb-3 text-lg text-center uppercase">Stats</div>
             <RangeSliderFilter
