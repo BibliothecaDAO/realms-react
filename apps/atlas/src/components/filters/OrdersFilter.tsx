@@ -7,6 +7,7 @@ import { OrderType } from '@/generated/graphql';
 type OrdersFilterProps = {
   selectedValues: OrderType[];
   onChange(selected: OrderType[]): void;
+  popoverClass?: string;
 };
 
 type OrderOption = {
@@ -68,7 +69,10 @@ export function OrdersFilter(props: OrdersFilterProps) {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel
-          className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4 border-double border-white/20 rounded"
+          className={clsx(
+            'absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4 border-double border-white/20 rounded',
+            props.popoverClass
+          )}
           static
         >
           <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">

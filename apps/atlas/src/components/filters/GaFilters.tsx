@@ -12,6 +12,7 @@ export function GaFilters() {
       <OrdersFilter
         selectedValues={state.selectedOrders}
         onChange={actions.updateSelectedOrders}
+        popoverClass="left-32"
       />
       <BagRatingFilter
         rating={state.ratingFilter}

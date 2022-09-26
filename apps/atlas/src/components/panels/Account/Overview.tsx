@@ -146,7 +146,7 @@ export function AccountOverview() {
             </Button>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
+        {/* <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
           <CardTitle>Relics Held</CardTitle>
 
           <CardBody>
@@ -158,7 +158,7 @@ export function AccountOverview() {
             </Button>
           </CardBody>
         </Card>
-        {/* <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-13">
+         <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-13">
           <CardTitle>Production rate daily</CardTitle>
 
           <CardBody>
@@ -200,7 +200,7 @@ export function AccountOverview() {
                 Start Raiding
               </Button>
             </CardBody>
-          </Card> */}
+          </Card> 
 
         <Card
           className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
@@ -230,7 +230,7 @@ export function AccountOverview() {
                 />
               )}
             </div>
-          </Card> */}
+          </Card> 
         <Card
           className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
         >
@@ -322,7 +322,7 @@ export function AccountOverview() {
               </Button>
             </div>
           </CardBody>
-        </Card>
+        </Card> */}
       </animated.div>
     </div>
   );

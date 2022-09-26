@@ -12,7 +12,7 @@ const APOLLO_ENDPOINTS = {
   mainnet: {
     realms:
       'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-    starkIndexer: 'https://starknet-indexer-c9bsk.ondigitalocean.app/graphql',
+    starkIndexer: 'https://sea-turtle-app-cm9oe.ondigitalocean.app/graphql',
     ecosystem:
       'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem',
   },

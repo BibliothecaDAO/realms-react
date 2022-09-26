@@ -62,7 +62,7 @@ export function AccountPanel() {
         ),
         component: <MyRealms />,
       },
-      {
+      /* {
         label: (
           <div className="flex no-wrap">
             <Helm className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
@@ -70,7 +70,7 @@ export function AccountPanel() {
           </div>
         ),
         component: <MyArmies />,
-      },
+      }, */
       {
         label: (
           <div className="flex ">

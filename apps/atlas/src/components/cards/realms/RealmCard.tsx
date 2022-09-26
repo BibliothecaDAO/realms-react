@@ -70,7 +70,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             />
           ),
         },
-        {
+        /* {
           label: <Globe className="self-center w-6 h-6 fill-current" />,
           component: <Travel realm={props.realm} />,
         },
@@ -86,7 +86,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               realmId={props.realm.realmId || 0}
             />
           ),
-        },
+        }, */
       ],
       [props.realm?.realmId]
     );

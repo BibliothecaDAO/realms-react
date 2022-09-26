@@ -178,7 +178,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
       <div className="w-full pt-4 bg-black shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
-          {isYourRealm(props.realm, account, starkAccount || '') && (
+          {/* {isYourRealm(props.realm, account, starkAccount || '') && (
             <div>
               {RealmStatus(props.realm) === 'Layer 1' && (
                 <Button
@@ -225,7 +225,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
                 ? 'manage'
                 : 'details'}
             </Button>
-          </div>
+            </div> */}
           <div className="flex self-center space-x-2">
             <div>
               <Button
