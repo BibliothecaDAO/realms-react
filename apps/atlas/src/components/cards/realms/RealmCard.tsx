@@ -51,7 +51,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
-    const ensData = useEnsResolver(props.realm?.owner as string);
+    const ensData = useEnsResolver(RealmOwner(props.realm) as string);
 
     const tabs = useMemo(
       () => [
@@ -112,12 +112,12 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         )}
         <div className="flex justify-between">
-          <h4 className="flex">
+          {/* <h4 className="flex">
             <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
             {isYourRealm(props.realm, account, starkAccount || '')
               ? 'ser'
               : shortenAddressWidth(RealmOwner(props.realm), 6)}
-          </h4>
+        </h4> */}
           <div className="flex items-center self-center">
             {!isFavourite(props.realm, favouriteRealms) && (
               <Button
