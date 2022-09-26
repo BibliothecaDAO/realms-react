@@ -101,7 +101,7 @@ export function AccountOverview() {
         style={animationUp}
         className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        <Card className="flex col-start-1 col-end-6">
+        <Card className="flex col-start-1 col-end-13 md:col-start-1 md:col-end-6">
           <div className="flex">
             <div className="relative">
               <Image
