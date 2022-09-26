@@ -21,7 +21,7 @@ export interface ArmyStatistics {
 const orange = '#ff9933';
 export const pumpkin = '#f5810c';
 const silver = '#d9d9d9';
-export const background = '#FAF7E9';
+export const background = '';
 const degrees = 360;
 
 const y = (d: { key: string; value: number }) => d.value;
@@ -178,10 +178,11 @@ export const RadarMap = ({
                 stroke={silver}
               />
               <Text
-                textAnchor="middle"
+                textAnchor="end"
                 verticalAnchor="middle"
                 dx={points[i].x}
                 dy={points[i].y}
+                className="fill-white"
               >
                 {data[i].key}
               </Text>

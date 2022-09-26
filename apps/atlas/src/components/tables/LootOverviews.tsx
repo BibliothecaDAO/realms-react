@@ -29,13 +29,10 @@ export function LootOverviews(props: LootOverviewsProps) {
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 
   return (
-    <div className="grid grid-cols-12 gap-6 px-2 rounded ">
+    <div className="grid gap-6 p-3 sm:p-6 md:grid-cols-4">
       {props.bags &&
         props.bags.map((loot: Loot, index) => (
-          <Card
-            key={index}
-            className="rounded sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3"
-          >
+          <Card key={index} className="rounded">
             <div className="flex w-full mt-3">
               <div className="flex self-center w-full">
                 <h2 className="ml-4 ">Bag #{loot.id}</h2>
