@@ -38,10 +38,18 @@ const accessors = {
 
 const redChartTheme = buildChartTheme({
   colors: ['#ff0000'],
+  backgroundColor: 'transparent',
+  tickLength: 0,
+  gridColor: 'transparent',
+  gridColorDark: 'transparent',
 });
 
 const greenChartTheme = buildChartTheme({
   colors: ['#00ff00'],
+  backgroundColor: 'transparent',
+  tickLength: 0,
+  gridColor: 'transparent',
+  gridColorDark: 'transparent',
 });
 
 export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
@@ -97,7 +105,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             yScale={{ type: 'linear' }}
           >
             <AreaSeries
-              dataKey="priceChart"
+              dataKey="resourceChart"
               data={
                 historicPrices && historicPrices[resource.resourceId]
                   ? historicPrices[resource.resourceId]
