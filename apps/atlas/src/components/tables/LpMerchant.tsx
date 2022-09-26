@@ -175,7 +175,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             <span className="opacity-60">
               {' '}
               <span className="flex">
-                -LORDS
+                -$LORDS
                 <Lords className="w-3 mr-1" />:{' '}
                 {loading
                   ? 'loading...'
@@ -194,7 +194,9 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         </div>
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
-        <div className="w-full">1 = {displayRate(props.resource.rate)} </div>
+        <div className="flex justify-end w-full">
+          1 = {displayRate(props.resource.rate)} <Lords className="w-3" />
+        </div>
         <div className="w-full">
           {(+formatEther(props.resource.amount)).toLocaleString()}
         </div>
