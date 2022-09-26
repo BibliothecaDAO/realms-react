@@ -4,6 +4,8 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
+
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import Image from 'next/future/image';
@@ -15,6 +17,7 @@ import { shortenAddressWidth } from '@/util/formatters';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
 import { MyArmies } from './Account/MyArmies';
 import { MyCrypts } from './Account/MyCrypts';
+import { MyGA } from './Account/MyGA';
 import { MyLoot } from './Account/MyLoot';
 import { MyRealms } from './Account/MyRealms';
 import { AccountOverview } from './Account/Overview';
@@ -88,6 +91,15 @@ export function AccountPanel() {
           </div>
         ),
         component: <MyLoot />,
+      },
+      {
+        label: (
+          <div className="flex no-wrap">
+            <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">My GA's</div>
+          </div>
+        ),
+        component: <MyGA />,
       },
     ],
     [selectedTab]

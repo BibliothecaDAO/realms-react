@@ -11,8 +11,7 @@ import Laurel from '@bibliotheca-dao/ui-lib/icons/laurel.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
-// import ShieldSmall from '@bibliotheca-dao/ui-lib/icons/shieldSmall.svg';
-// import Shield from '@bibliotheca-dao/ui-lib/icons/sword.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -81,7 +80,7 @@ export const MenuSideBar = () => {
       },
       {
         page: 'ga',
-        icon: <Helm className={`${iconClasses('ga')}`} />,
+        icon: <Sword className={`${iconClasses('ga')}`} />,
         text: 'GA',
       },
       {
