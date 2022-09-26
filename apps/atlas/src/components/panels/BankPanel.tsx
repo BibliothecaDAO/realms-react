@@ -78,9 +78,6 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           <span className="text-sm sm:text-lg">
             <span className="flex">
               {(+formatEther(resource.rate)).toFixed(4)}
-              <span className="hidden ml-1.5 uppercase text-stone-500 sm:block">
-                $LORDS
-              </span>
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">

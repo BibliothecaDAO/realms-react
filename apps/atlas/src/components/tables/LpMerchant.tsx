@@ -163,7 +163,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                   props.resource.qty
                 ).toFixed(2)}
               </span>{' '}
-              {/* <LordsIcon className="self-center w-5 h-5" /> */}
+              <Lords className="self-center w-4 h-4" />
             </div>
           </div>
           <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-75 border-white/20">
@@ -175,13 +175,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             <span className="opacity-60">
               {' '}
               <span className="flex">
-                -$LORDS
-                <Lords className="w-3 mr-1" />:{' '}
+                -$LORDS :{' '}
                 {loading
                   ? 'loading...'
                   : (+formatEther(
                       currencyAndTokenBalance.currency
                     )).toLocaleString()}{' '}
+                <Lords className="w-3 mr-1" />
               </span>
               <br />-{props.resource.resourceName}:{' '}
               {loading
@@ -400,27 +400,19 @@ export function LpMerchant(): ReactElement {
             <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
-                  {isBuy
-                    ? [
-                        'Total lords',
-                        <Lords key={1} className="w-3 mr-2" />,
-                        ' to spend:',
-                      ]
-                    : [
-                        'Total lords',
-                        <Lords key={1} className="w-3 mr-2" />,
-                        ' received:',
-                      ]}
+                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
                 </span>
-                {calculatedTotalInLords.toLocaleString()}
+                {calculatedTotalInLords.toLocaleString()}{' '}
+                <Lords key={1} className="w-5 ml-2" />
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your $lords <Lords className="w-3 mr-2" /> Balance:
+                  your $lords Balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+                <Lords className="w-3 ml-1" />
               </div>
             </div>
           </div>

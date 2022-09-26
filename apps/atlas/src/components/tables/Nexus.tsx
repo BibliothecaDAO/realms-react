@@ -196,11 +196,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
           <div className="flex flex-wrap justify-end w-full mb-1">
             <span className="flex text-xs font-semibold tracking-widest text-right uppercase opacity-60 ">
               {props.stake
-                ? [
-                    'enter $lords',
-                    <Lords key={1} className="w-3 mr-2 fill-white" />,
-                    'to stake',
-                  ]
+                ? 'enter $lords to stake'
                 : 'enter stk-lords to redeem'}
             </span>{' '}
             <InputNumber
@@ -222,10 +218,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
             <span className="flex items-center justify-end text-xs tracking-widest uppercase opacity-60">
               {props.stake
                 ? 'your will receive stk-lords '
-                : [
-                    'you will receive $lords',
-                    <Lords key={1} className="w-3 fill-white" />,
-                  ]}
+                : 'your will receive $lords'}
             </span>{' '}
             <br />{' '}
             <span className="text-xl">
@@ -266,11 +259,15 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
                 </span>
                 <span>
                   <span className="flex items-center text-xs opacity-60">
-                    equv. lords
-                    <Lords className="w-3 fill-white" />{' '}
+                    equv. $lords
                   </span>
                   <br />{' '}
-                  {(+formatEther(balances.previewTotalRedeem)).toLocaleString()}{' '}
+                  <div className="flex justify-end">
+                    {(+formatEther(
+                      balances.previewTotalRedeem
+                    )).toLocaleString()}{' '}
+                    <Lords className="w-3 ml-1 fill-white" />{' '}
+                  </div>
                   {/* {(
                     (parseInt(balances.stLords) /
                       parseInt(balances.totalStkLords)) *
@@ -327,7 +324,6 @@ export function Nexus(): ReactElement {
           }`}
         >
           withdraw $Lords
-          <Lords className="w-3 mr-2 fill-white" />
         </div>
       </div>
       <div className="w-full mx-auto md:w-1/2">

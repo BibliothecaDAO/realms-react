@@ -129,9 +129,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                   props.resource.rate,
                   props.resource.qty
                 ).toLocaleString()}{' '}
-                $Lords
               </span>{' '}
-              <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" />
+              <LordsIcon className="self-center w-3 h-3 fill-current sm:w-4 sm:h-4" />
             </div>
           </div>
           <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
@@ -272,6 +271,11 @@ export function SwapResources(): ReactElement {
     }
   }
 
+  const calculatedPriceImpact = useMemo(() => {
+    // TODO: Set actual slippage when view will be implemented
+    return -1;
+  }, [selectedSwapResourcesWithBalance, calculatedTotalInLords]);
+
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
@@ -376,25 +380,34 @@ export function SwapResources(): ReactElement {
               <span className="flex">
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
                   {isBuy
-                    ? [
-                        'Total cost of resources in $LORDS',
-                        <LordsIcon key={1} className="w-3 mr-2" />,
-                      ]
-                    : [
-                        'Approximate lords',
-                        <LordsIcon key={1} className="w-3 mr-2" />,
-                        ' received',
-                      ]}
+                    ? 'Total cost of resources in $LORDS:'
+                    : 'Approximate $lords received:'}
                 </span>
-                {calculatedTotalInLords.toLocaleString()}
+                {calculatedTotalInLords.toLocaleString()}{' '}
+                <LordsIcon key={1} className="w-5 ml-2" />
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  Your current $LORDS <LordsIcon className="w-3 mr-2" /> balance
+                  $LORDS price impact:
+                </span>
+                <span
+                  className={
+                    calculatedPriceImpact ? 'text-red-200' : 'text-green-200'
+                  }
+                >
+                  {calculatedPriceImpact}%
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-end text-md">
+                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  Your current $LORDS balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+                <LordsIcon key={1} className="w-4 ml-1" />
               </div>
             </div>
           </div>
