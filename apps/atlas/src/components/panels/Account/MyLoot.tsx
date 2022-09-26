@@ -1,19 +1,15 @@
 import { useQuery } from '@apollo/client';
-import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Loot } from '@/types/index';
 
 export const MyLoot = () => {
-  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -26,27 +22,16 @@ export const MyLoot = () => {
   useEffect(() => {
     setPage(1);
   }, [
-    state.favouriteLoot,
     state.searchIdFilter,
     state.ratingFilter.bagGreatness,
     state.ratingFilter.bagRating,
-    state.selectedTab,
   ]);
 
   const isLootPanel = true;
-  const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
     const where: any = {};
-    if (state.searchIdFilter) {
-      where.id = state.searchIdFilter;
-    } else if (state.selectedTab === 2) {
-      where.id_in = [...state.favouriteLoot];
-    }
-
-    if (state.selectedTab === 0) {
-      where.currentOwner = account?.toLowerCase();
-    }
+    where.currentOwner = account?.toLowerCase();
     where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
     where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
     where.bagRating_gte = state.ratingFilter.bagRating.min;
