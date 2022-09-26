@@ -129,7 +129,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                   props.resource.rate,
                   props.resource.qty
                 ).toLocaleString()}{' '}
-                Lords
+                $Lords
               </span>{' '}
               <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" />
             </div>
@@ -377,7 +377,7 @@ export function SwapResources(): ReactElement {
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
                   {isBuy
                     ? [
-                        'Total cost of resources in LORDS',
+                        'Total cost of resources in $LORDS',
                         <LordsIcon key={1} className="w-3 mr-2" />,
                       ]
                     : [
@@ -392,7 +392,7 @@ export function SwapResources(): ReactElement {
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  Your current LORDS <LordsIcon className="w-3 mr-2" /> balance
+                  Your current $LORDS <LordsIcon className="w-3 mr-2" /> balance
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>

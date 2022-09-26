@@ -416,7 +416,7 @@ export function LpMerchant(): ReactElement {
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your lords <Lords className="w-3 mr-2" /> Balance:
+                  your $lords <Lords className="w-3 mr-2" /> Balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
               </div>

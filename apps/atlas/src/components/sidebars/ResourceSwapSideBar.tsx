@@ -67,7 +67,7 @@ export const ResourceSwapSideBarPanel = (
         {!isLordsApprovedForExchange && (
           <div>
             <Button className="w-full" variant="primary" onClick={approveLords}>
-              APPROVE LORDS <Lords className="w-4" />
+              APPROVE $LORDS <Lords className="w-4" />
             </Button>
           </div>
         )}

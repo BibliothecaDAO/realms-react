@@ -194,10 +194,10 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       <div className="sm:w-full">
         <div className="flex flex-wrap w-full">
           <div className="flex flex-wrap justify-end w-full mb-1">
-            <span className="text-xs flex font-semibold tracking-widest text-right uppercase opacity-60 ">
+            <span className="flex text-xs font-semibold tracking-widest text-right uppercase opacity-60 ">
               {props.stake
                 ? [
-                    'enter lords',
+                    'enter $lords',
                     <Lords key={1} className="w-3 mr-2 fill-white" />,
                     'to stake',
                   ]
@@ -219,11 +219,11 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
             />{' '}
           </div>
           <div className="w-full pt-2 font-semibold text-right border-t border-white/30">
-            <span className="text-xs flex items-center justify-end tracking-widest uppercase opacity-60">
+            <span className="flex items-center justify-end text-xs tracking-widest uppercase opacity-60">
               {props.stake
                 ? 'your will receive stk-lords '
                 : [
-                    'you will receive lords',
+                    'you will receive $lords',
                     <Lords key={1} className="w-3 fill-white" />,
                   ]}
             </span>{' '}
@@ -249,7 +249,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
               </Button>
             </div>
             <div className="w-full mt-2 text-right border-t border-white/30">
-              <span className="flex mt-1 justify-between font-semibold uppercase text-body ">
+              <span className="flex justify-between mt-1 font-semibold uppercase text-body ">
                 <span className="text-left">
                   <span className="text-xs opacity-60"> stk-lords </span>
                   <br />
@@ -326,7 +326,7 @@ export function Nexus(): ReactElement {
             isSell && 'font-semibold'
           }`}
         >
-          withdraw Lords
+          withdraw $Lords
           <Lords className="w-3 mr-2 fill-white" />
         </div>
       </div>

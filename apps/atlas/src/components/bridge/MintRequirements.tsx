@@ -37,7 +37,7 @@ const MintRequirements: React.FC<Prop> = (props) => {
           <div>
             Min. {MINIMUM_LORDS_REQUIRED} LORDS.
             <h3>
-              Your LORDS Balance:{' '}
+              Your $LORDS Balance:{' '}
               <span className="text-2xl">{balance || '0'}</span>
             </h3>
           </div>
