@@ -273,8 +273,8 @@ export function SwapResources(): ReactElement {
 
   const calculatedPriceImpact = useMemo(() => {
     // TODO: Set actual slippage when view will be implemented
-    return -1;
-  }, [selectedSwapResourcesWithBalance, calculatedTotalInLords]);
+    return isBuy ? 1 : -1;
+  }, [selectedSwapResourcesWithBalance, calculatedTotalInLords, isBuy]);
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -361,20 +361,20 @@ export function SwapResources(): ReactElement {
             </Button>
           </div>
         ))}
-        <div className="flex w-full">
-          <Button
-            aria-label="Add Row"
-            size="xs"
-            variant="outline"
-            className="mx-auto"
-            onClick={() => addSelectedSwapResources()}
-          >
-            add resource
-          </Button>
-        </div>
       </div>
-      <div className="flex justify-end w-full pt-4">
+      <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
         <div className="flex flex-col justify-end w-full">
+          <div className="flex w-full">
+            <Button
+              aria-label="Add Row"
+              size="xs"
+              variant="outline"
+              className="static mx-auto"
+              onClick={() => addSelectedSwapResources()}
+            >
+              add resource
+            </Button>
+          </div>
           <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
@@ -394,7 +394,9 @@ export function SwapResources(): ReactElement {
                 </span>
                 <span
                   className={
-                    calculatedPriceImpact ? 'text-red-200' : 'text-green-200'
+                    calculatedPriceImpact < 0
+                      ? 'text-red-200'
+                      : 'text-green-200'
                   }
                 >
                   {calculatedPriceImpact}%

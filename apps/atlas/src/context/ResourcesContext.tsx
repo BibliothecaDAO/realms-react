@@ -196,8 +196,8 @@ function useResources() {
     }
     const select = resourceId ?? availableResourceIds[0];
     setSelectedSwapResources([
-      ...selectedSwapResources,
       { resourceId: select, qty: qty ? qty : 0 },
+      ...selectedSwapResources,
     ]);
   };
 
