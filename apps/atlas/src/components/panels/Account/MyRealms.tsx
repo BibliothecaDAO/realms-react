@@ -29,6 +29,7 @@ function useRealmsQueryVariables(
   const { account: starkAccount } = useStarknet();
 
   const { state } = useRealmContext();
+
   const starknetWallet = starkAccount
     ? BigNumber.from(starkAccount).toHexString()
     : '';
@@ -111,10 +112,8 @@ function useRealmsQueryVariables(
     };
   }, [
     account,
-    state.favouriteRealms,
     state.selectedOrders,
     state.selectedResources,
-
     state.searchIdFilter,
     state.hasWonderFilter,
     state.isSettledFilter,
@@ -183,7 +182,6 @@ export const MyRealms = () => {
   useEffect(() => {
     pagination.setPage(1);
   }, [
-    state.favouriteRealms,
     state.selectedOrders,
     state.selectedResources,
     state.searchIdFilter,
@@ -195,7 +193,6 @@ export const MyRealms = () => {
     state.traitsFilter.Harbor,
     state.traitsFilter.Region,
     state.traitsFilter.River,
-    selectedTabIndex,
   ]);
 
   const variables = useRealmsQueryVariables(
@@ -216,8 +213,7 @@ export const MyRealms = () => {
   }, [loading, data]);
 
   const showPagination = () =>
-    selectedTabIndex === 1 &&
-    (pagination.page > 1 || (data?.realms?.length ?? 0) === pagination.limit);
+    pagination.page > 1 || (data?.realms?.length ?? 0) === pagination.limit;
 
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 

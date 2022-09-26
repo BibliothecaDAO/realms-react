@@ -24,14 +24,12 @@ export const MyCrypts = () => {
   useEffect(() => {
     setPage(1);
   }, [
-    state.favouriteCrypt,
     state.isLegendaryFilter,
     state.searchIdFilter,
     state.environmentsFilter,
     state.statsFilter.numDoors,
     state.statsFilter.numPoints,
     state.statsFilter.size,
-    state.selectedTab,
   ]);
 
   const isCryptPanel = true;
@@ -40,8 +38,6 @@ export const MyCrypts = () => {
     const where: any = {};
     if (state.searchIdFilter) {
       where.id = state.searchIdFilter;
-    } else if (state.selectedTab === 2) {
-      where.id_in = [...state.favouriteCrypt];
     }
 
     where.currentOwner = account?.toLowerCase();
@@ -76,8 +72,7 @@ export const MyCrypts = () => {
   });
 
   const showPagination = () =>
-    state.selectedTab === 1 &&
-    (page > 1 || (data?.dungeons?.length ?? 0) === limit);
+    page > 1 || (data?.dungeons?.length ?? 0) === limit;
 
   const hasNoResults = () => !loading && (data?.dungeons?.length ?? 0) === 0;
 

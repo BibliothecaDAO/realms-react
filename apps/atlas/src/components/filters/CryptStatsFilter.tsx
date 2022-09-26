@@ -75,7 +75,7 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel
-          className="absolute z-10 m-auto mt-2 -left-40 sm:left-0 md:right-0 "
+          className="absolute z-10 m-auto mt-2 -left-40 sm:left-0 md:right-0"
           static
         >
           <div className="flex flex-col px-8 py-4 pb-6 font-medium bg-black rounded-sm shadow-sm w-60">
