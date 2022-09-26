@@ -81,6 +81,77 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
       action: Entrypoints.sellTokens,
     },
   }),
+  addLiquidity: (args: {
+    maxCurrencyAmount: BigNumber[];
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.addLiquidity,
+    calldata: [
+      args.maxCurrencyAmount.length,
+      ...args.maxCurrencyAmount
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
+    metadata: {
+      ...args,
+      action: Entrypoints.addLiquidity,
+    },
+  }),
+  removeLiquidity: (args: {
+    minCurrencyAmount: BigNumber[];
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    lpAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.removeLiquidity,
+    calldata: [
+      args.minCurrencyAmount.length,
+      ...args.minCurrencyAmount
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.lpAmounts.length,
+      ...args.lpAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
+    metadata: {
+      ...args,
+      action: Entrypoints.removeLiquidity,
+    },
+  }),
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
@@ -203,6 +274,8 @@ export const useAddLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.addLiquidity);
 
+  const txQueue = useTransactionQueue();
+
   const addLiquidity = (
     maxCurrencyAmount: BigNumber[],
     tokenIds: number[],
@@ -212,23 +285,14 @@ export const useAddLiquidity = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.addLiquidity,
+    txQueue.add(
+      createCall.addLiquidity({
+        maxCurrencyAmount,
         tokenIds,
         tokenAmounts,
-      },
-      args: [
-        maxCurrencyAmount.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {
@@ -243,6 +307,8 @@ export const useRemoveLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.removeLiquidity);
 
+  const txQueue = useTransactionQueue();
+
   const removeLiquidity = (
     minCurrencyAmount: BigNumber[],
     tokenIds: number[],
@@ -253,27 +319,15 @@ export const useRemoveLiquidity = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.removeLiquidity,
+    txQueue.add(
+      createCall.removeLiquidity({
+        minCurrencyAmount,
         tokenIds,
         tokenAmounts,
         lpAmounts,
-      },
-      args: [
-        minCurrencyAmount.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        lpAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {
