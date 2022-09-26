@@ -24,18 +24,8 @@ export default function AtlasPage() {
   return (
     <Layout>
       <RealmProvider>
-        <UserAgent>
-          {(ua: UserAgentProps) => (
-            <>
-              {!ua.mobile ? (
-                <MapModule />
-              ) : (
-                <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
-              )}
-              <AtlasSidebars />
-            </>
-          )}
-        </UserAgent>
+        <MapModule />
+        <AtlasSidebars />
       </RealmProvider>
     </Layout>
   );
