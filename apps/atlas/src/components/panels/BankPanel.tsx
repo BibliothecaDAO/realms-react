@@ -100,6 +100,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             yScale={{ type: 'linear' }}
           >
             <AreaSeries
+              dataKey="priceChart"
               data={
                 historicPrices && historicPrices[resource.resourceId]
                   ? historicPrices[resource.resourceId]
