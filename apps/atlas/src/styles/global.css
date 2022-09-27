@@ -46,7 +46,7 @@ body {
 
 #deckgl-wrapper {
   background: rgb(146 177 185);
-  @apply overflow-auto;
+  @apply overflow-hidden;
 }
 
 /* Prevent interference with Bridge modal by setting z-index */

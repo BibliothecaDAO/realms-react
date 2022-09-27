@@ -24,6 +24,7 @@ import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
+import { useWalletContext } from '@/hooks/useWalletContext';
 import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
@@ -35,10 +36,11 @@ import { shortenAddressWidth } from '@/util/formatters';
 
 export function AccountOverview() {
   const { play } = useUiSounds(soundSelector.pageTurn);
+  const { balance } = useWalletContext();
 
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
-  const { lordsBalance, balance } = useResourcesContext();
+  // const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
   const [selectedId, setSelectedId] = useState(0);
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
@@ -138,12 +140,12 @@ export function AccountOverview() {
           <CardTitle className="flex">Lords Balance</CardTitle>
           <CardBody>
             <CardStats className="flex justify-end ">
-              {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+              {balance.toLocaleString()}{' '}
               <Lords className="self-center w-6 h-6 ml-4 fill-current" />
             </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
+            {/* <Button variant="outline" size="xs" href="/bank">
               Bank
-            </Button>
+            </Button> */}
           </CardBody>
         </Card>
         {/* <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">

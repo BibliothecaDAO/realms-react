@@ -25,16 +25,17 @@ export const GaPanel = () => {
   const nextPage = () => setPage(page + 1);
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
-  useEffect(() => {
-    setPage(1);
-  }, [
+  const queryDependencies = [
     state.favouriteGa,
     state.selectedOrders,
     state.searchIdFilter,
     state.ratingFilter.bagGreatness,
     state.ratingFilter.bagRating,
     state.selectedTab,
-  ]);
+  ];
+  useEffect(() => {
+    setPage(1);
+  }, [...queryDependencies]);
 
   const isGaPanel = true;
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
@@ -68,7 +69,7 @@ export const GaPanel = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, state, page]);
+  }, [account, page, ...queryDependencies]);
 
   const { loading, data } = useQuery<{
     gadventurers: GAdventurer[];
@@ -76,17 +77,6 @@ export const GaPanel = () => {
     variables,
     skip: !isGaPanel,
   });
-
-  // useEffect(() => {
-  //   if (
-  //     !selectedId &&
-  //     isDisplayLarge &&
-  //     page === 1 &&
-  //     (data?.gadventurers?.length ?? 0) > 0
-  //   ) {
-  //     openDetails('ga', data?.gadventurers[0].id as string);
-  //   }
-  // }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&

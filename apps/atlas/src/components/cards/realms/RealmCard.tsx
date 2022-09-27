@@ -157,7 +157,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
 
         <hr className="mt-3 border border-white/30" />
         {/* <h6>{RealmStatus(props.realm)}</h6> */}
-        <Tabs
+        <RealmOverview {...props} />
+        {/* <Tabs
           selectedIndex={selectedTab}
           onChange={(index) => pressedTab(index as number)}
           variant="default"
@@ -172,7 +173,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
             ))}
           </Tabs.Panels>
-        </Tabs>
+            </Tabs> */}
       </Card>
     );
   }
