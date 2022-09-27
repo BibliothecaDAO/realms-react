@@ -133,6 +133,6 @@ html {
 }
 
 .paper {
-  mask-image: url('https://ucarecdn.com/9514f9b1-3bf9-4b7c-b31d-9fb8cd6af8bf/');
-  mask-mode: match-source;
+  mask-image: url('../../public/textures/grit.png');
+  mask-mode: alpha;
 }
