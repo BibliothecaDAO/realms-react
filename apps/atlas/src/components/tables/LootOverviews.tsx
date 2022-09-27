@@ -32,7 +32,7 @@ export function LootOverviews(props: LootOverviewsProps) {
     <div className="grid gap-6 p-3 sm:p-6 md:grid-cols-2 xl:grid-cols-4">
       {props.bags &&
         props.bags.map((loot: Loot, index) => (
-          <Card key={index} className="rounded">
+          <Card key={index} className="rounded paper">
             <div className="flex w-full mt-3">
               <div className="flex self-center w-full">
                 <h2 className="ml-4 ">Bag #{loot.id}</h2>
@@ -73,32 +73,19 @@ export function LootOverviews(props: LootOverviewsProps) {
               })}
             </div>
 
-            <div className="flex justify-center w-full p-2 space-x-2 rounded-b">
-              {' '}
-              <Button
-                onClick={() => {
-                  navigateToAsset(+loot.id, 'loot');
-                }}
-                variant="primary"
-                size="xs"
-                className="w-full uppercase"
-              >
-                fly to
-              </Button>
+            <div className="flex justify-center w-full p-2 space-x-2">
               <Button
                 onClick={() => {
                   setSelectedLootId(loot.id);
                 }}
-                variant="secondary"
+                variant="outline"
                 size="xs"
-                className="w-full uppercase"
               >
                 details
               </Button>
               {!isFavourite(loot) && (
                 <Button
-                  className="text-xs"
-                  variant="secondary"
+                  variant="outline"
                   size="xs"
                   onClick={() => actions.addFavouriteLoot(loot.id)}
                 >
@@ -107,8 +94,7 @@ export function LootOverviews(props: LootOverviewsProps) {
               )}
               {isFavourite(loot) && (
                 <Button
-                  className="text-xs"
-                  variant="secondary"
+                  variant="outline"
                   size="xs"
                   onClick={() => actions.removeFavouriteLoot(loot.id)}
                 >

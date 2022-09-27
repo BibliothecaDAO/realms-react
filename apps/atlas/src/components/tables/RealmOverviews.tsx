@@ -16,12 +16,7 @@ interface RealmOverviewsProps {
 
 export function RealmOverviews(props: RealmOverviewsProps) {
   const { play } = useUiSounds(soundSelector.pageTurn);
-  // Filtering out old realms
-  const usedRealms = [897, 5455, 555, 7, 2];
-
-  const filteredRealms = props.realms.filter(
-    (item) => !usedRealms.includes(item.realmId)
-  );
+  const filteredRealms = props.realms;
 
   const cardRefs = useRef<any>([]);
 
