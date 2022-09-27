@@ -6,8 +6,8 @@ const meta = {
   title: 'Atlas by Bibliotheca',
   description:
     'Custodians of an open source permissionless gaming ecosystem built on a L2 Zero-Knowledge rollup.',
-  website: 'https://lootverse.bibliothecadao.xyz/',
-  image: 'https://i.ibb.co/XYPNdCT/Screenshot-2022-02-21-132035.png',
+  website: 'https://atlas.bibliothecadao.xyz/',
+  image: 'https://i.ibb.co/KG17Pbh/atlas.png',
 };
 
 export function Head(): ReactElement {
