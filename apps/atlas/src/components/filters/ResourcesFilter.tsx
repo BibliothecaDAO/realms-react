@@ -52,7 +52,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel
-          className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4 border-double border-white/20 rounded"
+          className="absolute  mt-2 w-[380px] ml-2 -translate-x-1/4 shadow-black border-4 border-double border-white/20 rounded"
           static
         >
           <div className="flex flex-col items-center gap-4 p-4 pb-8 bg-black rounded shadow-lg">
