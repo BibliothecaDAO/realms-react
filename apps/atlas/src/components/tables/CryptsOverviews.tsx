@@ -34,7 +34,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
         props.dungeons.map((crypt: Crypt, index) => (
           <Card
             key={index}
-            className="flex flex-wrap w-full h-auto max-w-full col-span-12 mb-4 overflow-x-auto rounded sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3 justify-evenly"
+            className="flex flex-wrap w-full h-auto max-w-full col-span-12 mb-4 overflow-x-auto rounded sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3 justify-evenly paper"
           >
             <div className="w-full ">
               <Image
