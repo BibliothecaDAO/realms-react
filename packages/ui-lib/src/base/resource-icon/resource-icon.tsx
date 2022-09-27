@@ -77,23 +77,26 @@ const Components: { [key: string]: Resource } = Object.freeze({
 
 const STYLES = {
   size: {
-    xs: 'w-4',
-    sm: 'w-6',
-    md: 'w-8',
-    lg: 'w-12',
+    xs: 'w-2 md:w-4',
+    sm: 'w-4 md:w-6',
+    md: 'w-6 md:w-8',
+    lg: 'w-8 md:w-12',
   },
 } as const;
 
 export const ResourceIcon = (props: Props) => {
   return (
-    <div className={`flex flex-col`}>
+    <div className={`flex self-center`}>
       <span className={`${twMerge(STYLES.size[props.size], props.className)} `}>
-        {Components[props.resource.replace(' ', '').replace("'", '')].component}
+        {
+          Components[props.resource.replace(' ', '').replace("'", '')]
+            ?.component
+        }
       </span>
 
       {props.label && (
-        <span className="mt-4 uppercase font-body tracking-widest font-semibold">
-          {Components[props.resource.replace(' ', '').replace("'", '')].name}
+        <span className="self-center ml-4 text-xl font-semibold tracking-widest uppercase font-body">
+          {Components[props.resource.replace(' ', '').replace("'", '')]?.name}
         </span>
       )}
     </div>

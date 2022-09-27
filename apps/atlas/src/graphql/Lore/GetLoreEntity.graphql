@@ -1,0 +1,8 @@
+query getLoreEntity($id: Float!) @api(name: starkIndexer) {
+  getLoreEntity(entityId: $id) {
+    ...LoreEntityFragment
+    revisions {
+      markdown
+    }
+  }
+}

@@ -1,5 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
-import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/solid';
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import Button from '../Button';
 import { ExternalLink } from '../Icons';

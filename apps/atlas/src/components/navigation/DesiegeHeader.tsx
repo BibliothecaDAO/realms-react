@@ -2,72 +2,105 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
+import { Menu, Transition, Popover } from '@headlessui/react';
+import { MapIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
-import { shortenAddress } from '@/util/formatters';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import { shortenAddressWidth } from '@/util/formatters';
 import { useWalletContext } from '../../hooks/useWalletContext';
 export function DesiegeHeader() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
-  const starknet = useStarknet();
+  const { account, connect, connectors } = useStarknet();
+
+  const router = useRouter();
+
+  const navItemClass =
+    'font-body bg-gray-100 rounded px-3 py-2 flex items-center';
+  const navItemClassBtn =
+    'font-body bg-white rounded px-3 py-2 flex items-center hover:bg-gray-200';
+
   return (
     <div>
-      <div className="absolute z-20 hidden top-6 md:flex w-full">
-        <div className="ml-auto px-8">
-          <ul className="flex px-4 py-4 mr-auto space-x-4 text-xl rounded backdrop-blur-md  text-black">
-            <li className="">
-              {isConnected ? (
-                <div className="flex space-x-2">
-                  <span>
-                    <a
-                      className={
-                        'cursor-pointer shadow-sm  font-body p-4  bg-white/70 rounded ml-auto py-2 flex'
-                      }
-                      onClick={disconnectWallet}
-                    >
-                      <span className="px-4 self-center">LORDS: {balance}</span>
-                      <Ethereum className="w-4 mx-4" />
-                      {displayName} [ disconnect ]{' '}
-                    </a>
-                  </span>
-                </div>
-              ) : (
+      <div className="absolute z-20 hidden w-full top-6 md:flex">
+        <div className="px-8 ml-auto">
+          <div className="flex p-2 mr-auto space-x-4 text-xl text-black rounded">
+            {isConnected ? (
+              <>
+                <span className={navItemClass}>LORDS: {balance}</span>
+                <Menu as="div" className="relative">
+                  <Menu.Button className={navItemClassBtn}>
+                    <Ethereum className="w-4 mr-2" />
+                    {displayName}
+                  </Menu.Button>
+                  <Transition
+                    enter="transition duration-100 ease-out"
+                    enterFrom="transform scale-95 opacity-0"
+                    enterTo="transform scale-100 opacity-100"
+                    leave="transition duration-75 ease-out"
+                    leaveFrom="transform scale-100 opacity-100"
+                    leaveTo="transform scale-95 opacity-0"
+                  >
+                    <Menu.Items>
+                      <Menu.Item
+                        as={'button'}
+                        className={classNames(
+                          navItemClassBtn,
+                          'absolute left-0 w-full mt-2 top-full'
+                        )}
+                        onClick={disconnectWallet}
+                      >
+                        Disconnect
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              </>
+            ) : (
+              <button className={navItemClassBtn} onClick={connectWallet}>
+                Connect to Lootverse
+              </button>
+            )}
+            {account ? (
+              <span
+                className={navItemClass}
+                onClick={() => {
+                  connect(connectors[0]);
+                }}
+              >
+                <StarkNet className="w-5 mr-2" />
+                {shortenAddressWidth(account, 4)}
+              </span>
+            ) : (
+              <button
+                className={navItemClassBtn}
+                onClick={() => {
+                  connect(connectors[0]);
+                }}
+              >
+                Connect to StarkNet
+              </button>
+            )}
+            <Popover as="div">
+              <Popover.Button className={navItemClassBtn}>
+                <MapIcon className="w-5 mr-2" /> Atlas
+              </Popover.Button>
+
+              <Popover.Panel
+                className={classNames('absolute right-8 top-full')}
+              >
                 <button
-                  className={
-                    'cursor-pointer  shadow-sm font-body p-4  bg-white/20 rounded  ml-auto py-2'
-                  }
-                  onClick={connectWallet}
+                  className={navItemClassBtn}
+                  onClick={() => {
+                    router.push('/');
+                  }}
                 >
-                  Connect to Lootverse
+                  Return to Atlas?
                 </button>
-              )}
-            </li>
-            <li className="">
-              {starknet?.account ? (
-                <div className="flex">
-                  <span>
-                    <a
-                      className={
-                        'cursor-pointer  font-body p-4  bg-white/70 rounded ml-auto py-2 flex'
-                      }
-                      onClick={starknet.connectBrowserWallet}
-                    >
-                      <StarkNet className="w-5 mr-2" />
-                      {shortenAddress(starknet?.account)}
-                    </a>
-                  </span>
-                </div>
-              ) : (
-                <button
-                  className={
-                    'cursor-pointer  font-body p-4  bg-white/20 rounded  py-2'
-                  }
-                  onClick={starknet.connectBrowserWallet}
-                >
-                  Connect to StarkNet
-                </button>
-              )}
-            </li>
-          </ul>
+              </Popover.Panel>
+            </Popover>
+          </div>
         </div>
       </div>
     </div>

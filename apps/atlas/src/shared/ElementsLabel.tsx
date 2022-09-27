@@ -7,14 +7,17 @@ type Prop = {
   side?: 'light' | 'dark';
 };
 
+export const LightGradient = 'to-cyan-300 from-cyan-500';
+export const DarkGradient = 'to-purple-600 from-purple-900';
+
 const TokenLabel: React.FC<Prop> = (props) => {
   let gradient = 'to-cyan-400 from-purple-600';
   let gradientDir = 'bg-gradient-to-l';
   if (props.side == 'light') {
-    gradient = 'to-cyan-300 from-cyan-500';
+    gradient = LightGradient;
     gradientDir = 'bg-gradient-to-l';
   } else if (props.side == 'dark') {
-    gradient = 'to-purple-600 from-purple-900';
+    gradient = DarkGradient;
     gradientDir = 'bg-gradient-to-r';
   }
 

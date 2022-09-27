@@ -81,13 +81,13 @@ const Template: Story = (args) => {
 
   return (
     <div className="p-8 sm:w-1/2 bg-gray-400/30 ">
-      <Table columns={columns} {...args} />
+      <Table data={defaultData} columns={columns} {...args} />
     </div>
   );
 };
 
 export const Striped = Template.bind({});
-Striped.args = { data: defaultData, options: { is_striped: true } };
+Striped.args = { options: { is_striped: true } };
 
 export const Default = Template.bind({});
-Default.args = { data: defaultData };
+Default.args = {};

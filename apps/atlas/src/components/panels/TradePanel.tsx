@@ -1,59 +1,12 @@
-import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import type { ReactElement } from 'react';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { useUIContext } from '@/hooks/useUIContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { BasePanel } from './BasePanel';
 
-type Row = {
-  asset: string;
-  owner: string;
-  name: string;
-  tokenId: number;
-  overview: string;
-  statistics: LootStatistics;
-  history: string;
-  sellPrice: number;
-};
-type LootStatistics = {
-  agility: number;
-  intelligence: number;
-  strength: number;
-};
-
-const defaultData: Row[] = [
-  {
-    asset: 'loot',
-    tokenId: 1322,
-    owner: '0x... 10af',
-    overview: 'A noisy katana providing much power of lorem ipsum bacon',
-    name: `"Roar" Katana of Strength + 1`,
-    statistics: {
-      agility: 10,
-      intelligence: 8,
-      strength: -3,
-    },
-    history: 'sale',
-    sellPrice: 8999,
-  },
-  {
-    asset: 'loot',
-    tokenId: 4202,
-    owner: '0x... b3aRd',
-    name: `"Roar" Katana of Strength + 1`,
-    overview: 'A noisy katana providing much power of lorem ipsum bacon',
-    statistics: {
-      agility: 10,
-      intelligence: 8,
-      strength: -3,
-    },
-    history: 'sale',
-    sellPrice: 8999,
-  },
-];
-
 export function TradePanel(): ReactElement {
-  const { togglePanelType, selectedPanel } = useUIContext();
+  // const { togglePanelType, selectedPanel } = useAtlasContext();
 
   const { data } = useGetRealmQuery({
     variables: {
@@ -61,25 +14,26 @@ export function TradePanel(): ReactElement {
     },
   });
   return (
-    <BasePanel open={selectedPanel === 'trade'}>
-      <div className="flex justify-between">
-        <div className="sm:hidden"></div>
+    <div></div>
+    // <BasePanel open={selectedPanel === 'trade'}>
+    //   <div className="flex justify-between">
+    //     <div className="sm:hidden"></div>
 
-        <h1 className="tex">Bibliotheca NFT Marketplace</h1>
-        <div>
-          <Button variant="secondary" onClick={() => togglePanelType('trade')}>
-            <Close />
-          </Button>
-        </div>
-      </div>
-      <div className="relative">
-        <div className="p-2">{data && <div className="w-full h-48"></div>}</div>
+    //     <h1 className="tex">Bibliotheca NFT Marketplace</h1>
+    //     <div>
+    //       <Button variant="secondary" onClick={() => togglePanelType('trade')}>
+    //         <Close />
+    //       </Button>
+    //     </div>
+    //   </div>
+    //   <div className="relative">
+    //     <div className="p-2">{data && <div className="w-full h-48"></div>}</div>
 
-        <div className="mt-8 text-3xl">
-          <h4>A place to trade Realms, Crypts and Loot Items...</h4>
-          <h4>Coming soon to StarkNet</h4>
-        </div>
-      </div>
-    </BasePanel>
+    //     <div className="mt-8 text-3xl">
+    //       <h4>A place to trade Realms, Crypts and Loot Items...</h4>
+    //       <h4>Coming soon to StarkNet</h4>
+    //     </div>
+    //   </div>
+    // </BasePanel>
   );
 }

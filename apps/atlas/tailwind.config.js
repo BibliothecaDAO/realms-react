@@ -6,6 +6,79 @@ module.exports = {
     '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
+    'paper',
+    'shadow-order-perfection',
+    'shadow-order-power',
+    'shadow-order-giants',
+    'shadow-order-titans',
+    'shadow-order-skill',
+    'shadow-order-perfection',
+    'shadow-order-twins',
+    'shadow-order-reflection',
+    'shadow-order-detection',
+    'shadow-order-fox',
+    'shadow-order-vitriol',
+    'shadow-order-brilliance',
+    'shadow-order-enlightenment',
+    'shadow-order-protection',
+    'shadow-order-fury',
+    'shadow-order-rage',
+    'shadow-order-anger',
+
+    'border-order-perfection',
+    'border-order-power',
+    'border-order-giants',
+    'border-order-titans',
+    'border-order-skill',
+    'border-order-perfection',
+    'border-order-twins',
+    'border-order-reflection',
+    'border-order-detection',
+    'border-order-fox',
+    'border-order-vitriol',
+    'border-order-brilliance',
+    'border-order-enlightenment',
+    'border-order-protection',
+    'border-order-fury',
+    'border-order-rage',
+    'border-order-anger',
+
+    'bg-order-perfection',
+    'bg-order-power',
+    'bg-order-giants',
+    'bg-order-titans',
+    'bg-order-skill',
+    'bg-order-perfection',
+    'bg-order-twins',
+    'bg-order-reflection',
+    'bg-order-detection',
+    'bg-order-fox',
+    'bg-order-vitriol',
+    'bg-order-brilliance',
+    'bg-order-enlightenment',
+    'bg-order-protection',
+    'bg-order-fury',
+    'bg-order-rage',
+    'bg-order-anger',
+
+    'text-order-secondary-perfection',
+    'text-order-secondary-power',
+    'text-order-secondary-giants',
+    'text-order-secondary-titans',
+    'text-order-secondary-skill',
+    'text-order-secondary-perfection',
+    'text-order-secondary-twins',
+    'text-order-secondary-reflection',
+    'text-order-secondary-detection',
+    'text-order-secondary-fox',
+    'text-order-secondary-vitriol',
+    'text-order-secondary-brilliance',
+    'text-order-secondary-enlightenment',
+    'text-order-secondary-protection',
+    'text-order-secondary-fury',
+    'text-order-secondary-rage',
+    'text-order-secondary-anger',
+
     'text-[#838383]',
     'text-[#00DC82]',
     'text-[#2e82ff]',
@@ -35,25 +108,30 @@ module.exports = {
   ],
   theme: {
     extend: {
+      strokeWidth: {
+        8: '8px',
+      },
       letterSpacing: {
         veryWide: '0.165em',
       },
       fontFamily: {
-        display: ['EB Garamond', 'serif'],
+        display: ['IM Fell DW Pica SC', 'serif'],
         body: ['Inconsolata', 'monospace'],
+        lords: ['Lords', 'serif'],
       },
       zIndex: {
         50: '50',
         100: '100',
       },
       backgroundImage: {
+        ink: "url('/textures/ink.jpg')",
+        paperTexture: "url('/textures/paperTexture.jpg')",
         texture: "url('/texture-button.png')",
-        hero: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/cover.jpg')",
-        bank: "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/bank.jpg')",
-        realm:
-          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/realm.jpg')",
-        crypt:
-          "linear-gradient(0deg, rgba(184,184,184,0.75), rgba(184,184,184,0.75)), url('/crypt.jpg')",
+        hero: "url('/createOrDestroy-desktop.webp')",
+        warRoom: "url('/warRoom-desktop.png')",
+        bank: "url('/riches-desktop.png')",
+        realm: "url('/realm.jpg')",
+        crypt: "url('/crypt.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
         'conic-to-t': 'conic-gradient(at top, var(--tw-gradient-stops))',
         'conic-to-b': 'conic-gradient(at bottom, var(--tw-gradient-stops))',
@@ -95,10 +173,14 @@ module.exports = {
           800: '#424242',
           900: '#161619',
           1000: '#0e0e0e',
+          1100: '#020202',
         },
         off: {
           100: '#F9F7F1',
           200: '#8D795B',
+        },
+        cta: {
+          100: '#87272d',
         },
         /* Crypts and Caverns color styles */
         desert: {
@@ -131,6 +213,70 @@ module.exports = {
           door: '#FF1800',
           point: '#B75700',
         },
+        order: {
+          power: '#F4B547',
+          giants: '#EB544D',
+          titans: '#EC68A8',
+          skill: '#706DFF',
+          perfection: '#8E35FF',
+          twins: '#0020C6',
+          reflection: '#00A2AA',
+          detection: '#139757',
+          fox: '#D47230',
+          vitriol: '#59A509',
+          brilliance: '#7DFFBA',
+          enlightenment: '#1380FF',
+          protection: '#00C3A1',
+          fury: '#82005E',
+          rage: '#C74800',
+          anger: '#89192D',
+        },
+        'order-secondary': {
+          power: '#fff',
+          giants: '#fff',
+          titans: '#fff',
+          skill: '#fff',
+          perfection: '#fff',
+          twins: '#fff',
+          reflection: '#fff',
+          detection: '#fff',
+          fox: '#fff',
+          vitriol: '#fff',
+          brilliance: '#007238',
+          enlightenment: '#fff',
+          protection: '#fff',
+          fury: '#fff',
+          rage: '#fff',
+          anger: '#fff',
+        },
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#616161',
+            h1: {
+              color: '#616161',
+            },
+            h2: {
+              color: '#616161',
+            },
+            h3: {
+              color: '#616161',
+            },
+            h4: {
+              color: '#616161',
+            },
+            button: {
+              color: '#74787a',
+              '&:hover': {
+                color: '#2e82ff',
+              },
+            },
+            strong: {
+              color: '#74787a',
+            },
+          },
+        },
       },
     },
   },
@@ -138,7 +284,23 @@ module.exports = {
     'tailwindcss',
     'autoprefixer',
     'postcss-100vh-fix',
+    require('@tailwindcss/typography'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          /* IE and Edge */
+          '-ms-overflow-style': 'none',
 
+          /* Firefox */
+          'scrollbar-width': 'none',
+
+          /* Safari and Chrome */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
+    }),
     plugin(function ({ addVariant, e, postcss }) {
       addVariant('firefox', ({ container, separator }) => {
         const isFirefoxRule = postcss.atRule({

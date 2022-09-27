@@ -1,0 +1,335 @@
+[
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "qty",
+        "type": "felt"
+      },
+      {
+        "name": "food_building_id",
+        "type": "felt"
+      }
+    ],
+    "name": "create",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "harvest_type",
+        "type": "felt"
+      },
+      {
+        "name": "food_building_id",
+        "type": "felt"
+      }
+    ],
+    "name": "harvest",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "quantity",
+        "type": "felt"
+      },
+      {
+        "name": "resource_id",
+        "type": "felt"
+      }
+    ],
+    "name": "convert_food_tokens_to_store",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "food_in_store",
+    "outputs": [
+      {
+        "name": "available",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "available_food_in_store",
+    "outputs": [
+      {
+        "name": "available",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_farm_harvests_left",
+    "outputs": [
+      {
+        "name": "farm_harvests_left",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_farms_to_harvest",
+    "outputs": [
+      {
+        "name": "total_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_farms",
+        "type": "felt"
+      },
+      {
+        "name": "farms_built",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_fishing_villages_harvests_left",
+    "outputs": [
+      {
+        "name": "farm_harvests_left",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_fishing_villages_to_harvest",
+    "outputs": [
+      {
+        "name": "total_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_farms",
+        "type": "felt"
+      },
+      {
+        "name": "villages_built",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_all_food_information",
+    "outputs": [
+      {
+        "name": "total_farm_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_farm_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_farms",
+        "type": "felt"
+      },
+      {
+        "name": "farms_built",
+        "type": "felt"
+      },
+      {
+        "name": "farm_harvests_left",
+        "type": "felt"
+      },
+      {
+        "name": "total_village_harvest",
+        "type": "felt"
+      },
+      {
+        "name": "total_village_remaining",
+        "type": "felt"
+      },
+      {
+        "name": "decayed_villages",
+        "type": "felt"
+      },
+      {
+        "name": "villages_built",
+        "type": "felt"
+      },
+      {
+        "name": "fishing_villages_harvests_left",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_full_store_houses",
+    "outputs": [
+      {
+        "name": "full_store_houses",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "update_food_hook",
+    "outputs": [],
+    "type": "function"
+  }
+]

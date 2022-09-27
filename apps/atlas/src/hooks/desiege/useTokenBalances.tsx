@@ -59,7 +59,13 @@ export const useTokenBalances = (args: UseTokenBalancesArgs) => {
     },
     {
       enabled: args.gameIdx !== undefined && starknet.account !== undefined,
-      refetchInterval: args.refetch ? 1000 * 30 : false, // 30 seconds
+      refetchOnMount: false,
+      // The user balance cache is manually invalidated
+      // after game events. When the user triggers a spell, and after the user mints.
+      // It's possible the balance will change outside of the application,
+      // such as token transfers on Voyager. 1 minute is short enough to react but long enough to not hit the gateway too often.
+      staleTime: 1000 * 60 * 1, // 1 minute,
+      refetchInterval: args.refetch ? 1000 * 60 * 1 : false, // 1 minute
     }
   );
 

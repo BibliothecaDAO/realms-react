@@ -1,6 +1,12 @@
-import { number } from 'starknet';
+import type { ReactElement } from 'react';
+import type { Call as StarknetCall } from 'starknet';
+import type { RealmFragmentFragment, Army } from '@/generated/graphql';
 
 export type GameStatus = 'active' | 'completed' | 'expired';
+
+export const dndTypes = {
+  TX: 'tx',
+};
 
 interface Owner {
   address: string;
@@ -97,6 +103,11 @@ export interface RealmProps {
   loading: boolean;
   size?: string;
 }
+export interface RealmsCardProps {
+  realm: RealmFragmentFragment;
+  loading: boolean;
+  size?: string;
+}
 export interface CryptProps {
   crypt: Crypt;
   loading: boolean;
@@ -170,12 +181,12 @@ export interface GAsData {
 }
 
 export type RealmFeatures = {
-  type: string;
+  type?: string;
   geometry: RealmFeatureGeometry;
   properties: RealmFeatureProperties;
 };
 export type RealmFeatureGeometry = {
-  type: string;
+  type?: string;
   coordinates: number[];
 };
 export type RealmFeatureProperties = {
@@ -184,4 +195,127 @@ export type RealmFeatureProperties = {
   realm_idx: number;
   order: string;
   resources: string[];
+};
+
+export interface BattalionStatistics {
+  type: string;
+  attack: number;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+
+export interface BattalionInterface extends BattalionStatistics {
+  battalionId: number;
+  index: number;
+  battalionName: string;
+  battalionCost: ResourceCost[];
+  buildingId?: number | undefined;
+}
+export interface ArmyStatistics {
+  cavalryAttack: number;
+  archeryAttack: number;
+  magicAttack: number;
+  infantryAttack: number;
+  cavalryDefence: number;
+  archeryDefence: number;
+  magicDefence: number;
+  infantryDefence: number;
+}
+export interface ArmyInterface extends Army {
+  statistics: ArmyStatistics;
+}
+
+export type ArmyBattalionQty = Pick<
+  Army,
+  | 'heavyCavalryQty'
+  | 'lightCavalryQty'
+  | 'archerQty'
+  | 'longbowQty'
+  | 'mageQty'
+  | 'arcanistQty'
+  | 'lightInfantryQty'
+  | 'heavyInfantryQty'
+>;
+
+export interface ItemCost {
+  amount: number;
+  resources: ResourceCost[];
+}
+
+export interface ResourceCost {
+  amount: number;
+  resourceId: number;
+  resourceName: string;
+}
+
+export interface MinMaxRange {
+  min: number;
+  max: number;
+}
+
+export interface RealmsCall extends StarknetCall {
+  metadata: { title: string; description: string } | any;
+}
+
+export type RealmsTransaction = { status: string; metadata?: any };
+export interface RealmsTransactionRender {
+  title: string;
+  description: string | ReactElement;
+}
+
+export interface RealmsTransactionQueueContext {
+  isQueued: boolean;
+}
+
+export type RealmsTransactionRenderConfig = Record<
+  string,
+  (
+    tx: RealmsTransaction,
+    context: RealmsTransactionQueueContext
+  ) => RealmsTransactionRender
+>;
+
+export type NetworkState = 'loading' | 'success' | 'error';
+
+export interface BuildingDetail {
+  name: string;
+  id: number;
+  quantityBuilt: number;
+  img: string;
+  type: string;
+  key: string;
+  sqmUsage: number;
+  buildingSize: number;
+  cost: ResourceCost[];
+  buildingDecay: number;
+}
+
+export interface RealmFoodDetails {
+  totalFarmHarvest: number;
+  totalTimeRemainingUntilFarmHarvest: number;
+  decayedFarms: number;
+  farmsBuilt: number;
+  totalVillageHarvest: number;
+  totalTimeRemainingUntilVillageHarvest: number;
+  decayedVillages: number;
+  villagesBuilt: number;
+  population: number;
+  fishingVillagesHarvestsLeft: number;
+  farmHarvestsLeft: number;
+}
+
+export interface BuildingFootprint {
+  maxSqm: number;
+  currentSqm: number;
+}
+
+export type AvailableResources = {
+  daysAccrued: number;
+  daysRemainder: number;
+  vaultAccrued: number;
+  vaultRemainder: number;
+  claimableResources: string[] | undefined;
+  vaultResources: string[] | undefined;
 };

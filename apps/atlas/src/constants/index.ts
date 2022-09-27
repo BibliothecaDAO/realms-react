@@ -12,3 +12,40 @@ export enum ElementToken {
   Light = 1,
   Dark,
 }
+
+export const DAY_CYCLE = 1800;
+export const RAIDABLE_PERCENTAGE = 25;
+
+export enum RealmsMax {
+  Score = 400,
+  Rank = 8000,
+
+  Region = 7,
+  City = 21,
+  Harbour = 35,
+  River = 60,
+}
+export enum LootMax {
+  Greatness = 160,
+  Rating = 720,
+}
+export enum CryptsMax {
+  Size = 24,
+  NumDoors = 12,
+  NumPoints = 13,
+}
+
+export enum Squad {
+  Attack = 1,
+  Defend = 2,
+}
+
+export const TroopTierMax = [9, 5, 1];
+
+// Transaction status for a tx in queue (for multicall)
+export const ENQUEUED_STATUS = 'ENQUEUED';
+
+export enum RealmTrait {
+  Region = 'Region',
+  City = 'City',
+}

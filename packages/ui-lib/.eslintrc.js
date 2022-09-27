@@ -3,36 +3,31 @@
  * @see https://github.com/belgattitude/nextjs-monorepo-example/blob/main/docs/about-linters.md
  */
 
+// Workaround for https://github.com/eslint/eslint/issues/3458 (re-export of @rushstack/eslint-patch)
+require('@bibliotheca-dao/eslint-config-bases/patch/modern-module-resolution');
+
+const {
+  getDefaultIgnorePatterns,
+} = require('@bibliotheca-dao/eslint-config-bases/helpers');
+
 module.exports = {
   root: true,
+  ignorePatterns: [...getDefaultIgnorePatterns(), '/storybook-static'],
   extends: [
-    // Extend the monorepo default configuration
-    '../../.eslintrc.base.js',
-    // Add specific rules for react
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
+    '@bibliotheca-dao/eslint-config-bases/typescript',
+    '@bibliotheca-dao/eslint-config-bases/regexp',
+    '@bibliotheca-dao/eslint-config-bases/sonar',
+    '@bibliotheca-dao/eslint-config-bases/jest',
+    '@bibliotheca-dao/eslint-config-bases/rtl',
+    '@bibliotheca-dao/eslint-config-bases/storybook',
+    '@bibliotheca-dao/eslint-config-bases/react',
+    // Apply prettier and disable incompatible rules
+    '@bibliotheca-dao/eslint-config-bases/prettier',
   ],
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-  },
   rules: {
-    'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'jsx-a11y/anchor-is-valid': 'off',
+    // optional overrides per project
   },
   overrides: [
-    {
-      // For performance run jest/recommended on test files, not regular code
-      files: ['**/__tests__/**/*.{ts,tsx}'],
-      extends: ['plugin:testing-library/react'],
-    },
-    {
-      // For performance run storybook/recommended on test files, not regular code
-      files: ['**/*.stories.{ts,tsx,mdx}'],
-      extends: ['plugin:storybook/recommended'],
-    },
+    // optional overrides per project file match
   ],
 };

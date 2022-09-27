@@ -6,8 +6,13 @@ import Web3Modal from 'web3modal';
 import LordsTokenAbi from '@/abi/TheLordsToken.json';
 import { shortenAddress } from '@/util/formatters';
 
+const NETWORKS = {
+  '1': 'mainnet',
+  '4': 'rinkeby',
+};
+
 const WEB3_MODAL_CONFIG = {
-  network: 'mainnet',
+  network: NETWORKS['1'],
   cacheProvider: true,
   theme: {
     background: 'rgb(0, 0, 0)',
@@ -41,6 +46,7 @@ const defaultWalletContext = {
   displayName: '',
   balance: 0,
   dao: 0,
+  network: '',
 };
 
 const WalletContext = createContext<{
@@ -51,6 +57,7 @@ const WalletContext = createContext<{
   disconnectWallet: () => void;
   account: string;
   displayName: string;
+  network: string;
   balance: number;
 }>(defaultWalletContext);
 
@@ -74,6 +81,7 @@ function useWallet() {
   const [account, setAccount] = useState<string>('');
   const [displayName, setDisplayName] = useState('');
   const [balance, setBalance] = useState(0);
+  const [network, setNetwork] = useState('');
 
   async function connectWallet() {
     const web3Modal = new Web3Modal(WEB3_MODAL_CONFIG);
@@ -116,11 +124,11 @@ function useWallet() {
   async function login(newModal: Web3Modal) {
     try {
       const rawProvider = await newModal.connect();
-      const provider = new ethers.providers.Web3Provider(rawProvider);
+      const provider = new ethers.providers.Web3Provider(rawProvider, 'any');
       const signer = provider.getSigner();
-      setSigner(signer);
-      setProvider(provider);
-      setIsConnected(true);
+      await setSigner(signer);
+      await setProvider(provider);
+      await setIsConnected(true);
       const address = await signer.getAddress();
       if (address) {
         await updateAccount(provider, address);
@@ -132,9 +140,9 @@ function useWallet() {
             await updateAccount(provider, accounts[0]);
           }
         });
-
-        rawProvider.on('chainChanged', async () => {
-          // TODO: handle chain changes
+        await setNetwork(NETWORKS[parseInt(rawProvider.chainId) + ''] ?? '');
+        rawProvider.on('chainChanged', async (chainId: number) => {
+          await setNetwork(NETWORKS[parseInt(rawProvider.chainId) + ''] ?? '');
         });
       }
     } catch (e) {
@@ -150,6 +158,7 @@ function useWallet() {
     setAccount('');
     setIsConnected(false);
     setDisplayName('');
+    setNetwork('');
   }
 
   useEffect(() => {
@@ -176,6 +185,7 @@ function useWallet() {
     account,
     displayName,
     balance,
+    network,
   };
 }
 

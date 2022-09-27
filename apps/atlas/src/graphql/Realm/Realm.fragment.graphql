@@ -2,23 +2,38 @@ fragment RealmFragment on Realm {
   realmId
   owner
   bridgedOwner
+  ownerL2
+  settledOwner
   name
   rarityRank
   rarityScore
   orderType
   wonder
+  lastAttacked
+  lastClaimTime
+  lastVaultTime
+  longitude
+  latitude
   resources {
-    type
+    resourceId
+    resourceName
+    level
+    upgrades
   }
   traits {
     type
     qty
   }
-  buildings {
-    type
+
+  relic {
+    realmId
+    heldByRealm
   }
-  squads {
-    action
-    type
+  relicsOwned {
+    realmId
+    heldByRealm
   }
+  ...RealmBuildingsFragment
+  ...RealmTroopsFragment
+  ...RealmArmiesFragment
 }

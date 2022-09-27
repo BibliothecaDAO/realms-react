@@ -1,0 +1,18 @@
+query getAccount($account: String!, $realmIds: [Int!])
+@api(name: starkIndexer) {
+  ownedRealmsCount: realmsCount(filter: { ownerL2: { equals: $account } })
+  settledRealmsCount: realmsCount(
+    filter: { settledOwner: { equals: $account } }
+  )
+  accountHistory: getRealmHistory(filter: { realmId: { in: $realmIds } }) {
+    id
+    eventType
+    eventId
+    realmId
+    realmOwner
+    realmName
+    realmOrder
+    data
+    timestamp
+  }
+}

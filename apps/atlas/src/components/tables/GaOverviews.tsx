@@ -1,10 +1,12 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
+import { useState } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useGaContext } from '@/context/GaContext';
-import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
+import { GASideBar } from '../sidebars/GASideBar';
 
 interface GaOverviewsProps {
   bags: GAdventurer[];
@@ -13,37 +15,26 @@ interface GaOverviewsProps {
 export function GaOverviews(props: GaOverviewsProps) {
   const { account } = useWalletContext();
   const {
-    toggleMenuType,
-    selectedMenuType,
-    setSelectedId,
-    setSelectedAssetType,
-    gotoAssetId,
-    togglePanelType,
-  } = useUIContext();
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const {
     state: { favouriteGa },
     actions,
   } = useGaContext();
 
+  const [selectedGAId, setSelectedGAId] = useState('');
+
   const isYourGA = (ga: GAdventurer) =>
     account && account === ga.currentOwner?.address?.toLowerCase();
-
-  const openGaDetails = (id: string) => {
-    setSelectedAssetType('ga');
-    setSelectedId(id);
-    if (selectedMenuType !== 'ga') {
-      toggleMenuType('ga');
-    }
-  };
 
   const isFavourite = (ga: GAdventurer) => favouriteGa.indexOf(ga.id) > -1;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {props.bags &&
         props.bags.map((ga: GAdventurer, index) => (
           <div key={index} className="w-full rounded-b">
-            <div className="w-full p-2 bg-black/70 font-display rounded-t">
+            <div className="w-full p-2 rounded-t bg-black/70 font-display">
               {[
                 ga.weapon,
                 ga.chest,
@@ -74,7 +65,7 @@ export function GaOverviews(props: GaOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex flex-wrap w-full p-3 text-white bg-black/60">
+            <div className="flex flex-wrap w-full p-3 bg-black/60">
               <div className="flex self-center w-full">
                 <OrderIcon
                   className="self-center mx-3"
@@ -82,18 +73,17 @@ export function GaOverviews(props: GaOverviewsProps) {
                   order={ga.order.toLowerCase()}
                 />
                 <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
-                <div className="ml-auto self-center uppercase tracking-widest">
-                  <div className=" ml-auto">Greatness: {ga.bagGreatness}</div>
+                <div className="self-center ml-auto tracking-widest uppercase">
+                  <div className="ml-auto ">Greatness: {ga.bagGreatness}</div>
                   <div className="ml-auto">Rating: {ga.bagRating}</div>
                 </div>
               </div>
             </div>
-            <div className="rounded-b flex justify-center w-full p-2 space-x-2 bg-gray-600/70">
+            <div className="flex justify-center w-full p-2 space-x-2 rounded-b bg-gray-600/70">
               {' '}
               <Button
                 onClick={() => {
-                  togglePanelType('ga');
-                  gotoAssetId(ga.id, 'ga');
+                  navigateToAsset(+ga.id, 'ga');
                 }}
                 variant="primary"
                 className="w-full text-xs"
@@ -101,7 +91,9 @@ export function GaOverviews(props: GaOverviewsProps) {
                 fly to
               </Button>
               <Button
-                onClick={() => openGaDetails(ga.id)}
+                onClick={() => {
+                  setSelectedGAId(ga.id);
+                }}
                 variant="secondary"
                 className="w-full text-xs"
               >
@@ -130,6 +122,14 @@ export function GaOverviews(props: GaOverviewsProps) {
             </div>
           </div>
         ))}
+
+      <GASideBar
+        gaId={selectedGAId}
+        isOpen={!!selectedGAId}
+        onClose={() => {
+          setSelectedGAId('');
+        }}
+      />
     </div>
   );
 }

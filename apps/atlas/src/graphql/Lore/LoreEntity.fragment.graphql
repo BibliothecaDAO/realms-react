@@ -1,0 +1,12 @@
+fragment LoreEntityFragment on LoreEntity {
+  id
+  owner
+  ownerDisplayName
+  kind
+  revisions {
+    revisionNumber
+    title
+    excerpt
+    createdAt
+  }
+}

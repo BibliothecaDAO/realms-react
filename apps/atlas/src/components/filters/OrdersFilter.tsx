@@ -1,13 +1,13 @@
 import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { OrderType } from '@/generated/graphql';
-import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
 
 type OrdersFilterProps = {
   selectedValues: OrderType[];
   onChange(selected: OrderType[]): void;
+  popoverClass?: string;
 };
 
 type OrderOption = {
@@ -16,8 +16,6 @@ type OrderOption = {
 };
 
 export function OrdersFilter(props: OrdersFilterProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleOnClickOrderOption = (option: OrderOption) => {
     const newValues = props.selectedValues.filter(
       (value) => value !== option.value
@@ -31,11 +29,6 @@ export function OrdersFilter(props: OrdersFilterProps) {
 
   const isSelected = (option: OrderOption) =>
     props.selectedValues.indexOf(option.value) > -1;
-
-  const ref = useRef(null);
-  useOnClickOutsideElement(ref, () => {
-    setIsOpen(false);
-  });
 
   const orders = [
     { name: 'Power', value: OrderType.Power },
@@ -57,48 +50,59 @@ export function OrdersFilter(props: OrdersFilterProps) {
   ];
 
   return (
-    <Popover className="relative">
-      <div ref={ref}>
+    <Popover className="relative z-50">
+      <Popover.Button as="div">
         <Button
-          variant="primary"
-          size="sm"
-          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
+          size="xs"
+          variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
         >
-          Orders
+          orders
         </Button>
+      </Popover.Button>
 
-        {isOpen && (
-          <Popover.Panel
-            className="absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 shadow-2xl"
-            static
-          >
-            <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium text-white bg-black rounded shadow-sm">
-              <h4>Search by Orders</h4>
+      <Transition
+        enter="transition duration-350 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-350 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Popover.Panel
+          className={clsx(
+            'absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4 border-double border-white/20 rounded',
+            props.popoverClass
+          )}
+          static
+        >
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+            <h4>Search by Orders</h4>
 
-              <div className="relative grid items-center justify-center grid-cols-4 gap-6">
-                {orders.map((order, idx) => (
-                  <div
-                    role="button"
-                    key={order.value}
-                    tabIndex={idx}
-                    className={clsx(
-                      'flex items-center justify-center cursor-pointer rounded-sm px-6 hover:bg-gray-200/20 duration-150 transition-all',
-                      isSelected(order) ? 'bg-gray-200/20' : ''
-                    )}
-                    onClick={() => handleOnClickOrderOption(order)}
-                    aria-hidden="true"
-                  >
-                    <OrderIcon order={order.name.toLowerCase()} size="md" />
-                  </div>
-                ))}
-              </div>
+            <div className="relative grid items-center justify-center grid-cols-4 gap-6">
+              {orders.map((order, idx) => (
+                <div
+                  role="button"
+                  key={order.value}
+                  tabIndex={idx}
+                  className={clsx(
+                    'flex items-center justify-center cursor-pointer rounded-sm px-6 hover:bg-gray-200/20 duration-150 transition-all',
+                    isSelected(order) ? 'bg-gray-200/20' : ''
+                  )}
+                  onClick={() => handleOnClickOrderOption(order)}
+                  aria-hidden="true"
+                >
+                  <OrderIcon
+                    containerClassName="my-4"
+                    withTooltip
+                    order={order.name.toLowerCase()}
+                    size="md"
+                  />
+                </div>
+              ))}
             </div>
-          </Popover.Panel>
-        )}
-      </div>
+          </div>
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 }

@@ -2,20 +2,21 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
+// import { useAtlasContext } from '@/hooks/useAtlas';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
+import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const LootPanel = () => {
-  const { isDisplayLarge, togglePanelType, selectedPanel, openDetails } =
-    useUIContext();
+  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useLootContext();
 
@@ -35,7 +36,7 @@ export const LootPanel = () => {
     state.selectedTab,
   ]);
 
-  const isLootPanel = selectedPanel === 'loot';
+  const isLootPanel = true;
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
 
   const variables = useMemo(() => {
@@ -49,8 +50,11 @@ export const LootPanel = () => {
     if (state.selectedTab === 0) {
       where.currentOwner = account?.toLowerCase();
     }
-    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
-    where.bagRating_gt = state.ratingFilter.bagRating;
+    where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
+    where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
+    where.bagRating_gte = state.ratingFilter.bagRating.min;
+    where.bagRating_lte = state.ratingFilter.bagRating.max;
+
     return {
       first: limit,
       skip: limit * (page - 1),
@@ -65,11 +69,16 @@ export const LootPanel = () => {
     skip: !isLootPanel,
   });
 
-  useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.bags?.length ?? 0) > 0) {
-      openDetails('loot', data?.bags[0].id as string);
-    }
-  }, [data, page]);
+  // useEffect(() => {
+  //   if (
+  //     !selectedId &&
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.bags?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('loot', data?.bags[0].id as string);
+  //   }
+  // }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -79,17 +88,12 @@ export const LootPanel = () => {
 
   return (
     <BasePanel open={isLootPanel}>
-      <div className="flex justify-between pt-2">
-        <div className="sm:hidden"></div>
-        <h1>Loot</h1>
+      <PanelHeading
+        heading="Loot"
+        action={actions.updateSearchIdFilter}
+        searchFilterValue={state.searchIdFilter}
+      />
 
-        <button
-          className="z-50 transition-all rounded sm:hidden top-4"
-          onClick={() => togglePanelType('loot')}
-        >
-          <Close />
-        </button>
-      </div>
       <Tabs
         selectedIndex={state.selectedTab}
         onChange={actions.updateSelectedTab as any}
