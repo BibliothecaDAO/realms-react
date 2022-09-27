@@ -1,28 +1,34 @@
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
-import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/solid';
+import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/20/solid';
 import {
   useStarknet,
   useStarknetTransactionManager,
+  ConnectorNotFoundError,
 } from '@starknet-react/core';
 import axios from 'axios';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import type { AddTransactionResponse } from 'starknet';
+import type { InvokeFunctionResponse } from 'starknet';
+// eslint-disable-next-line import/order
+import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import useTotalMinted from '@/hooks/desiege/useTotalMinted';
 import useTxCallback from '@/hooks/useTxCallback';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
-import ElementsLabel from '@/shared/ElementsLabel';
+import ElementsLabel, {
+  DarkGradient,
+  LightGradient,
+} from '@/shared/ElementsLabel';
 import { ExternalLink } from '@/shared/Icons';
+import { getHostname } from '@/util/blockExplorer';
 import { messageKey } from '@/util/messageKey';
-import { EFFECT_BASE_FACTOR } from '@/util/minigameApi';
+import { EFFECT_BASE_FACTOR, starknetNetwork } from '@/util/minigameApi';
 import MintRequirements from './MintRequirements';
-import type { MintingError } from '@/../pages/api/minigame_alpha_mint';
 
 type Prop = {
   initialTab?: TabName;
@@ -38,7 +44,7 @@ type TabName =
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const Bridge: React.FC<Prop> = (props) => {
-  const starknet = useStarknet();
+  const { account: starkAccount, connect, connectors, error } = useStarknet();
   const txManager = useStarknetTransactionManager();
   const { account, signer, connectWallet, isConnected, balance } =
     useWalletContext();
@@ -57,7 +63,7 @@ export const Bridge: React.FC<Prop> = (props) => {
       // Need to manually track transaction here
       txManager.addTransaction({
         transactionHash,
-        address: starknet.account as string,
+        address: starkAccount as string,
         status: 'TRANSACTION_RECEIVED',
       });
     }
@@ -88,13 +94,13 @@ export const Bridge: React.FC<Prop> = (props) => {
     if (!isConnected) {
       setCurrentTab('connect-ethereum');
     } else {
-      if (starknet.account) {
+      if (starkAccount) {
         setCurrentTab('mint');
       } else {
         setCurrentTab('connect-starknet');
       }
     }
-  }, [isConnected, starknet.account]);
+  }, [isConnected, starkAccount]);
 
   const currentGameVars = useGameVariables();
 
@@ -112,21 +118,23 @@ export const Bridge: React.FC<Prop> = (props) => {
       if (signer) {
         setMiddlewareStatus('signing');
         const sig = await signer.signMessage(
-          messageKey(starknet.account as string)
+          messageKey(starkAccount as string)
         );
         setMiddlewareStatus('pending');
-        const res = await axios.post<AddTransactionResponse | MintingError>(
+        const res = await axios.post<InvokeFunctionResponse | MintingError>(
           '/api/minigame_alpha_mint',
           {
-            starknetAddress: starknet.account,
+            starknetAddress: starkAccount,
             sig,
             chosenSide: side,
             gameIdx: currentIndex, // The server will +1 this to mint for next round
           }
         );
 
-        if ('code' in res.data && res.data.code == 'TRANSACTION_RECEIVED') {
-          setTransactionHash(res.data.transaction_hash);
+        if (
+          'code' in res.data /* && res.data.code == 'TRANSACTION_RECEIVED' */
+        ) {
+          setTransactionHash(res.data);
           setMintError(undefined);
         }
         if ('error' in res.data) {
@@ -158,9 +166,6 @@ export const Bridge: React.FC<Prop> = (props) => {
 
   const Checkmark = <Check className="inline-block w-6 ml-1" />;
 
-  useEffect(() => {
-    starknet.connectBrowserWallet();
-  }, []);
   return (
     <div className="w-full pt-4 sm:w-2/3">
       <div className="p-4 mx-2 mt-4 rounded-lg bg-white/60">
@@ -198,7 +203,10 @@ export const Bridge: React.FC<Prop> = (props) => {
             >
               <div className="flex">
                 <Lords className="mr-4 fill-current w-7" />
-                <span className="flex">2. Lords Balance</span>
+                <span className="flex">
+                  2. Lords
+                  <Lords className="w-3 mr-2" /> Balance
+                </span>
               </div>
               {balance >= MINIMUM_LORDS_REQUIRED ? Checkmark : null}
             </button>
@@ -258,28 +266,24 @@ export const Bridge: React.FC<Prop> = (props) => {
             ) : null}
             {currentTab == 'connect-starknet' ? (
               <div className="py-4">
-                {starknet.account ? (
+                {starkAccount ? (
                   <p className={connectedClassname}>
-                    Connected as {starknet.account}
+                    Connected as {starkAccount}
                   </p>
                 ) : (
                   <div>
                     <div className="text-2xl">
-                      {starknet.hasStarknet ? (
-                        <div>
-                          If you haven&apos;t already done so, please{' '}
-                          <a
-                            rel="noreferrer"
-                            target="_blank"
-                            className="underline"
-                            href="https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb"
-                          >
-                            download and install
-                          </a>{' '}
-                          the ArgentX extension, available now for the Google
-                          Chrome web browser.
-                        </div>
-                      ) : (
+                      {!starkAccount && !error && (
+                        <Button
+                          onClick={() => {
+                            connect(connectors[0]);
+                          }}
+                          className="mt-4"
+                        >
+                          Connect to ArgentX
+                        </Button>
+                      )}
+                      {error instanceof ConnectorNotFoundError && (
                         <div className="p-4 text-red-800 bg-red-100 border-red-700 rounded-md">
                           The ArgentX wallet extension could not be activated.
                           Please{' '}
@@ -295,32 +299,33 @@ export const Bridge: React.FC<Prop> = (props) => {
                         </div>
                       )}
                     </div>
-                    <Button
-                      onClick={() => starknet.connectBrowserWallet()}
-                      className="mt-4"
-                    >
-                      Connect to ArgentX
-                    </Button>
                   </div>
                 )}
               </div>
             ) : null}
             {currentTab === 'mint' ? (
               <div className="py-4">
-                {starknet.account ? (
+                {starkAccount ? (
                   <>
-                    <h1 className="my-8 text-4xl">Pick your Allegiance</h1>
+                    <h1 className="my-2 text-4xl">Pick Polarity</h1>
                     <div className="flex w-full space-x-2 ">
                       <div className="relative w-full text-center group">
+                        {totalMinted.data
+                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
+                            ' distilled Light for next round'
+                          : '-'}
                         <div
                           className={classNames(
-                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
-                            side == 'light' ? 'opacity-100' : 'opacity-50'
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r group-hover:opacity-100 group-hover:duration-200',
+                            LightGradient
                           )}
                         >
                           <button
                             onClick={() => setSide('light')}
-                            className="relative items-center w-full py-4 leading-none tracking-widest text-pink-400 uppercase bg-white divide-x divide-gray-600 rounded-md px-7"
+                            className={classNames(
+                              'relative items-center w-full py-4 leading-none tracking-widest text-white hover:text-cyan-700 uppercase hover:bg-white divide-x divide-gray-600 rounded-md px-7',
+                              side == 'light' ? 'bg-white text-cyan-800' : null
+                            )}
                           >
                             <span className="flex justify-center">
                               {' '}
@@ -331,30 +336,47 @@ export const Bridge: React.FC<Prop> = (props) => {
                             </span>
                           </button>
                         </div>
-                        {totalMinted.data
-                          ? totalMinted.data.light / EFFECT_BASE_FACTOR +
-                            ' distilled Light for next round'
-                          : '-'}
-                      </div>
-                      <div className="relative w-full text-center group">
                         <div
                           className={classNames(
-                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r from-red-600 to-blue-600 group-hover:opacity-100 group-hover:duration-200 animate-tilt',
-                            side == 'dark' ? 'opacity-100' : 'opacity-50'
+                            'transition-opacity group-hover:opacity-100',
+                            side == 'light' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        >
+                          “Join us, defend the city, preserve the Divine Order,
+                          and protect our ancient stories from destruction!”
+                        </div>
+                      </div>
+                      <div className="relative w-full text-center group">
+                        {totalMinted.data
+                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
+                            ' distilled Dark for next round'
+                          : '-'}
+                        <div
+                          className={classNames(
+                            'w-full p-1 text-white transition duration-300 rounded-lg bg-gradient-to-r group-hover:opacity-100 group-hover:duration-200 animate-tilt',
+                            DarkGradient
                           )}
                         >
                           <button
                             onClick={() => setSide('dark')}
-                            className="relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase bg-black divide-x divide-gray-600 rounded-md px-7"
+                            className={classNames(
+                              'relative flex items-center justify-center w-full py-4 leading-none tracking-widest text-center text-white uppercase divide-x divide-gray-600 rounded-md hover:bg-gray-900 px-7',
+                              side == 'dark' ? 'bg-gray-900 text-white' : null
+                            )}
                           >
                             Dark{' '}
                             {/* {side == "dark" ? <Check className="ml-1" /> : null} */}
                           </button>
                         </div>
-                        {totalMinted.data
-                          ? totalMinted.data.dark / EFFECT_BASE_FACTOR +
-                            ' distilled Dark for next round'
-                          : '-'}
+                        <div
+                          className={classNames(
+                            'transition-opacity group-hover:opacity-100',
+                            side == 'dark' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        >
+                          “Join us, let us desiege this city so that we can live
+                          free of their chains…”
+                        </div>
                       </div>
                     </div>
 
@@ -384,9 +406,7 @@ export const Bridge: React.FC<Prop> = (props) => {
                             <p className="mt-8 text-2xl break-words">
                               {messageKey('')}
                             </p>
-                            <p className={connectedClassname}>
-                              {starknet.account}
-                            </p>
+                            <p className={connectedClassname}>{starkAccount}</p>
 
                             <Button
                               disabled={
@@ -416,8 +436,9 @@ export const Bridge: React.FC<Prop> = (props) => {
                     {transactionHash ? (
                       <p className="mt-2">
                         <a
-                          // TODO: Choose host dynamically here based on network
-                          href={`https://goerli.voyager.online/tx/${transactionHash}/`}
+                          href={`https://${getHostname(
+                            starknetNetwork
+                          )}/tx/${transactionHash}/`}
                           className="underline"
                           target={'_blank'}
                           rel="noopener noreferrer"

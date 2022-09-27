@@ -1,0 +1,586 @@
+[
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "t1_1",
+        "offset": 0,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_2",
+        "offset": 9,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_3",
+        "offset": 18,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_4",
+        "offset": 27,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_5",
+        "offset": 36,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_6",
+        "offset": 45,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_7",
+        "offset": 54,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_8",
+        "offset": 63,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_9",
+        "offset": 72,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_1",
+        "offset": 81,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_2",
+        "offset": 90,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_3",
+        "offset": 99,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_4",
+        "offset": 108,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_5",
+        "offset": 117,
+        "type": "Troop"
+      },
+      {
+        "name": "t3_1",
+        "offset": 126,
+        "type": "Troop"
+      }
+    ],
+    "name": "Squad",
+    "size": 135,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "type",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "tier",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "building",
+        "offset": 3,
+        "type": "felt"
+      },
+      {
+        "name": "agility",
+        "offset": 4,
+        "type": "felt"
+      },
+      {
+        "name": "attack",
+        "offset": 5,
+        "type": "felt"
+      },
+      {
+        "name": "armor",
+        "offset": 6,
+        "type": "felt"
+      },
+      {
+        "name": "vitality",
+        "offset": 7,
+        "type": "felt"
+      },
+      {
+        "name": "wisdom",
+        "offset": 8,
+        "type": "felt"
+      }
+    ],
+    "name": "Troop",
+    "size": 9,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "attacking_squad",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "defending_squad",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "last_attacked_at",
+        "offset": 2,
+        "type": "felt"
+      }
+    ],
+    "name": "RealmCombatData",
+    "size": 3,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "resource_count",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "bits",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "packed_ids",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "packed_amounts",
+        "offset": 3,
+        "type": "felt"
+      }
+    ],
+    "name": "Cost",
+    "size": 4,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "attacking_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "defending_squad",
+        "type": "Squad"
+      }
+    ],
+    "keys": [],
+    "name": "CombatStart_3",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "attacking_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "defending_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "outcome",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "CombatOutcome_3",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "attacking_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "defending_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "hit_points",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "CombatStep_3",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "squad",
+        "type": "Squad"
+      },
+      {
+        "name": "troop_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "troop_ids",
+        "type": "felt*"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "slot",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "BuildTroops_3",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "xoroshiro_addr",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "troop_ids",
+        "type": "felt*"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "slot",
+        "type": "felt"
+      }
+    ],
+    "name": "build_squad_from_troops_in_realm",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "initiate_combat",
+    "outputs": [
+      {
+        "name": "combat_outcome",
+        "type": "felt"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_idxs_len",
+        "type": "felt"
+      },
+      {
+        "name": "troop_idxs",
+        "type": "felt*"
+      },
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "slot",
+        "type": "felt"
+      }
+    ],
+    "name": "remove_troops_from_squad_in_realm",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "attack_goblin_town",
+    "outputs": [
+      {
+        "name": "outcome",
+        "type": "felt"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "view_troops",
+    "outputs": [
+      {
+        "name": "attacking_troops",
+        "type": "Squad"
+      },
+      {
+        "name": "defending_troops",
+        "type": "Squad"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "get_xoroshiro",
+    "outputs": [
+      {
+        "name": "x",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_id",
+        "type": "felt"
+      }
+    ],
+    "name": "get_troop",
+    "outputs": [
+      {
+        "name": "t",
+        "type": "Troop"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_realm_combat_data",
+    "outputs": [
+      {
+        "name": "combat_data",
+        "type": "RealmCombatData"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_id",
+        "type": "felt"
+      }
+    ],
+    "name": "get_troop_cost",
+    "outputs": [
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "attacking_realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "defending_realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "Realm_can_be_attacked",
+    "outputs": [
+      {
+        "name": "yesno",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "troop_id",
+        "type": "felt"
+      },
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "name": "set_troop_cost",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "xoroshiro",
+        "type": "felt"
+      }
+    ],
+    "name": "set_xoroshiro",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "zero_dead_squads",
+    "outputs": [],
+    "type": "function"
+  }
+]

@@ -29,8 +29,8 @@ export const SelectButton = ({
     <Listbox.Button
       className={twMerge(
         clsx(
-          'relative w-full cursor-default rounded bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 py-3 pl-3 pr-10 text-left ring-gray-500 ring-opacity-30 transition duration-150 ease-in-out',
-          'focus:outline-none shadow-md hover:from-gray-800 hover:via-gray-600 hover:to-gray-500 focus-visible:ring-opacity-100',
+          'relative w-full cursor-default rounded bg-gradient-to-t  py-3 pl-3 pr-10 text-left ring-gray-500 ring-opacity-30 transition duration-150 ease-in-out font-body tracking-widest font-semibold cursor-pointer border bg-gray-800 border-white/10 shadow-inner hover:bg-gray-800/40',
+          'focus:outline-none shadow-inner  focus-visible:ring-opacity-100',
           className
         )
       )}

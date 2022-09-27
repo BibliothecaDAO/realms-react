@@ -32,9 +32,9 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
       </p>
       <p className="text-4xl">
         {zeroShield && !zeroVitality ? (
-          <p className="inline-block px-2 py-1 mb-2 text-sm bg-red-600 rounded-sm animate-pulse text-white">
+          <span className="inline-block px-2 py-1 mb-2 text-sm bg-red-600 rounded-sm animate-pulse">
             Shield is down!
-          </p>
+          </span>
         ) : props.shield ? (
           (props.shield.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)
         ) : (
@@ -47,9 +47,9 @@ export const ShieldVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
         ) : (
           <>
             {zeroVitality ? (
-              <p className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
+              <span className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
                 Dark Wins
-              </p>
+              </span>
             ) : (
               ``
             )}
@@ -73,21 +73,21 @@ export const CityVitalityDisplay = (props: ShieldVitalityDisplayProps) => {
       >
         city Vitality
       </p>
-      <p className="text-3xl">
+      <div className="text-3xl">
         {props.health == undefined ? (
           <LoadingSkeleton className="w-full h-6 mt-2" />
         ) : (
           <>
             {zeroVitality ? (
-              <p className="inline-block px-2 py-1 text-white bg-purple-900 rounded-sm">
+              <span className="inline-block px-2 py-1 bg-purple-900 rounded-sm">
                 Dark Wins
-              </p>
+              </span>
             ) : (
               `${(props.health.toNumber() / EFFECT_BASE_FACTOR).toFixed(2)}`
             )}
           </>
         )}
-      </p>
+      </div>
     </>
   );
 };

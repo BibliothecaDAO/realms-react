@@ -1,9 +1,10 @@
  
 query getWallet($address: String!) @api(name: starkIndexer) {
     getWallet(address: $address) {
-      id
-      realms {
-        ...RealmFragment
-      }
+      address
+      realmsL1Held
+      realmsL2Held
+      realmsSettledHeld
+      realmsBridgedHeld
     }
 }

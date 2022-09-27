@@ -33,7 +33,7 @@ export const Select = <T extends unknown = string>({
       {...props}
     >
       {label && (
-        <Listbox.Label className="text-sm font-semibold text-gray-500 uppercase">
+        <Listbox.Label className="text-xs font-semibold tracking-widest text-gray-500 uppercase sm:text-sm">
           {label}
         </Listbox.Label>
       )}

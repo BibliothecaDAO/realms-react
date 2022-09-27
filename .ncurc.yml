@@ -8,4 +8,6 @@ reject: [
     'execa',
     # Too early cause in esm
     'is-port-reachable',
+    # Until get-starknet library merged https://github.com/apibara/starknet-react/pull/77
+    '@argent/get-starknet',
   ]

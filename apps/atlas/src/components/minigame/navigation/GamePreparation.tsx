@@ -3,10 +3,10 @@ export const GamePreparation = () => {
   return (
     <div className="">
       <h4 className="font-semibold tracking-widest text-center text-gray-800">
-        Get Prepared for the next game
+        Prepare for Desiege
       </h4>
       <div className="p-4 text-gray-700 rounded-md shadow-inner bg-white/40">
-        <ul className="text-xl list-none ">
+        <ul className="text-sm list-none lg:text-base ">
           <li>
             Browse the{' '}
             <a
@@ -20,7 +20,7 @@ export const GamePreparation = () => {
             <ExternalLink className="inline-block h-4 ml-1" />
           </li>
           <li>
-            Coordinate on{' '}
+            Whisper in the LoreBox or{' '}
             <a
               target={'_blank'}
               href="https://discord.gg/YfeZQ3NFB8"
@@ -39,7 +39,7 @@ export const GamePreparation = () => {
             Check the{' '}
             <a
               target={'_blank'}
-              href="https://github.com/BibliothecaForAdventurers/realms-react/tree/feat/desiege/apps/atlas/src/components/minigame"
+              href="https://github.com/BibliothecaForAdventurers/realms-react/tree/main/apps/atlas/src/components/minigame"
               className="underline"
               rel="noreferrer"
             >

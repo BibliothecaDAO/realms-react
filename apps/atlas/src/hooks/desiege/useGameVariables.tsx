@@ -25,7 +25,10 @@ const useGameVariables = () => {
       return gameVars;
     },
     {
-      staleTime: 1000 * 60 * 10, // Keep cached for 10 minutes
+      refetchOnMount: false,
+      // This is only used one time at the start of the game.
+      // Thereafter, individual queries are used to update the cache.
+      staleTime: Infinity,
     }
   );
 };

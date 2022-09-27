@@ -1,0 +1,12 @@
+query getExchangeRates @api(name: starkIndexer) {
+  getExchangeRates {
+    tokenId
+    tokenName
+    amount
+    buyAmount
+    sellAmount
+    currencyReserve
+    tokenReserve
+    percentChange24Hr
+  }
+}

@@ -1,52 +1,26 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloLink,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
-import { MultiAPILink } from '@habx/apollo-multi-endpoint-link';
+import { ApolloProvider } from '@apollo/client';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
-import { StarknetProvider } from '@starknet-react/core';
+import {
+  StarknetProvider,
+  getInstalledInjectedConnectors,
+} from '@starknet-react/core';
+import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider, RpcProvider } from 'starknet';
+import { AtlasProvider } from '@/context/AtlasContext';
+import { ResourceProvider } from '@/context/ResourcesContext';
+import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
-/* import PageTransition from '@/components/navigation/PageTransition'; 
-import { animated, Transition } from '@react-spring/web'; */
-
-const client = new ApolloClient({
-  link: ApolloLink.from([
-    new MultiAPILink({
-      endpoints: {
-        realms:
-          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms',
-        starkIndexer:
-          'https://starknet-indexer-c9bsk.ondigitalocean.app/graphql',
-        ecosystem:
-          'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem',
-      },
-      httpSuffix: '',
-      createHttpLink: () => createHttpLink(),
-    }),
-  ]),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          realms: concatPagination(['where', 'orderBy']),
-          bridgedRealms: concatPagination(['where', 'orderBy']),
-          // dungeons: concatPagination(['where']),
-          // bags: concatPagination(['where']),
-        },
-      },
-    },
-  }),
-});
+import 'mapbox-gl/dist/mapbox-gl.css';
+import apolloClient from '@/util/apolloClient';
 
 // Create a react-query client
 const queryClient = new QueryClient();
@@ -86,13 +60,42 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const connectors = getInstalledInjectedConnectors();
+  useEffect(() => {
+    // match the dapp with a wallet instance
+    connect({ showList: false }).then((wallet) => {
+      // connect the dapp with the chosen wallet instance
+      wallet?.enable({ showModal: false }).then(() => {
+        const isConnected = !!wallet?.isConnected;
+        // use `isConnected` :thumbsup:
+      });
+    });
+  }, []);
+
   return (
     <BreakpointProvider queries={queries}>
       <WalletProvider>
-        <ApolloProvider client={client}>
-          <StarknetProvider>
+        <ApolloProvider client={apolloClient}>
+          <StarknetProvider
+            defaultProvider={
+              new RpcProvider({
+                nodeUrl:
+                  'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
+              })
+            }
+            autoConnect
+            connectors={connectors}
+          >
             <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
+              <ResourceProvider>
+                <TransactionQueueProvider>
+                  <AtlasProvider>
+                    <DndProvider backend={HTML5Backend}>
+                      <Component {...pageProps} />
+                    </DndProvider>
+                  </AtlasProvider>
+                </TransactionQueueProvider>
+              </ResourceProvider>
               {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
@@ -105,6 +108,26 @@ function MyApp({ Component, pageProps }: AppProps) {
           </StarknetProvider>
         </ApolloProvider>
       </WalletProvider>
+      <Toaster
+        gutter={12}
+        toastOptions={{
+          className: '',
+          style: {
+            padding: '0px',
+          },
+        }}
+      >
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <div className="flex p-3 rounded shadow-lg stroke-current font-display bg-cta-100 shadow-purple-800/30 text-stone-200">
+                {icon}
+                {message}
+              </div>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
     </BreakpointProvider>
   );
 }

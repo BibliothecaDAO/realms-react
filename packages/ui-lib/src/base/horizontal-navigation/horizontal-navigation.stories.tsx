@@ -26,7 +26,7 @@ const Template: Story<HorizontalNavigationProps> = ({ ...args }) => {
         <button
           key={id}
           type="button"
-          className={clsx('relative rounded bg-indigo-100 p-4 text-white')}
+          className={clsx('relative rounded bg-indigo-100 p-4 ')}
           onClick={() => console.log(id)}
         >
           {id}

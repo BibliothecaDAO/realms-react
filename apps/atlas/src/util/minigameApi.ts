@@ -13,11 +13,14 @@ export const CONTROLLER_ADDRESS =
   (process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS as string) ||
   '0x29317ae2fccbb5ce0588454b8d13cf690fd7318a983cf72f0c9bf5f02f4a465';
 
-const starknetNetwork = process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
-  | 'mainnet-alpha'
-  | 'goerli-alpha';
+export const starknetNetwork =
+  (process.env.NEXT_PUBLIC_DESIEGE_STARKNET_NETWORK as
+    | 'mainnet-alpha'
+    | 'goerli-alpha') || 'goerli-alpha';
 
-export const provider = new Provider({ network: starknetNetwork });
+export const provider = new Provider({
+  sequencer: { network: starknetNetwork },
+});
 
 if (!CONTROLLER_ADDRESS) {
   throw new Error(
@@ -125,6 +128,8 @@ export const getModuleAddress: (moduleId: string) => Promise<string> = async (
     calldata: [moduleId.toString()],
   });
   const [moduleAddress] = res.result;
+  // Cache the result for the future
+  moduleAddressCache[moduleId] = moduleAddress;
   return moduleAddress;
 };
 
@@ -259,27 +264,22 @@ export const getTotalElementsMinted = async (gameIdx: number) => {
 };
 
 // To maintain balance next mint divides diff by 2
-export const getNextMintAmount = ({
-  light,
-  dark,
-}: {
-  light: number;
-  dark: number;
-}) => {
-  // The totals received will be
+export const getNextMintAmount = (
+  totals: {
+    light: number;
+    dark: number;
+  },
+  side: 'light' | 'dark'
+) => {
   const baseAmount = MINIMUM_MINT_AMOUNT * EFFECT_BASE_FACTOR;
 
-  let diff;
-  if (light > dark) {
-    diff = light - dark;
-  } else if (dark > light) {
-    diff = dark - light;
-  } else {
-    return baseAmount;
+  let diff: undefined | number;
+  if (totals.light > totals.dark && side === 'dark') {
+    diff = totals.light - totals.dark;
+    const balancedNextAmount = Math.round(diff / 2);
+    return Math.max(balancedNextAmount, baseAmount);
   }
-
-  const balancedNextAmount = Math.round(diff / 2);
-  return Math.max(balancedNextAmount, baseAmount);
+  return baseAmount;
 };
 
 export const getIsApprovedForAll = async (

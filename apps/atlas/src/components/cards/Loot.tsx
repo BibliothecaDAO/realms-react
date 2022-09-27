@@ -2,20 +2,18 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
-import { useUIContext } from '@/hooks/useUIContext';
 import getGreatness from '@/services/getGreatness';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import type { LootProps } from '../../types';
 
-const variantMaps: any = {
-  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
-};
-
 export function Loot(props: LootProps): ReactElement {
   const [metaData, setMetaData] = useState(null);
-  const { gotoAssetId } = useUIContext();
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
   const ensData = useEnsResolver(props.loot.currentOwner.address);
 
   const mappedProperties = [
@@ -59,7 +57,7 @@ export function Loot(props: LootProps): ReactElement {
   }, [props.loot.id]);
 
   return (
-    <div className="z-10 w-full h-auto p-1 text-white rounded-xl">
+    <div className="z-10 w-full h-auto p-1 rounded-xl">
       {props.loading ? (
         <div className="">
           <div className="w-full h-64 pt-20 mb-4 rounded bg-white/40 animate-pulse" />
@@ -67,7 +65,7 @@ export function Loot(props: LootProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 pb-4 rounded bg-black/60">
+        <div className="px-4 py-2 pb-4 bg-black rounded">
           <div className=" sm:text-2xl">
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row ">
               <h3>
@@ -81,7 +79,7 @@ export function Loot(props: LootProps): ReactElement {
                       'bg-white/20 rounded px-4 uppercase hover:bg-white/40'
                     }
                     onClick={() => {
-                      gotoAssetId(props.loot.id, 'loot');
+                      navigateToAsset(+props.loot.id, 'loot');
                     }}
                   >
                     fly to
@@ -89,19 +87,17 @@ export function Loot(props: LootProps): ReactElement {
                 </div>
               )}
             </div>
-            <div className="flex justify-between py-1 text-sm tracking-widest uppercase border-t border-b border-gray-500">
+            <div className="flex justify-between py-1 text-sm tracking-widest uppercase border-t border-b border-gray-500/40">
               <div>Manas claimed: {props.loot.manasClaimed}</div>
               <div>* mana available</div>
             </div>
             <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="p-4 text-lg tracking-widest text-left uppercase">
+                  <th className="p-4 tracking-widest text-left uppercase">
                     Item
                   </th>
-                  <th className="p-4 text-lg tracking-widest uppercase">
-                    Greatness
-                  </th>
+                  <th className="p-4 tracking-widest uppercase">Greatness</th>
                 </tr>
               </thead>
               <tbody>
@@ -110,7 +106,7 @@ export function Loot(props: LootProps): ReactElement {
                     <td className="pb-2">
                       <p
                         className={
-                          'mt-1 flex  font-display text-[' +
+                          'mt-1 flex font-display text-[' +
                           rarityColor((props.loot as any)[item]) +
                           ']'
                         }
@@ -124,16 +120,14 @@ export function Loot(props: LootProps): ReactElement {
                           {(props.loot as any)[item]}
                           {metaData &&
                             (metaData as any).unclaimedMana[item] && (
-                              <span className="ml-2 text-white text-green-200">
-                                *
-                              </span>
+                              <span className="ml-2 text-green-200">*</span>
                             )}
                         </span>
                       </p>
                       {metaData && (metaData as any).unclaimedMana[item] && (
                         <a
                           href="https://app.genesisproject.xyz/claim"
-                          className="text-xs uppercase border px-3 py-1 rounded hover:bg-white/40 transition-all duration-300"
+                          className="px-3 py-1 text-xs uppercase transition-all duration-300 border rounded border-white/20 hover:bg-white/20"
                         >
                           distill
                         </a>

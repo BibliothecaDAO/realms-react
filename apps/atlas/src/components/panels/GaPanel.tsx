@@ -2,20 +2,20 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useUIContext } from '@/hooks/useUIContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
+import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const GaPanel = () => {
-  const { isDisplayLarge, togglePanelType, openDetails, selectedPanel } =
-    useUIContext();
+  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 
@@ -36,7 +36,7 @@ export const GaPanel = () => {
     state.selectedTab,
   ]);
 
-  const isGaPanel = selectedPanel === 'ga';
+  const isGaPanel = true;
   const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
@@ -50,8 +50,10 @@ export const GaPanel = () => {
     if (state.selectedTab === 0) {
       where.currentOwner = account?.toLowerCase();
     }
-    where.bagGreatness_gt = state.ratingFilter.bagGreatness;
-    where.bagRating_gt = state.ratingFilter.bagRating;
+    where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
+    where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
+    where.bagRating_gte = state.ratingFilter.bagRating.min;
+    where.bagRating_lte = state.ratingFilter.bagRating.max;
 
     if (state.selectedOrders.length > 0) {
       where.order_in = [
@@ -75,11 +77,16 @@ export const GaPanel = () => {
     skip: !isGaPanel,
   });
 
-  useEffect(() => {
-    if (isDisplayLarge && page === 1 && (data?.gadventurers?.length ?? 0) > 0) {
-      openDetails('ga', data?.gadventurers[0].id as string);
-    }
-  }, [data, page]);
+  // useEffect(() => {
+  //   if (
+  //     !selectedId &&
+  //     isDisplayLarge &&
+  //     page === 1 &&
+  //     (data?.gadventurers?.length ?? 0) > 0
+  //   ) {
+  //     openDetails('ga', data?.gadventurers[0].id as string);
+  //   }
+  // }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
@@ -90,17 +97,11 @@ export const GaPanel = () => {
 
   return (
     <BasePanel open={isGaPanel}>
-      <div className="flex justify-between pt-2">
-        <div className="sm:hidden"></div>
-        <h1>Genesis Adventurers</h1>
-
-        <button
-          className="z-50 transition-all rounded sm:hidden top-4"
-          onClick={() => togglePanelType('ga')}
-        >
-          <Close />
-        </button>
-      </div>
+      <PanelHeading
+        heading="Genesis Adventurers"
+        action={actions.updateSearchIdFilter}
+        searchFilterValue={state.searchIdFilter}
+      />
       <Tabs
         selectedIndex={state.selectedTab}
         onChange={actions.updateSelectedTab as any}

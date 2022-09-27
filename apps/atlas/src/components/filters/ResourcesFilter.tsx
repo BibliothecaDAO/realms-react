@@ -1,27 +1,20 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
-import { ResourceType } from '@/generated/graphql';
-import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';
+import React from 'react';
+import { resources } from '@/constants/resources';
 
 type ResourcesFilterProps = {
-  selectedValues: ResourceType[];
-  onChange(selected: ResourceType[]): void;
+  selectedValues: number[];
+  onChange(selected: number[]): void;
 };
 
 type ResourceOption = {
   name: string;
-  value: ResourceType;
+  value: number;
 };
 
 export function ResourcesFilter(props: ResourcesFilterProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
-  useOnClickOutsideElement(ref, () => {
-    setIsOpen(false);
-  });
-
   const handleOnClickResourceOption = (option: ResourceOption) => {
     const newValues = props.selectedValues.filter(
       (value) => value !== option.value
@@ -35,78 +28,60 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
   const isSelected = (option: ResourceOption) =>
     props.selectedValues.indexOf(option.value) > -1;
 
-  const resources = [
-    { name: 'Adamantine', value: ResourceType.Adamantine },
-    { name: 'Alchemical Silver', value: ResourceType.AlchemicalSilver },
-    { name: 'Coal', value: ResourceType.Coal },
-    { name: 'Cold Iron', value: ResourceType.ColdIron },
-    { name: 'Copper', value: ResourceType.Copper },
-    { name: 'Deep Crystal', value: ResourceType.DeepCrystal },
-    { name: 'Diamonds', value: ResourceType.Diamonds },
-    { name: 'Dragonhide', value: ResourceType.Dragonhide },
-    { name: 'Ethereal Silica', value: ResourceType.EtherealSilica },
-    { name: 'Gold', value: ResourceType.Gold },
-    { name: 'Hartwood', value: ResourceType.Hartwood },
-    { name: 'Ignium', value: ResourceType.Ignium },
-    { name: 'Ironwood', value: ResourceType.Ironwood },
-    { name: 'Mithral', value: ResourceType.Mithral },
-    { name: 'Obsidian', value: ResourceType.Obsidian },
-    { name: 'Ruby', value: ResourceType.Ruby },
-    { name: 'Sapphire', value: ResourceType.Sapphire },
-    { name: 'Silver', value: ResourceType.Silver },
-    { name: 'Stone', value: ResourceType.Stone },
-    { name: 'True Ice', value: ResourceType.TrueIce },
-    { name: 'Twilight Quartz', value: ResourceType.TwilightQuartz },
-    { name: 'Wood', value: ResourceType.Wood },
-  ];
+  const resourcesOptions = resources.map((resource) => ({
+    name: resource.trait,
+    value: resource.id,
+  }));
 
   return (
-    <Popover className="relative">
-      <div ref={ref}>
+    <Popover className="relative z-50">
+      <Popover.Button as="div">
         <Button
-          variant="primary"
-          size="sm"
-          className={clsx(props.selectedValues.length > 0 ? 'bg-black' : '')}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
+          size="xs"
+          variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
         >
           Resources
         </Button>
+      </Popover.Button>
+      <Transition
+        enter="transition duration-350 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-350 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Popover.Panel
+          className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4 border-double border-white/20 rounded"
+          static
+        >
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 bg-black rounded shadow-lg">
+            <h4 className="text-center">Select Resources</h4>
 
-        {isOpen && (
-          <Popover.Panel
-            className="absolute z-10 mt-2 w-[420px] ml-2 -translate-x-1/3"
-            static
-          >
-            <div className="flex flex-col items-center gap-4 p-4 pb-8 text-white bg-black rounded shadow-lg">
-              <h4 className="text-center">Resources</h4>
-
-              <div className="relative grid items-center justify-center grid-cols-2 gap-4">
-                {resources.map((resource, idx) => (
-                  <div
-                    role="button"
-                    key={resource.value}
-                    tabIndex={idx}
-                    className={clsx(
-                      'flex items-center gap-2 uppercase rounded-sm cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide',
-                      isSelected(resource) ? 'bg-gray-200/20' : ''
-                    )}
-                    onClick={() => handleOnClickResourceOption(resource)}
-                    aria-hidden="true"
-                  >
-                    <ResourceIcon
-                      resource={resource.name.replace(' ', '')}
-                      size="xs"
-                    />{' '}
-                    <span>{resource.value.replace('_', ' ')}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="relative grid items-center justify-center grid-cols-2 gap-4">
+              {resourcesOptions.map((resource, idx) => (
+                <div
+                  role="button"
+                  key={resource.value}
+                  tabIndex={idx}
+                  className={clsx(
+                    'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-1000 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
+                    isSelected(resource) ? 'bg-gray-1000' : ''
+                  )}
+                  onClick={() => handleOnClickResourceOption(resource)}
+                  aria-hidden="true"
+                >
+                  <ResourceIcon
+                    resource={resource.name.replace(' ', '')}
+                    size="xs"
+                  />{' '}
+                  <span>{resource.name}</span>
+                </div>
+              ))}
             </div>
-          </Popover.Panel>
-        )}
-      </div>
+          </div>
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 }

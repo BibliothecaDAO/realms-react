@@ -9,12 +9,7 @@ on:
     paths:
       - 'apps/atlas/**'
       - 'packages/**'
-      - 'package.json'
-      - 'yarn.lock'
       - '.yarnrc.yml'
-      - '*.base.json'
-      - '*.base.js'
-      - '.prettier*.*'
       - '.github/workflows/**'
 
   pull_request:
@@ -25,12 +20,7 @@ on:
     paths:
       - 'apps/atlas/**'
       - 'packages/**'
-      - 'package.json'
-      - 'yarn.lock'
       - '.yarnrc.yml'
-      - '*.base.json'
-      - '*.base.js'
-      - '.prettier*.*'
       - '.github/workflows/**'
 
 jobs:
@@ -96,7 +86,7 @@ jobs:
       - name: Unit tests
         working-directory: apps/atlas
         run: |
-          yarn test-unit --runInBand --color
+          yarn test-unit
 
       - name: Build atlas
         working-directory: apps/atlas

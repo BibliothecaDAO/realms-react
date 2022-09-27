@@ -1,24 +1,28 @@
 // @ts-check
 
+const {
+  getPrettierConfig,
+} = require('@bibliotheca-dao/eslint-config-bases/helpers');
+
+const { overrides = [], ...prettierConfig } = getPrettierConfig();
+
 /**
  * @type {import('prettier').Config}
  */
-module.exports = {
-  singleQuote: true,
-  semi: true,
-  tabWidth: 2,
-  bracketSpacing: true,
-  trailingComma: 'es5',
-  bracketSameLine: false,
-  useTabs: false,
-  endOfLine: 'lf',
+const config = {
+  ...prettierConfig,
   overrides: [
-    {
-      files: '*.md',
-      options: {
-        singleQuote: false,
-        quoteProps: 'preserve',
+    ...overrides,
+    ...[
+      {
+        files: '*.md',
+        options: {
+          singleQuote: false,
+          quoteProps: 'preserve',
+        },
       },
-    },
+    ],
   ],
 };
+
+module.exports = config;

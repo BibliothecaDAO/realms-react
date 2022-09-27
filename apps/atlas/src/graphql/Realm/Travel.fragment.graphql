@@ -1,0 +1,9 @@
+fragment TravelFragment on Travel {
+  contractId
+  tokenId
+  nestedId
+  destinationContractId
+  destinationTokenId
+  destinationNestedId
+  destinationArrivalTime
+}
