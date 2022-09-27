@@ -82,7 +82,7 @@ const ResourcesContext = createContext<{
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
   battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
-  historicPrices: HistoricPrices;
+  historicPrices: HistoricPrices | undefined;
 }>(null!);
 
 interface ResourceProviderProps {
