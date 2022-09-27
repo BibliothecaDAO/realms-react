@@ -1,4 +1,4 @@
-import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
+import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -30,10 +30,10 @@ export function GaOverviews(props: GaOverviewsProps) {
   const isFavourite = (ga: GAdventurer) => favouriteGa.indexOf(ga.id) > -1;
 
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <div className="grid gap-6 p-3 sm:p-6 md:grid-cols-2 xl:grid-cols-4">
       {props.bags &&
         props.bags.map((ga: GAdventurer, index) => (
-          <div key={index} className="w-full rounded-b">
+          <Card key={index} className="w-full">
             <div className="w-full p-2 rounded-t bg-black/70 font-display">
               {[
                 ga.weapon,
@@ -120,7 +120,7 @@ export function GaOverviews(props: GaOverviewsProps) {
                 </Button>
               )}
             </div>
-          </div>
+          </Card>
         ))}
 
       <GASideBar
