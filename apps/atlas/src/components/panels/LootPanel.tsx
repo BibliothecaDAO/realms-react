@@ -26,15 +26,16 @@ export const LootPanel = () => {
   const nextPage = () => setPage(page + 1);
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
-  useEffect(() => {
-    setPage(1);
-  }, [
+  const queryDependencies = [
     state.favouriteLoot,
     state.searchIdFilter,
     state.ratingFilter.bagGreatness,
     state.ratingFilter.bagRating,
     state.selectedTab,
-  ]);
+  ];
+  useEffect(() => {
+    setPage(1);
+  }, [...queryDependencies]);
 
   const isLootPanel = true;
   const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
@@ -62,23 +63,12 @@ export const LootPanel = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, state, page]);
+  }, [account, page, ...queryDependencies]);
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
     variables,
     skip: !isLootPanel,
   });
-
-  // useEffect(() => {
-  //   if (
-  //     !selectedId &&
-  //     isDisplayLarge &&
-  //     page === 1 &&
-  //     (data?.bags?.length ?? 0) > 0
-  //   ) {
-  //     openDetails('loot', data?.bags[0].id as string);
-  //   }
-  // }, [data, page]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&

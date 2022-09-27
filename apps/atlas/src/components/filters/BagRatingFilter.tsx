@@ -51,9 +51,8 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
     <Popover className="relative">
       <div ref={ref}>
         <Button
-          variant="primary"
+          variant={hasSelectedFilters ? 'primary' : 'outline'}
           size="xs"
-          className={clsx(hasSelectedFilters ? 'bg-black' : '')}
           onClick={() => {
             setIsOpen(!isOpen);
           }}
@@ -62,10 +61,7 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
         </Button>
 
         {isOpen && (
-          <Popover.Panel
-            className="absolute z-10 m-auto mt-2 md:right-0"
-            static
-          >
+          <Popover.Panel className="absolute z-10 m-auto mt-2 md:left-0" static>
             <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
               <div className="text-lg text-center uppercase">Rating</div>
               <RangeSliderFilter

@@ -28,6 +28,10 @@ export function SearchFilter(props: SearchFilterProps) {
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
+          // Clear value if empty
+          if (!e.target.value && props.onSubmit) {
+            props.onSubmit('');
+          }
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {

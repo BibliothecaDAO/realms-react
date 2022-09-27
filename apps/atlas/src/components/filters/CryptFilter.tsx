@@ -13,9 +13,8 @@ export function CryptFilter() {
     <BaseFilter>
       <div>
         <Button
-          variant="primary"
+          variant={state.isLegendaryFilter ? 'primary' : 'outline'}
           size="xs"
-          className={clsx(state.isLegendaryFilter ? 'bg-black' : '')}
           onClick={actions.toggleIsLegendaryFilter}
         >
           Legendary
