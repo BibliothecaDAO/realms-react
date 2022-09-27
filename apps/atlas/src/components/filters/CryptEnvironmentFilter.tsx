@@ -38,7 +38,7 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
           size="xs"
           variant={props.selectedValues.length > 0 ? 'primary' : 'outline'}
         >
-          Rarity
+          Environment
         </Button>
       </Popover.Button>
 

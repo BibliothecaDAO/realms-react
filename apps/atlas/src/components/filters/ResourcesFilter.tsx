@@ -65,8 +65,8 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                   key={resource.value}
                   tabIndex={idx}
                   className={clsx(
-                    'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-1000 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
-                    isSelected(resource) ? 'bg-gray-1000' : ''
+                    'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
+                    isSelected(resource) ? 'bg-gray-200/20' : ''
                   )}
                   onClick={() => handleOnClickResourceOption(resource)}
                   aria-hidden="true"
