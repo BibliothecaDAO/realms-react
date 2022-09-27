@@ -33,8 +33,22 @@ export function GaOverviews(props: GaOverviewsProps) {
     <div className="grid gap-6 p-3 sm:p-6 md:grid-cols-2 xl:grid-cols-4">
       {props.bags &&
         props.bags.map((ga: GAdventurer, index) => (
-          <Card key={index} className="w-full">
-            <div className="w-full p-2 rounded-t bg-black/70 font-display">
+          <Card key={index} className="w-full paper">
+            <div className="flex flex-wrap w-full p-3 ">
+              <div className="flex self-center w-full">
+                <OrderIcon
+                  className="self-center mx-3"
+                  size={'md'}
+                  order={ga.order.toLowerCase()}
+                />
+                <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
+              </div>
+              <div className="self-center w-full mt-4 ml-auto tracking-widest uppercase font-display">
+                <div className="ml-auto ">Greatness: {ga.bagGreatness}</div>
+                <div className="ml-auto">Rating: {ga.bagRating}</div>
+              </div>
+            </div>
+            <div className="w-full p-2 rounded-t font-display">
               {[
                 ga.weapon,
                 ga.chest,
@@ -46,7 +60,10 @@ export function GaOverviews(props: GaOverviewsProps) {
                 ga.ring,
               ]?.map((itemName, index) => {
                 return (
-                  <div className="flex px-2 my-1 font-bold" key={index}>
+                  <div
+                    className="flex px-2 my-1 uppercase border-b border-white/20"
+                    key={index}
+                  >
                     <LootItemIcon
                       className="self-center"
                       size="sm"
@@ -65,58 +82,33 @@ export function GaOverviews(props: GaOverviewsProps) {
                 );
               })}
             </div>
-            <div className="flex flex-wrap w-full p-3 bg-black/60">
-              <div className="flex self-center w-full">
-                <OrderIcon
-                  className="self-center mx-3"
-                  size={'md'}
-                  order={ga.order.toLowerCase()}
-                />
-                <h3 className="self-center mb-1 ml-4">GA #{ga.id}</h3>
-                <div className="self-center ml-auto tracking-widest uppercase">
-                  <div className="ml-auto ">Greatness: {ga.bagGreatness}</div>
-                  <div className="ml-auto">Rating: {ga.bagRating}</div>
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-center w-full p-2 space-x-2 rounded-b bg-gray-600/70">
-              {' '}
-              <Button
-                onClick={() => {
-                  navigateToAsset(+ga.id, 'ga');
-                }}
-                variant="primary"
-                className="w-full text-xs"
-              >
-                fly to
-              </Button>
+
+            <div className="flex justify-center w-full p-2 space-x-2">
               <Button
                 onClick={() => {
                   setSelectedGAId(ga.id);
                 }}
-                variant="secondary"
-                className="w-full text-xs"
+                variant="outline"
+                size="xs"
               >
                 details
               </Button>
               {!isFavourite(ga) && (
                 <Button
-                  size="sm"
-                  className="text-xs"
-                  variant="secondary"
+                  size="xs"
+                  variant="outline"
                   onClick={() => actions.addFavouriteGa(ga.id)}
                 >
-                  Add
+                  +
                 </Button>
               )}
               {isFavourite(ga) && (
                 <Button
-                  size="sm"
-                  className="text-xs"
-                  variant="secondary"
+                  size="xs"
+                  variant="outline"
                   onClick={() => actions.removeFavouriteGa(ga.id)}
                 >
-                  Remove
+                  -
                 </Button>
               )}
             </div>

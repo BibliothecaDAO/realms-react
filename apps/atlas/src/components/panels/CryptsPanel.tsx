@@ -102,9 +102,7 @@ export const CryptsPanel = () => {
       >
         <Tabs.List>
           {tabs.map((tab) => (
-            <Tabs.Tab key={tab} className="uppercase">
-              {tab}
-            </Tabs.Tab>
+            <Tabs.Tab key={tab}>{tab}</Tabs.Tab>
           ))}
         </Tabs.List>
       </Tabs>
