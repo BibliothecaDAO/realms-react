@@ -25,9 +25,7 @@ export const CryptsPanel = () => {
   const nextPage = () => setPage(page + 1);
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
-  useEffect(() => {
-    setPage(1);
-  }, [
+  const filterDependencies = [
     state.favouriteCrypt,
     state.isLegendaryFilter,
     state.searchIdFilter,
@@ -36,7 +34,10 @@ export const CryptsPanel = () => {
     state.statsFilter.numPoints,
     state.statsFilter.size,
     state.selectedTab,
-  ]);
+  ];
+  useEffect(() => {
+    setPage(1);
+  }, [...filterDependencies]);
 
   const isCryptPanel = true;
   const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
@@ -73,7 +74,7 @@ export const CryptsPanel = () => {
       skip: limit * (page - 1),
       where,
     };
-  }, [account, state, page]);
+  }, [account, page, ...filterDependencies]);
 
   const { loading, data } = useQuery<{
     dungeons: Crypt[];
@@ -81,17 +82,6 @@ export const CryptsPanel = () => {
     variables,
     skip: !isCryptPanel,
   });
-
-  // useEffect(() => {
-  //   if (
-  //     !selectedId &&
-  //     isDisplayLarge &&
-  //     page === 1 &&
-  //     (data?.dungeons?.length ?? 0) > 0
-  //   ) {
-  //     openDetails('crypt', data?.dungeons[0].id as string);
-  //   }
-  // }, [data, page, selectedId]);
 
   const showPagination = () =>
     state.selectedTab === 1 &&
