@@ -13,7 +13,7 @@ import type {
 import { useArmy } from '@/hooks/settling/useArmy';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
-import { GetTravelTime } from '@/shared/Getters/Realm';
+import { getTravelTime } from '@/shared/Getters/Realm';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -30,7 +30,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const allArmies = findRealmsAttackingArmies(userRealms?.realms);
 
   const travelTable = allArmies?.map((a) => {
-    const travel_information = GetTravelTime({
+    const travel_information = getTravelTime({
       travellerId: realm.realmId,
       destinationId: a.destinationRealmId,
     });

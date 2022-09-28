@@ -295,7 +295,7 @@ const getCoordinates = (id: number) => {
   return RealmsData.features.find((a) => a.properties.realm_idx === id);
 };
 
-export const GetTravelTime = ({ travellerId, destinationId }) => {
+export const getTravelTime = ({ travellerId, destinationId }) => {
   const distance = (x1, y1, x2, y2) => {
     const a = x1 - x2;
     const b = y1 - y2;

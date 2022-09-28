@@ -11,7 +11,7 @@ import type {
 } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
-import { GetTravelTime } from '@/shared/Getters/Realm';
+import { getTravelTime } from '@/shared/Getters/Realm';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -25,7 +25,7 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
     travelContext: { travel, setTravelArcs },
   } = useAtlasContext();
   const travelTable = userRealms?.realms.map((a) => {
-    const travel_information = GetTravelTime({
+    const travel_information = getTravelTime({
       travellerId: realm.realmId,
       destinationId: a.realmId,
     });

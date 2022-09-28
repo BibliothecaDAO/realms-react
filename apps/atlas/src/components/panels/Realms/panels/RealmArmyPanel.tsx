@@ -370,6 +370,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                     setSelectedArmy(army);
                     setIsArmyBuilding(true);
                   }}
+                  onTravel={() =>
+                    travel(army.armyId, army.realmId, realm.realmId)
+                  }
+                  selectedRealm={realm.realmId}
                   key={army.armyId}
                   army={army}
                 />
