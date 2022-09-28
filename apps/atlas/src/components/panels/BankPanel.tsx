@@ -2,6 +2,7 @@ import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
+import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
 import type { ReactElement } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { BasePanel } from './BasePanel';
@@ -30,9 +31,34 @@ interface BankPanel {
   onOpenSwap?: () => void;
 }
 
+const accessors = {
+  xAccessor: (d) => d.date,
+  yAccessor: (d) => d.amount,
+};
+
+const redChartTheme = buildChartTheme({
+  colors: ['#ff0000'],
+  backgroundColor: 'transparent',
+  tickLength: 0,
+  gridColor: 'transparent',
+  gridColorDark: 'transparent',
+});
+
+const greenChartTheme = buildChartTheme({
+  colors: ['#00ff00'],
+  backgroundColor: 'transparent',
+  tickLength: 0,
+  gridColor: 'transparent',
+  gridColorDark: 'transparent',
+});
+
 export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
-  const { balance, availableResourceIds, addSelectedSwapResources } =
-    useResourcesContext();
+  const {
+    balance,
+    availableResourceIds,
+    addSelectedSwapResources,
+    historicPrices,
+  } = useResourcesContext();
 
   const defaultData: Row[] = balance?.map((resource) => {
     return {
@@ -56,18 +82,41 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         </div>
       ),
       rate: (
-        <span className="text-sm sm:text-lg">
-          <span className="flex">
-            {(+formatEther(resource.rate)).toFixed(4)}
-            <span className="hidden ml-1.5 uppercase text-stone-500 sm:block">
-              $LORDS
+        <div className="flex">
+          <span className="text-sm sm:text-lg">
+            <span className="flex">
+              {(+formatEther(resource.rate)).toFixed(4)}
+              <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
-            <Lords className="w-4 ml-3 text-white opacity-50" />
+            <span className="w-full text-xs sm:text-sm">
+              {RateChange(resource.percentChange)}
+            </span>
           </span>
-          <span className="w-full text-xs sm:text-sm">
-            {RateChange(resource.percentChange)}
-          </span>
-        </span>
+          <XYChart
+            theme={
+              parseFloat((resource.percentChange * 100).toFixed(2)) >= 0
+                ? greenChartTheme
+                : redChartTheme
+            }
+            margin={{ top: 10, left: 10, bottom: 10, right: 10 }}
+            height={50}
+            width={120}
+            xScale={{ type: 'band' }}
+            yScale={{ type: 'linear' }}
+          >
+            <AreaSeries
+              dataKey="resourceChart"
+              data={
+                historicPrices && historicPrices[resource.resourceId]
+                  ? historicPrices[resource.resourceId]
+                  : []
+              }
+              xAccessor={accessors.xAccessor}
+              yAccessor={accessors.yAccessor}
+              fillOpacity={0.15}
+            />
+          </XYChart>
+        </div>
       ),
 
       lp_balance: (
@@ -132,7 +181,6 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           </div>
         </div>
       </div>
-
       <div className="relative overflow-x-auto">
         {balance && (
           <Table columns={columns} data={defaultData} options={tableOptions} />

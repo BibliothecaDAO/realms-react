@@ -129,9 +129,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                   props.resource.rate,
                   props.resource.qty
                 ).toLocaleString()}{' '}
-                Lords
               </span>{' '}
-              <LordsIcon className="self-center w-3 h-3 fill-current sm:w-5 sm:h-5" />
+              <LordsIcon className="self-center w-3 h-3 fill-current sm:w-4 sm:h-4" />
             </div>
           </div>
           <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
@@ -140,7 +139,9 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         </div>
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-xs font-semibold tracking-widest text-right uppercase sm:text-sm opacity-80">
-        <div className="w-full">1 = {displayRate(props.resource.rate)}</div>
+        <div className="flex justify-end w-full">
+          1 = {displayRate(props.resource.rate)} <LordsIcon className="w-3" />
+        </div>
       </div>
     </div>
   );
@@ -270,6 +271,11 @@ export function SwapResources(): ReactElement {
     }
   }
 
+  const calculatedPriceImpact = useMemo(() => {
+    // TODO: Set actual slippage when view will be implemented
+    return isBuy ? 1 : -1;
+  }, [selectedSwapResourcesWithBalance, calculatedTotalInLords, isBuy]);
+
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
@@ -355,44 +361,55 @@ export function SwapResources(): ReactElement {
             </Button>
           </div>
         ))}
-        <div className="flex w-full">
-          <Button
-            aria-label="Add Row"
-            size="xs"
-            variant="outline"
-            className="mx-auto"
-            onClick={() => addSelectedSwapResources()}
-          >
-            add resource
-          </Button>
-        </div>
       </div>
-      <div className="flex justify-end w-full pt-4">
+      <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
         <div className="flex flex-col justify-end w-full">
+          <div className="flex w-full">
+            <Button
+              aria-label="Add Row"
+              size="xs"
+              variant="outline"
+              className="static mx-auto"
+              onClick={() => addSelectedSwapResources()}
+            >
+              add resource
+            </Button>
+          </div>
           <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
                   {isBuy
-                    ? [
-                        'Total cost of resources in LORDS',
-                        <LordsIcon key={1} className="w-3 mr-2" />,
-                      ]
-                    : [
-                        'Approximate lords',
-                        <LordsIcon key={1} className="w-3 mr-2" />,
-                        ' received',
-                      ]}
+                    ? 'Total cost of resources in $LORDS:'
+                    : 'Approximate $lords received:'}
                 </span>
-                {calculatedTotalInLords.toLocaleString()}
+                {calculatedTotalInLords.toLocaleString()}{' '}
+                <LordsIcon key={1} className="w-5 ml-2" />
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  Your current LORDS <LordsIcon className="w-3 mr-2" /> balance
+                  $LORDS price impact:
+                </span>
+                <span
+                  className={
+                    calculatedPriceImpact < 0
+                      ? 'text-red-200'
+                      : 'text-green-200'
+                  }
+                >
+                  {calculatedPriceImpact}%
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-end text-md">
+                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                  Your current $LORDS balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+                <LordsIcon key={1} className="w-4 ml-1" />
               </div>
             </div>
           </div>

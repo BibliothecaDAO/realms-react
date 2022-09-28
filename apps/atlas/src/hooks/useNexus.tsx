@@ -86,7 +86,7 @@ export const useStakeLords = () => {
         0,
       ],
       metadata: {
-        title: 'Approve Lords for Nexus',
+        title: 'Approve $Lords for Nexus',
         description: `You are approving ${(+formatEther(
           lordsAmount
         )).toLocaleString()} $LORDS to stake into the NEXUS.`,

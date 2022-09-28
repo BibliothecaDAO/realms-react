@@ -37,7 +37,7 @@ export const fetchLordsBalance = async (address: string) => {
     // Return formatted balance
     return results[0].add(results[1]);
   } catch (e: any) {
-    throw `Could not fetch L1 LORDS balance: ${e.message}`;
+    throw `Could not fetch L1 $LORDS balance: ${e.message}`;
   }
 };
 

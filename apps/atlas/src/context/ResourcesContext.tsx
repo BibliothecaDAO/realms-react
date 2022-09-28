@@ -20,7 +20,7 @@ import {
   useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
-import type { ResourceCost, NetworkState } from '@/types/index';
+import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 
 export type Resource = {
   resourceId: number;
@@ -82,6 +82,7 @@ const ResourcesContext = createContext<{
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
   battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
+  historicPrices: HistoricPrices | undefined;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -162,7 +163,7 @@ function useResources() {
       },
     });
 
-  const { exchangeInfo } = useMarketRate();
+  const { exchangeInfo, historicPrices } = useMarketRate();
 
   // batch add a cost
   const batchAddResources = (cost: ResourceCost[]) => {
@@ -195,8 +196,8 @@ function useResources() {
     }
     const select = resourceId ?? availableResourceIds[0];
     setSelectedSwapResources([
-      ...selectedSwapResources,
       { resourceId: select, qty: qty ? qty : 0 },
+      ...selectedSwapResources,
     ]);
   };
 
@@ -336,6 +337,7 @@ function useResources() {
     buildingCosts,
     battalionCosts,
     batchAddResources,
+    historicPrices,
   };
 }
 

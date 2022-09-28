@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 import type { Call as StarknetCall } from 'starknet';
 import type { RealmFragmentFragment, Army } from '@/generated/graphql';
-
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 export const dndTypes = {
@@ -319,3 +318,12 @@ export type AvailableResources = {
   claimableResources: string[] | undefined;
   vaultResources: string[] | undefined;
 };
+
+export interface HistoricPriceData {
+  date: string | undefined;
+  amount: number | undefined;
+}
+
+export interface HistoricPrices {
+  [tokenId: number]: HistoricPriceData[] | [];
+}
