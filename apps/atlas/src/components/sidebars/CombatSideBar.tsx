@@ -7,6 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 
+import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import React, { useEffect, useState } from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RaidResults } from '@/components/tables/RaidResults';
@@ -120,7 +121,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 </div>
               </div>
               <h2 className="mt-4">Armies at this Realm</h2>
-              <div className="grid grid-cols-2">
+              <div className="grid lg:grid-cols-2">
                 {defendingRealm &&
                   attackingRealmsAtLocation?.map((army, index) => {
                     return (
@@ -142,15 +143,19 @@ export const CombatSideBar: React.FC<Prop> = ({
                   })}
               </div>
             </div>
-            <div className="mx-auto">
+            <div className="w-full lg:px-24">
               <h1 className="pb-20 mt-4 text-center">Raiding</h1>
-              <div className="w-full">
-                <RadarMap
-                  armyOne={defendingArmyStats}
-                  armyTwo={attackingArmyStats}
-                  height={400}
-                  width={400}
-                />
+              <div className="w-full h-60">
+                <ParentSize>
+                  {({ width, height }) => (
+                    <RadarMap
+                      armyOne={defendingArmyStats}
+                      armyTwo={attackingArmyStats}
+                      height={height}
+                      width={width}
+                    />
+                  )}
+                </ParentSize>
               </div>
               <Button
                 onClick={() => {
