@@ -7,6 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
+import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
@@ -73,8 +74,12 @@ export const ArmyCard: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <div className="relative">
-        <RadarMap armyOne={armyStats} height={200} width={200} />
+      <div className="relative h-36">
+        <ParentSize>
+          {({ width, height }) => (
+            <RadarMap armyOne={armyStats} height={height} width={width} />
+          )}
+        </ParentSize>
       </div>
       {hasArrived && (
         <div className="flex px-2 my-1 text-sm rounded bg-gray-1000">

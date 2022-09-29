@@ -357,12 +357,12 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-6 md:col-end-13"
+          className="col-span-12 lg:col-start-6 lg:col-span-6"
         >
           <div className="flex justify-between w-full">
             <CardTitle>Realm Armies</CardTitle>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
             {realm.ownArmies.map((army) => {
               return (
                 <ArmyCard
@@ -397,12 +397,12 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-6 md:col-end-13"
+          className="col-span-12 lg:col-start-6 lg:col-span-6"
         >
           <div className="flex justify-between w-full">
             <CardTitle>All Your Armies</CardTitle>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
             {allArmies?.map((army) => {
               return (
                 <ArmyCard

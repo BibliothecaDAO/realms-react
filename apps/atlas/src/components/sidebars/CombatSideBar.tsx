@@ -85,8 +85,8 @@ export const CombatSideBar: React.FC<Prop> = ({
   return (
     <div>
       {(!txSubmitted || combatError) && (
-        <div>
-          <div className="grid w-full grid-cols-3">
+        <>
+          <div className="grid w-full md:grid-cols-3">
             <div>
               <div className="">
                 <h1 className="w-full mb-8 text-center">
@@ -144,13 +144,14 @@ export const CombatSideBar: React.FC<Prop> = ({
             </div>
             <div className="mx-auto">
               <h1 className="pb-20 mt-4 text-center">Raiding</h1>
-              <RadarMap
-                armyOne={defendingArmyStats}
-                armyTwo={attackingArmyStats}
-                height={400}
-                width={400}
-              />
-
+              <div className="w-full">
+                <RadarMap
+                  armyOne={defendingArmyStats}
+                  armyTwo={attackingArmyStats}
+                  height={400}
+                  width={400}
+                />
+              </div>
               <Button
                 onClick={() => {
                   initiateCombat({
@@ -235,7 +236,7 @@ export const CombatSideBar: React.FC<Prop> = ({
               </div>
             )}
           </div>
-        </div>
+        </>
       )}
       {txSubmitted && (
         <div>

@@ -13,7 +13,7 @@ h6 {
 h1 {
   mask-image: url('https://ucarecdn.com/9514f9b1-3bf9-4b7c-b31d-9fb8cd6af8bf/');
   mask-mode: match-source;
-  @apply text-3xl sm:text-4xl md:text-6xl font-lords;
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-lords;
 }
 
 h2 {
