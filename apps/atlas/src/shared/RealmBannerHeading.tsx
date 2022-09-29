@@ -10,7 +10,7 @@ import { OrderAffinity, LightDark } from '@/constants/orders';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useIsOwner from '@/hooks/useIsOwner';
-import { shortenAddressWidth } from '@/util/formatters';
+import { shortenAddress } from '@/util/formatters';
 import { ownerRelic, trimmedOrder, relicsOwnedByRealm } from './Getters/Realm';
 
 interface HeaderProps {
@@ -59,9 +59,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <div>
               <span className="flex font-display">
                 <Crown className="w-6 mr-3 fill-white" />{' '}
-                {isOwner
-                  ? 'you'
-                  : shortenAddressWidth(realm?.settledOwner || '', 6)}
+                {isOwner ? 'you' : shortenAddress(realm?.settledOwner || '', 6)}
               </span>
               <h1 className="font-semibold">
                 {realm?.name || '...'} | {realm?.realmId || '...'}
@@ -76,8 +74,11 @@ export const RealmBannerHeading = (props: HeaderProps) => {
                 }}
                 variant="primary"
               >
-                <Globe className="w-5 mr-4 fill-current" /> ({realm?.latitude},{' '}
-                {realm?.longitude})
+                <Globe className="w-5 fill-current" />
+                <span className="hidden ml-4 text-sm sm:block">
+                  {' '}
+                  ({realm?.latitude.toFixed(2)}, {realm?.longitude.toFixed(2)})
+                </span>
               </Button>
             </div>
           )}

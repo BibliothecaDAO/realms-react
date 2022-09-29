@@ -52,10 +52,10 @@ const ToolbarItem = (props: ToolbarItemProps) => {
         <span className="flex">
           {' '}
           {props.icon}
-          <span className="hidden ml-4 md:block">{props.title} </span>
+          <span className="hidden ml-4 xl:block">{props.title} </span>
           <span
             className={clsx(
-              'px-1 transition-colors uppercase opacity-30 hidden md:block',
+              'px-1 transition-colors uppercase opacity-30 hidden xl:block',
               pressed && 'bg-white text-black'
             )}
           >
