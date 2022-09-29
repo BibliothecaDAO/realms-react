@@ -59,7 +59,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <div>
               <span className="flex font-display">
                 <Crown className="w-6 mr-3 fill-white" />{' '}
-                {isOwner ? 'you' : shortenAddress(realm?.settledOwner || '', 6)}
+                {isOwner ? 'you' : shortenAddress(realm?.settledOwner || '')}
               </span>
               <h1 className="font-semibold">
                 {realm?.name || '...'} | {realm?.realmId || '...'}
