@@ -7,7 +7,6 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import CloseX from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
@@ -171,6 +170,7 @@ export function SwapResources(): ReactElement {
     getResourceById,
     addSelectedSwapResources,
     removeSelectedSwapResource,
+    removeAllSelectedSwapResources,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
@@ -364,15 +364,24 @@ export function SwapResources(): ReactElement {
       </div>
       <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex w-full">
+          <div className="relative flex w-full">
             <Button
               aria-label="Add Row"
               size="xs"
               variant="outline"
-              className="static mx-auto"
+              className="absolute transform -translate-x-1/2 left-1/2"
               onClick={() => addSelectedSwapResources()}
             >
               add resource
+            </Button>
+            <Button
+              aria-label="Clear All"
+              size="xs"
+              variant="outline"
+              className="ml-auto"
+              onClick={() => removeAllSelectedSwapResources()}
+            >
+              clear
             </Button>
           </div>
           <div className="flex flex-col py-4 rounded ">

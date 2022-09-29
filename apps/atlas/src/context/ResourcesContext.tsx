@@ -69,6 +69,7 @@ const ResourcesContext = createContext<{
   selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
   addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
+  removeAllSelectedSwapResources: () => void;
   updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
   updateSelectedSwapResource: (
     resourceId: number,
@@ -207,6 +208,10 @@ function useResources() {
     );
   };
 
+  const removeAllSelectedSwapResources = () => {
+    setSelectedSwapResources([]);
+  };
+
   const updateSelectedSwapResource = (
     resourceId: number,
     newResourceId: number
@@ -327,6 +332,7 @@ function useResources() {
     selectedSwapResourcesWithBalance,
     addSelectedSwapResources,
     removeSelectedSwapResource,
+    removeAllSelectedSwapResources,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     balance,
