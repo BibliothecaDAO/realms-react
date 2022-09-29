@@ -183,7 +183,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                     )).toLocaleString()}{' '}
                 <Lords className="w-3 mr-1" />
               </span>
-              <br />-{props.resource.resourceName}:{' '}
+              -{props.resource.resourceName}:{' '}
               {loading
                 ? 'loading...'
                 : (+formatEther(
