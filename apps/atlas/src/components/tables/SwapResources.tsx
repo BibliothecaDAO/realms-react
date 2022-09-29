@@ -9,7 +9,7 @@ import {
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
-import { Switch } from '@headlessui/react';
+import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { useState, useMemo, useReducer } from 'react';
@@ -290,34 +290,88 @@ export function SwapResources(): ReactElement {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
-        <h5>quick add building cost</h5>
-        {gameConstants?.buildingCosts
-          ?.filter((b) => b.resources.length)
-          .map((a, i) => {
-            return (
-              <Button
-                key={i}
-                onClick={() => batchAddResources(a.resources)}
-                size="xs"
-                variant="outline"
-              >
-                {a.buildingName}
+        <h5>quick add cost</h5>
+        <div className="flex">
+          <Popover className="relative z-50 mr-4">
+            <Popover.Button as="div">
+              <Button size="xs" variant="outline">
+                buildings
               </Button>
-            );
-          })}
-        <h5 className="mt-2">quick add troop cost</h5>
-        {gameConstants?.battalionCosts?.map((a, i) => {
-          return (
-            <Button
-              key={i}
-              onClick={() => batchAddResources(a.resources)}
-              size="xs"
-              variant="outline"
+            </Popover.Button>
+
+            <Transition
+              enter="transition duration-350 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-350 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
             >
-              {a.battalionName}
-            </Button>
-          );
-        })}
+              <Popover.Panel
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                static
+              >
+                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                  Add resources required for:
+                  {gameConstants?.buildingCosts
+                    ?.filter((b) => b.resources.length)
+                    .map((a, i) => {
+                      return (
+                        <Popover.Button key={i} as="div">
+                          <Button
+                            onClick={() => batchAddResources(a.resources)}
+                            size="xs"
+                            variant="outline"
+                          >
+                            {a.buildingName}
+                          </Button>
+                        </Popover.Button>
+                      );
+                    })}
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+          <Popover className="relative z-50">
+            <Popover.Button as="div">
+              <Button size="xs" variant="outline">
+                troops
+              </Button>
+            </Popover.Button>
+
+            <Transition
+              enter="transition duration-350 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-350 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Popover.Panel
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                static
+              >
+                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                  Add resources required for:
+                  {gameConstants?.battalionCosts?.map((a, i) => {
+                    return (
+                      <Popover.Button key={i} as="div">
+                        <Button
+                          onClick={() => batchAddResources(a.resources)}
+                          size="xs"
+                          variant="outline"
+                        >
+                          {a.battalionName}
+                        </Button>
+                      </Popover.Button>
+                    );
+                  })}
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+        </div>
+
         {/* <MarketSelect update={onClickCostRecipe} cost={buildingCosts} /> */}
       </div>
 
