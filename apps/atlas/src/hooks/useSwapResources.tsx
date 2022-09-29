@@ -1,7 +1,10 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { findResourceById } from '@/constants/resources';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
@@ -157,15 +160,51 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buyTokens]: ({ metadata }, { isQueued }) => ({
     title: 'Buy Resources',
-    description: `${isQueued ? 'Buy' : 'Buying'} ${
-      metadata.tokenIds?.length ?? ''
-    } resources from the market.`,
+    description: [
+      `${isQueued ? 'Buy' : 'Buying'} ${
+        metadata.tokenIds?.length ?? ''
+      } resources from the market.`,
+      <div key="icons" className="flex flex-wrap mt-4">
+        {metadata.tokenIds.map((tokenId, i) => (
+          <div key={tokenId} className="flex flex-col items-center mb-4 mr-4">
+            <ResourceIcon
+              className="self-center w-4"
+              resource={
+                findResourceById(tokenId)?.trait?.replace(' ', '') || ''
+              }
+              size="md"
+            />
+            <div className="text-xs">
+              {formatEther(metadata.tokenAmounts[i])}
+            </div>
+          </div>
+        ))}
+      </div>,
+    ] as any,
   }),
   [Entrypoints.sellTokens]: ({ metadata }, { isQueued }) => ({
     title: 'Sell Resources',
-    description: `${isQueued ? 'Sell' : 'Selling'} ${
-      metadata.tokenIds?.length ?? ''
-    } resources from the market.`,
+    description: [
+      `${isQueued ? 'Sell' : 'Selling'} ${
+        metadata.tokenIds?.length ?? ''
+      } resources from the market.`,
+      <div key="icons" className="flex flex-wrap mt-4">
+        {metadata.tokenIds.map((tokenId, i) => (
+          <div key={tokenId} className="flex flex-col items-center mb-4 mr-4">
+            <ResourceIcon
+              className="self-center w-4"
+              resource={
+                findResourceById(tokenId)?.trait?.replace(' ', '') || ''
+              }
+              size="md"
+            />
+            <div className="text-xs">
+              {formatEther(metadata.tokenAmounts[i])}
+            </div>
+          </div>
+        ))}
+      </div>,
+    ] as any,
   }),
   [Entrypoints.addLiquidity]: ({ metadata }, { isQueued }) => ({
     title: 'Add Liquidity Pair',
