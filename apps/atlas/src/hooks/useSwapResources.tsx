@@ -175,7 +175,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
               size="md"
             />
             <div className="text-xs">
-              {formatEther(metadata.tokenAmounts[i])}
+              {(+formatEther(metadata.tokenAmounts[i])).toLocaleString()}
             </div>
           </div>
         ))}
@@ -199,7 +199,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
               size="md"
             />
             <div className="text-xs">
-              {formatEther(metadata.tokenAmounts[i])}
+              {(+formatEther(metadata.tokenAmounts[i])).toLocaleString()}
             </div>
           </div>
         ))}
