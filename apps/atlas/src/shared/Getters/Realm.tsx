@@ -46,6 +46,12 @@ export const RealmOwner = (realm: RealmFragmentFragment) => {
   );
 };
 
+export const TimeSince = (time: number) => {
+  const now = Date.now();
+  const lastVaultTime = new Date(time);
+  return (now - lastVaultTime.getTime()) / 1000 / 60;
+};
+
 export const RealmVaultStatus = (realm: RealmFragmentFragment) => {
   if (!realm.lastVaultTime) {
     return '';
