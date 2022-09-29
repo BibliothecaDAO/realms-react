@@ -1,4 +1,5 @@
 import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
+import { Button, Card } from '@bibliotheca-dao/ui-lib/base';
 import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/20/solid';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useStarknet } from '@starknet-react/core';
@@ -129,14 +130,18 @@ const ChatComponent = (props: ChatComponentProps) => {
   });
 
   return (
-    <div>
+    <Card className="absolute bottom-0 left-0 z-50 card">
       <div className="flex items-center justify-between text-lg font-bold">
-        <span>
-          <Annotation className="inline-block w-4 h-4 mr-1" />
-          LoreBox
-        </span>
+        <h5>
+          {/* <Annotation className="inline-block w-4 h-4 mr-1" /> */}
+          Lords chat
+        </h5>
         <span className="text-xs text-gray-600">
-          ({presenceData.length} online)
+          <div className="flex">
+            <div className="self-center w-2 h-2 mr-2 bg-green-500 rounded-full"></div>
+            {presenceData.length} online
+          </div>
+
           {tokenBalance.side && (
             <button
               onClick={() => setMessagesFilterOnlySide((prev) => !prev)}
@@ -160,7 +165,7 @@ const ChatComponent = (props: ChatComponentProps) => {
           )}
         </span>
       </div>
-      <div className="h-32 p-2 overflow-y-scroll bg-gray-200 rounded-md max-h-32">
+      <div className="h-32 p-2 overflow-y-scroll bg-black border rounded-md card max-h-32">
         {messages.length == 0 ? (
           <p className="mt-8 text-center animate-pulse">
             whispers through the mist
@@ -172,22 +177,18 @@ const ChatComponent = (props: ChatComponentProps) => {
       <form className="mt-2" onSubmit={handleFormSubmission}>
         <textarea
           ref={inputBox}
-          className="w-full h-10 p-2 rounded-sm"
+          className="w-full h-10 p-2 rounded-sm bg-gray-1100"
           value={messageText}
           placeholder="Type a message..."
           onChange={(e) => setMessageText(e.target.value)}
           onKeyPress={handleKeyPress}
         ></textarea>
-        <button
-          className="px-2 py-1 transition-colors bg-blue-500 rounded-sm disabled:cursor-not-allowed disabled:bg-blue-300"
-          type="submit"
-          disabled={messageTextIsEmpty}
-        >
+        <Button variant="primary" type="submit" disabled={messageTextIsEmpty}>
           Send
-        </button>
-        <span className="p-1 ml-2 text-xs border border-gray-400">ENTER</span>
+        </Button>
+        {/* <span className="p-1 ml-2 text-xs border border-gray-400">ENTER</span> */}
       </form>
-    </div>
+    </Card>
   );
 };
 

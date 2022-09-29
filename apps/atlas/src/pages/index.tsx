@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
 import Layout from '@/components/Layout';
+import ChatComponent from '@/components/minigame/realtime/Chat';
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
@@ -137,8 +138,8 @@ function MapModule() {
     const assets = [
       createScatterPlot('crypt', crypts.features),
       createScatterPlot('realm', (realms as any).features),
-      createScatterPlot('loot', loot_bags.features),
-      createScatterPlot('ga', ga_bags.features),
+      // createScatterPlot('loot', loot_bags.features),
+      // createScatterPlot('ga', ga_bags.features),
     ];
 
     return [...assets, arcsLayer, ownRealms];
@@ -166,6 +167,7 @@ function MapModule() {
       ) : (
         ''
       )}
+      <ChatComponent channelName="desiege-chat" />
       <Map
         // projection={'globe'}
         attributionControl={false}
