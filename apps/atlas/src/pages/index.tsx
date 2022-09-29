@@ -155,7 +155,7 @@ function MapModule() {
       onViewStateChange={(e) => mapContext.setViewState(e.viewState)}
       layers={layers}
     >
-      {mapContext.isMapLoaded ? (
+      {!mapContext.isMapLoaded ? (
         <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1100">
           {' '}
           <h1 className="self-center duration-100 animate-pulse">
