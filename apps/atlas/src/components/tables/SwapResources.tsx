@@ -132,8 +132,19 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               <LordsIcon className="self-center w-3 h-3 fill-current sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
-            balance: {(+formatEther(props.resource.amount)).toLocaleString()}
+          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t un sm:text-sm opacity-60 border-white/20">
+            balance:{' '}
+            <button
+              onClick={() => {
+                props.onQtyChange(
+                  props.resource.resourceId,
+                  +formatEther(props.resource.amount)
+                );
+              }}
+              className="underline cursor-pointer decoration-dotted"
+            >
+              {(+formatEther(props.resource.amount)).toLocaleString()}
+            </button>
           </div>
         </div>
       </div>
