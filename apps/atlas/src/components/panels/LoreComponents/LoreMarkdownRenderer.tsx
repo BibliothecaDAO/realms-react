@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { LorePoiFragmentFragment } from '@/generated/graphql';
 import { poiRemarkPlugin } from './helpers/POIRemarkPlugin';
@@ -5,14 +6,15 @@ import { LorePOI } from './LorePOI';
 
 type LoreMarkdownRendererProps = {
   children: any;
-  pois?: { [index: string]: LorePoiFragmentFragment };
-  poisLoading?: boolean | undefined;
+  actions?: {
+    setSelectedCryptId?: Dispatch<SetStateAction<string>>;
+    setSelectedRealmId?: Dispatch<SetStateAction<string>>;
+  };
 };
 
 export const LoreMarkdownRenderer = ({
   children,
-  pois,
-  poisLoading,
+  actions,
 }: LoreMarkdownRendererProps) => {
   return (
     <ReactMarkdown
@@ -29,7 +31,7 @@ export const LoreMarkdownRenderer = ({
             assetId: (props as any).assetId,
           };
 
-          return <LorePOI {...newProps} />;
+          return <LorePOI {...newProps} actions={actions} />;
         },
       }}
     >
