@@ -6,7 +6,7 @@ const meta = {
   title: 'Realms: ETERNUM game',
   description:
     'Realms are building a MMOCCG (massively-multiplayer on-chain composable game) on L2 StarkNet',
-  website: 'https://realms.xyz/',
+  website: 'https://realmseternum.com/',
   image: '/realms-art/desktop/createOrDestroy-desktop.png',
 };
 
