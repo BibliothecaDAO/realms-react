@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 import { links } from '@/data/Projects';
 import { useWalletContext } from '@/hooks/useWalletContext';
+import { Head } from './Head';
 
 export const MainHeader = () => {
   const {
@@ -50,6 +51,7 @@ export const MainHeader = () => {
   return (
     <div className="fixed z-50 flex w-full h-16 px-4 space-x-8 tracking-widest uppercase border-b sm:px-10 bg-gray-900/40 border-off-300">
       {' '}
+      <Head />
       <div className="container flex justify-between mx-auto text-white">
         <Link href="/">
           <BibliothecaBook className="self-center mr-10 transition-all duration-150 cursor-pointer fill-current h-9 hover:fill-white" />
