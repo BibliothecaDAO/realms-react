@@ -74,13 +74,40 @@ export const ArmyCard: React.FC<Prop> = (props) => {
         </div>
       </div>
 
-      <div className="relative h-36">
+      <div className="relative h-36 card">
         <ParentSize>
           {({ width, height }) => (
             <RadarMap armyOne={armyStats} height={height} width={width} />
           )}
         </ParentSize>
       </div>
+      <div className="w-full mt-3 uppercase font-display">
+        <div className="flex justify-between">
+          <h5 className="">Army Statistics</h5>
+          <span className="pr-6 ml-auto">A</span> <span>D</span>
+        </div>
+        <hr className="border-white/30" />
+        <div className="flex justify-between">
+          Cavalry:{' '}
+          <span className="pr-3 ml-auto">{armyStats.cavalryAttack}</span>{' '}
+          <span>{armyStats.cavalryDefence}</span>
+        </div>
+        <div className="flex justify-between">
+          Archery:{' '}
+          <span className="pr-3 ml-auto">{armyStats.archeryAttack}</span>{' '}
+          <span>{armyStats.archeryDefence}</span>
+        </div>
+        <div className="flex justify-between">
+          Magic: <span className="pr-3 ml-auto">{armyStats.magicAttack}</span>{' '}
+          <span>{armyStats.magicDefence}</span>
+        </div>
+        <div className="flex justify-between">
+          Infantry:{' '}
+          <span className="pr-3 ml-auto">{armyStats.infantryAttack}</span>{' '}
+          <span>{armyStats.infantryDefence}</span>
+        </div>
+      </div>
+
       {hasArrived && (
         <div className="flex px-2 my-1 text-sm rounded bg-gray-1000">
           Traveling for: <CountdownTimer date={army?.destinationArrivalTime} />
