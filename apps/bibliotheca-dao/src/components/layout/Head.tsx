@@ -7,7 +7,7 @@ const meta = {
   description:
     'The decentralized organization developing on StarkNet in the Loot ecosystem.',
   website: 'https://bibliothecadao.xyz/',
-  image: 'https://i.ibb.co/XYPNdCT/Screenshot-2022-02-21-132035.png',
+  image: '/public/mobius.jpeg',
 };
 
 export function Head(): ReactElement {
@@ -15,22 +15,24 @@ export function Head(): ReactElement {
     <HTMLHead>
       {/* Primary Meta Tags */}
       <title>{meta.title}</title>
-      <meta name="title" content={meta.description} />
+      <meta name="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="title" content={meta.title} />
       <meta name="description" content={meta.description} />
 
       {/* OG + Faceook */}
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={meta.website} />
-      <meta property="og:title" content={meta.title} />
-      <meta property="og:description" content={meta.description} />
-      <meta property="og:image" content={meta.image} />
+      <meta name="og:type" content="website" />
+      <meta name="og:url" content={meta.website} />
+      <meta name="og:title" content={meta.title} />
+      <meta name="og:description" content={meta.description} />
+      <meta name="og:image" content={meta.image} />
 
       {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={meta.website} />
-      <meta property="twitter:title" content={meta.title} />
-      <meta property="twitter:description" content={meta.description} />
-      <meta property="twitter:image" content={meta.image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={meta.website} />
+      <meta name="twitter:title" content={meta.title} />
+      <meta name="twitter:description" content={meta.description} />
+      <meta name="twitter:image" content={meta.image} />
+
       <link rel="icon" type="image/png" href="/favicon.ico"></link>
       {/* Font */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
