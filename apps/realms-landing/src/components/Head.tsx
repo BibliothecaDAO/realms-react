@@ -7,7 +7,7 @@ const meta = {
   description:
     'Realms are building a MMOCCG (massively-multiplayer on-chain composable game) on L2 StarkNet',
   website: 'https://realmseternum.com/',
-  image: '/realms-art/desktop/createOrDestroy-desktop.png',
+  image: 'https://i.postimg.cc/vT4mWYtS/create-Or-Destroy-tablet.png',
 };
 
 export function Head(): ReactElement {

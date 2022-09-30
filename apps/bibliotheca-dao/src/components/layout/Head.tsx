@@ -7,7 +7,7 @@ const meta = {
   description:
     'The decentralized organization developing on StarkNet in the Loot ecosystem.',
   website: 'https://bibliothecadao.xyz/',
-  image: '/public/mobius.jpeg',
+  image: 'https://i.postimg.cc/hjrmCtxD/bibliotheca-logo.jpg',
 };
 
 export function Head(): ReactElement {
