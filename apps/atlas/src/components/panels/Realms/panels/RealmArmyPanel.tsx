@@ -145,7 +145,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6">
-        <Card className="col-span-12 md:col-start-1 md:col-end-4">
+        <Card className="col-span-12 sm:col-span-6 lg:col-start-1 lg:col-span-3">
           <CardBody>
             {hasOwnRelic(realm) ? (
               <div>
@@ -184,7 +184,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             )}
           </CardBody>
         </Card>
-        <Card className="col-span-12 md:col-start-4 md:col-end-7">
+        <Card className="col-span-12 sm:col-span-6 lg:col-start-4 lg:col-end-7">
           <CardTitle>
             {realm.name} rules a total of {realm.relicsOwned?.length} Realms
           </CardTitle>
@@ -357,12 +357,12 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-6 md:col-end-13"
+          className="col-span-12 lg:col-start-6 lg:col-span-7"
         >
           <div className="flex justify-between w-full">
             <CardTitle>Realm Armies</CardTitle>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
             {realm.ownArmies.map((army) => {
               return (
                 <ArmyCard
@@ -370,6 +370,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                     setSelectedArmy(army);
                     setIsArmyBuilding(true);
                   }}
+                  onTravel={() =>
+                    travel(army.armyId, army.realmId, realm.realmId)
+                  }
+                  selectedRealm={realm.realmId}
                   key={army.armyId}
                   army={army}
                 />
@@ -393,12 +397,12 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-6 md:col-end-13"
+          className="col-span-12 lg:col-start-6 lg:col-span-7"
         >
           <div className="flex justify-between w-full">
             <CardTitle>All Your Armies</CardTitle>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
             {allArmies?.map((army) => {
               return (
                 <ArmyCard

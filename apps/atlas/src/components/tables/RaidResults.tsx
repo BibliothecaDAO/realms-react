@@ -48,7 +48,7 @@ export const RaidResults = (props: RaidResultsProps) => {
     }
     console.log('start polling');
     startPolling(2000); // TODO poll interval after transaction accepted on l2
-    if (combatResult?.getRealmHistory) {
+    if (combatResult?.getRealmHistory.length) {
       stopPolling();
       setResult(combatResult?.getRealmHistory[0]);
     }
@@ -189,9 +189,9 @@ export const RaidResults = (props: RaidResultsProps) => {
           )}
         </div>
       ) : (
-        <div className="text-center">
+        <div className="text-center lg:px-36">
           <Image
-            className="w-full"
+            className="w-full "
             width={500}
             objectFit={'cover'}
             layout="responsive"

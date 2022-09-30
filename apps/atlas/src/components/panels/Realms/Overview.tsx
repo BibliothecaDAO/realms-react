@@ -78,7 +78,7 @@ const Overview: React.FC<Prop> = (props) => {
       <div className="grid grid-cols-12 gap-6 py-4">
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-1 md:col-end-3 "
+          className="col-span-12 sm:col-span-4 lg:col-span-2"
         >
           <CardTitle>Population</CardTitle>
           <CardStats className="text-4xl">
@@ -87,7 +87,7 @@ const Overview: React.FC<Prop> = (props) => {
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-3 md:col-end-5 "
+          className="col-span-12 sm:col-span-4 lg:col-span-2"
         >
           <CardTitle>Food in Storehouse</CardTitle>
           {!props.loading && (
@@ -120,7 +120,7 @@ const Overview: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-        <Card className="col-span-12 md:col-start-5 md:col-end-8 ">
+        <Card className="col-span-12 sm:col-span-4 lg:col-span-3">
           <CardTitle>Military Strength</CardTitle>
           <div className="w-full text-center uppercase sm:text-2xl">
             {realm && RealmCombatStatus(realm)}
@@ -150,7 +150,7 @@ const Overview: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-        <Card className="col-span-12 md:col-start-8 md:col-end-13">
+        <Card className="col-span-12 lg:col-start-8 lg:col-end-13">
           <CardBody>
             {hasOwnRelic(realm) ? (
               <div>
@@ -208,7 +208,7 @@ const Overview: React.FC<Prop> = (props) => {
         </Card> */}
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-1 md:col-end-4 "
+          className="col-span-12 lg:col-start-1 lg:col-end-4 "
         >
           <CardTitle>Used Sqm</CardTitle>
 
@@ -245,7 +245,7 @@ const Overview: React.FC<Prop> = (props) => {
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 row-span-1 md:col-start-4 md:col-end-8"
+          className="col-span-12 row-span-1 md:col-span-6 lg:col-start-4 lg:col-span-4"
         >
           <CardTitle>Resources</CardTitle>
           <CardBody>
@@ -259,7 +259,7 @@ const Overview: React.FC<Prop> = (props) => {
             )}
           </CardBody>
         </Card>
-        <Card className="col-span-12 row-span-1 md:col-start-8 md:col-end-13 ">
+        <Card className="col-span-12 row-span-1 md:col-span-6 lg:col-start-8 lg:col-span-5 ">
           <div className="rounded h-96">
             <TerrainLayer />
           </div>

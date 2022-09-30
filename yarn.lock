@@ -6498,6 +6498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@juggle/resize-observer@npm:^3.3.1":
+  version: 3.4.0
+  resolution: "@juggle/resize-observer@npm:3.4.0"
+  checksum: 5786abce4141d541f563d32a0c04dd0fb62f1f9f31620c0e92809418e73eb56610f7e10ddddf08ed2f09aad032c1eeac8c991eb708e042224002cc658716e67b
+  languageName: node
+  linkType: hard
+
 "@lezer/common@npm:^1.0.0":
   version: 1.0.0
   resolution: "@lezer/common@npm:1.0.0"
@@ -11180,6 +11187,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@visx/responsive@npm:2.10.0":
+  version: 2.10.0
+  resolution: "@visx/responsive@npm:2.10.0"
+  dependencies:
+    "@juggle/resize-observer": "npm:^3.3.1"
+    "@types/lodash": "npm:^4.14.172"
+    "@types/react": "npm:*"
+    lodash: "npm:^4.17.21"
+    prop-types: "npm:^15.6.1"
+  peerDependencies:
+    react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: da5496870bf5d748bfdf0e87f58da21611bc20a774c02ee5322b8682fffaf7c8df5ac41611332d6d0b794d4d232654757a899b6f0276bb34f31c937cb88aa692
+  languageName: node
+  linkType: hard
+
 "@visx/scale@npm:2.2.2":
   version: 2.2.2
   resolution: "@visx/scale@npm:2.2.2"
@@ -13175,6 +13197,7 @@ __metadata:
     "@visx/group": "npm:2.10.0"
     "@visx/mock-data": "npm:2.1.2"
     "@visx/point": "npm:2.6.0"
+    "@visx/responsive": "npm:2.10.0"
     "@visx/scale": "npm:2.2.2"
     "@visx/shape": "npm:2.12.2"
     "@visx/text": "npm:2.12.2"
@@ -27905,7 +27928,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

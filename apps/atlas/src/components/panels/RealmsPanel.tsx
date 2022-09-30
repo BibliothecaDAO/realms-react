@@ -38,7 +38,7 @@ function useRealmsQueryVariables(
     }));
 
     const filter = {} as any;
-    const orderBy = { realmId: 'asc' } as any;
+    let orderBy = { realmId: 'asc' } as any;
 
     if (state.searchIdFilter) {
       filter.realmId = { equals: parseInt(state.searchIdFilter) };
@@ -61,7 +61,7 @@ function useRealmsQueryVariables(
       }
       if (state.isRaidableFilter) {
         filter.lastVaultTime = { not: null };
-        orderBy.lastVaultTime = 'asc';
+        orderBy = { lastVaultTime: 'asc' };
       }
       if (
         state.rarityFilter.rank.min > 0 ||

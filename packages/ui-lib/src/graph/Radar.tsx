@@ -21,7 +21,7 @@ export interface ArmyStatistics {
 const orange = '#ff9933';
 export const pumpkin = '#f5810c';
 const silver = '#d9d9d9';
-export const background = '';
+export const background = 'gray';
 const degrees = 360;
 
 const y = (d: { key: string; value: number }) => d.value;
@@ -125,7 +125,7 @@ export const RadarMap = ({
 
   const tooltipStyles = {
     ...defaultStyles,
-    backgroundColor: 'rgba(53,71,125,0.8)',
+    backgroundColor: 'rgba(53,71,125,1)',
     color: 'white',
     padding: 12,
   };
@@ -152,7 +152,7 @@ export const RadarMap = ({
   const polygonPoints2 = genPolygonPoints(data2, (d) => yScale(d) ?? 0, y);
 
   return width < 10 ? null : (
-    <div>
+    <>
       <svg width={width} height={height}>
         <rect fill={background} width={width} height={height} rx={14} />
         <Group top={height / 2 - margin.top} left={width / 2}>
@@ -240,6 +240,6 @@ export const RadarMap = ({
           <strong>{tooltipData as ReactNode}</strong>
         </Tooltip>
       )}
-    </div>
+    </>
   );
 };

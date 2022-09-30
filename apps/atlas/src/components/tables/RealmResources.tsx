@@ -162,10 +162,10 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     { Header: '', id: 1, accessor: 'resource' },
     // { Header: 'Base Output', id: 2, accessor: 'baseOutput' },
     props.showClaimable
-      ? { Header: 'Claimable', id: 2, accessor: 'claimableResources' }
+      ? { Header: 'Claim', id: 2, accessor: 'claimableResources' }
       : undefined,
     props.showRaidable
-      ? { Header: 'Raidable', id: 3, accessor: 'raidableResources' }
+      ? { Header: 'Raid', id: 3, accessor: 'raidableResources' }
       : undefined,
     props.showLevel ? { Header: 'level', id: 4, accessor: 'level' } : undefined,
   ].filter((i) => i !== undefined);

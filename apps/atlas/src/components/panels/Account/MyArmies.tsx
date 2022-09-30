@@ -14,7 +14,7 @@ import { useArmy } from '@/hooks/settling/useArmy';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
-import { GetTravelTime } from '@/shared/Getters/Realm';
+import { getTravelTime } from '@/shared/Getters/Realm';
 
 export const MyArmies = () => {
   const { userData } = useUsersRealms();

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
+import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
+import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
+
 import DeckGL from '@deck.gl/react';
-import { UserAgent } from '@quentin-sommer/react-useragent';
-import type { UserAgentProps } from '@quentin-sommer/react-useragent/dist/UserAgent';
 import { useRouter } from 'next/router';
-import React, { useCallback, useMemo, useState } from 'react';
-import Map, { FullscreenControl } from 'react-map-gl';
+import React, { useCallback, useMemo } from 'react';
+import Map from 'react-map-gl';
 import Layout from '@/components/Layout';
+import ChatComponent from '@/components/minigame/realtime/Chat';
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
@@ -18,6 +19,7 @@ import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';
 
 export default function AtlasPage() {
@@ -67,6 +69,7 @@ function AtlasSidebars() {
 }
 
 function MapModule() {
+  const { userRealms } = useUsersRealms();
   const { travelContext, mapContext } = useAtlasContext();
   const ItemViewLevel = 5;
   const selectedId = mapContext.selectedAsset?.id ?? '0';
@@ -98,6 +101,27 @@ function MapModule() {
     [mapContext.viewState]
   );
 
+  const userRealmsFormatted = userRealms?.realms.map((a) => {
+    return {
+      coordinates: [a.longitude, a.latitude],
+      id: a.realmId,
+    };
+  });
+
+  const ownRealms = new IconLayer({
+    id: 'own-realms',
+    data: userRealmsFormatted,
+    getIcon: (d) => ({
+      url: 'https://cdn-icons-png.flaticon.com/512/90/90406.png',
+      width: 128,
+      height: 128,
+      anchorY: 100,
+    }),
+    sizeScale: 5,
+    getPosition: (d: any) => d.coordinates,
+    getSize: (d) => 10,
+  });
+
   const arcsLayer = useMemo(() => {
     return new ArcLayer({
       id: 'arc',
@@ -111,13 +135,14 @@ function MapModule() {
   }, [travelContext.travelArcs]);
 
   const layers = useMemo(() => {
-    return [
+    const assets = [
       createScatterPlot('crypt', crypts.features),
       createScatterPlot('realm', (realms as any).features),
-      createScatterPlot('loot', loot_bags.features),
-      createScatterPlot('ga', ga_bags.features),
-      arcsLayer,
+      // createScatterPlot('loot', loot_bags.features),
+      // createScatterPlot('ga', ga_bags.features),
     ];
+
+    return [...assets, arcsLayer, ownRealms];
   }, [arcsLayer, mapContext.viewState]);
 
   return (
@@ -132,13 +157,17 @@ function MapModule() {
       layers={layers}
     >
       {!mapContext.isMapLoaded ? (
-        <div className="fixed z-50 flex justify-center w-screen h-screen bg-gray-1100">
+        <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1100">
           {' '}
-          <h1 className="self-center">loading Atlas...</h1>{' '}
+          <h1 className="self-center duration-100 animate-pulse">
+            <Ouroboros className="block w-20 mx-auto fill-current" />
+            loading Atlas...
+          </h1>{' '}
         </div>
       ) : (
         ''
       )}
+      <ChatComponent channelName="desiege-chat" />
       <Map
         // projection={'globe'}
         attributionControl={false}

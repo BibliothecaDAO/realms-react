@@ -142,6 +142,43 @@ export const useArmy = () => {
     }, []);
   };
 
+  const calculateDefence = (
+    defence: string,
+    army?: Army | ArmyBattalionQty | undefined
+  ) => {
+    const lightCavalryDefence =
+      getBattalionStat('LightCavalry')?.[defence] *
+        (army?.lightCavalryQty || 0) || 0;
+    const heavyCavalryDefence =
+      getBattalionStat('HeavyCavalry')?.[defence] *
+        (army?.heavyCavalryQty || 0) || 0;
+    const archerDefence =
+      getBattalionStat('Archer')?.[defence] * (army?.archerQty || 0) || 0;
+    const longbowDefence =
+      getBattalionStat('Longbow')?.[defence] * (army?.longbowQty || 0) || 0;
+    const mageDefence =
+      getBattalionStat('Mage')?.[defence] * (army?.mageQty || 0) || 0;
+    const archanistDefence =
+      getBattalionStat('Arcanist')?.[defence] * (army?.arcanistQty || 0) || 0;
+    const lightInfantryDefence =
+      getBattalionStat('LightInfantry')?.[defence] *
+        (army?.lightInfantryQty || 0) || 0;
+    const heavyInfantryDefence =
+      getBattalionStat('HeavyInfantry')?.[defence] *
+        (army?.heavyInfantryQty || 0) || 0;
+
+    return (
+      lightCavalryDefence +
+      heavyCavalryDefence +
+      archerDefence +
+      longbowDefence +
+      mageDefence +
+      archanistDefence +
+      lightInfantryDefence +
+      heavyInfantryDefence
+    );
+  };
+
   // TODO Dirty - to improve once stabilised
   const getArmyStats = (army?: Army | ArmyBattalionQty): ArmyStatistics => {
     return {
@@ -164,10 +201,10 @@ export const useArmy = () => {
           army.heavyInfantryQty *
             (getBattalionStat('HeavyInfantry')?.attack || 0)
         : 0,
-      cavalryDefence: 100,
-      archeryDefence: 0,
-      magicDefence: 20,
-      infantryDefence: 0,
+      cavalryDefence: calculateDefence('cavalryDefence', army),
+      archeryDefence: calculateDefence('archeryDefence', army),
+      magicDefence: calculateDefence('magicDefence', army),
+      infantryDefence: calculateDefence('infantryDefence', army),
     };
   };
 
