@@ -13,7 +13,9 @@ import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, RpcProvider } from 'starknet';
+import { Modals } from '@/components/modals';
 import { AtlasProvider } from '@/context/AtlasContext';
+import { ModalProvider } from '@/context/ModalContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
@@ -73,41 +75,46 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <BreakpointProvider queries={queries}>
-      <WalletProvider>
-        <ApolloProvider client={apolloClient}>
-          <StarknetProvider
-            defaultProvider={
-              new RpcProvider({
-                nodeUrl:
-                  'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
-              })
-            }
-            autoConnect
-            connectors={connectors}
-          >
-            <QueryClientProvider client={queryClient}>
-              <ResourceProvider>
-                <TransactionQueueProvider>
-                  <AtlasProvider>
-                    <DndProvider backend={HTML5Backend}>
-                      <Component {...pageProps} />
-                    </DndProvider>
-                  </AtlasProvider>
-                </TransactionQueueProvider>
-              </ResourceProvider>
-              {/* <PageTransition
+    <>
+      <ApolloProvider client={apolloClient}>
+        <BreakpointProvider queries={queries}>
+          <ModalProvider>
+            <WalletProvider>
+              <StarknetProvider
+                defaultProvider={
+                  new RpcProvider({
+                    nodeUrl:
+                      'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
+                  })
+                }
+                autoConnect
+                connectors={connectors}
+              >
+                <QueryClientProvider client={queryClient}>
+                  <ResourceProvider>
+                    <TransactionQueueProvider>
+                      <AtlasProvider>
+                        <DndProvider backend={HTML5Backend}>
+                          <Component {...pageProps} />
+                          <Modals />
+                        </DndProvider>
+                      </AtlasProvider>
+                    </TransactionQueueProvider>
+                  </ResourceProvider>
+                  {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-              <ReactQueryDevtools
-                initialIsOpen={false}
-                position="bottom-right"
-              />
-            </QueryClientProvider>
-          </StarknetProvider>
-        </ApolloProvider>
-      </WalletProvider>
+                  <ReactQueryDevtools
+                    initialIsOpen={false}
+                    position="bottom-right"
+                  />
+                </QueryClientProvider>
+              </StarknetProvider>
+            </WalletProvider>
+          </ModalProvider>
+        </BreakpointProvider>
+      </ApolloProvider>
       <Toaster
         gutter={12}
         toastOptions={{
@@ -128,7 +135,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ToastBar>
         )}
       </Toaster>
-    </BreakpointProvider>
+    </>
   );
 }
 
