@@ -15,6 +15,7 @@ import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { ReactElement, useState, useMemo } from 'react';
 
+import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useResourcesContext } from '@/context/ResourcesContext';
@@ -43,6 +44,7 @@ export function AccountOverview() {
   const [selectedId, setSelectedId] = useState(0);
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
     useState(false);
+  const [isBridgeOpen, setIsBridgeOpen] = useState(false);
 
   const filter = {
     OR: [
@@ -320,6 +322,20 @@ export function AccountOverview() {
               >
                 burn ALl resources!
               </Button>
+            </div>
+            <CardTitle>Bridge</CardTitle>
+            <div className="w-full mt-4">
+              <Button
+                variant="primary"
+                size="xs"
+                onClick={() => setIsBridgeOpen(true)}
+              >
+                Open Bridge
+              </Button>
+              <BridgeRealmsSideBar
+                isOpen={isBridgeOpen}
+                onClose={() => setIsBridgeOpen(false)}
+              />
             </div>
           </CardBody>
         </Card>
