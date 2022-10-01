@@ -64,20 +64,21 @@ export const ResourceSwapSideBarPanel = (
     <BaseSideBarPanel onClose={props.onClose}>
       <div>
         <h2 className="mt-2 mb-4 text-center">Swap</h2>
-        {!isLordsApprovedForExchange && (
-          <div>
-            <Button className="w-full" variant="primary" onClick={approveLords}>
+        {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
+          <div className="grid gap-2 sm:grid-cols-2">
+            <Button
+              className="w-full"
+              variant="primary"
+              onClick={approveLords}
+              disabled={isLordsApprovedForExchange}
+            >
               APPROVE $LORDS <Lords className="w-4" />
             </Button>
-          </div>
-        )}
-        {/* TODO: NOT WORKING */}
-        {!isResourcesApprovedForExchange && (
-          <div>
             <Button
               className="w-full"
               variant="primary"
               onClick={approveResources}
+              disabled={isResourcesApprovedForExchange}
             >
               APPROVE RESOURCES
             </Button>

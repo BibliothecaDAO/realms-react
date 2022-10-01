@@ -7,10 +7,9 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import CloseX from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
-import { Switch } from '@headlessui/react';
+import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { useState, useMemo, useReducer } from 'react';
@@ -133,8 +132,19 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               <LordsIcon className="self-center w-3 h-3 fill-current sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t sm:text-sm opacity-60 border-white/20">
-            balance: {(+formatEther(props.resource.amount)).toLocaleString()}
+          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t un sm:text-sm opacity-60 border-white/20">
+            balance:{' '}
+            <button
+              onClick={() => {
+                props.onQtyChange(
+                  props.resource.resourceId,
+                  +formatEther(props.resource.amount)
+                );
+              }}
+              className="underline cursor-pointer decoration-dotted"
+            >
+              {(+formatEther(props.resource.amount)).toLocaleString()}
+            </button>
           </div>
         </div>
       </div>
@@ -171,6 +181,7 @@ export function SwapResources(): ReactElement {
     getResourceById,
     addSelectedSwapResources,
     removeSelectedSwapResource,
+    removeAllSelectedSwapResources,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
@@ -279,34 +290,88 @@ export function SwapResources(): ReactElement {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
-        <h5>quick add building cost</h5>
-        {gameConstants?.buildingCosts
-          ?.filter((b) => b.resources.length)
-          .map((a, i) => {
-            return (
-              <Button
-                key={i}
-                onClick={() => batchAddResources(a.resources)}
-                size="xs"
-                variant="outline"
-              >
-                {a.buildingName}
+        <h5>quick add cost</h5>
+        <div className="flex">
+          <Popover className="relative z-50 mr-4">
+            <Popover.Button as="div">
+              <Button size="xs" variant="outline">
+                buildings
               </Button>
-            );
-          })}
-        <h5 className="mt-2">quick add troop cost</h5>
-        {gameConstants?.battalionCosts?.map((a, i) => {
-          return (
-            <Button
-              key={i}
-              onClick={() => batchAddResources(a.resources)}
-              size="xs"
-              variant="outline"
+            </Popover.Button>
+
+            <Transition
+              enter="transition duration-350 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-350 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
             >
-              {a.battalionName}
-            </Button>
-          );
-        })}
+              <Popover.Panel
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                static
+              >
+                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                  Add resources required for:
+                  {gameConstants?.buildingCosts
+                    ?.filter((b) => b.resources.length)
+                    .map((a, i) => {
+                      return (
+                        <Popover.Button key={i} as="div">
+                          <Button
+                            onClick={() => batchAddResources(a.resources)}
+                            size="xs"
+                            variant="outline"
+                          >
+                            {a.buildingName}
+                          </Button>
+                        </Popover.Button>
+                      );
+                    })}
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+          <Popover className="relative z-50">
+            <Popover.Button as="div">
+              <Button size="xs" variant="outline">
+                troops
+              </Button>
+            </Popover.Button>
+
+            <Transition
+              enter="transition duration-350 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-350 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Popover.Panel
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                static
+              >
+                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                  Add resources required for:
+                  {gameConstants?.battalionCosts?.map((a, i) => {
+                    return (
+                      <Popover.Button key={i} as="div">
+                        <Button
+                          onClick={() => batchAddResources(a.resources)}
+                          size="xs"
+                          variant="outline"
+                        >
+                          {a.battalionName}
+                        </Button>
+                      </Popover.Button>
+                    );
+                  })}
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+        </div>
+
         {/* <MarketSelect update={onClickCostRecipe} cost={buildingCosts} /> */}
       </div>
 
@@ -321,9 +386,7 @@ export function SwapResources(): ReactElement {
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
-          className={`${
-            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
-          } relative inline-flex h-6 w-11 items-center rounded shadow-inner`}
+          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
         >
           <span className="sr-only">Buy/Sell</span>
           <span
@@ -364,15 +427,24 @@ export function SwapResources(): ReactElement {
       </div>
       <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
         <div className="flex flex-col justify-end w-full">
-          <div className="flex w-full">
+          <div className="relative flex w-full">
             <Button
               aria-label="Add Row"
               size="xs"
               variant="outline"
-              className="static mx-auto"
+              className="absolute transform -translate-x-1/2 left-1/2"
               onClick={() => addSelectedSwapResources()}
             >
               add resource
+            </Button>
+            <Button
+              aria-label="Clear All"
+              size="xs"
+              variant="outline"
+              className="ml-auto"
+              onClick={() => removeAllSelectedSwapResources()}
+            >
+              clear
             </Button>
           </div>
           <div className="flex flex-col py-4 rounded ">

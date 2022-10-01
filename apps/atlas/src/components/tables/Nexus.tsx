@@ -307,15 +307,13 @@ export function Nexus(): ReactElement {
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
-          className={`${
-            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
-          } relative inline-flex h-6 w-11 items-center rounded-full shadow-inner`}
+          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
         >
           <span className="sr-only">Buy/Sell</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white`}
+            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
           />
         </Switch>
         <div

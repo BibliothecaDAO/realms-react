@@ -82,7 +82,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         </div>
       ),
       rate: (
-        <div className="flex">
+        <div className="flex justify-center">
           <span className="text-sm sm:text-lg">
             <span className="flex">
               {(+formatEther(resource.rate)).toFixed(4)}
@@ -92,6 +92,10 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               {RateChange(resource.percentChange)}
             </span>
           </span>
+        </div>
+      ),
+      chart: (
+        <div className="flex justify-center">
           <XYChart
             theme={
               parseFloat((resource.percentChange * 100).toFixed(2)) >= 0
@@ -118,7 +122,6 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           </XYChart>
         </div>
       ),
-
       lp_balance: (
         <span className="text-xs uppercase sm:text-lg">
           {(+formatEther(resource.lp)).toLocaleString()} <br />
@@ -148,6 +151,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     // { Header: 'Balance', id: 2, accessor: 'balance' },
     // { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Price', id: 5, accessor: 'rate' },
+    { Header: '7d Chart', id: 8, accessor: 'chart' },
     // { Header: 'Change', id: 4, accessor: 'change' },
 
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
