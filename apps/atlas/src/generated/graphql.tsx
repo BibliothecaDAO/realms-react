@@ -1784,6 +1784,22 @@ export type GetExchangeRatesQuery = {
   }>;
 };
 
+export type GetHistoricPriceDataQueryVariables = Exact<{
+  dateFrom: Scalars['String'];
+  dateTo: Scalars['String'];
+}>;
+
+export type GetHistoricPriceDataQuery = {
+  __typename?: 'Query';
+  exchangeRates: Array<{
+    __typename?: 'ExchangeRate';
+    date: string;
+    hour: number;
+    tokenId: number;
+    amount: string;
+  }>;
+};
+
 export type GetLoreEntitiesQueryVariables = Exact<{
   filter?: InputMaybe<LoreEntityWhereInput>;
   take?: InputMaybe<Scalars['Float']>;
@@ -2870,6 +2886,72 @@ export type GetExchangeRatesLazyQueryHookResult = ReturnType<
 export type GetExchangeRatesQueryResult = Apollo.QueryResult<
   GetExchangeRatesQuery,
   GetExchangeRatesQueryVariables
+>;
+export const GetHistoricPriceDataDocument = gql`
+  query getHistoricPriceData($dateFrom: String!, $dateTo: String!)
+  @api(name: starkIndexer) {
+    exchangeRates(
+      where: { date: { gt: $dateFrom, lte: $dateTo } }
+      orderBy: { date: asc }
+    ) {
+      date
+      hour
+      tokenId
+      amount
+    }
+  }
+`;
+
+/**
+ * __useGetHistoricPriceDataQuery__
+ *
+ * To run a query within a React component, call `useGetHistoricPriceDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHistoricPriceDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHistoricPriceDataQuery({
+ *   variables: {
+ *      dateFrom: // value for 'dateFrom'
+ *      dateTo: // value for 'dateTo'
+ *   },
+ * });
+ */
+export function useGetHistoricPriceDataQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >(GetHistoricPriceDataDocument, options);
+}
+export function useGetHistoricPriceDataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetHistoricPriceDataQuery,
+    GetHistoricPriceDataQueryVariables
+  >(GetHistoricPriceDataDocument, options);
+}
+export type GetHistoricPriceDataQueryHookResult = ReturnType<
+  typeof useGetHistoricPriceDataQuery
+>;
+export type GetHistoricPriceDataLazyQueryHookResult = ReturnType<
+  typeof useGetHistoricPriceDataLazyQuery
+>;
+export type GetHistoricPriceDataQueryResult = Apollo.QueryResult<
+  GetHistoricPriceDataQuery,
+  GetHistoricPriceDataQueryVariables
 >;
 export const GetLoreEntitiesDocument = gql`
   query getLoreEntities(

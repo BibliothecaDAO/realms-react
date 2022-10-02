@@ -38,7 +38,7 @@ const handleMint = async (req: NextApiRequest, res: NextApiResponse) => {
     res.send(
       JSON.stringify({
         success: false,
-        error: 'Insufficient LORDS balance or staked Realm count',
+        error: 'Insufficient $LORDS balance or staked Realm count',
       })
     );
     return;

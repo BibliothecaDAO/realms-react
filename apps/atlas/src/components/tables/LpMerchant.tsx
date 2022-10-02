@@ -163,7 +163,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                   props.resource.qty
                 ).toFixed(2)}
               </span>{' '}
-              {/* <LordsIcon className="self-center w-5 h-5" /> */}
+              <Lords className="self-center w-4 h-4" />
             </div>
           </div>
           <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-75 border-white/20">
@@ -175,15 +175,15 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             <span className="opacity-60">
               {' '}
               <span className="flex">
-                -LORDS
-                <Lords className="w-3 mr-1" />:{' '}
+                -$LORDS :{' '}
                 {loading
                   ? 'loading...'
                   : (+formatEther(
                       currencyAndTokenBalance.currency
                     )).toLocaleString()}{' '}
+                <Lords className="w-3 mr-1" />
               </span>
-              <br />-{props.resource.resourceName}:{' '}
+              -{props.resource.resourceName}:{' '}
               {loading
                 ? 'loading...'
                 : (+formatEther(
@@ -194,7 +194,9 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
         </div>
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
-        <div className="w-full">1 = {displayRate(props.resource.rate)} </div>
+        <div className="flex justify-end w-full">
+          1 = {displayRate(props.resource.rate)} <Lords className="w-3" />
+        </div>
         <div className="w-full">
           {(+formatEther(props.resource.amount)).toLocaleString()}
         </div>
@@ -341,15 +343,13 @@ export function LpMerchant(): ReactElement {
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
-          className={`${
-            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
+          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
         >
           <span className="sr-only">Enable notifications</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white`}
+            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
           />
         </Switch>
         <div className={`px-4 uppercase ${isSell && 'font-semibold'}`}>
@@ -398,27 +398,19 @@ export function LpMerchant(): ReactElement {
             <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
-                  {isBuy
-                    ? [
-                        'Total lords',
-                        <Lords key={1} className="w-3 mr-2" />,
-                        ' to spend:',
-                      ]
-                    : [
-                        'Total lords',
-                        <Lords key={1} className="w-3 mr-2" />,
-                        ' received:',
-                      ]}
+                  {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
                 </span>
-                {calculatedTotalInLords.toLocaleString()}
+                {calculatedTotalInLords.toLocaleString()}{' '}
+                <Lords key={1} className="w-5 ml-2" />
               </span>
             </div>
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
-                  your lords <Lords className="w-3 mr-2" /> Balance:
+                  your $lords Balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+                <Lords className="w-3 ml-1" />
               </div>
             </div>
           </div>
