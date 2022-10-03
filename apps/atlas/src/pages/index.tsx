@@ -16,8 +16,8 @@ import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider } from '@/context/RealmContext';
 import crypts from '@/geodata/crypts.json';
-import ga_bags from '@/geodata/ga.json';
-import loot_bags from '@/geodata/loot.json';
+/* import ga_bags from '@/geodata/ga.json';
+import loot_bags from '@/geodata/loot.json'; */
 import realms from '@/geodata/realms.json';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';

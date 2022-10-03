@@ -247,7 +247,7 @@ export const CombatSideBar: React.FC<Prop> = ({
         <div>
           {/* <p>Tx Hash: {combatData} </p> */}
           <RaidResults
-            fromAttackRealmId={selectedArmy?.armyId}
+            fromAttackRealmId={selectedArmy?.realmId}
             tx={combatData}
           />
         </div>
