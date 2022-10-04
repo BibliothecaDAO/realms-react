@@ -327,3 +327,28 @@ export interface HistoricPriceData {
 export interface HistoricPrices {
   [tokenId: number]: HistoricPriceData[] | [];
 }
+
+export interface ImageResponse {
+  img: string;
+  seed?: string;
+  project?: string;
+  user?: string;
+  prompt?: string;
+}
+
+export interface SelectItem {
+  title: string;
+  value: string;
+}
+
+export interface SelectButton {
+  add?: (id) => void;
+  active?: boolean;
+}
+
+export interface SelectProps {
+  title?: string;
+  items: SelectItem[];
+  add?: (id) => void;
+  selected: SelectItem[];
+}

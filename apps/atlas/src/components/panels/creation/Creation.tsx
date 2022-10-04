@@ -11,65 +11,20 @@ import { useStarknet } from '@starknet-react/core';
 import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
+import {
+  projectID,
+  stableDiffusionEndPoints,
+  stableDiffusionUrl,
+  traits,
+} from '@/constants/character';
+import type {
+  ImageResponse,
+  SelectButton,
+  SelectItem,
+  SelectProps,
+} from '@/types/index';
 
-const projectID = 'test_rulers';
-
-const traits = {
-  sex: [
-    { title: 'male', value: 'male' },
-    { title: 'female', value: 'female' },
-    { title: 'n/a', value: 'no sex' },
-  ],
-  hair: [
-    { title: 'blonde', value: 'blonde hair' },
-    { title: 'black', value: 'black hair' },
-    { title: 'red', value: 'red hair' },
-    { title: 'none', value: 'none' },
-  ],
-  eyes: [
-    { title: 'blue', value: 'blue eyes' },
-    { title: 'red', value: 'red eyes' },
-    { title: 'black', value: 'black eyes' },
-    { title: 'yellow', value: 'yellow eyes' },
-  ],
-  race: [
-    { title: 'Human', value: 'human' },
-    { title: 'Orc', value: 'orc' },
-    { title: 'Demon', value: 'demon' },
-    { title: 'Unknown', value: 'unknown' }, // could have random list on this
-    { title: 'Cat', value: 'cat' },
-    { title: 'Frog', value: 'frog' },
-  ],
-  patterns: [
-    { title: 'Arabic', value: 'arabic patterns' },
-    { title: 'Chinese', value: 'oriential chiense patterns' },
-    { title: 'Australian', value: 'australian patterns' },
-  ],
-};
-
-interface ImageResponse {
-  img: string;
-  seed: string;
-}
-
-interface SelectItem {
-  title: string;
-  value: string;
-}
-
-interface SelectButton {
-  add?: (id) => void;
-  active?: boolean;
-}
-
-interface SelectProps {
-  title?: string;
-  items: SelectItem[];
-  add?: (id) => void;
-  selected: SelectItem[];
-}
-
-export const SelectButton = (props: SelectItem & SelectButton) => {
+export const OptionSelect = (props: SelectItem & SelectButton) => {
   return (
     <button
       onClick={() => props.add?.({ title: props.title, value: props.value })}
@@ -93,7 +48,7 @@ export const Select = (props: SelectProps) => {
               ? true
               : false;
           return (
-            <SelectButton
+            <OptionSelect
               key={i}
               active={active}
               value={a.value}
@@ -128,11 +83,9 @@ export const Creation = () => {
       setSelectedTraits((current) => [...current, value]);
     }
   };
-  const url =
-    'https://2e12-2a02-1811-3780-3800-43b8-68b1-88af-118f.eu.ngrok.io/generateImages';
 
   const prompt = () => {
-    const one = 'symmetry! portrait of young';
+    const one = 'symmetry! portrait of young ';
     const end =
       ',fantasy, dune, greg rutkowski, highly detailed, digital painting, trending on artstation, concept art, sharp focus, illustration, global illumination, ray tracing, realistic shaded, art by artgerm';
 
@@ -148,13 +101,11 @@ export const Creation = () => {
 
   const fetchPlayers = async () => {
     setLoading(true);
-    const params = {
+
+    const body = {
       project: projectID,
       user: account,
       collection: 'first_collection',
-    };
-
-    const body = {
       generation_settings: {
         prompt: prompt(),
         n_images: 9,
@@ -163,10 +114,15 @@ export const Creation = () => {
         width: 512,
       },
     };
-    const res = await axios.post(url, body, { params });
+    const res = await axios.post(
+      stableDiffusionUrl + stableDiffusionEndPoints.generate,
+      body
+    );
+
+    console.log(res);
 
     const obj: ImageResponse[] = res.data.map((a) => {
-      return { img: a.uri, seed: 1 };
+      return { img: a.uri, seed: a.seed };
     });
 
     setRulers(obj);
@@ -184,6 +140,14 @@ export const Creation = () => {
             }}
             title="sex"
             items={traits.sex}
+            selected={selectedTraits}
+          />
+          <Select
+            add={(value) => {
+              onSelectedTrait(value);
+            }}
+            title="occupation"
+            items={traits.occupation}
             selected={selectedTraits}
           />
           <Select
@@ -230,17 +194,18 @@ export const Creation = () => {
           </div>
         </div>
         <div className="p-10 ">
-          <h1 className="mb-3">Your Ruler</h1>
+          <h1 className="mb-3 mb-20 text-center">Your Ruler</h1>
           <div className="border card">
             {selectedRuler && (
               <Image
                 width={500}
+                layout={'responsive'}
                 height={500}
                 className={'w-72 h-72 mx-auto'}
                 src={selectedRuler?.img}
               />
             )}
-            <h4>seed: {selectedRuler && selectedRuler.seed}</h4>
+            {/* <h4>seed: {selectedRuler && selectedRuler.seed}</h4> */}
           </div>
 
           <div className="flex w-full">
@@ -250,7 +215,7 @@ export const Creation = () => {
           </div>
           {selectedTraits.map((a, i) => {
             return (
-              <SelectButton
+              <OptionSelect
                 key={i}
                 value={a.value}
                 title={a.title}
@@ -262,14 +227,15 @@ export const Creation = () => {
           })}
         </div>
         <div className="p-10 ">
-          <h3>Potentials candidates</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <h2 className="mb-20 text-center ">Potentials candidates</h2>
+          <div className="grid grid-cols-3 gap-4">
             {rulers?.map((a, i) => {
               return (
                 <Image
                   key={i}
                   width={200}
                   height={200}
+                  layout={'responsive'}
                   className={'w-32 h-32 mx-auto rounded-full hover:opacity-50'}
                   src={a.img}
                   onClick={() => setSelectedRuler(a)}
