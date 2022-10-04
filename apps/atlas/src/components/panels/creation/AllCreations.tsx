@@ -1,5 +1,3 @@
-import { useQuery } from '@apollo/client';
-import { Tabs } from '@bibliotheca-dao/ui-lib';
 import {
   Button,
   Card,
@@ -9,26 +7,12 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
-import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
+
 import { useStarknet } from '@starknet-react/core';
 import axios from 'axios';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { useEffect, useMemo, useState } from 'react';
-import { LootFilters } from '@/components/filters/LootFilters';
-import { LootOverviews } from '@/components/tables/LootOverviews';
-import { useLootContext } from '@/context/LootContext';
-import { getLootsQuery } from '@/hooks/graphql/queries';
-// import { useAtlasContext } from '@/hooks/useAtlas';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { useWalletContext } from '@/hooks/useWalletContext';
-import type { Loot } from '@/types/index';
-import { BasePanel } from './BasePanel';
-import { AllCreations } from './creation/AllCreations';
-import { Creation } from './creation/Creation';
-import { MyCreations } from './creation/MyCreations';
-import { PanelHeading } from './PanelComponents/PanelHeading';
 
 const projectID = 'test_rulers';
 
@@ -125,64 +109,85 @@ export const Select = (props: SelectProps) => {
   );
 };
 
-export const CreationPanel = () => {
-  const { play } = useUiSounds(soundSelector.pageTurn);
-  const pressedTab = (index) => {
-    play();
-    setSelectedTab(index as number);
+export const AllCreations = () => {
+  const { account } = useStarknet();
+  const [selectedTraits, setSelectedTraits] = useState<SelectItem[]>([]);
+  const [rulers, setRulers] = useState<ImageResponse[]>();
+
+  const [selectedRuler, setSelectedRuler] = useState<ImageResponse>();
+  const [loading, setLoading] = useState(false);
+
+  const onSelectedTrait = (value) => {
+    const index = selectedTraits.findIndex(
+      (id: SelectItem) => id.value === value.value
+    );
+    if (index !== -1) {
+      setSelectedTraits([
+        ...selectedTraits.slice(0, index),
+        ...selectedTraits.slice(index + 1),
+      ]);
+    } else {
+      setSelectedTraits((current) => [...current, value]);
+    }
   };
+  const url =
+    'https://2e12-2a02-1811-3780-3800-43b8-68b1-88af-118f.eu.ngrok.io/generateImages';
 
-  const [selectedTab, setSelectedTab] = useState(0);
-  const tabs = useMemo(
-    () => [
-      {
-        label: (
-          <div className="flex">
-            <div className="hidden md:block">Summon</div>
-          </div>
-        ),
-        component: <Creation />,
+  const fetchPlayers = async () => {
+    setLoading(true);
+    const params = {
+      project: projectID,
+      user: account,
+      collection: 'first_collection',
+    };
+    const traits = {
+      eyes: 'black',
+      pattern: 'chinese',
+    };
+    const body = {
+      generation_settings: {
+        prompt:
+          'symmetry! portrait of female mage, blonde hair, fantasy, dune, greg rutkowski, highly detailed, digital painting, trending on artstation, concept art, sharp focus, illustration, global illumination, ray tracing, realistic shaded, art by artgerm',
+        n_images: 9,
+        steps: 32,
+        seed: -1,
+        cfg_scale: 7.5,
+        height: 512,
+        width: 512,
       },
-      {
-        label: (
-          <div className="flex">
-            <div className="hidden md:block">My Rulers</div>
-          </div>
-        ),
-        component: <MyCreations />,
-      },
-      {
-        label: (
-          <div className="flex">
-            <div className="hidden md:block">All</div>
-          </div>
-        ),
-        component: <AllCreations />,
-      },
-    ],
-    [selectedTab]
-  );
+      traits: traits,
+    };
+    const res = await axios.post(url, body, { params });
 
+    const obj: ImageResponse[] = res.data.map((a) => {
+      return { img: a.uri, seed: 1 };
+    });
+
+    setRulers(obj);
+
+    console.log(obj);
+    setLoading(false);
+  };
   return (
-    <BasePanel open={true}>
-      <Tabs
-        selectedIndex={selectedTab}
-        onChange={(index) => pressedTab(index as number)}
-        variant="default"
-      >
-        <div className="w-full overflow-y-auto bg-black border-t pt-14 sm:pt-0 border-white/20">
-          <Tabs.List className="">
-            {tabs.map((tab, index) => (
-              <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-            ))}
-          </Tabs.List>
+    <div>
+      <div className="grid grid-cols-3 gap-8">
+        <div className="p-10 ">
+          <div className="grid grid-cols-3 gap-2">
+            {rulers?.map((a, i) => {
+              return (
+                <Image
+                  key={i}
+                  width={200}
+                  height={200}
+                  className={'w-32 h-32 mx-auto rounded-full hover:opacity-50'}
+                  src={a.img}
+                  onClick={() => setSelectedRuler(a)}
+                />
+              );
+            })}
+          </div>
         </div>
-        <Tabs.Panels>
-          {tabs.map((tab, index) => (
-            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-          ))}
-        </Tabs.Panels>
-      </Tabs>
-    </BasePanel>
+      </div>
+    </div>
   );
 };
