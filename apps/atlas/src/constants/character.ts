@@ -3,9 +3,6 @@ export enum stableDiffusionEndPoints {
   getImages = 'images',
 }
 
-export const stableDiffusionUrl =
-  'https://fastapi-production-e3aa.up.railway.app/';
-
 export const projectID = 'test_rulers';
 
 export const traits = {

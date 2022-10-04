@@ -14,7 +14,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   projectID,
   stableDiffusionEndPoints,
-  stableDiffusionUrl,
   traits,
 } from '@/constants/character';
 import type {
@@ -115,7 +114,8 @@ export const Creation = () => {
       },
     };
     const res = await axios.post(
-      stableDiffusionUrl + stableDiffusionEndPoints.generate,
+      process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
+        stableDiffusionEndPoints.generate,
       body
     );
 

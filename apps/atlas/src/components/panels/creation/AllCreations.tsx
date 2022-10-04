@@ -3,11 +3,7 @@ import axios from 'axios';
 import Image from 'next/image';
 
 import { useMemo, useState } from 'react';
-import {
-  projectID,
-  stableDiffusionEndPoints,
-  stableDiffusionUrl,
-} from '@/constants/character';
+import { projectID, stableDiffusionEndPoints } from '@/constants/character';
 import type { ImageResponse } from '@/types/index';
 
 export const AllCreations = () => {
@@ -24,7 +20,8 @@ export const AllCreations = () => {
       user: account,
     };
     const res = await axios.get(
-      stableDiffusionUrl + stableDiffusionEndPoints.getImages,
+      process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
+        stableDiffusionEndPoints.getImages,
       { params }
     );
 
