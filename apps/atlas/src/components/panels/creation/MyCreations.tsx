@@ -32,6 +32,7 @@ export const MyCreations = () => {
         seed: a.generation_settings.seed,
         id: a.id,
         user: a.user,
+        prompt: a.generation_settings.prompt,
       };
     });
 
@@ -48,22 +49,40 @@ export const MyCreations = () => {
     <div>
       <div className="grid grid-cols-1 gap-8">
         <div className="p-10 ">
-          <div className="grid grid-cols-8 gap-4">
+          <div className="grid grid-cols-6 gap-4">
             {rulers?.map((a, i) => {
               return (
-                <Image
+                <StableDiffusionImageWithMeta
                   key={i}
-                  width={200}
-                  height={200}
-                  layout={'responsive'}
-                  className={'w-32 h-32 mx-auto rounded-full hover:opacity-50'}
-                  src={a.img}
-                  onClick={() => setSelectedRuler(a)}
+                  img={a.img}
+                  seed={a.seed}
+                  user={a.user}
+                  prompt={a.prompt}
                 />
               );
             })}
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+export const StableDiffusionImageWithMeta = (props: ImageResponse) => {
+  return (
+    <div className="border">
+      <Image
+        width={200}
+        height={200}
+        layout={'responsive'}
+        className={'w-32 h-32 mx-auto rounded-full hover:opacity-50'}
+        src={props.img}
+        // onClick={() => setSelectedRuler(a)}
+      />
+      <div className="p-2">
+        {' '}
+        <div>seed:{props.seed}</div>
+        <div>{props.prompt}</div>
       </div>
     </div>
   );

@@ -339,6 +339,8 @@ export interface ImageResponse {
 export interface SelectItem {
   title: string;
   value: string;
+  selector?: string;
+  disabled?: boolean;
 }
 
 export interface SelectButton {

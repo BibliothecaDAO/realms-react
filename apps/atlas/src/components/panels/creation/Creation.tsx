@@ -1,12 +1,4 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CountdownTimer,
-  InputNumber,
-  ResourceIcon,
-} from '@bibliotheca-dao/ui-lib/base';
+import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useStarknet } from '@starknet-react/core';
 import axios from 'axios';
 import Image from 'next/image';
@@ -16,6 +8,7 @@ import {
   stableDiffusionEndPoints,
   traits,
 } from '@/constants/character';
+import { rgbDataURL } from '@/shared/ImageLoader';
 import type {
   ImageResponse,
   SelectButton,
@@ -26,7 +19,14 @@ import type {
 export const OptionSelect = (props: SelectItem & SelectButton) => {
   return (
     <button
-      onClick={() => props.add?.({ title: props.title, value: props.value })}
+      disabled={props.disabled}
+      onClick={() =>
+        props.add?.({
+          title: props.title,
+          value: props.value,
+          selector: props.selector,
+        })
+      }
       className={`w-auto p-4 uppercase border card font-display hover:bg-cta-100 ${
         props.active && 'bg-cta-100'
       }`}
@@ -46,6 +46,7 @@ export const Select = (props: SelectProps) => {
             props.selected.filter((b) => b.value == a.value).length > 0
               ? true
               : false;
+
           return (
             <OptionSelect
               key={i}
@@ -53,6 +54,8 @@ export const Select = (props: SelectProps) => {
               value={a.value}
               title={a.title}
               add={props.add}
+              selector={props.title}
+              disabled={false}
             />
           );
         })}
@@ -73,20 +76,30 @@ export const Creation = () => {
     const index = selectedTraits.findIndex(
       (id: SelectItem) => id.value === value.value
     );
+    const sameKey = selectedTraits.findIndex(
+      (id: SelectItem) => id.selector === value.selector
+    );
+
     if (index !== -1) {
       setSelectedTraits([
         ...selectedTraits.slice(0, index),
         ...selectedTraits.slice(index + 1),
       ]);
+    } else if (sameKey !== -1) {
+      setSelectedTraits([
+        ...selectedTraits.slice(0, sameKey),
+        ...selectedTraits.slice(sameKey + 1),
+      ]);
+      setSelectedTraits((current) => [...current, value]);
     } else {
       setSelectedTraits((current) => [...current, value]);
     }
   };
 
   const prompt = () => {
-    const one = 'symmetry! portrait of young ';
+    const one = 'intricate symmetry!';
     const end =
-      ',fantasy, dune, greg rutkowski, highly detailed, digital painting, trending on artstation, concept art, sharp focus, illustration, global illumination, ray tracing, realistic shaded, art by artgerm';
+      ',fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
 
     const sauce = selectedTraits
       .map((a) => {
@@ -146,8 +159,16 @@ export const Creation = () => {
             add={(value) => {
               onSelectedTrait(value);
             }}
-            title="occupation"
-            items={traits.occupation}
+            title="race"
+            items={traits.race}
+            selected={selectedTraits}
+          />
+          <Select
+            add={(value) => {
+              onSelectedTrait(value);
+            }}
+            title="skin"
+            items={traits.skin}
             selected={selectedTraits}
           />
           <Select
@@ -170,10 +191,11 @@ export const Creation = () => {
             add={(value) => {
               onSelectedTrait(value);
             }}
-            title="race"
-            items={traits.race}
+            title="occupation"
+            items={traits.occupation}
             selected={selectedTraits}
           />
+
           <Select
             add={(value) => {
               onSelectedTrait(value);
@@ -184,12 +206,13 @@ export const Creation = () => {
           />
           <div className="flex w-full">
             <Button
+              loading={loading}
               onClick={() => fetchPlayers()}
               className="w-full"
               variant="primary"
               size="lg"
             >
-              summon ruler
+              find rulers
             </Button>
           </div>
         </div>
@@ -199,9 +222,12 @@ export const Creation = () => {
             {selectedRuler && (
               <Image
                 width={500}
+                placeholder="blur"
+                blurDataURL={rgbDataURL(20, 20, 20)}
+                loading="lazy"
                 layout={'responsive'}
                 height={500}
-                className={'w-72 h-72 mx-auto'}
+                className={'w-72 h-72 mx-auto paper'}
                 src={selectedRuler?.img}
               />
             )}
@@ -209,7 +235,12 @@ export const Creation = () => {
           </div>
 
           <div className="flex w-full">
-            <Button className="w-full" variant="primary" size="lg">
+            <Button
+              loading={loading}
+              className="w-full"
+              variant="primary"
+              size="lg"
+            >
               {loading ? 'loading' : 'hire ruler'}
             </Button>
           </div>
@@ -217,6 +248,7 @@ export const Creation = () => {
             return (
               <OptionSelect
                 key={i}
+                active={true}
                 value={a.value}
                 title={a.title}
                 add={(value) => {
@@ -235,8 +267,13 @@ export const Creation = () => {
                   key={i}
                   width={200}
                   height={200}
+                  placeholder="blur"
+                  blurDataURL={rgbDataURL(20, 20, 20)}
+                  loading="lazy"
                   layout={'responsive'}
-                  className={'w-32 h-32 mx-auto rounded-full hover:opacity-50'}
+                  className={
+                    'w-32 h-32 mx-auto rounded-full hover:opacity-50 paper'
+                  }
                   src={a.img}
                   onClick={() => setSelectedRuler(a)}
                 />
