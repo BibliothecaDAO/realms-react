@@ -70,7 +70,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               resource={resource?.resourceName?.replace(' ', '') || ''}
               size="md"
             />
-            <div className="flex pt-2 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
+            <div className="flex pt-2 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0 font-display">
               <span className="self-center w-full tracking-widest uppercase text-stone-200">
                 {resource?.resourceName}
                 <span className="block w-full tracking-widest uppercase sm:flex sm:text-sm text-stone-400">

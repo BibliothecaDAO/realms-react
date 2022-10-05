@@ -33,7 +33,7 @@ import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 
-export function AccountOverview() {
+export function MyActions() {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   const { claimAll, userData, burnAll } = useUsersRealms();
@@ -60,8 +60,8 @@ export function AccountOverview() {
   });
 
   /* const getRealmDetails = (realmId: number) =>
-      realms.features.find((a: any) => a.properties.realm_idx === realmId)
-        ?.properties; */
+        realms.features.find((a: any) => a.properties.realm_idx === realmId)
+          ?.properties; */
 
   const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
 
@@ -101,52 +101,7 @@ export function AccountOverview() {
         style={animationUp}
         className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        <Card className="flex col-start-1 col-end-13 md:col-start-1 md:col-end-6">
-          <div className="flex">
-            <div className="relative">
-              <Image
-                src={'/stableai/archanist.png'}
-                alt="map"
-                height={300}
-                width={300}
-                className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
-              />
-              <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
-                1
-              </div>
-            </div>
-
-            <div className="flex flex-wrap">
-              <div className="self-center">
-                {account && (
-                  <span className="self-center text-center sm:text-xl font-lords">
-                    {shortenAddressWidth(account, 6)}
-                  </span>
-                )}
-                <h2 className="w-full sm:text-4xl">Ser, Your Vast Empire</h2>
-              </div>
-            </div>
-          </div>
-        </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-6 md:col-end-8">
-          <CardTitle>Settled Realms</CardTitle>
-          <CardBody>
-            <CardStats>{settledRealmsCount}</CardStats>
-          </CardBody>
-        </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-8 md:col-end-11">
-          <CardTitle className="flex">Lords Balance</CardTitle>
-          <CardBody>
-            <CardStats className="flex justify-end ">
-              {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-              <Lords className="self-center w-6 h-6 ml-4 fill-current" />
-            </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
-              Bank
-            </Button>
-          </CardBody>
-        </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
+        {/* <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
           <CardTitle>Relics Held</CardTitle>
 
           <CardBody>
@@ -157,48 +112,43 @@ export function AccountOverview() {
               Start Raiding
             </Button>
           </CardBody>
-        </Card>
+        </Card> */}
+        <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-6">
+          <CardTitle>Production rate daily</CardTitle>
 
-        <Card
-          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
-        >
-          <CardTitle>Mercantile History</CardTitle>
           <CardBody>
-            {economicEventData.map((a, index) => {
+            {userData.resourcesAcrossEmpire.map((a, i) => {
               return (
-                <HistoryCard
-                  key={index}
-                  timeStamp={a.timestamp}
-                  event={a.event}
-                  action={a.action}
-                />
-              );
-            })}
-          </CardBody>
-        </Card>
-
-        <Card
-          className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
-        >
-          <CardTitle>Battle History</CardTitle>
-          <CardBody>
-            {militaryEventData.map((a, index) => {
-              return (
-                <HistoryCard
-                  key={index}
-                  timeStamp={a.timestamp}
-                  event={a.event}
-                  eventId={a.eventId}
-                  action={a.action}
+                <div
+                  key={i}
+                  className="flex justify-between my-1 text-xl font-semibold tracking-widest uppercase font-display"
                 >
-                  {a.resources}
-                  {a.relic}
-                </HistoryCard>
+                  <div className="flex">
+                    <ResourceIcon
+                      size="sm"
+                      label
+                      className="self-center mr-2"
+                      resource={a.resourceName.replace('_', '') as string}
+                    />{' '}
+                  </div>
+                  + {a.resourceCount * BASE_RESOURCES_PER_DAY}
+                </div>
               );
             })}
           </CardBody>
+          <Button
+            disabled={!userData?.resourcesClaimable}
+            variant="primary"
+            size="md"
+            onClick={() => claimAll()}
+          >
+            {userData?.resourcesClaimable
+              ? 'Harvest All Resources'
+              : 'nothing to claim'}
+          </Button>
         </Card>
-        <Card className="col-span-12 sm:col-start-1 sm:col-end-4">
+
+        <Card className="col-span-12 sm:col-start-6 sm:col-end-9">
           <CardTitle>Quick Actions</CardTitle>
 
           <CardBody>
