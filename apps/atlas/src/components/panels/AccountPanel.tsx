@@ -15,6 +15,7 @@ import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
+import { MyActions } from './Account/MyActions';
 import { MyArmies } from './Account/MyArmies';
 import { MyCrypts } from './Account/MyCrypts';
 import { MyGA } from './Account/MyGA';
@@ -49,6 +50,15 @@ export function AccountPanel() {
           </div>
         ),
         component: <AccountOverview />,
+      },
+      {
+        label: (
+          <div className="flex no-wrap">
+            <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">Quick Actions</div>
+          </div>
+        ),
+        component: <MyActions />,
       },
       {
         label: (
