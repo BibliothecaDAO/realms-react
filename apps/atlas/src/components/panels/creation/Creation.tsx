@@ -97,21 +97,24 @@ export const Creation = () => {
   };
 
   const prompt = () => {
-    const one = 'intricate symmetry!';
+    const one = 'intricate intense symmetry! portrait of a ';
     const end =
       ',fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
 
-    const sauce = selectedTraits
-      .map((a) => {
-        return a.value;
-      })
-      .join()
-      .split(',');
+    const sex = selectedTraits.find((a) => a.selector == 'sex')?.value + ' ';
+    const race = selectedTraits.find((a) => a.selector == 'race')?.value;
+    const skin =
+      ' with ' + selectedTraits.find((a) => a.selector == 'skin')?.value + ',';
+    const hair = selectedTraits.find((a) => a.selector == 'hair')?.value + ',';
+    const eyes = selectedTraits.find((a) => a.selector == 'eyes')?.value + ',';
+    const occupation =
+      selectedTraits.find((a) => a.selector == 'occupation')?.value + ',';
 
-    return one + sauce + end;
+    return one + sex + race + skin + hair + eyes + occupation + end;
   };
 
   const fetchPlayers = async () => {
+    console.log(prompt());
     setLoading(true);
 
     const body = {
