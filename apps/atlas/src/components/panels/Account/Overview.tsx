@@ -158,49 +158,6 @@ export function AccountOverview() {
             </Button>
           </CardBody>
         </Card>
-        {/* <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-13">
-          <CardTitle>Production rate daily</CardTitle>
-
-          <CardBody>
-            {userData.resourcesAcrossEmpire.map((a, i) => {
-              return (
-                <div
-                  key={i}
-                  className="flex justify-between my-1 text-xl font-semibold tracking-widest uppercase"
-                >
-                  <div className="flex">
-                    <ResourceIcon
-                      size="sm"
-                      className="self-center mr-2"
-                      resource={a.resourceName.replace('_', '') as string}
-                    />{' '}
-                    {a.resourceName}
-                  </div>
-                  + {a.resourceCount * BASE_RESOURCES_PER_DAY}
-                </div>
-              );
-            })}
-          </CardBody>
-          <Button
-            disabled={!userData?.resourcesClaimable}
-            variant="primary"
-            size="md"
-            onClick={() => claimAll()}
-          >
-            {userData?.resourcesClaimable
-              ? 'Harvest All Resources'
-              : 'nothing to claim'}
-          </Button>
-        </Card> */}
-        {/* <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-4">
-            <CardTitle>Raided in past 24hrs</CardTitle>
-            <CardBody>
-              <CardStats className="mb-4 text-3xl">2</CardStats>
-              <Button variant="outline" size="xs" href="/bank">
-                Start Raiding
-              </Button>
-            </CardBody>
-          </Card> */}
 
         <Card
           className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
@@ -220,17 +177,6 @@ export function AccountOverview() {
           </CardBody>
         </Card>
 
-        {/* <Card className="col-start-1 col-end-13 row-span-3 md:col-start-4 md:col-end-9">
-            <div className="relative overflow-x-auto">
-              {balance && (
-                <Table
-                  columns={columns}
-                  data={defaultData}
-                  options={tableOptions}
-                />
-              )}
-            </div>
-          </Card> */}
         <Card
           className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
         >
