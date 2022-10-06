@@ -28,8 +28,8 @@ export const OptionSelect = (props: SelectItem & SelectButton) => {
           selector: props.selector,
         })
       }
-      className={`w-auto p-4 uppercase border cardthin font-display hover:bg-cta-100  ${
-        props.active ? 'bg-cta-100' : 'bg-black/40'
+      className={`w-auto px-4 py-2 uppercase border cardthin font-display hover:bg-cta-100 duration-150 transition-all    ${
+        props.active ? 'bg-cta-100' : 'bg-black/80'
       }`}
     >
       {props.title}
@@ -39,9 +39,9 @@ export const OptionSelect = (props: SelectItem & SelectButton) => {
 
 export const Select = (props: SelectProps) => {
   return (
-    <div>
+    <div className="my-2">
       <h3 className="self-center mr-4">{props.title}</h3>
-      <div className="flex flex-wrap my-3">
+      <div className="flex flex-wrap my-1">
         {props.items.map((a, i) => {
           const active =
             props.selected.filter((b) => b.value == a.value).length > 0
@@ -220,6 +220,7 @@ export const Creation = () => {
               className="w-full"
               variant="primary"
               size="lg"
+              disabled={!account}
             >
               find rulers
             </Button>

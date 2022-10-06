@@ -20,29 +20,31 @@ export const traits = {
     },
     {
       title: 'warrior',
-      value: 'warrior with armour',
+      value: 'warrior with detailed iron armour',
       weight: 2,
       selector: 'occupation',
     },
     {
       title: 'noble',
-      value: 'noble queen covered in gold and jewels',
+      value: 'royal with a gold crown',
       weight: 2,
       selector: 'occupation',
     },
     {
       title: 'hunter',
-      value: 'sneaky looking hunter',
+      value: 'deadly assassin with a bow',
       weight: 2,
       selector: 'occupation',
     },
   ],
   skin: [
-    { title: 'light', value: 'white sking', selector: 'skin' },
+    { title: 'light', value: 'white skin', selector: 'skin' },
     { title: 'dark', value: 'brown skin', selector: 'skin' },
     { title: 'very dark', value: 'black skin', selector: 'skin' },
     { title: 'iridescent', value: 'iridescent skin', selector: 'skin' },
     { title: 'red', value: 'red skin', selector: 'skin' },
+    { title: 'blue', value: 'blue skin', selector: 'skin' },
+    { title: 'green', value: 'green skin', selector: 'skin' },
   ],
   hair: [
     { title: 'blonde', value: 'blonde hair', selector: 'hair' },
@@ -59,25 +61,30 @@ export const traits = {
   race: [
     {
       title: 'Elf',
-      value: 'mysterious elf',
+      value:
+        'mysterious perfectly looking elf with a smirk and pointy ears and gold necklace',
       selector: 'race',
     },
     {
       title: 'Fox',
-      value: 'cute red fox person',
+      value: 'cute red fox person in a red dress with a bow',
       selector: 'race',
     },
     {
       title: 'Giant',
-      value: 'giant with huge facial features',
+      value: 'giant with huge lips and ears and thinning hair',
       selector: 'race',
     },
     {
       title: 'Human',
-      value: 'Beautiful human',
+      value: 'Beautiful human with a smile',
       selector: 'race',
     },
-    { title: 'Orc', value: 'ugly orc', selector: 'race' },
+    {
+      title: 'Orc',
+      value: 'ugly hideous green orc with a tooth necklace',
+      selector: 'race',
+    },
     {
       title: 'Demon',
       value: 'terrifying demon with sharp teeth',
@@ -88,8 +95,12 @@ export const traits = {
       value: 'disgusting goblin',
       selector: 'race',
     },
-    { title: 'Fish', value: 'wet fish head', selector: 'race' },
-    { title: 'Cat', value: 'cute cat person', selector: 'race' },
+    {
+      title: 'Fish',
+      value: 'a person with a fish head with gills on the neck',
+      selector: 'race',
+    },
+    { title: 'Cat', value: 'cute cat humanoid ', selector: 'race' },
     {
       title: 'Frog',
       value: 'pepe the frog',
