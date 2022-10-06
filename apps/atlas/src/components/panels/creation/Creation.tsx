@@ -99,7 +99,7 @@ export const Creation = () => {
   const prompt = () => {
     const one = 'intricate intense symmetry! portrait of a ';
     const end =
-      ',fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
+      'fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
 
     const sex = selectedTraits.find((a) => a.selector == 'sex')?.value + ' ';
     const race = selectedTraits.find((a) => a.selector == 'race')?.value;

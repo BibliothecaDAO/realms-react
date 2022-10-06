@@ -9,7 +9,7 @@ export const traits = {
   sex: [
     { title: 'male', value: 'male', weight: 1, selector: 'sex' },
     { title: 'female', value: 'female', weight: 1, selector: 'sex' },
-    { title: 'n/a', value: 'no sex', weight: 1, selector: 'sex' },
+    { title: 'n/a', value: 'non-binary', weight: 1, selector: 'sex' },
   ],
   occupation: [
     {
@@ -58,6 +58,11 @@ export const traits = {
   ],
   race: [
     {
+      title: 'Elf',
+      value: 'mysterious elf',
+      selector: 'race',
+    },
+    {
       title: 'Fox',
       value: 'cute red fox person',
       selector: 'race',
@@ -87,7 +92,7 @@ export const traits = {
     { title: 'Cat', value: 'cute cat person', selector: 'race' },
     {
       title: 'Frog',
-      value: 'realistic frog person',
+      value: 'pepe the frog',
       selector: 'race',
     },
   ],
