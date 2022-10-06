@@ -108,11 +108,23 @@ export const traits = {
     },
   ],
   patterns: [
-    { title: 'Arabic', value: 'arabic face patterns' },
-    { title: 'Chinese', value: 'oriental chinese face patterns' },
-    { title: 'Australian', value: 'australian aboriginal face patterns' },
-    { title: 'Egyptian', value: 'Egyptian face patterns' },
-    { title: 'Mayan', value: 'Mayan face patterns' },
-    { title: 'Aztec', value: 'Aztec face patterns' },
+    { title: 'Arabic', value: 'arabic face patterns', selector: 'patterns' },
+    {
+      title: 'Chinese',
+      value: 'oriental chinese face patterns',
+      selector: 'patterns',
+    },
+    {
+      title: 'Australian',
+      value: 'australian aboriginal face patterns',
+      selector: 'patterns',
+    },
+    {
+      title: 'Egyptian',
+      value: 'Egyptian face patterns',
+      selector: 'patterns',
+    },
+    { title: 'Mayan', value: 'Mayan face patterns', selector: 'patterns' },
+    { title: 'Aztec', value: 'Aztec face patterns', selector: 'patterns' },
   ],
 };

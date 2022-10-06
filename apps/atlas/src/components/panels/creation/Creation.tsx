@@ -4,6 +4,7 @@ import { useStarknet } from '@starknet-react/core';
 import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   projectID,
   stableDiffusionEndPoints,
@@ -100,18 +101,22 @@ export const Creation = () => {
   const prompt = () => {
     const one = 'intricate intense symmetry! portrait of a ';
     const end =
-      'fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
+      'desert background,  dramatic lighting, fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
 
     const sex = selectedTraits.find((a) => a.selector == 'sex')?.value + ' ';
     const race = selectedTraits.find((a) => a.selector == 'race')?.value;
     const skin =
-      ' with ' + selectedTraits.find((a) => a.selector == 'skin')?.value + ',';
+      ' with ' + selectedTraits.find((a) => a.selector == 'skin')?.value + ' ';
     const hair = selectedTraits.find((a) => a.selector == 'hair')?.value + ',';
     const eyes = selectedTraits.find((a) => a.selector == 'eyes')?.value + ',';
     const occupation =
       selectedTraits.find((a) => a.selector == 'occupation')?.value + ',';
+    const pattern =
+      ' and ' +
+      selectedTraits.find((a) => a.selector == 'patterns')?.value +
+      ',';
 
-    return one + sex + race + skin + hair + eyes + occupation + end;
+    return one + sex + race + skin + pattern + hair + eyes + occupation + end;
   };
 
   const fetchPlayers = async () => {
@@ -145,7 +150,11 @@ export const Creation = () => {
       });
 
       setRulers(obj);
-    } catch (error) {
+    } catch (error: any) {
+      toast(error.message, {
+        duration: 1000,
+        position: 'top-center',
+      });
       console.log(error);
     } finally {
       setLoading(false);
