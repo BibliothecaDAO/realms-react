@@ -7,7 +7,7 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { createBuildingCall, Entrypoints } from '@/hooks/settling/useBuildings';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Scroll } from '@/shared/Icons';
-import type { RealmsCall, RealmsCardProps } from '../../types';
+import type { CallAndMetadata, RealmsCardProps } from '../../types';
 import PreviewBuild from '../PreviewBuild';
 import Sidebar from '../sidebars/AtlasSideBar';
 
@@ -35,7 +35,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   const buildings = data?.getBuildingsByRealmId ?? [];
 
   const [buildingsInQueue, setBuildingsInQueue] = useState<
-    Pick<RealmsCall, 'metadata'>[]
+    Pick<CallAndMetadata, 'metadata'>[]
   >([]);
 
   useEffect(() => {

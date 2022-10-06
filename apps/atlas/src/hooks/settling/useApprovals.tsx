@@ -1,5 +1,6 @@
+import type { Call, UseStarknetExecuteArgs } from '@starknet-react/core';
 import {
-  useStarknet,
+  useAccount,
   useStarknetInvoke,
   useStarknetCall,
 } from '@starknet-react/core';
@@ -15,7 +16,7 @@ import {
   useResources1155Contract,
   ModuleAddr as CM,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall } from '@/types/index';
+import type { CallAndMetadata } from '@/types/index';
 
 export const queryKeys = {
   isApproved: (operator: any) => ['desiege', 'token-approval', operator],
@@ -47,7 +48,7 @@ const createStarknetAllowanceCall = (
 };
 
 const useApprovalForContract = (contract: Contract) => {
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [isApproved, setIsApproved] = useState<boolean>(false);
   const { contract: lordsContract } = useLordsContract();
   const approveLordsAction = useStarknetInvoke({
@@ -63,7 +64,7 @@ const useApprovalForContract = (contract: Contract) => {
   } = useStarknetCall(
     createStarknetAllowanceCall(
       lordsContract,
-      account as string,
+      address as string,
       contract?.address as string
     )
   );
@@ -97,7 +98,7 @@ export const useApproveLordsForExchange = () => {
 };
 
 export const useApproveResourcesForExchange = () => {
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
   const { contract: resourcesContract } = useResources1155Contract();
   const [isApproved, setIsApproved] = useState<boolean>(false);
@@ -114,7 +115,10 @@ export const useApproveResourcesForExchange = () => {
   } = useStarknetCall({
     contract: resourcesContract,
     method: 'isApprovedForAll',
-    args: [account as string, exchangeContract?.address.toString()],
+    args: [
+      toBN(address as string).toString(),
+      exchangeContract?.address.toString(),
+    ],
   });
 
   useEffect(() => {
@@ -132,22 +136,18 @@ export const useApproveResourcesForExchange = () => {
   return { isApproved, approveResources };
 };
 
-export const getApproveAllGameContracts = () => {
-  const txs: RealmsCall[] = [];
+export const getApproveAllGameContracts = (): UseStarknetExecuteArgs => {
+  const calls: Call[] = [];
 
   // Exchange approvals
 
-  txs.push({
+  calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.Exchange).toString(), toFelt(1)],
-    metadata: {
-      title: 'Realm Resources Contract',
-      description: 'Approve spending by Realms Exchange module',
-    },
   });
 
-  txs.push({
+  calls.push({
     contractAddress: CM.Lords,
     entrypoint: 'approve',
     calldata: [
@@ -155,67 +155,74 @@ export const getApproveAllGameContracts = () => {
       ALLOWANCE_AMOUNT.toString(),
       0, // Extra felt for uint256
     ],
-    metadata: {
-      title: 'Lords Contract',
-      description: 'Approve spending by Realms Exchange module',
-    },
   });
 
-  txs.push({
+  calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.ResourceGame).toString(), toFelt(1)],
-    metadata: {
-      title: 'Realms Resources',
-      description: 'Approve spending by Resource Game module',
-    },
   });
 
   // Settling
 
-  txs.push({
+  calls.push({
     contractAddress: CM.Realms,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.Settling).toString(), toFelt(1)],
-    metadata: {
-      title: 'Realms NFT',
-      description: 'Approve spending by Settling module',
-    },
   });
 
   // Buildings
-  txs.push({
+  calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.Building).toString(), toFelt(1)],
-    metadata: {
-      title: 'Realms Resources Contract',
-      description: 'Approve spending by Building module',
-    },
   });
 
   // Combat
 
-  txs.push({
+  calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.Combat).toString(), toFelt(1)],
-    metadata: {
-      title: 'Realm Resources Contract',
-      description: 'Approve spending by Combat module',
-    },
   });
 
   // Combat
 
-  txs.push({
+  calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
     calldata: [toBN(CM.Food).toString(), toFelt(1)],
-    metadata: {
+  });
+
+  const metadata = [
+    {
+      title: 'Realm Resources Contract',
+      description: 'Approve spending by Realms Exchange module',
+    },
+    {
+      title: 'Lords Contract',
+      description: 'Approve spending by Realms Exchange module',
+    },
+    {
+      title: 'Realms Resources',
+      description: 'Approve spending by Resource Game module',
+    },
+    {
+      title: 'Realms NFT',
+      description: 'Approve spending by Settling module',
+    },
+    {
+      title: 'Realms Resources Contract',
+      description: 'Approve spending by Building module',
+    },
+    {
+      title: 'Realm Resources Contract',
+      description: 'Approve spending by Combat module',
+    },
+    {
       title: 'Food approval',
       description: 'Approve spending by Food Module',
     },
-  });
-  return txs;
+  ];
+  return { calls, metadata };
 };

@@ -1,5 +1,9 @@
-import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
-import { useStarknet } from '@starknet-react/core';
+import { ResourceIcon, Button, Menu } from '@bibliotheca-dao/ui-lib';
+
+import { Transition } from '@headlessui/react';
+import { useAccount } from '@starknet-react/core';
+import clsx from 'clsx';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import React, { useState } from 'react';
@@ -24,7 +28,7 @@ const variantMaps: any = {
 export function RealmOverview(props: RealmsCardProps): ReactElement {
   const router = useRouter();
   const { account } = useWalletContext();
-  const { account: starkAccount } = useStarknet();
+  const { address } = useAccount();
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
@@ -85,7 +89,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
       <div className="w-full pt-4 bg-black shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
-          {isYourRealm(props.realm, account, starkAccount || '') && (
+          {isYourRealm(props.realm, account, address || '') && (
             <div>
               {RealmStatus(props.realm) === 'Layer 1' && (
                 <Button
@@ -128,7 +132,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
               size="xs"
               className="w-full"
             >
-              {isYourRealm(props.realm, account, starkAccount || '')
+              {isYourRealm(props.realm, account, address || '')
                 ? 'manage'
                 : 'details'}
             </Button>

@@ -2,7 +2,7 @@ import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
 import { Button, Card } from '@bibliotheca-dao/ui-lib/base';
 import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/20/solid';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import type { Types } from 'ably';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
@@ -35,7 +35,7 @@ const ChatComponent = (props: ChatComponentProps) => {
   const [messagesFilterOnlySide, setMessagesFilterOnlySide] =
     useState<boolean>(false);
 
-  const { account } = useStarknet();
+  const { address } = useAccount();
 
   const gameVars = useGameVariables();
   const getGameStatus = useGameStatus({
@@ -92,7 +92,7 @@ const ChatComponent = (props: ChatComponentProps) => {
       data: {
         side: tokenBalance.side,
         body: messageText,
-        account,
+        address,
       },
     });
     setMessageText('');

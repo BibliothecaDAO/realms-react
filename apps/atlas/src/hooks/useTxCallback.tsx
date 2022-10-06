@@ -1,4 +1,4 @@
-import { useStarknetTransactionManager } from '@starknet-react/core';
+import { useTransactionManager } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
 import type { Status } from 'starknet';
 
@@ -6,7 +6,7 @@ const useTxCallback = (
   transactionHash: string | undefined,
   callback: (status: Status) => void
 ) => {
-  const txManager = useStarknetTransactionManager();
+  const txManager = useTransactionManager();
   const tx = txManager.transactions.find(
     (t) => t.transactionHash == transactionHash
   );

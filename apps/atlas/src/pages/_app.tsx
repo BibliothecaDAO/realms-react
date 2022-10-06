@@ -1,12 +1,9 @@
 import { ApolloProvider } from '@apollo/client';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
-import {
-  StarknetProvider,
-  getInstalledInjectedConnectors,
-} from '@starknet-react/core';
+import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
 import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
@@ -62,7 +59,6 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const connectors = getInstalledInjectedConnectors();
   useEffect(() => {
     // match the dapp with a wallet instance
     connect({ showList: false }).then((wallet) => {
@@ -74,22 +70,20 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
   }, []);
 
+  const connectors = useMemo(
+    () => [
+      new InjectedConnector({ options: { id: 'argentX' } }),
+      new InjectedConnector({ options: { id: 'braavos' } }),
+    ],
+    []
+  );
   return (
     <>
       <ApolloProvider client={apolloClient}>
         <BreakpointProvider queries={queries}>
           <ModalProvider>
             <WalletProvider>
-              <StarknetProvider
-                defaultProvider={
-                  new RpcProvider({
-                    nodeUrl:
-                      'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
-                  })
-                }
-                autoConnect
-                connectors={connectors}
-              >
+              <StarknetConfig connectors={connectors} autoConnect>
                 <QueryClientProvider client={queryClient}>
                   <ResourceProvider>
                     <TransactionQueueProvider>
@@ -110,7 +104,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     position="bottom-right"
                   />
                 </QueryClientProvider>
-              </StarknetProvider>
+              </StarknetConfig>
             </WalletProvider>
           </ModalProvider>
         </BreakpointProvider>

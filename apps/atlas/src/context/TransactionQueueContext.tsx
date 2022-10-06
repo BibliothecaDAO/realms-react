@@ -1,14 +1,19 @@
-import { useStarknetTransactionManager } from '@starknet-react/core';
+import {
+  useTransactionManager,
+  useStarknetExecute,
+  UseStarknetExecuteArgs,
+} from '@starknet-react/core';
 import { getStarknet } from 'get-starknet';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/shared/Icons';
 import { ENQUEUED_STATUS } from '../constants';
-import type { RealmsCall } from '../types';
+import type { CallAndMetadata } from '../types';
 
-type Call = RealmsCall;
+type Call = CallAndMetadata;
 type Tx = Call & { status: typeof ENQUEUED_STATUS };
+
 interface TransactionQueue {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
@@ -68,22 +73,27 @@ export const TransactionQueueProvider = ({
     setTx([]);
   };
 
-  const txManager = useStarknetTransactionManager();
+  const { addTransaction } = useTransactionManager();
+  const { execute } = useStarknetExecute({ calls: txs });
 
   const executeMulticall = async (inline?: Tx[]) => {
-    const starknet = getStarknet();
+    /* const starknet = getStarknet();
     await starknet.enable();
 
     const t = inline ? [...inline, ...txs] : txs;
 
-    const resp = await starknet.account.execute(t);
+    const resp = await starknet.account.execute(t); */
 
-    txManager.addTransaction({
+    const resp = await execute();
+
+    addTransaction({
       ...resp,
-      status: 'TRANSACTION_RECEIVED',
-      transactionHash: resp.transaction_hash,
+      hash: resp.transaction_hash,
       metadata: {
-        multicalls: t.map((tt) => ({ ...tt, status: 'TRANSACTION_RECEIVED' })),
+        multicalls: txs.map((tt) => ({
+          ...tt,
+          status: 'TRANSACTION_RECEIVED',
+        })),
       },
     });
     setTx([]);

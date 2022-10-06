@@ -1,4 +1,3 @@
-import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -22,7 +21,7 @@ import {
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTrait } from '@/shared/Getters/Realm';
 import type {
-  RealmsCall,
+  CallAndMetadata,
   BuildingFootprint,
   BuildingDetail,
   RealmsTransactionRenderConfig,
@@ -39,7 +38,10 @@ export const Entrypoints = {
   build: 'build',
 };
 
-export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
+export const createBuildingCall: Record<
+  string,
+  (args: any) => CallAndMetadata
+> = {
   build: (args: { realmId; buildingId; qty; costs }) => ({
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,

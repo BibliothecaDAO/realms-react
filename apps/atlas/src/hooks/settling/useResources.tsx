@@ -4,7 +4,10 @@ import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
+import type {
+  CallAndMetadata,
+  RealmsTransactionRenderConfig,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 
@@ -12,7 +15,10 @@ export const Entrypoints = {
   claim: 'claim_resources',
 };
 
-export const createResourcesCall: Record<string, (args: any) => RealmsCall> = {
+export const createResourcesCall: Record<
+  string,
+  (args: any) => CallAndMetadata
+> = {
   claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,

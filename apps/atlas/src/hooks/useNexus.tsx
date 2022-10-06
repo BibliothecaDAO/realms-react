@@ -4,7 +4,7 @@ import type { BigNumber } from 'ethers';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import type { RealmsCall } from '../types';
+import type { CallAndMetadata } from '../types';
 import {
   useNexusContract,
   useLordsContract,
@@ -75,7 +75,7 @@ export const useStakeLords = () => {
     }
 
     // We approve then deposit in a multicall
-    const txs: RealmsCall[] = [];
+    const txs: CallAndMetadata[] = [];
 
     txs.push({
       contractAddress: ModuleAddr.Lords,

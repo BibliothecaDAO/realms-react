@@ -1,5 +1,5 @@
 import {
-  useStarknet,
+  useAccount,
   useStarknetInvoke,
   useStarknetCall,
 } from '@starknet-react/core';
@@ -12,7 +12,10 @@ import {
   useRealms721Contract,
   ModuleAddr,
 } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
+import type {
+  CallAndMetadata,
+  RealmsTransactionRenderConfig,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 
 type Settling = {
@@ -29,7 +32,10 @@ export const Entrypoints = {
   mint: 'mint',
 };
 
-export const createSettlingCall: Record<string, (args: any) => RealmsCall> = {
+export const createSettlingCall: Record<
+  string,
+  (args: any) => CallAndMetadata
+> = {
   settle: ({ realmId }) => ({
     contractAddress: ModuleAddr.Settling,
     entrypoint: Entrypoints.settle,
@@ -68,7 +74,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 const useSettling = (): Settling => {
   const { contract: settlingContract } = useSettlingContract();
   const { contract: realmsContract } = useRealms721Contract();
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [isRealmsApproved, setIsRealmsApproved] = useState<
     'approved' | 'not-approved'
   >();
@@ -86,7 +92,7 @@ const useSettling = (): Settling => {
     contract: realmsContract,
     method: 'isApprovedForAll',
     args: [
-      toBN(account as string).toString(),
+      toBN(address as string).toString(),
       toBN(settlingContract?.address as string).toString(),
     ],
   });
@@ -94,13 +100,13 @@ const useSettling = (): Settling => {
   const txQueue = useTransactionQueue();
 
   useEffect(() => {
-    if (realmsApprovalData !== undefined && account !== undefined) {
+    if (realmsApprovalData !== undefined && address !== undefined) {
       // console.log(realmsApprovalData.toString());
       setIsRealmsApproved(
         realmsApprovalData.toString() === '1' ? 'approved' : 'not-approved'
       );
     }
-  }, [realmsApprovalData, account]);
+  }, [realmsApprovalData, address]);
 
   return {
     settleRealm: (realmId: number) => {
@@ -120,7 +126,7 @@ const useSettling = (): Settling => {
     mintRealm: (realmId: number) => {
       txQueue.add(
         createSettlingCall.mint({
-          account: toBN(account as string).toString(),
+          account: toBN(address as string).toString(),
           realmId: realmId,
         })
       );

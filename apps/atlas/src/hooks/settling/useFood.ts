@@ -12,7 +12,7 @@ import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import type {
-  RealmsCall,
+  CallAndMetadata,
   BuildingDetail,
   RealmFoodDetails,
   AvailableResources,
@@ -32,7 +32,7 @@ export const Entrypoints = {
   convert: 'convert_food_tokens_to_store',
 };
 
-export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
+export const createFoodCall: Record<string, (args: any) => CallAndMetadata> = {
   create: (args: {
     tokenId: number;
     quantity: number;

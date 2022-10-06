@@ -4,7 +4,7 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Menu, Transition, Popover } from '@headlessui/react';
 import { MapIcon } from '@heroicons/react/24/outline';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount, useConnectors } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { shortenAddressWidth } from '@/util/formatters';
@@ -12,7 +12,8 @@ import { useWalletContext } from '../../hooks/useWalletContext';
 export function DesiegeHeader() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();
-  const { account, connect, connectors } = useStarknet();
+  const { connectors, connect } = useConnectors();
+  const { address } = useAccount();
 
   const router = useRouter();
 
@@ -62,7 +63,7 @@ export function DesiegeHeader() {
                 Connect to Lootverse
               </button>
             )}
-            {account ? (
+            {address ? (
               <span
                 className={navItemClass}
                 onClick={() => {
@@ -70,7 +71,7 @@ export function DesiegeHeader() {
                 }}
               >
                 <StarkNet className="w-5 mr-2" />
-                {shortenAddressWidth(account, 4)}
+                {shortenAddressWidth(address, 4)}
               </span>
             ) : (
               <button

@@ -1,6 +1,6 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -26,13 +26,11 @@ function useRealmsQueryVariables(
   limit: number
 ) {
   const { account } = useWalletContext();
-  const { account: starkAccount } = useStarknet();
+  const { address } = useAccount();
 
   const { state } = useRealmContext();
 
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   return useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
       resources: { some: { resourceId: { equals: resource } } },

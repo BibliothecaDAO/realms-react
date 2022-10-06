@@ -4,7 +4,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/20/solid';
 import {
   useStarknet,
-  useStarknetTransactionManager,
+  useTransactionManager,
   ConnectorNotFoundError,
 } from '@starknet-react/core';
 import axios from 'axios';
@@ -45,7 +45,7 @@ type TabName =
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const Bridge: React.FC<Prop> = (props) => {
   const { account: starkAccount, connect, connectors, error } = useStarknet();
-  const txManager = useStarknetTransactionManager();
+  const txManager = useTransactionManager();
   const { account, signer, connectWallet, isConnected, balance } =
     useWalletContext();
 

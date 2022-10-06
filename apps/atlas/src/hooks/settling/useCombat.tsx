@@ -12,7 +12,7 @@ import {
 } from '@/hooks/settling/stark-contracts';
 import type {
   ItemCost,
-  RealmsCall,
+  CallAndMetadata,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -25,7 +25,7 @@ export const Entrypoints = {
   attackGoblins: 'attack_goblin_town',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildArmy,

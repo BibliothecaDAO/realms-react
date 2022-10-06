@@ -1,6 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
-import { useStarknetTransactionManager } from '@starknet-react/core';
+import { useTransactionManager } from '@starknet-react/core';
 import type { Identifier, XYCoord } from 'dnd-core';
 import Link from 'next/link';
 import type { ReactElement } from 'react';
@@ -239,7 +239,7 @@ export const TxCartItem = (props: TxCartItem) => {
 };
 
 export const TransactionCartTable = () => {
-  const { transactions } = useStarknetTransactionManager();
+  const { transactions } = useTransactionManager();
   return (
     <div className="flex flex-col-reverse flex-wrap w-full">
       {transactions.map((a, index) => {

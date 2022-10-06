@@ -7,7 +7,7 @@ import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { findResourceById } from '@/constants/resources';
 import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
+import type { CallAndMetadata, RealmsTransactionRenderConfig } from '../types';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
@@ -29,7 +29,7 @@ export const Entrypoints = {
   removeLiquidity: 'remove_liquidity',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buyTokens: (args: {
     maxAmount: BigNumber;
     tokenIds: number[];

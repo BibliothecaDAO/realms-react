@@ -1,7 +1,7 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -28,7 +28,7 @@ export const LorePanel = () => {
 
   // const { setModal } = useAtlasContext();
   const { account } = useWalletContext();
-  const { account: starknetAccount } = useStarknet();
+  const { address } = useAccount();
   const { state, actions } = useLoreContext();
 
   // Filters
@@ -52,8 +52,8 @@ export const LorePanel = () => {
   const variables = useMemo(() => {
     const filter: LoreEntityWhereInput = {};
 
-    if (state.selectedTab == 1 && starknetAccount) {
-      filter.owner = { equals: hexToDecimalString(starknetAccount) };
+    if (state.selectedTab == 1 && address) {
+      filter.owner = { equals: hexToDecimalString(address) };
     }
 
     if (searchByContent) {

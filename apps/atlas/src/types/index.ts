@@ -1,5 +1,5 @@
+import type { Call } from '@starknet-react/core';
 import type { ReactElement } from 'react';
-import type { Call as StarknetCall } from 'starknet';
 import type { RealmFragmentFragment, Army } from '@/generated/graphql';
 export type GameStatus = 'active' | 'completed' | 'expired';
 
@@ -254,7 +254,7 @@ export interface MinMaxRange {
   max: number;
 }
 
-export interface RealmsCall extends StarknetCall {
+export interface CallAndMetadata extends Call {
   metadata: { title: string; description: string } | any;
 }
 

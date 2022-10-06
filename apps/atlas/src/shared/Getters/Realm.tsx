@@ -1,6 +1,6 @@
 import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
@@ -126,10 +126,10 @@ export const TraitTable = (props: TraitProps) => {
 };
 
 export const IsOwner = (owner?: string | null) => {
-  const { account } = useStarknet();
-  const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
 
-  if (account) {
+  if (address) {
     return starknetWallet == owner ? true : false;
   } else {
     return false;

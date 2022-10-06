@@ -14,7 +14,7 @@ import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import React, {
   forwardRef,
   ReactElement,
@@ -46,7 +46,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {
     const { play } = useUiSounds(soundSelector.pageTurn);
     const { account } = useWalletContext();
-    const { account: starkAccount } = useStarknet();
+    const { address, status } = useAccount();
     const {
       state: { favouriteRealms },
       actions,
@@ -114,7 +114,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <div className="flex justify-between">
           <h4 className="flex">
             <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
-            {isYourRealm(props.realm, account, starkAccount || '')
+            {isYourRealm(props.realm, account, address || '')
               ? 'ser'
               : shortenAddressWidth(RealmOwner(props.realm), 6)}
           </h4>
