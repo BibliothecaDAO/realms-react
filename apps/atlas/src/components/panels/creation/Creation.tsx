@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
+import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useStarknet } from '@starknet-react/core';
 import axios from 'axios';
 import Image from 'next/image';
@@ -220,9 +221,9 @@ export const Creation = () => {
           </div>
         </div>
         <div className="p-10 ">
-          <h1 className="mb-3 mb-20 text-center">Your Ruler</h1>
-          <div className="border card">
-            {selectedRuler && (
+          <h1 className="mb-20 text-center">Your Ruler</h1>
+          <div className="relative border card">
+            {selectedRuler && !loading && rulers ? (
               <Image
                 width={500}
                 placeholder="blur"
@@ -231,13 +232,33 @@ export const Creation = () => {
                 layout={'responsive'}
                 height={500}
                 className={'w-72 h-72 mx-auto paper'}
-                src={selectedRuler?.img}
+                src={selectedRuler?.img || rulers[0]?.img}
+              />
+            ) : (
+              <Image
+                width={500}
+                placeholder="blur"
+                blurDataURL={rgbDataURL(20, 20, 20)}
+                loading="lazy"
+                layout={'responsive'}
+                height={500}
+                className={'w-72 h-72 mx-auto paper'}
+                src={'/stableai/archanist.png'}
               />
             )}
+            {loading && (
+              <div className="absolute top-0 flex justify-center w-full h-full bg-black/60">
+                <div className="self-center text-4xl font-display animate-pulse">
+                  <Ouroboros className="block w-20 mx-auto fill-current" />
+                  Finding Rulers...
+                </div>
+              </div>
+            )}
+
             {/* <h4>seed: {selectedRuler && selectedRuler.seed}</h4> */}
           </div>
 
-          <div className="flex w-full">
+          {/* <div className="flex w-full my-10">
             <Button
               loading={loading}
               className="w-full"
@@ -246,40 +267,66 @@ export const Creation = () => {
             >
               {loading ? 'loading' : 'hire ruler'}
             </Button>
+          </div> */}
+          <div className="my-2">
+            {selectedTraits.map((a, i) => {
+              return (
+                <OptionSelect
+                  key={i}
+                  active={true}
+                  value={a.value}
+                  title={a.title}
+                  add={(value) => {
+                    onSelectedTrait(value);
+                  }}
+                />
+              );
+            })}
           </div>
-          {selectedTraits.map((a, i) => {
-            return (
-              <OptionSelect
-                key={i}
-                active={true}
-                value={a.value}
-                title={a.title}
-                add={(value) => {
-                  onSelectedTrait(value);
-                }}
-              />
-            );
-          })}
         </div>
         <div className="p-10 ">
           <h2 className="mb-20 text-center ">Potentials candidates</h2>
           <div className="grid grid-cols-3 gap-4">
             {rulers?.map((a, i) => {
               return (
-                <Image
-                  key={i}
-                  width={200}
-                  height={200}
-                  placeholder="blur"
-                  blurDataURL={rgbDataURL(20, 20, 20)}
-                  loading="lazy"
-                  layout={'responsive'}
-                  className={
-                    'w-32 h-32 mx-auto rounded-full hover:opacity-50 paper'
-                  }
-                  src={a.img}
-                  onClick={() => setSelectedRuler(a)}
-                />
+                <div key={i} className="relative">
+                  {!loading ? (
+                    <Image
+                      width={200}
+                      height={200}
+                      placeholder="blur"
+                      blurDataURL={rgbDataURL(20, 20, 20)}
+                      loading="lazy"
+                      layout={'responsive'}
+                      className={
+                        'w-32 h-32 mx-auto  hover:opacity-50 paper card border rounded-full'
+                      }
+                      src={a.img}
+                      onClick={() => setSelectedRuler(a)}
+                    />
+                  ) : (
+                    <Image
+                      width={200}
+                      height={200}
+                      placeholder="blur"
+                      blurDataURL={rgbDataURL(20, 20, 20)}
+                      loading="lazy"
+                      layout={'responsive'}
+                      className={
+                        'w-32 h-32 mx-auto  hover:opacity-50 paper card border rounded-full'
+                      }
+                      src={'/stableai/archanist.png'}
+                      onClick={() => setSelectedRuler(a)}
+                    />
+                  )}
+                  {loading && (
+                    <div className="absolute top-0 flex justify-center w-full h-full rounded-full bg-black/60">
+                      <div className="self-center text-1xl font-display animate-pulse">
+                        <Ouroboros className="block w-20 mx-auto fill-current" />
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
