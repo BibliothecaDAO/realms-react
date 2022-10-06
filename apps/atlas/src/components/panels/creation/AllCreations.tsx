@@ -17,8 +17,8 @@ export const AllCreations = () => {
 
     const params = {
       project: projectID,
-      user: account,
     };
+
     const res = await axios.get(
       process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
         stableDiffusionEndPoints.getImages,

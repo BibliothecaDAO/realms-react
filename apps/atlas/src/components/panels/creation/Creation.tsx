@@ -28,8 +28,8 @@ export const OptionSelect = (props: SelectItem & SelectButton) => {
           selector: props.selector,
         })
       }
-      className={`w-auto p-4 uppercase border card font-display hover:bg-cta-100 ${
-        props.active && 'bg-cta-100'
+      className={`w-auto p-4 uppercase border cardthin font-display hover:bg-cta-100  ${
+        props.active ? 'bg-cta-100' : 'bg-black/40'
       }`}
     >
       {props.title}
@@ -116,6 +116,7 @@ export const Creation = () => {
 
   const fetchPlayers = async () => {
     console.log(prompt());
+
     setLoading(true);
 
     const body = {
@@ -130,21 +131,25 @@ export const Creation = () => {
         width: 512,
       },
     };
-    const res = await axios.post(
-      process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
-        stableDiffusionEndPoints.generate,
-      body
-    );
 
-    console.log(res);
+    try {
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
+          stableDiffusionEndPoints.generate,
+        body
+      );
+      console.log(res);
 
-    const obj: ImageResponse[] = res.data.map((a) => {
-      return { img: a.uri, seed: a.seed };
-    });
+      const obj: ImageResponse[] = res.data.map((a) => {
+        return { img: a.uri, seed: a.seed };
+      });
 
-    setRulers(obj);
-
-    setLoading(false);
+      setRulers(obj);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
@@ -257,7 +262,13 @@ export const Creation = () => {
 
             {/* <h4>seed: {selectedRuler && selectedRuler.seed}</h4> */}
           </div>
-
+          <div>
+            <input
+              className="block w-full p-3 px-3 py-2 mt-1 text-xl border border-4 rounded-md shadow-sm font-display border-slate-300 placeholder-stone-300 focus:outline-none focus:border-black focus:ring-black focus:ring-1 bg-black/50 card"
+              type="text"
+              placeholder="enter a name for your ruler...."
+            />
+          </div>
           {/* <div className="flex w-full my-10">
             <Button
               loading={loading}

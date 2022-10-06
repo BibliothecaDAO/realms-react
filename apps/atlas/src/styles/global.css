@@ -136,3 +136,9 @@ html {
   mask-image: url('../../public/textures/grit.png');
   mask-mode: alpha;
 }
+
+.cardthin {
+  border-style: solid;
+  border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
+    12 / 1px 1px 1px 1px / 0 repeat repeat;
+}
