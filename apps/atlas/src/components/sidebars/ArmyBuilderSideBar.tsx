@@ -9,7 +9,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation, defaultArmy } from '@/constants/army';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -36,7 +36,7 @@ type Battalion = {
 const MAX_BATTALIONS = 30;
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
   useEffect(() => {
     setBuildingIdsEnqueued(

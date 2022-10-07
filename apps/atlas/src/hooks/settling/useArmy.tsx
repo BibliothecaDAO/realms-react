@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type {
   GetGameConstantsQuery,
   BattalionCost,
@@ -60,7 +60,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 };
 
 export const useArmy = () => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);

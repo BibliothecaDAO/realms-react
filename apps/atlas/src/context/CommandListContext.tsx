@@ -12,9 +12,9 @@ import { ENQUEUED_STATUS } from '../constants';
 import type { CallAndMetadata } from '../types';
 
 type Call = CallAndMetadata;
-type Tx = Call & { status: typeof ENQUEUED_STATUS };
+export type Tx = Call & { status: typeof ENQUEUED_STATUS };
 
-interface TransactionQueue {
+interface CommandList {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
   remove: (tx: Tx) => void;
@@ -23,16 +23,20 @@ interface TransactionQueue {
   executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
-export const TransactionQueueContext = createContext<
-  TransactionQueue | undefined
->(undefined);
+export const CommandListContext = createContext<CommandList | undefined>(
+  undefined
+);
 
-export const TransactionQueueProvider = ({
+export const CommandListProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
+  const [inlineTx, setInlineTx] = useState<Tx[]>([]);
+
+  const { addTransaction } = useTransactionManager();
+  const { execute } = useStarknetExecute({ calls: txs });
 
   const add = (tx: Call[] | Call) => {
     const scrollIcon = <Scroll className="w-6 fill-current" />;
@@ -73,9 +77,6 @@ export const TransactionQueueProvider = ({
     setTx([]);
   };
 
-  const { addTransaction } = useTransactionManager();
-  const { execute } = useStarknetExecute({ calls: txs });
-
   const executeMulticall = async (inline?: Tx[]) => {
     /* const starknet = getStarknet();
     await starknet.enable();
@@ -83,6 +84,16 @@ export const TransactionQueueProvider = ({
     const t = inline ? [...inline, ...txs] : txs;
 
     const resp = await starknet.account.execute(t); */
+
+    setTx((prev) => {
+      if (inline) {
+        return prev.concat(
+          inline.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+        );
+      } else {
+        return prev;
+      }
+    });
 
     const resp = await execute();
 
@@ -101,7 +112,7 @@ export const TransactionQueueProvider = ({
   };
 
   return (
-    <TransactionQueueContext.Provider
+    <CommandListContext.Provider
       value={{
         add,
         remove,
@@ -112,16 +123,14 @@ export const TransactionQueueProvider = ({
       }}
     >
       {children}
-    </TransactionQueueContext.Provider>
+    </CommandListContext.Provider>
   );
 };
 
-export const useTransactionQueue = () => {
-  const txContext = useContext(TransactionQueueContext);
+export const useCommandList = () => {
+  const txContext = useContext(CommandListContext);
   if (txContext == undefined) {
-    throw new Error(
-      'useTransactionQueue must be used within a TransactionQueueProvider'
-    );
+    throw new Error('useCommandList must be used within a CommandListProvider');
   }
   return txContext;
 };

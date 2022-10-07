@@ -6,7 +6,7 @@ import {
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import {
   useSettlingContract,
   useRealms721Contract,
@@ -97,7 +97,7 @@ const useSettling = (): Settling => {
     ],
   });
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   useEffect(() => {
     if (realmsApprovalData !== undefined && address !== undefined) {

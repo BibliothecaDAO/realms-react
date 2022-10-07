@@ -5,7 +5,7 @@ import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
 import { battalionIdToString, getUnitImage } from '@/constants/army';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import {
   ModuleAddr,
   useCombatContract,
@@ -95,7 +95,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 const useCombat = () => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);

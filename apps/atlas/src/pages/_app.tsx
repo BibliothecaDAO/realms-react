@@ -12,9 +12,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, RpcProvider } from 'starknet';
 import { Modals } from '@/components/modals';
 import { AtlasProvider } from '@/context/AtlasContext';
+import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
-import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
@@ -86,14 +86,14 @@ function MyApp({ Component, pageProps }: AppProps) {
               <StarknetConfig connectors={connectors} autoConnect>
                 <QueryClientProvider client={queryClient}>
                   <ResourceProvider>
-                    <TransactionQueueProvider>
+                    <CommandListProvider>
                       <AtlasProvider>
                         <DndProvider backend={HTML5Backend}>
                           <Component {...pageProps} />
                           <Modals />
                         </DndProvider>
                       </AtlasProvider>
-                    </TransactionQueueProvider>
+                    </CommandListProvider>
                   </ResourceProvider>
                   {/* <PageTransition
                 Component={Component}

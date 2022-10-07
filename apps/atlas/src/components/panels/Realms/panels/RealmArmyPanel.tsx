@@ -30,7 +30,7 @@ import {
 } from '@/constants/buildings';
 import type { Squad } from '@/constants/index';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery, Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
@@ -108,7 +108,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   const [isArmyBuilding, setIsArmyBuilding] = useState(false);
   const [isTravel, setIsTravel] = useState(false);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const isOwner = useIsOwner(realm?.settledOwner);
 
   const [buildQty, setBuildQty] = useState<BuildQuantity>({

@@ -2,14 +2,14 @@ import { useTransactionManager } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
 import type { Status } from 'starknet';
 
+// TODO - implement starknet-react callbacks once https://github.com/apibara/starknet-react/pull/173 is merged
+
 const useTxCallback = (
   transactionHash: string | undefined,
   callback: (status: Status) => void
 ) => {
   const txManager = useTransactionManager();
-  const tx = txManager.transactions.find(
-    (t) => t.transactionHash == transactionHash
-  );
+  const tx = txManager.transactions.find((t) => t.hash == transactionHash);
 
   const [executed, setExecuted] = useState(false);
 
@@ -18,7 +18,7 @@ const useTxCallback = (
     setExecuted(false);
   }, [transactionHash]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (
       !executed &&
       !!transactionHash &&
@@ -30,12 +30,12 @@ const useTxCallback = (
       callback(tx.status);
       setExecuted(true);
     }
-  }, [tx?.status, transactionHash]);
+  }, [tx?.status, transactionHash]); */
 
-  const loading =
-    tx?.status == 'TRANSACTION_RECEIVED' ||
+  const loading = false;
+  /* tx?.status == 'TRANSACTION_RECEIVED' ||
     tx?.status == 'RECEIVED' ||
-    tx?.status == 'PENDING';
+    tx?.status == 'PENDING'; */
 
   return {
     loading,

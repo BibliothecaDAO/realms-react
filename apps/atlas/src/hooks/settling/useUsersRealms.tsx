@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type {
   GetRealmsQuery,
   RealmOrderByWithRelationInput,
@@ -40,7 +40,7 @@ const useUsersRealms = () => {
   });
   const { address } = useAccount();
   const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const variables = useMemo(() => {
     const filter = {} as any;

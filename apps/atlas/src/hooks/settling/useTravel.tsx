@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { getTravelArcs } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
@@ -64,7 +64,7 @@ type TravelArc = {
 };
 
 const useTravel = (): Travel => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const [travelArcs, setTravelArcs] = useState<TravelArc[]>();
 
   return {

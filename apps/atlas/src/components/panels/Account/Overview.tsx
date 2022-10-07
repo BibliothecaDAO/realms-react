@@ -19,9 +19,10 @@ import {
 import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+import { ENQUEUED_STATUS } from '@/constants/index';
 
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -48,8 +49,9 @@ export function AccountOverview() {
     useState(false);
 
   const approveTxs = getApproveAllGameContracts();
+  const txQueue = useCommandList();
 
-  const { execute } = useStarknetExecute(approveTxs);
+  const { execute } = useStarknetExecute({ calls: approveTxs });
 
   const filter = {
     OR: [
@@ -237,9 +239,14 @@ export function AccountOverview() {
               size="xs"
               className="mb-2"
               onClick={async () => {
-                const tx = await execute();
-                console.log(tx.transaction_hash);
-                addTransaction({ hash: tx.transaction_hash });
+                txQueue
+                  .executeMulticall(
+                    approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+                  )
+                  .catch((err) => {
+                    // TODO: handle error
+                    console.log(err);
+                  });
               }}
             >
               2. Approve All game Contracts

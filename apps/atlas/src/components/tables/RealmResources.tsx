@@ -16,8 +16,8 @@ import {
   PILLAGE_AMOUNT,
 } from '@/constants/buildings';
 import { resources, findResourceById } from '@/constants/resources';
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { Realm } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
@@ -144,7 +144,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     }
   );
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
   useEffect(() => {

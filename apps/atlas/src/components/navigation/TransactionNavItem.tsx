@@ -1,12 +1,12 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { useTransactionManager, useTransactions } from '@starknet-react/core';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { Scroll } from '@/shared/Icons';
 import { TxStyles } from '@/shared/Validators/styles';
 
 const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   const { hashes } = useTransactionManager();
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const transactions = useTransactions({ hashes });
 
   const TxStyle = () => {

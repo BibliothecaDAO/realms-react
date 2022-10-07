@@ -8,7 +8,7 @@ import {
   HarvestType,
   buildingIdToString,
 } from '@/constants/buildings';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import type {
@@ -122,7 +122,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
   const [availableFood, setAvailableFood] = useState();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const { data: foodData } = useGetFoodByRealmIdQuery({
     variables: { id: realm?.realmId as number },

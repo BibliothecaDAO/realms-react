@@ -1,7 +1,7 @@
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { createBuildingCall, Entrypoints } from '@/hooks/settling/useBuildings';
@@ -26,7 +26,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     variables: { id: props.realm.realmId },
   });
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [previewBuild, setPreviewBuild] = useState<any>();
 

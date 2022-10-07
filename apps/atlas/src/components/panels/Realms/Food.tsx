@@ -24,8 +24,8 @@ import {
   FISH_ID,
   WHEAT_ID,
 } from '@/constants/buildings';
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useFood from '@/hooks/settling/useFood';
@@ -78,7 +78,7 @@ const Food: React.FC<Prop> = (props) => {
 
   const { getBuildingCostById } = useGameConstants();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
@@ -99,7 +99,7 @@ const Food: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0]).eq(toBN(realm?.realmId))
+          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
       )
     );
   }, [txQueue.transactions]);

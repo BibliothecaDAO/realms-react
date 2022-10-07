@@ -5,7 +5,7 @@
 // import { buildingIdToString } from '@/constants/buildings';
 // import { Squad, TroopTierMax } from '@/constants/index';
 // import { findResourceById } from '@/constants/resources';
-// import { useTransactionQueue } from '@/context/TransactionQueueContext';
+// import { useCommandList} from '@/context/CommandListContext';
 // import type { GetTroopStatsQuery } from '@/generated/graphql';
 // import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 // import { Entrypoints } from '@/hooks/settling/useBuildings';
@@ -52,7 +52,7 @@
 //     filteredCurrentTroops.length + filteredQueuedTroops.length >=
 //       TroopTierMax[tier - 1];
 
-//   const txQueue = useTransactionQueue();
+//   const txQueue = useCommandList();
 //   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
 //   useEffect(() => {
 //     setBuildingIdsEnqueued(

@@ -3,7 +3,7 @@ import { useStarknetInvoke } from '@starknet-react/core';
 import type { BigNumber } from 'ethers';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { CallAndMetadata } from '../types';
 import {
   useNexusContract,
@@ -49,10 +49,13 @@ const useNexusTransaction = (method: string) => {
     contract: nexusContract,
     method,
   });
-  const { tx, loading } = useTxCallback(transactionHash, (status) => {
-    // Update state changes?
-    return true;
-  });
+  const { tx, loading } = useTxCallback(
+    transactionHash?.transaction_hash,
+    (status) => {
+      // Update state changes?
+      return true;
+    }
+  );
 
   return {
     transactionHash: tx,
@@ -67,7 +70,7 @@ const useNexusTransaction = (method: string) => {
 export const useStakeLords = () => {
   const { transactionHash, invoke, invokeError, loading, nexusContract } =
     useNexusTransaction(Entrypoints.deposit);
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const stakeLords = (lordsAmount: BigNumber, receiver: string) => {
     if (loading) {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import type {
@@ -42,7 +42,7 @@ type Resources = {
 const useResources = (realm: Realm | undefined): Resources => {
   const { play } = useUiSounds(soundSelector.claim);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   useEffect(() => {
     if (!realm) {

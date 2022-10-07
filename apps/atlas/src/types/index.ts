@@ -258,7 +258,7 @@ export interface CallAndMetadata extends Call {
   metadata: { title: string; description: string } | any;
 }
 
-export type RealmsTransaction = { status: string; metadata?: any };
+export type RealmsTransaction = { status?: string; metadata?: any };
 export interface RealmsTransactionRender {
   title: string;
   description: string | ReactElement;

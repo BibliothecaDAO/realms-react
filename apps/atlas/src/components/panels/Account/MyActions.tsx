@@ -17,8 +17,8 @@ import { ReactElement, useState, useMemo } from 'react';
 
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -86,7 +86,7 @@ export function MyActions() {
     })
     .filter((row) => row.event !== '');
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const approveTxs = getApproveAllGameContracts();
 
   const animationUp = useSpring({

@@ -21,7 +21,7 @@ import {
   WORK_HUT_COST,
   MAX_HARVESTS,
 } from '@/constants/buildings';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useBuildings, {
@@ -64,7 +64,7 @@ const Harvests: React.FC<Prop> = (props) => {
 
   const { getBuildingCostById } = useGameConstants();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
@@ -84,7 +84,7 @@ const Harvests: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0]).eq(toBN(realm?.realmId))
+          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
       )
     );
     setInput({
