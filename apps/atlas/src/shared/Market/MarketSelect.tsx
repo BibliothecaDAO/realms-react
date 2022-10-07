@@ -1,8 +1,6 @@
-import { Button, Select } from '@bibliotheca-dao/ui-lib/base';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { Button } from '@bibliotheca-dao/ui-lib/base';
 import type { ReactElement } from 'react';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
-import type { ResourceCost } from '@/types/index';
 
 type ResourceRowProps = {
   cost: GetGameConstantsQuery['buildingCosts'] | undefined;

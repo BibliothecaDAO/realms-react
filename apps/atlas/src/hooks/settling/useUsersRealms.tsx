@@ -4,11 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useCommandList } from '@/context/CommandListContext';
-import type {
-  GetRealmsQuery,
-  RealmOrderByWithRelationInput,
-  RealmWhereInput,
-} from '@/generated/graphql';
+import type { GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';

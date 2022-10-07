@@ -1,23 +1,14 @@
-import {
-  OrderIcon,
-  Tabs,
-  ResourceIcon,
-  Button,
-  Card,
-} from '@bibliotheca-dao/ui-lib';
-import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import { OrderIcon, Tabs, Button, Card } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
-import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
 import React, {
   forwardRef,
-  ReactElement,
   useImperativeHandle,
   useState,
   useMemo,

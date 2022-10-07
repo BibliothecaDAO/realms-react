@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';

@@ -1,10 +1,8 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import clsx from 'clsx';
 import { useCryptContext } from '@/context/CryptContext';
 import { BaseFilter } from './BaseFilter';
 import { CryptEnvironmentFilter } from './CryptEnvironmentFilter';
 import { CryptStatsFilter } from './CryptStatsFilter';
-import { SearchFilter } from './SearchFilter';
 
 export function CryptFilter() {
   const { state, actions } = useCryptContext();

@@ -1,14 +1,5 @@
-import {
-  Button,
-  Select,
-  ResourceIcon,
-  InputNumber,
-  IconButton,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, InputNumber } from '@bibliotheca-dao/ui-lib';
 
-import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
@@ -16,24 +7,17 @@ import { useStarknetCall, useAccount } from '@starknet-react/core';
 
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import { useState, useMemo, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useNexusContract,
-  useSplitterContract,
   useLordsContract,
-  useResources1155Contract,
-  useExchangeContract,
   ModuleAddr,
 } from '@/hooks/settling/stark-contracts';
-import {
-  useApproveLordsForExchange,
-  useApproveResourcesForExchange,
-} from '@/hooks/settling/useApprovals';
+
 import { useStakeLords } from '@/hooks/useNexus';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 

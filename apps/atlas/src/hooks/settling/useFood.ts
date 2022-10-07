@@ -13,9 +13,7 @@ import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import type {
   CallAndMetadata,
-  BuildingDetail,
   RealmFoodDetails,
-  AvailableResources,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';

@@ -4,7 +4,6 @@ import {
   CardBody,
   CardTitle,
   CardStats,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -33,7 +32,6 @@ import {
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 

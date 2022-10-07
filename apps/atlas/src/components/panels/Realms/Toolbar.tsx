@@ -2,7 +2,6 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 import type { ReactElement } from 'react';
 import React, { useState, useEffect } from 'react';

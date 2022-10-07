@@ -5,7 +5,7 @@ import {
 } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useCommandList } from '@/context/CommandListContext';
 import {
   useSettlingContract,

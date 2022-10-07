@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
@@ -15,7 +13,6 @@ import { BasePanel } from './BasePanel';
 import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const GaPanel = () => {
-  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
   const { account } = useWalletContext();
   const { state, actions } = useGaContext();
 

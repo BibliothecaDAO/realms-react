@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type ModalTypes = 'lore-entity';
 

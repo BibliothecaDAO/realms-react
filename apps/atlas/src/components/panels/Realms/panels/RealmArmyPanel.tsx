@@ -6,11 +6,8 @@ import {
   CardTitle,
   CountdownTimer,
   InputNumber,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import { ArrowSmallRightIcon } from '@heroicons/react/20/solid';
-import { useStarknetCall } from '@starknet-react/core';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -22,21 +19,12 @@ import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 
 import { RealmResources } from '@/components/tables/RealmResources';
 import { defaultArmy } from '@/constants/army';
-import {
-  RealmBuildingId,
-  HarvestType,
-  RealmBuildingIntegrity,
-  buildingIntegrity,
-} from '@/constants/buildings';
-import type { Squad } from '@/constants/index';
+import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useGetTroopStatsQuery } from '@/generated/graphql';
 import type { GetRealmQuery, Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import useBuildings, {
-  createBuildingCall,
-} from '@/hooks/settling/useBuildings';
+import { createBuildingCall } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
@@ -47,7 +35,7 @@ import {
   RealmCombatStatus,
 } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
-import type { BuildingDetail, AvailableResources } from '@/types/index';
+import type { BuildingDetail } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 type Prop = {
   realm: GetRealmQuery['realm'];

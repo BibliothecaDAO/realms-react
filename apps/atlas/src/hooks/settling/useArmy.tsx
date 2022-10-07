@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useCommandList } from '@/context/CommandListContext';
-import type {
-  GetGameConstantsQuery,
-  BattalionCost,
-  GetRealmsQuery,
-  Army,
-} from '@/generated/graphql';
+import type { GetRealmsQuery, Army } from '@/generated/graphql';
 import {
   ModuleAddr,
   useCombatContract,

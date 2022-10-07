@@ -6,7 +6,6 @@ import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Eth from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Laurel from '@bibliotheca-dao/ui-lib/icons/laurel.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -17,7 +16,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {

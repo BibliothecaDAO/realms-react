@@ -1,8 +1,6 @@
-import { Table, Button, ResourceIcon, Switch } from '@bibliotheca-dao/ui-lib';
+import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import type { ReactElement } from 'react';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useGetRealmsQuery,
   SortOrder,
@@ -26,10 +24,6 @@ type Row = {
   action: ReactElement;
   onChange?: (checked: boolean) => void;
 };
-
-interface BankPanel {
-  onOpenSwap?: () => void;
-}
 
 export function LeaderboardPanel(): ReactElement {
   const router = useRouter();

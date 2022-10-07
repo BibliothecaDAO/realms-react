@@ -1,4 +1,4 @@
-import { ResourceIcon, Button, Menu } from '@bibliotheca-dao/ui-lib';
+import { Button, Menu } from '@bibliotheca-dao/ui-lib';
 import { Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import Image from 'next/image';

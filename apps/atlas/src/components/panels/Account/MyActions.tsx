@@ -3,17 +3,13 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardStats,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
-import Image from 'next/future/image';
-import type { ReactNode } from 'react';
-import { ReactElement, useState, useMemo } from 'react';
+
+import { useState } from 'react';
 
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
@@ -28,10 +24,8 @@ import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
-import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
+
 import { getAccountHex } from '@/shared/Getters/Realm';
-import { shortenAddressWidth } from '@/util/formatters';
 
 export function MyActions() {
   const { play } = useUiSounds(soundSelector.pageTurn);

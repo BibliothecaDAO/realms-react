@@ -3,12 +3,12 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Popover, Transition } from '@headlessui/react';
 import { useAccount, useConnectors } from '@starknet-react/core';
-import { useMemo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { removeHexPrefix } from 'starknet/dist/utils/encode';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { shortenAddressWidth } from '@/util/formatters';
 const NetworkConnectButton = () => {
-  const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
+  const { connectWallet, isConnected, displayName, balance } =
     useWalletContext();
 
   const { connect, available, refresh, disconnect } = useConnectors();

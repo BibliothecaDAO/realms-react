@@ -2,14 +2,11 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
-import { DAY, MAX_DAYS_ACCURED, SECONDS_PER_KM } from '@/constants/buildings';
+import { DAY, SECONDS_PER_KM } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
-import RealmsData from '@/data/realms.json';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import RealmsData from '@/geodata/realms.json';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
-import { useWalletContext } from '@/hooks/useWalletContext';
-import type { BuildingDetail } from '@/types/index';
-import { shortenAddress } from '@/util/formatters';
 
 interface TraitProps {
   trait: string;
@@ -298,7 +295,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
 };
 
 const getCoordinates = (id: number) => {
-  return RealmsData.features.find((a) => a.properties.realm_idx === id);
+  return RealmsData.features.find((a) => a.id === id);
 };
 
 export const getTravelTime = ({ travellerId, destinationId }) => {
@@ -313,10 +310,10 @@ export const getTravelTime = ({ travellerId, destinationId }) => {
   const destinationCoordinates = getCoordinates(destinationId);
 
   const d = distance(
-    travellerCoordinates?.geometry.coordinates[0],
-    travellerCoordinates?.geometry.coordinates[1],
-    destinationCoordinates?.geometry.coordinates[0],
-    destinationCoordinates?.geometry.coordinates[1]
+    travellerCoordinates?.coordinates[0],
+    travellerCoordinates?.coordinates[1],
+    destinationCoordinates?.coordinates[0],
+    destinationCoordinates?.coordinates[1]
   ).toFixed(2);
 
   return { distance: d, time: parseInt(d) * SECONDS_PER_KM };
@@ -325,8 +322,8 @@ export const getTravelTime = ({ travellerId, destinationId }) => {
 export const getTravelArcs = (location: number, assets: number[]) => {
   return assets.map((a) => {
     return {
-      source: getCoordinates(location)?.geometry.coordinates,
-      target: getCoordinates(a)?.geometry.coordinates,
+      source: getCoordinates(location)?.coordinates,
+      target: getCoordinates(a)?.coordinates,
       value: 2,
       gain: 3,
       quantile: 1,

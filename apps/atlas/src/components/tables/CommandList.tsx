@@ -1,13 +1,9 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
-import type { Call } from '@starknet-react/core';
 import type { Identifier, XYCoord } from 'dnd-core';
-import type { ReactElement } from 'react';
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { twMerge } from 'tailwind-merge';
-import useSound from 'use-sound';
-import { TxCartItem } from '@/components/tables/Transactions';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';

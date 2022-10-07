@@ -1,4 +1,3 @@
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,

@@ -1,12 +1,9 @@
 import {
   Button,
   Card,
-  CardBody,
   CardStats,
   CardTitle,
   InputNumber,
-  CountdownTimer,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
@@ -15,29 +12,19 @@ import { toBN } from 'starknet/dist/utils/number';
 import { RealmResources } from '@/components/tables/RealmResources';
 import {
   RealmBuildingId,
-  HarvestType,
-  HARVEST_LENGTH,
   WORK_HUT_OUTPUT,
   WORK_HUT_COST,
-  MAX_HARVESTS,
 } from '@/constants/buildings';
 import { useCommandList } from '@/context/CommandListContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import useBuildings, {
-  createBuildingCall,
-} from '@/hooks/settling/useBuildings';
-import useFood, { createFoodCall } from '@/hooks/settling/useFood';
+import { createBuildingCall } from '@/hooks/settling/useBuildings';
+import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
-import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
-import type {
-  BuildingDetail,
-  RealmFoodDetails,
-  AvailableResources,
-} from '@/types/index';
+import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 type Prop = {

@@ -1,10 +1,8 @@
 import {
   useTransactionManager,
   useStarknetExecute,
-  UseStarknetExecuteArgs,
 } from '@starknet-react/core';
-import { getStarknet } from 'get-starknet';
-import { createContext, useState, useContext, useMemo } from 'react';
+import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/shared/Icons';

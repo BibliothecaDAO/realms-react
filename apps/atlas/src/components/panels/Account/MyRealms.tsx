@@ -1,4 +1,4 @@
-import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';

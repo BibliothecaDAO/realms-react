@@ -2,7 +2,6 @@ import { BagRatingFilter } from '@/components/filters/BagRatingFilter';
 import { useGaContext } from '@/context/GaContext';
 import { BaseFilter } from './BaseFilter';
 import { OrdersFilter } from './OrdersFilter';
-import { SearchFilter } from './SearchFilter';
 
 export function GaFilters() {
   const { state, actions } = useGaContext();

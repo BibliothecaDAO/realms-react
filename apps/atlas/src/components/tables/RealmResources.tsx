@@ -15,16 +15,15 @@ import {
   MAX_DAYS_ACCURED,
   PILLAGE_AMOUNT,
 } from '@/constants/buildings';
-import { resources, findResourceById } from '@/constants/resources';
+import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Realm } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { RateChange } from '@/shared/Getters/Market';
-import type { AvailableResources, RealmsCardProps } from '@/types/index';
+import type { RealmsCardProps } from '@/types/index';
 
 type Row = {
   resource: ReactElement;

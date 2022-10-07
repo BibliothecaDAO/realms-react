@@ -4,13 +4,7 @@ import EthDater from 'ethereum-block-by-date';
 import type { Contract } from 'ethers';
 import { ethers } from 'ethers';
 import type { Dispatch } from 'react';
-import {
-  useEffect,
-  useMemo,
-  createContext,
-  useContext,
-  useReducer,
-} from 'react';
+import { useMemo, createContext, useContext, useReducer } from 'react';
 import BalanceABI from '@/abi/balance.json';
 import CarrackABI from '@/abi/carrack.json';
 import JourneyABI from '@/abi/journey.json';

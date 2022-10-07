@@ -1,6 +1,5 @@
 import { useStarknetInvoke } from '@starknet-react/core';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
@@ -11,7 +10,6 @@ import {
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
 import type {
-  ItemCost,
   CallAndMetadata,
   RealmsTransactionRenderConfig,
 } from '@/types/index';

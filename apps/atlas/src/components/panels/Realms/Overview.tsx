@@ -10,24 +10,21 @@ import Image from 'next/image';
 import React from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
+import { STORE_HOUSE_SIZE } from '@/constants/buildings';
 import type { GetRealmQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   TraitTable,
-  squadStats,
-  RealmVaultStatus,
   hasOwnRelic,
   RealmCombatStatus,
   getTrait,
 } from '@/shared/Getters/Realm';
 import TerrainLayer from '@/shared/Terrain';
 import type {
-  BuildingDetail,
   RealmFoodDetails,
   BuildingFootprint,
-  AvailableResources,
+  BuildingDetail,
 } from '@/types/index';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 import { RealmImage } from './details/Image';

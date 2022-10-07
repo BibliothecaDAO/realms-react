@@ -1,17 +1,10 @@
 import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
 import { Button, Card } from '@bibliotheca-dao/ui-lib/base';
-import { CheckCircleIcon as SolidCircleIcon } from '@heroicons/react/20/solid';
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useAccount } from '@starknet-react/core';
 import type { Types } from 'ably';
-import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 
-import TokenLabel, {
-  DarkGradient,
-  LightGradient,
-} from '@/shared/ElementsLabel';
-import { Annotation } from '@/shared/Icons';
+import TokenLabel from '@/shared/ElementsLabel';
 
 type ChatComponentProps = {
   channelName: string;
@@ -28,9 +21,6 @@ const ChatComponent = (props: ChatComponentProps) => {
   const [messageText, setMessageText] = useState('');
   const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
-
-  const [messagesFilterOnlySide, setMessagesFilterOnlySide] =
-    useState<boolean>(false);
 
   const { address } = useAccount();
 

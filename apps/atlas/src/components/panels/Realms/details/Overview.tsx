@@ -1,16 +1,13 @@
-import { ResourceIcon, Button, Menu } from '@bibliotheca-dao/ui-lib';
+import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
-import { Transition } from '@headlessui/react';
 import { useAccount } from '@starknet-react/core';
-import clsx from 'clsx';
-import Image from 'next/image';
+
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
-import React, { useState } from 'react';
+import React from 'react';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useWalletContext } from '@/hooks/useWalletContext';
-import { DownloadAssets } from '@/shared/DownloadAssets';
 import {
   TraitTable,
   getTrait,

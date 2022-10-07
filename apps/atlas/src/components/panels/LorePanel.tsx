@@ -1,24 +1,14 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { useAccount } from '@starknet-react/core';
-import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-// import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { hexToDecimalString } from 'starknet/dist/utils/number';
 import { LoreCreateEntityForm } from '@/components/panels/LoreComponents/LoreCreateEntityForm';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import { useLoreContext } from '@/context/LoreContext';
 import type { LoreEntityWhereInput } from '@/generated/graphql';
-import {
-  GetLoreEntitiesQueryVariables,
-  RealmTraitType,
-  useGetLoreEntitiesLazyQuery,
-  useGetLoreEntitiesQuery,
-  useGetRealmsQuery,
-} from '@/generated/graphql';
-// import { useAtlasContext } from '@/hooks/useAtlas';
+import { useGetLoreEntitiesLazyQuery } from '@/generated/graphql';
 import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
@@ -26,7 +16,6 @@ import { BasePanel } from './BasePanel';
 export const LorePanel = () => {
   const router = useRouter();
 
-  // const { setModal } = useAtlasContext();
   const { account } = useWalletContext();
   const { address } = useAccount();
   const { state, actions } = useLoreContext();

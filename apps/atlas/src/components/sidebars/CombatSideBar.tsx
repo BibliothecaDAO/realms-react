@@ -1,10 +1,4 @@
-import {
-  OrderIcon,
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-} from '@bibliotheca-dao/ui-lib';
+import { OrderIcon, Button } from '@bibliotheca-dao/ui-lib';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 
 import ParentSize from '@visx/responsive/lib/components/ParentSize';
@@ -18,7 +12,6 @@ import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import RealmSelector from '@/shared/RealmSelector';
 import { Battalion } from '@/shared/squad/Battalion';
 
 type Prop = {

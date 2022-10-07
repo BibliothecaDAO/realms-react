@@ -1,6 +1,4 @@
 import { animated, useSpring } from '@react-spring/web';
-// import { useState } from 'react';
-// import { useAtlasContext } from '@/hooks/useAtlas';
 
 export type BackgroundOptions =
   | 'hero'
