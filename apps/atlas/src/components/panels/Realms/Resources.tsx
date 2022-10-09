@@ -136,13 +136,15 @@ const Harvests: React.FC<Prop> = (props) => {
                   min={1}
                   max={10}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput({
-                      farmsToBuild: input.farmsToBuild,
-                      fishingVillagesToBuild: input.fishingVillagesToBuild,
-                      workHutsToBuild: value.toString(),
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput({
+                        farmsToBuild: input.farmsToBuild,
+                        fishingVillagesToBuild: input.fishingVillagesToBuild,
+                        workHutsToBuild: value.toString(),
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
             )}

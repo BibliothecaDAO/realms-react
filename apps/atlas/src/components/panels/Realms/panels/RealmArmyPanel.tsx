@@ -296,14 +296,16 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                             min={1}
                             max={10}
                             stringMode
-                            onChange={(value) =>
-                              setBuildQty((current) => {
-                                return {
-                                  ...current,
-                                  [a.key]: value.toString(),
-                                };
-                              })
-                            }
+                            onChange={(value) => {
+                              if (value) {
+                                setBuildQty((current) => {
+                                  return {
+                                    ...current,
+                                    [a.key]: value.toString(),
+                                  };
+                                });
+                              }
+                            }}
                           />{' '}
                         </div>
                         <div className="flex mt-4">

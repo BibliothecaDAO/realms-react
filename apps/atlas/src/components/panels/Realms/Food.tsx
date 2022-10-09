@@ -207,14 +207,16 @@ const Food: React.FC<Prop> = (props) => {
                     min={1}
                     max={farmCapacity}
                     stringMode // to support high precision decimals
-                    onChange={(value: ValueType) =>
-                      setInput((current) => {
-                        return {
-                          ...current,
-                          farmsToBuild: value.toString(),
-                        };
-                      })
-                    }
+                    onChange={(value: ValueType | null) => {
+                      if (value) {
+                        setInput((current) => {
+                          return {
+                            ...current,
+                            farmsToBuild: value.toString(),
+                          };
+                        });
+                      }
+                    }}
                   />{' '}
                 </div>
                 <div className="flex mt-4">
@@ -372,14 +374,16 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={fishingVillageCapacity}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        fishingVillagesToBuild: value.toString(),
-                      };
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          fishingVillagesToBuild: value.toString(),
+                        };
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
               <div className="flex mt-4">
@@ -503,15 +507,17 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={100000}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        fishConversion: value.toString(),
-                      };
-                    })
-                  }
-                />{' '}
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          fishConversion: value.toString(),
+                        };
+                      });
+                    }
+                  }}
+                />
               </div>
               <div className="flex flex-wrap w-full p-2">
                 <div className="w-full mb-2 text-2xl">
@@ -534,14 +540,16 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={100000}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        wheatConversion: value.toString(),
-                      };
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          wheatConversion: value.toString(),
+                        };
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
               <p className="p-2">

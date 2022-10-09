@@ -7,8 +7,6 @@ import React, { useEffect, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Toaster, ToastBar } from 'react-hot-toast';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { Modals } from '@/components/modals';
 import { AtlasProvider } from '@/context/AtlasContext';
 import { CommandListProvider } from '@/context/CommandListContext';
@@ -21,7 +19,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
 
 // Create a react-query client
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PageWrapper = (Comp: any) =>
@@ -83,26 +81,26 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ModalProvider>
             <WalletProvider>
               <StarknetConfig connectors={connectors} autoConnect>
-                <QueryClientProvider client={queryClient}>
-                  <ResourceProvider>
-                    <CommandListProvider>
-                      <AtlasProvider>
-                        <DndProvider backend={HTML5Backend}>
-                          <Component {...pageProps} />
-                          <Modals />
-                        </DndProvider>
-                      </AtlasProvider>
-                    </CommandListProvider>
-                  </ResourceProvider>
-                  {/* <PageTransition
+                {/* <QueryClientProvider client={queryClient}> */}
+                <ResourceProvider>
+                  <CommandListProvider>
+                    <AtlasProvider>
+                      <DndProvider backend={HTML5Backend}>
+                        <Component {...pageProps} />
+                        <Modals />
+                      </DndProvider>
+                    </AtlasProvider>
+                  </CommandListProvider>
+                </ResourceProvider>
+                {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-                  <ReactQueryDevtools
-                    initialIsOpen={false}
-                    position="bottom-right"
-                  />
-                </QueryClientProvider>
+                {/* <ReactQueryDevtools
+                  initialIsOpen={false}
+                  position="bottom-right"
+                />
+                </QueryClientProvider> */}
               </StarknetConfig>
             </WalletProvider>
           </ModalProvider>

@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
-
 import DeckGL from '@deck.gl/react';
+import dynamic from 'next/dynamic';
+
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
 import Layout from '@/components/Layout';
-import ChatComponent from '@/components/minigame/realtime/Chat';
+const ChatComponent = dynamic(
+  () => import('@/components/minigame/realtime/Chat'),
+  { ssr: false }
+);
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
