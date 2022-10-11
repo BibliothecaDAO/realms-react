@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -8,7 +8,6 @@ import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
 import { PanelHeading } from './PanelComponents/PanelHeading';

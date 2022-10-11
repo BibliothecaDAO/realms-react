@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
@@ -7,7 +7,6 @@ import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 import { PanelHeading } from './PanelComponents/PanelHeading';

@@ -4,8 +4,6 @@ import { useAccount } from '@starknet-react/core';
 import type { Types } from 'ably';
 import React, { useEffect, useRef, useState } from 'react';
 
-import TokenLabel from '@/shared/ElementsLabel';
-
 type ChatComponentProps = {
   channelName: string;
 };
@@ -76,18 +74,7 @@ const ChatComponent = (props: ChatComponentProps) => {
   };
 
   const messages = receivedMessages.map((message, index) => {
-    return (
-      <p key={index}>
-        <TokenLabel side={message.data.side as 'light' | 'dark' | undefined}>
-          {message.data.account
-            ? `0x${message.data.account.substring(
-                message.data.account.length - 4
-              )}: `
-            : 'anon: '}
-        </TokenLabel>
-        {message.data.body}
-      </p>
-    );
+    return <p key={index}>{message.data.body}</p>;
   });
 
   return (
