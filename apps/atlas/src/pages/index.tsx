@@ -89,7 +89,7 @@ function MapModule() {
         pickable: true,
         opacity: 1,
         visible: mapContext.viewState.zoom < ItemViewLevel ? false : true,
-        getPosition: (d: any) => d.coordinates,
+        getPosition: (d: any) => d.xy,
         getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
         getElevation: 10000,
         lineWidthMinPixels: 1,
@@ -122,7 +122,7 @@ function MapModule() {
       anchorY: 100,
     }),
     sizeScale: 5,
-    getPosition: (d: any) => d.coordinates,
+    getPosition: (d: any) => d.xy,
     getSize: (d) => 10,
   });
 

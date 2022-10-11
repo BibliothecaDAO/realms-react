@@ -310,10 +310,10 @@ export const getTravelTime = ({ travellerId, destinationId }) => {
   const destinationCoordinates = getCoordinates(destinationId);
 
   const d = distance(
-    travellerCoordinates?.coordinates[0],
-    travellerCoordinates?.coordinates[1],
-    destinationCoordinates?.coordinates[0],
-    destinationCoordinates?.coordinates[1]
+    travellerCoordinates?.xy[0],
+    travellerCoordinates?.xy[1],
+    destinationCoordinates?.xy[0],
+    destinationCoordinates?.xy[1]
   ).toFixed(2);
 
   return { distance: d, time: parseInt(d) * SECONDS_PER_KM };
@@ -322,8 +322,8 @@ export const getTravelTime = ({ travellerId, destinationId }) => {
 export const getTravelArcs = (location: number, assets: number[]) => {
   return assets.map((a) => {
     return {
-      source: getCoordinates(location)?.coordinates,
-      target: getCoordinates(a)?.coordinates,
+      source: getCoordinates(location)?.xy,
+      target: getCoordinates(a)?.xy,
       value: 2,
       gain: 3,
       quantile: 1,
