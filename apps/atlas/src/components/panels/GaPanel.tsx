@@ -2,18 +2,18 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 import { BasePanel } from './BasePanel';
 import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const GaPanel = () => {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { state, actions } = useGaContext();
 
   const limit = 50;
@@ -46,7 +46,7 @@ export const GaPanel = () => {
     }
 
     if (state.selectedTab === 0) {
-      where.currentOwner = account?.toLowerCase();
+      where.currentOwner = l1Address?.toLowerCase();
     }
     where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
     where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
@@ -66,7 +66,7 @@ export const GaPanel = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, page, ...queryDependencies]);
+  }, [l1Address, page, ...queryDependencies]);
 
   const { loading, data } = useQuery<{
     gadventurers: GAdventurer[];

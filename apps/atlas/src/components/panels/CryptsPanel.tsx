@@ -2,11 +2,11 @@ import { useQuery } from '@apollo/client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { CryptFilter } from '@/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
 import { getCryptsQuery } from '@/hooks/graphql/queries';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import Button from '@/shared/Button';
 import type { Crypt } from '@/types/index';
 import { BasePanel } from './BasePanel';
@@ -14,7 +14,7 @@ import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const CryptsPanel = () => {
   // const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { state, actions } = useCryptContext();
 
   const limit = 50;
@@ -49,7 +49,7 @@ export const CryptsPanel = () => {
     }
 
     if (state.selectedTab === 0) {
-      where.currentOwner = account?.toLowerCase();
+      where.currentOwner = l1Address?.toLowerCase();
     }
 
     if (state.isLegendaryFilter) {
@@ -72,7 +72,7 @@ export const CryptsPanel = () => {
       skip: limit * (page - 1),
       where,
     };
-  }, [account, page, ...filterDependencies]);
+  }, [l1Address, page, ...filterDependencies]);
 
   const { loading, data } = useQuery<{
     dungeons: Crypt[];

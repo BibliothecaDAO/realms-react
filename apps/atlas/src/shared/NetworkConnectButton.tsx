@@ -3,14 +3,12 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Popover, Transition } from '@headlessui/react';
 import { useAccount, useConnectors } from '@starknet-react/core';
+import { ConnectKitButton } from 'connectkit';
 import { useEffect } from 'react';
 import { removeHexPrefix } from 'starknet/dist/utils/encode';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import { shortenAddressWidth } from '@/util/formatters';
-const NetworkConnectButton = () => {
-  const { connectWallet, isConnected, displayName, balance } =
-    useWalletContext();
 
+const NetworkConnectButton = () => {
   const { connect, available, refresh, disconnect } = useConnectors();
   const { address, status } = useAccount();
 
@@ -86,33 +84,28 @@ const NetworkConnectButton = () => {
           ) : null} */}
 
             <hr className="my-4" />
-            {isConnected && (
-              <>
-                {displayName ? (
+            <ConnectKitButton.Custom>
+              {({ show, isConnected, truncatedAddress, ensName }) => {
+                return (
                   <>
-                    <p>Ethereum</p>
-
-                    <Ethereum className="inline-block w-4 mr-2" />
-                    {displayName}
+                    <Button
+                      variant="primary"
+                      className="w-full text-xs"
+                      onClick={show}
+                    >
+                      <Ethereum className="w-4 mr-4" />{' '}
+                      {isConnected
+                        ? ensName ?? truncatedAddress
+                        : 'Connect Wallet'}
+                    </Button>
+                    <p className="mt-2 text-xs">
+                      Connect an Ethereum Wallet to bridge and check balances
+                      across rollups.
+                    </p>
                   </>
-                ) : null}
-              </>
-            )}
-            {!isConnected && (
-              <>
-                <Button
-                  variant="primary"
-                  className="w-full text-xs"
-                  onClick={connectWallet}
-                >
-                  <Ethereum className="w-4 mr-4" /> Connect Ethereum
-                </Button>
-                <p className="mt-2 text-xs">
-                  Connect an Ethereum Wallet to bridge and check balances across
-                  rollups.
-                </p>
-              </>
-            )}
+                );
+              }}
+            </ConnectKitButton.Custom>
           </>
         </Popover.Panel>
       </Transition>

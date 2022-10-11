@@ -18,7 +18,7 @@ import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import useTotalMinted from '@/hooks/desiege/useTotalMinted';
 import useTxCallback from '@/hooks/useTxCallback';
-import { useWalletContext } from '@/hooks/useWalletContext';
+import { useAccount as useL1Account } from 'wagmi';
 import Button from '@/shared/Button';
 import ElementsLabel, {
   DarkGradient,

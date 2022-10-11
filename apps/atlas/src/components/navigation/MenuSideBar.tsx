@@ -12,14 +12,13 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
+import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
-import { useWalletContext } from '@/hooks/useWalletContext';
 
 export const MenuSideBar = () => {
-  const { connectWallet } = useWalletContext();
   const breakpoints: any = useBreakpoint();
   const [showMenu, setShowMenu] = useState(breakpoints.lg);
   const { query, pathname } = useRouter();
@@ -155,14 +154,19 @@ export const MenuSideBar = () => {
         </div>
 
         <div className="flex flex-col mb-2 sm:hidden place-items-center">
-          <IconButton
-            className={buttonClasses}
-            aria-label="Connect Wallet"
-            onClick={connectWallet}
-            icon={<Eth className={'w-6 mx-auto sm:w-8'} />}
-            size="lg"
-          />
-          <span className={textClasses}></span>
+          <ConnectKitButton.Custom>
+            {({ isConnected, isConnecting, show, hide, address, ensName }) => {
+              return (
+                <IconButton
+                  className={buttonClasses}
+                  aria-label="Connect Wallet"
+                  onClick={show}
+                  icon={<Eth className={'w-6 mx-auto sm:w-8'} />}
+                  size="lg"
+                />
+              );
+            }}
+          </ConnectKitButton.Custom>
         </div>
       </animated.div>
     </div>

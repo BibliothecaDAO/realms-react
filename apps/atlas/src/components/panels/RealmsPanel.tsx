@@ -4,13 +4,13 @@ import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
@@ -25,7 +25,7 @@ function useRealmsQueryVariables(
   page: number,
   limit: number
 ) {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { address } = useAccount();
 
   const { state } = useRealmContext();
@@ -44,8 +44,8 @@ function useRealmsQueryVariables(
       // Your realms
       if (selectedTabIndex === 0) {
         filter.OR = [
-          { owner: { equals: account?.toLowerCase() } },
-          { bridgedOwner: { equals: account?.toLowerCase() } },
+          { owner: { equals: l1Address?.toLowerCase() } },
+          { bridgedOwner: { equals: l1Address?.toLowerCase() } },
           { ownerL2: { equals: starknetWallet } },
           { settledOwner: { equals: starknetWallet } },
         ];
@@ -108,23 +108,22 @@ function useRealmsQueryVariables(
       skip: limit * (page - 1),
     };
   }, [
-    account,
-    state.favouriteRealms,
-    state.selectedOrders,
     state.selectedResources,
-
     state.searchIdFilter,
     state.hasWonderFilter,
     state.isSettledFilter,
     state.isRaidableFilter,
-    state.rarityFilter.rank,
-    state.rarityFilter.score,
-    state.traitsFilter.City,
-    state.traitsFilter.Harbor,
-    state.traitsFilter.Region,
-    state.traitsFilter.River,
+    state.rarityFilter.rank.min,
+    state.rarityFilter.rank.max,
+    state.rarityFilter.score.min,
+    state.rarityFilter.score.max,
+    state.traitsFilter,
+    state.selectedOrders,
+    state.favouriteRealms,
+    limit,
     page,
     selectedTabIndex,
+    l1Address,
     starknetWallet,
   ]);
 }

@@ -8,7 +8,7 @@ import useGameStatus from '@/hooks/desiege/useGameStatus';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import { queryKeys as userBalanceQueryKeys } from '@/hooks/desiege/useTokenBalances';
 import { queryKeys as totalMintedQueryKeys } from '@/hooks/desiege/useTotalMinted';
-import { useWalletContext } from '@/hooks/useWalletContext';
+import { useAccount as useL1Account } from 'wagmi';
 import LoreDevKit from '@/shared/LoreDevKit';
 import DivineSiege from '@/shared/LoreDevKit/desiege.ldk';
 

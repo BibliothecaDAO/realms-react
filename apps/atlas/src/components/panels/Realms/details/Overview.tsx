@@ -5,9 +5,9 @@ import { useAccount } from '@starknet-react/core';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import React from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import {
   TraitTable,
   getTrait,
@@ -24,7 +24,7 @@ const variantMaps: any = {
 
 export function RealmOverview(props: RealmsCardProps): ReactElement {
   const router = useRouter();
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { address } = useAccount();
   const {
     mapContext: { navigateToAsset },
@@ -86,7 +86,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
       <div className="w-full pt-4 bg-black shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
-          {isYourRealm(props.realm, account, address || '') && (
+          {isYourRealm(props.realm, l1Address, address || '') && (
             <div>
               {RealmStatus(props.realm) === 'Layer 1' && (
                 <Button
@@ -129,7 +129,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
               size="xs"
               className="w-full"
             >
-              {isYourRealm(props.realm, account, address || '')
+              {isYourRealm(props.realm, l1Address, address || '')
                 ? 'manage'
                 : 'details'}
             </Button>

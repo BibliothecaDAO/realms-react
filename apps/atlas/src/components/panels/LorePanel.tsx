@@ -4,19 +4,19 @@ import { useAccount } from '@starknet-react/core';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { hexToDecimalString } from 'starknet/dist/utils/number';
+import { useAccount as useL1Account } from 'wagmi';
 import { LoreCreateEntityForm } from '@/components/panels/LoreComponents/LoreCreateEntityForm';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import { useLoreContext } from '@/context/LoreContext';
 import type { LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesLazyQuery } from '@/generated/graphql';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import { SearchFilter } from '../filters/SearchFilter';
 import { BasePanel } from './BasePanel';
 
 export const LorePanel = () => {
   const router = useRouter();
 
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { address } = useAccount();
   const { state, actions } = useLoreContext();
 
@@ -66,7 +66,7 @@ export const LorePanel = () => {
       take: limit,
       skip: limit * (page - 1),
     };
-  }, [account, state, page, searchByContent, searchByAuthor]);
+  }, [address, state, page, searchByContent, searchByAuthor]);
 
   const [resyncEntities, { data, loading }] = useGetLoreEntitiesLazyQuery({
     variables,

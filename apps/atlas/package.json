@@ -139,7 +139,6 @@
     "@deck.gl/react": "^8.8.12",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
-    "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/hash": "^5.7.0",
     "@ethersproject/providers": "^5.7.1",
     "@ethersproject/units": "^5.7.0",
@@ -168,17 +167,12 @@
     "@visx/text": "2.12.2",
     "@visx/tooltip": "2.15.0",
     "@visx/xychart": "2.15.0",
-    "@walletconnect/web3-provider": "^1.8.0",
-    "@web3-react/core": "^6.1.9",
-    "@web3-react/injected-connector": "^6.0.7",
-    "@web3-react/walletconnect-connector": "^6.2.13",
     "ably": "1.2.30",
     "arweave": "1.11.6",
     "axios": "^1.1.2",
-    "bn.js": "^5.2.1",
     "classnames": "^2.3.2",
+    "connectkit": "0.0.2",
     "deck.gl": "^8.8.12",
-    "ethereum-block-by-date": "1.4.6",
     "ethers": "5.7.1",
     "get-starknet": "^1.5.0",
     "gl-matrix": "^3.4.3",
@@ -215,6 +209,9 @@
     "three.meshline": "1.4.0",
     "threejs-meshline": "2.0.12",
     "use-sound": "^4.0.1",
-    "web3modal": "^1.9.9"
+    "wagmi": "0.6.8"
+  },
+  "resolutions": {
+    "bn.js": "^5.2.1"
   }
 }

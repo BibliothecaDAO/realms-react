@@ -8,7 +8,7 @@ import { useAccount, useConnectors } from '@starknet-react/core';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { shortenAddressWidth } from '@/util/formatters';
-import { useWalletContext } from '../../hooks/useWalletContext';
+//import { useWalletContext } from '../../../atlas/src/hooks/useWalletContext';
 export function DesiegeHeader() {
   const { connectWallet, isConnected, disconnectWallet, displayName, balance } =
     useWalletContext();

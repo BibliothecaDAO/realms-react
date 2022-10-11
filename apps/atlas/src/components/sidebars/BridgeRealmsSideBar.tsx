@@ -1,11 +1,11 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useState, useMemo } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { SelectableRealm } from '@/components/tables/SelectableRealm';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useSelections } from '@/hooks/useSelectable';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 
@@ -30,21 +30,21 @@ export const BridgeRealmsSideBarPanel = ({
 }: {
   onClose?: () => void;
 }) => {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const limit = 50;
   const [page, setPage] = useState(1);
 
   const variables = useMemo(() => {
     const filter = {} as any;
 
-    filter.OR = [{ owner: { equals: account?.toLowerCase() } }];
+    filter.OR = [{ owner: { equals: l1Address?.toLowerCase() } }];
 
     return {
       filter,
       take: limit,
       skip: limit * (page - 1),
     };
-  }, [account, page]);
+  }, [l1Address, page]);
 
   const { data, loading } = useGetRealmsQuery({
     variables,

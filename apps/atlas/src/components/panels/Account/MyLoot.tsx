@@ -2,15 +2,15 @@ import { useQuery } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Loot } from '@/types/index';
 
 export const MyLoot = () => {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { state, actions } = useLootContext();
 
   const limit = 50;
@@ -31,7 +31,7 @@ export const MyLoot = () => {
 
   const variables = useMemo(() => {
     const where: any = {};
-    where.currentOwner = account?.toLowerCase();
+    where.currentOwner = l1Address?.toLowerCase();
     where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
     where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
     where.bagRating_gte = state.ratingFilter.bagRating.min;
@@ -44,7 +44,7 @@ export const MyLoot = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, state, page]);
+  }, [l1Address, state, page]);
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
     variables,

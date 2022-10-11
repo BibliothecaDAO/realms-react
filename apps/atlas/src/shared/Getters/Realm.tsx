@@ -333,8 +333,8 @@ export const getTravelArcs = (location: number, assets: number[]) => {
 
 export const isYourRealm = (
   realm: RealmFragmentFragment,
-  account: string,
-  starkAccount: string
+  account?: string,
+  starkAccount?: string
 ) =>
   (account &&
     (account.toLowerCase() === realm.owner ||

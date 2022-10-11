@@ -1,23 +1,24 @@
 import { ApolloProvider } from '@apollo/client';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
+import { ConnectKitProvider } from 'connectkit';
 import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
 import React, { useEffect, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Toaster, ToastBar } from 'react-hot-toast';
+import { WagmiConfig } from 'wagmi';
 import { Modals } from '@/components/modals';
 import { AtlasProvider } from '@/context/AtlasContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
-import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
-
+import { wagmiClient } from '@/util/wagmi';
 // Create a react-query client
 // const queryClient = new QueryClient();
 
@@ -79,30 +80,32 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <BreakpointProvider queries={queries}>
           <ModalProvider>
-            <WalletProvider>
-              <StarknetConfig connectors={connectors} autoConnect>
-                {/* <QueryClientProvider client={queryClient}> */}
-                <ResourceProvider>
-                  <CommandListProvider>
-                    <AtlasProvider>
-                      <DndProvider backend={HTML5Backend}>
-                        <Component {...pageProps} />
-                        <Modals />
-                      </DndProvider>
-                    </AtlasProvider>
-                  </CommandListProvider>
-                </ResourceProvider>
-                {/* <PageTransition
+            <WagmiConfig client={wagmiClient}>
+              <ConnectKitProvider>
+                <StarknetConfig connectors={connectors} autoConnect>
+                  {/* <QueryClientProvider client={queryClient}> */}
+                  <ResourceProvider>
+                    <CommandListProvider>
+                      <AtlasProvider>
+                        <DndProvider backend={HTML5Backend}>
+                          <Component {...pageProps} />
+                          <Modals />
+                        </DndProvider>
+                      </AtlasProvider>
+                    </CommandListProvider>
+                  </ResourceProvider>
+                  {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-                {/* <ReactQueryDevtools
+                  {/* <ReactQueryDevtools
                   initialIsOpen={false}
                   position="bottom-right"
                 />
                 </QueryClientProvider> */}
-              </StarknetConfig>
-            </WalletProvider>
+                </StarknetConfig>
+              </ConnectKitProvider>
+            </WagmiConfig>{' '}
           </ModalProvider>
         </BreakpointProvider>
       </ApolloProvider>
