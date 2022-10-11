@@ -1,4 +1,4 @@
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 
 import type BN from 'bn.js';
 import { useQuery } from 'react-query';
@@ -20,7 +20,7 @@ export const queryKeys = {
 };
 
 export const useTokenBalances = (args: UseTokenBalancesArgs) => {
-  const starknet = useStarknet();
+  const { address } = useAccount();
 
   const getBalance = useQuery<{ balances: BN[]; side: string }>(
     queryKeys.tokenBalance(args.gameIdx),
@@ -28,7 +28,7 @@ export const useTokenBalances = (args: UseTokenBalancesArgs) => {
       // The token IDs change every game
       const tokenIds = getTokenIdsForGame(args.gameIdx as number);
 
-      const ownerAddressInt = toBN(starknet.account as string).toString();
+      const ownerAddressInt = toBN(address as string).toString();
       const balances = await provider.callContract({
         contractAddress: ELEMENTS_ADDRESS,
         entrypoint: 'balanceOfBatch',
@@ -58,7 +58,7 @@ export const useTokenBalances = (args: UseTokenBalancesArgs) => {
       };
     },
     {
-      enabled: args.gameIdx !== undefined && starknet.account !== undefined,
+      enabled: args.gameIdx !== undefined && address !== undefined,
       refetchOnMount: false,
       // The user balance cache is manually invalidated
       // after game events. When the user triggers a spell, and after the user mints.

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
-import { useWalletContext } from '@/hooks/useWalletContext';
+import { useAccount as useL1Account } from 'wagmi';
 import { CheckCircle } from '@/shared/Icons';
 import { fetchNumberRealmsStaked } from '@/util/fetchL1';
 

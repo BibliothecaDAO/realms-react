@@ -1,16 +1,16 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { useStarknetTransactionManager } from '@starknet-react/core';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useTransactionManager, useTransactions } from '@starknet-react/core';
+import { useCommandList } from '@/context/CommandListContext';
 import { Scroll } from '@/shared/Icons';
-import { TxStyles } from '@/shared/Validators/styles';
 
 const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
-  const { transactions } = useStarknetTransactionManager();
-  const txQueue = useTransactionQueue();
+  const { hashes } = useTransactionManager();
+  const txQueue = useCommandList();
+  const transactions = useTransactions({ hashes });
 
   const TxStyle = () => {
-    return transactions.length
-      ? TxStyles.status[transactions[0].status]
+    return transactions[0]?.loading
+      ? 'bg-orange-400 animate-ping'
       : 'border-gray-200 border';
   };
 

@@ -1,28 +1,20 @@
-import { useStarknetCall, useStarknetInvoke } from '@starknet-react/core';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
   RealmBuildingId,
-  HarvestType,
   RealmBuildingsSize,
   RealmBuildingIntegrity,
   buildingIdToString,
   buildingImageById,
 } from '@/constants/buildings';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Realm } from '@/generated/graphql';
-import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
-import {
-  ModuleAddr,
-  useBuildingContract,
-  useFoodContract,
-} from '@/hooks/settling/stark-contracts';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTrait } from '@/shared/Getters/Realm';
 import type {
-  RealmsCall,
+  CallAndMetadata,
   BuildingFootprint,
   BuildingDetail,
   RealmsTransactionRenderConfig,
@@ -39,7 +31,10 @@ export const Entrypoints = {
   build: 'build',
 };
 
-export const createBuildingCall: Record<string, (args: any) => RealmsCall> = {
+export const createBuildingCall: Record<
+  string,
+  (args: any) => CallAndMetadata
+> = {
   build: (args: { realmId; buildingId; qty; costs }) => ({
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,

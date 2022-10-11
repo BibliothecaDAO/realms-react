@@ -1,16 +1,13 @@
 import { Button, Table, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
+
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
   GetRealmsQuery,
   RealmFragmentFragment,
 } from '@/generated/graphql';
-import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
-import useIsOwner from '@/hooks/useIsOwner';
+
 import { getTravelTime } from '@/shared/Getters/Realm';
 
 type Prop = {

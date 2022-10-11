@@ -2,7 +2,6 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import toast from 'react-hot-toast';
 import { LoreScrollEntity } from '@/components/panels/LoreComponents/LoreScrollEntity';
-import { AtlasProvider } from '@/context/AtlasContext';
 import { useGetLoreEntityQuery } from '@/generated/graphql';
 
 export const LoreEntityModal = ({ entityId }) => {

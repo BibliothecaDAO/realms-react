@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import type BN from 'bn.js';
 import { number, Provider } from 'starknet';
-import { ElementToken } from '../constants';
-import type { GameStatus } from '../types';
+
 const { toBN } = number;
 
 // Contract calculates effects in BIPS

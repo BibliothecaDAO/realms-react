@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
-
 import DeckGL from '@deck.gl/react';
+import dynamic from 'next/dynamic';
+
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
 import Layout from '@/components/Layout';
-import ChatComponent from '@/components/minigame/realtime/Chat';
+const ChatComponent = dynamic(
+  () => import('@/components/minigame/realtime/Chat'),
+  { ssr: false }
+);
 import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
@@ -85,7 +89,7 @@ function MapModule() {
         pickable: true,
         opacity: 1,
         visible: mapContext.viewState.zoom < ItemViewLevel ? false : true,
-        getPosition: (d: any) => d.coordinates,
+        getPosition: (d: any) => d.xy,
         getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
         getElevation: 10000,
         lineWidthMinPixels: 1,
@@ -118,7 +122,7 @@ function MapModule() {
       anchorY: 100,
     }),
     sizeScale: 5,
-    getPosition: (d: any) => d.coordinates,
+    getPosition: (d: any) => d.xy,
     getSize: (d) => 10,
   });
 

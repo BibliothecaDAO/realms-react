@@ -3,11 +3,9 @@ import {
   Select,
   ResourceIcon,
   InputNumber,
-  IconButton,
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
@@ -21,17 +19,13 @@ import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import {
-  useLordsContract,
-  useResources1155Contract,
-  useExchangeContract,
-} from '@/hooks/settling/stark-contracts';
+import { useExchangeContract } from '@/hooks/settling/stark-contracts';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
 import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
-import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
+import type { ResourceQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
   resource: Resource & ResourceQty;

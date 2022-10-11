@@ -9,7 +9,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { battalionInformation, defaultArmy } from '@/constants/army';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -36,7 +36,7 @@ type Battalion = {
 const MAX_BATTALIONS = 30;
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
   useEffect(() => {
     setBuildingIdsEnqueued(
@@ -138,8 +138,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     }
   }, [addedBattalions, props.army]);
 
-  console.log(props.buildings);
-
   return (
     <div className="grid grid-cols-12 gap-6 pt-4">
       <hr />
@@ -164,7 +162,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                   ...battalion,
                 })
               }
-              key={index}
+              key={army?.realmId + '-' + index}
             >
               <Battalion
                 {...battalion}
@@ -198,13 +196,15 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       </div>
       <div className="col-span-5">
         <Card className={`card ${activeBattalionData?.color}`}>
-          <Image
-            className="rounded-xl"
-            src={activeBattalionData?.image ? activeBattalionData.image : ''}
-            width={400}
-            height={400}
-            objectFit={'cover'}
-          />
+          {activeBattalionData?.image && (
+            <Image
+              className="rounded-xl"
+              src={activeBattalionData?.image}
+              width={400}
+              height={400}
+              objectFit={'cover'}
+            />
+          )}
           <div className="p-3">
             <h2>{activeBattalionData?.name}</h2>
 

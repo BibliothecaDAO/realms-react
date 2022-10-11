@@ -4,21 +4,24 @@ import {
   CardBody,
   CardTitle,
   CardStats,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
-import { useStarknet } from '@starknet-react/core';
+import {
+  useAccount,
+  useStarknetExecute,
+  useTransactionManager,
+} from '@starknet-react/core';
+
 import Image from 'next/future/image';
 import type { ReactNode } from 'react';
-import { ReactElement, useState, useMemo } from 'react';
-
-import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
+import { useState } from 'react';
 import { ENQUEUED_STATUS } from '@/constants/index';
+
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -29,7 +32,6 @@ import {
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 
@@ -39,24 +41,29 @@ export function AccountOverview() {
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [selectedId, setSelectedId] = useState(0);
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
     useState(false);
 
+  const approveTxs = getApproveAllGameContracts();
+  const txQueue = useCommandList();
+
+  const { execute } = useStarknetExecute({ calls: approveTxs });
+
   const filter = {
     OR: [
-      { ownerL2: { equals: getAccountHex(account || '0x0') } },
-      { settledOwner: { equals: getAccountHex(account || '0x0') } },
+      { ownerL2: { equals: getAccountHex(address || '0x0') } },
+      { settledOwner: { equals: getAccountHex(address || '0x0') } },
     ],
   };
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
   const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
 
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: account ? getAccountHex(account) : '', realmIds },
+    variables: { account: address ? getAccountHex(address) : '', realmIds },
     pollInterval: 10000,
-    skip: !account,
+    skip: !address,
   });
 
   /* const getRealmDetails = (realmId: number) =>
@@ -86,8 +93,7 @@ export function AccountOverview() {
     })
     .filter((row) => row.event !== '');
 
-  const txQueue = useTransactionQueue();
-  const approveTxs = getApproveAllGameContracts();
+  const { addTransaction } = useTransactionManager();
 
   const animationUp = useSpring({
     // opacity: true === 'account' ? 1 : 0,
@@ -118,9 +124,9 @@ export function AccountOverview() {
 
             <div className="flex flex-wrap">
               <div className="self-center">
-                {account && (
+                {address && (
                   <span className="self-center text-center sm:text-xl font-lords">
-                    {shortenAddressWidth(account, 6)}
+                    {shortenAddressWidth(address, 6)}
                   </span>
                 )}
                 <h2 className="w-full sm:text-4xl">Ser, Your Vast Empire</h2>
@@ -230,7 +236,7 @@ export function AccountOverview() {
               variant="primary"
               size="xs"
               className="mb-2"
-              onClick={() => {
+              onClick={async () => {
                 txQueue
                   .executeMulticall(
                     approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))

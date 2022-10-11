@@ -1,9 +1,9 @@
 import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useGaContext } from '@/context/GaContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
 import { GASideBar } from '../sidebars/GASideBar';
@@ -13,7 +13,7 @@ interface GaOverviewsProps {
 }
 
 export function GaOverviews(props: GaOverviewsProps) {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
@@ -25,7 +25,7 @@ export function GaOverviews(props: GaOverviewsProps) {
   const [selectedGAId, setSelectedGAId] = useState('');
 
   const isYourGA = (ga: GAdventurer) =>
-    account && account === ga.currentOwner?.address?.toLowerCase();
+    l1Address && l1Address === ga.currentOwner?.address?.toLowerCase();
 
   const isFavourite = (ga: GAdventurer) => favouriteGa.indexOf(ga.id) > -1;
 

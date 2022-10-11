@@ -1,4 +1,4 @@
-import { CheckCircle, Scroll } from '@/shared/Icons';
+import { Scroll } from '@/shared/Icons';
 
 const TxAddedToQueueLabel = () => {
   return (

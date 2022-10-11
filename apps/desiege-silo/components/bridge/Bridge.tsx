@@ -4,7 +4,7 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { XCircleIcon, CheckIcon as Check } from '@heroicons/react/20/solid';
 import {
   useStarknet,
-  useStarknetTransactionManager,
+  useTransactionManager,
   ConnectorNotFoundError,
 } from '@starknet-react/core';
 import axios from 'axios';
@@ -18,7 +18,7 @@ import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import useGameVariables from '@/hooks/desiege/useGameVariables';
 import useTotalMinted from '@/hooks/desiege/useTotalMinted';
 import useTxCallback from '@/hooks/useTxCallback';
-import { useWalletContext } from '@/hooks/useWalletContext';
+import { useAccount as useL1Account } from 'wagmi';
 import Button from '@/shared/Button';
 import ElementsLabel, {
   DarkGradient,
@@ -45,7 +45,7 @@ type TabName =
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const Bridge: React.FC<Prop> = (props) => {
   const { account: starkAccount, connect, connectors, error } = useStarknet();
-  const txManager = useStarknetTransactionManager();
+  const txManager = useTransactionManager();
   const { account, signer, connectWallet, isConnected, balance } =
     useWalletContext();
 

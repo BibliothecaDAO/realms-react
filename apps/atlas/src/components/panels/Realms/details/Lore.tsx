@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import type { GetRealmQuery, LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesQuery } from '@/generated/graphql';
-import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 type Prop = {
   realm?: GetRealmQuery;

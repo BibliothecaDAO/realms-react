@@ -1,15 +1,18 @@
-import { useStarknetTransactionManager } from '@starknet-react/core';
-import { getStarknet } from 'get-starknet';
+import {
+  useTransactionManager,
+  useStarknetExecute,
+} from '@starknet-react/core';
 import { createContext, useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/shared/Icons';
 import { ENQUEUED_STATUS } from '../constants';
-import type { RealmsCall } from '../types';
+import type { CallAndMetadata } from '../types';
 
-type Call = RealmsCall;
-type Tx = Call & { status: typeof ENQUEUED_STATUS };
-interface TransactionQueue {
+type Call = CallAndMetadata;
+export type Tx = Call & { status: typeof ENQUEUED_STATUS };
+
+interface CommandList {
   add: (tx: Call | Call[]) => void;
   transactions: Tx[];
   remove: (tx: Tx) => void;
@@ -18,16 +21,20 @@ interface TransactionQueue {
   executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
-export const TransactionQueueContext = createContext<
-  TransactionQueue | undefined
->(undefined);
+export const CommandListContext = createContext<CommandList | undefined>(
+  undefined
+);
 
-export const TransactionQueueProvider = ({
+export const CommandListProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
+  const [inlineTx, setInlineTx] = useState<Tx[]>([]);
+
+  const { addTransaction } = useTransactionManager();
+  const { execute } = useStarknetExecute({ calls: txs });
 
   const add = (tx: Call[] | Call) => {
     const scrollIcon = <Scroll className="w-6 fill-current" />;
@@ -68,22 +75,34 @@ export const TransactionQueueProvider = ({
     setTx([]);
   };
 
-  const txManager = useStarknetTransactionManager();
-
   const executeMulticall = async (inline?: Tx[]) => {
-    const starknet = getStarknet();
+    /* const starknet = getStarknet();
     await starknet.enable();
 
     const t = inline ? [...inline, ...txs] : txs;
 
-    const resp = await starknet.account.execute(t);
+    const resp = await starknet.account.execute(t); */
 
-    txManager.addTransaction({
+    setTx((prev) => {
+      if (inline) {
+        return prev.concat(
+          inline.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+        );
+      } else {
+        return prev;
+      }
+    });
+
+    const resp = await execute();
+
+    addTransaction({
       ...resp,
-      status: 'TRANSACTION_RECEIVED',
-      transactionHash: resp.transaction_hash,
+      hash: resp.transaction_hash,
       metadata: {
-        multicalls: t.map((tt) => ({ ...tt, status: 'TRANSACTION_RECEIVED' })),
+        multicalls: txs.map((tt) => ({
+          ...tt,
+          status: 'TRANSACTION_RECEIVED',
+        })),
       },
     });
     setTx([]);
@@ -91,7 +110,7 @@ export const TransactionQueueProvider = ({
   };
 
   return (
-    <TransactionQueueContext.Provider
+    <CommandListContext.Provider
       value={{
         add,
         remove,
@@ -102,16 +121,14 @@ export const TransactionQueueProvider = ({
       }}
     >
       {children}
-    </TransactionQueueContext.Provider>
+    </CommandListContext.Provider>
   );
 };
 
-export const useTransactionQueue = () => {
-  const txContext = useContext(TransactionQueueContext);
+export const useCommandList = () => {
+  const txContext = useContext(CommandListContext);
   if (txContext == undefined) {
-    throw new Error(
-      'useTransactionQueue must be used within a TransactionQueueProvider'
-    );
+    throw new Error('useCommandList must be used within a CommandListProvider');
   }
   return txContext;
 };

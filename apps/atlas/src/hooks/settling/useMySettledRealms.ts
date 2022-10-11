@@ -1,14 +1,12 @@
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import type { RealmWhereInput } from '@/generated/graphql';
 import type { Args } from './useRealms';
 import useRealms from './useRealms';
 
 const useMySettledRealms = (args: Omit<Args, 'filter'>) => {
-  const { account: starkAccount } = useStarknet();
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
 
   const filter: RealmWhereInput = {};
 

@@ -2,7 +2,6 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { OrdersFilter } from '@/components/filters/OrdersFilter';
 import { RealmsRarityFilter } from '@/components/filters/RealmsRarityFilter';
 import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
-import { SearchFilter } from '@/components/filters/SearchFilter';
 import { TraitsFilter } from '@/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
 import { BaseFilter } from './BaseFilter';
@@ -63,7 +62,7 @@ export function RealmsFilter(props: RealmsFilterProps) {
 
       <div className="md:ml-4">
         <Button variant="outline" size="xs" onClick={actions.clearFilters}>
-          Clear <span className="hidden md:block ml-2">Filters</span>
+          Clear <span className="hidden ml-2 md:block">Filters</span>
         </Button>
       </div>
     </BaseFilter>

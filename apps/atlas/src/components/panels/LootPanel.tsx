@@ -1,23 +1,19 @@
 import { useQuery } from '@apollo/client';
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import Link from 'next/link';
+
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { LootFilters } from '@/components/filters/LootFilters';
 import { LootOverviews } from '@/components/tables/LootOverviews';
 import { useLootContext } from '@/context/LootContext';
 import { getLootsQuery } from '@/hooks/graphql/queries';
-// import { useAtlasContext } from '@/hooks/useAtlas';
-import { useWalletContext } from '@/hooks/useWalletContext';
-import Button from '@/shared/Button';
 import type { Loot } from '@/types/index';
 import { BasePanel } from './BasePanel';
 import { PanelHeading } from './PanelComponents/PanelHeading';
 
 export const LootPanel = () => {
-  // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { state, actions } = useLootContext();
 
   const limit = 50;
@@ -49,7 +45,7 @@ export const LootPanel = () => {
     }
 
     if (state.selectedTab === 0) {
-      where.currentOwner = account?.toLowerCase();
+      where.currentOwner = l1Address?.toLowerCase();
     }
     where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
     where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
@@ -63,7 +59,7 @@ export const LootPanel = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, page, ...queryDependencies]);
+  }, [l1Address, page, ...queryDependencies]);
 
   const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
     variables,

@@ -1,14 +1,10 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core';
+import { useAccount, useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import type {
-  GetRealmsQuery,
-  RealmOrderByWithRelationInput,
-  RealmWhereInput,
-} from '@/generated/graphql';
+import { useCommandList } from '@/context/CommandListContext';
+import type { GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
@@ -38,9 +34,9 @@ const useUsersRealms = () => {
     relicsHeld: 0,
     resourcesAcrossEmpire: [],
   });
-  const { account } = useStarknet();
-  const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
-  const txQueue = useTransactionQueue();
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
+  const txQueue = useCommandList();
 
   const variables = useMemo(() => {
     const filter = {} as any;
@@ -75,7 +71,7 @@ const useUsersRealms = () => {
     const isClaimable = () => {
       return userRealmsData.realms
         .filter((a) => RealmClaimable(a))
-        .filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
+        .filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
         ? true
         : false;
     };
@@ -87,7 +83,7 @@ const useUsersRealms = () => {
     const resourcesAcrossRealms = () => {
       const allResources =
         userRealmsData.realms
-          .filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
+          .filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
           .map((a) => a.resources)
           .flat() || [];
 
@@ -120,7 +116,7 @@ const useUsersRealms = () => {
     play();
 
     userRealms?.realms
-      ?.filter((a) => a.settledOwner === getAccountHex(account || '0x0'))
+      ?.filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
       .forEach((a) => {
         if (RealmClaimable(a)) {
           txQueue.add(
@@ -150,7 +146,7 @@ const useUsersRealms = () => {
     burnAll: (args: { ids; amounts }) => {
       invoke({
         args: [
-          account,
+          address,
           args.ids.map((a) => bnToUint256(toBN(a))),
           args.amounts.map((a) => bnToUint256(toBN(a))),
         ],

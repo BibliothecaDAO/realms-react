@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
-import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
@@ -13,7 +12,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useResourcesContext } from '@/context/ResourcesContext';
-// import { useAtlasContext } from '@/hooks/useAtlas';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
@@ -25,7 +23,6 @@ type HeaderSidePanelType = 'bank' | 'transaction' | '';
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  // const { togglePanelType, toggleMenuType } = useAtlasContext();
   const { pathname } = useRouter();
   const [player, currentTrack] = usePlayer([
     {

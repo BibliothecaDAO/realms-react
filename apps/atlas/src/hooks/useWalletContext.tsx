@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+/*
 import WalletConnectProvider from '@walletconnect/web3-provider';
+
+import { chains, providers } from '@web3modal/ethereum';
+import type { ConfigOptions } from '@web3modal/react';
+import { Web3Modal } from '@web3modal/react';
 import { ethers } from 'ethers';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Web3Modal from 'web3modal';
 import LordsTokenAbi from '@/abi/TheLordsToken.json';
 import { shortenAddress } from '@/util/formatters';
 
@@ -73,7 +77,7 @@ export const WalletProvider = (props: WalletProviderProps) => {
   );
 };
 
-function useWallet() {
+/*function useWallet() {
   const [modal, setModal] = useState<Web3Modal>();
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner>();
   const [provider, setProvider] = useState<ethers.providers.Provider>();
@@ -191,4 +195,5 @@ function useWallet() {
 
 export function useWalletContext() {
   return useContext(WalletContext);
-}
+} */
+export default {};

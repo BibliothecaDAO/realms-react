@@ -1,6 +1,6 @@
 import {
   useContract,
-  useStarknet,
+  useAccount,
   useStarknetInvoke,
 } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
@@ -18,7 +18,7 @@ export const queryKeys = {
 };
 
 const use1155Approval = () => {
-  const { account } = useStarknet();
+  const { address } = useAccount();
 
   const [is1155TokenApproved, setIs1155TokenApproved] = useState<
     'approved' | 'not-approved'
@@ -38,19 +38,19 @@ const use1155Approval = () => {
     queryKeys.isApproved(towerDefenceContractAddress.data as string),
     () => {
       return getIsApprovedForAll(
-        account as string,
+        address as string,
         towerDefenceContractAddress.data as string
       );
     },
     {
       enabled:
-        towerDefenceContractAddress.data !== undefined && account !== undefined,
+        towerDefenceContractAddress.data !== undefined && address !== undefined,
       staleTime: Infinity, // never consider this stale
     }
   );
 
   useEffect(() => {
-    if (approval.data !== undefined && account !== undefined) {
+    if (approval.data !== undefined && address !== undefined) {
       setIs1155TokenApproved(approval.data ? 'approved' : 'not-approved');
     }
   }, [approval.data]);

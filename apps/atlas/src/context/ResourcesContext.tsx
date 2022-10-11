@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useStarknet, useStarknetCall } from '@starknet-react/core';
+import { useAccount, useStarknetCall } from '@starknet-react/core';
 
 import React, {
   createContext,
@@ -99,7 +99,7 @@ export const ResourceProvider = (props: ResourceProviderProps) => {
 };
 
 function useResources() {
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
@@ -123,8 +123,15 @@ function useResources() {
   const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
   const { contract: exchangeContract } = useExchangeContract();
+  const ownerAddressInt = address
+    ? toBN(address as string).toString()
+    : undefined;
 
-  const ownerAddressInt = toBN(account as string).toString();
+  const resourceMappingArray = useMemo(() => {
+    return ownerAddressInt
+      ? Array(resourceMapping.length).fill(ownerAddressInt)
+      : undefined;
+  }, [ownerAddressInt]);
 
   const { data: lordsBalanceData, refresh } = useStarknetCall({
     contract: lordsContract,
@@ -139,19 +146,13 @@ function useResources() {
   } = useStarknetCall({
     contract: resources1155Contract,
     method: 'balanceOfBatch',
-    args: [
-      Array(resourceMapping.length).fill(ownerAddressInt),
-      resourceMapping,
-    ],
+    args: [resourceMappingArray, resourceMapping],
   });
 
   const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
     contract: exchangeContract,
     method: 'balanceOfBatch',
-    args: [
-      Array(resourceMapping.length).fill(ownerAddressInt),
-      resourceMapping,
-    ],
+    args: [resourceMappingArray, resourceMapping],
   });
 
   const { data: exchangePairData, refresh: updateExchangePairData } =

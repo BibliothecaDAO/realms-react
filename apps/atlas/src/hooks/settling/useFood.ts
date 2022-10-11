@@ -8,14 +8,12 @@ import {
   HarvestType,
   buildingIdToString,
 } from '@/constants/buildings';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
 import type {
-  RealmsCall,
-  BuildingDetail,
+  CallAndMetadata,
   RealmFoodDetails,
-  AvailableResources,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -32,7 +30,7 @@ export const Entrypoints = {
   convert: 'convert_food_tokens_to_store',
 };
 
-export const createFoodCall: Record<string, (args: any) => RealmsCall> = {
+export const createFoodCall: Record<string, (args: any) => CallAndMetadata> = {
   create: (args: {
     tokenId: number;
     quantity: number;
@@ -122,7 +120,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
   const [availableFood, setAvailableFood] = useState();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const { data: foodData } = useGetFoodByRealmIdQuery({
     variables: { id: realm?.realmId as number },

@@ -3,7 +3,6 @@ import {
   Select,
   ResourceIcon,
   InputNumber,
-  IconButton,
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
@@ -23,8 +22,6 @@ import {
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
-import { MarketSelect } from '@/shared/Market/MarketSelect';
-import type { ResourceCost } from '@/types/index';
 
 type ResourceRowProps = {
   resource: Resource & ResourceQty;
@@ -187,9 +184,9 @@ export function SwapResources(): ReactElement {
     batchAddResources,
   } = useResourcesContext();
 
-  const { approveLords, isApproved: isLordsApprovedForExchange } =
+  const { isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
-  const { approveResources, isApproved: isResourcesApprovedForExchange } =
+  const { isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
   const [slippage, setSlippage] = useState(0.5);

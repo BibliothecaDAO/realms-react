@@ -1,5 +1,3 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import type { ReactElement } from 'react';
 import { useGetRealmQuery } from '@/generated/graphql';
 
