@@ -2,9 +2,8 @@ import { ApolloProvider } from '@apollo/client';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
 import { ConnectKitProvider } from 'connectkit';
-import { connect } from 'get-starknet';
 import type { AppProps } from 'next/app';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Toaster, ToastBar } from 'react-hot-toast';
@@ -57,17 +56,6 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    // match the dapp with a wallet instance
-    connect({ showList: false }).then((wallet) => {
-      // connect the dapp with the chosen wallet instance
-      wallet?.enable({ showModal: false }).then(() => {
-        const isConnected = !!wallet?.isConnected;
-        // use `isConnected` :thumbsup:
-      });
-    });
-  }, []);
-
   const connectors = useMemo(
     () => [
       new InjectedConnector({ options: { id: 'argentX' } }),
