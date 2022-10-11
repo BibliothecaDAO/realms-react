@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
+import { Button } from '@bibliotheca-dao/ui-lib';
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
-import Button from '../Button';
 import { ExternalLink } from '../Icons';
 import type { LDKSchema } from './lib';
 
