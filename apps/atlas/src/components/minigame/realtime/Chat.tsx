@@ -78,7 +78,7 @@ const ChatComponent = (props: ChatComponentProps) => {
   });
 
   return (
-    <Card className="absolute bottom-0 left-0 z-50 card">
+    <Card className="z-50 card">
       <div className="flex items-center justify-between text-lg font-bold">
         <h5>
           {/* <Annotation className="inline-block w-4 h-4 mr-1" /> */}
