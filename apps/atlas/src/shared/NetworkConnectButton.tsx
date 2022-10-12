@@ -41,7 +41,7 @@ const NetworkConnectButton = () => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute right-0 w-64 p-6 my-2 rounded-md z-100 bg-gray-1000">
+        <Popover.Panel className="absolute right-0 w-64 p-6 my-2 rounded-md shadow-xl z-100 bg-gray-1000">
           <>
             <h3>Game Networks</h3>
             <hr />
@@ -51,10 +51,10 @@ const NetworkConnectButton = () => {
                 StarkNet
               </p>
               <Tooltip
-                placement="right"
+                placement="auto-start"
                 className="ml-5 "
                 tooltipText={
-                  <div className="p-2 ml-4 text-white border rounded bg-slate-400/60">
+                  <div className="p-2 ml-4 text-white border rounded bg-slate-600/90">
                     <p className="text-xs normal-case">
                       Connect to the StarkNet L2 network to play the Realms:
                       Eternum game
@@ -80,24 +80,25 @@ const NetworkConnectButton = () => {
               </Button>
             ) : (
               <div className="flex flex-col space-y-1">
-                {available &&
-                  available.map((connector) => (
-                    <Button
-                      variant="outline"
-                      className="w-full text-sm"
-                      key={connector.id()}
-                      onClick={() => connect(connector)}
-                    >
-                      {connector.id() == 'argentX' ? (
-                        <ArgentX className="inline-block w-4 mr-4" />
-                      ) : (
-                        <Braavos className="inline-block w-4 mr-4" />
-                      )}
-                      {connector.id() !== 'Disconnected'
-                        ? connector.name()
-                        : 'Wallet'}
-                    </Button>
-                  ))}
+                {available.length
+                  ? available.map((connector) => (
+                      <Button
+                        variant="outline"
+                        className="w-full text-sm"
+                        key={connector.id()}
+                        onClick={() => connect(connector)}
+                      >
+                        {connector.id() == 'argentX' ? (
+                          <ArgentX className="inline-block w-4 mr-4" />
+                        ) : (
+                          <Braavos className="inline-block w-4 mr-4" />
+                        )}
+                        {connector.id() !== 'Disconnected'
+                          ? connector.name()
+                          : 'Wallet'}
+                      </Button>
+                    ))
+                  : 'L2 wallet not available (Download ArgentX)'}
               </div>
             )}
 
@@ -112,9 +113,9 @@ const NetworkConnectButton = () => {
                 Ethereum
               </p>
               <Tooltip
-                placement="right"
+                placement="auto-start"
                 tooltipText={
-                  <div className="p-2 ml-4 text-white border rounded bg-slate-400/60">
+                  <div className="p-2 ml-4 text-white border rounded bg-slate-600/90">
                     <p className="text-xs">
                       Connect an Ethereum Wallet to bridge and check balances
                       across rollups.

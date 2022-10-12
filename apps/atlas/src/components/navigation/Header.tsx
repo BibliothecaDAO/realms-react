@@ -8,9 +8,11 @@ import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
+import { useAccount } from '@starknet-react/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
@@ -24,7 +26,15 @@ export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
   const { pathname } = useRouter();
+  const { address } = useAccount();
+  const { address: l1Address } = useL1Account();
+
   const [player, currentTrack] = usePlayer([
+    {
+      title: 'Cimbalom',
+      artist: 'Casey',
+      src: '/music/realms_cimbalom.mp3',
+    },
     {
       title: 'Order of Enlightenment',
       artist: 'Casey',
@@ -159,18 +169,20 @@ export function Header() {
         <NetworkConnectButton />
 
         <span>
-          <Button
-            className="font-display"
-            onClick={onLordsNavClick}
-            variant="primary"
-          >
-            <Lords className="w-6 fill-current" />{' '}
-            <span className="pl-4">
-              {(+formatEther(lordsBalance)).toLocaleString()}
-            </span>
-          </Button>
+          {(address || l1Address) && (
+            <Button
+              className="font-display"
+              onClick={onLordsNavClick}
+              variant="primary"
+            >
+              <Lords className="w-6 fill-current" />{' '}
+              <span className="pl-4">
+                {(+formatEther(lordsBalance)).toLocaleString()}
+              </span>
+            </Button>
+          )}
         </span>
-        <TransactionNavItem onClick={onTransactionNavClick} />
+        {address && <TransactionNavItem onClick={onTransactionNavClick} />}
       </div>
 
       <ResourceSwapSideBar

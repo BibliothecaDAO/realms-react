@@ -23,7 +23,7 @@ export const ResourceSwapSideBar = ({
   resources,
 }: ResourceSwapSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-30">
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
       )}
