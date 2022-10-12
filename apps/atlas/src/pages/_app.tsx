@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <BreakpointProvider queries={queries}>
           <ModalProvider>
             <WagmiConfig client={wagmiClient}>
-              <ConnectKitProvider>
+              <ConnectKitProvider theme="midnight">
                 <StarknetConfig connectors={connectors} autoConnect>
                   {/* <QueryClientProvider client={queryClient}> */}
                   <ResourceProvider>
