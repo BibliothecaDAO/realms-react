@@ -35,6 +35,11 @@ export function AccountPanel() {
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
   const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
 
+  function onSettleRealmsClick() {
+    console.log('clik realm');
+    setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
+  }
+
   const [selectedTab, setSelectedTab] = useState(0);
   const tabs = useMemo(
     () => [
@@ -45,7 +50,7 @@ export function AccountPanel() {
             <div className="hidden md:block">Empire</div>
           </div>
         ),
-        component: <AccountOverview />,
+        component: <AccountOverview onSettleRealms={onSettleRealmsClick} />,
       },
       {
         label: (
@@ -54,7 +59,7 @@ export function AccountPanel() {
             <div className="hidden md:block">Quick Actions</div>
           </div>
         ),
-        component: <MyActions />,
+        component: <MyActions onSettleRealms={onSettleRealmsClick} />,
       },
       {
         label: (
@@ -132,9 +137,7 @@ export function AccountPanel() {
       </Tabs>
       <SettleRealmsSideBar
         isOpen={isSettleRealmsSideBarOpen}
-        onClose={() => {
-          setIsSettleRealmsSideBarOpen(false);
-        }}
+        onClose={onSettleRealmsClick}
       />
     </BasePanel>
   );

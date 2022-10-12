@@ -35,7 +35,11 @@ import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 
-export function AccountOverview() {
+type Prop = {
+  onSettleRealms: () => void;
+};
+
+export function AccountOverview(props: Prop) {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   const { claimAll, userData, burnAll } = useUsersRealms();
@@ -43,8 +47,6 @@ export function AccountOverview() {
   const { lordsBalance, balance } = useResourcesContext();
   const { address } = useAccount();
   const [selectedId, setSelectedId] = useState(0);
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
 
   const approveTxs = getApproveAllGameContracts();
   const txQueue = useCommandList();
@@ -249,13 +251,7 @@ export function AccountOverview() {
             >
               2. Approve All game Contracts
             </Button>
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() => {
-                setIsSettleRealmsSideBarOpen(true);
-              }}
-            >
+            <Button variant="primary" size="xs" onClick={props.onSettleRealms}>
               3. Settle Realms
             </Button>
 

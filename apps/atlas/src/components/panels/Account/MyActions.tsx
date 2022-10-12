@@ -8,9 +8,8 @@ import {
 
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
-
 import { useState } from 'react';
-
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
@@ -26,8 +25,11 @@ import {
 } from '@/shared/Dashboard/EventMappings';
 
 import { getAccountHex } from '@/shared/Getters/Realm';
+type Prop = {
+  onSettleRealms: () => void;
+};
 
-export function MyActions() {
+export function MyActions(props: Prop) {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   const { claimAll, userData, burnAll } = useUsersRealms();
@@ -35,8 +37,6 @@ export function MyActions() {
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
   const [selectedId, setSelectedId] = useState(0);
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
 
   const filter = {
     OR: [
@@ -187,13 +187,7 @@ export function MyActions() {
             >
               2. Approve All game Contracts
             </Button>
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() => {
-                setIsSettleRealmsSideBarOpen(true);
-              }}
-            >
+            <Button variant="primary" size="xs" onClick={props.onSettleRealms}>
               3. Settle Realms
             </Button>
 
