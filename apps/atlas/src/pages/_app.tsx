@@ -60,6 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     () => [
       new InjectedConnector({ options: { id: 'argentX' } }),
       new InjectedConnector({ options: { id: 'braavos' } }),
+      new InjectedConnector({ options: { id: 'guildly' } }),
     ],
     []
   );

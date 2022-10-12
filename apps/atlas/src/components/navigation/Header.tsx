@@ -36,51 +36,10 @@ export function Header() {
       src: '/music/realms_cimbalom.mp3',
     },
     {
-      title: 'Order of Enlightenment',
+      title: 'Bansura',
       artist: 'Casey',
-      src: '/music/Realms_Report_Idea_1.mp3',
+      src: '/music/realms_bansura.mp3',
     },
-    // {
-    //   title: 'The Minstrels - Order of Enlightenment',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-enlightenment.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Power',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-power.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Anger',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-anger.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Protection',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-protection.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Rage',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-rage.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Brilliance',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-brilliance.mp3',
-    // },
-    // {
-    //   title: 'I walk with ghosts',
-    //   artist: 'Scott Buckley',
-    //   src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
-    // },
   ]);
 
   const [selectedSideBar, setSelectedSideBar] =
@@ -168,20 +127,18 @@ export function Header() {
 
         <NetworkConnectButton />
 
-        <span>
-          {(address || l1Address) && (
-            <Button
-              className="font-display"
-              onClick={onLordsNavClick}
-              variant="primary"
-            >
-              <Lords className="w-6 fill-current" />{' '}
-              <span className="pl-4">
-                {(+formatEther(lordsBalance)).toLocaleString()}
-              </span>
-            </Button>
-          )}
-        </span>
+        {address && (
+          <Button
+            className="font-display"
+            onClick={onLordsNavClick}
+            variant="primary"
+          >
+            <Lords className="w-6 fill-current" />{' '}
+            <span className="pl-4">
+              {(+formatEther(lordsBalance)).toLocaleString()}
+            </span>
+          </Button>
+        )}
         {address && <TransactionNavItem onClick={onTransactionNavClick} />}
       </div>
 

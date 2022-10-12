@@ -12,7 +12,7 @@ import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
-import { toBN } from 'starknet/utils/number';
+import { toBN } from 'starknet/dist/utils/number';
 import {
   RealmBuildingId,
   HarvestType,

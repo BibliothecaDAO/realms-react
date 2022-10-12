@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useStarknetCall } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
+import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { toBN } from 'starknet/utils/number';
 import {
   RealmBuildingId,
   HarvestType,
