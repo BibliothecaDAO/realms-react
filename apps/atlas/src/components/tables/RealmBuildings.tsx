@@ -1,13 +1,13 @@
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { createBuildingCall, Entrypoints } from '@/hooks/settling/useBuildings';
 import useIsOwner from '@/hooks/useIsOwner';
 import { Scroll } from '@/shared/Icons';
-import type { RealmsCall, RealmsCardProps } from '../../types';
+import type { CallAndMetadata, RealmsCardProps } from '../../types';
 import PreviewBuild from '../PreviewBuild';
 import Sidebar from '../sidebars/AtlasSideBar';
 
@@ -26,7 +26,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
     variables: { id: props.realm.realmId },
   });
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [previewBuild, setPreviewBuild] = useState<any>();
 
@@ -35,7 +35,7 @@ export function RealmBuildings(props: RealmsCardProps): ReactElement {
   const buildings = data?.getBuildingsByRealmId ?? [];
 
   const [buildingsInQueue, setBuildingsInQueue] = useState<
-    Pick<RealmsCall, 'metadata'>[]
+    Pick<CallAndMetadata, 'metadata'>[]
   >([]);
 
   useEffect(() => {

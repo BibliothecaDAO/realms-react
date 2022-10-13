@@ -1,10 +1,13 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { findResourceById } from '@/constants/resources';
+import { useCommandList } from '@/context/CommandListContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
+import type { CallAndMetadata, RealmsTransactionRenderConfig } from '../types';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
@@ -26,7 +29,7 @@ export const Entrypoints = {
   removeLiquidity: 'remove_liquidity',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buyTokens: (args: {
     maxAmount: BigNumber;
     tokenIds: number[];
@@ -81,20 +84,126 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
       action: Entrypoints.sellTokens,
     },
   }),
+  addLiquidity: (args: {
+    maxCurrencyAmount: BigNumber[];
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.addLiquidity,
+    calldata: [
+      args.maxCurrencyAmount.length,
+      ...args.maxCurrencyAmount
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
+    metadata: {
+      ...args,
+      action: Entrypoints.addLiquidity,
+    },
+  }),
+  removeLiquidity: (args: {
+    minCurrencyAmount: BigNumber[];
+    tokenIds: number[];
+    tokenAmounts: BigNumber[];
+    lpAmounts: BigNumber[];
+    deadline: number;
+  }) => ({
+    contractAddress: ModuleAddr.Exchange,
+    entrypoint: Entrypoints.removeLiquidity,
+    calldata: [
+      args.minCurrencyAmount.length,
+      ...args.minCurrencyAmount
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.tokenIds.length,
+      ...args.tokenIds
+        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .flat(1),
+      args.tokenAmounts.length,
+      ...args.tokenAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      args.lpAmounts.length,
+      ...args.lpAmounts
+        .map((value) =>
+          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+        )
+        .flat(1),
+      toFelt(args.deadline),
+    ],
+    metadata: {
+      ...args,
+      action: Entrypoints.removeLiquidity,
+    },
+  }),
+};
+
+export const CartResources = ({ tokenId, amounts }) => {
+  return (
+    <div className="flex flex-col items-center mb-4 mr-4">
+      <ResourceIcon
+        className="self-center w-4"
+        resource={findResourceById(tokenId)?.trait?.replace(' ', '') || ''}
+        size="md"
+      />
+      <div>{(+formatEther(amounts)).toLocaleString()}</div>
+    </div>
+  );
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buyTokens]: ({ metadata }, { isQueued }) => ({
     title: 'Buy Resources',
-    description: `${isQueued ? 'Buy' : 'Buying'} ${
-      metadata.tokenIds?.length ?? ''
-    } resources from the market.`,
+    description: [
+      `${isQueued ? 'Buy' : 'Buying'} ${
+        metadata.tokenIds?.length ?? ''
+      } resources from the market.`,
+      <div key="icons" className="flex flex-wrap mt-4">
+        {metadata.tokenIds.map((tokenId, i) => (
+          <CartResources
+            key={i}
+            tokenId={tokenId}
+            amounts={metadata.tokenAmounts[i]}
+          />
+        ))}
+      </div>,
+    ] as any,
   }),
   [Entrypoints.sellTokens]: ({ metadata }, { isQueued }) => ({
     title: 'Sell Resources',
-    description: `${isQueued ? 'Sell' : 'Selling'} ${
-      metadata.tokenIds?.length ?? ''
-    } resources from the market.`,
+    description: [
+      `${isQueued ? 'Sell' : 'Selling'} ${
+        metadata.tokenIds?.length ?? ''
+      } resources from the market.`,
+      <div key="icons" className="flex flex-wrap mt-4">
+        {metadata.tokenIds.map((tokenId, i) => (
+          <CartResources
+            key={i}
+            tokenId={tokenId}
+            amounts={metadata.tokenAmounts[i]}
+          />
+        ))}
+      </div>,
+    ] as any,
   }),
   [Entrypoints.addLiquidity]: ({ metadata }, { isQueued }) => ({
     title: 'Add Liquidity Pair',
@@ -120,10 +229,13 @@ const useSwapResourcesTransaction = (method: string) => {
     contract: exchangeContract,
     method,
   });
-  const { tx, loading } = useTxCallback(transactionHash, (status) => {
-    // Update state changes?
-    return true;
-  });
+  const { tx, loading } = useTxCallback(
+    transactionHash?.transaction_hash,
+    (status) => {
+      // Update state changes?
+      return true;
+    }
+  );
 
   return {
     transactionHash: tx,
@@ -137,7 +249,7 @@ export const useBuyResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.buyTokens);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const buyTokens = (
     maxAmount: BigNumber,
@@ -170,7 +282,7 @@ export const useSellResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.sellTokens);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const sellTokens = (
     minAmount: BigNumber,
@@ -203,6 +315,8 @@ export const useAddLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.addLiquidity);
 
+  const txQueue = useCommandList();
+
   const addLiquidity = (
     maxCurrencyAmount: BigNumber[],
     tokenIds: number[],
@@ -212,23 +326,14 @@ export const useAddLiquidity = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.addLiquidity,
+    txQueue.add(
+      createCall.addLiquidity({
+        maxCurrencyAmount,
         tokenIds,
         tokenAmounts,
-      },
-      args: [
-        maxCurrencyAmount.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {
@@ -243,6 +348,8 @@ export const useRemoveLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.removeLiquidity);
 
+  const txQueue = useCommandList();
+
   const removeLiquidity = (
     minCurrencyAmount: BigNumber[],
     tokenIds: number[],
@@ -253,27 +360,15 @@ export const useRemoveLiquidity = () => {
     if (loading) {
       return;
     }
-    invoke({
-      metadata: {
-        action: Entrypoints.removeLiquidity,
+    txQueue.add(
+      createCall.removeLiquidity({
+        minCurrencyAmount,
         tokenIds,
         tokenAmounts,
         lpAmounts,
-      },
-      args: [
-        minCurrencyAmount.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        tokenIds.map((value) => bnToUint256(value)),
-        tokenAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        lpAmounts.map((value) =>
-          bnToUint256(BigNumber.from(value).toHexString())
-        ),
-        toFelt(deadline),
-      ],
-    });
+        deadline,
+      })
+    );
   };
 
   return {

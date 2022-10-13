@@ -1,7 +1,6 @@
 import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import { useState } from 'react';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
-import { TroopSlot } from '@/constants/army';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import useMySettledRealms from '@/hooks/settling/useMySettledRealms';
 import SidebarHeader from './SidebarHeader';

@@ -1,10 +1,8 @@
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useRef } from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { RealmCard } from '../cards/realms/RealmCard';

@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react';
-import { useMemo, createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 import { storage } from '@/util/localStorage';
 
 const LoreFavoriteLocalStorageKey = 'lore.favourites';

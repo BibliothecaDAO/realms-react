@@ -1,14 +1,8 @@
-import { useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
-import type {
-  GetGameConstantsQuery,
-  BattalionCost,
-  GetRealmsQuery,
-  Army,
-} from '@/generated/graphql';
+import { useCommandList } from '@/context/CommandListContext';
+import type { GetRealmsQuery, Army } from '@/generated/graphql';
 import {
   ModuleAddr,
   useCombatContract,
@@ -16,7 +10,7 @@ import {
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type {
   ItemCost,
-  RealmsCall,
+  CallAndMetadata,
   ResourceCost,
   BattalionInterface,
   ArmyStatistics,
@@ -44,7 +38,7 @@ export const nameArray = [
   'heavyInfantry',
 ];
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildArmy,
@@ -61,7 +55,7 @@ export const createCall: Record<string, (args: any) => RealmsCall> = {
 };
 
 export const useArmy = () => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);
@@ -209,7 +203,6 @@ export const useArmy = () => {
   };
 
   useEffect(() => {
-    console.log(gameConstants);
     setBattalions(
       gameConstants?.battalionCosts.map((a, i) => {
         return {

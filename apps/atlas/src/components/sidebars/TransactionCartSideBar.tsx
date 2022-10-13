@@ -1,6 +1,6 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useState, useMemo } from 'react';
-import { TransactionQueue } from '../tables/TransactionQueue';
+import { CommandList } from '../tables/CommandList';
 import { TransactionCartTable } from '../tables/Transactions';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
@@ -29,7 +29,7 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
       {
         label: 'Command List',
         component: (
-          <TransactionQueue
+          <CommandList
             onSubmit={() => {
               setSelectedTab(1);
             }}

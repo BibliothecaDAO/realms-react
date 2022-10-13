@@ -6,7 +6,7 @@ import {
   InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { battalionInformation } from '@/constants/army';
 import { buildingIdToString } from '@/constants/buildings';
 

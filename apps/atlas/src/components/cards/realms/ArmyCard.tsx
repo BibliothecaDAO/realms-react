@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CountdownTimer,
-} from '@bibliotheca-dao/ui-lib/base';
+import { Button, Card, CountdownTimer } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import ParentSize from '@visx/responsive/lib/components/ParentSize';

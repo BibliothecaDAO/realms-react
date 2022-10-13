@@ -4,10 +4,7 @@ import type {
   RealmWhereInput,
   TravelWhereInput,
 } from '@/generated/graphql';
-import {
-  useGetRealmsQuery,
-  useGetRealmsWithTravelsQuery,
-} from '@/generated/graphql';
+import { useGetRealmsQuery } from '@/generated/graphql';
 
 export type Args = {
   filter: RealmWhereInput;

@@ -4,13 +4,17 @@ import {
   CardBody,
   CardTitle,
   CardStats,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
-import { useStarknet } from '@starknet-react/core';
+import {
+  useAccount,
+  useStarknetExecute,
+  useTransactionManager,
+} from '@starknet-react/core';
+
 import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { ReactElement, useState, useMemo } from 'react';
@@ -18,8 +22,9 @@ import { ReactElement, useState, useMemo } from 'react';
 import { BridgeRealmsSideBar } from '@/components/sidebars/BridgeRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
+
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -30,35 +35,40 @@ import {
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 
-export function AccountOverview() {
+type Prop = {
+  onSettleRealms: () => void;
+};
+
+export function AccountOverview(props: Prop) {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { lordsBalance, balance } = useResourcesContext();
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [selectedId, setSelectedId] = useState(0);
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
-  const [isBridgeOpen, setIsBridgeOpen] = useState(false);
+
+  const approveTxs = getApproveAllGameContracts();
+  const txQueue = useCommandList();
+
+  const { execute } = useStarknetExecute({ calls: approveTxs });
 
   const filter = {
     OR: [
-      { ownerL2: { equals: getAccountHex(account || '0x0') } },
-      { settledOwner: { equals: getAccountHex(account || '0x0') } },
+      { ownerL2: { equals: getAccountHex(address || '0x0') } },
+      { settledOwner: { equals: getAccountHex(address || '0x0') } },
     ],
   };
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
   const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
 
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: account ? getAccountHex(account) : '', realmIds },
+    variables: { account: address ? getAccountHex(address) : '', realmIds },
     pollInterval: 10000,
-    skip: !account,
+    skip: !address,
   });
 
   /* const getRealmDetails = (realmId: number) =>
@@ -88,8 +98,7 @@ export function AccountOverview() {
     })
     .filter((row) => row.event !== '');
 
-  const txQueue = useTransactionQueue();
-  const approveTxs = getApproveAllGameContracts();
+  const { addTransaction } = useTransactionManager();
 
   const animationUp = useSpring({
     // opacity: true === 'account' ? 1 : 0,
@@ -120,9 +129,9 @@ export function AccountOverview() {
 
             <div className="flex flex-wrap">
               <div className="self-center">
-                {account && (
+                {address && (
                   <span className="self-center text-center sm:text-xl font-lords">
-                    {shortenAddressWidth(account, 6)}
+                    {shortenAddressWidth(address, 6)}
                   </span>
                 )}
                 <h2 className="w-full sm:text-4xl">Ser, Your Vast Empire</h2>
@@ -160,49 +169,6 @@ export function AccountOverview() {
             </Button>
           </CardBody>
         </Card>
-        {/* <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-13">
-          <CardTitle>Production rate daily</CardTitle>
-
-          <CardBody>
-            {userData.resourcesAcrossEmpire.map((a, i) => {
-              return (
-                <div
-                  key={i}
-                  className="flex justify-between my-1 text-xl font-semibold tracking-widest uppercase"
-                >
-                  <div className="flex">
-                    <ResourceIcon
-                      size="sm"
-                      className="self-center mr-2"
-                      resource={a.resourceName.replace('_', '') as string}
-                    />{' '}
-                    {a.resourceName}
-                  </div>
-                  + {a.resourceCount * BASE_RESOURCES_PER_DAY}
-                </div>
-              );
-            })}
-          </CardBody>
-          <Button
-            disabled={!userData?.resourcesClaimable}
-            variant="primary"
-            size="md"
-            onClick={() => claimAll()}
-          >
-            {userData?.resourcesClaimable
-              ? 'Harvest All Resources'
-              : 'nothing to claim'}
-          </Button>
-        </Card> */}
-        {/* <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-4">
-            <CardTitle>Raided in past 24hrs</CardTitle>
-            <CardBody>
-              <CardStats className="mb-4 text-3xl">2</CardStats>
-              <Button variant="outline" size="xs" href="/bank">
-                Start Raiding
-              </Button>
-            </CardBody>
-          </Card> */}
 
         <Card
           className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
@@ -222,17 +188,6 @@ export function AccountOverview() {
           </CardBody>
         </Card>
 
-        {/* <Card className="col-start-1 col-end-13 row-span-3 md:col-start-4 md:col-end-9">
-            <div className="relative overflow-x-auto">
-              {balance && (
-                <Table
-                  columns={columns}
-                  data={defaultData}
-                  options={tableOptions}
-                />
-              )}
-            </div>
-          </Card> */}
         <Card
           className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
         >
@@ -286,7 +241,7 @@ export function AccountOverview() {
               variant="primary"
               size="xs"
               className="mb-2"
-              onClick={() => {
+              onClick={async () => {
                 txQueue
                   .executeMulticall(
                     approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
@@ -299,13 +254,7 @@ export function AccountOverview() {
             >
               2. Approve All game Contracts
             </Button>
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() => {
-                setIsSettleRealmsSideBarOpen(true);
-              }}
-            >
+            <Button variant="primary" size="xs" onClick={props.onSettleRealms}>
               3. Settle Realms
             </Button>
 

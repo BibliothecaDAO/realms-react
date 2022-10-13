@@ -1,5 +1,4 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { StringValueNode } from 'graphql';
 
 interface Props {
   id: string;

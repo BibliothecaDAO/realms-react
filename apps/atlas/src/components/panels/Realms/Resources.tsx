@@ -1,12 +1,9 @@
 import {
   Button,
   Card,
-  CardBody,
   CardStats,
   CardTitle,
   InputNumber,
-  CountdownTimer,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
@@ -15,29 +12,19 @@ import { toBN } from 'starknet/dist/utils/number';
 import { RealmResources } from '@/components/tables/RealmResources';
 import {
   RealmBuildingId,
-  HarvestType,
-  HARVEST_LENGTH,
   WORK_HUT_OUTPUT,
   WORK_HUT_COST,
-  MAX_HARVESTS,
 } from '@/constants/buildings';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import useBuildings, {
-  createBuildingCall,
-} from '@/hooks/settling/useBuildings';
-import useFood, { createFoodCall } from '@/hooks/settling/useFood';
+import { createBuildingCall } from '@/hooks/settling/useBuildings';
+import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
-import TxAddedToQueueLabel from '@/shared/TxAddedToQueueLabel';
-import type {
-  BuildingDetail,
-  RealmFoodDetails,
-  AvailableResources,
-} from '@/types/index';
+import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 type Prop = {
@@ -64,7 +51,7 @@ const Harvests: React.FC<Prop> = (props) => {
 
   const { getBuildingCostById } = useGameConstants();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
@@ -84,7 +71,7 @@ const Harvests: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0]).eq(toBN(realm?.realmId))
+          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
       )
     );
     setInput({
@@ -149,13 +136,15 @@ const Harvests: React.FC<Prop> = (props) => {
                   min={1}
                   max={10}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput({
-                      farmsToBuild: input.farmsToBuild,
-                      fishingVillagesToBuild: input.fishingVillagesToBuild,
-                      workHutsToBuild: value.toString(),
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput({
+                        farmsToBuild: input.farmsToBuild,
+                        fishingVillagesToBuild: input.fishingVillagesToBuild,
+                        workHutsToBuild: value.toString(),
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
             )}

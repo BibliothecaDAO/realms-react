@@ -14,8 +14,6 @@ const ArcherTower = 'bg-yellow-600/20';
 const Castle = 'bg-orange-600/20';
 const MageTower = 'bg-purple-600/20';
 
-const image = '/realm-troops/archanist.png';
-
 const description =
   'Paladins are the most loyal and talented horseback riders that exist. With their superior horsemanship skills, they are able to wield a lance or polearm effectively with just one hand, allowing them to use their other hand to carry a shield or sheathe a weapon.';
 
@@ -33,18 +31,18 @@ export enum BattalionIds {
 export const battalionInformation = [
   {
     id: 1,
-    name: 'Light Cavalry',
+    name: 'Cavalry',
     color: Barracks,
-    image: image,
+    image: '/realm-troops/cavalry.png',
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
   },
   {
     id: 2,
-    name: 'Heavy Cavalry',
+    name: 'Knight',
     color: Barracks,
-    image: image,
+    image: '/realm-troops/knight.png',
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
@@ -53,25 +51,25 @@ export const battalionInformation = [
     id: 3,
     name: 'Archer',
     color: ArcherTower,
-    image: image,
+    image: '/realm-troops/archer.png',
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
   },
   {
     id: 4,
-    name: 'Long Bow',
+    name: 'Hunter',
     color: ArcherTower,
-    image: image,
+    image: '/realm-troops/hunter.png',
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
   },
   {
     id: 5,
-    name: 'Mage',
+    name: 'Apprentice',
     color: Castle,
-    image: '/realm-troops/mage.png',
+    image: '/realm-troops/apprentice.png',
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
@@ -80,25 +78,25 @@ export const battalionInformation = [
     id: 6,
     name: 'Archanist',
     color: Castle,
-    image: image,
+    image: '/realm-troops/archanist.png',
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
   },
   {
     id: 7,
-    name: 'Light Infantry',
+    name: 'Solider',
     color: MageTower,
-    image: image,
+    image: '/realm-troops/soldier.png',
     description: description,
     strength: 'Cavalary',
     weakness: 'Magic',
   },
   {
     id: 8,
-    name: 'Heavy Infantry',
+    name: 'Paladin',
     color: MageTower,
-    image: image,
+    image: '/realm-troops/paladin.png',
     description: description,
     strength: 'Cavalary',
     weakness: 'Magic',

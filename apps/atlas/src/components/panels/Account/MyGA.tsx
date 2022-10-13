@@ -1,17 +1,17 @@
 import { useQuery } from '@apollo/client';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useEffect, useMemo, useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { GaFilters } from '@/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';
-import { useWalletContext } from '@/hooks/useWalletContext';
-import Button from '@/shared/Button';
 import type { GAdventurer } from '@/types/index';
 
 export const MyGA = () => {
   // const { isDisplayLarge, selectedId, openDetails } = useAtlasContext();
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const { state, actions } = useGaContext();
 
   const limit = 50;
@@ -34,7 +34,7 @@ export const MyGA = () => {
   const variables = useMemo(() => {
     const where: any = {};
 
-    where.currentOwner = account?.toLowerCase();
+    where.currentOwner = l1Address?.toLowerCase();
     where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
     where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
     where.bagRating_gte = state.ratingFilter.bagRating.min;
@@ -53,7 +53,7 @@ export const MyGA = () => {
       orderBy: 'minted',
       orderDirection: 'asc',
     };
-  }, [account, state, page]);
+  }, [l1Address, state, page]);
 
   const { loading, data } = useQuery<{
     gadventurers: GAdventurer[];

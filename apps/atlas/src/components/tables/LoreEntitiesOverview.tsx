@@ -1,4 +1,3 @@
-import 'moment-timezone';
 import type { LoreEntityFragmentFragment } from '@/generated/graphql';
 import { LoreEntityCard } from '../cards/LoreEntityCard';
 

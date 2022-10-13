@@ -1,7 +1,6 @@
+import type { Call } from '@starknet-react/core';
 import type { ReactElement } from 'react';
-import type { Call as StarknetCall } from 'starknet';
 import type { RealmFragmentFragment, Army } from '@/generated/graphql';
-
 export type GameStatus = 'active' | 'completed' | 'expired';
 
 export const dndTypes = {
@@ -255,11 +254,11 @@ export interface MinMaxRange {
   max: number;
 }
 
-export interface RealmsCall extends StarknetCall {
+export interface CallAndMetadata extends Call {
   metadata: { title: string; description: string } | any;
 }
 
-export type RealmsTransaction = { status: string; metadata?: any };
+export type RealmsTransaction = { status?: string; metadata?: any };
 export interface RealmsTransactionRender {
   title: string;
   description: string | ReactElement;
@@ -319,3 +318,12 @@ export type AvailableResources = {
   claimableResources: string[] | undefined;
   vaultResources: string[] | undefined;
 };
+
+export interface HistoricPriceData {
+  date: string | undefined;
+  amount: number | undefined;
+}
+
+export interface HistoricPrices {
+  [tokenId: number]: HistoricPriceData[] | [];
+}

@@ -1,13 +1,9 @@
-import { OrderIcon, Tabs, Table, Button } from '@bibliotheca-dao/ui-lib';
+import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
-import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
-import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
-import { useAtlasContext } from '@/context/AtlasContext';
-import type { GetRealmQuery, RealmFragmentFragment } from '@/generated/graphql';
-import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
+
+import type { RealmFragmentFragment } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { ArmiesTravel } from './ArmiesTravel';

@@ -1,7 +1,7 @@
 import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -182,10 +182,8 @@ const getFilterForPlaylist: (
 };
 
 const RealmsPlaylistSidebar = (props: Prop) => {
-  const { account: starkAccount } = useStarknet();
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   const [loading, setLoading] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
   const router = useRouter();
@@ -212,20 +210,12 @@ const RealmsPlaylistSidebar = (props: Prop) => {
         onClose={props.onClose}
       ></SidebarHeader>
 
-      <img
-        alt="Lord sitting on throne in war room"
-        style={{ textIndent: '100%', fontSize: 0 }} //  to hide alt
-        className="w-full h-48 overflow-hidden bg-bottom bg-cover whitespace-nowrap lg:h-80 bg-warRoom"
-      />
       <h2 className="my-6 text-center">
         What route should we take today, ser?{' '}
       </h2>
-      <div className="grid grid-cols-6 gap-4 mt-4">
+      <div className="grid grid-cols-2 gap-4 mt-4">
         {systemPlaylists.concat(curatedPlaylists).map((rp, i) => (
-          <Card
-            key={rp.name}
-            className="col-span-6 xl:col-span-3 2xl:col-span-2"
-          >
+          <Card key={rp.name}>
             <h3>{rp.name}</h3>
             <p className="my-2">{rp.description}</p>
             <Button

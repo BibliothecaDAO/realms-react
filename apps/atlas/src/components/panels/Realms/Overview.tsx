@@ -8,27 +8,26 @@ import {
 } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
 import React from 'react';
+import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RealmResources } from '@/components/tables/RealmResources';
-import { RealmBuildingId, STORE_HOUSE_SIZE } from '@/constants/buildings';
+import { STORE_HOUSE_SIZE } from '@/constants/buildings';
 import type { GetRealmQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   TraitTable,
-  squadStats,
-  RealmVaultStatus,
   hasOwnRelic,
   RealmCombatStatus,
   getTrait,
 } from '@/shared/Getters/Realm';
 import TerrainLayer from '@/shared/Terrain';
 import type {
-  BuildingDetail,
   RealmFoodDetails,
   BuildingFootprint,
-  AvailableResources,
+  BuildingDetail,
 } from '@/types/index';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { RealmImage } from './details/Image';
 
 type Prop = {
   realm?: GetRealmQuery;
@@ -122,24 +121,20 @@ const Overview: React.FC<Prop> = (props) => {
         </Card>
         <Card className="col-span-12 sm:col-span-4 lg:col-span-3">
           <CardTitle>Military Strength</CardTitle>
-          <div className="w-full text-center uppercase sm:text-2xl">
-            {realm && RealmCombatStatus(realm)}
+          <div className="w-full p-2 mb-3 text-center uppercase bg-gray-800 rounded sm:text-2xl font-display paper">
+            {realm && RealmCombatStatus(realm)}!
           </div>
-          <div className="flex justify-around flex-grow w-full p-4 text-center">
-            <div>
-              <h5>Attacking</h5>
-              <div className="pt-3 text-5xl font-semibold">
-                {squadStats(attackingSquad).attack}
-              </div>
-            </div>
-            <div className="border-r-4 border-white border-double border-white/30"></div>
-            <div>
-              <h5>Defending</h5>
-              <div className="pt-3 text-5xl font-semibold text-5xll">
-                {squadStats(defensiveSquad).attack}
-              </div>
-            </div>
+          <div className="my-2">
+            {props.realm?.realm.ownArmies.length ? (
+              <ArmyCard
+                selectedRealm={props.realm?.realm.realmId}
+                army={props.realm?.realm.ownArmies[0]}
+              />
+            ) : (
+              'No armies! This Realm is defenceless.'
+            )}
           </div>
+
           {isOwner && (
             <Button
               onClick={() => props.onSetSubview('Army')}
@@ -165,15 +160,29 @@ const Overview: React.FC<Prop> = (props) => {
               <div>
                 {realm?.relic?.map((a, i) => {
                   return (
-                    <div key={i} className="mb-4">
-                      <h2>Conquered by Realm {a.heldByRealm}</h2>{' '}
-                      <p className="text-xl">
-                        {realm?.name} has been Conquered by Realm{' '}
-                        {a.heldByRealm}. The citizens shake in fear everyday
-                        thinking it will be their last... won't someone think of
-                        the children!
-                      </p>
-                      <div className="mt-4">
+                    <div key={i} className="flex flex-wrap mb-4">
+                      <div className="relative">
+                        <Image
+                          src={'/stableai/archanist.png'}
+                          alt="map"
+                          height={150}
+                          width={150}
+                          className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
+                        />
+                        <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
+                          1
+                        </div>
+                      </div>
+                      <div>
+                        <h2>Annexed by Realm {a.heldByRealm}</h2>{' '}
+                        <p className="text-xl">
+                          {realm?.name} has been Conquered by Realm{' '}
+                          {a.heldByRealm}. The citizens shake in fear everyday
+                          thinking it will be their last... won't someone think
+                          of the children!
+                        </p>
+                      </div>
+                      <div className="w-full mt-4">
                         <Button
                           href={'/realm/' + a.heldByRealm + '?tab=Army'}
                           variant="outline"
@@ -189,29 +198,11 @@ const Overview: React.FC<Prop> = (props) => {
             )}
           </CardBody>
         </Card>
-
-        {/* <Card
-          loading={props.loading}
-          className="col-span-12 row-span-2 md:col-start-8 md:col-end-13"
-        >
-          <CardTitle>{realm?.name} history</CardTitle>
-          <CardBody className="text-2xl">
-            Loot is a collaborative media project that aims to create a
-            decentralized, infinitely-expansive sci-fantasy universe, rich with
-            stories, games and multi-media. The Lootverse is a collection of NFT
-            projects, games, art, stories and multimedia backed by an active
-            community of players, builders, artists, writers and creators.
-          </CardBody>
-          <div className="pt-4 mt-auto">
-            <Button variant="outline">write an entry</Button>
-          </div>
-        </Card> */}
         <Card
           loading={props.loading}
           className="col-span-12 lg:col-start-1 lg:col-end-4 "
         >
-          <CardTitle>Used Sqm</CardTitle>
-
+          <CardTitle>Land Used</CardTitle>
           <CardBody>
             <div className="flex flex-wrap">
               {cropLand({
@@ -260,10 +251,7 @@ const Overview: React.FC<Prop> = (props) => {
           </CardBody>
         </Card>
         <Card className="col-span-12 row-span-1 md:col-span-6 lg:col-start-8 lg:col-span-5 ">
-          <div className="rounded h-96">
-            <TerrainLayer />
-          </div>
-
+          <RealmImage id={realm?.realmId} />
           <CardBody>
             <div className="flex grid grid-cols-2 gap-4 font-display">
               <div className="my-1 ">

@@ -1,39 +1,23 @@
-import {
-  Button,
-  Select,
-  ResourceIcon,
-  InputNumber,
-  IconButton,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, InputNumber } from '@bibliotheca-dao/ui-lib';
 
-import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
-import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
-import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
-import { useStarknetCall, useStarknet } from '@starknet-react/core';
+import { useStarknetCall, useAccount } from '@starknet-react/core';
 
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import { useState, useMemo, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useNexusContract,
-  useSplitterContract,
   useLordsContract,
-  useResources1155Contract,
-  useExchangeContract,
   ModuleAddr,
 } from '@/hooks/settling/stark-contracts';
-import {
-  useApproveLordsForExchange,
-  useApproveResourcesForExchange,
-} from '@/hooks/settling/useApprovals';
+
 import { useStakeLords } from '@/hooks/useNexus';
 import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
@@ -52,7 +36,7 @@ const calculateLords = (rate: string, qty: number) => {
 const LordsInput = (props: ResourceRowProps): ReactElement => {
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
   const [input, setInput] = useState<any>(0);
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const { contract: lordsContract } = useLordsContract();
   const { contract: nexusContract } = useNexusContract();
 
@@ -64,7 +48,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     loading: loadingStakeLords,
   } = useStakeLords();
 
-  const ownerAddressInt = toBN(account as string).toString();
+  const ownerAddressInt = toBN(address as string).toString();
 
   const splitterAddressInt = toBN(ModuleAddr.Splitter as string).toString();
   const nexusAddressInt = toBN(ModuleAddr.Nexus as string).toString();
@@ -166,19 +150,19 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
   };
 
   async function onStakeLords() {
-    if (!account) {
+    if (!address) {
       return;
     }
 
-    await stakeLords(parseEther(String(input)), account);
+    await stakeLords(parseEther(String(input)), address);
   }
 
   function onWithdrawLords() {
-    if (!account) {
+    if (!address) {
       return;
     }
 
-    withdrawLords(parseEther(String(input)), account);
+    withdrawLords(parseEther(String(input)), address);
   }
 
   function onNexusClicked() {
@@ -194,13 +178,9 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
       <div className="sm:w-full">
         <div className="flex flex-wrap w-full">
           <div className="flex flex-wrap justify-end w-full mb-1">
-            <span className="text-xs flex font-semibold tracking-widest text-right uppercase opacity-60 ">
+            <span className="flex text-xs font-semibold tracking-widest text-right uppercase opacity-60 ">
               {props.stake
-                ? [
-                    'enter lords',
-                    <Lords key={1} className="w-3 mr-2 fill-white" />,
-                    'to stake',
-                  ]
+                ? 'enter $lords to stake'
                 : 'enter stk-lords to redeem'}
             </span>{' '}
             <InputNumber
@@ -219,13 +199,10 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
             />{' '}
           </div>
           <div className="w-full pt-2 font-semibold text-right border-t border-white/30">
-            <span className="text-xs flex items-center justify-end tracking-widest uppercase opacity-60">
+            <span className="flex items-center justify-end text-xs tracking-widest uppercase opacity-60">
               {props.stake
                 ? 'your will receive stk-lords '
-                : [
-                    'you will receive lords',
-                    <Lords key={1} className="w-3 fill-white" />,
-                  ]}
+                : 'your will receive $lords'}
             </span>{' '}
             <br />{' '}
             <span className="text-xl">
@@ -249,7 +226,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
               </Button>
             </div>
             <div className="w-full mt-2 text-right border-t border-white/30">
-              <span className="flex mt-1 justify-between font-semibold uppercase text-body ">
+              <span className="flex justify-between mt-1 font-semibold uppercase text-body ">
                 <span className="text-left">
                   <span className="text-xs opacity-60"> stk-lords </span>
                   <br />
@@ -266,11 +243,15 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
                 </span>
                 <span>
                   <span className="flex items-center text-xs opacity-60">
-                    equv. lords
-                    <Lords className="w-3 fill-white" />{' '}
+                    equv. $lords
                   </span>
                   <br />{' '}
-                  {(+formatEther(balances.previewTotalRedeem)).toLocaleString()}{' '}
+                  <div className="flex justify-end">
+                    {(+formatEther(
+                      balances.previewTotalRedeem
+                    )).toLocaleString()}{' '}
+                    <Lords className="w-3 ml-1 fill-white" />{' '}
+                  </div>
                   {/* {(
                     (parseInt(balances.stLords) /
                       parseInt(balances.totalStkLords)) *
@@ -310,15 +291,13 @@ export function Nexus(): ReactElement {
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
-          className={`${
-            isBuy ? 'bg-green-600/40' : 'bg-blue-600/40'
-          } relative inline-flex h-6 w-11 items-center rounded-full shadow-inner`}
+          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
         >
           <span className="sr-only">Buy/Sell</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white`}
+            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
           />
         </Switch>
         <div
@@ -326,8 +305,7 @@ export function Nexus(): ReactElement {
             isSell && 'font-semibold'
           }`}
         >
-          withdraw Lords
-          <Lords className="w-3 mr-2 fill-white" />
+          withdraw $Lords
         </div>
       </div>
       <div className="w-full mx-auto md:w-1/2">

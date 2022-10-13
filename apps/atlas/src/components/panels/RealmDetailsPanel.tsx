@@ -1,4 +1,3 @@
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,
@@ -166,23 +165,23 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
     {
       icon: <BookmarkIcon className={s_icons} />,
       action: () => toggleFavourite(),
-      class: `-mb-24 -mr-14 ${s}`,
+      class: `mb-24 -ml-14 ${s}`,
     },
     {
       icon: <ArrowLongLeftIcon className={s_icons} />,
       action: () => prev(),
       class: `-ml-28 ${s}`,
     },
-    {
-      icon: <Helm className={s_icons + ' fill-current'} />,
-      action: () => next(),
-      class: `mt-24 -ml-14 ${s}`,
-    },
-    {
-      icon: <Helm className={s_icons + ' fill-current'} />,
-      action: () => next(),
-      class: `mb-24 -ml-14 ${s}`,
-    },
+    // {
+    //   icon: <Helm className={s_icons + ' fill-current'} />,
+    //   action: () => next(),
+    //   class: `mt-24 -ml-14 ${s}`,
+    // },
+    // {
+    //   icon: <Helm className={s_icons + ' fill-current'} />,
+    //   action: () => next(),
+    //   class: `mb-24 -ml-14 ${s}`,
+    // },
   ];
 
   return (
@@ -200,9 +199,9 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
             hideSearchFilter
           />
 
-          <div className="fixed z-50 text-black bottom-10 right-10">
+          <div className="fixed bottom-0 right-0 z-50 text-black">
             <div
-              className={`w-40 h-40 rounded-full border-4 border-double ${color} flex justify-center align-middle text-black bg-opacity-95 shadow-2xl border-white/20`}
+              className={` w-40 h-40  ${color} flex justify-center align-middle text-black shadow-2xl border-white/20 card border`}
             >
               {quickActions.map((a, i) => {
                 return (

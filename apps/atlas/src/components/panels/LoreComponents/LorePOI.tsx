@@ -1,4 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect } from 'react';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -34,28 +35,26 @@ const pois = {
 type LorePOIProps = {
   poiId: string;
   assetId?: string;
-  pois?: { [index: string]: LorePoiFragmentFragment };
-  poisLoading?: boolean;
+  actions?: {
+    setSelectedCryptId?: Dispatch<SetStateAction<string>>;
+    setSelectedRealmId?: Dispatch<SetStateAction<string>>;
+  };
 };
 
-export const LorePOI = ({
-  poiId,
-  assetId,
-  // pois,
-  poisLoading,
-}: LorePOIProps) => {
-  const {
-    mapContext: { navigateToAsset },
-  } = useAtlasContext();
-
+export const LorePOI = ({ poiId, assetId, actions }: LorePOIProps) => {
   const openSideBar = () => {
     if (!assetId) return;
     switch (poiId) {
       case '1000':
-        navigateToAsset(+assetId, 'realm');
+        actions?.setSelectedRealmId
+          ? actions?.setSelectedRealmId(assetId)
+          : null;
+        // navigateToAsset(+assetId, 'realm');
         break;
       case '2000':
-        navigateToAsset(+assetId, 'crypt');
+        actions?.setSelectedCryptId
+          ? actions?.setSelectedCryptId(assetId)
+          : null;
         break;
 
       default:
@@ -112,9 +111,13 @@ export const LorePOI = ({
     }
   }, []);
 
+  const clickable = ['1000', '2000'].includes(poiId);
+
   return (
     <button
-      className={`rounded-md font-normal underline inline-flex mb-1`}
+      className={`rounded-md font-normal ${
+        clickable ? 'underline' : ''
+      } inline-flex mb-1`}
       onClick={openSideBar}
     >
       {pois && !poiName ? pois[poiId]?.name : null}

@@ -1,29 +1,25 @@
 import { ApolloProvider } from '@apollo/client';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
-import {
-  StarknetProvider,
-  getInstalledInjectedConnectors,
-} from '@starknet-react/core';
-import { connect } from 'get-starknet';
+import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
+import { ConnectKitProvider } from 'connectkit';
 import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { toast, Toaster, ToastBar } from 'react-hot-toast';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { Provider, RpcProvider } from 'starknet';
+import { Toaster, ToastBar } from 'react-hot-toast';
+import { WagmiConfig } from 'wagmi';
+import { Modals } from '@/components/modals';
 import { AtlasProvider } from '@/context/AtlasContext';
+import { CommandListProvider } from '@/context/CommandListContext';
+import { ModalProvider } from '@/context/ModalContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
-import { TransactionQueueProvider } from '@/context/TransactionQueueContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
-import { WalletProvider } from '@/hooks/useWalletContext';
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
-
+import { wagmiClient } from '@/util/wagmi';
 // Create a react-query client
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PageWrapper = (Comp: any) =>
@@ -60,54 +56,48 @@ const queries = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const connectors = getInstalledInjectedConnectors();
-  useEffect(() => {
-    // match the dapp with a wallet instance
-    connect({ showList: false }).then((wallet) => {
-      // connect the dapp with the chosen wallet instance
-      wallet?.enable({ showModal: false }).then(() => {
-        const isConnected = !!wallet?.isConnected;
-        // use `isConnected` :thumbsup:
-      });
-    });
-  }, []);
-
+  const connectors = useMemo(
+    () => [
+      new InjectedConnector({ options: { id: 'argentX' } }),
+      new InjectedConnector({ options: { id: 'braavos' } }),
+      new InjectedConnector({ options: { id: 'guildly' } }),
+    ],
+    []
+  );
   return (
-    <BreakpointProvider queries={queries}>
-      <WalletProvider>
-        <ApolloProvider client={apolloClient}>
-          <StarknetProvider
-            defaultProvider={
-              new RpcProvider({
-                nodeUrl:
-                  'https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6',
-              })
-            }
-            autoConnect
-            connectors={connectors}
-          >
-            <QueryClientProvider client={queryClient}>
-              <ResourceProvider>
-                <TransactionQueueProvider>
-                  <AtlasProvider>
-                    <DndProvider backend={HTML5Backend}>
-                      <Component {...pageProps} />
-                    </DndProvider>
-                  </AtlasProvider>
-                </TransactionQueueProvider>
-              </ResourceProvider>
-              {/* <PageTransition
+    <>
+      <ApolloProvider client={apolloClient}>
+        <BreakpointProvider queries={queries}>
+          <ModalProvider>
+            <WagmiConfig client={wagmiClient}>
+              <ConnectKitProvider theme="midnight">
+                <StarknetConfig connectors={connectors} autoConnect>
+                  {/* <QueryClientProvider client={queryClient}> */}
+                  <ResourceProvider>
+                    <CommandListProvider>
+                      <AtlasProvider>
+                        <DndProvider backend={HTML5Backend}>
+                          <Component {...pageProps} />
+                          <Modals />
+                        </DndProvider>
+                      </AtlasProvider>
+                    </CommandListProvider>
+                  </ResourceProvider>
+                  {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-              <ReactQueryDevtools
-                initialIsOpen={false}
-                position="bottom-right"
-              />
-            </QueryClientProvider>
-          </StarknetProvider>
-        </ApolloProvider>
-      </WalletProvider>
+                  {/* <ReactQueryDevtools
+                  initialIsOpen={false}
+                  position="bottom-right"
+                />
+                </QueryClientProvider> */}
+                </StarknetConfig>
+              </ConnectKitProvider>
+            </WagmiConfig>{' '}
+          </ModalProvider>
+        </BreakpointProvider>
+      </ApolloProvider>
       <Toaster
         gutter={12}
         toastOptions={{
@@ -128,7 +118,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ToastBar>
         )}
       </Toaster>
-    </BreakpointProvider>
+    </>
   );
 }
 

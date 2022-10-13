@@ -1,24 +1,13 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  OrderIcon,
-  ResourceIcon,
-} from '@bibliotheca-dao/ui-lib';
-import { useAtlasContext } from '@/context/AtlasContext';
-import { useRealmContext } from '@/context/RealmContext';
-import type {
-  LoreEntityFragmentFragment,
-  RealmFragmentFragment,
-} from '@/generated/graphql';
-import { useWalletContext } from '@/hooks/useWalletContext';
+import { Card, CardBody } from '@bibliotheca-dao/ui-lib';
+import { useModalContext } from '@/context/ModalContext';
+import type { LoreEntityFragmentFragment } from '@/generated/graphql';
 
 interface LoreEntitiesProps {
   entity: LoreEntityFragmentFragment;
 }
 
 export function LoreEntityCard(props: LoreEntitiesProps) {
-  // const { setModal } = useAtlasContext();
+  const { openModal } = useModalContext();
 
   const { entity } = props;
 
@@ -32,16 +21,14 @@ export function LoreEntityCard(props: LoreEntitiesProps) {
 
   return (
     <Card
-      className={``}
+      className={`cursor-pointer`}
       role="button"
       onKeyUp={() => ({})}
       tabIndex={0}
-      // onClick={() => {
-      //   setModal({
-      //     type: 'lore-entity',
-      //     props: { id: entity.id },
-      //   });
-      // }}
+      onClick={() => {
+        console.log('asdasd');
+        openModal('lore-entity', { id: entity.id });
+      }}
     >
       <CardBody>
         <div

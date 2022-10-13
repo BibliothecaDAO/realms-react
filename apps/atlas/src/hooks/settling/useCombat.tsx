@@ -1,18 +1,16 @@
 import { useStarknetInvoke } from '@starknet-react/core';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
 import { battalionIdToString, getUnitImage } from '@/constants/army';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
 import type {
-  ItemCost,
-  RealmsCall,
+  CallAndMetadata,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -25,7 +23,7 @@ export const Entrypoints = {
   attackGoblins: 'attack_goblin_town',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildArmy,
@@ -95,7 +93,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 const useCombat = () => {
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);

@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '@/types/index';
+import type {
+  CallAndMetadata,
+  RealmsTransactionRenderConfig,
+} from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 
@@ -12,7 +15,10 @@ export const Entrypoints = {
   claim: 'claim_resources',
 };
 
-export const createResourcesCall: Record<string, (args: any) => RealmsCall> = {
+export const createResourcesCall: Record<
+  string,
+  (args: any) => CallAndMetadata
+> = {
   claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,
@@ -36,7 +42,7 @@ type Resources = {
 const useResources = (realm: Realm | undefined): Resources => {
   const { play } = useUiSounds(soundSelector.claim);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   useEffect(() => {
     if (!realm) {

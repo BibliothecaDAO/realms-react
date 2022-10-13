@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useStarknet, useStarknetCall } from '@starknet-react/core';
+import { useAccount, useStarknetCall } from '@starknet-react/core';
 
 import React, {
   createContext,
@@ -20,7 +20,7 @@ import {
   useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
-import type { ResourceCost, NetworkState } from '@/types/index';
+import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 
 export type Resource = {
   resourceId: number;
@@ -69,6 +69,7 @@ const ResourcesContext = createContext<{
   selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
   addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
+  removeAllSelectedSwapResources: () => void;
   updateSelectedSwapResourceQty: (resourceId: number, qty: number) => void;
   updateSelectedSwapResource: (
     resourceId: number,
@@ -82,6 +83,7 @@ const ResourcesContext = createContext<{
   buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
   battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
+  historicPrices: HistoricPrices | undefined;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -97,7 +99,7 @@ export const ResourceProvider = (props: ResourceProviderProps) => {
 };
 
 function useResources() {
-  const { account } = useStarknet();
+  const { address } = useAccount();
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
@@ -121,8 +123,15 @@ function useResources() {
   const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
   const { contract: exchangeContract } = useExchangeContract();
+  const ownerAddressInt = address
+    ? toBN(address as string).toString()
+    : undefined;
 
-  const ownerAddressInt = toBN(account as string).toString();
+  const resourceMappingArray = useMemo(() => {
+    return ownerAddressInt
+      ? Array(resourceMapping.length).fill(ownerAddressInt)
+      : undefined;
+  }, [ownerAddressInt]);
 
   const { data: lordsBalanceData, refresh } = useStarknetCall({
     contract: lordsContract,
@@ -137,19 +146,13 @@ function useResources() {
   } = useStarknetCall({
     contract: resources1155Contract,
     method: 'balanceOfBatch',
-    args: [
-      Array(resourceMapping.length).fill(ownerAddressInt),
-      resourceMapping,
-    ],
+    args: [resourceMappingArray, resourceMapping],
   });
 
   const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
     contract: exchangeContract,
     method: 'balanceOfBatch',
-    args: [
-      Array(resourceMapping.length).fill(ownerAddressInt),
-      resourceMapping,
-    ],
+    args: [resourceMappingArray, resourceMapping],
   });
 
   const { data: exchangePairData, refresh: updateExchangePairData } =
@@ -162,7 +165,7 @@ function useResources() {
       },
     });
 
-  const { exchangeInfo } = useMarketRate();
+  const { exchangeInfo, historicPrices } = useMarketRate();
 
   // batch add a cost
   const batchAddResources = (cost: ResourceCost[]) => {
@@ -195,8 +198,8 @@ function useResources() {
     }
     const select = resourceId ?? availableResourceIds[0];
     setSelectedSwapResources([
-      ...selectedSwapResources,
       { resourceId: select, qty: qty ? qty : 0 },
+      ...selectedSwapResources,
     ]);
   };
 
@@ -204,6 +207,10 @@ function useResources() {
     setSelectedSwapResources(
       selectedSwapResources.filter((item) => item.resourceId !== resourceId)
     );
+  };
+
+  const removeAllSelectedSwapResources = () => {
+    setSelectedSwapResources([]);
   };
 
   const updateSelectedSwapResource = (
@@ -326,6 +333,7 @@ function useResources() {
     selectedSwapResourcesWithBalance,
     addSelectedSwapResources,
     removeSelectedSwapResource,
+    removeAllSelectedSwapResources,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     balance,
@@ -336,6 +344,7 @@ function useResources() {
     buildingCosts,
     battalionCosts,
     batchAddResources,
+    historicPrices,
   };
 }
 

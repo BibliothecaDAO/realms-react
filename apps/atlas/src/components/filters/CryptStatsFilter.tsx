@@ -1,6 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Popover, Transition } from '@headlessui/react';
-import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { CryptsMax } from '@/constants/index';
 import { useOnClickOutsideElement } from '@/hooks/useOnClickOutsideElement';

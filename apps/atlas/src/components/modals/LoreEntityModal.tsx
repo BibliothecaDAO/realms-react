@@ -37,62 +37,60 @@ export const LoreEntityModal = ({ entityId }) => {
   };
 
   return (
-    <div className={``}>
-      <div className="w-full rounded-md">
-        {loading && (
-          <div className="flex flex-col items-center gap-2 py-8 mx-auto animate-pulse">
-            <Castle className="block w-20 fill-current" />
-            <h2>Loading Lore...</h2>
-          </div>
-        )}
+    <div className="w-full rounded-md">
+      {loading && (
+        <div className="flex flex-col items-center gap-2 py-8 mx-auto animate-pulse">
+          <Castle className="block w-20 fill-current" />
+          <h2>Loading Lore...</h2>
+        </div>
+      )}
 
-        {loreEntity && (
-          <div
-            className={
-              'p-10 w-full text-xl prose prose-stone prose-sm brightness-200 mt-2 mb-2 bg-black border-double border-white/30 border-4 rounded-xl'
-            }
-          >
+      {loreEntity && (
+        <div
+          className={`w-full p-10 brightness-200 mt-2 mb-2 bg-black border-double border-white/30 border-4 rounded-xl`}
+        >
+          <div className={'text-xl prose prose-stone prose-sm '}>
             <LoreScrollEntity entity={loreEntity} />
           </div>
-        )}
-        {loreEntity && (
-          <div className={`mb-1 p-4`}>
-            <Button
-              href="/lore"
-              size="xs"
-              variant={'outline'}
-              onClick={() => {
-                window.open(
-                  `https://twitter.com/share?${getTwitterParams()}`,
-                  'sharer',
-                  'toolbar=0,status=0,width=550,height=400'
-                );
-              }}
-            >
-              Share on Twitter
-            </Button>
-            <Button
-              size="xs"
-              className="ml-2"
-              variant={'outline'}
-              onClick={() => {
-                navigator.clipboard.writeText(getShareUrl());
+        </div>
+      )}
+      {loreEntity && (
+        <div className={`mb-1 p-4`}>
+          <Button
+            href="/lore"
+            size="xs"
+            variant={'outline'}
+            onClick={() => {
+              window.open(
+                `https://twitter.com/share?${getTwitterParams()}`,
+                'sharer',
+                'toolbar=0,status=0,width=550,height=400'
+              );
+            }}
+          >
+            Share on Twitter
+          </Button>
+          <Button
+            size="xs"
+            className="ml-2"
+            variant={'outline'}
+            onClick={() => {
+              navigator.clipboard.writeText(getShareUrl());
 
-                toast(`Link is copied to clipboard`, {
-                  position: 'top-right',
-                  style: {
-                    borderRadius: '2px',
-                    background: '#000',
-                    color: '#fff',
-                  },
-                });
-              }}
-            >
-              Copy link for sharing
-            </Button>
-          </div>
-        )}
-      </div>
+              toast(`Link is copied to clipboard`, {
+                position: 'top-right',
+                style: {
+                  borderRadius: '2px',
+                  background: '#000',
+                  color: '#fff',
+                },
+              });
+            }}
+          >
+            Copy link for sharing
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

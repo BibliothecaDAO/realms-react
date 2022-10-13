@@ -353,7 +353,7 @@ export const LoreEditor = ({
 
 const Portal = ({ children }) => {
   return typeof document === 'object'
-    ? ReactDOM.createPortal(children, document.body)
+    ? ReactDOM.createPortal(children, (document as Document).body)
     : null;
 };
 
