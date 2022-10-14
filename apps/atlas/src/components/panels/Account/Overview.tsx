@@ -161,7 +161,7 @@ export function AccountOverview(props: Prop) {
             <CardStats>
               <span>{userData?.relicsHeld as ReactNode}</span>
             </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
+            <Button variant="outline" size="xs" href="/realm">
               Start Raiding
             </Button>
           </CardBody>
