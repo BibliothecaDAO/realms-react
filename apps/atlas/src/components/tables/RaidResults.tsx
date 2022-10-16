@@ -88,105 +88,43 @@ export const RaidResults = (props: RaidResultsProps) => {
     }); */
 
   return (
-    <div className="pt-10">
-      {result && (
-        <h2 className="mb-4 text-center">
-          {success ? 'Successful Raid' : 'Raid Defended'}!!
-        </h2>
-      )}
-
-      <div className="flex flex-wrap justify-between">
-        {/* {mapped
-          ?.filter((b) => b.outcome !== 1)
-          .filter((b) => b.unitDefending)
-          .map((a, i) => {
-            return (
-              <div
-                className="w-full p-4 mb-2 text-center border-4 border-double rounded-xl border-white/20"
-                key={i}
-              >
-                <h3>
-                  [{i + 1}] Attacking Realm # {a.realm}
-                </h3>
-
-                 <div className="flex justify-around mt-10 space-x-2">
-                  <div>
-                     <Troop
-                      className="w-48 h-64"
-                      troopsStats={gameConstants?.troopStats}
-                      troop={a.unitAttacking}
-            /> 
-                    <div className="flex flex-wrap w-full mx-auto mt-2">
-                      {a.attackSquad.map((b: TroopInterface, i) => {
-                        return <TroopIcon key={i} vitality={b.vitality} />;
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="self-center w-12">
-                    <h1>{a.hitPoints}</h1>
-                    <h3>hits</h3>
-                  </div>
-
-                  <div>
-                   <Troop
-                      className="w-48 h-64"
-                      troopsStats={costs?.troopStats}
-                      troop={a.unitDefending}
-                    /> 
-                    <div className="flex flex-wrap w-full mx-auto mt-2">
-                      {a.defendSquad.map((b: TroopInterface, i) => {
-                        return <TroopIcon key={i} vitality={b.vitality} />;
-                      })}
-                    </div>
-                  </div>
-                </div> 
-              </div>
-            );
-          })} */}
-      </div>
-
+    <div className="pt-10 text-center">
       {result ? (
-        <div className="mt-5">
-          {/* <div className="relative flex flex-wrap ">
-            <div className="w-full">
-              {getCombatSteps().map((a, index) => {
-                return (
-                  <BattleReportItem
-                    key={index}
-                    index={index}
-                    realm={
-                      index & 1
-                        ? result.defendRealmId
-                        : result.attackRealmId
-                    }
-                    hitPoints={a.hitPoints}
-                    result={result}
-                  />
-                );
-              })}
+        <div>
+          <h2 className="mb-4 text-center">
+            {success ? 'Successful Raid' : 'Raid Defended'}!!
+          </h2>
+          <div className="flex">
+            <div className="w-1/2">
+              <h3>Attacker</h3>
+              {result.data.attackRealmId}
             </div>
-          </div> */}
-          {(result?.data.relicLost ?? 0) > 0 && (
-            <h1>Relic {result.data.relicLost} Captured</h1>
-          )}
-          {result.data.pillagedResources?.length ? (
-            <div className="pt-4">
-              <div className="mb-4 text-3xl">
-                Successful Raid!! The troops of Realm{' '}
-                {result.data.defendRealmId} were slayed and Realm{' '}
-                {result.data.attackRealmId} took off with the following
-                resources.
-                {/* TODO GENERALISE
+            <div className="w-1/2 text-center">
+              <h3>Defender</h3>
+            </div>
+          </div>
+          <div className="mt-5">
+            {(result?.data.relicLost ?? 0) > 0 && (
+              <h1>Relic {result.data.relicLost} Captured</h1>
+            )}
+            {result.data.pillagedResources?.length && (
+              <div className="pt-4">
+                <div className="mb-4 text-3xl">
+                  Successful Raid!! The troops of Realm{' '}
+                  {result.data.defendRealmId} were slayed and Realm{' '}
+                  {result.data.attackRealmId} took off with the following
+                  resources.
+                  {/* TODO GENERALISE
                  The citizens are trembling and in awe of your victory. */}
+                </div>
+                {result.data.pillagedResources && (
+                  <div className="flex justify-center w-72">
+                    {resourcePillaged(result.data.pillagedResources)}
+                  </div>
+                )}
               </div>
-              <div className="flex justify-center w-72">
-                {resourcePillaged(result.data.pillagedResources)}
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
+            )}
+          </div>
         </div>
       ) : (
         <div className="text-center lg:px-36">
@@ -214,65 +152,10 @@ export const RaidResults = (props: RaidResultsProps) => {
     </div>
   );
 };
-
-/* interface BattleReportItem {
-  realm: number;
-  index: number;
-  hitPoints: number | null | undefined;
-  result: GetRealmCombatResultQuery['getRealmCombatResult'];
-}
-
-export function BattleReportItem(props: BattleReportItem): ReactElement {
-  const isOwnRealm = props.index & 1 ? false : true;
-
-  return (
-    <div
-      className={`flex justify-between w-full px-4 py-1 my-1 text-2xl border-4 border-double rounded shadow-inner border-white/30 font-display ${
-        isOwnRealm ? 'bg-green-900' : 'bg-red-900'
-      }`}
-    >
-      {' '}
-      <span>
-        <span>
-          {props.index + 1}. Your troops {isOwnRealm ? 'dealt' : 'took'}{' '}
-          <span className="font-semibold">{props.hitPoints}</span> damage
-        </span>
-      </span>
-    </div>
-  );
-}
-
+/*
 interface BattleTroopItem {
   vitality: number;
   troopId: number;
   hitsTaken: number | null | undefined;
-}
-
-export function BattleTroop(props: BattleTroopItem): ReactElement {
-  return (
-    <div className="w-24">
-      {' '}
-      <span>
-        <span>
-          ID: {props.troopId} {props.vitality} {props.hitsTaken}
-        </span>
-      </span>
-    </div>
-  );
-}
-
-export function TroopIcon({ vitality }): ReactElement {
-  return (
-    <div className="m-1">
-      {' '}
-      <div
-        className={`w-1 h-1 ${
-          vitality === 0
-            ? 'bg-gray-500'
-            : 'bg-green-800 shadow-green-200 shadow-lg'
-        } rounded-full`}
-      ></div>
-    </div>
-  );
 }
 */
