@@ -277,6 +277,7 @@ export function SwapResources(): ReactElement {
     } else {
       onSellTokensClick();
     }
+    removeAllSelectedSwapResources();
   }
 
   const calculatedPriceImpact = useMemo(() => {
