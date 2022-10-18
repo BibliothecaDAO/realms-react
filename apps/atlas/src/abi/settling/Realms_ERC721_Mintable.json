@@ -153,12 +153,42 @@
   {
     "data": [
       {
+        "name": "previousOwner",
+        "type": "felt"
+      },
+      {
+        "name": "newOwner",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
         "name": "implementation",
         "type": "felt"
       }
     ],
     "keys": [],
     "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
     "type": "event"
   },
   {
@@ -372,6 +402,18 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "owner",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "name": "to",
@@ -452,10 +494,6 @@
       {
         "name": "to",
         "type": "felt"
-      },
-      {
-        "name": "tokenId",
-        "type": "Uint256"
       }
     ],
     "name": "mint",
@@ -485,6 +523,23 @@
       }
     ],
     "name": "setTokenURI",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "felt"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
     "outputs": [],
     "type": "function"
   },
