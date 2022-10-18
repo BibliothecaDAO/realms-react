@@ -6,6 +6,7 @@ import {
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { toFelt } from 'starknet/utils/number';
 import { useCommandList } from '@/context/CommandListContext';
 import {
   useSettlingContract,
@@ -30,6 +31,7 @@ export const Entrypoints = {
   settle: 'settle',
   unsettle: 'unsettle',
   mint: 'mint',
+  approve: 'approve',
 };
 
 export const createSettlingCall: Record<
@@ -42,11 +44,17 @@ export const createSettlingCall: Record<
     calldata: uint256ToRawCalldata(bnToUint256(realmId)),
     metadata: { realmId, action: Entrypoints.settle },
   }),
-  mint: ({ account, realmId }) => ({
+  approve: ({ quantity }) => ({
+    contractAddress: ModuleAddr.StarkEthereum,
+    entrypoint: Entrypoints.approve,
+    calldata: [toBN(ModuleAddr.Realms).toString(), quantity, 0],
+    metadata: { quantity, action: Entrypoints.approve },
+  }),
+  mint: ({ account }) => ({
     contractAddress: ModuleAddr.Realms,
     entrypoint: Entrypoints.mint,
-    calldata: [account, ...uint256ToRawCalldata(bnToUint256(realmId))],
-    metadata: { realmId, action: Entrypoints.mint },
+    calldata: [account],
+    metadata: { action: Entrypoints.mint },
   }),
   unsettle: ({ realmId }) => ({
     contractAddress: ModuleAddr.Settling,
@@ -59,7 +67,11 @@ export const createSettlingCall: Record<
 export const renderTransaction: RealmsTransactionRenderConfig = {
   mint: (tx, ctx) => ({
     title: 'Minting',
-    description: `Terraforming Realm #${tx.metadata.realmId}.`,
+    description: `Minting Realms.`,
+  }),
+  approve: (tx, ctx) => ({
+    title: 'Approving Eth for Sale',
+    description: `Approving Eth for Sale`,
   }),
   settle: (tx, ctx) => ({
     title: 'Settling',
@@ -123,13 +135,20 @@ const useSettling = (): Settling => {
         })
       );
     },
-    mintRealm: (realmId: number) => {
+    mintRealm: (quantity: number) => {
       txQueue.add(
-        createSettlingCall.mint({
-          account: toBN(address as string).toString(),
-          realmId: realmId,
+        createSettlingCall.approve({
+          quantity: (quantity * 10000000000000000).toString(),
         })
       );
+      // loop through and mint
+      for (let i = 0; i < quantity; i++) {
+        txQueue.add(
+          createSettlingCall.mint({
+            account: toBN(address as string).toString(),
+          })
+        );
+      }
     },
     isRealmsApproved,
     approveRealms: () => {

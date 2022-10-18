@@ -44,7 +44,20 @@ export const ModuleAddr = {
   Calculator:
     '0x04f65c9451f333e0fbe33f912f470da360cf959ea0cefb85f0abef54fd3bb76c',
   Travel: '0x0415bda0925437cee1cd70c5782c65a5b1f5c72945c5204dbba71c6d69c8575a',
+  StarkEthereum:
+    '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
 };
+
+/**
+ * Load the Stark Ethereum Contract. This is an ERC20 Contract.
+ * @returns The `StarkEthereum` contract or undefined.
+ */
+export function useStarkEthereum() {
+  return useContract({
+    abi: Lords as Abi,
+    address: ModuleAddr.StarkEthereum,
+  });
+}
 
 /**
  * Load the Travel contract.

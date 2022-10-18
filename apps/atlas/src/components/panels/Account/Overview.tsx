@@ -211,14 +211,21 @@ export function AccountOverview(props: Prop) {
 
           <CardBody>
             <p className="mb-3 font-semibold">
-              HINT: Add a few Realms to your tx cart. Then follow the buttons in
-              sequence. You may get an error if the Realm has already been
-              minted.
+              Mint Realms for 0.01 ETH each. Input quantity below.
             </p>
+            <Button
+              variant="outline"
+              size="xs"
+              target={'_blank'}
+              href="https://faucet.goerli.starknet.io/"
+            >
+              Get ETH from faucet
+            </Button>
+            <hr className="my-2" />
             <input
               placeholder="Type Id"
               type={'number'}
-              className="w-full px-3 mx-auto mb-2 text-black rounded bg-white/80"
+              className="w-full px-4 py-4 mx-auto mb-2 text-3xl text-center text-black rounded bg-white/80"
               value={selectedId}
               onChange={(e) => {
                 setSelectedId(parseInt(e.target.value));
@@ -228,10 +235,10 @@ export function AccountOverview(props: Prop) {
             />
             <Button
               variant="primary"
-              size="xs"
+              size="lg"
               onClick={() => mintRealm(selectedId)}
             >
-              Add realms to tx cart
+              Mint Realms
             </Button>
             <hr className="my-2" />
             <Button
