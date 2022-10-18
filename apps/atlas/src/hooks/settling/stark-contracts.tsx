@@ -27,7 +27,7 @@ export const ModuleAddr = {
   StakedRealms:
     '0x04a0c6a8d4343f890417e6be19166a8b95a870a43f332add3509ea074750f0f9',
   Settling:
-    '0x0441181da8e4d3ca2add537dff9d80b4ac1300cc67b0ceffd75147c4f1915048',
+    '0x007a29730cfaed96839660577c3b3019038862187b0865280b79e944c66ac215',
   Exchange:
     '0x042bf805eb946855cc55b1321a86cd4ece9904b2d15f50c47439af3166c7c5e2',
   ResourcesToken:
