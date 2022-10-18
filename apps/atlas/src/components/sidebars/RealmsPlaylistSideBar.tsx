@@ -1,7 +1,7 @@
 import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -182,10 +182,8 @@ const getFilterForPlaylist: (
 };
 
 const RealmsPlaylistSidebar = (props: Prop) => {
-  const { account: starkAccount } = useStarknet();
-  const starknetWallet = starkAccount
-    ? BigNumber.from(starkAccount).toHexString()
-    : '';
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   const [loading, setLoading] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
   const router = useRouter();

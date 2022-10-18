@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { getCryptQuery } from '@/hooks/graphql/queries';
 import type { CryptData } from '@/types/index';
-import { Crypt } from '../cards/Crypts/Crypt';
+import { Crypt } from '../cards/crypts/Crypt';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 

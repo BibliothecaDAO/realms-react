@@ -5,9 +5,9 @@ import { BigNumber } from 'ethers';
 import { toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { findResourceById } from '@/constants/resources';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
+import { useCommandList } from '@/context/CommandListContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import type { RealmsCall, RealmsTransactionRenderConfig } from '../types';
+import type { CallAndMetadata, RealmsTransactionRenderConfig } from '../types';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
@@ -29,7 +29,7 @@ export const Entrypoints = {
   removeLiquidity: 'remove_liquidity',
 };
 
-export const createCall: Record<string, (args: any) => RealmsCall> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   buyTokens: (args: {
     maxAmount: BigNumber;
     tokenIds: number[];
@@ -229,10 +229,13 @@ const useSwapResourcesTransaction = (method: string) => {
     contract: exchangeContract,
     method,
   });
-  const { tx, loading } = useTxCallback(transactionHash, (status) => {
-    // Update state changes?
-    return true;
-  });
+  const { tx, loading } = useTxCallback(
+    transactionHash?.transaction_hash,
+    (status) => {
+      // Update state changes?
+      return true;
+    }
+  );
 
   return {
     transactionHash: tx,
@@ -246,7 +249,7 @@ export const useBuyResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.buyTokens);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const buyTokens = (
     maxAmount: BigNumber,
@@ -279,7 +282,7 @@ export const useSellResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.sellTokens);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const sellTokens = (
     minAmount: BigNumber,
@@ -312,7 +315,7 @@ export const useAddLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.addLiquidity);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const addLiquidity = (
     maxCurrencyAmount: BigNumber[],
@@ -345,7 +348,7 @@ export const useRemoveLiquidity = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.removeLiquidity);
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const removeLiquidity = (
     minCurrencyAmount: BigNumber[],

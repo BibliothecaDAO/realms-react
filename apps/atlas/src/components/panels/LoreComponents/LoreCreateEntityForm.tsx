@@ -534,7 +534,7 @@ export const LoreCreateEntityForm = () => {
           >
             <div className={`bg-white w-4 h-4 rounded-full mx-auto mb-2`}></div>
             Waiting for StarkNet
-            {starknetError && (
+            {!!starknetError && (
               <div className={`mt-2`}>
                 <Button
                   onClick={() => {

@@ -12,7 +12,7 @@ import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
-import { toBN } from 'starknet/utils/number';
+import { toBN } from 'starknet/dist/utils/number';
 import {
   RealmBuildingId,
   HarvestType,
@@ -24,8 +24,8 @@ import {
   FISH_ID,
   WHEAT_ID,
 } from '@/constants/buildings';
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useFood from '@/hooks/settling/useFood';
@@ -78,7 +78,7 @@ const Food: React.FC<Prop> = (props) => {
 
   const { getBuildingCostById } = useGameConstants();
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
@@ -99,7 +99,7 @@ const Food: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0]).eq(toBN(realm?.realmId))
+          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
       )
     );
   }, [txQueue.transactions]);
@@ -207,14 +207,16 @@ const Food: React.FC<Prop> = (props) => {
                     min={1}
                     max={farmCapacity}
                     stringMode // to support high precision decimals
-                    onChange={(value: ValueType) =>
-                      setInput((current) => {
-                        return {
-                          ...current,
-                          farmsToBuild: value.toString(),
-                        };
-                      })
-                    }
+                    onChange={(value: ValueType | null) => {
+                      if (value) {
+                        setInput((current) => {
+                          return {
+                            ...current,
+                            farmsToBuild: value.toString(),
+                          };
+                        });
+                      }
+                    }}
                   />{' '}
                 </div>
                 <div className="flex mt-4">
@@ -372,14 +374,16 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={fishingVillageCapacity}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        fishingVillagesToBuild: value.toString(),
-                      };
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          fishingVillagesToBuild: value.toString(),
+                        };
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
               <div className="flex mt-4">
@@ -503,15 +507,17 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={100000}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        fishConversion: value.toString(),
-                      };
-                    })
-                  }
-                />{' '}
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          fishConversion: value.toString(),
+                        };
+                      });
+                    }
+                  }}
+                />
               </div>
               <div className="flex flex-wrap w-full p-2">
                 <div className="w-full mb-2 text-2xl">
@@ -534,14 +540,16 @@ const Food: React.FC<Prop> = (props) => {
                   min={1}
                   max={100000}
                   stringMode
-                  onChange={(value: ValueType) =>
-                    setInput((current) => {
-                      return {
-                        ...current,
-                        wheatConversion: value.toString(),
-                      };
-                    })
-                  }
+                  onChange={(value: ValueType | null) => {
+                    if (value) {
+                      setInput((current) => {
+                        return {
+                          ...current,
+                          wheatConversion: value.toString(),
+                        };
+                      });
+                    }
+                  }}
                 />{' '}
               </div>
               <p className="p-2">

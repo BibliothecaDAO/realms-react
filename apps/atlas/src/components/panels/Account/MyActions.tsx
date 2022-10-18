@@ -3,22 +3,17 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardStats,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
-import Image from 'next/future/image';
-import type { ReactNode } from 'react';
-import { ReactElement, useState, useMemo } from 'react';
-
+import { useState } from 'react';
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
+import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { useTransactionQueue } from '@/context/TransactionQueueContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -28,12 +23,13 @@ import {
   genEconomicRealmEvent,
   genMilitaryRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
-import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import { RateChange } from '@/shared/Getters/Market';
-import { getAccountHex } from '@/shared/Getters/Realm';
-import { shortenAddressWidth } from '@/util/formatters';
 
-export function MyActions() {
+import { getAccountHex } from '@/shared/Getters/Realm';
+type Prop = {
+  onSettleRealms: () => void;
+};
+
+export function MyActions(props: Prop) {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   const { claimAll, userData, burnAll } = useUsersRealms();
@@ -41,8 +37,6 @@ export function MyActions() {
   const { lordsBalance, balance } = useResourcesContext();
   const { account } = useStarknet();
   const [selectedId, setSelectedId] = useState(0);
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
 
   const filter = {
     OR: [
@@ -86,7 +80,7 @@ export function MyActions() {
     })
     .filter((row) => row.event !== '');
 
-  const txQueue = useTransactionQueue();
+  const txQueue = useCommandList();
   const approveTxs = getApproveAllGameContracts();
 
   const animationUp = useSpring({
@@ -193,13 +187,7 @@ export function MyActions() {
             >
               2. Approve All game Contracts
             </Button>
-            <Button
-              variant="primary"
-              size="xs"
-              onClick={() => {
-                setIsSettleRealmsSideBarOpen(true);
-              }}
-            >
+            <Button variant="primary" size="xs" onClick={props.onSettleRealms}>
               3. Settle Realms
             </Button>
 

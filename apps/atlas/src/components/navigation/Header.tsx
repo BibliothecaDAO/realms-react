@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
-import BibliothecaBook from '@bibliotheca-dao/ui-lib/icons/BibliothecaBook.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
@@ -9,11 +8,12 @@ import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
+import { useAccount } from '@starknet-react/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { useResourcesContext } from '@/context/ResourcesContext';
-// import { useAtlasContext } from '@/hooks/useAtlas';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
@@ -25,55 +25,21 @@ type HeaderSidePanelType = 'bank' | 'transaction' | '';
 export function Header() {
   const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  // const { togglePanelType, toggleMenuType } = useAtlasContext();
   const { pathname } = useRouter();
+  const { address } = useAccount();
+  const { address: l1Address } = useL1Account();
+
   const [player, currentTrack] = usePlayer([
     {
-      title: 'Order of Enlightenment',
+      title: 'Cimbalom',
       artist: 'Casey',
-      src: '/music/Realms_Report_Idea_1.mp3',
+      src: '/music/realms_cimbalom.mp3',
     },
-    // {
-    //   title: 'The Minstrels - Order of Enlightenment',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-enlightenment.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Power',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-power.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Anger',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-anger.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Protection',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-protection.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Rage',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-rage.mp3',
-    // },
-    // {
-    //   title: 'The Minstrels - Order of Brilliance',
-    //   album: 'The 16 Orders',
-    //   artist: 'The Minstrels',
-    //   src: '/music/minstrels/minstrels-brilliance.mp3',
-    // },
-    // {
-    //   title: 'I walk with ghosts',
-    //   artist: 'Scott Buckley',
-    //   src: '/music/scott-buckley-i-walk-with-ghosts.mp3',
-    // },
+    {
+      title: 'Bansura',
+      artist: 'Casey',
+      src: '/music/realms_bansura.mp3',
+    },
   ]);
 
   const [selectedSideBar, setSelectedSideBar] =
@@ -161,7 +127,7 @@ export function Header() {
 
         <NetworkConnectButton />
 
-        <span>
+        {address && (
           <Button
             className="font-display"
             onClick={onLordsNavClick}
@@ -172,8 +138,8 @@ export function Header() {
               {(+formatEther(lordsBalance)).toLocaleString()}
             </span>
           </Button>
-        </span>
-        <TransactionNavItem onClick={onTransactionNavClick} />
+        )}
+        {address && <TransactionNavItem onClick={onTransactionNavClick} />}
       </div>
 
       <ResourceSwapSideBar

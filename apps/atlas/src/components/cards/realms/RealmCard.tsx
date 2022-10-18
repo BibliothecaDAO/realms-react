@@ -1,27 +1,19 @@
-import {
-  OrderIcon,
-  Tabs,
-  ResourceIcon,
-  Button,
-  Card,
-} from '@bibliotheca-dao/ui-lib';
-import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import { OrderIcon, Tabs, Button, Card } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
-import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import React, {
   forwardRef,
-  ReactElement,
   useImperativeHandle,
   useState,
   useMemo,
 } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import {
   RealmHistory,
   RealmOverview,
@@ -32,7 +24,6 @@ import { RealmResources } from '@/components/tables/RealmResources';
 import { useRealmContext } from '@/context/RealmContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import {
   isFavourite,
   isYourRealm,
@@ -45,8 +36,8 @@ import type { RealmsCardProps } from '../../../types';
 export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {
     const { play } = useUiSounds(soundSelector.pageTurn);
-    const { account } = useWalletContext();
-    const { account: starkAccount } = useStarknet();
+    const { address: l1Address } = useL1Account();
+    const { address, status } = useAccount();
     const {
       state: { favouriteRealms },
       actions,
@@ -114,7 +105,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <div className="flex justify-between">
           <h4 className="flex">
             <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
-            {isYourRealm(props.realm, account, starkAccount || '')
+            {isYourRealm(props.realm, l1Address, address || '')
               ? 'ser'
               : shortenAddressWidth(RealmOwner(props.realm), 6)}
           </h4>

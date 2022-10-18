@@ -1,10 +1,7 @@
 import { gql } from '@apollo/client';
 import { GAdventurerFragment } from './fragments/gadventurer';
-import { BagFragment, defaultLoot } from './fragments/loot';
-import { ManaFragment } from './fragments/mana';
-import { RaidResultFragment } from './fragments/raidResults';
-import { RealmFragment, SRealmFragment } from './fragments/realmFragments';
-import { WalletFragment } from './fragments/wallet';
+import { BagFragment } from './fragments/loot';
+import { RealmFragment } from './fragments/realmFragments';
 
 const getRealmsQuery = gql`
   ${RealmFragment}
@@ -185,153 +182,6 @@ const getCryptsQuery = gql`
   }
 `;
 
-const getResourceListQuery = gql`
-  query getResourceListQuery @api(name: realms) {
-    resources(first: 25) {
-      id
-      name
-      totalRealms
-    }
-  }
-`;
-const getResourceBalancesQuery = gql`
-  query getResourceBalancesQuery($address: String) {
-    accounts(where: { id: $address }) {
-      balances {
-        token {
-          identifier
-        }
-        value
-      }
-    }
-  }
-`;
-
-const getl1Adventurer = gql`
-  ${WalletFragment}
-  ${BagFragment}
-  ${defaultLoot}
-  ${ManaFragment}
-  ${GAdventurerFragment}
-
-  query getAdventurer($address: String!, $first: Int, $skip: Int)
-  @api(name: ecosystem) {
-    wallet(id: $address) {
-      id
-      realmsHeld
-      bridgedRealmsHeld
-      bridgedRealms(first: 30) {
-        id
-        tokenURI
-      }
-      realms(first: 30) {
-        id
-        tokenURI
-      }
-      bagsHeld
-      bags(first: $first, skip: $skip) {
-        ...BagData
-      }
-      mLootsHeld
-      mLoot(first: 30) {
-        id
-        head
-        neck
-        chest
-        hand
-        ring
-        weapon
-        waist
-        foot
-      }
-      manasHeld
-      manas(first: 30) {
-        ...ManaData
-      }
-      gAdventurersHeld
-      gAdventurers(first: 30) {
-        ...DefaultBagData
-        ...GAdventurerData
-      }
-    }
-  }
-`;
-const getl2Adventurer = gql`
-  ${RealmFragment}
-  ${SRealmFragment}
-  ${RaidResultFragment}
-  query adventurer($address: String!) {
-    wallet(id: $address) {
-      id
-      realmsHeld
-      realms(first: 5) {
-        ...RealmData
-      }
-      srealmsHeld
-      srealms(first: 3) {
-        ...SRealmData
-      }
-      raiderResults(orderBy: timestamp, orderDirection: desc) {
-        ...RaidResultFragment
-      }
-      defenderResults(orderBy: timestamp, orderDirection: desc) {
-        ...RaidResultFragment
-      }
-    }
-  }
-`;
-
-const mintedRealmsQuery = gql`
-  query mintedRealmsQuery($lastID: String) {
-    realms(
-      first: 1000
-      where: { id_gt: $lastID }
-      orderBy: id
-      orderDirection: asc
-    ) {
-      id
-    }
-  }
-`;
-
-const lpPositionQuery = gql`
-  query lpPositionQuery($address: String) {
-    positions(where: { owner: $address }) {
-      id
-      tokenId
-      owner
-      staked
-      oldOwner
-      incentivePositions {
-        id
-        active
-      }
-    }
-    depositedPositions: positions(where: { oldOwner: $address }) {
-      id
-      tokenId
-      owner
-      staked
-      oldOwner
-      incentivePositions {
-        id
-        active
-      }
-    }
-  }
-`;
-const lpIncentivesQuery = gql`
-  query lpIncentivesQuery($address: String) {
-    incentives(where: { pool: $address }, orderBy: "startTime") {
-      id
-      startTime
-      endTime
-      reward
-      ended
-    }
-  }
-`;
-
 export {
   getRealmQuery,
   getRealmsQuery,
@@ -341,11 +191,4 @@ export {
   getGAsQuery,
   getCryptQuery,
   getCryptsQuery,
-  mintedRealmsQuery,
-  getl1Adventurer,
-  getl2Adventurer,
-  getResourceListQuery,
-  getResourceBalancesQuery,
-  lpPositionQuery,
-  lpIncentivesQuery,
 };

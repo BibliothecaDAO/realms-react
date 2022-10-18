@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const RealmFragment = gql`
   fragment RealmData on Realm {

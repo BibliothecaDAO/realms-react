@@ -1,6 +1,6 @@
 import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import type { ReactElement } from 'react';
 import { useEffect, useState, useMemo } from 'react';
@@ -60,9 +60,9 @@ export const SettleRealmsSideBarPanel = ({
 }: {
   onClose?: () => void;
 }) => {
-  const { account } = useStarknet();
+  const { address } = useAccount();
 
-  const starknetWallet = account ? BigNumber.from(account).toHexString() : '';
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
 
   const { settleRealm, unsettleRealm, isRealmsApproved, approveRealms } =
     useSettling();

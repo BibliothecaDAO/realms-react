@@ -1,7 +1,5 @@
-import { formatEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';

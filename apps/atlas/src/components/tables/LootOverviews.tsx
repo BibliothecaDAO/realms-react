@@ -1,9 +1,9 @@
 import { Button, Card } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useLootContext } from '@/context/LootContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { Loot } from '@/types/index';
 import { LootSideBar } from '../sidebars/LootSideBar';
@@ -13,7 +13,7 @@ interface LootOverviewsProps {
 }
 
 export function LootOverviews(props: LootOverviewsProps) {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
@@ -24,7 +24,7 @@ export function LootOverviews(props: LootOverviewsProps) {
   } = useLootContext();
 
   const isYourLoot = (loot: Loot) =>
-    account && account === loot.currentOwner?.address?.toLowerCase();
+    l1Address && l1Address === loot.currentOwner?.address?.toLowerCase();
 
   const isFavourite = (loot: Loot) => favouriteLoot.indexOf(loot.id) > -1;
 

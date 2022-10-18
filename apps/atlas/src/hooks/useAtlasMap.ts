@@ -47,8 +47,8 @@ function getCoordinates(assetId: string, assetType: AssetType) {
   }
 
   return {
-    longitude: asset[0].coordinates[0] as number,
-    latitude: asset[0].coordinates[1] as number,
+    longitude: asset[0].xy[0] as number,
+    latitude: asset[0].xy[1] as number,
   };
 }
 

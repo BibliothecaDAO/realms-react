@@ -1,10 +1,10 @@
 import { Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useAccount as useL1Account } from 'wagmi';
 import { environments, findEnvironment } from '@/constants/cryptsEnvironments';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCryptContext } from '@/context/CryptContext';
-import { useWalletContext } from '@/hooks/useWalletContext';
 import type { Crypt } from '@/types/index';
 import { CryptSideBar } from '../sidebars/CryptsSideBar';
 
@@ -13,7 +13,7 @@ interface CryptOverviewsProps {
 }
 
 export function CryptsOverviews(props: CryptOverviewsProps) {
-  const { account } = useWalletContext();
+  const { address: l1Address } = useL1Account();
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
@@ -24,7 +24,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
   const [selectedCryptId, setSelectedCryptId] = useState('');
 
   const isYourCrypt = (crypt: Crypt) =>
-    account && account === crypt.currentOwner?.address?.toLowerCase();
+    l1Address && l1Address === crypt.currentOwner?.address?.toLowerCase();
 
   const isFavourite = (crypt: Crypt) => favouriteCrypt.indexOf(crypt.id) > -1;
 
