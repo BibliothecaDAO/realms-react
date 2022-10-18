@@ -124,7 +124,7 @@ export const SettleRealmsSideBarPanel = ({
         ),
       },
     ],
-    [data?.realms, selectedTab]
+    [data?.realms, selectedTab, isRealmsApproved]
   );
 
   const settleAll = () => {
