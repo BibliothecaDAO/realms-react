@@ -71,8 +71,8 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex items-center mr-4">
-          <div className="mr-4 text-xs">{currentTrack}</div>
+        <div className="flex items-center px-4 mr-4 border card">
+          <div className="mr-4 font-display">{currentTrack}</div>
           <div className="flex self-center">
             <IconButton
               aria-label="Bank"

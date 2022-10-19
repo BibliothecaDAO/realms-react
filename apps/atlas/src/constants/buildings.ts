@@ -100,19 +100,19 @@ export const buildingIntegrity = (id: RealmBuildingId) => {
   let name = 0;
   switch (id) {
     case RealmBuildingId.House:
-      name = 3600;
+      name = 3 * DAY;
       break;
     case RealmBuildingId.Barracks:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.MageTower:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.ArcherTower:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.Castle:
-      name = 37319;
+      name = 7 * DAY;
       break;
   }
   return name;

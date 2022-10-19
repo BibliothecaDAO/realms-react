@@ -22,9 +22,11 @@ import { defaultArmy } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import type { GetRealmQuery, Army } from '@/generated/graphql';
+import type { GetRealmQuery, Army, Realm } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import { createBuildingCall } from '@/hooks/settling/useBuildings';
+import useBuildings, {
+  createBuildingCall,
+} from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
@@ -57,9 +59,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
   const { findRealmsAttackingArmies } = useArmy();
 
-  const { build } = useCombat();
   const realm = props.realm;
   const { userData, userRealms } = useUsersRealms();
+
+  const { build } = useBuildings(realm as Realm);
 
   const allArmies = findRealmsAttackingArmies(userRealms?.realms)?.filter(
     (a) => a.realmId !== realm.realmId
@@ -271,18 +274,16 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                         <div className="flex w-full mt-3 space-x-2">
                           <Button
                             onClick={() =>
-                              txQueue.add(
-                                createBuildingCall.build({
-                                  realmId: realm.realmId,
-                                  buildingId: a.id,
-                                  qty: buildQty[a.key],
-                                  costs: {
-                                    // Mimic ItemCost interface
-                                    amount: 0,
-                                    resources: a.cost,
-                                  },
-                                })
-                              )
+                              build({
+                                realmId: realm.realmId,
+                                buildingId: a.id,
+                                qty: buildQty[a.key],
+                                costs: {
+                                  // Mimic ItemCost interface
+                                  amount: 0,
+                                  resources: a.cost,
+                                },
+                              })
                             }
                             className="w-full"
                             size="xs"
