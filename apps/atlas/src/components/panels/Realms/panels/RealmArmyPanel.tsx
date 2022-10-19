@@ -27,6 +27,7 @@ import { useArmy } from '@/hooks/settling/useArmy';
 import { createBuildingCall } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
+import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
@@ -72,7 +73,8 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
     (army) => army.destinationRealmId == realm.realmId
   );
 
-  const { attackGoblins } = useCombat();
+  const { claim } = useGoblinTowns();
+
   const { checkUserHasResources } = useGameConstants();
 
   const timeAttacked = realm?.lastAttacked
@@ -329,21 +331,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             </div>
           </Card>
         )}
-        {/* {isOwner && (
-          <Card className="col-span-12 md:col-start-6 md:col-end-13">
-            <CardTitle>Goblins</CardTitle>
-            <CardBody>
-              Goblins emit Lords after defeating them. You must use your
-              Attacking Army.
-            </CardBody>
-            <Button
-              variant="primary"
-              onClick={() => attackGoblins(realm.realmId)}
-            >
-              Attack Goblins
-            </Button>
-          </Card>
-        )} */}
 
         <Card
           loading={props.loading}
@@ -412,6 +399,18 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             })}
           </div>
         </Card>
+        {isOwner && (
+          <Card className="col-span-12 md:col-start-6 md:col-end-13">
+            <CardTitle>Goblins</CardTitle>
+            <CardBody>
+              Goblins emit Lords after defeating them. You must use your
+              Attacking Army.
+            </CardBody>
+            <Button variant="primary" onClick={() => claim(realm.realmId)}>
+              Attack Goblins
+            </Button>
+          </Card>
+        )}
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
           <SidebarHeader onClose={() => setIsRaiding(false)} />
           <CombatSideBar defendingRealm={realm} />
