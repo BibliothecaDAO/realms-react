@@ -246,14 +246,10 @@ export function AccountOverview(props: Prop) {
               size="xs"
               className="mb-2"
               onClick={async () => {
-                txQueue
-                  .executeMulticall(
-                    approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-                  )
-                  .catch((err) => {
-                    // TODO: handle error
-                    console.log(err);
-                  });
+                await txQueue.add(
+                  approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+                );
+                await txQueue.executeMulticall();
               }}
             >
               2. Approve All game Contracts

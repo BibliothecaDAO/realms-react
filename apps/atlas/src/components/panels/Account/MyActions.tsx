@@ -174,15 +174,11 @@ export function MyActions(props: Prop) {
               variant="primary"
               size="xs"
               className="mb-2"
-              onClick={() => {
-                txQueue
-                  .executeMulticall(
-                    approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-                  )
-                  .catch((err) => {
-                    // TODO: handle error
-                    console.log(err);
-                  });
+              onClick={async () => {
+                await txQueue.add(
+                  approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+                );
+                await txQueue.executeMulticall();
               }}
             >
               2. Approve All game Contracts
