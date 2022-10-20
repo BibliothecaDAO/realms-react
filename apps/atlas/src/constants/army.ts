@@ -89,7 +89,7 @@ export const battalionInformation = [
     color: MageTower,
     image: '/realm-troops/soldier.png',
     description: description,
-    strength: 'Cavalary',
+    strength: 'Cavalry',
     weakness: 'Magic',
   },
   {
@@ -98,7 +98,7 @@ export const battalionInformation = [
     color: MageTower,
     image: '/realm-troops/paladin.png',
     description: description,
-    strength: 'Cavalary',
+    strength: 'Cavalry',
     weakness: 'Magic',
   },
 ];
@@ -134,28 +134,28 @@ export const battalionIdToString = (id: BattalionIds) => {
   let name = 'n/a';
   switch (id) {
     case BattalionIds.LightCavalry:
-      name = 'Light Cavalry';
+      name = 'Cavalry';
       break;
     case BattalionIds.HeavyCavalry:
-      name = 'Heavy Cavalry';
+      name = 'Knight';
       break;
     case BattalionIds.Archer:
       name = 'Archer';
       break;
     case BattalionIds.LongBow:
-      name = 'LongBow';
+      name = 'Hunter';
       break;
     case BattalionIds.Mage:
-      name = 'Mage';
+      name = 'Apprentice';
       break;
     case BattalionIds.Archanist:
       name = 'Archanist';
       break;
     case BattalionIds.LightInfantry:
-      name = 'Light Infantry';
+      name = 'Solider';
       break;
     case BattalionIds.HeavyInfantry:
-      name = 'Heavy Infantry';
+      name = 'Paladin';
       break;
   }
   return name;

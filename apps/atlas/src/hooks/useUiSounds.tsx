@@ -13,6 +13,7 @@ export const soundSelector = {
   fly: 'whoosh_low_1.mp3',
   buildMilitary: 'RealmsUI_Castle5.mp3',
   buildWorkHut: 'Realms_Work_UI_2.mp3',
+  summonTroops: 'summonTroops.mp3',
 };
 
 export const useUiSounds = (selector: string) => {

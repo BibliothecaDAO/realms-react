@@ -10,9 +10,9 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
-
 import { useState, useMemo, useReducer } from 'react';
 import type { ReactElement } from 'react';
+import { battalionInformation, battalionIdToString } from '@/constants/army';
 import type { Resource } from '@/context/ResourcesContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import {
@@ -359,7 +359,7 @@ export function SwapResources(): ReactElement {
                           size="xs"
                           variant="outline"
                         >
-                          {a.battalionName}
+                          {battalionIdToString(a.battalionId)}
                         </Button>
                       </Popover.Button>
                     );
