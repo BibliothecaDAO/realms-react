@@ -38,7 +38,7 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
         </span>
       ),
       distance: travel_information.distance,
-      time: <span>{travel_information.time / 60} min</span>,
+      time: <span>{(travel_information.time / 60 / 60).toFixed(2)} Hrs</span>,
       action: (
         <Button
           onClick={() => {

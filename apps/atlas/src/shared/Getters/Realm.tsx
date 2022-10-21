@@ -235,7 +235,7 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
   return realm?.relic && realm?.relic.length ? false : true;
 };
 
-export const fetchRealmNameById = (id: number) => {
+export const fetchRealmNameById = (id: number | undefined) => {
   return RealmsData.features.filter((realm) => realm.id == id)[0].name;
 };
 
@@ -277,15 +277,15 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   const { checkUserHasResources } = useGameConstants();
 
   return (
-    <div className="px-1 font-extrabold text-center">
-      <ResourceIcon size="xs" resource={resourceName} />
+    <div className="px-1 font-extrabold text-center font-display">
+      <ResourceIcon withTooltip size="xs" resource={resourceName} />
       <span
         className={
           checkUserHasResources({
             cost: amount * qty,
             id: id,
           })
-            ? 'text-green-200'
+            ? 'text-green-600 shadow-green-100 drop-shadow-lg'
             : 'text-red-200'
         }
       >

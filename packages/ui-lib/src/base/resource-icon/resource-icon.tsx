@@ -34,6 +34,7 @@ export type Props = {
   size: keyof typeof STYLES['size'];
   className?: string;
   label?: boolean;
+  withTooltip?: boolean;
 };
 
 type Resource = {
@@ -98,6 +99,14 @@ export const ResourceIcon = (props: Props) => {
         <span className="self-center ml-4 text-xl tracking-widest uppercase font-display">
           {Components[props.resource.replace(' ', '').replace("'", '')]?.name}
         </span>
+      )}
+      {props.withTooltip && (
+        <div className="absolute top-0 flex flex-col items-center hidden -translate-y-full w-max group-hover:flex">
+          <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black rounded shadow-lg">
+            <span className="capitalize">{props.resource}</span>
+          </span>
+          <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+        </div>
       )}
     </div>
   );
