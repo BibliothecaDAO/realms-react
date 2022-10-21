@@ -49,7 +49,7 @@ export type Army = {
   heavyCavalryQty: Scalars['Int'];
   heavyInfantryHealth: Scalars['Int'];
   heavyInfantryQty: Scalars['Int'];
-  lastAttacked: Scalars['Int'];
+  lastAttacked?: Maybe<Scalars['Timestamp']>;
   level: Scalars['Int'];
   lightCavalryHealth: Scalars['Int'];
   lightCavalryQty: Scalars['Int'];
@@ -119,7 +119,7 @@ export type ArmyWhereInput = {
   heavyCavalryQty?: InputMaybe<IntFilter>;
   heavyInfantryHealth?: InputMaybe<IntFilter>;
   heavyInfantryQty?: InputMaybe<IntFilter>;
-  lastAttacked?: InputMaybe<IntFilter>;
+  lastAttacked?: InputMaybe<DateTimeNullableFilter>;
   level?: InputMaybe<IntFilter>;
   lightCavalryHealth?: InputMaybe<IntFilter>;
   lightCavalryQty?: InputMaybe<IntFilter>;
@@ -880,6 +880,7 @@ export type Query = {
   realmsCount: Scalars['Int'];
   travels: Array<Travel>;
   troopStats: Array<TroopStats>;
+  walletBalances: Array<WalletBalance>;
 };
 
 export type QueryAggregateRealmHistoryArgs = {
@@ -1009,6 +1010,15 @@ export type QueryTravelsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TravelWhereInput>;
+};
+
+export type QueryWalletBalancesArgs = {
+  cursor?: InputMaybe<WalletBalanceWhereUniqueInput>;
+  distinct?: InputMaybe<Array<WalletBalanceScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<WalletBalanceOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WalletBalanceWhereInput>;
 };
 
 export enum QueryMode {
@@ -1309,6 +1319,8 @@ export type RealmOrderByWithRelationInput = {
   squad?: InputMaybe<TroopOrderByRelationAggregateInput>;
   traits?: InputMaybe<RealmTraitOrderByRelationAggregateInput>;
   wallet?: InputMaybe<WalletOrderByWithRelationInput>;
+  walletL2?: InputMaybe<WalletOrderByWithRelationInput>;
+  walletSettled?: InputMaybe<WalletOrderByWithRelationInput>;
   wonder?: InputMaybe<SortOrder>;
 };
 
@@ -1382,6 +1394,8 @@ export type RealmWhereInput = {
   squad?: InputMaybe<TroopListRelationFilter>;
   traits?: InputMaybe<RealmTraitListRelationFilter>;
   wallet?: InputMaybe<WalletRelationFilter>;
+  walletL2?: InputMaybe<WalletRelationFilter>;
+  walletSettled?: InputMaybe<WalletRelationFilter>;
   wonder?: InputMaybe<StringNullableFilter>;
 };
 
@@ -1456,27 +1470,6 @@ export type ResourceOrderByRelationAggregateInput = {
   _count?: InputMaybe<SortOrder>;
 };
 
-export type ResourceTokenListRelationFilter = {
-  every?: InputMaybe<ResourceTokenWhereInput>;
-  none?: InputMaybe<ResourceTokenWhereInput>;
-  some?: InputMaybe<ResourceTokenWhereInput>;
-};
-
-export type ResourceTokenOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
-export type ResourceTokenWhereInput = {
-  AND?: InputMaybe<Array<ResourceTokenWhereInput>>;
-  NOT?: InputMaybe<Array<ResourceTokenWhereInput>>;
-  OR?: InputMaybe<Array<ResourceTokenWhereInput>>;
-  address?: InputMaybe<StringFilter>;
-  id?: InputMaybe<IntFilter>;
-  qty?: InputMaybe<IntFilter>;
-  resourceId?: InputMaybe<IntFilter>;
-  wallet?: InputMaybe<WalletRelationFilter>;
-};
-
 export type ResourceWhereInput = {
   AND?: InputMaybe<Array<ResourceWhereInput>>;
   NOT?: InputMaybe<Array<ResourceWhereInput>>;
@@ -1487,26 +1480,6 @@ export type ResourceWhereInput = {
   realmId?: InputMaybe<IntNullableFilter>;
   resourceId?: InputMaybe<IntFilter>;
   upgrades?: InputMaybe<StringNullableListFilter>;
-};
-
-export type SRealmListRelationFilter = {
-  every?: InputMaybe<SRealmWhereInput>;
-  none?: InputMaybe<SRealmWhereInput>;
-  some?: InputMaybe<SRealmWhereInput>;
-};
-
-export type SRealmOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
-export type SRealmWhereInput = {
-  AND?: InputMaybe<Array<SRealmWhereInput>>;
-  NOT?: InputMaybe<Array<SRealmWhereInput>>;
-  OR?: InputMaybe<Array<SRealmWhereInput>>;
-  id?: InputMaybe<IntFilter>;
-  owner?: InputMaybe<StringNullableFilter>;
-  realmId?: InputMaybe<IntFilter>;
-  wallet?: InputMaybe<WalletRelationFilter>;
 };
 
 export enum SortOrder {
@@ -1712,12 +1685,58 @@ export type Wallet = {
   realmsSettledHeld: Scalars['Int'];
 };
 
+export type WalletBalance = {
+  __typename?: 'WalletBalance';
+  address: Scalars['String'];
+  amount: Scalars['String'];
+  id: Scalars['Int'];
+  lastEventId?: Maybe<Scalars['String']>;
+  tokenId: Scalars['Int'];
+};
+
+export type WalletBalanceAddressTokenIdCompoundUniqueInput = {
+  address: Scalars['String'];
+  tokenId: Scalars['Int'];
+};
+
+export type WalletBalanceOrderByWithRelationInput = {
+  address?: InputMaybe<SortOrder>;
+  amount?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  lastEventId?: InputMaybe<SortOrder>;
+  tokenId?: InputMaybe<SortOrder>;
+};
+
+export enum WalletBalanceScalarFieldEnum {
+  Address = 'address',
+  Amount = 'amount',
+  Id = 'id',
+  LastEventId = 'lastEventId',
+  TokenId = 'tokenId',
+}
+
+export type WalletBalanceWhereInput = {
+  AND?: InputMaybe<Array<WalletBalanceWhereInput>>;
+  NOT?: InputMaybe<Array<WalletBalanceWhereInput>>;
+  OR?: InputMaybe<Array<WalletBalanceWhereInput>>;
+  address?: InputMaybe<StringFilter>;
+  amount?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  lastEventId?: InputMaybe<StringNullableFilter>;
+  tokenId?: InputMaybe<IntFilter>;
+};
+
+export type WalletBalanceWhereUniqueInput = {
+  address_tokenId?: InputMaybe<WalletBalanceAddressTokenIdCompoundUniqueInput>;
+  id?: InputMaybe<Scalars['Int']>;
+};
+
 export type WalletOrderByWithRelationInput = {
   address?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
-  realms?: InputMaybe<RealmOrderByRelationAggregateInput>;
-  sRealms?: InputMaybe<SRealmOrderByRelationAggregateInput>;
-  tokens?: InputMaybe<ResourceTokenOrderByRelationAggregateInput>;
+  realmsL1?: InputMaybe<RealmOrderByRelationAggregateInput>;
+  realmsL2?: InputMaybe<RealmOrderByRelationAggregateInput>;
+  realmsSettled?: InputMaybe<RealmOrderByRelationAggregateInput>;
 };
 
 export type WalletRelationFilter = {
@@ -1731,9 +1750,9 @@ export type WalletWhereInput = {
   OR?: InputMaybe<Array<WalletWhereInput>>;
   address?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
-  realms?: InputMaybe<RealmListRelationFilter>;
-  sRealms?: InputMaybe<SRealmListRelationFilter>;
-  tokens?: InputMaybe<ResourceTokenListRelationFilter>;
+  realmsL1?: InputMaybe<RealmListRelationFilter>;
+  realmsL2?: InputMaybe<RealmListRelationFilter>;
+  realmsSettled?: InputMaybe<RealmListRelationFilter>;
 };
 
 export type DesiegeFragmentFragment = {
@@ -2016,7 +2035,7 @@ export type GetRealmQuery = {
       destinationRealmId: number;
       destinationArrivalTime?: any | null;
       armyPacked: number;
-      lastAttacked: number;
+      lastAttacked?: any | null;
       level: number;
       callSign: number;
       lightCavalryQty: number;
@@ -2244,7 +2263,7 @@ export type GetRealmsQuery = {
       destinationRealmId: number;
       destinationArrivalTime?: any | null;
       armyPacked: number;
-      lastAttacked: number;
+      lastAttacked?: any | null;
       level: number;
       callSign: number;
       lightCavalryQty: number;
@@ -2352,7 +2371,7 @@ export type GetRealmsWithTravelsQuery = {
       destinationRealmId: number;
       destinationArrivalTime?: any | null;
       armyPacked: number;
-      lastAttacked: number;
+      lastAttacked?: any | null;
       level: number;
       callSign: number;
       lightCavalryQty: number;
@@ -2482,7 +2501,7 @@ export type RealmFragmentFragment = {
     destinationRealmId: number;
     destinationArrivalTime?: any | null;
     armyPacked: number;
-    lastAttacked: number;
+    lastAttacked?: any | null;
     level: number;
     callSign: number;
     lightCavalryQty: number;
@@ -2514,7 +2533,7 @@ export type RealmArmiesFragmentFragment = {
     destinationRealmId: number;
     destinationArrivalTime?: any | null;
     armyPacked: number;
-    lastAttacked: number;
+    lastAttacked?: any | null;
     level: number;
     callSign: number;
     lightCavalryQty: number;
@@ -2604,6 +2623,19 @@ export type GetWalletQuery = {
     realmsSettledHeld: number;
     realmsBridgedHeld: number;
   };
+};
+
+export type GetWalletBalancesQueryVariables = Exact<{
+  address: Scalars['String'];
+}>;
+
+export type GetWalletBalancesQuery = {
+  __typename?: 'Query';
+  walletBalances: Array<{
+    __typename?: 'WalletBalance';
+    tokenId: number;
+    amount: string;
+  }>;
 };
 
 export const DesiegeFragmentFragmentDoc = gql`
@@ -3966,4 +3998,66 @@ export type GetWalletLazyQueryHookResult = ReturnType<
 export type GetWalletQueryResult = Apollo.QueryResult<
   GetWalletQuery,
   GetWalletQueryVariables
+>;
+export const GetWalletBalancesDocument = gql`
+  query GetWalletBalances($address: String!) @api(name: starkIndexer) {
+    walletBalances(
+      where: { address: { equals: $address } }
+      orderBy: { tokenId: asc }
+    ) {
+      tokenId
+      amount
+    }
+  }
+`;
+
+/**
+ * __useGetWalletBalancesQuery__
+ *
+ * To run a query within a React component, call `useGetWalletBalancesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetWalletBalancesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetWalletBalancesQuery({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useGetWalletBalancesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetWalletBalancesQuery,
+    GetWalletBalancesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetWalletBalancesQuery,
+    GetWalletBalancesQueryVariables
+  >(GetWalletBalancesDocument, options);
+}
+export function useGetWalletBalancesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetWalletBalancesQuery,
+    GetWalletBalancesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetWalletBalancesQuery,
+    GetWalletBalancesQueryVariables
+  >(GetWalletBalancesDocument, options);
+}
+export type GetWalletBalancesQueryHookResult = ReturnType<
+  typeof useGetWalletBalancesQuery
+>;
+export type GetWalletBalancesLazyQueryHookResult = ReturnType<
+  typeof useGetWalletBalancesLazyQuery
+>;
+export type GetWalletBalancesQueryResult = Apollo.QueryResult<
+  GetWalletBalancesQuery,
+  GetWalletBalancesQueryVariables
 >;
