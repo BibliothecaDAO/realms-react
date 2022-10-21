@@ -184,7 +184,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           {days != MAX_DAYS_ACCURED && (
             <div className="flex justify-between px-3 uppercase">
               next day
-              <CountdownTimer date={cachedDaysRemained} />
+              <CountdownTimer date={cachedDaysRemained.toString()} />
             </div>
           )}
         </div>
