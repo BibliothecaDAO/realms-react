@@ -110,6 +110,8 @@ const useUsersRealms = () => {
       relicsHeld: relicsHeld(),
       resourcesAcrossEmpire: resourcesAcrossRealms(),
     });
+
+    // console.log(isClaimable());
   }, [userRealmsData]);
 
   const claimAll = () => {

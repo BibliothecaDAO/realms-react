@@ -236,7 +236,7 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
 };
 
 export const fetchRealmNameById = (id: number) => {
-  return;
+  return RealmsData.features.filter((realm) => realm.id == id)[0].name;
 };
 
 export const RealmClaimable = (realm: RealmFragmentFragment) => {
@@ -247,6 +247,7 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
   const cachedDaysAccrued = parseInt(
     ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
   );
+  console.log(realm?.lastClaimTime);
   return cachedDaysAccrued >= 1 ? true : false;
 };
 
