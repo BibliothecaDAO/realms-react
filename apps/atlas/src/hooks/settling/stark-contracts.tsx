@@ -6,6 +6,7 @@ import Splitter from '@/abi/nexus/Splitter.json';
 import Combat from '@/abi/settling/Combat.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Food from '@/abi/settling/Food.json';
+import GoblinTown from '@/abi/settling/GoblinTown.json';
 import Settling from '@/abi/settling/L01_Settling.json';
 import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
@@ -27,7 +28,7 @@ export const ModuleAddr = {
   StakedRealms:
     '0x04a0c6a8d4343f890417e6be19166a8b95a870a43f332add3509ea074750f0f9',
   Settling:
-    '0x0441181da8e4d3ca2add537dff9d80b4ac1300cc67b0ceffd75147c4f1915048',
+    '0x007a29730cfaed96839660577c3b3019038862187b0865280b79e944c66ac215',
   Exchange:
     '0x042bf805eb946855cc55b1321a86cd4ece9904b2d15f50c47439af3166c7c5e2',
   ResourcesToken:
@@ -44,7 +45,33 @@ export const ModuleAddr = {
   Calculator:
     '0x04f65c9451f333e0fbe33f912f470da360cf959ea0cefb85f0abef54fd3bb76c',
   Travel: '0x0415bda0925437cee1cd70c5782c65a5b1f5c72945c5204dbba71c6d69c8575a',
+  StarkEthereum:
+    '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
+  GoblinTown:
+    '0x00c358a31b8722845d44c98e428bd751f0d769bdaf14a3cb490c61dfd93e59fc',
 };
+
+/**
+ * Load the Stark Ethereum Contract. This is an ERC20 Contract.
+ * @returns The `StarkEthereum` contract or undefined.
+ */
+export function useGoblinTown() {
+  return useContract({
+    abi: GoblinTown as Abi,
+    address: ModuleAddr.GoblinTown,
+  });
+}
+
+/**
+ * Load the Stark Ethereum Contract. This is an ERC20 Contract.
+ * @returns The `StarkEthereum` contract or undefined.
+ */
+export function useStarkEthereum() {
+  return useContract({
+    abi: Lords as Abi,
+    address: ModuleAddr.StarkEthereum,
+  });
+}
 
 /**
  * Load the Travel contract.

@@ -254,7 +254,7 @@ export const CommandList: React.FC<Prop> = (props) => {
       )}
       {txQueue.transactions.map((c, i) => (
         <CommandListItem
-          key={`${c.contractAddress}:${c.entrypoint}::${c.calldata
+          key={`${c.keyId}::${c.contractAddress}:${c.entrypoint}::${c.calldata
             ?.map((bignum) => bignum?.toString())
             .join(':')}`}
           call={c}

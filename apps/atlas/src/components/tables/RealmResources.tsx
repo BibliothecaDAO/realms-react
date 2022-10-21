@@ -8,7 +8,6 @@ import {
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
-
 import {
   BASE_RESOURCES_PER_DAY,
   DAY,
@@ -27,9 +26,7 @@ import type { RealmsCardProps } from '@/types/index';
 
 type Row = {
   resource: ReactElement;
-  // baseOutput: number;
   claimableResources: string | ReactElement;
-  // totalOutput: number;
 };
 
 type Prop = {
@@ -45,23 +42,27 @@ type Prop = {
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const { exchangeInfo } = useMarketRate();
 
+  const now = new Date().getTime();
+
+  const getDays = (time) => {
+    return parseInt(((now - time) / DAY / 1000).toFixed(2));
+  };
+  const remainingDays = (time) => {
+    return (DAY - (time % DAY) + now) * 1000;
+  };
+
   const { claim } = useResources(props.realm as Realm);
   const isOwner = useIsOwner(props.realm?.settledOwner);
 
-  const cachedDaysAccrued = parseInt(
-    ((new Date().getTime() - props.realm?.lastClaimTime) / DAY / 1000).toFixed(
-      2
-    )
-  );
+  // days accrued
+  const cachedDaysAccrued = getDays(props.realm?.lastClaimTime);
 
-  const cachedDaysRemained =
-    (new Date().getTime() - props.realm?.lastClaimTime) % DAY;
+  // time until next claim
+  const cachedDaysRemained = remainingDays(props.realm?.lastClaimTime);
+  console.log(props.realm.realmId, cachedDaysRemained);
 
-  const cachedVaultDaysAccrued = parseInt(
-    ((new Date().getTime() - props.realm?.lastVaultTime) / DAY / 1000).toFixed(
-      2
-    )
-  );
+  // vault accrued
+  const cachedVaultDaysAccrued = getDays(props.realm?.lastVaultTime);
 
   // adds the base amount to the claimable
   const maxResources =
@@ -182,13 +183,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           </div>{' '}
           {days != MAX_DAYS_ACCURED && (
             <div className="flex justify-between px-3 uppercase">
-              next day
-              <CountdownTimer
-                date={(
-                  (DAY - cachedDaysRemained) * 1000 +
-                  new Date().getTime()
-                ).toString()}
-              />
+              <CountdownTimer date={cachedDaysRemained.toString()} />
             </div>
           )}
         </div>

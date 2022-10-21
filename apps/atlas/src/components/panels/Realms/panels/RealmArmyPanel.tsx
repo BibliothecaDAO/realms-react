@@ -22,15 +22,19 @@ import { defaultArmy } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import type { GetRealmQuery, Army } from '@/generated/graphql';
+import type { GetRealmQuery, Army, Realm } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import { createBuildingCall } from '@/hooks/settling/useBuildings';
+import useBuildings, {
+  createBuildingCall,
+} from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
+import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   CostBlock,
+  fetchRealmNameById,
   hasOwnRelic,
   RealmCombatStatus,
 } from '@/shared/Getters/Realm';
@@ -56,9 +60,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
   const { findRealmsAttackingArmies } = useArmy();
 
-  const { build } = useCombat();
   const realm = props.realm;
   const { userData, userRealms } = useUsersRealms();
+
+  const { build } = useBuildings(realm as Realm);
 
   const allArmies = findRealmsAttackingArmies(userRealms?.realms)?.filter(
     (a) => a.realmId !== realm.realmId
@@ -72,7 +77,8 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
     (army) => army.destinationRealmId == realm.realmId
   );
 
-  const { attackGoblins } = useCombat();
+  const { claim } = useGoblinTowns();
+
   const { checkUserHasResources } = useGameConstants();
 
   const timeAttacked = realm?.lastAttacked
@@ -137,7 +143,9 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           <CardBody>
             {hasOwnRelic(realm) ? (
               <div>
-                <h2 className="mb-4">Not conquered!</h2>
+                <h2 className="mb-4">
+                  {realm?.name} is a self-sovereign state
+                </h2>
                 <p className="text-xl">
                   Citizens of {realm?.name} are living peacefully on its lands.
                   The Lord of {realm?.name} is keeping them safe from Goblins
@@ -149,12 +157,15 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 {realm?.relic?.map((a, i) => {
                   return (
                     <div key={i} className="mb-4">
-                      <h2>Conquered by Realm {a.heldByRealm}</h2>{' '}
+                      <h2>
+                        Annexed by Realm{' '}
+                        {fetchRealmNameById(a.heldByRealm || 0)}
+                      </h2>{' '}
                       <p className="text-xl">
-                        {realm?.name} has been Conquered by Realm{' '}
-                        {a.heldByRealm}. The citizens shake in fear everyday
-                        thinking it will be their last... won't someone think of
-                        the children!
+                        {realm?.name} has been Conquered by
+                        {fetchRealmNameById(a.heldByRealm || 0)}. The citizens
+                        shake in fear everyday thinking it will be their last...
+                        won't someone think of the children!
                       </p>
                       <div className="mt-4">
                         <Button
@@ -172,10 +183,10 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             )}
           </CardBody>
         </Card>
-        <Card className="col-span-12 sm:col-span-6 lg:col-start-4 lg:col-end-7">
-          <CardTitle>
+        <Card className="col-span-12 sm:col-span-6 lg:col-start-4 lg:col-end-8">
+          <div className="text-2xl">
             {realm.name} rules a total of {realm.relicsOwned?.length} Realms
-          </CardTitle>
+          </div>
 
           <CardBody>
             <div className="flex flex-wrap">
@@ -188,7 +199,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                       size="sm"
                     >
                       <Relic className={` w-3 mr-4 fill-yellow-500`} />{' '}
-                      <h5>Realm {a.realmId}</h5>
+                      <h5>Realm {fetchRealmNameById(a.realmId || 0)}</h5>
                     </Button>
                   </div>
                 );
@@ -198,7 +209,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
         </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 md:col-start-7 md:col-end-13"
+          className="col-span-12 md:col-start-8 md:col-end-13"
         >
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
@@ -241,7 +252,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                 .map((a, i) => {
                   return (
                     <div key={i} className="flex flex-wrap w-full ">
-                      <div className="self-center p-1 border card ">
+                      <div className="self-center p-1 ">
                         <Image
                           height={200}
                           width={200}
@@ -258,29 +269,29 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                           per building
                         </div>
                         <div className="flex flex-wrap my-5">
-                          <div>
+                          <div className="flex">
                             <p className="sm:text-4xl">{a.quantityBuilt}</p>
 
-                            <CountdownTimer
-                              date={(a.buildingDecay * 1000).toString()}
-                            />
+                            <div className="self-end">
+                              <CountdownTimer
+                                date={(a.buildingDecay * 1000).toString()}
+                              />{' '}
+                            </div>
                           </div>
                         </div>
                         <div className="flex w-full mt-3 space-x-2">
                           <Button
                             onClick={() =>
-                              txQueue.add(
-                                createBuildingCall.build({
-                                  realmId: realm.realmId,
-                                  buildingId: a.id,
-                                  qty: buildQty[a.key],
-                                  costs: {
-                                    // Mimic ItemCost interface
-                                    amount: 0,
-                                    resources: a.cost,
-                                  },
-                                })
-                              )
+                              build({
+                                realmId: realm.realmId,
+                                buildingId: a.id,
+                                qty: buildQty[a.key],
+                                costs: {
+                                  // Mimic ItemCost interface
+                                  amount: 0,
+                                  resources: a.cost,
+                                },
+                              })
                             }
                             className="w-full"
                             size="xs"
@@ -329,21 +340,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             </div>
           </Card>
         )}
-        {/* {isOwner && (
-          <Card className="col-span-12 md:col-start-6 md:col-end-13">
-            <CardTitle>Goblins</CardTitle>
-            <CardBody>
-              Goblins emit Lords after defeating them. You must use your
-              Attacking Army.
-            </CardBody>
-            <Button
-              variant="primary"
-              onClick={() => attackGoblins(realm.realmId)}
-            >
-              Attack Goblins
-            </Button>
-          </Card>
-        )} */}
 
         <Card
           loading={props.loading}
@@ -412,6 +408,18 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             })}
           </div>
         </Card>
+        {isOwner && (
+          <Card className="col-span-12 md:col-start-6 md:col-end-13">
+            <CardTitle>Goblins</CardTitle>
+            <CardBody>
+              Goblins emit Lords after defeating them. You must use your
+              Attacking Army.
+            </CardBody>
+            <Button variant="primary" onClick={() => claim(realm.realmId)}>
+              Attack Goblins
+            </Button>
+          </Card>
+        )}
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
           <SidebarHeader onClose={() => setIsRaiding(false)} />
           <CombatSideBar defendingRealm={realm} />

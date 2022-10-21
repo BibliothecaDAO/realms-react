@@ -2,7 +2,7 @@ import {
   useTransactionManager,
   useStarknetExecute,
 } from '@starknet-react/core';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/shared/Icons';
@@ -10,7 +10,7 @@ import { ENQUEUED_STATUS } from '../constants';
 import type { CallAndMetadata } from '../types';
 
 type Call = CallAndMetadata;
-export type Tx = Call & { status: typeof ENQUEUED_STATUS };
+export type Tx = Call & { status: typeof ENQUEUED_STATUS; keyId?: string };
 
 interface CommandList {
   add: (tx: Call | Call[]) => void;
@@ -18,7 +18,7 @@ interface CommandList {
   remove: (tx: Tx) => void;
   empty: () => void;
   reorderQueue: (dragIndex: number, hoverIndex: number) => void;
-  executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
+  executeMulticall: (transactions?: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
 export const CommandListContext = createContext<CommandList | undefined>(
@@ -44,13 +44,25 @@ export const CommandListProvider = ({
         icon: scrollIcon,
       });
       setTx((prev) =>
-        prev.concat(tx.map((t) => ({ ...t, status: ENQUEUED_STATUS })))
+        prev.concat(
+          tx.map((t) => ({
+            ...t,
+            status: ENQUEUED_STATUS,
+            keyId: Math.random().toString(16).slice(2),
+          }))
+        )
       );
     } else {
       toast('Command Queued: ' + tx.metadata?.action, {
         icon: scrollIcon,
       });
-      setTx((prev) => prev.concat({ ...tx, status: ENQUEUED_STATUS }));
+      setTx((prev) =>
+        prev.concat({
+          ...tx,
+          status: ENQUEUED_STATUS,
+          keyId: Math.random().toString(16).slice(2),
+        })
+      );
     }
   };
 

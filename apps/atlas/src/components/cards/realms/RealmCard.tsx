@@ -103,12 +103,12 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         )}
         <div className="flex justify-between">
-          <h4 className="flex">
+          <div className="flex text-lg font-display">
             <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
             {isYourRealm(props.realm, l1Address, address || '')
               ? 'ser'
               : shortenAddressWidth(RealmOwner(props.realm), 6)}
-          </h4>
+          </div>
           <div className="flex items-center self-center">
             {!isFavourite(props.realm, favouriteRealms) && (
               <Button
@@ -138,9 +138,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             <span className="opacity-50">{props.realm.realmId}</span> |{' '}
             {props.realm.name}{' '}
           </h2>
-          {props.realm.owner && (
+          {/* {props.realm.owner && (
             <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
-          )}
+          )} */}
           <div className="self-center">
             <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
           </div>

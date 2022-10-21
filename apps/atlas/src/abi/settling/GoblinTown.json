@@ -1,0 +1,235 @@
+[
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "t1_1",
+        "offset": 0,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_2",
+        "offset": 9,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_3",
+        "offset": 18,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_4",
+        "offset": 27,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_5",
+        "offset": 36,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_6",
+        "offset": 45,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_7",
+        "offset": 54,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_8",
+        "offset": 63,
+        "type": "Troop"
+      },
+      {
+        "name": "t1_9",
+        "offset": 72,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_1",
+        "offset": 81,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_2",
+        "offset": 90,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_3",
+        "offset": 99,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_4",
+        "offset": 108,
+        "type": "Troop"
+      },
+      {
+        "name": "t2_5",
+        "offset": 117,
+        "type": "Troop"
+      },
+      {
+        "name": "t3_1",
+        "offset": 126,
+        "type": "Troop"
+      }
+    ],
+    "name": "Squad",
+    "size": 135,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "id",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "type",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "tier",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "building",
+        "offset": 3,
+        "type": "felt"
+      },
+      {
+        "name": "agility",
+        "offset": 4,
+        "type": "felt"
+      },
+      {
+        "name": "attack",
+        "offset": 5,
+        "type": "felt"
+      },
+      {
+        "name": "armor",
+        "offset": 6,
+        "type": "felt"
+      },
+      {
+        "name": "vitality",
+        "offset": 7,
+        "type": "felt"
+      },
+      {
+        "name": "wisdom",
+        "offset": 8,
+        "type": "felt"
+      }
+    ],
+    "name": "Troop",
+    "size": 9,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "goblin_squad",
+        "type": "Squad"
+      },
+      {
+        "name": "time_stamp",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "GoblinSpawn",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "lords_faucet",
+    "outputs": [],
+    "type": "function"
+  }
+]
