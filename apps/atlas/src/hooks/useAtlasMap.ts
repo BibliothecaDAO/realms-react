@@ -5,6 +5,7 @@ import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
+import { soundSelector, useUiSounds } from './useUiSounds';
 export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga';
 
 export type AssetFilter = {
@@ -62,6 +63,7 @@ export interface AtlasMap {
 }
 
 export function useAtlasMap(): AtlasMap {
+  const { play: fly } = useUiSounds(soundSelector.fly);
   const router = useRouter();
   const { asset } = router.query;
   const [selectedAsset, setSelectedAsset] = useState<Asset>(null!);
@@ -127,6 +129,7 @@ export function useAtlasMap(): AtlasMap {
     if (!assetId) {
       return;
     }
+    fly();
     router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
   }
 

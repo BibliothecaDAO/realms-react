@@ -123,7 +123,7 @@ function MapModule() {
       anchorY: 100,
     }),
     sizeScale: 5,
-    getPosition: (d: any) => d.xy,
+    getPosition: (d: any) => d.coordinates,
     getSize: (d) => 10,
   });
 

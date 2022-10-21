@@ -12,6 +12,7 @@ import {
   battalionInformation,
   defaultArmy,
   getUnitImage,
+  battalionIdToString,
 } from '@/constants/army';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
@@ -19,6 +20,7 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { CostBlock } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
 
@@ -41,6 +43,8 @@ type Battalion = {
 const MAX_BATTALIONS = 30;
 
 export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
+  const { play: buildTroop } = useUiSounds(soundSelector.buildMilitary);
+  const { play: summonTroops } = useUiSounds(soundSelector.summonTroops);
   const txQueue = useCommandList();
   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
   useEffect(() => {
@@ -174,6 +178,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 show
                 add={(value) =>
                   setAddedBattalions((current) => {
+                    buildTroop();
                     if (
                       current.find((b) => b.battalionId === value.battalionId)
                     ) {
@@ -263,19 +268,21 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         </Card>
       </div>
       <Card className="col-span-7">
-        <CardTitle>Adding Battalions to build</CardTitle>
+        <CardTitle>
+          {' '}
+          Battalion Qty:{' '}
+          {totalBattalionQty && sumTotalBattalions(totalBattalionQty)} /
+          {MAX_BATTALIONS}
+        </CardTitle>
         <CardBody className="justify-between">
           <div>
-            <div className="text-xl">
-              Battalion Qty:
-              {totalBattalionQty && sumTotalBattalions(totalBattalionQty)} /
-              {MAX_BATTALIONS}
-            </div>
-            <div className="grid w-full grid-cols-2 gap-4">
+            <div className="grid w-full grid-cols-3 gap-2">
               {addedBattalions?.map((battalion, index) => (
-                <Card className="" key={index}>
-                  <CardTitle>{battalion.battalionName} </CardTitle>
-                  <CardBody>Battalions: {battalion.battalionQty}</CardBody>
+                <div className="p-2 rounded bg-gray-1000" key={index}>
+                  <CardTitle>
+                    {battalionIdToString(battalion.battalionId)}
+                  </CardTitle>
+                  <CardBody>Qty: {battalion.battalionQty}</CardBody>
 
                   <Button
                     size="xs"
@@ -284,12 +291,12 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                   >
                     remove
                   </Button>
-                </Card>
+                </div>
               ))}
             </div>
           </div>
           <div>
-            <p className="text-xl uppercase">Total Cost</p>
+            <p className="mb-4 text-xl font-display">Total Cost</p>
             <div className="flex">
               {totalCost?.length &&
                 totalCost.map((b, i) => {
@@ -315,6 +322,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       <div className="col-span-5">
         <Button
           onClick={() => {
+            summonTroops();
             build(
               army?.realmId,
               army?.armyId,

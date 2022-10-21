@@ -2,7 +2,7 @@ import {
   useTransactionManager,
   useStarknetExecute,
 } from '@starknet-react/core';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/shared/Icons';
@@ -18,7 +18,7 @@ interface CommandList {
   remove: (tx: Tx) => void;
   empty: () => void;
   reorderQueue: (dragIndex: number, hoverIndex: number) => void;
-  executeMulticall: (transactions: Tx[]) => Promise<InvokeFunctionResponse>;
+  executeMulticall: (transactions?: Tx[]) => Promise<InvokeFunctionResponse>;
 }
 
 export const CommandListContext = createContext<CommandList | undefined>(

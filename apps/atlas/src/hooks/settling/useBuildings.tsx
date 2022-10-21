@@ -9,6 +9,7 @@ import {
   buildingIdToString,
   buildingImageById,
 } from '@/constants/buildings';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
@@ -20,10 +21,12 @@ import type {
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
+import { soundSelector, useUiSounds } from '../useUiSounds';
 
 type Building = {
   buildings: BuildingDetail[] | undefined;
   loading: boolean;
+  build: (args: { realmId; buildingId; qty; costs }) => void;
   buildingUtilisation: BuildingFootprint | undefined;
 };
 
@@ -74,7 +77,11 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 const useBuildings = (realm: Realm | undefined): Building => {
+  const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
+
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
+
+  const txQueue = useCommandList();
 
   const { gameConstants } = useGameConstants();
 
@@ -257,6 +264,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
 
   return {
     buildings,
+    build: (args: { realmId; buildingId; qty; costs }) => {
+      buildMilitary();
+      txQueue.add(createBuildingCall.build({ ...args }));
+    },
     loading: false,
     buildingUtilisation,
   };

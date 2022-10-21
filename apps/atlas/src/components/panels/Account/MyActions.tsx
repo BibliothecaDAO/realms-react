@@ -89,24 +89,15 @@ export function MyActions(props: Prop) {
     // delay: 350,
   });
 
+  // console.log(userData?.resourcesClaimable);
+  console.log(!!userData?.resourcesClaimable);
+
   return (
     <div>
       <animated.div
         style={animationUp}
         className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        {/* <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
-          <CardTitle>Relics Held</CardTitle>
-
-          <CardBody>
-            <CardStats>
-              <span>{userData?.relicsHeld as ReactNode}</span>
-            </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
-              Start Raiding
-            </Button>
-          </CardBody>
-        </Card> */}
         <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-6">
           <CardTitle>Production rate daily</CardTitle>
 
@@ -142,19 +133,26 @@ export function MyActions(props: Prop) {
           </Button>
         </Card>
 
-        <Card className="col-span-12 sm:col-start-6 sm:col-end-9">
+        <Card className="col-span-12 sm:col-start-1 sm:col-end-4">
           <CardTitle>Quick Actions</CardTitle>
 
           <CardBody>
             <p className="mb-3 font-semibold">
-              HINT: Add a few Realms to your tx cart. Then follow the buttons in
-              sequence. You may get an error if the Realm has already been
-              minted.
+              Mint Realms for 0.01 ETH each. Input quantity below.
             </p>
+            <Button
+              variant="outline"
+              size="xs"
+              target={'_blank'}
+              href="https://faucet.goerli.starknet.io/"
+            >
+              Get ETH from faucet
+            </Button>
+            <hr className="my-2" />
             <input
               placeholder="Type Id"
               type={'number'}
-              className="w-full px-3 mx-auto mb-2 text-black rounded bg-white/80"
+              className="w-full px-4 py-4 mx-auto mb-2 text-3xl text-center text-black rounded bg-white/80"
               value={selectedId}
               onChange={(e) => {
                 setSelectedId(parseInt(e.target.value));
@@ -164,25 +162,21 @@ export function MyActions(props: Prop) {
             />
             <Button
               variant="primary"
-              size="xs"
+              size="lg"
               onClick={() => mintRealm(selectedId)}
             >
-              Add realms to tx cart
+              Mint Realms
             </Button>
             <hr className="my-2" />
             <Button
               variant="primary"
               size="xs"
               className="mb-2"
-              onClick={() => {
-                txQueue
-                  .executeMulticall(
-                    approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-                  )
-                  .catch((err) => {
-                    // TODO: handle error
-                    console.log(err);
-                  });
+              onClick={async () => {
+                await txQueue.add(
+                  approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
+                );
+                await txQueue.executeMulticall();
               }}
             >
               2. Approve All game Contracts

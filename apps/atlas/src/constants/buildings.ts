@@ -100,19 +100,19 @@ export const buildingIntegrity = (id: RealmBuildingId) => {
   let name = 0;
   switch (id) {
     case RealmBuildingId.House:
-      name = 3600;
+      name = 3 * DAY;
       break;
     case RealmBuildingId.Barracks:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.MageTower:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.ArcherTower:
-      name = 37319;
+      name = 7 * DAY;
       break;
     case RealmBuildingId.Castle:
-      name = 37319;
+      name = 7 * DAY;
       break;
   }
   return name;
@@ -123,25 +123,13 @@ export enum HarvestType {
   Store = 2,
 }
 
-export enum RealmBuildingIntegrity {
-  House = 3600,
-  StoreHouse = 2000,
-  Granary = 2000,
-  Farm = 2000,
-  FishingVillage = 2000,
-  Barracks = 37319,
-  MageTower = 37319,
-  ArcherTower = 37319,
-  Castle = 37319,
-}
-
 export const BASE_SQM = 100;
 export const MAX_DAYS_ACCURED = 3;
 export const BASE_RESOURCES_PER_DAY = 250;
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;
 
 export const VAULT_LENGTH = 7;
-export const DAY = 14400;
+export const DAY = 86400;
 export const VAULT_LENGTH_SECONDS = VAULT_LENGTH * DAY;
 
 export const BASE_LORDS_PER_DAY = 25;
@@ -166,3 +154,15 @@ export const FISH_ID = 10001;
 export const WHEAT_ID = 10000;
 
 export const SECONDS_PER_KM = 30;
+
+export enum RealmBuildingIntegrity {
+  House = 3 * DAY,
+  StoreHouse = 2000,
+  Granary = 2000,
+  Farm = 2000,
+  FishingVillage = 2000,
+  Barracks = 7 * DAY,
+  MageTower = 7 * DAY,
+  ArcherTower = 7 * DAY,
+  Castle = 7 * DAY,
+}

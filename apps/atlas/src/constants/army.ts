@@ -82,7 +82,7 @@ export const battalionInformation = [
     name: 'lightInfantry',
     color: MageTower,
     description: description,
-    strength: 'Cavalary',
+    strength: 'Cavalry',
     weakness: 'Magic',
   },
   {
@@ -90,7 +90,7 @@ export const battalionInformation = [
     name: 'heavyInfantry',
     color: MageTower,
     description: description,
-    strength: 'Cavalary',
+    strength: 'Cavalry',
     weakness: 'Magic',
   },
 ];
@@ -126,10 +126,10 @@ export const battalionIdToString = (id: BattalionIds) => {
   let name = 'n/a';
   switch (id) {
     case BattalionIds.LightCavalry:
-      name = 'Light Cavalry';
+      name = 'Cavalry';
       break;
     case BattalionIds.HeavyCavalry:
-      name = 'Heavy Cavalry';
+      name = 'Knight';
       break;
     case BattalionIds.Archer:
       name = 'Archer';
@@ -138,16 +138,16 @@ export const battalionIdToString = (id: BattalionIds) => {
       name = 'Longbow';
       break;
     case BattalionIds.Mage:
-      name = 'Mage';
+      name = 'Apprentice';
       break;
     case BattalionIds.Arcanist:
       name = 'Arcanist';
       break;
     case BattalionIds.LightInfantry:
-      name = 'Light Infantry';
+      name = 'Solider';
       break;
     case BattalionIds.HeavyInfantry:
-      name = 'Heavy Infantry';
+      name = 'Paladin';
       break;
   }
   return name;
