@@ -1,0 +1,9 @@
+query GetWalletBalances($address: String!) @api(name: starkIndexer) {
+  walletBalances(
+    where: { address: { equals: $address } }
+    orderBy: { tokenId: asc }
+  ) {
+    tokenId
+    amount
+  }
+}
