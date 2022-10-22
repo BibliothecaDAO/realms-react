@@ -4,6 +4,7 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
 import type { ReactElement } from 'react';
+import { resources } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { BasePanel } from './BasePanel';
 
@@ -60,21 +61,26 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     historicPrices,
   } = useResourcesContext();
 
-  const defaultData: Row[] = balance?.map((resource) => {
+  const defaultData: Row[] = resources?.map((resource) => {
+    const resourceBalance = balance.find(
+      (reBalance) => reBalance.resourceId == resource.id
+    );
     return {
       resource: (
         <div>
           <div className="flex sm:text-xl">
             <ResourceIcon
               className="self-center w-4"
-              resource={resource?.resourceName?.replace(' ', '') || ''}
+              resource={resource?.trait?.replace(' ', '') || ''}
               size="md"
             />
             <div className="flex pt-2 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0 font-display">
               <span className="self-center w-full tracking-widest uppercase text-stone-200">
-                {resource?.resourceName}
+                {resource?.trait}
                 <span className="block w-full tracking-widest uppercase sm:flex sm:text-sm text-stone-400">
-                  {(+formatEther(resource.amount)).toLocaleString()}
+                  {(+formatEther(
+                    resourceBalance?.amount || 0
+                  )).toLocaleString()}
                 </span>
               </span>
             </div>
@@ -85,11 +91,11 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center">
           <span className="text-sm sm:text-lg">
             <span className="flex">
-              {(+formatEther(resource.rate)).toFixed(4)}
+              {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">
-              {RateChange(resource.percentChange)}
+              {RateChange(resourceBalance?.percentChange || 0)}
             </span>
           </span>
         </div>
@@ -98,7 +104,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center">
           <XYChart
             theme={
-              parseFloat((resource.percentChange * 100).toFixed(2)) >= 0
+              parseFloat(
+                (resourceBalance?.percentChange || 0 * 100).toFixed(2)
+              ) >= 0
                 ? greenChartTheme
                 : redChartTheme
             }
@@ -111,8 +119,8 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             <AreaSeries
               dataKey="resourceChart"
               data={
-                historicPrices && historicPrices[resource.resourceId]
-                  ? historicPrices[resource.resourceId]
+                historicPrices && historicPrices[resource.id]
+                  ? historicPrices[resource.id]
                   : []
               }
               xAccessor={accessors.xAccessor}
@@ -124,7 +132,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       ),
       lp_balance: (
         <span className="text-xs uppercase sm:text-lg">
-          {(+formatEther(resource.lp)).toLocaleString()} <br />
+          {(+formatEther(resourceBalance?.lp || 0)).toLocaleString()} <br />
           {/* <span className="text-xs sm:text-sm text-stone-500">
             LORDS: {(+formatEther(resource.currencyAmount)).toLocaleString()}
             <br />
@@ -137,9 +145,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
-            addSelectedSwapResources(resource.resourceId);
+            addSelectedSwapResources(resource.id);
           }}
-          disabled={!availableResourceIds.includes(resource.resourceId)}
+          disabled={!availableResourceIds.includes(resource.id)}
         >
           Add <span className="hidden sm:block">+</span>
         </Button>
