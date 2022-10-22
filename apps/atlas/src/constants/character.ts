@@ -26,13 +26,13 @@ export const traits = {
     },
     {
       title: 'noble',
-      value: 'royal with a gold crown',
+      value: 'royal with a gold crown with jewels',
       weight: 2,
       selector: 'occupation',
     },
     {
       title: 'hunter',
-      value: 'deadly assassin with a bow',
+      value: 'deadly assassin with a hood',
       weight: 2,
       selector: 'occupation',
     },

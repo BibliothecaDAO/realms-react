@@ -10,6 +10,7 @@ import {
   stableDiffusionEndPoints,
   traits,
 } from '@/constants/character';
+import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { rgbDataURL } from '@/shared/ImageLoader';
 import type {
   ImageResponse,
@@ -19,29 +20,37 @@ import type {
 } from '@/types/index';
 
 export const OptionSelect = (props: SelectItem & SelectButton) => {
+  const { play } = useUiSounds(soundSelector.pageTurn);
   return (
-    <button
-      disabled={props.disabled}
-      onClick={() =>
-        props.add?.({
-          title: props.title,
-          value: props.value,
-          selector: props.selector,
-        })
-      }
-      className={`w-auto px-4 py-2 uppercase border cardthin font-display hover:bg-cta-100 duration-150 transition-all    ${
-        props.active ? 'bg-cta-100' : 'bg-black/80'
-      }`}
-    >
-      {props.title}
-    </button>
+    <div className="relative group">
+      {props.active && (
+        <div className="absolute w-1 h-4 mt-3 -ml-3 bg-red-600"></div>
+      )}
+
+      <button
+        disabled={props.disabled}
+        onClick={() => {
+          play();
+          props.add?.({
+            title: props.title,
+            value: props.value,
+            selector: props.selector,
+          });
+        }}
+        className={`w-auto pr-4 capitalize hover:text-stone-50 py-2 hover:font-semibold text-xl duration-150 transition-all mr-3    ${
+          props.active ? 'font-semibold' : ' text-gray-500'
+        }`}
+      >
+        {props.title}
+      </button>
+    </div>
   );
 };
 
 export const Select = (props: SelectProps) => {
   return (
     <div className="my-2">
-      <h3 className="self-center mr-4">{props.title}</h3>
+      <h2 className="self-center mr-4 border-b">{props.title}</h2>
       <div className="flex flex-wrap my-1">
         {props.items.map((a, i) => {
           const active =
@@ -128,9 +137,10 @@ export const Creation = () => {
       project: projectID,
       user: account,
       collection: 'first_collection',
+      generation_engine: 'stability',
       generation_settings: {
         prompt: prompt(),
-        n_images: 9,
+        n_images: 6,
         steps: 32,
         height: 512,
         width: 512,
@@ -236,7 +246,7 @@ export const Creation = () => {
           </div>
         </div>
         <div className="p-10 ">
-          <h1 className="mb-20 text-center">Your Ruler</h1>
+          <h1 className="mb-20 text-center">Adventurer</h1>
           <div className="relative border card">
             {selectedRuler && !loading && rulers ? (
               <Image
@@ -306,8 +316,8 @@ export const Creation = () => {
           </div>
         </div>
         <div className="p-10 ">
-          <h2 className="mb-20 text-center ">Potentials candidates</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <h2 className="mb-20 text-center ">Candidates</h2>
+          <div className="grid grid-cols-2 gap-4">
             {rulers?.map((a, i) => {
               return (
                 <div key={i} className="relative">
@@ -320,7 +330,7 @@ export const Creation = () => {
                       loading="lazy"
                       layout={'responsive'}
                       className={
-                        'w-32 h-32 mx-auto  hover:opacity-50 paper card border rounded-full'
+                        'w-32 h-32 mx-auto  hover:opacity-50 paper card rounded-xl card'
                       }
                       src={a.img}
                       onClick={() => setSelectedRuler(a)}
@@ -334,7 +344,7 @@ export const Creation = () => {
                       loading="lazy"
                       layout={'responsive'}
                       className={
-                        'w-32 h-32 mx-auto  hover:opacity-50 paper card border rounded-full'
+                        'w-32 h-32 mx-auto  hover:opacity-50 paper card border rounded-xl'
                       }
                       src={'/stableai/archanist.png'}
                       onClick={() => setSelectedRuler(a)}

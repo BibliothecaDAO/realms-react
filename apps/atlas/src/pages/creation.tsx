@@ -10,7 +10,7 @@ export default function LootPage() {
       <LootProvider>
         <CreationPanel />
       </LootProvider>
-      <ArtBackground background="warRoom" />
+      <ArtBackground background="hero" />
     </Layout>
   );
 }
