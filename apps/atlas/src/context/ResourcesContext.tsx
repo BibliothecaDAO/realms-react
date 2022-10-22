@@ -286,7 +286,7 @@ function useResources() {
 
     setBalance(
       walletBalancesData.walletBalances.map((resourceBalance, index) => {
-        const resourceId = resources[index]?.id ?? 0;
+        const resourceId = resourceBalance.tokenId ?? 0;
         const rate = rates.find((rate) => rate.tokenId === resourceId);
         const rateAmount = rate?.amount ?? '0';
         const resourceName = rate?.tokenName ?? '';
