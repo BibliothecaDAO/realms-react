@@ -50,7 +50,7 @@ export function CardTitle({ children, className, loading }: Props) {
   }
   return (
     <div className={`${className} w-full mb-1 pt-2`}>
-      <h3 className="px-2 py-1 text-xs text-left uppercase rounded sm:text-lg font-display">
+      <h3 className="px-2 py-1 text-xs text-left rounded sm:text-lg font-display text-shadow-[0_2px_6px_#6366f1]">
         {children}
       </h3>
     </div>

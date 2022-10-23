@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { getTravelArcs } from '@/shared/Getters/Realm';
+import { fetchRealmNameById, getTravelArcs } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,
@@ -45,8 +45,10 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.travel]: (tx, _context) => ({
-    title: `Travelling`,
-    description: `Army ${tx.metadata.armyId} of Realm ${tx.metadata.travellerId} -> Realm ${tx.metadata.destinationId}`,
+    title: `Traveling ${fetchRealmNameById(tx.metadata.travellerId)}`,
+    description: `Army ${tx.metadata.armyId} of ${fetchRealmNameById(
+      tx.metadata.travellerId
+    )} -> ${fetchRealmNameById(tx.metadata.destinationId)}`,
   }),
 };
 

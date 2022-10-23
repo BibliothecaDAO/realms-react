@@ -113,7 +113,7 @@ export function AccountOverview(props: Prop) {
           <div className="flex">
             <div className="relative">
               <Image
-                src={'/stableai/arcanist.png'}
+                src={'/stableai/archanist.png'}
                 alt="map"
                 height={300}
                 width={300}

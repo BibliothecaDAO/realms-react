@@ -40,6 +40,8 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   } = useAtlasContext();
   const armyStats = getArmyStats(props.army);
 
+  console.log('armyStats', armyStats);
+
   const armyLocation =
     army.destinationRealmId == 0 ? army.realmId : army.destinationRealmId;
 
