@@ -113,7 +113,7 @@ export function AccountOverview(props: Prop) {
           <div className="flex">
             <div className="relative">
               <Image
-                src={'/stableai/archanist.png'}
+                src={'/stableai/arcanist.png'}
                 alt="map"
                 height={300}
                 width={300}
@@ -161,7 +161,7 @@ export function AccountOverview(props: Prop) {
             <CardStats>
               <span>{userData?.relicsHeld as ReactNode}</span>
             </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
+            <Button variant="outline" size="xs" href="/realm">
               Start Raiding
             </Button>
           </CardBody>

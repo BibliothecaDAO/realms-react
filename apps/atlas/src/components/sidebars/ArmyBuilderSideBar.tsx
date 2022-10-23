@@ -9,9 +9,10 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import {
-  battalionIdToString,
   battalionInformation,
   defaultArmy,
+  getUnitImage,
+  battalionIdToString,
 } from '@/constants/army';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
@@ -22,6 +23,7 @@ import useCombat from '@/hooks/settling/useCombat';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { CostBlock } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
+
 import type {
   ArmyBattalionQty,
   BattalionInterface,
@@ -207,10 +209,10 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       </div>
       <div className="col-span-5">
         <Card className={`card ${activeBattalionData?.color}`}>
-          {activeBattalionData?.image && (
+          {activeBattalionData?.id && (
             <Image
               className="rounded-xl"
-              src={activeBattalionData?.image}
+              src={getUnitImage(activeBattalionData.id)}
               width={400}
               height={400}
               objectFit={'cover'}

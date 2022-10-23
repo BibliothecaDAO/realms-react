@@ -79,8 +79,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
 
   const { claim } = useGoblinTowns();
 
-  const { checkUserHasResources } = useGameConstants();
-
   const timeAttacked = realm?.lastAttacked
     ? new Date(parseInt(realm.lastAttacked)).getTime()
     : 0;
@@ -328,7 +326,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                                   key={i}
                                   resourceName={b.resourceName}
                                   amount={b.amount}
-                                  id={a.id}
+                                  id={b.resourceId}
                                   qty={buildQty[a.key]}
                                 />
                               );
@@ -426,7 +424,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           <CombatSideBar defendingRealm={realm} />
         </AtlasSidebar>
         <AtlasSidebar
-          containerClassName="w-full md:w-10/12"
+          containerClassName="w-full md:w-10/12 z-[20]"
           isOpen={isArmyBuilding}
         >
           <SidebarHeader

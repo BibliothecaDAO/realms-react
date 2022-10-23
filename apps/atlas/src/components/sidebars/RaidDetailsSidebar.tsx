@@ -14,7 +14,11 @@ export const RaidDetailsSideBar: React.FC<Prop> = (props) => {
   return (
     <div>
       {/* <p>Tx Hash: {combatData} </p> */}
-      <RaidResults fromAttackRealmId={event.attackRealmId} tx={event.txHash} />
+      <RaidResults
+        event={props.event}
+        fromAttackRealmId={event.attackRealmId}
+        tx={event.txHash}
+      />
     </div>
   );
 };
