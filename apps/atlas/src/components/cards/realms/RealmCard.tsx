@@ -23,6 +23,7 @@ import {
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useRealmContext } from '@/context/RealmContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
+import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   isFavourite,
@@ -95,6 +96,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       setSelectedTab(index as number);
     };
 
+    const { starknetId } = useStarkNetId(RealmOwner(props.realm) || '');
+
     return (
       <Card ref={ref}>
         {props.realm?.wonder && (
@@ -105,9 +108,11 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <div className="flex justify-between">
           <div className="flex text-lg font-display">
             <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
-            {isYourRealm(props.realm, l1Address, address || '')
-              ? 'ser'
-              : shortenAddressWidth(RealmOwner(props.realm), 6)}
+            {starknetId ?? starknetId}
+            {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
+            {!starknetId &&
+              isYourRealm(props.realm, l1Address, address || '') &&
+              isYourRealm(props.realm, l1Address, address || '')}
           </div>
           <div className="flex items-center self-center">
             {!isFavourite(props.realm, favouriteRealms) && (

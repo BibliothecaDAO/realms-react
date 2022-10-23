@@ -6,21 +6,23 @@ import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Popover, Transition } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-
 import { useAccount, useConnectors } from '@starknet-react/core';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect } from 'react';
 import { removeHexPrefix } from 'starknet/dist/utils/encode';
+import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { shortenAddressWidth } from '@/util/formatters';
 
 const NetworkConnectButton = () => {
   const { connect, available, refresh, disconnect } = useConnectors();
   const { address, status, connector } = useAccount();
 
+  const { starknetId } = useStarkNetId(address || '');
+
   useEffect(() => {
     const interval = setInterval(refresh, 5000);
     return () => clearInterval(interval);
-  }, [refresh]);
+  }, [refresh, address]);
 
   return (
     <Popover className="relative">
@@ -28,9 +30,11 @@ const NetworkConnectButton = () => {
         <Button variant="primary" className="font-display">
           {' '}
           <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
-          {address
+          {starknetId ?? starknetId}
+          {!starknetId && address
             ? removeHexPrefix(shortenAddressWidth(address, 4))
-            : 'Connect'}
+            : ''}
+          {!address && 'Connect'}
         </Button>{' '}
       </Popover.Button>
       <Transition

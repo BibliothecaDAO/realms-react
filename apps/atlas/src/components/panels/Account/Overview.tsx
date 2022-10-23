@@ -26,6 +26,7 @@ import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   genEconomicRealmEvent,
@@ -103,6 +104,8 @@ export function AccountOverview(props: Prop) {
     // delay: 350,
   });
 
+  const { starknetId } = useStarkNetId(address || '');
+
   return (
     <div>
       <animated.div
@@ -127,11 +130,11 @@ export function AccountOverview(props: Prop) {
             <div className="flex flex-wrap">
               <div className="self-center">
                 {address && (
-                  <span className="self-center text-center sm:text-xl font-lords">
-                    {shortenAddressWidth(address, 6)}
+                  <span className="self-center text-center sm:text-xl font-display">
+                    {starknetId ? starknetId : shortenAddressWidth(address, 6)}
                   </span>
                 )}
-                <h2 className="w-full sm:text-4xl">Ser, Your Vast Empire</h2>
+                <h2 className="w-full sm:text-4xl">Your Vast Empire</h2>
               </div>
             </div>
           </div>

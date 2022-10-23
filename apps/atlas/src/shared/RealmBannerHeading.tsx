@@ -8,6 +8,7 @@ import { OrderAffinity, LightDark } from '@/constants/orders';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useIsOwner from '@/hooks/useIsOwner';
+import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { shortenAddress } from '@/util/formatters';
 import { ownerRelic, trimmedOrder } from './Getters/Realm';
 
@@ -19,6 +20,8 @@ interface HeaderProps {
 
 export const RealmBannerHeading = (props: HeaderProps) => {
   const realm = props.realm?.realm;
+  const { starknetId } = useStarkNetId(realm?.settledOwner || '');
+
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
@@ -57,7 +60,11 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <div>
               <span className="flex font-display">
                 <Crown className="w-6 mr-3 fill-white" />{' '}
-                {isOwner ? 'you' : shortenAddress(realm?.settledOwner || '')}
+                {starknetId ?? starknetId}
+                {!starknetId && isOwner ? 'you' : ''}
+                {!starknetId && !isOwner
+                  ? shortenAddress(realm?.settledOwner || '')
+                  : ''}
               </span>
               <h1 className="font-semibold">
                 {realm?.name || '...'} | {realm?.realmId || '...'}
