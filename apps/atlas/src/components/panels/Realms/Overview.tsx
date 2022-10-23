@@ -163,7 +163,7 @@ const Overview: React.FC<Prop> = (props) => {
                     <div key={i} className="flex flex-wrap mb-4">
                       <div className="relative">
                         <Image
-                          src={'/stableai/archanist.png'}
+                          src={'/stableai/arcanist.png'}
                           alt="map"
                           height={150}
                           width={150}

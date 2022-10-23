@@ -152,7 +152,7 @@ export const useArmy = () => {
       getBattalionStat('Longbow')?.[defence] * (army?.longbowQty || 0) || 0;
     const mageDefence =
       getBattalionStat('Mage')?.[defence] * (army?.mageQty || 0) || 0;
-    const archanistDefence =
+    const arcanistDefence =
       getBattalionStat('Arcanist')?.[defence] * (army?.arcanistQty || 0) || 0;
     const lightInfantryDefence =
       getBattalionStat('LightInfantry')?.[defence] *
@@ -167,7 +167,7 @@ export const useArmy = () => {
       archerDefence +
       longbowDefence +
       mageDefence +
-      archanistDefence +
+      arcanistDefence +
       lightInfantryDefence +
       heavyInfantryDefence
     );

@@ -165,6 +165,21 @@ export interface CryptFilters {
   first?: number;
   skip?: number;
 }
+export enum realmMilitaryEvents {
+  realmCombatAttack = 'realm_combat_attack',
+  realmCombatDefend = 'realm_combat_defend',
+}
+export enum realmEconomicEvents {
+  realmBuildingBuilt = 'realm_building_built',
+  realmTransfer = 'realm_transfer',
+}
+export const realmEvents = { ...realmMilitaryEvents, ...realmEconomicEvents };
+export type RealmEvents = typeof realmEvents;
+
+export interface RealmEventTypes {
+  realmBuildingBuilt: 'realm_building_built';
+  realmTransfer: 'realm_transfer';
+}
 
 export interface WalletData {
   wallet: WalletEcosystemData;

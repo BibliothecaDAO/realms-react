@@ -19,84 +19,76 @@ const description =
 
 export enum BattalionIds {
   LightCavalry = 1,
-  HeavyCavalry = 2,
-  Archer = 3,
-  LongBow = 4,
-  Mage = 5,
-  Archanist = 6,
-  LightInfantry = 7,
-  HeavyInfantry = 8,
+  HeavyCavalry,
+  Archer,
+  Longbow,
+  Mage,
+  Arcanist,
+  LightInfantry,
+  HeavyInfantry,
 }
 
 export const battalionInformation = [
   {
-    id: 1,
-    name: 'Cavalry',
+    id: BattalionIds.LightCavalry,
+    name: 'lightCavalry',
     color: Barracks,
-    image: '/realm-troops/cavalry.png',
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
   },
   {
-    id: 2,
-    name: 'Knight',
+    id: BattalionIds.HeavyCavalry,
+    name: 'heavyCavalry',
     color: Barracks,
-    image: '/realm-troops/knight.png',
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
   },
   {
-    id: 3,
-    name: 'Archer',
+    id: BattalionIds.Archer,
+    name: 'archer',
     color: ArcherTower,
-    image: '/realm-troops/archer.png',
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
   },
   {
-    id: 4,
-    name: 'Hunter',
+    id: BattalionIds.Longbow,
+    name: 'longbow',
     color: ArcherTower,
-    image: '/realm-troops/hunter.png',
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
   },
   {
-    id: 5,
-    name: 'Apprentice',
+    id: BattalionIds.Mage,
+    name: 'mage',
     color: Castle,
-    image: '/realm-troops/apprentice.png',
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
   },
   {
-    id: 6,
-    name: 'Archanist',
+    id: BattalionIds.Arcanist,
+    name: 'arcanist',
     color: Castle,
-    image: '/realm-troops/archanist.png',
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
   },
   {
-    id: 7,
-    name: 'Solider',
+    id: BattalionIds.LightInfantry,
+    name: 'lightInfantry',
     color: MageTower,
-    image: '/realm-troops/soldier.png',
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
   },
   {
-    id: 8,
-    name: 'Paladin',
+    id: BattalionIds.HeavyInfantry,
+    name: 'heavyInfantry',
     color: MageTower,
-    image: '/realm-troops/paladin.png',
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
@@ -142,14 +134,14 @@ export const battalionIdToString = (id: BattalionIds) => {
     case BattalionIds.Archer:
       name = 'Archer';
       break;
-    case BattalionIds.LongBow:
-      name = 'Hunter';
+    case BattalionIds.Longbow:
+      name = 'Longbow';
       break;
     case BattalionIds.Mage:
       name = 'Apprentice';
       break;
-    case BattalionIds.Archanist:
-      name = 'Archanist';
+    case BattalionIds.Arcanist:
+      name = 'Arcanist';
       break;
     case BattalionIds.LightInfantry:
       name = 'Solider';
@@ -161,6 +153,10 @@ export const battalionIdToString = (id: BattalionIds) => {
   return name;
 };
 
-export const getUnitImage = (id: number) => {
-  return battalionInformation.find((a) => a.id === id)?.image;
+export const getUnitImage = (id: BattalionIds) => {
+  return (
+    '/realm-troops/' +
+    battalionInformation.find((a) => a.id === id)?.name +
+    '.png'
+  );
 };
