@@ -16,7 +16,6 @@ type ArtBackgroundProps = {
 export const ArtBackground = (props: ArtBackgroundProps) => {
   const artBackground = props.background ?? 'hero';
   const opacityAnimation = useSpring({
-    zIndex: artBackground ? 10 : 0,
     opacity: artBackground ? 1 : 0,
     config: { duration: 600 },
     immediate: (key) => key === 'zIndex',
@@ -24,7 +23,7 @@ export const ArtBackground = (props: ArtBackgroundProps) => {
 
   return (
     <animated.div
-      className={`absolute top-0 z-20 w-full h-full bg-center bg-cover bg-${artBackground}`}
+      className={`absolute top-0 w-full h-full bg-center bg-cover bg-${artBackground}`}
       style={opacityAnimation}
     ></animated.div>
   );

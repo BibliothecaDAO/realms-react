@@ -12,7 +12,7 @@ interface MilitarySideBarProps {
 
 export const MilitarySideBar = ({ isOpen, onClose }: MilitarySideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-30">
       {isOpen && <MilitarySideBarPanel onClose={onClose} />}
     </AtlasSideBar>
   );

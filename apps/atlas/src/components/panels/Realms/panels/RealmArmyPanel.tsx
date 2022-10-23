@@ -425,7 +425,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           <CombatSideBar defendingRealm={realm} />
         </AtlasSidebar>
         <AtlasSidebar
-          containerClassName="w-full md:w-10/12"
+          containerClassName="w-full md:w-10/12 z-[20]"
           isOpen={isArmyBuilding}
         >
           <SidebarHeader
