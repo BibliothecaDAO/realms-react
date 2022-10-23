@@ -49,7 +49,7 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
           variant="outline"
           size="xs"
         >
-          View Realm
+          view
         </Button>
       ),
     };

@@ -1,20 +1,38 @@
-import { Button, Card, CountdownTimer } from '@bibliotheca-dao/ui-lib/base';
+import {
+  Button,
+  Card,
+  CountdownTimer,
+  OrderIcon,
+  Tabs,
+} from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
+import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
+import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import ParentSize from '@visx/responsive/lib/components/ParentSize';
+import { useMemo, useState } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import { getTravelTime } from '@/shared/Getters/Realm';
+import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
+import { fetchRealmNameById, getTravelTime } from '@/shared/Getters/Realm';
+import { ArmyBattalions } from './armyCard/ArmyBattalions';
+import { ArmyStatistics } from './armyCard/ArmyStatistics';
+
+export interface ArmyAndOrder extends Army {
+  orderType?: string;
+}
 
 type Prop = {
-  army: Army;
+  army: ArmyAndOrder;
   onBuildArmy?: () => void;
   onTravel?: () => void;
   selectedRealm?: number;
 };
 
 export const ArmyCard: React.FC<Prop> = (props) => {
+  const { play } = useUiSounds(soundSelector.pageTurn);
+  const [selectedTab, setSelectedTab] = useState(0);
   const { getArmyStats } = useArmy();
   const army = props.army;
   const {
@@ -36,77 +54,86 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   });
 
   const hasArrived = army?.destinationArrivalTime > new Date().getTime();
+
+  const tabs = useMemo(
+    () => [
+      {
+        label: <Map className="self-center w-6 h-6 fill-current" />,
+        component: (
+          <ArmyStatistics
+            armyStatistics={armyStats}
+            army={props.army}
+            isAtLocation={isAtLocation}
+            selectedRealm={props.selectedRealm}
+            onTravel={props.onTravel}
+            onBuildArmy={props.onBuildArmy}
+            isHome={isHome}
+          />
+        ),
+      },
+      {
+        label: <Head className="self-center w-6 h-6 fill-current" />,
+        component: (
+          <ArmyBattalions
+            armyStatistics={armyStats}
+            army={props.army}
+            isAtLocation={isAtLocation}
+            selectedRealm={props.selectedRealm}
+            onTravel={props.onTravel}
+            onBuildArmy={props.onBuildArmy}
+            isHome={isHome}
+          />
+        ),
+      },
+    ],
+    [army]
+  );
+
+  const pressedTab = (index) => {
+    play();
+    setSelectedTab(index as number);
+  };
+
   return (
     <Card key={army.armyId} className="flex flex-col">
+      <h3 className="flex justify-between">
+        #{army.armyId == 0 ? '' : army.realmId} | Army{' '}
+        {army.armyId == 0 ? 'Defending' : army.armyId}{' '}
+        <OrderIcon
+          className="ml-auto"
+          size="sm"
+          order={army.orderType ? army.orderType.toLowerCase() : ''}
+        />{' '}
+      </h3>
       <div className="flex justify-between">
-        <h3 className="">
-          {army.armyId == 0 ? '' : army.realmId}{' '}
-          {army.armyId == 0 ? 'Defending' : ' | ' + army.armyId}{' '}
-        </h3>
-        <div>
-          {army.armyId != 0 &&
-            (isAtLocation ? (
-              <h5>{hasArrived ? 'on the way' : 'here'}</h5>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigateToAsset(
-                    army?.destinationRealmId
-                      ? army?.destinationRealmId
-                      : army.realmId,
-                    'realm'
-                  );
-                }}
-                variant="outline"
-                size="xs"
-                className="w-full uppercase"
-              >
-                <Globe className="w-3 mr-2 fill-current" />
-                {!isHome ? army?.destinationRealmId : 'Home'}
-              </Button>
-            ))}
-        </div>
+        <h2>{fetchRealmNameById(army.realmId)}</h2>
       </div>
-
-      <div className="relative h-36 card">
-        <ParentSize>
-          {({ width, height }) => (
-            <RadarMap armyOne={armyStats} height={height} width={width} />
-          )}
-        </ParentSize>
-      </div>
-      <div className="w-full mt-3 uppercase font-display">
-        <div className="flex justify-between">
-          <h5 className="">Army Statistics</h5>
-          <span className="pr-6 ml-auto">A</span> <span>D</span>
-        </div>
-        <hr className="border-white/30" />
-        <div className="flex justify-between">
-          Cavalry:{' '}
-          <span className="pr-3 ml-auto">{armyStats.cavalryAttack}</span>{' '}
-          <span>{armyStats.cavalryDefence}</span>
-        </div>
-        <div className="flex justify-between">
-          Archery:{' '}
-          <span className="pr-3 ml-auto">{armyStats.archeryAttack}</span>{' '}
-          <span>{armyStats.archeryDefence}</span>
-        </div>
-        <div className="flex justify-between">
-          Magic: <span className="pr-3 ml-auto">{armyStats.magicAttack}</span>{' '}
-          <span>{armyStats.magicDefence}</span>
-        </div>
-        <div className="flex justify-between">
-          Infantry:{' '}
-          <span className="pr-3 ml-auto">{armyStats.infantryAttack}</span>{' '}
-          <span>{armyStats.infantryDefence}</span>
-        </div>
-      </div>
-
       {hasArrived && (
-        <div className="flex px-2 my-1 text-sm rounded bg-gray-1000">
-          Traveling for: <CountdownTimer date={army?.destinationArrivalTime} />
+        <div className="flex text-sm font-semibold rounded ">
+          <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
         </div>
       )}
+      <div>Traveling to {fetchRealmNameById(armyLocation)}</div>
+      <Tabs
+        selectedIndex={selectedTab}
+        onChange={(index) => pressedTab(index as number)}
+        variant="default"
+      >
+        <Tabs.List className="">
+          {tabs.map((tab, index) => (
+            <Tabs.Tab key={index} className="uppercase">
+              {tab.label}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+
+        <Tabs.Panels>
+          {tabs.map((tab, index) => (
+            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+          ))}
+        </Tabs.Panels>
+      </Tabs>
+
       <div className="grid grid-cols-1 gap-2 mt-4">
         {isHome && isAtLocation && (
           <Button

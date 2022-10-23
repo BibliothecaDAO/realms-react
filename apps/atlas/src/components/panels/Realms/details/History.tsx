@@ -70,8 +70,8 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
   };
 
   return (
-    <div className="flex gap-6 py-4">
-      <Card className="w-1/2 w-96 md:col-span-6">
+    <div className="grid gap-6 py-4">
+      <Card className=" md:col-span-6">
         <CardTitle>Mercantile History</CardTitle>
         {economicEventData?.length
           ? economicEventData.map((a, index) => {
@@ -93,7 +93,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
 
       <Card className="col-span-12 md:col-span-6">
         <CardTitle>Military History</CardTitle>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid gap-3">
           {militaryEventData?.length
             ? militaryEventData.map((a, index) => {
                 return (
@@ -113,7 +113,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                         <div className="flex">
                           <Sword className="w-6 mr-2" />
                           <span className="text-green-300">
-                            Successful Raid
+                            Successful Raid!
                           </span>
                         </div>
                       ) : (

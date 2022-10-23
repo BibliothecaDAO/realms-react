@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
 import { getTravelArcs } from '@/shared/Getters/Realm';
 import type {
@@ -78,7 +79,6 @@ const useTravel = (): Travel => {
       );
     },
     setTravelArcs: (location: number, assets: number[]) => {
-      console.log(getTravelArcs(location, assets));
       setTravelArcs(() => getTravelArcs(location, assets) as any);
     },
     travelArcs,

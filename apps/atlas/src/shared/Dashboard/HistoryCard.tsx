@@ -12,7 +12,9 @@ interface Props {
 
 export const HistoryCard = (props: Props) => {
   return (
-    <Card className={`flex flex-wrap mb-2 justify-between w-full relative`}>
+    <div
+      className={`flex flex-wrap mb-2 justify-between w-full relative border border-white/10 rounded p-2`}
+    >
       <Image
         objectFit="cover"
         className="rounded-xl brightness-50 contrast-75 "
@@ -31,6 +33,6 @@ export const HistoryCard = (props: Props) => {
         {props.children}
         <div className="pt-5">{props.action}</div>
       </div>
-    </Card>
+    </div>
   );
 };

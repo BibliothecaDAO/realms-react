@@ -61,17 +61,6 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
     };
   });
 
-  const travelTableFiltered = travelTable?.sort(
-    (a, b) => parseInt(a.distance) - parseInt(b.distance)
-  );
-  const columns = [
-    { Header: 'Name', id: 1, accessor: 'name' },
-    { Header: 'Distance', id: 2, accessor: 'distance' },
-    { Header: 'Time', id: 3, accessor: 'time' },
-    { Header: 'Action', id: 4, accessor: 'action' },
-  ];
-  const tableOptions = { is_striped: true };
-
   const ids = allArmies?.map((a) => a.destinationRealmId) || [];
 
   return (
@@ -84,16 +73,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
       >
         show armies distance on atlas
       </Button>
-      {/* <div className="relative mt-4 overflow-x-auto">
-        {userRealms?.realms && (
-          <Table
-            columns={columns}
-            data={travelTableFiltered}
-            options={tableOptions}
-          />
-        )}
-      </div> */}
-      <div className="relative grid grid-cols-2 gap-4 mt-4 overflow-x-auto">
+      <div className="relative grid grid-cols-2 gap-2 mt-4 overflow-x-auto">
         {allArmies?.map((army, index) => {
           return (
             <ArmyCard

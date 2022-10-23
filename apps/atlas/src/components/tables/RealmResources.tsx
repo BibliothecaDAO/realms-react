@@ -80,7 +80,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     cachedDaysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : cachedDaysAccrued;
 
   const resources = props.realm.resources?.map((a) => {
-    return (resourcesAccrued + maxResources).toLocaleString();
+    return maxResources.toLocaleString();
   });
 
   const vault = props.realm.resources?.map((a) => {
