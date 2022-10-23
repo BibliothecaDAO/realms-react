@@ -285,22 +285,45 @@ function useResources() {
       : [];
 
     setBalance(
-      walletBalancesData.walletBalances.map((resourceBalance, index) => {
-        const resourceId = resourceBalance.tokenId ?? 0;
+      resources.map((resource, index) => {
+        const resourceId = resource.id ?? 0;
+        const resourceName = resource.trait ?? 0;
+
+        const walletBalance =
+          walletBalancesData.walletBalances.find(
+            (a) => a.tokenId === resourceId
+          )?.amount ?? 0;
+
         const rate = rates.find((rate) => rate.tokenId === resourceId);
-        const rateAmount = rate?.amount ?? '0';
-        const resourceName = rate?.tokenName ?? '';
+        console.log(rate);
         return {
           resourceId,
           resourceName,
-          amount: BigNumber.from(resourceBalance.amount).toString(),
-          rate: rateAmount ?? '0',
+          amount: BigNumber.from(walletBalance).toString(),
+          rate: rate?.amount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
           tokenAmount: tokenExchangeData[index]?.amount ?? '0',
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
+
+      // walletBalancesData.walletBalances.map((resourceBalance, index) => {
+      //   const resourceId = resourceBalance.tokenId ?? 0;
+      //   const rate = rates.find((rate) => rate.tokenId === resourceId);
+      //   const rateAmount = rate?.amount ?? '0';
+      //   const resourceName = rate?.tokenName ?? '';
+      //   return {
+      //     resourceId,
+      //     resourceName,
+      //     amount: BigNumber.from(resourceBalance.amount).toString(),
+      //     rate: rateAmount ?? '0',
+      //     lp: userLp[index]?.amount ?? '0',
+      //     currencyAmount: currencyExchangeData[index]?.amount ?? '0',
+      //     tokenAmount: tokenExchangeData[index]?.amount ?? '0',
+      //     percentChange: rate?.percentChange24Hr ?? 0,
+      //   };
+      // })
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
