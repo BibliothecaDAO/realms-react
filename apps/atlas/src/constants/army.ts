@@ -31,67 +31,75 @@ export enum BattalionIds {
 export const battalionInformation = [
   {
     id: BattalionIds.LightCavalry,
-    name: 'lightCavalry',
+    name: 'Light Cavalry',
     color: Barracks,
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
+    image: 'lightCavalry.png',
   },
   {
     id: BattalionIds.HeavyCavalry,
-    name: 'heavyCavalry',
+    name: 'Knight',
     color: Barracks,
     description: description,
     strength: 'Archers',
     weakness: 'Infantry',
+    image: 'heavyCavalry.png',
   },
   {
     id: BattalionIds.Archer,
-    name: 'archer',
+    name: 'Archer',
     color: ArcherTower,
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
+    image: 'archer.png',
   },
   {
     id: BattalionIds.Longbow,
-    name: 'longbow',
+    name: 'Hunter',
     color: ArcherTower,
     description: description,
     strength: 'Magic',
     weakness: 'Cavalary',
+    image: 'longbow.png',
   },
   {
     id: BattalionIds.Mage,
-    name: 'mage',
+    name: 'Apprentice',
     color: Castle,
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
+    image: 'mage.png',
   },
   {
     id: BattalionIds.Arcanist,
-    name: 'arcanist',
+    name: 'Arcanist',
     color: Castle,
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
+    image: 'arcanist.png',
   },
   {
     id: BattalionIds.LightInfantry,
-    name: 'lightInfantry',
+    name: 'Solider',
     color: MageTower,
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
+    image: 'lightInfantry.png',
   },
   {
     id: BattalionIds.HeavyInfantry,
-    name: 'heavyInfantry',
+    name: 'Paladin',
     color: MageTower,
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
+    image: 'heavyInfantry.png',
   },
 ];
 
@@ -135,7 +143,7 @@ export const battalionIdToString = (id: BattalionIds) => {
       name = 'Archer';
       break;
     case BattalionIds.Longbow:
-      name = 'Longbow';
+      name = 'Hunter';
       break;
     case BattalionIds.Mage:
       name = 'Apprentice';
@@ -155,8 +163,6 @@ export const battalionIdToString = (id: BattalionIds) => {
 
 export const getUnitImage = (id: BattalionIds) => {
   return (
-    '/realm-troops/' +
-    battalionInformation.find((a) => a.id === id)?.name +
-    '.png'
+    '/realm-troops/' + battalionInformation.find((a) => a.id === id)?.image
   );
 };

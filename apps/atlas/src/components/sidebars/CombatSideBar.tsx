@@ -12,6 +12,7 @@ import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
 
 type Prop = {
@@ -77,13 +78,13 @@ export const CombatSideBar: React.FC<Prop> = ({
   }, [combatData]);
 
   return (
-    <div>
+    <div className="z-50">
       {!txSubmitted || combatError ? (
         <div className="grid w-full md:grid-cols-3">
           <div>
             <div className="">
-              <h1 className="w-full mb-8 text-center">
-                {selectedArmy?.realmId}
+              <h1 className="flex justify-between w-full mb-8 text-center">
+                {fetchRealmNameById(selectedArmy?.realmId)}
                 <OrderIcon
                   withTooltip
                   containerClassName="inline-block mr-4"
@@ -112,7 +113,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 })}
               </div>
             </div>
-            <h2 className="mt-4">Armies at this Realm</h2>
+            <h3 className="mt-20">Armies at this Realm</h3>
             <div className="grid lg:grid-cols-2">
               {defendingRealm &&
                 attackingRealmsAtLocation?.map((army, index) => {
@@ -136,7 +137,6 @@ export const CombatSideBar: React.FC<Prop> = ({
             </div>
           </div>
           <div className="w-full lg:px-24">
-            <h1 className="pb-20 mt-4 text-center">Raiding</h1>
             <div className="w-full h-60">
               <ParentSize>
                 {({ width, height }) => (
@@ -168,7 +168,7 @@ export const CombatSideBar: React.FC<Prop> = ({
             </Button>
           </div>
           <div className="">
-            <h1 className="w-full mb-8 text-center">
+            <h1 className="flex justify-between w-full mb-8 text-center">
               {defendingRealm?.name}
               <OrderIcon
                 withTooltip

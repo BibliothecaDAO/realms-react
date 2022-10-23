@@ -236,7 +236,9 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
 };
 
 export const fetchRealmNameById = (id: number | undefined) => {
-  return RealmsData.features.filter((realm) => realm.id == id)[0].name;
+  return RealmsData.features.find((realm) => realm.id == id)
+    ? RealmsData.features.find((realm) => realm.id == id)?.name
+    : '';
 };
 
 export const RealmClaimable = (realm: RealmFragmentFragment) => {

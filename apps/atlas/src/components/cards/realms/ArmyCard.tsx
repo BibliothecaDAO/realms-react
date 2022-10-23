@@ -113,7 +113,31 @@ export const ArmyCard: React.FC<Prop> = (props) => {
           <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
         </div>
       )}
-      <div>Traveling to {fetchRealmNameById(armyLocation)}</div>
+      <div className="flex justify-between">
+        <div>
+          {army.armyId != 0 &&
+            (isAtLocation ? (
+              <h5>{hasArrived ? 'on the way' : 'here'}</h5>
+            ) : (
+              <Button
+                onClick={() => {
+                  navigateToAsset(
+                    army?.destinationRealmId
+                      ? army?.destinationRealmId
+                      : army.realmId,
+                    'realm'
+                  );
+                }}
+                variant="outline"
+                size="xs"
+                className="w-full uppercase"
+              >
+                <Globe className="w-3 mr-2 fill-current" />
+                {!isHome ? army?.destinationRealmId : 'Home'}
+              </Button>
+            ))}
+        </div>
+      </div>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
