@@ -149,6 +149,7 @@ function useResources() {
       variables: {
         address: address ? getAccountHex(address)?.toLowerCase() : '',
       },
+      pollInterval: 5000,
     });
 
   const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({

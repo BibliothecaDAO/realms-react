@@ -274,10 +274,11 @@ export function SwapResources(): ReactElement {
   function onTradeClicked() {
     if (isBuy) {
       onBuyTokensClick();
+      // removeAllSelectedSwapResources();
     } else {
       onSellTokensClick();
+      // removeAllSelectedSwapResources();
     }
-    removeAllSelectedSwapResources();
   }
 
   const calculatedPriceImpact = useMemo(() => {

@@ -26,6 +26,7 @@ export const useGameConstants = () => {
     const co = BigNumber.from((cost * 10 ** 18).toString());
     const currentBalance =
       balance.find((a) => a.resourceId === id)?.amount || 0;
+
     return BigNumber.from(currentBalance).gte(co) ? true : false;
   };
 

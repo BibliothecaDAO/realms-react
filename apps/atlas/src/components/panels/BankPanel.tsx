@@ -74,10 +74,10 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               resource={resource?.trait?.replace(' ', '') || ''}
               size="md"
             />
-            <div className="flex pt-2 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0 font-display">
+            <div className="flex py-4 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0 font-display">
               <span className="self-center w-full tracking-widest uppercase text-stone-200">
                 {resource?.trait}
-                <span className="block w-full tracking-widest uppercase sm:flex sm:text-sm text-stone-400">
+                <span className="block w-full tracking-widest uppercase sm:flex text-stone-400">
                   {(+formatEther(
                     resourceBalance?.amount || 0
                   )).toLocaleString()}
@@ -165,14 +165,14 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
     { Header: 'Action', id: 7, accessor: 'action' },
   ];
-  const tableOptions = { is_striped: true };
+  const tableOptions = { is_striped: false };
 
   return (
     <BasePanel open={true} style="lg:w-7/12">
       <div className="flex justify-between">
-        <div className="w-full p-10 pt-20 bg-black/90">
-          <h2 className="w-full">The Resource Emporium</h2>
-          <p className="mt-4 sm:text-xl opacity-70">
+        <div className="w-full p-10 pt-10 bg-black/90">
+          <h2 className="w-full">Resource Emporium</h2>
+          <p className="mt-4 sm:text-2xl">
             Trade your resources with the merchant. You can also provide
             liquidity to the merchant.
           </p>

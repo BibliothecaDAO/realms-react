@@ -20,8 +20,8 @@ export interface ArmyStatistics {
 
 const orange = '#ff9933';
 export const pumpkin = '#f5810c';
-const silver = '#d9d9d9';
-export const background = 'gray';
+const silver = '#939393';
+export const background = '';
 const degrees = 360;
 
 const y = (d: { key: string; value: number }) => d.value;

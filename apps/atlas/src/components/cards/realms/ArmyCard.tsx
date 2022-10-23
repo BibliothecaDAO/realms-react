@@ -123,7 +123,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             size="xs"
             onClick={() => props.onTravel && props.onTravel()}
           >
-            Travel here: {travelInformation.time / 60}m
+            Travel: {(travelInformation.time / 60).toFixed(2)} m
           </Button>
         )}
       </div>

@@ -8,6 +8,7 @@ import React from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import {
   TraitTable,
   getTrait,
@@ -152,7 +153,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
       </div>
       <MarketplaceByPanel
         id={props.realm.realmId.toString()}
-        address="0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d"
+        address={ModuleAddr.StakedRealms}
       />
       {/* <DownloadAssets id={props.realm.realmId}></DownloadAssets> */}
     </>

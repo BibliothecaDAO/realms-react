@@ -46,6 +46,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const txQueue = useCommandList();
   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
   useEffect(() => {
+    console.log(txQueue.transactions);
     setBuildingIdsEnqueued(
       txQueue.transactions
         .filter(
@@ -65,6 +66,8 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       ? false
       : true;
   };
+
+  console.log(buildingIdsEnqueued);
 
   const { build } = useCombat();
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();

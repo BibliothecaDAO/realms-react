@@ -19,6 +19,7 @@ import {
   hasOwnRelic,
   RealmCombatStatus,
   getTrait,
+  fetchRealmNameById,
 } from '@/shared/Getters/Realm';
 import TerrainLayer from '@/shared/Terrain';
 import type {
@@ -41,22 +42,7 @@ type Prop = {
 };
 
 const Overview: React.FC<Prop> = (props) => {
-  const getPopulation = () => {
-    return realm?.buildings
-      ?.map((a) => a.population)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
-
-  const getCulture = () => {
-    return realm?.buildings
-      ?.map((a) => a.culture)
-      .reduce((prev, curr) => prev + curr, 0);
-  };
-
   const realm = props.realm?.realm;
-
-  const attackingSquad = realm?.troops?.filter((a) => a.squadSlot === 1);
-  const defensiveSquad = realm?.troops?.filter((a) => a.squadSlot === 2);
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
@@ -75,24 +61,139 @@ const Overview: React.FC<Prop> = (props) => {
   return (
     <BaseRealmDetailPanel open={props.open}>
       <div className="grid grid-cols-12 gap-6 py-4">
+        <Card className="col-span-12 lg:col-start-1 lg:col-end-7">
+          <CardBody>
+            <div>
+              {hasOwnRelic(realm) ? (
+                <div>
+                  <p className="text-xl">
+                    Citizens of {realm?.name} are living peacefully on its
+                    lands. The Lord of {realm?.name} is keeping them safe from
+                    Goblins and other warmongering realms.
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  {realm?.relic?.map((a, i) => {
+                    return (
+                      <div key={i} className="flex flex-wrap mb-4">
+                        <div className="relative">
+                          <Image
+                            src={'/stableai/archanist.png'}
+                            alt="map"
+                            height={150}
+                            width={150}
+                            className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
+                          />
+                          <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
+                            1
+                          </div>
+                        </div>
+                        <div>
+                          <h2>
+                            Annexed by {fetchRealmNameById(a.heldByRealm || 0)}!
+                          </h2>{' '}
+                          <p className="text-xl">
+                            {realm?.name} has been Conquered by Realm{' '}
+                            {fetchRealmNameById(a.heldByRealm || 0)}. The
+                            citizens shake in fear everyday thinking it will be
+                            their last... won't someone think of the children!
+                          </p>
+                        </div>
+                        <div className="w-full mt-4">
+                          <Button
+                            href={'/realm/' + a.heldByRealm + '?tab=Army'}
+                            variant="outline"
+                            size="sm"
+                          >
+                            see realm {fetchRealmNameById(a.heldByRealm || 0)}
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </CardBody>
+        </Card>
+        <Card className="col-span-12 row-span-3 md:col-span-6 lg:col-start-7 lg:col-span-5 ">
+          <RealmImage id={realm?.realmId} />
+          <CardBody>
+            <div className="flex grid grid-cols-2 gap-4 font-display">
+              <div className="my-1 ">
+                <TraitTable
+                  trait="Region"
+                  traitAmount={getTrait(realm, 'Region')}
+                />
+              </div>
+              <div className="my-1 ">
+                <TraitTable
+                  trait="City"
+                  traitAmount={getTrait(realm, 'City')}
+                />
+              </div>
+              <div className="my-1 ">
+                <TraitTable
+                  trait="Harbor"
+                  traitAmount={getTrait(realm, 'Harbor')}
+                />
+              </div>
+              <div className="my-1 ">
+                <TraitTable
+                  trait="River"
+                  traitAmount={getTrait(realm, 'River')}
+                />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
         <Card
           loading={props.loading}
-          className="col-span-12 sm:col-span-4 lg:col-span-2"
+          className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3"
         >
           <CardTitle>Population</CardTitle>
           <CardStats className="text-4xl">
             {props.realmFoodDetails.population}
           </CardStats>
         </Card>
+
+        <Card className="col-span-12 row-span-2 sm:col-span-4 lg:col-span-4">
+          <div className="w-full p-2 mb-3 text-center uppercase bg-red-800 rounded sm:text-2xl font-display paper animate-pulse">
+            {realm && RealmCombatStatus(realm)}!
+          </div>
+
+          <div className="my-2">
+            {props.realm?.realm.ownArmies.length ? (
+              <ArmyCard
+                selectedRealm={props.realm?.realm.realmId}
+                army={props.realm?.realm.ownArmies[0]}
+              />
+            ) : (
+              'No defending Armies! This Realm is defence less.'
+            )}
+          </div>
+
+          {isOwner && (
+            <Button
+              onClick={() => props.onSetSubview('Army')}
+              variant="outline"
+              size="xs"
+            >
+              manage
+            </Button>
+          )}
+        </Card>
+
         <Card
           loading={props.loading}
-          className="col-span-12 sm:col-span-4 lg:col-span-2"
+          className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3"
         >
           <CardTitle>Food in Storehouse</CardTitle>
           {!props.loading && (
             <CardStats>
               <div>
-                {props.availableFood && (
+                {/* {props.availableFood && (
                   <div className="flex justify-end w-full text-xl">
                     {' '}
                     <CountdownTimer
@@ -102,7 +203,7 @@ const Overview: React.FC<Prop> = (props) => {
                       ).toString()}
                     />
                   </div>
-                )}
+                )} */}
                 <div className="text-4xl">
                   {props.availableFood?.toLocaleString()}
                 </div>{' '}
@@ -119,85 +220,7 @@ const Overview: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-        <Card className="col-span-12 sm:col-span-4 lg:col-span-3">
-          <CardTitle>Military Strength</CardTitle>
-          <div className="w-full p-2 mb-3 text-center uppercase bg-gray-800 rounded sm:text-2xl font-display paper">
-            {realm && RealmCombatStatus(realm)}!
-          </div>
-          <div className="my-2">
-            {props.realm?.realm.ownArmies.length ? (
-              <ArmyCard
-                selectedRealm={props.realm?.realm.realmId}
-                army={props.realm?.realm.ownArmies[0]}
-              />
-            ) : (
-              'No armies! This Realm is defenceless.'
-            )}
-          </div>
 
-          {isOwner && (
-            <Button
-              onClick={() => props.onSetSubview('Army')}
-              variant="outline"
-              size="xs"
-            >
-              manage
-            </Button>
-          )}
-        </Card>
-        <Card className="col-span-12 lg:col-start-8 lg:col-end-13">
-          <CardBody>
-            {hasOwnRelic(realm) ? (
-              <div>
-                <h2>Not conquered!</h2>
-                <p className="text-xl">
-                  Citizens of {realm?.name} are living peacefully on its lands.
-                  The Lord of {realm?.name} is keeping them safe from Goblins
-                  and other warmongering realms.
-                </p>
-              </div>
-            ) : (
-              <div>
-                {realm?.relic?.map((a, i) => {
-                  return (
-                    <div key={i} className="flex flex-wrap mb-4">
-                      <div className="relative">
-                        <Image
-                          src={'/stableai/archanist.png'}
-                          alt="map"
-                          height={150}
-                          width={150}
-                          className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
-                        />
-                        <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
-                          1
-                        </div>
-                      </div>
-                      <div>
-                        <h2>Annexed by Realm {a.heldByRealm}</h2>{' '}
-                        <p className="text-xl">
-                          {realm?.name} has been Conquered by Realm{' '}
-                          {a.heldByRealm}. The citizens shake in fear everyday
-                          thinking it will be their last... won't someone think
-                          of the children!
-                        </p>
-                      </div>
-                      <div className="w-full mt-4">
-                        <Button
-                          href={'/realm/' + a.heldByRealm + '?tab=Army'}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Visit realm {a.heldByRealm}
-                        </Button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </CardBody>
-        </Card>
         <Card
           loading={props.loading}
           className="col-span-12 lg:col-start-1 lg:col-end-4 "
@@ -248,37 +271,6 @@ const Overview: React.FC<Prop> = (props) => {
                 loading={false}
               />
             )}
-          </CardBody>
-        </Card>
-        <Card className="col-span-12 row-span-1 md:col-span-6 lg:col-start-8 lg:col-span-5 ">
-          <RealmImage id={realm?.realmId} />
-          <CardBody>
-            <div className="flex grid grid-cols-2 gap-4 font-display">
-              <div className="my-1 ">
-                <TraitTable
-                  trait="Region"
-                  traitAmount={getTrait(realm, 'Region')}
-                />
-              </div>
-              <div className="my-1 ">
-                <TraitTable
-                  trait="City"
-                  traitAmount={getTrait(realm, 'City')}
-                />
-              </div>
-              <div className="my-1 ">
-                <TraitTable
-                  trait="Harbor"
-                  traitAmount={getTrait(realm, 'Harbor')}
-                />
-              </div>
-              <div className="my-1 ">
-                <TraitTable
-                  trait="River"
-                  traitAmount={getTrait(realm, 'River')}
-                />
-              </div>
-            </div>
           </CardBody>
         </Card>
       </div>
