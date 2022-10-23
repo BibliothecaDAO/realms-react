@@ -10,7 +10,7 @@ import { ENQUEUED_STATUS } from '../constants';
 import type { CallAndMetadata } from '../types';
 
 type Call = CallAndMetadata;
-export type Tx = Call & { status: typeof ENQUEUED_STATUS };
+export type Tx = Call & { status: typeof ENQUEUED_STATUS; keyId?: string };
 
 interface CommandList {
   add: (tx: Call | Call[]) => void;
@@ -44,13 +44,25 @@ export const CommandListProvider = ({
         icon: scrollIcon,
       });
       setTx((prev) =>
-        prev.concat(tx.map((t) => ({ ...t, status: ENQUEUED_STATUS })))
+        prev.concat(
+          tx.map((t) => ({
+            ...t,
+            status: ENQUEUED_STATUS,
+            keyId: Math.random().toString(16).slice(2),
+          }))
+        )
       );
     } else {
       toast('Command Queued: ' + tx.metadata?.action, {
         icon: scrollIcon,
       });
-      setTx((prev) => prev.concat({ ...tx, status: ENQUEUED_STATUS }));
+      setTx((prev) =>
+        prev.concat({
+          ...tx,
+          status: ENQUEUED_STATUS,
+          keyId: Math.random().toString(16).slice(2),
+        })
+      );
     }
   };
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useAccount, useStarknetCall } from '@starknet-react/core';
 
+import { BigNumber } from 'ethers';
 import React, {
   createContext,
   useCallback,
@@ -13,13 +14,17 @@ import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { resources } from '@/constants/resources';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
-import { useGetGameConstantsQuery } from '@/generated/graphql';
+import {
+  useGetWalletBalancesQuery,
+  useGetGameConstantsQuery,
+} from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import {
   useLordsContract,
   useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
+import { getAccountHex } from '@/shared/Getters/Realm';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 
 export type Resource = {
@@ -139,15 +144,12 @@ function useResources() {
     args: [ownerAddressInt],
   });
 
-  const {
-    data: resourceBalanceData,
-    error: resourcesBalanceError,
-    refresh: updateBalance,
-  } = useStarknetCall({
-    contract: resources1155Contract,
-    method: 'balanceOfBatch',
-    args: [resourceMappingArray, resourceMapping],
-  });
+  const { data: walletBalancesData, refetch: updateBalance } =
+    useGetWalletBalancesQuery({
+      variables: {
+        address: address ? getAccountHex(address)?.toLowerCase() : '',
+      },
+    });
 
   const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
     contract: exchangeContract,
@@ -258,11 +260,11 @@ function useResources() {
   }, [selectedSwapResources]);
 
   useEffect(() => {
-    if (resourcesBalanceError) {
-      setBalanceStatus('error');
-    }
-
-    if (!resourceBalanceData || !resourceBalanceData[0] || !gameConstants) {
+    if (
+      !walletBalancesData ||
+      !walletBalancesData.walletBalances ||
+      !gameConstants
+    ) {
       return;
     }
 
@@ -283,31 +285,53 @@ function useResources() {
       : [];
 
     setBalance(
-      resourceBalanceData[0].map((resourceBalance, index) => {
-        const resourceId = resources[index]?.id ?? 0;
+      resources.map((resource, index) => {
+        const resourceId = resource.id ?? 0;
+        const resourceName = resource.trait ?? 0;
+
+        const walletBalance =
+          walletBalancesData.walletBalances.find(
+            (a) => a.tokenId === resourceId
+          )?.amount ?? 0;
+
         const rate = rates.find((rate) => rate.tokenId === resourceId);
-        const rateAmount = rate?.amount ?? '0';
-        const resourceName = rate?.tokenName ?? '';
+        console.log(rate);
         return {
           resourceId,
           resourceName,
-          amount: uint256ToBN(resourceBalance).toString(10),
-          rate: rateAmount ?? '0',
+          amount: BigNumber.from(walletBalance).toString(),
+          rate: rate?.amount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
           tokenAmount: tokenExchangeData[index]?.amount ?? '0',
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
+
+      // walletBalancesData.walletBalances.map((resourceBalance, index) => {
+      //   const resourceId = resourceBalance.tokenId ?? 0;
+      //   const rate = rates.find((rate) => rate.tokenId === resourceId);
+      //   const rateAmount = rate?.amount ?? '0';
+      //   const resourceName = rate?.tokenName ?? '';
+      //   return {
+      //     resourceId,
+      //     resourceName,
+      //     amount: BigNumber.from(resourceBalance.amount).toString(),
+      //     rate: rateAmount ?? '0',
+      //     lp: userLp[index]?.amount ?? '0',
+      //     currencyAmount: currencyExchangeData[index]?.amount ?? '0',
+      //     tokenAmount: tokenExchangeData[index]?.amount ?? '0',
+      //     percentChange: rate?.percentChange24Hr ?? 0,
+      //   };
+      // })
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
     setBattalionCosts(gameConstants?.battalionCosts);
   }, [
-    resourceBalanceData && resourceBalanceData[0],
+    walletBalancesData && walletBalancesData.walletBalances,
     lpBalanceData && lpBalanceData[0],
     exchangePairData && exchangePairData[0],
-    resourcesBalanceError,
     exchangeInfo,
   ]);
 

@@ -142,11 +142,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
           )} */}
           <div className="self-center">
-            <OrderIcon
-              withTooltip
-              size="md"
-              order={props.realm.orderType.toLowerCase()}
-            />
+            <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
           </div>
         </div>
 

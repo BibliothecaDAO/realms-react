@@ -153,7 +153,7 @@ export const BASE_FOOD_PRODUCTION = 2000;
 export const FISH_ID = 10001;
 export const WHEAT_ID = 10000;
 
-export const SECONDS_PER_KM = 30;
+export const SECONDS_PER_KM = 200;
 
 export enum RealmBuildingIntegrity {
   House = 3 * DAY,

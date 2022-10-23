@@ -113,9 +113,11 @@ export const RaidResults = (props: RaidResultsProps) => {
             </div>
             <div className="w-1/2 text-center">
               <h3>Defender</h3>
-              {defendingStartArmy && (
-                <BattalionImagesCard battalion={defendingStartArmy} />
-              )}
+              <div className="grid grid-cols-4 gap-4">
+                {defendingStartArmy && (
+                  <BattalionImagesCard battalion={defendingStartArmy} />
+                )}
+              </div>
             </div>
           </div>
           <div className="mt-5">

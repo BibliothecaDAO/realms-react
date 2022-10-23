@@ -42,13 +42,15 @@ type Prop = {
 export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const { exchangeInfo } = useMarketRate();
 
-  const now = new Date().getTime();
-
+  const DAY_MS = DAY * 1000;
   const getDays = (time) => {
-    return parseInt(((now - time) / DAY / 1000).toFixed(2));
+    return Math.trunc((Date.now() - time) / DAY_MS);
   };
+
   const remainingDays = (time) => {
-    return (DAY - (time % DAY) + now) * 1000;
+    const offsetClaimtime = time % DAY_MS;
+    const remainingDay = DAY_MS - (Date.now() % DAY_MS);
+    return remainingDay + offsetClaimtime + Date.now();
   };
 
   const { claim } = useResources(props.realm as Realm);
@@ -59,7 +61,6 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
 
   // time until next claim
   const cachedDaysRemained = remainingDays(props.realm?.lastClaimTime);
-  console.log(props.realm.realmId, cachedDaysRemained);
 
   // vault accrued
   const cachedVaultDaysAccrued = getDays(props.realm?.lastVaultTime);
@@ -183,7 +184,6 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
           </div>{' '}
           {days != MAX_DAYS_ACCURED && (
             <div className="flex justify-between px-3 uppercase">
-              next day
               <CountdownTimer date={cachedDaysRemained.toString()} />
             </div>
           )}
