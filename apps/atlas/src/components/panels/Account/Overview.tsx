@@ -5,7 +5,6 @@ import {
   CardTitle,
   CardStats,
 } from '@bibliotheca-dao/ui-lib';
-
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { animated, useSpring } from '@react-spring/web';
@@ -18,8 +17,6 @@ import {
 import Image from 'next/future/image';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { ENQUEUED_STATUS } from '@/constants/index';
-
 import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
@@ -112,52 +109,41 @@ export function AccountOverview(props: Prop) {
         style={animationUp}
         className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        <Card className="flex col-start-1 col-end-13 md:col-start-1 md:col-end-6">
+        <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
           <div className="flex">
             <div className="relative">
               <Image
                 src={'/stableai/archanist.png'}
                 alt="map"
-                height={300}
-                width={300}
-                className="w-24 h-24 mr-10 border shadow-2xl md:w-48 md:h-48 border-white/20 card paper"
+                height={500}
+                width={500}
+                className="border shadow-2xl border-white/20 card paper"
               />
               <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
                 1
               </div>
             </div>
 
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap p-10">
               <div className="self-center">
                 {address && (
-                  <span className="self-center text-center sm:text-xl font-display">
+                  <span className="self-center text-center sm:text-2xl font-display">
                     {starknetId ? starknetId : shortenAddressWidth(address, 6)}
                   </span>
                 )}
-                <h2 className="w-full sm:text-4xl">Your Vast Empire</h2>
+                <h2 className="w-full mt-3 sm:text-4xl">Your Vast Empire</h2>
+                <p>It has been busy since you have been away...</p>
               </div>
             </div>
           </div>
         </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-6 md:col-end-8">
+        <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
             <CardStats>{settledRealmsCount}</CardStats>
           </CardBody>
         </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-8 md:col-end-11">
-          <CardTitle className="flex">Lords Balance</CardTitle>
-          <CardBody>
-            <CardStats className="flex justify-end ">
-              {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-              <Lords className="self-center w-6 h-6 ml-4 fill-current" />
-            </CardStats>
-            <Button variant="outline" size="xs" href="/bank">
-              Bank
-            </Button>
-          </CardBody>
-        </Card>
-        <Card className="col-start-1 col-end-13 md:col-start-11 md:col-end-13">
+        <Card className="col-start-1 col-end-13 md:col-start-9 md:col-end-11">
           <CardTitle>Relics Held</CardTitle>
 
           <CardBody>
@@ -169,9 +155,21 @@ export function AccountOverview(props: Prop) {
             </Button>
           </CardBody>
         </Card>
+        <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
+          <CardTitle className="flex">Lords Balance</CardTitle>
+          <CardBody>
+            <CardStats className="flex justify-end ">
+              {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+              <Lords className="self-center w-6 h-6 ml-4 fill-current" />
+            </CardStats>
+            <Button variant="outline" size="xs" href="/bank">
+              Bank
+            </Button>
+          </CardBody>
+        </Card>
 
         <Card
-          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 max-h-96 overflow-y-scroll`}
+          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 overflow-y-scroll`}
         >
           <CardTitle>Mercantile History</CardTitle>
           <CardBody>
@@ -189,7 +187,7 @@ export function AccountOverview(props: Prop) {
         </Card>
 
         <Card
-          className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 max-h-96 overflow-y-scroll `}
+          className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 overflow-y-scroll `}
         >
           <CardTitle>Battle History</CardTitle>
           <CardBody>
