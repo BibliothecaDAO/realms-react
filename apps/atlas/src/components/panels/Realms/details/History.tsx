@@ -158,7 +158,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
         containerClassName="z-20 w-full md:w-1/2"
         isOpen={raidDetails}
       >
-        <SidebarHeader title="Raiding" onClose={() => setRaidDetails(false)} />
+        <SidebarHeader onClose={() => setRaidDetails(false)} />
         <RaidDetailsSideBar event={selectedEvent} />
       </AtlasSidebar>
     </div>

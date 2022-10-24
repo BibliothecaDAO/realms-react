@@ -208,20 +208,23 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       <div className="col-span-5">
         <Card className={`card ${activeBattalionData?.color}`}>
           {activeBattalionData?.id && (
-            <Image
-              className="rounded-xl"
-              src={getUnitImage(activeBattalionData.id)}
-              width={400}
-              height={400}
-              objectFit={'cover'}
-            />
-          )}
-          <div className="p-3">
-            <h2>{activeBattalionData?.name}</h2>
+            <>
+              <Image
+                className="rounded-xl"
+                src={getUnitImage(activeBattalionData.id)}
+                width={400}
+                height={400}
+                objectFit={'cover'}
+              />
 
-            <h5>Strong vs {activeBattalionData?.strength}</h5>
-            <h5>Weak vs {activeBattalionData?.weakness}</h5>
-          </div>
+              <div className="p-3">
+                <h2> {battalionIdToString(activeBattalionData?.id)}</h2>
+
+                <h5>Strong vs {activeBattalionData?.strength}</h5>
+                <h5>Weak vs {activeBattalionData?.weakness}</h5>
+              </div>
+            </>
+          )}
           {/* <p className="px-4 text-xl">{activeBattalionData?.description}</p> */}
           <CardBody>
             <div className="text-xl font-display">

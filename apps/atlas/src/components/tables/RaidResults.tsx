@@ -6,6 +6,7 @@ import type { RealmHistory, RealmHistoryWhereInput } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { fetchRealmNameById, resourcePillaged } from '@/shared/Getters/Realm';
+import { shortenAddress } from '@/util/formatters';
 
 interface RaidResultsProps {
   fromAttackRealmId?: number;
@@ -56,31 +57,33 @@ export const RaidResults = (props: RaidResultsProps) => {
 
   const success = result?.data?.success;
 
+  const defendingRealmId = result?.data?.defendRealmId || result?.realmId;
+  const attackingRealmId = result?.data?.attackRealmId || result?.realmId;
+  const defendingRealmOwner =
+    result?.data?.defendRealmOwner || result?.realmOwner;
+  const attackingRealmOwner =
+    result?.data?.attackRealmOwner?.account || result?.realmOwner;
   const attackingStartArmy = result?.data?.armiesStart[0];
   const defendingStartArmy = result?.data?.armiesStart[1];
 
-  console.log('attackingStartArmy', result?.data);
-
-  const { starknetId } = useStarkNetId(
-    result?.data?.attackRealmOwner.account || ''
-  );
-
+  const { starknetId } = useStarkNetId(attackingRealmOwner);
+  const { starknetId: defenderStarknetId } = useStarkNetId(defendingRealmOwner);
   return (
-    <div className="pt-10 text-center">
+    <div className="text-center">
       {result ? (
         <div>
           <h2 className="mb-4 text-center">
             {result.eventType == 'realm_combat_attack' &&
-              (success ? 'Successful Raid' : 'Raid Defended')}
+              (success ? 'Successful Raid' : 'Raid Failed')}
             {result.eventType == 'realm_combat_defend' &&
-              (success ? 'Raid Defended' : 'Realm Pillaged')}
+              (success ? 'Raid Defended' : 'Defeat')}
           </h2>
           <div className="flex gap-6">
             <div className="w-1/2">
-              <h6>{starknetId ?? starknetId}</h6>
+              <h6>{starknetId ?? shortenAddress(attackingRealmOwner)}</h6>
               <h3>Attacker</h3>
-              <h2> {fetchRealmNameById(result.data?.attackRealmId)}</h2>
-              <div className="grid grid-cols-4 gap-4">
+              <h2> {fetchRealmNameById(attackingRealmId)}</h2>
+              <div className="grid grid-cols-4 gap-4 mt-4">
                 {attackingStartArmy && (
                   <BattalionImagesCard
                     battalion={attackingStartArmy}
@@ -90,26 +93,31 @@ export const RaidResults = (props: RaidResultsProps) => {
               </div>
             </div>
             <div className="w-1/2 text-center">
+              <h6>
+                {defenderStarknetId ?? shortenAddress(defendingRealmOwner)}
+              </h6>
               <h5>Defender</h5>
-              <h2> {fetchRealmNameById(result.data?.defendRealmId)}</h2>
-              <div className="grid grid-cols-4 gap-4">
+              <h2> {fetchRealmNameById(defendingRealmId)}</h2>
+              <div className="grid grid-cols-4 gap-4 mt-4">
                 {defendingStartArmy && (
                   <BattalionImagesCard battalion={defendingStartArmy} />
                 )}
               </div>
             </div>
           </div>
+
           <div className="mt-5">
             {(result?.data?.relicLost ?? 0) > 0 && (
               <h1>Relic {result.data.relicLost} Captured</h1>
             )}
             {result.data?.pillagedResources?.length && (
-              <div className="pt-4">
-                <div className="mb-4 text-3xl">
-                  Successful Raid!! The troops of Realm{' '}
-                  {fetchRealmNameById(result.data?.defendRealmId)} were slayed
-                  and Realm {fetchRealmNameById(result.data?.attackRealmId)}{' '}
-                  took off with the following resources
+              <div>
+                <hr className="my-3 border border-white/30" />
+                <div className="mt-4 text-xl">
+                  Successful Raid!! The army of{' '}
+                  {fetchRealmNameById(defendingRealmId)} was defeated and{' '}
+                  {fetchRealmNameById(attackingRealmId)}'s battalions took off
+                  with the following resources
                   {/* TODO GENERALISE
                  The citizens are trembling and in awe of your victory. */}
                 </div>
@@ -122,6 +130,30 @@ export const RaidResults = (props: RaidResultsProps) => {
                 </div>
               </div>
             )}
+          </div>
+          <hr className="mt-3 border border-white/30" />
+          <div className="mt-5">
+            <h3 className="mb-5">Remaining Army</h3>
+            <div className="flex gap-6">
+              <div className="w-1/2">
+                {result?.data?.armiesEnd[0] && (
+                  <div className="grid grid-cols-4 gap-4">
+                    <BattalionImagesCard
+                      battalion={result?.data?.armiesEnd[0]}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="w-1/2">
+                {result?.data?.armiesEnd[1] && (
+                  <div className="grid grid-cols-4 gap-4">
+                    <BattalionImagesCard
+                      battalion={result?.data?.armiesEnd[1]}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       ) : (
