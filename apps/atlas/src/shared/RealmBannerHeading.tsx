@@ -32,7 +32,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
   const isOwner = useIsOwner(realm?.settledOwner);
 
   return (
-    <div className="bg-cover bg-ink">
+    <div className="bg-cover bg-snake">
       <div
         className={`bg-opacity-80 flex py-4 md:py-8 p-4 flex-wrap shadow     ${
           OrderAffinity[trimmed] === LightDark.light

@@ -6,9 +6,10 @@ import {
   getUnitImage,
 } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
+import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 
 type Prop = {
-  battalion: Army;
+  battalion: ArmyAndOrder;
   endBattalion?: Army;
 };
 interface HealthBarProps {

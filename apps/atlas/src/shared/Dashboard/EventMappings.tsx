@@ -1,6 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 
-import { resourcePillaged } from '../Getters/Realm';
+import { fetchRealmNameById, resourcePillaged } from '../Getters/Realm';
 
 export const Event = {
   realmCombatAttack: 'realm_combat_attack',
@@ -20,8 +20,12 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           <div>
             <span className="">
               {event.data?.success
-                ? `Raid successful on Realm ${event.data?.defendRealmId}`
-                : `Raid failed on Realm ${event.data?.defendRealmId}`}
+                ? `Raid successful on ${fetchRealmNameById(
+                    event.data?.defendRealmId
+                  )}!`
+                : `Raid failed on ${fetchRealmNameById(
+                    event.data?.defendRealmId
+                  )}`}
             </span>
           </div>
         ),
@@ -51,8 +55,12 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           event: (
             <span>
               {event.data?.success
-                ? `Defended raid from ${event.data?.attackRealmId}`
-                : `We have been Pillaged by Realm ${event.data?.attackRealmId}`}
+                ? `Defended raid from ${fetchRealmNameById(
+                    event.data?.attackRealmId
+                  )}`
+                : `We have been Pillaged by Realm ${fetchRealmNameById(
+                    event.data?.attackRealmId
+                  )}`}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,

@@ -129,6 +129,8 @@ module.exports = {
         100: '100',
       },
       backgroundImage: {
+        realmBackground: "url('/stableai/test-background.webp')",
+        snake: "url('/textures/snake_tiling_texture.png')",
         ink: "url('/textures/ink.jpg')",
         paperTexture: "url('/textures/paperTexture.jpg')",
         texture: "url('/texture-button.png')",

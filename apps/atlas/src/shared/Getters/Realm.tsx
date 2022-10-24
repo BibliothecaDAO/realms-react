@@ -198,7 +198,7 @@ export const relicsOwnedByRealm = (
 
 export const resourcePillaged = (resources: any) => {
   return (
-    <div className="w-full my-4">
+    <div className="mx-auto my-4">
       {resources.length ? (
         resources?.map((resource, index) => {
           const info = findResourceById(resource.resourceId);
@@ -209,7 +209,7 @@ export const resourcePillaged = (resources: any) => {
             >
               <div className="flex">
                 <ResourceIcon
-                  size="sm"
+                  size="md"
                   className="self-center"
                   resource={info?.trait?.replace('_', '') as string}
                 />{' '}

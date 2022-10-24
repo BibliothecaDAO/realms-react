@@ -122,7 +122,7 @@ export const MenuSideBar = () => {
       <animated.div
         style={animation}
         id="menuSidebar"
-        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100 z-40 shadow-md flex flex-col transform  overflow-auto border-r-4 border-white/20 shadow-white/30 card ${
+        className={`absolute sm:relative align-items-center sm:pt-4 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100 bg-snake z-40 shadow-md flex flex-col transform  overflow-auto border-r-4 border-white/20 shadow-white/30 card ${
           showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >

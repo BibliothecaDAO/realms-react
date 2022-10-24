@@ -7,13 +7,16 @@ import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RaidResults } from '@/components/tables/RaidResults';
 
 import { useAtlasContext } from '@/context/AtlasContext';
-import type { GetRealmQuery } from '@/generated/graphql';
+import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
+import { BattalionWithImage } from '@/shared/squad/BattalionWithImage';
+import { ArmyStatistics } from '../cards/realms/armyCard/ArmyStatistics';
+import { RealmResources } from '../tables/RealmResources';
 
 type Prop = {
   defendingRealm?: GetRealmQuery['realm'];
@@ -78,24 +81,38 @@ export const CombatSideBar: React.FC<Prop> = ({
   }, [combatData]);
 
   return (
-    <div className="z-50">
+    <div className="z-50 bg-cover">
+      <div>
+        {!raidButtonEnabled && selectedArmy && (
+          <div className="p-2 my-2 text-xl text-orange-200 rounded bg-red-200/40 font-display">
+            {isSameOrder && (
+              <div>
+                Ser, {fetchRealmNameById(selectedArmy.realmId)} is of the same
+                order as {fetchRealmNameById(defendingRealm?.realmId)}. You
+                cannot attack!
+              </div>
+            )}
+          </div>
+        )}
+      </div>
       {!txSubmitted || combatError ? (
         <div className="grid w-full md:grid-cols-3">
           <div>
             <div className="">
               <h1 className="flex justify-between w-full mb-8 text-center">
                 {fetchRealmNameById(selectedArmy?.realmId)}
-                <OrderIcon
-                  withTooltip
-                  containerClassName="inline-block mr-4"
-                  size="md"
-                  order={selectedArmy?.orderType || ''}
-                />
+                <div className="self-center">
+                  <OrderIcon
+                    containerClassName="inline-block mr-4"
+                    size="md"
+                    order={selectedArmy?.orderType || ''}
+                  />
+                </div>
               </h1>
               <div className="grid grid-cols-2">
                 {battalions?.map((battalion, index) => {
                   return (
-                    <Battalion
+                    <BattalionWithImage
                       key={index}
                       {...battalion}
                       quantity={
@@ -137,7 +154,7 @@ export const CombatSideBar: React.FC<Prop> = ({
             </div>
           </div>
           <div className="w-full lg:px-24">
-            <div className="w-full h-60">
+            {/* <div className="w-full h-60">
               <ParentSize>
                 {({ width, height }) => (
                   <RadarMap
@@ -148,7 +165,8 @@ export const CombatSideBar: React.FC<Prop> = ({
                   />
                 )}
               </ParentSize>
-            </div>
+            </div> */}
+            {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
             <Button
               onClick={() => {
                 initiateCombat({
@@ -164,23 +182,30 @@ export const CombatSideBar: React.FC<Prop> = ({
               size="lg"
               className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double font-lords"
             >
-              Raid
+              Raid Vault
             </Button>
+            <RealmResources
+              showRaidable
+              realm={defendingRealm as Realm}
+              loading={false}
+              size="lg"
+            />
           </div>
           <div className="">
             <h1 className="flex justify-between w-full mb-8 text-center">
               {defendingRealm?.name}
-              <OrderIcon
-                withTooltip
-                containerClassName="inline-block mr-4"
-                size="md"
-                order={defendingRealm?.orderType || ''}
-              />
+              <div className="self-center">
+                <OrderIcon
+                  containerClassName="inline-block mr-4"
+                  size="md"
+                  order={defendingRealm?.orderType || ''}
+                />
+              </div>
             </h1>
             <div className="grid grid-cols-2">
               {battalions?.map((battalion, index) => {
                 return (
-                  <Battalion
+                  <BattalionWithImage
                     key={index}
                     {...battalion}
                     quantity={
@@ -198,43 +223,8 @@ export const CombatSideBar: React.FC<Prop> = ({
               })}
             </div>
           </div>
-          {/* <div className="grid grid-cols-2 gap-2 divide-x-4 divide-dotted ">
-            <SquadStatistics
-              slot={TroopSlot.defending}
-              troops={realm?.troops || []}
-            />
-          </div>
-           <RealmSelector onSelect={(r) => setSelectedRealms(r)} /> 
-          <Button
-            onClick={() => {
-              initiateCombat({
-                attackingRealmId: selectedRealms[0]?.realmId,
-                defendingRealmId: realm?.realmId,
-              });
-            }}
-            loading={combatLoading}
-            loadingText={'Raiding'}
-            disabled={!raidButtonEnabled}
-            variant="primary"
-            size="lg"
-            className="w-full mt-2 border-4 border-yellow-600 border-double"
-          >
-            pillage {realm?.name}
-          </Button> */}
           <div>
             {/* combatError && <p className="mt-3 text-red-400">combatError</p> */}
-          </div>
-          <div>
-            {!raidButtonEnabled && selectedArmy && (
-              <div className="p-2 my-2 font-semibold text-orange-800 bg-red-200 rounded">
-                {isSameOrder && (
-                  <p>
-                    Ser, {selectedArmy.armyId} cannot Attack a Realm of the same
-                    order!
-                  </p>
-                )}
-              </div>
-            )}
           </div>
         </div>
       ) : (

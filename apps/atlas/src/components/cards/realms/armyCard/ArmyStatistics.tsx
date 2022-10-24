@@ -24,30 +24,13 @@ export interface ArmyAndOrder extends Army {
 
 type Prop = {
   armyStatistics: Stats;
-  army: ArmyAndOrder;
-  onBuildArmy?: () => void;
-  onTravel?: () => void;
-  selectedRealm?: number;
-  isAtLocation: boolean;
-  isHome: boolean;
 };
 
 export const ArmyStatistics: React.FC<Prop> = (props) => {
   const { play } = useUiSounds(soundSelector.pageTurn);
-  const army = props.army;
-
-  const armyLocation =
-    army.destinationRealmId == 0 ? army.realmId : army.destinationRealmId;
-
-  const travelInformation = getTravelTime({
-    travellerId: armyLocation,
-    destinationId: props.selectedRealm,
-  });
-
-  const hasArrived = army?.destinationArrivalTime > new Date().getTime();
 
   return (
-    <div key={army.armyId}>
+    <div>
       <div className="relative h-36">
         <ParentSize>
           {({ width, height }) => (
