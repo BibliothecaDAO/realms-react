@@ -10,17 +10,16 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 hover:shadow border-b-2 border-transparent hover:border-cta-100 font-display',
-      active:
-        'border-orange-700 shadow-purple-800/10 shadow-md text-orange-700',
+      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 font-display  uppercase hover:text-shadow-[0_2px_10px_#f97316]',
+      active: ' text-orange-700 text-shadow-[0_2px_10px_#f97316]',
       inactive: ' border-transparent text-white/50',
     },
     tabList: 'flex space-x-3 sm:space-x-4  p-2 shadow-inner ',
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center justify-center px-4 py-2 font-body  uppercase tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350  rounded focus-visible:ring-yellow-700  hover:border hover:bg-black border-transparent border',
-      active: ' shadow-md bg-black border font-semibold border-cta-100/60',
+      base: 'relative flex w-full items-center justify-center px-4 py-2 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 text-shadow-[0_2px_6px_#6366f1] hover:bg-gradient-to-r hover:from-red-800 hover:to-red-900 hover:text-yellow-100',
+      active: 'bg-gradient-to-r from-red-800 to-red-900 text-yellow-100',
       inactive: 'bg-transparent text-gray-200',
     },
     tabList: 'flex py-2 space-x-2',

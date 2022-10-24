@@ -51,6 +51,7 @@ export const RaidResults = (props: RaidResultsProps) => {
     startPolling(2000); // TODO poll interval after transaction accepted on l2
     if (combatResult?.getRealmHistory.length) {
       stopPolling();
+
       setResult(combatResult?.getRealmHistory[0]);
     }
   }, [combatResult, props.event, startPolling, stopPolling]);
@@ -68,6 +69,7 @@ export const RaidResults = (props: RaidResultsProps) => {
 
   const { starknetId } = useStarkNetId(attackingRealmOwner);
   const { starknetId: defenderStarknetId } = useStarkNetId(defendingRealmOwner);
+
   return (
     <div className="text-center">
       {result ? (
@@ -76,14 +78,16 @@ export const RaidResults = (props: RaidResultsProps) => {
             {result.eventType == 'realm_combat_attack' &&
               (success ? 'Successful Raid' : 'Raid Failed')}
             {result.eventType == 'realm_combat_defend' &&
-              (success ? 'Raid Defended' : 'Defeat')}
+              (success ? 'Raid Defended' : 'Defeat!')}
           </h2>
           <div className="flex gap-6">
             <div className="w-1/2">
-              <h6>{starknetId ?? shortenAddress(attackingRealmOwner)}</h6>
-              <h3>Attacker</h3>
+              <h6>
+                Attacker: {starknetId ?? shortenAddress(attackingRealmOwner)}
+              </h6>
+
               <h2> {fetchRealmNameById(attackingRealmId)}</h2>
-              <div className="grid grid-cols-4 gap-4 mt-4">
+              <div className="grid grid-cols-3 gap-4 mt-4">
                 {attackingStartArmy && (
                   <BattalionImagesCard
                     battalion={attackingStartArmy}
@@ -94,11 +98,12 @@ export const RaidResults = (props: RaidResultsProps) => {
             </div>
             <div className="w-1/2 text-center">
               <h6>
+                Defender:{' '}
                 {defenderStarknetId ?? shortenAddress(defendingRealmOwner)}
               </h6>
-              <h5>Defender</h5>
+
               <h2> {fetchRealmNameById(defendingRealmId)}</h2>
-              <div className="grid grid-cols-4 gap-4 mt-4">
+              <div className="grid grid-cols-3 gap-4 mt-4">
                 {defendingStartArmy && (
                   <BattalionImagesCard battalion={defendingStartArmy} />
                 )}
@@ -113,11 +118,11 @@ export const RaidResults = (props: RaidResultsProps) => {
             {result.data?.pillagedResources?.length && (
               <div>
                 <hr className="my-3 border border-white/30" />
-                <div className="mt-4 text-xl">
+                <div className="mx-auto mt-4 text-2xl italic sm:w-1/2">
                   Successful Raid!! The army of{' '}
                   {fetchRealmNameById(defendingRealmId)} was defeated and{' '}
                   {fetchRealmNameById(attackingRealmId)}'s battalions took off
-                  with the following resources
+                  with the following resources!
                   {/* TODO GENERALISE
                  The citizens are trembling and in awe of your victory. */}
                 </div>
@@ -133,11 +138,10 @@ export const RaidResults = (props: RaidResultsProps) => {
           </div>
           <hr className="mt-3 border border-white/30" />
           <div className="mt-5">
-            <h3 className="mb-5">Remaining Army</h3>
             <div className="flex gap-6">
               <div className="w-1/2">
                 {result?.data?.armiesEnd[0] && (
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-3 gap-4">
                     <BattalionImagesCard
                       battalion={result?.data?.armiesEnd[0]}
                     />
@@ -146,7 +150,7 @@ export const RaidResults = (props: RaidResultsProps) => {
               </div>
               <div className="w-1/2">
                 {result?.data?.armiesEnd[1] && (
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-3 gap-4">
                     <BattalionImagesCard
                       battalion={result?.data?.armiesEnd[1]}
                     />
