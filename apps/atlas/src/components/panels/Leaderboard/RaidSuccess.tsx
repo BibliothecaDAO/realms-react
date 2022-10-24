@@ -126,13 +126,13 @@ export const RaidSuccess = () => {
     <>
       <div
         key={section.name}
-        className="p-4 mb-10 border-4 border-double cursor-pointer rounded-2xl border-white/30 shadow-black"
+        className="p-4 mb-10 border cursor-pointer card rounded-2xl border-white/30 shadow-black"
       >
         <h3 className="text-3xl capitalize">
           {section.name.replace(/([A-Z])/g, ' $1')}
         </h3>
 
-        <div className="flex mx-auto mb-8 text-sm tracking-widest">
+        {/* <div className="flex mx-auto mb-8 text-sm tracking-widest">
           <div
             className={`px-4 uppercase self-center ${
               raidSuccessOwnerToggle && 'font-semibold'
@@ -151,7 +151,7 @@ export const RaidSuccess = () => {
           >
             Adventurer
           </div>
-        </div>
+        </div> */}
         {raidSuccessOwnerToggle ? (
           <Table
             columns={section.columns}

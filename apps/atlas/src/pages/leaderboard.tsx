@@ -7,7 +7,7 @@ export default function LeaderboardPage() {
   return (
     <Layout>
       <LeaderboardPanel />
-      <ArtBackground background="bank" />
+      <ArtBackground background="realm" />
     </Layout>
   );
 }

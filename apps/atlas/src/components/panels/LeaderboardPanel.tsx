@@ -70,7 +70,7 @@ export function LeaderboardPanel(): ReactElement {
             });
           }}
         >
-          View Realm
+          View
         </Button>
       ),
     };
@@ -91,7 +91,7 @@ export function LeaderboardPanel(): ReactElement {
             });
           }}
         >
-          View Realm
+          View
         </Button>
       ),
     };
@@ -157,17 +157,17 @@ export function LeaderboardPanel(): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <BasePanel open={true} style="lg:w-7/12">
+    <BasePanel open={true} style="lg:w-12/12">
       <div className="p-4 md:p-10">
-        <div className="w-full pb-10 bg-black/90">
-          <h2 className="w-full">The Leaderboard</h2>
+        <div className="w-full pb-10">
+          <h1 className="w-full text-center">The Lords Leaderboard</h1>
         </div>
         <div className="relative">
           <RaidSuccess />
           {sections.map((section, index) => (
             <div
               key={section.name}
-              className="p-4 mb-10 border-4 border-double cursor-pointer rounded-2xl border-white/30 shadow-black"
+              className="p-4 mb-10 border cursor-pointer rounded-2xl border-white/30 card"
             >
               <h3 className="text-3xl capitalize">
                 {section.name.replace(/([A-Z])/g, ' $1')}
