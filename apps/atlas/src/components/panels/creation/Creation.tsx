@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers';
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useStarknet } from '@starknet-react/core';
@@ -7,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   projectID,
+  characterAWSBucket,
   stableDiffusionEndPoints,
   traits,
 } from '@/constants/character';
@@ -110,7 +112,7 @@ export const Creation = () => {
   const prompt = () => {
     const one = 'intricate intense symmetry! portrait of a ';
     const end =
-      'desert background,  dramatic lighting, fantasy, d&d, perfection, dune, greg rutkowski, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
+      'desert background,  dramatic lighting, fantasy, d&d, perfection, dune, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
 
     const sex = selectedTraits.find((a) => a.selector == 'sex')?.value + ' ';
     const race = selectedTraits.find((a) => a.selector == 'race')?.value;
@@ -128,6 +130,12 @@ export const Creation = () => {
     return one + sex + race + skin + pattern + hair + eyes + occupation + end;
   };
 
+  const sleep = async (milliseconds) => {
+    await new Promise((resolve) => {
+      return setTimeout(resolve, milliseconds);
+    });
+  };
+
   const fetchPlayers = async () => {
     console.log(prompt());
 
@@ -137,7 +145,7 @@ export const Creation = () => {
       project: projectID,
       user: account,
       collection: 'first_collection',
-      generation_engine: 'stability',
+      generation_engine: 'diffusers',
       generation_settings: {
         prompt: prompt(),
         n_images: 6,
@@ -153,12 +161,42 @@ export const Creation = () => {
           stableDiffusionEndPoints.generate,
         body
       );
-      console.log(res);
 
       const obj: ImageResponse[] = res.data.map((a) => {
-        return { img: a.uri, seed: a.seed };
+        return { img: a.uri, seed: a.generation_settings.seed };
       });
 
+      const jobIds: string[] = res.data.map((a) => {
+        return a.id;
+      });
+
+      if (body.generation_engine === 'diffusers') {
+        // Retrieve the initial operation status
+        let allDone = false;
+
+        const jobIdsParams = jobIds.map((id) => `job_ids=${id}`).join('&');
+
+        while (!allDone) {
+          await sleep(5000);
+          const pollingResponse = await axios.get(
+            process.env.NEXT_PUBLIC_STABLE_DIFFUSION_API +
+              stableDiffusionEndPoints.getJobs +
+              '?' +
+              jobIdsParams // fastapi cannot handle axios param lists
+          );
+          // check if all jobs are done
+          allDone = true;
+          for (const [key, value] of Object.entries(pollingResponse.data)) {
+            if (value != 'done') {
+              allDone = false;
+            }
+          }
+        }
+        // if all jobs are done, fill in the img fields
+        jobIds.forEach((value, index) => {
+          obj[index].img = `${characterAWSBucket}${value}.png`;
+        });
+      }
       setRulers(obj);
     } catch (error: any) {
       toast(error.message, {

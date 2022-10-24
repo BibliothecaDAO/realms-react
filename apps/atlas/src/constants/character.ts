@@ -1,9 +1,13 @@
 export enum stableDiffusionEndPoints {
   generate = 'generateImages',
   getImages = 'images',
+  getJobs = 'getJobs',
 }
 
 export const projectID = 'test_rulers';
+const awsBucketNameImages = 'ingave-images';
+const awsBucketRegion = 'eu-west-3';
+export const characterAWSBucket = `https://${awsBucketNameImages}.s3.${awsBucketRegion}.amazonaws.com/${projectID}/`;
 
 export const traits = {
   sex: [
