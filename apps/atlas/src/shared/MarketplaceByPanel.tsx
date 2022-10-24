@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Aspect from '@bibliotheca-dao/ui-lib/icons/marketplaces/aspect.svg';
 import MintSquare from '@bibliotheca-dao/ui-lib/icons/marketplaces/mintSquare.svg';
 interface Props {
   id: string;
@@ -76,8 +77,7 @@ export const MarketplaceByPanel = (props: Props) => {
         }
         rel="noreferrer"
       >
-        {/* <MintSquare className="w-6 h-6 mr-4" /> */}
-        Aspect
+        <Aspect className="h-6 mr-4 fill-current stroke-current w-14" />
       </Button>
     </div>
   );
