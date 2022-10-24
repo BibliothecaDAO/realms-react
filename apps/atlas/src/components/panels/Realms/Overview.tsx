@@ -234,9 +234,7 @@ const Overview: React.FC<Prop> = (props) => {
                 color: 'bg-green-800',
                 built:
                   props.buildingUtilisation &&
-                  props.availableFood &&
-                  props.buildingUtilisation.currentSqm +
-                    props.availableFood / STORE_HOUSE_SIZE,
+                  props.buildingUtilisation.currentSqm,
               })}
             </div>
             {/* <div className="mt-3">

@@ -58,7 +58,7 @@ export function Header() {
   }
 
   return (
-    <div className="top-0 left-0 z-40 justify-end hidden border-b-4 card border-white/20 bg-gray-1100 sm:flex">
+    <div className="top-0 left-0 z-40 justify-end hidden border-b-4 card border-white/20 bg-gray-1100/95 sm:flex bg-snake">
       <div className="flex justify-end w-full px-4 py-4 ml-auto mr-auto space-x-4">
         <div className="self-center mr-auto">
           <Link href={'/'}>

@@ -320,7 +320,6 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                         <div className="flex mt-4">
                           {a.cost &&
                             a.cost.map((b, i) => {
-                              console.log(b);
                               return (
                                 <CostBlock
                                   key={i}

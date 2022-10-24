@@ -14,6 +14,7 @@ import { useMemo, useState } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { fetchRealmNameById, getTravelTime } from '@/shared/Getters/Realm';
 import { ArmyBattalions } from './armyCard/ArmyBattalions';
@@ -31,31 +32,33 @@ type Prop = {
 };
 
 export const ArmyCard: React.FC<Prop> = (props) => {
+  const { userRealms } = useUsersRealms();
+
+  const army = props.army;
+
   const { play } = useUiSounds(soundSelector.pageTurn);
   const [selectedTab, setSelectedTab] = useState(0);
-  const { getArmyStats } = useArmy();
-  const army = props.army;
+
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
-  const armyStats = getArmyStats(props.army);
-
-  console.log('armyStats', armyStats);
 
   const armyLocation =
     army.destinationRealmId == 0 ? army.realmId : army.destinationRealmId;
-
-  // bools
-  const isAtLocation = armyLocation == props.selectedRealm;
-
-  const isHome = [0, army.realmId].includes(army?.destinationRealmId);
 
   const travelInformation = getTravelTime({
     travellerId: armyLocation,
     destinationId: props.selectedRealm,
   });
 
+  // bools
+  const isAtLocation = armyLocation == props.selectedRealm;
   const hasArrived = army?.destinationArrivalTime > new Date().getTime();
+  const isHome = [0, army.realmId].includes(army?.destinationRealmId);
+
+  const isOwnRealm = userRealms?.realms.find(
+    (a) => a.realmId === props.army.realmId
+  );
 
   const tabs = useMemo(
     () => [
@@ -150,7 +153,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
       </Tabs>
 
       <div className="grid grid-cols-1 gap-2 mt-4">
-        {isHome && isAtLocation && (
+        {isHome && isAtLocation && isOwnRealm && (
           <Button
             variant="primary"
             size="xs"
@@ -159,7 +162,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             Recruit Army
           </Button>
         )}
-        {props.onTravel && !isAtLocation && (
+        {props.onTravel && !isAtLocation && isOwnRealm && (
           <Button
             variant="outline"
             size="xs"
