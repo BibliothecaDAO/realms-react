@@ -16,14 +16,12 @@ import type { Army } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { fetchRealmNameById, getTravelTime } from '@/shared/Getters/Realm';
-import type { ArmyStatistics as Stats } from '@/types/index';
 
 export interface ArmyAndOrder extends Army {
   orderType?: string;
 }
 
 type Prop = {
-  armyStatistics: Stats;
   army: ArmyAndOrder;
   onBuildArmy?: () => void;
   onTravel?: () => void;

@@ -23,22 +23,21 @@ export interface ArmyAndOrder extends Army {
 }
 
 type Prop = {
-  armyStatistics: Stats;
+  army: ArmyAndOrder;
 };
 
 export const ArmyStatistics: React.FC<Prop> = (props) => {
   const { play } = useUiSounds(soundSelector.pageTurn);
+  const army = props.army;
+  const { getArmyStats } = useArmy();
+  const armyStats = getArmyStats(props.army);
 
   return (
     <div>
       <div className="relative h-36">
         <ParentSize>
           {({ width, height }) => (
-            <RadarMap
-              armyOne={props.armyStatistics}
-              height={height}
-              width={width}
-            />
+            <RadarMap armyOne={armyStats} height={height} width={width} />
           )}
         </ParentSize>
       </div>
@@ -50,31 +49,22 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
         <hr className="border-white/30" />
         <div className="flex justify-between">
           Cavalry{' '}
-          <span className="pr-3 ml-auto">
-            {props.armyStatistics.cavalryAttack}
-          </span>{' '}
-          <span>{props.armyStatistics.cavalryDefence}</span>
+          <span className="pr-3 ml-auto">{armyStats.cavalryAttack}</span>{' '}
+          <span>{armyStats.cavalryDefence}</span>
         </div>
         <div className="flex justify-between">
           Archery{' '}
-          <span className="pr-3 ml-auto">
-            {props.armyStatistics.archeryAttack}
-          </span>{' '}
-          <span>{props.armyStatistics.archeryDefence}</span>
+          <span className="pr-3 ml-auto">{armyStats.archeryAttack}</span>{' '}
+          <span>{armyStats.archeryDefence}</span>
         </div>
         <div className="flex justify-between">
-          Magic{' '}
-          <span className="pr-3 ml-auto">
-            {props.armyStatistics.magicAttack}
-          </span>{' '}
-          <span>{props.armyStatistics.magicDefence}</span>
+          Magic <span className="pr-3 ml-auto">{armyStats.magicAttack}</span>{' '}
+          <span>{armyStats.magicDefence}</span>
         </div>
         <div className="flex justify-between">
           Infantry{' '}
-          <span className="pr-3 ml-auto">
-            {props.armyStatistics.infantryAttack}
-          </span>{' '}
-          <span>{props.armyStatistics.infantryDefence}</span>
+          <span className="pr-3 ml-auto">{armyStats.infantryAttack}</span>{' '}
+          <span>{armyStats.infantryDefence}</span>
         </div>
       </div>
     </div>

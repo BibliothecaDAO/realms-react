@@ -4,6 +4,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import React, { createRef, useEffect, useRef } from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { RealmCard } from '../cards/realms/RealmCard';
 
@@ -17,6 +18,9 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const filteredRealms = props.realms;
 
   const cardRefs = useRef<any>([]);
+  const { userData } = useUsersRealms();
+
+  const attackingArmies = userData.attackingArmies;
 
   useEffect(() => {
     // add or remove refs
