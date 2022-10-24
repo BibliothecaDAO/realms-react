@@ -40,10 +40,10 @@ export const MenuSideBar = () => {
     'border-b-4  border-l-2 border-transparent w-14 h-14 sm:w-20 sm:h-20 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
 
   const textClasses =
-    'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible ';
+    'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible  text-shadow-[0_2px_6px_#6366f1]';
 
   const iconClasses = (page) => {
-    return `w-6 mx-auto sm:w-8 ${
+    return `w-6 mx-auto sm:w-8  ${
       isPage(page) ? ' fill-yellow-100' : 'fill-gray-300'
     }`;
   };
@@ -122,7 +122,7 @@ export const MenuSideBar = () => {
       <animated.div
         style={animation}
         id="menuSidebar"
-        className={`absolute sm:relative align-items-center sm:pt-10 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100/95 bg-snake z-40 shadow-md flex flex-col transform  overflow-auto border-r-4 border-white/20 shadow-white/30 card ${
+        className={`absolute sm:relative align-items-center sm:pt-10 h-full sm:!opacity-100 px-2 bottom-0 lg:w-32 sm:left-0 pt-16 sm:top-0 bg-gray-1100/95 bg-snake z-40 shadow-md flex flex-col transform  overflow-auto border-r-4 border-white/20 shadow-white/30 card  ${
           showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
         }`}
       >
@@ -132,7 +132,7 @@ export const MenuSideBar = () => {
               <IconButton
                 className={`${buttonClasses}  ${
                   isPage(menu.page)
-                    ? 'bg-cta-100 bg-gradient-to-r from-orange-500 shadow-purple-500 -translate-y-1 border-yellow-700 fill-yellow-600    '
+                    ? 'bg-cta-100 bg-gradient-to-r from-orange-500 shadow-purple-500 -translate-y-1 border-yellow-700 fill-yellow-600     '
                     : ''
                 }`}
                 aria-label={menu.text}
