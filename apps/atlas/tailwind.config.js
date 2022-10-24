@@ -24,7 +24,6 @@ module.exports = {
     'shadow-order-fury',
     'shadow-order-rage',
     'shadow-order-anger',
-
     'border-order-perfection',
     'border-order-power',
     'border-order-giants',
@@ -42,7 +41,6 @@ module.exports = {
     'border-order-fury',
     'border-order-rage',
     'border-order-anger',
-
     'bg-order-perfection',
     'bg-order-power',
     'bg-order-giants',
@@ -60,7 +58,6 @@ module.exports = {
     'bg-order-fury',
     'bg-order-rage',
     'bg-order-anger',
-
     'text-order-secondary-perfection',
     'text-order-secondary-power',
     'text-order-secondary-giants',
@@ -78,7 +75,6 @@ module.exports = {
     'text-order-secondary-fury',
     'text-order-secondary-rage',
     'text-order-secondary-anger',
-
     'text-[#838383]',
     'text-[#00DC82]',
     'text-[#2e82ff]',
@@ -120,8 +116,8 @@ module.exports = {
         veryWide: '0.165em',
       },
       fontFamily: {
-        display: ['IM Fell DW Pica SC', 'serif'],
-        body: ['Inconsolata', 'monospace'],
+        display: ['IM Fell DW Pica', 'serif'],
+        body: ['IM Fell DW Pica', 'serif'],
         lords: ['Lords', 'serif'],
       },
       zIndex: {
