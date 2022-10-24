@@ -12,6 +12,7 @@ import DesertGlass from '../../icons/resources/DesertGlass.svg';
 import Diamonds from '../../icons/resources/Diamonds.svg';
 import Dragonhide from '../../icons/resources/Dragonhide.svg';
 import EtherealSilica from '../../icons/resources/EtherealSilica.svg';
+import Fish from '../../icons/resources/fish.svg';
 import Gold from '../../icons/resources/Gold.svg';
 import Hartwood from '../../icons/resources/Hartwood.svg';
 import Ignium from '../../icons/resources/Ignium.svg';
@@ -27,6 +28,7 @@ import Spores from '../../icons/resources/Spores.svg';
 import Stone from '../../icons/resources/Stone.svg';
 import TrueIce from '../../icons/resources/TrueIce.svg';
 import TwilightQuartz from '../../icons/resources/TwilightQuartz.svg';
+import Wheat from '../../icons/resources/wheat.svg';
 import Wood from '../../icons/resources/Wood.svg';
 
 export type Props = {
@@ -74,6 +76,8 @@ const Components: { [key: string]: Resource } = Object.freeze({
   MountainDeep: { component: <Ore />, name: 'Ore' },
   UnderwaterKeep: { component: <Shekels />, name: 'Shekels' },
   ForestRuins: { component: <Spores />, name: 'Spores' },
+  Fish: { component: <Fish />, name: 'Fish' },
+  Wheat: { component: <Wheat />, name: 'Wheat' },
 });
 
 const STYLES = {
