@@ -59,8 +59,6 @@ export const RaidResults = (props: RaidResultsProps) => {
   const attackingStartArmy = result?.data?.armiesStart[0];
   const defendingStartArmy = result?.data?.armiesStart[1];
 
-  console.log('attackingStartArmy', result?.data);
-
   const { starknetId } = useStarkNetId(
     result?.data?.attackRealmOwner.account || ''
   );

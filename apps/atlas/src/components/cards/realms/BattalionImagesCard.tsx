@@ -68,19 +68,22 @@ export const BattalionImagesCard: React.FC<Prop> = (props) => {
                       ? props.endBattalion[unit.name + 'Health']
                       : 0
                   }
-                  baseHealth={0} // TODO add base amount of health (unit health * qty)
+                  baseHealth={100} // TODO add base amount of health (unit health * qty)
                 />
                 <div className="relative flex flex-col justify-end w-full h-full">
                   <div>
-                    <span className="bottom-0 mr-2 text-2xl">
-                      {props.battalion[unit.name + 'Qty']}x
-                    </span>
+                    <p className="bottom-0 mr-2 text-2xl">
+                      start: {props.battalion[unit.name + 'Qty']}x end:{' '}
+                      {props.endBattalion &&
+                        props.endBattalion[unit.name + 'Qty']}
+                      x
+                    </p>
 
-                    <span>Health: {props.battalion[unit.name + 'Health']}</span>
+                    <p>Health: {props.battalion[unit.name + 'Health']}</p>
                     {props.endBattalion && (
-                      <span>
+                      <p>
                         End Health: {props.endBattalion[unit.name + 'Health']}
-                      </span>
+                      </p>
                     )}
                   </div>
                 </div>

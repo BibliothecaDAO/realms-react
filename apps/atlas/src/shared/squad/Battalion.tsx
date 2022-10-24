@@ -7,7 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib/base';
 
 import React, { useState } from 'react';
-import { battalionInformation } from '@/constants/army';
+import { battalionInformation, battalionIdToString } from '@/constants/army';
 import { buildingIdToString } from '@/constants/buildings';
 
 import { CostBlock } from '@/shared/Getters/Realm';
@@ -92,9 +92,11 @@ export const Battalion: React.FC<
         </div>
       )}
 
-      <CardTitle className="flex justify-center text-center">
-        {data?.name}
-      </CardTitle>
+      {data?.id && (
+        <CardTitle className="flex justify-center text-center">
+          {battalionIdToString(data.id)}
+        </CardTitle>
+      )}
       <CardBody>
         <div className="flex justify-center space-x-3 text-center">
           <div className="px-4 border-r">

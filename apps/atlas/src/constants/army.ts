@@ -31,7 +31,7 @@ export enum BattalionIds {
 export const battalionInformation = [
   {
     id: BattalionIds.LightCavalry,
-    name: 'Light Cavalry',
+    name: 'lightCavalry',
     color: Barracks,
     description: description,
     strength: 'Archers',
@@ -40,7 +40,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.HeavyCavalry,
-    name: 'Knight',
+    name: 'heavyCavalry',
     color: Barracks,
     description: description,
     strength: 'Archers',
@@ -49,7 +49,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.Archer,
-    name: 'Archer',
+    name: 'archer',
     color: ArcherTower,
     description: description,
     strength: 'Magic',
@@ -58,7 +58,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.Longbow,
-    name: 'Hunter',
+    name: 'longbow',
     color: ArcherTower,
     description: description,
     strength: 'Magic',
@@ -67,7 +67,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.Mage,
-    name: 'Apprentice',
+    name: 'mage',
     color: Castle,
     description: description,
     strength: 'Infantry',
@@ -76,7 +76,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.Arcanist,
-    name: 'Arcanist',
+    name: 'arcanist',
     color: Castle,
     description: description,
     strength: 'Infantry',
@@ -85,7 +85,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.LightInfantry,
-    name: 'Solider',
+    name: 'lightInfantry',
     color: MageTower,
     description: description,
     strength: 'Cavalry',
@@ -94,7 +94,7 @@ export const battalionInformation = [
   },
   {
     id: BattalionIds.HeavyInfantry,
-    name: 'Paladin',
+    name: 'heavyInfantry',
     color: MageTower,
     description: description,
     strength: 'Cavalry',
