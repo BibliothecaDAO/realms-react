@@ -69,8 +69,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
       : true;
   };
 
-  console.log(buildingIdsEnqueued);
-
   const { build } = useCombat();
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
