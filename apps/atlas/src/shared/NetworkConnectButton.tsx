@@ -3,6 +3,7 @@ import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import ArgentX from '@bibliotheca-dao/ui-lib/icons/argentX.svg';
 import Braavos from '@bibliotheca-dao/ui-lib/icons/braavos.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
+import Guildly from '@bibliotheca-dao/ui-lib/icons/guildly.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import { Popover, Transition } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
@@ -18,6 +19,20 @@ const NetworkConnectButton = () => {
   const { address, status, connector } = useAccount();
 
   const { starknetId } = useStarkNetId(address || '');
+
+  const getConnectorLogo = (connector) => {
+    switch (connector) {
+      case 'argentX':
+        return <ArgentX className="inline-block w-4 mr-4" />;
+        break;
+      case 'braavos':
+        return <Braavos className="inline-block w-4 mr-4" />;
+        break;
+      case 'guildly':
+        return <Guildly className="inline-block w-5 mr-4" />;
+        break;
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(refresh, 5000);
@@ -75,11 +90,7 @@ const NetworkConnectButton = () => {
                 className="w-full text-xs normal-case "
                 onClick={disconnect}
               >
-                {connector.id() == 'argentX' ? (
-                  <ArgentX className="inline-block w-4 mr-4" />
-                ) : (
-                  <Braavos className="inline-block w-4 mr-4" />
-                )}
+                {getConnectorLogo(connector.id())}
                 {shortenAddressWidth(address, 4)}X
               </Button>
             ) : (
@@ -92,11 +103,8 @@ const NetworkConnectButton = () => {
                         key={connector.id()}
                         onClick={() => connect(connector)}
                       >
-                        {connector.id() == 'argentX' ? (
-                          <ArgentX className="inline-block w-4 mr-4" />
-                        ) : (
-                          <Braavos className="inline-block w-4 mr-4" />
-                        )}
+                        {getConnectorLogo(connector.id())}
+
                         {connector.id() !== 'Disconnected'
                           ? connector.name()
                           : 'Wallet'}
