@@ -6,15 +6,9 @@ export const useStarkNetId = (addr: string) => {
 
   useEffect(() => {
     if (addr) {
-      fetch(
-        ` https://goerli.indexer.starknet.id/addr_to_domain?addr=${toFelt(
-          addr
-        )}`
-      )
+      fetch(`/api/starknetId/resolve?address=${addr}`)
         .then((response) => response.json())
         .then((a) => setStarknetId(a.domain as string));
-
-      console.log(starknetId);
     }
   }, [addr]);
 
