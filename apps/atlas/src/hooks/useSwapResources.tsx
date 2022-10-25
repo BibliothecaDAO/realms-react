@@ -161,6 +161,7 @@ export const CartResources = ({ tokenId, amounts }) => {
   return (
     <div className="flex flex-col items-center mb-4 mr-4">
       <ResourceIcon
+        withTooltip
         className="self-center w-4"
         resource={findResourceById(tokenId)?.trait?.replace(' ', '') || ''}
         size="md"

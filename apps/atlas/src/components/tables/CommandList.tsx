@@ -242,7 +242,11 @@ export const CommandList: React.FC<Prop> = (props) => {
               const resource = resourceCostsById[resourceId];
               return (
                 <div className="flex flex-col items-center" key={resourceId}>
-                  <ResourceIcon size="sm" resource={resource.resourceName} />
+                  <ResourceIcon
+                    withTooltip
+                    size="sm"
+                    resource={resource.resourceName}
+                  />
                   <span>{resource.amount}</span>
                 </div>
               );
