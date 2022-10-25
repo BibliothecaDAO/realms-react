@@ -55,7 +55,10 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
 
       <div
         ref={setPopperElement}
-        style={styles.popper}
+        style={{
+          ...styles.popper,
+          visibility: isOpen ? 'visible' : 'hidden',
+        }}
         {...attributes.popper}
         className={`transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0'}`}
       >

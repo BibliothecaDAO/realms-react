@@ -277,7 +277,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                             </div>
                           </div>
                         </div>
-                        <div className="flex w-full mt-3 space-x-2">
+                        <div className="relative flex w-full mt-3 space-x-2">
                           <Button
                             onClick={() =>
                               build({
@@ -317,7 +317,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                             }}
                           />{' '}
                         </div>
-                        <div className="flex mt-4">
+                        <div className="relative flex mt-4">
                           {a.cost &&
                             a.cost.map((b, i) => {
                               return (
