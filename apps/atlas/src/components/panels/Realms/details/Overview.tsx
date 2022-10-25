@@ -6,9 +6,15 @@ import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { useAccount as useL1Account } from 'wagmi';
+import {
+  systemPlaylists,
+  ACCOUNT_PLAYLIST_INDEX,
+} from '@/components/sidebars/RealmsPlaylistSideBar';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import useRealmPlaylist from '@/hooks/settling/useRealmsPlaylist';
+import useIsOwner from '@/hooks/useIsOwner';
 import {
   TraitTable,
   getTrait,
@@ -27,9 +33,11 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
   const router = useRouter();
   const { address: l1Address } = useL1Account();
   const { address } = useAccount();
+  const isOwner = useIsOwner(props?.realm?.settledOwner);
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
+  const { setPlaylistState } = useRealmPlaylist({});
 
   return (
     <>
@@ -125,14 +133,19 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
                   undefined,
                   { shallow: true }
                 );
+                if (isOwner) {
+                  setPlaylistState(
+                    systemPlaylists[ACCOUNT_PLAYLIST_INDEX],
+                    true,
+                    props.realm.realmId
+                  );
+                }
               }}
               variant="primary"
               size="xs"
               className="w-full"
             >
-              {isYourRealm(props.realm, l1Address, address || '')
-                ? 'manage'
-                : 'details'}
+              {isOwner ? 'manage' : 'details'}
             </Button>
           </div>
           <div className="flex self-center space-x-2">

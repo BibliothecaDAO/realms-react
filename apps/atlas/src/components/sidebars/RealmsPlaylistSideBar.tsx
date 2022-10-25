@@ -7,23 +7,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
-import type {
-  GetRealmsQuery,
-  GetRealmsQueryVariables,
-  RealmWhereInput,
-} from '@/generated/graphql';
-import { GetRealmsDocument } from '@/generated/graphql';
 import type { PlaylistQueryType } from '@/hooks/settling/useRealmsPlaylist';
-import {
-  playlistQueryStrategy,
-  realmPlaylistCursorKey,
-  realmPlaylistKey,
-  realmPlaylistNameKey,
+import useRealmPlaylist, {
   resetPlaylistState,
 } from '@/hooks/settling/useRealmsPlaylist';
 import SidebarHeader from '@/shared/SidebarHeader';
-import apolloClient from '@/util/apolloClient';
-import { storage } from '@/util/localStorage';
 import AtlasSidebar from './AtlasSideBar';
 
 type Prop = {
@@ -51,9 +39,9 @@ type AddressPlaylist = {
   address: string;
 } & BasePlaylist;
 
-type Playlist = SystemPlaylist | LocalStoragePlaylist | AddressPlaylist;
+export type Playlist = SystemPlaylist | LocalStoragePlaylist | AddressPlaylist;
 
-const systemPlaylists: Playlist[] = [
+export const systemPlaylists: Playlist[] = [
   {
     playlistType: 'AllRealms',
     name: 'All Realms',
@@ -76,6 +64,10 @@ const systemPlaylists: Playlist[] = [
     description: 'Realms vulnerable to Raid',
   },
 ];
+
+export const ACCOUNT_PLAYLIST_INDEX = systemPlaylists.findIndex(
+  (p) => p.playlistType === 'Account'
+);
 
 // Curated playlists
 const curatedPlaylists: Playlist[] = [
@@ -156,39 +148,10 @@ const curatedPlaylists: Playlist[] = [
   },
 ];
 
-const getFilterForPlaylist: (
-  playlistName: Playlist['playlistType'],
-  args: any
-) => RealmWhereInput = (name, args) => {
-  let filter: RealmWhereInput = {};
-  switch (name) {
-    case 'AllRealms':
-      filter = playlistQueryStrategy['AllRealms']();
-      break;
-    case 'Account':
-      filter = playlistQueryStrategy['Account'](args.starknetWallet);
-      break;
-    case 'OwnedBy':
-      filter = playlistQueryStrategy['Account'](args.starknetWallet);
-      break;
-    case 'LocalStorage':
-      filter = playlistQueryStrategy['Ids'](args.realmIds);
-      break;
-    case 'Raidable':
-      filter = playlistQueryStrategy['Raidable']();
-      break;
-  }
-  return filter;
-};
-
 const RealmsPlaylistSidebar = (props: Prop) => {
-  const { address } = useAccount();
-  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   const [loading, setLoading] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
-  const router = useRouter();
-
-  const query = { ...router.query };
+  const { setPlaylistState } = useRealmPlaylist({});
 
   return (
     <AtlasSidebar isOpen={props.isOpen} containerClassName="z-[40]">
@@ -223,7 +186,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
               className={loading ? 'animate-pulse' : ''}
               variant="primary"
               id={`playlist-${i}`}
-              onClick={() => {
+              onClick={async () => {
                 if (rp.playlistType == 'AllRealms') {
                   toast(`Realm Playlist: ${rp.name}`, {
                     icon: <RectangleStackIcon className="w-6" />,
@@ -243,47 +206,9 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                 }
                 setSelectedPlaylist(rp.name);
                 setLoading(true);
-                const args: any = {
-                  starknetWallet:
-                    rp.playlistType == 'OwnedBy' ? rp.address : starknetWallet,
-                };
-                if (rp.playlistType == 'LocalStorage') {
-                  args.realmIds = storage<number[]>(rp.storageKey, []).get();
-                }
-
-                apolloClient
-                  .query<GetRealmsQuery, GetRealmsQueryVariables>({
-                    query: GetRealmsDocument,
-                    variables: {
-                      filter: getFilterForPlaylist(rp.playlistType, args),
-                    },
-                  })
-                  .then((res) => {
-                    setLoading(false);
-                    setSelectedPlaylist(undefined);
-                    if (res.data.realms && res.data.realms.length > 0) {
-                      toast(`Realm Playlist: ${rp.name}`, {
-                        icon: <RectangleStackIcon className="w-6" />,
-                      });
-                      const realmIds = res.data.realms.map((r) => r.realmId);
-                      storage(realmPlaylistCursorKey, 0).set(0);
-                      storage(realmPlaylistNameKey, '').set(rp.name);
-                      storage<number[]>(realmPlaylistKey, []).set(realmIds);
-                      router.replace(
-                        {
-                          pathname: `/realm/${realmIds[0]}`,
-                          query: { ...query },
-                        },
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
-                    }
-                    if (!res.loading && res.data.realms.length == 0) {
-                      toast(`Playlist ${rp.name} has no Realms`);
-                    }
-                  });
+                await setPlaylistState(rp);
+                setLoading(false);
+                setSelectedPlaylist(undefined);
               }}
             >
               <RectangleStackIcon className="inline-block w-6 mr-2" />{' '}

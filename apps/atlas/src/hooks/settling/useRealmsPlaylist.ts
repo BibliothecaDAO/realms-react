@@ -1,10 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable sonarjs/cognitive-complexity */
 
+import { useAccount } from '@starknet-react/core';
+import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import type { RealmWhereInput } from '@/generated/graphql';
+import type { Playlist } from '@/components/sidebars/RealmsPlaylistSideBar';
+import type {
+  GetRealmsQuery,
+  GetRealmsQueryVariables,
+  RealmWhereInput,
+} from '@/generated/graphql';
+import { GetRealmsDocument } from '@/generated/graphql';
+import apolloClient from '@/util/apolloClient';
 import { storage } from '@/util/localStorage';
 import useKeyPress from '../useKeyPress';
 import usePrevious from '../usePrevious';
@@ -32,12 +41,39 @@ export const resetPlaylistState = () => {
   storage(realmPlaylistKey, []).remove();
 };
 
+const getFilterForPlaylist: (
+  playlistName: Playlist['playlistType'],
+  args: any
+) => RealmWhereInput = (name, args) => {
+  let filter: RealmWhereInput = {};
+  switch (name) {
+    case 'AllRealms':
+      filter = playlistQueryStrategy['AllRealms']();
+      break;
+    case 'Account':
+      filter = playlistQueryStrategy['Account'](args.starknetWallet);
+      break;
+    case 'OwnedBy':
+      filter = playlistQueryStrategy['Account'](args.starknetWallet);
+      break;
+    case 'LocalStorage':
+      filter = playlistQueryStrategy['Ids'](args.realmIds);
+      break;
+    case 'Raidable':
+      filter = playlistQueryStrategy['Raidable']();
+      break;
+  }
+  return filter;
+};
+
 type Args = {
-  onChange: (id: number) => void;
+  onChange?: (id: number) => void;
 };
 
 const useRealmPlaylist = (args: Args) => {
   const router = useRouter();
+  const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   const realmIdFromRoute = router.query?.realmId
     ? Number(router.query?.realmId)
     : undefined;
@@ -51,6 +87,61 @@ const useRealmPlaylist = (args: Args) => {
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
 
   const realmIds = storage<number[]>(realmPlaylistKey, []).get();
+
+  const setPlaylistState = async (
+    rp: Playlist,
+    noRedirect = false,
+    cursorRealmId = 0
+  ) => {
+    const _args: any = {
+      starknetWallet:
+        rp.playlistType == 'OwnedBy' ? rp.address : starknetWallet,
+    };
+    if (rp.playlistType == 'LocalStorage') {
+      _args.realmIds = storage<number[]>(rp.storageKey, []).get();
+    }
+
+    try {
+      const res = await apolloClient.query<
+        GetRealmsQuery,
+        GetRealmsQueryVariables
+      >({
+        query: GetRealmsDocument,
+        variables: {
+          filter: getFilterForPlaylist(rp.playlistType, _args),
+        },
+      });
+
+      if (res.data.realms && res.data.realms.length > 0) {
+        !noRedirect && toast(`Realm Playlist: ${rp.name}`);
+        const realmIds = res.data.realms.map((r) => r.realmId);
+        storage(realmPlaylistCursorKey, 0).set(
+          cursorRealmId ? realmIds.findIndex((id) => id == cursorRealmId) : 0
+        );
+        storage(realmPlaylistNameKey, '').set(rp.name);
+        storage<number[]>(realmPlaylistKey, []).set(realmIds);
+        !noRedirect &&
+          router.replace(
+            {
+              pathname: `/realm/${realmIds[0]}`,
+              query: { ...query },
+            },
+            undefined,
+            {
+              shallow: true,
+            }
+          );
+      }
+      if (!res.loading && res.data.realms.length == 0) {
+        toast(`Playlist ${rp.name} has no Realms`);
+      }
+
+      return res;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  };
 
   const next = () => {
     const currentPlaylist = storage<string>(realmPlaylistNameKey, '').get();
@@ -129,7 +220,7 @@ const useRealmPlaylist = (args: Args) => {
       realmIdFromRoute != prevRealmId;
 
     if (realmIds && realmIds[cursor] && !conflictingRealmIds) {
-      args.onChange(realmIds[cursor]);
+      args.onChange && args.onChange(realmIds[cursor]);
     }
 
     if (conflictingRealmIds) {
@@ -143,6 +234,6 @@ const useRealmPlaylist = (args: Args) => {
       resetPlaylistState();
     }
   }, [cursor]);
-  return { next, prev };
+  return { next, prev, setPlaylistState };
 };
 export default useRealmPlaylist;
