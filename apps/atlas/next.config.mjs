@@ -1,8 +1,26 @@
 // @ts-check
 
-const pc = require('picocolors');
 
-const packageJson = require('./package.json');
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+import withBundleAnalyzer from '@next/bundle-analyzer';
+import pc from 'picocolors';
+
+/**
+ * Once supported replace by node / eslint / ts and out of experimental, replace by
+ * `import packageJson from './package.json' assert { type: 'json' };`
+ * @type {import('type-fest').PackageJson}
+ */
+ const packageJson = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url)).toString('utf-8')
+);
+
+const workspaceRoot = path.resolve(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  '..',
+  '..'
+);
 
 const trueEnv = ['true', '1', 'yes'];
 
@@ -63,7 +81,7 @@ if (disableSourceMaps) {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   productionBrowserSourceMaps: !disableSourceMaps,
   optimizeFonts: true,
 
@@ -84,15 +102,13 @@ const nextConfig = {
     },
   },
 
-  experimental: {
-    browsersListForSwc: true,
-    legacyBrowsers: false,
+  // Standalone build
+  // @link https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files-experimental
+  output: 'standalone',
 
-    // React 18 server components
-    // @link https://nextjs.org/docs/advanced-features/react-18/server-components
-    serverComponents: false,
+  experimental: {
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
-    outputFileTracingRoot: undefined, // ,path.join(__dirname, '../../'),
+    outputFileTracingRoot: workspaceRoot, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS
     // @link {https://nextjs.org/blog/next-11-1#es-modules-support|Blog 11.1.0}
     // @link {https://github.com/vercel/next.js/discussions/27876|Discussion}
@@ -194,13 +210,9 @@ const nextConfig = {
     return config;
   },
   env: {
-    APP_NAME: packageJson.name,
-    APP_VERSION: packageJson.version,
+    APP_NAME: packageJson.name ?? 'not-in-package.json',
+    APP_VERSION: packageJson.version ?? 'not-in-package.json',
     BUILD_TIME: new Date().toISOString(),
-  },
-  serverRuntimeConfig: {
-    // to bypass https://github.com/zeit/next.js/issues/8251
-    PROJECT_ROOT: __dirname,
   },
 };
 
@@ -221,12 +233,11 @@ if (tmModules.length > 0) {
   config = withNextTranspileModules(config);
 }
 
+
 if (process.env.ANALYZE === 'true') {
-  // @ts-ignore
-  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  config = withBundleAnalyzer({
     enabled: true,
-  });
-  config = withBundleAnalyzer(config);
+  })(config);
 }
 
-module.exports = config;
+export default config;
