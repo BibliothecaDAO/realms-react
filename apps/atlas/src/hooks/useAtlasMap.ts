@@ -129,7 +129,7 @@ export function useAtlasMap(): AtlasMap {
       return;
     }
     fly();
-    router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
+    router.push(`/?asset=${assetType}${assetId}`);
   }
 
   return {
