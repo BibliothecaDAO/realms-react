@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import Link from 'next/link';
+import { MusicControl } from '@/components/navigation/MusicControl';
+import NetworkConnectButton from '@/components/navigation/NetworkConnectButton';
 
 export function Header() {
   return (
@@ -16,7 +18,11 @@ export function Header() {
               {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
             </span>
           </Link>
+        </div>{' '}
+        <div className="flex items-center px-4 mr-4 border card">
+          <MusicControl />
         </div>
+        <NetworkConnectButton />
         {/* network here */}
       </div>
       {/* sidebars here */}

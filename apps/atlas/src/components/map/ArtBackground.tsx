@@ -1,3 +1,4 @@
+'use client';
 import { animated, useSpring } from '@react-spring/web';
 
 export type BackgroundOptions =

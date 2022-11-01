@@ -1,3 +1,5 @@
+'use client';
+
 import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useAccount } from '@starknet-react/core';

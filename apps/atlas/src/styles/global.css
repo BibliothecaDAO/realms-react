@@ -136,3 +136,9 @@ html {
   mask-image: url('../../public/textures/grit.png');
   mask-mode: alpha;
 }
+
+@layer base {
+  [data-nextjs-scroll-focus-boundary] {
+    display: contents;
+  }
+}

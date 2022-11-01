@@ -1,8 +1,11 @@
+'use client';
+
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
@@ -12,7 +15,6 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { SearchFilter } from '../filters/SearchFilter';
-import { BasePanel } from './BasePanel';
 
 const TABS = [
   { key: 'Your', name: 'Your Realms' },
@@ -144,13 +146,13 @@ function useRealmsPanelPagination() {
 }
 
 function useRealmsPanelTabs() {
-  const router = useRouter();
-  const selectedTabKey = (router.query['tab'] as string) ?? TABS[1].key;
+  const query = useSearchParams();
+  const selectedTabKey = (query.get('tab') as string) ?? TABS[1].key;
   const selectedTabIndex = TABS.findIndex(
     ({ key }) => key.toLowerCase() === selectedTabKey.toLowerCase()
   );
 
-  function onTabChange(index: number) {
+  /* function onTabChange(index: number) {
     router.push(
       {
         pathname: router.pathname,
@@ -162,11 +164,11 @@ function useRealmsPanelTabs() {
       undefined,
       { shallow: true }
     );
-  }
+  } */
 
   return {
     selectedTabIndex,
-    onTabChange,
+    /* onTabChange, */
   };
 }
 
@@ -174,7 +176,7 @@ export const RealmsPanel = () => {
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
 
-  const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
+  const { selectedTabIndex } = useRealmsPanelTabs();
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
@@ -217,9 +219,10 @@ export const RealmsPanel = () => {
     (pagination.page > 1 || (data?.realms?.length ?? 0) === pagination.limit);
 
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
-
+  const query = useSearchParams();
+  const pathname = usePathname();
   return (
-    <BasePanel open={true} style="lg:w-12/12 ">
+    <>
       <div className="flex flex-wrap justify-between px-3 pt-16 sm:px-6">
         <h1>Realms</h1>
         <div className="w-full my-1 sm:w-auto">
@@ -232,14 +235,21 @@ export const RealmsPanel = () => {
           />
         </div>
       </div>
-      <Tabs
-        key={selectedTabIndex}
-        selectedIndex={selectedTabIndex}
-        onChange={onTabChange as any}
-      >
+      <Tabs key={selectedTabIndex} selectedIndex={selectedTabIndex}>
         <Tabs.List>
-          {TABS.map((tab) => (
-            <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
+          {TABS.map((tab, index) => (
+            <Tabs.Tab key={tab.key}>
+              <Link
+                href={{
+                  pathname: pathname,
+                  query: {
+                    tab: TABS[index].key,
+                  },
+                }}
+              >
+                {tab.name}
+              </Link>
+            </Tabs.Tab>
           ))}
         </Tabs.List>
       </Tabs>
@@ -271,11 +281,7 @@ export const RealmsPanel = () => {
               Clear Filters
             </Button>
             {selectedTabIndex !== 1 && (
-              <Button
-                className="whitespace-nowrap"
-                variant="outline"
-                onClick={() => onTabChange(1)}
-              >
+              <Button className="whitespace-nowrap" variant="outline">
                 See All Realms
               </Button>
             )}
@@ -301,6 +307,6 @@ export const RealmsPanel = () => {
           </Button>
         </div>
       )}
-    </BasePanel>
+    </>
   );
 };

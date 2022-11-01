@@ -1,8 +1,10 @@
+'use client';
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
@@ -14,17 +16,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
-const TABS = [
-  { key: 'Your', name: 'Your Realms' },
-  { key: 'All', name: 'All Realms' },
-  { key: 'Favourite', name: 'Favourite Realms' },
-];
-
-function useRealmsQueryVariables(
-  selectedTabIndex: number,
-  page: number,
-  limit: number
-) {
+function useRealmsQueryVariables(page: number, limit: number) {
   const { address: l1Address } = useL1Account();
   const { address } = useAccount();
 
@@ -43,16 +35,12 @@ function useRealmsQueryVariables(
       filter.realmId = { equals: parseInt(state.searchIdFilter) };
     } else {
       // Your realms
-      if (selectedTabIndex === 0) {
-        filter.OR = [
-          { owner: { equals: l1Address?.toLowerCase() } },
-          { bridgedOwner: { equals: l1Address?.toLowerCase() } },
-          { ownerL2: { equals: starknetWallet } },
-          { settledOwner: { equals: starknetWallet } },
-        ];
-      } else if (selectedTabIndex === 2) {
-        filter.realmId = { in: [...state.favouriteRealms] };
-      }
+      filter.OR = [
+        { owner: { equals: l1Address?.toLowerCase() } },
+        { bridgedOwner: { equals: l1Address?.toLowerCase() } },
+        { ownerL2: { equals: starknetWallet } },
+        { settledOwner: { equals: starknetWallet } },
+      ];
 
       if (state.hasWonderFilter) filter.wonder = { not: null };
       if (state.isSettledFilter) {
@@ -123,7 +111,6 @@ function useRealmsQueryVariables(
     state.traitsFilter.Region,
     state.traitsFilter.River,
     page,
-    selectedTabIndex,
     starknetWallet,
   ]);
 }
@@ -143,38 +130,9 @@ function useRealmsPanelPagination() {
   };
 }
 
-function useRealmsPanelTabs() {
-  const router = useRouter();
-  const selectedTabKey = (router.query['tab'] as string) ?? TABS[0].key;
-  const selectedTabIndex = TABS.findIndex(
-    ({ key }) => key.toLowerCase() === selectedTabKey.toLowerCase()
-  );
-
-  function onTabChange(index: number) {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          tab: TABS[index].key,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
-  }
-
-  return {
-    selectedTabIndex,
-    onTabChange,
-  };
-}
-
 export const MyRealms = () => {
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
-
-  const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
@@ -193,11 +151,7 @@ export const MyRealms = () => {
     state.traitsFilter.River,
   ]);
 
-  const variables = useRealmsQueryVariables(
-    selectedTabIndex,
-    pagination.page,
-    pagination.limit
-  );
+  const variables = useRealmsQueryVariables(pagination.page, pagination.limit);
 
   const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
@@ -218,7 +172,7 @@ export const MyRealms = () => {
   return (
     <div>
       <div className="container flex justify-between w-full px-6 sm:w-auto">
-        <RealmsFilter isYourRealms={selectedTabIndex === 0} />
+        <RealmsFilter isYourRealms={true} />
         <SearchFilter
           placeholder="SEARCH BY ID"
           onSubmit={(value) => {
@@ -235,11 +189,7 @@ export const MyRealms = () => {
             <h2>Loading</h2>
           </div>
         )}
-        <RealmOverviews
-          key={selectedTabIndex}
-          realms={data?.realms ?? []}
-          isYourRealms={true}
-        />
+        <RealmOverviews realms={data?.realms ?? []} isYourRealms={true} />
       </div>
 
       {hasNoResults() && (
@@ -253,15 +203,6 @@ export const MyRealms = () => {
             >
               Clear Filters
             </Button>
-            {selectedTabIndex !== 1 && (
-              <Button
-                className="whitespace-nowrap"
-                variant="outline"
-                onClick={() => onTabChange(1)}
-              >
-                See All Realms
-              </Button>
-            )}
           </div>
         </div>
       )}

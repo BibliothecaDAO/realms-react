@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import ArgentX from '@bibliotheca-dao/ui-lib/icons/argentX.svg';
