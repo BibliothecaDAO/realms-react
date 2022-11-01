@@ -3,7 +3,7 @@ import {
   ArrowLongRightIcon,
 } from '@heroicons/react/20/solid';
 import { BookmarkIcon, RectangleStackIcon } from '@heroicons/react/24/outline';
-import { UserAgent } from '@quentin-sommer/react-useragent';
+// import { UserAgent } from '@quentin-sommer/react-useragent';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -213,29 +213,28 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
               <div className="self-center w-8 h-8 border rounded-full"></div>
             </div>
           </div>
-          <UserAgent>
-            {({ mobile }) => (
-              <RealmToolbar
-                selected={subview}
-                isOwnerOfRealm={isOwner}
-                isMobile={mobile}
-                color={color}
-                onSetSubview={(s) => onSetSubview(s)}
-                className=""
-                onNavigateIntent={(dir) => {
-                  if (!realm) {
-                    return;
-                  }
-                  if (dir == 'previous') {
-                    pushPage(realm.realmId - 1);
-                  }
-                  if (dir == 'next') {
-                    pushPage(realm.realmId + 1);
-                  }
-                }}
-              />
-            )}
-          </UserAgent>
+          {/* <UserAgent>
+            {({ mobile }) => ( */}
+          <RealmToolbar
+            selected={subview}
+            isOwnerOfRealm={isOwner}
+            color={color}
+            onSetSubview={(s) => onSetSubview(s)}
+            className=""
+            onNavigateIntent={(dir) => {
+              if (!realm) {
+                return;
+              }
+              if (dir == 'previous') {
+                pushPage(realm.realmId - 1);
+              }
+              if (dir == 'next') {
+                pushPage(realm.realmId + 1);
+              }
+            }}
+          />
+          {/* })}
+          </UserAgent> */}
           <div className="relative w-full h-full">
             <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
               {realmData?.realm ? (

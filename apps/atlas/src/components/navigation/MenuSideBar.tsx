@@ -1,3 +1,5 @@
+'use client';
+
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
@@ -14,22 +16,23 @@ import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
 import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useCallback, useState, useMemo } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const MenuSideBar = () => {
   const breakpoints: any = useBreakpoint();
   const [showMenu, setShowMenu] = useState(breakpoints.lg);
-  const { query, pathname } = useRouter();
+  const pathname = usePathname();
+  const query = useSearchParams();
 
+  const segment = query.get('segment') || '';
   const isPage = useCallback(
     (name: string) => name === pathname.slice(1).split('/')[0],
     [pathname]
   );
   const getPageHref = useCallback(
-    (name: string) =>
-      name === (query.segment && query.segment[0]) ? '/' : `/${name}`,
+    (name: string) => (name === (segment && segment[0]) ? '/' : `/${name}`),
     [query]
   );
   const animation = useSpring({

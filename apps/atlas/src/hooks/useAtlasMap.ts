@@ -1,5 +1,5 @@
 import { FlyToInterpolator } from '@deck.gl/core';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
@@ -65,7 +65,8 @@ export interface AtlasMap {
 export function useAtlasMap(): AtlasMap {
   const { play: fly } = useUiSounds(soundSelector.fly);
   const router = useRouter();
-  const { asset } = router.query;
+  const searchParams = useSearchParams();
+  const asset = searchParams.get('asset');
   const [selectedAsset, setSelectedAsset] = useState<Asset>(null!);
   const [coordinates, setCoordinates] = useState<Coordinate>(null!);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -86,8 +87,6 @@ export function useAtlasMap(): AtlasMap {
 
   // check for asset in query string
   useEffect(() => {
-    if (!router.isReady) return;
-
     // match asset
     const match = ((asset as string) ?? '').match(/(realm|crypt|loot|ga)(\d+)/);
     if (match) {
@@ -103,7 +102,7 @@ export function useAtlasMap(): AtlasMap {
       setSelectedAsset(null!);
       setCoordinates(null!);
     }
-  }, [router.isReady, asset]);
+  }, [asset]);
 
   // Update view state on coordinates change
   useEffect(() => {

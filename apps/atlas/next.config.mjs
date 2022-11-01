@@ -107,6 +107,7 @@ const nextConfig = {
   output: 'standalone',
 
   experimental: {
+    appDir: true,
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
     outputFileTracingRoot: workspaceRoot, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS

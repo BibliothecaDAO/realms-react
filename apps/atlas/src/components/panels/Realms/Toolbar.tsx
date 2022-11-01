@@ -73,12 +73,12 @@ type ToolbarProps = {
   isOwnerOfRealm?: boolean;
   onNavigateIntent: (direction: 'previous' | 'next') => void;
   onSetSubview: (string: Subview) => void;
-  isMobile: boolean;
+  // isMobile: boolean;
   color: string;
 };
 
 const RealmToolbar: React.FC<ToolbarProps> = (props) => {
-  const [showPlaylist, setShowPlaylist] = useState(props.isMobile);
+  // const [showPlaylist, setShowPlaylist] = useState(props.isMobile);
 
   const toolBarItems = [
     {

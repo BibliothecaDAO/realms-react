@@ -296,7 +296,6 @@ function useResources() {
           )?.amount ?? 0;
 
         const rate = rates.find((rate) => rate.tokenId === resourceId);
-        console.log(rate);
         return {
           resourceId,
           resourceName,

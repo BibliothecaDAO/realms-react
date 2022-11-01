@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
@@ -5,10 +7,9 @@ import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
-import Layout from '@/components/Layout';
 const ChatComponent = dynamic(
   () => import('@/components/minigame/realtime/Chat'),
   { ssr: false }
@@ -29,12 +30,10 @@ import { Annotation } from '@/shared/Icons';
 
 export default function AtlasPage() {
   return (
-    <Layout>
-      <RealmProvider>
-        <MapModule />
-        <AtlasSidebars />
-      </RealmProvider>
-    </Layout>
+    <RealmProvider>
+      <MapModule />
+      <AtlasSidebars />
+    </RealmProvider>
   );
 }
 
@@ -45,7 +44,7 @@ function AtlasSidebars() {
   const selectedAsset = mapContext.selectedAsset;
 
   function onClose() {
-    router.push('/', undefined, { shallow: true });
+    router.push('/');
   }
   return (
     <>
