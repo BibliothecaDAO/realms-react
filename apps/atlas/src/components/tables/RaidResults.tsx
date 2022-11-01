@@ -168,6 +168,7 @@ export const RaidResults = (props: RaidResultsProps) => {
             objectFit={'cover'}
             layout="responsive"
             height={250}
+            alt="Destroy Battle"
             src="/createOrDestroy-desktop.webp"
           />
           <div className="mt-4 text-3xl">

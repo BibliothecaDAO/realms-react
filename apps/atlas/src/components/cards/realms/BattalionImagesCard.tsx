@@ -60,6 +60,7 @@ export const BattalionImagesCard: React.FC<Prop> = (props) => {
                   src={getUnitImage(unit.id)}
                   layout="fill"
                   objectFit="cover"
+                  alt={unit.name}
                 />
                 <HealthBar
                   troopId={unit.id}

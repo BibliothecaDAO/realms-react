@@ -458,6 +458,7 @@ const Food: React.FC<Prop> = (props) => {
               height={220}
               className={' mx-auto'}
               src={'/realm-buildings/storehouse.png'}
+              alt="Storehouse"
             />
           </div>
           <CardTitle>Store house [food]</CardTitle>

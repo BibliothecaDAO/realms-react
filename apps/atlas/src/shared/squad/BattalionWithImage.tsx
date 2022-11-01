@@ -61,6 +61,7 @@ export const BattalionWithImage: React.FC<
         layout="fill"
         objectFit="cover"
         className="absolute inset-0 z-0 w-full h-full"
+        alt={props.battalionName}
       />
     </Card>
   );
