@@ -18,6 +18,8 @@
       "@/data/*": ["./data/*"],
       "@/geodata/*": ["./geodata/*"],
       "@/generated/*": ["./generated/*"],
+      "@/gql/*": ["./gql/*"],
+      "@/graphql/*": ["./graphql/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
       "@/mocks/*": ["./mocks/*"],

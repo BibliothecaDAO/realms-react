@@ -45,7 +45,7 @@ module.exports = {
       },
     },
     {
-      files: ['src/backend/**/*graphql*schema*.ts'],
+      files: ['src/backend/**/*graphql*schema*.ts', 'src/gql/**/*.ts'],
       rules: {
         '@typescript-eslint/naming-convention': [
           'error',

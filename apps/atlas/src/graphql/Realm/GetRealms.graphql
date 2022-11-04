@@ -1,15 +1,15 @@
 #import "./Realm.fragment.graphql"
-query getRealms(
-  $filter: RealmWhereInput
-  $orderBy: RealmOrderByWithRelationInput
-  $take: Float
-  $skip: Float
-) @api(name: starkIndexer) {
-  realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
-    ...RealmFragment
-  }
-  total: realmsCount(filter: $filter)
-}
+# query getRealms(
+#   $filter: RealmWhereInput
+#   $orderBy: RealmOrderByWithRelationInput
+#   $take: Float
+#   $skip: Float
+# ) @api(name: starkIndexer) {
+#   realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
+#     ...RealmFragment
+#   }
+#   total: realmsCount(filter: $filter)
+# }
 
 query getRealmsWithTravels(
   $filter: RealmWhereInput

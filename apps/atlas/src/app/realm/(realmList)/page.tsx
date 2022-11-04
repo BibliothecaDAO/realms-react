@@ -15,13 +15,8 @@ export default async function Page() {
   // const recentPosts = await getPosts();
   // Forward fetched data to your Client Component
   return (
-    <>
-      <BasePanel open={true} style="lg:w-12/12">
-        <RealmProvider>
-          <RealmsPanel /* recentPosts={recentPosts} */ />
-        </RealmProvider>
-      </BasePanel>
-      <ArtBackground background="realm" />
-    </>
+    <RealmProvider>
+      <RealmsPanel /* recentPosts={recentPosts} */ />
+    </RealmProvider>
   );
 }

@@ -223,18 +223,6 @@ export const RealmsPanel = () => {
   const pathname = usePathname();
   return (
     <>
-      <div className="flex flex-wrap justify-between px-3 pt-16 sm:px-6">
-        <h1>Realms</h1>
-        <div className="w-full my-1 sm:w-auto">
-          <SearchFilter
-            placeholder="SEARCH BY ID"
-            onSubmit={(value) => {
-              actions.updateSearchIdFilter(parseInt(value) ? value : '');
-            }}
-            defaultValue={state.searchIdFilter + ''}
-          />
-        </div>
-      </div>
       <Tabs key={selectedTabIndex} selectedIndex={selectedTabIndex}>
         <Tabs.List>
           {TABS.map((tab, index) => (
