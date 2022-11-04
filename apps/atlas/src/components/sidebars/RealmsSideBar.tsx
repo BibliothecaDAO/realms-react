@@ -1,6 +1,6 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useGetRealmQuery } from '@/generated/graphql';
-import { RealmCard } from '../cards/realms/RealmCard';
+import { RealmCard } from '../../app/realm/(realmList)/RealmCard';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 

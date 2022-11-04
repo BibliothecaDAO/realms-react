@@ -12,6 +12,7 @@
     "paths": {
       "@/test-utils": ["../config/tests/test-utils"],
       "@/abi/*": ["./abi/*"],
+      "@/app/*": ["./app/*"],
       "@/constants/*": ["./constants/*"],
       "@/components/*": ["./components/*"],
       "@/context/*": ["./context/*"],

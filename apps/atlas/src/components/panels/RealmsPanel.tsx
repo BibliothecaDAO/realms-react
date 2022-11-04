@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
+import { RealmOverviews } from '@/app/realm/(realmList)/RealmOverviews';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
@@ -223,24 +223,6 @@ export const RealmsPanel = () => {
   const pathname = usePathname();
   return (
     <>
-      <Tabs key={selectedTabIndex} selectedIndex={selectedTabIndex}>
-        <Tabs.List>
-          {TABS.map((tab, index) => (
-            <Tabs.Tab key={tab.key}>
-              <Link
-                href={{
-                  pathname: pathname,
-                  query: {
-                    tab: TABS[index].key,
-                  },
-                }}
-              >
-                {tab.name}
-              </Link>
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
-      </Tabs>
       <div>
         <RealmsFilter isYourRealms={selectedTabIndex === 0} />
 

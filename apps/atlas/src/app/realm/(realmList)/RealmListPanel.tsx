@@ -10,7 +10,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { SearchFilter } from '@/components/filters/SearchFilter';
-import { RealmOverviews } from '@/components/tables/RealmOverviews';
 import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
@@ -19,11 +18,13 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 import type { FragmentType } from '@/gql/fragment-masking';
 import { useFragment } from '@/gql/fragment-masking';
 import { graphql } from '@/gql/gql';
+import { RealmOverviews } from './RealmOverviews';
 
 export const RealmListFragment = graphql(/* GraphQL */ `
   fragment RealmList on Realm {
     realmId
     name
+    orderType
   }
 `);
 

@@ -6,7 +6,7 @@ import React, { createRef, useEffect, useRef } from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import { RealmCard } from '../cards/realms/RealmCard';
+import { RealmCard } from './RealmCard';
 
 interface RealmOverviewsProps {
   realms: any;
