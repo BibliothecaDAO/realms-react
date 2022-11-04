@@ -1,9 +1,8 @@
 overwrite: true
 schema: 'https://dev-indexer-gu226.ondigitalocean.app/graphql'
-documents: ['src/graphql/**/*.graphql', 'src/lib/**/*.tsx']
+documents: ['src/lib/**/*.tsx', 'src/app/**/*.tsx', '!src/gql/**/*']
+ignoreNoDocuments: true,
 generates:
   src/gql/:
     preset: 'client'
-    plugins:
-      - 'typescript'
-      - 'typescript-operations'
+    plugins: []

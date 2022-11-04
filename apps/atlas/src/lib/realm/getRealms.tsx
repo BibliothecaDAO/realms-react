@@ -1,16 +1,12 @@
 import { graphql } from '@/gql/gql';
+import { GetRealmsQuery } from '@/gql/graphql';
+import { graphqlClient } from '@/lib/graphql-client';
 
-const getRealmsQueryDocument = graphql(`
-  query getRealms(
-    $filter: RealmWhereInput
-    $orderBy: RealmOrderByWithRelationInput
-    $take: Float
-    $skip: Float
-  ) @api(name: starkIndexer) {
-    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
-      ...RealmFragment
+const getRealmsDocument = graphql(/* GraphQL */ `
+  query getRealms {
+    realms {
+      ...RealmList
     }
-    total: realmsCount(filter: $filter)
   }
 `);
 
@@ -21,22 +17,10 @@ export async function getRealms(
   skip?: number
 ) {
   try {
-    const res = await fetch(
-      'https://dev-indexer-gu226.ondigitalocean.app/graphql',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: getRealmsQueryDocument,
-          variables: { filter, orderBy, take, skip },
-        }),
-      }
-    );
-    const response = await res.json();
-    console.log(response);
-    return response.data;
+    const { realms } = await graphqlClient.request(getRealmsDocument);
+    console.log('getting realms');
+    console.log(realms);
+    return realms;
   } catch (e) {
     console.log(e);
   }

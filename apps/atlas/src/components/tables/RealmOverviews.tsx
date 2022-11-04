@@ -9,7 +9,7 @@ import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { RealmCard } from '../cards/realms/RealmCard';
 
 interface RealmOverviewsProps {
-  realms: RealmFragmentFragment[];
+  realms: any;
   isYourRealms?: boolean;
 }
 

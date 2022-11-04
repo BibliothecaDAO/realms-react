@@ -11923,6 +11923,7 @@ __metadata:
     get-starknet: "npm:^1.5.0"
     gl-matrix: "npm:^3.4.3"
     graphql: "npm:^16.6.0"
+    graphql-request: "npm:5.0.0"
     happy-dom: "npm:7.6.6"
     heroicons: "npm:^2.0.13"
     listplayer: "npm:0.2.3"
@@ -18816,20 +18817,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^3.5.0":
-  version: 3.7.0
-  resolution: "graphql-request@npm:3.7.0"
-  dependencies:
-    cross-fetch: "npm:^3.0.6"
-    extract-files: "npm:^9.0.0"
-    form-data: "npm:^3.0.0"
-  peerDependencies:
-    graphql: 14 - 16
-  checksum: 0f2c975f3e5ea341cb3c71ca8be94b5af5d797b54623d22c425c378eed63520f3f5fa0907d354fcb170f5966ad117703ca69a16e2844cfeefdd10a3012b5ebaa
-  languageName: node
-  linkType: hard
-
-"graphql-request@npm:^5.0.0":
+"graphql-request@npm:5.0.0, graphql-request@npm:^5.0.0":
   version: 5.0.0
   resolution: "graphql-request@npm:5.0.0"
   dependencies:
@@ -18840,6 +18828,19 @@ __metadata:
   peerDependencies:
     graphql: 14 - 16
   checksum: 50063a7e93e5eed8f8815332e7b38658d5bb5e9ad8d054b1485709ed39e643c225c64e896ad1506aed64f631d9929e5fe9e691338727edbd0971fbe647e31048
+  languageName: node
+  linkType: hard
+
+"graphql-request@npm:^3.5.0":
+  version: 3.7.0
+  resolution: "graphql-request@npm:3.7.0"
+  dependencies:
+    cross-fetch: "npm:^3.0.6"
+    extract-files: "npm:^9.0.0"
+    form-data: "npm:^3.0.0"
+  peerDependencies:
+    graphql: 14 - 16
+  checksum: 0f2c975f3e5ea341cb3c71ca8be94b5af5d797b54623d22c425c378eed63520f3f5fa0907d354fcb170f5966ad117703ca69a16e2844cfeefdd10a3012b5ebaa
   languageName: node
   linkType: hard
 

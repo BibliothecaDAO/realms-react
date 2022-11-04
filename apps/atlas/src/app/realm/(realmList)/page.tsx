@@ -1,22 +1,17 @@
 // Import your Client Component
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { BasePanel } from '@/components/panels/BasePanel';
-import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { RealmProvider } from '@/context/RealmContext';
-
-/* async function getPosts() {
-  const res = await fetch('https://...');
-  const posts = await res.json();
-  return posts;
-} */
+import { getRealms } from '@/lib/realm/getRealms';
+import { RealmListPanel } from './RealmListPanel';
 
 export default async function Page() {
-  // Fetch data directly in a Server Component
-  // const recentPosts = await getPosts();
-  // Forward fetched data to your Client Component
+  const realms = await getRealms();
+  console.log(realms);
+
   return (
     <RealmProvider>
-      <RealmsPanel /* recentPosts={recentPosts} */ />
+      <RealmListPanel realms={realms} />
     </RealmProvider>
   );
 }

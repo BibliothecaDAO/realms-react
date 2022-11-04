@@ -2,13 +2,10 @@ import React from 'react';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { BasePanel } from '@/components/panels/BasePanel';
-import { getRealms } from '@/lib/realm/getRealms';
 import { getStarkNetId } from '@/lib/starknet/getStarkNetId';
 import RealmsListTabs from '../RealmsListTabs';
 
 export default async function RealmLayout({ children, params }) {
-  const { realms } = await getRealms();
-  console.log(realms);
   return (
     <>
       <BasePanel open={true}>
