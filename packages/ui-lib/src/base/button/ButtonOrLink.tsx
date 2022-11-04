@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type {
   ComponentPropsWithRef,
   ReactElement,
@@ -60,7 +60,6 @@ export interface Styles {
 }
 
 export type ButtonOrLinkProps = {
-  preserveRedirect?: boolean;
   replace?: boolean;
   leftIcon?: ReactElement;
   rightIcon?: ReactElement;
@@ -81,7 +80,6 @@ export const ButtonOrLink = forwardRef<
     {
       href,
       replace = false,
-      preserveRedirect = false,
       size = 'md',
       variant = 'default',
       isIconButton = false,
@@ -144,15 +142,8 @@ export const ButtonOrLink = forwardRef<
     );
 
     if (isLink) {
-      const finalHref =
-        preserveRedirect && router.query.redirect
-          ? `${href!}?redirect=${encodeURIComponent(
-              router.query.redirect as string
-            )}`
-          : href!;
-
       return (
-        <Link href={finalHref} passHref replace>
+        <Link href={href} passHref replace>
           {content}
         </Link>
       );

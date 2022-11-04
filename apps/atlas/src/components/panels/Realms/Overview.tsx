@@ -14,9 +14,9 @@ import { STORE_HOUSE_SIZE } from '@/constants/buildings';
 import type { GetRealmQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
+import { hasOwnRelic } from '@/lib/realm/getters/relic';
 import {
   TraitTable,
-  hasOwnRelic,
   RealmCombatStatus,
   getTrait,
   fetchRealmNameById,

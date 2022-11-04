@@ -8,7 +8,7 @@ export function usePlayer(playlist) {
   const [currentTrack, setCurrentTrack] = useState('');
 
   // List player could be instantiated only at client side
-  if (!player.current) {
+  if (!player.current && document) {
     player.current = new ListPlayer({
       tracks: playlist,
       loopTracks: true,

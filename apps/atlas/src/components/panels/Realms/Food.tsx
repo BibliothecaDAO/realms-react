@@ -32,7 +32,7 @@ import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
-import { CostBlock } from '@/shared/Getters/Realm';
+import { CostBlock } from '@/shared/Getters/CostBlock';
 import type {
   BuildingDetail,
   RealmFoodDetails,

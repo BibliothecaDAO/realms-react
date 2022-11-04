@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { LorePanel } from '@/components/panels/LorePanel';
 import { LoreProvider } from '@/context/LoreContext';
+import Layout from '@/components/Layout';
 
 export default function LorePage() {
   return (

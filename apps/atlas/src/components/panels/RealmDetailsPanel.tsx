@@ -20,8 +20,7 @@ import useResources from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import useKeyPress from '@/hooks/useKeyPress';
 import usePrevious from '@/hooks/usePrevious';
-import { trimmedOrder } from '@/shared/Getters/Realm';
-import { RealmBannerHeading } from '@/shared/RealmBannerHeading';
+import { trimmedOrder } from '@/lib/realm/getters/orders';
 
 import { storage } from '@/util/localStorage';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
@@ -193,12 +192,6 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
       />
       <div className="grid w-full h-full overflow-auto bg-cover">
         <div className="relative col-span-6">
-          <RealmBannerHeading
-            onSubmit={(value) => pushPage(parseInt(value))}
-            realm={realmData}
-            hideSearchFilter
-          />
-
           <div className="fixed bottom-0 right-0 z-50 text-black">
             <div
               className={` w-40 h-40  ${color} flex justify-center align-middle text-black shadow-2xl border-white/20 card border`}

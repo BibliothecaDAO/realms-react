@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { battalionInformation, battalionIdToString } from '@/constants/army';
 import { buildingIdToString } from '@/constants/buildings';
 
-import { CostBlock } from '@/shared/Getters/Realm';
+import { CostBlock } from '@/shared/Getters/CostBlock';
 import type { BattalionInterface } from '@/types/index';
 
 type Battalion = {

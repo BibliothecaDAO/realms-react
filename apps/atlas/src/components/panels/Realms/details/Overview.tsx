@@ -2,7 +2,7 @@ import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
 import { useAccount } from '@starknet-react/core';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { useAccount as useL1Account } from 'wagmi';
@@ -120,11 +120,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           <div className="w-full">
             <Button
               onClick={() => {
-                router.push(
-                  `/realm/${props.realm.realmId}?tab=Overview`,
-                  undefined,
-                  { shallow: true }
-                );
+                router.push(`/realm/${props.realm.realmId}`);
               }}
               variant="primary"
               size="xs"

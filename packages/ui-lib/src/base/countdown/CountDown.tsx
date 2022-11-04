@@ -1,3 +1,5 @@
+'use client';
+
 import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 
 interface DateProps {

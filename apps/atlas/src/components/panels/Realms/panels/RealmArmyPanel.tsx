@@ -32,12 +32,9 @@ import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
-import {
-  CostBlock,
-  fetchRealmNameById,
-  hasOwnRelic,
-  RealmCombatStatus,
-} from '@/shared/Getters/Realm';
+import { hasOwnRelic } from '@/lib/realm/getters/relic';
+import { CostBlock } from '@/shared/Getters/CostBlock';
+import { fetchRealmNameById, RealmCombatStatus } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';

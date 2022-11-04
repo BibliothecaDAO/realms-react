@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { RealmDetailsPanel } from '@/components/panels/RealmDetailsPanel';
+import Layout from '@/components/Layout';
 
 export default function RealmPage() {
   const router = useRouter();

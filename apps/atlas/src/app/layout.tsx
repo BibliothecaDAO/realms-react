@@ -5,7 +5,6 @@ import React from 'react';
 import { Head } from '@/components/Head';
 import { MenuSideBar } from '@/components/navigation/MenuSideBar';
 import { ClientProviders } from './ClientProviders';
-
 import { Header } from './Header';
 
 import '../styles/global.css';
@@ -17,7 +16,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const userAgent = headersInstance.get('user-agent') || '';
   return (
     <html lang="en">
-      <Head />
       <body>
         <ClientProviders>
           <div className="absolute inset-0">

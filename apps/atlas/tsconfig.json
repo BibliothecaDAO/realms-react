@@ -19,6 +19,7 @@
       "@/geodata/*": ["./geodata/*"],
       "@/generated/*": ["./generated/*"],
       "@/hooks/*": ["./hooks/*"],
+      "@/lib/*": ["./lib/*"],
       "@/mocks/*": ["./mocks/*"],
       "@/pages/*": ["./pages/*"],
       "@/services/*": ["./services/*"],

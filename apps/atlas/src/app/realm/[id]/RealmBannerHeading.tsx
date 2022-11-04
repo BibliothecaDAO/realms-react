@@ -3,33 +3,31 @@ import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import React from 'react';
+
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import { OrderAffinity, LightDark } from '@/constants/orders';
-import { useAtlasContext } from '@/context/AtlasContext';
+// import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery } from '@/generated/graphql';
-import useIsOwner from '@/hooks/useIsOwner';
-import { useStarkNetId } from '@/hooks/useStarkNetId';
-import { shortenAddress } from '@/util/formatters';
-import { ownerRelic, trimmedOrder } from './Getters/Realm';
+import { trimmedOrder } from '@/lib/realm/getters/orders';
+import { ownerRelic } from '@/lib/realm/getters/relic';
+import { RealmOwner } from 'app/components/RealmOwner';
 
 interface HeaderProps {
-  onSubmit: (value: string) => void;
+  onSubmit?: (value: string) => void;
   hideSearchFilter?: boolean;
-  realm?: GetRealmQuery;
+  realm?: any;
+  starknetId?: string;
 }
 
-export const RealmBannerHeading = (props: HeaderProps) => {
-  const realm = props.realm?.realm;
-  const { starknetId } = useStarkNetId(realm?.settledOwner || '');
+export default function RealmBannerHeading(props: HeaderProps) {
+  const realm = props.realm;
 
-  const {
+  /* const {
     mapContext: { navigateToAsset },
-  } = useAtlasContext();
+  } = useAtlasContext(); */
   const trimmed = trimmedOrder(realm);
 
   const relicOwned = realm ? ownerRelic(realm)?.toString() : '0';
-
-  const isOwner = useIsOwner(realm?.settledOwner);
 
   return (
     <div className="bg-cover bg-snake">
@@ -59,12 +57,12 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           <div className="flex items-center justify-between pl-16 text-left md:pl-40">
             <div>
               <span className="flex font-display">
-                <Crown className="w-6 mr-3 fill-white" />{' '}
-                {starknetId ?? starknetId}
-                {!starknetId && isOwner ? 'you' : ''}
-                {!starknetId && !isOwner
-                  ? shortenAddress(realm?.settledOwner || '')
-                  : ''}
+                <Crown className="w-6 mr-3 fill-white" />
+                {props.starknetId ? (
+                  props.starknetId
+                ) : (
+                  <RealmOwner realm={realm} />
+                )}
               </span>
               <h1 className="font-semibold">
                 {realm?.name || '...'} | {realm?.realmId || '...'}
@@ -73,7 +71,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
           </div>
           {realm?.realmId && (
             <div className="self-center">
-              <Button
+              {/* TODO <Button
                 onClick={() => {
                   navigateToAsset(realm?.realmId, 'realm');
                 }}
@@ -84,7 +82,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
                   {' '}
                   ({realm?.latitude.toFixed(2)}, {realm?.longitude.toFixed(2)})
                 </span>
-              </Button>
+              </Button> */}
             </div>
           )}
 
@@ -109,7 +107,7 @@ export const RealmBannerHeading = (props: HeaderProps) => {
             <SearchFilter
               placeholder="SEARCH BY ID"
               onSubmit={(value) => {
-                props.onSubmit(parseInt(value) ? value : '');
+                props.onSubmit && props.onSubmit(parseInt(value) ? value : '');
               }}
               defaultValue={realm?.realmId.toString()}
             />
@@ -118,4 +116,4 @@ export const RealmBannerHeading = (props: HeaderProps) => {
       </div>
     </div>
   );
-};
+}

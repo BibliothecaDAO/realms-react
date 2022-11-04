@@ -6,7 +6,6 @@ import { DAY, SECONDS_PER_KM } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
-import { useGameConstants } from '@/hooks/settling/useGameConstants';
 
 interface TraitProps {
   trait: string;
@@ -133,10 +132,6 @@ export const IsOwner = (owner?: string | null) => {
   }
 };
 
-export const getOrder = (realm: RealmFragmentFragment) => {
-  return realm.orderType.toLowerCase();
-};
-
 export const getAccountHex = (account: string) => {
   return ethers.BigNumber.from(account).toHexString();
 };
@@ -168,32 +163,6 @@ export const getTrait = (realm: any, trait: string) => {
   return realm?.traits?.find((o) => o.type === trait)
     ? realm.traits?.find((o) => o.type === trait).qty
     : '0';
-};
-
-export const trimmedOrder = (realm: RealmFragmentFragment | undefined) => {
-  return (
-    realm?.orderType
-      ?.replaceAll('_', ' ')
-      .replace('the ', '')
-      .replace('the_', '')
-      .toLowerCase() ?? ''
-  );
-};
-
-export const ownerRelic = (realm: RealmFragmentFragment | undefined) => {
-  return realm?.relic && realm?.relic[0] && realm?.relic[0].heldByRealm
-    ? realm?.relic[0].heldByRealm
-    : realm?.realmId;
-};
-
-export const relicsOwnedByRealm = (
-  realm: RealmFragmentFragment | undefined
-) => {
-  return realm?.relicsOwned &&
-    realm?.relicsOwned[0] &&
-    realm?.relicsOwned.length
-    ? realm?.relicsOwned.length
-    : 0;
 };
 
 export const resourcePillaged = (resources: any) => {
@@ -229,10 +198,6 @@ export const resourcePillaged = (resources: any) => {
       )}
     </div>
   );
-};
-
-export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
-  return realm?.relic && realm?.relic.length ? false : true;
 };
 
 export const fetchRealmNameById = (id: number | undefined) => {
@@ -273,28 +238,6 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
   } else {
     return `Raidable in ${minutes}m`;
   }
-};
-
-export const CostBlock = ({ resourceName, amount, id, qty }) => {
-  const { checkUserHasResources } = useGameConstants();
-
-  return (
-    <div className="px-1 font-extrabold text-center font-display">
-      <ResourceIcon withTooltip size="xs" resource={resourceName} />
-      <span
-        className={
-          checkUserHasResources({
-            cost: amount * qty,
-            id: id,
-          })
-            ? 'text-green-600 shadow-green-100 drop-shadow-lg'
-            : 'text-red-200'
-        }
-      >
-        {amount * qty}
-      </span>
-    </div>
-  );
 };
 
 const getCoordinates = (id: number) => {

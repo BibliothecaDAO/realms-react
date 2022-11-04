@@ -7,7 +7,7 @@ import {
   RealmHistoryScalarFieldEnum,
   useGroupByRealmHistoryQuery,
 } from '@/generated/graphql';
-import { relicsOwnedByRealm } from '@/shared/Getters/Realm';
+import { relicsOwnedByRealm } from '@/lib/realm/getters/relic';
 import { shortenAddressWidth } from '@/util/formatters';
 import { BasePanel } from './BasePanel';
 import { RaidSuccess } from './Leaderboard/RaidSuccess';

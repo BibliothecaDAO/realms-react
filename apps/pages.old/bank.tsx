@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { BankPanel } from '@/components/panels/BankPanel';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
+import Layout from '@/components/Layout';
 
 export default function RealmPage() {
   const [showSwap, setShowSwap] = useState(false);

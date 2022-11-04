@@ -21,7 +21,7 @@ import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { CostBlock } from '@/shared/Getters/Realm';
+import { CostBlock } from '@/shared/Getters/CostBlock';
 import { Battalion } from '@/shared/squad/Battalion';
 
 import type {

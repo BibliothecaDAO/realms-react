@@ -4,7 +4,11 @@ import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import Link from 'next/link';
 import { MusicControl } from '@/components/navigation/MusicControl';
 import NetworkConnectButton from '@/components/navigation/NetworkConnectButton';
+/* import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
+import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
+import TransactionNavItem from './TransactionNavItem';
 
+*/
 export function Header() {
   return (
     <div className="top-0 left-0 z-40 justify-end hidden border-b-4 card border-white/20 bg-gray-1100/95 sm:flex bg-snake">
@@ -23,9 +27,32 @@ export function Header() {
           <MusicControl />
         </div>
         <NetworkConnectButton />
-        {/* network here */}
+        {/* TODO
+        {address && (
+          <>
+            <Button
+              className="font-display"
+              onClick={onLordsNavClick}
+              variant="primary"
+            >
+              <Lords className="w-6 fill-current" />{' '}
+              <span className="pl-4">
+                {(+formatEther(lordsBalance)).toLocaleString()}
+              </span>
+            </Button>
+            <TransactionNavItem onClick={onTransactionNavClick} />
+          </>
+        )} */}
       </div>
-      {/* sidebars here */}
+      {/* TODO
+      <ResourceSwapSideBar
+        isOpen={selectedSideBar === 'bank'}
+        onClose={onLordsNavClick}
+      />
+      <TransactionCartSideBar
+        isOpen={selectedSideBar === 'transaction'}
+        onClose={onTransactionNavClick}
+      /> */}
     </div>
   );
 }

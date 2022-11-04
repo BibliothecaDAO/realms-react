@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-key */
 import { ArrayUtils } from '@bibliotheca-dao/core-lib';

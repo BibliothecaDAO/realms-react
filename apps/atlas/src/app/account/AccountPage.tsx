@@ -8,7 +8,6 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import React, { useState, useMemo } from 'react';
 
-import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { MyActions } from '@/components/panels/Account/MyActions';
 import { MyArmies } from '@/components/panels/Account/MyArmies';
