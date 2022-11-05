@@ -15,8 +15,8 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
 import { BattalionWithImage } from '@/shared/squad/BattalionWithImage';
+import { RealmResources } from '../../app/realm/(realmList)/RealmResources';
 import { ArmyStatistics } from '../cards/realms/armyCard/ArmyStatistics';
-import { RealmResources } from '../tables/RealmResources';
 
 type Prop = {
   defendingRealm?: GetRealmQuery['realm'];

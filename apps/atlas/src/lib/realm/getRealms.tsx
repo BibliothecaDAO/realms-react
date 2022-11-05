@@ -3,23 +3,26 @@ import { GetRealmsQuery } from '@/gql/graphql';
 import { graphqlClient } from '@/lib/graphql-client';
 
 const getRealmsDocument = graphql(/* GraphQL */ `
-  query getRealms($take: Float) {
-    realms(take: $take) {
+  query getRealms(
+    $filter: RealmWhereInput
+    $orderBy: RealmOrderByWithRelationInput
+    $take: Float
+    $skip: Float
+  ) {
+    realms(filter: $filter, orderBy: $orderBy, take: $take, skip: $skip) {
       ...RealmCard
       ...RealmOverview
+      ...RealmResources
     }
   }
 `);
 
-export async function getRealms(
-  filter?: any,
-  orderBy?: any,
-  take?: number,
-  skip?: number
-) {
-  console.log(take);
+export async function getRealms(variables) {
   try {
-    const { realms } = await graphqlClient.request(getRealmsDocument, { take });
+    const { realms } = await graphqlClient.request(
+      getRealmsDocument,
+      variables
+    );
     return realms;
   } catch (e) {
     console.log(e);

@@ -36,11 +36,6 @@ const NetworkConnectButton = () => {
     }
   };
 
-  useEffect(() => {
-    const interval = setInterval(refresh, 5000);
-    return () => clearInterval(interval);
-  }, [refresh, address]);
-
   return (
     <Popover className="relative">
       <Popover.Button as="div">

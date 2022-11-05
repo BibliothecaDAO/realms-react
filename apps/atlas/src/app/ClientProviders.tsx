@@ -72,16 +72,16 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
               <ConnectKitProvider theme="midnight">
                 <StarknetConfig connectors={connectors} autoConnect>
                   {/* <QueryClientProvider client={queryClient}> */}
-                  <ResourceProvider>
-                    <CommandListProvider>
-                      <AtlasProvider>
-                        <DndProvider backend={HTML5Backend}>
-                          {children}
-                          <Modals />
-                        </DndProvider>
-                      </AtlasProvider>
-                    </CommandListProvider>
-                  </ResourceProvider>
+                  {/* TODO refactor <ResourceProvider> */}
+                  <CommandListProvider>
+                    <AtlasProvider>
+                      <DndProvider backend={HTML5Backend}>
+                        {children}
+                        <Modals />
+                      </DndProvider>
+                    </AtlasProvider>
+                  </CommandListProvider>
+                  {/* </ResourceProvider> */}
                   {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}

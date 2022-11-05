@@ -6,7 +6,7 @@ import { getRealms } from '@/lib/realm/getRealms';
 import { RealmListPanel } from './RealmListPanel';
 
 export default async function Page() {
-  const realms = await getRealms(undefined, undefined, 20, undefined);
+  const realms = await getRealms(undefined, { realmId: 'asc' }, 20, undefined);
 
   return (
     <RealmProvider>

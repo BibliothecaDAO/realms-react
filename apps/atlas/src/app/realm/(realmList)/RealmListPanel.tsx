@@ -6,7 +6,7 @@ import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { cache, use, useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { RealmsFilter } from '@/components/filters/RealmsFilter';
 import { SearchFilter } from '@/components/filters/SearchFilter';
@@ -17,6 +17,7 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 
 import type { FragmentType } from '@/gql/fragment-masking';
 import { useFragment } from '@/gql/fragment-masking';
+import { getRealms } from '@/lib/realm/getRealms';
 import { RealmOverviews } from './RealmOverviews';
 
 function useRealmsQueryVariables(
@@ -141,11 +142,14 @@ function useRealmsPanelPagination() {
     goForward,
   };
 }
+const getRealmsData = cache(async (variables) => {
+  return await getRealms(variables);
+});
 
-export const RealmListPanel = (props: { realms? }) => {
+export function RealmListPanel(props: { realms? }) {
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
-  const selectedTabIndex = 0;
+  const selectedTabIndex = 1;
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
@@ -171,6 +175,10 @@ export const RealmListPanel = (props: { realms? }) => {
     pagination.page,
     pagination.limit
   );
+  console.log(variables);
+
+  /* TODO refetch realm data on client */
+  /* const data = use(getRealmsData(variables)); */
 
   /* const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
@@ -245,4 +253,4 @@ export const RealmListPanel = (props: { realms? }) => {
       )}
     </>
   );
-};
+}
