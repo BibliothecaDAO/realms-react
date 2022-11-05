@@ -10,7 +10,7 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 font-display  uppercase hover:text-shadow-[0_2px_10px_#f97316]',
+      base: 'relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 hover:text-shadow-[0_2px_10px_#f97316]',
       active: ' text-orange-700 text-shadow-[0_2px_10px_#f97316]',
       inactive: ' border-transparent text-white/50',
     },

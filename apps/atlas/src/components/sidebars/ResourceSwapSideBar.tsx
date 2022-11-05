@@ -53,17 +53,17 @@ export const ResourceSwapSideBarPanel = (
         label: 'LP',
         component: <LpMerchant />,
       },
-      {
-        label: 'Nexus',
-        component: <Nexus />,
-      },
+      // {
+      //   label: 'Nexus',
+      //   component: <Nexus />,
+      // },
     ],
     []
   );
   return (
     <BaseSideBarPanel onClose={props.onClose}>
       <div>
-        <h2 className="mt-2 mb-4 text-center">Swap</h2>
+        <h2 className="mt-2 mb-4 text-center">Trade</h2>
         {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
           <div className="grid gap-2 sm:grid-cols-2">
             <Button

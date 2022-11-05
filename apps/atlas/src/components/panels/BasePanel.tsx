@@ -21,7 +21,7 @@ export const BasePanel = (props: Props) => {
       style={animation}
     >
       <div
-        className={`h-full overflow-y-scroll w-full relative top-0  bg-gray-1100/90 ${props.style}`}
+        className={`h-full overflow-y-scroll w-full relative  bg-gray-1100/90 ${props.style}`}
       >
         {props.children}
       </div>

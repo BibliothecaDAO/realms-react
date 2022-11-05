@@ -105,15 +105,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             {props.realm?.wonder}
           </div>
         )}
-        <div className="flex justify-between">
-          <div className="flex text-lg font-display">
-            <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '}
-            {starknetId ?? starknetId}
-            {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
-            {!starknetId &&
-              isYourRealm(props.realm, l1Address, address || '') &&
-              isYourRealm(props.realm, l1Address, address || '')}
-          </div>
+        {/* <div className="flex justify-between">
           <div className="flex items-center self-center">
             {!isFavourite(props.realm, favouriteRealms) && (
               <Button
@@ -137,20 +129,27 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </Button>
             )}
           </div>
-        </div>
-        <div className="flex justify-between pt-4">
-          <h2>
-            <span className="opacity-50">{props.realm.realmId}</span> |{' '}
+        </div> */}
+        <div className="flex justify-center pt-4">
+          <h2 className="text-center">
+            {/* <span className="opacity-50">{props.realm.realmId}</span> |{' '} */}
             {props.realm.name}{' '}
           </h2>
           {/* {props.realm.owner && (
             <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
           )} */}
-          <div className="self-center">
+          {/* <div className="self-center">
             <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
-          </div>
+          </div> */}
         </div>
-
+        <div className="flex text-lg justify-center opacity-70 mt-2">
+          {/* <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '} */}
+          {starknetId ?? starknetId}
+          {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
+          {!starknetId &&
+            isYourRealm(props.realm, l1Address, address || '') &&
+            isYourRealm(props.realm, l1Address, address || '')}
+        </div>
         <hr className="mt-3 border border-white/30" />
         {/* <h6>{RealmStatus(props.realm)}</h6> */}
         <Tabs

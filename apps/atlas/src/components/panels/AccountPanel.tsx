@@ -116,13 +116,13 @@ export function AccountPanel() {
   };
 
   return (
-    <BasePanel open={true}>
+    <BasePanel style="pt-10" open={true}>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
         variant="default"
       >
-        <div className="w-full overflow-y-auto border-t pt-14 sm:pt-0 border-white/20">
+        <div className="w-full overflow-y-auto pt-14 sm:pt-0 border-white/20">
           <Tabs.List className="">
             {tabs.map((tab, index) => (
               <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
