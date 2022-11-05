@@ -28,7 +28,7 @@ export const MenuSideBar = () => {
 
   const segment = query.get('segment') || '';
   const isPage = useCallback(
-    (name: string) => name === pathname.slice(1).split('/')[0],
+    (name: string) => name === pathname?.slice(1).split('/')[0],
     [pathname]
   );
   const getPageHref = useCallback(

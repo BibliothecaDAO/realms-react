@@ -8,6 +8,7 @@ import React from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { graphql } from '@/gql/gql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import {
   TraitTable,
@@ -22,6 +23,20 @@ import { RealmImage } from './Image';
 const variantMaps: any = {
   small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
 };
+
+export const RealmOverviewFragment = graphql(/* GraphQL */ `
+  fragment RealmOverview on Realm {
+    rarityRank
+    rarityScore
+    resources {
+      resourceId
+    }
+    traits {
+      type
+      qty
+    }
+  }
+`);
 
 export function RealmOverview(props: RealmsCardProps): ReactElement {
   const router = useRouter();

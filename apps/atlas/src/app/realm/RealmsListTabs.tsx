@@ -17,7 +17,6 @@ type RealmsListTabsProps = {
 const RealmsListTabs: React.FC<RealmsListTabsProps> = (props) => {
   // const [showPlaylist, setShowPlaylist] = useState(props.isMobile);
   const [selectedLayoutSegments] = useSelectedLayoutSegments();
-  console.log(selectedLayoutSegments);
 
   const toolBarItems = [
     {

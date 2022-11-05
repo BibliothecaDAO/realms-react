@@ -16,12 +16,12 @@ import React, {
 import { useAccount as useL1Account } from 'wagmi';
 import {
   RealmHistory,
-  RealmOverview,
   Travel,
   RealmLore,
 } from '@/components/panels/Realms/details';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useRealmContext } from '@/context/RealmContext';
+import { graphql } from '@/gql/gql';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
@@ -33,6 +33,20 @@ import {
 } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
 import type { RealmsCardProps } from '../../../types';
+import { RealmOverview } from './Overview';
+
+export const RealmCardFragment = graphql(/* GraphQL */ `
+  fragment RealmCard on Realm {
+    realmId
+    name
+    orderType
+    wonder
+    owner
+    bridgedOwner
+    ownerL2
+    settledOwner
+  }
+`);
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {

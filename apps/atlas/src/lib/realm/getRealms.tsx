@@ -3,9 +3,10 @@ import { GetRealmsQuery } from '@/gql/graphql';
 import { graphqlClient } from '@/lib/graphql-client';
 
 const getRealmsDocument = graphql(/* GraphQL */ `
-  query getRealms {
-    realms {
-      ...RealmList
+  query getRealms($take: Float) {
+    realms(take: $take) {
+      ...RealmCard
+      ...RealmOverview
     }
   }
 `);
@@ -16,10 +17,9 @@ export async function getRealms(
   take?: number,
   skip?: number
 ) {
+  console.log(take);
   try {
-    const { realms } = await graphqlClient.request(getRealmsDocument);
-    console.log('getting realms');
-    console.log(realms);
+    const { realms } = await graphqlClient.request(getRealmsDocument, { take });
     return realms;
   } catch (e) {
     console.log(e);

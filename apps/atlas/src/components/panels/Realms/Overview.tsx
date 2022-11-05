@@ -27,8 +27,8 @@ import type {
   BuildingFootprint,
   BuildingDetail,
 } from '@/types/index';
+import { RealmImage } from '../../../app/realm/(realmList)/Image';
 import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
-import { RealmImage } from './details/Image';
 
 type Prop = {
   realm?: GetRealmQuery;

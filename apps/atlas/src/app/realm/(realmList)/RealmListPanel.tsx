@@ -17,16 +17,7 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 
 import type { FragmentType } from '@/gql/fragment-masking';
 import { useFragment } from '@/gql/fragment-masking';
-import { graphql } from '@/gql/gql';
 import { RealmOverviews } from './RealmOverviews';
-
-export const RealmListFragment = graphql(/* GraphQL */ `
-  fragment RealmList on Realm {
-    realmId
-    name
-    orderType
-  }
-`);
 
 function useRealmsQueryVariables(
   selectedTabIndex: number,
@@ -151,12 +142,9 @@ function useRealmsPanelPagination() {
   };
 }
 
-export const RealmListPanel = (props: {
-  realms?: Array<FragmentType<typeof RealmListFragment>>;
-}) => {
+export const RealmListPanel = (props: { realms? }) => {
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
-  const realms = useFragment(RealmListFragment, props.realms);
   const selectedTabIndex = 0;
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
@@ -184,7 +172,7 @@ export const RealmListPanel = (props: {
     pagination.limit
   );
 
-  const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
+  /* const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
   });
 
@@ -193,27 +181,28 @@ export const RealmListPanel = (props: {
     else startPolling(5000);
 
     return stopPolling;
-  }, [loading, data]);
+  }, [loading, data]); */
 
   const showPagination = () =>
-    pagination.page > 1 || (data?.realms?.length ?? 0) === pagination.limit;
+    pagination.page > 1 || (props.realms?.length ?? 0) === pagination.limit;
 
-  const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
+  const hasNoResults = () =>
+    /*! loading && */ (props.realms?.length ?? 0) === 0;
   const query = useSearchParams();
   const pathname = usePathname();
   return (
     <>
       <div>
         <RealmsFilter isYourRealms={selectedTabIndex === 0} />
-        {loading && (
+        {/* {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Ouroboros className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
-        )}
+        )} */}
         <RealmOverviews
           key={selectedTabIndex}
-          realms={realms ?? []}
+          realms={props.realms ?? []}
           isYourRealms={selectedTabIndex === 0}
         />
       </div>
@@ -248,7 +237,7 @@ export const RealmListPanel = (props: {
           <Button
             variant="outline"
             onClick={pagination.goForward}
-            disabled={data?.realms?.length !== pagination.limit}
+            disabled={props.realms?.length !== pagination.limit}
           >
             Next
           </Button>

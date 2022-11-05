@@ -1,8 +1,8 @@
 // Import your Client Component
 import { ArtBackground } from '@/components/map/ArtBackground';
 import { BasePanel } from '@/components/panels/BasePanel';
-import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { RealmProvider } from '@/context/RealmContext';
+import { RealmListPanel } from '../RealmListPanel';
 
 /* async function getPosts() {
   const res = await fetch('https://...');
@@ -16,7 +16,7 @@ export default async function Page() {
   // Forward fetched data to your Client Component
   return (
     <RealmProvider>
-      <RealmsPanel /* recentPosts={recentPosts} */ />
+      <RealmListPanel /* recentPosts={recentPosts} */ />
     </RealmProvider>
   );
 }
