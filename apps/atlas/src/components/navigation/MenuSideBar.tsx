@@ -125,8 +125,7 @@ export const MenuSideBar = () => {
       <animated.div
         style={animation}
         id="menuSidebar"
-        className={` sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1  shadow-yellow-100/20 ${
-          showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
+        className={` sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1  shadow-yellow-100/20 
         }`}
       >
         {menus.map((menu) => (

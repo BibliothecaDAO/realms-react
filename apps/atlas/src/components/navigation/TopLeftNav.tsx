@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
@@ -11,7 +12,8 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
+// import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import NetworkConnectButton from '@/components/navigation/NetworkConnectButton';
@@ -24,9 +26,9 @@ import TransactionNavItem from './TransactionNavItem';
 type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export const TopLeftNav = () => {
-  const { lordsBalance } = useResourcesContext();
+  // const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { pathname } = useRouter();
+  const pathname = usePathname();
   const { address } = useAccount();
   const { address: l1Address } = useL1Account();
 
@@ -52,7 +54,7 @@ export const TopLeftNav = () => {
 
   function onLordsNavClick() {
     // Bank swap panel is already open
-    if (pathname.slice(1).split('/')[0] === 'bank') {
+    if (pathname?.slice(1).split('/')[0] === 'bank') {
       return;
     }
     setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
@@ -70,7 +72,7 @@ export const TopLeftNav = () => {
             >
               <Lords className="w-6 fill-current" />{' '}
               <span className="pl-4">
-                {(+formatEther(lordsBalance)).toLocaleString()}
+                {/* TODO add back lords balance(+formatEther(lordsBalance)).toLocaleString() */}
               </span>
             </Button>
           )}

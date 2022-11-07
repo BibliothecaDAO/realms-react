@@ -201,7 +201,7 @@ export function RealmListPanel(props: { realms? }) {
   return (
     <>
       <div>
-        <RealmsFilter isYourRealms={selectedTabIndex === 0} />
+        <RealmsFilter isYourRealms={false /* selectedTabIndex === 0 */} />
         {/* {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
             <Ouroboros className="block w-20 fill-current" />
@@ -211,7 +211,7 @@ export function RealmListPanel(props: { realms? }) {
         <RealmOverviews
           key={selectedTabIndex}
           realms={props.realms ?? []}
-          isYourRealms={selectedTabIndex === 0}
+          isYourRealms={false /* selectedTabIndex === 0 */}
         />
       </div>
 

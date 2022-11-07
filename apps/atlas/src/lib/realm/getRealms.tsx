@@ -19,7 +19,7 @@ const getRealmsDocument = graphql(/* GraphQL */ `
 
 export async function getRealms(variables) {
   try {
-    const { realms } = await graphqlClient.request(
+    const { realms } = await graphqlClient().request(
       getRealmsDocument,
       variables
     );

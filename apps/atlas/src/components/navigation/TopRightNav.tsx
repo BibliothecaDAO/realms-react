@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
@@ -23,9 +24,9 @@ import TransactionNavItem from './TransactionNavItem';
 type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export const TopRightNav = () => {
-  const { lordsBalance } = useResourcesContext();
+  // const { lordsBalance } = useResourcesContext();
   const [soundOn, setSoundOn] = useState(false);
-  const { pathname } = useRouter();
+  // const { pathname } = useRouter();
   const { address } = useAccount();
   const { address: l1Address } = useL1Account();
 
@@ -49,13 +50,13 @@ export const TopRightNav = () => {
     setSelectedSideBar(selectedSideBar === 'transaction' ? '' : 'transaction');
   }
 
-  function onLordsNavClick() {
+  /* function onLordsNavClick() {
     // Bank swap panel is already open
     if (pathname.slice(1).split('/')[0] === 'bank') {
       return;
     }
     setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
-  }
+  } */
 
   return (
     <div className="absolute top-0 right-0 z-40">
