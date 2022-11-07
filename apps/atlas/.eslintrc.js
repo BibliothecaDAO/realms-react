@@ -16,12 +16,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
   },
-  ignorePatterns: [
-    ...getDefaultIgnorePatterns(),
-    '.next',
-    '.out',
-    './gql/**/*.ts',
-  ],
+  ignorePatterns: [...getDefaultIgnorePatterns(), '.next', '.out', 'src/gql/'],
   extends: [
     '@bibliotheca-dao/eslint-config-bases/typescript',
     '@bibliotheca-dao/eslint-config-bases/sonar',
