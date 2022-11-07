@@ -13,7 +13,7 @@ import { Spinner } from '../spinner';
 
 const STYLES = {
   icon: 'rounded-2xl border-gray-600 text-gray-200 ',
-  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out uppercase hover:-translate-y-0.5 paper',
+  base: 'relative inline-flex items-center justify-center tracking-veryWide outline-none select-none text-left outline-none rounded transition duration-150 ease-in-out capitalize hover:-translate-y-0.5 paper',
   active:
     'focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-white',
   disabled: 'disabled:opacity-70 disabled:pointer-events-none',
@@ -121,17 +121,21 @@ export const ButtonOrLink = forwardRef<
         disabled={disabled || loading}
         {...props}
       >
-        {/* {texture && (
+        {variant == 'primary' && (
           <img
-            className={`${
-              isIconButton
-                ? 'rounded-2xl bg-center absolute w-full bg-cover h-full opacity-20'
-                : 'bg-center absolute w-full bg-cover h-full opacity-20'
-            }`}
-            src="/texture-button.png"
+            className={`absolute right-0 h-full px-1 py-0.5`}
+            src="/button_ornament_cap_right.png"
             alt=""
           />
-        )} */}
+        )}
+
+        {variant == 'primary' && (
+          <img
+            className={`absolute left-0 h-full px-1 py-0.5`}
+            src="/button_ornament_cap_left.png"
+            alt=""
+          />
+        )}
 
         {(leftIcon || loading) && (
           <span className="mr-3.5">{loading ? spinner : leftIcon}</span>

@@ -45,7 +45,7 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel onClose={onClose}>
+    <BaseSideBarPanel>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => setSelectedTab(index as number)}

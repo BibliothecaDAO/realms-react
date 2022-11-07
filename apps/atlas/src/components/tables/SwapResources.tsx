@@ -212,11 +212,10 @@ export function SwapResources(): ReactElement {
       balance < calculatedTotalInLords
     );
   }, [
-    tradeType,
     isLordsApprovedForExchange,
-    isResourcesApprovedForExchange,
     lordsBalance,
     calculatedTotalInLords,
+    isSell,
   ]);
 
   const isSellButtonDisabled = useMemo(() => {
@@ -230,11 +229,7 @@ export function SwapResources(): ReactElement {
         (resource) => resource.qty > parseFloat(formatEther(resource.amount))
       ).length !== 0
     );
-  }, [
-    tradeType,
-    isResourcesApprovedForExchange,
-    selectedSwapResourcesWithBalance,
-  ]);
+  }, [isResourcesApprovedForExchange, selectedSwapResourcesWithBalance, isBuy]);
 
   const deadline = () => {
     const maxDate = new Date();
@@ -289,7 +284,6 @@ export function SwapResources(): ReactElement {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
-        <h5>quick add cost</h5>
         <div className="flex">
           <Popover className="relative z-50 mr-4">
             <Popover.Button as="div">
