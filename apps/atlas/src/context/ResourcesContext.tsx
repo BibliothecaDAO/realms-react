@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useAccount, useStarknetCall } from '@starknet-react/core';
 

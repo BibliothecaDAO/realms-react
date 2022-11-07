@@ -1,3 +1,4 @@
+'use client';
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';

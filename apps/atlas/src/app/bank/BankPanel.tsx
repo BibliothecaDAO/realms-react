@@ -1,3 +1,4 @@
+'use client';
 import { Table, Button, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -6,8 +7,12 @@ import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
 import type { ReactElement } from 'react';
 import { resources } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { BasePanel } from './BasePanel';
-
+import type { FragmentType } from '@/gql/fragment-masking';
+import { useFragment } from '@/gql/fragment-masking';
+import { graphql } from '@/gql/gql';
+import type { ExchangeRate24Hr } from '@/gql/graphql';
+import type { HistoricPrices } from '@/types/index';
+import { BasePanel } from '../../components/panels/BasePanel';
 type Row = {
   resource: ReactElement;
   lp_balance: ReactElement;
@@ -16,7 +21,13 @@ type Row = {
   rate: ReactElement;
   action: ReactElement;
 };
-
+export const BankPanelExchangeRatesFragment = graphql(/* GraphQL */ `
+  fragment BankPanelExchangeRates on ExchangeRate24Hr {
+    tokenId
+    amount
+    percentChange24Hr
+  }
+`);
 export const RateChange = (change: number) => {
   const x = (change * 100).toFixed(2);
   return (
@@ -29,7 +40,8 @@ export const RateChange = (change: number) => {
 };
 
 interface BankPanel {
-  onOpenSwap?: () => void;
+  historicPrices?: HistoricPrices;
+  exchangeInfo?: Array<FragmentType<typeof BankPanelExchangeRatesFragment>>;
 }
 
 const accessors = {
@@ -53,15 +65,20 @@ const greenChartTheme = buildChartTheme({
   gridColorDark: 'transparent',
 });
 
-export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
-  const {
-    balance,
-    availableResourceIds,
-    addSelectedSwapResources,
-    historicPrices,
-  } = useResourcesContext();
-
+export function BankPanel({
+  historicPrices,
+  exchangeInfo,
+}: BankPanel): ReactElement {
+  const { balance, availableResourceIds, addSelectedSwapResources } =
+    useResourcesContext();
+  const exchangeRates = useFragment(
+    BankPanelExchangeRatesFragment,
+    exchangeInfo
+  );
   const defaultData: Row[] = resources?.map((resource) => {
+    const exchangeRate = exchangeRates?.find(
+      (rate) => rate.tokenId == resource.id
+    );
     const resourceBalance = balance.find(
       (reBalance) => reBalance.resourceId == resource.id
     );
@@ -91,11 +108,11 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center">
           <span className="text-sm sm:text-lg">
             <span className="flex">
-              {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
+              {(+formatEther(exchangeRate?.amount || 0)).toFixed(4)}
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">
-              {RateChange(resourceBalance?.percentChange || 0)}
+              {RateChange(exchangeRate?.percentChange24Hr || 0)}
             </span>
           </span>
         </div>
@@ -105,7 +122,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           <XYChart
             theme={
               parseFloat(
-                (resourceBalance?.percentChange || 0 * 100).toFixed(2)
+                (exchangeRate?.percentChange24Hr || 0 * 100).toFixed(2)
               ) >= 0
                 ? greenChartTheme
                 : redChartTheme
@@ -168,6 +185,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   const tableOptions = { is_striped: false };
 
   const boxData: Row[] = resources?.map((resource) => {
+    const exchangeRate = exchangeRates?.find(
+      (rate) => rate.tokenId == resource.id
+    );
     const resourceBalance = balance.find(
       (reBalance) => reBalance.resourceId == resource.id
     );
@@ -197,11 +217,11 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center my-2">
           <span className="text-sm sm:text-lg flex">
             <span className="flex">
-              {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
+              {(+formatEther(exchangeRate?.amount || 0)).toFixed(4)}
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm self-center ml-4">
-              {RateChange(resourceBalance?.percentChange || 0)}
+              {RateChange(exchangeRate?.percentChange24Hr || 0)}
             </span>
           </span>
         </div>
@@ -211,7 +231,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
           <XYChart
             theme={
               parseFloat(
-                (resourceBalance?.percentChange || 0 * 100).toFixed(2)
+                (exchangeRate?.percentChange24Hr || 0 * 100).toFixed(2)
               ) >= 0
                 ? greenChartTheme
                 : redChartTheme
@@ -264,7 +284,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   });
 
   return (
-    <BasePanel open={true} style="lg:w-7/12 p-10">
+    <>
       <div className="flex justify-between">
         <div className="w-full p-10 pt-10 bg-black/90">
           {/* <h2 className="w-full">Resource Emporium</h2>
@@ -309,6 +329,6 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             );
           })}
       </div>
-    </BasePanel>
+    </>
   );
 }

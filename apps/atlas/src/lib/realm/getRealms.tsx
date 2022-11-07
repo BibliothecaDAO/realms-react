@@ -1,5 +1,4 @@
 import { graphql } from '@/gql/gql';
-import { GetRealmsQuery } from '@/gql/graphql';
 import { graphqlClient } from '@/lib/graphql-client';
 
 const getRealmsDocument = graphql(/* GraphQL */ `
