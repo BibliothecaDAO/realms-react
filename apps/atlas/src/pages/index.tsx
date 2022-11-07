@@ -93,7 +93,7 @@ function MapModule() {
         getPosition: (d: any) => d.xy,
         getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
         getElevation: 10000,
-        lineWidthMinPixels: 1,
+        lineWidthMinPixels: 2,
         getFillColor: [0, 0, 0, 0],
         updateTriggers: {
           getRadius: parseInt(selectedId),
@@ -103,7 +103,7 @@ function MapModule() {
           mapContext.navigateToAsset(info.object.id, assetType);
         },
       }),
-    [mapContext.viewState]
+    [mapContext, selectedId]
   );
 
   const userRealmsFormatted = userRealms?.realms.map((a) => {
@@ -135,7 +135,7 @@ function MapModule() {
       getTargetPosition: (d: any) => d.target,
       getSourceColor: [255, 255, 204],
       getTargetColor: [255, 255, 204],
-      getWidth: 2,
+      getWidth: 8,
     });
   }, [travelContext.travelArcs]);
 
@@ -148,7 +148,7 @@ function MapModule() {
     ];
 
     return [...assets, arcsLayer, ownRealms];
-  }, [arcsLayer, mapContext.viewState]);
+  }, [arcsLayer, createScatterPlot, ownRealms]);
 
   return (
     <>
@@ -175,14 +175,14 @@ function MapModule() {
         )}
 
         <Map
-          // projection={'globe'}
+          projection={'globe'}
           attributionControl={false}
           onLoad={() => mapContext.setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
         />
       </DeckGL>
-      <Popover className="absolute z-30 bottom-10 left-2">
+      <Popover className="absolute z-30 bottom-10 right-20">
         <Popover.Button as="div">
           <Button
             size="lg"
@@ -201,7 +201,10 @@ function MapModule() {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Popover.Panel className="absolute w-full md:w-96 bottom-14" static>
+          <Popover.Panel
+            className="absolute w-full md:w-96 -left-96 bottom-16"
+            static
+          >
             <ChatComponent channelName="desiege-chat" />
           </Popover.Panel>
         </Transition>
@@ -209,3 +212,7 @@ function MapModule() {
     </>
   );
 }
+
+export const HoverCard = ({ name }) => {
+  return <div>{name}</div>;
+};

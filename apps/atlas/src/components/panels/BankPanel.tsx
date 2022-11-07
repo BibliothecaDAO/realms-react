@@ -173,41 +173,41 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     );
     return {
       resource: (
-        <div className="p-2">
-          <div className="flex sm:text-xl w-full justify-center">
-            <ResourceIcon
-              className="self-center w-4"
-              resource={resource?.trait?.replace(' ', '') || ''}
-              size="md"
-            />
-            <div className="flex p-2 ml-1 text-2xl">
-              <span className="self-center">
-                {resource?.trait}
-                {/* <span className="block w-full tracking-widest uppercase sm:flex text-stone-400/60">
-                  {(+formatEther(
-                    resourceBalance?.amount || 0
-                  )).toLocaleString()}
-                </span> */}
+        <div className="flex sm:text-xl py-2 px-1">
+          <ResourceIcon
+            className="self-center w-4"
+            resource={resource?.trait?.replace(' ', '') || ''}
+            size="md"
+          />
+          <div className="flex p-2 ml-1">
+            <span className="self-center">
+              {resource?.trait}
+              <span className="block w-full tracking-widest uppercase sm:flex text-stone-400/70  text-lg">
+                {(+formatEther(resourceBalance?.amount || 0)).toLocaleString()}
               </span>
-            </div>
+            </span>
           </div>
         </div>
       ),
       rate: (
-        <div className="flex justify-center my-2">
-          <span className="text-sm sm:text-lg flex">
+        <div className="flex justify-center my-2 px-1">
+          <span className="text-sm sm:text-lg flex flex-col">
             <span className="flex">
               {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
               <Lords className="w-4 ml-1 text-white opacity-50" />
-            </span>
-            <span className="w-full text-xs sm:text-sm self-center ml-4">
-              {RateChange(resourceBalance?.percentChange || 0)}
             </span>
           </span>
         </div>
       ),
       chart: (
-        <div className="flex justify-center">
+        <div className="flex justify-center relative">
+          <span className="w-full text-xs sm:text-sm self-center absolute bottom-0 left-0 p-1">
+            {RateChange(resourceBalance?.percentChange || 0)}
+          </span>
+          <span className="flex  absolute bottom-0 right-0 p-1">
+            {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
+            <Lords className="w-4 ml-1 text-white" />
+          </span>
           <XYChart
             theme={
               parseFloat(
@@ -231,7 +231,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               }
               xAccessor={accessors.xAccessor}
               yAccessor={accessors.yAccessor}
-              fillOpacity={0.01}
+              fillOpacity={0.1}
             />
           </XYChart>
         </div>
@@ -256,7 +256,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             }}
             disabled={!availableResourceIds.includes(resource.id)}
           >
-            {availableResourceIds.includes(resource.id) ? 'add' : 'added'}{' '}
+            {availableResourceIds.includes(resource.id) ? '+' : '-'}{' '}
           </Button>
         </div>
       ),
@@ -299,12 +299,17 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
                 className="p-2 card border border-yellow-600/20 rounded bg-black"
                 key={index}
               >
-                {data.resource}
-                {data.rate}
+                <div className="flex justify-between">
+                  {data.resource}
+                  <div>
+                    {/* {data.rate} */}
+
+                    {data.action}
+                  </div>
+                </div>
 
                 {data.chart}
                 {/* {data.lp_balance} */}
-                {data.action}
               </div>
             );
           })}
