@@ -68,14 +68,6 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
 
   return (
     <div>
-      <h3>Your realms</h3>
-      <Button
-        onClick={() => setTravelArcs(realm.realmId, ids)}
-        variant="primary"
-        size="xs"
-      >
-        show travel distance to realms
-      </Button>
       <div className="relative mt-4 overflow-x-auto">
         {userRealms?.realms && (
           <Table
@@ -84,6 +76,15 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
             options={tableOptions}
           />
         )}
+      </div>
+      <div className="mt-2">
+        <Button
+          onClick={() => setTravelArcs(realm.realmId, ids)}
+          variant="primary"
+          size="xs"
+        >
+          travel distance to realms
+        </Button>
       </div>
     </div>
   );

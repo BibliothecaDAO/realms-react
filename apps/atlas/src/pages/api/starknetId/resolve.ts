@@ -20,6 +20,10 @@ export default async function handler(req: NextRequest) {
 
       return new NextResponse(response.body, {
         status: response.status,
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Cache-Control': 's-maxage=86400, stale-while-revalidate',
+        },
       });
     } else {
       return NextResponse.json({ error: 'address not defined' });

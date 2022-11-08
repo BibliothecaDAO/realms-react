@@ -42,7 +42,7 @@ const NetworkConnectButton = () => {
   return (
     <Popover className="relative">
       <Popover.Button as="div">
-        <Button variant="primary" className="font-display">
+        <div className="px-4 py-2">
           {' '}
           <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
           {starknetId ?? starknetId}
@@ -50,7 +50,7 @@ const NetworkConnectButton = () => {
             ? removeHexPrefix(shortenAddressWidth(address, 4))
             : ''}
           {!address && 'Connect'}
-        </Button>{' '}
+        </div>{' '}
       </Popover.Button>
       <Transition
         enter="transition duration-100 ease-out"
@@ -89,6 +89,7 @@ const NetworkConnectButton = () => {
                 variant="outline"
                 className="w-full text-xs normal-case "
                 onClick={disconnect}
+                size="xs"
               >
                 {getConnectorLogo(connector.id())}
                 {shortenAddressWidth(address, 4)}X

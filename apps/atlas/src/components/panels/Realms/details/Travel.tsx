@@ -33,7 +33,7 @@ export const Travel = ({ realm }: Prop) => {
         component: <ArmiesTravel realm={realm} userRealms={userRealms} />,
       },
     ],
-    [realm?.realmId, userRealms]
+    [userRealms, realm]
   );
   return (
     <div>

@@ -55,21 +55,16 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
   return (
     <div>
       {loading && (
-        <div className="grid grid-cols-12 gap-6 py-4">
-          <Card className="">
-            <CardBody className="text-center">
-              <Castle className="block w-20 mx-auto fill-current" />
-              <div className="text-4xl">Loading...</div>
-            </CardBody>
-          </Card>
+        <div className="grid grid-cols-1">
+          <div className="text-xl">Loading...</div>
         </div>
       )}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3">
         <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
       </div>
 
       {hasNoResults() && (
-        <div className="grid grid-cols-12 gap-6 py-4">
+        <div className="grid grid-cols-12">
           <Card className="col-span-12">
             <CardTitle>No Lore for {realmName} has written yet!</CardTitle>
             <CardBody>
@@ -77,11 +72,11 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
               <div className="mt-2">
                 <Button
                   href="/lore"
-                  size="lg"
+                  size="sm"
                   className="w-full"
                   variant={'primary'}
                 >
-                  Start writing Lore for {realmName}
+                  start writing
                 </Button>
               </div>
             </CardBody>

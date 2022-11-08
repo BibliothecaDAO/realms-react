@@ -10,9 +10,9 @@ import { BasePanel } from './BasePanel';
 
 type Row = {
   resource: ReactElement;
-  // balance: string;
+  lp_balance: ReactElement;
   // output: number;
-  // change: ReactElement;
+  chart: ReactElement;
   rate: ReactElement;
   action: ReactElement;
 };
@@ -167,19 +167,112 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   ];
   const tableOptions = { is_striped: false };
 
+  const boxData: Row[] = resources?.map((resource) => {
+    const resourceBalance = balance.find(
+      (reBalance) => reBalance.resourceId == resource.id
+    );
+    return {
+      resource: (
+        <div className="flex sm:text-xl py-2 px-1">
+          <ResourceIcon
+            className="self-center w-4"
+            resource={resource?.trait?.replace(' ', '') || ''}
+            size="md"
+          />
+          <div className="flex p-2 ml-1">
+            <span className="self-center">
+              {resource?.trait}
+              <span className="block w-full tracking-widest uppercase sm:flex text-stone-400/70  text-lg">
+                {(+formatEther(resourceBalance?.amount || 0)).toLocaleString()}
+              </span>
+            </span>
+          </div>
+        </div>
+      ),
+      rate: (
+        <div className="flex justify-center my-2 px-1">
+          <span className="text-sm sm:text-lg flex flex-col">
+            <span className="flex">
+              {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
+              <Lords className="w-4 ml-1 text-white opacity-50" />
+            </span>
+          </span>
+        </div>
+      ),
+      chart: (
+        <div className="flex justify-center relative">
+          <span className="w-full text-xs sm:text-sm self-center absolute bottom-0 left-0 p-1">
+            {RateChange(resourceBalance?.percentChange || 0)}
+          </span>
+          <span className="flex  absolute bottom-0 right-0 p-1">
+            {(+formatEther(resourceBalance?.rate || 0)).toFixed(4)}
+            <Lords className="w-4 ml-1 text-white" />
+          </span>
+          <XYChart
+            theme={
+              parseFloat(
+                (resourceBalance?.percentChange || 0 * 100).toFixed(2)
+              ) >= 0
+                ? greenChartTheme
+                : redChartTheme
+            }
+            margin={{ top: 2, left: 2, bottom: 2, right: 2 }}
+            height={50}
+            width={250}
+            xScale={{ type: 'band' }}
+            yScale={{ type: 'linear' }}
+          >
+            <AreaSeries
+              dataKey="resourceChart"
+              data={
+                historicPrices && historicPrices[resource.id]
+                  ? historicPrices[resource.id]
+                  : []
+              }
+              xAccessor={accessors.xAccessor}
+              yAccessor={accessors.yAccessor}
+              fillOpacity={0.1}
+            />
+          </XYChart>
+        </div>
+      ),
+      lp_balance: (
+        <span className="text-xs uppercase sm:text-lg">
+          {(+formatEther(resourceBalance?.lp || 0)).toLocaleString()} <br />
+          {/* <span className="text-xs sm:text-sm text-stone-500">
+            LORDS: {(+formatEther(resource.currencyAmount)).toLocaleString()}
+            <br />
+            Token: {(+formatEther(resource.tokenAmount)).toLocaleString()}
+          </span> */}
+        </span>
+      ),
+      action: (
+        <div className="w-full flex justify-center">
+          <Button
+            variant="primary"
+            size="xs"
+            onClick={() => {
+              addSelectedSwapResources(resource.id);
+            }}
+            disabled={!availableResourceIds.includes(resource.id)}
+          >
+            {availableResourceIds.includes(resource.id) ? '+' : '-'}{' '}
+          </Button>
+        </div>
+      ),
+    };
+  });
+
   return (
-    <BasePanel open={true} style="lg:w-7/12">
+    <BasePanel open={true} style="lg:w-7/12 p-10">
       <div className="flex justify-between">
         <div className="w-full p-10 pt-10 bg-black/90">
-          <h2 className="w-full">Resource Emporium</h2>
+          {/* <h2 className="w-full">Resource Emporium</h2>
           <p className="mt-4 sm:text-2xl">
             Trade your resources with the merchant. You can also provide
             liquidity to the merchant.
-          </p>
-          {/* <h4 className="p-2 my-4 text-center rounded shadow-inner bg-white/20">
-            Your Lords Balance: {(+formatEther(lordsBalance)).toFixed(2)}
-          </h4> */}
-          <div className="flex">
+          </p> */}
+          {/* <div className="flex">
             <Button
               variant="secondary"
               size="xs"
@@ -190,13 +283,36 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
             >
               <ChevronRight />
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="relative overflow-x-auto">
+      {/* <div className="relative overflow-x-auto">
         {balance && (
           <Table columns={columns} data={defaultData} options={tableOptions} />
         )}
+      </div> */}
+      <div className="grid grid-cols-3 gap-2">
+        {balance &&
+          boxData.map((data, index) => {
+            return (
+              <div
+                className="p-2 card border border-yellow-600/20 rounded bg-black"
+                key={index}
+              >
+                <div className="flex justify-between">
+                  {data.resource}
+                  <div>
+                    {/* {data.rate} */}
+
+                    {data.action}
+                  </div>
+                </div>
+
+                {data.chart}
+                {/* {data.lp_balance} */}
+              </div>
+            );
+          })}
       </div>
     </BasePanel>
   );

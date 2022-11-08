@@ -10,7 +10,7 @@ import { TabProvider } from './tab-provider';
 export const VARIANTS = {
   default: {
     tab: {
-      base: ' relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 font-display  uppercase hover:text-shadow-[0_2px_10px_#f97316]',
+      base: 'relative inline-flex items-center px-2 sm:px-4 pb-2 pt-4 text-xs sm:text-lg md:text-md  transition-all duration-150 hover:text-shadow-[0_2px_10px_#f97316]',
       active: ' text-orange-700 text-shadow-[0_2px_10px_#f97316]',
       inactive: ' border-transparent text-white/50',
     },
@@ -19,6 +19,14 @@ export const VARIANTS = {
   primary: {
     tab: {
       base: 'relative flex w-full items-center justify-center px-4 py-2 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 text-shadow-[0_2px_6px_#6366f1] hover:bg-gradient-to-r hover:from-red-800 hover:to-red-900 hover:text-yellow-100',
+      active: 'bg-gradient-to-r from-red-800 to-red-900 text-yellow-100',
+      inactive: 'bg-transparent text-gray-200',
+    },
+    tabList: 'flex py-2 space-x-2',
+  },
+  small: {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-2 py-2 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 text-shadow-[0_2px_6px_#6366f1] hover:bg-gradient-to-r hover:from-red-800 hover:to-red-900 hover:text-yellow-100',
       active: 'bg-gradient-to-r from-red-800 to-red-900 text-yellow-100',
       inactive: 'bg-transparent text-gray-200',
     },
