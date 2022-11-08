@@ -175,7 +175,7 @@ function MapModule() {
         )}
 
         <Map
-          projection={'globe'}
+          // projection={'globe'}
           attributionControl={false}
           onLoad={() => mapContext.setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}

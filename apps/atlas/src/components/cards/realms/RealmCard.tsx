@@ -3,8 +3,10 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
 import React, {
@@ -19,9 +21,15 @@ import {
   RealmOverview,
   Travel,
   RealmLore,
+  RealmsFood,
+  RealmsArmy,
 } from '@/components/panels/Realms/details';
+import { RealmImage } from '@/components/panels/Realms/details/Image';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useRealmContext } from '@/context/RealmContext';
+import type { GetRealmQuery, Realm } from '@/generated/graphql';
+import useBuildings from '@/hooks/settling/useBuildings';
+import useFood from '@/hooks/settling/useFood';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
@@ -43,16 +51,31 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
+
     const ensData = useEnsResolver(props.realm?.owner as string);
+
+    const {
+      buildings,
+      buildingUtilisation,
+      loading: loadingBuildings,
+    } = useBuildings(props.realm as Realm);
+
+    const {
+      realmFoodDetails,
+      availableFood,
+      loading: loadingFood,
+    } = useFood(props.realm as Realm);
+
+    console.log(props.realm);
 
     const tabs = useMemo(
       () => [
+        // {
+        //   label: <Castle className="self-center w-5 h-5 fill-current" />,
+        //   component: <RealmOverview {...props} />,
+        // },
         {
-          label: <Castle className="self-center w-6 h-6 fill-current" />,
-          component: <RealmOverview {...props} />,
-        },
-        {
-          label: <Sickle className="self-center w-6 h-6 fill-current" />,
+          label: <Castle className="self-center w-5 h-5 fill-current" />,
           component: (
             <RealmResources
               showRaidable
@@ -63,15 +86,31 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
         {
-          label: <Globe className="self-center w-6 h-6 fill-current" />,
+          label: <Sword className="self-center w-5 h-5 fill-current" />,
+          component: <RealmsArmy buildings={buildings} realm={props.realm} />,
+        },
+        {
+          label: <Sickle className="self-center w-5 h-5  fill-current" />,
+          component: (
+            <RealmsFood
+              realmFoodDetails={realmFoodDetails}
+              availableFood={availableFood}
+              buildings={buildings}
+              realm={props.realm}
+              loading={false}
+            />
+          ),
+        },
+        {
+          label: <Globe className="self-center w-5 h-5 fill-current" />,
           component: <Travel realm={props.realm} />,
         },
         {
-          label: <Scroll className="self-center w-6 h-6 fill-current" />,
+          label: <Scroll className="self-center w-5 h-5  fill-current" />,
           component: <RealmHistory realmId={props.realm.realmId} />,
         },
         {
-          label: <Library className="self-center w-6 h-6 fill-current" />,
+          label: <Library className="self-center w-5 h-5  fill-current" />,
           component: (
             <RealmLore
               realmName={props.realm.name || ''}
@@ -80,7 +119,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
       ],
-      [props.realm?.realmId]
+      [props.loading, props.realm]
     );
 
     const [selectedTab, setSelectedTab] = useState(0);
@@ -105,57 +144,77 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             {props.realm?.wonder}
           </div>
         )}
-        {/* <div className="flex justify-between">
-          <div className="flex items-center self-center">
-            {!isFavourite(props.realm, favouriteRealms) && (
-              <Button
-                size="xs"
-                variant="unstyled"
-                onClick={() => actions.addFavouriteRealm(props.realm.realmId)}
-              >
-                <HeartIcon className="w-6 fill-black stroke-white/50 hover:fill-current" />
-              </Button>
-            )}{' '}
-            {isFavourite(props.realm, favouriteRealms) && (
-              <Button
-                size="xs"
-                variant="unstyled"
-                className="w-full"
-                onClick={() =>
-                  actions.removeFavouriteRealm(props.realm.realmId)
-                }
-              >
-                <HeartIcon className="w-6" />
-              </Button>
-            )}
+
+        <div className="flex pb-2">
+          {/* <RealmImage id={props.realm.realmId} /> */}
+          <div>
+            <div className="self-center flex ">
+              <OrderIcon
+                size="sm"
+                order={props.realm.orderType.toLowerCase()}
+              />
+              <h3 className="text-center self-center ml-2">
+                {props.realm.name}{' '}
+              </h3>
+            </div>
+            <div className="flex">
+              <div className="flex">
+                {!isFavourite(props.realm, favouriteRealms) && (
+                  <Button
+                    size="xs"
+                    variant="unstyled"
+                    onClick={() =>
+                      actions.addFavouriteRealm(props.realm.realmId)
+                    }
+                  >
+                    <HeartIcon className="w-5 fill-black stroke-white/50 hover:fill-current" />
+                  </Button>
+                )}{' '}
+                {isFavourite(props.realm, favouriteRealms) && (
+                  <Button
+                    size="xs"
+                    variant="unstyled"
+                    className="w-full"
+                    onClick={() =>
+                      actions.removeFavouriteRealm(props.realm.realmId)
+                    }
+                  >
+                    <HeartIcon className="w-5" />
+                  </Button>
+                )}
+              </div>
+              <span className=" ml-2 self-center">{props.realm.realmId}</span>
+            </div>
           </div>
-        </div> */}
-        <div className="flex justify-center pt-4">
-          <h2 className="text-center">
-            {/* <span className="opacity-50">{props.realm.realmId}</span> |{' '} */}
-            {props.realm.name}{' '}
-          </h2>
+
+          <div className=" text-lg justify-center ml-auto">
+            <div className="text-right">
+              {starknetId ?? starknetId}
+              {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
+              {!starknetId &&
+                isYourRealm(props.realm, l1Address, address || '') &&
+                isYourRealm(props.realm, l1Address, address || '')}
+            </div>{' '}
+            <div className="flex justify-end">
+              <span className="mr-3">{props.realm.relicsOwned?.length}</span>{' '}
+              <Relic className={` w-3 fill-yellow-500`} />{' '}
+            </div>
+          </div>
           {/* {props.realm.owner && (
             <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
           )} */}
-          {/* <div className="self-center">
-            <OrderIcon size="md" order={props.realm.orderType.toLowerCase()} />
-          </div> */}
         </div>
-        <div className="flex text-lg justify-center opacity-70 mt-2">
-          {/* <Crown className="self-center w-5 h-5 mr-4 fill-white" />{' '} */}
-          {starknetId ?? starknetId}
-          {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
-          {!starknetId &&
-            isYourRealm(props.realm, l1Address, address || '') &&
-            isYourRealm(props.realm, l1Address, address || '')}
-        </div>
-        <hr className="mt-3 border border-white/30" />
+        {/* <div className="my-2 w-full flex">
+          <Button size="xs" variant="primary" className="w-full">
+            raid - 4 days of vault
+          </Button>
+        </div> */}
+
         {/* <h6>{RealmStatus(props.realm)}</h6> */}
         <Tabs
           selectedIndex={selectedTab}
           onChange={(index) => pressedTab(index as number)}
-          variant="default"
+          variant="small"
         >
           <Tabs.List className="">
             {tabs.map((tab, index) => (

@@ -33,8 +33,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
 
   return (
     <>
-      <RealmImage id={props.realm.realmId} />
-      <div className="flex flex-col justify-between py-2 mt-auto uppercase rounded shadow-inner sm:flex-row font-display">
+      {/* <div className="flex flex-col justify-between py-2 mt-auto uppercase rounded shadow-inner sm:flex-row font-display">
         <span>
           Rank:
           <span className="">{props.realm.rarityRank}</span>
@@ -43,28 +42,25 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           Score:
           <span className="">{props.realm.rarityScore}</span>
         </span>
-      </div>
-      <div className="flex flex-wrap py-2 mb-2 border-t border-b font-display border-white/30">
+      </div> */}
+      <div className="flex flex-wrap">
         {props.realm.resources?.map((re, index) => (
-          <div
-            key={index}
-            className="z-10 flex px-2 mb-1 mr-4 text-lg uppercase rounded bg-gray-1000"
-          >
+          <div key={index} className="flex p-2 flex-col justify-center">
             <ResourceIcon
               resource={
                 findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
               }
-              size="xs"
+              size="sm"
             />
 
-            <span className="self-center ml-2">
+            <span className="self-center mt-2">
               {findResourceById(re.resourceId)?.trait}
             </span>
           </div>
         ))}
       </div>
 
-      <div
+      {/* <div
         className={
           `grid grid-cols-2 gap-4  w-full uppercase font-display ` +
           (props.size ? variantMaps[props.size]?.regions : '')
@@ -83,7 +79,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           trait="River"
           traitAmount={getTrait(props.realm, 'River')}
         />
-      </div>
+      </div> */}
       <div className="w-full pt-4 bg-black shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
@@ -117,7 +113,7 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
               )}
             </div>
           )}
-          <div className="w-full">
+          {/* <div className="w-full">
             <Button
               onClick={() => {
                 router.push(
@@ -134,8 +130,8 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
                 ? 'manage'
                 : 'details'}
             </Button>
-          </div>
-          <div className="flex self-center space-x-2">
+          </div> */}
+          {/* <div className="flex self-center space-x-2">
             <div>
               <Button
                 onClick={() => {
@@ -148,13 +144,13 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
                 fly
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <MarketplaceByPanel
+      {/* <MarketplaceByPanel
         id={props.realm.realmId.toString()}
         address={ModuleAddr.StakedRealms}
-      />
+      /> */}
       {/* <DownloadAssets id={props.realm.realmId}></DownloadAssets> */}
     </>
   );

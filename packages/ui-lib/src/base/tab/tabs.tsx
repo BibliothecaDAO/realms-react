@@ -24,6 +24,14 @@ export const VARIANTS = {
     },
     tabList: 'flex py-2 space-x-2',
   },
+  small: {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-2 py-2 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 text-shadow-[0_2px_6px_#6366f1] hover:bg-gradient-to-r hover:from-red-800 hover:to-red-900 hover:text-yellow-100',
+      active: 'bg-gradient-to-r from-red-800 to-red-900 text-yellow-100',
+      inactive: 'bg-transparent text-gray-200',
+    },
+    tabList: 'flex py-2 space-x-2',
+  },
 };
 
 export interface TabsProps {

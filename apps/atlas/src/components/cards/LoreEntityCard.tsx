@@ -26,7 +26,6 @@ export function LoreEntityCard(props: LoreEntitiesProps) {
       onKeyUp={() => ({})}
       tabIndex={0}
       onClick={() => {
-        console.log('asdasd');
         openModal('lore-entity', { id: entity.id });
       }}
     >

@@ -110,7 +110,9 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
             <span className="self-center tracking-widest uppercase">
               {re.resourceName || ''} <br />{' '}
               {RateChange(getRateChange(re.resourceId))}{' '}
-              <span className="text-xs ">[{getRate(re.resourceId)}]</span>
+              <span className="text-xs opacity-60 ">
+                [{getRate(re.resourceId)}]
+              </span>
             </span>
           </span>
         ),
@@ -174,24 +176,19 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <div className="w-full font-display ">
-      <div className="flex justify-around flex-grow w-full p-4 text-center">
-        <div className="w-full sm:w-1/2">
-          <h6>work days</h6>
-          <div className="mt-3 sm:text-5xl">
-            {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
-            <span className="opacity-50"> / 3</span>
-          </div>{' '}
+    <div className="w-full ">
+      <div className="flex w-full">
+        <div className="w-full">
+          <div className='flex'>
+          <h4> Claimable Days: {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}<span className="opacity-50"> / 3</span></h4>
           {days != MAX_DAYS_ACCURED && (
-            <div className="flex justify-between px-3 uppercase">
+            <div className="flex justify-between px-3 uppercase self-center">
               <CountdownTimer date={cachedDaysRemained.toString()} />
             </div>
           )}
-        </div>
-        <div className="border-r-4 border-double border-white/30"></div>
-        <div className="w-full sm:w-1/2">
-          <h6>vault days</h6>
-          <div className="mt-3 sm:text-5xl">{cachedVaultDaysAccrued}</div>{' '}
+          </div>
+
+          <h4>Vault: {vault?.[0]} units</h4>
         </div>
       </div>
       {props.header}
