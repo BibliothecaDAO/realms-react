@@ -1,3 +1,4 @@
+'use client';
 import { Table, Button, Switch } from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
 import { useState } from 'react';

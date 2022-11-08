@@ -1,8 +1,8 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { OrdersFilter } from '@/components/filters/OrdersFilter';
-import { RealmsRarityFilter } from '@/components/filters/RealmsRarityFilter';
-import { ResourcesFilter } from '@/components/filters/ResourcesFilter';
-import { TraitsFilter } from '@/components/filters/TraitsFilter';
+import { OrdersFilter } from '@/app/components/filters/OrdersFilter';
+import { RealmsRarityFilter } from '@/app/components/filters/RealmsRarityFilter';
+import { ResourcesFilter } from '@/app/components/filters/ResourcesFilter';
+import { TraitsFilter } from '@/app/components/filters/TraitsFilter';
 import { useRealmContext } from '@/context/RealmContext';
 import { BaseFilter } from './BaseFilter';
 

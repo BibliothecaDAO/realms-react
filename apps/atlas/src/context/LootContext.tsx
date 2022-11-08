@@ -1,3 +1,5 @@
+'use client';
+
 import type { Dispatch } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import type { OrderType } from '@/generated/graphql';

@@ -84,7 +84,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = (props) => {
       hotkey: HotKeys.Overview,
       title: 'Overview',
       icon: <Castle className="self-center w-6 h-6 fill-current" />,
-      tabName: 'Overview',
+      tabName: 'overview',
     },
     {
       hotkey: HotKeys.Army,
@@ -92,20 +92,20 @@ const NavigationTabs: React.FC<NavigationTabsProps> = (props) => {
       icon: (
         <Helm className="self-center w-6 h-6 fill-current stroke-current" />
       ),
-      tabName: 'Army',
+      tabName: 'military',
     },
 
     {
       hotkey: HotKeys.Resources,
       title: 'Resources',
       icon: <Lords className="self-center w-6 h-6 fill-current" />,
-      tabName: 'Resources',
+      tabName: 'resources',
     },
     {
       hotkey: HotKeys.Resources,
       title: 'Farming',
       icon: <Sickle className="self-center w-6 h-6 fill-current" />,
-      tabName: 'Food',
+      tabName: 'farming',
     },
     {
       hotkey: HotKeys.History,
@@ -113,7 +113,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = (props) => {
       icon: (
         <Scroll className="self-center w-6 h-6 fill-current stroke-current" />
       ),
-      tabName: 'History',
+      tabName: 'history',
     },
     {
       hotkey: HotKeys.Lore,
@@ -121,7 +121,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = (props) => {
       icon: (
         <Scroll className="self-center w-6 h-6 fill-current stroke-current" />
       ),
-      tabName: 'Lore',
+      tabName: 'lore',
     },
   ];
 

@@ -1,8 +1,12 @@
 overwrite: true
-schema: 'https://dev-indexer-gu226.ondigitalocean.app/graphql'
 documents: ['src/lib/**/*.tsx', 'src/app/**/*.tsx', '!src/gql/**/*']
 ignoreNoDocuments: true,
 generates:
   src/gql/:
+    schema: 'https://dev-indexer-gu226.ondigitalocean.app/graphql'
     preset: 'client'
     plugins: []
+  # src/subgraph-gql/:
+  #   schema: 'https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/loot-ecosystem'
+  #   preset: 'client'
+  #   plugins: []

@@ -1,6 +1,6 @@
 // Import your Client Component
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { BasePanel } from '@/components/panels/BasePanel';
 import { RealmsPanel } from '@/components/panels/RealmsPanel';
 import { RealmProvider } from '@/context/RealmContext';
 import { getRealm } from '@/lib/realm/getRealm';

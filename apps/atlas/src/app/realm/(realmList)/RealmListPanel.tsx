@@ -8,15 +8,14 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { cache, use, useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
-import { RealmsFilter } from '@/components/filters/RealmsFilter';
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { RealmsFilter } from '@/app/components/filters/RealmsFilter';
+import { SearchFilter } from '@/app/components/filters/SearchFilter';
 import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
 import type { FragmentType } from '@/gql/fragment-masking';
-import { useFragment } from '@/gql/fragment-masking';
 import { getRealms } from '@/lib/realm/getRealms';
 import { RealmOverviews } from './RealmOverviews';
 

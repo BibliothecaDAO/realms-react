@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { useGetRealmQuery } from '@/generated/graphql';
-
-import { BasePanel } from './BasePanel';
 
 export function NoticeBoard(): ReactElement {
   const { data } = useGetRealmQuery({

@@ -1,20 +1,21 @@
+'use client';
+
 import { useQuery } from '@apollo/client';
 import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
-import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-
+import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
-import { LootFilters } from '@/components/filters/LootFilters';
-import { LootOverviews } from '@/components/tables/LootOverviews';
-import { useLootContext } from '@/context/LootContext';
-import { getLootsQuery } from '@/hooks/graphql/queries';
-import type { Loot } from '@/types/index';
-import { BasePanel } from './BasePanel';
-import { PanelHeading } from './PanelComponents/PanelHeading';
+import { GaFilters } from '@/app/components/filters/GaFilters';
+import { BasePanel } from '@/app/components/ui/BasePanel';
+import { PanelHeading } from '@/app/components/ui/PanelHeading';
+import { GaOverviews } from '@/components/tables/GaOverviews';
+import { useGaContext } from '@/context/GaContext';
+import { getGAsQuery } from '@/hooks/graphql/queries';
+import type { GAdventurer } from '@/types/index';
 
-export const LootPanel = () => {
+export const GaPanel = () => {
   const { address: l1Address } = useL1Account();
-  const { state, actions } = useLootContext();
+  const { state, actions } = useGaContext();
 
   const limit = 50;
   const [page, setPage] = useState(1);
@@ -23,7 +24,8 @@ export const LootPanel = () => {
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   const queryDependencies = [
-    state.favouriteLoot,
+    state.favouriteGa,
+    state.selectedOrders,
     state.searchIdFilter,
     state.ratingFilter.bagGreatness,
     state.ratingFilter.bagRating,
@@ -33,15 +35,15 @@ export const LootPanel = () => {
     setPage(1);
   }, [...queryDependencies]);
 
-  const isLootPanel = true;
-  const tabs = ['Your Loot', 'All Loot', 'Favourite Loot'];
+  const isGaPanel = true;
+  const tabs = ['Your GA', 'All GA', 'Favourite GA'];
 
   const variables = useMemo(() => {
     const where: any = {};
     if (state.searchIdFilter) {
       where.id = state.searchIdFilter;
     } else if (state.selectedTab === 2) {
-      where.id_in = [...state.favouriteLoot];
+      where.id_in = [...state.favouriteGa];
     }
 
     if (state.selectedTab === 0) {
@@ -52,6 +54,12 @@ export const LootPanel = () => {
     where.bagRating_gte = state.ratingFilter.bagRating.min;
     where.bagRating_lte = state.ratingFilter.bagRating.max;
 
+    if (state.selectedOrders.length > 0) {
+      where.order_in = [
+        ...state.selectedOrders.map((orderType) => orderType.replace('_', ' ')),
+      ];
+    }
+
     return {
       first: limit,
       skip: limit * (page - 1),
@@ -61,25 +69,27 @@ export const LootPanel = () => {
     };
   }, [l1Address, page, ...queryDependencies]);
 
-  const { loading, data } = useQuery<{ bags: Loot[] }>(getLootsQuery, {
+  const { loading, data } = useQuery<{
+    gadventurers: GAdventurer[];
+  }>(getGAsQuery, {
     variables,
-    skip: !isLootPanel,
+    skip: !isGaPanel,
   });
 
   const showPagination = () =>
     state.selectedTab === 1 &&
-    (page > 1 || (data?.bags?.length ?? 0) === limit);
+    (page > 1 || (data?.gadventurers?.length ?? 0) === limit);
 
-  const hasNoResults = () => !loading && (data?.bags?.length ?? 0) === 0;
+  const hasNoResults = () =>
+    !loading && (data?.gadventurers?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isLootPanel}>
+    <BasePanel open={isGaPanel}>
       <PanelHeading
-        heading="Loot"
+        heading="Genesis Adventurers"
         action={actions.updateSearchIdFilter}
         searchFilterValue={state.searchIdFilter}
       />
-
       <Tabs
         selectedIndex={state.selectedTab}
         onChange={actions.updateSelectedTab as any}
@@ -91,14 +101,14 @@ export const LootPanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <LootFilters />
+        <GaFilters />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <Bag className="block w-20 fill-current" />
+            <Helm className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        <LootOverviews bags={data?.bags ?? []} />
+        <GaOverviews bags={data?.gadventurers ?? []} />
       </div>
 
       {hasNoResults() && (
@@ -116,7 +126,7 @@ export const LootPanel = () => {
                 className="whitespace-nowrap"
                 onClick={() => actions.updateSelectedTab(1)}
               >
-                See All Loot
+                See All GA
               </Button>
             )}
           </div>
@@ -128,7 +138,10 @@ export const LootPanel = () => {
           <Button onClick={previousPage} disabled={page === 1}>
             Previous
           </Button>
-          <Button onClick={nextPage} disabled={data?.bags?.length !== limit}>
+          <Button
+            onClick={nextPage}
+            disabled={data?.gadventurers?.length !== limit}
+          >
             Next
           </Button>
         </div>

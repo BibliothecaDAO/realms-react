@@ -15,14 +15,14 @@ import { MyCrypts } from '@/components/panels/Account/MyCrypts';
 import { MyGA } from '@/components/panels/Account/MyGA';
 import { MyLoot } from '@/components/panels/Account/MyLoot';
 import { MyRealms } from '@/components/panels/Account/MyRealms';
-import { AccountOverview } from '@/components/panels/Account/Overview';
-import { AccountPanel } from '@/components/panels/AccountPanel';
 import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
+import { AccountPanel } from './AccountPanel';
+import { AccountOverview } from './Overview';
 
 export default function AccountPage() {
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =

@@ -1,5 +1,5 @@
 // Import your Client Component
-import { BasePanel } from '@/components/panels/BasePanel';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { ResourceProvider } from '@/context/ResourcesContext';
 import { getExchangeRates } from '@/lib/amm/getExchangeRates';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { SearchFilter } from '@/app/components/filters/SearchFilter';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { BasePanel } from '@/components/panels/BasePanel';
 import { getStarkNetId } from '@/lib/starknet/getStarkNetId';
 import RealmsListTabs from '../RealmsListTabs';
 

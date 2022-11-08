@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useAccount } from '@starknet-react/core';
@@ -5,13 +7,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { hexToDecimalString } from 'starknet/dist/utils/number';
 import { useAccount as useL1Account } from 'wagmi';
+import { SearchFilter } from '@/app/components/filters/SearchFilter';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { LoreCreateEntityForm } from '@/components/panels/LoreComponents/LoreCreateEntityForm';
 import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import { useLoreContext } from '@/context/LoreContext';
 import type { LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesLazyQuery } from '@/generated/graphql';
-import { SearchFilter } from '../filters/SearchFilter';
-import { BasePanel } from './BasePanel';
 
 export const LorePanel = () => {
   const router = useRouter();
@@ -76,6 +78,7 @@ export const LorePanel = () => {
     resyncEntities();
 
     // Open Modal if the path is: /lore/{id}-some-slugged-header-for-ux
+    /* TODO refactor to new next/navigation 
     if (
       router.query.segment &&
       router.query.segment.length >= 2 &&
@@ -92,7 +95,7 @@ export const LorePanel = () => {
         //   props: { id },
         // });
       }
-    }
+    } */
   }, []);
 
   const showPagination = () =>

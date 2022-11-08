@@ -4,7 +4,7 @@ import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import React from 'react';
 
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { SearchFilter } from '@/app/components/filters/SearchFilter';
 import { OrderAffinity, LightDark } from '@/constants/orders';
 // import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery } from '@/generated/graphql';

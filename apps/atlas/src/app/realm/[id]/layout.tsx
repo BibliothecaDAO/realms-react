@@ -1,6 +1,6 @@
 import React from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { BasePanel } from '@/components/panels/BasePanel';
 import { getRealm } from '@/lib/realm/getRealm';
 import { getStarkNetId } from '@/lib/starknet/getStarkNetId';
 import NavigationTabs from './NavigationTabs';

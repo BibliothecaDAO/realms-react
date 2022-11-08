@@ -1,6 +1,8 @@
+'use client';
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import type { ReactElement } from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import {
   useGetRealmsQuery,
   SortOrder,
@@ -9,8 +11,7 @@ import {
 } from '@/generated/graphql';
 import { relicsOwnedByRealm } from '@/lib/realm/getters/relic';
 import { shortenAddressWidth } from '@/util/formatters';
-import { BasePanel } from './BasePanel';
-import { RaidSuccess } from './Leaderboard/RaidSuccess';
+import { RaidSuccess } from './RaidSuccess';
 
 type Row = {
   realm?: number;
@@ -65,9 +66,7 @@ export function LeaderboardPanel(): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
-              shallow: true,
-            });
+            router.push(`/realm/${realm?.realmId}`);
           }}
         >
           View
@@ -86,9 +85,7 @@ export function LeaderboardPanel(): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
-              shallow: true,
-            });
+            router.push(`/realm/${realm?.realmId}`);
           }}
         >
           View

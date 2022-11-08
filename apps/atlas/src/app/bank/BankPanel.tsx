@@ -5,6 +5,7 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
 import type { ReactElement } from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { resources } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { FragmentType } from '@/gql/fragment-masking';
@@ -12,7 +13,6 @@ import { useFragment } from '@/gql/fragment-masking';
 import { graphql } from '@/gql/gql';
 import type { ExchangeRate24Hr } from '@/gql/graphql';
 import type { HistoricPrices } from '@/types/index';
-import { BasePanel } from '../../components/panels/BasePanel';
 type Row = {
   resource: ReactElement;
   lp_balance: ReactElement;

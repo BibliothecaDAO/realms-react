@@ -1,4 +1,4 @@
-import { BagRatingFilter } from '@/components/filters/BagRatingFilter';
+import { BagRatingFilter } from '@/app/components/filters/BagRatingFilter';
 import { useGaContext } from '@/context/GaContext';
 import { BaseFilter } from './BaseFilter';
 import { OrdersFilter } from './OrdersFilter';

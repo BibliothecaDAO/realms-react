@@ -1,4 +1,4 @@
-import { BagRatingFilter } from '@/components/filters/BagRatingFilter';
+import { BagRatingFilter } from '@/app/components/filters/BagRatingFilter';
 import { useLootContext } from '@/context/LootContext';
 import { BaseFilter } from './BaseFilter';
 

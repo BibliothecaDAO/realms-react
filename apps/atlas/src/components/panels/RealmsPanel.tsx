@@ -9,7 +9,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { RealmOverviews } from '@/app/realm/(realmList)/RealmOverviews';
-import { RealmsFilter } from '@/components/filters/RealmsFilter';
+import { RealmsFilter } from '@/app/components/filters/RealmsFilter';
 import { RealmsMax } from '@/constants/index';
 import { useRealmContext } from '@/context/RealmContext';
 import type { RealmTraitType } from '@/generated/graphql';

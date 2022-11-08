@@ -1,4 +1,4 @@
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { SearchFilter } from '@/app/components/filters/SearchFilter';
 
 interface Props {
   heading: string;

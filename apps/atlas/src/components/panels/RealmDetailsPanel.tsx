@@ -7,6 +7,7 @@ import { BookmarkIcon, RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { RealmHistoryPanel } from '@/components/panels/Realms/panels/RealmHistoryPanel';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import { useGetRealmQuery } from '@/generated/graphql';
@@ -24,7 +25,6 @@ import { trimmedOrder } from '@/lib/realm/getters/orders';
 
 import { storage } from '@/util/localStorage';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
-import { BasePanel } from './BasePanel';
 import Food from './Realms/Food';
 import Overview from './Realms/Overview';
 import RealmArmyPanel from './Realms/panels/RealmArmyPanel';

@@ -1,3 +1,4 @@
+'use client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
@@ -7,18 +8,18 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState, useMemo } from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
+import { MyActions } from '@/components/panels/Account/MyActions';
+import { MyArmies } from '@/components/panels/Account/MyArmies';
+import { MyCrypts } from '@/components/panels/Account/MyCrypts';
+import { MyGA } from '@/components/panels/Account/MyGA';
+import { MyLoot } from '@/components/panels/Account/MyLoot';
+import { MyRealms } from '@/components/panels/Account/MyRealms';
+import { SettleRealmsSideBar } from '@/components/sidebars/SettleRealmsSideBar';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getAccountHex } from '@/shared/Getters/Realm';
-import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
-import { MyActions } from './Account/MyActions';
-import { MyArmies } from './Account/MyArmies';
-import { MyCrypts } from './Account/MyCrypts';
-import { MyGA } from './Account/MyGA';
-import { MyLoot } from './Account/MyLoot';
-import { MyRealms } from './Account/MyRealms';
-import { AccountOverview } from './Account/Overview';
-import { BasePanel } from './BasePanel';
+import { AccountOverview } from './Overview';
 
 export function AccountPanel() {
   const { play } = useUiSounds(soundSelector.pageTurn);

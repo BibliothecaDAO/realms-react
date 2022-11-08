@@ -1,6 +1,6 @@
 // Import your Client Component
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { BasePanel } from '@/components/panels/BasePanel';
 import AccountPage from './AccountPage';
 
 /* async function getPosts() {

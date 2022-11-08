@@ -3,7 +3,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
-import { CryptFilter } from '@/components/filters/CryptFilter';
+import { CryptFilter } from '@/app/components/filters/CryptFilter';
 import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
 import { useCryptContext } from '@/context/CryptContext';
 import { getCryptsQuery } from '@/hooks/graphql/queries';

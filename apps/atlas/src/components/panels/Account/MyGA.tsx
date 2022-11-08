@@ -3,7 +3,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
-import { GaFilters } from '@/components/filters/GaFilters';
+import { GaFilters } from '@/app/components/filters/GaFilters';
 import { GaOverviews } from '@/components/tables/GaOverviews';
 import { useGaContext } from '@/context/GaContext';
 import { getGAsQuery } from '@/hooks/graphql/queries';

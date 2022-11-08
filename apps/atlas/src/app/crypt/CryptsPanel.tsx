@@ -1,19 +1,21 @@
+'use client';
 import { useQuery } from '@apollo/client';
 import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
-import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
+import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
-import { GaFilters } from '@/components/filters/GaFilters';
-import { GaOverviews } from '@/components/tables/GaOverviews';
-import { useGaContext } from '@/context/GaContext';
-import { getGAsQuery } from '@/hooks/graphql/queries';
-import type { GAdventurer } from '@/types/index';
-import { BasePanel } from './BasePanel';
-import { PanelHeading } from './PanelComponents/PanelHeading';
+import { CryptFilter } from '@/app/components/filters/CryptFilter';
+import { BasePanel } from '@/app/components/ui/BasePanel';
+import { PanelHeading } from '@/app/components/ui/PanelHeading';
+import { CryptsOverviews } from '@/components/tables/CryptsOverviews';
+import { useCryptContext } from '@/context/CryptContext';
+import { getCryptsQuery } from '@/hooks/graphql/queries';
+import type { Crypt } from '@/types/index';
 
-export const GaPanel = () => {
+export const CryptsPanel = () => {
+  // const { selectedId, openDetails, isDisplayLarge } = useAtlasContext();
   const { address: l1Address } = useL1Account();
-  const { state, actions } = useGaContext();
+  const { state, actions } = useCryptContext();
 
   const limit = 50;
   const [page, setPage] = useState(1);
@@ -21,70 +23,74 @@ export const GaPanel = () => {
   const nextPage = () => setPage(page + 1);
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
-  const queryDependencies = [
-    state.favouriteGa,
-    state.selectedOrders,
+  const filterDependencies = [
+    state.favouriteCrypt,
+    state.isLegendaryFilter,
     state.searchIdFilter,
-    state.ratingFilter.bagGreatness,
-    state.ratingFilter.bagRating,
+    state.environmentsFilter,
+    state.statsFilter.numDoors,
+    state.statsFilter.numPoints,
+    state.statsFilter.size,
     state.selectedTab,
   ];
   useEffect(() => {
     setPage(1);
-  }, [...queryDependencies]);
+  }, [...filterDependencies]);
 
-  const isGaPanel = true;
-  const tabs = ['Your GA', 'All GA', 'Favourite GA'];
+  const isCryptPanel = true;
+  const tabs = ['Your Crypts', 'All Crypts', 'Favourite Crypts'];
 
   const variables = useMemo(() => {
     const where: any = {};
     if (state.searchIdFilter) {
       where.id = state.searchIdFilter;
     } else if (state.selectedTab === 2) {
-      where.id_in = [...state.favouriteGa];
+      where.id_in = [...state.favouriteCrypt];
     }
 
     if (state.selectedTab === 0) {
       where.currentOwner = l1Address?.toLowerCase();
     }
-    where.bagGreatness_gte = state.ratingFilter.bagGreatness.min;
-    where.bagGreatness_lte = state.ratingFilter.bagGreatness.max;
-    where.bagRating_gte = state.ratingFilter.bagRating.min;
-    where.bagRating_lte = state.ratingFilter.bagRating.max;
 
-    if (state.selectedOrders.length > 0) {
-      where.order_in = [
-        ...state.selectedOrders.map((orderType) => orderType.replace('_', ' ')),
-      ];
+    if (state.isLegendaryFilter) {
+      where.name_starts_with = "'";
+    }
+
+    where.numDoors_gte = state.statsFilter.numDoors.min;
+    where.numDoors_lte = state.statsFilter.numDoors.max;
+    where.numPoints_gte = state.statsFilter.numPoints.min;
+    where.numPoints_lte = state.statsFilter.numPoints.max;
+    where.size_gte = state.statsFilter.size.min;
+    where.size_lte = state.statsFilter.size.max;
+
+    if (state.environmentsFilter.length > 0) {
+      where.environment_in = [...state.environmentsFilter];
     }
 
     return {
       first: limit,
       skip: limit * (page - 1),
       where,
-      orderBy: 'minted',
-      orderDirection: 'asc',
     };
-  }, [l1Address, page, ...queryDependencies]);
+  }, [l1Address, page, ...filterDependencies]);
 
   const { loading, data } = useQuery<{
-    gadventurers: GAdventurer[];
-  }>(getGAsQuery, {
+    dungeons: Crypt[];
+  }>(getCryptsQuery, {
     variables,
-    skip: !isGaPanel,
+    skip: !isCryptPanel,
   });
 
   const showPagination = () =>
     state.selectedTab === 1 &&
-    (page > 1 || (data?.gadventurers?.length ?? 0) === limit);
+    (page > 1 || (data?.dungeons?.length ?? 0) === limit);
 
-  const hasNoResults = () =>
-    !loading && (data?.gadventurers?.length ?? 0) === 0;
+  const hasNoResults = () => !loading && (data?.dungeons?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={isGaPanel}>
+    <BasePanel open={isCryptPanel}>
       <PanelHeading
-        heading="Genesis Adventurers"
+        heading="Crypts"
         action={actions.updateSearchIdFilter}
         searchFilterValue={state.searchIdFilter}
       />
@@ -99,14 +105,14 @@ export const GaPanel = () => {
         </Tabs.List>
       </Tabs>
       <div>
-        <GaFilters />
+        <CryptFilter />
         {loading && (
           <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <Helm className="block w-20 fill-current" />
+            <Danger className="block w-20 fill-current" />
             <h2>Loading</h2>
           </div>
         )}
-        <GaOverviews bags={data?.gadventurers ?? []} />
+        <CryptsOverviews dungeons={data?.dungeons ?? []} />
       </div>
 
       {hasNoResults() && (
@@ -124,7 +130,7 @@ export const GaPanel = () => {
                 className="whitespace-nowrap"
                 onClick={() => actions.updateSelectedTab(1)}
               >
-                See All GA
+                See All Crypts
               </Button>
             )}
           </div>
@@ -138,7 +144,7 @@ export const GaPanel = () => {
           </Button>
           <Button
             onClick={nextPage}
-            disabled={data?.gadventurers?.length !== limit}
+            disabled={data?.dungeons?.length !== limit}
           >
             Next
           </Button>
