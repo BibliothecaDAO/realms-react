@@ -4,9 +4,9 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
 import type { ReactElement } from 'react';
+import { BasePanel } from '@/app/components/ui/BasePanel';
 import { resources } from '@/constants/resources';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import { BasePanel } from './BasePanel';
 
 type Row = {
   resource: ReactElement;

@@ -1,3 +1,4 @@
+'use client';
 import { Button, Card, CardBody, CardTitle } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useMemo, useState } from 'react';

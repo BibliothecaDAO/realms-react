@@ -8,7 +8,10 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { BasePanel } from '@/app/components/ui/BasePanel';
-import { RealmHistoryPanel } from '@/components/panels/Realms/panels/RealmHistoryPanel';
+import Food from '@/app/realm/[id]/farming/Food';
+import RealmArmyPanel from '@/app/realm/[id]/military/RealmArmyPanel';
+import Overview from '@/app/realm/[id]/Overview';
+import ResourceDetails from '@/app/realm/[id]/resources/Resources';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import type { Realm } from '@/generated/graphql';
@@ -24,12 +27,7 @@ import usePrevious from '@/hooks/usePrevious';
 import { trimmedOrder } from '@/lib/realm/getters/orders';
 
 import { storage } from '@/util/localStorage';
-import Overview from '../../app/realm/[id]/Overview';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
-import Food from './Realms/Food';
-import RealmArmyPanel from './Realms/panels/RealmArmyPanel';
-import RealmLorePanel from './Realms/panels/RealmLorePanel';
-import ResourceDetails from './Realms/Resources';
 import RealmToolbar from './Realms/Toolbar';
 
 interface RealmDetailsPanelProps {
@@ -230,23 +228,14 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
           </UserAgent> */}
           <div className="relative w-full h-full">
             <div className="w-full h-full py-10 overflow-x-scroll md:overflow-x-visible">
-              {realmData?.realm ? (
+              {/* {realmData?.realm ? (
                 <>
-                  <RealmArmyPanel
-                    open={subview == 'Army'}
+                   <RealmArmyPanel
                     buildings={buildings}
                     realm={realmData?.realm}
-                    loading={loadingHooks}
                   />
 
-                  <ResourceDetails
-                    open={subview == 'Resources'}
-                    realmFoodDetails={realmFoodDetails}
-                    availableFood={availableFood}
-                    buildings={buildings}
-                    realm={realmData}
-                    loading={loadingHooks}
-                  />
+                  <ResourceDetails buildings={buildings} realm={realmData} />
 
                   <Overview
                     open={subview == 'Overview'}
@@ -257,7 +246,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
                     buildings={buildings}
                     realm={realmData}
                     loading={loadingHooks}
-                  />
+              /> 
                   <Food
                     open={subview == 'Food'}
                     realmFoodDetails={realmFoodDetails}
@@ -273,7 +262,7 @@ export function RealmDetailsPanel({ realmId }: RealmDetailsPanelProps) {
 
                   <RealmLorePanel open={subview == 'Lore'} realm={realmData} />
                 </>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         </div>

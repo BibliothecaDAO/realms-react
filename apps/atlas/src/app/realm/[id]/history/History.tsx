@@ -1,3 +1,4 @@
+'use client';
 import { Button, Card, CardTitle } from '@bibliotheca-dao/ui-lib';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';

@@ -7,10 +7,10 @@ import NavigationTabs from './NavigationTabs';
 import RealmBannerHeading from './RealmBannerHeading';
 
 export default async function RealmLayout({ children, params }) {
-  const { realm } = await getRealm(params.id);
+  const realm = await getRealm(params.id);
 
   // TODO move to realmbanner component
-  const starknetId = await getStarkNetId(realm?.settledOwner);
+  const starknetId = await getStarkNetId(realm?.settledOwner || undefined);
 
   return (
     <>

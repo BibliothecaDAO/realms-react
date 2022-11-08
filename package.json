@@ -82,6 +82,12 @@
   },
   "packageManager": "yarn@4.0.0-rc.6",
   "resolutions": {
-    "bn.js": "^5.2.1"
+    "bn.js": "^5.2.1",
+    "keyv": "npm:@keyvhq/core@~1.6.14"
+  },
+  "overrides": {
+    "cacheable-request": {
+      "keyv": "npm:@keyvhq/core@~1.6.14"
+    }
   }
 }

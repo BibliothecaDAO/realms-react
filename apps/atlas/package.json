@@ -214,6 +214,12 @@
     "wagmi": "0.7.10"
   },
   "resolutions": {
-    "bn.js": "^5.2.1"
+    "bn.js": "^5.2.1",
+    "keyv": "npm:@keyvhq/core@~1.6.25"
+  },
+  "overrides": {
+    "cacheable-request": {
+      "keyv": "npm:@keyvhq/core@~1.6.25"
+    }
   }
 }

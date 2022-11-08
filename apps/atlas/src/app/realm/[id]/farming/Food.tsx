@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardTitle,
@@ -38,15 +39,11 @@ import type {
   RealmFoodDetails,
   AvailableResources,
 } from '@/types/index';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 type Prop = {
-  realm: GetRealmQuery;
+  realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
-  realmFoodDetails: RealmFoodDetails;
-  availableFood: number | undefined;
-  open: boolean;
-  loading: boolean;
 };
 
 const getTrait = (realm: any, trait: string) => {
@@ -63,7 +60,7 @@ interface ResourceAndFoodInput {
 }
 
 const Food: React.FC<Prop> = (props) => {
-  const realm = props.realm?.realm;
+  const realm = props.realm;
 
   const { balance } = useResourcesContext();
 
@@ -72,7 +69,14 @@ const Food: React.FC<Prop> = (props) => {
     (a) => a.resourceId === WHEAT_ID
   )?.amount;
 
-  const { create, harvest, convert } = useFood(realm as Realm);
+  const {
+    create,
+    harvest,
+    convert,
+    realmFoodDetails,
+    availableFood,
+    loading: loadingFood,
+  } = useFood(realm as Realm);
 
   const isOwner = useIsOwner(realm?.settledOwner);
 
@@ -126,22 +130,20 @@ const Food: React.FC<Prop> = (props) => {
   };
 
   return (
-    <BaseRealmDetailPanel open={props.open}>
+    <BaseRealmDetailPanel open={true}>
       <div className="grid grid-cols-12 gap-6 py-4">
         <Card className="col-span-12 md:col-start-1 md:col-end-5 ">
           <div className="flex justify-between my-4">
             <h3>
-              Farming land {props.realmFoodDetails.farmsBuilt} /{farmCapacity}
+              Farming land {realmFoodDetails.farmsBuilt} /{farmCapacity}
             </h3>
-            {props.realmFoodDetails.farmHarvestsLeft -
-              props.realmFoodDetails.decayedFarms >
+            {realmFoodDetails.farmHarvestsLeft - realmFoodDetails.decayedFarms >
               0 && (
               <div className="text-xl">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
-                      props.realmFoodDetails
-                        .totalTimeRemainingUntilFarmHarvest) *
+                      realmFoodDetails.totalTimeRemainingUntilFarmHarvest) *
                       1000 +
                     new Date().getTime()
                   ).toString()}
@@ -150,9 +152,9 @@ const Food: React.FC<Prop> = (props) => {
             )}
           </div>
           <p className="px-1 mb-2 text-xl">
-            {realm.name} has {props.realmFoodDetails.farmsBuilt} Farm producing{' '}
+            {realm.name} has {realmFoodDetails.farmsBuilt} Farm producing{' '}
             {(
-              BASE_FOOD_PRODUCTION * props.realmFoodDetails.farmsBuilt
+              BASE_FOOD_PRODUCTION * realmFoodDetails.farmsBuilt
             ).toLocaleString()}{' '}
             $WHEAT every {HARVEST_LENGTH / 60} minutes.
           </p>
@@ -160,7 +162,7 @@ const Food: React.FC<Prop> = (props) => {
             {cropLand({
               level: farmCapacity,
               color: 'bg-green-800',
-              built: props.realmFoodDetails.farmsBuilt,
+              built: realmFoodDetails.farmsBuilt,
             })}
           </div>
 
@@ -168,17 +170,17 @@ const Food: React.FC<Prop> = (props) => {
             <div className="w-1/2 my-2">
               <h5>farms to harvest </h5>
               <div className="text-5xl">
-                {props.realmFoodDetails.totalFarmHarvest} / {MAX_HARVESTS}
+                {realmFoodDetails.totalFarmHarvest} / {MAX_HARVESTS}
               </div>
             </div>
             <div className="w-1/2 my-2">
               <h5>harvests left</h5>
               <div className="text-5xl">
-                {props.realmFoodDetails.farmHarvestsLeft -
-                  props.realmFoodDetails.decayedFarms >
+                {realmFoodDetails.farmHarvestsLeft -
+                  realmFoodDetails.decayedFarms >
                 0
-                  ? props.realmFoodDetails.farmHarvestsLeft -
-                    props.realmFoodDetails.decayedFarms
+                  ? realmFoodDetails.farmHarvestsLeft -
+                    realmFoodDetails.decayedFarms
                   : 0}
               </div>
             </div>
@@ -237,8 +239,8 @@ const Food: React.FC<Prop> = (props) => {
                   <p className="text-xl">
                     {(
                       BASE_FOOD_PRODUCTION *
-                      props.realmFoodDetails.farmsBuilt *
-                      props.realmFoodDetails.totalFarmHarvest
+                      realmFoodDetails.farmsBuilt *
+                      realmFoodDetails.totalFarmHarvest
                     ).toLocaleString()}{' '}
                     $WHEAT available to action
                   </p>
@@ -253,7 +255,7 @@ const Food: React.FC<Prop> = (props) => {
                         );
                       }}
                       size="xs"
-                      disabled={props.realmFoodDetails.totalFarmHarvest === 0}
+                      disabled={realmFoodDetails.totalFarmHarvest === 0}
                       variant="primary"
                     >
                       Export $WHEAT{' '}
@@ -268,7 +270,7 @@ const Food: React.FC<Prop> = (props) => {
                         );
                       }}
                       size="xs"
-                      disabled={props.realmFoodDetails.totalFarmHarvest === 0}
+                      disabled={realmFoodDetails.totalFarmHarvest === 0}
                       variant="primary"
                     >
                       Harvest $WHEAT
@@ -292,18 +294,17 @@ const Food: React.FC<Prop> = (props) => {
         <Card className="col-span-12 md:col-start-5 md:col-end-9 ">
           <div className="flex justify-between w-full my-4">
             <h3>
-              Fishing villages {props.realmFoodDetails.villagesBuilt}/
+              Fishing villages {realmFoodDetails.villagesBuilt}/
               {fishingVillageCapacity}
             </h3>
-            {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-              props.realmFoodDetails.decayedVillages >
+            {realmFoodDetails.fishingVillagesHarvestsLeft -
+              realmFoodDetails.decayedVillages >
               0 && (
               <div className="text-xl ">
                 <CountdownTimer
                   date={(
                     (HARVEST_LENGTH -
-                      props.realmFoodDetails
-                        .totalTimeRemainingUntilVillageHarvest) *
+                      realmFoodDetails.totalTimeRemainingUntilVillageHarvest) *
                       1000 +
                     new Date().getTime()
                   ).toString()}
@@ -313,10 +314,10 @@ const Food: React.FC<Prop> = (props) => {
           </div>
           <div className="w-full">
             <p className="px-1 mb-2 text-xl">
-              {realm.name} has {props.realmFoodDetails.villagesBuilt} Fishing
-              Villages catching{' '}
+              {realm.name} has {realmFoodDetails.villagesBuilt} Fishing Villages
+              catching{' '}
               {(
-                BASE_FOOD_PRODUCTION * props.realmFoodDetails.villagesBuilt
+                BASE_FOOD_PRODUCTION * realmFoodDetails.villagesBuilt
               ).toLocaleString()}{' '}
               $FISH every {HARVEST_LENGTH / 60} minutes.
             </p>
@@ -326,7 +327,7 @@ const Food: React.FC<Prop> = (props) => {
             {cropLand({
               level: fishingVillageCapacity,
               color: 'bg-blue-800',
-              built: props.realmFoodDetails.villagesBuilt,
+              built: realmFoodDetails.villagesBuilt,
             })}
           </div>
 
@@ -334,18 +335,18 @@ const Food: React.FC<Prop> = (props) => {
             <div className="w-1/2 my-2">
               <h5>villages to harvest </h5>
               <div className="sm:text-5xl">
-                {props.realmFoodDetails.totalVillageHarvest} / {MAX_HARVESTS}
+                {realmFoodDetails.totalVillageHarvest} / {MAX_HARVESTS}
               </div>
             </div>
 
             <div className="w-1/2 my-2">
               <h5>Harvests Left</h5>
               <div className="sm:text-5xl">
-                {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                  props.realmFoodDetails.decayedVillages >
+                {realmFoodDetails.fishingVillagesHarvestsLeft -
+                  realmFoodDetails.decayedVillages >
                 0
-                  ? props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                    props.realmFoodDetails.decayedVillages
+                  ? realmFoodDetails.fishingVillagesHarvestsLeft -
+                    realmFoodDetails.decayedVillages
                   : 0}
               </div>
             </div>
@@ -402,8 +403,8 @@ const Food: React.FC<Prop> = (props) => {
               <p className="w-full mt-4 text-xl">
                 {(
                   BASE_FOOD_PRODUCTION *
-                  props.realmFoodDetails.villagesBuilt *
-                  props.realmFoodDetails.totalVillageHarvest
+                  realmFoodDetails.villagesBuilt *
+                  realmFoodDetails.totalVillageHarvest
                 ).toLocaleString()}{' '}
                 $FISH available to action
               </p>
@@ -417,7 +418,7 @@ const Food: React.FC<Prop> = (props) => {
                     );
                   }}
                   size="xs"
-                  disabled={props.realmFoodDetails.totalVillageHarvest === 0}
+                  disabled={realmFoodDetails.totalVillageHarvest === 0}
                   variant="primary"
                 >
                   Export $FISH
@@ -431,7 +432,7 @@ const Food: React.FC<Prop> = (props) => {
                     );
                   }}
                   size="xs"
-                  disabled={props.realmFoodDetails.totalVillageHarvest === 0}
+                  disabled={realmFoodDetails.totalVillageHarvest === 0}
                   variant="primary"
                 >
                   Harvest $FISH
@@ -465,11 +466,11 @@ const Food: React.FC<Prop> = (props) => {
           <div>
             <div className="text-right">
               <br />
-              {props.availableFood && props?.availableFood > 0 ? (
+              {availableFood && availableFood > 0 ? (
                 <div className="flex justify-end text-xl">
                   <CountdownTimer
                     date={(
-                      props.availableFood * 1000 +
+                      availableFood * 1000 +
                       new Date().getTime()
                     ).toString()}
                   />
@@ -479,9 +480,7 @@ const Food: React.FC<Prop> = (props) => {
                   Serfs are starving!!
                 </span>
               )}
-              <div className="text-5xl ">
-                {props.availableFood?.toLocaleString()}
-              </div>
+              <div className="text-5xl ">{availableFood?.toLocaleString()}</div>
             </div>
           </div>
           {isOwner && (

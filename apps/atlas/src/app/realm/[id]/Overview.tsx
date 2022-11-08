@@ -13,6 +13,7 @@ import React from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { STORE_HOUSE_SIZE } from '@/constants/buildings';
+import type { GetRealmQuery, Realm } from '@/gql/graphql';
 import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -30,11 +31,10 @@ import type {
   BuildingDetail,
 } from '@/types/index';
 import { RealmImage } from '../(realmList)/Image';
-import { BaseRealmDetailPanel } from '../../../components/panels/Realms/BaseRealmDetailPanel';
-import type { Realm } from '@/gqll/graphql';
+import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 type Prop = {
-  realm?: Realm;
+  realm?: GetRealmQuery['realm'];
   buildingUtilisation: BuildingFootprint | undefined;
   buildings: BuildingDetail[] | undefined;
 };

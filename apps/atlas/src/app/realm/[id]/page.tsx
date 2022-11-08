@@ -11,11 +11,13 @@ export default async function Page({ params }) {
   // Forward fetched data to your Client Component
   return (
     <>
-      <Overview
-        buildingUtilisation={undefined}
-        buildings={undefined}
-        realm={realm}
-      />
+      {realm && (
+        <Overview
+          buildingUtilisation={undefined}
+          buildings={undefined}
+          realm={realm}
+        />
+      )}
     </>
   );
 }

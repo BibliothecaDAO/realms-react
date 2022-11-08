@@ -84,7 +84,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = (props) => {
       hotkey: HotKeys.Overview,
       title: 'Overview',
       icon: <Castle className="self-center w-6 h-6 fill-current" />,
-      tabName: 'overview',
+      tabName: '/',
     },
     {
       hotkey: HotKeys.Army,

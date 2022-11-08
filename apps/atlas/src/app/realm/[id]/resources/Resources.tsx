@@ -1,3 +1,4 @@
+'use client';
 import {
   Button,
   Card,
@@ -25,15 +26,11 @@ import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 
 type Prop = {
-  realm: GetRealmQuery;
+  realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
-  realmFoodDetails: RealmFoodDetails;
-  availableFood: number | undefined;
-  open: boolean;
-  loading: boolean;
 };
 
 interface ResourceAndFoodInput {
@@ -42,8 +39,8 @@ interface ResourceAndFoodInput {
   workHutsToBuild: string;
 }
 
-const Harvests: React.FC<Prop> = (props) => {
-  const realm = props.realm?.realm;
+const Resources: React.FC<Prop> = (props) => {
+  const realm = props.realm;
 
   const { create, harvest } = useFood(realm as Realm);
 
@@ -86,7 +83,7 @@ const Harvests: React.FC<Prop> = (props) => {
   }
 
   return (
-    <BaseRealmDetailPanel open={props.open}>
+    <BaseRealmDetailPanel open={true}>
       <div className="grid grid-cols-12 gap-6 py-4">
         <Card className="col-span-12 md:col-start-1 md:col-end-4 ">
           <div className="w-full p-4 mx-auto bg-white rounded bg-opacity-90">
@@ -165,4 +162,4 @@ const Harvests: React.FC<Prop> = (props) => {
   );
 };
 
-export default Harvests;
+export default Resources;

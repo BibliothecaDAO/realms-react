@@ -30,7 +30,35 @@ const getRealmDocument = graphql(/* GraphQL */ `
         type
         qty
       }
-      ...RealmArmies
+      ownArmies {
+        armyId
+        realmId
+        xp
+        destinationRealmId
+        destinationArrivalTime
+        armyPacked
+        lastAttacked
+        xp
+        level
+        callSign
+
+        lightCavalryQty
+        lightCavalryHealth
+        heavyCavalryQty
+        heavyCavalryHealth
+        archerQty
+        archerHealth
+        longbowQty
+        longbowHealth
+        mageQty
+        mageHealth
+        arcanistQty
+        arcanistHealth
+        lightInfantryQty
+        lightInfantryHealth
+        heavyInfantryQty
+        heavyInfantryHealth
+      }
       relic {
         realmId
         heldByRealm
@@ -48,7 +76,6 @@ export async function getRealm(id) {
     const { realm } = await graphqlClient().request(getRealmDocument, {
       id: parseFloat(id),
     });
-    console.log(realm);
     return realm;
   } catch (e) {
     console.log(e);

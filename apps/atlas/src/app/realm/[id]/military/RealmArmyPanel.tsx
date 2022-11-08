@@ -1,3 +1,4 @@
+'use client';
 import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import {
   Button,
@@ -22,7 +23,8 @@ import { defaultArmy } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import type { GetRealmQuery, Army, Realm } from '@/generated/graphql';
+import type { Army } from '@/generated/graphql';
+import type { Realm, GetRealmQuery } from '@/gql/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import useBuildings, {
   createBuildingCall,
@@ -38,11 +40,10 @@ import { fetchRealmNameById, RealmCombatStatus } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
+
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
-  open: boolean;
-  loading: boolean;
 };
 
 interface BuildQuantity {
@@ -132,7 +133,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
   };
 
   return (
-    <BaseRealmDetailPanel open={props.open}>
+    <BaseRealmDetailPanel open={true}>
       <div className="grid grid-cols-12 gap-6">
         <Card className="col-span-12 sm:col-span-6 lg:col-start-1 lg:col-span-3">
           <CardBody>
@@ -202,10 +203,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             </div>
           </CardBody>
         </Card>
-        <Card
-          loading={props.loading}
-          className="col-span-12 md:col-start-8 md:col-end-13"
-        >
+        <Card className="col-span-12 md:col-start-8 md:col-end-13">
           <CardTitle>Raidable Resources</CardTitle>
           <RealmResources
             realm={realm}
@@ -236,10 +234,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           )}
         </Card>
         {isOwner && (
-          <Card
-            loading={props.loading}
-            className="col-span-12 row-span-3 md:col-span-5"
-          >
+          <Card className="col-span-12 row-span-3 md:col-span-5">
             <CardTitle>Military Buildings</CardTitle>
             <div className="flex flex-wrap">
               {props.buildings
@@ -336,10 +331,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
           </Card>
         )}
 
-        <Card
-          loading={props.loading}
-          className="col-span-12 lg:col-start-6 lg:col-span-7"
-        >
+        <Card className="col-span-12 lg:col-start-6 lg:col-span-7">
           <div className="flex justify-between w-full">
             <CardTitle>Realm Armies</CardTitle>
           </div>
@@ -376,10 +368,7 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
             )}
           </div>
         </Card>
-        <Card
-          loading={props.loading}
-          className="col-span-12 lg:col-start-6 lg:col-span-7"
-        >
+        <Card className="col-span-12 lg:col-start-6 lg:col-span-7">
           <div className="flex justify-between w-full">
             <CardTitle>All Your Armies</CardTitle>
           </div>

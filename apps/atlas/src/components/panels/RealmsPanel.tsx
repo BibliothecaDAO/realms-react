@@ -1,4 +1,4 @@
-'use client';
+/* 'use client';
 
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
@@ -164,11 +164,11 @@ function useRealmsPanelTabs() {
       undefined,
       { shallow: true }
     );
-  } */
+  } 
 
   return {
     selectedTabIndex,
-    /* onTabChange, */
+     onTabChange, 
   };
 }
 
@@ -280,3 +280,4 @@ export const RealmsPanel = () => {
     </>
   );
 };
+*/ export default {};

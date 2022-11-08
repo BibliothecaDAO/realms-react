@@ -1,3 +1,4 @@
+'use client';
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';

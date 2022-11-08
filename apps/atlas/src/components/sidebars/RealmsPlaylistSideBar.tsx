@@ -1,9 +1,10 @@
+'use client';
 import { Card, Button } from '@bibliotheca-dao/ui-lib/base';
 import { LoadingBricks } from '@bibliotheca-dao/ui-lib/base/spinner/loading-bricks';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { useRouter } from 'next/router';
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
@@ -187,8 +188,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
   const [loading, setLoading] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>();
   const router = useRouter();
-
-  const query = { ...router.query };
+  const segment = useSelectedLayoutSegment();
 
   return (
     <AtlasSidebar isOpen={props.isOpen} containerClassName="z-[40]">
@@ -269,16 +269,7 @@ const RealmsPlaylistSidebar = (props: Prop) => {
                       storage(realmPlaylistCursorKey, 0).set(0);
                       storage(realmPlaylistNameKey, '').set(rp.name);
                       storage<number[]>(realmPlaylistKey, []).set(realmIds);
-                      router.replace(
-                        {
-                          pathname: `/realm/${realmIds[0]}`,
-                          query: { ...query },
-                        },
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      router.replace(`/realm/${realmIds[0]}/${segment}`);
                     }
                     if (!res.loading && res.data.realms.length == 0) {
                       toast(`Playlist ${rp.name} has no Realms`);

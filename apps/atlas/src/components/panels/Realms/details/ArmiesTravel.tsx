@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useRouter } from 'next/router';
 import React from 'react';
