@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardTitle,
@@ -7,11 +8,12 @@ import {
   CountdownTimer,
 } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { STORE_HOUSE_SIZE } from '@/constants/buildings';
-import type { GetRealmQuery } from '@/generated/graphql';
+import useFood from '@/hooks/settling/useFood';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useIsOwner from '@/hooks/useIsOwner';
 import { hasOwnRelic } from '@/lib/realm/getters/relic';
@@ -27,24 +29,27 @@ import type {
   BuildingFootprint,
   BuildingDetail,
 } from '@/types/index';
-import { RealmImage } from '../../../app/realm/(realmList)/Image';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
+import { RealmImage } from '../(realmList)/Image';
+import { BaseRealmDetailPanel } from '../../../components/panels/Realms/BaseRealmDetailPanel';
+import type { Realm } from '@/gqll/graphql';
 
 type Prop = {
-  realm?: GetRealmQuery;
+  realm?: Realm;
   buildingUtilisation: BuildingFootprint | undefined;
   buildings: BuildingDetail[] | undefined;
-  realmFoodDetails: RealmFoodDetails;
-  onSetSubview: (string: Subview) => void;
-  availableFood: number | undefined;
-  open: boolean;
-  loading: boolean;
 };
 
 const Overview: React.FC<Prop> = (props) => {
-  const realm = props.realm?.realm;
+  const realm = props.realm;
 
   const isOwner = useIsOwner(realm?.settledOwner);
+  const router = useRouter();
+
+  const {
+    realmFoodDetails,
+    availableFood,
+    loading: loadingFood,
+  } = useFood(realm as Realm);
 
   const cropLand = ({ level, color, built }) => {
     return Array.from({ length: level }, (item, index) => (
@@ -59,7 +64,7 @@ const Overview: React.FC<Prop> = (props) => {
   };
 
   return (
-    <BaseRealmDetailPanel open={props.open}>
+    <BaseRealmDetailPanel open={true /* props.open */}>
       <div className="grid grid-cols-12 gap-6 py-4">
         <Card className="col-span-12 lg:col-start-1 lg:col-end-7">
           <CardBody>
@@ -149,12 +154,12 @@ const Overview: React.FC<Prop> = (props) => {
           </CardBody>
         </Card>
         <Card
-          loading={props.loading}
+          /* TODO refactor loading to suspense loading={props.loading} */
           className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3"
         >
           <CardTitle>Population</CardTitle>
           <CardStats className="text-4xl">
-            {props.realmFoodDetails.population}
+            {realmFoodDetails.population}
           </CardStats>
         </Card>
 
@@ -164,10 +169,10 @@ const Overview: React.FC<Prop> = (props) => {
           </div>
 
           <div className="my-2">
-            {props.realm?.realm.ownArmies.length ? (
+            {props.realm?.ownArmies.length ? (
               <ArmyCard
-                selectedRealm={props.realm?.realm.realmId}
-                army={props.realm?.realm.ownArmies[0]}
+                selectedRealm={props.realm?.realmId}
+                army={props.realm?.ownArmies[0]}
               />
             ) : (
               'No defending Armies! This Realm is defence less.'
@@ -176,7 +181,9 @@ const Overview: React.FC<Prop> = (props) => {
 
           {isOwner && (
             <Button
-              onClick={() => props.onSetSubview('Army')}
+              onClick={() => {
+                router.push(`/realm/${realm?.realmId}/military`);
+              }}
               variant="outline"
               size="xs"
             >
@@ -184,13 +191,10 @@ const Overview: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-
-        <Card
-          loading={props.loading}
-          className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3"
-        >
+        {/* TODO refactor loading */}
+        <Card className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3">
           <CardTitle>Food in Storehouse</CardTitle>
-          {!props.loading && (
+          {availableFood && (
             <CardStats>
               <div>
                 {/* {props.availableFood && (
@@ -205,14 +209,16 @@ const Overview: React.FC<Prop> = (props) => {
                   </div>
                 )} */}
                 <div className="text-4xl">
-                  {props.availableFood?.toLocaleString()}
+                  {availableFood?.toLocaleString()}
                 </div>{' '}
               </div>
             </CardStats>
           )}
           {isOwner && (
             <Button
-              onClick={() => props.onSetSubview('Food')}
+              onClick={() => {
+                router.push(`/realm/${realm?.realmId}/military`);
+              }}
               variant="outline"
               size="xs"
             >
@@ -220,11 +226,8 @@ const Overview: React.FC<Prop> = (props) => {
             </Button>
           )}
         </Card>
-
-        <Card
-          loading={props.loading}
-          className="col-span-12 lg:col-start-1 lg:col-end-4 "
-        >
+        {/* TODO refactor loading */}
+        <Card className="col-span-12 lg:col-start-1 lg:col-end-4 ">
           <CardTitle>Land Used</CardTitle>
           <CardBody>
             <div className="flex flex-wrap">
@@ -255,10 +258,8 @@ const Overview: React.FC<Prop> = (props) => {
             {props.buildingUtilisation && props.buildingUtilisation.maxSqm}
           </CardStats>
         </Card>
-        <Card
-          loading={props.loading}
-          className="col-span-12 row-span-1 md:col-span-6 lg:col-start-4 lg:col-span-4"
-        >
+        {/* TODO refactor loading */}
+        <Card className="col-span-12 row-span-1 md:col-span-6 lg:col-start-4 lg:col-span-4">
           <CardTitle>Resources</CardTitle>
           <CardBody>
             {realm && (

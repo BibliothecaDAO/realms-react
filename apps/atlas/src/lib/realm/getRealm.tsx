@@ -1,60 +1,55 @@
+import { graphql } from '@/gql/gql';
+import { graphqlClient } from '@/lib/graphql-client';
+
+const getRealmDocument = graphql(/* GraphQL */ `
+  query getRealm($id: Float!) {
+    realm(id: $id) {
+      realmId
+      realmId
+      owner
+      bridgedOwner
+      ownerL2
+      settledOwner
+      name
+      rarityRank
+      rarityScore
+      orderType
+      wonder
+      lastAttacked
+      lastClaimTime
+      lastVaultTime
+      longitude
+      latitude
+      resources {
+        resourceId
+        resourceName
+        level
+        upgrades
+      }
+      traits {
+        type
+        qty
+      }
+      ...RealmArmies
+      relic {
+        realmId
+        heldByRealm
+      }
+      relicsOwned {
+        realmId
+        heldByRealm
+      }
+    }
+  }
+`);
+
 export async function getRealm(id) {
   try {
-    const res = await fetch(
-      'https://dev-indexer-gu226.ondigitalocean.app/graphql',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `
-                  query getRealm($id: Float!) {
-                      realm(id: $id) {
-                          realmId
-                          realmId
-                          owner
-                          bridgedOwner
-                          ownerL2
-                          settledOwner
-                          name
-                          rarityRank
-                          rarityScore
-                          orderType
-                          wonder
-                          lastAttacked
-                          lastClaimTime
-                          lastVaultTime
-                          longitude
-                          latitude
-                          resources {
-                            resourceId
-                            resourceName
-                            level
-                            upgrades
-                          }
-                          traits {
-                            type
-                            qty
-                          }
-                        
-                          relic {
-                            realmId
-                            heldByRealm
-                          }
-                          relicsOwned {
-                            realmId
-                            heldByRealm
-                          }
-                      }
-                  }
-              `,
-          variables: { id: parseFloat(id) },
-        }),
-      }
-    );
-    const response = await res.json();
-    return response.data;
+    const { realm } = await graphqlClient().request(getRealmDocument, {
+      id: parseFloat(id),
+    });
+    console.log(realm);
+    return realm;
   } catch (e) {
     console.log(e);
   }

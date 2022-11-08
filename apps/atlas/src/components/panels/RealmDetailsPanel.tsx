@@ -24,9 +24,9 @@ import usePrevious from '@/hooks/usePrevious';
 import { trimmedOrder } from '@/lib/realm/getters/orders';
 
 import { storage } from '@/util/localStorage';
+import Overview from '../../app/realm/[id]/Overview';
 import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 import Food from './Realms/Food';
-import Overview from './Realms/Overview';
 import RealmArmyPanel from './Realms/panels/RealmArmyPanel';
 import RealmLorePanel from './Realms/panels/RealmLorePanel';
 import ResourceDetails from './Realms/Resources';
