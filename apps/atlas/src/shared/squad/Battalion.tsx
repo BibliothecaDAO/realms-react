@@ -24,6 +24,7 @@ const MAX_BATTALIONS = 30;
 export const Battalion: React.FC<
   BattalionInterface & {
     add?: (id) => void;
+    addResources?: (qty) => void;
     quantity;
     health;
     disabled?;
@@ -54,6 +55,18 @@ export const Battalion: React.FC<
                   />
                 );
               })}
+            {props.addResources && (
+              <Button
+                onClick={() => {
+                  props.addResources?.(input);
+                }}
+                size="xs"
+                className="ml-2"
+                variant="outline"
+              >
+                Buy
+              </Button>
+            )}
           </div>
           <div className="flex self-center space-x-3">
             {props.add && (

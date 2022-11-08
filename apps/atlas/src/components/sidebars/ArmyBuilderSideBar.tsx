@@ -8,6 +8,7 @@ import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import {
   battalionInformation,
   defaultArmy,
@@ -15,6 +16,7 @@ import {
   battalionIdToString,
 } from '@/constants/army';
 import { useCommandList } from '@/context/CommandListContext';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -76,6 +78,8 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
 
   const army = props.army;
   const { battalions, getArmyStats, getArmyCost } = useArmy();
+
+  const { batchAddResources } = useResourcesContext();
 
   const activeBattalionData = battalionInformation.find(
     (a) => a.id === activeBattalion?.battalionId
@@ -197,6 +201,18 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                     } else return [...current, value];
                   })
                 }
+                addResources={(qty) => {
+                  batchAddResources(
+                    battalion.battalionCost
+                      .filter((r) => r.amount > 0)
+                      .map((r) => ({
+                        resourceId: r.resourceId,
+                        resourceName: r.resourceName,
+                        amount: r.amount * qty,
+                      }))
+                  );
+                  toast('Resources are added to the swap cart');
+                }}
                 quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                 health={army ? army[nameArray[index] + 'Health'] : ''}
                 disabled={checkCanBuilt(battalion.buildingId)}
@@ -316,6 +332,27 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                     );
                   }
                 })}
+              {totalCost?.length && (
+                <Button
+                  onClick={() => {
+                    batchAddResources(
+                      totalCost
+                        .filter((r) => r.amount > 0)
+                        .map((r) => ({
+                          resourceId: r.resourceId,
+                          resourceName: r.resourceName,
+                          amount: r.amount,
+                        }))
+                    );
+                    toast('Resources are added to the swap cart');
+                  }}
+                  size="xs"
+                  className="ml-2"
+                  variant="outline"
+                >
+                  Add to cart
+                </Button>
+              )}
             </div>
           </div>
         </CardBody>

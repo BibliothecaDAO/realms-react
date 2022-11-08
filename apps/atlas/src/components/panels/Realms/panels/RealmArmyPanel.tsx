@@ -11,6 +11,7 @@ import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
 import { Travel } from '@/components/panels/Realms/details/Travel';
 import { ArmyBuilderSideBar } from '@/components/sidebars/ArmyBuilderSideBar';
@@ -22,6 +23,7 @@ import { defaultArmy } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import type { GetRealmQuery, Army, Realm } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 import useBuildings, {
@@ -109,6 +111,8 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
     castle: '1',
     mageTower: '1',
   });
+
+  const { batchAddResources } = useResourcesContext();
 
   useEffect(() => {
     setBuildQty({
@@ -330,6 +334,27 @@ const RealmArmyPanel: React.FC<Prop> = (props) => {
                                 />
                               );
                             })}
+                          {a.cost && (
+                            <Button
+                              onClick={() => {
+                                batchAddResources(
+                                  a.cost
+                                    .filter((r) => r.amount > 0)
+                                    .map((r) => ({
+                                      resourceId: r.resourceId,
+                                      resourceName: r.resourceName,
+                                      amount: r.amount,
+                                    }))
+                                );
+                                toast('Resources are added to the swap cart');
+                              }}
+                              size="xs"
+                              className="ml-2"
+                              variant="outline"
+                            >
+                              Buy
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
