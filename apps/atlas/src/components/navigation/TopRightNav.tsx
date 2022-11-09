@@ -37,9 +37,9 @@ export const TopRightNav = () => {
     <div className="absolute z-40 right-0 top-0">
       <div className="relative">
         <div
-          className={`absolute rounded-r-full rounded-b-full w-48 h-48 shadow-2xl border-yellow-800 z-40 border  -ml-24 -mt-24 top-0  ${TxStyle()}`}
+          className={`absolute rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 z-40 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0  ${TxStyle()}`}
         ></div>
-        <div className="z-40 top-5 right-1 absolute">
+        <div className="z-40 top-3 lg:top-5 right-0 lg:right-1 absolute">
           {address && <TransactionNavItem onClick={onTransactionNavClick} />}
         </div>
       </div>

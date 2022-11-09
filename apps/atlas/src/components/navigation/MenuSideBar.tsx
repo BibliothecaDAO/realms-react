@@ -37,13 +37,13 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'border bg-black  border-l-2 border-transparent w-8 h-8 sm:w-10 sm:h-10 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
+    'border bg-black  border-l-2 border-transparent w-6 h-6 lg:w-8 lg:h-8 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
 
   const textClasses =
     'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible  text-shadow-[0_2px_6px_#6366f1]';
 
   const iconClasses = (page) => {
-    return `w-4 mx-auto sm:w-4  ${
+    return `lg:w-4 mx-auto w-3  ${
       isPage(page) ? ' fill-yellow-100' : 'fill-gray-300'
     }`;
   };
@@ -119,12 +119,8 @@ export const MenuSideBar = () => {
           {showMenu ? <Close /> : <Menu />}
         </button>
       </div>
-      <animated.div
-        style={animation}
-        id="menuSidebar"
-        className={` sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1  shadow-yellow-100/20 ${
-          showMenu ? '' : 'translate-y-full hidden sm:transform-none sm:block'
-        }`}
+      <div
+        className={`sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1 shadow-yellow-100/20`}
       >
         {menus.map((menu) => (
           <Link href={getPageHref(menu.page)} key={menu.page} shallow={true}>
@@ -132,7 +128,7 @@ export const MenuSideBar = () => {
               <IconButton
                 className={`${buttonClasses}  ${
                   isPage(menu.page)
-                    ? 'bg-cta-100 bg-gradient-to-r from-orange-500 shadow-purple-500 -translate-y-1 border-yellow-700 fill-yellow-600     '
+                    ? 'bg-cta-100 bg-gradient-to-r from-orange-500 shadow-purple-500  border-yellow-700 fill-yellow-600     '
                     : ' border-yellow-700'
                 }`}
                 aria-label={menu.text}
@@ -166,7 +162,7 @@ export const MenuSideBar = () => {
             }}
           </ConnectKitButton.Custom>
         </div>
-      </animated.div>
+      </div>
     </div>
   );
 };

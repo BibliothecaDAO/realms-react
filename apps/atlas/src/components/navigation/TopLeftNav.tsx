@@ -61,30 +61,30 @@ export const TopLeftNav = () => {
   return (
     <div className="absolute z-40">
       <div className="relative">
-        <div className="w-64 h-10 pl-28 absolute top-0 bg-white z-20 border-b border-r border-yellow-800 rounded-br-full shadow-md  bg-black ">
+        <div className="w-48 lg:w-64 h-8 lg:h-10 md:pl-16 lg:pl-28 absolute top-0 bg-white z-20 border-b border-r border-yellow-800 rounded-br-full shadow-md  bg-black md:text-xs lg:text-lg">
           {address && (
             <Button
               className="flex py-2 px-2 "
               onClick={onLordsNavClick}
               variant="unstyled"
             >
-              <Lords className="w-6 fill-current" />{' '}
-              <span className="pl-4">
+              <Lords className="md:w-4 lg:w-6 fill-current" />{' '}
+              <span className="md:pl-2 lg:pl-4">
                 {(+formatEther(lordsBalance)).toLocaleString()}
               </span>
             </Button>
           )}
         </div>
 
-        <div className="bg-white absolute rounded-r-full rounded-b-full w-48 h-48 shadow-2xl border-yellow-800  z-40 border  -ml-24 -mt-24 top-0 bg-black paper shadow-yellow-200 hover:bg-gray-1000 "></div>
-        <div className="z-40 top-5 left-4 absolute">
+        <div className="bg-white absolute rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800  z-40 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0 bg-black paper shadow-yellow-200 hover:bg-gray-1000 "></div>
+        <div className="z-40 md:top-4 md:left-3 lg:top-5 lg:left-4 absolute">
           <Button href="/account" variant="unstyled">
-            <Crown className="w-9 h-9 fill-current " />
+            <Crown className="md:w-6 md:w-6 lg:w-9 lg:h-9 fill-current " />
           </Button>
           {/* {address && <TransactionNavItem onClick={onTransactionNavClick} />} */}
         </div>
       </div>
-      <div className="pl-64">
+      <div className="pl-48 lg:pl-64">
         <NetworkConnectButton />
       </div>
 
