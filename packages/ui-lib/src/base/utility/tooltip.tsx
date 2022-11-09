@@ -1,6 +1,7 @@
 import type * as PopperJS from '@popperjs/core';
 import React, { useCallback, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
+import { twMerge } from 'tailwind-merge';
 
 type TooltipProps = {
   tooltipText: React.ReactElement;
@@ -16,6 +17,7 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
     enterDelay = 250,
     leaveDelay = 150,
     placement = 'bottom',
+    className,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +43,7 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
   }, [leaveDelay]);
 
   return (
-    <div>
+    <div className={twMerge('relative', className)}>
       <div
         ref={setReferenceElement}
         onMouseEnter={handleMouseEnter}
@@ -53,7 +55,10 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
 
       <div
         ref={setPopperElement}
-        style={styles.popper}
+        style={{
+          ...styles.popper,
+          visibility: isOpen ? 'visible' : 'hidden',
+        }}
         {...attributes.popper}
         className={`transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0'}`}
       >

@@ -42,11 +42,10 @@ export function RealmOverviews(props: RealmOverviewsProps) {
           <Tooltip
             key={index}
             placement="top"
-            className="ml-3 text-xs"
-            tooltipText={<span className="text-sm">{tabNames[index]}</span>}
+            className="ml-4"
+            tooltipText={<div className="text-sm">{tabNames[index]}</div>}
           >
             <button
-              className="ml-4"
               onClick={() => {
                 play();
                 cardRefs.current?.forEach((el) => {

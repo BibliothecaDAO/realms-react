@@ -10,7 +10,7 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
-import { useState, useMemo, useReducer } from 'react';
+import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { battalionInformation, battalionIdToString } from '@/constants/army';
 import type { Resource } from '@/context/ResourcesContext';
@@ -281,6 +281,25 @@ export function SwapResources(): ReactElement {
     return isBuy ? 1 : -1;
   }, [selectedSwapResourcesWithBalance, calculatedTotalInLords, isBuy]);
 
+  const [buildingsQty, setBuildingsQty] = useState({});
+
+  const [battalionQty, setBattalionQty] = useState({});
+
+  useEffect(() => {
+    gameConstants?.battalionCosts.forEach((battalion) => {
+      setBattalionQty((prev) => ({
+        ...prev,
+        [battalion.battalionId]: 1,
+      }));
+    });
+    gameConstants?.buildingCosts.forEach((building) => {
+      setBuildingsQty((prev) => ({
+        ...prev,
+        [building.buildingId]: 1,
+      }));
+    });
+  }, [gameConstants]);
+
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full my-4">
@@ -304,21 +323,52 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
                   Add resources required for:
                   {gameConstants?.buildingCosts
                     ?.filter((b) => b.resources.length)
                     .map((a, i) => {
                       return (
-                        <Popover.Button key={i} as="div">
-                          <Button
-                            onClick={() => batchAddResources(a.resources)}
-                            size="xs"
-                            variant="outline"
-                          >
-                            {a.buildingName}
-                          </Button>
-                        </Popover.Button>
+                        <div key={i} className="flex items-center">
+                          <Popover.Button as="div">
+                            <Button
+                              onClick={() => {
+                                batchAddResources(
+                                  a.resources.map((r) => ({
+                                    resourceId: r.resourceId,
+                                    resourceName: r.resourceName,
+                                    amount:
+                                      r.amount * buildingsQty[a.buildingId],
+                                  }))
+                                );
+                              }}
+                              size="xs"
+                              variant="outline"
+                            >
+                              Add
+                            </Button>
+                          </Popover.Button>
+                          <InputNumber
+                            value={buildingsQty[a.buildingId]}
+                            inputSize="sm"
+                            colorScheme="transparent"
+                            className="w-12 mx-2 bg-white border rounded border-white/40"
+                            min={1}
+                            max={100}
+                            stringMode
+                            onChange={(value) => {
+                              if (value) {
+                                setBuildingsQty((current) => {
+                                  return {
+                                    ...current,
+                                    [a.buildingId]: value.toString(),
+                                  };
+                                });
+                              }
+                            }}
+                          />
+                          <div>{a.buildingName}</div>
+                        </div>
                       );
                     })}
                 </div>
@@ -344,19 +394,50 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
                   Add resources required for:
                   {gameConstants?.battalionCosts?.map((a, i) => {
                     return (
-                      <Popover.Button key={i} as="div">
-                        <Button
-                          onClick={() => batchAddResources(a.resources)}
-                          size="xs"
-                          variant="outline"
-                        >
-                          {battalionIdToString(a.battalionId)}
-                        </Button>
-                      </Popover.Button>
+                      <div key={i} className="flex items-center">
+                        <Popover.Button as="div">
+                          <Button
+                            onClick={() => {
+                              batchAddResources(
+                                a.resources.map((r) => ({
+                                  resourceId: r.resourceId,
+                                  resourceName: r.resourceName,
+                                  amount:
+                                    r.amount * battalionQty[a.battalionId],
+                                }))
+                              );
+                            }}
+                            size="xs"
+                            variant="outline"
+                          >
+                            Add
+                          </Button>
+                        </Popover.Button>
+                        <InputNumber
+                          value={battalionQty[a.battalionId]}
+                          inputSize="sm"
+                          colorScheme="transparent"
+                          className="w-12 mx-2 bg-white border rounded border-white/40"
+                          min={1}
+                          max={100}
+                          stringMode
+                          onChange={(value) => {
+                            if (value) {
+                              setBattalionQty((current) => {
+                                return {
+                                  ...current,
+                                  [a.battalionId]: value.toString(),
+                                };
+                              });
+                            }
+                          }}
+                        />
+                        <div>{battalionIdToString(a.battalionId)}</div>
+                      </div>
                     );
                   })}
                 </div>
