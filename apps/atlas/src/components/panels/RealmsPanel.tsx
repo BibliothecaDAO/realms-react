@@ -219,7 +219,7 @@ export const RealmsPanel = () => {
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 
   return (
-    <BasePanel open={true} style="lg:w-12/12 ">
+    <BasePanel open={true} style="lg:w-12/12  ">
       <div className="flex flex-wrap justify-between px-3 pt-16 sm:px-6">
         <h1>Realms</h1>
         <div className="w-full my-1 sm:w-auto">

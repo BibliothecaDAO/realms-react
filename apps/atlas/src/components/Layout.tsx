@@ -23,7 +23,7 @@ export default function Layout({
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
             {/* <Header /> */}
-            <div className="relative w-full h-full pt-32 bg-black pl-10">
+            <div className="relative w-full h-full pt-32 bg-black">
               {children}
               <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
               <div id="sidebar-root">

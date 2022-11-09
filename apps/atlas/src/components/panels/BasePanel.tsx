@@ -17,7 +17,9 @@ export const BasePanel = (props: Props) => {
 
   return (
     <animated.div
-      className={`absolute top-0 w-full h-full ${props.open ? 'z-10' : ''}`}
+      className={`absolute top-0 w-full h-full pl-12 bg-black ${
+        props.open ? 'z-10' : ''
+      }`}
       style={animation}
     >
       <div

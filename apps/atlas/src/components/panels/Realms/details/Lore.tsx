@@ -65,14 +65,13 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
 
       {hasNoResults() && (
         <div className="grid grid-cols-12">
-          <Card className="col-span-12">
+          <div className="col-span-12">
             <CardTitle>No Lore for {realmName} has written yet!</CardTitle>
             <CardBody>
-              Want to be the first?
               <div className="mt-2">
                 <Button
                   href="/lore"
-                  size="sm"
+                  size="xs"
                   className="w-full"
                   variant={'primary'}
                 >
@@ -80,7 +79,7 @@ export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
                 </Button>
               </div>
             </CardBody>
-          </Card>
+          </div>
         </div>
       )}
 
