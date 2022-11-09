@@ -66,8 +66,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       loading: loadingFood,
     } = useFood(props.realm as Realm);
 
-    console.log(props.realm);
-
+    console.log(buildings);
     const tabs = useMemo(
       () => [
         // {
@@ -119,7 +118,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
       ],
-      [props.loading, props.realm]
+      [props.loading, props.realm, availableFood, buildings, realmFoodDetails]
     );
 
     const [selectedTab, setSelectedTab] = useState(0);

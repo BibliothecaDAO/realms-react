@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
@@ -77,14 +77,10 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 const useBuildings = (realm: Realm | undefined): Building => {
-  const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
-
-  const [buildings, setBuildings] = useState<BuildingDetail[]>();
-
   const txQueue = useCommandList();
-
+  const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
   const { gameConstants } = useGameConstants();
-
+  const [buildings, setBuildings] = useState<BuildingDetail[]>();
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
 
@@ -104,7 +100,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     return integrity ? integrity : 0;
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (!gameConstants || !realm) {
       return;
     }
@@ -258,6 +254,8 @@ const useBuildings = (realm: Realm | undefined): Building => {
     const regions = getTrait(realm, 'Region');
 
     const max = cities * (regions / 2) + 100;
+
+    console.log(buildings);
 
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
   }, [realm, gameConstants]);
