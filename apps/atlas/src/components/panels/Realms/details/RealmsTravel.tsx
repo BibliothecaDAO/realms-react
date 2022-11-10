@@ -1,13 +1,10 @@
 import { Button, Table, OrderIcon } from '@bibliotheca-dao/ui-lib/base';
-import { useRouter } from 'next/router';
 import React from 'react';
-
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
   GetRealmsQuery,
   RealmFragmentFragment,
 } from '@/generated/graphql';
-
 import { getTravelTime } from '@/shared/Getters/Realm';
 
 type Prop = {
@@ -17,12 +14,14 @@ type Prop = {
 
 export const RealmsTravel = ({ realm, userRealms }: Prop) => {
   const ids = userRealms?.realms.map((a) => a.realmId) || [];
-  const router = useRouter();
+
   const {
-    travelContext: { travel, setTravelArcs },
+    travelContext: { setTravelArcs },
+    mapContext: { navigateToAsset },
   } = useAtlasContext();
+
   const travelTable = userRealms?.realms.map((a) => {
-    const travel_information = getTravelTime({
+    const travelInformation = getTravelTime({
       travellerId: realm.realmId,
       destinationId: a.realmId,
     });
@@ -37,15 +36,11 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
           {a.name}
         </span>
       ),
-      distance: travel_information.distance,
-      time: <span>{(travel_information.time / 60 / 60).toFixed(2)} Hrs</span>,
+      distance: travelInformation.distance,
+      time: <span>{(travelInformation.time / 60 / 60).toFixed(2)} Hrs</span>,
       action: (
         <Button
-          onClick={() => {
-            router.push(`/realm/${a.realmId}?tab=Overview`, undefined, {
-              shallow: true,
-            });
-          }}
+          onClick={() => navigateToAsset(a.realmId, 'realm')}
           variant="outline"
           size="xs"
         >

@@ -135,7 +135,7 @@ function MapModule() {
       getTargetPosition: (d: any) => d.target,
       getSourceColor: [255, 255, 204],
       getTargetColor: [255, 255, 204],
-      getWidth: 8,
+      getWidth: 1,
     });
   }, [travelContext.travelArcs]);
 

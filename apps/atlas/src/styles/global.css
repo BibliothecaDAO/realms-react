@@ -139,3 +139,7 @@ html {
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
+
+div#deckgl-wrapper {
+  overflow: hidden;
+}

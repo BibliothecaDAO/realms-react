@@ -22,6 +22,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const { findRealmsAttackingArmies } = useArmy();
   const {
     travelContext: { travel, setTravelArcs },
+    mapContext: { navigateToAsset },
   } = useAtlasContext();
 
   const allArmies = findRealmsAttackingArmies(userRealms?.realms);
@@ -32,13 +33,16 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
     <div>
       <h3>Your Armies</h3>
       <Button
-        onClick={() => setTravelArcs(realm.realmId, ids)}
+        onClick={() => {
+          setTravelArcs(realm.realmId, ids);
+          navigateToAsset(realm.realmId, 'realm');
+        }}
         variant="primary"
         size="xs"
       >
         show armies distance
       </Button>
-      <div className="relative grid grid-cols-2 gap-2 mt-4 overflow-x-auto">
+      <div className="relative grid grid-cols-1 gap-2 mt-4 overflow-x-auto">
         {allArmies?.map((army, index) => {
           return (
             <ArmyCard

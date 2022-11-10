@@ -40,13 +40,11 @@ export const Travel = ({ realm }: Prop) => {
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
-        variant="default"
+        variant="small"
       >
         <Tabs.List className="">
           {tabs.map((tab, index) => (
-            <Tabs.Tab key={index} className="uppercase">
-              {tab.label}
-            </Tabs.Tab>
+            <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
           ))}
         </Tabs.List>
 

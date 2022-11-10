@@ -248,16 +248,16 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                       />
                     </div>
 
-                    <div className="p-3 capitalize">
-                      <h3>{a.name}</h3>
-                      <div className="w-full text-xs font-semibold uppercase">
-                        {(buildingIntegrity(a.id) / 60 / 60).toFixed(2)} hours
-                        per building
+                    <div className="p-2 capitalize ml-4">
+                      <div className="w-full text-xs">
+                        {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
+                        Day Decay
                       </div>
-                      <div className="flex flex-wrap my-2">
+                      <h3>
+                        {a.name} - {a.quantityBuilt}
+                      </h3>
+                      <div className="flex flex-wrap my-1">
                         <div className="flex">
-                          <p className="sm:text-xl">{a.quantityBuilt}</p>
-
                           <div className="self-end">
                             <CountdownTimer
                               date={(a.buildingDecay * 1000).toString()}
@@ -265,7 +265,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex w-full mt-3 space-x-2">
+                      <div className="flex w-full mt-1 space-x-2">
                         <Button
                           onClick={() =>
                             build({
@@ -279,7 +279,6 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                               },
                             })
                           }
-                          className="w-full"
                           size="xs"
                           variant="primary"
                         >
@@ -305,7 +304,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                           }}
                         />{' '}
                       </div>
-                      <div className="flex mt-4">
+                      <div className="flex mt-2">
                         {a.cost &&
                           a.cost.map((b, i) => {
                             return (

@@ -114,14 +114,14 @@ export function useAtlasMap(): AtlasMap {
     setViewState({
       ...coordinates,
       zoom: 8,
-      pitch: 20,
+      pitch: 90,
       bearing: 0,
       bounds: [
         [-180, -180], // Southwest coordinates
         [180, 180], // Northeast coordinates
       ],
-      transitionDuration: 5000,
-      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 3000,
+      transitionInterpolator: new FlyToInterpolator({ speed: 2.5, curve: 1 }),
     });
   }, [coordinates?.latitude, coordinates?.latitude]);
 
