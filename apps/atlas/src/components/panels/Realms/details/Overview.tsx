@@ -51,7 +51,54 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
           <span className="">{props.realm.rarityScore}</span>
         </span>
       </div> */}
-      <div className="flex flex-wrap">
+      <div className="flex justify-between">
+        <div>
+          <div className="p-2">
+            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Population
+            </h5>
+            <h3>
+              1.0 <span className="text-green-800">(+1)</span>{' '}
+            </h3>
+          </div>
+          <div className="p-2">
+            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Happiness
+            </h5>
+            <h3>
+              100 <span className="text-green-800">(+0)</span>
+            </h3>
+          </div>
+          <div className="p-2">
+            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Food
+            </h5>
+            <h3>
+              25,000 <span className="text-green-800">(+0)</span>
+            </h3>
+          </div>
+        </div>
+        <div>
+          <div className="p-2">
+            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Days Produced
+            </h5>
+            <h2>
+              3/3 <span className="text-green-800 text-xl">(+750 units)</span>
+            </h2>
+          </div>
+          <div className="p-2">
+            <h5 className="opacity-80  text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Vault
+            </h5>
+            <h2>
+              6 <span className="text-green-800 text-xl">(+750 units)</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap justify-center mt-4">
         {props.realm.resources?.map((re, index) => (
           <div key={index} className="flex p-2 flex-col justify-center">
             <ResourceIcon

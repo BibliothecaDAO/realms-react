@@ -34,16 +34,16 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
 
   return (
     <div>
-      <div className="relative h-36">
+      {/* <div className="relative h-36">
         <ParentSize>
           {({ width, height }) => (
             <RadarMap armyOne={armyStats} height={height} width={width} />
           )}
         </ParentSize>
-      </div>
-      <div className="w-full mt-3 uppercase">
+      </div> */}
+      <div className="w-full mt-3">
         <div className="flex justify-between">
-          <h5 className="">Statistics</h5>
+          <h4 className="">Statistics</h4>
           <span className="pr-6 ml-auto">A</span> <span>D</span>
         </div>
         <hr className="border-white/30" />

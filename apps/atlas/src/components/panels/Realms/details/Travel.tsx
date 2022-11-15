@@ -25,11 +25,11 @@ export const Travel = ({ realm }: Prop) => {
   const tabs = useMemo(
     () => [
       {
-        label: <Map className="self-center w-6 h-6 fill-current" />,
+        label: <Map className="self-center w-4 h-4 fill-current" />,
         component: <RealmsTravel realm={realm} userRealms={userRealms} />,
       },
       {
-        label: <Head className="self-center w-6 h-6 fill-current" />,
+        label: <Head className="self-center w-4 h-4 fill-current" />,
         component: <ArmiesTravel realm={realm} userRealms={userRealms} />,
       },
     ],

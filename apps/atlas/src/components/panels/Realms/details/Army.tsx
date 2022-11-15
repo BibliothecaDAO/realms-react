@@ -325,47 +325,53 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           </div>
         </div>
       )}
+      {realm.ownArmies.length > 0 ? (
+        <div className="col-span-12">
+          <div className="flex justify-between w-full">
+            <CardTitle>Realm Armies</CardTitle>
+          </div>
+          <div className="grid grid-cols-1">
+            {realm.ownArmies.map((army) => {
+              return (
+                <ArmyCard
+                  onBuildArmy={() => {
+                    setSelectedArmy(army);
+                    setIsArmyBuilding(true);
+                  }}
+                  onTravel={() =>
+                    travel(army.armyId, army.realmId, realm.realmId)
+                  }
+                  selectedRealm={realm.realmId}
+                  key={army.armyId}
+                  army={army}
+                />
+              );
+            })}
+            {isOwner && (
+              <Card className="flex justify-center">
+                <Button
+                  onClick={() => {
+                    buildNewArmy();
+                    setIsArmyBuilding(true);
+                  }}
+                  variant="primary"
+                  className="self-center"
+                >
+                  Summon New Army
+                </Button>{' '}
+              </Card>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="col-span-12">
+          <h3>{fetchRealmNameById(realm.realmId || 0)} has no Armies </h3>
+        </div>
+      )}
 
-      <div className="col-span-12">
-        <div className="flex justify-between w-full">
-          <CardTitle>Realm Armies</CardTitle>
-        </div>
-        <div className="grid grid-cols-1">
-          {realm.ownArmies.map((army) => {
-            return (
-              <ArmyCard
-                onBuildArmy={() => {
-                  setSelectedArmy(army);
-                  setIsArmyBuilding(true);
-                }}
-                onTravel={() =>
-                  travel(army.armyId, army.realmId, realm.realmId)
-                }
-                selectedRealm={realm.realmId}
-                key={army.armyId}
-                army={army}
-              />
-            );
-          })}
-          {isOwner && (
-            <Card className="flex justify-center">
-              <Button
-                onClick={() => {
-                  buildNewArmy();
-                  setIsArmyBuilding(true);
-                }}
-                variant="primary"
-                className="self-center"
-              >
-                Summon New Army
-              </Button>{' '}
-            </Card>
-          )}
-        </div>
-      </div>
       <div className="col-span-12 ">
         <div className="flex justify-between w-full">
-          <CardTitle>All Your Armies</CardTitle>
+          <CardTitle>Ser, your Armies</CardTitle>
         </div>
         <div className="grid grid-cols-1">
           {allArmies?.map((army) => {

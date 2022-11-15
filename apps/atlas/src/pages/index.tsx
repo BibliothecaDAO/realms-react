@@ -2,6 +2,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
+import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import DeckGL from '@deck.gl/react';
 import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
@@ -145,6 +146,19 @@ function MapModule() {
       createScatterPlot('realm', (realms as any).features),
       // createScatterPlot('loot', loot_bags.features),
       // createScatterPlot('ga', ga_bags.features),
+      new ScenegraphLayer({
+        id: 'scenegraph-layer',
+        data: (realms as any).features,
+        pickable: true,
+        scenegraph: 'public/castle.glb',
+        getPosition: (d: any) => d.xy,
+        getOrientation: (d) => [0, Math.random() * 180, 90],
+        _animations: {
+          '*': { speed: 5 },
+        },
+        sizeScale: 5000,
+        _lighting: 'pbr',
+      }),
     ];
 
     return [...assets, arcsLayer, ownRealms];

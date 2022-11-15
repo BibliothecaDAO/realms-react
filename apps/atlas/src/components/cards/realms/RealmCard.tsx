@@ -69,27 +69,27 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     console.log(buildings);
     const tabs = useMemo(
       () => [
+        {
+          label: <Castle className="self-center w-4 h-4 fill-current" />,
+          component: <RealmOverview {...props} />,
+        },
         // {
         //   label: <Castle className="self-center w-5 h-5 fill-current" />,
-        //   component: <RealmOverview {...props} />,
+        //   component: (
+        //     <RealmResources
+        //       showRaidable
+        //       showClaimable
+        //       realm={props.realm}
+        //       loading={props.loading}
+        //     />
+        //   ),
         // },
         {
-          label: <Castle className="self-center w-5 h-5 fill-current" />,
-          component: (
-            <RealmResources
-              showRaidable
-              showClaimable
-              realm={props.realm}
-              loading={props.loading}
-            />
-          ),
-        },
-        {
-          label: <Sword className="self-center w-5 h-5 fill-current" />,
+          label: <Sword className="self-center w-4 h-4 fill-current" />,
           component: <RealmsArmy buildings={buildings} realm={props.realm} />,
         },
         {
-          label: <Sickle className="self-center w-5 h-5  fill-current" />,
+          label: <Sickle className="self-center w-4 h-4  fill-current" />,
           component: (
             <RealmsFood
               realmFoodDetails={realmFoodDetails}
@@ -101,15 +101,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
         {
-          label: <Globe className="self-center w-5 h-5 fill-current" />,
+          label: <Globe className="self-center w-4 h-4 fill-current" />,
           component: <Travel realm={props.realm} />,
         },
         {
-          label: <Scroll className="self-center w-5 h-5  fill-current" />,
+          label: <Scroll className="self-center w-4 h-4  fill-current" />,
           component: <RealmHistory realmId={props.realm.realmId} />,
         },
         {
-          label: <Library className="self-center w-5 h-5  fill-current" />,
+          label: <Library className="self-center w-4 h-4  fill-current" />,
           component: (
             <RealmLore
               realmName={props.realm.name || ''}
@@ -118,7 +118,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
       ],
-      [props.loading, props.realm, availableFood, buildings, realmFoodDetails]
+      [availableFood, buildings, realmFoodDetails, props]
     );
 
     const [selectedTab, setSelectedTab] = useState(0);

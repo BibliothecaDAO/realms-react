@@ -63,11 +63,11 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   const tabs = useMemo(
     () => [
       {
-        label: <Map className="self-center w-6 h-6 fill-current" />,
+        label: <Map className="self-center w-3 h-3 fill-current" />,
         component: <ArmyStatistics army={props.army} />,
       },
       {
-        label: <Head className="self-center w-6 h-6 fill-current" />,
+        label: <Head className="self-center w-3 h-3 fill-current" />,
         component: (
           <ArmyBattalions
             army={props.army}
@@ -100,16 +100,16 @@ export const ArmyCard: React.FC<Prop> = (props) => {
       <div className="flex space-x-3">
         <div className="w-1/2">
           <div className="">
+            <h3>{fetchRealmNameById(army.realmId)}</h3>
             <h5 className="flex">
               <OrderIcon
                 className="mr-3 self-center"
                 size="xs"
                 order={army.orderType ? army.orderType.toLowerCase() : ''}
               />{' '}
-              #{army.armyId == 0 ? '' : army.realmId} | Army{' '}
+              {army.armyId == 0 ? '' : army.realmId} | Army{' '}
               {army.armyId == 0 ? 'Defending' : army.armyId}{' '}
             </h5>
-            <h3>{fetchRealmNameById(army.realmId)}</h3>
           </div>
           {hasArrived && (
             <div className="flex text-sm font-semibold rounded ">

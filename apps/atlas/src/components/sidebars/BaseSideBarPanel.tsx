@@ -22,11 +22,12 @@ export const BaseSideBarPanel = ({
               <Button
                 size="xs"
                 variant="outline"
+                className="rounded-full"
                 onClick={() => {
                   onClose();
                 }}
               >
-                <Close className="w-6" />
+                <Close className="w-6 h-6" />
               </Button>
             )}
           </div>
