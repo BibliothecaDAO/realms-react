@@ -146,19 +146,19 @@ function MapModule() {
       createScatterPlot('realm', (realms as any).features),
       // createScatterPlot('loot', loot_bags.features),
       // createScatterPlot('ga', ga_bags.features),
-      new ScenegraphLayer({
-        id: 'scenegraph-layer',
-        data: (realms as any).features,
-        pickable: true,
-        scenegraph: 'public/castle.glb',
-        getPosition: (d: any) => d.xy,
-        getOrientation: (d) => [0, Math.random() * 180, 90],
-        _animations: {
-          '*': { speed: 5 },
-        },
-        sizeScale: 5000,
-        _lighting: 'pbr',
-      }),
+      // new ScenegraphLayer({
+      //   id: 'scenegraph-layer',
+      //   data: (realms as any).features,
+      //   pickable: true,
+      //   scenegraph: 'public/castle.glb',
+      //   getPosition: (d: any) => d.xy,
+      //   getOrientation: (d) => [0, Math.random() * 180, 90],
+      //   _animations: {
+      //     '*': { speed: 5 },
+      //   },
+      //   sizeScale: 5000,
+      //   _lighting: 'pbr',
+      // }),
     ];
 
     return [...assets, arcsLayer, ownRealms];
