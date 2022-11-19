@@ -71,10 +71,8 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
       ? BASE_RESOURCES_PER_DAY * MAX_DAYS_ACCURED
       : 0;
 
-  const resourcesAccrued = cachedDaysAccrued * BASE_RESOURCES_PER_DAY;
-  const resourceVaultAccrued = cachedVaultDaysAccrued * BASE_RESOURCES_PER_DAY;
-
-  const vaultAccrued = resourceVaultAccrued * (PILLAGE_AMOUNT / 100);
+  const vaultAccrued =
+    cachedVaultDaysAccrued * BASE_RESOURCES_PER_DAY * (PILLAGE_AMOUNT / 100);
 
   const days =
     cachedDaysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : cachedDaysAccrued;

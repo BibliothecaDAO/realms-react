@@ -2,9 +2,19 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
-import { DAY, SECONDS_PER_KM } from '@/constants/buildings';
+import {
+  BASE_HAPPINESS,
+  BASE_RESOURCES_PER_DAY,
+  DAY,
+  MAX_DAYS_ACCURED,
+  NO_DEFENDING_ARMY_LOSS,
+  NO_FOOD_LOSS,
+  NO_RELIC_LOSS,
+  PILLAGE_AMOUNT,
+  SECONDS_PER_KM,
+} from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
-import type { RealmFragmentFragment } from '@/generated/graphql';
+import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 
@@ -350,3 +360,37 @@ export const isFavourite = (
   realm: RealmFragmentFragment,
   favouriteRealms: number[]
 ) => favouriteRealms.indexOf(realm.realmId) > -1;
+
+const DAY_MS = DAY * 1000;
+
+export const getDays = (time) => {
+  return Math.trunc((Date.now() - time) / DAY_MS);
+};
+
+export const getRemainingDays = (time) => {
+  const offsetClaimtime = time % DAY_MS;
+  const remainingDay = DAY_MS - (Date.now() % DAY_MS);
+  return remainingDay + offsetClaimtime + Date.now();
+};
+
+export const maxClaimableResources = (daysAccrued: number) =>
+  daysAccrued > MAX_DAYS_ACCURED
+    ? BASE_RESOURCES_PER_DAY * MAX_DAYS_ACCURED
+    : BASE_RESOURCES_PER_DAY * daysAccrued;
+
+export const vaultResources = (vault) =>
+  vault * BASE_RESOURCES_PER_DAY * (PILLAGE_AMOUNT / 100);
+
+export const daysAccrued = (daysAccrued) =>
+  daysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : daysAccrued;
+
+export const getHappiness = ({ realm, food }) => {
+  const hasRelic = hasOwnRelic(realm) ? 0 : NO_RELIC_LOSS;
+
+  const hasFood = food > 0 ? 0 : NO_FOOD_LOSS;
+
+  const hasDefendingArmy =
+    realm?.ownArmies?.length > 0 ? 0 : NO_DEFENDING_ARMY_LOSS;
+
+  return BASE_HAPPINESS - hasRelic - hasFood - hasDefendingArmy;
+};

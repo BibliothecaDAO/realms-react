@@ -127,6 +127,8 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     skip: !realm,
   });
 
+  console.log('food', foodData);
+
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,
     totalTimeRemainingUntilFarmHarvest: 0,

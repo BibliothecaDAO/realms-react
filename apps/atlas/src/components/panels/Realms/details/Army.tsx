@@ -199,14 +199,8 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card> */}
-      {/* <Card className="col-span-12 md:col-start-1 md:col-end-13">
+      <Card className="col-span-12 md:col-start-1 md:col-end-13">
         <CardTitle>Raidable Resources</CardTitle>
-        <RealmResources
-          realm={realm}
-          loading={false}
-          hideLordsClaimable
-          showRaidable
-        />
 
         {!isOwner && (
           <div className="w-full mt-3">
@@ -228,7 +222,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
             </p>
           </div>
         )}
-      </Card> */}
+      </Card>
       {isOwner && (
         <div className="col-span-12 row-span-2 md:col-span-13">
           <CardTitle>Military Buildings</CardTitle>
@@ -347,20 +341,6 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                 />
               );
             })}
-            {isOwner && (
-              <Card className="flex justify-center">
-                <Button
-                  onClick={() => {
-                    buildNewArmy();
-                    setIsArmyBuilding(true);
-                  }}
-                  variant="primary"
-                  className="self-center"
-                >
-                  Summon New Army
-                </Button>{' '}
-              </Card>
-            )}
           </div>
         </div>
       ) : (
@@ -368,7 +348,20 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           <h3>{fetchRealmNameById(realm.realmId || 0)} has no Armies </h3>
         </div>
       )}
-
+      {isOwner && (
+        <Card className="col-span-12">
+          <Button
+            onClick={() => {
+              buildNewArmy();
+              setIsArmyBuilding(true);
+            }}
+            variant="primary"
+            className="self-center"
+          >
+            Summon New Army
+          </Button>{' '}
+        </Card>
+      )}
       <div className="col-span-12 ">
         <div className="flex justify-between w-full">
           <CardTitle>Ser, your Armies</CardTitle>

@@ -125,7 +125,6 @@ function useResources() {
     ResourceQty[]
   >([]);
 
-  const { contract: resources1155Contract } = useResources1155Contract();
   const { contract: lordsContract } = useLordsContract();
   const { contract: exchangeContract } = useExchangeContract();
   const ownerAddressInt = address
@@ -138,7 +137,7 @@ function useResources() {
       : undefined;
   }, [ownerAddressInt]);
 
-  const { data: lordsBalanceData, refresh } = useStarknetCall({
+  const { data: lordsBalanceData } = useStarknetCall({
     contract: lordsContract,
     method: 'balanceOf',
     args: [ownerAddressInt],
@@ -152,21 +151,20 @@ function useResources() {
       pollInterval: 5000,
     });
 
-  const { data: lpBalanceData, refresh: updateLpBalance } = useStarknetCall({
+  const { data: lpBalanceData } = useStarknetCall({
     contract: exchangeContract,
     method: 'balanceOfBatch',
     args: [resourceMappingArray, resourceMapping],
   });
 
-  const { data: exchangePairData, refresh: updateExchangePairData } =
-    useStarknetCall({
-      contract: exchangeContract,
-      method: 'get_all_currency_reserves',
-      args: [resourceMapping],
-      options: {
-        watch: false,
-      },
-    });
+  const { data: exchangePairData } = useStarknetCall({
+    contract: exchangeContract,
+    method: 'get_all_currency_reserves',
+    args: [resourceMapping],
+    options: {
+      watch: false,
+    },
+  });
 
   const { exchangeInfo, historicPrices } = useMarketRate();
 
@@ -241,13 +239,16 @@ function useResources() {
   };
 
   useEffect(() => {
-    if (!lordsBalanceData || !lordsBalanceData[0]) {
+    if (
+      !walletBalancesData ||
+      !walletBalancesData.walletBalances ||
+      !gameConstants ||
+      !lordsBalanceData ||
+      !lordsBalanceData[0]
+    ) {
       return;
     }
-    setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
-  }, [lordsBalanceData]);
 
-  useEffect(() => {
     setAvailableResourceIds(
       resources
         .map((resource) => resource.id)
@@ -258,16 +259,6 @@ function useResources() {
             ) === undefined
         )
     );
-  }, [selectedSwapResources]);
-
-  useEffect(() => {
-    if (
-      !walletBalancesData ||
-      !walletBalancesData.walletBalances ||
-      !gameConstants
-    ) {
-      return;
-    }
 
     const rates = exchangeInfo ?? [];
     const pluckData = (data: any) => {
@@ -284,7 +275,7 @@ function useResources() {
     const tokenExchangeData = exchangePairData
       ? pluckData(exchangePairData[1])
       : [];
-
+    setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
     setBalance(
       resources.map((resource, index) => {
         const resourceId = resource.id ?? 0;
@@ -308,32 +299,18 @@ function useResources() {
           percentChange: rate?.percentChange24Hr ?? 0,
         };
       })
-
-      // walletBalancesData.walletBalances.map((resourceBalance, index) => {
-      //   const resourceId = resourceBalance.tokenId ?? 0;
-      //   const rate = rates.find((rate) => rate.tokenId === resourceId);
-      //   const rateAmount = rate?.amount ?? '0';
-      //   const resourceName = rate?.tokenName ?? '';
-      //   return {
-      //     resourceId,
-      //     resourceName,
-      //     amount: BigNumber.from(resourceBalance.amount).toString(),
-      //     rate: rateAmount ?? '0',
-      //     lp: userLp[index]?.amount ?? '0',
-      //     currencyAmount: currencyExchangeData[index]?.amount ?? '0',
-      //     tokenAmount: tokenExchangeData[index]?.amount ?? '0',
-      //     percentChange: rate?.percentChange24Hr ?? 0,
-      //   };
-      // })
     );
 
     setBuildingCosts(gameConstants?.buildingCosts);
     setBattalionCosts(gameConstants?.battalionCosts);
   }, [
-    walletBalancesData && walletBalancesData.walletBalances,
-    lpBalanceData && lpBalanceData[0],
-    exchangePairData && exchangePairData[0],
+    walletBalancesData,
+    lpBalanceData,
+    exchangePairData,
     exchangeInfo,
+    gameConstants,
+    lordsBalanceData,
+    selectedSwapResources,
   ]);
 
   const getResourceById = useCallback(
@@ -350,7 +327,7 @@ function useResources() {
         ...getResourceById(resource.resourceId),
       } as Resource & ResourceQty;
     });
-  }, [selectedSwapResources, balance]);
+  }, [selectedSwapResources, getResourceById]);
 
   return {
     availableResourceIds,

@@ -5,14 +5,7 @@ import {
   useTransactionManager,
   useTransactions,
 } from '@starknet-react/core';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useAccount as useL1Account } from 'wagmi';
-import { useResourcesContext } from '@/context/ResourcesContext';
-import { usePlayer } from '@/hooks/usePlayer';
-import NetworkConnectButton from '@/shared/NetworkConnectButton';
-import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
 import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
 import TransactionNavItem from './TransactionNavItem';
 

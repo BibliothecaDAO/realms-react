@@ -67,8 +67,6 @@ interface ResourceAndFoodInput {
 const RealmsFood: React.FC<Prop> = (props) => {
   const realm = props.realm;
 
-  console.log(realm);
-
   const { balance } = useResourcesContext();
 
   const getFishBalance = balance.find((a) => a.resourceId === FISH_ID)?.amount;
@@ -205,7 +203,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
                 </div>
                 <Button
                   onClick={() => {
-                    convert(realm?.realmId, input.fishConversion, WHEAT_ID);
+                    convert(realm?.realmId, input.wheatConversion, WHEAT_ID);
                   }}
                   size="xs"
                   variant="primary"

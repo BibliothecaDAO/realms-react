@@ -525,7 +525,8 @@ const Food: React.FC<Prop> = (props) => {
                 </div>
                 <Button
                   onClick={() => {
-                    convert(realm?.realmId, input.fishConversion, WHEAT_ID);
+               
+                    convert(realm?.realmId, 9000, WHEAT_ID);
                   }}
                   size="xs"
                   variant="primary"

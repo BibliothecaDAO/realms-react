@@ -66,12 +66,17 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       loading: loadingFood,
     } = useFood(props.realm as Realm);
 
-    console.log(buildings);
     const tabs = useMemo(
       () => [
         {
           label: <Castle className="self-center w-4 h-4 fill-current" />,
-          component: <RealmOverview {...props} />,
+          component: (
+            <RealmOverview
+              availableFood={availableFood}
+              realmFoodDetails={realmFoodDetails}
+              {...props}
+            />
+          ),
         },
         // {
         //   label: <Castle className="self-center w-5 h-5 fill-current" />,

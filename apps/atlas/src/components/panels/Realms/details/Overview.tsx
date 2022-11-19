@@ -20,16 +20,25 @@ import {
   getTrait,
   isYourRealm,
   RealmStatus,
+  getDays,
+  getRemainingDays,
+  vaultResources,
+  daysAccrued,
+  maxClaimableResources,
+  getHappiness,
 } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import type { RealmsCardProps } from '@/types/index';
+import type { RealmFoodDetails, RealmsCardProps } from '@/types/index';
 import { RealmImage } from './Image';
 
-const variantMaps: any = {
-  small: { heading: 'lg:text-4xl', regions: 'lg:text-xl' },
-};
+interface RealmOverview {
+  realmFoodDetails: RealmFoodDetails;
+  availableFood: number | undefined;
+}
 
-export function RealmOverview(props: RealmsCardProps): ReactElement {
+export function RealmOverview(
+  props: RealmsCardProps & RealmOverview
+): ReactElement {
   const router = useRouter();
   const { address: l1Address } = useL1Account();
   const { address } = useAccount();
@@ -38,6 +47,15 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
   const { setPlaylistState } = useRealmPlaylist({});
+
+  // days accrued
+  const cachedDaysAccrued = getDays(props.realm?.lastClaimTime);
+
+  // time until next claim
+  const cachedDaysRemained = getRemainingDays(props.realm?.lastClaimTime);
+
+  // vault accrued
+  const cachedVaultDaysAccrued = getDays(props.realm?.lastVaultTime);
 
   return (
     <>
@@ -57,43 +75,40 @@ export function RealmOverview(props: RealmsCardProps): ReactElement {
             <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
               Population
             </h5>
-            <h3>
-              1.0 <span className="text-green-800">(+1)</span>{' '}
-            </h3>
+            <h3>{props.realmFoodDetails.population} </h3>
           </div>
           <div className="p-2">
             <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
               Happiness
             </h5>
             <h3>
-              100 <span className="text-green-800">(+0)</span>
+              {getHappiness({ realm: props.realm, food: props.availableFood })}
             </h3>
           </div>
           <div className="p-2">
             <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Food
+              Food in Store
             </h5>
-            <h3>
-              25,000 <span className="text-green-800">(+0)</span>
-            </h3>
+            <h3>{props.availableFood?.toLocaleString()} </h3>
           </div>
         </div>
         <div>
           <div className="p-2">
             <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Days Produced
+              Resources
             </h5>
             <h2>
-              3/3 <span className="text-green-800 text-xl">(+750 units)</span>
+              {maxClaimableResources(cachedDaysAccrued)}
+              <span className="text-green-800 text-xl">
+                {daysAccrued(cachedDaysAccrued)}/3{' '}
+              </span>
             </h2>
           </div>
           <div className="p-2">
             <h5 className="opacity-80  text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
               Vault
             </h5>
-            <h2>
-              6 <span className="text-green-800 text-xl">(+750 units)</span>
-            </h2>
+            <h2>{vaultResources(cachedVaultDaysAccrued)} </h2>
           </div>
         </div>
       </div>
