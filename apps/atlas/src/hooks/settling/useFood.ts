@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useStarknetCall } from '@starknet-react/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+
 import {
   RealmBuildingId,
   HarvestType,
@@ -11,6 +13,7 @@ import {
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
+import { getPopulation } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmFoodDetails,
@@ -22,6 +25,7 @@ import {
   ModuleAddr,
   useCalculatorContract,
   useFoodContract,
+  useJsonRpc,
 } from './stark-contracts';
 
 export const Entrypoints = {
@@ -115,8 +119,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const { play: harvestWheat } = useUiSounds(soundSelector.harvestWheat);
   const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
 
-  const { contract: foodContract } = useFoodContract();
-  const { contract: calculatorContract } = useCalculatorContract();
+  const { FoodContract } = useJsonRpc();
 
   const [availableFood, setAvailableFood] = useState();
 
@@ -126,8 +129,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     variables: { id: realm?.realmId as number },
     skip: !realm,
   });
-
-  console.log('food', foodData);
 
   const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
     totalFarmHarvest: 0,
@@ -143,83 +144,62 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     population: 0,
   });
 
-  const {
-    data: population,
-    loading: populationLoading,
-    error: errorPopulation,
-  } = useStarknetCall({
-    contract: calculatorContract,
-    method: 'calculate_population',
-    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  });
-
-  const {
-    data: foodInformation,
-    loading: foodLoading,
-    error: errorFoodInformation,
-  } = useStarknetCall({
-    contract: foodContract,
-    method: 'get_all_food_information',
-    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  });
-
-  const {
-    data: storehouse,
-    loading: storehouseLoading,
-    error: errorStorehouse,
-  } = useStarknetCall({
-    contract: foodContract,
-    method: 'available_food_in_store',
-    args: [bnToUint256(toBN(realm?.realmId ?? 0))],
-  });
-
-  useEffect(() => {
-    if (
-      !foodInformation ||
-      !foodInformation[0] ||
-      !storehouse ||
-      !storehouse[0] ||
-      !population ||
-      !population[0] ||
-      !realm
-    ) {
+  useMemo(() => {
+    if (!realm) {
       return;
     }
 
-    const fishingVillagesHarvestsLeft =
-      foodInformation['fishing_villages_harvests_left'].toNumber();
-    const isFishingVillagesLeft =
-      fishingVillagesHarvestsLeft > 0 ? true : false;
+    const fetchData = async () => {
+      const food = await FoodContract.available_food_in_store(
+        bnToUint256(toBN(realm?.realmId ?? 0))
+      );
+      const foodInformation = await FoodContract.get_all_food_information(
+        bnToUint256(toBN(realm?.realmId ?? 0))
+      );
 
-    const farmHarvestsLeft = foodInformation['farm_harvests_left'].toNumber();
-    const isFarmHarvestsLeft = farmHarvestsLeft > 0 ? true : false;
+      return [food.toString(), foodInformation];
+    };
 
-    setRealmFoodDetails({
-      totalFarmHarvest: isFarmHarvestsLeft
-        ? foodInformation['total_farm_harvest'].toNumber()
-        : 0,
-      farmHarvestsLeft: farmHarvestsLeft,
-      totalTimeRemainingUntilFarmHarvest:
-        foodInformation['total_farm_remaining'].toNumber(),
-      decayedFarms: foodInformation['decayed_farms'].toNumber(),
-      farmsBuilt: isFarmHarvestsLeft
-        ? foodInformation['farms_built'].toNumber()
-        : 0,
-      totalVillageHarvest: isFishingVillagesLeft
-        ? foodInformation['total_village_harvest'].toNumber()
-        : 0,
-      totalTimeRemainingUntilVillageHarvest:
-        foodInformation['total_village_remaining'].toNumber(),
-      decayedVillages: foodInformation['decayed_villages'].toNumber(),
-      villagesBuilt: isFishingVillagesLeft
-        ? foodInformation['villages_built'].toNumber()
-        : 0,
-      fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
-      population: population[0].toNumber() + 1,
-    });
+    fetchData()
+      .then((foodInformation) => {
+        setAvailableFood(foodInformation[0]);
 
-    setAvailableFood(storehouse[0].toNumber());
-  }, [foodInformation, storehouse, population]);
+        // food details
+        const fishingVillagesHarvestsLeft =
+          foodInformation[1]['fishing_villages_harvests_left'].toNumber();
+        const isFishingVillagesLeft =
+          fishingVillagesHarvestsLeft > 0 ? true : false;
+
+        const farmHarvestsLeft =
+          foodInformation[1]['farm_harvests_left'].toNumber();
+        const isFarmHarvestsLeft = farmHarvestsLeft > 0 ? true : false;
+
+        setRealmFoodDetails({
+          totalFarmHarvest: isFarmHarvestsLeft
+            ? foodInformation[1]['total_farm_harvest'].toNumber()
+            : 0,
+          farmHarvestsLeft: farmHarvestsLeft,
+          totalTimeRemainingUntilFarmHarvest:
+            foodInformation[1]['total_farm_remaining'].toNumber(),
+          decayedFarms: foodInformation[1]['decayed_farms'].toNumber(),
+          farmsBuilt: isFarmHarvestsLeft
+            ? foodInformation[1]['farms_built'].toNumber()
+            : 0,
+          totalVillageHarvest: isFishingVillagesLeft
+            ? foodInformation[1]['total_village_harvest'].toNumber()
+            : 0,
+          totalTimeRemainingUntilVillageHarvest:
+            foodInformation[1]['total_village_remaining'].toNumber(),
+          decayedVillages: foodInformation[1]['decayed_villages'].toNumber(),
+          villagesBuilt: isFishingVillagesLeft
+            ? foodInformation[1]['villages_built'].toNumber()
+            : 0,
+          fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
+          population: getPopulation(realm),
+        });
+      })
+      .catch(console.error);
+  }, [realm]);
 
   return {
     realmFoodDetails,
@@ -271,7 +251,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
         })
       );
     },
-    loading: foodLoading || populationLoading || storehouseLoading,
+    loading: false,
   };
 };
 

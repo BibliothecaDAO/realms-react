@@ -394,3 +394,10 @@ export const getHappiness = ({ realm, food }) => {
 
   return BASE_HAPPINESS - hasRelic - hasFood - hasDefendingArmy;
 };
+
+export const getPopulation = (realm: RealmFragmentFragment) => {
+  const buildingPopulation = 10;
+  const troopPopulation = 10;
+
+  return buildingPopulation + troopPopulation;
+};

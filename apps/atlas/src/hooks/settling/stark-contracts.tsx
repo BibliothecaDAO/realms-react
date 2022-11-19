@@ -1,6 +1,15 @@
 import { useContract } from '@starknet-react/core';
-import type { Abi } from 'starknet';
 
+import type { Abi } from 'starknet';
+import {
+  Account,
+  Contract,
+  defaultProvider,
+  ec,
+  json,
+  number,
+  RpcProvider,
+} from 'starknet';
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
 import Combat from '@/abi/settling/Combat.json';
@@ -234,4 +243,22 @@ export function useExchangeContract() {
     abi: Exchange as Abi,
     address: ModuleAddr.Exchange,
   });
+}
+
+export function useJsonRpc() {
+  const provider = new RpcProvider({
+    nodeUrl: `https://starknet-goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+  });
+
+  const FoodContract = new Contract(Food as Abi, ModuleAddr.Food, provider);
+  const CalculatorContract = new Contract(
+    Calculator as Abi,
+    ModuleAddr.Calculator,
+    provider
+  );
+
+  return {
+    FoodContract,
+    CalculatorContract,
+  };
 }
