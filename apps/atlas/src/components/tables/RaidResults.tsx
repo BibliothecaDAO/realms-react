@@ -186,10 +186,3 @@ export const RaidResults = (props: RaidResultsProps) => {
     </div>
   );
 };
-/*
-interface BattleTroopItem {
-  vitality: number;
-  troopId: number;
-  hitsTaken: number | null | undefined;
-}
-*/

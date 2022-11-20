@@ -41,7 +41,7 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
         component: <TransactionCartTable />,
       },
     ],
-    [selectedTab]
+    []
   );
 
   return (

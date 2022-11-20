@@ -1,11 +1,14 @@
+import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
 import { useAccount } from '@starknet-react/core';
 
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
+import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
+import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 import {
   systemPlaylists,
   ACCOUNT_PLAYLIST_INDEX,
@@ -14,6 +17,7 @@ import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useRealmPlaylist from '@/hooks/settling/useRealmsPlaylist';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import {
   TraitTable,
@@ -26,10 +30,13 @@ import {
   daysAccrued,
   maxClaimableResources,
   getHappiness,
+  RealmCombatStatus,
 } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
+import SidebarHeader from '@/shared/SidebarHeader';
 import type { RealmFoodDetails, RealmsCardProps } from '@/types/index';
 import { RealmImage } from './Image';
+import { Travel } from './Travel';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
@@ -47,6 +54,8 @@ export function RealmOverview(
     mapContext: { navigateToAsset },
   } = useAtlasContext();
   const { setPlaylistState } = useRealmPlaylist({});
+
+  const { userData, userRealms } = useUsersRealms();
 
   // days accrued
   const cachedDaysAccrued = getDays(props.realm?.lastClaimTime);
@@ -69,6 +78,7 @@ export function RealmOverview(
           <span className="">{props.realm.rarityScore}</span>
         </span>
       </div> */}
+
       <div className="flex justify-between">
         <div>
           <div className="p-2">

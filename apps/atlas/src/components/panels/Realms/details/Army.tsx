@@ -199,7 +199,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card> */}
-      <Card className="col-span-12 md:col-start-1 md:col-end-13">
+      {/* <Card className="col-span-12 md:col-start-1 md:col-end-13">
         <CardTitle>Raidable Resources</CardTitle>
 
         {!isOwner && (
@@ -222,7 +222,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
             </p>
           </div>
         )}
-      </Card>
+      </Card> */}
       {isOwner && (
         <div className="col-span-12 row-span-2 md:col-span-13">
           <CardTitle>Military Buildings</CardTitle>

@@ -1,3 +1,4 @@
+import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import { OrderIcon, Tabs, Button, Card } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
@@ -25,20 +26,26 @@ import {
   RealmsArmy,
 } from '@/components/panels/Realms/details';
 import { RealmImage } from '@/components/panels/Realms/details/Image';
+import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
+import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useRealmContext } from '@/context/RealmContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
+import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   isFavourite,
   isYourRealm,
+  RealmCombatStatus,
   RealmOwner,
   RealmStatus,
 } from '@/shared/Getters/Realm';
+import SidebarHeader from '@/shared/SidebarHeader';
 import { shortenAddressWidth } from '@/util/formatters';
 import type { RealmsCardProps } from '../../../types';
 
@@ -125,7 +132,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       ],
       [availableFood, buildings, realmFoodDetails, props]
     );
-
+    const { userData, userRealms } = useUsersRealms();
     const [selectedTab, setSelectedTab] = useState(0);
 
     useImperativeHandle(ref, () => ({
@@ -140,6 +147,27 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     };
 
     const { starknetId } = useStarkNetId(RealmOwner(props.realm) || '');
+    const vaultCooldownMinutes = 30;
+    const attackingCooldownMinutes = 10;
+
+    const time = (timestamp: any, minutes: number) => {
+      const cooldownSeconds = 60 * minutes;
+      const t = timestamp ? new Date(parseInt(timestamp)).getTime() : 0;
+      return (t + cooldownSeconds).toString();
+    };
+
+    const vaultCountdown = useCountdown({
+      date: time(props.realm?.lastAttacked, vaultCooldownMinutes),
+    });
+
+    const userArmiesAtLocation = userData.attackingArmies?.filter(
+      (army) => army.destinationRealmId == props.realm.realmId
+    );
+
+    const [isRaiding, setIsRaiding] = useState(false);
+    const [isTravel, setIsTravel] = useState(false);
+
+    const isOwner = useIsOwner(props?.realm?.settledOwner);
 
     return (
       <Card ref={ref}>
@@ -208,11 +236,37 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
           )} */}
         </div>
-        {/* <div className="my-2 w-full flex">
-          <Button size="xs" variant="primary" className="w-full">
-            raid - 4 days of vault
-          </Button>
-        </div> */}
+        {!isOwner && (
+          <div className="w-full my-2">
+            <Button
+              onClick={() => {
+                userArmiesAtLocation && userArmiesAtLocation.length
+                  ? setIsRaiding(true)
+                  : setIsTravel(true);
+              }}
+              size="sm"
+              className="w-full"
+              disabled={!vaultCountdown.expired}
+              variant={'primary'}
+            >
+              {props.realm && RealmCombatStatus(props.realm)}
+            </Button>
+            {/* <p className="p-3 text-center uppercase font-display text-xs">
+              Pillage this vault for 25% of its resources.
+            </p> */}
+          </div>
+        )}
+        <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
+          <SidebarHeader onClose={() => setIsRaiding(false)} />
+          <CombatSideBar defendingRealm={props.realm} />
+        </AtlasSidebar>
+        <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
+          <SidebarHeader
+            title={'Travel to Realm ' + props.realm.realmId}
+            onClose={() => setIsTravel(false)}
+          />
+          <Travel realm={props.realm} />
+        </AtlasSidebar>
 
         {/* <h6>{RealmStatus(props.realm)}</h6> */}
         <Tabs

@@ -28,7 +28,7 @@ export const TopRightNav = () => {
       ? 'bg-orange-900 animate-pulse'
       : 'bg-black';
   };
-  console.log(transactions);
+
   return (
     <div className="absolute z-40 right-0 top-0">
       <div className="relative">
