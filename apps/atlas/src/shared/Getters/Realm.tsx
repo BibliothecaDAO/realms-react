@@ -5,6 +5,7 @@ import { ethers, BigNumber } from 'ethers';
 import {
   BASE_HAPPINESS,
   BASE_RESOURCES_PER_DAY,
+  buildingPopulation,
   DAY,
   MAX_DAYS_ACCURED,
   NO_DEFENDING_ARMY_LOSS,
@@ -395,9 +396,51 @@ export const getHappiness = ({ realm, food }) => {
   return BASE_HAPPINESS - hasRelic - hasFood - hasDefendingArmy;
 };
 
-export const getPopulation = (realm: RealmFragmentFragment) => {
-  const buildingPopulation = 10;
-  const troopPopulation = 10;
+export const getBuildingPopulation = (realm: RealmFragmentFragment) => {
+  let buildingPop = 0;
 
-  return buildingPopulation + troopPopulation;
+  realm.buildings
+    ?.map((b) => {
+      return { id: b.buildingId };
+    })
+    .forEach((b) => {
+      const bpop = buildingPopulation(b.id);
+      buildingPop += bpop;
+    });
+
+  return buildingPop;
+};
+
+export const getTroopPopulation = (realm: RealmFragmentFragment) => {
+  const troopPrePopulation = realm.ownArmies
+    .map((a) => {
+      return {
+        arcanistQty: a.arcanistQty,
+        archerQty: a.archerQty,
+        heavyCavalryQty: a.heavyCavalryQty,
+        heavyInfantryQty: a.heavyInfantryQty,
+        lightCavalryQty: a.lightCavalryQty,
+        lightInfantryQty: a.lightInfantryQty,
+        longbowQty: a.longbowQty,
+        mageQty: a.mageQty,
+      };
+    })
+    .reduce((accumulator, item) => {
+      Object.keys(item).forEach((key) => {
+        accumulator[key] = (accumulator[key] || 0) + item[key];
+      });
+
+      return accumulator;
+    }, {});
+
+  const troopPopulation: any = Object.values(troopPrePopulation).reduce(
+    (a: any, b: any) => a + b,
+    0
+  );
+
+  return troopPopulation;
+};
+
+export const getPopulation = (realm: RealmFragmentFragment) => {
+  return getBuildingPopulation(realm) + getTroopPopulation(realm) + 1;
 };

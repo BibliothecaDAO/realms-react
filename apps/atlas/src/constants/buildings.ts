@@ -176,3 +176,25 @@ export enum RealmBuildingIntegrity {
   ArcherTower = 7 * DAY,
   Castle = 7 * DAY,
 }
+
+export const buildingPopulation = (id: RealmBuildingId) => {
+  let pop = 0;
+  switch (id) {
+    case RealmBuildingId.House:
+      pop = 12;
+      break;
+    case RealmBuildingId.Barracks:
+      pop = 5;
+      break;
+    case RealmBuildingId.MageTower:
+      pop = 5;
+      break;
+    case RealmBuildingId.ArcherTower:
+      pop = 5;
+      break;
+    case RealmBuildingId.Castle:
+      pop = 5;
+      break;
+  }
+  return pop;
+};

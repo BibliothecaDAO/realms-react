@@ -23,7 +23,10 @@ export const TopRightNav = () => {
     setSelectedSideBar(selectedSideBar === 'transaction' ? '' : 'transaction');
   }
   const TxStyle = () => {
-    return transactions.length ? 'bg-orange-900 animate-pulse' : 'bg-black';
+    return transactions.filter((a: any) => a?.data?.status === 'RECEIVED')
+      .length
+      ? 'bg-orange-900 animate-pulse'
+      : 'bg-black';
   };
   console.log(transactions);
   return (
