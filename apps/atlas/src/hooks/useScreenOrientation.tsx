@@ -14,13 +14,13 @@ const useScreenOrientation = () => {
     const de = document.documentElement;
     if (de.requestFullscreen) {
       de.requestFullscreen();
-    } else if (de.mozRequestFullScreen) {
+    } /* else if (de.mozRequestFullScreen) {
       de.mozRequestFullScreen();
     } else if (de.webkitRequestFullscreen) {
       de.webkitRequestFullscreen();
     } else if (de.msRequestFullscreen) {
       de.msRequestFullscreen();
-    }
+    } */
 
     // (A2) THEN LOCK ORIENTATION
     screen.orientation.lock('landscape').catch((e) => {
