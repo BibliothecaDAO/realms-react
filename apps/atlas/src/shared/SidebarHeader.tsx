@@ -8,7 +8,7 @@ type Props = {
 
 const SidebarHeader = (props: Props) => {
   return (
-    <div className="flex justify-between mb-2">
+    <div className="flex mb-2">
       {props.titleComponent ?? <h2> {props.title}</h2>}
 
       <div>

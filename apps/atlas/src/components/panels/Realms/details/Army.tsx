@@ -128,7 +128,9 @@ const RealmsArmy: React.FC<Prop> = (props) => {
 
   const buildNewArmy = () => {
     defaultArmy.realmId = realm.realmId;
-    // defaultArmy.armyId = realm.ownArmies.length;
+    defaultArmy.armyId = realm.ownArmies.length;
+
+    console.log(realm.ownArmies.length);
     setSelectedArmy(defaultArmy);
   };
 
@@ -324,7 +326,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           <div className="flex justify-between w-full">
             <CardTitle>Realm Armies</CardTitle>
           </div>
-          <div className="grid grid-cols-1">
+          <div className="grid grid-cols-1 gap-4">
             {realm.ownArmies.map((army) => {
               return (
                 <ArmyCard
@@ -349,17 +351,18 @@ const RealmsArmy: React.FC<Prop> = (props) => {
         </div>
       )}
       {isOwner && (
-        <Card className="col-span-12">
-          <Button
-            onClick={() => {
-              buildNewArmy();
-              setIsArmyBuilding(true);
-            }}
-            variant="primary"
-            className="self-center"
-          >
-            Summon New Army
-          </Button>{' '}
+        <Card className="flex col-span-12">
+          <div className="flex">
+            <Button
+              onClick={() => {
+                buildNewArmy();
+                setIsArmyBuilding(true);
+              }}
+              variant="primary"
+            >
+              Summon New Army
+            </Button>{' '}
+          </div>
         </Card>
       )}
       <div className="col-span-12 ">
