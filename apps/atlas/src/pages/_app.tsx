@@ -9,6 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Toaster, ToastBar } from 'react-hot-toast';
 import { WagmiConfig } from 'wagmi';
 import { Modals } from '@/components/modals';
+import { SplashScreen } from '@/components/navigation/SplashScreen';
 import { AtlasProvider } from '@/context/AtlasContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
@@ -65,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     []
   );
   return (
-    <>
+    <SplashScreen>
       <ApolloProvider client={apolloClient}>
         <BreakpointProvider queries={queries}>
           <ModalProvider>
@@ -118,7 +119,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ToastBar>
         )}
       </Toaster>
-    </>
+    </SplashScreen>
   );
 }
 
