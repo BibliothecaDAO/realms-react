@@ -40,8 +40,12 @@ export const RealmStateStatus = (realm: RealmFragmentFragment) => {
   if (realm.ownerL2) {
     return 'Unsettled L2';
   } else {
-    return 'Layer 1';
+    return 'Mainnet & Unsettled';
   }
+};
+
+export const IsSettled = (realm: RealmFragmentFragment) => {
+  return RealmStateStatus(realm) === 'Settled L2';
 };
 
 export const RealmOwner = (realm: RealmFragmentFragment) => {

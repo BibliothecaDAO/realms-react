@@ -83,7 +83,7 @@ export const TopLeftNav = () => {
           <Button
             onClick={onEmpireClick}
             variant="unstyled"
-            className=" rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 border shadow-yellow-200 hover:bg-gray-1000 paper bg-black"
+            className=" rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-lg border-yellow-800 border shadow-red-100/20 hover:bg-gray-1000 bg-black"
           >
             <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-28 lg:left-28 z-50">
               <Crown className="md:h-6 md:w-6 lg:w-9 lg:h-9 fill-current" />

@@ -43,6 +43,7 @@ import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   hasOwnRelic,
   isFavourite,
+  IsSettled,
   isYourRealm,
   RealmCombatStatus,
   RealmOwner,
@@ -216,6 +217,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 <Button
                   onClick={() => {
                     navigateToAsset(props.realm.realmId, 'realm');
+                    actions.updateSearchIdFilter(
+                      parseInt(props.realm.realmId) ? props.realm.realmId : 0
+                    );
                   }}
                   variant="outline"
                   size="xs"
@@ -250,7 +254,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             </div>
           </div>
         </div>
-        {!isOwner && (
+        {!isOwner && IsSettled(props.realm) ? (
           <div className="w-full my-2">
             <Button
               onClick={() => {
@@ -266,6 +270,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               {props.realm && RealmCombatStatus(props.realm)}
             </Button>
           </div>
+        ) : (
+          RealmStatus(props.realm)
         )}
 
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
@@ -279,41 +285,41 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           />
           <Travel realm={props.realm} />
         </AtlasSidebar>
-
-        {/* <h6>{RealmStatus(props.realm)}</h6> */}
-        <Disclosure>
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
-                <ChevronDoubleDownIcon
-                  className={`w-5 h-5 mx-auto ${
-                    open ? 'rotate-180 transform' : ''
-                  }`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="text-gray-500">
-                {open && (
-                  <Tabs
-                    selectedIndex={selectedTab}
-                    onChange={(index) => pressedTab(index as number)}
-                    variant="small"
-                  >
-                    <Tabs.List className="">
-                      {tabs.map((tab, index) => (
-                        <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-                      ))}
-                    </Tabs.List>
-                    <Tabs.Panels>
-                      {tabs.map((tab, index) => (
-                        <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-                      ))}
-                    </Tabs.Panels>
-                  </Tabs>
-                )}
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
+        {IsSettled(props.realm) && (
+          <Disclosure>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
+                  <ChevronDoubleDownIcon
+                    className={`w-5 h-5 mx-auto ${
+                      open ? 'rotate-180 transform' : ''
+                    }`}
+                  />
+                </Disclosure.Button>
+                <Disclosure.Panel className="text-gray-500">
+                  {open && (
+                    <Tabs
+                      selectedIndex={selectedTab}
+                      onChange={(index) => pressedTab(index as number)}
+                      variant="small"
+                    >
+                      <Tabs.List className="">
+                        {tabs.map((tab, index) => (
+                          <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                        ))}
+                      </Tabs.List>
+                      <Tabs.Panels>
+                        {tabs.map((tab, index) => (
+                          <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+                        ))}
+                      </Tabs.Panels>
+                    </Tabs>
+                  )}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        )}
       </Card>
     );
   }
