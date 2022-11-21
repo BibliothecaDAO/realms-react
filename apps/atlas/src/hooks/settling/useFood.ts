@@ -144,7 +144,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     population: 0,
   });
 
-  useMemo(() => {
+  useEffect(() => {
     if (!realm) {
       return;
     }

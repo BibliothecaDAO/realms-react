@@ -109,7 +109,7 @@ export function RealmOverview(
             </h5>
             <h2>
               {maxClaimableResources(cachedDaysAccrued)}
-              <span className="text-green-800 text-xl">
+              <span className="text-xl text-green-800">
                 {daysAccrued(cachedDaysAccrued)}/3{' '}
               </span>
             </h2>
@@ -125,7 +125,7 @@ export function RealmOverview(
 
       <div className="flex flex-wrap justify-center mt-4">
         {props.realm.resources?.map((re, index) => (
-          <div key={index} className="flex p-2 flex-col justify-center">
+          <div key={index} className="flex flex-col justify-center p-2">
             <ResourceIcon
               resource={
                 findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
@@ -215,20 +215,6 @@ export function RealmOverview(
             >
               {isOwner ? 'manage' : 'details'}
             </Button>
-          </div> */}
-          {/* <div className="flex self-center space-x-2">
-            <div>
-              <Button
-                onClick={() => {
-                  navigateToAsset(props.realm.realmId, 'realm');
-                }}
-                variant="outline"
-                size="xs"
-                className="w-full uppercase"
-              >
-                fly
-              </Button>
-            </div>
           </div> */}
         </div>
       </div>

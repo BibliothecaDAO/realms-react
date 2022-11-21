@@ -1,6 +1,7 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { RealmCard } from '../cards/realms/RealmCard';
+import { RealmsSearch } from '../panels/RealmsSearch';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 
@@ -37,7 +38,7 @@ function RealmsQuickView({
 
   return (
     <BaseSideBarPanel onClose={onClose}>
-      {data && data.realm && (
+      {/* {data && data.realm && (
         <RealmCard realm={data!.realm} loading={loading} />
       )}
       {loading && (
@@ -45,7 +46,8 @@ function RealmsQuickView({
           <Castle className="block w-20 fill-current" />
           <h2>Loading</h2>
         </div>
-      )}
+      )} */}
+      <RealmsSearch />
     </BaseSideBarPanel>
   );
 }

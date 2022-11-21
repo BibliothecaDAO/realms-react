@@ -8,7 +8,8 @@ import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
-import { HeartIcon } from '@heroicons/react/20/solid';
+import { Disclosure } from '@headlessui/react';
+import { HeartIcon, ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
 import React, {
   forwardRef,
@@ -29,6 +30,7 @@ import { RealmImage } from '@/components/panels/Realms/details/Image';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
@@ -85,23 +87,13 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             />
           ),
         },
-        // {
-        //   label: <Castle className="self-center w-5 h-5 fill-current" />,
-        //   component: (
-        //     <RealmResources
-        //       showRaidable
-        //       showClaimable
-        //       realm={props.realm}
-        //       loading={props.loading}
-        //     />
-        //   ),
-        // },
+
         {
           label: <Sword className="self-center w-4 h-4 fill-current" />,
           component: <RealmsArmy buildings={buildings} realm={props.realm} />,
         },
         {
-          label: <Sickle className="self-center w-4 h-4  fill-current" />,
+          label: <Sickle className="self-center w-4 h-4 fill-current" />,
           component: (
             <RealmsFood
               realmFoodDetails={realmFoodDetails}
@@ -117,11 +109,11 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           component: <Travel realm={props.realm} />,
         },
         {
-          label: <Scroll className="self-center w-4 h-4  fill-current" />,
+          label: <Scroll className="self-center w-4 h-4 fill-current" />,
           component: <RealmHistory realmId={props.realm.realmId} />,
         },
         {
-          label: <Library className="self-center w-4 h-4  fill-current" />,
+          label: <Library className="self-center w-4 h-4 fill-current" />,
           component: (
             <RealmLore
               realmName={props.realm.name || ''}
@@ -169,6 +161,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
 
     const isOwner = useIsOwner(props?.realm?.settledOwner);
 
+    const {
+      mapContext: { navigateToAsset },
+    } = useAtlasContext();
+
     return (
       <Card ref={ref}>
         {props.realm?.wonder && (
@@ -180,16 +176,16 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <div className="flex pb-2">
           {/* <RealmImage id={props.realm.realmId} /> */}
           <div>
-            <div className="self-center flex ">
+            <div className="flex self-center ">
               <OrderIcon
                 size="sm"
                 order={props.realm.orderType.toLowerCase()}
               />
-              <h3 className="text-center self-center ml-2">
+              <h3 className="flex self-center ml-2 text-center">
                 {props.realm.name}{' '}
               </h3>
             </div>
-            <div className="flex">
+            <div className="flex mt-1">
               <div className="flex">
                 {!isFavourite(props.realm, favouriteRealms) && (
                   <Button
@@ -215,11 +211,24 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   </Button>
                 )}
               </div>
-              <span className=" ml-2 self-center">{props.realm.realmId}</span>
+              <div className="self-center ml-2">
+                <Button
+                  onClick={() => {
+                    navigateToAsset(props.realm.realmId, 'realm');
+                  }}
+                  variant="outline"
+                  size="xs"
+                >
+                  fly
+                </Button>
+              </div>
+              <span className="self-center ml-2 text-lg ">
+                {props.realm.realmId}
+              </span>
             </div>
           </div>
 
-          <div className=" text-lg justify-center ml-auto">
+          <div className="justify-center ml-auto text-lg ">
             <div className="text-right">
               {starknetId ?? starknetId}
               {!starknetId && shortenAddressWidth(RealmOwner(props.realm), 6)}
@@ -229,7 +238,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             </div>{' '}
             <div className="flex justify-end">
               <span className="mr-3">{props.realm.relicsOwned?.length}</span>{' '}
-              <Relic className={` w-3 fill-yellow-500`} />{' '}
+              <Relic className={`w-3 fill-yellow-500`} />{' '}
             </div>
           </div>
           {/* {props.realm.owner && (
@@ -244,18 +253,19 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   ? setIsRaiding(true)
                   : setIsTravel(true);
               }}
-              size="sm"
+              size="md"
               className="w-full"
               disabled={!vaultCountdown.expired}
               variant={'primary'}
             >
               {props.realm && RealmCombatStatus(props.realm)}
             </Button>
-            {/* <p className="p-3 text-center uppercase font-display text-xs">
+            {/* <p className="p-3 text-xs text-center uppercase font-display">
               Pillage this vault for 25% of its resources.
             </p> */}
           </div>
         )}
+
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
           <SidebarHeader onClose={() => setIsRaiding(false)} />
           <CombatSideBar defendingRealm={props.realm} />
@@ -269,22 +279,39 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         </AtlasSidebar>
 
         {/* <h6>{RealmStatus(props.realm)}</h6> */}
-        <Tabs
-          selectedIndex={selectedTab}
-          onChange={(index) => pressedTab(index as number)}
-          variant="small"
-        >
-          <Tabs.List className="">
-            {tabs.map((tab, index) => (
-              <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels>
-            {tabs.map((tab, index) => (
-              <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
+        <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
+                <ChevronDoubleDownIcon
+                  className={`w-5 h-5 mx-auto ${
+                    open ? 'rotate-180 transform' : ''
+                  }`}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className="text-gray-500">
+                {open && (
+                  <Tabs
+                    selectedIndex={selectedTab}
+                    onChange={(index) => pressedTab(index as number)}
+                    variant="small"
+                  >
+                    <Tabs.List className="">
+                      {tabs.map((tab, index) => (
+                        <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                      ))}
+                    </Tabs.List>
+                    <Tabs.Panels>
+                      {tabs.map((tab, index) => (
+                        <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+                      ))}
+                    </Tabs.Panels>
+                  </Tabs>
+                )}
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
       </Card>
     );
   }

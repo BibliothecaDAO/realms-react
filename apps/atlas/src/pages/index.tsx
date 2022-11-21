@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Map from 'react-map-gl';
+import { SearchFilter } from '@/components/filters/SearchFilter';
 import Layout from '@/components/Layout';
 const ChatComponent = dynamic(
   () => import('@/components/minigame/realtime/Chat'),
@@ -18,8 +19,10 @@ import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
 import { GASideBar } from '@/components/sidebars/GASideBar';
 import { LootSideBar } from '@/components/sidebars/LootSideBar';
 import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
+import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { RealmProvider } from '@/context/RealmContext';
+import { RealmProvider, useRealmContext } from '@/context/RealmContext';
+import RealmsResources from '@/geodata/continents';
 import crypts from '@/geodata/crypts.json';
 /* import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json'; */
@@ -77,6 +80,8 @@ function AtlasSidebars() {
 function MapModule() {
   const { userRealms } = useUsersRealms();
   const { travelContext, mapContext } = useAtlasContext();
+  const { state, actions } = useRealmContext();
+
   const ItemViewLevel = 5;
   const selectedId = mapContext.selectedAsset?.id ?? '0';
 
@@ -102,6 +107,9 @@ function MapModule() {
         },
         onClick: (info: any) => {
           mapContext.navigateToAsset(info.object.id, assetType);
+          actions.updateSearchIdFilter(
+            parseInt(info.object.id) ? info.object.id : ''
+          );
         },
       }),
     [mapContext, selectedId]
@@ -118,7 +126,31 @@ function MapModule() {
     id: 'own-realms',
     data: userRealmsFormatted,
     getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/90/90406.png',
+      url: 'https://cdn-icons-png.flaticon.com/512/8983/8983174.png',
+      width: 128,
+      height: 128,
+      anchorY: 100,
+    }),
+    sizeScale: 5,
+    getPosition: (d: any) => d.coordinates,
+    getSize: (d) => 10,
+  });
+
+  const resourcesToString = (a) => {
+    return resources.find((r) => r.trait === a)?.id ?? 0;
+  };
+
+  const selectedResourcesFiltered = RealmsResources.filter((d) =>
+    d.resource.find((c) =>
+      state.selectedResources.includes(resourcesToString(c))
+    )
+  );
+
+  const selectedResources = new IconLayer({
+    id: 'selected-resources',
+    data: selectedResourcesFiltered,
+    getIcon: (d) => ({
+      url: 'https://cdn-icons-png.flaticon.com/512/3275/3275748.png',
       width: 128,
       height: 128,
       anchorY: 100,
@@ -136,7 +168,7 @@ function MapModule() {
       getTargetPosition: (d: any) => d.target,
       getSourceColor: [255, 255, 204],
       getTargetColor: [255, 255, 204],
-      getWidth: 1,
+      getWidth: 2,
     });
   }, [travelContext.travelArcs]);
 
@@ -161,11 +193,25 @@ function MapModule() {
       // }),
     ];
 
-    return [...assets, arcsLayer, ownRealms];
+    return [...assets, arcsLayer, ownRealms, selectedResources];
   }, [arcsLayer, createScatterPlot, ownRealms]);
+
+  const {
+    mapContext: { navigateToAsset },
+  } = useAtlasContext();
 
   return (
     <>
+      <div className="absolute z-20 top-5 right-32">
+        <SearchFilter
+          placeholder="Search by Realm Id"
+          onSubmit={(value) => {
+            actions.updateSearchIdFilter(parseInt(value) ? value : '');
+            navigateToAsset(parseInt(value), 'realm');
+          }}
+          defaultValue={state.searchIdFilter + ''}
+        />
+      </div>
       <DeckGL
         getCursor={({ isHovering }) => {
           return isHovering ? 'pointer' : 'grabbing';

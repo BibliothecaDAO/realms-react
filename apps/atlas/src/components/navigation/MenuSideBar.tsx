@@ -61,7 +61,7 @@ export const MenuSideBar = () => {
       //   text: 'empire',
       // },
       {
-        page: 'realm',
+        page: '?asset=realm0',
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
       },

@@ -245,11 +245,11 @@ export function useExchangeContract() {
   });
 }
 
-export function useJsonRpc() {
-  const provider = new RpcProvider({
-    nodeUrl: `https://starknet-goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
-  });
+const provider = new RpcProvider({
+  nodeUrl: `https://starknet-goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+});
 
+export function useJsonRpc() {
   const FoodContract = new Contract(Food as Abi, ModuleAddr.Food, provider);
   const CalculatorContract = new Contract(
     Calculator as Abi,
