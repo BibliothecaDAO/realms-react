@@ -12,13 +12,20 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
     return transactions[0]?.loading ? 'bg-orange-400 animate-ping' : '';
   };
 
+  const TxStyle1 = () => {
+    return transactions.filter((a: any) => a?.data?.status === 'RECEIVED')
+      .length
+      ? 'bg-orange-900 animate-pulse'
+      : 'bg-black';
+  };
+
   return (
-    <div className="top-0 ">
-      <Button
-        variant="unstyled"
-        className="relative flex flex-col sm:flex-row sm:inline-flex"
-        onClick={onClick}
-      >
+    <Button
+      variant="unstyled"
+      className={`rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 z-40 border md:-ml-16 md:-mt-16 lg:-ml-32 lg:-mt-24 top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex`}
+      onClick={onClick}
+    >
+      <div className="absolute top-0 left-0 md:top-[4.75rem] md:right-[3.2rem] lg:top-28 lg:right-28 z-50">
         <Scroll className="inline-block w-6 lg:w-9 fill-white" />
 
         <span className="flex w-3 h-3 mt-3 sm:ml-1 sm:mt-0">
@@ -37,8 +44,8 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
             className={`relative inline-flex w-3 h-3 rounded-full ${TxStyle()}`}
           ></span>
         </span>
-      </Button>
-    </div>
+      </div>
+    </Button>
   );
 };
 
