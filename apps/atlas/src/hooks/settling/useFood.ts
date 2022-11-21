@@ -156,49 +156,44 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       const foodInformation = await FoodContract.get_all_food_information(
         bnToUint256(toBN(realm?.realmId ?? 0))
       );
+      setAvailableFood(food.toString());
+      console.log(food);
+      console.log(FoodContract);
+      // food details
+      const fishingVillagesHarvestsLeft =
+        foodInformation['fishing_villages_harvests_left'].toNumber();
+      const isFishingVillagesLeft =
+        fishingVillagesHarvestsLeft > 0 ? true : false;
 
-      return [food.toString(), foodInformation];
+      const farmHarvestsLeft = foodInformation['farm_harvests_left'].toNumber();
+      const isFarmHarvestsLeft = farmHarvestsLeft > 0 ? true : false;
+
+      setRealmFoodDetails({
+        totalFarmHarvest: isFarmHarvestsLeft
+          ? foodInformation['total_farm_harvest'].toNumber()
+          : 0,
+        farmHarvestsLeft: farmHarvestsLeft,
+        totalTimeRemainingUntilFarmHarvest:
+          foodInformation['total_farm_remaining'].toNumber(),
+        decayedFarms: foodInformation['decayed_farms'].toNumber(),
+        farmsBuilt: isFarmHarvestsLeft
+          ? foodInformation['farms_built'].toNumber()
+          : 0,
+        totalVillageHarvest: isFishingVillagesLeft
+          ? foodInformation['total_village_harvest'].toNumber()
+          : 0,
+        totalTimeRemainingUntilVillageHarvest:
+          foodInformation['total_village_remaining'].toNumber(),
+        decayedVillages: foodInformation['decayed_villages'].toNumber(),
+        villagesBuilt: isFishingVillagesLeft
+          ? foodInformation['villages_built'].toNumber()
+          : 0,
+        fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
+        population: getPopulation(realm),
+      });
     };
 
-    fetchData()
-      .then((foodInformation) => {
-        setAvailableFood(foodInformation[0]);
-
-        // food details
-        const fishingVillagesHarvestsLeft =
-          foodInformation[1]['fishing_villages_harvests_left'].toNumber();
-        const isFishingVillagesLeft =
-          fishingVillagesHarvestsLeft > 0 ? true : false;
-
-        const farmHarvestsLeft =
-          foodInformation[1]['farm_harvests_left'].toNumber();
-        const isFarmHarvestsLeft = farmHarvestsLeft > 0 ? true : false;
-
-        setRealmFoodDetails({
-          totalFarmHarvest: isFarmHarvestsLeft
-            ? foodInformation[1]['total_farm_harvest'].toNumber()
-            : 0,
-          farmHarvestsLeft: farmHarvestsLeft,
-          totalTimeRemainingUntilFarmHarvest:
-            foodInformation[1]['total_farm_remaining'].toNumber(),
-          decayedFarms: foodInformation[1]['decayed_farms'].toNumber(),
-          farmsBuilt: isFarmHarvestsLeft
-            ? foodInformation[1]['farms_built'].toNumber()
-            : 0,
-          totalVillageHarvest: isFishingVillagesLeft
-            ? foodInformation[1]['total_village_harvest'].toNumber()
-            : 0,
-          totalTimeRemainingUntilVillageHarvest:
-            foodInformation[1]['total_village_remaining'].toNumber(),
-          decayedVillages: foodInformation[1]['decayed_villages'].toNumber(),
-          villagesBuilt: isFishingVillagesLeft
-            ? foodInformation[1]['villages_built'].toNumber()
-            : 0,
-          fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
-          population: getPopulation(realm),
-        });
-      })
-      .catch(console.error);
+    fetchData().catch(console.error);
   }, [realm]);
 
   return {

@@ -116,7 +116,7 @@ export function AccountPanel() {
   };
 
   return (
-    <BasePanel style="pt-10" open={true}>
+    <>
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
@@ -139,6 +139,6 @@ export function AccountPanel() {
         isOpen={isSettleRealmsSideBarOpen}
         onClose={onSettleRealmsClick}
       />
-    </BasePanel>
+    </>
   );
 }
