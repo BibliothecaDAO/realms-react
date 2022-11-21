@@ -8,6 +8,7 @@ type Prop = {
   children: React.ReactNode[] | React.ReactNode;
   containerClassName?: string;
   container?: HTMLElement;
+  position?: 'left' | 'right';
 };
 
 const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
@@ -15,7 +16,11 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
 
   const animation = useSpring({
     opacity: isOpen ? 1 : 0,
-    transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+    transform: isOpen
+      ? 'translateX(0)'
+      : props.position == 'left'
+      ? 'translateX(-100%)'
+      : 'translateX(100%)',
   });
 
   // Must wait until DOM is ready or might receive
@@ -32,8 +37,9 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0 shadow-xl shadow-yellow-800 bottom-0 right-0 p-5 bg-gray-1100 overflow-y-scroll border-white/30 z-50',
-        props.containerClassName ? props.containerClassName : 'w-full md:w-1/2'
+        'absolute top-0 shadow-xl shadow-yellow-800 bottom-0 p-5 bg-gray-1100 overflow-y-scroll border-white/30 z-30',
+        props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
+        props.position == 'left' ? 'left-0' : 'right-0'
       )}
       style={animation}
     >
