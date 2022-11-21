@@ -31,6 +31,8 @@ import {
   maxClaimableResources,
   getHappiness,
   RealmCombatStatus,
+  fetchRealmNameById,
+  hasOwnRelic,
 } from '@/shared/Getters/Realm';
 import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import SidebarHeader from '@/shared/SidebarHeader';
@@ -78,7 +80,43 @@ export function RealmOverview(
           <span className="">{props.realm.rarityScore}</span>
         </span>
       </div> */}
-
+      {hasOwnRelic(props.realm) ? (
+        <div>
+          <h3 className="mb-4">
+            {props.realm?.name} is a self-sovereign state
+          </h3>
+          <p className="text-xl">
+            Citizens of {props.realm?.name} are living peacefully on its lands.
+            The Lord of {props.realm?.name} is keeping them safe from Goblins
+            and other warmongering realms.
+          </p>
+        </div>
+      ) : (
+        <div>
+          {props.realm?.relic?.map((a, i) => {
+            return (
+              <div key={i} className="mb-4">
+                <h3>Annexed by {fetchRealmNameById(a.heldByRealm || 0)}</h3>{' '}
+                <p className="text-xl">
+                  {props.realm?.name} has been Conquered by{' '}
+                  {fetchRealmNameById(a.heldByRealm || 0)}. The citizens shake
+                  in fear everyday thinking it will be their last... won't
+                  someone think of the children!
+                </p>
+                <div className="mt-4">
+                  <Button
+                    href={'/?asset=realm' + a.heldByRealm}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Fly To {fetchRealmNameById(a.heldByRealm || 0)}
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div className="flex justify-between">
         <div>
           <div className="p-2">

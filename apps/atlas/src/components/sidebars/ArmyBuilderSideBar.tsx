@@ -61,7 +61,9 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         )
         .map((t) => t.metadata['buildingId'])
     );
-  }, [txQueue.transactions]);
+  }, [txQueue.transactions, props.buildings]);
+
+  console.log(buildingIdsEnqueued);
 
   const checkCanBuilt = (id) => {
     const militaryBuildings = props.buildings ?? [];

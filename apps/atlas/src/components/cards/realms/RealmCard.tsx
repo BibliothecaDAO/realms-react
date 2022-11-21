@@ -41,6 +41,7 @@ import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
+  hasOwnRelic,
   isFavourite,
   isYourRealm,
   RealmCombatStatus,
@@ -237,13 +238,17 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 isYourRealm(props.realm, l1Address, address || '')}
             </div>{' '}
             <div className="flex justify-end">
+              <span
+                className={`self-center mr-2 text-xs  uppercase ${
+                  hasOwnRelic(props.realm) ? 'text-green-700' : 'text-red-400'
+                }`}
+              >
+                {hasOwnRelic(props.realm) ? 'free realm' : 'annexed'}
+              </span>
               <span className="mr-3">{props.realm.relicsOwned?.length}</span>{' '}
               <Relic className={`w-3 fill-yellow-500`} />{' '}
             </div>
           </div>
-          {/* {props.realm.owner && (
-            <h3 className="self-center my-2 ml-auto">{ensData.displayName}</h3>
-          )} */}
         </div>
         {!isOwner && (
           <div className="w-full my-2">
@@ -260,9 +265,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             >
               {props.realm && RealmCombatStatus(props.realm)}
             </Button>
-            {/* <p className="p-3 text-xs text-center uppercase font-display">
-              Pillage this vault for 25% of its resources.
-            </p> */}
           </div>
         )}
 

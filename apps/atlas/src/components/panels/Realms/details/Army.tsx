@@ -128,7 +128,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
 
   const buildNewArmy = () => {
     defaultArmy.realmId = realm.realmId;
-    defaultArmy.armyId = realm.ownArmies.length;
+    // defaultArmy.armyId = realm.ownArmies.length;
     setSelectedArmy(defaultArmy);
   };
 
@@ -242,7 +242,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
                       />
                     </div>
 
-                    <div className="p-2 capitalize ml-4">
+                    <div className="p-2 ml-4 capitalize">
                       <div className="w-full text-xs">
                         {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
                         Day Decay
