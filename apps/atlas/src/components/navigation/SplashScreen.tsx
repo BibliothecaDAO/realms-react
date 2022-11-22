@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useScreenOrientation from '@/hooks/useScreenOrientation';
 
 export const SplashScreen = ({ children }) => {
-  const { lockOrientation, orientation } = useScreenOrientation();
+  const { toggleFullScreen, orientation } = useScreenOrientation();
   const [loading, setLoading] = useState(true);
 
   return !loading ? (
@@ -27,7 +27,7 @@ export const SplashScreen = ({ children }) => {
               className="w-1/2"
               variant="primary"
               onClick={() => {
-                lockOrientation();
+                toggleFullScreen();
                 setLoading(false);
               }}
             >
