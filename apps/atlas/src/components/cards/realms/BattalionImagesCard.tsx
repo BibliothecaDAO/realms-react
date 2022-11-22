@@ -16,6 +16,7 @@ interface HealthBarProps {
   health: number;
   troopId: number;
   baseHealth: number;
+  className?: string;
 }
 export const HealthBar = (props: HealthBarProps) => {
   const getVitality = () => {
@@ -38,7 +39,9 @@ export const HealthBar = (props: HealthBarProps) => {
   };
 
   return (
-    <div className="absolute bottom-0 flex h-full transform rotate-180">
+    <div
+      className={`absolute bottom-0 flex h-full transform rotate-180 ${props.className}`}
+    >
       <div
         style={{
           height: `${getVitality()}%`,

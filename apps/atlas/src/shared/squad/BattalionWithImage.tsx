@@ -8,6 +8,7 @@ import {
 
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { HealthBar } from '@/components/cards/realms/BattalionImagesCard';
 import { battalionInformation, getUnitImage } from '@/constants/army';
 import { buildingIdToString } from '@/constants/buildings';
 
@@ -34,26 +35,30 @@ export const BattalionWithImage: React.FC<
   const data = battalionInformation.find((a) => a.id === props.battalionId);
 
   return (
-    <Card
+    <div
       key={props.battalionId}
-      className={`relative flex-col justify-between group h-56 ${data?.color}`}
+      className={`border-2 border-yellow-900 relative flex-col justify-between group h-56`}
     >
-      <h2 className="z-10 flex justify-center text-center  text-shadow-[0_2px_6px_#6366f1]">
+      {/* <h2 className="z-20 flex justify-center text-center  text-shadow-[0_2px_6px_#6366f1] absolute">
         {data?.name}
-      </h2>
-      <div className="z-10 mt-auto">
+      </h2> */}
+      {/* <div className="absolute z-10 mt-auto">
         <div className="flex justify-between px-2 space-x-3 text-center text-white border rounded shadow-xl bg-white/50 border-white/20 bg-blur-lg">
-          <div>
-            <h2 className="text-shadow-[0_2px_6px_#6366f1]">
-              {props.quantity || 0}
-            </h2>
-          </div>
           <div>
             <h2 className="text-shadow-[0_2px_6px_#6366f1]">
               {props.health || 0} hp
             </h2>
           </div>
         </div>
+      </div> */}
+      <HealthBar
+        troopId={props.battalionId}
+        health={props.health}
+        baseHealth={100} // TODO add base amount of health (unit health * qty)
+        className="absolute z-50 px-1 py-2"
+      />
+      <div className="absolute z-10 flex justify-between p-2 mt-auto text-center rounded-full bg-black/90 left-2 bottom-2">
+        <h4 className="">x {props.quantity || 0}</h4>
       </div>
 
       <Image
@@ -62,6 +67,6 @@ export const BattalionWithImage: React.FC<
         objectFit="cover"
         className="absolute inset-0 z-0 w-full h-full"
       />
-    </Card>
+    </div>
   );
 };
