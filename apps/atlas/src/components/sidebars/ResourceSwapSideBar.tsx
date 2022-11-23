@@ -23,7 +23,11 @@ export const ResourceSwapSideBar = ({
   resources,
 }: ResourceSwapSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12 z-20">
+    <AtlasSideBar
+      position="left"
+      isOpen={isOpen}
+      containerClassName="w-full lg:w-5/12 z-20"
+    >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
       )}
@@ -61,7 +65,7 @@ export const ResourceSwapSideBarPanel = (
     []
   );
   return (
-    <BaseSideBarPanel onClose={props.onClose}>
+    <BaseSideBarPanel position="left" onClose={props.onClose}>
       <div>
         <h2 className="mt-2 mb-4 text-center">Trade</h2>
         {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
