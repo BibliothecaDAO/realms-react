@@ -148,15 +148,6 @@ const Overview: React.FC<Prop> = (props) => {
             </div>
           </CardBody>
         </Card>
-        <Card
-          loading={props.loading}
-          className="col-span-12 sm:col-span-4 lg:col-start-1 lg:col-end-3"
-        >
-          <CardTitle>Population</CardTitle>
-          <CardStats className="text-4xl">
-            {props.realmFoodDetails.population}
-          </CardStats>
-        </Card>
 
         <Card className="col-span-12 row-span-2 sm:col-span-4 lg:col-span-4">
           <div className="w-full p-2 mb-3 text-center uppercase bg-red-800 rounded sm:text-2xl font-display paper animate-pulse">
