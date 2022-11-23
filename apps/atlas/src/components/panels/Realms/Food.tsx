@@ -185,20 +185,6 @@ const Food: React.FC<Prop> = (props) => {
             {isOwner && (
               <div className="flex flex-wrap mt-2">
                 <div className="flex w-full space-x-2">
-                  <Button
-                    disabled={enqueuedHarvestTx}
-                    onClick={() => {
-                      create(
-                        realm?.realmId,
-                        input.farmsToBuild,
-                        RealmBuildingId.Farm
-                      );
-                    }}
-                    size="xs"
-                    variant="primary"
-                  >
-                    Build Farms
-                  </Button>
                   <InputNumber
                     value={input.farmsToBuild}
                     inputSize="sm"
@@ -353,19 +339,6 @@ const Food: React.FC<Prop> = (props) => {
           {isOwner && (
             <div className="flex flex-wrap p-2">
               <div className="flex w-full space-x-2">
-                <Button
-                  onClick={() => {
-                    create(
-                      realm?.realmId,
-                      input.fishingVillagesToBuild,
-                      RealmBuildingId.FishingVillage
-                    );
-                  }}
-                  size="xs"
-                  variant="primary"
-                >
-                  Build
-                </Button>
                 <InputNumber
                   value={input.fishingVillagesToBuild}
                   inputSize="sm"
