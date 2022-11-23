@@ -76,16 +76,16 @@ function MyApp({ Component, pageProps }: AppProps) {
               <ConnectKitProvider theme="midnight">
                 <StarknetConfig connectors={connectors} autoConnect>
                   {/* <QueryClientProvider client={queryClient}> */}
-                  <ResourceProvider>
-                    <CommandListProvider>
+                  <CommandListProvider>
+                    <ResourceProvider>
                       <AtlasProvider>
                         <DndProvider backend={HTML5Backend}>
                           <Component {...pageProps} />
                           <Modals />
                         </DndProvider>
                       </AtlasProvider>
-                    </CommandListProvider>
-                  </ResourceProvider>
+                    </ResourceProvider>
+                  </CommandListProvider>
                   {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}

@@ -196,7 +196,6 @@ export const RealmsSearch = () => {
     state.traitsFilter.Region,
     state.traitsFilter.River,
     selectedTabIndex,
-    pagination,
   ]);
 
   const variables = useRealmsQueryVariables(

@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useAccount, useStarknetCall } from '@starknet-react/core';
-
+import {
+  useAccount,
+  useStarknetCall,
+  useTransactionManager,
+} from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import type { Metadata } from '@/components/tables/Transactions';
 import { resources } from '@/constants/resources';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import {
@@ -21,11 +24,12 @@ import {
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import {
   useLordsContract,
-  useResources1155Contract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
+import { getTxCosts } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
+import { useCommandList } from './CommandListContext';
 
 export type Resource = {
   resourceId: number;
@@ -104,6 +108,9 @@ export const ResourceProvider = (props: ResourceProviderProps) => {
 };
 
 function useResources() {
+  const txQueue = useCommandList();
+  // const { hashes, transactions } = useTransactionManager<Metadata>();
+
   const { address } = useAccount();
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
@@ -276,22 +283,45 @@ function useResources() {
       ? pluckData(exchangePairData[1])
       : [];
     setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
+
+    const allResourceCosts = getTxCosts(txQueue)
+      .map((t) => t.resources)
+      .flat(1);
+
+    const costsByResourceId = {};
+
+    allResourceCosts.forEach((c) => {
+      costsByResourceId[c.resourceId] = {
+        ...costsByResourceId[c.resourceId],
+        resourceId: c.resourceId,
+        amount: (costsByResourceId[c.resourceId]?.amount ?? 0) + c.amount,
+      };
+    });
+
     setBalance(
       resources.map((resource, index) => {
         const resourceId = resource.id ?? 0;
         const resourceName = resource.trait ?? 0;
+
+        const inCartCost = costsByResourceId[resourceId]
+          ? BigNumber.from(
+              (costsByResourceId[resourceId].amount * 10 ** 18).toString()
+            )
+          : 0;
 
         const walletBalance =
           walletBalancesData.walletBalances.find(
             (a) => a.tokenId === resourceId
           )?.amount ?? 0;
 
+        const actualBalance = BigNumber.from(walletBalance).sub(inCartCost);
+
         const rate = rates.find((rate) => rate.tokenId === resourceId);
 
         return {
           resourceId,
           resourceName,
-          amount: BigNumber.from(walletBalance).toString(),
+          amount: actualBalance.toString(),
           rate: rate?.amount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
@@ -311,6 +341,7 @@ function useResources() {
     gameConstants,
     lordsBalanceData,
     selectedSwapResources,
+    txQueue,
   ]);
 
   const getResourceById = useCallback(

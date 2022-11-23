@@ -8,6 +8,7 @@ import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
+import { getTxCosts } from '@/shared/Getters/Market';
 import type { ItemCost, CallAndMetadata } from '@/types/index';
 import { dndTypes } from '@/types/index';
 
@@ -166,12 +167,13 @@ export const CommandList: React.FC<Prop> = (props) => {
 
   useEffect(() => {
     // Note: All metadata.costs are assumed to follow the ItemCost interface
-    const txCosts: ItemCost[] = txQueue.transactions
-      .filter((t) => !!t.metadata.costs)
-      .map((t) => t.metadata.costs);
 
-    const allResourceCosts = txCosts.map((t) => t.resources).flat(1);
+    const allResourceCosts = getTxCosts(txQueue)
+      .map((t) => t.resources)
+      .flat(1);
+
     const costsByResourceId = {};
+
     allResourceCosts.forEach((c) => {
       costsByResourceId[c.resourceId] = {
         ...costsByResourceId[c.resourceId],
@@ -181,7 +183,7 @@ export const CommandList: React.FC<Prop> = (props) => {
     });
 
     setResourceCostsById(costsByResourceId);
-  }, [txQueue.transactions]);
+  }, [txQueue]);
 
   const reorderCards = useCallback((dragIndex: number, hoverIndex: number) => {
     txQueue.reorderQueue(dragIndex, hoverIndex);

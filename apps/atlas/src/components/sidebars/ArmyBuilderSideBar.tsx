@@ -50,7 +50,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const txQueue = useCommandList();
   const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
   useEffect(() => {
-    console.log(txQueue.transactions);
     setBuildingIdsEnqueued(
       txQueue.transactions
         .filter(
@@ -62,8 +61,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
         .map((t) => t.metadata['buildingId'])
     );
   }, [txQueue.transactions, props.buildings]);
-
-  console.log(buildingIdsEnqueued);
 
   const checkCanBuilt = (id) => {
     const militaryBuildings = props.buildings ?? [];

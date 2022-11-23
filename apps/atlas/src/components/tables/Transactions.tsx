@@ -13,7 +13,7 @@ import type { ENQUEUED_STATUS } from '@/constants/index';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { ExternalLink } from '@/shared/Icons';
 
-interface Metadata {
+export interface Metadata {
   description: string;
   title: string;
   action: string;
