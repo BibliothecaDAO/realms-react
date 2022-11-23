@@ -5,7 +5,7 @@ import type { AssetType } from '@/hooks/useAtlasMap';
 
 export type UIContext = {
   assetSidebar: AssetType | null;
-  openAsset: () => void;
+  openAsset: (type: AssetType) => void;
   closeAsset: () => void;
   toggleEmpire: () => void;
   toggleTrade: () => void;
