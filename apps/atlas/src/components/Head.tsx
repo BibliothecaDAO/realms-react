@@ -33,6 +33,9 @@ export function Head(): ReactElement {
       <meta property="twitter:description" content={meta.description} />
       <meta property="twitter:image" content={meta.image} />
 
+      {/* Web App functionality */}
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
       {/* Font */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link

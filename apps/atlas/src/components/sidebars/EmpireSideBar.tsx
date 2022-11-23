@@ -14,11 +14,7 @@ interface EmpireSideBarProps {
 }
 export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
   return (
-    <AtlasSideBar
-      isOpen={isOpen}
-      position="left"
-      containerClassName="w-full lg:w-5/6"
-    >
+    <AtlasSideBar isOpen={isOpen} position="left" containerClassName="w-full">
       {isOpen && <EmpireQuickView onClose={onClose} />}
     </AtlasSideBar>
   );
