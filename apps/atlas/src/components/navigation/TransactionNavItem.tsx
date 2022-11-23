@@ -22,10 +22,10 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   return (
     <Button
       variant="unstyled"
-      className={`rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 z-40 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex`}
+      className={`rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex z-100`}
       onClick={onClick}
     >
-      <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-28 lg:right-28 z-50 flex">
+      <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-28 lg:right-28 flex">
         <span className="flex w-3 h-3 mt-3 sm:ml-1 sm:mt-0 mr-1">
           {txQueue.transactions.length > 0 ? (
             <span className="p-1 -mt-3 text-center">

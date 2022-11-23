@@ -27,7 +27,7 @@ export const BottomLeftNav = () => {
   const [showPlaylists, setShowPlaylists] = useState(false);
 
   return (
-    <div className="absolute bottom-0 z-40">
+    <div className="absolute bottom-0 z-50">
       <div className="relative">
         <div className="relative bottom-0 z-30 flex h-10 w-72">
           <div className="relative w-12 h-10 p-2 bg-black border-t border-r border-yellow-800 rounded-tr-full paper">

@@ -30,7 +30,7 @@ export const TopLeftNav = () => {
   }
 
   return (
-    <div className="absolute z-40">
+    <div className="absolute z-50">
       <div className="relative">
         <div className="w-48 lg:w-64 h-8 lg:h-10 md:pl-16 lg:pl-28 absolute top-0 bg-white border-b border-r border-yellow-800 rounded-br-full shadow-md  bg-black md:text-xs lg:text-lg">
           {address && (
