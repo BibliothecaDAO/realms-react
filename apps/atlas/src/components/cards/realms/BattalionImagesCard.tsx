@@ -60,6 +60,7 @@ export const BattalionImagesCard: React.FC<Prop> = (props) => {
             {props.battalion[unit.name + 'Qty'] > 0 && (
               <div key={unit.id} className="relative h-32">
                 <Image
+                  alt={unit.name}
                   src={getUnitImage(unit.id)}
                   layout="fill"
                   objectFit="cover"

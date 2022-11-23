@@ -14,7 +14,7 @@ import {
   useTransactionManager,
 } from '@starknet-react/core';
 
-import Image from 'next/future/image';
+import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useCommandList } from '@/context/CommandListContext';

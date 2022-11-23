@@ -429,6 +429,7 @@ const Food: React.FC<Prop> = (props) => {
             <Image
               width={200}
               height={220}
+              alt=""
               className={' mx-auto'}
               src={'/realm-buildings/storehouse.png'}
             />

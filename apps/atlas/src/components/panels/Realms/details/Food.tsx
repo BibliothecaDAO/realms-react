@@ -156,6 +156,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
               <Image
                 width={100}
                 height={100}
+                alt="Storehouse"
                 src={'/realm-buildings/storehouse.png'}
               />
             </div>

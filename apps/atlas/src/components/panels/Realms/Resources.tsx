@@ -95,6 +95,7 @@ const Harvests: React.FC<Prop> = (props) => {
               height={200}
               className={'w-72 h-72 mx-auto'}
               src={'/realm-buildings/hut.png'}
+              alt="Hut"
             />
           </div>
 

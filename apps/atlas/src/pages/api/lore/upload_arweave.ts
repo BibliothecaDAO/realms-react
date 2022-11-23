@@ -30,11 +30,11 @@ export default async function handler(
     await transaction.sign();
     const resp = await transaction.upload();
 
-    console.log(resp.data);
+    console.log(resp);
 
     res.send(
       JSON.stringify({
-        arweaveId: resp.data.id,
+        arweaveId: resp.id,
       })
     );
   } catch (error) {
