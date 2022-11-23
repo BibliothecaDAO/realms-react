@@ -120,6 +120,14 @@ const Harvests: React.FC<Prop> = (props) => {
                         realmId: realm.realmId,
                         buildingId: RealmBuildingId.House,
                         qty: input.workHutsToBuild,
+                        costs: {
+                          resources: realm.resources?.map((res) => ({
+                            resourceId: res.resourceId,
+                            resourceName: res.resourceName,
+                            amount:
+                              WORK_HUT_COST * parseInt(input.workHutsToBuild),
+                          })),
+                        },
                       })
                     )
                   }
