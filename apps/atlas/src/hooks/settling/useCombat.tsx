@@ -95,7 +95,6 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 const useCombat = () => {
   const txQueue = useCommandList();
   const { contract } = useCombatContract();
-  const { gameConstants } = useGameConstants();
   const { play: raidSound } = useUiSounds(soundSelector.raid);
   const { play: buildArmySound } = useUiSounds(soundSelector.raid);
 
@@ -139,38 +138,18 @@ const useCombat = () => {
         },
       });
     },
-    build: (
-      realmId,
-      armyId,
-      ids,
-      qty,
-      costs
-      // battalionIdsQtyCosts: { ids: any; qty: any; cost?: ItemCost }[]
-    ) => {
+    build: (realmId, armyId, ids, qty, costs) => {
       buildArmySound();
-      // const totalCost: ItemCost = battalionIdsQtyCosts.reduce<ItemCost>(
-      //   (agg, curr) => {
-      //     if (!curr.cost) {
-      //       return agg;
-      //     }
-      //     return {
-      //       amount: agg.amount + curr.cost.amount,
-      //       resources: agg.resources.concat(curr.cost.resources),
-      //     };
-      //   },
-      //   {
-      //     amount: 0,
-      //     resources: [],
-      //   }
-      // );
-
       txQueue.add(
         createCall.buildArmy({
           realmId,
           armyId,
           ids,
           qty,
-          // costs: totalCost,
+          costs: {
+            amount: 0,
+            resources: costs,
+          },
         })
       );
     },

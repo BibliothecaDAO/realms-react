@@ -1,21 +1,5 @@
-import {
-  Button,
-  Card,
-  CountdownTimer,
-  OrderIcon,
-  Tabs,
-} from '@bibliotheca-dao/ui-lib/base';
-import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
-import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
-import ParentSize from '@visx/responsive/lib/components/ParentSize';
-import { useMemo, useState } from 'react';
-import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
-import { useArmy } from '@/hooks/settling/useArmy';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import { fetchRealmNameById, getTravelTime } from '@/shared/Getters/Realm';
 
 export interface ArmyAndOrder extends Army {
   orderType?: string;

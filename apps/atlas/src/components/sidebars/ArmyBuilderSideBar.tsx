@@ -368,7 +368,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
               army?.armyId,
               addedBattalions.map((a) => a.battalionId),
               addedBattalions.map((a) => a.battalionQty),
-              totalCost
+              totalCost?.filter((b) => b.amount > 0)
             );
             setAddedBattalions(() => []);
           }}

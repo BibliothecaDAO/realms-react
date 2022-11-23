@@ -333,7 +333,8 @@ const RealmsFood: React.FC<Prop> = (props) => {
                         create(
                           realm?.realmId,
                           input.farmsToBuild,
-                          RealmBuildingId.Farm
+                          RealmBuildingId.Farm,
+                          farmCosts
                         );
                       }}
                       size="xs"
@@ -483,7 +484,8 @@ const RealmsFood: React.FC<Prop> = (props) => {
                     create(
                       realm?.realmId,
                       input.fishingVillagesToBuild,
-                      RealmBuildingId.FishingVillage
+                      RealmBuildingId.FishingVillage,
+                      fishingVillageCosts
                     );
                   }}
                   size="xs"

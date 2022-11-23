@@ -264,6 +264,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
     buildings,
     build: (args: { realmId; buildingId; qty; costs }) => {
       buildMilitary();
+      console.log(args.costs);
       txQueue.add(createBuildingCall.build({ ...args }));
     },
     loading: false,

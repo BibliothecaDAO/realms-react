@@ -238,18 +238,17 @@ export const CommandList: React.FC<Prop> = (props) => {
 
       {txQueue.transactions.length ? (
         <div className="mb-4 ">
-          <h4>Your resource costs in these transactions</h4>
-          <div className="flex gap-4 mt-2">
+          <div className="flex flex-wrap gap-2 mt-2">
             {Object.keys(resourceCostsById).map((resourceId) => {
               const resource = resourceCostsById[resourceId];
               return (
                 <div className="flex flex-col items-center" key={resourceId}>
                   <ResourceIcon
                     withTooltip
-                    size="sm"
+                    size="xs"
                     resource={resource.resourceName}
                   />
-                  <span>{resource.amount}</span>
+                  <span className="xs">{resource.amount.toFixed(0)}</span>
                 </div>
               );
             })}

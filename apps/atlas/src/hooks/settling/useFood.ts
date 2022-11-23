@@ -39,6 +39,7 @@ export const createFoodCall: Record<string, (args: any) => CallAndMetadata> = {
     tokenId: number;
     quantity: number;
     foodBuildingId: number;
+    costs: any;
   }) => ({
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.create,
@@ -109,7 +110,7 @@ type UseRealmFoodDetails = {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
   loading: boolean;
-  create: (tokenId, quantity, foodBuildingId) => void;
+  create: (tokenId, quantity, foodBuildingId, costs) => void;
   harvest: (tokenId, harvestType, foodBuildingId) => void;
   convert: (tokenId, quantity, resourceId) => void;
 };
@@ -195,17 +196,30 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   return {
     realmFoodDetails,
     availableFood,
-    create: (tokenId, quantity, foodBuildingId) => {
+    create: (tokenId, quantity, foodBuildingId, costs) => {
       if (foodBuildingId === RealmBuildingId.FishingVillage) {
         harvestFish();
       } else {
         harvestWheat();
       }
+
+      const qtyCosts = costs.resources.map((a) => {
+        return {
+          resourceId: a.resourceId,
+          amount: a.amount * quantity,
+          resourceName: a.resourceName,
+        };
+      });
+
       txQueue.add(
         createFoodCall.create({
           tokenId,
           quantity,
           foodBuildingId,
+          costs: {
+            amount: 0,
+            resources: qtyCosts,
+          },
         })
       );
     },

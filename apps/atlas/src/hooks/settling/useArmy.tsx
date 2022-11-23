@@ -38,27 +38,8 @@ export const nameArray = [
   'heavyInfantry',
 ];
 
-export const createCall: Record<string, (args: any) => CallAndMetadata> = {
-  buildArmy: (args: { realmId; armyId; ids; qty; costs }) => ({
-    contractAddress: ModuleAddr.Combat,
-    entrypoint: Entrypoints.buildArmy,
-    calldata: [
-      ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
-      args.armyId,
-      args.ids.length,
-      ...args.ids,
-      args.qty.length,
-      ...args.qty,
-    ],
-    metadata: { ...args, action: Entrypoints.buildArmy },
-  }),
-};
-
 export const useArmy = () => {
-  const txQueue = useCommandList();
-  const { contract } = useCombatContract();
   const { gameConstants } = useGameConstants();
-  const { play: raidSound } = useUiSounds(soundSelector.raid);
 
   const [battalions, setBattalions] = useState<BattalionInterface[]>();
 
@@ -99,10 +80,6 @@ export const useArmy = () => {
             })
         : []
     );
-  };
-
-  const calcArmyDefence = (type) => {
-    return battalions;
   };
 
   const getArmyCost = (armyQtys: ArmyBattalionQty): ResourceCost[] => {
@@ -217,36 +194,6 @@ export const useArmy = () => {
   }, [gameConstants]);
 
   return {
-    build: (
-      realmId,
-      battalionIdsAndCosts: { id: any; cost?: ItemCost }[],
-      squadSlot
-    ) => {
-      const totalCost: ItemCost = battalionIdsAndCosts.reduce<ItemCost>(
-        (agg, curr) => {
-          if (!curr.cost) {
-            return agg;
-          }
-          return {
-            amount: agg.amount + curr.cost.amount,
-            resources: agg.resources.concat(curr.cost.resources),
-          };
-        },
-        {
-          amount: 0,
-          resources: [],
-        }
-      );
-
-      txQueue.add(
-        createCall.buildSquad({
-          realmId,
-          battalionIds: battalionIdsAndCosts.map((t) => t.id),
-          squadSlot,
-          costs: totalCost,
-        })
-      );
-    },
     battalions,
     getArmyStats,
     getArmyCost,
