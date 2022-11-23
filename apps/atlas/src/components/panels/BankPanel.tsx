@@ -276,15 +276,16 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   });
 
   return (
-    <BasePanel open={true} style="lg:w-7/12 p-10">
-      <div className="flex justify-between">
-        <div className="w-full p-10 pt-10 bg-black/90">
-          {/* <h2 className="w-full">Resource Emporium</h2>
+    <BasePanel open={true} style="p-10">
+      <div className="absolute right-0 lg:w-7/12">
+        <div className="flex justify-between">
+          <div className="w-full p-10 pt-10 bg-black/90">
+            {/* <h2 className="w-full">Resource Emporium</h2>
           <p className="mt-4 sm:text-2xl">
             Trade your resources with the merchant. You can also provide
             liquidity to the merchant.
           </p> */}
-          {/* <div className="flex">
+            {/* <div className="flex">
             <Button
               variant="secondary"
               size="xs"
@@ -296,59 +297,60 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               <ChevronRight />
             </Button>
           </div> */}
+          </div>
         </div>
-      </div>
-      <div className="flex mb-4">
-        <Squares2X2Icon className="w-6 h-6 text-white" />
-        <Switch
-          checked={isTableView}
-          onChange={toggleMarketView}
-          className={`relative inline-flex h-6 w-11 mx-2 items-center rounded shadow-inne border border-yellow-700`}
-        >
-          <span className="sr-only">Table/Cards</span>
-          <span
-            className={`${
-              isTableView ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
-          />
-        </Switch>
-        <TableCellsIcon className="w-6 h-6 text-white" />
-      </div>
-      {isTableView ? (
-        <div className="relative overflow-x-auto">
-          {balance && (
-            <Table
-              columns={columns}
-              data={defaultData}
-              options={tableOptions}
+        <div className="flex mb-4">
+          <Squares2X2Icon className="w-6 h-6 text-white" />
+          <Switch
+            checked={isTableView}
+            onChange={toggleMarketView}
+            className={`relative inline-flex h-6 w-11 mx-2 items-center rounded shadow-inne border border-yellow-700`}
+          >
+            <span className="sr-only">Table/Cards</span>
+            <span
+              className={`${
+                isTableView ? 'translate-x-6' : 'translate-x-1'
+              } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
             />
-          )}
+          </Switch>
+          <TableCellsIcon className="w-6 h-6 text-white" />
         </div>
-      ) : (
-        <div className="grid grid-cols-3 gap-2">
-          {balance &&
-            boxData.map((data, index) => {
-              return (
-                <div
-                  className="p-2 bg-black border rounded card border-yellow-600/20"
-                  key={index}
-                >
-                  <div className="flex justify-between">
-                    {data.resource}
-                    <div>
-                      {/* {data.rate} */}
+        {isTableView ? (
+          <div className="relative overflow-x-auto">
+            {balance && (
+              <Table
+                columns={columns}
+                data={defaultData}
+                options={tableOptions}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2">
+            {balance &&
+              boxData.map((data, index) => {
+                return (
+                  <div
+                    className="p-2 bg-black border rounded card border-yellow-600/20"
+                    key={index}
+                  >
+                    <div className="flex justify-between">
+                      {data.resource}
+                      <div>
+                        {/* {data.rate} */}
 
-                      {data.action}
+                        {data.action}
+                      </div>
                     </div>
-                  </div>
 
-                  {data.chart}
-                  {/* {data.lp_balance} */}
-                </div>
-              );
-            })}
-        </div>
-      )}
+                    {data.chart}
+                    {/* {data.lp_balance} */}
+                  </div>
+                );
+              })}
+          </div>
+        )}
+      </div>
     </BasePanel>
   );
 }

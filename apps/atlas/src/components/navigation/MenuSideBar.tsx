@@ -110,7 +110,7 @@ export const MenuSideBar = () => {
   }, [query]);
 
   return (
-    <div className="absolute z-20">
+    <div className="absolute z-50">
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2 "

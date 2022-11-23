@@ -23,7 +23,6 @@ export default function RealmPage() {
         }}
       />
       <ResourceSwapSideBar isOpen={isSwapOpen} onClose={onCloseClick} />
-      <ArtBackground background="bank" />
     </Layout>
   );
 }

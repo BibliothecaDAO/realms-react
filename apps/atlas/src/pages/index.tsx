@@ -22,6 +22,7 @@ import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider, useRealmContext } from '@/context/RealmContext';
+import { useUIContext } from '@/context/UIContext';
 import crypts from '@/geodata/crypts.json';
 /* import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json'; */
@@ -47,30 +48,29 @@ function AtlasSidebars() {
 
   const selectedAsset = mapContext.selectedAsset;
 
-  function onClose() {
-    router.push('/', undefined, { shallow: true });
-  }
+  const { assetSidebar, closeAsset } = useUIContext();
+
   return (
     <>
       <RealmSideBar
         realmId={selectedAsset?.id as string}
-        isOpen={selectedAsset?.type === 'realm'}
-        onClose={onClose}
+        isOpen={assetSidebar === 'realm'}
+        onClose={closeAsset}
       />
       <LootSideBar
         lootId={selectedAsset?.id as string}
-        isOpen={selectedAsset?.type === 'loot'}
-        onClose={onClose}
+        isOpen={assetSidebar === 'loot'}
+        onClose={closeAsset}
       />
       <CryptSideBar
         cryptId={selectedAsset?.id as string}
-        isOpen={selectedAsset?.type === 'crypt'}
-        onClose={onClose}
+        isOpen={assetSidebar === 'crypt'}
+        onClose={closeAsset}
       />
       <GASideBar
         gaId={selectedAsset?.id as string}
-        isOpen={selectedAsset?.type === 'ga'}
-        onClose={onClose}
+        isOpen={assetSidebar === 'ga'}
+        onClose={closeAsset}
       />
     </>
   );
