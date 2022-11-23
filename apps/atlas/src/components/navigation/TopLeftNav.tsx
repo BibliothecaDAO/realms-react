@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { EmpireSideBar } from '@/components/sidebars/EmpireSideBar';
 import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUIContext } from '@/context/UIContext';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
@@ -28,23 +29,21 @@ export const TopLeftNav = () => {
   const { lordsBalance } = useResourcesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
-
-  const [selectedSideBar, setSelectedSideBar] =
-    useState<HeaderSidePanelType>('');
-
-  function onTransactionNavClick() {
-    setSelectedSideBar(selectedSideBar === 'transaction' ? '' : 'transaction');
-  }
-  function onEmpireClick() {
-    setSelectedSideBar(selectedSideBar === 'empire' ? '' : 'empire');
-  }
+  const {
+    empireSidebar,
+    toggleEmpire,
+    tradeSidebar,
+    toggleTrade,
+    transactionCart,
+    toggleTransactionCart,
+  } = useUIContext();
 
   function onLordsNavClick() {
     // Bank swap panel is already open
     if (pathname.slice(1).split('/')[0] === 'bank') {
       return;
     }
-    setSelectedSideBar(selectedSideBar === 'bank' ? '' : 'bank');
+    toggleTrade();
   }
 
   return (
@@ -66,7 +65,7 @@ export const TopLeftNav = () => {
         </div>
         <div className="absolute z-50 md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24">
           <Button
-            onClick={onEmpireClick}
+            onClick={toggleEmpire}
             variant="unstyled"
             className=" rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-lg border-yellow-800 border shadow-red-100/20 hover:bg-gray-1000 bg-black"
           >
@@ -80,18 +79,12 @@ export const TopLeftNav = () => {
       <div className="pl-48 lg:pl-64">
         <NetworkConnectButton />
       </div>
-      <EmpireSideBar
-        isOpen={selectedSideBar === 'empire'}
-        onClose={onEmpireClick}
-      />
+      <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />
       <TransactionCartSideBar
-        isOpen={selectedSideBar === 'transaction'}
-        onClose={onTransactionNavClick}
+        isOpen={transactionCart}
+        onClose={toggleTransactionCart}
       />
-      <ResourceSwapSideBar
-        isOpen={selectedSideBar === 'bank'}
-        onClose={onLordsNavClick}
-      />
+      <ResourceSwapSideBar isOpen={tradeSidebar} onClose={onLordsNavClick} />
     </div>
   );
 };

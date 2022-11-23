@@ -15,6 +15,7 @@ import { AtlasProvider } from '@/context/AtlasContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
 import { ResourceProvider } from '@/context/ResourcesContext';
+import { UIProvider } from '@/context/UIContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -79,10 +80,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <CommandListProvider>
                     <ResourceProvider>
                       <AtlasProvider>
-                        <DndProvider backend={HTML5Backend}>
-                          <Component {...pageProps} />
-                          <Modals />
-                        </DndProvider>
+                        <UIProvider>
+                          <DndProvider backend={HTML5Backend}>
+                            <Component {...pageProps} />
+                            <Modals />
+                          </DndProvider>
+                        </UIProvider>
                       </AtlasProvider>
                     </ResourceProvider>
                   </CommandListProvider>
