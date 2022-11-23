@@ -11,7 +11,7 @@ const SidebarHeader = (props: Props) => {
     <div className="flex mb-2">
       {props.titleComponent ?? <h2> {props.title}</h2>}
 
-      <div>
+      <div className="mx-auto">
         <Button variant="outline" size="xs" onClick={props.onClose}>
           X
         </Button>

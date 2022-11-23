@@ -315,7 +315,6 @@ export interface RealmFoodDetails {
   totalTimeRemainingUntilVillageHarvest: number;
   decayedVillages: number;
   villagesBuilt: number;
-  population: number;
   fishingVillagesHarvestsLeft: number;
   farmHarvestsLeft: number;
 }

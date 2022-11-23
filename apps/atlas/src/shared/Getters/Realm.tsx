@@ -389,13 +389,24 @@ export const vaultResources = (vault) =>
 export const daysAccrued = (daysAccrued) =>
   daysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : daysAccrued;
 
+export const getHappinessHasOwnRelic = ({ realm }) => {
+  return hasOwnRelic(realm) ? 0 : NO_RELIC_LOSS;
+};
+
+export const getHappinessHasFood = ({ food }) => {
+  return food > 0 ? 0 : NO_FOOD_LOSS;
+};
+
+export const getHappinessHasDefendingArmy = ({ realm }) => {
+  return realm?.ownArmies?.length > 0 ? 0 : NO_DEFENDING_ARMY_LOSS;
+};
+
 export const getHappiness = ({ realm, food }) => {
-  const hasRelic = hasOwnRelic(realm) ? 0 : NO_RELIC_LOSS;
+  const hasRelic = getHappinessHasOwnRelic({ realm: realm });
 
-  const hasFood = food > 0 ? 0 : NO_FOOD_LOSS;
+  const hasFood = getHappinessHasFood({ food: food });
 
-  const hasDefendingArmy =
-    realm?.ownArmies?.length > 0 ? 0 : NO_DEFENDING_ARMY_LOSS;
+  const hasDefendingArmy = getHappinessHasDefendingArmy({ realm: realm });
 
   return BASE_HAPPINESS - hasRelic - hasFood - hasDefendingArmy;
 };

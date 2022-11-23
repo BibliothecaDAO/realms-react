@@ -34,6 +34,12 @@ import {
   fetchRealmNameById,
   hasOwnRelic,
   getHappinessIcon,
+  getPopulation,
+  getTroopPopulation,
+  getBuildingPopulation,
+  getHappinessHasOwnRelic,
+  getHappinessHasDefendingArmy,
+  getHappinessHasFood,
 } from '@/shared/Getters/Realm';
 
 import type {
@@ -85,7 +91,7 @@ export function RealmOverview(
             <img
               src={'/stableai/archanist.png'}
               alt="map"
-              className="shadow-sm shadow-white rounded-full  w-32 h-32 mr-4"
+              className="shadow-lg rounded-full  w-32 h-32 mr-4 shadow-purple-800"
             />
           </div>
 
@@ -126,17 +132,18 @@ export function RealmOverview(
       <div className="flex justify-between">
         <div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Population
-            </h5>
-            <h3>{props.realmFoodDetails.population} </h3>
+            <h5 className="opacity-80 text-yellow-400  italic">Population</h5>
+            <h3>{getPopulation(props.realm)} </h3>
+            <span className="text-sm text-gray-700">
+              {' '}
+              Armies: {getTroopPopulation(props.realm)} | Buildings:{' '}
+              {getBuildingPopulation(props.realm)}
+            </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Happiness
-            </h5>
+            <h5 className="opacity-80 text-yellow-400  italic">Happiness</h5>
             <h3>
-              {getHappiness({ realm: props.realm, food: props.availableFood })}
+              {getHappiness({ realm: props.realm, food: props.availableFood })}{' '}
               <span className="ml-2">
                 {' '}
                 {getHappinessIcon({
@@ -145,15 +152,21 @@ export function RealmOverview(
                 })}
               </span>
             </h3>
+            <span className="text-sm text-gray-700">
+              Relic: -{getHappinessHasOwnRelic({ realm: props.realm })} | Food:
+              -{getHappinessHasFood({ food: props?.availableFood })} | Defending
+              Army: -{getHappinessHasDefendingArmy({ realm: props.realm })}
+            </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Food in Store
-            </h5>
+            <h5 className="opacity-80 text-yellow-400 italic">Food in Store</h5>
             <h3>{props.availableFood?.toLocaleString()} </h3>
+            <span className="text-sm text-gray-700">
+              Consuming {getPopulation(props.realm)} food per second
+            </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+            <h5 className="opacity-80 text-yellow-400 italic">
               Building Utilisation (sqm)
             </h5>
             <h3>
@@ -164,21 +177,22 @@ export function RealmOverview(
         </div>
         <div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Resources
-            </h5>
-            <h2>
-              {maxClaimableResources(cachedDaysAccrued)}
-              <span className="text-xl text-green-800">
-                {daysAccrued(cachedDaysAccrued)}/3{' '}
-              </span>
-            </h2>
+            <h5 className="opacity-80 text-yellow-400 italic">Resources</h5>
+            <h3>{maxClaimableResources(cachedDaysAccrued)}</h3>
+            <span className="text-sm text-gray-700">
+              {' '}
+              {daysAccrued(cachedDaysAccrued)}/3 max days accrued
+            </span>
           </div>
           <div className="p-2">
             <h5 className="opacity-80  text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
               Vault
             </h5>
             <h2>{vaultResources(cachedVaultDaysAccrued)} </h2>
+            <span className="text-sm text-gray-700">
+              {' '}
+              {cachedVaultDaysAccrued}/7 days until claimable
+            </span>
           </div>
         </div>
       </div>

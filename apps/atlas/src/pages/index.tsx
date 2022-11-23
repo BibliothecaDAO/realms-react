@@ -84,6 +84,27 @@ function MapModule() {
   const ItemViewLevel = 5;
   const selectedId = mapContext.selectedAsset?.id ?? '0';
 
+  const userRealmsFormatted = userRealms?.realms.map((a) => {
+    return {
+      coordinates: [a.longitude, a.latitude],
+      id: a.realmId,
+    };
+  });
+
+  const userRealmIds = userRealms?.realms.map((a) => {
+    return a.realmId;
+  });
+
+  const resourcesToString = (a) => {
+    return resources.find((r) => r.trait === a)?.id ?? 0;
+  };
+
+  const selectedResourcesFiltered = realms.features.filter((d) =>
+    d.resources.find((c) =>
+      state.selectedResources.includes(resourcesToString(c))
+    )
+  );
+
   const createScatterPlot = useCallback(
     (assetType: AssetType, data: any[]) =>
       new ScatterplotLayer({
@@ -114,17 +135,6 @@ function MapModule() {
     [mapContext, selectedId, actions]
   );
 
-  const userRealmsFormatted = userRealms?.realms.map((a) => {
-    return {
-      coordinates: [a.longitude, a.latitude],
-      id: a.realmId,
-    };
-  });
-
-  const userRealmIds = userRealms?.realms.map((a) => {
-    return a.realmId;
-  });
-
   const ownRealms = new IconLayer({
     id: 'own-realms',
     data: userRealmsFormatted,
@@ -145,16 +155,6 @@ function MapModule() {
       );
     },
   });
-
-  const resourcesToString = (a) => {
-    return resources.find((r) => r.trait === a)?.id ?? 0;
-  };
-
-  const selectedResourcesFiltered = realms.features.filter((d) =>
-    d.resources.find((c) =>
-      state.selectedResources.includes(resourcesToString(c))
-    )
-  );
 
   const selectedResources = new IconLayer({
     id: 'selected-resources',

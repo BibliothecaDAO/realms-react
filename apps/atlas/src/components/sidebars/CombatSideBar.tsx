@@ -107,7 +107,7 @@ export const CombatSideBar: React.FC<Prop> = ({
         <div className="grid w-full md:grid-cols-3 ">
           <div>
             <div className="">
-              <div className="flex justify-center w-32 h-32 mx-auto bg-white border-4 border-yellow-600 border-double rounded-full shadow-xl shadow-yellow-200">
+              <div className="flex justify-center w-32 h-32 mx-auto bg-white border-4 border-yellow-600 border-double rounded-full shadow-xl shadow-rage">
                 <OrderIcon
                   containerClassName="inline-block mr-4 self-center mx-auto"
                   size="lg"
@@ -159,7 +159,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 })}
             </div>
           </div>
-          <div className="self-center w-full lg:px-24">
+          <div className="self-start w-full lg:px-24">
             {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
 
             <div className="p-4 text-center border-4 border-yellow-600 border-double rounded">

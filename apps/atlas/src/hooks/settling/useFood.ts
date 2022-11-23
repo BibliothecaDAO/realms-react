@@ -141,7 +141,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     decayedVillages: 0,
     fishingVillagesHarvestsLeft: 0,
     villagesBuilt: 0,
-    population: 0,
   });
 
   useEffect(() => {
@@ -157,8 +156,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
         bnToUint256(toBN(realm?.realmId ?? 0))
       );
       setAvailableFood(food.toString());
-      console.log(food);
-      console.log(FoodContract);
       // food details
       const fishingVillagesHarvestsLeft =
         foodInformation['fishing_villages_harvests_left'].toNumber();
@@ -189,7 +186,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
           ? foodInformation['villages_built'].toNumber()
           : 0,
         fishingVillagesHarvestsLeft: fishingVillagesHarvestsLeft,
-        population: getPopulation(realm),
       });
     };
 

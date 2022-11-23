@@ -1,4 +1,5 @@
 import { ApolloProvider } from '@apollo/client';
+import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
 import { ConnectKitProvider } from 'connectkit';
@@ -19,6 +20,7 @@ import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
 import { wagmiClient } from '@/util/wagmi';
+
 // Create a react-query client
 // const queryClient = new QueryClient();
 
@@ -111,10 +113,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         {(t) => (
           <ToastBar toast={t}>
             {({ icon, message }) => (
-              <div className="flex p-3 rounded shadow-lg stroke-current font-display bg-cta-100 shadow-purple-800/30 text-stone-200">
+              <Button variant="primary" size="md">
                 {icon}
                 {message}
-              </div>
+              </Button>
             )}
           </ToastBar>
         )}

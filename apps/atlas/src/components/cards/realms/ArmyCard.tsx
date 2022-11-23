@@ -97,8 +97,8 @@ export const ArmyCard: React.FC<Prop> = (props) => {
 
   return (
     <Card key={army.armyId} className=" flex-row">
-      <div className="flex space-x-3">
-        <div className="w-1/2">
+      <div className="">
+        <div>
           <div className="">
             <h3>{fetchRealmNameById(army.realmId)}</h3>
             <h5 className="flex">
@@ -139,7 +139,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             )}
           </div>
         </div>
-        <div className="h-full w-full w-1/2">
+        <div className="h-full w-full">
           <div className="flex justify-between mb-2">
             <div className="flex w-full">
               {army.armyId != 0 &&

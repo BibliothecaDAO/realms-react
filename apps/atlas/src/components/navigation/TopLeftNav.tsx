@@ -26,23 +26,8 @@ type HeaderSidePanelType = 'bank' | 'transaction' | 'empire' | '';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useResourcesContext();
-  const [soundOn, setSoundOn] = useState(false);
   const { pathname } = useRouter();
   const { address } = useAccount();
-  const { address: l1Address } = useL1Account();
-
-  const [player, currentTrack] = usePlayer([
-    {
-      title: 'Cimbalom',
-      artist: 'Casey',
-      src: '/music/realms_cimbalom.mp3',
-    },
-    {
-      title: 'Bansura',
-      artist: 'Casey',
-      src: '/music/realms_bansura.mp3',
-    },
-  ]);
 
   const [selectedSideBar, setSelectedSideBar] =
     useState<HeaderSidePanelType>('');
