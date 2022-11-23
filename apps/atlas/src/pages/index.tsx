@@ -22,11 +22,10 @@ import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider, useRealmContext } from '@/context/RealmContext';
-import RealmsResources from '@/geodata/continents';
 import crypts from '@/geodata/crypts.json';
 /* import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json'; */
-import realms from '@/geodata/realms.json';
+import realms from '@/geodata/realms_resources.json';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';
 import { Annotation } from '@/shared/Icons';
@@ -112,7 +111,7 @@ function MapModule() {
           );
         },
       }),
-    [mapContext, selectedId]
+    [mapContext, selectedId, actions]
   );
 
   const userRealmsFormatted = userRealms?.realms.map((a) => {
@@ -122,26 +121,37 @@ function MapModule() {
     };
   });
 
+  const userRealmIds = userRealms?.realms.map((a) => {
+    return a.realmId;
+  });
+
   const ownRealms = new IconLayer({
     id: 'own-realms',
     data: userRealmsFormatted,
     getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/8983/8983174.png',
+      url: 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png',
       width: 128,
       height: 128,
       anchorY: 100,
     }),
+    pickable: true,
     sizeScale: 5,
     getPosition: (d: any) => d.coordinates,
     getSize: (d) => 10,
+    onClick: (info: any) => {
+      mapContext.navigateToAsset(info.object.id, 'realm');
+      actions.updateSearchIdFilter(
+        parseInt(info.object.id) ? info.object.id : ''
+      );
+    },
   });
 
   const resourcesToString = (a) => {
     return resources.find((r) => r.trait === a)?.id ?? 0;
   };
 
-  const selectedResourcesFiltered = RealmsResources.filter((d) =>
-    d.resource.find((c) =>
+  const selectedResourcesFiltered = realms.features.filter((d) =>
+    d.resources.find((c) =>
       state.selectedResources.includes(resourcesToString(c))
     )
   );
@@ -150,14 +160,41 @@ function MapModule() {
     id: 'selected-resources',
     data: selectedResourcesFiltered,
     getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/3275/3275748.png',
+      url: 'https://cdn-icons-png.flaticon.com/512/6491/6491529.png',
       width: 128,
       height: 128,
       anchorY: 100,
     }),
     sizeScale: 5,
-    getPosition: (d: any) => d.coordinates,
+    getPosition: (d: any) => d.xy,
     getSize: (d) => 10,
+  });
+
+  const filteredUserRealmsFromMain = realms.features.filter(
+    (d) => !userRealmIds?.includes(d.id)
+  );
+
+  const sRealms = new IconLayer({
+    id: 'srealms',
+    data: filteredUserRealmsFromMain,
+    getIcon: (d) => ({
+      url: 'https://cdn-icons-png.flaticon.com/512/8989/8989521.png',
+      width: 128,
+      height: 128,
+      anchorY: 100,
+    }),
+    sizeUnits: 'pixels',
+    pickable: true,
+    visible: mapContext.viewState.zoom < ItemViewLevel ? false : true,
+    sizeScale: 50,
+    sizeMinPixels: 6,
+    getPosition: (d: any) => d.xy,
+    onClick: (info: any) => {
+      mapContext.navigateToAsset(info.object.id, 'realm');
+      actions.updateSearchIdFilter(
+        parseInt(info.object.id) ? info.object.id : ''
+      );
+    },
   });
 
   const arcsLayer = useMemo(() => {
@@ -174,8 +211,8 @@ function MapModule() {
 
   const layers = useMemo(() => {
     const assets = [
-      createScatterPlot('crypt', crypts.features),
-      createScatterPlot('realm', (realms as any).features),
+      // createScatterPlot('crypt', crypts.features),
+      // createScatterPlot('realm', (realms as any).features),
       // createScatterPlot('loot', loot_bags.features),
       // createScatterPlot('ga', ga_bags.features),
       // new ScenegraphLayer({
@@ -193,8 +230,8 @@ function MapModule() {
       // }),
     ];
 
-    return [...assets, arcsLayer, ownRealms, selectedResources];
-  }, [arcsLayer, createScatterPlot, ownRealms]);
+    return [...assets, arcsLayer, ownRealms, selectedResources, sRealms];
+  }, [arcsLayer, createScatterPlot, ownRealms, sRealms, selectedResources]);
 
   const {
     mapContext: { navigateToAsset },
@@ -272,7 +309,3 @@ function MapModule() {
     </>
   );
 }
-
-export const HoverCard = ({ name }) => {
-  return <div>{name}</div>;
-};

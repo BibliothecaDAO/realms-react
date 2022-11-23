@@ -143,7 +143,7 @@ function useRealmsPanelPagination() {
   };
 }
 
-function useRealmsPanelTabs() {
+function useRealmsPanelTabs({ actions }) {
   const router = useRouter();
   const selectedTabKey = (router.query['tab'] as string) ?? TABS[1].key;
   const selectedTabIndex = TABS.findIndex(
@@ -162,6 +162,7 @@ function useRealmsPanelTabs() {
       undefined,
       { shallow: true }
     );
+    actions.clearFilters();
   }
 
   return {
@@ -174,7 +175,9 @@ export const RealmsSearch = () => {
   const { state, actions } = useRealmContext();
   const pagination = useRealmsPanelPagination();
 
-  const { selectedTabIndex, onTabChange } = useRealmsPanelTabs();
+  const { selectedTabIndex, onTabChange } = useRealmsPanelTabs({
+    actions: actions,
+  });
 
   // Reset page on filter change. UseEffect doesn't do a deep compare
   useEffect(() => {
@@ -193,6 +196,7 @@ export const RealmsSearch = () => {
     state.traitsFilter.Region,
     state.traitsFilter.River,
     selectedTabIndex,
+    pagination,
   ]);
 
   const variables = useRealmsQueryVariables(
@@ -210,7 +214,7 @@ export const RealmsSearch = () => {
     else startPolling(5000);
 
     return stopPolling;
-  }, [loading, data]);
+  }, [loading, data, startPolling, stopPolling]);
 
   const showPagination = () =>
     selectedTabIndex === 1 &&

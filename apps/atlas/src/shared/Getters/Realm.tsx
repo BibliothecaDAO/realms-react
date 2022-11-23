@@ -35,7 +35,7 @@ export const RealmStateStatus = (realm: RealmFragmentFragment) => {
     return 'Bridge Pending';
   }
   if (realm.settledOwner) {
-    return 'Settled L2';
+    return 'Settled & Generating';
   }
   if (realm.ownerL2) {
     return 'Unsettled L2';
@@ -45,7 +45,7 @@ export const RealmStateStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const IsSettled = (realm: RealmFragmentFragment) => {
-  return RealmStateStatus(realm) === 'Settled L2';
+  return RealmStateStatus(realm) === 'Settled & Generating';
 };
 
 export const RealmOwner = (realm: RealmFragmentFragment) => {
@@ -398,6 +398,16 @@ export const getHappiness = ({ realm, food }) => {
     realm?.ownArmies?.length > 0 ? 0 : NO_DEFENDING_ARMY_LOSS;
 
   return BASE_HAPPINESS - hasRelic - hasFood - hasDefendingArmy;
+};
+
+export const getHappinessIcon = ({ realm, food }) => {
+  const happiness = getHappiness({ realm, food });
+
+  if (happiness >= BASE_HAPPINESS) {
+    return '😀';
+  } else {
+    return '😢';
+  }
 };
 
 export const getBuildingPopulation = (realm: RealmFragmentFragment) => {

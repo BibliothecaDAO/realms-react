@@ -11554,6 +11554,7 @@ __metadata:
     react-popper: "npm:2.3.0"
     react-spring: "npm:^9.5.5"
     react-textarea-autosize: "npm:8.3.4"
+    react-tooltip: "npm:4.5.0"
     rimraf: "npm:3.0.2"
     sharp: "npm:0.31.1"
     size-limit: "npm:8.1.0"
@@ -26299,6 +26300,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-tooltip@npm:4.5.0":
+  version: 4.5.0
+  resolution: "react-tooltip@npm:4.5.0"
+  dependencies:
+    prop-types: "npm:^15.8.1"
+    uuid: "npm:^7.0.3"
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: b90cff275ad186d56af84b028fd02e20b9b697abdb0b5361238bfe831725850e693e3341d290208fb85eaec05412d17e91ff332b5ab3128706f803e758afd3e1
+  languageName: node
+  linkType: hard
+
 "react-transition-state@npm:^1.1.4":
   version: 1.1.5
   resolution: "react-transition-state@npm:1.1.5"
@@ -30893,6 +30907,15 @@ __metadata:
   bin:
     uuid: ./bin/uuid
   checksum: c84dbfcb94389fea5a09020802df2a1227d183ceabaa5256658194dfad045c83fe72366b64b165b6445a480fac8a75d0e982033f3cb393713674b3cd938063fa
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "uuid@npm:7.0.3"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 73dd31fbb8614ebe489ad7d82475d7f53d14d69eef7a8e2f94ef821202707b8e559f7f44e4505f06b0c3f99d4e1dee36eac665e911026e94b3bf368fafbc60e5
   languageName: node
   linkType: hard
 

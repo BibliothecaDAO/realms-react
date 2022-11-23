@@ -2,7 +2,7 @@ import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
 import { useAccount } from '@starknet-react/core';
-
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import React, { useState } from 'react';
@@ -33,29 +33,28 @@ import {
   RealmCombatStatus,
   fetchRealmNameById,
   hasOwnRelic,
+  getHappinessIcon,
 } from '@/shared/Getters/Realm';
-import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
-import SidebarHeader from '@/shared/SidebarHeader';
-import type { RealmFoodDetails, RealmsCardProps } from '@/types/index';
+
+import type {
+  BuildingFootprint,
+  RealmFoodDetails,
+  RealmsCardProps,
+} from '@/types/index';
 import { RealmImage } from './Image';
 import { Travel } from './Travel';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
+  buildingUtilisation: BuildingFootprint | undefined;
 }
 
 export function RealmOverview(
   props: RealmsCardProps & RealmOverview
 ): ReactElement {
-  const router = useRouter();
   const { address: l1Address } = useL1Account();
   const { address } = useAccount();
-  const isOwner = useIsOwner(props?.realm?.settledOwner);
-  const {
-    mapContext: { navigateToAsset },
-  } = useAtlasContext();
-  const { setPlaylistState } = useRealmPlaylist({});
 
   const { userData, userRealms } = useUsersRealms();
 
@@ -81,23 +80,30 @@ export function RealmOverview(
         </span>
       </div> */}
       {hasOwnRelic(props.realm) ? (
-        <div>
-          <h3 className="mb-4">
-            {props.realm?.name} is a self-sovereign state
-          </h3>
-          <p className="text-xl">
-            Citizens of {props.realm?.name} are living peacefully on its lands.
-            The Lord of {props.realm?.name} is keeping them safe from Goblins
-            and other warmongering realms.
-          </p>
+        <div className="px-2 flex my-4">
+          <div className="self-center">
+            <img
+              src={'/stableai/archanist.png'}
+              alt="map"
+              className="shadow-sm shadow-white rounded-full  w-32 h-32 mr-4"
+            />
+          </div>
+
+          <div className="w-2/3 self-center">
+            <p className="italic">
+              Visir: "Citizens of {props.realm?.name} are living peacefully on
+              its lands. The Lord of {props.realm?.name} is keeping them safe
+              from Goblins and other warmongering realms."
+            </p>
+          </div>
         </div>
       ) : (
-        <div>
+        <div className="px-2">
           {props.realm?.relic?.map((a, i) => {
             return (
-              <div key={i} className="mb-4">
+              <div key={i} className="mb-1">
                 <h3>Annexed by {fetchRealmNameById(a.heldByRealm || 0)}</h3>{' '}
-                <p className="text-xl">
+                <p className="text-md">
                   {props.realm?.name} has been Conquered by{' '}
                   {fetchRealmNameById(a.heldByRealm || 0)}. The citizens shake
                   in fear everyday thinking it will be their last... won't
@@ -131,6 +137,13 @@ export function RealmOverview(
             </h5>
             <h3>
               {getHappiness({ realm: props.realm, food: props.availableFood })}
+              <span className="ml-2">
+                {' '}
+                {getHappinessIcon({
+                  realm: props.realm,
+                  food: props.availableFood,
+                })}
+              </span>
             </h3>
           </div>
           <div className="p-2">
@@ -138,6 +151,15 @@ export function RealmOverview(
               Food in Store
             </h5>
             <h3>{props.availableFood?.toLocaleString()} </h3>
+          </div>
+          <div className="p-2">
+            <h5 className="opacity-80 text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
+              Building Utilisation (sqm)
+            </h5>
+            <h3>
+              {props.buildingUtilisation?.currentSqm} /{' '}
+              {props.buildingUtilisation?.maxSqm}{' '}
+            </h3>
           </div>
         </div>
         <div>

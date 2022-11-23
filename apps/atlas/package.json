@@ -199,6 +199,7 @@
     "react-popper": "2.3.0",
     "react-spring": "^9.5.5",
     "react-textarea-autosize": "8.3.4",
+    "react-tooltip": "4.5.0",
     "sharp": "0.31.1",
     "slate": "0.84.0",
     "slate-history": "0.66.0",

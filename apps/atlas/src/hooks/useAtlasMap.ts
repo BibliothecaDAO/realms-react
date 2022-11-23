@@ -115,7 +115,7 @@ export function useAtlasMap(): AtlasMap {
     setViewState({
       ...coordinates,
       zoom: 8,
-      pitch: 90,
+      pitch: 0,
       bearing: 0,
       bounds: [
         [-180, -180], // Southwest coordinates

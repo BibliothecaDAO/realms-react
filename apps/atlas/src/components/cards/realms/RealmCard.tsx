@@ -83,6 +83,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           label: <Castle className="self-center w-4 h-4 fill-current" />,
           component: (
             <RealmOverview
+              buildingUtilisation={buildingUtilisation}
               availableFood={availableFood}
               realmFoodDetails={realmFoodDetails}
               {...props}
