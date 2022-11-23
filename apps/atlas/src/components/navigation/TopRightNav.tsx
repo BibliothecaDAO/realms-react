@@ -1,11 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { Button } from '@bibliotheca-dao/ui-lib';
-import {
-  useAccount,
-  useTransactionManager,
-  useTransactions,
-} from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
 import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
 import TransactionNavItem from './TransactionNavItem';
@@ -13,9 +8,7 @@ import TransactionNavItem from './TransactionNavItem';
 type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export const TopRightNav = () => {
-  const { hashes } = useTransactionManager();
   const { address } = useAccount();
-  const transactions = useTransactions({ hashes });
 
   const [selectedSideBar, setSelectedSideBar] =
     useState<HeaderSidePanelType>('');

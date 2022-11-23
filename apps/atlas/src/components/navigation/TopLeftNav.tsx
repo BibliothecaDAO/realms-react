@@ -1,42 +1,25 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
-import PlayBack from '@bibliotheca-dao/ui-lib/icons/player/play-back.svg';
-import PlayForward from '@bibliotheca-dao/ui-lib/icons/player/play-forward.svg';
-import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
-import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
+
 import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useAccount as useL1Account } from 'wagmi';
 import { EmpireSideBar } from '@/components/sidebars/EmpireSideBar';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import { useUIContext } from '@/context/UIContext';
-import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '@/shared/NetworkConnectButton';
 import { ResourceSwapSideBar } from '../sidebars/ResourceSwapSideBar';
-import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
-import TransactionNavItem from './TransactionNavItem';
-
-type HeaderSidePanelType = 'bank' | 'transaction' | 'empire' | '';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useResourcesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
-  const {
-    empireSidebar,
-    toggleEmpire,
-    tradeSidebar,
-    toggleTrade,
-    transactionCart,
-    toggleTransactionCart,
-  } = useUIContext();
+  const { empireSidebar, toggleEmpire, tradeSidebar, toggleTrade } =
+    useUIContext();
 
   function onLordsNavClick() {
     // Bank swap panel is already open
@@ -80,10 +63,6 @@ export const TopLeftNav = () => {
         <NetworkConnectButton />
       </div>
       <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />
-      <TransactionCartSideBar
-        isOpen={transactionCart}
-        onClose={toggleTransactionCart}
-      />
       <ResourceSwapSideBar isOpen={tradeSidebar} onClose={onLordsNavClick} />
     </div>
   );
