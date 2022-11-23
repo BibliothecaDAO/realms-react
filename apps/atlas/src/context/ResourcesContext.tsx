@@ -305,16 +305,18 @@ function useResources() {
 
         const inCartCost = costsByResourceId[resourceId]
           ? BigNumber.from(
-              (costsByResourceId[resourceId].amount * 10 ** 18).toString()
+              parseInt(costsByResourceId[resourceId]?.amount).toString()
             )
           : 0;
+
+        const baseBn = BigNumber.from('1000000000000000000').mul(inCartCost);
 
         const walletBalance =
           walletBalancesData.walletBalances.find(
             (a) => a.tokenId === resourceId
           )?.amount ?? 0;
 
-        const actualBalance = BigNumber.from(walletBalance).sub(inCartCost);
+        const actualBalance = BigNumber.from(walletBalance).sub(baseBn);
 
         const rate = rates.find((rate) => rate.tokenId === resourceId);
 

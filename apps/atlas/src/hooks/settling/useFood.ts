@@ -74,6 +74,7 @@ export const createFoodCall: Record<string, (args: any) => CallAndMetadata> = {
     tokenId: number;
     quantity: number;
     resourceId: number;
+    costs: any;
   }) => ({
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.convert,
@@ -253,6 +254,16 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
           tokenId,
           quantity,
           resourceId,
+          costs: {
+            amount: 0,
+            resources: [
+              {
+                resourceId: resourceId,
+                amount: parseInt(quantity),
+                resourceName: 'wheat',
+              },
+            ],
+          },
         })
       );
     },

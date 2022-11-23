@@ -469,3 +469,11 @@ export const getTroopPopulation = (realm: RealmFragmentFragment) => {
 export const getPopulation = (realm: RealmFragmentFragment) => {
   return getBuildingPopulation(realm) + getTroopPopulation(realm) + 1;
 };
+
+export const getFoodIcon = (food: number) => {
+  if (food > 0) {
+    return '🍞';
+  } else {
+    return '☠️';
+  }
+};

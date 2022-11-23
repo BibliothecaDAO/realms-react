@@ -40,6 +40,7 @@ import {
   getHappinessHasOwnRelic,
   getHappinessHasDefendingArmy,
   getHappinessHasFood,
+  getFoodIcon,
 } from '@/shared/Getters/Realm';
 
 import type {
@@ -160,7 +161,10 @@ export function RealmOverview(
           </div>
           <div className="p-2">
             <h5 className="opacity-80 text-yellow-400 italic">Food in Store</h5>
-            <h3>{props.availableFood?.toLocaleString()} </h3>
+            <h3>
+              {props.availableFood?.toLocaleString()}{' '}
+              {getFoodIcon(props.availableFood || 0)}
+            </h3>
             <span className="text-sm text-gray-700">
               Consuming {getPopulation(props.realm)} food per second
             </span>
