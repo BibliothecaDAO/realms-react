@@ -5,10 +5,10 @@ import {
   CardTitle,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';
+import { BigNumber } from 'ethers';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
 import { RealmResources } from '@/components/tables/RealmResources';
 import {
   RealmBuildingId,
@@ -71,7 +71,9 @@ const Harvests: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
+          BigNumber.from(t.calldata[0] as string).eq(
+            BigNumber.from(realm?.realmId)
+          )
       )
     );
     setInput({

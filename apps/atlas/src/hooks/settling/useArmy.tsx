@@ -1,23 +1,12 @@
 import { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { useCommandList } from '@/context/CommandListContext';
 import type { GetRealmsQuery, Army } from '@/generated/graphql';
-import {
-  ModuleAddr,
-  useCombatContract,
-} from '@/hooks/settling/stark-contracts';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type {
-  ItemCost,
-  CallAndMetadata,
   ResourceCost,
   BattalionInterface,
   ArmyStatistics,
   ArmyBattalionQty,
 } from '@/types/index';
-import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import { useUiSounds, soundSelector } from '../useUiSounds';
 
 export const Entrypoints = {
   buildArmy: 'build_army_from_battalions',

@@ -204,7 +204,7 @@
     "slate": "0.86.0",
     "slate-history": "0.86.0",
     "slate-react": "0.86.0",
-    "starknet": "^4.9.0",
+    "starknet": "4.9.0",
     "three": "0.146.0",
     "three-stdlib": "2.19.0",
     "three.meshline": "1.4.0",

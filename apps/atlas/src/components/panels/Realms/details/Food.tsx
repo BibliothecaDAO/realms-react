@@ -9,10 +9,11 @@ import {
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
+import { BigNumber } from 'ethers';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
+
 import {
   RealmBuildingId,
   HarvestType,
@@ -36,7 +37,7 @@ import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
-import { CostBlock } from '@/shared/Getters/Realm';
+import { CostBlock, getPopulation } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -101,7 +102,9 @@ const RealmsFood: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
+          BigNumber.from(t.calldata[0] as string).eq(
+            BigNumber.from(realm?.realmId)
+          )
       )
     );
   }, [txQueue.transactions, realm?.realmId]);
@@ -138,7 +141,8 @@ const RealmsFood: React.FC<Prop> = (props) => {
                 <div className="flex justify-end text-xl">
                   <CountdownTimer
                     date={(
-                      props.availableFood * 1000 +
+                      (props.availableFood / getPopulation(props.realm)) *
+                        1000 +
                       new Date().getTime()
                     ).toString()}
                   />
