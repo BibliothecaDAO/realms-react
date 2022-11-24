@@ -10,8 +10,6 @@ import type {
 } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
 
-import { getTravelTime } from '@/shared/Getters/Realm';
-
 type Prop = {
   realm: RealmFragmentFragment;
   userRealms?: GetRealmsQuery;

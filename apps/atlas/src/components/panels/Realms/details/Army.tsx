@@ -4,11 +4,8 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CountdownTimer,
-  InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';
-import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import Image from 'next/image';
+
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { ArmyCard } from '@/components/cards/realms/ArmyCard';
@@ -16,31 +13,19 @@ import { Travel } from '@/components/panels/Realms/details/Travel';
 import { ArmyBuilderSideBar } from '@/components/sidebars/ArmyBuilderSideBar';
 import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
-
-import { RealmResources } from '@/components/tables/RealmResources';
 import { defaultArmy } from '@/constants/army';
-import { buildingIntegrity } from '@/constants/buildings';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army, GetRealmQuery, Realm } from '@/generated/graphql';
 import { useArmy } from '@/hooks/settling/useArmy';
-import useBuildings, {
-  createBuildingCall,
-} from '@/hooks/settling/useBuildings';
-import useCombat from '@/hooks/settling/useCombat';
-import { useGameConstants } from '@/hooks/settling/useGameConstants';
+import useBuildings from '@/hooks/settling/useBuildings';
+
 import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
-import {
-  CostBlock,
-  fetchRealmNameById,
-  hasOwnRelic,
-  RealmCombatStatus,
-} from '@/shared/Getters/Realm';
+import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
-import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
 import { MilitaryBuildings } from './MilitaryBuildings';
 type Prop = {
   realm: GetRealmQuery['realm'];

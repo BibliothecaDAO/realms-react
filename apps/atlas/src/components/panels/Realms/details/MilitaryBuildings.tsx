@@ -1,8 +1,5 @@
 import {
   Button,
-  Card,
-  CardBody,
-  CardTitle,
   CountdownTimer,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';

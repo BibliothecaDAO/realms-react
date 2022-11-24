@@ -1,12 +1,9 @@
 import {
   Card,
   CardTitle,
-  CardStats,
   Button,
   CountdownTimer,
   InputNumber,
-  CardBody,
-  ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
@@ -18,8 +15,6 @@ import {
   RealmBuildingId,
   HarvestType,
   HARVEST_LENGTH,
-  WORK_HUT_OUTPUT,
-  WORK_HUT_COST,
   MAX_HARVESTS,
   BASE_FOOD_PRODUCTION,
   FISH_ID,
@@ -27,22 +22,14 @@ import {
 } from '@/constants/buildings';
 import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
-import type {
-  GetRealmQuery,
-  Realm,
-  RealmFragmentFragment,
-} from '@/generated/graphql';
+import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { CostBlock, getPopulation } from '@/shared/Getters/Realm';
-import type {
-  BuildingDetail,
-  RealmFoodDetails,
-  AvailableResources,
-} from '@/types/index';
+import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 
 type Prop = {
   realm: RealmFragmentFragment;

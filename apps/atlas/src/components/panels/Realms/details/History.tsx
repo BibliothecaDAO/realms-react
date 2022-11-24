@@ -14,12 +14,7 @@ import {
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { resourcePillaged } from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
-import type { RealmEvents } from '@/types/index';
-import {
-  realmMilitaryEvents,
-  realmEvents,
-  realmEconomicEvents,
-} from '@/types/index';
+import { realmMilitaryEvents, realmEconomicEvents } from '@/types/index';
 
 interface RealmHistoryProps {
   realmId: number;
