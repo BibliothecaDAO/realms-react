@@ -1,7 +1,6 @@
 import { FlyToInterpolator } from '@deck.gl/core';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useRealmContext } from '@/context/RealmContext';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';

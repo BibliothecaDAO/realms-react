@@ -11283,7 +11283,7 @@ __metadata:
     slate: "npm:0.86.0"
     slate-history: "npm:0.86.0"
     slate-react: "npm:0.86.0"
-    starknet: "npm:^4.9.0"
+    starknet: "npm:4.9.0"
     storybook-addon-next-router: "npm:^4.0.1"
     stylelint: "npm:14.15.0"
     stylelint-config-prettier: "npm:9.0.4"
@@ -28053,9 +28053,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"starknet@npm:^4.9.0":
-  version: 4.13.1
-  resolution: "starknet@npm:4.13.1"
+"starknet@npm:4.9.0":
+  version: 4.9.0
+  resolution: "starknet@npm:4.9.0"
   dependencies:
     "@ethersproject/bytes": "npm:^5.6.1"
     bn.js: "npm:^5.2.1"
@@ -28068,7 +28068,7 @@ __metadata:
     pako: "npm:^2.0.4"
     ts-custom-error: "npm:^3.2.0"
     url-join: "npm:^4.0.1"
-  checksum: e687dc6da1b6b10995725ab0f64ab8498797dfbbe498aed741c49018c429742beefcf6f807860ef9a52af294733304cd5994d5fdb8bb684d7ad5ecd34042cb22
+  checksum: eee65e32b3160548a7ed89a31a2b88a7a8c06e3ea9d7b1ed43867c2ff8397cd4655d4eb7cac6a86d0f75e8f7d0d614d97e66ace8f6989b691ef1909063bb1f38
   languageName: node
   linkType: hard
 

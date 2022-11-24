@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useStarknetCall } from '@starknet-react/core';
-import { useEffect, useMemo, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-
 import {
   RealmBuildingId,
   HarvestType,
@@ -13,7 +10,6 @@ import {
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
-import { getPopulation } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmFoodDetails,
@@ -21,12 +17,7 @@ import type {
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import { useUiSounds, soundSelector } from '../useUiSounds';
-import {
-  ModuleAddr,
-  useCalculatorContract,
-  useFoodContract,
-  useJsonRpc,
-} from './stark-contracts';
+import { ModuleAddr, useJsonRpc } from './stark-contracts';
 
 export const Entrypoints = {
   create: 'create',
