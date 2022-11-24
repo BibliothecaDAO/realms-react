@@ -1552,6 +1552,10 @@ export type Travel = {
   destinationRealm?: Maybe<Realm>;
   destinationTokenId: Scalars['Int'];
   eventId: Scalars['String'];
+  locationContractId: Scalars['Int'];
+  locationNestedId: Scalars['Int'];
+  locationRealm?: Maybe<Realm>;
+  locationTokenId: Scalars['Int'];
   nestedId: Scalars['Int'];
   originRealm?: Maybe<Realm>;
   timestamp: Scalars['Timestamp'];
@@ -1565,6 +1569,9 @@ export type TravelOrderByWithRelationInput = {
   destinationNestedId?: InputMaybe<SortOrder>;
   destinationTokenId?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
+  locationContractId?: InputMaybe<SortOrder>;
+  locationNestedId?: InputMaybe<SortOrder>;
+  locationTokenId?: InputMaybe<SortOrder>;
   nestedId?: InputMaybe<SortOrder>;
   timestamp?: InputMaybe<SortOrder>;
   tokenId?: InputMaybe<SortOrder>;
@@ -1577,6 +1584,9 @@ export enum TravelScalarFieldEnum {
   DestinationNestedId = 'destinationNestedId',
   DestinationTokenId = 'destinationTokenId',
   EventId = 'eventId',
+  LocationContractId = 'locationContractId',
+  LocationNestedId = 'locationNestedId',
+  LocationTokenId = 'locationTokenId',
   NestedId = 'nestedId',
   Timestamp = 'timestamp',
   TokenId = 'tokenId',
@@ -1592,6 +1602,9 @@ export type TravelWhereInput = {
   destinationNestedId?: InputMaybe<IntFilter>;
   destinationTokenId?: InputMaybe<IntFilter>;
   eventId?: InputMaybe<StringFilter>;
+  locationContractId?: InputMaybe<IntFilter>;
+  locationNestedId?: InputMaybe<IntFilter>;
+  locationTokenId?: InputMaybe<IntFilter>;
   nestedId?: InputMaybe<IntFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
   tokenId?: InputMaybe<IntFilter>;
@@ -2607,6 +2620,49 @@ export type ResourceFragmentFragment = {
   resourceId: number;
   resourceName: string;
   realmId?: number | null;
+};
+
+export type GetTravelsQueryVariables = Exact<{
+  where?: InputMaybe<TravelWhereInput>;
+  orderBy?: InputMaybe<
+    Array<TravelOrderByWithRelationInput> | TravelOrderByWithRelationInput
+  >;
+  take?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type GetTravelsQuery = {
+  __typename?: 'Query';
+  payload: Array<{
+    __typename?: 'Travel';
+    contractId: number;
+    tokenId: number;
+    nestedId: number;
+    destinationContractId: number;
+    destinationTokenId: number;
+    destinationNestedId: number;
+    destinationArrivalTime: any;
+    startTime: any;
+    endTime: any;
+    originRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+    locationRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+    destinationRealm?: {
+      __typename?: 'Realm';
+      realmId: number;
+      longitude: number;
+      latitude: number;
+    } | null;
+  }>;
 };
 
 export type GetWalletQueryVariables = Exact<{
@@ -3941,6 +3997,93 @@ export type GetTroopStatsLazyQueryHookResult = ReturnType<
 export type GetTroopStatsQueryResult = Apollo.QueryResult<
   GetTroopStatsQuery,
   GetTroopStatsQueryVariables
+>;
+export const GetTravelsDocument = gql`
+  query GetTravels(
+    $where: TravelWhereInput
+    $orderBy: [TravelOrderByWithRelationInput!]
+    $take: Int
+    $skip: Int
+  ) @api(name: starkIndexer) {
+    payload: travels(
+      where: $where
+      orderBy: $orderBy
+      take: $take
+      skip: $skip
+    ) {
+      ...TravelFragment
+      startTime: timestamp
+      endTime: destinationArrivalTime
+      originRealm {
+        realmId
+        longitude
+        latitude
+      }
+      locationRealm {
+        realmId
+        longitude
+        latitude
+      }
+      destinationRealm {
+        realmId
+        longitude
+        latitude
+      }
+    }
+  }
+  ${TravelFragmentFragmentDoc}
+`;
+
+/**
+ * __useGetTravelsQuery__
+ *
+ * To run a query within a React component, call `useGetTravelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTravelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTravelsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useGetTravelsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTravelsQuery,
+    GetTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTravelsQuery, GetTravelsQueryVariables>(
+    GetTravelsDocument,
+    options
+  );
+}
+export function useGetTravelsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTravelsQuery,
+    GetTravelsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTravelsQuery, GetTravelsQueryVariables>(
+    GetTravelsDocument,
+    options
+  );
+}
+export type GetTravelsQueryHookResult = ReturnType<typeof useGetTravelsQuery>;
+export type GetTravelsLazyQueryHookResult = ReturnType<
+  typeof useGetTravelsLazyQuery
+>;
+export type GetTravelsQueryResult = Apollo.QueryResult<
+  GetTravelsQuery,
+  GetTravelsQueryVariables
 >;
 export const GetWalletDocument = gql`
   query getWallet($address: String!) @api(name: starkIndexer) {

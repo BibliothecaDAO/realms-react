@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
+import { TripsLayer } from '@deck.gl/geo-layers';
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
-import { ScenegraphLayer } from '@deck.gl/mesh-layers';
 import DeckGL from '@deck.gl/react';
 import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Map from 'react-map-gl';
 import { SearchFilter } from '@/components/filters/SearchFilter';
 import Layout from '@/components/Layout';
@@ -23,6 +22,7 @@ import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider, useRealmContext } from '@/context/RealmContext';
 import { useUIContext } from '@/context/UIContext';
+import { useGetTravelsQuery } from '@/generated/graphql';
 import crypts from '@/geodata/crypts.json';
 /* import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json'; */
@@ -30,6 +30,8 @@ import realms from '@/geodata/realms_resources.json';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';
 import { Annotation } from '@/shared/Icons';
+import { getDeckGLTripLayerPath } from '@/util/travel';
+import type { Point } from '@/util/travel';
 
 export default function AtlasPage() {
   return (
@@ -44,7 +46,6 @@ export default function AtlasPage() {
 
 function AtlasSidebars() {
   const { mapContext } = useAtlasContext();
-  const router = useRouter();
 
   const selectedAsset = mapContext.selectedAsset;
 
@@ -76,6 +77,66 @@ function AtlasSidebars() {
   );
 }
 
+function useTravelTripsLayer() {
+  const [variables, setVariables] = useState({
+    where: { destinationArrivalTime: { gt: Date.now() } },
+  });
+  const { data: travels } = useGetTravelsQuery({ variables });
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setVariables({ where: { destinationArrivalTime: { gt: Date.now() } } });
+    }, 30 * 1000);
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  // Increase length to slow down
+  const loopLength = 500;
+  const animationSpeed = 1;
+  const [time, setTime] = useState(0);
+  const [animation] = useState<any>({});
+  const animate = () => {
+    setTime((t) => (t + animationSpeed) % loopLength);
+    animation.id = window.requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    animation.id = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(animation.id);
+  }, [animation]);
+
+  const travelData = useMemo(() => {
+    return travels?.payload
+      ? travels?.payload
+          .filter((travel) => travel.endTime > travel.startTime)
+          .map((travel) =>
+            getDeckGLTripLayerPath(
+              travel.locationRealm as Point,
+              travel.destinationRealm as Point,
+              travel.startTime,
+              travel.endTime,
+              loopLength
+            )
+          )
+      : [];
+  }, [travels]);
+
+  const tripsLayer = new TripsLayer({
+    id: 'trips',
+    data: travelData,
+    getPath: (d: any) => d.path,
+    getTimestamps: (d: any) => d.timestamps,
+    getColor: [255, 255, 204],
+    opacity: 1,
+    widthMinPixels: 2,
+    fadeTrail: true,
+    trailLength: 400,
+    currentTime: time,
+  });
+  return { tripsLayer };
+}
+
 function MapModule() {
   const { userRealms } = useUsersRealms();
   const { travelContext, mapContext } = useAtlasContext();
@@ -83,6 +144,7 @@ function MapModule() {
 
   const ItemViewLevel = 5;
   const selectedId = mapContext.selectedAsset?.id ?? '0';
+  const { tripsLayer } = useTravelTripsLayer();
 
   const userRealmsFormatted = userRealms?.realms.map((a) => {
     return {
@@ -257,7 +319,7 @@ function MapModule() {
         viewState={mapContext.viewState}
         controller={true}
         onViewStateChange={(e) => mapContext.setViewState(e.viewState)}
-        layers={layers}
+        layers={[...layers, tripsLayer]}
       >
         {!mapContext.isMapLoaded ? (
           <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1100">

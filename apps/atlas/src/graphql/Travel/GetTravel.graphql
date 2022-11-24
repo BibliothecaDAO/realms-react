@@ -1,0 +1,27 @@
+query GetTravels(
+  $where: TravelWhereInput
+  $orderBy: [TravelOrderByWithRelationInput!]
+  $take: Int
+  $skip: Int
+) @api(name: starkIndexer) {
+  payload: travels(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
+    ...TravelFragment
+    startTime: timestamp
+    endTime: destinationArrivalTime
+    originRealm {
+      realmId
+      longitude
+      latitude
+    }
+    locationRealm {
+      realmId
+      longitude
+      latitude
+    }
+    destinationRealm {
+      realmId
+      longitude
+      latitude
+    }
+  }
+}
