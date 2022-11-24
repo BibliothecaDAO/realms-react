@@ -36,7 +36,7 @@ import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
-import { CostBlock } from '@/shared/Getters/Realm';
+import { CostBlock, getPopulation } from '@/shared/Getters/Realm';
 import type {
   BuildingDetail,
   RealmFoodDetails,
@@ -138,7 +138,8 @@ const RealmsFood: React.FC<Prop> = (props) => {
                 <div className="flex justify-end text-xl">
                   <CountdownTimer
                     date={(
-                      props.availableFood * 1000 +
+                      (props.availableFood / getPopulation(props.realm)) *
+                        1000 +
                       new Date().getTime()
                     ).toString()}
                   />
