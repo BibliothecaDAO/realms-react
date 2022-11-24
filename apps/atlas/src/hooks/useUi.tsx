@@ -44,6 +44,7 @@ export function useUi() {
     router.push('/', undefined, { shallow: true });
   };
   const toggleEmpire = () => {
+    router.push('/', undefined, { shallow: true });
     closeAll();
     setEmpireSidebar(!empireSidebar);
   };
