@@ -155,7 +155,7 @@
     "@react-spring/web": "^9.5.5",
     "@react-three/drei": "^9.43.3",
     "@react-three/fiber": "^8.9.1",
-    "@starknet-react/core": "^0.14.6",
+    "@starknet-react/core": "0.14.6",
     "@tailwindcss/typography": "0.5.8",
     "@types/three": "^0.146.0",
     "@uiw/react-codemirror": "4.15.1",

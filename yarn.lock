@@ -6404,7 +6404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@starknet-react/core@npm:^0.14.6":
+"@starknet-react/core@npm:0.14.6":
   version: 0.14.6
   resolution: "@starknet-react/core@npm:0.14.6"
   dependencies:
@@ -11187,7 +11187,7 @@ __metadata:
     "@react-three/drei": "npm:^9.43.3"
     "@react-three/fiber": "npm:^8.9.1"
     "@size-limit/file": "npm:8.1.0"
-    "@starknet-react/core": "npm:^0.14.6"
+    "@starknet-react/core": "npm:0.14.6"
     "@storybook/addon-actions": "npm:6.5.13"
     "@storybook/addons": "npm:6.5.13"
     "@storybook/client-api": "npm:6.5.13"

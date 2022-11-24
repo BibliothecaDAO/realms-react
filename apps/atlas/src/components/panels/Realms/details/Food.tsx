@@ -98,7 +98,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
   useEffect(() => {
     setEnqueuedHarvestTx(
       !!txQueue.transactions.find(
-        (t) =>
+        (t: any) =>
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&

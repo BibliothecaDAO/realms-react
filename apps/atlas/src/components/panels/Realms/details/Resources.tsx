@@ -9,7 +9,6 @@ import { BigNumber } from 'ethers';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
-import { RealmResources } from '@/components/tables/RealmResources';
 import {
   RealmBuildingId,
   WORK_HUT_OUTPUT,
@@ -25,7 +24,6 @@ import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { getTrait } from '@/shared/Getters/Realm';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
-import { BaseRealmDetailPanel } from './BaseRealmDetailPanel';
 
 type Prop = {
   realm: GetRealmQuery;
@@ -88,7 +86,7 @@ const Harvests: React.FC<Prop> = (props) => {
   }
 
   return (
-    <BaseRealmDetailPanel open={props.open}>
+    <div>
       <div className="grid grid-cols-12 gap-6 py-4">
         <Card className="col-span-12 md:col-start-1 md:col-end-4 ">
           <div className="w-full p-4 mx-auto bg-white rounded bg-opacity-90">
@@ -166,12 +164,8 @@ const Harvests: React.FC<Prop> = (props) => {
             </p>
           </div>
         </Card>
-        <Card className="col-span-12 md:col-start-4 md:col-end-8 ">
-          <CardTitle>Resources</CardTitle>
-          <RealmResources showClaimable realm={realm} loading={false} />
-        </Card>
       </div>
-    </BaseRealmDetailPanel>
+    </div>
   );
 };
 
