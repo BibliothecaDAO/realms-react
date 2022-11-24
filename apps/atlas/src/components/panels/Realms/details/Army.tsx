@@ -41,6 +41,7 @@ import {
 import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
 import { BaseRealmDetailPanel } from '../BaseRealmDetailPanel';
+import { MilitaryBuildings } from './MilitaryBuildings';
 type Prop = {
   realm: GetRealmQuery['realm'];
   buildings: BuildingDetail[] | undefined;
@@ -227,98 +228,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
       </Card> */}
       {isOwner && (
         <div className="col-span-12 row-span-2 md:col-span-13">
-          <CardTitle>Military Buildings</CardTitle>
-          <div className="flex flex-wrap">
-            {props.buildings
-              ?.filter((a) => a.type === 'military')
-              .map((a, i) => {
-                return (
-                  <div key={i} className="flex flex-wrap w-full ">
-                    <div className="self-center">
-                      <Image
-                        height={120}
-                        width={120}
-                        className="object-fill bg-white border rounded paper"
-                        src={a.img}
-                        alt=""
-                      />
-                    </div>
-
-                    <div className="p-2 ml-4 capitalize">
-                      <div className="w-full text-xs">
-                        {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
-                        Day Decay
-                      </div>
-                      <h3>
-                        {a.name} - {a.quantityBuilt}
-                      </h3>
-                      <div className="flex flex-wrap my-1">
-                        <div className="flex">
-                          <div className="self-end">
-                            <CountdownTimer
-                              date={(a.buildingDecay * 1000).toString()}
-                            />{' '}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex w-full mt-1 space-x-2">
-                        <Button
-                          onClick={() =>
-                            build({
-                              realmId: realm.realmId,
-                              buildingId: a.id,
-                              qty: buildQty[a.key],
-                              costs: {
-                                // Mimic ItemCost interface
-                                amount: 0,
-                                resources: a.cost,
-                              },
-                            })
-                          }
-                          size="xs"
-                          variant="primary"
-                        >
-                          build
-                        </Button>
-                        <InputNumber
-                          value={buildQty[a.key]}
-                          inputSize="sm"
-                          colorScheme="transparent"
-                          className="w-12 bg-white border rounded border-white/40"
-                          min={1}
-                          max={10}
-                          stringMode
-                          onChange={(value) => {
-                            if (value) {
-                              setBuildQty((current) => {
-                                return {
-                                  ...current,
-                                  [a.key]: value.toString(),
-                                };
-                              });
-                            }
-                          }}
-                        />{' '}
-                      </div>
-                      <div className="flex mt-2">
-                        {a.cost &&
-                          a.cost.map((b, i) => {
-                            return (
-                              <CostBlock
-                                key={i}
-                                resourceName={b.resourceName}
-                                amount={b.amount}
-                                id={b.resourceId}
-                                qty={buildQty[a.key]}
-                              />
-                            );
-                          })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
+          <MilitaryBuildings buildings={props.buildings} realm={props.realm} />,
         </div>
       )}
       {realm.ownArmies.length > 0 ? (

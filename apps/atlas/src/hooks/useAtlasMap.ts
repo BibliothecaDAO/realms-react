@@ -74,7 +74,9 @@ export function useAtlasMap(): AtlasMap {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
-    zoom: 3,
+    zoom: 1,
+    minZoom: 1,
+    maxZoom: 10,
     pitch: 0,
     bearing: 0,
     bounds: [
@@ -115,6 +117,8 @@ export function useAtlasMap(): AtlasMap {
     setViewState({
       ...coordinates,
       zoom: 8,
+      minZoom: 1,
+      maxZoom: 10,
       pitch: 0,
       bearing: 0,
       bounds: [
