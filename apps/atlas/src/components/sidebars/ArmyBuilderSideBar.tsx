@@ -229,6 +229,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                 src={getUnitImage(activeBattalionData.id)}
                 width={400}
                 height={400}
+                alt=""
                 objectFit={'cover'}
               />
 

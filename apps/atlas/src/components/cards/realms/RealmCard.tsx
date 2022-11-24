@@ -31,6 +31,7 @@ import AtlasSidebar from '@/components/sidebars/AtlasSideBar';
 import { CombatSideBar } from '@/components/sidebars/CombatSideBar';
 import { RealmResources } from '@/components/tables/RealmResources';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { useModalContext } from '@/context/ModalContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
@@ -167,6 +168,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const {
       mapContext: { navigateToAsset },
     } = useAtlasContext();
+    const { openModal } = useModalContext();
 
     return (
       <Card ref={ref}>
@@ -287,39 +289,54 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           <Travel realm={props.realm} />
         </AtlasSidebar>
         {IsSettled(props.realm) && (
-          <Disclosure>
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
-                  <ChevronDoubleDownIcon
-                    className={`w-5 h-5 mx-auto ${
-                      open ? 'rotate-180 transform' : ''
-                    }`}
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="text-gray-500">
-                  {open && (
-                    <Tabs
-                      selectedIndex={selectedTab}
-                      onChange={(index) => pressedTab(index as number)}
-                      variant="small"
-                    >
-                      <Tabs.List className="">
-                        {tabs.map((tab, index) => (
-                          <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-                        ))}
-                      </Tabs.List>
-                      <Tabs.Panels>
-                        {tabs.map((tab, index) => (
-                          <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-                        ))}
-                      </Tabs.Panels>
-                    </Tabs>
-                  )}
-                </Disclosure.Panel>
-              </>
+          <>
+            {isOwner && (
+              <Button
+                onClick={() => {
+                  openModal('realm-build', {
+                    realm: props.realm,
+                    buildings: buildings,
+                  });
+                }}
+                variant="primary"
+              >
+                build
+              </Button>
             )}
-          </Disclosure>
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
+                    <ChevronDoubleDownIcon
+                      className={`w-5 h-5 mx-auto ${
+                        open ? 'rotate-180 transform' : ''
+                      }`}
+                    />
+                  </Disclosure.Button>
+                  <Disclosure.Panel className="text-gray-500">
+                    {open && (
+                      <Tabs
+                        selectedIndex={selectedTab}
+                        onChange={(index) => pressedTab(index as number)}
+                        variant="small"
+                      >
+                        <Tabs.List className="">
+                          {tabs.map((tab, index) => (
+                            <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                          ))}
+                        </Tabs.List>
+                        <Tabs.Panels>
+                          {tabs.map((tab, index) => (
+                            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+                          ))}
+                        </Tabs.Panels>
+                      </Tabs>
+                    )}
+                  </Disclosure.Panel>
+                </>
+              )}
+            </Disclosure>
+          </>
         )}
       </Card>
     );

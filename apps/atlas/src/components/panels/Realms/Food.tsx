@@ -12,7 +12,6 @@ import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
 import {
   RealmBuildingId,
   HarvestType,
@@ -429,6 +428,7 @@ const Food: React.FC<Prop> = (props) => {
             <Image
               width={200}
               height={220}
+              alt=""
               className={' mx-auto'}
               src={'/realm-buildings/storehouse.png'}
             />

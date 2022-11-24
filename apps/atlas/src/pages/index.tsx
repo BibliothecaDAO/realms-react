@@ -277,6 +277,7 @@ function MapModule() {
           onLoad={() => mapContext.setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
+          // renderWorldCopies={false}
         />
       </DeckGL>
       <Popover className="absolute z-30 bottom-10 right-20">

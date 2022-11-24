@@ -9,8 +9,11 @@ export type UIContext = {
   closeAsset: () => void;
   toggleEmpire: () => void;
   toggleTrade: () => void;
+  toggleTransactionCart: () => void;
+  closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
+  transactionCart: boolean;
 };
 
 export function useUi() {
@@ -41,6 +44,7 @@ export function useUi() {
     router.push('/', undefined, { shallow: true });
   };
   const toggleEmpire = () => {
+    closeAll();
     setEmpireSidebar(!empireSidebar);
   };
   const toggleTrade = () => {
@@ -48,6 +52,13 @@ export function useUi() {
   };
   const toggleTransactionCart = () => {
     setTransactionCart(!transactionCart);
+  };
+
+  const closeAll = () => {
+    setEmpireSidebar(false);
+    setTradeSidebar(false);
+    setTransactionCart(false);
+    setAssetSidebar(null);
   };
 
   return {
@@ -60,5 +71,6 @@ export function useUi() {
     toggleTrade,
     transactionCart,
     toggleTransactionCart,
+    closeAll,
   };
 }

@@ -5,11 +5,16 @@ import { useModalContext } from '@/context/ModalContext';
 import type { TModal } from '@/hooks/useModal';
 import { HelpModal } from './HelpModal';
 import { LoreEntityModal } from './LoreEntityModal';
+import { RealmBuildModal } from './RealmBuildModal';
 
 const getModalComponent = (currentModal: TModal) => {
+  const props: any = currentModal?.props;
+
   if (currentModal?.type === 'lore-entity') {
-    const props: any = currentModal?.props;
     return <LoreEntityModal entityId={parseInt(props.id)} />;
+  }
+  if (currentModal?.type === 'realm-build') {
+    return <RealmBuildModal realm={props.realm} buildings={props.buildings} />;
   }
   // switch (currentModal?.type) {
   //   case 'lore-entity':
@@ -49,11 +54,11 @@ export const Modals = () => {
 
   return (
     <animated.div
-      className="absolute top-0 z-40 w-full h-full bg-center bg-cover"
+      className="absolute top-0 z-40 w-full h-full bg-center bg-cover py-20"
       style={animation}
     >
       <div
-        className={`h-full overflow-y-auto left-0 w-full lg:w-7/12 relative top-0`}
+        className={`h-full overflow-y-auto left-0 w-full lg:w-7/12 mx-auto relative top-0 border rounded-xl bg-black`}
       >
         <div className={`pt-4 px-4`}>
           <div className="flex justify-end">

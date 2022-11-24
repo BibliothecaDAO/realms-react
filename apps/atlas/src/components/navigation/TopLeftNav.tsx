@@ -18,7 +18,7 @@ export const TopLeftNav = () => {
   const { lordsBalance } = useResourcesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
-  const { empireSidebar, toggleEmpire, tradeSidebar, toggleTrade } =
+  const { empireSidebar, toggleEmpire, tradeSidebar, toggleTrade, closeAll } =
     useUIContext();
 
   function onLordsNavClick() {

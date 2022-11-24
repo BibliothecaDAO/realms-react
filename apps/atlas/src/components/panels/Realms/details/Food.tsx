@@ -9,10 +9,11 @@ import {
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
+import { BigNumber } from 'ethers';
 import Image from 'next/image';
 import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
+
 import {
   RealmBuildingId,
   HarvestType,
@@ -101,7 +102,9 @@ const RealmsFood: React.FC<Prop> = (props) => {
           t.contractAddress == ModuleAddr.ResourceGame &&
           t.entrypoint == Entrypoints.claim &&
           t.calldata &&
-          toBN(t.calldata[0] as string).eq(toBN(realm?.realmId))
+          BigNumber.from(t.calldata[0] as string).eq(
+            BigNumber.from(realm?.realmId)
+          )
       )
     );
   }, [txQueue.transactions, realm?.realmId]);
@@ -157,6 +160,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
               <Image
                 width={100}
                 height={100}
+                alt="Storehouse"
                 src={'/realm-buildings/storehouse.png'}
               />
             </div>
