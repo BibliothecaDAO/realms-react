@@ -112,7 +112,7 @@ const useUsersRealms = () => {
     });
 
     // console.log(isClaimable());
-  }, [userRealmsData]);
+  }, [userRealmsData, address]);
 
   const claimAll = () => {
     play();

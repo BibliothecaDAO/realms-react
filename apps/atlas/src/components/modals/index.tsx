@@ -58,7 +58,7 @@ export const Modals = () => {
       style={animation}
     >
       <div
-        className={`h-full overflow-y-auto left-0 w-full lg:w-7/12 mx-auto relative top-0 border rounded-xl bg-black`}
+        className={`h-full overflow-y-auto left-0 w-full lg:w-7/12 mx-auto relative top-0 rounded bg-black`}
       >
         <div className={`pt-4 px-4`}>
           <div className="flex justify-end">

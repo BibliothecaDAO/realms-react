@@ -299,8 +299,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   });
                 }}
                 variant="primary"
+                size="xs"
+                className="mb-2"
               >
-                build
+                build realm
               </Button>
             )}
             <Disclosure>

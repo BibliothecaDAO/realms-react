@@ -46,7 +46,7 @@ export const RealmBuildModal = (props: Prop) => {
         component: <div>army</div>,
       },
     ],
-    [props.realm]
+    [props.realm, props.buildings]
   );
 
   const pressedTab = (index) => {
@@ -58,9 +58,9 @@ export const RealmBuildModal = (props: Prop) => {
     <div className="flex-col flex-wrap px-4 bg-gray/800">
       <div className="flex self-center ">
         <OrderIcon size="sm" order={props.realm.orderType.toLowerCase()} />
-        <h3 className="flex self-center ml-2 text-center">
+        <h1 className="flex self-center ml-2 text-center">
           {props.realm.name}
-        </h3>
+        </h1>
       </div>
       <Tabs
         selectedIndex={selectedTab}
