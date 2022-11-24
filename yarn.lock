@@ -11158,6 +11158,7 @@ __metadata:
     "@danmarshall/deckgl-typings": "npm:^4.9.27"
     "@deck.gl/core": "npm:^8.8.20"
     "@deck.gl/extensions": "npm:^8.8.20"
+    "@deck.gl/geo-layers": "npm:8.8.20"
     "@deck.gl/layers": "npm:^8.8.20"
     "@deck.gl/mapbox": "npm:^8.8.20"
     "@deck.gl/react": "npm:^8.8.20"

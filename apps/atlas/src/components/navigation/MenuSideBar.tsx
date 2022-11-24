@@ -16,6 +16,8 @@ import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
+import { useUIContext } from '@/context/UIContext';
+import type { AssetType } from '@/hooks/useAtlasMap';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const MenuSideBar = () => {
@@ -108,7 +110,7 @@ export const MenuSideBar = () => {
       // },
     ];
   }, [query]);
-
+  const { closeAll, assetSidebar } = useUIContext();
   return (
     <div className="absolute z-40">
       <div>
@@ -123,11 +125,19 @@ export const MenuSideBar = () => {
         className={`sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1 shadow-yellow-100/20`}
       >
         {menus.map((menu) => (
-          <Link href={getPageHref(menu.page)} key={menu.page} shallow={true}>
+          <Link
+            href={getPageHref(menu.page)}
+            onClick={() => {
+              closeAll;
+            }}
+            key={menu.page}
+            shallow={true}
+          >
             <div className="flex flex-col place-items-center group">
               <IconButton
                 className={`${buttonClasses}  ${
-                  isPage(menu.page)
+                  isPage(menu.page) ||
+                  (menu.text == 'Realms' && assetSidebar == 'realm')
                     ? 'bg-gradient-to-r from-red-600 to-red-900 text-yellow-100  border-yellow-700    '
                     : ' border-yellow-700'
                 }`}
