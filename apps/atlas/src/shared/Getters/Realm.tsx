@@ -18,6 +18,7 @@ import { findResourceById } from '@/constants/resources';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
+import type { BuildingDetail } from '@/types/index';
 
 interface TraitProps {
   trait: string;
@@ -264,7 +265,6 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
   const cachedDaysAccrued = parseInt(
     ((new Date().getTime() - realm?.lastClaimTime) / DAY / 1000).toFixed(2)
   );
-  console.log(realm?.lastClaimTime);
   return cachedDaysAccrued >= 1 ? true : false;
 };
 
@@ -476,4 +476,13 @@ export const getFoodIcon = (food: number) => {
   } else {
     return '☠️';
   }
+};
+
+export const getMilitaryBuildingsBuilt = (
+  buildings: BuildingDetail[] | undefined
+) => {
+  return buildings
+    ?.filter((a) => a.type === 'military')
+    .filter((b) => b.quantityBuilt > 0)
+    .map((c) => c.id);
 };

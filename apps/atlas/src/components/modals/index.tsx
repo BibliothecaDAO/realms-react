@@ -14,7 +14,14 @@ const getModalComponent = (currentModal: TModal) => {
     return <LoreEntityModal entityId={parseInt(props.id)} />;
   }
   if (currentModal?.type === 'realm-build') {
-    return <RealmBuildModal realm={props.realm} buildings={props.buildings} />;
+    return (
+      <RealmBuildModal
+        realm={props.realm}
+        buildings={props.buildings}
+        realmFoodDetails={props.realmFoodDetails}
+        availableFood={props.availableFood}
+      />
+    );
   }
   // switch (currentModal?.type) {
   //   case 'lore-entity':
@@ -42,8 +49,8 @@ export const Modals = () => {
   const animation = useSpring({
     opacity: currentModal ? 1 : 0,
     transform: currentModal ? `translateY(0)` : `translateY(-200%)`,
-    backdropFilter: currentModal ? `blur(4px)` : `blur(0px)`,
-    delay: 150,
+    backdropFilter: currentModal ? `blur(1px)` : `blur(0px)`,
+    delay: 100,
   });
 
   if (!currentModal) {
@@ -58,13 +65,15 @@ export const Modals = () => {
       style={animation}
     >
       <div
-        className={`h-full overflow-y-auto left-0 w-full lg:w-7/12 mx-auto relative top-0 rounded bg-black`}
+        className={`h-full overflow-y-auto left-0 w-full lg:w-9/12 mx-auto relative top-0 rounded bg-gray-1000 shadow-red-800/30 shadow-2xl border border-gray-700`}
       >
         <div className={`pt-4 px-4`}>
           <div className="flex justify-end">
             <div className="flex justify-end mb-2 mr-1">
               <Button
-                size="sm"
+                size="xs"
+                variant="outline"
+                className="rounded-full"
                 onClick={() => {
                   closeModal();
                 }}

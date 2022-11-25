@@ -23,7 +23,10 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
-import { fetchRealmNameById } from '@/shared/Getters/Realm';
+import {
+  fetchRealmNameById,
+  getMilitaryBuildingsBuilt,
+} from '@/shared/Getters/Realm';
 import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
 import { MilitaryBuildings } from './MilitaryBuildings';
@@ -103,15 +106,6 @@ const RealmsArmy: React.FC<Prop> = (props) => {
     });
   }, [realm?.realmId]);
 
-  const getMilitaryBuildingsBuilt = (
-    buildings: BuildingDetail[] | undefined
-  ) => {
-    return buildings
-      ?.filter((a) => a.type === 'military')
-      .filter((b) => b.quantityBuilt > 0)
-      .map((c) => c.id);
-  };
-
   const buildNewArmy = () => {
     defaultArmy.realmId = realm.realmId;
     defaultArmy.armyId = realm.ownArmies.length;
@@ -122,47 +116,6 @@ const RealmsArmy: React.FC<Prop> = (props) => {
 
   return (
     <div className="grid grid-cols-12 gap-6">
-      {/* <Card className="col-span-12 sm:col-span-6 lg:col-start-1 lg:col-span-12">
-        <CardBody>
-          {hasOwnRelic(realm) ? (
-            <div>
-              <h4 className="mb-4">{realm?.name} is a self-sovereign state</h4>
-              <p className="text-xl">
-                Citizens of {realm?.name} are living peacefully on its lands.
-                The Lord of {realm?.name} is keeping them safe from Goblins and
-                other warmongering realms.
-              </p>
-            </div>
-          ) : (
-            <div>
-              {realm?.relic?.map((a, i) => {
-                return (
-                  <div key={i} className="mb-4">
-                    <h2>
-                      Annexed by Realm {fetchRealmNameById(a.heldByRealm || 0)}
-                    </h2>{' '}
-                    <p className="text-xl">
-                      {realm?.name} has been Conquered by
-                      {fetchRealmNameById(a.heldByRealm || 0)}. The citizens
-                      shake in fear everyday thinking it will be their last...
-                      won't someone think of the children!
-                    </p>
-                    <div className="mt-4">
-                      <Button
-                        href={'/realm/' + a.heldByRealm + '?tab=Army'}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Visit realm {a.heldByRealm}
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </CardBody>
-      </Card> */}
       {/* <Card className="col-span-12 sm:col-span-6 lg:col-start-1 lg:col-end-13">
         <div className="text-2xl">
           {realm.name} rules a total of {realm.relicsOwned?.length} Realms
@@ -211,11 +164,11 @@ const RealmsArmy: React.FC<Prop> = (props) => {
           </div>
         )}
       </Card> */}
-      {isOwner && (
+      {/* {isOwner && (
         <div className="col-span-12 row-span-2 md:col-span-13">
           <MilitaryBuildings buildings={props.buildings} realm={props.realm} />,
         </div>
-      )}
+      )} */}
       {realm.ownArmies.length > 0 ? (
         <div className="col-span-12">
           <div className="flex justify-between w-full">
@@ -269,7 +222,7 @@ const RealmsArmy: React.FC<Prop> = (props) => {
             return (
               <ArmyCard
                 onBuildArmy={() => {
-                  router.push(`/realm/${realm.realmId}?tab=Army`, undefined, {
+                  router.push(`/asset=realm${realm.realmId}`, undefined, {
                     shallow: true,
                   });
                 }}

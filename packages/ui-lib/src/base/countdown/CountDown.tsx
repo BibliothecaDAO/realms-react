@@ -23,7 +23,7 @@ const DateTimeDisplay = (props: TimeDisplay) => {
     <div className={`mr-1 ${props.isDanger ? 'text-red-200' : 'countdown'}`}>
       <p>
         {props.value}
-        <span className="text-stone-400">{props.type}</span>
+        <span className="text-gray-700">{props.type}</span>
       </p>
     </div>
   );
@@ -32,11 +32,11 @@ const DateTimeDisplay = (props: TimeDisplay) => {
 const ShowCounter = (props: Counter) => {
   return (
     <div className="flex ">
-      {/* <DateTimeDisplay
+      <DateTimeDisplay
         value={props.days}
         type={'D'}
         isDanger={props.days <= 3}
-      /> */}
+      />
 
       <DateTimeDisplay value={props.hours} type={'H'} isDanger={true} />
 

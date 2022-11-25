@@ -143,18 +143,19 @@ export const CombatSideBar: React.FC<Prop> = ({
               {defendingRealm &&
                 attackingRealmsAtLocation?.map((army, index) => {
                   return (
-                    <ArmyCard
-                      key={index}
-                      army={army}
-                      selectedRealm={defendingRealm?.realmId}
-                      onTravel={() =>
-                        travel(
-                          army.armyId,
-                          army.realmId,
-                          defendingRealm.realmId
-                        )
-                      }
-                    />
+                    <button onClick={() => setSelectedArmy(army)} key={index}>
+                      <ArmyCard
+                        army={army}
+                        selectedRealm={defendingRealm?.realmId}
+                        onTravel={() =>
+                          travel(
+                            army.armyId,
+                            army.realmId,
+                            defendingRealm.realmId
+                          )
+                        }
+                      />
+                    </button>
                   );
                 })}
             </div>

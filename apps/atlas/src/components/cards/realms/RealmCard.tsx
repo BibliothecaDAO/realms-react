@@ -126,9 +126,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           ),
         },
       ],
-      [availableFood, buildings, realmFoodDetails, props]
+      [availableFood, buildings, realmFoodDetails, props, buildingUtilisation]
     );
-    const { userData, userRealms } = useUsersRealms();
+    const { userData } = useUsersRealms();
     const [selectedTab, setSelectedTab] = useState(0);
 
     useImperativeHandle(ref, () => ({
@@ -296,13 +296,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   openModal('realm-build', {
                     realm: props.realm,
                     buildings: buildings,
+                    realmFoodDetails: realmFoodDetails,
+                    availableFood: availableFood,
                   });
                 }}
                 variant="primary"
                 size="xs"
                 className="mb-2"
               >
-                build realm
+                construct
               </Button>
             )}
             <Disclosure>

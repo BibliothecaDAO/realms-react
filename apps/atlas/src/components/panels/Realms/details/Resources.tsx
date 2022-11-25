@@ -79,7 +79,12 @@ const Harvests: React.FC<Prop> = (props) => {
       fishingVillagesToBuild: fishingVillageCapacity,
       workHutsToBuild: '1',
     });
-  }, [txQueue.transactions]);
+  }, [
+    txQueue.transactions,
+    farmCapacity,
+    fishingVillageCapacity,
+    realm?.realmId,
+  ]);
 
   if (!realm) {
     return null;

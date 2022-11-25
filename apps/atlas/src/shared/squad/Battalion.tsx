@@ -36,9 +36,9 @@ export const Battalion: React.FC<
   const [input, setInput] = useState('1');
 
   return (
-    <Card
+    <div
       key={props.battalionId}
-      className={`relative flex-col group ${data?.color}`}
+      className={`relative flex-col group p-3 rounded ${data?.color}`}
     >
       {props.show && (
         <div className="absolute z-50 flex flex-col justify-center invisible w-full h-full -m-3 transition-all bg-black cursor-pointer group-hover:visible">
@@ -105,23 +105,17 @@ export const Battalion: React.FC<
         </div>
       )}
 
-      {data?.id && (
-        <CardTitle className="flex justify-center text-center">
-          {battalionIdToString(data.id)}
-        </CardTitle>
-      )}
+      {data?.id && <h3 className="">{battalionIdToString(data.id)}</h3>}
       <CardBody>
-        <div className="flex justify-center space-x-3 text-center">
-          <div className="px-4 border-r">
-            <h5 className="">qty</h5>
-            <h1>{props.quantity || 0}</h1>
+        <div className="flex flex-col">
+          <div className="w-full">
+            <h4>x{props.quantity || 0}</h4>
           </div>
-          <div className="pr-4">
-            <h5 className="">health</h5>
-            <h1>{props.health || 0}</h1>
+          <div className="w-full">
+            <h4>{props.health || 0}hp</h4>
           </div>
         </div>
       </CardBody>
-    </Card>
+    </div>
   );
 };

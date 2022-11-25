@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { Army } from '@/generated/graphql';
+import { RealmBuildingId } from './buildings';
 
 export const COMBAT_OUTCOME_ATTACKER_WINS = 1;
 export const COMBAT_OUTCOME_DEFENDER_WINS = 2;
@@ -37,6 +38,7 @@ export const battalionInformation = [
     strength: 'Archers',
     weakness: 'Infantry',
     image: 'lightCavalry.png',
+    buildingId: RealmBuildingId.Castle,
   },
   {
     id: BattalionIds.HeavyCavalry,
@@ -46,6 +48,7 @@ export const battalionInformation = [
     strength: 'Archers',
     weakness: 'Infantry',
     image: 'heavyCavalry.png',
+    buildingId: RealmBuildingId.Castle,
   },
   {
     id: BattalionIds.Archer,
@@ -55,6 +58,7 @@ export const battalionInformation = [
     strength: 'Magic',
     weakness: 'Cavalary',
     image: 'archer.png',
+    buildingId: RealmBuildingId.ArcherTower,
   },
   {
     id: BattalionIds.Longbow,
@@ -64,6 +68,7 @@ export const battalionInformation = [
     strength: 'Magic',
     weakness: 'Cavalary',
     image: 'longbow.png',
+    buildingId: RealmBuildingId.ArcherTower,
   },
   {
     id: BattalionIds.Mage,
@@ -73,6 +78,7 @@ export const battalionInformation = [
     strength: 'Infantry',
     weakness: 'Archers',
     image: 'mage.png',
+    buildingId: RealmBuildingId.MageTower,
   },
   {
     id: BattalionIds.Arcanist,
@@ -82,6 +88,7 @@ export const battalionInformation = [
     strength: 'Infantry',
     weakness: 'Archers',
     image: 'arcanist.png',
+    buildingId: RealmBuildingId.MageTower,
   },
   {
     id: BattalionIds.LightInfantry,
@@ -91,6 +98,7 @@ export const battalionInformation = [
     strength: 'Cavalry',
     weakness: 'Magic',
     image: 'lightInfantry.png',
+    buildingId: RealmBuildingId.Barracks,
   },
   {
     id: BattalionIds.HeavyInfantry,
@@ -100,6 +108,7 @@ export const battalionInformation = [
     strength: 'Cavalry',
     weakness: 'Magic',
     image: 'heavyInfantry.png',
+    buildingId: RealmBuildingId.Barracks,
   },
 ];
 
@@ -152,7 +161,7 @@ export const battalionIdToString = (id: BattalionIds) => {
       name = 'Arcanist';
       break;
     case BattalionIds.LightInfantry:
-      name = 'Solider';
+      name = 'Soldier';
       break;
     case BattalionIds.HeavyInfantry:
       name = 'Paladin';

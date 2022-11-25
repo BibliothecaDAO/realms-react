@@ -39,6 +39,8 @@ export const CommandListProvider = ({
   const add = (tx: Call[] | Call) => {
     const scrollIcon = <Scroll className="w-6 fill-current" />;
 
+    console.log(tx);
+
     if (Array.isArray(tx)) {
       toast(`${tx.length} Command(s) Queued`, {
         icon: scrollIcon,
@@ -88,6 +90,7 @@ export const CommandListProvider = ({
   };
 
   const executeMulticall = async (inline?: Tx[]) => {
+    console.log(inline);
     /* const starknet = getStarknet();
     await starknet.enable();
 
