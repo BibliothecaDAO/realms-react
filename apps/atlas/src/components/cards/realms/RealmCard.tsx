@@ -96,18 +96,18 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           label: <Sword className="self-center w-4 h-4 fill-current" />,
           component: <RealmsArmy buildings={buildings} realm={props.realm} />,
         },
-        {
-          label: <Sickle className="self-center w-4 h-4 fill-current" />,
-          component: (
-            <RealmsFood
-              realmFoodDetails={realmFoodDetails}
-              availableFood={availableFood}
-              buildings={buildings}
-              realm={props.realm}
-              loading={false}
-            />
-          ),
-        },
+        // {
+        //   label: <Sickle className="self-center w-4 h-4 fill-current" />,
+        //   component: (
+        //     <RealmsFood
+        //       realmFoodDetails={realmFoodDetails}
+        //       availableFood={availableFood}
+        //       buildings={buildings}
+        //       realm={props.realm}
+        //       loading={false}
+        //     />
+        //   ),
+        // },
         {
           label: <Globe className="self-center w-4 h-4 fill-current" />,
           component: <Travel realm={props.realm} />,

@@ -65,8 +65,8 @@ export const ResourceSwapSideBarPanel = (
     []
   );
   return (
-    <BaseSideBarPanel position="left" onClose={props.onClose}>
-      <div>
+    <BaseSideBarPanel className="z-50" position="left" onClose={props.onClose}>
+      {/* <div>
         <h2 className="mt-2 mb-4 text-center">Trade</h2>
         {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
           <div className="grid gap-2 sm:grid-cols-2">
@@ -88,7 +88,7 @@ export const ResourceSwapSideBarPanel = (
             </Button>
           </div>
         )}
-      </div>
+      </div> */}
 
       <div className="relative">
         <Tabs className="h-full" variant="primary">

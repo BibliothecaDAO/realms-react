@@ -306,7 +306,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
             : 'text-red-200'
         }
       >
-        {amount * qty}
+        {(amount * qty).toFixed(0)}
       </span>
     </div>
   );

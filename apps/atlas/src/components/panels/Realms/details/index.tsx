@@ -5,6 +5,7 @@ import { RealmLore } from './Lore';
 import { RealmOverview } from './Overview';
 import { RealmsTravel } from './RealmsTravel';
 import { Travel } from './Travel';
+import WorkHuts from './WorkHuts';
 
 export {
   RealmHistory,
@@ -14,4 +15,5 @@ export {
   RealmLore,
   RealmsFood,
   RealmsArmy,
+  WorkHuts,
 };

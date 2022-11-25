@@ -87,7 +87,7 @@ export const battalionInformation = [
     description: description,
     strength: 'Infantry',
     weakness: 'Archers',
-    image: 'arcanist.png',
+    image: 'mj_mage.png',
     buildingId: RealmBuildingId.MageTower,
   },
   {
@@ -97,7 +97,7 @@ export const battalionInformation = [
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
-    image: 'lightInfantry.png',
+    image: 'mj_lightInfantry.png',
     buildingId: RealmBuildingId.Barracks,
   },
   {
@@ -107,7 +107,7 @@ export const battalionInformation = [
     description: description,
     strength: 'Cavalry',
     weakness: 'Magic',
-    image: 'heavyInfantry.png',
+    image: 'knight.png',
     buildingId: RealmBuildingId.Barracks,
   },
 ];

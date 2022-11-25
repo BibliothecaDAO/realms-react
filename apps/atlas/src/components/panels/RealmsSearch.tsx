@@ -223,15 +223,6 @@ export const RealmsSearch = () => {
 
   return (
     <div>
-      <div className="flex">
-        <SearchFilter
-          placeholder="Search by Realm Id"
-          onSubmit={(value) => {
-            actions.updateSearchIdFilter(parseInt(value) ? value : '');
-          }}
-          defaultValue={state.searchIdFilter + ''}
-        />
-      </div>
       <Tabs
         key={selectedTabIndex}
         selectedIndex={selectedTabIndex}
@@ -243,7 +234,15 @@ export const RealmsSearch = () => {
           ))}
         </Tabs.List>
       </Tabs>
-
+      <div className="flex px-4 w-full">
+        <SearchFilter
+          placeholder="Search by Realm Id"
+          onSubmit={(value) => {
+            actions.updateSearchIdFilter(parseInt(value) ? value : '');
+          }}
+          defaultValue={state.searchIdFilter + ''}
+        />
+      </div>
       <div>
         <RealmsFilter isYourRealms={selectedTabIndex === 0} />
 

@@ -10,7 +10,7 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { getMilitaryBuildingsBuilt } from '@/shared/Getters/Realm';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
-import { RealmsFood } from '../panels/Realms/details';
+import { RealmsFood, WorkHuts } from '../panels/Realms/details';
 import { DefendingArmy } from '../panels/Realms/details/DefendingArmy';
 
 type Prop = {
@@ -27,13 +27,22 @@ export const RealmBuildModal = (props: Prop) => {
   const tabs = useMemo(
     () => [
       {
-        label: <Sword className="self-center w-4 h-4 fill-current" />,
+        label: (
+          <span className="flex">
+            <Sword className="self-center w-4 h-4 fill-current mr-2" />
+            Military
+          </span>
+        ),
         component: (
           <MilitaryBuildings buildings={props.buildings} realm={props.realm} />
         ),
       },
       {
-        label: <Shield className="self-center w-4 h-4 fill-current" />,
+        label: (
+          <span className="flex">
+            <Shield className="self-center w-4 h-4 fill-current mr-2" /> Defence
+          </span>
+        ),
         component: (
           <DefendingArmy
             realm={props.realm}
@@ -42,14 +51,21 @@ export const RealmBuildModal = (props: Prop) => {
           />
         ),
       },
-      // {
-      //   label: <Castle className="self-center w-4 h-4 fill-current" />,
-      //   component: (
-      //     <MilitaryBuildings buildings={props.buildings} realm={props.realm} />
-      //   ),
-      // },
       {
-        label: <Sickle className="self-center w-4 h-4 fill-current" />,
+        label: (
+          <span className="flex">
+            <Sickle className="self-center w-4 h-4 fill-current mr-2" />{' '}
+            Production
+          </span>
+        ),
+        component: <WorkHuts buildings={props.buildings} realm={props.realm} />,
+      },
+      {
+        label: (
+          <span className="flex">
+            <Sickle className="self-center w-4 h-4 fill-current mr-2" /> Farming
+          </span>
+        ),
         component: (
           <RealmsFood
             realmFoodDetails={props.realmFoodDetails}

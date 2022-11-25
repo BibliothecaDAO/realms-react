@@ -26,13 +26,13 @@ export enum RealmBuildingId {
   Castle = 9,
 }
 
-const barracks = '/realm-buildings/barracks.png';
+const barracks = '/realm-buildings/castle.png';
 
 export const buildingImageById = (id: RealmBuildingId) => {
   let name = 'n/a';
   switch (id) {
     case RealmBuildingId.House:
-      name = barracks;
+      name = '/realm-buildings/mj_storehouse.png';
       break;
     case RealmBuildingId.StoreHouse:
       name = '/realm-buildings/storeHouse.png';
@@ -41,22 +41,22 @@ export const buildingImageById = (id: RealmBuildingId) => {
       name = barracks;
       break;
     case RealmBuildingId.Farm:
-      name = barracks;
+      name = '/realm-buildings/mj_farm.png';
       break;
     case RealmBuildingId.FishingVillage:
-      name = barracks;
+      name = '/realm-buildings/mj_fishing_village.png';
       break;
     case RealmBuildingId.Barracks:
-      name = barracks;
+      name = '/realm-buildings/mj_barracks.png';
       break;
     case RealmBuildingId.MageTower:
-      name = '/realm-buildings/mageTower.png';
+      name = '/realm-buildings/mj_mage_tower.png';
       break;
     case RealmBuildingId.ArcherTower:
-      name = barracks;
+      name = '/realm-buildings/mj_archery_range.png';
       break;
     case RealmBuildingId.Castle:
-      name = barracks;
+      name = '/realm-buildings/mj_castle.png';
       break;
   }
   return name;

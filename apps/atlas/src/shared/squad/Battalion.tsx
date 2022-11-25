@@ -109,10 +109,10 @@ export const Battalion: React.FC<
       <CardBody>
         <div className="flex flex-col">
           <div className="w-full">
-            <h4>x{props.quantity || 0}</h4>
+            <h5>{props.quantity || 0} units</h5>
           </div>
           <div className="w-full">
-            <h4>{props.health || 0}hp</h4>
+            <h5>{props.health || 0} hp</h5>
           </div>
         </div>
       </CardBody>
