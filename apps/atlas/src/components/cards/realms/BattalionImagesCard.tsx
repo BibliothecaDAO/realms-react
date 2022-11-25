@@ -30,7 +30,7 @@ export const HealthBar = (props: HealthBarProps) => {
     } else if (vit > 70) {
       return 'bg-green-800/70 ';
     } else if (vit > 50) {
-      return 'bg-yellow-200 ';
+      return 'bg-yellow-600 ';
     } else if (vit > 25) {
       return 'bg-red-200 ';
     } else {
@@ -44,7 +44,7 @@ export const HealthBar = (props: HealthBarProps) => {
     >
       <div
         style={{
-          height: `${getVitality()}%`,
+          height: `${getVitality() > 100 ? 100 : getVitality()}%`,
         }}
         className={`${getColour()} transform w-2 rounded border border-white/30`}
       ></div>

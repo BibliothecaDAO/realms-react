@@ -109,7 +109,7 @@ export function AccountOverview(props: Prop) {
         style={animationUp}
         className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
       >
-        <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
+        {/* <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
           <div className="flex">
             <div className="relative">
               <Image
@@ -136,7 +136,7 @@ export function AccountOverview(props: Prop) {
               </div>
             </div>
           </div>
-        </Card>
+        </Card> */}
         <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>

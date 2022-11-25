@@ -7,6 +7,7 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import { useAccount } from '@starknet-react/core';
+import Image from 'next/image';
 import { useState, useMemo } from 'react';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
@@ -38,7 +39,6 @@ export function EmpirePanel() {
   const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
 
   function onSettleRealmsClick() {
-    console.log('clik realm');
     setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
   }
 
@@ -56,7 +56,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex no-wrap">
+          <div className="flex whitespace-nowrap">
             <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">Quick Actions</div>
           </div>
@@ -65,7 +65,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex">
+          <div className="flex whitespace-nowrap">
             <Castle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">My Realms</div>
           </div>
@@ -74,7 +74,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex no-wrap">
+          <div className="flex whitespace-nowrap">
             <Helm className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">My Armies</div>
           </div>
@@ -83,7 +83,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex ">
+          <div className="flex whitespace-nowrap">
             <Danger className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">My Crypts</div>
           </div>
@@ -92,7 +92,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex no-wrap">
+          <div className="flex whitespace-nowrap">
             <Bag className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">My Loot</div>
           </div>
@@ -101,7 +101,7 @@ export function EmpirePanel() {
       },
       {
         label: (
-          <div className="flex no-wrap">
+          <div className="flex whitespace-nowrap">
             <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
             <div className="hidden md:block">My GA's</div>
           </div>
@@ -117,21 +117,17 @@ export function EmpirePanel() {
     () => [
       {
         name: 'Harvest empire',
-        icon: <Danger className="w-4 h-4 mr-1 fill-white" />,
-        details: (
-          <span className="flex">
-            70,200 <Bag className="w-3 h-3 fill-white items-center ml-2 my-1" />
-          </span>
-        ),
+        icon: <Castle className="w-4 h-4 mr-1 fill-white self-center" />,
+        details: <span className="flex"></span>,
         action: () => {
           claimAll();
         },
       },
-      {
-        name: 'Secondary quick action',
-        icon: <Sword className="w-4 h-4 mr-1" />,
-        details: <span className="flex">action details</span>,
-      },
+      // {
+      //   name: 'Secondary quick action',
+      //   icon: <Sword className="w-4 h-4 mr-1" />,
+      //   details: <span className="flex">action details</span>,
+      // },
     ],
     []
   );
@@ -142,46 +138,57 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="w-1/2 mx-auto">
-      <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2">
-        {quickActions.map((action) => (
-          <Button
-            key={action.name}
-            className="rounded-xl flex-col items-start"
-            variant="outline"
-            onClick={action.action}
+    <div className="flex px-10">
+      <div className="w-9/12 overflow-y-scroll px-20 bg-gray-1100 pt-20">
+        <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2">
+          {quickActions.map((action) => (
+            <Button
+              key={action.name}
+              className="rounded-xl flex-col items-start whitespace-nowrap"
+              variant="outline"
+              onClick={action.action}
+            >
+              {userData?.resourcesClaimable}
+              <span className="flex">
+                {action.icon} {action.name}
+              </span>
+              {action.details}
+            </Button>
+          ))}
+        </div>
+        <div className="relative bg-black z-10 rounded-2xl overflow-scroll">
+          <Tabs
+            selectedIndex={selectedTab}
+            onChange={(index) => pressedTab(index as number)}
+            variant="default"
           >
-            {userData?.resourcesClaimable}
-            <span className="flex">
-              {action.icon} {action.name}
-            </span>
-            {action.details}
-          </Button>
-        ))}
-      </div>
-      <div className="relative bg-black z-10 rounded-2xl overflow-y-scroll">
-        <Tabs
-          selectedIndex={selectedTab}
-          onChange={(index) => pressedTab(index as number)}
-          variant="default"
-        >
-          <div className="w-full overflow-y-auto pt-14 sm:pt-0 border-white/20">
-            <Tabs.List className="">
+            <div className="w-full overflow-x-scroll pt-14 sm:pt-0 border-white/20">
+              <Tabs.List className="">
+                {tabs.map((tab, index) => (
+                  <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </div>
+            <Tabs.Panels>
               {tabs.map((tab, index) => (
-                <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
               ))}
-            </Tabs.List>
-          </div>
-          <Tabs.Panels>
-            {tabs.map((tab, index) => (
-              <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
-        <SettleRealmsSideBar
-          isOpen={isSettleRealmsSideBarOpen}
-          onClose={onSettleRealmsClick}
-        />
+            </Tabs.Panels>
+          </Tabs>
+          <SettleRealmsSideBar
+            isOpen={isSettleRealmsSideBarOpen}
+            onClose={onSettleRealmsClick}
+          />
+        </div>
+      </div>
+      <div className="w-3/12">
+        <div className="sticky top-10">
+          <img
+            className="object-fill bg-white rounded"
+            src={'/realm-troops/vizir.png'}
+            alt="Vizir"
+          />
+        </div>
       </div>
     </div>
   );

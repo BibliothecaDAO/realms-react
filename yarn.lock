@@ -6405,16 +6405,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@starknet-react/core@npm:0.14.6":
-  version: 0.14.6
-  resolution: "@starknet-react/core@npm:0.14.6"
+"@starknet-react/core@npm:0.14.7":
+  version: 0.14.7
+  resolution: "@starknet-react/core@npm:0.14.7"
   dependencies:
     "@tanstack/react-query": "npm:^4.3.4"
     immutable: "npm:^4.0.0"
   peerDependencies:
     react: ^17.0 || ^18.0
-    starknet: ^4.0
-  checksum: fa46693eb4a15f91b974923be99e452698e115db92bb9aeb2f89c5d67cc6829790f7d705970d67b3ac9e1b830aeb1cfa33db9be15e1906393da215f8dd1aa4f0
+    starknet: "*"
+  checksum: 16ccb76d77d816cf832ba0a8d8c7989cbd145f2aa9ffd10043ca67d4172b12e5429867ba4c58fe35b1046e7fd2a785c2af9a9b58215baa22d8d76cc2dd79fd3a
   languageName: node
   linkType: hard
 
@@ -11188,7 +11188,7 @@ __metadata:
     "@react-three/drei": "npm:^9.43.3"
     "@react-three/fiber": "npm:^8.9.1"
     "@size-limit/file": "npm:8.1.0"
-    "@starknet-react/core": "npm:0.14.6"
+    "@starknet-react/core": "npm:0.14.7"
     "@storybook/addon-actions": "npm:6.5.13"
     "@storybook/addons": "npm:6.5.13"
     "@storybook/client-api": "npm:6.5.13"

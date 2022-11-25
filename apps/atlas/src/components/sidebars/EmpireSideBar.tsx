@@ -33,11 +33,7 @@ export const EmpireQuickView = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <>
-      <BaseSideBarPanel
-        position="left"
-        className="h-screen overflow-y-hidden bg-warRoom bg-cover"
-        onClose={onClose}
-      >
+      <BaseSideBarPanel position="left" className="bg-cover" onClose={onClose}>
         <RealmProvider>
           <CryptProvider>
             <LootProvider>
