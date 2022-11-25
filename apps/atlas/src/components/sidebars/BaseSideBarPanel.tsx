@@ -7,6 +7,7 @@ interface BaseSideBarPanel {
   children: React.ReactNode[] | React.ReactNode;
   position?: 'left' | 'right';
   onClose?: () => void;
+  className?: string;
 }
 
 export const BaseSideBarPanel = ({
@@ -14,9 +15,10 @@ export const BaseSideBarPanel = ({
   onClose,
   children,
   position,
+  className,
 }: BaseSideBarPanel) => {
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${className}`}>
       <div>
         <div className="flex w-full mb-2 justify-between">
           <h1>{title}</h1>
