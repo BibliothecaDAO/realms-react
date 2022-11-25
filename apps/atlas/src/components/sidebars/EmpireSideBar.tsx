@@ -5,6 +5,7 @@ import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
+import { ArtBackground } from '../map/ArtBackground';
 import AtlasSideBar from './AtlasSideBar';
 import { BaseSideBarPanel } from './BaseSideBarPanel';
 
@@ -14,7 +15,11 @@ interface EmpireSideBarProps {
 }
 export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} position="left" containerClassName="w-full">
+    <AtlasSideBar
+      isOpen={isOpen}
+      position="left"
+      containerClassName="w-full !p-0"
+    >
       {isOpen && <EmpireQuickView onClose={onClose} />}
     </AtlasSideBar>
   );
@@ -27,16 +32,22 @@ export const EmpireQuickView = ({ onClose }: { onClose?: () => void }) => {
   }); */
 
   return (
-    <BaseSideBarPanel position="left" onClose={onClose}>
-      <RealmProvider>
-        <CryptProvider>
-          <LootProvider>
-            <GaProvider>
-              <AccountPanel />
-            </GaProvider>
-          </LootProvider>
-        </CryptProvider>
-      </RealmProvider>
-    </BaseSideBarPanel>
+    <>
+      <BaseSideBarPanel
+        position="left"
+        className="h-screen overflow-y-hidden bg-warRoom bg-cover"
+        onClose={onClose}
+      >
+        <RealmProvider>
+          <CryptProvider>
+            <LootProvider>
+              <GaProvider>
+                <AccountPanel />
+              </GaProvider>
+            </LootProvider>
+          </CryptProvider>
+        </RealmProvider>
+      </BaseSideBarPanel>
+    </>
   );
 };

@@ -116,7 +116,7 @@ export function AccountPanel() {
   };
 
   return (
-    <>
+    <div className="relative bg-black w-1/2 mx-auto z-10 rounded-2xl overflow-y-scroll">
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
@@ -139,6 +139,6 @@ export function AccountPanel() {
         isOpen={isSettleRealmsSideBarOpen}
         onClose={onSettleRealmsClick}
       />
-    </>
+    </div>
   );
 }
