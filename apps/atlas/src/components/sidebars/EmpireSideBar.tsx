@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 
-import { AccountPanel } from '@/components/panels/AccountPanel';
+import { EmpirePanel } from '@/components/panels/EmpirePanel';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
@@ -42,7 +42,7 @@ export const EmpireQuickView = ({ onClose }: { onClose?: () => void }) => {
           <CryptProvider>
             <LootProvider>
               <GaProvider>
-                <AccountPanel />
+                <EmpirePanel />
               </GaProvider>
             </LootProvider>
           </CryptProvider>

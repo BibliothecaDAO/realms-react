@@ -1,5 +1,6 @@
-import { Tabs } from '@bibliotheca-dao/ui-lib';
+import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
+import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
@@ -8,6 +9,7 @@ import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState, useMemo } from 'react';
 import { useGetRealmsQuery } from '@/generated/graphql';
+import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
@@ -20,7 +22,7 @@ import { MyRealms } from './Account/MyRealms';
 import { AccountOverview } from './Account/Overview';
 import { BasePanel } from './BasePanel';
 
-export function AccountPanel() {
+export function EmpirePanel() {
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
@@ -109,6 +111,30 @@ export function AccountPanel() {
     ],
     [selectedTab]
   );
+  const { claimAll, userData, burnAll } = useUsersRealms();
+
+  const quickActions = useMemo(
+    () => [
+      {
+        name: 'Harvest empire',
+        icon: <Danger className="w-4 h-4 mr-1 fill-white" />,
+        details: (
+          <span className="flex">
+            70,200 <Bag className="w-3 h-3 fill-white items-center ml-2 my-1" />
+          </span>
+        ),
+        action: () => {
+          claimAll();
+        },
+      },
+      {
+        name: 'Secondary quick action',
+        icon: <Sword className="w-4 h-4 mr-1" />,
+        details: <span className="flex">action details</span>,
+      },
+    ],
+    []
+  );
 
   const pressedTab = (index) => {
     play();
@@ -116,29 +142,47 @@ export function AccountPanel() {
   };
 
   return (
-    <div className="relative bg-black w-1/2 mx-auto z-10 rounded-2xl overflow-y-scroll">
-      <Tabs
-        selectedIndex={selectedTab}
-        onChange={(index) => pressedTab(index as number)}
-        variant="default"
-      >
-        <div className="w-full overflow-y-auto pt-14 sm:pt-0 border-white/20">
-          <Tabs.List className="">
+    <div className="w-1/2 mx-auto">
+      <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2">
+        {quickActions.map((action) => (
+          <Button
+            key={action.name}
+            className="rounded-xl flex-col items-start"
+            variant="outline"
+            onClick={action.action}
+          >
+            {userData?.resourcesClaimable}
+            <span className="flex">
+              {action.icon} {action.name}
+            </span>
+            {action.details}
+          </Button>
+        ))}
+      </div>
+      <div className="relative bg-black z-10 rounded-2xl overflow-y-scroll">
+        <Tabs
+          selectedIndex={selectedTab}
+          onChange={(index) => pressedTab(index as number)}
+          variant="default"
+        >
+          <div className="w-full overflow-y-auto pt-14 sm:pt-0 border-white/20">
+            <Tabs.List className="">
+              {tabs.map((tab, index) => (
+                <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+              ))}
+            </Tabs.List>
+          </div>
+          <Tabs.Panels>
             {tabs.map((tab, index) => (
-              <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+              <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
             ))}
-          </Tabs.List>
-        </div>
-        <Tabs.Panels>
-          {tabs.map((tab, index) => (
-            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-          ))}
-        </Tabs.Panels>
-      </Tabs>
-      <SettleRealmsSideBar
-        isOpen={isSettleRealmsSideBarOpen}
-        onClose={onSettleRealmsClick}
-      />
+          </Tabs.Panels>
+        </Tabs>
+        <SettleRealmsSideBar
+          isOpen={isSettleRealmsSideBarOpen}
+          onClose={onSettleRealmsClick}
+        />
+      </div>
     </div>
   );
 }
