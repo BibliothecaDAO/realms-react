@@ -83,7 +83,7 @@ export function AccountOverview(props: Prop) {
     })
     .filter((row) => row.event !== '');
 
-  const militaryEventData = (accountData?.accountHistory ?? [])
+  const events = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
       return {
         ...genMilitaryRealmEvent(realmEvent, true),
@@ -103,12 +103,11 @@ export function AccountOverview(props: Prop) {
 
   const { starknetId } = useStarkNetId(address || '');
 
+  console.log(accountData?.accountHistory);
+
   return (
     <div>
-      <animated.div
-        style={animationUp}
-        className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6"
-      >
+      <div className="grid grid-cols-12 gap-3 md:gap-6 md:grid-cols-12 sm:px-6">
         {/* <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
           <div className="flex">
             <div className="relative">
@@ -137,7 +136,7 @@ export function AccountOverview(props: Prop) {
             </div>
           </div>
         </Card> */}
-        <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
+        {/* <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
             <CardStats>{settledRealmsCount}</CardStats>
@@ -166,9 +165,9 @@ export function AccountOverview(props: Prop) {
               Bank
             </Button>
           </CardBody>
-        </Card>
+        </Card> */}
 
-        <Card
+        {/* <Card
           className={`col-start-1 col-end-13 md:col-start-1 md:col-end-5 overflow-y-scroll`}
         >
           <CardTitle>Mercantile History</CardTitle>
@@ -184,14 +183,14 @@ export function AccountOverview(props: Prop) {
               );
             })}
           </CardBody>
-        </Card>
+        </Card> */}
 
-        <Card
-          className={`col-start-1 col-end-13 md:col-start-5 md:col-end-9 overflow-y-scroll `}
+        <div
+          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-13 overflow-y-scroll `}
         >
-          <CardTitle>Battle History</CardTitle>
+          <CardTitle>History</CardTitle>
           <CardBody>
-            {militaryEventData.map((a, index) => {
+            {events.map((a, index) => {
               return (
                 <HistoryCard
                   key={index}
@@ -206,8 +205,8 @@ export function AccountOverview(props: Prop) {
               );
             })}
           </CardBody>
-        </Card>
-      </animated.div>
+        </div>
+      </div>
     </div>
   );
 }

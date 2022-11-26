@@ -225,13 +225,11 @@ export const resourcePillaged = (resources: any) => {
             >
               <div className="flex">
                 <ResourceIcon
-                  size="md"
+                  size="xs"
                   className="self-center"
                   resource={info?.trait?.replace('_', '') as string}
                 />{' '}
-                <span className="self-center ml-4 mr-1 font-semibold tracking-widest uppercase">
-                  {info?.trait}
-                </span>
+                <span className="self-center ml-4 mr-1">{info?.trait}</span>
               </div>
 
               <div className="self-center font-semibold uppercase">

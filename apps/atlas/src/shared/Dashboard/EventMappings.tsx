@@ -111,6 +111,62 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           ),
         };
       }
+    case 'realm_building_built':
+      return {
+        event: `Built ${event.data?.buildingName}`,
+        class: successClass,
+        action: (
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/?asset=realm' + event.realmId}
+          >
+            Visit
+          </Button>
+        ),
+      };
+    case 'realm_resource_upgraded':
+      return {
+        event: `Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`,
+        class: successClass,
+        action: (
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/?asset=realm' + event.realmId}
+          >
+            Visit
+          </Button>
+        ),
+      };
+    case 'realm_settle':
+      return {
+        event: 'Settled',
+        class: successClass,
+        action: (
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/?asset=realm' + event.realmId}
+          >
+            Visit
+          </Button>
+        ),
+      };
+    case 'realm_unsettle':
+      return {
+        event: 'Unsettled',
+        class: successClass,
+        action: (
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/?asset=realm' + event.realmId}
+          >
+            Visit
+          </Button>
+        ),
+      };
     default:
       return {
         event: '',
@@ -125,7 +181,15 @@ export function genEconomicRealmEvent(event) {
       return {
         event: `Built ${event.data?.buildingName}`,
         class: successClass,
-        action: '',
+        action: (
+          <Button
+            size="xs"
+            variant="primary"
+            href={'/?asset=realm' + event.data?.realmId}
+          >
+            {event.data?.success ? 'Try again' : 'summon the troops!'}
+          </Button>
+        ),
       };
     case 'realm_resource_upgraded':
       return {
