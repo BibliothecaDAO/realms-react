@@ -22,19 +22,31 @@ export const HistoryCard = (props: Props) => {
         src={`https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${props.eventId}.png`}
         alt=""
       /> */}
-      <div className="z-10 justify-between w-full">
-        <div className=" flex justify-between">
-          <h3> {props.event}</h3>
-          <span className="text-xs text-gray-700">
+      <div className="z-10 w-full flex flex-wrap">
+        <div className="flex">
+          <img
+            className="rounded-full w-24 h-24 mr-8"
+            src={`/vizirs/mj_builder.png`}
+            alt=""
+          />
+          <div className="flex-auto">
+            <div className=" flex justify-between">
+              <span className="text-xl"> {props.event}</span>
+            </div>
+
+            {props.children}
+            {props.action && <div className="mt-2">{props.action}</div>}
+          </div>
+        </div>
+
+        <div className="w-full flex justify-end mt-4">
+          <span className="text-xs text-gray-700 ml-auto">
             {' '}
             {new Date(props.timeStamp).toLocaleTimeString('en-US')}
             {' | '}
             {new Date(props.timeStamp).toLocaleDateString('en-US')}
           </span>
         </div>
-
-        {props.children}
-        {props.action && <div className="pt-5">{props.action}</div>}
       </div>
     </div>
   );

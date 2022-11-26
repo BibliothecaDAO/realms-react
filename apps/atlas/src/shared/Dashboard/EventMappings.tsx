@@ -12,7 +12,11 @@ export const Event = {
 const successClass = '';
 const negativeClass = '';
 
-export function genMilitaryRealmEvent(event, user?: boolean) {
+export const checkTimeInPast = (time: number) => {
+  return time < Date.now();
+};
+
+export function generateRealmEvent(event, user?: boolean) {
   switch (event.eventType) {
     case Event.realmCombatAttack:
       return {
@@ -41,7 +45,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         action: (
           <Button
             size="sm"
-            variant="primary"
+            variant="outline"
             href={'/?asset=realm' + event.data?.defendRealmId}
           >
             {event.data?.success ? 'Pillage and plunder again' : 'try again'}
@@ -75,7 +79,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           action: (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/?asset=realm' + event.data?.attackRealmId}
             >
               {event.data?.success ? 'Try again' : 'summon the troops!'}
@@ -103,7 +107,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           action: (
             <Button
               size="xs"
-              variant="primary"
+              variant="outline"
               href={'/?asset=realm' + event.data?.attackRealmId}
             >
               {event.data?.success ? 'Retaliate' : 'summon the troops!'}
@@ -111,28 +115,14 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
           ),
         };
       }
-    case 'realm_building_built':
+    case Event.realmBuildingBuilt:
       return {
         event: `Built ${event.data?.buildingName}`,
         class: successClass,
         action: (
           <Button
             size="xs"
-            variant="primary"
-            href={'/?asset=realm' + event.realmId}
-          >
-            Visit
-          </Button>
-        ),
-      };
-    case 'realm_resource_upgraded':
-      return {
-        event: `Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`,
-        class: successClass,
-        action: (
-          <Button
-            size="xs"
-            variant="primary"
+            variant="outline"
             href={'/?asset=realm' + event.realmId}
           >
             Visit
@@ -146,7 +136,7 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         action: (
           <Button
             size="xs"
-            variant="primary"
+            variant="outline"
             href={'/?asset=realm' + event.realmId}
           >
             Visit
@@ -160,11 +150,45 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         action: (
           <Button
             size="xs"
-            variant="primary"
+            variant="outline"
             href={'/?asset=realm' + event.realmId}
           >
             Visit
           </Button>
+        ),
+      };
+    case 'army_travel':
+      return {
+        event: `Army Travel`,
+        class: successClass,
+        action: (
+          <div>
+            {checkTimeInPast(event.data?.destinationArrivalTime) ? (
+              <p className="mb-4">
+                Your Army from {fetchRealmNameById(event.data?.originRealmId)}{' '}
+                has arrived at{' '}
+                {fetchRealmNameById(event.data?.destinationRealmId)}
+              </p>
+            ) : (
+              <p>
+                <p className="mb-4">
+                  Your Army from {fetchRealmNameById(event.data?.originRealmId)}{' '}
+                  will arrive at{' '}
+                  {fetchRealmNameById(event.data?.destinationRealmId)} by
+                  {new Date(
+                    event.data?.destinationArrivalTime
+                  ).toLocaleTimeString('en-US')}
+                </p>
+              </p>
+            )}
+            <Button
+              size="xs"
+              variant="outline"
+              href={'/?asset=realm' + event.data?.destinationRealmId}
+            >
+              Visit {fetchRealmNameById(event.data?.destinationRealmId)}
+            </Button>
+          </div>
         ),
       };
     default:
@@ -184,7 +208,7 @@ export function genEconomicRealmEvent(event) {
         action: (
           <Button
             size="xs"
-            variant="primary"
+            variant="outline"
             href={'/?asset=realm' + event.data?.realmId}
           >
             {event.data?.success ? 'Try again' : 'summon the troops!'}

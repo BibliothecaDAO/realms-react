@@ -146,7 +146,7 @@ export function EmpirePanel() {
               key={action.name}
               className="rounded-xl flex-col items-start whitespace-nowrap"
               variant="outline"
-              onClick={action.action}
+              onClick={() => action.action()}
             >
               {userData?.resourcesClaimable}
               <span className="flex">

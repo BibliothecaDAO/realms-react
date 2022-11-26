@@ -27,7 +27,7 @@ import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   genEconomicRealmEvent,
-  genMilitaryRealmEvent,
+  generateRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { getAccountHex } from '@/shared/Getters/Realm';
@@ -86,12 +86,14 @@ export function AccountOverview(props: Prop) {
   const events = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
       return {
-        ...genMilitaryRealmEvent(realmEvent, true),
+        ...generateRealmEvent(realmEvent, true),
         timestamp: realmEvent.timestamp,
         eventId: realmEvent.eventId,
       };
     })
     .filter((row) => row.event !== '');
+
+  console.log(accountData?.accountHistory);
 
   const { addTransaction } = useTransactionManager();
 

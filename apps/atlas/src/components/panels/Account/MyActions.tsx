@@ -21,7 +21,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import {
   genEconomicRealmEvent,
-  genMilitaryRealmEvent,
+  generateRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 
 import { getAccountHex } from '@/shared/Getters/Realm';
@@ -73,7 +73,7 @@ export function MyActions(props: Prop) {
   const militaryEventData = (accountData?.accountHistory ?? [])
     .map((realmEvent) => {
       return {
-        ...genMilitaryRealmEvent(realmEvent, true),
+        ...generateRealmEvent(realmEvent, true),
         timestamp: realmEvent.timestamp,
         eventId: realmEvent.eventId,
       };

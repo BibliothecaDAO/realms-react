@@ -9,7 +9,7 @@ import { RaidDetailsSideBar } from '@/components/sidebars/RaidDetailsSidebar';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import {
   genEconomicRealmEvent,
-  genMilitaryRealmEvent,
+  generateRealmEvent,
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { resourcePillaged } from '@/shared/Getters/Realm';
@@ -52,7 +52,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
   const militaryEventData1 = (historyData?.getRealmHistory ?? [])
     .map((realmEvent) => {
       return {
-        ...genMilitaryRealmEvent(realmEvent, false),
+        ...generateRealmEvent(realmEvent, false),
         timestamp: realmEvent.timestamp,
         eventId: realmEvent.eventId,
       };
