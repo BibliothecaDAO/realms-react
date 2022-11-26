@@ -43,7 +43,7 @@ export const MilitaryBuildings = (props: Prop) => {
         .map((a, i) => {
           return (
             <div key={i} className="flex w-full my-2">
-              <div className="self-center border rounded border-yellow-900 relative">
+              <div className="relative self-center border border-yellow-900 rounded">
                 <Image
                   height={200}
                   width={200}
@@ -51,21 +51,21 @@ export const MilitaryBuildings = (props: Prop) => {
                   src={a.img}
                   alt=""
                 />
-                <span className="absolute bottom-2 left-2 bg-white rounded-full px-2  text-gray-700">
+                <span className="absolute px-2 text-gray-700 bg-white rounded-full bottom-2 left-2">
                   {a.quantityBuilt}
                 </span>
               </div>
-              <div className="w-full px-4 flex flex-wrap capitalize">
-                <div className=" w-full ">
+              <div className="flex flex-wrap w-full px-4 capitalize">
+                <div className="w-full ">
                   <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] ">
-                    <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1000">
+                    <h3 className="flex p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
                       {a.name}{' '}
-                      <span className=" text-xs text-gray-700 self-center ml-4">
+                      <span className="self-center ml-4 text-xs text-gray-700 ">
                         {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
                         Day Decay Time
                       </span>
-                      <span className="self-center ml-auto text-sm flex">
-                        <span className="mr-2 text-gray-700 text-xs self-center">
+                      <span className="flex self-center ml-auto text-sm">
+                        <span className="self-center mr-2 text-xs text-gray-700">
                           Time till decay:
                         </span>
                         <CountdownTimer
@@ -89,7 +89,7 @@ export const MilitaryBuildings = (props: Prop) => {
                             key={i}
                             height={90}
                             width={90}
-                            className="object-fill bg-white rounded self-center"
+                            className="self-center object-fill bg-white rounded"
                             src={getUnitImage(c.id)}
                             alt=""
                           />

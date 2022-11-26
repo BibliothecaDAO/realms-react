@@ -22,7 +22,7 @@ export const useGameConstants = () => {
     return gameConstants?.buildingCosts.find((a) => a.buildingId === id);
   };
 
-  const checkUserHasResources = ({ cost, id }) => {
+  const checkUserHasAvailableResources = ({ cost, id }) => {
     const co = BigNumber.from((cost * 10 ** 18).toString());
     const currentBalance =
       balance.find((a) => a.resourceId === id)?.amount || 0;
@@ -30,9 +30,18 @@ export const useGameConstants = () => {
     return BigNumber.from(currentBalance).gte(co) ? true : false;
   };
 
+  const checkUserHasCheckoutResources = ({ cost, id }) => {
+    const co = BigNumber.from((cost * 10 ** 18).toString());
+    const currentBalance =
+      balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount || 0;
+
+    return BigNumber.from(currentBalance).gte(co) ? true : false;
+  };
+
   return {
     gameConstants,
-    checkUserHasResources,
+    checkUserHasAvailableResources,
+    checkUserHasCheckoutResources,
     getBuildingCostById,
   };
 };

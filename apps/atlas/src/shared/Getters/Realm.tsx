@@ -289,14 +289,14 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
 };
 
 export const CostBlock = ({ resourceName, amount, id, qty }) => {
-  const { checkUserHasResources } = useGameConstants();
+  const { checkUserHasAvailableResources } = useGameConstants();
 
   return (
     <div className="px-1 font-extrabold text-center font-display">
       <ResourceIcon withTooltip size="xs" resource={resourceName} />
       <span
         className={
-          checkUserHasResources({
+          checkUserHasAvailableResources({
             cost: amount * qty,
             id: id,
           })
