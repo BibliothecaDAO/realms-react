@@ -34,8 +34,8 @@ export function genMilitaryRealmEvent(event, user?: boolean) {
         txHash: event.transactionHash,
         attackRealmId: event.data?.attackRealmId,
         relic: event.data?.relicClaimed ? (
-          <span className="pl-10 text-xl font-semibold">
-            Captured Relic {event.data?.relicClaimed}
+          <span className="text-xl">
+            Captured Relic {event.data?.relicClaimed}!
           </span>
         ) : null,
         action: (

@@ -139,7 +139,7 @@ export function EmpirePanel() {
 
   return (
     <div className="flex px-10">
-      <div className="w-9/12 overflow-y-scroll px-20 bg-gray-1100 pt-20">
+      <div className="w-9/12 px-20 bg-gray-1100 pt-20">
         <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2">
           {quickActions.map((action) => (
             <Button
@@ -156,18 +156,20 @@ export function EmpirePanel() {
             </Button>
           ))}
         </div>
-        <div className="relative bg-black z-10 rounded-2xl overflow-scroll">
+        <div className="relative">
           <Tabs
             selectedIndex={selectedTab}
             onChange={(index) => pressedTab(index as number)}
             variant="default"
           >
-            <div className="w-full overflow-x-scroll pt-14 sm:pt-0 border-white/20">
-              <Tabs.List className="">
-                {tabs.map((tab, index) => (
-                  <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-                ))}
-              </Tabs.List>
+            <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] sticky top-10 z-40">
+              <div className="bg-gray-1100 overflow-x-auto">
+                <Tabs.List>
+                  {tabs.map((tab, index) => (
+                    <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                  ))}
+                </Tabs.List>
+              </div>
             </div>
             <Tabs.Panels>
               {tabs.map((tab, index) => (
@@ -184,7 +186,7 @@ export function EmpirePanel() {
       <div className="w-3/12">
         <div className="sticky top-10">
           <img
-            className="object-fill bg-white rounded"
+            className="object-cover bg-white rounded h-screen"
             src={'/realm-troops/vizir.png'}
             alt="Vizir"
           />

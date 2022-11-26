@@ -103,8 +103,6 @@ export function AccountOverview(props: Prop) {
 
   const { starknetId } = useStarkNetId(address || '');
 
-  console.log(accountData?.accountHistory);
-
   return (
     <div>
       <div className="grid grid-cols-12 gap-3 md:gap-6 md:grid-cols-12 sm:px-6">
@@ -185,10 +183,7 @@ export function AccountOverview(props: Prop) {
           </CardBody>
         </Card> */}
 
-        <div
-          className={`col-start-1 col-end-13 md:col-start-1 md:col-end-13 overflow-y-scroll `}
-        >
-          <CardTitle>History</CardTitle>
+        <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-8 `}>
           <CardBody>
             {events.map((a, index) => {
               return (
@@ -199,8 +194,8 @@ export function AccountOverview(props: Prop) {
                   eventId={a.eventId}
                   action={a.action}
                 >
-                  {a.resources}
                   {a.relic}
+                  {a.resources}
                 </HistoryCard>
               );
             })}
