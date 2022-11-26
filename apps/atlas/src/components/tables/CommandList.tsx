@@ -1,11 +1,16 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
 import type { Identifier, XYCoord } from 'dnd-core';
+import { BigNumber } from 'ethers';
+import { formatEther } from 'ethers/lib/utils';
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
+import { useResourcesContext } from '@/context/ResourcesContext';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getTxCosts } from '@/shared/Getters/Market';
@@ -201,6 +206,11 @@ export const CommandList: React.FC<Prop> = (props) => {
         // TODO: Handle error
       });
   };
+
+  const { checkUserHasCheckoutResources } = useGameConstants();
+
+  const { balance, batchAddResources } = useResourcesContext();
+
   return (
     <>
       {txQueue.transactions.length > 0 ? (
@@ -248,10 +258,54 @@ export const CommandList: React.FC<Prop> = (props) => {
                     size="xs"
                     resource={resource.resourceName}
                   />
-                  <span className="xs">{resource.amount.toFixed(0)}</span>
+                  <span
+                    className={
+                      checkUserHasCheckoutResources({
+                        cost: resource.amount,
+                        id: resourceId,
+                      })
+                        ? 'text-green-600 shadow-green-100 drop-shadow-lg xs'
+                        : 'text-red-200 xs'
+                    }
+                  >
+                    {resource.amount.toFixed(0)}
+                  </span>
                 </div>
               );
             })}
+            <Button
+              onClick={() => {
+                batchAddResources(
+                  Object.keys(resourceCostsById)
+                    .filter(
+                      (r) =>
+                        !checkUserHasCheckoutResources({
+                          cost: resourceCostsById[r].amount,
+                          id: r,
+                        })
+                    )
+                    .map((r) => {
+                      const resource = resourceCostsById[r];
+                      const checkoutBalance =
+                        balance.find((a) => a.resourceId === parseInt(r))
+                          ?.checkoutAmount || 0;
+                      return {
+                        resourceId: parseInt(r),
+                        resourceName: resource.resourceName,
+                        amount:
+                          resource.amount -
+                          +formatEther(BigNumber.from(checkoutBalance)),
+                      };
+                    })
+                );
+                toast('Missing resources added to the cart');
+              }}
+              size="xs"
+              variant="outline"
+              className="ml-auto"
+            >
+              reconcile deficits
+            </Button>
           </div>
         </div>
       ) : (

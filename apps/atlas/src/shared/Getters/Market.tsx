@@ -18,3 +18,15 @@ export const getTxCosts = (txQueue) => {
     .filter((t) => !!t.metadata.costs)
     .map((t) => t.metadata.costs);
 };
+
+export const getTxResourcesTrades = (txQueue) => {
+  return txQueue.transactions
+    .filter((t) => ['buy_tokens', 'sell_tokens'].includes(t.metadata.action))
+    .map((t) =>
+      t.metadata.tokenIds.map((id, i) => ({
+        resourceId: id,
+        amount: t.metadata.tokenAmounts[i],
+        action: t.metadata.action,
+      }))
+    );
+};

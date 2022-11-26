@@ -26,7 +26,7 @@ import {
   useLordsContract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
-import { getTxCosts } from '@/shared/Getters/Market';
+import { getTxCosts, getTxResourcesTrades } from '@/shared/Getters/Market';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 import { useCommandList } from './CommandListContext';
@@ -35,6 +35,7 @@ export type Resource = {
   resourceId: number;
   resourceName: string;
   amount: string;
+  checkoutAmount: string;
   rate: string;
   lp: string;
   currencyAmount: string;
@@ -64,6 +65,7 @@ const initBalance = resources.map((resource) => {
     resourceId: resource.id,
     resourceName: resource.trait,
     amount: '0',
+    checkoutAmount: '0',
     rate: '0',
     lp: '0',
     currencyAmount: '0',
@@ -298,6 +300,29 @@ function useResources() {
       };
     });
 
+    const allResourcesTrades = getTxResourcesTrades(txQueue);
+
+    const tradeChangeByResourceId = {};
+
+    allResourcesTrades.forEach((t) => {
+      t.forEach((c) => {
+        tradeChangeByResourceId[c.resourceId] = {
+          ...tradeChangeByResourceId[c.resourceId],
+          resourceId: c.resourceId,
+          amount:
+            c.action === 'buy_tokens'
+              ? (
+                  tradeChangeByResourceId[c.resourceId]?.amount ??
+                  BigNumber.from(0)
+                ).add(c.amount)
+              : (
+                  tradeChangeByResourceId[c.resourceId]?.amount ??
+                  BigNumber.from(0)
+                ).sub(c.amount),
+        };
+      });
+    });
+
     setBalance(
       resources.map((resource, index) => {
         const resourceId = resource.id ?? 0;
@@ -309,6 +334,9 @@ function useResources() {
             )
           : 0;
 
+        const inCartTradeChange =
+          tradeChangeByResourceId[resourceId]?.amount ?? 0;
+
         const baseBn = BigNumber.from('1000000000000000000').mul(inCartCost);
 
         const walletBalance =
@@ -316,7 +344,12 @@ function useResources() {
             (a) => a.tokenId === resourceId
           )?.amount ?? 0;
 
-        const actualBalance = BigNumber.from(walletBalance).sub(baseBn);
+        const checkoutBalance =
+          BigNumber.from(walletBalance).add(inCartTradeChange);
+
+        const actualBalance = checkoutBalance.gt(baseBn)
+          ? checkoutBalance.sub(baseBn)
+          : 0;
 
         const rate = rates.find((rate) => rate.tokenId === resourceId);
 
@@ -324,6 +357,7 @@ function useResources() {
           resourceId,
           resourceName,
           amount: actualBalance.toString(),
+          checkoutAmount: checkoutBalance.toString(),
           rate: rate?.amount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
