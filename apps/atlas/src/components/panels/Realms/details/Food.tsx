@@ -136,9 +136,12 @@ const RealmsFood: React.FC<Prop> = (props) => {
                   <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
                     <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1100 justify-between">
                       Storehouse
-                      <div>
+                      <div className="flex">
+                        <div className="text-3xl self-center mr-3">
+                          {props.availableFood?.toLocaleString()}
+                        </div>
                         {props.availableFood && props?.availableFood > 0 ? (
-                          <div className="flex justify-end text-xl">
+                          <div className="flex justify-end">
                             <CountdownTimer
                               date={(
                                 (props.availableFood /
@@ -153,9 +156,6 @@ const RealmsFood: React.FC<Prop> = (props) => {
                             Serfs are starving!!
                           </span>
                         )}
-                        <div className="text-5xl ">
-                          {props.availableFood?.toLocaleString()}
-                        </div>
                       </div>
                     </h3>
                   </div>
@@ -244,7 +244,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
               <Image
                 width={200}
                 height={200}
-                className={' mx-auto'}
+                className={' mx-auto border-yellow-900 border rounded'}
                 src={'/realm-buildings/mj_farm.png'}
                 alt="Hut"
               />
@@ -266,7 +266,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
                 {props.realmFoodDetails.farmHarvestsLeft -
                   props.realmFoodDetails.decayedFarms >
                   0 && (
-                  <div className="text-xl">
+                  <div className=" px-4">
                     <CountdownTimer
                       date={(
                         (HARVEST_LENGTH -
@@ -396,7 +396,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
               <Image
                 width={200}
                 height={200}
-                className={'mx-auto rounded'}
+                className={'mx-auto  border-yellow-900 border rounded'}
                 src={'/realm-buildings/mj_fishing_village.png'}
                 alt="Hut"
               />
@@ -420,7 +420,7 @@ const RealmsFood: React.FC<Prop> = (props) => {
                 {props.realmFoodDetails.fishingVillagesHarvestsLeft -
                   props.realmFoodDetails.decayedVillages >
                   0 && (
-                  <div className="text-xl ">
+                  <div className="text-xl px-4">
                     <CountdownTimer
                       date={(
                         (HARVEST_LENGTH -

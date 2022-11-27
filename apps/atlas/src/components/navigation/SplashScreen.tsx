@@ -11,7 +11,7 @@ export const SplashScreen = ({ children }) => {
     children
   ) : (
     <div>
-      <div className="flex left-0 justify-center items-center h-screen w-full bg-black bg-cover">
+      <div className="flex left-0 justify-center items-center h-screen w-full bg-black bg-cover bg-realmBackground">
         <div className="relative flex flex-col lg:w-1/3 text-center">
           <Ouroboros className="self-center h-32 ml-2 mr-4 fill-yellow-600 " />
           <h1 className="mb-8">Eternum</h1>

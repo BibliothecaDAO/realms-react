@@ -251,7 +251,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
               {
                 resourceId: resourceId,
                 amount: parseInt(quantity),
-                resourceName: 'wheat',
+                resourceName: 'Wheat',
               },
             ],
           },

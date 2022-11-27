@@ -174,7 +174,7 @@ export function generateRealmEvent(event, user?: boolean) {
                 <p className="mb-4">
                   Your Army from {fetchRealmNameById(event.data?.originRealmId)}{' '}
                   will arrive at{' '}
-                  {fetchRealmNameById(event.data?.destinationRealmId)} by
+                  {fetchRealmNameById(event.data?.destinationRealmId)} by{' '}
                   {new Date(
                     event.data?.destinationArrivalTime
                   ).toLocaleTimeString('en-US')}

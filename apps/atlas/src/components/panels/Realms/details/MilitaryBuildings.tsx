@@ -89,7 +89,7 @@ export const MilitaryBuildings = (props: Prop) => {
                             key={i}
                             height={90}
                             width={90}
-                            className="self-center object-fill bg-white rounded"
+                            className="self-center object-fill bg-white rounded border border-yellow-900 shadow-inner"
                             src={getUnitImage(c.id)}
                             alt=""
                           />

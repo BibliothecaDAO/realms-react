@@ -54,6 +54,9 @@ export const Travel = ({ realm }: Prop) => {
           ))}
         </Tabs.Panels>
       </Tabs>
+      <div className="my-2">
+        <img src="/vizirs/mj_travel.png" alt="" className="rounded" />
+      </div>
     </div>
   );
 };

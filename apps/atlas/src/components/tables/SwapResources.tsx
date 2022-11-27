@@ -524,7 +524,7 @@ export function SwapResources(): ReactElement {
           <div className="flex flex-col py-4 rounded ">
             <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
-                <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
+                <span className="flex items-center mr-6 text-xs  text-gray-700">
                   {isBuy
                     ? 'Total cost of resources in $LORDS:'
                     : 'Approximate $lords received:'}
@@ -535,7 +535,7 @@ export function SwapResources(): ReactElement {
             </div>
             <div>
               <div className="flex justify-end text-md">
-                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                <span className="flex self-center mr-6 text-xs  text-gray-700">
                   $LORDS price impact:
                 </span>
                 <span
@@ -551,7 +551,7 @@ export function SwapResources(): ReactElement {
             </div>
             <div>
               <div className="flex justify-end text-md">
-                <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">
+                <span className="flex self-center mr-6 text-xs text-gray-700">
                   Your current $LORDS balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}

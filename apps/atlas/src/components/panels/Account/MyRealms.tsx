@@ -217,7 +217,7 @@ export const MyRealms = () => {
 
   return (
     <div>
-      <div className="container flex justify-between w-full px-6 sm:w-auto">
+      {/* <div className="container flex justify-between w-full px-6 sm:w-auto">
         <RealmsFilter isYourRealms={selectedTabIndex === 0} />
         <SearchFilter
           placeholder="SEARCH BY ID"
@@ -226,7 +226,7 @@ export const MyRealms = () => {
           }}
           defaultValue={state.searchIdFilter + ''}
         />
-      </div>
+      </div> */}
 
       <div>
         {loading && (

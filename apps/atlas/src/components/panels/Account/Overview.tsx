@@ -32,6 +32,7 @@ import {
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { shortenAddressWidth } from '@/util/formatters';
+import { MyRealms } from './MyRealms';
 
 type Prop = {
   onSettleRealms: () => void;
@@ -66,10 +67,6 @@ export function AccountOverview(props: Prop) {
     skip: !address,
   });
 
-  /* const getRealmDetails = (realmId: number) =>
-      realms.features.find((a: any) => a.properties.realm_idx === realmId)
-        ?.properties; */
-
   const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
 
   const unSettledRealmsCount = accountData?.ownedRealmsCount ?? 0;
@@ -97,17 +94,9 @@ export function AccountOverview(props: Prop) {
 
   const { addTransaction } = useTransactionManager();
 
-  const animationUp = useSpring({
-    // opacity: true === 'account' ? 1 : 0,
-    // transform: true === 'account' ? `translateY(0)` : `translateY(+10%)`,
-    // delay: 350,
-  });
-
-  const { starknetId } = useStarkNetId(address || '');
-
   return (
     <div>
-      <div className="grid grid-cols-12 gap-3 md:gap-6 md:grid-cols-12 sm:px-6">
+      <div className="grid grid-cols-12 gap-3 md:gap-2 md:grid-cols-12 sm:px-2">
         {/* <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
           <div className="flex">
             <div className="relative">
@@ -184,9 +173,18 @@ export function AccountOverview(props: Prop) {
             })}
           </CardBody>
         </Card> */}
+        <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
+          <MyRealms />
+        </div>
+        <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
+          <div className="p-2  mb-8">
+            <h2>Vizir Reports</h2>
+            <div className="text-xl italic mt-4 px-10">
+              "Your Majesty, we have been busy since you have been away."
+            </div>
+          </div>
 
-        <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-8 `}>
-          <CardBody>
+          <CardBody className="border border-yellow-900 h-96 overflow-y-auto">
             {events.map((a, index) => {
               return (
                 <HistoryCard

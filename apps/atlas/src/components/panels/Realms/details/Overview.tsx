@@ -75,7 +75,7 @@ export function RealmOverview(
         <div className="px-2 flex my-4">
           <div className="self-center">
             <img
-              src={'/stableai/archanist.png'}
+              src={'/realm-troops/vizir.png'}
               alt="map"
               className="shadow-lg rounded-full  w-32 h-32 mr-4 shadow-purple-800"
             />

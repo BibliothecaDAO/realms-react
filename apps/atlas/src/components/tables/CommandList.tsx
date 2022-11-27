@@ -136,7 +136,7 @@ export const CommandListItem = (props: CommandListItem) => {
       )}
       <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
         <div className="flex justify-between w-full pb-2 mb-2 border-b border-white/20">
-          <h5 className="self-center uppercase">ENQUEUED</h5>
+          <h5 className="self-center text-xs">ENQUEUED</h5>
           <div className="self-center ">
             {props.onRemove && (
               <Button
@@ -154,7 +154,7 @@ export const CommandListItem = (props: CommandListItem) => {
         <div>
           <h3>{title}</h3>
 
-          <p>{description}</p>
+          <p className="text-gray-700">{description}</p>
         </div>
       </div>
       {/* <span>{props.call.lastUpdatedAt}</span> */}
@@ -293,7 +293,7 @@ export const CommandList: React.FC<Prop> = (props) => {
                         resourceId: parseInt(r),
                         resourceName: resource.resourceName,
                         amount:
-                          resource.amount -
+                          resource.amount * 1.2 -
                           +formatEther(BigNumber.from(checkoutBalance)),
                       };
                     })

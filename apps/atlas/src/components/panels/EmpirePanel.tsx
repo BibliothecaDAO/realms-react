@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useState, useMemo } from 'react';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getAccountHex } from '@/shared/Getters/Realm';
 import { SettleRealmsSideBar } from '../sidebars/SettleRealmsSideBar';
@@ -43,6 +44,9 @@ export function EmpirePanel() {
   }
 
   const [selectedTab, setSelectedTab] = useState(0);
+
+  const { starknetId } = useStarkNetId(address || '');
+
   const tabs = useMemo(
     () => [
       {
@@ -90,24 +94,24 @@ export function EmpirePanel() {
         ),
         component: <MyCrypts />,
       },
-      {
-        label: (
-          <div className="flex whitespace-nowrap">
-            <Bag className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-            <div className="hidden md:block">My Loot</div>
-          </div>
-        ),
-        component: <MyLoot />,
-      },
-      {
-        label: (
-          <div className="flex whitespace-nowrap">
-            <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-            <div className="hidden md:block">My GA's</div>
-          </div>
-        ),
-        component: <MyGA />,
-      },
+      // {
+      //   label: (
+      //     <div className="flex whitespace-nowrap">
+      //       <Bag className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+      //       <div className="hidden md:block">My Loot</div>
+      //     </div>
+      //   ),
+      //   component: <MyLoot />,
+      // },
+      // {
+      //   label: (
+      //     <div className="flex whitespace-nowrap">
+      //       <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+      //       <div className="hidden md:block">My GA's</div>
+      //     </div>
+      //   ),
+      //   component: <MyGA />,
+      // },
     ],
     [selectedTab]
   );
@@ -116,17 +120,28 @@ export function EmpirePanel() {
   const quickActions = useMemo(
     () => [
       {
-        name: 'Harvest empire',
+        name: 'Harvest Resources',
         icon: <Castle className="w-4 h-4 mr-1 fill-white self-center" />,
         details: <span className="flex"></span>,
         action: () => {
           claimAll();
         },
       },
+      {
+        name: 'Harvest Farms',
+        icon: <Sword className="w-4 h-4 mr-1" />,
+        details: <span className="flex"></span>,
+        action: () => {
+          claimAll();
+        },
+      },
       // {
-      //   name: 'Secondary quick action',
+      //   name: 'Harvest Farms',
       //   icon: <Sword className="w-4 h-4 mr-1" />,
-      //   details: <span className="flex">action details</span>,
+      //   details: <span className="flex"></span>,
+      //   action: () => {
+      //     claimAll();
+      //   },
       // },
     ],
     []
@@ -138,15 +153,15 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="flex px-10">
-      <div className="w-9/12 px-20 bg-gray-1100 pt-20">
-        <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2">
+    <div className="flex px-2">
+      <div className="w-9/12 px-10 bg-gray-1100 pt-10">
+        <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2 border border-yellow-900">
           {quickActions.map((action) => (
             <Button
               key={action.name}
               className="rounded-xl flex-col items-start whitespace-nowrap"
               variant="outline"
-              onClick={() => action.action()}
+              onClick={() => action?.action()}
             >
               {userData?.resourcesClaimable}
               <span className="flex">
@@ -171,11 +186,13 @@ export function EmpirePanel() {
                 </Tabs.List>
               </div>
             </div>
-            <Tabs.Panels>
-              {tabs.map((tab, index) => (
-                <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-              ))}
-            </Tabs.Panels>
+            <div className="border border-yellow-900 rounded">
+              <Tabs.Panels>
+                {tabs.map((tab, index) => (
+                  <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+                ))}
+              </Tabs.Panels>
+            </div>
           </Tabs>
           <SettleRealmsSideBar
             isOpen={isSettleRealmsSideBarOpen}
