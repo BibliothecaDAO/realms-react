@@ -116,6 +116,18 @@ export const RealmsArmy = (props) => {
 
   return (
     <div className="grid grid-cols-12 gap-6">
+      {isOwner && (
+        <div className="col-span-12 md:col-start-1 md:col-end-13">
+          <CardTitle>Goblins</CardTitle>
+          <CardBody>
+            Goblins emit Lords after defeating them. You must use your Attacking
+            Army.
+          </CardBody>
+          <Button variant="primary" onClick={() => claim(realm.realmId)}>
+            Attack Goblins
+          </Button>
+        </div>
+      )}
       {/* <Card className="col-span-12 sm:col-span-6 lg:col-start-1 lg:col-end-13">
         <div className="text-2xl">
           {realm.name} rules a total of {realm.relicsOwned?.length} Realms
@@ -213,7 +225,7 @@ export const RealmsArmy = (props) => {
           </div>
         </Card>
       )}
-      <div className="col-span-12 ">
+      {/* <div className="col-span-12 ">
         <div className="flex justify-between w-full">
           <CardTitle>Ser, your Armies</CardTitle>
         </div>
@@ -236,19 +248,8 @@ export const RealmsArmy = (props) => {
             );
           })}
         </div>
-      </div>
-      {isOwner && (
-        <div className="col-span-12 md:col-start-1 md:col-end-13">
-          <CardTitle>Goblins</CardTitle>
-          <CardBody>
-            Goblins emit Lords after defeating them. You must use your Attacking
-            Army.
-          </CardBody>
-          <Button variant="primary" onClick={() => claim(realm.realmId)}>
-            Attack Goblins
-          </Button>
-        </div>
-      )}
+      </div> */}
+
       <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
         <SidebarHeader onClose={() => setIsRaiding(false)} />
         <CombatSideBar defendingRealm={realm} />

@@ -29,7 +29,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Sword className="self-center w-4 h-4 fill-current mr-2" />
+            <Sword className="self-center w-4 h-4 mr-2 fill-current" />
             Military
           </span>
         ),
@@ -40,7 +40,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Shield className="self-center w-4 h-4 fill-current mr-2" /> Defence
+            <Shield className="self-center w-4 h-4 mr-2 fill-current" /> Defence
           </span>
         ),
         component: (
@@ -54,7 +54,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Sickle className="self-center w-4 h-4 fill-current mr-2" />{' '}
+            <Sickle className="self-center w-4 h-4 mr-2 fill-current" />{' '}
             Production
           </span>
         ),
@@ -63,7 +63,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Sickle className="self-center w-4 h-4 fill-current mr-2" /> Farming
+            <Sickle className="self-center w-4 h-4 mr-2 fill-current" /> Farming
           </span>
         ),
         component: (

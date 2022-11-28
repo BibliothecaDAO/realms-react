@@ -121,7 +121,7 @@ export function EmpirePanel() {
     () => [
       {
         name: 'Harvest Resources',
-        icon: <Castle className="w-4 h-4 mr-1 fill-white self-center" />,
+        icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
         action: () => {
           claimAll();
@@ -154,14 +154,14 @@ export function EmpirePanel() {
 
   return (
     <div className="flex px-2">
-      <div className="w-9/12 px-10 bg-gray-1100 pt-10">
-        <div className="flex w-full bg-black rounded-2xl mb-4 p-2 gap-2 border border-yellow-900">
+      <div className="w-9/12 px-10 pt-10 bg-gray-1100">
+        <div className="flex w-full gap-2 p-2 mb-4 bg-black border border-yellow-900 rounded-2xl">
           {quickActions.map((action) => (
             <Button
               key={action.name}
-              className="rounded-xl flex-col items-start whitespace-nowrap"
+              className="flex-col items-start rounded-xl whitespace-nowrap"
               variant="outline"
-              onClick={() => action?.action()}
+              onClick={() => action.action()}
             >
               {userData?.resourcesClaimable}
               <span className="flex">
@@ -178,7 +178,7 @@ export function EmpirePanel() {
             variant="default"
           >
             <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] sticky top-10 z-40">
-              <div className="bg-gray-1100 overflow-x-auto">
+              <div className="overflow-x-auto bg-gray-1100">
                 <Tabs.List>
                   {tabs.map((tab, index) => (
                     <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
@@ -203,7 +203,7 @@ export function EmpirePanel() {
       <div className="w-3/12">
         <div className="sticky top-10">
           <img
-            className="object-cover bg-white rounded h-screen"
+            className="object-cover h-screen bg-white rounded"
             src={'/realm-troops/vizir.png'}
             alt="Vizir"
           />

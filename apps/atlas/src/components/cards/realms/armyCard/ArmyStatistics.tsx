@@ -13,9 +13,10 @@ import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import { useMemo, useState } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
-import { useArmy } from '@/hooks/settling/useArmy';
+import { nameArray, useArmy } from '@/hooks/settling/useArmy';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { fetchRealmNameById, getTravelTime } from '@/shared/Getters/Realm';
+import { BattalionWithImage } from '@/shared/squad/BattalionWithImage';
 import type { ArmyStatistics as Stats } from '@/types/index';
 
 export interface ArmyAndOrder extends Army {
@@ -27,20 +28,28 @@ type Prop = {
 };
 
 export const ArmyStatistics: React.FC<Prop> = (props) => {
-  const { play } = useUiSounds(soundSelector.pageTurn);
   const army = props.army;
-  const { getArmyStats } = useArmy();
+  const { battalions, getArmyStats } = useArmy();
   const armyStats = getArmyStats(props.army);
 
   return (
     <div>
-      {/* <div className="relative h-36">
-        <ParentSize>
-          {({ width, height }) => (
-            <RadarMap armyOne={armyStats} height={height} width={width} />
-          )}
-        </ParentSize>
-      </div> */}
+      <div className="grid grid-cols-4 gap-2 p-2 ">
+        {battalions?.map((battalion, index) => {
+          return (
+            <>
+              {army && army[nameArray[index] + 'Qty'] > 0 && (
+                <BattalionWithImage
+                  key={index}
+                  {...battalion}
+                  quantity={army ? army[nameArray[index] + 'Qty'] : ''}
+                  health={army ? army[nameArray[index] + 'Health'] : ''}
+                />
+              )}
+            </>
+          );
+        })}
+      </div>
       <div className="w-full mt-3">
         <div className="flex justify-between">
           <h4 className="">Statistics</h4>

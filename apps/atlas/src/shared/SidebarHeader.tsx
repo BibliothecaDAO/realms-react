@@ -8,7 +8,7 @@ type Props = {
 
 const SidebarHeader = (props: Props) => {
   return (
-    <div className="flex">
+    <div className="flex p-3">
       {props.titleComponent ?? <h2> {props.title}</h2>}
 
       <div className="mx-auto my-3">

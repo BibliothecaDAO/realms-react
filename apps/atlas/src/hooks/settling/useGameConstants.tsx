@@ -23,7 +23,6 @@ export const useGameConstants = () => {
   };
 
   const checkUserHasAvailableResources = ({ cost, id }) => {
-    console.log(cost);
     const co = BigNumber.from(parseInt(cost).toFixed().toString());
 
     const baseBn = BigNumber.from('1000000000000000000').mul(co);

@@ -93,52 +93,17 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   };
 
   return (
-    <Card key={army.armyId} className=" flex-row">
+    <div
+      key={army.armyId}
+      className="flex-row p-3 border border-yellow-900 rounded"
+    >
       <div className="">
         <div>
-          <div className="">
-            <h3>{fetchRealmNameById(army.realmId)}</h3>
-            <h5 className="flex">
-              <OrderIcon
-                className="mr-3 self-center"
-                size="xs"
-                order={army.orderType ? army.orderType.toLowerCase() : ''}
-              />{' '}
-              {army.armyId == 0 ? '' : army.realmId} | Army{' '}
-              {army.armyId == 0 ? 'Defending' : army.armyId}{' '}
-            </h5>
-          </div>
-          {hasArrived && (
-            <div className="flex text-sm font-semibold rounded ">
-              <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 gap-2 mt-4">
-            {isHome && isAtLocation && isOwnRealm && (
-              <Button
-                variant="primary"
-                size="xs"
-                onClick={() => props.onBuildArmy && props.onBuildArmy()}
-              >
-                Recruit Army
-              </Button>
-            )}
-            {props.onTravel && !isAtLocation && isOwnRealm && (
-              <Button
-                variant="primary"
-                size="xs"
-                onClick={() => props.onTravel && props.onTravel()}
-              >
-                Travel {'->'} {(travelInformation.time / 60 / 60).toFixed(0)}{' '}
-                hrs
-              </Button>
-            )}
-          </div>
-        </div>
-        <div className="h-full w-full">
-          <div className="flex justify-between mb-2">
-            <div className="flex w-full">
+          <div className="flex justify-between">
+            <h3>
+              {fetchRealmNameById(army.realmId)} | {army.realmId}
+            </h3>
+            <div>
               {army.armyId != 0 &&
                 (isAtLocation ? (
                   <h5>{hasArrived ? 'on the way' : 'here'}</h5>
@@ -162,7 +127,45 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                   </Button>
                 ))}
             </div>
+            <h5 className="flex">
+              <OrderIcon
+                className="self-center mr-3"
+                size="xs"
+                order={army.orderType ? army.orderType.toLowerCase() : ''}
+              />{' '}
+              {army.armyId == 0 ? 'Defending Army' : 'Army ' + army.armyId}
+            </h5>
           </div>
+          {hasArrived && (
+            <div className="flex text-sm font-semibold rounded ">
+              <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2 my-2">
+            {isHome && isAtLocation && isOwnRealm && (
+              <Button
+                variant="outline"
+                size="xs"
+                onClick={() => props.onBuildArmy && props.onBuildArmy()}
+              >
+                Build Army
+              </Button>
+            )}
+            {props.onTravel && !isAtLocation && isOwnRealm && (
+              <Button
+                variant="outline"
+                size="xs"
+                onClick={() => props.onTravel && props.onTravel()}
+              >
+                Travel here {'->'}{' '}
+                {(travelInformation.time / 60 / 60).toFixed(0)} hrs
+              </Button>
+            )}
+          </div>
+        </div>
+        <div className="w-full h-full">
+          <div className="flex justify-between mb-2"></div>
           <Tabs
             selectedIndex={selectedTab}
             onChange={(index) => pressedTab(index as number)}
@@ -182,6 +185,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
           </Tabs>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };

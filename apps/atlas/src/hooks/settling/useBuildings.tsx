@@ -13,7 +13,7 @@ import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
-import { getTrait } from '@/shared/Getters/Realm';
+import { fetchRealmNameById, getTrait } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   BuildingFootprint,
@@ -55,7 +55,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     title: ctx.isQueued
       ? `Construct ${metadata.qty} ${buildingIdToString(
           metadata.buildingId
-        )} on Realm ${metadata.realmId}`
+        )} on Realm ${fetchRealmNameById(metadata.realmId)}`
       : 'Constructing Building',
     description: (
       <span>
@@ -63,7 +63,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
           <Image
             height={80}
             width={80}
-            className="object-fill border rounded paper"
+            className="object-fill border border-yellow-900 rounded"
             src={buildingImageById(metadata.buildingId)}
             alt=""
           />

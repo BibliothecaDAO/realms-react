@@ -152,8 +152,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   }, [addedBattalions, props.army]);
 
   return (
-    <div className="grid grid-cols-12 gap-6 pt-4">
-      <hr />
+    <div className="grid grid-cols-12 gap-6 p-4">
       <div className="flex justify-between col-span-12">
         <h2>
           {army?.armyId == 0 ? 'Defending Army' : ' Army ' + army?.armyId}{' '}
@@ -357,9 +356,9 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
           </div>
         </CardBody>
       </Card>
-      <div className="relative col-span-5">
+      {/* <div className="relative col-span-5">
         <RadarMap armyOne={armyStats} height={400} width={400} />
-      </div>
+      </div> */}
       <div className="col-span-5">
         <Button
           onClick={() => {

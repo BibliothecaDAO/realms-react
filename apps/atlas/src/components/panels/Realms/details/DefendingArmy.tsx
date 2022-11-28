@@ -15,6 +15,7 @@ import {
   getUnitImage,
   battalionIdToString,
 } from '@/constants/army';
+import { MAX_BATTALIONS } from '@/constants/buildings';
 import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
@@ -22,6 +23,7 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
 import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
+import { useCurrentQueuedBuildings } from '@/hooks/settling/useCurrentQueuedBuildings';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { CostBlock } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
@@ -31,7 +33,7 @@ import type {
   ResourceCost,
 } from '@/types/index';
 
-type Prop = {
+type Props = {
   army?: Army;
   realm: GetRealmQuery['realm'];
   buildings?: number[];
@@ -44,28 +46,20 @@ type Battalion = {
   battalionQty: number;
 };
 
-const MAX_BATTALIONS = 30;
+export const DefendingArmy = (props: Props) => {
+  const { army, realm, buildings, availableFood } = props;
 
-export const DefendingArmy: React.FC<Prop> = (props) => {
   const { play: buildTroop } = useUiSounds(soundSelector.buildMilitary);
   const { play: summonTroops } = useUiSounds(soundSelector.summonTroops);
-  const txQueue = useCommandList();
-  const [buildingIdsEnqueued, setBuildingIdsEnqueued] = useState<number[]>([]);
-  useEffect(() => {
-    setBuildingIdsEnqueued(
-      txQueue.transactions
-        .filter(
-          (tx) =>
-            tx.contractAddress == ModuleAddr.Building &&
-            tx.entrypoint == Entrypoints.build &&
-            tx.metadata['realmId'] == props.army?.realmId
-        )
-        .map((t) => t.metadata['buildingId'])
-    );
-  }, [txQueue.transactions, props.buildings, props.army?.realmId]);
+
+  const { buildingIdsEnqueued } = useCurrentQueuedBuildings({
+    moduleAddr: ModuleAddr.Building,
+    entryPoint: Entrypoints.build,
+    realmId: realm?.realmId,
+  });
 
   const checkCanBuilt = (id) => {
-    const militaryBuildings = props.buildings ?? [];
+    const militaryBuildings = buildings ?? [];
     return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
       .length > 0
       ? false
@@ -77,42 +71,43 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
   const [totalCost, setTotalCost] = useState<ResourceCost[]>();
 
-  let army = props.realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy;
+  let blankArmy =
+    props.realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy;
 
   defaultArmy.realmId = props.realm.realmId;
   defaultArmy.armyId = 0; // defending Army
 
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
-  const hasFood = props.availableFood && props.availableFood > 0;
+  const hasFood = availableFood && availableFood > 0;
 
   // TODO: move to composable
   if (!hasFood) {
-    army = {
-      arcanistHealth: army.arcanistHealth / 2,
-      arcanistQty: army.arcanistQty,
-      archerHealth: army.archerHealth / 2,
-      archerQty: army.arcanistQty / 2,
-      armyId: army.armyId,
-      armyPacked: army.armyPacked,
-      callSign: army.callSign,
-      destinationRealmId: army.destinationRealmId,
-      heavyCavalryHealth: army.heavyCavalryHealth / 2,
-      heavyCavalryQty: army.heavyCavalryQty,
-      heavyInfantryHealth: army.heavyInfantryHealth / 2,
-      heavyInfantryQty: army.heavyInfantryQty,
-      lastAttacked: army.lastAttacked,
-      level: army.level,
-      lightCavalryHealth: army.lightCavalryHealth / 2,
-      lightCavalryQty: army.lightCavalryQty,
-      lightInfantryHealth: army.lightInfantryHealth / 2,
-      lightInfantryQty: army.lightInfantryQty,
-      longbowHealth: army.longbowHealth / 2,
-      longbowQty: army.longbowQty,
-      mageHealth: army.mageHealth / 2,
-      mageQty: army.mageQty,
-      realmId: army.realmId,
-      xp: army.xp,
+    blankArmy = {
+      arcanistHealth: blankArmy.arcanistHealth / 2,
+      arcanistQty: blankArmy.arcanistQty,
+      archerHealth: blankArmy.archerHealth / 2,
+      archerQty: blankArmy.arcanistQty / 2,
+      armyId: blankArmy.armyId,
+      armyPacked: blankArmy.armyPacked,
+      callSign: blankArmy.callSign,
+      destinationRealmId: blankArmy.destinationRealmId,
+      heavyCavalryHealth: blankArmy.heavyCavalryHealth / 2,
+      heavyCavalryQty: blankArmy.heavyCavalryQty,
+      heavyInfantryHealth: blankArmy.heavyInfantryHealth / 2,
+      heavyInfantryQty: blankArmy.heavyInfantryQty,
+      lastAttacked: blankArmy.lastAttacked,
+      level: blankArmy.level,
+      lightCavalryHealth: blankArmy.lightCavalryHealth / 2,
+      lightCavalryQty: blankArmy.lightCavalryQty,
+      lightInfantryHealth: blankArmy.lightInfantryHealth / 2,
+      lightInfantryQty: blankArmy.lightInfantryQty,
+      longbowHealth: blankArmy.longbowHealth / 2,
+      longbowQty: blankArmy.longbowQty,
+      mageHealth: blankArmy.mageHealth / 2,
+      mageQty: blankArmy.mageQty,
+      realmId: blankArmy.realmId,
+      xp: blankArmy.xp,
     };
   }
 
@@ -158,7 +153,7 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
     return { ...battalionQtys, ...reMapped };
   };
 
-  const armyStats = getArmyStats(props.army);
+  const armyStats = getArmyStats(army);
 
   const sumTotalBattalions = (armyQtys: ArmyBattalionQty) =>
     Object.values(armyQtys).reduce((a, b) => a + b);
@@ -180,11 +175,11 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
             acc[k] = (acc[k] || 0) + v;
             return acc;
           },
-          { ...filterArmytoQtys(props.army) }
+          { ...filterArmytoQtys(army) }
         )
       );
     }
-  }, [addedBattalions, props.army]);
+  }, [addedBattalions, army]);
 
   return (
     <div className="grid grid-cols-12 gap-6 pt-4">
@@ -204,7 +199,7 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
                   ...battalion,
                 })
               }
-              key={army?.realmId + '-' + index}
+              key={blankArmy?.realmId + '-' + index}
             >
               <Battalion
                 {...battalion}
@@ -241,8 +236,8 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
                   );
                   toast('Resources are added to the swap cart');
                 }}
-                quantity={army ? army[nameArray[index] + 'Qty'] : ''}
-                health={army ? army[nameArray[index] + 'Health'] : ''}
+                quantity={blankArmy ? blankArmy[nameArray[index] + 'Qty'] : ''}
+                health={blankArmy ? blankArmy[nameArray[index] + 'Health'] : ''}
                 disabled={checkCanBuilt(battalion.buildingId)}
               />
             </div>
@@ -344,7 +339,7 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
             </div>
           </div>
           <div className="mt-auto">
-            <p className="mb-4 text-xl mt-4">Total Cost</p>
+            <p className="mt-4 mb-4 text-xl">Total Cost</p>
             <div className="flex flex-wrap">
               {totalCost?.length &&
                 totalCost.map((b, i) => {
@@ -388,8 +383,8 @@ export const DefendingArmy: React.FC<Prop> = (props) => {
               onClick={() => {
                 summonTroops();
                 build(
-                  army?.realmId,
-                  army?.armyId,
+                  blankArmy?.realmId,
+                  blankArmy?.armyId,
                   addedBattalions.map((a) => a.battalionId),
                   addedBattalions.map((a) => a.battalionQty),
                   totalCost?.filter((b) => b.amount > 0)

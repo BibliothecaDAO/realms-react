@@ -89,7 +89,7 @@ export const MilitaryBuildings = (props: Prop) => {
                             key={i}
                             height={90}
                             width={90}
-                            className="self-center object-fill bg-white rounded border border-yellow-900 shadow-inner"
+                            className="self-center object-fill bg-white border border-yellow-900 rounded shadow-inner"
                             src={getUnitImage(c.id)}
                             alt=""
                           />
@@ -113,23 +113,6 @@ export const MilitaryBuildings = (props: Prop) => {
                         })}
                     </div>
                     <div className="flex w-full mt-1 space-x-2">
-                      <Button
-                        onClick={() => {
-                          batchAddResources(
-                            a.cost.map((r) => ({
-                              resourceId: r.resourceId,
-                              resourceName: r.resourceName,
-                              amount: r.amount,
-                            }))
-                          );
-                          toast('Resources are added to the swap cart');
-                        }}
-                        size="xs"
-                        variant="outline"
-                        className="ml-auto"
-                      >
-                        buy shortfall from market
-                      </Button>
                       <Button
                         onClick={() =>
                           build({

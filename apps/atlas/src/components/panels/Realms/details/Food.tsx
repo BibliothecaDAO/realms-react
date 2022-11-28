@@ -24,9 +24,9 @@ import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
-import useFood from '@/hooks/settling/useFood';
+import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
+import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
-import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
 import { CostBlock, getPopulation } from '@/shared/Getters/Realm';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
@@ -52,25 +52,25 @@ interface ResourceAndFoodInput {
   wheatConversion: string;
 }
 
-export const RealmsFood = (props) => {
-  const realm = props.realm;
+export const RealmsFood = (props: Prop) => {
+  const { realm, buildings, realmFoodDetails, availableFood, loading } = props;
 
   const { balance } = useResourcesContext();
+  const { getBuildingCostById } = useGameConstants();
+  const { create, harvest, convert } = useFood(realm as Realm);
+  const isOwner = useIsOwner(realm?.settledOwner);
 
   const getFishBalance = balance.find((a) => a.resourceId === FISH_ID)?.amount;
   const getWheatBalance = balance.find(
     (a) => a.resourceId === WHEAT_ID
   )?.amount;
 
-  const { create, harvest, convert } = useFood(realm as Realm);
-
-  const isOwner = useIsOwner(realm?.settledOwner);
-
-  const { getBuildingCostById } = useGameConstants();
-
-  const txQueue = useCommandList();
-
-  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
+  const { enqueuedHarvestTx: harvestFarmEnqueuedHarvestTx } =
+    useCurrentQueuedTxs({
+      moduleAddr: ModuleAddr.Food,
+      entryPoint: Entrypoints.harvest,
+      realmId: realm?.realmId,
+    });
 
   const farmCapacity = getTrait(realm, 'River');
   const fishingVillageCapacity = getTrait(realm, 'Harbor');
@@ -81,24 +81,6 @@ export const RealmsFood = (props) => {
     fishConversion: '1000',
     wheatConversion: '1000',
   });
-
-  useEffect(() => {
-    setEnqueuedHarvestTx(
-      !!txQueue.transactions.find(
-        (t: any) =>
-          t.contractAddress == ModuleAddr.ResourceGame &&
-          t.entrypoint == Entrypoints.claim &&
-          t.calldata &&
-          BigNumber.from(t.calldata[0] as string).eq(
-            BigNumber.from(realm?.realmId)
-          )
-      )
-    );
-  }, [txQueue.transactions, realm?.realmId]);
-
-  if (!realm) {
-    return null;
-  }
 
   const farmCosts = getBuildingCostById(RealmBuildingId.Farm);
   const fishingVillageCosts = getBuildingCostById(
@@ -132,12 +114,12 @@ export const RealmsFood = (props) => {
             </div>
             {isOwner && (
               <div className="p-4">
-                <div className=" w-full ">
+                <div className="w-full ">
                   <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                    <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1100 justify-between">
+                    <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
                       Storehouse
                       <div className="flex">
-                        <div className="text-3xl self-center mr-3">
+                        <div className="self-center mr-3 text-3xl">
                           {props.availableFood?.toLocaleString()}
                         </div>
                         {props.availableFood && props?.availableFood > 0 ? (
@@ -240,7 +222,7 @@ export const RealmsFood = (props) => {
         </Card>
         {isOwner && (
           <Card className="w-full">
-            <div className=" flex">
+            <div className="flex ">
               <Image
                 width={200}
                 height={200}
@@ -250,10 +232,10 @@ export const RealmsFood = (props) => {
               />
               <div className="w-full p-2">
                 <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                  <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1100 justify-between">
+                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
                     Farming land {props.realmFoodDetails.farmsBuilt} /
                     {farmCapacity}
-                    <span className="text-gray-700 text-sm self-center">
+                    <span className="self-center text-sm text-gray-700">
                       {props.realmFoodDetails.farmsBuilt} Farms producing{' '}
                       {(
                         BASE_FOOD_PRODUCTION * props.realmFoodDetails.farmsBuilt
@@ -266,7 +248,7 @@ export const RealmsFood = (props) => {
                 {props.realmFoodDetails.farmHarvestsLeft -
                   props.realmFoodDetails.decayedFarms >
                   0 && (
-                  <div className=" px-4">
+                  <div className="px-4 ">
                     <CountdownTimer
                       date={(
                         (HARVEST_LENGTH -
@@ -280,7 +262,7 @@ export const RealmsFood = (props) => {
                 )}
 
                 <div className="flex justify-between w-full p-3">
-                  <div className=" w-1/2">
+                  <div className="w-1/2 ">
                     <div className="flex mb-2">
                       <div className="w-1/2">
                         <h5>To Harvest </h5>
@@ -311,7 +293,10 @@ export const RealmsFood = (props) => {
                           );
                         }}
                         size="xs"
-                        disabled={props.realmFoodDetails.totalFarmHarvest === 0}
+                        disabled={
+                          props.realmFoodDetails.totalFarmHarvest === 0 ||
+                          harvestFarmEnqueuedHarvestTx
+                        }
                         variant="primary"
                       >
                         {(
@@ -330,12 +315,11 @@ export const RealmsFood = (props) => {
                       })}
                     </div>
                   </div>
-                  <div className="flex flex-wrap justify-between p-2 w-1/2">
+                  <div className="flex flex-wrap justify-between w-1/2 p-2">
                     {isOwner && (
                       <div className="flex flex-wrap mt-2">
                         <div className="flex w-full space-x-2">
                           <Button
-                            disabled={enqueuedHarvestTx}
                             onClick={() => {
                               create(
                                 realm?.realmId,
@@ -402,10 +386,10 @@ export const RealmsFood = (props) => {
               />
               <div className="w-full p-2">
                 <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                  <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1100 justify-between">
+                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
                     Fishing villages {props.realmFoodDetails.villagesBuilt} /
                     {fishingVillageCapacity}
-                    <span className="text-gray-700 text-sm self-center">
+                    <span className="self-center text-sm text-gray-700">
                       {realm.name} has {props.realmFoodDetails.villagesBuilt}{' '}
                       Fishing Villages catching{' '}
                       {(
@@ -420,7 +404,7 @@ export const RealmsFood = (props) => {
                 {props.realmFoodDetails.fishingVillagesHarvestsLeft -
                   props.realmFoodDetails.decayedVillages >
                   0 && (
-                  <div className="text-xl px-4">
+                  <div className="px-4 text-xl">
                     <CountdownTimer
                       date={(
                         (HARVEST_LENGTH -

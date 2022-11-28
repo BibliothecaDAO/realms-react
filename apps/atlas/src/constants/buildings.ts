@@ -165,6 +165,8 @@ export const NO_DEFENDING_ARMY_LOSS = 5;
 // number of potentially random events
 export const NUMBER_OF_RANDOM_EVENTS = 9;
 
+export const MAX_BATTALIONS = 30;
+
 export enum RealmBuildingIntegrity {
   House = 3 * DAY,
   StoreHouse = 2000,

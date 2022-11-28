@@ -9,6 +9,7 @@ import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
+import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,
@@ -58,7 +59,9 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buildArmy]: ({ metadata }, { isQueued }) => ({
-    title: `Summon Army ${metadata.armyId} on Realm ${metadata.realmId}`,
+    title: `Summon Army ${metadata.armyId} on Realm ${fetchRealmNameById(
+      metadata.realmId
+    )}`,
     description: (
       <span>
         {/* Building Army {metadata.armyId} on Realm {metadata.realmId} */}
@@ -68,7 +71,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
               <Image
                 height={80}
                 width={80}
-                className="object-fill border rounded"
+                className="object-fill border border-yellow-900 rounded"
                 src={getUnitImage(a) || ''}
                 alt=""
               />
