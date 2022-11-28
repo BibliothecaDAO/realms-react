@@ -95,6 +95,10 @@ const ResourcesContext = createContext<{
   battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
   historicPrices: HistoricPrices | undefined;
+  isLordsApproved: boolean;
+  setIsLordsApproved: (bool) => void;
+  isResourcesApproved: boolean;
+  setIsResourcesApproved: (bool) => void;
 }>(null!);
 
 interface ResourceProviderProps {
@@ -117,6 +121,10 @@ function useResources() {
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
+
+  const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
+  const [isResourcesApproved, setIsResourcesApproved] =
+    useState<boolean>(false);
 
   // TODO: Move costs into own provider...
   const [buildingCosts, setBuildingCosts] =
@@ -414,6 +422,10 @@ function useResources() {
     battalionCosts,
     batchAddResources,
     historicPrices,
+    isLordsApproved,
+    setIsLordsApproved,
+    isResourcesApproved,
+    setIsResourcesApproved,
   };
 }
 
