@@ -16,6 +16,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import {
   fetchRealmNameById,
   getDays,
+  hasOwnRelic,
   vaultResources,
 } from '@/shared/Getters/Realm';
 import { Battalion } from '@/shared/squad/Battalion';
@@ -89,10 +90,10 @@ export const CombatSideBar: React.FC<Prop> = ({
   const cachedVaultDaysAccrued = getDays(defendingRealm?.lastVaultTime);
 
   return (
-    <div className="z-50 p-10">
-      <div>
+    <div className="z-50 bg-realmCombatBackground bg-cover p-16 bg-center">
+      {/* <div>
         {!raidButtonEnabled && selectedArmy && (
-          <div className="p-2 my-2 text-xl text-orange-200 rounded bg-red-200/40 font-display">
+          <div className="p-8 text-xl text-white rounded bg-red-900">
             {isSameOrder && (
               <div>
                 Ser, {fetchRealmNameById(selectedArmy.realmId)} is of the same
@@ -102,68 +103,28 @@ export const CombatSideBar: React.FC<Prop> = ({
             )}
           </div>
         )}
-      </div>
+      </div> */}
       {!txSubmitted || combatError ? (
         <div className="grid w-full md:grid-cols-3 ">
           <div>
-            <div className="">
-              <div className="flex justify-center w-32 h-32 mx-auto bg-white border-4 border-yellow-600 border-double rounded-full shadow-xl shadow-rage">
-                <OrderIcon
-                  containerClassName="inline-block mr-4 self-center mx-auto"
-                  size="lg"
-                  order={selectedArmy?.orderType || ''}
-                />
-              </div>
-              <h1 className="flex justify-center w-full py-4 text-center border-4 border-yellow-600 border-double rounded">
-                {fetchRealmNameById(selectedArmy?.realmId)}
-              </h1>
-              <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-600 border-double">
-                {battalions?.map((battalion, index) => {
-                  return (
-                    <BattalionWithImage
-                      key={index}
-                      {...battalion}
-                      quantity={
-                        selectedArmy
-                          ? selectedArmy[nameArray[index] + 'Qty']
-                          : ''
-                      }
-                      health={
-                        selectedArmy
-                          ? selectedArmy[nameArray[index] + 'Health']
-                          : ''
-                      }
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <h3 className="mt-20">Armies at this Realm</h3>
-            <div className="grid lg:grid-cols-1">
-              {defendingRealm &&
-                attackingRealmsAtLocation?.map((army, index) => {
-                  return (
-                    <button onClick={() => setSelectedArmy(army)} key={index}>
-                      <ArmyCard
-                        army={army}
-                        selectedRealm={defendingRealm?.realmId}
-                        onTravel={() =>
-                          travel(
-                            army.armyId,
-                            army.realmId,
-                            defendingRealm.realmId
-                          )
-                        }
-                      />
-                    </button>
-                  );
-                })}
-            </div>
+            <ArmyDisplayContainer
+              order={selectedArmy?.orderType}
+              realmId={selectedArmy?.realmId}
+              battalions={battalions}
+              army={selectedArmy}
+            />
           </div>
           <div className="self-start w-full lg:px-24">
             {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
-
-            <div className="p-4 text-center border-4 border-yellow-600 border-double rounded">
+            <div className=" text-center border-4 border-yellow-600 border-double rounded bg-black">
+              {hasOwnRelic(defendingRealm) ? (
+                <img src="/mj_relic.png" alt="" />
+              ) : (
+                ''
+              )}
+              <h5 className="my-3">
+                {hasOwnRelic(defendingRealm) ? 'Relic vulnerable' : ''}
+              </h5>
               <h2 className="text-center">
                 {vaultResources(cachedVaultDaysAccrued)}x
               </h2>
@@ -199,46 +160,42 @@ export const CombatSideBar: React.FC<Prop> = ({
               disabled={!raidButtonEnabled}
               variant="primary"
               size="lg"
-              className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double font-lords"
+              className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double"
             >
               Raid Vault
             </Button>
           </div>
-
-          <div className="">
-            <div className="flex justify-center w-32 h-32 mx-auto bg-white border-4 border-yellow-600 border-double rounded-full shadow-xl shadow-yellow-200">
-              <OrderIcon
-                containerClassName="inline-block mr-4 self-center mx-auto"
-                size="lg"
-                order={defendingRealm?.orderType || ''}
-              />
-            </div>
-            <h1 className="flex justify-center w-full py-4 text-center border-4 border-yellow-600 border-double rounded">
-              {defendingRealm?.name}
-            </h1>
-            <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-600 border-double">
-              {battalions?.map((battalion, index) => {
-                return (
-                  <BattalionWithImage
-                    key={index}
-                    {...battalion}
-                    quantity={
-                      defendingRealmArmy
-                        ? defendingRealmArmy[nameArray[index] + 'Qty']
-                        : ''
-                    }
-                    health={
-                      defendingRealmArmy
-                        ? defendingRealmArmy[nameArray[index] + 'Health']
-                        : ''
-                    }
-                  />
-                );
-              })}
-            </div>
-          </div>
+          <ArmyDisplayContainer
+            order={defendingRealm?.orderType}
+            realmId={defendingRealm?.realmId}
+            battalions={battalions}
+            army={defendingRealmArmy}
+          />
           <div>
             {/* combatError && <p className="mt-3 text-red-400">combatError</p> */}
+          </div>
+          <div className="col-span-full p-6 bg-black mt-20 rounded">
+            <h3>Armies at this Realm</h3>
+            <div className="grid lg:grid-cols-3">
+              {defendingRealm &&
+                attackingRealmsAtLocation?.map((army, index) => {
+                  return (
+                    <button onClick={() => setSelectedArmy(army)} key={index}>
+                      <ArmyCard
+                        army={army}
+                        selectedRealm={defendingRealm?.realmId}
+                        onTravel={() =>
+                          travel(
+                            army.armyId,
+                            army.realmId,
+                            defendingRealm.realmId
+                          )
+                        }
+                      />
+                    </button>
+                  );
+                })}
+            </div>
           </div>
         </div>
       ) : (
@@ -250,6 +207,41 @@ export const CombatSideBar: React.FC<Prop> = ({
           />
         </div>
       )}
+    </div>
+  );
+};
+
+export const ArmyDisplayContainer = ({ order, realmId, battalions, army }) => {
+  return (
+    <div>
+      <div className="">
+        <div className="flex justify-center w-16 h-16 mx-auto bg-black border-4 border-yellow-900 border-double rounded-t-2xl shadow-xl">
+          <OrderIcon
+            containerClassName="inline-block mr-4 self-center mx-auto"
+            size="sm"
+            order={order || ''}
+          />
+        </div>
+        <div className="text-3xl bg-gray-1000 flex justify-center w-full py-4 text-center border-4 border-yellow-900 border-double rounded-t-2xl">
+          {fetchRealmNameById(realmId)}
+        </div>
+        <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-900 border-double bg-gray-1000 rounded-b-2xl">
+          {battalions?.map((battalion, index) => {
+            return (
+              <>
+                {army && army[nameArray[index] + 'Qty'] > 0 && (
+                  <BattalionWithImage
+                    key={index}
+                    {...battalion}
+                    quantity={army ? army[nameArray[index] + 'Qty'] : ''}
+                    health={army ? army[nameArray[index] + 'Health'] : ''}
+                  />
+                )}
+              </>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

@@ -42,7 +42,7 @@ interface BuildQuantity {
   mageTower: string;
 }
 
-const RealmsArmy: React.FC<Prop> = (props) => {
+export const RealmsArmy = (props) => {
   const router = useRouter();
 
   const { findRealmsAttackingArmies } = useArmy();
@@ -276,5 +276,3 @@ const RealmsArmy: React.FC<Prop> = (props) => {
     </div>
   );
 };
-
-export default RealmsArmy;

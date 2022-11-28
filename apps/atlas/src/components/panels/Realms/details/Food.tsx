@@ -52,7 +52,7 @@ interface ResourceAndFoodInput {
   wheatConversion: string;
 }
 
-const RealmsFood: React.FC<Prop> = (props) => {
+export const RealmsFood = (props) => {
   const realm = props.realm;
 
   const { balance } = useResourcesContext();
@@ -549,5 +549,3 @@ const RealmsFood: React.FC<Prop> = (props) => {
     </div>
   );
 };
-
-export default RealmsFood;

@@ -42,7 +42,7 @@ interface WorkHutInput {
   workHutsToBuild: string;
 }
 
-const WorkHuts: React.FC<Prop> = (props) => {
+export const WorkHuts = (props) => {
   const realm = props.realm;
 
   const isOwner = useIsOwner(realm?.settledOwner);
@@ -201,5 +201,3 @@ const WorkHuts: React.FC<Prop> = (props) => {
     </Card>
   );
 };
-
-export default WorkHuts;

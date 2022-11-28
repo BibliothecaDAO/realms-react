@@ -69,41 +69,41 @@ function MyApp({ Component, pageProps }: AppProps) {
     []
   );
   return (
-    <SplashScreen>
-      <ApolloProvider client={apolloClient}>
-        <BreakpointProvider queries={queries}>
-          <ModalProvider>
-            <WagmiConfig client={wagmiClient}>
-              <ConnectKitProvider theme="midnight">
-                <StarknetConfig connectors={connectors} autoConnect>
-                  {/* <QueryClientProvider client={queryClient}> */}
-                  <CommandListProvider>
-                    <ResourceProvider>
-                      <AtlasProvider>
-                        <UIProvider>
+    <ApolloProvider client={apolloClient}>
+      <BreakpointProvider queries={queries}>
+        <ModalProvider>
+          <WagmiConfig client={wagmiClient}>
+            <ConnectKitProvider theme="midnight">
+              <StarknetConfig connectors={connectors} autoConnect>
+                {/* <QueryClientProvider client={queryClient}> */}
+                <CommandListProvider>
+                  <ResourceProvider>
+                    <AtlasProvider>
+                      <UIProvider>
+                        <SplashScreen>
                           <DndProvider backend={HTML5Backend}>
                             <Component {...pageProps} />
                             <Modals />
                           </DndProvider>
-                        </UIProvider>
-                      </AtlasProvider>
-                    </ResourceProvider>
-                  </CommandListProvider>
-                  {/* <PageTransition
+                        </SplashScreen>
+                      </UIProvider>
+                    </AtlasProvider>
+                  </ResourceProvider>
+                </CommandListProvider>
+                {/* <PageTransition
                 Component={Component}
                 pageProps={pageProps}
               ></PageTransition> */}
-                  {/* <ReactQueryDevtools
+                {/* <ReactQueryDevtools
                   initialIsOpen={false}
                   position="bottom-right"
                 />
                 </QueryClientProvider> */}
-                </StarknetConfig>
-              </ConnectKitProvider>
-            </WagmiConfig>{' '}
-          </ModalProvider>
-        </BreakpointProvider>
-      </ApolloProvider>
+              </StarknetConfig>
+            </ConnectKitProvider>
+          </WagmiConfig>{' '}
+        </ModalProvider>
+      </BreakpointProvider>
       <Toaster
         gutter={12}
         toastOptions={{
@@ -124,7 +124,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ToastBar>
         )}
       </Toaster>
-    </SplashScreen>
+    </ApolloProvider>
   );
 }
 

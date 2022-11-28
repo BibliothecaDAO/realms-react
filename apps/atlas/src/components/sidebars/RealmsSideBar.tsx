@@ -30,12 +30,6 @@ function RealmsQuickView({
   realmId: string;
   onClose?: () => void;
 }) {
-  const { data, loading } = useGetRealmQuery({
-    variables: {
-      id: parseInt(realmId ?? '0'),
-    },
-  });
-
   return (
     <BaseSideBarPanel onClose={onClose}>
       {/* {data && data.realm && (

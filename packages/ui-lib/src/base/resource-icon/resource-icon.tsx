@@ -101,7 +101,7 @@ export const ResourceIcon = (props: Props) => {
       </span>
 
       {props.label && (
-        <span className="self-center ml-4 text-xl tracking-widest uppercase font-display">
+        <span className="self-center ml-4">
           {Components[props.resource.replace(' ', '').replace("'", '')]?.name}
         </span>
       )}

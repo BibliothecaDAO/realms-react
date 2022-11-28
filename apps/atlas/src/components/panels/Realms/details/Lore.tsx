@@ -5,13 +5,7 @@ import { LoreEntitiesOverview } from '@/components/tables/LoreEntitiesOverview';
 import type { GetRealmQuery, LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesQuery } from '@/generated/graphql';
 
-type Prop = {
-  realm?: GetRealmQuery;
-  realmId: number;
-  realmName: string;
-};
-
-export const RealmLore: React.FC<Prop> = ({ realm, realmId, realmName }) => {
+export const RealmLore = ({ realm, realmId, realmName }) => {
   const limit = 20;
   const [page, setPage] = useState(1);
   const previousPage = () => setPage(page - 1);

@@ -8,10 +8,10 @@ type Props = {
 
 const SidebarHeader = (props: Props) => {
   return (
-    <div className="flex mb-2">
+    <div className="flex">
       {props.titleComponent ?? <h2> {props.title}</h2>}
 
-      <div className="mx-auto">
+      <div className="mx-auto my-3">
         <Button variant="outline" size="xs" onClick={props.onClose}>
           X
         </Button>

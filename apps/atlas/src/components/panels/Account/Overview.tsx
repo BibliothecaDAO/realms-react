@@ -1,21 +1,10 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardStats,
-} from '@bibliotheca-dao/ui-lib';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
-import { formatEther } from '@ethersproject/units';
-import { animated, useSpring } from '@react-spring/web';
+import { CardBody } from '@bibliotheca-dao/ui-lib';
 import {
   useAccount,
   useStarknetExecute,
   useTransactionManager,
 } from '@starknet-react/core';
 
-import Image from 'next/image';
-import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useCommandList } from '@/context/CommandListContext';
 import { useResourcesContext } from '@/context/ResourcesContext';
@@ -31,7 +20,6 @@ import {
 } from '@/shared/Dashboard/EventMappings';
 import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { getAccountHex } from '@/shared/Getters/Realm';
-import { shortenAddressWidth } from '@/util/formatters';
 import { MyRealms } from './MyRealms';
 
 type Prop = {
@@ -184,7 +172,7 @@ export function AccountOverview(props: Prop) {
             </div>
           </div>
 
-          <CardBody className="border border-yellow-900 h-96 overflow-y-auto">
+          <CardBody className="border border-yellow-900 h-screen overflow-y-auto">
             {events.map((a, index) => {
               return (
                 <HistoryCard

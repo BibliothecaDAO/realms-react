@@ -104,10 +104,7 @@ export function MyActions(props: Prop) {
           <CardBody>
             {userData.resourcesAcrossEmpire.map((a, i) => {
               return (
-                <div
-                  key={i}
-                  className="flex justify-between my-1 text-xl font-semibold tracking-widest uppercase font-display"
-                >
+                <div key={i} className="flex justify-between my-1">
                   <div className="flex">
                     <ResourceIcon
                       size="sm"
@@ -133,7 +130,7 @@ export function MyActions(props: Prop) {
           </Button>
         </Card>
 
-        <Card className="col-span-12 sm:col-start-1 sm:col-end-4">
+        <Card className="col-span-12 sm:col-start-6 sm:col-end-11">
           <CardTitle>Quick Actions</CardTitle>
 
           <CardBody>
@@ -170,7 +167,7 @@ export function MyActions(props: Prop) {
             <hr className="my-2" />
             <Button
               variant="primary"
-              size="xs"
+              size="lg"
               className="mb-2"
               onClick={async () => {
                 await txQueue.add(
@@ -181,7 +178,7 @@ export function MyActions(props: Prop) {
             >
               2. Approve All game Contracts
             </Button>
-            <Button variant="primary" size="xs" onClick={props.onSettleRealms}>
+            <Button variant="primary" size="lg" onClick={props.onSettleRealms}>
               3. Settle Realms
             </Button>
 
@@ -196,7 +193,7 @@ export function MyActions(props: Prop) {
                   })
                 }
               >
-                burn ALl resources!
+                burn all resources!
               </Button>
             </div>
           </CardBody>
