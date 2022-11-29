@@ -60,7 +60,7 @@ const NetworkConnectButton = () => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute right-0 w-64 p-6 my-2 rounded-md shadow-xl z-100 bg-gray-1000">
+        <Popover.Panel className="absolute right-0 w-64 p-6 my-2 rounded-md shadow-xl z-100 bg-gray-1100">
           <>
             <h3>Game Networks</h3>
             <hr />

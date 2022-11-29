@@ -37,15 +37,12 @@ export function EmpirePanel() {
     ],
   };
   const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
-  const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
 
   function onSettleRealmsClick() {
     setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
   }
 
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const { starknetId } = useStarkNetId(address || '');
 
   const tabs = useMemo(
     () => [
@@ -67,15 +64,15 @@ export function EmpirePanel() {
         ),
         component: <MyActions onSettleRealms={onSettleRealmsClick} />,
       },
-      {
-        label: (
-          <div className="flex whitespace-nowrap">
-            <Castle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-            <div className="hidden md:block">My Realms</div>
-          </div>
-        ),
-        component: <MyRealms />,
-      },
+      // {
+      //   label: (
+      //     <div className="flex whitespace-nowrap">
+      //       <Castle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+      //       <div className="hidden md:block">My Realms</div>
+      //     </div>
+      //   ),
+      //   component: <MyRealms />,
+      // },
       {
         label: (
           <div className="flex whitespace-nowrap">
@@ -85,15 +82,15 @@ export function EmpirePanel() {
         ),
         component: <MyArmies />,
       },
-      {
-        label: (
-          <div className="flex whitespace-nowrap">
-            <Danger className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-            <div className="hidden md:block">My Crypts</div>
-          </div>
-        ),
-        component: <MyCrypts />,
-      },
+      // {
+      //   label: (
+      //     <div className="flex whitespace-nowrap">
+      //       <Danger className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+      //       <div className="hidden md:block">My Crypts</div>
+      //     </div>
+      //   ),
+      //   component: <MyCrypts />,
+      // },
       // {
       //   label: (
       //     <div className="flex whitespace-nowrap">
@@ -115,7 +112,7 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { claimAll, userData, burnAll } = useUsersRealms();
+  const { claimAll, userData } = useUsersRealms();
 
   const quickActions = useMemo(
     () => [
@@ -123,28 +120,18 @@ export function EmpirePanel() {
         name: 'Harvest Resources',
         icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => {
-          claimAll();
-        },
+        action: () => claimAll(),
       },
       {
         name: 'Harvest Farms',
-        icon: <Sword className="w-4 h-4 mr-1" />,
+        icon: <Sword className="self-center w-4 h-4 mr-1" />,
         details: <span className="flex"></span>,
         action: () => {
           claimAll();
         },
       },
-      // {
-      //   name: 'Harvest Farms',
-      //   icon: <Sword className="w-4 h-4 mr-1" />,
-      //   details: <span className="flex"></span>,
-      //   action: () => {
-      //     claimAll();
-      //   },
-      // },
     ],
-    []
+    [userData]
   );
 
   const pressedTab = (index) => {

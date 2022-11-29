@@ -32,15 +32,15 @@ export const TopLeftNav = () => {
   return (
     <div className="absolute z-50">
       <div className="relative">
-        <div className="w-48 lg:w-64 h-8 lg:h-10 md:pl-16 lg:pl-28 absolute top-0 bg-white border-b border-r border-yellow-800 rounded-br-full shadow-md  bg-black md:text-xs lg:text-lg">
+        <div className="absolute top-0 w-48 h-8 bg-black border-b border-r border-yellow-900 rounded-br-full shadow-sm lg:w-64 lg:h-10 md:pl-16 lg:pl-28 md:text-xs lg:text-lg shadow-red-900">
           {address && (
             <Button
-              className="flex py-1 px-2 "
+              className="flex px-2 py-1 "
               onClick={onLordsNavClick}
               variant="unstyled"
             >
-              <Lords className="md:w-4 lg:w-6 fill-current self-center" />{' '}
-              <span className="md:pl-2 lg:pl-4 self-center">
+              <Lords className="self-center fill-current md:w-4 lg:w-6" />{' '}
+              <span className="self-center md:pl-2 lg:pl-4">
                 {(+formatEther(lordsBalance)).toLocaleString()}
               </span>
             </Button>
@@ -50,16 +50,16 @@ export const TopLeftNav = () => {
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
-            className=" rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-lg border-yellow-800 border shadow-red-100/20 hover:bg-gray-900 bg-black"
+            className="bg-black border border-yellow-800 rounded-b-full rounded-r-full shadow-lg md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-red-100/20 hover:bg-gray-900 "
           >
             <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-[7.4rem] lg:left-28 z-50">
-              <Crown className="md:h-6 md:w-6 lg:w-9 lg:h-9 fill-current" />
+              <Crown className="fill-current md:h-6 md:w-6 lg:w-9 lg:h-9" />
             </div>
           </Button>
         </div>
         {/* {address && <TransactionNavItem onClick={onTransactionNavClick} />} */}
       </div>
-      <div className="pl-48 lg:pl-64">
+      <div className="pl-48 bg-black border-b border-r border-yellow-900 rounded-br-3xl lg:pl-64">
         <NetworkConnectButton />
       </div>
       <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />

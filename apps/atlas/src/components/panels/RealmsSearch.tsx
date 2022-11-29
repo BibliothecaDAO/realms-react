@@ -234,7 +234,7 @@ export const RealmsSearch = () => {
           ))}
         </Tabs.List>
       </Tabs>
-      <div className="flex px-4 w-full">
+      <div className="flex w-full px-4">
         <SearchFilter
           placeholder="Search by Realm Id"
           onSubmit={(value) => {

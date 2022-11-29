@@ -36,6 +36,7 @@ import { useRealmContext } from '@/context/RealmContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
+import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -58,7 +59,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {
     const { play } = useUiSounds(soundSelector.pageTurn);
     const { address: l1Address } = useL1Account();
-    const { address, status } = useAccount();
+    const { address } = useAccount();
+
+    const { enqueuedTx } = usePendingRealmTx({ realmId: props.realm.realmId });
     const {
       state: { favouriteRealms },
       actions,
@@ -188,6 +191,11 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               />
               <h3 className="flex self-center ml-2 text-center">
                 {props.realm.name}{' '}
+                {enqueuedTx ? (
+                  <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
+                ) : (
+                  ''
+                )}
               </h3>
             </div>
             <div className="flex mt-1">

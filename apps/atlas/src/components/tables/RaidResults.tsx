@@ -161,16 +161,7 @@ export const RaidResults = (props: RaidResultsProps) => {
           </div>
         </div>
       ) : (
-        <div className="text-center lg:px-36">
-          <Image
-            className="w-full "
-            width={500}
-            objectFit={'cover'}
-            layout="responsive"
-            height={250}
-            alt=""
-            src="/createOrDestroy-desktop.webp"
-          />
+        <div className="h-screen text-center lg:px-36">
           <div className="mt-4 text-3xl">
             Running on-chain battle simulation...
           </div>

@@ -85,34 +85,6 @@ export function AccountOverview(props: Prop) {
   return (
     <div>
       <div className="grid grid-cols-12 gap-3 md:gap-2 md:grid-cols-12 sm:px-2">
-        {/* <Card className="flex col-start-1 col-end-13 row-span-2 md:col-start-1 md:col-end-7">
-          <div className="flex">
-            <div className="relative">
-              <Image
-                src={'/stableai/archanist.png'}
-                alt="map"
-                height={500}
-                width={500}
-                className="border shadow-2xl border-white/20 card paper"
-              />
-              <div className="absolute top-0 px-2 text-xl font-semibold border bg-black/30 border-white/20 font-lords ">
-                1
-              </div>
-            </div>
-
-            <div className="flex flex-wrap p-10">
-              <div className="self-center">
-                {address && (
-                  <span className="self-center text-center sm:text-2xl font-display">
-                    {starknetId ? starknetId : shortenAddressWidth(address, 6)}
-                  </span>
-                )}
-                <h2 className="w-full mt-3 sm:text-4xl">Your Vast Empire</h2>
-                <p>It has been busy since you have been away...</p>
-              </div>
-            </div>
-          </div>
-        </Card> */}
         {/* <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
@@ -165,28 +137,30 @@ export function AccountOverview(props: Prop) {
           <MyRealms />
         </div>
         <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
-          <div className="p-2  mb-8">
+          <div className="p-2 mb-8">
             <h2>Vizir Reports</h2>
-            <div className="text-xl italic mt-4 px-10">
+            <div className="px-10 mt-4 text-xl italic">
               "Your Majesty, we have been busy since you have been away."
             </div>
           </div>
 
-          <CardBody className="border border-yellow-900 h-screen overflow-y-auto">
-            {events.map((a, index) => {
-              return (
-                <HistoryCard
-                  key={index}
-                  timeStamp={a.timestamp}
-                  event={a.event}
-                  eventId={a.eventId}
-                  action={a.action}
-                >
-                  {a.relic}
-                  {a.resources}
-                </HistoryCard>
-              );
-            })}
+          <CardBody className="h-screen overflow-y-auto border border-yellow-900">
+            {events
+              ? events.map((a, index) => {
+                  return (
+                    <HistoryCard
+                      key={index}
+                      timeStamp={a.timestamp}
+                      event={a.event}
+                      eventId={a.eventId}
+                      action={a.action}
+                    >
+                      {a.relic}
+                      {a.resources}
+                    </HistoryCard>
+                  );
+                })
+              : 'loading'}
           </CardBody>
         </div>
       </div>
