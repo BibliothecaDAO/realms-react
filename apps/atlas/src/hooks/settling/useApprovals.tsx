@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { useResourcesContext } from '@/context/ResourcesContext';
 import {
   useLordsContract,
   useBuildingContract,
@@ -48,7 +49,7 @@ const createStarknetAllowanceCall = (
 
 const useApprovalForContract = (contract: Contract) => {
   const { address } = useAccount();
-  const [isApproved, setIsApproved] = useState<boolean>(false);
+  const { isResourcesApproved, setIsResourcesApproved } = useResourcesContext();
   const { contract: lordsContract } = useLordsContract();
   const approveLordsAction = useStarknetInvoke({
     contract: lordsContract,
@@ -70,14 +71,14 @@ const useApprovalForContract = (contract: Contract) => {
 
   useEffect(() => {
     if (!outputResult) return;
-    setIsApproved(
+    setIsResourcesApproved(
       uint256ToBN(outputResult['remaining']) >=
         toBN(MIN_ALLOWANCE_AMOUNT.toString())
     );
   }, [outputResult]);
 
   return {
-    isApproved,
+    isApproved: isResourcesApproved,
     approveLords: () => {
       approveLordsAction.invoke(
         createApprovalParams(contract?.address as string)
@@ -100,7 +101,7 @@ export const useApproveResourcesForExchange = () => {
   const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
   const { contract: resourcesContract } = useResources1155Contract();
-  const [isApproved, setIsApproved] = useState<boolean>(false);
+  const { isLordsApproved, setIsLordsApproved } = useResourcesContext();
 
   const approveResourcesAction = useStarknetInvoke({
     contract: resourcesContract,
@@ -122,7 +123,7 @@ export const useApproveResourcesForExchange = () => {
 
   useEffect(() => {
     if (!outputResult) return;
-    setIsApproved(outputResult.toString() == '1');
+    setIsLordsApproved(outputResult.toString() == '1');
   }, [outputResult]);
 
   const approveResources = () => {
@@ -132,7 +133,7 @@ export const useApproveResourcesForExchange = () => {
     });
   };
 
-  return { isApproved, approveResources };
+  return { isApproved: isLordsApproved, approveResources };
 };
 
 export const getApproveAllGameContracts = (): CallAndMetadata[] => {
