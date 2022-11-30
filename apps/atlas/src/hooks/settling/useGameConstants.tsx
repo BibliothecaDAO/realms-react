@@ -1,11 +1,12 @@
 import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';
 
+// TODO this should be refactored (doesnt need user balances for getting constants)
 export const useGameConstants = () => {
-  const { balance } = useResourcesContext();
+  const { balance } = useUserBalancesContext();
   const [gameConstants, setGameConstants] = useState<GetGameConstantsQuery>();
 
   const { data } = useGetGameConstantsQuery();

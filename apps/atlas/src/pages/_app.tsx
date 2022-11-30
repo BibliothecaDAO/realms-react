@@ -12,10 +12,11 @@ import { WagmiConfig } from 'wagmi';
 import { SplashScreen } from '@/components/navigation/SplashScreen';
 import { Modals } from '@/components/ui/Modal';
 import { AtlasProvider } from '@/context/AtlasContext';
+import { BankProvider } from '@/context/BankContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
-import { ResourceProvider } from '@/context/ResourcesContext';
 import { UIProvider } from '@/context/UIContext';
+import { UserBalancesProvider } from '@/context/UserBalancesContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -77,18 +78,20 @@ function MyApp({ Component, pageProps }: AppProps) {
               <StarknetConfig connectors={connectors} autoConnect>
                 {/* <QueryClientProvider client={queryClient}> */}
                 <CommandListProvider>
-                  <ResourceProvider>
-                    <AtlasProvider>
-                      <UIProvider>
-                        <SplashScreen>
-                          <DndProvider backend={HTML5Backend}>
-                            <Component {...pageProps} />
-                            <Modals />
-                          </DndProvider>
-                        </SplashScreen>
-                      </UIProvider>
-                    </AtlasProvider>
-                  </ResourceProvider>
+                  <UserBalancesProvider>
+                    <BankProvider>
+                      <AtlasProvider>
+                        <UIProvider>
+                          <SplashScreen>
+                            <DndProvider backend={HTML5Backend}>
+                              <Component {...pageProps} />
+                              <Modals />
+                            </DndProvider>
+                          </SplashScreen>
+                        </UIProvider>
+                      </AtlasProvider>
+                    </BankProvider>
+                  </UserBalancesProvider>
                 </CommandListProvider>
                 {/* <PageTransition
                 Component={Component}

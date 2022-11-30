@@ -8,8 +8,9 @@ import { useDrag, useDrop } from 'react-dnd';
 import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
 import type { ENQUEUED_STATUS } from '@/constants/index';
+import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
@@ -208,8 +209,8 @@ export const CommandList: React.FC<Prop> = (props) => {
   };
 
   const { checkUserHasCheckoutResources } = useGameConstants();
-
-  const { balance, batchAddResources } = useResourcesContext();
+  const { balance } = useUserBalancesContext();
+  const { batchAddResources } = useBankContext();
 
   return (
     <>

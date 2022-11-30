@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { BigNumberish } from 'starknet/dist/utils/number';
 import { toBN } from 'starknet/dist/utils/number';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 
 type Props = {
   /*
@@ -19,15 +20,14 @@ const useResourcesDeficit = (props: Props) => {
 
   const [deficits, setDeficits] = useState<Record<number, BigNumberish>>({});
 
-  const resources = useResourcesContext();
+  const resources = useBankContext();
+
+  const { balance, balanceStatus } = useUserBalancesContext();
 
   useEffect(() => {
-    if (
-      Object.keys(resourceCosts).length > 0 &&
-      resources.balanceStatus == 'success'
-    ) {
+    if (Object.keys(resourceCosts).length > 0 && balanceStatus == 'success') {
       const deficits = {};
-      resources.balance.forEach((r) => {
+      balance.forEach((r) => {
         const amount = toBN(r.amount, 10);
         if (resourceCosts[r.resourceId]) {
           const costBN = toBN(resourceCosts[r.resourceId]);
@@ -39,7 +39,7 @@ const useResourcesDeficit = (props: Props) => {
 
       setDeficits(deficits);
     }
-  }, [resources.balance, resourceCosts]);
+  }, [resourceCosts, balanceStatus, balance]);
 
   return {
     deficits,

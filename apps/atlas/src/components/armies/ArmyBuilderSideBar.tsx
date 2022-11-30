@@ -17,8 +17,8 @@ import {
   getUnitImage,
   battalionIdToString,
 } from '@/constants/army';
+import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -78,7 +78,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const army = props.army;
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
-  const { batchAddResources } = useResourcesContext();
+  const { batchAddResources } = useBankContext();
 
   const activeBattalionData = battalionInformation.find(
     (a) => a.id === activeBattalion?.battalionId

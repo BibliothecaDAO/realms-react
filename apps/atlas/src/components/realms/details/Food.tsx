@@ -22,7 +22,7 @@ import {
   WHEAT_ID,
 } from '@/constants/buildings';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
@@ -55,7 +55,7 @@ interface ResourceAndFoodInput {
 export const RealmsFood = (props: Prop) => {
   const { realm, buildings, realmFoodDetails, availableFood, loading } = props;
 
-  const { balance } = useResourcesContext();
+  const { balance } = useUserBalancesContext();
   const { getBuildingCostById } = useGameConstants();
   const { create, harvest, convert } = useFood(realm as Realm);
   const isOwner = useIsOwner(realm?.settledOwner);

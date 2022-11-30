@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
 import type { BuildingDetail } from '@/types/index';
@@ -27,7 +27,7 @@ type Prop = {
 };
 
 export const MilitaryBuildings = (props: Prop) => {
-  const { batchAddResources } = useResourcesContext();
+  const { batchAddResources } = useBankContext();
   const { build } = useBuildings(props.realm as Realm);
   const [buildQty, setBuildQty] = useState<BuildQuantity>({
     barracks: '1',

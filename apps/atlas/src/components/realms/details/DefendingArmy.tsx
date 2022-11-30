@@ -18,8 +18,8 @@ import {
   battalionIdToString,
 } from '@/constants/army';
 import { MAX_BATTALIONS } from '@/constants/buildings';
+import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -111,7 +111,7 @@ export const DefendingArmy = (props: Props) => {
     };
   }
 
-  const { batchAddResources } = useResourcesContext();
+  const { batchAddResources } = useBankContext();
 
   const activeBattalionData = battalionInformation.find(
     (a) => a.id === activeBattalion?.battalionId
