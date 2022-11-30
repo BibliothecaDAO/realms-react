@@ -1,7 +1,7 @@
 import React from 'react';
+import { GaPanel } from '@/components/ga/GaPanel';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { GaPanel } from '@/components/panels/GaPanel';
 import { GaProvider } from '@/context/GaContext';
 
 export default function GAPage() {

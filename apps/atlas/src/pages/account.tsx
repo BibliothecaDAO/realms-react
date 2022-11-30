@@ -1,7 +1,7 @@
 import React from 'react';
+import { EmpirePanel } from '@/components/empire/EmpirePanel';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { EmpirePanel } from '@/components/panels/EmpirePanel';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';

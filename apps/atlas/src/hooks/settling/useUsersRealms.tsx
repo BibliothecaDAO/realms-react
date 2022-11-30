@@ -3,12 +3,15 @@ import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import {
+  getAccountHex,
+  RealmClaimable,
+} from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
-import { getAccountHex, RealmClaimable } from '@/shared/Getters/Realm';
 import { useUiSounds, soundSelector } from '../useUiSounds';
 import { useArmy } from './useArmy';
 import { createResourcesCall } from './useResources';

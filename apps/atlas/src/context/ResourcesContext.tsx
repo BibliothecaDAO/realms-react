@@ -14,7 +14,8 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import type { Metadata } from '@/components/tables/Transactions';
+import { getAccountHex } from '@/components/realms/RealmsGetters';
+import type { Metadata } from '@/components/ui/transactions/Transactions';
 import { resources } from '@/constants/resources';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import {
@@ -27,7 +28,6 @@ import {
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
 import { getTxCosts, getTxResourcesTrades } from '@/shared/Getters/Market';
-import { getAccountHex } from '@/shared/Getters/Realm';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 import { useCommandList } from './CommandListContext';
 

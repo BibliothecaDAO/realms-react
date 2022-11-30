@@ -5,8 +5,8 @@ import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import RealmsPlaylistSidebar from '@/components/realms/RealmsPlaylistSideBar';
 import { usePlayer } from '@/hooks/usePlayer';
-import RealmsPlaylistSidebar from '../sidebars/RealmsPlaylistSideBar';
 
 export const BottomLeftNav = () => {
   const [soundOn, setSoundOn] = useState(false);

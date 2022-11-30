@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '@/components/Layout';
+import { LootPanel } from '@/components/loot/LootPanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { LootPanel } from '@/components/panels/LootPanel';
 import { LootProvider } from '@/context/LootContext';
 
 export default function LootPage() {

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
+import { CryptSideBar } from '@/components/crypts/CryptsSideBar';
 import type { Travel } from '@/hooks/settling/useTravel';
 import useTravel from '@/hooks/settling/useTravel';
 import type { AtlasMap } from '@/hooks/useAtlasMap';

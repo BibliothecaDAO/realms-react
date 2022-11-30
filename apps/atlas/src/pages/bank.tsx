@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { BankPanel } from '@/components/bank/BankPanel';
+import { ResourceSwapSideBar } from '@/components/bank/ResourceSwapSideBar';
 import Layout from '@/components/Layout';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { BankPanel } from '@/components/panels/BankPanel';
-import { ResourceSwapSideBar } from '@/components/sidebars/ResourceSwapSideBar';
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export default function RealmPage() {
