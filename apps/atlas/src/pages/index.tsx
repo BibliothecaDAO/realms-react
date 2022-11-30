@@ -17,6 +17,7 @@ const ChatComponent = dynamic(() => import('@/components/ui/Chat'), {
 import { LootSideBar } from '@/components/loot/LootSideBar';
 import { RealmSideBar } from '@/components/realms/RealmsSideBar';
 import { SearchFilter } from '@/components/ui/filters/SearchFilter';
+import { Annotation } from '@/components/ui/Icons';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider, useRealmContext } from '@/context/RealmContext';
@@ -28,7 +29,6 @@ import loot_bags from '@/geodata/loot.json'; */
 import realms from '@/geodata/realms_resources.json';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { AssetType } from '@/hooks/useAtlasMap';
-import { Annotation } from '@/shared/Icons';
 import { getDeckGLTripLayerPath } from '@/util/travel';
 import type { Point } from '@/util/travel';
 

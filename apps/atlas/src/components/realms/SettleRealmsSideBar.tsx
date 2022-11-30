@@ -10,7 +10,7 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 import useSettling from '@/hooks/settling/useSettling';
 import { useSelections } from '@/hooks/useSelectable';
 import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 
 type RealmsSelectableProps = {
   realms?: RealmFragmentFragment[];

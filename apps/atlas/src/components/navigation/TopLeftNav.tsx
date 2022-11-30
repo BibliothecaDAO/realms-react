@@ -10,10 +10,10 @@ import { useAccount } from '@starknet-react/core';
 import { useRouter } from 'next/router';
 import { ResourceSwapSideBar } from '@/components/bank/ResourceSwapSideBar';
 import { EmpireSideBar } from '@/components/empire/EmpireSideBar';
+import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import NetworkConnectButton from '@/shared/NetworkConnectButton';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useUserBalancesContext();

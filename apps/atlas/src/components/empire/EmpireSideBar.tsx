@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 
 import { EmpirePanel } from '@/components/empire/EmpirePanel';
-import { BaseSideBarPanel } from '@/components/ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';

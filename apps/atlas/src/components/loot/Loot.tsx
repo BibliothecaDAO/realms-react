@@ -2,11 +2,11 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
+import { LootItemIcon } from '@/components/loot/LootItemIcon';
+import { MarketplaceByPanel } from '@/components/ui/MarketplaceByPanel';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import getGreatness from '@/services/getGreatness';
-import { LootItemIcon } from '@/shared/LootItemIcon';
-import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import type { LootProps } from '../../types';
 
 export function Loot(props: LootProps): ReactElement {

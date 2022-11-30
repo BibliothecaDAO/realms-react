@@ -1,11 +1,11 @@
 import { useLazyQuery } from '@apollo/client';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect } from 'react';
+import { theOrders } from '@/components/lore/theOrders';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { LorePoiFragmentFragment } from '@/generated/graphql';
 import { getRealmQuery, getCryptQuery } from '@/hooks/graphql/queries';
-import { theOrders } from '@/util/theOrders';
 
 const pois = {
   1: { name: 'Scrolls', class: 'bg-red-500' },

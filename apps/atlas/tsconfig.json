@@ -22,7 +22,6 @@
       "@/mocks/*": ["./mocks/*"],
       "@/pages/*": ["./pages/*"],
       "@/services/*": ["./services/*"],
-      "@/shared/*": ["./shared/*"],
       "@/types/*": ["./types/*"],
       "@/util/*": ["./util/*"],
       "@bibliotheca-dao/ui-lib/*": ["../../../packages/ui-lib/src/*"],

@@ -7,6 +7,7 @@ import { useCallback, useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
+import { RateChange, getTxCosts } from '@/components/bank/MarketGetters';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
@@ -14,7 +15,6 @@ import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { getTxCosts } from '@/shared/Getters/Market';
 import type { ItemCost, CallAndMetadata } from '@/types/index';
 import { dndTypes } from '@/types/index';
 

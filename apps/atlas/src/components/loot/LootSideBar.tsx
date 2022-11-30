@@ -3,7 +3,7 @@ import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import { getLootQuery } from '@/hooks/graphql/queries';
 import type { LootData } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 import { Loot } from './Loot';
 
 interface LootSideBarProps {

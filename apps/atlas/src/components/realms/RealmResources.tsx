@@ -8,6 +8,7 @@ import {
 import { formatEther } from '@ethersproject/units';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
+import { RateChange } from '@/components/bank/MarketGetters';
 import {
   BASE_RESOURCES_PER_DAY,
   DAY,
@@ -21,7 +22,6 @@ import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useResources, { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
-import { RateChange } from '@/shared/Getters/Market';
 import type { RealmsCardProps } from '@/types/index';
 
 type Row = {
@@ -177,13 +177,18 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
     <div className="w-full ">
       <div className="flex w-full">
         <div className="w-full">
-          <div className='flex'>
-          <h4> Claimable Days: {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}<span className="opacity-50"> / 3</span></h4>
-          {days != MAX_DAYS_ACCURED && (
-            <div className="flex justify-between px-3 uppercase self-center">
-              <CountdownTimer date={cachedDaysRemained.toString()} />
-            </div>
-          )}
+          <div className="flex">
+            <h4>
+              {' '}
+              Claimable Days:{' '}
+              {days === MAX_DAYS_ACCURED ? `${MAX_DAYS_ACCURED}` : days}{' '}
+              <span className="opacity-50"> / 3</span>
+            </h4>
+            {days != MAX_DAYS_ACCURED && (
+              <div className="flex justify-between px-3 uppercase self-center">
+                <CountdownTimer date={cachedDaysRemained.toString()} />
+              </div>
+            )}
           </div>
 
           <h4>Vault: {vault?.[0]} units</h4>

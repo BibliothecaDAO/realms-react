@@ -31,7 +31,7 @@ import {
 import { queryKeys as poolBalanceQueries } from '@/hooks/desiege/useTokenPool';
 import { useModuleAddress } from '@/hooks/useModuleAddress';
 import useTxCallback from '@/hooks/useTxCallback';
-import { ExternalLink } from '@/shared/Icons';
+import { ExternalLink } from '@/components/ui/Icons';
 import { getHostname } from '@/util/blockExplorer';
 import { applyActionAmount } from '@/util/desiegeLogic';
 import {

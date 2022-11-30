@@ -6,6 +6,11 @@ import {
 } from '@starknet-react/core';
 
 import { useState } from 'react';
+import {
+  genEconomicRealmEvent,
+  generateRealmEvent,
+} from '@/components/realms/EventMappings';
+import { HistoryCard } from '@/components/realms/HistoryCard';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
@@ -15,11 +20,6 @@ import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import {
-  genEconomicRealmEvent,
-  generateRealmEvent,
-} from '@/shared/Dashboard/EventMappings';
-import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
 import { MyRealms } from './MyRealms';
 
 type Prop = {

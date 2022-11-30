@@ -4,7 +4,7 @@ import { Crypt } from '@/components/crypts/CryptCard';
 import { getCryptQuery } from '@/hooks/graphql/queries';
 import type { CryptData } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 
 interface CryptSideBarProps {
   cryptId: string;

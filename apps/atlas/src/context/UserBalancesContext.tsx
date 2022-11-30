@@ -10,11 +10,14 @@ import React, {
 } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { uint256ToBN } from 'starknet/dist/utils/uint256';
+import {
+  getTxResourcesTrades,
+  getTxCosts,
+} from '@/components/bank/MarketGetters';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { resources } from '@/constants/resources';
 import { useGetWalletBalancesQuery } from '@/generated/graphql';
 import { useLordsContract } from '@/hooks/settling/stark-contracts';
-import { getTxResourcesTrades, getTxCosts } from '@/shared/Getters/Market';
 import type { NetworkState } from '@/types/index';
 import { useCommandList } from './CommandListContext';
 

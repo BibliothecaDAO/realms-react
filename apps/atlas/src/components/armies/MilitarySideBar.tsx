@@ -1,7 +1,7 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useState, useMemo } from 'react';
 import { MilitaryStatistics } from '@/components/armies/MilitaryStatistics';
-import { BaseSideBarPanel } from '@/components/ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { useGetTroopStatsQuery } from '@/generated/graphql';
 import AtlasSideBar from '../map/AtlasSideBar';
 

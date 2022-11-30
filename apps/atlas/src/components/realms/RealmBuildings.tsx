@@ -1,15 +1,15 @@
 import { Table, Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
+import { Scroll } from '@/components/ui/Icons';
 import { useCommandList } from '@/context/CommandListContext';
 import { useGetBuildingsByRealmIdQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { createBuildingCall, Entrypoints } from '@/hooks/settling/useBuildings';
 import useIsOwner from '@/hooks/useIsOwner';
-import { Scroll } from '@/shared/Icons';
 import type { CallAndMetadata, RealmsCardProps } from '../../types';
 import Sidebar from '../map/AtlasSideBar';
-import PreviewBuild from '../realms/PreviewBuild';
+import PreviewBuild from './PreviewBuild';
 
 type Row = {
   building: ReactElement;

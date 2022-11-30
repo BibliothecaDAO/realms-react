@@ -5,7 +5,7 @@ import {
 import { createContext, useState, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
-import { Scroll } from '@/shared/Icons';
+import { Scroll } from '@/components/ui/Icons';
 import { ENQUEUED_STATUS } from '../constants';
 import type { CallAndMetadata } from '../types';
 

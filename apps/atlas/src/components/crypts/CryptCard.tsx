@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 
+import { MarketplaceByPanel } from '@/components/ui/MarketplaceByPanel';
 import {
   isLegendary,
   legendaryColourClass,
@@ -9,7 +10,6 @@ import {
 } from '@/constants/cryptsEnvironments';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
-import { MarketplaceByPanel } from '@/shared/MarketplaceByPanel';
 import type { CryptProps } from '@/types/index';
 const variantMaps: any = {
   small: { heading: 'lg:text-2xl', regions: 'lg:text-xl' },

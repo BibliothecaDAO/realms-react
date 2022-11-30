@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
+import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { RealmFavoriteLocalStorageKey } from '@/context/RealmContext';
 import type { PlaylistQueryType } from '@/hooks/settling/useRealmsPlaylist';
 import useRealmPlaylist, {
   resetPlaylistState,
 } from '@/hooks/settling/useRealmsPlaylist';
-import SidebarHeader from '@/shared/SidebarHeader';
 
 type Prop = {
   isOpen: boolean;
