@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
+import { TransactionCartSideBar } from '@/components/ui/transactions/TransactionCartSideBar';
 import { useUIContext } from '@/context/UIContext';
-import { TransactionCartSideBar } from '../sidebars/TransactionCartSideBar';
 import TransactionNavItem from './TransactionNavItem';
 
 type HeaderSidePanelType = 'bank' | 'transaction' | '';

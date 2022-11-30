@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import {
+  fetchRealmNameById,
+  getTravelArcs,
+} from '@/components/realms/RealmsGetters';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { fetchRealmNameById, getTravelArcs } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,

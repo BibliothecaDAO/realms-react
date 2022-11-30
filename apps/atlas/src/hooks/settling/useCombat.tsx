@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
+import { fetchRealmNameById } from '@/components/realms/RealmsGetters';
 import { battalionIdToString, getUnitImage } from '@/constants/army';
 import { useCommandList } from '@/context/CommandListContext';
 import {
   ModuleAddr,
   useCombatContract,
 } from '@/hooks/settling/stark-contracts';
-import { fetchRealmNameById } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,

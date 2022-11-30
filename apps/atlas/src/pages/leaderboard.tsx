@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '@/components/Layout';
+import { LeaderboardPanel } from '@/components/leaderboard/LeaderboardPanel';
 import { ArtBackground } from '@/components/map/ArtBackground';
-import { LeaderboardPanel } from '@/components/panels/LeaderboardPanel';
 
 export default function LeaderboardPage() {
   return (

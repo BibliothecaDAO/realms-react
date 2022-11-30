@@ -3,6 +3,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
+  fetchRealmNameById,
+  getTrait,
+} from '@/components/realms/RealmsGetters';
+import {
   RealmBuildingId,
   RealmBuildingsSize,
   RealmBuildingIntegrity,
@@ -13,7 +17,6 @@ import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
-import { fetchRealmNameById, getTrait } from '@/shared/Getters/Realm';
 import type {
   CallAndMetadata,
   BuildingFootprint,

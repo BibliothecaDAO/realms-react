@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import type { Playlist } from '@/components/sidebars/RealmsPlaylistSideBar';
+import type { Playlist } from '@/components/realms/RealmsPlaylistSideBar';
 import type {
   GetRealmsQuery,
   GetRealmsQueryVariables,

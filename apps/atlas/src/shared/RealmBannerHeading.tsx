@@ -3,14 +3,14 @@ import { Button, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import React from 'react';
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { SearchFilter } from '@/components/ui/filters/SearchFilter';
 import { OrderAffinity, LightDark } from '@/constants/orders';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { shortenAddress } from '@/util/formatters';
-import { ownerRelic, trimmedOrder } from './Getters/Realm';
+import { ownerRelic, trimmedOrder } from '../components/realms/RealmsGetters';
 
 interface HeaderProps {
   onSubmit: (value: string) => void;

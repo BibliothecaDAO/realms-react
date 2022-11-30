@@ -8,16 +8,15 @@ import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Map from 'react-map-gl';
-import { SearchFilter } from '@/components/filters/SearchFilter';
+import { CryptSideBar } from '@/components/crypts/CryptsSideBar';
+import { GASideBar } from '@/components/ga/GASideBar';
 import Layout from '@/components/Layout';
-const ChatComponent = dynamic(
-  () => import('@/components/minigame/realtime/Chat'),
-  { ssr: false }
-);
-import { CryptSideBar } from '@/components/sidebars/CryptsSideBar';
-import { GASideBar } from '@/components/sidebars/GASideBar';
-import { LootSideBar } from '@/components/sidebars/LootSideBar';
-import { RealmSideBar } from '@/components/sidebars/RealmsSideBar';
+const ChatComponent = dynamic(() => import('@/components/ui/Chat'), {
+  ssr: false,
+});
+import { LootSideBar } from '@/components/loot/LootSideBar';
+import { RealmSideBar } from '@/components/realms/RealmsSideBar';
+import { SearchFilter } from '@/components/ui/filters/SearchFilter';
 import { resources } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { RealmProvider, useRealmContext } from '@/context/RealmContext';

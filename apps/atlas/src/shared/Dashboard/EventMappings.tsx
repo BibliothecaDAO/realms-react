@@ -1,6 +1,9 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 
-import { fetchRealmNameById, resourcePillaged } from '../Getters/Realm';
+import {
+  fetchRealmNameById,
+  resourcePillaged,
+} from '../../components/realms/RealmsGetters';
 
 export const Event = {
   realmCombatAttack: 'realm_combat_attack',
