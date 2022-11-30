@@ -2,7 +2,7 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { RealmCard } from '@/components/realms/RealmCard';
 import { useGetRealmQuery } from '@/generated/graphql';
 import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 import { RealmsSearch } from './RealmsSearch';
 
 interface RealmSideBarProps {

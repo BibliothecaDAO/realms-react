@@ -9,6 +9,10 @@ import {
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import { useState } from 'react';
+import {
+  genEconomicRealmEvent,
+  generateRealmEvent,
+} from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { SettleRealmsSideBar } from '@/components/realms/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
@@ -20,10 +24,6 @@ import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import {
-  genEconomicRealmEvent,
-  generateRealmEvent,
-} from '@/shared/Dashboard/EventMappings';
 
 type Prop = {
   onSettleRealms: () => void;

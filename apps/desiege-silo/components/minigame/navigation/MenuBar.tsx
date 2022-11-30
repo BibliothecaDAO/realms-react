@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import useSound from 'use-sound';
-import { DocumentText, VolumeOff, VolumeUp } from '@/shared/Icons';
+import { DocumentText, VolumeOff, VolumeUp } from '@/components/ui/Icons';
 import type { DesiegeTab } from '../ShieldGame';
 import VictoryDisplay from '../VictoryDisplay';
 import { ManaBall } from './ManaBall';

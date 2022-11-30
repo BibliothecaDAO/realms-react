@@ -24,7 +24,7 @@ import ElementsLabel, {
   DarkGradient,
   LightGradient,
 } from '@/shared/ElementsLabel';
-import { ExternalLink } from '@/shared/Icons';
+import { ExternalLink } from '@/components/ui/Icons';
 import { getHostname } from '@/util/blockExplorer';
 import { messageKey } from '@/util/messageKey';
 import { EFFECT_BASE_FACTOR, starknetNetwork } from '@/util/minigameApi';

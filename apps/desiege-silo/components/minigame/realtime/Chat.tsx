@@ -14,7 +14,7 @@ import TokenLabel, {
   DarkGradient,
   LightGradient,
 } from '@/shared/ElementsLabel';
-import { Annotation } from '@/shared/Icons';
+import { Annotation } from '@/components/ui/Icons';
 
 type ChatComponentProps = {
   channelName: string;

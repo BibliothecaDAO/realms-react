@@ -6,14 +6,14 @@ import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { RaidDetailsSideBar } from '@/components/armies/RaidDetailsSidebar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
-import { resourcePillaged } from '@/components/realms/RealmsGetters';
-import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import {
   genEconomicRealmEvent,
   generateRealmEvent,
-} from '@/shared/Dashboard/EventMappings';
-import { HistoryCard } from '@/shared/Dashboard/HistoryCard';
-import SidebarHeader from '@/shared/SidebarHeader';
+} from '@/components/realms/EventMappings';
+import { HistoryCard } from '@/components/realms/HistoryCard';
+import { resourcePillaged } from '@/components/realms/RealmsGetters';
+import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
+import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { realmMilitaryEvents, realmEconomicEvents } from '@/types/index';
 
 interface RealmHistoryProps {

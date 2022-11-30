@@ -39,6 +39,7 @@ import {
   RealmOwner,
   RealmStatus,
 } from '@/components/realms/RealmsGetters';
+import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useModalContext } from '@/context/ModalContext';
 import { useRealmContext } from '@/context/RealmContext';
@@ -51,7 +52,6 @@ import { useEnsResolver } from '@/hooks/useEnsResolver';
 import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import SidebarHeader from '@/shared/SidebarHeader';
 import type { RealmsCardProps } from '@/types/index';
 import { shortenAddressWidth } from '@/util/formatters';
 

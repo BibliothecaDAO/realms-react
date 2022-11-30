@@ -2,9 +2,9 @@ import { Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { rarityColor } from 'loot-rarity';
 import { useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
+import { LootItemIcon } from '@/components/loot/LootItemIcon';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useGaContext } from '@/context/GaContext';
-import { LootItemIcon } from '@/shared/LootItemIcon';
 import type { GAdventurer } from '@/types/index';
 import { GASideBar } from '../ga/GASideBar';
 

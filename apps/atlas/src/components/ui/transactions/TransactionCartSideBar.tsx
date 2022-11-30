@@ -1,6 +1,6 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useState, useMemo } from 'react';
-import { BaseSideBarPanel } from '@/components/ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CommandList } from '@/components/ui/transactions/CommandList';
 import { TransactionCartTable } from '@/components/ui/transactions/Transactions';
 import AtlasSideBar from '../../map/AtlasSideBar';

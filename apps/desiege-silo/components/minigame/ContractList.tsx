@@ -1,6 +1,6 @@
 import { toBN } from 'starknet/dist/utils/number';
 import { useModuleAddress } from '@/hooks/useModuleAddress';
-import { ExternalLink } from '@/shared/Icons';
+import { ExternalLink } from '@/components/ui/Icons';
 import LoadingSkeleton from '@/shared/LoadingSkeleton';
 import { getHostname } from '@/util/blockExplorer';
 import {

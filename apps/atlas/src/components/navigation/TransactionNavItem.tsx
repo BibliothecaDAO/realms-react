@@ -1,7 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { useTransactionManager, useTransactions } from '@starknet-react/core';
+import { Scroll } from '@/components/ui/Icons';
 import { useCommandList } from '@/context/CommandListContext';
-import { Scroll } from '@/shared/Icons';
 
 const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   const { hashes } = useTransactionManager();

@@ -17,6 +17,7 @@ import {
   fetchRealmNameById,
   getMilitaryBuildingsBuilt,
 } from '@/components/realms/RealmsGetters';
+import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { defaultArmy } from '@/constants/army';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
@@ -27,7 +28,6 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import { useGoblinTowns } from '@/hooks/settling/useGoblinTowns';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
-import SidebarHeader from '@/shared/SidebarHeader';
 import type { BuildingDetail } from '@/types/index';
 import { MilitaryBuildings } from './MilitaryBuildings';
 type Prop = {

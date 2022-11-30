@@ -1,4 +1,4 @@
-import { ExternalLink } from '@/shared/Icons';
+import { ExternalLink } from '@/components/ui/Icons';
 export const GamePreparation = () => {
   return (
     <div className="">

@@ -2,7 +2,7 @@ import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';
 import { SwapResources } from '@/components/bank/SwapResources';
-import { BaseSideBarPanel } from '@/components/ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,

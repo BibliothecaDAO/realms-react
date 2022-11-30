@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import AtlasSideBar from '@/components/map/AtlasSideBar';
 import { SelectableRealm } from '@/components/realms/SelectableRealm';
-import { BaseSideBarPanel } from '@/components/ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useSelections } from '@/hooks/useSelectable';

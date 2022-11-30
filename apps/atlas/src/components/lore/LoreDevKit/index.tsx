@@ -2,7 +2,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
-import { ExternalLink } from '../Icons';
+import { ExternalLink } from '@/components/ui/Icons';
 import type { LDKSchema } from './lib';
 
 type Prop = {

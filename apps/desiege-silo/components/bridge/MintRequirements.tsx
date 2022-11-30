@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useQuery } from 'react-query';
 import { MINIMUM_LORDS_REQUIRED } from '@/constants/index';
 import { useAccount as useL1Account } from 'wagmi';
-import { CheckCircle } from '@/shared/Icons';
+import { CheckCircle } from '@/components/ui/Icons';
 import { fetchNumberRealmsStaked } from '@/util/fetchL1';
 
 type Prop = {

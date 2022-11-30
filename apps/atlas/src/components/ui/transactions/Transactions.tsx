@@ -9,9 +9,9 @@ import type { ReactElement } from 'react';
 import { useRef } from 'react';
 import type { Status, TransactionStatus } from 'starknet';
 import { twMerge } from 'tailwind-merge';
+import { ExternalLink } from '@/components/ui/Icons';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
-import { ExternalLink } from '@/shared/Icons';
 
 export interface Metadata {
   description: string;

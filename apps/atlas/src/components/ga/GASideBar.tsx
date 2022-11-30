@@ -3,7 +3,7 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import { getGAQuery } from '@/hooks/graphql/queries';
 import type { GAData } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/BaseSideBarPanel';
+import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 import { GAdventurer } from './GAdventurer';
 
 interface GASideBarProps {

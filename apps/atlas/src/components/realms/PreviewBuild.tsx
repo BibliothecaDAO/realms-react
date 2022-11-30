@@ -8,7 +8,6 @@ import { RealmBuildingsSize, BASE_SQM } from '@/constants/buildings';
 import { useResourcesContext } from '@/context/ResourcesContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useResourcesDeficit from '@/hooks/settling/useResourcesDeficit';
-import { ResourceIcon } from '@/shared/ResourceIcon';
 import { RealmTrait } from '../../constants';
 
 type Props = {
