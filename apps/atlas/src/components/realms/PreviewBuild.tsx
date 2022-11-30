@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 // import { formatEther } from '@ethersproject/units';
 import { toBN } from 'starknet/dist/utils/number';
 import { RealmBuildingsSize, BASE_SQM } from '@/constants/buildings';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useResourcesDeficit from '@/hooks/settling/useResourcesDeficit';
 import { RealmTrait } from '../../constants';
@@ -29,7 +29,7 @@ const CheckBuildRequirements = (props: Props) => {
 
   const [costs, setCosts] = useState<Record<number, string>>({});
 
-  const { deficits, lordsBalance } = useResourcesDeficit({
+  const { deficits } = useResourcesDeficit({
     resourceCosts: costs,
   });
 

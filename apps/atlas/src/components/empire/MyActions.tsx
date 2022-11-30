@@ -18,7 +18,7 @@ import { SettleRealmsSideBar } from '@/components/realms/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -34,7 +34,8 @@ export function MyActions(props: Prop) {
 
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
-  const { lordsBalance, balance } = useResourcesContext();
+  const { balance } = useUserBalancesContext();
+
   const { account } = useStarknet();
   const [selectedId, setSelectedId] = useState(0);
 

@@ -13,8 +13,10 @@ import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { battalionInformation, battalionIdToString } from '@/constants/army';
-import type { Resource } from '@/context/ResourcesContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import type { BankResource } from '@/context/BankContext';
+import { useBankContext } from '@/context/BankContext';
+import type { Resource } from '@/context/UserBalancesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -24,8 +26,9 @@ import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
-  resource: Resource & ResourceQty;
-  availableResources: Resource[];
+  resource: BankResource & ResourceQty;
+  balance?: Resource;
+  availableResources: BankResource[];
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
   buy?: boolean;
@@ -135,12 +138,12 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               onClick={() => {
                 props.onQtyChange(
                   props.resource.resourceId,
-                  +formatEther(props.resource.amount)
+                  +formatEther(props.balance?.amount || 0)
                 );
               }}
               className="underline cursor-pointer decoration-dotted"
             >
-              {(+formatEther(props.resource.amount)).toLocaleString()}
+              {(+formatEther(props.balance?.amount || 0)).toLocaleString()}
             </button>
           </div>
         </div>
@@ -173,7 +176,6 @@ export function SwapResources(): ReactElement {
 
   const {
     availableResourceIds,
-    lordsBalance,
     selectedSwapResourcesWithBalance,
     getResourceById,
     addSelectedSwapResources,
@@ -182,7 +184,9 @@ export function SwapResources(): ReactElement {
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
-  } = useResourcesContext();
+  } = useBankContext();
+
+  const { getBalanceById, lordsBalance, balance } = useUserBalancesContext();
 
   const { isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
@@ -222,14 +226,23 @@ export function SwapResources(): ReactElement {
     if (isBuy) {
       return false;
     }
-
     return (
       !isResourcesApprovedForExchange ||
-      selectedSwapResourcesWithBalance.filter(
-        (resource) => resource.qty > parseFloat(formatEther(resource.amount))
-      ).length !== 0
+      selectedSwapResourcesWithBalance.filter((resource) => {
+        return (
+          resource.qty >
+          parseFloat(
+            formatEther(getBalanceById(resource.resourceId)?.amount || '0')
+          )
+        );
+      }).length !== 0
     );
-  }, [isResourcesApprovedForExchange, selectedSwapResourcesWithBalance, isBuy]);
+  }, [
+    isBuy,
+    isResourcesApprovedForExchange,
+    selectedSwapResourcesWithBalance,
+    getBalanceById,
+  ]);
 
   const deadline = () => {
     const maxDate = new Date();
@@ -476,28 +489,33 @@ export function SwapResources(): ReactElement {
         </div>
       </div>
       <div>
-        {selectedSwapResourcesWithBalance.map((resource) => (
-          <div className="relative" key={resource.resourceId}>
-            <ResourceRow
-              key={resource.resourceId}
-              resource={resource}
-              availableResources={availableResourceIds.map(
-                (resourceId) => getResourceById(resourceId) as Resource
-              )}
-              onResourceChange={updateSelectedSwapResource}
-              onQtyChange={updateSelectedSwapResourceQty}
-              buy={isBuy}
-            />
-            <Button
-              className="absolute top-3 right-3 border-white/20 "
-              size="xs"
-              variant="outline"
-              onClick={() => removeSelectedSwapResource(resource.resourceId)}
-            >
-              x
-            </Button>
-          </div>
-        ))}
+        {selectedSwapResourcesWithBalance.map((resource) => {
+          const balance = getBalanceById(resource.resourceId);
+
+          return (
+            <div className="relative" key={resource.resourceId}>
+              <ResourceRow
+                key={resource.resourceId}
+                resource={resource}
+                balance={balance}
+                availableResources={availableResourceIds.map(
+                  (resourceId) => getResourceById(resourceId) as BankResource
+                )}
+                onResourceChange={updateSelectedSwapResource}
+                onQtyChange={updateSelectedSwapResourceQty}
+                buy={isBuy}
+              />
+              <Button
+                className="absolute top-3 right-3 border-white/20 "
+                size="xs"
+                variant="outline"
+                onClick={() => removeSelectedSwapResource(resource.resourceId)}
+              >
+                x
+              </Button>
+            </div>
+          );
+        })}
       </div>
       <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
         <div className="flex flex-col justify-end w-full">

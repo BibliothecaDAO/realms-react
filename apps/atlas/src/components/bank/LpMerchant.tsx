@@ -17,8 +17,9 @@ import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import type { Resource } from '@/context/ResourcesContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import type { BankResource } from '@/context/BankContext';
+import { useBankContext } from '@/context/BankContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useExchangeContract } from '@/hooks/settling/stark-contracts';
 import {
   useApproveLordsForExchange,
@@ -28,8 +29,8 @@ import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
-  resource: Resource & ResourceQty;
-  availableResources: Resource[];
+  resource: BankResource & ResourceQty;
+  availableResources: BankResource[];
   isRemoveLp?: boolean;
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
@@ -45,7 +46,8 @@ const calculateLords = (rate: string, qty: number) => {
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
   const { contract: exchangeContract } = useExchangeContract();
-
+  const { getBalanceById } = useUserBalancesContext();
+  const amount = getBalanceById(props.resource.resourceId)?.amount;
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
   const [currencyAndTokenBalance, setCurrencyAndTokenBalance] = useState({
     currency: '0',
@@ -192,7 +194,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           1 = {displayRate(props.resource.rate)} <Lords className="w-3" />
         </div>
         <div className="w-full">
-          {(+formatEther(props.resource.amount)).toLocaleString()}
+          {(+formatEther(amount || '0')).toLocaleString()}
         </div>
       </div>
     </div>
@@ -221,12 +223,13 @@ export function LpMerchant(): ReactElement {
     availableResourceIds,
     selectedSwapResourcesWithBalance,
     getResourceById,
-    lordsBalance,
     addSelectedSwapResources,
     removeSelectedSwapResource,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
-  } = useResourcesContext();
+  } = useBankContext();
+
+  const { lordsBalance } = useUserBalancesContext();
 
   const { approveLords, isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
@@ -358,7 +361,7 @@ export function LpMerchant(): ReactElement {
               resource={resource}
               isRemoveLp={isSell}
               availableResources={availableResourceIds.map(
-                (resourceId) => getResourceById(resourceId) as Resource
+                (resourceId) => getResourceById(resourceId) as BankResource
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}

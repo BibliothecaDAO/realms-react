@@ -11,11 +11,12 @@ import { useRouter } from 'next/router';
 import { ResourceSwapSideBar } from '@/components/bank/ResourceSwapSideBar';
 import { EmpireSideBar } from '@/components/empire/EmpireSideBar';
 import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 
 export const TopLeftNav = () => {
-  const { lordsBalance } = useResourcesContext();
+  const { lordsBalance } = useUserBalancesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
   const { empireSidebar, toggleEmpire, tradeSidebar, toggleTrade, closeAll } =

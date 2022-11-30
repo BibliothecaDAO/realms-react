@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/*
 import { Button, IconButton } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
@@ -16,14 +17,14 @@ import { useAccount as useL1Account } from 'wagmi';
 import { ResourceSwapSideBar } from '@/components/bank/ResourceSwapSideBar';
 import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
 import { TransactionCartSideBar } from '@/components/ui/transactions/TransactionCartSideBar';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
 import { usePlayer } from '@/hooks/usePlayer';
 import TransactionNavItem from './TransactionNavItem';
 
 type HeaderSidePanelType = 'bank' | 'transaction' | '';
 
 export function Header() {
-  const { lordsBalance } = useResourcesContext();
+  const { lordsBalance } = useBankContext();
   const [soundOn, setSoundOn] = useState(false);
   const { pathname } = useRouter();
   const { address } = useAccount();
@@ -66,7 +67,7 @@ export function Header() {
               {' '}
               <Ouroboros className="self-center h-10 ml-2 mr-4 fill-yellow-600 " />
               <div className="self-center text-3xl font-lords">Eternum</div>
-              {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> */}
+              {/* <BibliothecaDAO className="self-center h-5 ml-2 mr-auto stroke-white fill-white" /> 
             </span>
           </Link>
         </div>
@@ -153,3 +154,6 @@ export function Header() {
     </div>
   );
 }
+*/
+
+export default {};

@@ -12,8 +12,8 @@ import {
 } from '@/components/realms/EventMappings';
 import { HistoryCard } from '@/components/realms/HistoryCard';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
+import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
 import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
@@ -31,7 +31,6 @@ export function AccountOverview(props: Prop) {
 
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
-  const { lordsBalance, balance } = useResourcesContext();
   const { address } = useAccount();
   const [selectedId, setSelectedId] = useState(0);
 
