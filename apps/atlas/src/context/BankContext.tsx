@@ -17,7 +17,6 @@ import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import type { Metadata } from '@/components/ui/transactions/Transactions';
 import { resources } from '@/constants/resources';
-import type { GetGameConstantsQuery } from '@/generated/graphql';
 import {
   useGetWalletBalancesQuery,
   useGetGameConstantsQuery,
@@ -31,11 +30,9 @@ import { getTxCosts, getTxResourcesTrades } from '@/shared/Getters/Market';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 import { useCommandList } from './CommandListContext';
 
-export type Resource = {
+export type BankResource = {
   resourceId: number;
   resourceName: string;
-  amount: string;
-  checkoutAmount: string;
   rate: string;
   lp: string;
   currencyAmount: string;
@@ -54,18 +51,16 @@ export type LpQty = {
   currencyqty: number;
 };
 
-type ResourcesBalance = Array<Resource>;
+type ResourcesBalance = Array<BankResource>;
 
 const resourceMapping = resources.map((resource) => {
   return bnToUint256(toBN(resource.id));
 });
 
-const initBalance = resources.map((resource) => {
+const initResources = resources.map((resource) => {
   return {
     resourceId: resource.id,
     resourceName: resource.trait,
-    amount: '0',
-    checkoutAmount: '0',
     rate: '0',
     lp: '0',
     currencyAmount: '0',
@@ -74,10 +69,11 @@ const initBalance = resources.map((resource) => {
   };
 });
 
-const ResourcesContext = createContext<{
+const BankContext = createContext<{
+  bankResources: BankResource[];
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
-  selectedSwapResourcesWithBalance: (Resource & ResourceQty)[];
+  selectedSwapResourcesWithBalance: (BankResource & ResourceQty)[];
   addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
   removeAllSelectedSwapResources: () => void;
@@ -86,13 +82,7 @@ const ResourcesContext = createContext<{
     resourceId: number,
     newResourceId: number
   ) => void;
-  balance: ResourcesBalance;
-  balanceStatus: NetworkState;
-  lordsBalance: string;
-  updateBalance: () => void;
-  getResourceById: (resourceId: number) => Resource | undefined;
-  buildingCosts: GetGameConstantsQuery['buildingCosts'] | undefined;
-  battalionCosts: GetGameConstantsQuery['battalionCosts'] | undefined;
+  getResourceById: (resourceId: number) => BankResource | undefined;
   batchAddResources: (cost: ResourceCost[]) => void;
   historicPrices: HistoricPrices | undefined;
   isLordsApproved: boolean;
@@ -101,39 +91,30 @@ const ResourcesContext = createContext<{
   setIsResourcesApproved: (bool) => void;
 }>(null!);
 
-interface ResourceProviderProps {
+interface BankProviderProps {
   children: React.ReactNode;
 }
 
-export const ResourceProvider = (props: ResourceProviderProps) => {
+export const BankProvider = (props: BankProviderProps) => {
   return (
-    <ResourcesContext.Provider value={useResources()}>
+    <BankContext.Provider value={useResources()}>
       {props.children}
-    </ResourcesContext.Provider>
+    </BankContext.Provider>
   );
 };
 
 function useResources() {
-  const txQueue = useCommandList();
+  // const txQueue = useCommandList();
   // const { hashes, transactions } = useTransactionManager<Metadata>();
 
   const { address } = useAccount();
-  const [balance, setBalance] = useState([...initBalance]);
-  const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
-  const [lordsBalance, setLordsBalance] = useState('0');
 
   const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
   const [isResourcesApproved, setIsResourcesApproved] =
     useState<boolean>(false);
 
-  // TODO: Move costs into own provider...
-  const [buildingCosts, setBuildingCosts] =
-    useState<GetGameConstantsQuery['buildingCosts']>();
-
-  const [battalionCosts, setBattalionCosts] =
-    useState<GetGameConstantsQuery['battalionCosts']>();
-
-  const { data: gameConstants } = useGetGameConstantsQuery();
+  const [bankResources, setBankResources] =
+    useState<BankResource[]>(initResources);
 
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
@@ -142,7 +123,6 @@ function useResources() {
     ResourceQty[]
   >([]);
 
-  const { contract: lordsContract } = useLordsContract();
   const { contract: exchangeContract } = useExchangeContract();
   const ownerAddressInt = address
     ? toBN(address as string).toString()
@@ -153,20 +133,6 @@ function useResources() {
       ? Array(resourceMapping.length).fill(ownerAddressInt)
       : undefined;
   }, [ownerAddressInt]);
-
-  const { data: lordsBalanceData } = useStarknetCall({
-    contract: lordsContract,
-    method: 'balanceOf',
-    args: [ownerAddressInt],
-  });
-
-  const { data: walletBalancesData, refetch: updateBalance } =
-    useGetWalletBalancesQuery({
-      variables: {
-        address: address ? getAccountHex(address)?.toLowerCase() : '',
-      },
-      pollInterval: 5000,
-    });
 
   const { data: lpBalanceData } = useStarknetCall({
     contract: exchangeContract,
@@ -256,13 +222,7 @@ function useResources() {
   };
 
   useMemo(() => {
-    if (
-      !walletBalancesData ||
-      !walletBalancesData.walletBalances ||
-      !gameConstants ||
-      !lordsBalanceData ||
-      !lordsBalanceData[0]
-    ) {
+    if (!exchangePairData) {
       return;
     }
 
@@ -292,80 +252,17 @@ function useResources() {
     const tokenExchangeData = exchangePairData
       ? pluckData(exchangePairData[1])
       : [];
-    setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
 
-    const allResourceCosts = getTxCosts(txQueue)
-      .map((t) => t.resources)
-      .flat(1);
-
-    const costsByResourceId = {};
-
-    allResourceCosts.forEach((c) => {
-      costsByResourceId[c.resourceId] = {
-        ...costsByResourceId[c.resourceId],
-        resourceId: c.resourceId,
-        amount: (costsByResourceId[c.resourceId]?.amount ?? 0) + c.amount,
-      };
-    });
-
-    const allResourcesTrades = getTxResourcesTrades(txQueue);
-
-    const tradeChangeByResourceId = {};
-
-    allResourcesTrades.forEach((t) => {
-      t.forEach((c) => {
-        tradeChangeByResourceId[c.resourceId] = {
-          ...tradeChangeByResourceId[c.resourceId],
-          resourceId: c.resourceId,
-          amount:
-            c.action === 'buy_tokens'
-              ? (
-                  tradeChangeByResourceId[c.resourceId]?.amount ??
-                  BigNumber.from(0)
-                ).add(c.amount)
-              : (
-                  tradeChangeByResourceId[c.resourceId]?.amount ??
-                  BigNumber.from(0)
-                ).sub(c.amount),
-        };
-      });
-    });
-
-    setBalance(
+    setBankResources(
       resources.map((resource, index) => {
         const resourceId = resource.id ?? 0;
         const resourceName = resource.trait ?? 0;
-
-        const inCartCost = costsByResourceId[resourceId]
-          ? BigNumber.from(
-              parseInt(costsByResourceId[resourceId]?.amount).toString()
-            )
-          : 0;
-
-        const inCartTradeChange =
-          tradeChangeByResourceId[resourceId]?.amount ?? 0;
-
-        const baseBn = BigNumber.from('1000000000000000000').mul(inCartCost);
-
-        const walletBalance =
-          walletBalancesData.walletBalances.find(
-            (a) => a.tokenId === resourceId
-          )?.amount ?? 0;
-
-        const checkoutBalance =
-          BigNumber.from(walletBalance).add(inCartTradeChange);
-
-        const actualBalance = checkoutBalance.gt(baseBn)
-          ? checkoutBalance.sub(baseBn)
-          : 0;
 
         const rate = rates.find((rate) => rate.tokenId === resourceId);
 
         return {
           resourceId,
           resourceName,
-          amount: actualBalance.toString(),
-          checkoutAmount: checkoutBalance.toString(),
           rate: rate?.amount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
@@ -374,25 +271,15 @@ function useResources() {
         };
       })
     );
-
-    setBuildingCosts(gameConstants?.buildingCosts);
-    setBattalionCosts(gameConstants?.battalionCosts);
-  }, [
-    walletBalancesData,
-    lpBalanceData,
-    exchangePairData,
-    exchangeInfo,
-    gameConstants,
-    lordsBalanceData,
-    selectedSwapResources,
-    txQueue,
-  ]);
+  }, [lpBalanceData, exchangePairData, exchangeInfo, selectedSwapResources]);
 
   const getResourceById = useCallback(
     (resourceId: number) => {
-      return balance.find((resource) => resource.resourceId === resourceId);
+      return bankResources.find(
+        (resource) => resource.resourceId === resourceId
+      );
     },
-    [balance]
+    [bankResources]
   );
 
   const selectedSwapResourcesWithBalance = useMemo(() => {
@@ -400,11 +287,12 @@ function useResources() {
       return {
         ...resource,
         ...getResourceById(resource.resourceId),
-      } as Resource & ResourceQty;
+      } as BankResource & ResourceQty;
     });
   }, [selectedSwapResources, getResourceById]);
 
   return {
+    bankResources,
     availableResourceIds,
     selectedSwapResources,
     selectedSwapResourcesWithBalance,
@@ -413,13 +301,7 @@ function useResources() {
     removeAllSelectedSwapResources,
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
-    balance,
-    balanceStatus,
-    updateBalance,
     getResourceById,
-    lordsBalance,
-    buildingCosts,
-    battalionCosts,
     batchAddResources,
     historicPrices,
     isLordsApproved,
@@ -429,6 +311,6 @@ function useResources() {
   };
 }
 
-export function useResourcesContext() {
-  return useContext(ResourcesContext);
+export function useBankContext() {
+  return useContext(BankContext);
 }

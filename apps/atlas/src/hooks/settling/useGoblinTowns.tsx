@@ -2,8 +2,8 @@ import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useResourcesContext } from '@/context/ResourcesContext';
 import type { GetGameConstantsQuery } from '@/generated/graphql';
 import { useGetGameConstantsQuery } from '@/generated/graphql';
 import type {

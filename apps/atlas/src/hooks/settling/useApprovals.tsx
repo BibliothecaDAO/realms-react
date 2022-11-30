@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useBankContext } from '@/context/BankContext';
 import {
   useLordsContract,
   useBuildingContract,
@@ -49,7 +49,7 @@ const createStarknetAllowanceCall = (
 
 const useApprovalForContract = (contract: Contract) => {
   const { address } = useAccount();
-  const { isResourcesApproved, setIsResourcesApproved } = useResourcesContext();
+  const { isResourcesApproved, setIsResourcesApproved } = useBankContext();
   const { contract: lordsContract } = useLordsContract();
   const approveLordsAction = useStarknetInvoke({
     contract: lordsContract,
@@ -101,7 +101,7 @@ export const useApproveResourcesForExchange = () => {
   const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
   const { contract: resourcesContract } = useResources1155Contract();
-  const { isLordsApproved, setIsLordsApproved } = useResourcesContext();
+  const { isLordsApproved, setIsLordsApproved } = useBankContext();
 
   const approveResourcesAction = useStarknetInvoke({
     contract: resourcesContract,

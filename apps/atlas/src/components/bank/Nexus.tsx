@@ -11,7 +11,7 @@ import { useState, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useResourcesContext } from '@/context/ResourcesContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import {
   useNexusContract,
   useLordsContract,
@@ -40,7 +40,7 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
   const { contract: lordsContract } = useLordsContract();
   const { contract: nexusContract } = useNexusContract();
 
-  const { lordsBalance } = useResourcesContext();
+  const { lordsBalance } = useUserBalancesContext();
 
   const {
     withdrawLords,
