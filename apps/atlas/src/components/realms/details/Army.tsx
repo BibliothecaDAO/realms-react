@@ -181,7 +181,7 @@ export const RealmsArmy = (props) => {
           <MilitaryBuildings buildings={props.buildings} realm={props.realm} />,
         </div>
       )} */}
-      {realm.ownArmies.length > 0 ? (
+      {/* {realm.ownArmies.length > 0 ? (
         <div className="col-span-12">
           <div className="flex justify-between w-full">
             <CardTitle>Realm Armies</CardTitle>
@@ -209,8 +209,8 @@ export const RealmsArmy = (props) => {
         <div className="col-span-12">
           <h3>{fetchRealmNameById(realm.realmId || 0)} has no Armies </h3>
         </div>
-      )}
-      {isOwner && (
+      )} */}
+      {/* {isOwner && (
         <Card className="flex col-span-12">
           <div className="flex">
             <Button
@@ -224,7 +224,7 @@ export const RealmsArmy = (props) => {
             </Button>{' '}
           </div>
         </Card>
-      )}
+      )} */}
       {/* <div className="col-span-12 ">
         <div className="flex justify-between w-full">
           <CardTitle>Ser, your Armies</CardTitle>
