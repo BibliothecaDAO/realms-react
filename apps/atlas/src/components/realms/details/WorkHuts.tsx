@@ -96,7 +96,7 @@ export const WorkHuts = (props) => {
 
         <div className="p-2 ">
           <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 pb-[2px] ">
-            <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1100">
+            <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1000">
               Workhuts{' '}
               <span className=" text-xs text-gray-700 self-center ml-4">
                 {(

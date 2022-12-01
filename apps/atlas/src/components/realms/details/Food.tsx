@@ -116,7 +116,7 @@ export const RealmsFood = (props: Prop) => {
               <div className="p-4">
                 <div className="w-full ">
                   <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                    <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
+                    <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
                       Storehouse
                       <div className="flex">
                         <div className="self-center mr-3 text-3xl">
@@ -232,7 +232,7 @@ export const RealmsFood = (props: Prop) => {
               />
               <div className="w-full p-2">
                 <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
+                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
                     Farming land {props.realmFoodDetails.farmsBuilt} /
                     {farmCapacity}
                     <span className="self-center text-sm text-gray-700">
@@ -386,7 +386,7 @@ export const RealmsFood = (props: Prop) => {
               />
               <div className="w-full p-2">
                 <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
-                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1100">
+                  <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
                     Fishing villages {props.realmFoodDetails.villagesBuilt} /
                     {fishingVillageCapacity}
                     <span className="self-center text-sm text-gray-700">

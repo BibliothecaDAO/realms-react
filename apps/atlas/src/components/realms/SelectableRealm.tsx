@@ -23,11 +23,11 @@ export function SelectableRealm(props: SelectableRealmProps) {
       <div
         className={clsx(
           `flex w-full p-2  shadow-inner rounded-t-l`,
-          isSelected ? `bg-black/60` : `bg-black/40`
+          isSelected ? `bg-gray-1000/60` : `bg-gray-1000/40`
         )}
       >
         <div
-          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-black rounded border-2 border-gray-900`}
+          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-gray-1000 rounded border-2 border-gray-900`}
         >
           {isSelected ? `✔️` : ``}
         </div>

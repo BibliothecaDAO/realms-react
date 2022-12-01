@@ -77,7 +77,7 @@ export function CryptStatsFilter(props: CryptStatsFilterProps) {
           className="absolute z-10 m-auto mt-2 -left-40 sm:left-0 md:right-0"
           static
         >
-          <div className="flex flex-col px-8 py-4 pb-6 font-medium bg-black rounded-sm shadow-sm w-60">
+          <div className="flex flex-col px-8 py-4 pb-6 font-medium bg-gray-1000 rounded-sm shadow-sm w-60">
             <div className="mb-3 text-lg text-center uppercase">Stats</div>
             <RangeSliderFilter
               name="Size"

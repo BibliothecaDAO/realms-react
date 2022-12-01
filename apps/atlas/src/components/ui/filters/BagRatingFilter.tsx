@@ -61,7 +61,7 @@ export function BagRatingFilter(props: BagRatingFilterProps) {
 
         {isOpen && (
           <Popover.Panel className="absolute z-10 m-auto mt-2 md:left-0" static>
-            <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-black rounded shadow-sm w-60">
+            <div className="flex flex-col gap-6 px-8 py-4 pb-10 font-medium text-white bg-gray-1000 rounded shadow-sm w-60">
               <div className="text-lg text-center uppercase">Rating</div>
               <RangeSliderFilter
                 name="Greatness"

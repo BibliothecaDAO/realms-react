@@ -46,14 +46,14 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 className={'rounded-md'}
               />
             </div>
-            <div className="flex w-full bg-black">
+            <div className="flex w-full bg-gray-1000">
               <div className="flex self-center w-full pt-4 pb-2 border-b border-white/20">
                 <h3 className={`px-2 rounded py-1`}>
                   <span>{crypt.id}</span> | {crypt.name}
                 </h3>
               </div>
             </div>
-            <div className="flex w-full px-2 py-2 bg-black border-b border-white/20">
+            <div className="flex w-full px-2 py-2 bg-gray-1000 border-b border-white/20">
               <div className="flex self-center my-1">
                 <ResourceIcon
                   resource={environments[crypt.environment]?.name}
@@ -63,7 +63,7 @@ export function CryptsOverviews(props: CryptOverviewsProps) {
                 <span className="self-center"> (soon)</span>
               </div>
             </div>
-            <div className="grid items-center justify-between w-full grid-cols-2 px-2 pt-4 tracking-wide uppercase bg-black">
+            <div className="grid items-center justify-between w-full grid-cols-2 px-2 pt-4 tracking-wide uppercase bg-gray-1000">
               <div className="my-1">Environment</div>
               <div
                 className={`px-2 rounded font-display uppercase text-xs py-1 text-black border border-white/20 ${

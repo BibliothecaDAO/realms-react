@@ -35,7 +35,7 @@ const STYLES = {
     ACCEPTED_ON_L2: 'bg-green-800/90',
     ACCEPTED_ON_L1: 'bg-green-900',
     TRANSACTION_RECEIVED: 'bg-green-700 animate-pulse',
-    ENQUEUED: '  bg-black/80',
+    ENQUEUED: '  bg-gray-1000/80',
   },
 } as const;
 
@@ -86,7 +86,7 @@ export const TxCartItem = (props: TxCartItem) => {
         `rounded-xl flex p-4 w-full mb-2  border card`
       )}
     >
-      <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
+      <div className="flex flex-wrap w-full p-1 rounded bg-gray-1000/19">
         <div className="flex justify-between w-full pb-2 mb-2 border-b border-white/20">
           <h5 className="self-center uppercase">
             {FORMATED_STATUS.status[data?.status || 0]}

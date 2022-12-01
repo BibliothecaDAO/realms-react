@@ -12,6 +12,7 @@ import { getMilitaryBuildingsBuilt } from '@/components/realms/RealmsGetters';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
+import { AttackingArmy } from './details/AttackingArmy';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -45,6 +46,20 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <DefendingArmy
+            realm={props.realm}
+            buildings={getMilitaryBuildingsBuilt(props.buildings)}
+            availableFood={props.availableFood}
+          />
+        ),
+      },
+      {
+        label: (
+          <span className="flex">
+            <Shield className="self-center w-4 h-4 mr-2 fill-current" /> Offence
+          </span>
+        ),
+        component: (
+          <AttackingArmy
             realm={props.realm}
             buildings={getMilitaryBuildingsBuilt(props.buildings)}
             availableFood={props.availableFood}

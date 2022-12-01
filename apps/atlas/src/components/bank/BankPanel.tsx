@@ -279,7 +279,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     <BasePanel open={true} style="p-10">
       <div className="absolute right-0 lg:w-7/12">
         <div className="flex justify-between">
-          <div className="w-full p-10 pt-10 bg-black/90">
+          <div className="w-full p-10 pt-10 bg-gray-1000/90">
             {/* <h2 className="w-full">Resource Emporium</h2>
           <p className="mt-4 sm:text-2xl">
             Trade your resources with the merchant. You can also provide
@@ -331,7 +331,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               boxData.map((data, index) => {
                 return (
                   <div
-                    className="p-2 bg-black border rounded card border-yellow-600/20"
+                    className="p-2 bg-gray-1000 border rounded card border-yellow-600/20"
                     key={index}
                   >
                     <div className="flex justify-between">

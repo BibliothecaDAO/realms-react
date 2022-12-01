@@ -54,7 +54,7 @@ export function CryptEnvironmentFilter(props: CryptEnvironmentFilterProps) {
           className="absolute z-20 mt-2 w-[300px] ml-2 left-1/2 -translate-x-1/2  rounded"
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded-sm shadow-lg">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded-sm shadow-lg">
             <div className="text-lg text-center uppercase">Environments</div>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">

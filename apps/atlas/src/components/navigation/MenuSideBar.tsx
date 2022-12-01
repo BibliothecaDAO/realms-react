@@ -39,7 +39,7 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'border bg-black  border-l-2 border-transparent w-6 h-6 lg:w-8 lg:h-8 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
+    'border bg-gray-1000  border-l-2 border-transparent w-6 h-6 lg:w-12 lg:h-12 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
 
   const textClasses =
     'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible  text-shadow-[0_2px_6px_#6366f1]';

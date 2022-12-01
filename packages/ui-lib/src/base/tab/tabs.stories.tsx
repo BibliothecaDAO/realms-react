@@ -61,7 +61,7 @@ const Template: Story<TabsProps> = (args) => {
   });
 
   return (
-    <div className="p-8 bg-black/30">
+    <div className="p-8 bg-gray-1000/30">
       <Tabs {...args}>
         <Tabs.List>
           {Object.keys(categories).map((category) => (

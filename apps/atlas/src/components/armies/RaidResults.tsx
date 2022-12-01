@@ -73,6 +73,8 @@ export const RaidResults = (props: RaidResultsProps) => {
   const { starknetId } = useStarkNetId(attackingRealmOwner);
   const { starknetId: defenderStarknetId } = useStarkNetId(defendingRealmOwner);
 
+  console.log(combatResult);
+
   return (
     <div className="text-center">
       {result ? (

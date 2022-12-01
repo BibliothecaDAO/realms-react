@@ -16,7 +16,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
     return transactions.filter((a: any) => a?.data?.status === 'RECEIVED')
       .length
       ? 'bg-orange-900 animate-pulse'
-      : 'bg-black';
+      : 'bg-gray-1000';
   };
 
   return (

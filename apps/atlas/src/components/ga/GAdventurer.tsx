@@ -60,7 +60,7 @@ export function GAdventurer(props: GAProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 pb-4 rounded bg-black/60">
+        <div className="px-4 py-2 pb-4 rounded bg-gray-1000/60">
           <div className="flex justify-center">
             <OrderIcon size="lg" order={props.ga.order.toLowerCase()} />
           </div>

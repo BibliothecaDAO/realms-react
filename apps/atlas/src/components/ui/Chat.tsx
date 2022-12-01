@@ -91,7 +91,7 @@ const ChatComponent = (props: ChatComponentProps) => {
           </div>
         </span>
       </div>
-      <div className="h-32 p-2 overflow-y-scroll bg-black border rounded-md card max-h-32">
+      <div className="h-32 p-2 overflow-y-scroll bg-gray-1000 border rounded-md card max-h-32">
         {messages.length == 0 ? (
           <p className="mt-8 text-center animate-pulse">
             whispers through the mist
@@ -103,7 +103,7 @@ const ChatComponent = (props: ChatComponentProps) => {
       <form className="mt-2" onSubmit={handleFormSubmission}>
         <textarea
           ref={inputBox}
-          className="w-full h-10 p-2 rounded-sm bg-gray-1100"
+          className="w-full h-10 p-2 rounded-sm bg-gray-1000"
           value={messageText}
           placeholder="Type a message..."
           onChange={(e) => setMessageText(e.target.value)}

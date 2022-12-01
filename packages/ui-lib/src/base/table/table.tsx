@@ -66,7 +66,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
       )}
 
       <table className="w-full ">
-        <thead className="uppercase bg-black/90">
+        <thead className="uppercase bg-gray-1000/90">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -92,7 +92,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
                   ? 'bg-1000'
-                  : 'bg-gray-1100'
+                  : 'bg-gray-1000'
               } hover:bg-gray-800 font-semibold shadow-inner transition-all duration-30`}
               key={row.id}
             >

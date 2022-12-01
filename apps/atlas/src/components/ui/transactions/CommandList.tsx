@@ -128,14 +128,14 @@ export const CommandListItem = (props: CommandListItem) => {
       ref={ref}
       data-handler-id={handlerId}
       className={twMerge(
-        `rounded-xl flex p-4 w-full mb-2 bg-black/80 border card`,
+        `rounded-xl flex p-4 w-full mb-2 bg-gray-1000/80 border card`,
         isDragging ? 'opacity-0' : 'opacity-100'
       )}
     >
       {props.onRemove && (
         <DragIcon className="fill-current w-5 -translate-x-1.5 cursor-grab" />
       )}
-      <div className="flex flex-wrap w-full p-1 rounded bg-black/19">
+      <div className="flex flex-wrap w-full p-1 rounded bg-gray-1000/19">
         <div className="flex justify-between w-full pb-2 mb-2 border-b border-white/20">
           <h5 className="self-center text-xs">ENQUEUED</h5>
           <div className="self-center ">
