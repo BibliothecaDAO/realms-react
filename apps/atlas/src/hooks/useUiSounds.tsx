@@ -11,8 +11,10 @@ export const soundSelector = {
   raid: 'KatanaEvent_1.mp3',
   pageTurn: 'ASO_foley_click_04.mp3',
   fly: 'whoosh_low_1.mp3',
-  buildMilitary: 'RealmsUI_Castle5.mp3',
-  buildWorkHut: 'Realms_Work_UI_2.mp3',
+  buildMilitary: 'buildings/military.mp3',
+  buildBarracks: 'buildings/barracks.mp3',
+  buildWorkHut: 'buildings/workhut.mp3',
+  buildFishingVillage: 'buildings/fishing_village.mp3',
   summonTroops: 'summonTroops.mp3',
 };
 

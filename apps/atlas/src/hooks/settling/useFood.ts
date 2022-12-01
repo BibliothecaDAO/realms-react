@@ -111,6 +111,9 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const { play: harvestFish } = useUiSounds(soundSelector.harvestFish);
   const { play: harvestWheat } = useUiSounds(soundSelector.harvestWheat);
   const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
+  const { play: buildFishingVillage } = useUiSounds(
+    soundSelector.buildFishingVillage
+  );
 
   const { FoodContract } = useJsonRpc();
 
@@ -190,7 +193,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     availableFood,
     create: (tokenId, quantity, foodBuildingId, costs) => {
       if (foodBuildingId === RealmBuildingId.FishingVillage) {
-        harvestFish();
+        buildFishingVillage();
       } else {
         harvestWheat();
       }
