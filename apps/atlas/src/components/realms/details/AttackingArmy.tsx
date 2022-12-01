@@ -70,14 +70,14 @@ export const AttackingArmy = (props: Props) => {
         <div className="col-span-12">
           <h3>{fetchRealmNameById(realm.realmId || 0)} Armies </h3>
         </div>
-        {onlyAttackingArmies.length > 0 && !newArmyId && (
+        {onlyAttackingArmies.length > 0 && !newArmyId && !selectedArmy && (
           <div className="col-span-12">
             <div className="grid grid-cols-2 gap-4">
               {onlyAttackingArmies.map((army) => {
                 return (
                   <ArmyCard
                     onBuildArmy={() => {
-                      // setSelectedArmy(army);
+                      setSelectedArmy(army);
                       // setIsArmyBuilding(true);
                     }}
                     onTravel={() =>
@@ -93,7 +93,7 @@ export const AttackingArmy = (props: Props) => {
           </div>
         )}
       </div>
-      {!newArmyId && (
+      {!newArmyId && !selectedArmy && (
         <div>
           <div className="mt-20">
             <Button
@@ -107,8 +107,17 @@ export const AttackingArmy = (props: Props) => {
       )}
 
       {selectedArmy && (
-        <div>
-          <Button>back</Button>
+        <div className="mt-10">
+          <div className="flex justify-between">
+            <h2>Army {selectedArmy.armyId}</h2>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSelectedArmy(undefined)}
+            >
+              Back to Armies
+            </Button>
+          </div>
           <ArmyBuilder
             realm={realm}
             armyId={selectedArmy.armyId}
