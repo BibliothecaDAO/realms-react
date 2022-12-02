@@ -1,22 +1,15 @@
 import type { Army } from '@/generated/graphql';
-import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 
 export interface ArmyAndOrder extends Army {
   orderType?: string;
 }
 
-type Prop = {
-  army: ArmyAndOrder;
-  onBuildArmy?: () => void;
-  onTravel?: () => void;
-  selectedRealm?: number;
-  isAtLocation: boolean;
-  isHome: boolean;
+type Props = {
+  army: Army;
 };
 
-export const ArmyBattalions: React.FC<Prop> = (props) => {
-  const { play } = useUiSounds(soundSelector.pageTurn);
-  const army = props.army;
+export const ArmyBattalions = (props: Props) => {
+  const { army } = props;
 
   return (
     <div key={army.armyId}>
@@ -31,44 +24,44 @@ export const ArmyBattalions: React.FC<Prop> = (props) => {
           </thead>
           <tbody>
             <Row
-              qty={props.army.lightCavalryQty}
+              qty={army.lightCavalryQty}
               name="Cavalry"
-              health={props.army.lightCavalryHealth}
+              health={army.lightCavalryHealth}
             />
             <Row
-              qty={props.army.heavyCavalryQty}
+              qty={army.heavyCavalryQty}
               name="Knights"
-              health={props.army.heavyCavalryHealth}
+              health={army.heavyCavalryHealth}
             />
             <Row
-              qty={props.army.archerQty}
+              qty={army.archerQty}
               name="Archers"
-              health={props.army.archerHealth}
+              health={army.archerHealth}
             />
             <Row
-              qty={props.army.longbowQty}
+              qty={army.longbowQty}
               name="Longbow"
-              health={props.army.longbowHealth}
+              health={army.longbowHealth}
             />
             <Row
-              qty={props.army.mageQty}
+              qty={army.mageQty}
               name="Apprentice"
-              health={props.army.mageHealth}
+              health={army.mageHealth}
             />
             <Row
-              qty={props.army.arcanistQty}
+              qty={army.arcanistQty}
               name="Archanist"
-              health={props.army.arcanistHealth}
+              health={army.arcanistHealth}
             />
             <Row
-              qty={props.army.lightInfantryQty}
+              qty={army.lightInfantryQty}
               name="Solider"
-              health={props.army.lightInfantryHealth}
+              health={army.lightInfantryHealth}
             />
             <Row
-              qty={props.army.heavyInfantryQty}
+              qty={army.heavyInfantryQty}
               name="Paladin"
-              health={props.army.heavyInfantryHealth}
+              health={army.heavyInfantryHealth}
             />
           </tbody>
         </table>

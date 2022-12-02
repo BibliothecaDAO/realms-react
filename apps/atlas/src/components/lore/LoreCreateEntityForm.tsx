@@ -347,7 +347,7 @@ export const LoreCreateEntityForm = () => {
   };
 
   return (
-    <div className="flex flex-col p-4 mb-3 rounded bg-black/95">
+    <div className="flex flex-col p-4 mb-3 rounded bg-gray-1000/95">
       {hasDraft ? (
         <div className={`bg-green-200 text-black p-2 rounded-md mb-2`}>
           You have saved draft. Do you want to restore it?{' '}

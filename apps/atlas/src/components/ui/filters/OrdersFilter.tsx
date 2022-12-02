@@ -75,7 +75,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
           )}
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded shadow-sm">
             <h4>Search by Orders</h4>
 
             <div className="relative grid items-center justify-center grid-cols-4 gap-6">

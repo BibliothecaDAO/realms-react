@@ -222,7 +222,7 @@ export function RealmOverview(
           traitAmount={getTrait(props.realm, 'River')}
         />
       </div> */}
-      <div className="w-full pt-4 bg-black shadow-inner">
+      <div className="w-full pt-4 bg-gray-1000 shadow-inner">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
           {isYourRealm(props.realm, l1Address, address || '') && (

@@ -65,7 +65,7 @@ export function Loot(props: LootProps): ReactElement {
           <div className="w-full h-32 pt-20 rounded bg-white/40 animate-pulse" />
         </div>
       ) : (
-        <div className="px-4 py-2 pb-4 bg-black rounded">
+        <div className="px-4 py-2 pb-4 bg-gray-1000 rounded">
           <div className=" sm:text-2xl">
             <div className="flex flex-col flex-wrap justify-between my-4 rounded sm:flex-row ">
               <h3>

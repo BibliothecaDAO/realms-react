@@ -321,7 +321,7 @@ function MapModule() {
         layers={[...layers, tripsLayer]}
       >
         {!mapContext.isMapLoaded ? (
-          <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1100">
+          <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-gray-1000">
             {' '}
             <h1 className="self-center duration-100 animate-pulse">
               <Ouroboros className="block w-20 mx-auto fill-current" />

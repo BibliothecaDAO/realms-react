@@ -39,7 +39,7 @@ export const RealmImage = ({ id }) => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="right-0 w-48 bg-black border border-cta-100/60">
+          <Menu.Items className="right-0 w-48 bg-gray-1000 border border-cta-100/60">
             <Menu.Group className="flex">
               {menuItems.map((menuItem) => {
                 return (

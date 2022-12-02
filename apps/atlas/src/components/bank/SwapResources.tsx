@@ -336,7 +336,7 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded shadow-sm">
                   Add resources required for:
                   {gameConstants?.buildingCosts
                     ?.filter((b) => b.resources.length)
@@ -407,7 +407,7 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-black rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded shadow-sm">
                   Add resources required for:
                   {gameConstants?.battalionCosts?.map((a, i) => {
                     return (
@@ -517,7 +517,7 @@ export function SwapResources(): ReactElement {
           );
         })}
       </div>
-      <div className="sticky flex justify-end w-full pt-4 pb-5 bg-black -bottom-5">
+      <div className="sticky flex justify-end w-full pt-4 pb-5 bg-gray-1000 -bottom-5">
         <div className="flex flex-col justify-end w-full">
           <div className="relative flex w-full">
             <Button

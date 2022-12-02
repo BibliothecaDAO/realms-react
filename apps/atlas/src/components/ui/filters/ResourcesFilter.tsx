@@ -55,7 +55,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
           className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4 border-double border-white/20 rounded"
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 bg-black rounded shadow-lg">
+          <div className="flex flex-col items-center gap-4 p-4 pb-8 bg-gray-1000 rounded shadow-lg">
             <h4 className="text-center">Select Resources</h4>
 
             <div className="relative grid items-center justify-center grid-cols-2 gap-4">

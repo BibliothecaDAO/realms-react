@@ -47,7 +47,7 @@ export const LoreEntityModal = ({ entityId }) => {
 
       {loreEntity && (
         <div
-          className={`w-full p-10 brightness-200 mt-2 mb-2 bg-black border-double border-white/30 border-4 rounded-xl`}
+          className={`w-full p-10 brightness-200 mt-2 mb-2 bg-gray-1000 border-double border-white/30 border-4 rounded-xl`}
         >
           <div className={'text-xl prose prose-stone prose-sm '}>
             <LoreScrollEntity entity={loreEntity} />

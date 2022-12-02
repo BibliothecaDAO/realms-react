@@ -141,8 +141,8 @@ export function EmpirePanel() {
 
   return (
     <div className="flex px-2">
-      <div className="w-9/12 px-10 pt-10 bg-gray-1100">
-        <div className="flex w-full gap-2 p-2 mb-4 bg-black border border-yellow-900 rounded-2xl">
+      <div className="w-9/12 px-10 pt-10 bg-gray-1000">
+        <div className="flex w-full gap-2 p-2 mb-4 bg-gray-1000 border border-yellow-900 rounded-2xl">
           {quickActions.map((action) => (
             <Button
               key={action.name}
@@ -165,7 +165,7 @@ export function EmpirePanel() {
             variant="default"
           >
             <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] sticky top-10 z-40">
-              <div className="overflow-x-auto bg-gray-1100">
+              <div className="overflow-x-auto bg-gray-1000">
                 <Tabs.List>
                   {tabs.map((tab, index) => (
                     <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>

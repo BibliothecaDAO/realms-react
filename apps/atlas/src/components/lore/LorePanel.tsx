@@ -108,7 +108,7 @@ export const LorePanel = () => {
       // style={clsx({ 'lg:w-7/12': state.selectedTab !== 2 })}
     >
       <div className="flex justify-between">
-        <div className="w-full p-10 pt-20 bg-black/90">
+        <div className="w-full p-10 pt-20 bg-gray-1000/90">
           <h1 className="w-full">Bibliopedia</h1>
           <p className="mt-4 sm:text-xl opacity-70">
             Write stories about your favourite Realms, Loot Bags, GA, and more!
@@ -117,7 +117,7 @@ export const LorePanel = () => {
       </div>
       <Tabs
         selectedIndex={state.selectedTab}
-        className={'bg-gray-1100'}
+        className={'bg-gray-1000'}
         onChange={actions.updateSelectedTab as any}
       >
         <Tabs.List>
@@ -129,7 +129,7 @@ export const LorePanel = () => {
         </Tabs.List>
       </Tabs>
 
-      <div className="h-full px-2 bg-black">
+      <div className="h-full px-2 bg-gray-1000">
         {state.selectedTab !== 2 && (
           <div className="flex flex-wrap justify-between mb-2 ">
             <div className="grid grid-cols-2 gap-2">

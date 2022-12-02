@@ -53,7 +53,7 @@ const LoreDevKit = (props: Prop) => {
       <h3 className="">
         {currentLayer.title}{' '}
         {currentLayer.end ? (
-          <span className="px-2 py-1 text-sm bg-black rounded-md">
+          <span className="px-2 py-1 text-sm bg-gray-1000 rounded-md">
             Lore Extension Prompt
           </span>
         ) : null}

@@ -68,16 +68,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
       },
       {
         label: <Head className="self-center w-3 h-3 fill-current" />,
-        component: (
-          <ArmyBattalions
-            army={props.army}
-            isAtLocation={isAtLocation}
-            selectedRealm={props.selectedRealm}
-            onTravel={props.onTravel}
-            onBuildArmy={props.onBuildArmy}
-            isHome={isHome}
-          />
-        ),
+        component: <ArmyBattalions army={props.army} />,
       },
     ],
     [
