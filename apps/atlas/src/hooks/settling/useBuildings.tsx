@@ -82,12 +82,25 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 const useBuildings = (realm: Realm | undefined): Building => {
   const txQueue = useCommandList();
   const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
+  const { play: buildBarracks } = useUiSounds(soundSelector.buildBarracks);
   const { gameConstants } = useGameConstants();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
   const [buildingUtilisation, SetBuildingUtilisation] =
     useState<BuildingFootprint>({ maxSqm: 0, currentSqm: 0 });
 
   const currentTime = new Date().getTime();
+
+  const playBuildingSound = (buildingId: RealmBuildingId) => {
+    // eslint-disable-next-line sonarjs/no-small-switch
+    switch (buildingId) {
+      case RealmBuildingId.Barracks:
+        buildBarracks();
+        break;
+      default:
+        buildMilitary();
+        break;
+    }
+  };
 
   const getRealmBuildings = (integrity, buildingLength) => {
     const buildings = Math.floor(
@@ -266,7 +279,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
   return {
     buildings,
     build: (args: { realmId; buildingId; qty; costs }) => {
-      buildMilitary();
+      playBuildingSound(args.buildingId);
       console.log(args.costs);
       txQueue.add(createBuildingCall.build({ ...args }));
     },
