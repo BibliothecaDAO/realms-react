@@ -73,7 +73,7 @@ export function useAtlasMap(): AtlasMap {
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 0,
-    zoom: 1,
+    zoom: 4,
     minZoom: 1,
     maxZoom: 10,
     pitch: 0,

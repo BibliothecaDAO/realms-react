@@ -6,46 +6,44 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import RealmsPlaylistSidebar from '@/components/realms/RealmsPlaylistSideBar';
+import { useSound } from '@/context/MusicProvider';
 import { usePlayer } from '@/hooks/usePlayer';
 
 export const BottomLeftNav = () => {
-  const [soundOn, setSoundOn] = useState(false);
+  // const [soundOn, setSoundOn] = useState(false);
 
-  const [player, currentTrack] = usePlayer([
-    {
-      title: 'Cimbalom',
-      artist: 'Casey',
-      src: '/music/realms_cimbalom.mp3',
-    },
-    {
-      title: 'Bansura',
-      artist: 'Casey',
-      src: '/music/realms_bansura.mp3',
-    },
-  ]);
+  // const [player, currentTrack] = usePlayer([
+  //   {
+  //     title: 'Cimbalom',
+  //     artist: 'Casey',
+  //     src: '/music/realms_cimbalom.mp3',
+  //   },
+  //   {
+  //     title: 'Bansura',
+  //     artist: 'Casey',
+  //     src: '/music/realms_bansura.mp3',
+  //   },
+  // ]);
 
-  const [showPlaylists, setShowPlaylists] = useState(false);
+  // const [showPlaylists, setShowPlaylists] = useState(false);
+
+  const { toggleSound, isSoundActive } = useSound();
 
   return (
     <div className="absolute bottom-0 z-50">
       <div className="relative">
         <div className="relative bottom-0 z-30 flex h-10 w-72">
-          <div className="relative w-12 h-10 p-2 bg-gray-1000 border-t border-r border-yellow-800 rounded-tr-full">
+          <div className="relative w-12 h-10 p-2 border-t border-r border-yellow-800 rounded-tr-full bg-gray-1000">
             {' '}
             <IconButton
               aria-label="Bank"
               variant="unstyled"
               texture={false}
               onClick={() => {
-                if (soundOn) {
-                  player.pause();
-                } else {
-                  player.play();
-                }
-                setSoundOn((prev) => !prev);
+                toggleSound();
               }}
               icon={
-                soundOn ? (
+                isSoundActive ? (
                   <VolumeOn className="w-5" />
                 ) : (
                   <VolumeOff className="w-5" />
@@ -54,7 +52,7 @@ export const BottomLeftNav = () => {
               size="md"
             />
           </div>
-          {/* <div className="flex justify-center w-12 h-10 p-2 bg-gray-1000 border-t border-r border-yellow-800 rounded-t-full paper">
+          {/* <div className="flex justify-center w-12 h-10 p-2 border-t border-r border-yellow-800 rounded-t-full bg-gray-1000 paper">
             <IconButton
               aria-label="Bank"
               variant="unstyled"

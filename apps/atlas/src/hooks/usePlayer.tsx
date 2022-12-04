@@ -15,7 +15,7 @@ export function usePlayer(playlist) {
     player.current.on('play', () => {
       setCurrentTrack(player.current.currentTrack.title);
     });
-  }, []);
+  }, [player]);
 
   return [player.current, currentTrack];
 }
