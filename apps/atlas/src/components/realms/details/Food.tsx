@@ -102,13 +102,14 @@ export const RealmsFood = (props: Prop) => {
   return (
     <div>
       <div>
-        <Card className="w-full">
+        <div className="w-full">
           <div className="flex">
             <div>
               <Image
                 width={200}
                 height={200}
                 alt="Storehouse"
+                className={' mx-auto border-yellow-900 border rounded'}
                 src={'/realm-buildings/mj_storehouse.png'}
               />
             </div>
@@ -219,9 +220,9 @@ export const RealmsFood = (props: Prop) => {
               </div>
             )}
           </div>
-        </Card>
+        </div>
         {isOwner && (
-          <Card className="w-full">
+          <div className="w-full">
             <div className="flex ">
               <Image
                 width={200}
@@ -372,10 +373,10 @@ export const RealmsFood = (props: Prop) => {
                 </div>
               </div>
             </div>
-          </Card>
+          </div>
         )}
         {isOwner && (
-          <Card className="w-full">
+          <div className="w-full">
             <div className="flex justify-between w-full">
               <Image
                 width={200}
@@ -527,7 +528,7 @@ export const RealmsFood = (props: Prop) => {
                 </div>
               </div>
             </div>
-          </Card>
+          </div>
         )}
       </div>
     </div>

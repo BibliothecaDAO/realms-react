@@ -238,10 +238,13 @@ function MapModule() {
   const sRealms = new IconLayer({
     id: 'srealms',
     data: filteredUserRealmsFromMain,
-    getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/8989/8989521.png',
-      width: 128,
-      height: 128,
+    getIcon: (d: any) => ({
+      url:
+        d.id === parseInt(selectedId)
+          ? 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png'
+          : 'https://cdn-icons-png.flaticon.com/512/8989/8989521.png',
+      width: d.id === parseInt(selectedId) ? 400 : 100,
+      height: d.id === parseInt(selectedId) ? 400 : 100,
       anchorY: 100,
     }),
     sizeUnits: 'pixels',
@@ -250,6 +253,7 @@ function MapModule() {
     sizeScale: 50,
     sizeMinPixels: 6,
     getPosition: (d: any) => d.xy,
+
     onClick: (info: any) => {
       mapContext.navigateToAsset(info.object.id, 'realm');
       actions.updateSearchIdFilter(
@@ -292,7 +296,14 @@ function MapModule() {
     ];
 
     return [...assets, arcsLayer, ownRealms, selectedResources, sRealms];
-  }, [arcsLayer, createScatterPlot, ownRealms, sRealms, selectedResources]);
+  }, [
+    arcsLayer,
+    createScatterPlot,
+    ownRealms,
+    sRealms,
+    selectedResources,
+    selectedId,
+  ]);
 
   const {
     mapContext: { navigateToAsset },

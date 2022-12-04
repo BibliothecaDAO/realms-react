@@ -19,6 +19,7 @@ const getModalComponent = (currentModal: TModal) => {
         buildings={props.buildings}
         realmFoodDetails={props.realmFoodDetails}
         availableFood={props.availableFood}
+        buildingUtilisation={props.buildingUtilisation}
       />
     );
   }
@@ -42,7 +43,7 @@ export const Modals = () => {
 
   return (
     <animated.div
-      className="absolute top-0 z-40 w-full h-full bg-center bg-cover py-20"
+      className="absolute top-0 z-40 w-full h-full py-20 bg-center bg-cover"
       style={animation}
     >
       <div

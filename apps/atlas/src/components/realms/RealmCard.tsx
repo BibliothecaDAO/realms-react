@@ -306,6 +306,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     buildings: buildings,
                     realmFoodDetails: realmFoodDetails,
                     availableFood: availableFood,
+                    buildingUtilisation: buildingUtilisation,
                   });
                 }}
                 variant="primary"
