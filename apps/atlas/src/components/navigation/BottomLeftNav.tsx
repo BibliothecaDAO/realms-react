@@ -6,7 +6,7 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import RealmsPlaylistSidebar from '@/components/realms/RealmsPlaylistSideBar';
-import { useSound } from '@/context/MusicProvider';
+import { useSound } from '@/context/soundProvider';
 import { usePlayer } from '@/hooks/usePlayer';
 
 export const BottomLeftNav = () => {

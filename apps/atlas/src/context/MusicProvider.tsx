@@ -70,11 +70,11 @@ export function useSound() {
     });
   }, [player]);
 
-  const toggleSound = () => {
+  const toggleSound = useCallback(() => {
     const newValue = !isSoundActive;
     setSound(newValue);
     // booleanStorage.setItem(localStorageKey, newValue);
-  };
+  }, [isSoundActive]);
 
   // const isSSR = typeof window === 'undefined';
 

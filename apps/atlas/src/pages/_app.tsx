@@ -15,7 +15,7 @@ import { AtlasProvider } from '@/context/AtlasContext';
 import { BankProvider } from '@/context/BankContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
-import { MusicProvider } from '@/context/MusicProvider';
+import { SoundProvider } from '@/context/soundProvider';
 import { UIProvider } from '@/context/UIContext';
 import { UserBalancesProvider } from '@/context/UserBalancesContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
@@ -82,7 +82,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <CommandListProvider>
                   <UserBalancesProvider>
                     <BankProvider>
-                      <MusicProvider>
+                      <SoundProvider>
                         <AtlasProvider>
                           <UIProvider>
                             <SplashScreen>
@@ -93,7 +93,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                             </SplashScreen>
                           </UIProvider>
                         </AtlasProvider>
-                      </MusicProvider>
+                      </SoundProvider>
                     </BankProvider>
                   </UserBalancesProvider>
                 </CommandListProvider>
