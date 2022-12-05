@@ -207,6 +207,16 @@ export const RealmsSearch = () => {
   const { data, loading, startPolling, stopPolling } = useGetRealmsQuery({
     variables,
   });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query) {
+      const id = router.query?.asset.split('realm')[1];
+      console.log(id);
+
+      actions.updateSearchIdFilter(id);
+    }
+  }, [router]);
 
   useEffect(() => {
     if (loading) stopPolling();

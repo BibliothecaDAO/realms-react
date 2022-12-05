@@ -228,9 +228,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 <Button
                   onClick={() => {
                     navigateToAsset(props.realm.realmId, 'realm');
-                    actions.updateSearchIdFilter(
-                      props.realm.realmId ? props.realm.realmId.toString() : '0'
-                    );
                   }}
                   variant="outline"
                   size="xs"

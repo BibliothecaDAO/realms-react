@@ -40,7 +40,7 @@ type RealmAction =
   | { type: 'toggleHasWonderFilter' }
   | { type: 'toggleIsSettledFilter' }
   | { type: 'toggleIsRaidableFilter' }
-  | { type: 'clearFilfters' }
+  | { type: 'clearFilters' }
   | { type: 'addFavouriteRealm'; payload: number }
   | { type: 'removeFavouriteRealm'; payload: number }
   | { type: 'updateSearchIdFilter'; payload: string }
@@ -110,7 +110,7 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
       return { ...state, selectedOrders: [...action.payload] };
     case 'updateSelectedResources':
       return { ...state, selectedResources: [...action.payload] };
-    case 'clearFilfters':
+    case 'clearFilters':
       return { ...state, ...defaultFilters };
     case 'addFavouriteRealm':
       storage<number[]>(RealmFavoriteLocalStorageKey, []).set([
@@ -157,7 +157,7 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateSelectedOrders', payload: orders }),
   updateSelectedResources: (resources: number[]) =>
     dispatch({ type: 'updateSelectedResources', payload: resources }),
-  clearFilters: () => dispatch({ type: 'clearFilfters' }),
+  clearFilters: () => dispatch({ type: 'clearFilters' }),
   addFavouriteRealm: (realmId: number) =>
     dispatch({ type: 'addFavouriteRealm', payload: realmId }),
   removeFavouriteRealm: (realmId: number) =>

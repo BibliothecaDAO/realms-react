@@ -188,9 +188,6 @@ function MapModule() {
         },
         onClick: (info: any) => {
           mapContext.navigateToAsset(info.object.id, assetType);
-          actions.updateSearchIdFilter(
-            parseInt(info.object.id) ? info.object.id : ''
-          );
         },
       }),
     [mapContext, selectedId, actions]
@@ -211,9 +208,6 @@ function MapModule() {
     getSize: (d) => 10,
     onClick: (info: any) => {
       mapContext.navigateToAsset(info.object.id, 'realm');
-      actions.updateSearchIdFilter(
-        parseInt(info.object.id) ? info.object.id : ''
-      );
     },
   });
 
@@ -243,8 +237,8 @@ function MapModule() {
         d.id === parseInt(selectedId)
           ? 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png'
           : 'https://cdn-icons-png.flaticon.com/512/8989/8989521.png',
-      width: d.id === parseInt(selectedId) ? 400 : 100,
-      height: d.id === parseInt(selectedId) ? 400 : 100,
+      width: 128,
+      height: 128,
       anchorY: 100,
     }),
     sizeUnits: 'pixels',
@@ -256,9 +250,6 @@ function MapModule() {
 
     onClick: (info: any) => {
       mapContext.navigateToAsset(info.object.id, 'realm');
-      actions.updateSearchIdFilter(
-        parseInt(info.object.id) ? info.object.id : ''
-      );
     },
   });
 
