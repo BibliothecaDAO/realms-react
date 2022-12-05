@@ -214,7 +214,6 @@ export const RealmsSearch = () => {
       const id = router.query.asset
         ? (router.query.asset as string).split('realm')[1]
         : '';
-      console.log(id);
 
       actions.updateSearchIdFilter(id);
     }
