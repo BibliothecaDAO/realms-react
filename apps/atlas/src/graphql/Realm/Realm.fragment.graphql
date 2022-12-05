@@ -11,6 +11,7 @@ fragment RealmFragment on Realm {
   wonder
   lastAttacked
   lastClaimTime
+  lastTick
   lastVaultTime
   longitude
   latitude
