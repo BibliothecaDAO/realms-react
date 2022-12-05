@@ -5,6 +5,7 @@ import { formatEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
 import { TableCellsIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 import { AreaSeries, buildChartTheme, XYChart } from '@visx/xychart';
+import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { useReducer } from 'react';
 import { BasePanel } from '@/components/ui/panel/BasePanel';
@@ -85,15 +86,24 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       resource: (
         <div>
           <div className="flex sm:text-xl">
-            <ResourceIcon
-              className="self-center w-4"
-              resource={resource?.trait?.replace(' ', '') || ''}
-              size="md"
+            <img
+              alt={resource?.trait}
+              src={'/resources/' + resource.id.toString() + '.jpg'}
+              className="w-24 h-24 border rounded border-yellow-900/30"
             />
-            <div className="flex py-4 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0 font-display">
-              <span className="self-center w-full tracking-widest uppercase text-stone-200">
-                {resource?.trait}
-                <span className="block w-full tracking-widest uppercase sm:flex text-stone-400">
+
+            <div className="flex py-4 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
+              <span className="self-center w-full">
+                <span className="flex">
+                  <ResourceIcon
+                    className="self-center w-4 mr-2"
+                    resource={resource?.trait?.replace(' ', '') || ''}
+                    size="xs"
+                  />
+                  {resource?.trait}
+                </span>
+
+                <span className="block w-full tracking-widest text-gray-700 uppercase sm:flex">
                   {(+formatEther(balance?.amount || 0)).toLocaleString()}
                 </span>
               </span>
@@ -187,14 +197,24 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     return {
       resource: (
         <div className="flex px-1 py-2 sm:text-xl">
-          <ResourceIcon
-            className="self-center w-4"
-            resource={resource?.trait?.replace(' ', '') || ''}
-            size="md"
+          <img
+            alt={resource?.trait}
+            src={'/resources/' + resource.id.toString() + '.jpg'}
+            className="w-24 h-24 border rounded border-yellow-900/30"
           />
+
           <div className="flex p-2 ml-1">
             <span className="self-center">
-              {resource?.trait}
+              <span className="flex">
+                {' '}
+                <ResourceIcon
+                  className="self-center w-4 mr-2"
+                  resource={resource?.trait?.replace(' ', '') || ''}
+                  size="xs"
+                />
+                {resource?.trait}
+              </span>
+
               <span className="block w-full text-lg tracking-widest uppercase sm:flex text-stone-400/70">
                 {(+formatEther(balance?.amount || 0)).toLocaleString()}
               </span>
@@ -331,7 +351,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               boxData.map((data, index) => {
                 return (
                   <div
-                    className="p-2 bg-gray-1000 border rounded card border-yellow-600/20"
+                    className="p-2 border rounded bg-gray-1000 border-yellow-600/20"
                     key={index}
                   >
                     <div className="flex justify-between">

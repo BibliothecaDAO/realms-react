@@ -1,44 +1,58 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
+import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
+import { useSound } from '@/context/soundProvider';
 import useScreenOrientation from '@/hooks/useScreenOrientation';
+import NetworkConnectButton from '../ui/NetworkConnectButton';
 
 export const SplashScreen = ({ children }) => {
   const { toggleFullScreen, orientation } = useScreenOrientation();
   const [loading, setLoading] = useState(true);
+  const { address, status, connector } = useAccount();
 
-  return !loading ? (
-    children
-  ) : (
-    <div>
-      <div className="flex left-0 justify-center items-center h-screen w-full bg-gray-1000 bg-cover bg-realmBackground">
-        <div className="relative flex flex-col lg:w-1/3 text-center">
-          <Ouroboros className="self-center h-32 ml-2 mr-4 fill-yellow-600 " />
-          <h1 className="mb-8">Eternum</h1>
+  const { toggleSound } = useSound();
 
-          <div className="flex gap-4">
-            <Button
-              className="w-1/2"
-              variant="primary"
-              onClick={() => {
-                setLoading(false);
-              }}
-            >
-              Launch
-            </Button>
-            <Button
-              className="w-1/2"
-              variant="primary"
-              onClick={() => {
-                toggleFullScreen();
-                setLoading(false);
-              }}
-            >
-              Launch Fullscreen
-            </Button>
+  return (
+    <>
+      {loading && (
+        <div className="absolute left-0 flex items-center justify-center w-full h-screen bg-cover z-100 bg-gray-1000 bg-realmBackground">
+          <div className="relative flex flex-col text-center lg:w-1/3">
+            <Ouroboros className="self-center h-32 ml-2 mr-4 fill-yellow-600 " />
+            <h1 className="mb-8">Eternum</h1>
+            {address && status === 'connected' ? (
+              <div className="flex gap-4">
+                <Button
+                  className="w-1/2"
+                  variant="primary"
+                  onClick={() => {
+                    setLoading(false);
+                    toggleSound();
+                  }}
+                >
+                  Launch
+                </Button>
+                <Button
+                  className="w-1/2"
+                  variant="primary"
+                  onClick={() => {
+                    toggleFullScreen();
+                    setLoading(false);
+                    toggleSound();
+                  }}
+                >
+                  Launch Fullscreen
+                </Button>
+              </div>
+            ) : (
+              <div className="rounded bg-gray-1000 animate-pulse">
+                <NetworkConnectButton />
+              </div>
+            )}
           </div>
         </div>
-      </div>
-    </div>
+      )}
+      {children}
+    </>
   );
 };

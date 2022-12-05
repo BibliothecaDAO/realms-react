@@ -43,13 +43,13 @@ const initialValue =
 export function useSound() {
   const [isSoundActive, setSound] = useState(initialValue);
 
-  const toggleSound = useCallback(() => {
+  const toggleSound = () => {
     const newValue = !isSoundActive;
     setSound(newValue);
     booleanStorage.setItem(localStorageKey, newValue);
-  }, [isSoundActive]);
+  };
 
-  const [playBackground, { stop }] = useSoundLib('/Honor_Bound.mp3', {
+  const [playBackground, { stop }] = useSoundLib('/music/realms_cimbalom.mp3', {
     soundEnabled: isSoundActive,
     volume: 0.3,
     loop: true,
@@ -64,9 +64,9 @@ export function useSound() {
     if (!isSoundActive) {
       stop();
     } else {
-      // playBackground()
+      playBackground();
     }
-  }, [isSoundActive, playBackground, stop]);
+  }, [isSoundActive]);
 
   // return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
   return { isSoundActive, toggleSound, playShield };

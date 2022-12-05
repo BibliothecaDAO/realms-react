@@ -15,9 +15,11 @@ import { AtlasProvider } from '@/context/AtlasContext';
 import { BankProvider } from '@/context/BankContext';
 import { CommandListProvider } from '@/context/CommandListContext';
 import { ModalProvider } from '@/context/ModalContext';
+import { SoundProvider } from '@/context/soundProvider';
 import { UIProvider } from '@/context/UIContext';
 import { UserBalancesProvider } from '@/context/UserBalancesContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
+
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
@@ -80,16 +82,18 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <CommandListProvider>
                   <UserBalancesProvider>
                     <BankProvider>
-                      <AtlasProvider>
-                        <UIProvider>
-                          <SplashScreen>
-                            <DndProvider backend={HTML5Backend}>
-                              <Component {...pageProps} />
-                              <Modals />
-                            </DndProvider>
-                          </SplashScreen>
-                        </UIProvider>
-                      </AtlasProvider>
+                      <SoundProvider>
+                        <AtlasProvider>
+                          <UIProvider>
+                            <SplashScreen>
+                              <DndProvider backend={HTML5Backend}>
+                                <Component {...pageProps} />
+                                <Modals />
+                              </DndProvider>
+                            </SplashScreen>
+                          </UIProvider>
+                        </AtlasProvider>
+                      </SoundProvider>
                     </BankProvider>
                   </UserBalancesProvider>
                 </CommandListProvider>

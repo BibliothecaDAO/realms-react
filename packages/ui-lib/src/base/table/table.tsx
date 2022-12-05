@@ -71,7 +71,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  className="p-2 tracking-widest text-center border border-black"
+                  className="p-2 text-center "
                   key={header.id}
                   colSpan={header.colSpan}
                 >

@@ -1,17 +1,34 @@
 import { OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib/base';
+
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
+import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
+import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 
 import { useMemo, useState } from 'react';
-import { RealmsFood, WorkHuts } from '@/components/realms/details';
+import {
+  RealmHistory,
+  RealmLore,
+  RealmOverview,
+  RealmsFood,
+  Travel,
+  WorkHuts,
+} from '@/components/realms/details';
 import { DefendingArmy } from '@/components/realms/details/DefendingArmy';
 import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings';
 import { getMilitaryBuildingsBuilt } from '@/components/realms/RealmsGetters';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
+import type {
+  BuildingDetail,
+  BuildingFootprint,
+  RealmFoodDetails,
+} from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
 
 type Prop = {
@@ -19,6 +36,7 @@ type Prop = {
   buildings: BuildingDetail[] | undefined;
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
+  buildingUtilisation: BuildingFootprint | undefined;
 };
 
 export const RealmBuildModal = (props: Prop) => {
@@ -30,8 +48,23 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
+            <Castle className="self-center w-4 h-4 mr-2 fill-current" />
+          </span>
+        ),
+        component: (
+          <RealmOverview
+            buildingUtilisation={props.buildingUtilisation}
+            availableFood={props.availableFood}
+            realmFoodDetails={props.realmFoodDetails}
+            realm={props.realm}
+            loading={false}
+          />
+        ),
+      },
+      {
+        label: (
+          <span className="flex">
             <Sword className="self-center w-4 h-4 mr-2 fill-current" />
-            Military
           </span>
         ),
         component: (
@@ -41,7 +74,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Shield className="self-center w-4 h-4 mr-2 fill-current" /> Defence
+            <Shield className="self-center w-4 h-4 mr-2 fill-current" />
           </span>
         ),
         component: (
@@ -55,7 +88,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Shield className="self-center w-4 h-4 mr-2 fill-current" /> Offence
+            <Shield className="self-center w-4 h-4 mr-2 fill-current" />
           </span>
         ),
         component: (
@@ -70,7 +103,6 @@ export const RealmBuildModal = (props: Prop) => {
         label: (
           <span className="flex">
             <Sickle className="self-center w-4 h-4 mr-2 fill-current" />{' '}
-            Production
           </span>
         ),
         component: <WorkHuts buildings={props.buildings} realm={props.realm} />,
@@ -78,7 +110,7 @@ export const RealmBuildModal = (props: Prop) => {
       {
         label: (
           <span className="flex">
-            <Sickle className="self-center w-4 h-4 mr-2 fill-current" /> Farming
+            <Sickle className="self-center w-4 h-4 mr-2 fill-current" />
           </span>
         ),
         component: (
@@ -88,6 +120,23 @@ export const RealmBuildModal = (props: Prop) => {
             buildings={props.buildings}
             realm={props.realm}
             loading={false}
+          />
+        ),
+      },
+      // {
+      //   label: <Globe className="self-center w-4 h-4 fill-current" />,
+      //   component: <Travel realm={props.realm} />,
+      // },
+      {
+        label: <Scroll className="self-center w-4 h-4 fill-current" />,
+        component: <RealmHistory realmId={props.realm.realmId} />,
+      },
+      {
+        label: <Library className="self-center w-4 h-4 fill-current" />,
+        component: (
+          <RealmLore
+            realmName={props.realm.name || ''}
+            realmId={props.realm.realmId || 0}
           />
         ),
       },
@@ -102,11 +151,18 @@ export const RealmBuildModal = (props: Prop) => {
 
   return (
     <div className="flex-col flex-wrap px-4 bg-gray/800">
-      <div className="flex self-center justify-center mb-4">
-        <OrderIcon size="lg" order={props.realm.orderType.toLowerCase()} />
-        <h1 className="flex self-center ml-2 text-center">
-          {props.realm.name}
-        </h1>
+      <div className="flex flex-wrap self-center justify-center mb-4">
+        <div className="flex justify-center w-full">
+          <h6 className="text-gray-700 animate-pulse">
+            24hrs Ago (decay imminent)
+          </h6>
+        </div>
+        <div className="flex justify-center w-full">
+          <OrderIcon size="lg" order={props.realm.orderType.toLowerCase()} />
+          <h1 className="flex self-center ml-2 text-center">
+            {props.realm.name}
+          </h1>
+        </div>
       </div>
       <Tabs
         selectedIndex={selectedTab}
