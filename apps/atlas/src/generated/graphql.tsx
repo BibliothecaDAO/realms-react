@@ -1035,6 +1035,7 @@ export type Realm = {
   imageUrl?: Maybe<Scalars['String']>;
   lastAttacked?: Maybe<Scalars['Timestamp']>;
   lastClaimTime?: Maybe<Scalars['Timestamp']>;
+  lastTick?: Maybe<Scalars['Timestamp']>;
   lastVaultTime?: Maybe<Scalars['Timestamp']>;
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
@@ -1301,6 +1302,7 @@ export type RealmOrderByWithRelationInput = {
   imageUrl?: InputMaybe<SortOrder>;
   lastAttacked?: InputMaybe<SortOrder>;
   lastClaimTime?: InputMaybe<SortOrder>;
+  lastTick?: InputMaybe<SortOrder>;
   lastVaultTime?: InputMaybe<SortOrder>;
   latitude?: InputMaybe<SortOrder>;
   longitude?: InputMaybe<SortOrder>;
@@ -1376,6 +1378,7 @@ export type RealmWhereInput = {
   imageUrl?: InputMaybe<StringFilter>;
   lastAttacked?: InputMaybe<DateTimeNullableFilter>;
   lastClaimTime?: InputMaybe<DateTimeNullableFilter>;
+  lastTick?: InputMaybe<DateTimeNullableFilter>;
   lastVaultTime?: InputMaybe<DateTimeNullableFilter>;
   latitude?: InputMaybe<FloatFilter>;
   longitude?: InputMaybe<FloatFilter>;
@@ -1988,6 +1991,7 @@ export type GetRealmQuery = {
     wonder?: string | null;
     lastAttacked?: any | null;
     lastClaimTime?: any | null;
+    lastTick?: any | null;
     lastVaultTime?: any | null;
     longitude: number;
     latitude: number;
@@ -2216,6 +2220,7 @@ export type GetRealmsQuery = {
     wonder?: string | null;
     lastAttacked?: any | null;
     lastClaimTime?: any | null;
+    lastTick?: any | null;
     lastVaultTime?: any | null;
     longitude: number;
     latitude: number;
@@ -2324,6 +2329,7 @@ export type GetRealmsWithTravelsQuery = {
     wonder?: string | null;
     lastAttacked?: any | null;
     lastClaimTime?: any | null;
+    lastTick?: any | null;
     lastVaultTime?: any | null;
     longitude: number;
     latitude: number;
@@ -2454,6 +2460,7 @@ export type RealmFragmentFragment = {
   wonder?: string | null;
   lastAttacked?: any | null;
   lastClaimTime?: any | null;
+  lastTick?: any | null;
   lastVaultTime?: any | null;
   longitude: number;
   latitude: number;
@@ -2806,6 +2813,7 @@ export const RealmFragmentFragmentDoc = gql`
     wonder
     lastAttacked
     lastClaimTime
+    lastTick
     lastVaultTime
     longitude
     latitude
