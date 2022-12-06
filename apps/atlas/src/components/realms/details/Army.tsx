@@ -168,7 +168,7 @@ export const RealmsArmy = (props) => {
               disabled={!vaultCountdown.expired}
               variant={'primary'}
             >
-              {realm && RealmCombatStatus(realm)}
+              {realm && getRealmCombatStatus(realm)}
             </Button>
             <p className="p-3 text-center uppercase font-display">
               Pillage this vault for 25% of its resources.

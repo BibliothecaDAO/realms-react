@@ -16,6 +16,7 @@ import {
   fetchRealmNameById,
   getDays,
   hasOwnRelic,
+  getRealmCombatStatus,
   vaultResources,
 } from '@/components/realms/RealmsGetters';
 import { findResourceById } from '@/constants/resources';
@@ -63,10 +64,11 @@ export const CombatSideBar: React.FC<Prop> = ({
     ArmyAndOrder | undefined
   >(defendingRealm?.ownArmies[0]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (firstArmy) {
       setSelectedArmy(firstArmy);
     }
+    console.log(firstArmy);
   }, [firstArmy]);
 
   // Can probably split using reduce function instead
@@ -107,130 +109,131 @@ export const CombatSideBar: React.FC<Prop> = ({
   });
 
   useEffect(() => {
-    if (!loadingResult && result) {
+    if (combatData?.transaction_hash && !loadingResult && result) {
       setDefendingRealmArmy(defendingEndArmy);
       setSelectedArmy(attackingEndArmy);
     }
+
+    // console.log(result);
   }, [result]);
 
   return (
     <div className="z-50 p-16 bg-center bg-cover bg-realmCombatBackground">
-      {!txSubmitted || combatError ? (
-        <div className="grid w-full md:grid-cols-3 ">
-          <div>
-            {!raidButtonEnabled && selectedArmy && (
-              <div className="p-8 mb-4 text-xl text-white bg-red-900 rounded-3xl">
-                {isSameOrder && (
-                  <div>
-                    Ser, {fetchRealmNameById(selectedArmy.realmId)} is of the
-                    same order as {fetchRealmNameById(defendingRealm?.realmId)}.
-                    You cannot attack!
-                  </div>
-                )}
-              </div>
-            )}
-
-            <ArmyDisplayContainer
-              order={selectedArmy?.orderType}
-              realmId={selectedArmy?.realmId}
-              army={selectedArmy}
-              owner={address}
-            />
-          </div>
-          <div className="self-start w-full lg:px-24">
-            {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
-            <div className="py-10 text-center border-4 border-yellow-900 border-double rounded-b-full bg-gray-1000 ">
-              {hasOwnRelic(defendingRealm) ? (
-                <img src="/mj_relic.png" alt="" />
-              ) : (
-                ''
-              )}
-              <h5 className="my-3">
-                {hasOwnRelic(defendingRealm) ? 'Relic vulnerable' : ''}
-              </h5>
-              <h2 className="text-center">
-                {vaultResources(getDays(defendingRealm?.lastVaultTime))}x
-              </h2>
-              {defendingRealm?.resources?.map((re, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col justify-center p-2 mt-4"
-                >
-                  <ResourceIcon
-                    resource={
-                      findResourceById(re.resourceId)?.trait.replace(' ', '') ||
-                      ''
-                    }
-                    size="sm"
-                  />
-
-                  <span className="self-center mt-1">
-                    {findResourceById(re.resourceId)?.trait}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <Button
-              onClick={() => {
-                initiateCombat({
-                  attackingArmyId: selectedArmy?.armyId,
-                  attackingRealmId: selectedArmy?.realmId,
-                  defendingRealmId: defendingRealm?.realmId,
-                });
-              }}
-              loading={combatLoading}
-              loadingText={'Raiding'}
-              disabled={!raidButtonEnabled}
-              variant="primary"
-              size="lg"
-              className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double"
-            >
-              Raid Vault
-            </Button>
-          </div>
-          <ArmyDisplayContainer
-            order={defendingRealm?.orderType}
-            realmId={defendingRealm?.realmId}
-            army={defendingRealmArmy}
-            owner={defendingRealm?.ownerL2}
-          />
-          <div>
-            {/* combatError && <p className="mt-3 text-red-400">combatError</p> */}
-          </div>
-          <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
-            <h3>Armies at this Realm</h3>
-            <div className="grid lg:grid-cols-3">
-              {defendingRealm &&
-                attackingRealmsAtLocation?.map((army, index) => {
-                  return (
-                    <button onClick={() => setSelectedArmy(army)} key={index}>
-                      <ArmyCard
-                        army={army}
-                        selectedRealm={defendingRealm?.realmId}
-                        onTravel={() =>
-                          travel(
-                            army.armyId,
-                            army.realmId,
-                            defendingRealm.realmId
-                          )
-                        }
-                      />
-                    </button>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
-      ) : (
+      {/* {txSubmitted || combatError ? ( */}
+      <div className="grid w-full md:grid-cols-3 ">
         <div>
-          loading
-          {/* <p>Tx Hash: {combatData} </p> */}
-          {/* <RaidResults
-            fromAttackRealmId={selectedArmy?.realmId}
-            tx={combatData?.transaction_hash}
-          /> */}
+          {!raidButtonEnabled && selectedArmy && (
+            <div className="p-8 mb-4 text-xl text-white bg-red-900 rounded-3xl">
+              {isSameOrder && (
+                <div>
+                  Ser, {fetchRealmNameById(selectedArmy.realmId)} is of the same
+                  order as {fetchRealmNameById(defendingRealm?.realmId)}. You
+                  cannot attack!
+                </div>
+              )}
+            </div>
+          )}
+
+          <ArmyDisplayContainer
+            order={selectedArmy?.orderType}
+            realmId={selectedArmy?.realmId}
+            army={selectedArmy}
+            owner={address}
+          />
         </div>
-      )}
+        <div className="self-start w-full lg:px-24">
+          {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
+          <div className="py-10 text-center border-4 border-yellow-900 border-double rounded-b-full bg-gray-1000 ">
+            {hasOwnRelic(defendingRealm) ? (
+              <img src="/mj_relic.png" alt="" />
+            ) : (
+              ''
+            )}
+            <h5 className="my-3">
+              {hasOwnRelic(defendingRealm) ? 'Relic vulnerable' : ''}
+            </h5>
+            <h2 className="text-center">
+              {vaultResources(getDays(defendingRealm?.lastVaultTime))}x
+            </h2>
+            {defendingRealm?.resources?.map((re, index) => (
+              <div
+                key={index}
+                className="flex flex-col justify-center p-2 mt-4"
+              >
+                <ResourceIcon
+                  resource={
+                    findResourceById(re.resourceId)?.trait.replace(' ', '') ||
+                    ''
+                  }
+                  size="sm"
+                />
+
+                <span className="self-center mt-1">
+                  {findResourceById(re.resourceId)?.trait}
+                </span>
+              </div>
+            ))}
+          </div>
+          <Button
+            onClick={() => {
+              initiateCombat({
+                attackingArmyId: selectedArmy?.armyId,
+                attackingRealmId: selectedArmy?.realmId,
+                defendingRealmId: defendingRealm?.realmId,
+              });
+            }}
+            loading={combatLoading}
+            loadingText={'Raiding'}
+            disabled={!raidButtonEnabled}
+            variant="primary"
+            size="lg"
+            className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double"
+          >
+            Raid Vault
+          </Button>
+        </div>
+
+        <ArmyDisplayContainer
+          order={defendingRealm?.orderType}
+          realmId={defendingRealm?.realmId}
+          army={defendingRealmArmy}
+          owner={defendingRealm?.ownerL2}
+        />
+        <div>
+          {/* combatError && <p className="mt-3 text-red-400">combatError</p> */}
+        </div>
+        <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
+          <h3>Armies at this Realm</h3>
+          <div className="grid lg:grid-cols-3">
+            {defendingRealm &&
+              attackingRealmsAtLocation?.map((army, index) => {
+                return (
+                  <button onClick={() => setSelectedArmy(army)} key={index}>
+                    <ArmyCard
+                      army={army}
+                      selectedRealm={defendingRealm?.realmId}
+                      onTravel={() =>
+                        travel(
+                          army.armyId,
+                          army.realmId,
+                          defendingRealm.realmId
+                        )
+                      }
+                    />
+                  </button>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+
+      {/* <div>
+        loading
+        <RaidResults
+          fromAttackRealmId={selectedArmy?.realmId}
+          tx={combatData?.transaction_hash}
+        />
+      </div> */}
     </div>
   );
 };

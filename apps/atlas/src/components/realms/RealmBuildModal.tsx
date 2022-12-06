@@ -21,7 +21,12 @@ import {
 } from '@/components/realms/details';
 import { DefendingArmy } from '@/components/realms/details/DefendingArmy';
 import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings';
-import { getMilitaryBuildingsBuilt } from '@/components/realms/RealmsGetters';
+import {
+  getMilitaryBuildingsBuilt,
+  getNumberOfTicks,
+  getTimeSinceLastTick,
+} from '@/components/realms/RealmsGetters';
+import { HAPPINESS_TIME_PERIOD_TICK } from '@/constants/buildings';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type {
@@ -30,6 +35,7 @@ import type {
   RealmFoodDetails,
 } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
+import { DetailedOverview } from './details/DetailedOverview';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -40,6 +46,14 @@ type Prop = {
 };
 
 export const RealmBuildModal = (props: Prop) => {
+  const {
+    realm,
+    buildings,
+    realmFoodDetails,
+    availableFood,
+    buildingUtilisation,
+  } = props;
+
   const [selectedTab, setSelectedTab] = useState(0);
   const { play } = useUiSounds(soundSelector.pageTurn);
 
@@ -52,11 +66,11 @@ export const RealmBuildModal = (props: Prop) => {
           </span>
         ),
         component: (
-          <RealmOverview
-            buildingUtilisation={props.buildingUtilisation}
-            availableFood={props.availableFood}
-            realmFoodDetails={props.realmFoodDetails}
-            realm={props.realm}
+          <DetailedOverview
+            buildingUtilisation={buildingUtilisation}
+            availableFood={availableFood}
+            realmFoodDetails={realmFoodDetails}
+            realm={realm}
             loading={false}
           />
         ),
@@ -67,9 +81,7 @@ export const RealmBuildModal = (props: Prop) => {
             <Sword className="self-center w-4 h-4 mr-2 fill-current" />
           </span>
         ),
-        component: (
-          <MilitaryBuildings buildings={props.buildings} realm={props.realm} />
-        ),
+        component: <MilitaryBuildings buildings={buildings} realm={realm} />,
       },
       {
         label: (
@@ -79,9 +91,9 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <DefendingArmy
-            realm={props.realm}
-            buildings={getMilitaryBuildingsBuilt(props.buildings)}
-            availableFood={props.availableFood}
+            realm={realm}
+            buildings={getMilitaryBuildingsBuilt(buildings)}
+            availableFood={availableFood}
           />
         ),
       },
@@ -93,9 +105,9 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <AttackingArmy
-            realm={props.realm}
-            buildings={getMilitaryBuildingsBuilt(props.buildings)}
-            availableFood={props.availableFood}
+            realm={realm}
+            buildings={getMilitaryBuildingsBuilt(buildings)}
+            availableFood={availableFood}
           />
         ),
       },
@@ -105,7 +117,7 @@ export const RealmBuildModal = (props: Prop) => {
             <Sickle className="self-center w-4 h-4 mr-2 fill-current" />{' '}
           </span>
         ),
-        component: <WorkHuts buildings={props.buildings} realm={props.realm} />,
+        component: <WorkHuts buildings={buildings} realm={realm} />,
       },
       {
         label: (
@@ -115,33 +127,33 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <RealmsFood
-            realmFoodDetails={props.realmFoodDetails}
-            availableFood={props.availableFood}
-            buildings={props.buildings}
-            realm={props.realm}
+            realmFoodDetails={realmFoodDetails}
+            availableFood={availableFood}
+            buildings={buildings}
+            realm={realm}
             loading={false}
           />
         ),
       },
       // {
       //   label: <Globe className="self-center w-4 h-4 fill-current" />,
-      //   component: <Travel realm={props.realm} />,
+      //   component: <Travel realm={realm} />,
       // },
       {
         label: <Scroll className="self-center w-4 h-4 fill-current" />,
-        component: <RealmHistory realmId={props.realm.realmId} />,
+        component: <RealmHistory realmId={realm.realmId} />,
       },
       {
         label: <Library className="self-center w-4 h-4 fill-current" />,
         component: (
           <RealmLore
-            realmName={props.realm.name || ''}
-            realmId={props.realm.realmId || 0}
+            realmName={realm.name || ''}
+            realmId={realm.realmId || 0}
           />
         ),
       },
     ],
-    [props.realm, props.buildings, props.availableFood, props.realmFoodDetails]
+    [realm, buildings, availableFood, realmFoodDetails]
   );
 
   const pressedTab = (index) => {
@@ -153,15 +165,14 @@ export const RealmBuildModal = (props: Prop) => {
     <div className="flex-col flex-wrap px-4 bg-gray/800">
       <div className="flex flex-wrap self-center justify-center mb-4">
         <div className="flex justify-center w-full">
-          <h6 className="text-gray-700 animate-pulse">
-            24hrs Ago (decay imminent)
+          <h6 className="animate-pulse">
+            ({getNumberOfTicks(realm)} cycles) | {getTimeSinceLastTick(realm)}{' '}
+            hrs since update
           </h6>
         </div>
         <div className="flex justify-center w-full">
-          <OrderIcon size="lg" order={props.realm.orderType.toLowerCase()} />
-          <h1 className="flex self-center ml-2 text-center">
-            {props.realm.name}
-          </h1>
+          <OrderIcon size="lg" order={realm.orderType.toLowerCase()} />
+          <h1 className="flex self-center ml-2 text-center">{realm.name}</h1>
         </div>
       </div>
       <Tabs

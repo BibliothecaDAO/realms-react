@@ -25,18 +25,23 @@ export const Travel = ({ realm }: Prop) => {
   const tabs = useMemo(
     () => [
       {
-        label: <Map className="self-center w-4 h-4 fill-current" />,
-        component: <RealmsTravel realm={realm} userRealms={userRealms} />,
-      },
-      {
         label: <Head className="self-center w-4 h-4 fill-current" />,
         component: <ArmiesTravel realm={realm} userRealms={userRealms} />,
+      },
+      {
+        label: <Map className="self-center w-4 h-4 fill-current" />,
+        component: <RealmsTravel realm={realm} userRealms={userRealms} />,
       },
     ],
     [userRealms, realm]
   );
   return (
-    <div>
+    <div className="p-5">
+      <div className="mb-4">
+        <h2>No Armies at this Realm</h2>
+        <h5>First travel an Army here, then you will be able to Attack.</h5>
+      </div>
+
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => pressedTab(index as number)}
@@ -54,9 +59,9 @@ export const Travel = ({ realm }: Prop) => {
           ))}
         </Tabs.Panels>
       </Tabs>
-      <div className="my-2">
+      {/* <div className="my-2">
         <img src="/vizirs/mj_travel.png" alt="" className="rounded" />
-      </div>
+      </div> */}
     </div>
   );
 };

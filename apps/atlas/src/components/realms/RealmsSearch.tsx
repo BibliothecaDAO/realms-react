@@ -215,7 +215,11 @@ export const RealmsSearch = () => {
         ? (router.query.asset as string).split('realm')[1]
         : '';
 
-      actions.updateSearchIdFilter(id);
+      const tab = router.query.tab;
+
+      if (!tab) {
+        actions.updateSearchIdFilter(id);
+      }
     }
   }, [router]);
 
