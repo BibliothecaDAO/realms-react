@@ -2,6 +2,7 @@ import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
 
 import { useAccount } from '@starknet-react/core';
 
+import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 import { useAccount as useL1Account } from 'wagmi';
@@ -86,8 +87,7 @@ export function DetailedOverview(
           {realm?.relic?.map((a, i) => {
             return (
               <div key={i} className="mb-1">
-                <h3>Annexed by {fetchRealmNameById(a.heldByRealm || 0)}</h3>{' '}
-                <p className="text-md">
+                <p className="text-3xl italic">
                   {realm?.name} has been Conquered by{' '}
                   {fetchRealmNameById(a.heldByRealm || 0)}. The citizens shake
                   in fear everyday thinking it will be their last... won't
@@ -108,85 +108,80 @@ export function DetailedOverview(
         </div>
       )}
 
-      <RealmImage id={realm.realmId} />
-      <div className="flex justify-between">
-        <div>
-          <div className="p-2">
-            <h5 className="italic text-yellow-400 opacity-80">Population</h5>
-            <h3>{getPopulation(realm)} </h3>
-            <span className="text-sm text-gray-700">
-              {' '}
-              Armies: {getTroopPopulation(realm)} | Buildings:{' '}
-              {getBuildingPopulation(realm)}
-            </span>
-          </div>
-          <div className="p-2">
-            <h5 className="italic text-yellow-400 opacity-80">Happiness</h5>
-            <h3>
-              {getHappiness({ realm: realm, food: availableFood })}{' '}
-              <span className="ml-2">
-                {' '}
-                {getHappinessIcon({
-                  realm: realm,
-                  food: availableFood,
-                })}
-              </span>
-            </h3>
-            <span className="text-sm text-gray-700">
-              Relic: -{getHappinessHasOwnRelic({ realm: realm })} | Food: -
-              {getHappinessHasFood({ food: props?.availableFood })} | Defending
-              Army: -{getHappinessHasDefendingArmy({ realm: realm })}
-            </span>
-          </div>
-          <div className="p-2">
-            <h5 className="italic text-yellow-400 opacity-80">Food in Store</h5>
-            <h3>
-              {availableFood?.toLocaleString()}{' '}
-              {getFoodIcon(availableFood || 0)}
-            </h3>
-            <span className="text-sm text-gray-700">
-              Consuming {getPopulation(realm)} food per second
-            </span>
-          </div>
-          <div className="p-2">
-            <h5 className="italic text-yellow-400 opacity-80">
-              Building Utilisation (sqm)
-            </h5>
-            <h3>
-              {buildingUtilisation?.currentSqm} / {buildingUtilisation?.maxSqm}{' '}
-            </h3>
-          </div>
+      <div className="flex flex-wrap justify-between">
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">Population</h5>
+          <h3>{getPopulation(realm)} </h3>
+          <span className="text-sm text-gray-700">
+            {' '}
+            Armies: {getTroopPopulation(realm)} | Buildings:{' '}
+            {getBuildingPopulation(realm)}
+          </span>
         </div>
-        <div>
-          <div className="p-2">
-            <h5 className="italic text-yellow-400 opacity-80">Resources</h5>
-            <h3>{maxClaimableResources(cachedDaysAccrued)}</h3>
-            <span className="text-sm text-gray-700">
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">Happiness</h5>
+          <h3>
+            {getHappiness({ realm: realm, food: availableFood })}{' '}
+            <span className="ml-2">
               {' '}
-              {daysAccrued(cachedDaysAccrued)}/3 max days accrued
+              {getHappinessIcon({
+                realm: realm,
+                food: availableFood,
+              })}
             </span>
-          </div>
-          <div className="p-2">
-            <h5 className="opacity-80  text-yellow-400 text-shadow-[0_2px_6px_#6366f1] italic">
-              Vault
-            </h5>
-            <h2>{vaultResources(cachedVaultDaysAccrued)} </h2>
-            <span className="text-sm text-gray-700">
-              {' '}
-              {cachedVaultDaysAccrued}/7 days until claimable
-            </span>
-          </div>
+          </h3>
+          <span className="text-sm text-gray-700">
+            Relic: -{getHappinessHasOwnRelic({ realm: realm })} | Food: -
+            {getHappinessHasFood({ food: props?.availableFood })} | Defending
+            Army: -{getHappinessHasDefendingArmy({ realm: realm })}
+          </span>
+        </div>
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">Food in Store</h5>
+          <h3>
+            {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
+          </h3>
+          <span className="text-sm text-gray-700">
+            Consuming {getPopulation(realm)} food per second
+          </span>
+        </div>
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">
+            Building Utilisation (sqm)
+          </h5>
+          <h3>
+            {buildingUtilisation?.currentSqm} / {buildingUtilisation?.maxSqm}{' '}
+          </h3>
+          <span className="text-sm text-gray-700"> Total Space used</span>
+        </div>
+
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">Resources</h5>
+          <h3>{maxClaimableResources(cachedDaysAccrued)}</h3>
+          <span className="text-sm text-gray-700">
+            {' '}
+            {daysAccrued(cachedDaysAccrued)}/3 max days accrued
+          </span>
+        </div>
+        <div className="p-2">
+          <h5 className="italic text-yellow-400 opacity-80">Vault</h5>
+          <h2>{vaultResources(cachedVaultDaysAccrued)} </h2>
+          <span className="text-sm text-gray-700">
+            {' '}
+            {cachedVaultDaysAccrued}/7 days until claimable
+          </span>
         </div>
       </div>
-
+      <RealmImage id={realm.realmId} />
       <div className="flex flex-wrap justify-center mt-4">
         {realm.resources?.map((re, index) => (
           <div key={index} className="flex flex-col justify-center p-2">
-            <ResourceIcon
-              resource={
-                findResourceById(re.resourceId)?.trait.replace(' ', '') || ''
-              }
-              size="sm"
+            <Image
+              src={'/resources/' + re.resourceId + '.jpg'}
+              alt="map"
+              width={200}
+              height={200}
+              className="rounded"
             />
 
             <span className="self-center mt-2">

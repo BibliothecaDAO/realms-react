@@ -204,7 +204,7 @@ export const CombatSideBar: React.FC<Prop> = ({
         </div>
         <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
           <h3>Armies at this Realm</h3>
-          <div className="grid lg:grid-cols-3">
+          <div className="grid gap-2 lg:grid-cols-3">
             {defendingRealm &&
               attackingRealmsAtLocation?.map((army, index) => {
                 return (

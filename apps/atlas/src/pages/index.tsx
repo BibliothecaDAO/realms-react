@@ -236,7 +236,7 @@ function MapModule() {
       url:
         d.id === parseInt(selectedId)
           ? 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png'
-          : 'https://cdn-icons-png.flaticon.com/512/8989/8989521.png',
+          : '/castle_icon.png',
       width: 128,
       height: 128,
       anchorY: 100,

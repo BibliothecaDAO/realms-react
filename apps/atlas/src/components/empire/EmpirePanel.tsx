@@ -122,14 +122,14 @@ export function EmpirePanel() {
         details: <span className="flex"></span>,
         action: () => claimAll(),
       },
-      {
-        name: 'Harvest Farms',
-        icon: <Sword className="self-center w-4 h-4 mr-1" />,
-        details: <span className="flex"></span>,
-        action: () => {
-          claimAll();
-        },
-      },
+      // {
+      //   name: 'Harvest Farms',
+      //   icon: <Sword className="self-center w-4 h-4 mr-1" />,
+      //   details: <span className="flex"></span>,
+      //   action: () => {
+      //     claimAll();
+      //   },
+      // },
     ],
     [userData]
   );
@@ -142,7 +142,7 @@ export function EmpirePanel() {
   return (
     <div className="flex px-2">
       <div className="w-9/12 px-10 pt-10 bg-gray-1000">
-        <div className="flex w-full gap-2 p-2 mb-4 bg-gray-1000 border border-yellow-900 rounded-2xl">
+        <div className="flex w-full gap-2 p-2 mb-4 border border-yellow-900 bg-gray-1000 rounded-2xl">
           {quickActions.map((action) => (
             <Button
               key={action.name}

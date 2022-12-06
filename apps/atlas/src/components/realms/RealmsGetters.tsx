@@ -295,7 +295,7 @@ export const getIsRaidable = (realm: RealmFragmentFragment) => {
   const lastVaultTime = new Date(realm.lastAttacked);
   const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
   const minutesToVault = ATTACK_COOLDOWN_PERIOD / 60; // 24 hours
-  return minutesSinceLastVault >= minutesToVault;
+  return minutesToVault >= minutesSinceLastVault;
 };
 
 export const CostBlock = ({ resourceName, amount, id, qty }) => {
