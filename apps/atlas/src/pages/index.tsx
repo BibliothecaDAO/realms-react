@@ -197,7 +197,7 @@ function MapModule() {
     id: 'own-realms',
     data: userRealmsFormatted,
     getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png',
+      url: '/real_icon-fill_small.png',
       width: 128,
       height: 128,
       anchorY: 100,
@@ -235,8 +235,8 @@ function MapModule() {
     getIcon: (d: any) => ({
       url:
         d.id === parseInt(selectedId)
-          ? 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png'
-          : '/castle_icon.png',
+          ? '/real_icon-fill_small.png'
+          : '/real_icon-line_small.png',
       width: 128,
       height: 128,
       anchorY: 100,
