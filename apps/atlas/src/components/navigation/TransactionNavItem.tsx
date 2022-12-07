@@ -16,17 +16,17 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
     return transactions.filter((a: any) => a?.data?.status === 'RECEIVED')
       .length
       ? 'bg-orange-900 animate-pulse'
-      : 'bg-gray-1000';
+      : '';
   };
 
   return (
     <Button
       variant="unstyled"
-      className={`rounded-r-full rounded-b-full md:w-32 md:h-32 lg:w-48 lg:h-48 shadow-2xl border-yellow-800 border md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex z-100`}
+      className={`md:w-32 md:h-32 lg:w-48 lg:h-48 md:-ml-16 md:-mt-16 lg:-ml-24 lg:-mt-24 top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex `}
       onClick={onClick}
     >
-      <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-28 lg:right-28 flex">
-        <span className="flex w-3 h-3 mt-3 sm:ml-1 sm:mt-0 mr-1">
+      <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-32 lg:right-32 flex pointer-events-none">
+        <span className="flex w-3 h-3 mt-3 mr-1 sm:ml-1 sm:mt-0">
           {txQueue.transactions.length > 0 ? (
             <span className="p-1 -mt-3 text-center">
               {txQueue.transactions.length}

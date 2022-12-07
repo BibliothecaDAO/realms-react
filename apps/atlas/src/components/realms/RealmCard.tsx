@@ -185,6 +185,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       });
 
     const isOwner = useIsOwner(realm?.settledOwner);
+
     return (
       <Card ref={ref}>
         {realm?.wonder && (

@@ -1,4 +1,10 @@
-import { OrderIcon, Button, ResourceIcon, Tabs } from '@bibliotheca-dao/ui-lib';
+import {
+  OrderIcon,
+  Button,
+  ResourceIcon,
+  Tabs,
+  Table,
+} from '@bibliotheca-dao/ui-lib';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
@@ -78,11 +84,6 @@ export const CombatSideBar: React.FC<Prop> = ({
 
   // Client side validation
   const isSameOrder = defendingRealm?.orderType == selectedArmy?.orderType;
-  /* const attackRealmHasAttackSquad =
-    attackingRealm?.troops &&
-    attackingRealm.troops.filter((t) => t.squadSlot == Squad['Attack']).length >
-      0; */
-  // TODO: Attacking army cooldown has expired
 
   const raidButtonEnabled = !!selectedArmy && !isSameOrder;
 
@@ -118,7 +119,7 @@ export const CombatSideBar: React.FC<Prop> = ({
   }, [result]);
 
   return (
-    <div className="z-50 p-16 bg-center bg-cover bg-realmCombatBackground">
+    <div className="z-50 h-screen p-16 bg-center bg-cover bg-realmCombatBackground ">
       {/* {txSubmitted || combatError ? ( */}
       <div className="grid w-full md:grid-cols-3 ">
         <div>
@@ -142,7 +143,10 @@ export const CombatSideBar: React.FC<Prop> = ({
           />
         </div>
         <div className="self-start w-full lg:px-24">
-          {/* <ArmyStatistics armyStatistics={attackingArmyStats} /> */}
+          <RaidResultTable />
+          {/* <div className="p-2 text-center bg-gray-1000 rounded-t-xl">
+            <h1>Raid</h1>
+          </div>
           <div className="py-10 text-center border-4 border-yellow-900 border-double rounded-b-full bg-gray-1000 ">
             {hasOwnRelic(defendingRealm) ? (
               <img src="/mj_relic.png" alt="" />
@@ -189,8 +193,8 @@ export const CombatSideBar: React.FC<Prop> = ({
             size="lg"
             className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double"
           >
-            Raid Vault
-          </Button>
+            Plunder!
+          </Button> */}
         </div>
 
         <ArmyDisplayContainer
@@ -202,7 +206,7 @@ export const CombatSideBar: React.FC<Prop> = ({
         <div>
           {/* combatError && <p className="mt-3 text-red-400">combatError</p> */}
         </div>
-        <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
+        {/* <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
           <h3>Armies at this Realm</h3>
           <div className="grid gap-2 lg:grid-cols-3">
             {defendingRealm &&
@@ -224,7 +228,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 );
               })}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* <div>
@@ -308,6 +312,69 @@ export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
           </Tabs>
         </div>
       </div>
+    </div>
+  );
+};
+
+export const RaidResultTable = () => {
+  const army = {
+    __typename: 'Army',
+    armyId: 1,
+    realmId: 54,
+    xp: 0,
+    destinationRealmId: 24,
+    destinationArrivalTime: 1670330023000,
+    armyPacked: 0,
+    lastAttacked: null,
+    level: 0,
+    callSign: 0,
+    lightCavalryQty: 10,
+    lightCavalryHealth: 100,
+    heavyCavalryQty: 0,
+    heavyCavalryHealth: 0,
+    archerQty: 10,
+    archerHealth: 100,
+    longbowQty: 0,
+    longbowHealth: 0,
+    mageQty: 0,
+    mageHealth: 0,
+    arcanistQty: 0,
+    arcanistHealth: 0,
+    lightInfantryQty: 0,
+    lightInfantryHealth: 0,
+    heavyInfantryQty: 10,
+    heavyInfantryHealth: 100,
+    orderType: 'Fury',
+  };
+  const combatTable = () => {
+    return {
+      lord: 'squid',
+      deployed: [{ name: 'squid', quantity: 1 }],
+      losses: [{ name: 'squid', quantity: 1 }],
+      remaining: 2,
+    };
+  };
+
+  return (
+    <div className="p-2 rounded bg-gray-1000">
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th>Lord</th>
+            <th>Deployed</th>
+            <th>Losses</th>
+            <th>Remaining</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{combatTable().lord}</td>
+            <td>{combatTable().lord}</td>
+            <td>{combatTable().lord}</td>
+            <td>{combatTable().lord}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
