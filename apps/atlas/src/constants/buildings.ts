@@ -132,6 +132,10 @@ export const VAULT_LENGTH = 7;
 export const DAY = 86400;
 export const VAULT_LENGTH_SECONDS = VAULT_LENGTH * DAY;
 
+export const HAPPINESS_TIME_PERIOD_TICK = DAY / 2;
+
+export const ARMY_DESERTION_DAMAGE = 150;
+
 export const BASE_LORDS_PER_DAY = 25;
 
 export const WORK_HUT_COST_IN_BP = 5;
@@ -166,6 +170,8 @@ export const NO_DEFENDING_ARMY_LOSS = 5;
 export const NUMBER_OF_RANDOM_EVENTS = 9;
 
 export const MAX_BATTALIONS = 30;
+
+export const ATTACK_COOLDOWN_PERIOD = DAY / 10;
 
 export enum RealmBuildingIntegrity {
   House = 3 * DAY,

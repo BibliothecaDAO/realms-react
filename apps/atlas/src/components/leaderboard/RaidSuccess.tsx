@@ -62,7 +62,7 @@ export const RaidSuccess = () => {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
+            router.push(`/?asset=realm${realm?.realmId}`, undefined, {
               shallow: true,
             });
           }}
@@ -83,7 +83,7 @@ export const RaidSuccess = () => {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmOwner}`, undefined, {
+            router.push(`/?asset=realm${realm?.realmOwner}`, undefined, {
               shallow: true,
             });
           }}

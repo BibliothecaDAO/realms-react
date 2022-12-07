@@ -3,10 +3,12 @@ import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 import { ethers, BigNumber } from 'ethers';
 import {
+  ATTACK_COOLDOWN_PERIOD,
   BASE_HAPPINESS,
   BASE_RESOURCES_PER_DAY,
   buildingPopulation,
   DAY,
+  HAPPINESS_TIME_PERIOD_TICK,
   MAX_DAYS_ACCURED,
   NO_DEFENDING_ARMY_LOSS,
   NO_FOOD_LOSS,
@@ -266,14 +268,14 @@ export const RealmClaimable = (realm: RealmFragmentFragment) => {
   return cachedDaysAccrued >= 1 ? true : false;
 };
 
-export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
-  if (!realm.lastAttacked) {
+export const getRealmCombatStatus = (realm: RealmFragmentFragment) => {
+  if (!getIsRaidable(realm)) {
     return 'Raidable';
   }
   const now = Date.now();
   const lastVaultTime = new Date(realm.lastAttacked);
   const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
-  const minutesToVault = DAY / 60; // 24 hours
+  const minutesToVault = ATTACK_COOLDOWN_PERIOD / 60; // 24 hours
   if (minutesSinceLastVault >= minutesToVault) {
     return `Raidable`;
   }
@@ -286,6 +288,14 @@ export const RealmCombatStatus = (realm: RealmFragmentFragment) => {
   } else {
     return `Raidable in ${minutes}m`;
   }
+};
+
+export const getIsRaidable = (realm: RealmFragmentFragment) => {
+  const now = Date.now();
+  const lastVaultTime = new Date(realm.lastAttacked);
+  const minutesSinceLastVault = (now - lastVaultTime.getTime()) / 1000 / 60;
+  const minutesToVault = ATTACK_COOLDOWN_PERIOD / 60; // 24 hours
+  return minutesToVault >= minutesSinceLastVault;
 };
 
 export const CostBlock = ({ resourceName, amount, id, qty }) => {
@@ -483,4 +493,29 @@ export const getMilitaryBuildingsBuilt = (
     ?.filter((a) => a.type === 'military')
     .filter((b) => b.quantityBuilt > 0)
     .map((c) => c.id);
+};
+
+export const getTimeSinceLastTick = (realm: RealmFragmentFragment) => {
+  // date from unix timestamp
+  const date = new Date(realm.lastTick);
+  const now = new Date();
+
+  return (
+    Math.floor((now.getTime() - date.getTime()) / 1000) /
+    60 /
+    60
+  ).toFixed(2);
+};
+
+export const getNumberOfTicks = (realm: RealmFragmentFragment) => {
+  return Math.floor(
+    parseInt(getTimeSinceLastTick(realm)) / HAPPINESS_TIME_PERIOD_TICK
+  );
+};
+
+export const getTimeUntilNextTick = (realm: RealmFragmentFragment) => {
+  return Math.floor(
+    HAPPINESS_TIME_PERIOD_TICK / 60 / 60 -
+      (parseInt(getTimeSinceLastTick(realm)) % HAPPINESS_TIME_PERIOD_TICK)
+  );
 };

@@ -48,6 +48,7 @@ export const useCombatResult = (props: RaidResultsProps) => {
 
       setResult(combatResult?.getRealmHistory[0]);
     }
+    console.log('combatResult', combatResult);
   }, [combatResult, props.event, startPolling, stopPolling]);
 
   return {

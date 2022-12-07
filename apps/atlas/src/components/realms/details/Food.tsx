@@ -104,19 +104,18 @@ export const RealmsFood = (props: Prop) => {
       <div>
         <div className="w-full">
           <div className="flex">
-            <div>
-              <Image
-                width={200}
-                height={200}
-                alt="Storehouse"
-                className={' mx-auto border-yellow-900 border rounded'}
-                src={'/realm-buildings/mj_storehouse.png'}
-              />
-            </div>
+            <Image
+              width={200}
+              height={200}
+              alt="Storehouse"
+              className={' mx-auto border-yellow-900 border rounded'}
+              src={'/realm-buildings/mj_storehouse.png'}
+            />
+
             {isOwner && (
-              <div className="p-4">
-                <div className="w-full ">
-                  <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] ">
+              <div className="w-full p-4">
+                <div className="">
+                  <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 py-[2px] w-full">
                     <h3 className="flex justify-between p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
                       Storehouse
                       <div className="flex">
@@ -210,13 +209,13 @@ export const RealmsFood = (props: Prop) => {
                     }}
                   />{' '}
                 </div>
-                <p className="p-2 text-xs">
+                {/* <p className="p-2 text-xs">
                   You consume 1 food per second according to your population.
                   Build and harvest Farms and Fishing Villages in order to keep
                   your citizens fed. <br /> If you do not have food you are
                   capped at 250 resources per day and your troops have half
                   health.
-                </p>
+                </p> */}
               </div>
             )}
           </div>

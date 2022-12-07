@@ -59,9 +59,9 @@ export function RealmsFilter(props: RealmsFilterProps) {
         onChange={actions.updateTraitsFilter}
       />
 
-      <div className="md:ml-4">
-        <Button variant="outline" size="xs" onClick={actions.clearFilters}>
-          Clear <span className="hidden ml-2 md:block">Filters</span>
+      <div className="md:ml-1">
+        <Button variant="secondary" size="xs" onClick={actions.clearFilters}>
+          Clear
         </Button>
       </div>
     </BaseFilter>

@@ -66,7 +66,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
 
   return (
     <div className="grid gap-6 py-4">
-      <Card className=" md:col-span-6">
+      <div className=" md:col-span-6">
         <CardTitle>Mercantile History</CardTitle>
         {economicEventData?.length
           ? economicEventData.map((a, index) => {
@@ -84,9 +84,9 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
               );
             })
           : 'No History yet'}
-      </Card>
+      </div>
 
-      <Card className="col-span-12 md:col-span-6">
+      <div className="col-span-12 md:col-span-6">
         <CardTitle>Military History</CardTitle>
         <div className="grid gap-3">
           {militaryEventData?.length
@@ -147,7 +147,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
               })
             : 'No History yet'}
         </div>
-      </Card>
+      </div>
 
       <AtlasSidebar
         containerClassName="z-20 w-full md:w-1/2"

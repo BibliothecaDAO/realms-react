@@ -20,7 +20,7 @@ export const BaseSideBarPanel = ({
   return (
     <div className={`relative w-full ${className}`}>
       <div>
-        <div className="flex w-full mb-2 justify-between p-2">
+        <div className="flex justify-between w-full p-2 mb-2">
           <h1>{title}</h1>
           <div
             className={clsx('self-center', position != 'left' && '-order-1')}

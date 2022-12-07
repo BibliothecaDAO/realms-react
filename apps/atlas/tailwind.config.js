@@ -125,8 +125,8 @@ module.exports = {
         100: '100',
       },
       backgroundImage: {
-        realmCombatBackground: "url('/backgrounds/mj_combat_2.png')",
-        realmBackground: "url('/vizirs/mj_landscape.png')",
+        realmCombatBackground: "url('/backgrounds/castle_landscape.png')",
+        realmBackground: "url('/backgrounds/castle_landscape.png')",
         snake: "url('/textures/snake_tiling_texture.png')",
         ink: "url('/textures/ink.jpg')",
         paperTexture: "url('/textures/paperTexture.jpg')",

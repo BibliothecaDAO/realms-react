@@ -27,7 +27,7 @@ export const SplashScreen = ({ children }) => {
                   variant="primary"
                   onClick={() => {
                     setLoading(false);
-                    toggleSound();
+                    // toggleSound();
                   }}
                 >
                   Launch
@@ -38,7 +38,7 @@ export const SplashScreen = ({ children }) => {
                   onClick={() => {
                     toggleFullScreen();
                     setLoading(false);
-                    toggleSound();
+                    // toggleSound();
                   }}
                 >
                   Launch Fullscreen

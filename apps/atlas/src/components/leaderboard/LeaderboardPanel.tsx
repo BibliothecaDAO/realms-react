@@ -65,7 +65,7 @@ export function LeaderboardPanel(): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
+            router.push(`/?asset=realm${realm?.realmId}`, undefined, {
               shallow: true,
             });
           }}
@@ -86,7 +86,7 @@ export function LeaderboardPanel(): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
-            router.push(`/realm/${realm?.realmId}`, undefined, {
+            router.push(`/?asset=realm${realm?.realmId}`, undefined, {
               shallow: true,
             });
           }}
