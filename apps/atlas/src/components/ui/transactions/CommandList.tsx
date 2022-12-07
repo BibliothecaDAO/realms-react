@@ -3,6 +3,7 @@ import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
+import Link from 'next/link';
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import toast from 'react-hot-toast';
@@ -11,9 +12,11 @@ import { RateChange, getTxCosts } from '@/components/bank/MarketGetters';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
+import { useUi } from '@/hooks/useUi';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { ItemCost, CallAndMetadata } from '@/types/index';
 import { dndTypes } from '@/types/index';
@@ -211,7 +214,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   const { checkUserHasCheckoutResources } = useGameConstants();
   const { balance } = useUserBalancesContext();
   const { batchAddResources } = useBankContext();
-
+  const { toggleTrade } = useUIContext();
   return (
     <>
       {txQueue.transactions.length > 0 ? (
@@ -299,7 +302,12 @@ export const CommandList: React.FC<Prop> = (props) => {
                       };
                     })
                 );
-                toast('Missing resources added to the cart');
+                toast(
+                  <span>
+                    Missing resources added to the cart
+                    <Button onClick={toggleTrade}>Open Now</Button>
+                  </span>
+                );
               }}
               size="xs"
               variant="outline"

@@ -209,7 +209,12 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                         amount: r.amount * qty,
                       }))
                   );
-                  toast('Resources are added to the swap cart');
+                  toast(
+                    <span>
+                      Missing resources added to the cart
+                      <Button onClick={toggleTrade}>Open Now</Button>
+                    </span>
+                  );
                 }}
                 quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                 health={army ? army[nameArray[index] + 'Health'] : ''}
@@ -343,7 +348,12 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
                           amount: r.amount,
                         }))
                     );
-                    toast('Resources are added to the swap cart');
+                    toast(
+                      <span>
+                        Missing resources added to the cart
+                        <Button onClick={toggleTrade}>Open Now</Button>
+                      </span>
+                    );
                   }}
                   size="xs"
                   className="ml-2"
