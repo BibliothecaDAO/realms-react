@@ -1,6 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import BiblioIcon from '@bibliotheca-dao/ui-lib/icons/biblio-icon.svg';
 import { useTransactionManager, useTransactions } from '@starknet-react/core';
-import { Scroll } from '@/components/ui/Icons';
+
 import { useCommandList } from '@/context/CommandListContext';
 
 const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
@@ -42,7 +43,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
             className={`relative inline-flex w-3 h-3 rounded-full ${TxStyle()}`}
           ></span>
         </span>
-        <Scroll className="inline-block w-6 lg:w-9 fill-white" />
+        <BiblioIcon className="inline-block w-6 lg:w-9 fill-yellow-800 hover:fill-yellow-500" />
       </div>
     </Button>
   );

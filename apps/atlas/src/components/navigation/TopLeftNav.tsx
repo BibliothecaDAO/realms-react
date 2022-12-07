@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Button } from '@bibliotheca-dao/ui-lib';
-import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
+import EternumIcon from '@bibliotheca-dao/ui-lib/icons/eternum_icon.svg';
 import TopLeftFrameGold from '@bibliotheca-dao/ui-lib/icons/frame/top-left_gold.svg';
 import TopLeftFrame from '@bibliotheca-dao/ui-lib/icons/frame/top-left_no-ink.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -41,7 +41,7 @@ export const TopLeftNav = () => {
               onClick={onLordsNavClick}
               variant="unstyled"
             >
-              <Lords className="self-center fill-current stroke-current md:w-4 lg:w-6" />{' '}
+              <Lords className="self-center stroke-current md:w-4 lg:w-6" />{' '}
               <span className="self-center md:pl-2 lg:pl-4">
                 {(+formatEther(lordsBalance)).toLocaleString()}
               </span>
@@ -55,10 +55,10 @@ export const TopLeftNav = () => {
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
-            className="rounded-full hover:bg-black/20 md:w-12 md:h-12 lg:w-16 lg:h-16"
+            className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
           >
             <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-[0.8rem] lg:left-[0.8rem] z-50">
-              <Crown className="fill-black md:h-6 md:w-6 lg:w-9 lg:h-9" />
+              <EternumIcon className="transition-all duration-300 fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
             </div>
           </Button>
         </div>
