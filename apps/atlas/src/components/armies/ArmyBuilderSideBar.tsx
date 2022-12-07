@@ -19,6 +19,7 @@ import {
 } from '@/constants/army';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -74,7 +75,7 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
   const [addedBattalions, setAddedBattalions] = useState<Battalion[]>([]);
   const [totalCost, setTotalCost] = useState<ResourceCost[]>();
-
+  const { toggleTrade } = useUIContext();
   const army = props.army;
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
