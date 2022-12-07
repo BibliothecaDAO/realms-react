@@ -250,10 +250,10 @@ export const RealmsArmy = (props) => {
         </div>
       </div> */}
 
-      <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
+      {/* <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
         <SidebarHeader onClose={() => setIsRaiding(false)} />
         <CombatSideBar defendingRealm={realm} />
-      </AtlasSidebar>
+      </AtlasSidebar> */}
       <AtlasSidebar
         containerClassName="w-full md:w-10/12 z-50"
         isOpen={isArmyBuilding}
