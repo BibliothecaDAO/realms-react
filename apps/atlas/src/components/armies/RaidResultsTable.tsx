@@ -37,17 +37,17 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
   );
 
   // reduce two arrays to get the difference
-  // const getLosses = (startingArmy, endingArmy) => {
-  //   let losses: any[] = [];
+  const getLosses = (startingArmy, endingArmy) => {
+    const losses: any[] = [];
 
-  //   for (let i = 0; i < startingArmy.length; i++) {
-  //     let loss = startingArmy[i].quantity - endingArmy[i].quantity;
+    for (let i = 0; i < startingArmy.length; i++) {
+      const loss = startingArmy[i].quantity - endingArmy[i].quantity;
 
-  //     losses.push({ name: startingArmy[i].name, quantity: loss });
-  //   }
+      losses.push({ name: startingArmy[i].name, quantity: loss });
+    }
 
-  //   return losses;
-  // };
+    return losses;
+  };
 
   return (
     <div className="p-2 rounded-2xl bg-gray-1000">
@@ -83,19 +83,20 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
                   );
                 })}
             </td>
-            {/* <td>
-                {startingAttackingArmy &&
-                  getLosses(
-                    formatArmy(startingAttackingArmy),
-                    formatArmy(endingAttackingArmy)
-                  ).map((a, i) => {
-                    return (
-                      <div key={i}>
-                        {a.name} -{a.quantity}
-                      </div>
-                    );
-                  })}
-              </td> */}
+            <td>
+              {startingAttackingArmy &&
+                endingAttackingArmy &&
+                getLosses(
+                  formatArmy(startingAttackingArmy),
+                  formatArmy(endingAttackingArmy)
+                ).map((a, i) => {
+                  return (
+                    <div key={i}>
+                      {a.name} -{a.quantity}
+                    </div>
+                  );
+                })}
+            </td>
           </tr>
         </tbody>
         <tbody className="bg-gray-800">
@@ -121,19 +122,20 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
                   );
                 })}
             </td>
-            {/* <td>
-                {endingAttackingArmy &&
-                  getLosses(
-                    formatArmy(startingDefendingArmy),
-                    formatArmy(endingDefendingArmy)
-                  ).map((a, i) => {
-                    return (
-                      <div key={i}>
-                        {a.name} {a.quantity}
-                      </div>
-                    );
-                  })}
-              </td> */}
+            <td>
+              {startingDefendingArmy &&
+                endingDefendingArmy &&
+                getLosses(
+                  formatArmy(startingDefendingArmy),
+                  formatArmy(endingDefendingArmy)
+                ).map((a, i) => {
+                  return (
+                    <div key={i}>
+                      {a.name} {a.quantity}
+                    </div>
+                  );
+                })}
+            </td>
           </tr>
         </tbody>
       </table>
