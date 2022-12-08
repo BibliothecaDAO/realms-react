@@ -6,9 +6,9 @@ import {
   InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';
 import { formatEther } from '@ethersproject/units';
+import type { ValueType } from '@rc-component/mini-decimal';
 import { BigNumber } from 'ethers';
 import Image from 'next/image';
-import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useEffect, useState } from 'react';
 
 import { CostBlock, getPopulation } from '@/components/realms/RealmsGetters';

@@ -1,12 +1,10 @@
-/// <reference types="vitest" />
-/// <reference types="vite/client" />
-
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-// https://vitejs.dev/config/
+const testFiles = ['./src/**/*.test.{js,jsx,ts,tsx}'];
+
 export default defineConfig({
   plugins: [
     react({
@@ -28,7 +26,21 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     passWithNoTests: false,
-    exclude: ['**/e2e/**', './node_modules'],
     setupFiles: './config/tests/setupVitest.ts',
+    cache: {
+      dir: '../../.cache/vitest/nextjs-app',
+    },
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'clover'],
+      extension: ['js', 'jsx', 'ts', 'tsx'],
+    },
+    include: testFiles,
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.next/**',
+      '**/.{idea,git,cache,output,temp}/**',
+    ],
   },
 });
