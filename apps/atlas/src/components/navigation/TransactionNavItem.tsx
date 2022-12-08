@@ -82,7 +82,9 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   }, [transactions]); */
 
   const onButtonClick = () => {
-    setButtonStatus(null);
+    if (buttonStatus && ['complete', 'error'].includes(buttonStatus)) {
+      setButtonStatus(null);
+    }
     onClick();
   };
 
