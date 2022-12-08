@@ -3,9 +3,8 @@ import { Button, InputNumber } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
+import type { ValueType } from '@rc-component/mini-decimal';
 import { useStarknetCall, useAccount } from '@starknet-react/core';
-
-import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { useState, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';

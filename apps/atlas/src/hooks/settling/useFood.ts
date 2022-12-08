@@ -93,7 +93,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     description: `Harvesting food for Realm #${tx.metadata.tokenId}`,
   }),
   [Entrypoints.convert]: (tx, _context) => ({
-    title: `Storehouse`,
+    title: `Resupply Storehouse`,
     description: `Storing food in #${tx.metadata.tokenId}`,
   }),
 };

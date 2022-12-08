@@ -9,7 +9,7 @@ import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
-import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
+import type { ValueType } from '@rc-component/mini-decimal';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { battalionInformation, battalionIdToString } from '@/constants/army';

@@ -20,6 +20,7 @@ import {
 import { MAX_BATTALIONS } from '@/constants/buildings';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { useArmy, nameArray } from '@/hooks/settling/useArmy';
@@ -155,7 +156,7 @@ export const ArmyBuilder = (props: Props) => {
   };
 
   const armyStats = getArmyStats(army);
-
+  const { toggleTrade } = useUIContext();
   const sumTotalBattalions = (armyQtys: ArmyBattalionQty) =>
     Object.values(armyQtys).reduce((a, b) => a + b);
 
@@ -228,7 +229,12 @@ export const ArmyBuilder = (props: Props) => {
                         amount: r.amount * qty,
                       }))
                   );
-                  toast('Resources are added to the swap cart');
+                  toast(
+                    <span>
+                      Missing resources added to the cart
+                      <Button onClick={toggleTrade}>Open Now</Button>
+                    </span>
+                  );
                 }}
                 quantity={blankArmy ? blankArmy[nameArray[index] + 'Qty'] : ''}
                 health={blankArmy ? blankArmy[nameArray[index] + 'Health'] : ''}
@@ -364,7 +370,12 @@ export const ArmyBuilder = (props: Props) => {
                           amount: r.amount,
                         }))
                     );
-                    toast('Resources are added to the swap cart');
+                    toast(
+                      <span>
+                        Missing resources added to the cart
+                        <Button onClick={toggleTrade}>Open Now</Button>
+                      </span>
+                    );
                   }}
                   size="xs"
                   className="ml-2"

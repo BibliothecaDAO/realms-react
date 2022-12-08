@@ -7,9 +7,9 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import type { ValueType } from '@rc-component/mini-decimal';
 import { BigNumber } from 'ethers';
 import Image from 'next/image';
-import type { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 import React, { useState, useEffect } from 'react';
 import { getTrait } from '@/components/realms/RealmsGetters';
 import {
