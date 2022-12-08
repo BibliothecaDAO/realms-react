@@ -6,8 +6,9 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import type { InvokeFunctionResponse } from 'starknet';
 import { Scroll } from '@/components/ui/Icons';
+import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { ENQUEUED_STATUS } from '../constants';
-import type { CallAndMetadata } from '../types';
+import type { CallAndMetadata, RealmsTransaction } from '../types';
 
 type Call = CallAndMetadata;
 export type Tx = Call & { status: typeof ENQUEUED_STATUS; keyId?: string };
@@ -37,9 +38,8 @@ export const CommandListProvider = ({
   const { execute } = useStarknetExecute({ calls: txs });
 
   const add = (tx: Call[] | Call) => {
+    const { title: configTitle } = getTxRenderConfig(tx as RealmsTransaction);
     const scrollIcon = <Scroll className="w-6 fill-current" />;
-
-    console.log(tx);
 
     if (Array.isArray(tx)) {
       toast(`${tx.length} Command(s) Queued`, {
@@ -55,7 +55,7 @@ export const CommandListProvider = ({
         )
       );
     } else {
-      toast('Command Queued: ' + tx.metadata?.action, {
+      toast('Command Queued: ' + configTitle, {
         icon: scrollIcon,
       });
       setTx((prev) =>
@@ -90,7 +90,6 @@ export const CommandListProvider = ({
   };
 
   const executeMulticall = async (inline?: Tx[]) => {
-    console.log(inline);
     /* const starknet = getStarknet();
     await starknet.enable();
 

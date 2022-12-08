@@ -126,10 +126,10 @@ export const MenuSideBar = () => {
       >
         {menus.map((menu) => (
           <Link
-            href={getPageHref(menu.page)}
             onClick={() => {
-              closeAll;
+              closeAll();
             }}
+            href={getPageHref(menu.page)}
             key={menu.page}
             shallow={true}
           >
