@@ -175,3 +175,10 @@ export const getUnitImage = (id: BattalionIds) => {
     '/realm-troops/' + battalionInformation.find((a) => a.id === id)?.image
   );
 };
+
+// dirty hack to get the id from the name
+export const trueNameFromRawString = (name: string) => {
+  return battalionIdToString(
+    battalionInformation.find((a) => a.name === name)?.id || 0
+  );
+};

@@ -336,7 +336,7 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">
                   Add resources required for:
                   {gameConstants?.buildingCosts
                     ?.filter((b) => b.resources.length)
@@ -407,7 +407,7 @@ export function SwapResources(): ReactElement {
                 className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
                 static
               >
-                <div className="flex flex-col gap-4 p-4 pb-8 font-medium bg-gray-1000 rounded shadow-sm">
+                <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">
                   Add resources required for:
                   {gameConstants?.battalionCosts?.map((a, i) => {
                     return (
@@ -540,12 +540,10 @@ export function SwapResources(): ReactElement {
             </Button>
           </div>
           <div className="flex flex-col py-4 rounded ">
-            <div className="flex justify-end text-2xl font-semibold">
+            <div className="flex justify-end text-2xl">
               <span className="flex">
-                <span className="flex items-center mr-6 text-xs  text-gray-700">
-                  {isBuy
-                    ? 'Total cost of resources in $LORDS:'
-                    : 'Approximate $lords received:'}
+                <span className="flex items-center mr-6 text-xs text-gray-700">
+                  {isBuy ? 'Total $LORDS:' : 'Approximate $lords received:'}
                 </span>
                 {calculatedTotalInLords.toLocaleString()}{' '}
                 <LordsIcon key={1} className="w-5 ml-2" />
@@ -553,7 +551,7 @@ export function SwapResources(): ReactElement {
             </div>
             <div>
               <div className="flex justify-end text-md">
-                <span className="flex self-center mr-6 text-xs  text-gray-700">
+                <span className="flex self-center mr-6 text-xs text-gray-700">
                   $LORDS price impact:
                 </span>
                 <span
@@ -570,7 +568,7 @@ export function SwapResources(): ReactElement {
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs text-gray-700">
-                  Your current $LORDS balance:
+                  $LORDS balance:
                 </span>
                 {(+formatEther(lordsBalance)).toLocaleString()}{' '}
                 <LordsIcon key={1} className="w-4 ml-1" />

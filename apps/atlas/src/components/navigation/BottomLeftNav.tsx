@@ -8,6 +8,7 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { RectangleStackIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import RealmsPlaylistSidebar from '@/components/realms/RealmsPlaylistSideBar';
+import { framePrimary } from '@/constants/ui';
 import { useSound } from '@/context/soundProvider';
 import { usePlayer } from '@/hooks/usePlayer';
 import NetworkConnectButton from '../ui/NetworkConnectButton';
@@ -63,12 +64,23 @@ export const BottomLeftNav = () => {
         <div className="pl-48 lg:pl-[5rem]">
           <NetworkConnectButton />
         </div>
-        <BottomLeftFrameGold className="absolute w-[14rem] pointer-events-none stroke-yellow-900 bottom-0  mix-blend-multiply" />
-        <BottomLeftFrame className="absolute bottom-0 pointer-events-none w-72 mix-blend-multiply stroke-gray-1000" />
+        <BottomLeftFrame
+          className={`absolute bottom-0 pointer-events-none w-72 stroke-${framePrimary} fill-${framePrimary}`}
+        />
 
-        <div className="absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-black mb-72 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-black mb-72 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-black mb-72 pointer-events-none"></div>
+        <BottomLeftFrameGold
+          className={`absolute w-[14rem] pointer-events-none bottom-0 fill-${framePrimary} stroke-${framePrimary}`}
+        />
+
+        <div
+          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none`}
+        />
+        <div
+          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-${framePrimary} mb-72 pointer-events-none`}
+        />
+        <div
+          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none `}
+        />
       </div>
     </div>
   );

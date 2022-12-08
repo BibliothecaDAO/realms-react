@@ -44,7 +44,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
           ></span>
         </span>
         <BiblioIcon
-          className={`inline-block w-6 lg:w-9 fill-green-800 hover:fill-yellow-500 ${TxStyle1()}`}
+          className={`inline-block w-6 lg:w-9 hover:fill-yellow-500 ${TxStyle1()}`}
         />
       </div>
     </Button>

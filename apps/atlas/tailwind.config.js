@@ -6,6 +6,9 @@ module.exports = {
     '../../packages/ui-lib/src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
+    'stroke-gray-1000',
+    'fill-gray-1000',
+    'bg-gray-1000',
     'paper',
     'shadow-order-perfection',
     'shadow-order-power',

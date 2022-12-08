@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { defaultArmy } from '@/constants/army';
 import type { RealmHistory, RealmHistoryWhereInput } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 
@@ -45,17 +46,17 @@ export const useCombatResult = (props: RaidResultsProps) => {
     startPolling(2000); // TODO poll interval after transaction accepted on l2
     if (combatResult?.getRealmHistory.length) {
       stopPolling();
-
       setResult(combatResult?.getRealmHistory[0]);
     }
-    console.log('combatResult', combatResult);
   }, [combatResult, props.event, startPolling, stopPolling]);
 
   return {
     result,
-    attackingEndArmy: result?.data?.armiesEnd[0],
-    defendingEndArmy: result?.data?.armiesEnd[1],
+    attackingEndArmy: result?.data?.armiesEnd[0] || defaultArmy,
+    defendingEndArmy: result?.data?.armiesEnd[1] || defaultArmy,
     success: result?.data?.success,
     loading,
+    resources: result?.data?.pillagedResources,
+    relic: result?.data?.relicLost,
   };
 };
