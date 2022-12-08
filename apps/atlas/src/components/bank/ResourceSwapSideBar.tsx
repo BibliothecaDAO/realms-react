@@ -65,11 +65,7 @@ export const ResourceSwapSideBarPanel = (
     []
   );
   return (
-    <BaseSideBarPanel
-      className="z-50 px-10 pt-10"
-      position="left"
-      onClose={props.onClose}
-    >
+    <BaseSideBarPanel className="z-50" position="left" onClose={props.onClose}>
       {/* <div>
         <h2 className="mt-2 mb-4 text-center">Trade</h2>
         {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
