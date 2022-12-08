@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h5,
+h6 {
+  @apply font-display;
+}
+
+h1 {
+  @apply text-4xl sm:text-4xl md:text-6xl font-lords;
+}
+
+h2 {
+  @apply text-3xl sm:text-4xl md:text-5xl;
+}
+
+h3 {
+  @apply text-lg sm:text-xl md:text-2xl;
+}
+
+h4 {
+  @apply mb-4 text-xl font-semibold tracking-widest uppercase font-body;
+}
+
+button {
+  @apply tracking-widest uppercase;
+}
+
+body {
+  @apply text-lg leading-loose text-off-300 font-body;
+}
+
+hr {
+  @apply my-8;
+}
+
+.fp-watermark {
+  @apply hidden;
+}
+
+@font-face {
+  font-family: Lords;
+  src: url('fontforlordsn.otf');
+}
+
+[data-content] > * {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+}
+
+.active [data-content] > * {
+  opacity: 1;
+  transform: translate3d(0, -3rem, 0);
+}
+
+p {
+  @apply leading-loose;
+}
