@@ -166,7 +166,7 @@ export const CombatSideBar: React.FC<Prop> = ({
             />
           </div>
         )}
-        {!txSubmitted && !result && (
+        {!txSubmitted && !combatData?.transaction_hash && (
           <div className="grid w-full md:grid-cols-3 ">
             <div>
               {!raidButtonEnabled && selectedArmy && (
