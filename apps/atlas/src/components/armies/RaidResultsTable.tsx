@@ -7,12 +7,10 @@ import { resourcePillaged } from '../realms/RealmsGetters';
 export const formatArmy = (army) => {
   const arr: any[] = [];
   battalionInformation.forEach((unit) => {
-    if (army[unit.name + 'Qty'] > 0) {
-      arr.push({
-        name: trueNameFromRawString(unit.name),
-        quantity: army[unit.name + 'Qty'],
-      });
-    }
+    arr.push({
+      name: trueNameFromRawString(unit.name),
+      quantity: army[unit.name + 'Qty'],
+    });
   });
 
   return arr;

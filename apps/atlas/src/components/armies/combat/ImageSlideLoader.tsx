@@ -16,7 +16,7 @@ export const ImageSlideLoader = (props: ImageSlideLoaderProps) => {
       setIndex(
         (index) => (index + 1) % (strings?.length || images?.length || 0)
       );
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
