@@ -285,6 +285,7 @@ export const CommandList: React.FC<Prop> = (props) => {
             })}
             <Button
               onClick={() => {
+                sessionStorage.setItem('reconcileTrade', 'true');
                 batchAddResources(
                   Object.keys(resourceCostsById)
                     .filter(

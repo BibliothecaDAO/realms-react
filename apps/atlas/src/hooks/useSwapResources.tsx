@@ -261,13 +261,19 @@ export const useBuyResources = () => {
     if (loading) {
       return;
     }
+    let insertFirst = false;
+    if (sessionStorage.getItem('reconcileTrade') == 'true') {
+      insertFirst = true;
+      sessionStorage.removeItem('reconcileTrade');
+    }
     txQueue.add(
       createCall.buyTokens({
         maxAmount,
         tokenIds,
         tokenAmounts,
         deadline,
-      })
+      }),
+      insertFirst
     );
   };
 
