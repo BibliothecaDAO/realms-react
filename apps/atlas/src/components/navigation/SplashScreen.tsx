@@ -2,7 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib';
 import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
-import { useSound } from '@/context/soundProvider';
+import { useSoundContext } from '@/context/soundProvider';
 import useScreenOrientation from '@/hooks/useScreenOrientation';
 import NetworkConnectButton from '../ui/NetworkConnectButton';
 
@@ -11,7 +11,7 @@ export const SplashScreen = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { address, status, connector } = useAccount();
 
-  const { toggleSound } = useSound();
+  const { toggleSound } = useSoundContext();
 
   return (
     <>
@@ -27,7 +27,7 @@ export const SplashScreen = ({ children }) => {
                   variant="primary"
                   onClick={() => {
                     setLoading(false);
-                    // toggleSound();
+                    toggleSound();
                   }}
                 >
                   Launch
@@ -38,7 +38,7 @@ export const SplashScreen = ({ children }) => {
                   onClick={() => {
                     toggleFullScreen();
                     setLoading(false);
-                    // toggleSound();
+                    toggleSound();
                   }}
                 >
                   Launch Fullscreen

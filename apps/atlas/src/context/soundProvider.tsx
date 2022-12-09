@@ -1,52 +1,31 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-} from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 import useSoundLib from 'use-sound';
-
-import booleanStorage from '../services/booleanStorage';
-
-const defaultSoundContext = {
-  isSoundActive: false,
-  toggleSound: () => {},
-  playShield: () => {},
-};
-
-const SoundContext = createContext<{
-  isSoundActive: boolean;
-  toggleSound: () => void;
-  playShield: () => void;
-}>(defaultSoundContext);
 
 interface SoundProviderProps {
   children: React.ReactNode;
 }
 
-export const SoundProvider = (props: SoundProviderProps) => {
-  return (
-    <SoundContext.Provider value={useSound()}>
-      {props.children}
-    </SoundContext.Provider>
-  );
+const defaultSoundContext = {
+  isSoundActive: false,
+  toggleSound: () => {},
+  playCombat: () => {},
+  stopCombat: () => {},
 };
 
-const localStorageKey = 'SOUND_SETTING_IS_ON';
+const SoundContext = createContext<{
+  isSoundActive: boolean;
+  toggleSound: () => void;
+  playCombat: () => void;
+  stopCombat: () => void;
+}>(defaultSoundContext);
 
-const initialValue =
-  booleanStorage.getItem(localStorageKey, { defaultValue: true }) || false;
-// const SoundSettingContext = createContext({isSoundActive: false, toggleSound: () => { }});
-
-export function useSound() {
-  const [isSoundActive, setSound] = useState(initialValue);
+export const SoundProvider = (props: SoundProviderProps) => {
+  const [isSoundActive, setSound] = useState(false);
 
   const toggleSound = () => {
     const newValue = !isSoundActive;
     setSound(newValue);
-    booleanStorage.setItem(localStorageKey, newValue);
   };
 
   const [playBackground, { stop }] = useSoundLib('/music/realms_cimbalom.mp3', {
@@ -55,12 +34,16 @@ export function useSound() {
     loop: true,
   });
 
-  const [playShield, options] = useSoundLib('/shield.mp3', {
-    soundEnabled: !isSoundActive,
-    volume: 1,
-  });
+  const [playCombat, { stop: stopCombat }] = useSoundLib(
+    '/music/scott-buckley-i-walk-with-ghosts.mp3',
+    {
+      soundEnabled: isSoundActive,
+      volume: 0.3,
+      loop: true,
+    }
+  );
 
-  useEffect(() => {
+  useMemo(() => {
     if (!isSoundActive) {
       stop();
     } else {
@@ -68,9 +51,14 @@ export function useSound() {
     }
   }, [isSoundActive]);
 
-  // return [isSoundActive || configs.forcePlay ? playSound() : () => {}, options];
-  return { isSoundActive, toggleSound, playShield };
-}
+  return (
+    <SoundContext.Provider
+      value={{ toggleSound, isSoundActive, playCombat, stopCombat }}
+    >
+      {props.children}
+    </SoundContext.Provider>
+  );
+};
 
 export function useSoundContext() {
   return useContext(SoundContext);

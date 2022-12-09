@@ -19,14 +19,11 @@ import {
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
-
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
-
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-
 import { ArmyDisplayContainer } from './combat/ArmyDisplayContainer';
 import { ImageSlideLoader } from './combat/ImageSlideLoader';
 import { RaidResultTable } from './RaidResultsTable';

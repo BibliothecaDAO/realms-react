@@ -1,37 +1,15 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { IconButton } from '@bibliotheca-dao/ui-lib';
 import BottomLeftFrameGold from '@bibliotheca-dao/ui-lib/icons/frame/bottom-left_gold.svg';
 import BottomLeftFrame from '@bibliotheca-dao/ui-lib/icons/frame/bottom-left_no-ink.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
-import { RectangleStackIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import RealmsPlaylistSidebar from '@/components/realms/RealmsPlaylistSideBar';
 import { framePrimary } from '@/constants/ui';
-import { useSound } from '@/context/soundProvider';
-import { usePlayer } from '@/hooks/usePlayer';
+import { useSoundContext } from '@/context/soundProvider';
+
 import NetworkConnectButton from '../ui/NetworkConnectButton';
 
 export const BottomLeftNav = () => {
-  // const [soundOn, setSoundOn] = useState(false);
-
-  // const [player, currentTrack] = usePlayer([
-  //   {
-  //     title: 'Cimbalom',
-  //     artist: 'Casey',
-  //     src: '/music/realms_cimbalom.mp3',
-  //   },
-  //   {
-  //     title: 'Bansura',
-  //     artist: 'Casey',
-  //     src: '/music/realms_bansura.mp3',
-  //   },
-  // ]);
-
-  // const [showPlaylists, setShowPlaylists] = useState(false);
-
-  const { toggleSound, isSoundActive } = useSound();
+  const { toggleSound, isSoundActive } = useSoundContext();
 
   return (
     <div className="absolute bottom-0 z-50">

@@ -235,7 +235,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
 
           <div className="justify-center ml-auto text-lg ">
-            <div className="flex justify-end w-full space-x-1">
+            <div className="flex flex-wrap justify-end w-full space-x-1">
               {IsSettled(realm) && (
                 <>
                   {isOwner && (
