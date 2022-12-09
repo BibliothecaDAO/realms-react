@@ -296,7 +296,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   });
 
   return (
-    <BasePanel open={true} style="p-10 mt-10 z-30">
+    <BasePanel open={true} style="p-10 mt-10 z-30" isLightTheme={true}>
       <div className="absolute right-0 lg:w-7/12 lg:pl-24 lg:pr-10">
         <div className="flex flex-col p-6 mb-8 bg-gray-1000 rounded-3xl">
           <div className="flex justify-center mb-4">

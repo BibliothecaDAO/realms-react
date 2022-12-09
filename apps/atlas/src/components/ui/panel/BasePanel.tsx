@@ -4,6 +4,7 @@ type Props = {
   children: React.ReactNode;
   open: boolean;
   style?: string;
+  isLightTheme?: boolean;
 };
 
 export const BasePanel = (props: Props) => {
@@ -17,13 +18,15 @@ export const BasePanel = (props: Props) => {
 
   return (
     <animated.div
-      className={`absolute top-0 w-full h-full pl-12 bg-yellow-50 ${
-        props.open ? 'z-10' : ''
-      }`}
+      className={`absolute top-0 w-full h-full pl-12 ${
+        props.isLightTheme ? 'bg-yellow-50' : 'bg-gray-1000'
+      } ${props.open ? 'z-10' : ''}`}
       style={animation}
     >
       <div
-        className={`h-full overflow-y-scroll w-full relative  bg-yellow-50 ${props.style}`}
+        className={`h-full overflow-y-scroll w-full relative  ${
+          props.isLightTheme ? 'bg-yellow-50' : 'bg-gray-1000'
+        } ${props.style}`}
       >
         {props.children}
       </div>
