@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CommandList } from '@/components/ui/transactions/CommandList';
 import { TransactionCartTable } from '@/components/ui/transactions/Transactions';
+import { sidebarClassNames } from '@/constants/ui';
 import AtlasSideBar from '../../map/AtlasSideBar';
 
 interface TransactionCartSideBarProps {
@@ -15,10 +16,7 @@ export const TransactionCartSideBar = ({
   onClose,
 }: TransactionCartSideBarProps) => {
   return (
-    <AtlasSideBar
-      isOpen={isOpen}
-      containerClassName="w-full lg:w-5/12 z-40 m-10"
-    >
+    <AtlasSideBar isOpen={isOpen} containerClassName={sidebarClassNames}>
       {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
   );

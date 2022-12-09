@@ -1,8 +1,10 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
+import { sidebarClassNames } from '@/constants/ui';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -26,7 +28,7 @@ export const ResourceSwapSideBar = ({
     <AtlasSideBar
       position="left"
       isOpen={isOpen}
-      containerClassName="w-full lg:w-5/12 z-20"
+      containerClassName={twMerge(sidebarClassNames, 'ml-20')}
     >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />

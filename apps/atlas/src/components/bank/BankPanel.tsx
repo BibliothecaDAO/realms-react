@@ -297,29 +297,8 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
 
   return (
     <BasePanel open={true} style="p-10">
-      <div className="absolute right-0 lg:w-7/12">
-        <div className="flex justify-between">
-          <div className="w-full p-10 pt-10 bg-gray-1000/90">
-            {/* <h2 className="w-full">Resource Emporium</h2>
-          <p className="mt-4 sm:text-2xl">
-            Trade your resources with the merchant. You can also provide
-            liquidity to the merchant.
-          </p> */}
-            {/* <div className="flex">
-            <Button
-              variant="secondary"
-              size="xs"
-              className="ml-auto"
-              onClick={() => {
-                if (onOpenSwap) onOpenSwap();
-              }}
-            >
-              <ChevronRight />
-            </Button>
-          </div> */}
-          </div>
-        </div>
-        <div className="flex mb-4">
+      <div className="absolute right-0 lg:w-7/12 lg:pl-24 lg:pr-10">
+        <div className="flex justify-center mb-4">
           <Squares2X2Icon className="w-6 h-6 text-white" />
           <Switch
             checked={isTableView}
