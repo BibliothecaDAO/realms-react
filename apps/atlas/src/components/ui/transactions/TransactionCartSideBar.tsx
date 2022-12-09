@@ -49,25 +49,27 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel className="px-6 py-4">
-      <Tabs
-        selectedIndex={selectedTab}
-        onChange={(index) => setSelectedTab(index as number)}
-        variant="primary"
-      >
-        <Tabs.List className="">
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab.label}>{tab.label}</Tabs.Tab>
-          ))}
-        </Tabs.List>
-        <Tabs.Panels>
-          {tabs.map((tab) => (
-            <Tabs.Panel className="mt-0" key={tab.label}>
-              {tab.component}
-            </Tabs.Panel>
-          ))}
-        </Tabs.Panels>
-      </Tabs>
+    <BaseSideBarPanel onClose={onClose}>
+      <div className="relative px-6 rounded">
+        <Tabs
+          selectedIndex={selectedTab}
+          onChange={(index) => setSelectedTab(index as number)}
+          variant="primary"
+        >
+          <Tabs.List className="mt-2">
+            {tabs.map((tab) => (
+              <Tabs.Tab key={tab.label}>{tab.label}</Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <Tabs.Panels>
+            {tabs.map((tab) => (
+              <Tabs.Panel className="mt-0" key={tab.label}>
+                {tab.component}
+              </Tabs.Panel>
+            ))}
+          </Tabs.Panels>
+        </Tabs>
+      </div>
     </BaseSideBarPanel>
   );
 };

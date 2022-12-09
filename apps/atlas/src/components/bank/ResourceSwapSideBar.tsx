@@ -94,7 +94,7 @@ export const ResourceSwapSideBarPanel = (
 
       <div className="relative px-6 rounded">
         <Tabs className="h-full" variant="primary">
-          <Tabs.List className="rounded">
+          <Tabs.List className="mt-2 rounded">
             {tabs.map((tab) => (
               <Tabs.Tab key={tab.label} className="">
                 {tab.label}
