@@ -14,11 +14,13 @@ export const soundSelector = {
   buildMilitary: 'buildings/military.mp3',
   buildBarracks: 'buildings/barracks.mp3',
   buildArcherTower: 'buildings/archer_tower.mp3',
-  buildWorkHut: 'buildings/workhut.mp3',
+  buildWorkHut: 'buildings/workhuts.mp3',
   buildFishingVillage: 'buildings/fishing_village.mp3',
   buildFarm: 'buildings/farm.mp3',
   buildStorehouse: 'buildings/storehouse.mp3',
   summonTroops: 'summonTroops.mp3',
+  openSidebar: 'sidebar_in.mp3',
+  closeSidebar: 'sidebar_out.mp3',
 };
 
 export const useUiSounds = (selector: string) => {

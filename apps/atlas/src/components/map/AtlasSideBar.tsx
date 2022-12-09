@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { animated, useSpring } from 'react-spring';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 
 type Prop = {
   isOpen: boolean;
@@ -14,6 +15,17 @@ type Prop = {
 
 const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   const { isOpen } = props;
+
+  const { play: playOpenSidebar } = useUiSounds(soundSelector.openSidebar);
+  const { play: playCloseSidebar } = useUiSounds(soundSelector.closeSidebar);
+
+  useEffect(() => {
+    if (isOpen) {
+      playOpenSidebar();
+    } else {
+      playCloseSidebar();
+    }
+  }, [isOpen]);
 
   // Must wait until DOM is ready or might receive
   // Error: Target container is not a DOM element.

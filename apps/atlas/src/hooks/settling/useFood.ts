@@ -116,6 +116,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   );
   const { play: buildFarm } = useUiSounds(soundSelector.buildFarm);
   const { play: buildStorehouse } = useUiSounds(soundSelector.buildStorehouse);
+  const { play: buildWorkHut } = useUiSounds(soundSelector.buildWorkHut);
 
   const playFoodBuildingSound = (buildingId: RealmBuildingId) => {
     // eslint-disable-next-line sonarjs/no-small-switch
@@ -128,6 +129,9 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
         break;
       case RealmBuildingId.StoreHouse:
         buildStorehouse();
+        break;
+      case RealmBuildingId.House:
+        buildWorkHut();
         break;
       default:
         harvestWheat();
