@@ -18,7 +18,7 @@ export const TransactionCartSideBar = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={`${sidebarClassNames} z-40`}
+      containerClassName={sidebarClassNames.replace('z-30', 'z-40')}
     >
       {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
