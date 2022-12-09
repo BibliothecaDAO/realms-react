@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   getTravelArcs,
 } from '@/components/realms/RealmsGetters';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -48,10 +48,10 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.travel]: (tx, _context) => ({
-    title: `Traveling ${fetchRealmNameById(tx.metadata.travellerId)}`,
-    description: `Army ${tx.metadata.armyId} of ${fetchRealmNameById(
+    title: `Traveling ${getRealmNameById(tx.metadata.travellerId)}`,
+    description: `Army ${tx.metadata.armyId} of ${getRealmNameById(
       tx.metadata.travellerId
-    )} -> ${fetchRealmNameById(tx.metadata.destinationId)}`,
+    )} -> ${getRealmNameById(tx.metadata.destinationId)}`,
   }),
 };
 

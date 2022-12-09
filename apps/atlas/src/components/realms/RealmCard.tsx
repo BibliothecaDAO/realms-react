@@ -1,4 +1,3 @@
-import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
 import {
   OrderIcon,
   Tabs,
@@ -7,13 +6,9 @@ import {
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
+
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
-import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
-import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
+
 import { Disclosure } from '@headlessui/react';
 import { HeartIcon, ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
@@ -26,16 +21,8 @@ import React, {
 import { useAccount as useL1Account } from 'wagmi';
 import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
-import {
-  RealmHistory,
-  RealmOverview,
-  Travel,
-  RealmLore,
-  RealmsFood,
-  RealmsArmy,
-} from '@/components/realms/details';
-import { RealmImage } from '@/components/realms/details/Image';
-import { RealmResources } from '@/components/realms/RealmResources';
+import { RealmOverview, Travel } from '@/components/realms/details';
+
 import {
   hasOwnRelic,
   isFavourite,
@@ -50,6 +37,7 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
   getTimeUntilNextTick,
+  getDays,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { HarvestType, RealmBuildingId } from '@/constants/buildings';
@@ -63,6 +51,9 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
 import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
+import useResources, {
+  Entrypoints as ResourceEntryPoints,
+} from '@/hooks/settling/useResources';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -79,12 +70,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const { address } = useAccount();
 
     const { enqueuedTx } = usePendingRealmTx({ realmId: realm.realmId });
+
+    const { enqueuedHarvestTx: resourcesTxPending } = useCurrentQueuedTxs({
+      moduleAddr: ModuleAddr.ResourceGame,
+      entryPoint: ResourceEntryPoints.claim,
+      realmId: realm.realmId,
+    });
+
     const {
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
 
     const ensData = useEnsResolver(realm?.owner as string);
+
+    const { claim } = useResources(realm as Realm);
 
     const {
       buildings,
@@ -98,6 +98,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       loading: loadingFood,
       harvest,
     } = useFood(realm as Realm);
+
+    console.log(realm.realmId, realm);
 
     const tabs = useMemo(
       () => [
@@ -185,6 +187,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       });
 
     const isOwner = useIsOwner(realm?.settledOwner);
+
     return (
       <Card ref={ref}>
         {realm?.wonder && (
@@ -193,12 +196,24 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         )}
 
-        <div className="flex pb-2">
-          {/* <RealmImage id={realm.realmId} /> */}
+        <div className="flex">
           <div>
+            <div className="flex mb-1 text-gray-700">
+              <span className="">{realm.realmId} </span>
+              {' | '}
+              {starknetId ?? starknetId}
+              {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
+              {!starknetId &&
+                isYourRealm(realm, l1Address, address || '') &&
+                isYourRealm(realm, l1Address, address || '')}
+            </div>
             <div className="flex self-center ">
-              <OrderIcon size="sm" order={realm.orderType.toLowerCase()} />
-              <h3 className="flex self-center ml-2 text-center">
+              <OrderIcon
+                className="self-center"
+                size="sm"
+                order={realm.orderType.toLowerCase()}
+              />
+              <h3 className="flex ml-2">
                 {realm.name}{' '}
                 {enqueuedTx ? (
                   <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
@@ -206,64 +221,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   ''
                 )}
               </h3>
-            </div>
-            <div className="flex mt-1">
-              <div className="flex">
-                {!isFavourite(realm, favouriteRealms) && (
-                  <Button
-                    size="xs"
-                    variant="unstyled"
-                    onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                  >
-                    <HeartIcon className="w-5 fill-black stroke-white/50 hover:fill-current" />
-                  </Button>
-                )}{' '}
-                {isFavourite(realm, favouriteRealms) && (
-                  <Button
-                    size="xs"
-                    variant="unstyled"
-                    className="w-full"
-                    onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                  >
-                    <HeartIcon className="w-5" />
-                  </Button>
-                )}
-              </div>
-              <div className="self-center ml-2">
-                <Button
-                  onClick={() => {
-                    navigateToAsset(realm.realmId, 'realm');
-                  }}
-                  variant="outline"
-                  size="xs"
-                >
-                  fly
-                </Button>
-              </div>
-              <span className="self-center ml-2 text-lg ">{realm.realmId}</span>
-            </div>
-          </div>
 
-          <div className="justify-center ml-auto text-lg ">
-            <div className="text-right">
-              {starknetId ?? starknetId}
-              {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
-              {!starknetId &&
-                isYourRealm(realm, l1Address, address || '') &&
-                isYourRealm(realm, l1Address, address || '')}
-            </div>{' '}
-            <div className="flex justify-end">
-              <span
-                className={`self-center mr-2 text-xs  uppercase ${
-                  hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
-                }`}
-              >
-                {hasOwnRelic(realm) ? 'free realm' : 'annexed'}
-              </span>
-              <span className="mr-3">{realm.relicsOwned?.length}</span>{' '}
-              <Relic className={`w-3 fill-yellow-500`} />{' '}
-              <span>
-                {/* {getHappiness({ realm: realm, food: availableFood })}{' '} */}
+              <span className="self-center">
                 <span className="ml-2">
                   {' '}
                   {getHappinessIcon({
@@ -274,99 +233,152 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </span>
             </div>
           </div>
+
+          <div className="justify-center ml-auto text-lg ">
+            <div className="flex flex-wrap justify-end w-full space-x-1">
+              {IsSettled(realm) && (
+                <>
+                  {isOwner && (
+                    <>
+                      <Button
+                        onClick={() => {
+                          openModal('realm-build', {
+                            realm: realm,
+                            buildings: buildings,
+                            realmFoodDetails: realmFoodDetails,
+                            availableFood: availableFood,
+                            buildingUtilisation: buildingUtilisation,
+                          });
+                        }}
+                        variant="outline"
+                        size="xs"
+                      >
+                        construct
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          if (realmFoodDetails.totalFarmHarvest > 0) {
+                            harvest(
+                              realm?.realmId,
+                              HarvestType.Export,
+                              RealmBuildingId.Farm
+                            );
+                          }
+                          if (realmFoodDetails.totalVillageHarvest > 0) {
+                            harvest(
+                              realm?.realmId,
+                              HarvestType.Export,
+                              RealmBuildingId.FishingVillage
+                            );
+                          }
+                        }}
+                        variant="outline"
+                        size="xs"
+                        className={
+                          (realmFoodDetails.totalFarmHarvest === 0 &&
+                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          harvestFarmEnqueuedHarvestTx
+                            ? ''
+                            : 'bg-green-800 animate-pulse'
+                        }
+                        disabled={
+                          (realmFoodDetails.totalFarmHarvest === 0 &&
+                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          harvestFarmEnqueuedHarvestTx
+                        }
+                      >
+                        <ResourceIcon resource={'Wheat'} size="xs" />{' '}
+                        <ResourceIcon resource={'Fish'} size="xs" />
+                      </Button>
+                      <Button
+                        disabled={
+                          getDays(realm?.lastClaimTime) === 0 ||
+                          resourcesTxPending
+                        }
+                        size="xs"
+                        variant={'outline'}
+                        className={
+                          getDays(realm?.lastClaimTime) === 0 ||
+                          resourcesTxPending
+                            ? ''
+                            : 'bg-green-800 animate-pulse'
+                        }
+                        onClick={() => {
+                          claim();
+                        }}
+                      >
+                        Harvest
+                      </Button>
+                    </>
+                  )}
+                </>
+              )}
+
+              <Button
+                onClick={() => {
+                  navigateToAsset(realm.realmId, 'realm');
+                }}
+                variant="outline"
+                size="xs"
+              >
+                fly
+              </Button>
+              {!isFavourite(realm, favouriteRealms) ? (
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
+                >
+                  <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
+                </Button>
+              ) : (
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="w-full"
+                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                >
+                  <HeartIcon className="w-5" />
+                </Button>
+              )}
+            </div>
+            {/* <div className="flex w-full ml-auto">
+              <span
+                className={`self-center text-xs  uppercase ${
+                  hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
+                }`}
+              >
+                {hasOwnRelic(realm) ? 'free' : 'annexed'}
+              </span>
+              <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
+              <Relic className={`w-3 fill-yellow-500`} />{' '}
+            </div> */}
+            <div className="flex justify-between text-sm">
+              <h6 className="text-gray-800">
+                ({getNumberOfTicks(realm)} cycles) |{' '}
+                {getTimeUntilNextTick(realm)} hrs
+              </h6>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-wrap justify-between w-full">
-          <div className="flex">
+        <div className="flex flex-wrap justify-between w-full mt-2">
+          <div className="flex my-1 space-x-2">
             {realm.resources?.map((re, index) => (
-              <div key={index} className="flex flex-col justify-center p-2">
+              <div key={index} className="flex flex-col justify-center">
                 <ResourceIcon
                   withTooltip
                   resource={
                     findResourceById(re.resourceId)?.trait.replace(' ', '') ||
                     ''
                   }
-                  size="sm"
+                  size="xs"
                 />
               </div>
             ))}
           </div>
-
-          {IsSettled(realm) && (
-            <>
-              {isOwner && (
-                <div className="flex space-x-1">
-                  <Button
-                    onClick={() => {
-                      openModal('realm-build', {
-                        realm: realm,
-                        buildings: buildings,
-                        realmFoodDetails: realmFoodDetails,
-                        availableFood: availableFood,
-                        buildingUtilisation: buildingUtilisation,
-                      });
-                    }}
-                    variant="primary"
-                    size="xs"
-                  >
-                    construct
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      if (realmFoodDetails.totalFarmHarvest > 0) {
-                        harvest(
-                          realm?.realmId,
-                          HarvestType.Export,
-                          RealmBuildingId.Farm
-                        );
-                      }
-                      if (realmFoodDetails.totalVillageHarvest > 0) {
-                        harvest(
-                          realm?.realmId,
-                          HarvestType.Export,
-                          RealmBuildingId.FishingVillage
-                        );
-                      }
-                    }}
-                    variant="outline"
-                    size="xs"
-                    className={
-                      (realmFoodDetails.totalFarmHarvest === 0 &&
-                        realmFoodDetails.totalVillageHarvest === 0) ||
-                      harvestFarmEnqueuedHarvestTx
-                        ? ''
-                        : 'bg-green-800 animate-pulse'
-                    }
-                    disabled={
-                      (realmFoodDetails.totalFarmHarvest === 0 &&
-                        realmFoodDetails.totalVillageHarvest === 0) ||
-                      harvestFarmEnqueuedHarvestTx
-                    }
-                  >
-                    <ResourceIcon resource={'Wheat'} size="xs" />{' '}
-                    <ResourceIcon resource={'Fish'} size="xs" />
-                  </Button>
-                  {/* <Button
-                    onClick={() => {
-                      openModal('realm-build', {
-                        realm: realm,
-                        buildings: buildings,
-                        realmFoodDetails: realmFoodDetails,
-                        availableFood: availableFood,
-                        buildingUtilisation: buildingUtilisation,
-                      });
-                    }}
-                    variant="outline"
-                    size="xs"
-                  >
-                    <ResourceIcon withTooltip resource={'Wood'} size="xs" />
-                  </Button> */}
-                </div>
-              )}
-            </>
-          )}
-          {realm && !isOwner && IsSettled(realm) && (
-            <div className="">
+          <div className="flex">
+            {realm && !isOwner && IsSettled(realm) && (
               <Button
                 onClick={() => {
                   userArmiesAtLocation && userArmiesAtLocation.length
@@ -380,18 +392,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               >
                 {realm && getRealmCombatStatus(realm)}
               </Button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
-        <h6 className="text-gray-700">
-          ({getNumberOfTicks(realm)} cycles) | {getTimeUntilNextTick(realm)} hrs
-          until next cycle
-        </h6>
-
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
-          <SidebarHeader onClose={() => setIsRaiding(false)} />
-          <CombatSideBar defendingRealm={realm} />
+          <CombatSideBar
+            onClose={() => setIsRaiding(false)}
+            defendingRealm={realm}
+          />
         </AtlasSidebar>
         <AtlasSidebar containerClassName="w-full md:w-5/12" isOpen={isTravel}>
           <SidebarHeader onClose={() => setIsTravel(false)} />

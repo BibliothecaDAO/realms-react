@@ -83,16 +83,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <UserBalancesProvider>
                     <BankProvider>
                       <SoundProvider>
-                        <AtlasProvider>
-                          <UIProvider>
-                            <SplashScreen>
+                        <SplashScreen>
+                          <AtlasProvider>
+                            <UIProvider>
                               <DndProvider backend={HTML5Backend}>
                                 <Component {...pageProps} />
                                 <Modals />
                               </DndProvider>
-                            </SplashScreen>
-                          </UIProvider>
-                        </AtlasProvider>
+                            </UIProvider>
+                          </AtlasProvider>
+                        </SplashScreen>
                       </SoundProvider>
                     </BankProvider>
                   </UserBalancesProvider>

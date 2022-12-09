@@ -37,7 +37,7 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute bottom-10 top-10 rounded-3xl right-10 bg-gray-1000 overflow-y-scroll border-white/30 z-30  border border-double border-yellow-800',
+        'absolute top-0 shadow-xl shadow-yellow-800 bottom-0 bg-gray-1000 overflow-y-scroll border-white/30 z-30 rounded-3xl border-8 border-double border-gray-900 ',
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
         props.position == 'left' ? 'left-0' : 'right-0'
       )}

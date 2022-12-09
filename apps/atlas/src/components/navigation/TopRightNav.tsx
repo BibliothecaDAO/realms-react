@@ -1,21 +1,23 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import TopRightFrame from '@bibliotheca-dao/ui-lib/icons/frame/top-right_no-ink.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
 import { TransactionCartSideBar } from '@/components/ui/transactions/TransactionCartSideBar';
 import { useUIContext } from '@/context/UIContext';
 import TransactionNavItem from './TransactionNavItem';
 
-type HeaderSidePanelType = 'bank' | 'transaction' | '';
-
 export const TopRightNav = () => {
   const { address } = useAccount();
   const { transactionCart, toggleTransactionCart } = useUIContext();
 
   return (
-    <div className="absolute z-50 right-0 top-0">
+    <div className="absolute top-0 right-0 z-50">
       <div className="relative">
         {address && <TransactionNavItem onClick={toggleTransactionCart} />}
+        <div className="absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px] bg-black  mr-72 pointer-events-none"></div>
+        <div className="absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-black mr-72 pointer-events-none"></div>
+        <TopRightFrame className="absolute top-0 right-0 pointer-events-none w-72" />
       </div>
       <TransactionCartSideBar
         isOpen={transactionCart}

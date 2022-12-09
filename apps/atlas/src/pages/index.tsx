@@ -137,7 +137,7 @@ function useTravelTripsLayer() {
 }
 
 function MapModule() {
-  const { userRealms } = useUsersRealms();
+  const { userRealms, userData } = useUsersRealms();
   const { travelContext, mapContext } = useAtlasContext();
   const { state, actions } = useRealmContext();
 
@@ -151,6 +151,16 @@ function MapModule() {
       id: a.realmId,
     };
   });
+
+  const userArmiesFormatted = userData?.attackingArmies
+    ?.filter((a) => a.armyId !== 0 || a.destinationRealmId !== 0)
+    ?.map((a) => {
+      return {
+        coordinates: realms.features.find((b) => b.id === a.destinationRealmId)
+          ?.xy,
+        id: a.destinationRealmId,
+      };
+    });
 
   const userRealmIds = userRealms?.realms.map((a) => {
     return a.realmId;
@@ -197,7 +207,7 @@ function MapModule() {
     id: 'own-realms',
     data: userRealmsFormatted,
     getIcon: (d) => ({
-      url: 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png',
+      url: '/real_icon-fill.png',
       width: 128,
       height: 128,
       anchorY: 100,
@@ -235,8 +245,8 @@ function MapModule() {
     getIcon: (d: any) => ({
       url:
         d.id === parseInt(selectedId)
-          ? 'https://cdn-icons-png.flaticon.com/512/8887/8887142.png'
-          : '/castle_icon.png',
+          ? '/real_icon-fill.png'
+          : '/real_icon-line.png',
       width: 128,
       height: 128,
       anchorY: 100,
@@ -247,6 +257,27 @@ function MapModule() {
     sizeScale: 50,
     sizeMinPixels: 6,
     getPosition: (d: any) => d.xy,
+
+    onClick: (info: any) => {
+      mapContext.navigateToAsset(info.object.id, 'realm');
+    },
+  });
+
+  const armies = new IconLayer({
+    id: 'army',
+    data: userArmiesFormatted,
+    getIcon: (d: any) => ({
+      url: 'https://cdn-icons-png.flaticon.com/512/3612/3612777.png',
+      width: 128,
+      height: 128,
+      anchorY: d.id === parseInt(selectedId) ? 200 : 100,
+    }),
+    sizeUnits: 'pixels',
+    pickable: true,
+    visible: true,
+    sizeScale: 50,
+    sizeMinPixels: 6,
+    getPosition: (d: any) => d.coordinates,
 
     onClick: (info: any) => {
       mapContext.navigateToAsset(info.object.id, 'realm');
@@ -286,7 +317,14 @@ function MapModule() {
       // }),
     ];
 
-    return [...assets, arcsLayer, ownRealms, selectedResources, sRealms];
+    return [
+      ...assets,
+      arcsLayer,
+      ownRealms,
+      selectedResources,
+      sRealms,
+      armies,
+    ];
   }, [
     arcsLayer,
     createScatterPlot,
@@ -294,6 +332,7 @@ function MapModule() {
     sRealms,
     selectedResources,
     selectedId,
+    armies,
   ]);
 
   const {

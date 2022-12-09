@@ -140,29 +140,29 @@ export const SettleRealmsSideBarPanel = ({
   };
 
   return (
-    <BaseSideBarPanel title="Settle Realms" onClose={onClose}>
-      <Tabs
-        selectedIndex={selectedTab}
-        onChange={(index) => setSelectedTab(index as number)}
-        variant="primary"
-      >
-        <Tabs.List className="">
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab.label} className="uppercase">
-              {tab.label}
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
-        <Tabs.Panels>
-          {tabs.map((tab) => (
-            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-          ))}
-        </Tabs.Panels>
-      </Tabs>
-
-      <div className="w-full">
-        {/* Remove when needed  */}
-        {/* {isRealmsApproved != 'approved' && (
+    <BaseSideBarPanel onClose={onClose}>
+      <div className="p-8">
+        <Tabs
+          selectedIndex={selectedTab}
+          onChange={(index) => setSelectedTab(index as number)}
+          variant="primary"
+        >
+          <Tabs.List className="">
+            {tabs.map((tab) => (
+              <Tabs.Tab key={tab.label} className="uppercase">
+                {tab.label}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <Tabs.Panels>
+            {tabs.map((tab) => (
+              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+            ))}
+          </Tabs.Panels>
+        </Tabs>
+        <div className="w-full">
+          {/* Remove when needed  */}
+          {/* {isRealmsApproved != 'approved' && (
             <Button
               className="w-full"
               variant="primary"
@@ -171,16 +171,18 @@ export const SettleRealmsSideBarPanel = ({
               Approve Realms for Settling
             </Button>
           )} */}
-        {isRealmsApproved == 'approved' && (
-          <Button
-            className="w-full"
-            variant="primary"
-            onClick={() => (selectedTab === 0 ? settleAll() : usSettleAll())}
-          >
-            {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
-          </Button>
-        )}
+          {isRealmsApproved == 'approved' && (
+            <Button
+              className="w-full"
+              variant="primary"
+              onClick={() => (selectedTab === 0 ? settleAll() : usSettleAll())}
+            >
+              {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
+            </Button>
+          )}
+        </div>
       </div>
+
       {loading && (
         <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
           <Castle className="block w-20 fill-current" />

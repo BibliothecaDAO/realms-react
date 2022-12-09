@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
 
-import { fetchRealmNameById } from '@/components/realms/RealmsGetters';
+import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { battalionIdToString, getUnitImage } from '@/constants/army';
 import { useCommandList } from '@/context/CommandListContext';
 import {
@@ -59,7 +59,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.buildArmy]: ({ metadata }, { isQueued }) => ({
-    title: `Summon Army ${metadata.armyId} on Realm ${fetchRealmNameById(
+    title: `Summon Army ${metadata.armyId} on Realm ${getRealmNameById(
       metadata.realmId
     )}`,
     description: (

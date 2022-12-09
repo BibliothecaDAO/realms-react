@@ -6,6 +6,7 @@ import { MenuSideBar } from '@/components/navigation/MenuSideBar';
 import { TopLeftNav } from '@/components/navigation/TopLeftNav';
 import { TopRightNav } from '@/components/navigation/TopRightNav';
 import { Head } from './Head';
+import { BottomRightNav } from './navigation/BottomRightNav';
 
 export default function Layout({
   children,
@@ -20,6 +21,7 @@ export default function Layout({
           <TopLeftNav />
           <TopRightNav />
           <BottomLeftNav />
+          <BottomRightNav />
           <MenuSideBar />
           <div className="relative flex flex-col w-full">
             {/* <Header /> */}
