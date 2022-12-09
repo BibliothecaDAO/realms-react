@@ -98,7 +98,9 @@ export function MapModule() {
     }),
     sizeScale: 5,
     getPosition: (d: any) => d.xy,
+    pickable: true,
     getSize: (d) => 10,
+    onHover: (info) => setHoverInfo(info),
   });
 
   const arcsLayer = useMemo(() => {
@@ -164,7 +166,7 @@ export function MapModule() {
           onLoad={() => setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
-          renderWorldCopies={false}
+          // renderWorldCopies={false}
         />
       </DeckGL>
       <Popover className="absolute z-30 bottom-10 right-20">
