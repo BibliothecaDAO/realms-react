@@ -16,7 +16,7 @@ import {
   PILLAGE_AMOUNT,
   SECONDS_PER_KM,
 } from '@/constants/buildings';
-import { findResourceById } from '@/constants/resources';
+import { findResourceById, resources } from '@/constants/resources';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
@@ -518,4 +518,8 @@ export const getTimeUntilNextTick = (realm: RealmFragmentFragment) => {
     HAPPINESS_TIME_PERIOD_TICK / 60 / 60 -
       (parseInt(getTimeSinceLastTick(realm)) % HAPPINESS_TIME_PERIOD_TICK)
   );
+};
+
+export const resourcesToString = (a) => {
+  return resources.find((r) => r.trait === a)?.id ?? 0;
 };
