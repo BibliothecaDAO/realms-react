@@ -12,6 +12,7 @@ import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from '@rc-component/mini-decimal';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
+import toast from 'react-hot-toast';
 import { battalionInformation, battalionIdToString } from '@/constants/army';
 import type { BankResource } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
@@ -205,29 +206,38 @@ export function SwapResources(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
-  const isBuyButtonDisabled = useMemo(() => {
+  const isBuyButtonDisabled = () => {
     if (isSell) {
       return false;
     }
     const balance = parseFloat(formatEther(lordsBalance));
-    return (
-      !isLordsApprovedForExchange ||
-      balance === 0 ||
-      balance < calculatedTotalInLords
-    );
-  }, [
-    isLordsApprovedForExchange,
-    lordsBalance,
-    calculatedTotalInLords,
-    isSell,
-  ]);
+    const isBalanceSufficient = balance >= calculatedTotalInLords;
+    if (!isLordsApprovedForExchange) {
+      toast('Please approve Lords for exchange before buying resources.');
+      return true;
+    }
+    if (balance === 0) {
+      toast('Insufficient Lords balance.');
+      return true;
+    }
+    if (!isBalanceSufficient) {
+      toast(
+        `Insufficient Lords balance. You have ${balance.toLocaleString()} Lords.`
+      );
+      return true;
+    }
+    return false;
+  };
 
-  const isSellButtonDisabled = useMemo(() => {
+  const isSellButtonDisabled = () => {
     if (isBuy) {
       return false;
     }
-    return (
-      !isResourcesApprovedForExchange ||
+    if (!isResourcesApprovedForExchange) {
+      toast('Please approve resources for exchange before selling resources.');
+      return true;
+    }
+    if (
       selectedSwapResourcesWithBalance.filter((resource) => {
         return (
           resource.qty >
@@ -236,13 +246,12 @@ export function SwapResources(): ReactElement {
           )
         );
       }).length !== 0
-    );
-  }, [
-    isBuy,
-    isResourcesApprovedForExchange,
-    selectedSwapResourcesWithBalance,
-    getBalanceById,
-  ]);
+    ) {
+      toast('Insufficient resource balance.');
+      return true;
+    }
+    return false;
+  };
 
   const deadline = () => {
     const maxDate = new Date();
@@ -261,7 +270,7 @@ export function SwapResources(): ReactElement {
 
   // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
-    if (isBuyButtonDisabled) return;
+    if (isBuyButtonDisabled()) return;
     const maxAmount = parseEther(
       String(calculatedTotalInLords + calculatedSlippage)
     );
@@ -271,7 +280,7 @@ export function SwapResources(): ReactElement {
 
   // TODO: Set actual slippage when indexer caches rates
   function onSellTokensClick() {
-    if (isSellButtonDisabled) return;
+    if (isSellButtonDisabled()) return;
     // const minAmount = parseEther(
     //   String(calculatedTotalInLords - calculatedSlippage)
     // );
