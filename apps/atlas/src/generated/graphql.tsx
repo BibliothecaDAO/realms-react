@@ -1032,6 +1032,7 @@ export type Realm = {
   bridgedOwner?: Maybe<Scalars['String']>;
   buildings?: Maybe<Array<Building>>;
   defendTroopIds: Array<Scalars['String']>;
+  foods: Array<Food>;
   imageUrl?: Maybe<Scalars['String']>;
   lastAttacked?: Maybe<Scalars['Timestamp']>;
   lastClaimTime?: Maybe<Scalars['Timestamp']>;
@@ -2072,6 +2073,15 @@ export type GetRealmQuery = {
       heavyInfantryQty: number;
       heavyInfantryHealth: number;
     }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
+    }>;
   };
 };
 
@@ -2301,6 +2311,15 @@ export type GetRealmsQuery = {
       heavyInfantryQty: number;
       heavyInfantryHealth: number;
     }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
+    }>;
   }>;
 };
 
@@ -2409,6 +2428,15 @@ export type GetRealmsWithTravelsQuery = {
       lightInfantryHealth: number;
       heavyInfantryQty: number;
       heavyInfantryHealth: number;
+    }>;
+    foods: Array<{
+      __typename?: 'Food';
+      realmId: number;
+      buildingId: number;
+      buildingName: string;
+      qty?: number | null;
+      harvests?: number | null;
+      createdAt: any;
     }>;
   }>;
   travels: Array<{
@@ -2541,6 +2569,15 @@ export type RealmFragmentFragment = {
     heavyInfantryQty: number;
     heavyInfantryHealth: number;
   }>;
+  foods: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
+  }>;
 };
 
 export type RealmArmiesFragmentFragment = {
@@ -2589,6 +2626,19 @@ export type RealmBuildingsFragmentFragment = {
     limitTraitId: number;
     limitTraitName: string;
   }> | null;
+};
+
+export type RealmFoodsFragmentFragment = {
+  __typename?: 'Realm';
+  foods: Array<{
+    __typename?: 'Food';
+    realmId: number;
+    buildingId: number;
+    buildingName: string;
+    qty?: number | null;
+    harvests?: number | null;
+    createdAt: any;
+  }>;
 };
 
 export type RealmTroopsFragmentFragment = {
@@ -2799,6 +2849,18 @@ export const RealmArmiesFragmentFragmentDoc = gql`
     }
   }
 `;
+export const RealmFoodsFragmentFragmentDoc = gql`
+  fragment RealmFoodsFragment on Realm {
+    foods {
+      realmId
+      buildingId
+      buildingName
+      qty
+      harvests
+      createdAt
+    }
+  }
+`;
 export const RealmFragmentFragmentDoc = gql`
   fragment RealmFragment on Realm {
     realmId
@@ -2838,10 +2900,12 @@ export const RealmFragmentFragmentDoc = gql`
     ...RealmBuildingsFragment
     ...RealmTroopsFragment
     ...RealmArmiesFragment
+    ...RealmFoodsFragment
   }
   ${RealmBuildingsFragmentFragmentDoc}
   ${RealmTroopsFragmentFragmentDoc}
   ${RealmArmiesFragmentFragmentDoc}
+  ${RealmFoodsFragmentFragmentDoc}
 `;
 export const TravelFragmentFragmentDoc = gql`
   fragment TravelFragment on Travel {

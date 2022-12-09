@@ -1,0 +1,10 @@
+fragment RealmFoodsFragment on Realm {
+  foods {
+    realmId
+    buildingId
+    buildingName
+    qty
+    harvests
+    createdAt
+  }
+}
