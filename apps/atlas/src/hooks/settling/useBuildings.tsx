@@ -80,6 +80,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
   const txQueue = useCommandList();
   const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
   const { play: buildBarracks } = useUiSounds(soundSelector.buildBarracks);
+  const { play: buildArcherTower } = useUiSounds(
+    soundSelector.buildArcherTower
+  );
+
   const { gameConstants } = useGameConstants();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
   const [buildingUtilisation, SetBuildingUtilisation] =
@@ -92,6 +96,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
     switch (buildingId) {
       case RealmBuildingId.Barracks:
         buildBarracks();
+        break;
+      case RealmBuildingId.ArcherTower:
+        buildArcherTower();
         break;
       default:
         buildMilitary();
