@@ -217,7 +217,7 @@ export const RealmsSearch = () => {
 
       const tab = router.query.tab;
 
-      if (!tab) {
+      if (!tab && parseInt(id)) {
         actions.updateSearchIdFilter(id);
       }
     }
@@ -237,19 +237,20 @@ export const RealmsSearch = () => {
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 
   return (
-    <div>
+    <div className="px-6">
       <Tabs
         key={selectedTabIndex}
         selectedIndex={selectedTabIndex}
         onChange={onTabChange as any}
+        variant="primary"
       >
-        <Tabs.List>
+        <Tabs.List className="mt-2">
           {TABS.map((tab) => (
             <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
           ))}
         </Tabs.List>
       </Tabs>
-      <div className="flex w-full px-4">
+      <div className="flex w-full mt-2">
         <SearchFilter
           placeholder="Search by Realm Id"
           onSubmit={(value) => {

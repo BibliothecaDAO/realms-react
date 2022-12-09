@@ -64,49 +64,54 @@ export function DetailedOverview(
 
   return (
     <>
-      {hasOwnRelic(realm) ? (
-        <div className="flex px-2 my-4">
-          <div className="self-center">
-            <img
-              src={'/realm-troops/vizir.png'}
-              alt="map"
-              className="w-56 h-56 mr-10 rounded-full shadow-lg shadow-purple-800"
-            />
-          </div>
+      <div className="flex">
+        {hasOwnRelic(realm) ? (
+          <div className="flex px-2 my-4">
+            <div className="self-center">
+              <img
+                src={'/realm-troops/vizir.png'}
+                alt="map"
+                className="w-56 h-56 mr-10 rounded-full shadow-lg shadow-purple-800"
+              />
+            </div>
 
-          <div className="self-center w-2/3">
-            <p className="text-3xl italic">
-              "Citizens of {realm?.name} are living peacefully on its lands. The
-              Lord of {realm?.name} is keeping them safe from Goblins and other
-              warmongering realms."
-            </p>
+            <div className="self-center w-2/3">
+              <p className="text-3xl italic">
+                "Citizens of {realm?.name} are living peacefully on its lands.
+                The Lord of {realm?.name} is keeping them safe from Goblins and
+                other warmongering realms."
+              </p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="px-2">
-          {realm?.relic?.map((a, i) => {
-            return (
-              <div key={i} className="mb-1">
-                <p className="text-3xl italic">
-                  {realm?.name} has been Conquered by{' '}
-                  {getRealmNameById(a.heldByRealm || 0)}. The citizens shake in
-                  fear everyday thinking it will be their last... won't someone
-                  think of the children!
-                </p>
-                <div className="mt-4">
-                  <Button
-                    href={'/?asset=realm' + a.heldByRealm}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Fly To {getRealmNameById(a.heldByRealm || 0)}
-                  </Button>
+        ) : (
+          <div className="px-2">
+            {realm?.relic?.map((a, i) => {
+              return (
+                <div key={i} className="mb-1">
+                  <p className="text-3xl italic">
+                    {realm?.name} has been Conquered by{' '}
+                    {getRealmNameById(a.heldByRealm || 0)}. The citizens shake
+                    in fear everyday thinking it will be their last... won't
+                    someone think of the children!
+                  </p>
+                  <div className="mt-4">
+                    <Button
+                      href={'/?asset=realm' + a.heldByRealm}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Fly To {getRealmNameById(a.heldByRealm || 0)}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+        )}
+        <div className="w-1/3 h-full">
+          <RealmImage id={realm.realmId} />
         </div>
-      )}
+      </div>
 
       <div className="flex flex-wrap justify-between">
         <div className="p-2">
@@ -172,23 +177,25 @@ export function DetailedOverview(
           </span>
         </div>
       </div>
-      <RealmImage id={realm.realmId} />
-      <div className="flex flex-wrap justify-center mt-4">
-        {realm.resources?.map((re, index) => (
-          <div key={index} className="flex flex-col justify-center p-2">
-            <Image
-              src={'/resources/' + re.resourceId + '.jpg'}
-              alt="map"
-              width={200}
-              height={200}
-              className="rounded"
-            />
+      <div className="flex flex-col">
+        <h3 className="text-2xl font-bold">Resources</h3>
+        <div className="flex flex-wrap mt-4">
+          {realm.resources?.map((re, index) => (
+            <div key={index} className="flex flex-col justify-center p-2">
+              <Image
+                src={'/resources/' + re.resourceId + '.jpg'}
+                alt="map"
+                width={100}
+                height={100}
+                className="rounded"
+              />
 
-            <span className="self-center mt-2">
-              {findResourceById(re.resourceId)?.trait}
-            </span>
-          </div>
-        ))}
+              <span className="self-center mt-2">
+                {findResourceById(re.resourceId)?.trait}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* <div

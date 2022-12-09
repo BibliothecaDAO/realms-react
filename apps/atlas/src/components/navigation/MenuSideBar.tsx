@@ -66,6 +66,7 @@ export const MenuSideBar = () => {
         page: '?asset=realm0',
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
+        sidebar: 'realm' as AssetType,
       },
       {
         page: 'bank',
@@ -110,7 +111,7 @@ export const MenuSideBar = () => {
       // },
     ];
   }, [query]);
-  const { closeAll, assetSidebar } = useUIContext();
+  const { closeAll, assetSidebar, openAsset } = useUIContext();
   return (
     <div className="absolute z-40">
       <div>
@@ -128,6 +129,7 @@ export const MenuSideBar = () => {
           <Link
             onClick={() => {
               closeAll();
+              menu.sidebar && openAsset(menu.sidebar);
             }}
             href={getPageHref(menu.page)}
             key={menu.page}

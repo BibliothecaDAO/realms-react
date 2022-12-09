@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CommandList } from '@/components/ui/transactions/CommandList';
 import { TransactionCartTable } from '@/components/ui/transactions/Transactions';
+import { sidebarClassNames } from '@/constants/ui';
 import AtlasSideBar from '../../map/AtlasSideBar';
 
 interface TransactionCartSideBarProps {
@@ -17,7 +18,7 @@ export const TransactionCartSideBar = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName="w-full lg:w-5/12 z-40 m-10"
+      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
     >
       {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
@@ -48,25 +49,27 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel className="p-2">
-      <Tabs
-        selectedIndex={selectedTab}
-        onChange={(index) => setSelectedTab(index as number)}
-        variant="default"
-      >
-        <Tabs.List className="">
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab.label} className="uppercase">
-              {tab.label}
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
-        <Tabs.Panels>
-          {tabs.map((tab) => (
-            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-          ))}
-        </Tabs.Panels>
-      </Tabs>
+    <BaseSideBarPanel onClose={onClose}>
+      <div className="relative px-6 rounded">
+        <Tabs
+          selectedIndex={selectedTab}
+          onChange={(index) => setSelectedTab(index as number)}
+          variant="primary"
+        >
+          <Tabs.List className="mt-2">
+            {tabs.map((tab) => (
+              <Tabs.Tab key={tab.label}>{tab.label}</Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <Tabs.Panels>
+            {tabs.map((tab) => (
+              <Tabs.Panel className="mt-0" key={tab.label}>
+                {tab.component}
+              </Tabs.Panel>
+            ))}
+          </Tabs.Panels>
+        </Tabs>
+      </div>
     </BaseSideBarPanel>
   );
 };

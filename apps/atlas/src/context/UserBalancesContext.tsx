@@ -19,6 +19,7 @@ import { resources } from '@/constants/resources';
 import { useGetWalletBalancesQuery } from '@/generated/graphql';
 import { useLordsContract } from '@/hooks/settling/stark-contracts';
 import type { NetworkState } from '@/types/index';
+import { LORDS_TOKEN_TOKENID } from '../constants';
 import { useCommandList } from './CommandListContext';
 
 export type Resource = {
@@ -74,12 +75,6 @@ function useUserBalances() {
     ? toBN(address as string).toString()
     : undefined;
 
-  const { data: lordsBalanceData } = useStarknetCall({
-    contract: lordsContract,
-    method: 'balanceOf',
-    args: [ownerAddressInt],
-  });
-
   const { data: walletBalancesData, refetch: updateBalance } =
     useGetWalletBalancesQuery({
       variables: {
@@ -89,12 +84,7 @@ function useUserBalances() {
     });
 
   useMemo(() => {
-    if (
-      !walletBalancesData ||
-      !walletBalancesData.walletBalances ||
-      !lordsBalanceData ||
-      !lordsBalanceData[0]
-    ) {
+    if (!walletBalancesData || !walletBalancesData.walletBalances) {
       return;
     }
 
@@ -109,7 +99,13 @@ function useUserBalances() {
         )
     ); */
 
-    setLordsBalance(uint256ToBN(lordsBalanceData[0]).toString(10));
+    setLordsBalance(
+      BigNumber.from(
+        walletBalancesData.walletBalances.find(
+          (a) => a.tokenId === LORDS_TOKEN_TOKENID
+        )?.amount ?? 0
+      ).toString()
+    );
 
     const allResourceCosts = getTxCosts(txQueue)
       .map((t) => t.resources)
@@ -184,7 +180,7 @@ function useUserBalances() {
         };
       })
     );
-  }, [walletBalancesData, lordsBalanceData, txQueue]);
+  }, [walletBalancesData, txQueue]);
 
   const getBalanceById = useCallback(
     (resourceId: number) => {
