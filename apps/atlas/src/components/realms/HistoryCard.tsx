@@ -13,7 +13,7 @@ interface Props {
 export const HistoryCard = (props: Props) => {
   return (
     <div
-      className={`flex flex-wrap mb-2 justify-between w-full relative border border-yellow-900 rounded p-3 shadow-red-900/80 shadow-2xl`}
+      className={`flex flex-wrap mb-6 justify-between w-full relative border-4 border-yellow-800 border-double rounded p-3`}
     >
       {/* <Image
         objectFit="cover"
@@ -22,15 +22,15 @@ export const HistoryCard = (props: Props) => {
         src={`https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${props.eventId}.png`}
         alt=""
       /> */}
-      <div className="z-10 w-full flex flex-wrap">
+      <div className="z-10 flex flex-wrap w-full">
         <div className="flex">
           <img
-            className="rounded-full w-24 h-24 mr-8"
+            className="w-24 h-24 mr-8 rounded-full"
             src={`/vizirs/mj_builder.png`}
             alt=""
           />
           <div className="flex-auto">
-            <div className=" flex justify-between">
+            <div className="flex justify-between ">
               <span className="text-xl"> {props.event}</span>
             </div>
 
@@ -39,8 +39,8 @@ export const HistoryCard = (props: Props) => {
           </div>
         </div>
 
-        <div className="w-full flex justify-end mt-4">
-          <span className="text-xs text-gray-700 ml-auto">
+        <div className="flex justify-end w-full mt-4">
+          <span className="ml-auto text-xs text-gray-700">
             {' '}
             {new Date(props.timeStamp).toLocaleTimeString('en-US')}
             {' | '}

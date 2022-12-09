@@ -114,6 +114,30 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   const { play: buildFishingVillage } = useUiSounds(
     soundSelector.buildFishingVillage
   );
+  const { play: buildFarm } = useUiSounds(soundSelector.buildFarm);
+  const { play: buildStorehouse } = useUiSounds(soundSelector.buildStorehouse);
+  const { play: buildWorkHut } = useUiSounds(soundSelector.buildWorkHut);
+
+  const playFoodBuildingSound = (buildingId: RealmBuildingId) => {
+    // eslint-disable-next-line sonarjs/no-small-switch
+    switch (buildingId) {
+      case RealmBuildingId.FishingVillage:
+        buildFishingVillage();
+        break;
+      case RealmBuildingId.Farm:
+        buildFarm();
+        break;
+      case RealmBuildingId.StoreHouse:
+        buildStorehouse();
+        break;
+      case RealmBuildingId.House:
+        buildWorkHut();
+        break;
+      default:
+        harvestWheat();
+        break;
+    }
+  };
 
   const { FoodContract } = useJsonRpc();
 
@@ -192,11 +216,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     realmFoodDetails,
     availableFood,
     create: (tokenId, quantity, foodBuildingId, costs) => {
-      if (foodBuildingId === RealmBuildingId.FishingVillage) {
-        buildFishingVillage();
-      } else {
-        harvestWheat();
-      }
+      playFoodBuildingSound(foodBuildingId);
 
       const qtyCosts = costs.resources.map((a) => {
         return {

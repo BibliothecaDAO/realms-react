@@ -42,6 +42,7 @@ import {
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { HarvestType, RealmBuildingId } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
+import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useModalContext } from '@/context/ModalContext';
 import { useRealmContext } from '@/context/RealmContext';
@@ -394,13 +395,16 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         </div>
 
-        <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
+        <AtlasSidebar containerClassName="w-full z-40" isOpen={isRaiding}>
           <CombatSideBar
             onClose={() => setIsRaiding(false)}
             defendingRealm={realm}
           />
         </AtlasSidebar>
-        <AtlasSidebar containerClassName="w-full md:w-5/12" isOpen={isTravel}>
+        <AtlasSidebar
+          containerClassName={sidebarClassNames.replace('z-30', 'z-40')}
+          isOpen={isTravel}
+        >
           <SidebarHeader onClose={() => setIsTravel(false)} />
           <Travel realm={realm} />
         </AtlasSidebar>

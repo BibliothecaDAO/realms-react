@@ -31,6 +31,7 @@ import useFood from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { Entrypoints } from '@/hooks/settling/useResources';
 import useIsOwner from '@/hooks/useIsOwner';
+import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 
 type Prop = {
@@ -52,6 +53,8 @@ export const WorkHuts = (props) => {
   const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
+
+  const { play: buildWorkHut } = useUiSounds(soundSelector.buildWorkHut);
 
   const [input, setInput] = useState<WorkHutInput>({
     workHutsToBuild: '1',
@@ -84,7 +87,7 @@ export const WorkHuts = (props) => {
   return (
     <Card>
       <div className="flex w-full">
-        <div className=" rounded">
+        <div className="rounded ">
           <Image
             width={200}
             height={200}
@@ -96,9 +99,9 @@ export const WorkHuts = (props) => {
 
         <div className="p-2 ">
           <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 pb-[2px] ">
-            <h3 className=" p-1 shadow-xl shadow-red-700/20 px-2 flex bg-gray-1000">
+            <h3 className="flex p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
               Workhuts{' '}
-              <span className=" text-xs text-gray-700 self-center ml-4">
+              <span className="self-center ml-4 text-xs text-gray-700 ">
                 {(
                   buildingIntegrity(RealmBuildingId.House) /
                   60 /
@@ -107,8 +110,8 @@ export const WorkHuts = (props) => {
                 ).toFixed(0)}{' '}
                 Day Decay Time
               </span>
-              <span className="self-center ml-auto text-sm flex">
-                <span className="mr-2 text-gray-700 text-xs self-center">
+              <span className="flex self-center ml-auto text-sm">
+                <span className="self-center mr-2 text-xs text-gray-700">
                   Time till decay:
                 </span>
                 <CountdownTimer
@@ -121,7 +124,7 @@ export const WorkHuts = (props) => {
             </h3>
           </div>
 
-          <div className="p-2 w-full">
+          <div className="w-full p-2">
             <div className="text-4xl opacity-80">
               <span className="">
                 {
@@ -134,7 +137,8 @@ export const WorkHuts = (props) => {
             <div>
               <div className="flex mt-2 space-x-2">
                 <Button
-                  onClick={() =>
+                  onClick={() => {
+                    buildWorkHut();
                     txQueue.add(
                       createBuildingCall.build({
                         realmId: realm.realmId,
@@ -149,8 +153,8 @@ export const WorkHuts = (props) => {
                           })),
                         },
                       })
-                    )
-                  }
+                    );
+                  }}
                   size="xs"
                   variant="primary"
                 >
@@ -191,7 +195,7 @@ export const WorkHuts = (props) => {
                 </div>
               ))}
             </div>
-            <span className="py-1 bg-green-900 border-green-200 rounded p-2">
+            <span className="p-2 py-1 bg-green-900 border-green-200 rounded">
               Workhuts increase your output by {WORK_HUT_OUTPUT} per day cycle.
               They cost {WORK_HUT_COST} of all the resources on your realm.
             </span>

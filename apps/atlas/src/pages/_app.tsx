@@ -123,7 +123,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {(t) => (
           <ToastBar toast={t}>
             {({ icon, message }) => (
-              <Button variant="primary" size="md">
+              <Button className="text-center" variant="primary" size="md">
                 {icon}
                 {message}
               </Button>

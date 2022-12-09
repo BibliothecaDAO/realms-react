@@ -19,6 +19,7 @@ export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
       isOpen={isOpen}
       position="left"
       containerClassName="w-full !p-0"
+      isTransparent={true}
     >
       {isOpen && <EmpireQuickView onClose={onClose} />}
     </AtlasSideBar>

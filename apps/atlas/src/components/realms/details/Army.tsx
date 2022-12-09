@@ -19,6 +19,7 @@ import {
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { defaultArmy } from '@/constants/army';
+import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army, GetRealmQuery, Realm } from '@/generated/graphql';
@@ -267,7 +268,10 @@ export const RealmsArmy = (props) => {
           army={selectedArmy}
         />
       </AtlasSidebar>
-      <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
+      <AtlasSidebar
+        containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+        isOpen={isTravel}
+      >
         <SidebarHeader
           title={'Travel to Realm ' + realm.realmId}
           onClose={() => setIsTravel(false)}

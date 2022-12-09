@@ -1,8 +1,10 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
+import { sidebarClassNames } from '@/constants/ui';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -26,7 +28,7 @@ export const ResourceSwapSideBar = ({
     <AtlasSideBar
       position="left"
       isOpen={isOpen}
-      containerClassName="w-full lg:w-5/12 z-20"
+      containerClassName={twMerge(sidebarClassNames, 'ml-20')}
     >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
@@ -90,18 +92,20 @@ export const ResourceSwapSideBarPanel = (
         )}
       </div> */}
 
-      <div className="relative p-10 border border-yellow-900 rounded">
+      <div className="relative px-6 rounded">
         <Tabs className="h-full" variant="primary">
-          <Tabs.List className="px-2 border border-yellow-900 rounded">
+          <Tabs.List className="mt-2 rounded">
             {tabs.map((tab) => (
               <Tabs.Tab key={tab.label} className="">
                 {tab.label}
               </Tabs.Tab>
             ))}
           </Tabs.List>
-          <Tabs.Panels className="h-full p-2 rounded shadow-inner bg-gray-1000/10">
+          <Tabs.Panels className="h-full py-2 rounded shadow-inner bg-gray-1000/10">
             {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+              <Tabs.Panel className="mt-0" key={tab.label}>
+                {tab.component}
+              </Tabs.Panel>
             ))}
           </Tabs.Panels>
         </Tabs>

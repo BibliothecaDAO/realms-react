@@ -339,9 +339,11 @@ export function LpMerchant(): ReactElement {
         <Switch
           checked={isBuy}
           onChange={toggleTradeType}
-          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
+          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne ${
+            isBuy ? 'bg-green-800' : 'bg-red-700'
+          }`}
         >
-          <span className="sr-only">Enable notifications</span>
+          <span className="sr-only">Add/Remove LP</span>
           <span
             className={`${
               isSell ? 'translate-x-6' : 'translate-x-1'
