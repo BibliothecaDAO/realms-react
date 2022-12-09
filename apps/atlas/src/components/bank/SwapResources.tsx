@@ -315,7 +315,7 @@ export function SwapResources(): ReactElement {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="w-full my-4">
+      <div className="w-full mb-4">
         <div className="flex">
           <Popover className="relative z-50 mr-4">
             <Popover.Button as="div">
@@ -457,37 +457,41 @@ export function SwapResources(): ReactElement {
               </Popover.Panel>
             </Transition>
           </Popover>
+          <div className="flex ml-auto text-sm tracking-widest">
+            <div
+              className={`px-4 uppercase self-center ${
+                tradeType === 'buy' && 'font-semibold'
+              }`}
+            >
+              Buy
+            </div>
+            <Switch
+              checked={isBuy}
+              onChange={toggleTradeType}
+              className={`relative inline-flex h-6 w-11 items-center rounded shadow-inner ${
+                isBuy ? 'bg-green-800' : 'bg-red-700'
+              }`}
+            >
+              <span className="sr-only">Buy/Sell</span>
+              <span
+                className={`${
+                  isSell ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
+              />
+            </Switch>
+            <div
+              className={`px-4 uppercase self-center ${
+                isSell && 'font-semibold'
+              }`}
+            >
+              Sell
+            </div>
+          </div>
         </div>
 
         {/* <MarketSelect update={onClickCostRecipe} cost={buildingCosts} /> */}
       </div>
 
-      <div className="flex mx-auto mb-8 text-sm tracking-widest">
-        <div
-          className={`px-4 uppercase self-center ${
-            tradeType === 'buy' && 'font-semibold'
-          }`}
-        >
-          Buy
-        </div>
-        <Switch
-          checked={isBuy}
-          onChange={toggleTradeType}
-          className={`relative inline-flex h-6 w-11 items-center rounded shadow-inne border border-yellow-700`}
-        >
-          <span className="sr-only">Buy/Sell</span>
-          <span
-            className={`${
-              isSell ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
-          />
-        </Switch>
-        <div
-          className={`px-4 uppercase self-center ${isSell && 'font-semibold'}`}
-        >
-          Sell
-        </div>
-      </div>
       <div>
         {selectedSwapResourcesWithBalance.map((resource) => {
           const balance = getBalanceById(resource.resourceId);

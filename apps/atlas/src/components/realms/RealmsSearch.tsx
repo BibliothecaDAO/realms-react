@@ -237,11 +237,12 @@ export const RealmsSearch = () => {
   const hasNoResults = () => !loading && (data?.realms?.length ?? 0) === 0;
 
   return (
-    <div>
+    <div className="px-6">
       <Tabs
         key={selectedTabIndex}
         selectedIndex={selectedTabIndex}
         onChange={onTabChange as any}
+        variant="primary"
       >
         <Tabs.List>
           {TABS.map((tab) => (
@@ -249,7 +250,7 @@ export const RealmsSearch = () => {
           ))}
         </Tabs.List>
       </Tabs>
-      <div className="flex w-full px-4">
+      <div className="flex w-full mt-2">
         <SearchFilter
           placeholder="Search by Realm Id"
           onSubmit={(value) => {

@@ -46,22 +46,22 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel className="p-2">
+    <BaseSideBarPanel className="px-6 py-4">
       <Tabs
         selectedIndex={selectedTab}
         onChange={(index) => setSelectedTab(index as number)}
-        variant="default"
+        variant="primary"
       >
         <Tabs.List className="">
           {tabs.map((tab) => (
-            <Tabs.Tab key={tab.label} className="uppercase">
-              {tab.label}
-            </Tabs.Tab>
+            <Tabs.Tab key={tab.label}>{tab.label}</Tabs.Tab>
           ))}
         </Tabs.List>
         <Tabs.Panels>
           {tabs.map((tab) => (
-            <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+            <Tabs.Panel className="mt-0" key={tab.label}>
+              {tab.component}
+            </Tabs.Panel>
           ))}
         </Tabs.Panels>
       </Tabs>
