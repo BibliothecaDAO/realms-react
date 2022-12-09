@@ -244,7 +244,7 @@ export const RealmsSearch = () => {
         onChange={onTabChange as any}
         variant="primary"
       >
-        <Tabs.List>
+        <Tabs.List className="mt-2">
           {TABS.map((tab) => (
             <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
           ))}
