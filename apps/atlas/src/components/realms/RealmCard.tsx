@@ -99,8 +99,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       harvest,
     } = useFood(realm as Realm);
 
-    console.log(realm.realmId, realm);
-
     const tabs = useMemo(
       () => [
         {
