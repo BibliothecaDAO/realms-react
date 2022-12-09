@@ -95,22 +95,13 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
       onClick={onButtonClick}
     >
       <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-32 lg:right-32 flex pointer-events-none">
-        <span className="flex w-3 h-3 mt-3 mr-1 sm:ml-1 sm:mt-0">
-          {txQueue.transactions.length > 0 ? (
-            <span className="p-1 -mt-3 text-center">
-              {txQueue.transactions.length}
-            </span>
-          ) : (
-            ' '
-          )}
-          <span
-            className={`absolute inline-flex w-3 h-3 duration-300 rounded-full opacity-75 ${TxStyle()}`}
-          ></span>
-
-          <span
-            className={`relative inline-flex w-3 h-3 rounded-full ${TxStyle()}`}
-          ></span>
-        </span>
+        {txQueue.transactions.length > 0 ? (
+          <div className="absolute top-0 left-0 flex items-center justify-center h-6 px-2 leading-6 text-white -translate-x-1/2 -translate-y-1/2 bg-red-800 rounded-full">
+            {txQueue.transactions.length}
+          </div>
+        ) : (
+          ''
+        )}
         <BiblioIcon
           className={`inline-block w-6 lg:w-9 hover:fill-yellow-500 ${TxStyle1()}`}
         />
