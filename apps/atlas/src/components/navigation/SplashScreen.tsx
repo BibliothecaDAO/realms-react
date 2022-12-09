@@ -45,7 +45,7 @@ export const SplashScreen = ({ children }) => {
                 </Button>
               </div>
             ) : (
-              <div className="rounded bg-gray-1000 animate-pulse">
+              <div className="rounded bg-gray-1000">
                 <NetworkConnectButton />
               </div>
             )}

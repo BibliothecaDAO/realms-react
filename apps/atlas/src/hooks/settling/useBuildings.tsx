@@ -2,10 +2,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import {
-  fetchRealmNameById,
-  getTrait,
-} from '@/components/realms/RealmsGetters';
+import { getRealmNameById, getTrait } from '@/components/realms/RealmsGetters';
 import {
   RealmBuildingId,
   RealmBuildingsSize,
@@ -58,7 +55,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     title: ctx.isQueued
       ? `Construct ${metadata.qty} ${buildingIdToString(
           metadata.buildingId
-        )} on Realm ${fetchRealmNameById(metadata.realmId)}`
+        )} on Realm ${getRealmNameById(metadata.realmId)}`
       : 'Constructing Building',
     description: (
       <span>

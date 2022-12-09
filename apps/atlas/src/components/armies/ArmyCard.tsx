@@ -10,7 +10,7 @@ import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import { useMemo, useState } from 'react';
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   getTravelTime,
 } from '@/components/realms/RealmsGetters';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -95,7 +95,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
         <div>
           <div className="flex justify-between">
             <h3>
-              {fetchRealmNameById(army.realmId)} | {army.realmId}
+              {getRealmNameById(army.realmId)} | {army.realmId}
             </h3>
             <div>
               {army.armyId != 0 &&

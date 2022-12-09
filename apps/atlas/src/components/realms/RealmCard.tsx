@@ -37,6 +37,7 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
   getTimeUntilNextTick,
+  getDays,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { HarvestType, RealmBuildingId } from '@/constants/buildings';
@@ -50,6 +51,9 @@ import useBuildings from '@/hooks/settling/useBuildings';
 import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
 import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
+import useResources, {
+  Entrypoints as ResourceEntryPoints,
+} from '@/hooks/settling/useResources';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useEnsResolver } from '@/hooks/useEnsResolver';
 import useIsOwner from '@/hooks/useIsOwner';
@@ -66,12 +70,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const { address } = useAccount();
 
     const { enqueuedTx } = usePendingRealmTx({ realmId: realm.realmId });
+
+    const { enqueuedHarvestTx: resourcesTxPending } = useCurrentQueuedTxs({
+      moduleAddr: ModuleAddr.ResourceGame,
+      entryPoint: ResourceEntryPoints.claim,
+      realmId: realm.realmId,
+    });
+
     const {
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
 
     const ensData = useEnsResolver(realm?.owner as string);
+
+    const { claim } = useResources(realm as Realm);
 
     const {
       buildings,
@@ -277,21 +290,25 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         <ResourceIcon resource={'Wheat'} size="xs" />{' '}
                         <ResourceIcon resource={'Fish'} size="xs" />
                       </Button>
-                      {/* <Button
-                    onClick={() => {
-                      openModal('realm-build', {
-                        realm: realm,
-                        buildings: buildings,
-                        realmFoodDetails: realmFoodDetails,
-                        availableFood: availableFood,
-                        buildingUtilisation: buildingUtilisation,
-                      });
-                    }}
-                    variant="outline"
-                    size="xs"
-                  >
-                    <ResourceIcon withTooltip resource={'Wood'} size="xs" />
-                  </Button> */}
+                      <Button
+                        disabled={
+                          getDays(realm?.lastClaimTime) === 0 ||
+                          resourcesTxPending
+                        }
+                        size="xs"
+                        variant={'outline'}
+                        className={
+                          getDays(realm?.lastClaimTime) === 0 ||
+                          resourcesTxPending
+                            ? ''
+                            : 'bg-green-800 animate-pulse'
+                        }
+                        onClick={() => {
+                          claim();
+                        }}
+                      >
+                        Harvest
+                      </Button>
                     </>
                   )}
                 </>
@@ -325,7 +342,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 </Button>
               )}
             </div>
-            <div className="flex w-full ml-auto">
+            {/* <div className="flex w-full ml-auto">
               <span
                 className={`self-center text-xs  uppercase ${
                   hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
@@ -335,11 +352,17 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </span>
               <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
               <Relic className={`w-3 fill-yellow-500`} />{' '}
+            </div> */}
+            <div className="flex justify-between text-sm">
+              <h6 className="text-gray-800">
+                ({getNumberOfTicks(realm)} cycles) |{' '}
+                {getTimeUntilNextTick(realm)} hrs
+              </h6>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-between w-full">
+        <div className="flex flex-wrap justify-between w-full mt-2">
           <div className="flex my-1 space-x-2">
             {realm.resources?.map((re, index) => (
               <div key={index} className="flex flex-col justify-center">
@@ -349,7 +372,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     findResourceById(re.resourceId)?.trait.replace(' ', '') ||
                     ''
                   }
-                  size="sm"
+                  size="xs"
                 />
               </div>
             ))}
@@ -371,12 +394,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </Button>
             )}
           </div>
-        </div>
-        <div className="flex justify-between">
-          <h6 className="text-gray-800">
-            ({getNumberOfTicks(realm)} cycles) | {getTimeUntilNextTick(realm)}{' '}
-            hrs
-          </h6>
         </div>
 
         <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>

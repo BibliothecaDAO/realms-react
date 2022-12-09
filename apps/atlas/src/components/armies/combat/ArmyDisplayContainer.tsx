@@ -2,7 +2,7 @@ import { OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib/base';
 import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import { useMemo, useState } from 'react';
-import { fetchRealmNameById } from '@/components/realms/RealmsGetters';
+import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { nameArray, useArmy } from '@/hooks/settling/useArmy';
 import { ArmyBattalions } from '../armyCard/ArmyBattalions';
 import { ArmyStatisticsTable } from '../armyCard/ArmyStatisticsTable';
@@ -40,7 +40,7 @@ export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
             size="md"
             order={order || ''}
           />{' '}
-          <span className="self-center">{fetchRealmNameById(realmId)}</span>
+          <span className="self-center">{getRealmNameById(realmId)}</span>
         </div>
         <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-900 border-double bg-gray-1000 rounded-b-2xl">
           {battalions?.map((battalion, index) => {

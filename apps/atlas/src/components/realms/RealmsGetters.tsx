@@ -251,7 +251,7 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
   return realm?.relic && realm?.relic.length ? false : true;
 };
 
-export const fetchRealmNameById = (id: number | undefined) => {
+export const getRealmNameById = (id: number | undefined) => {
   return RealmsData.features.find((realm) => realm.id == id)
     ? RealmsData.features.find((realm) => realm.id == id)?.name
     : '';

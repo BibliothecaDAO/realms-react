@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { BattalionImagesCard } from '@/components/armies/BattalionImagesCard';
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
 import type { RealmHistory, RealmHistoryWhereInput } from '@/generated/graphql';
@@ -89,7 +89,7 @@ export const RaidResults = (props: RaidResultsProps) => {
                 Attacker: {starknetId ?? shortenAddress(attackingRealmOwner)}
               </h6>
 
-              <h2> {fetchRealmNameById(attackingRealmId)}</h2>
+              <h2> {getRealmNameById(attackingRealmId)}</h2>
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {attackingStartArmy && (
                   <BattalionImagesCard
@@ -105,7 +105,7 @@ export const RaidResults = (props: RaidResultsProps) => {
                 {defenderStarknetId ?? shortenAddress(defendingRealmOwner)}
               </h6>
 
-              <h2> {fetchRealmNameById(defendingRealmId)}</h2>
+              <h2> {getRealmNameById(defendingRealmId)}</h2>
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {defendingStartArmy && (
                   <BattalionImagesCard battalion={defendingStartArmy} />
@@ -123,8 +123,8 @@ export const RaidResults = (props: RaidResultsProps) => {
                 <hr className="my-3 border border-white/30" />
                 <div className="mx-auto mt-4 text-2xl italic sm:w-1/2">
                   Successful Raid!! The army of{' '}
-                  {fetchRealmNameById(defendingRealmId)} was defeated and{' '}
-                  {fetchRealmNameById(attackingRealmId)}'s battalions took off
+                  {getRealmNameById(defendingRealmId)} was defeated and{' '}
+                  {getRealmNameById(attackingRealmId)}'s battalions took off
                   with the following resources!
                   {/* TODO GENERALISE
                  The citizens are trembling and in awe of your victory. */}

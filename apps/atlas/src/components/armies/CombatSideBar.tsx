@@ -12,7 +12,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ArmyCard } from '@/components/armies/ArmyCard';
 
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   getDays,
   hasOwnRelic,
   vaultResources,
@@ -173,10 +173,9 @@ export const CombatSideBar: React.FC<Prop> = ({
                 <div className="p-8 mb-4 text-xl text-white bg-red-900 rounded-3xl">
                   {isSameOrder && (
                     <div>
-                      Ser, {fetchRealmNameById(selectedArmy.realmId)} is of the
-                      same order as{' '}
-                      {fetchRealmNameById(defendingRealm?.realmId)}. You cannot
-                      attack!
+                      Ser, {getRealmNameById(selectedArmy.realmId)} is of the
+                      same order as {getRealmNameById(defendingRealm?.realmId)}.
+                      You cannot attack!
                     </div>
                   )}
                 </div>

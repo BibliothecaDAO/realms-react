@@ -15,7 +15,7 @@ import {
   daysAccrued,
   maxClaimableResources,
   getHappiness,
-  fetchRealmNameById,
+  getRealmNameById,
   hasOwnRelic,
   getHappinessIcon,
   getPopulation,
@@ -89,9 +89,9 @@ export function DetailedOverview(
               <div key={i} className="mb-1">
                 <p className="text-3xl italic">
                   {realm?.name} has been Conquered by{' '}
-                  {fetchRealmNameById(a.heldByRealm || 0)}. The citizens shake
-                  in fear everyday thinking it will be their last... won't
-                  someone think of the children!
+                  {getRealmNameById(a.heldByRealm || 0)}. The citizens shake in
+                  fear everyday thinking it will be their last... won't someone
+                  think of the children!
                 </p>
                 <div className="mt-4">
                   <Button
@@ -99,7 +99,7 @@ export function DetailedOverview(
                     variant="outline"
                     size="sm"
                   >
-                    Fly To {fetchRealmNameById(a.heldByRealm || 0)}
+                    Fly To {getRealmNameById(a.heldByRealm || 0)}
                   </Button>
                 </div>
               </div>
