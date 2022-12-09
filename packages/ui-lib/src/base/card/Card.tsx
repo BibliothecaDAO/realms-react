@@ -34,9 +34,7 @@ export function CardBody({ children, className, loading }: Props) {
     );
   }
   return (
-    <div className={`${className} flex flex-col flex-grow  p-3 rounded-xl  `}>
-      {children}
-    </div>
+    <div className={`${className} flex flex-col flex-grow`}>{children}</div>
   );
 }
 
