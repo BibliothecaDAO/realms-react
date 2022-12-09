@@ -23,12 +23,16 @@ export const ImageSlideLoader = (props: ImageSlideLoaderProps) => {
   return (
     <div className="absolute top-0 flex flex-wrap justify-center w-full h-full overflow-y-hidden z-100 bg-gray-1000">
       {images && (
-        <img className="object-cover w-full" src={images[index]} alt="" />
+        <img
+          className="object-cover w-full"
+          src={images[index % images.length]}
+          alt=""
+        />
       )}
 
       {strings && (
         <span className="absolute self-center text-5xl capitalize animate-pulse">
-          {strings[index]}
+          {strings[index % strings.length]}
         </span>
       )}
     </div>

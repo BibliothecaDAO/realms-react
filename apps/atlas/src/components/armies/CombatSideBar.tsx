@@ -126,6 +126,12 @@ export const CombatSideBar: React.FC<Prop> = ({
     'Preparing Siege Engines',
     'Blooding the hounds',
     'Interrogating the prisoners',
+    'Filling The Quivers',
+    'Raising The Banners',
+    'Polishing The Blades',
+    'Blessing The Warriors',
+    'Sacrificing To The Gods',
+    'Raising The War Cry',
   ];
 
   const combatImages = [
