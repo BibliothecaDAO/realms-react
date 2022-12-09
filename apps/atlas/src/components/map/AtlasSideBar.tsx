@@ -14,15 +14,6 @@ type Prop = {
 const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   const { isOpen } = props;
 
-  const animation = useSpring({
-    opacity: isOpen ? 1 : 0,
-    transform: isOpen
-      ? 'translateX(0)'
-      : props.position == 'left'
-      ? 'translateX(-100%)'
-      : 'translateX(100%)',
-  });
-
   // Must wait until DOM is ready or might receive
   // Error: Target container is not a DOM element.
   const [domReady, setDomReady] = useState(false);
@@ -37,11 +28,16 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0 shadow-xl shadow-yellow-800 bottom-0 bg-gray-1000 overflow-y-scroll border-white/30 z-30 rounded-3xl border-8 border-double border-gray-900 ',
+        'absolute top-0 shadow-xl shadow-yellow-800 bottom-0 bg-gray-1000 overflow-y-scroll border-white/30 z-30 rounded-3xl border-8 border-double border-gray-900 transition-all duration-500 ease-in-out',
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
-        props.position == 'left' ? 'left-0' : 'right-0'
+        props.position == 'left' ? 'left-0' : 'right-0',
+        props.isOpen ? 'opacity-100' : 'opacity-0',
+        props.isOpen
+          ? 'translate-x-0'
+          : props.position == 'left'
+          ? '-translate-x-full'
+          : 'translate-x-full'
       )}
-      style={animation}
     >
       {props.children}
     </animated.div>,
