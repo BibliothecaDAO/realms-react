@@ -217,7 +217,7 @@ export const RealmsSearch = () => {
 
       const tab = router.query.tab;
 
-      if (!tab) {
+      if (!tab && parseInt(id)) {
         actions.updateSearchIdFilter(id);
       }
     }
