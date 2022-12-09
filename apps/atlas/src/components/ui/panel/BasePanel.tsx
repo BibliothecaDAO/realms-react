@@ -17,13 +17,13 @@ export const BasePanel = (props: Props) => {
 
   return (
     <animated.div
-      className={`absolute top-0 w-full h-full pl-12 bg-gray-1000 ${
+      className={`absolute top-0 w-full h-full pl-12 bg-yellow-50 ${
         props.open ? 'z-10' : ''
       }`}
       style={animation}
     >
       <div
-        className={`h-full overflow-y-scroll w-full relative  bg-gray-1000/90 ${props.style}`}
+        className={`h-full overflow-y-scroll w-full relative  bg-yellow-50 ${props.style}`}
       >
         {props.children}
       </div>
