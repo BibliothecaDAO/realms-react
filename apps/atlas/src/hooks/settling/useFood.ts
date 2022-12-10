@@ -13,7 +13,7 @@ import {
 } from '@/constants/buildings';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Food, Realm } from '@/generated/graphql';
-import { useGetFoodByRealmIdQuery } from '@/generated/graphql';
+
 import type {
   CallAndMetadata,
   RealmFoodDetails,
@@ -29,7 +29,7 @@ export const Entrypoints = {
   convert: 'convert_food_tokens_to_store',
 };
 
-export const createFoodCall: Record<string, (args: any) => CallAndMetadata> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   create: (args: {
     tokenId: number;
     quantity: number;
@@ -255,7 +255,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       });
 
       txQueue.add(
-        createFoodCall.create({
+        createCall.create({
           tokenId,
           quantity,
           foodBuildingId,
@@ -282,7 +282,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       }
 
       txQueue.add(
-        createFoodCall.harvest({
+        createCall.harvest({
           tokenId,
           harvestType,
           foodBuildingId,
@@ -292,7 +292,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     convert: (tokenId, quantity, resourceId) => {
       exportFood();
       txQueue.add(
-        createFoodCall.convert({
+        createCall.convert({
           tokenId,
           quantity,
           resourceId,
