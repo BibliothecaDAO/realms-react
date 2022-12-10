@@ -1,6 +1,6 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import { ethers, BigNumber } from 'ethers';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   useAccount,
   useContractRead,
@@ -10,6 +10,7 @@ import {
 import Web3Utils, { toBN } from 'web3-utils';
 import { paymentPoolAbi } from '@/abi/PaymentPool';
 import UserClaim from '@/data/claim.json';
+import useDebounce from '@/hooks/useDebounce';
 import CumulativePaymentTree from '@/util/cumulative-payment-tree';
 
 const paymentList = [
@@ -31,68 +32,44 @@ export const AccountClaim = () => {
   const [formattedClaim, setFormattedClaim] = useState([
     { payee: '', amount: toBN(0) },
   ]);
-  const [week, setWeek] = useState(0);
+  const week = 10;
   const [claimAmount, setClaimAmount] = useState('0');
+  const debouncedClaimAmount = useDebounce(claimAmount, 1000);
   const [currentClaimable, setCurrentClaimable] = useState(0);
   const { address, connector, isConnected } = useAccount();
-
+  const [hexProof, setHexProof] = useState<string>();
   const [withdrawnAmount, setWithdrawnAmount] = useState('0');
 
-  const totalClaimable = UserClaim.find(
-    (a) => a.payee === address?.toLowerCase()
-  )?.amount;
+  const totalClaimable =
+    UserClaim.find((a) => a.payee === address?.toLowerCase())?.amount || 0;
 
-  /* const paymentPool = new ethers.Contract(
-    contractAddress,
-    PaymentPool.abi,
-    signer
-  ); */
-  const { data, isError, isLoading } = useContractRead({
+  const { refetch } = useContractRead({
     address: contractAddress,
     abi: paymentPoolAbi,
     functionName: 'withdrawals',
     args: address && [address],
     onSuccess(data) {
       setWithdrawnAmount(ethers.utils.formatEther(data));
+      const claimable =
+        totalClaimable - parseFloat(ethers.utils.formatEther(data || 0));
+      setCurrentClaimable(claimable);
+      setClaimAmount(claimable.toString());
     },
     enabled: !!address,
   });
 
-  const getUserData = async () => {
-    if (address) {
-      const cycles = 11; /* hardcode past week 10 now */
-      setWeek(cycles - 1);
-
-      const formatClaim = UserClaim.map((a: any) => {
-        const pre = a.amount * ((cycles - 1) / 10);
-        const toEth = Web3Utils.toWei(pre.toString());
-
-        return {
-          payee: a.payee,
-          amount: Web3Utils.toBN(toEth),
-        };
-      });
-      setFormattedClaim(formatClaim);
-      const fetchBalances: any = formatClaim.find(
-        (a) => a.payee === address.toLowerCase()
-      )?.amount;
-
-      const toEth = ethers.utils.formatEther(fetchBalances.toString() || 0);
-
-      try {
-        const claimable =
-          parseFloat(toEth) - parseFloat(ethers.utils.formatEther(data || 0));
-        setCurrentClaimable(claimable);
-        setClaimAmount(claimable.toString());
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
   useEffect(() => {
-    getUserData();
-  }, [address]);
+    const formatClaim = UserClaim.map((a: any) => {
+      const toEth = Web3Utils.toWei(a.amount.toString()).toString();
+      return {
+        payee: a.payee,
+        amount: Web3Utils.toBN(toEth),
+      };
+    });
+    setFormattedClaim(formatClaim);
+    const paymentTree = new CumulativePaymentTree(formatClaim);
+    setHexProof(paymentTree.hexProofForPayee(address?.toLowerCase(), week));
+  }, [address, totalClaimable]);
 
   /* const paymentPool = new ethers.Contract(
       contractAddress,
@@ -100,16 +77,15 @@ export const AccountClaim = () => {
       signer
     ); */
 
-  const paymentTree = new CumulativePaymentTree(formattedClaim);
-
   const { config } = usePrepareContractWrite({
     address: contractAddress,
     abi: paymentPoolAbi,
     functionName: 'withdraw',
     args: [
-      BigNumber.from(Web3Utils.toWei(claimAmount)),
-      paymentTree.hexProofForPayee(address?.toLowerCase(), week) as any,
+      BigNumber.from(Web3Utils.toWei(debouncedClaimAmount)),
+      hexProof as any,
     ],
+    enabled: Boolean(hexProof),
   });
 
   const { write } = useContractWrite({
@@ -118,9 +94,11 @@ export const AccountClaim = () => {
       setClaiming(true);
     },
     onSuccess(data) {
-      getUserData();
+      setClaiming(false);
+      refetch();
     },
-    onSettled(data, error) {
+    onError(data, error) {
+      console.log(error);
       setClaiming(false);
     },
   });
@@ -167,7 +145,6 @@ export const AccountClaim = () => {
           >
             Claim
           </Button>
-          <div></div>
         </div>
       </div>
     </div>
