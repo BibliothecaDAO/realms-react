@@ -307,15 +307,15 @@ export interface BuildingDetail {
 }
 
 export interface RealmFoodDetails {
-  totalFarmHarvest: number;
-  totalTimeRemainingUntilFarmHarvest: number;
-  decayedFarms: number;
+  farmsToHarvest: number;
+  farmTimeTillHarvest: number;
+  farmsDecayed: number;
   farmsBuilt: number;
-  totalVillageHarvest: number;
-  totalTimeRemainingUntilVillageHarvest: number;
-  decayedVillages: number;
+  villagesToHarvest: number;
+  villagesTimeTillHarvest: number;
+  villagesDecayed: number;
   villagesBuilt: number;
-  fishingVillagesHarvestsLeft: number;
+  villagesHarvestsLeft: number;
   farmHarvestsLeft: number;
 }
 

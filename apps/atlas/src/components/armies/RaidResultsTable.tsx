@@ -95,19 +95,23 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
             <td className="text-2xl">lord</td>
             <td>
               {startingAttackingArmy &&
-                formatArmy(startingAttackingArmy).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                formatArmy(startingAttackingArmy)
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
             <td>
               {endingAttackingArmy &&
-                formatArmy(endingAttackingArmy).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                formatArmy(endingAttackingArmy)
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
             <td>
               {startingAttackingArmy &&
@@ -115,11 +119,13 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
                 getLosses(
                   formatArmy(startingAttackingArmy),
                   formatArmy(endingAttackingArmy)
-                ).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                )
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
           </tr>
         </tbody>
@@ -128,19 +134,23 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
             <td className="text-2xl">lord</td>
             <td>
               {startingDefendingArmy &&
-                formatArmy(startingDefendingArmy).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                formatArmy(startingDefendingArmy)
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
             <td>
               {endingDefendingArmy &&
-                formatArmy(endingDefendingArmy).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                formatArmy(endingDefendingArmy)
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
             <td>
               {startingDefendingArmy &&
@@ -148,11 +158,13 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
                 getLosses(
                   formatArmy(startingDefendingArmy),
                   formatArmy(endingDefendingArmy)
-                ).map((a, i) => {
-                  return (
-                    <TroopCell key={i} id={a.name} quantity={a.quantity} />
-                  );
-                })}
+                )
+                  .filter((b) => b.quantity > 0)
+                  .map((a, i) => {
+                    return (
+                      <TroopCell key={i} id={a.name} quantity={a.quantity} />
+                    );
+                  })}
             </td>
           </tr>
         </tbody>
