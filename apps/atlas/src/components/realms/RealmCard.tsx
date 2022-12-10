@@ -194,47 +194,72 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             {realm?.wonder}
           </div>
         )}
-
-        <div className="flex">
-          <div>
-            <div className="flex mb-1 text-gray-700">
-              <span className="">{realm.realmId} </span>
-              {' | '}
-              {starknetId ?? starknetId}
-              {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
-              {!starknetId &&
-                isYourRealm(realm, l1Address, address || '') &&
-                isYourRealm(realm, l1Address, address || '')}
+        <div className="flex w-full">
+          <div className="flex self-center w-full">
+            <OrderIcon
+              className="self-center"
+              size="md"
+              order={realm.orderType.toLowerCase()}
+            />
+            <h3 className="flex mx-2">{realm.name} </h3>
+            <div className="self-center">
+              {!isFavourite(realm, favouriteRealms) ? (
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
+                >
+                  <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
+                </Button>
+              ) : (
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="w-full"
+                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                >
+                  <HeartIcon className="w-5" />
+                </Button>
+              )}
             </div>
-            <div className="flex self-center ">
-              <OrderIcon
-                className="self-center"
-                size="sm"
-                order={realm.orderType.toLowerCase()}
-              />
-              <h3 className="flex ml-2">
-                {realm.name}{' '}
-                {enqueuedTx ? (
-                  <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
-                ) : (
-                  ''
-                )}
-              </h3>
 
-              <span className="self-center">
-                <span className="ml-2">
-                  {' '}
-                  {getHappinessIcon({
-                    realm: realm,
-                    food: availableFood,
-                  })}
-                </span>
+            <span className="self-center">
+              <span className="ml-2">
+                {' '}
+                {getHappinessIcon({
+                  realm: realm,
+                  food: availableFood,
+                })}
               </span>
-            </div>
+            </span>
           </div>
-
-          <div className="justify-center ml-auto text-lg ">
-            <div className="flex flex-wrap justify-end w-full space-x-1">
+          <div className="flex justify-end w-full mb-1 ml-auto text-gray-700">
+            <span className="">{realm.realmId} </span>
+            {' | '}
+            {starknetId ?? starknetId}
+            {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
+            {!starknetId &&
+              isYourRealm(realm, l1Address, address || '') &&
+              isYourRealm(realm, l1Address, address || '')}
+          </div>
+        </div>
+        <div className="flex w-full mt-3">
+          <div className="w-full">
+            <div className="flex w-full my-3 space-x-2">
+              {realm.resources?.map((re, index) => (
+                <div key={index} className="flex flex-col justify-center">
+                  <ResourceIcon
+                    withTooltip
+                    resource={
+                      findResourceById(re.resourceId)?.trait.replace(' ', '') ||
+                      ''
+                    }
+                    size="xs"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap w-full space-x-1">
               {IsSettled(realm) && (
                 <>
                   {isOwner && (
@@ -256,14 +281,14 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       </Button>
                       <Button
                         onClick={() => {
-                          if (realmFoodDetails.totalFarmHarvest > 0) {
+                          if (realmFoodDetails.farmsToHarvest > 0) {
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
                               RealmBuildingId.Farm
                             );
                           }
-                          if (realmFoodDetails.totalVillageHarvest > 0) {
+                          if (realmFoodDetails.villagesToHarvest > 0) {
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
@@ -274,15 +299,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         variant="outline"
                         size="xs"
                         className={
-                          (realmFoodDetails.totalFarmHarvest === 0 &&
-                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          (realmFoodDetails.farmsToHarvest === 0 &&
+                            realmFoodDetails.villagesToHarvest === 0) ||
                           harvestFarmEnqueuedHarvestTx
                             ? ''
                             : 'bg-green-800 animate-pulse'
                         }
                         disabled={
-                          (realmFoodDetails.totalFarmHarvest === 0 &&
-                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          (realmFoodDetails.farmsToHarvest === 0 &&
+                            realmFoodDetails.villagesToHarvest === 0) ||
                           harvestFarmEnqueuedHarvestTx
                         }
                       >
@@ -322,24 +347,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               >
                 fly
               </Button>
-              {!isFavourite(realm, favouriteRealms) ? (
-                <Button
-                  size="xs"
-                  variant="unstyled"
-                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                >
-                  <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
-                </Button>
-              ) : (
-                <Button
-                  size="xs"
-                  variant="unstyled"
-                  className="w-full"
-                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                >
-                  <HeartIcon className="w-5" />
-                </Button>
-              )}
             </div>
             {/* <div className="flex w-full ml-auto">
               <span
@@ -352,30 +359,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
               <Relic className={`w-3 fill-yellow-500`} />{' '}
             </div> */}
-            <div className="flex justify-between text-sm">
-              <h6 className="text-gray-800">
-                ({getNumberOfTicks(realm)} cycles) |{' '}
+            <div className="flex justify-between w-full mt-3 text-sm">
+              <h6 className="text-gray-700">
+                ({getNumberOfTicks(realm)} ticks) |{' '}
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
+              {enqueuedTx ? (
+                <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-between w-full mt-2">
-          <div className="flex my-1 space-x-2">
-            {realm.resources?.map((re, index) => (
-              <div key={index} className="flex flex-col justify-center">
-                <ResourceIcon
-                  withTooltip
-                  resource={
-                    findResourceById(re.resourceId)?.trait.replace(' ', '') ||
-                    ''
-                  }
-                  size="xs"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-wrap justify-between w-full">
           <div className="flex">
             {realm && !isOwner && IsSettled(realm) && (
               <Button

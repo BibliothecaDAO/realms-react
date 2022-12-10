@@ -60,32 +60,32 @@ export function MapModule() {
     )
   );
 
-  const createScatterPlot = useCallback(
-    (assetType: AssetType, data: any[]) =>
-      new ScatterplotLayer({
-        id: `${assetType}-layer`,
-        data,
-        stroked: true,
-        filled: true,
-        extruded: true,
-        pickable: true,
-        opacity: 1,
-        visible: viewState.zoom < ItemViewLevel ? false : true,
-        getPosition: (d: any) => d.xy,
-        getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
-        getElevation: 10000,
-        lineWidthMinPixels: 2,
-        getFillColor: [0, 0, 0, 0],
-        updateTriggers: {
-          getRadius: parseInt(selectedId),
-          getVisible: viewState,
-        },
-        onClick: (info: any) => {
-          navigateToAsset(info.object.id, assetType);
-        },
-      }),
-    [selectedAsset, selectedId]
-  );
+  // const createScatterPlot = useCallback(
+  //   (assetType: AssetType, data: any[]) =>
+  //     new ScatterplotLayer({
+  //       id: `${assetType}-layer`,
+  //       data,
+  //       stroked: true,
+  //       filled: true,
+  //       extruded: true,
+  //       pickable: true,
+  //       opacity: 1,
+  //       visible: viewState.zoom < ItemViewLevel ? false : true,
+  //       getPosition: (d: any) => d.xy,
+  //       getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
+  //       getElevation: 10000,
+  //       lineWidthMinPixels: 2,
+  //       getFillColor: [0, 0, 0, 0],
+  //       updateTriggers: {
+  //         getRadius: parseInt(selectedId),
+  //         getVisible: viewState,
+  //       },
+  //       onClick: (info: any) => {
+  //         navigateToAsset(info.object.id, assetType);
+  //       },
+  //     }),
+  //   [selectedAsset, selectedId]
+  // );
 
   const selectedResources = new IconLayer({
     id: 'selected-resources',
@@ -122,7 +122,7 @@ export function MapModule() {
     ];
 
     return [arcsLayer, selectedResources];
-  }, [arcsLayer, createScatterPlot, selectedResources, selectedId]);
+  }, [arcsLayer, selectedResources, selectedId]);
 
   return (
     <>
@@ -164,7 +164,7 @@ export function MapModule() {
           onLoad={() => setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
-          renderWorldCopies={false}
+          // renderWorldCopies={false}
         />
       </DeckGL>
       <Popover className="absolute z-30 bottom-10 right-20">

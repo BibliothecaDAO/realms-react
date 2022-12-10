@@ -45,16 +45,15 @@ export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
         <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-900 border-double bg-gray-1000 rounded-b-2xl">
           {battalions?.map((battalion, index) => {
             return (
-              <>
+              <span key={index}>
                 {army && army[nameArray[index] + 'Qty'] > 0 && (
                   <BattalionWithImage
-                    key={index}
                     {...battalion}
                     quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                     health={army ? army[nameArray[index] + 'Health'] : ''}
                   />
                 )}
-              </>
+              </span>
             );
           })}
         </div>
