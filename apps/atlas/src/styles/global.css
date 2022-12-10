@@ -107,14 +107,14 @@ html {
 }
 
 *::-webkit-scrollbar {
-  @apply w-1 md:w-2 h-1 md:h-2;
+  @apply w-1 h-1 md:w-2 md:h-2;
 
   border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
     12 / 3px 3px 3px 3px / 0 repeat repeat;
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply cursor-move rounded hover:bg-cta-100 bg-cta-100;
+  @apply rounded cursor-move hover:bg-cta-100 bg-cta-100;
 }
 
 @font-face {

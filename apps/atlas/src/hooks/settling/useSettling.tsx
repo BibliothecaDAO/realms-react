@@ -6,7 +6,7 @@ import {
 import { useState, useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { toFelt } from 'starknet/utils/number';
+import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import {
   useSettlingContract,
@@ -34,10 +34,7 @@ export const Entrypoints = {
   approve: 'approve',
 };
 
-export const createSettlingCall: Record<
-  string,
-  (args: any) => CallAndMetadata
-> = {
+export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   settle: ({ realmId }) => ({
     contractAddress: ModuleAddr.Settling,
     entrypoint: Entrypoints.settle,
@@ -75,11 +72,13 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
   }),
   settle: (tx, ctx) => ({
     title: 'Settling',
-    description: `Realm #${tx.metadata.realmId} is being populated.`,
+    description: `Realm #${getRealmNameById(
+      tx.metadata.realmId
+    )} is being populated.`,
   }),
   unsettle: (tx, ctx) => ({
     title: 'Unsettling',
-    description: `Abandoning Realm #${tx.metadata.realmId}.`,
+    description: `Abandoning Realm #${getRealmNameById(tx.metadata.realmId)}.`,
   }),
 };
 
@@ -123,28 +122,28 @@ const useSettling = (): Settling => {
   return {
     settleRealm: (realmId: number) => {
       txQueue.add(
-        createSettlingCall.settle({
+        createCall.settle({
           realmId: realmId,
         })
       );
     },
     unsettleRealm: (realmId: number) => {
       txQueue.add(
-        createSettlingCall.unsettle({
+        createCall.unsettle({
           realmId: realmId,
         })
       );
     },
     mintRealm: (quantity: number) => {
       txQueue.add(
-        createSettlingCall.approve({
+        createCall.approve({
           quantity: (quantity * 10000000000000000).toString(),
         })
       );
       // loop through and mint
       for (let i = 0; i < quantity; i++) {
         txQueue.add(
-          createSettlingCall.mint({
+          createCall.mint({
             account: toBN(address as string).toString(),
           })
         );

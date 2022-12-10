@@ -1,7 +1,7 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
 
@@ -27,10 +27,10 @@ export function generateRealmEvent(event, user?: boolean) {
           <div>
             <span className="">
               {event.data?.success
-                ? `Raid successful on ${fetchRealmNameById(
+                ? `Raid successful on ${getRealmNameById(
                     event.data?.defendRealmId
                   )}!`
-                : `Raid failed on ${fetchRealmNameById(
+                : `Raid failed on ${getRealmNameById(
                     event.data?.defendRealmId
                   )}`}
             </span>
@@ -62,10 +62,10 @@ export function generateRealmEvent(event, user?: boolean) {
           event: (
             <span>
               {event.data?.success
-                ? `Defended raid from ${fetchRealmNameById(
+                ? `Defended raid from ${getRealmNameById(
                     event.data?.attackRealmId
                   )}`
-                : `We have been Pillaged by Realm ${fetchRealmNameById(
+                : `We have been Pillaged by Realm ${getRealmNameById(
                     event.data?.attackRealmId
                   )}`}
             </span>
@@ -168,16 +168,15 @@ export function generateRealmEvent(event, user?: boolean) {
           <div>
             {checkTimeInPast(event.data?.destinationArrivalTime) ? (
               <p className="mb-4">
-                Your Army from {fetchRealmNameById(event.data?.originRealmId)}{' '}
-                has arrived at{' '}
-                {fetchRealmNameById(event.data?.destinationRealmId)}
+                Your Army from {getRealmNameById(event.data?.originRealmId)} has
+                arrived at {getRealmNameById(event.data?.destinationRealmId)}
               </p>
             ) : (
               <p>
                 <p className="mb-4">
-                  Your Army from {fetchRealmNameById(event.data?.originRealmId)}{' '}
+                  Your Army from {getRealmNameById(event.data?.originRealmId)}{' '}
                   will arrive at{' '}
-                  {fetchRealmNameById(event.data?.destinationRealmId)} by{' '}
+                  {getRealmNameById(event.data?.destinationRealmId)} by{' '}
                   {new Date(
                     event.data?.destinationArrivalTime
                   ).toLocaleTimeString('en-US')}
@@ -189,7 +188,7 @@ export function generateRealmEvent(event, user?: boolean) {
               variant="outline"
               href={'/?asset=realm' + event.data?.destinationRealmId}
             >
-              Visit {fetchRealmNameById(event.data?.destinationRealmId)}
+              Visit {getRealmNameById(event.data?.destinationRealmId)}
             </Button>
           </div>
         ),

@@ -2,10 +2,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import {
-  fetchRealmNameById,
-  getTrait,
-} from '@/components/realms/RealmsGetters';
+import { getRealmNameById, getTrait } from '@/components/realms/RealmsGetters';
 import {
   RealmBuildingId,
   RealmBuildingsSize,
@@ -58,7 +55,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     title: ctx.isQueued
       ? `Construct ${metadata.qty} ${buildingIdToString(
           metadata.buildingId
-        )} on Realm ${fetchRealmNameById(metadata.realmId)}`
+        )} on Realm ${getRealmNameById(metadata.realmId)}`
       : 'Constructing Building',
     description: (
       <span>
@@ -83,6 +80,10 @@ const useBuildings = (realm: Realm | undefined): Building => {
   const txQueue = useCommandList();
   const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
   const { play: buildBarracks } = useUiSounds(soundSelector.buildBarracks);
+  const { play: buildArcherTower } = useUiSounds(
+    soundSelector.buildArcherTower
+  );
+
   const { gameConstants } = useGameConstants();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
   const [buildingUtilisation, SetBuildingUtilisation] =
@@ -95,6 +96,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
     switch (buildingId) {
       case RealmBuildingId.Barracks:
         buildBarracks();
+        break;
+      case RealmBuildingId.ArcherTower:
+        buildArcherTower();
         break;
       default:
         buildMilitary();

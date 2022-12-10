@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
 import { bnToUint256 } from 'starknet/dist/utils/uint256';
-import { fetchRealmNameById } from '@/components/realms/RealmsGetters';
+import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
@@ -31,7 +31,7 @@ export const createResourcesCall: Record<
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.claim]: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} Resources`,
-    description: `Serfs gathering resources on ${fetchRealmNameById(
+    description: `Serfs gathering resources on ${getRealmNameById(
       tx.metadata.realmId
     )}.`,
   }),

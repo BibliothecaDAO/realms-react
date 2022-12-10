@@ -83,7 +83,7 @@ export function AccountOverview(props: Prop) {
 
   return (
     <div>
-      <div className="grid grid-cols-12 gap-3 md:gap-2 md:grid-cols-12 sm:px-2">
+      <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
         {/* <Card className="col-start-1 col-end-13 md:col-start-7 md:col-end-9">
           <CardTitle>Settled Realms</CardTitle>
           <CardBody>
@@ -133,17 +133,23 @@ export function AccountOverview(props: Prop) {
           </CardBody>
         </Card> */}
         <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
+          <div className="p-4 mb-8 ">
+            <h2>Your Realms</h2>
+            <div className="px-10 mt-4 text-xl italic">
+              "Would you like to inspect your lands?"
+            </div>
+          </div>
           <MyRealms />
         </div>
         <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
-          <div className="p-2 mb-8">
+          <div className="p-4 mb-8 ">
             <h2>Vizir Reports</h2>
-            <div className="px-10 mt-4 text-xl italic">
+            <div className="px-10 mt-4 text-xl italic shadow-2xl shadow-red-900/80">
               "Your Majesty, we have been busy since you have been away."
             </div>
           </div>
 
-          <CardBody className="h-screen overflow-y-auto border border-yellow-900">
+          <CardBody className="h-screen overflow-y-auto">
             {events
               ? events.map((a, index) => {
                   return (

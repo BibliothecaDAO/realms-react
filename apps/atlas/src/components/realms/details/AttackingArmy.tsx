@@ -11,10 +11,7 @@ import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { ArmyCard } from '@/components/armies/ArmyCard';
 import { Battalion } from '@/components/armies/squad/Battalion';
-import {
-  CostBlock,
-  fetchRealmNameById,
-} from '@/components/realms/RealmsGetters';
+import { CostBlock, getRealmNameById } from '@/components/realms/RealmsGetters';
 import {
   battalionInformation,
   defaultArmy,
@@ -68,7 +65,7 @@ export const AttackingArmy = (props: Props) => {
     <div>
       <div className="grid grid-cols-12 gap-6 pt-4">
         <div className="col-span-12">
-          <h3>{fetchRealmNameById(realm.realmId || 0)} Armies </h3>
+          <h3>{getRealmNameById(realm.realmId || 0)} Armies </h3>
         </div>
         {onlyAttackingArmies.length > 0 && !newArmyId && !selectedArmy && (
           <div className="col-span-12">

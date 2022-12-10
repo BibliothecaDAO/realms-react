@@ -14,7 +14,7 @@ type Call = CallAndMetadata;
 export type Tx = Call & { status: typeof ENQUEUED_STATUS; keyId?: string };
 
 interface CommandList {
-  add: (tx: Call | Call[]) => void;
+  add: (tx: Call | Call[], insertFirst?: boolean) => void;
   transactions: Tx[];
   remove: (tx: Tx) => void;
   empty: () => void;
@@ -37,7 +37,7 @@ export const CommandListProvider = ({
   const { addTransaction } = useTransactionManager();
   const { execute } = useStarknetExecute({ calls: txs });
 
-  const add = (tx: Call[] | Call) => {
+  const add = (tx: Call[] | Call, insertFirst = false) => {
     const { title: configTitle } = getTxRenderConfig(tx as RealmsTransaction);
     const scrollIcon = <Scroll className="w-6 fill-current" />;
 
@@ -46,24 +46,28 @@ export const CommandListProvider = ({
         icon: scrollIcon,
       });
       setTx((prev) =>
-        prev.concat(
-          tx.map((t) => ({
-            ...t,
-            status: ENQUEUED_STATUS,
-            keyId: Math.random().toString(16).slice(2),
-          }))
-        )
+        insertFirst
+          ? ([...tx, ...prev] as any)
+          : prev.concat(
+              tx.map((t) => ({
+                ...t,
+                status: ENQUEUED_STATUS,
+                keyId: Math.random().toString(16).slice(2),
+              }))
+            )
       );
     } else {
       toast('Command Queued: ' + configTitle, {
         icon: scrollIcon,
       });
       setTx((prev) =>
-        prev.concat({
-          ...tx,
-          status: ENQUEUED_STATUS,
-          keyId: Math.random().toString(16).slice(2),
-        })
+        insertFirst
+          ? ([tx, ...prev] as any)
+          : prev.concat({
+              ...tx,
+              status: ENQUEUED_STATUS,
+              keyId: Math.random().toString(16).slice(2),
+            })
       );
     }
   };

@@ -37,4 +37,5 @@ fragment RealmFragment on Realm {
   ...RealmBuildingsFragment
   ...RealmTroopsFragment
   ...RealmArmiesFragment
+  ...RealmFoodsFragment
 }

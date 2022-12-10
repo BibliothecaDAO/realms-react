@@ -218,40 +218,46 @@ export const CommandList: React.FC<Prop> = (props) => {
   return (
     <>
       {txQueue.transactions.length > 0 ? (
-        <p className="z-0 p-2 sm:text-xl">
-          Ser, your royal signature is requested to execute the following
-          commands:
-        </p>
-      ) : null}
-      <div className="flex justify-between my-2 mb-4 space-x-2">
-        <Button
-          disabled={txQueue.transactions.length == 0}
-          className="flex-1"
-          size="md"
-          variant="primary"
-          onClick={() => {
-            signDecree();
-          }}
-        >
-          {txQueue.transactions.length > 0
-            ? `Sign for ${txQueue.transactions.length} Command${
-                txQueue.transactions.length > 1 ? 's' : ''
-              }`
-            : 'Sign the Decree'}
-        </Button>
-        <Button
-          disabled={txQueue.transactions.length == 0}
-          size="md"
-          texture={false}
-          variant="outline"
-          onClick={() => txQueue.empty()}
-        >
-          Remove All
-        </Button>
-      </div>
+        <>
+          <p className="z-0 py-2 sm:text-lg">
+            Ser, your royal signature is requested to execute the following
+            commands:
+          </p>
+          <div className="flex justify-between mb-6 space-x-2">
+            <Button
+              disabled={txQueue.transactions.length == 0}
+              className="flex-1"
+              size="md"
+              variant="primary"
+              onClick={() => {
+                signDecree();
+              }}
+            >
+              {txQueue.transactions.length > 0
+                ? `Sign for ${txQueue.transactions.length} Command${
+                    txQueue.transactions.length > 1 ? 's' : ''
+                  }`
+                : 'Sign the Decree'}
+            </Button>
+            <Button
+              disabled={txQueue.transactions.length == 0}
+              size="md"
+              texture={false}
+              variant="outline"
+              onClick={() => txQueue.empty()}
+            >
+              Remove All
+            </Button>
+          </div>
+        </>
+      ) : (
+        <div className="mt-4 text-lg text-center">
+          Transaction queue is empty.
+        </div>
+      )}
 
-      {txQueue.transactions.length ? (
-        <div className="mb-4 ">
+      {txQueue.transactions.length && Object.keys(resourceCostsById).length ? (
+        <div className="mb-6 ">
           <div className="flex flex-wrap gap-2 mt-2">
             {Object.keys(resourceCostsById).map((resourceId) => {
               const resource = resourceCostsById[resourceId];
@@ -279,6 +285,7 @@ export const CommandList: React.FC<Prop> = (props) => {
             })}
             <Button
               onClick={() => {
+                sessionStorage.setItem('reconcileTrade', 'true');
                 batchAddResources(
                   Object.keys(resourceCostsById)
                     .filter(

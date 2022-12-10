@@ -1,5 +1,6 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { RealmCard } from '@/components/realms/RealmCard';
+import { sidebarClassNames } from '@/constants/ui';
 import { useGetRealmQuery } from '@/generated/graphql';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
@@ -17,7 +18,7 @@ export const RealmSideBar = ({
   onClose,
 }: RealmSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+    <AtlasSideBar isOpen={isOpen} containerClassName={sidebarClassNames}>
       {isOpen && <RealmsQuickView realmId={realmId} onClose={onClose} />}
     </AtlasSideBar>
   );

@@ -18,27 +18,30 @@ export const BaseSideBarPanel = ({
   className,
 }: BaseSideBarPanel) => {
   return (
-    <div className={`relative w-full ${className}`}>
+    <div
+      className={`relative w-full ${className} ${!title && !onClose && 'pt-2'}`}
+    >
       <div>
-        <div className="flex justify-between w-full p-2 mb-2">
-          <h1>{title}</h1>
-          <div
-            className={clsx('self-center', position != 'left' && '-order-1')}
-          >
-            {onClose && (
-              <Button
-                size="xs"
-                variant="outline"
-                className="rounded-full"
-                onClick={() => {
-                  onClose();
-                }}
-              >
-                <Close className="w-6 h-6" />
-              </Button>
+        {onClose && (
+          <Button
+            size="xs"
+            variant="outline"
+            className={clsx(
+              'absolute top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-full',
+              position != 'left' ? 'left-2' : 'right-2'
             )}
+            onClick={() => {
+              onClose();
+            }}
+          >
+            <Close className="w-6 h-6" />
+          </Button>
+        )}
+        {(title || onClose) && (
+          <div className="flex justify-between w-full p-2 mb-4">
+            <h1>{title}</h1>
           </div>
-        </div>
+        )}
         {children}
       </div>
     </div>

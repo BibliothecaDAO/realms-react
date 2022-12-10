@@ -39,14 +39,14 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    'border bg-gray-1000  border-l-2 border-transparent w-6 h-6 lg:w-12 lg:h-12 align-self-center mt-1 hover:bg-cta-100 shadow-2xl rounded-full hover:shadow-purple-500 transition-all duration-450 transform hover:-translate-y-1 hover:border-yellow-200/40 hover:fill-yellow-600 hover:bg-cta-100 hover:bg-gradient-to-r hover:from-orange-500 background-animate slow transition-all shimmer paper';
+    ' border-transparent w-6 h-6 lg:w-12 lg:h-12 align-self-center mt-1 shadow-2xl rounded-full  transition-all duration-450 transform background-animate slow transition-all shimmer paper';
 
   const textClasses =
     'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible  text-shadow-[0_2px_6px_#6366f1]';
 
   const iconClasses = (page) => {
-    return `lg:w-4 mx-auto w-3  ${
-      isPage(page) ? ' fill-yellow-100' : 'fill-gray-300'
+    return `lg:w-6 mx-auto w-3  ${
+      isPage(page) ? ' fill-yellow-700' : 'fill-yellow-900 '
     }`;
   };
 
@@ -66,27 +66,28 @@ export const MenuSideBar = () => {
         page: '?asset=realm0',
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
+        sidebar: 'realm' as AssetType,
       },
       {
         page: 'bank',
-        icon: <Lords className={`${iconClasses('bank')}`} />,
+        icon: <Lords className={`${iconClasses('bank')} stroke-yellow-900`} />,
         text: 'Bank',
       },
-      {
-        page: 'loot',
-        icon: <Bag className={`${iconClasses('loot')}`} />,
-        text: 'Loot',
-      },
-      {
-        page: 'ga',
-        icon: <Sword className={`${iconClasses('ga')}`} />,
-        text: 'GA',
-      },
-      {
-        page: 'crypt',
-        icon: <Danger className={`${iconClasses('crypt')}`} />,
-        text: 'Crypts',
-      },
+      // {
+      //   page: 'loot',
+      //   icon: <Bag className={`${iconClasses('loot')}`} />,
+      //   text: 'Loot',
+      // },
+      // {
+      //   page: 'ga',
+      //   icon: <Sword className={`${iconClasses('ga')}`} />,
+      //   text: 'GA',
+      // },
+      // {
+      //   page: 'crypt',
+      //   icon: <Danger className={`${iconClasses('crypt')}`} />,
+      //   text: 'Crypts',
+      // },
       {
         page: 'lore',
         icon: <Library className={`${iconClasses('lore')}`} />,
@@ -110,7 +111,7 @@ export const MenuSideBar = () => {
       // },
     ];
   }, [query]);
-  const { closeAll, assetSidebar } = useUIContext();
+  const { closeAll, assetSidebar, openAsset } = useUIContext();
   return (
     <div className="absolute z-40">
       <div>
@@ -128,6 +129,7 @@ export const MenuSideBar = () => {
           <Link
             onClick={() => {
               closeAll();
+              menu.sidebar && openAsset(menu.sidebar);
             }}
             href={getPageHref(menu.page)}
             key={menu.page}
@@ -138,8 +140,8 @@ export const MenuSideBar = () => {
                 className={`${buttonClasses}  ${
                   isPage(menu.page) ||
                   (menu.text == 'Realms' && assetSidebar == 'realm')
-                    ? 'bg-gradient-to-r from-red-600 to-red-900 text-yellow-100  border-yellow-700    '
-                    : ' border-yellow-700'
+                    ? '   '
+                    : ' '
                 }`}
                 aria-label={menu.text}
                 variant="unstyled"

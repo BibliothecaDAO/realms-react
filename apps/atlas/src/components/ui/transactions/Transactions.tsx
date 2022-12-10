@@ -28,12 +28,12 @@ interface TxCartItem {
 
 const STYLES = {
   status: {
-    REJECTED: 'bg-red-400',
-    NOT_RECEIVED: 'bg-red-200',
+    REJECTED: 'bg-red-400/20',
+    NOT_RECEIVED: 'bg-red-200/20',
     RECEIVED: 'bg-green-800/40 animate-pulse',
-    PENDING: 'bg-orange-500 animate-pulse',
-    ACCEPTED_ON_L2: 'bg-green-800/90',
-    ACCEPTED_ON_L1: 'bg-green-900',
+    PENDING: 'bg-orange-500/20 animate-pulse',
+    ACCEPTED_ON_L2: 'bg-green-800/20',
+    ACCEPTED_ON_L1: 'bg-green-900/20',
     TRANSACTION_RECEIVED: 'bg-green-700 animate-pulse',
     ENQUEUED: '  bg-gray-1000/80',
   },
@@ -83,12 +83,12 @@ export const TxCartItem = (props: TxCartItem) => {
       ref={ref}
       className={twMerge(
         STYLES.status[data?.status || 0],
-        `rounded-xl flex p-4 w-full mb-2  border card`
+        `rounded-xl flex p-4 w-full mb-2`
       )}
     >
       <div className="flex flex-wrap w-full p-1 rounded bg-gray-1000/19">
         <div className="flex justify-between w-full pb-2 mb-2 border-b border-white/20">
-          <h5 className="self-center uppercase">
+          <h5 className="self-center">
             {FORMATED_STATUS.status[data?.status || 0]}
           </h5>
           <div className="self-center ">
@@ -118,7 +118,7 @@ export const TxCartItem = (props: TxCartItem) => {
                 return (
                   <div className="py-2" key={`${props.transaction.hash}:${i}`}>
                     <h5 className="uppercase">{renderConfig.title}</h5>
-                    <p className="text-lg font-semibold opacity-75">
+                    <p className="text-lg text-gray-400">
                       {renderConfig.description}
                     </p>
                   </div>

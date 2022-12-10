@@ -140,57 +140,57 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="flex px-2">
-      <div className="w-9/12 px-10 pt-10 bg-gray-1000">
-        <div className="flex w-full gap-2 p-2 mb-4 border border-yellow-900 bg-gray-1000 rounded-2xl">
-          {quickActions.map((action) => (
-            <Button
-              key={action.name}
-              className="flex-col items-start rounded-xl whitespace-nowrap"
-              variant="outline"
-              onClick={() => action.action()}
+    <div className="flex pl-2 pr-6">
+      <div className="w-9/12 py-16 pl-16 pr-4">
+        <div className="sticky flex flex-col p-6 bg-gray-1000 rounded-2xl top-10">
+          <div className="flex w-full gap-2 mb-4 rounded-2xl">
+            {quickActions.map((action) => (
+              <Button
+                key={action.name}
+                className="flex-col items-start rounded-xl whitespace-nowrap"
+                variant="outline"
+                onClick={() => action.action()}
+              >
+                {userData?.resourcesClaimable}
+                <span className="flex">
+                  {action.icon} {action.name}
+                </span>
+                {action.details}
+              </Button>
+            ))}
+          </div>
+          <div className="relative">
+            <Tabs
+              selectedIndex={selectedTab}
+              onChange={(index) => pressedTab(index as number)}
+              variant="primary"
             >
-              {userData?.resourcesClaimable}
-              <span className="flex">
-                {action.icon} {action.name}
-              </span>
-              {action.details}
-            </Button>
-          ))}
-        </div>
-        <div className="relative">
-          <Tabs
-            selectedIndex={selectedTab}
-            onChange={(index) => pressedTab(index as number)}
-            variant="default"
-          >
-            <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] sticky top-10 z-40">
-              <div className="overflow-x-auto bg-gray-1000">
+              <div className="overflow-x-auto">
                 <Tabs.List>
                   {tabs.map((tab, index) => (
                     <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
                   ))}
                 </Tabs.List>
               </div>
-            </div>
-            <div className="border border-yellow-900 rounded">
-              <Tabs.Panels>
-                {tabs.map((tab, index) => (
-                  <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-                ))}
-              </Tabs.Panels>
-            </div>
-          </Tabs>
-          <SettleRealmsSideBar
-            isOpen={isSettleRealmsSideBarOpen}
-            onClose={onSettleRealmsClick}
-          />
+              <div className="p-0 mt-2">
+                <Tabs.Panels>
+                  {tabs.map((tab, index) => (
+                    <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+                  ))}
+                </Tabs.Panels>
+              </div>
+            </Tabs>
+            <SettleRealmsSideBar
+              isOpen={isSettleRealmsSideBarOpen}
+              onClose={onSettleRealmsClick}
+            />
+          </div>
         </div>
       </div>
-      <div className="w-3/12">
+      <div className="w-3/12 py-16">
         <div className="sticky top-10">
           <img
-            className="object-cover h-screen bg-white rounded"
+            className="object-cover h-screen bg-white rounded-2xl"
             src={'/realm-troops/vizir.png'}
             alt="Vizir"
           />

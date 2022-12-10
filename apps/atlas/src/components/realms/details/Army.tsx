@@ -14,11 +14,12 @@ import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
 import { Travel } from '@/components/realms/details/Travel';
 import {
-  fetchRealmNameById,
+  getRealmNameById,
   getMilitaryBuildingsBuilt,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { defaultArmy } from '@/constants/army';
+import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army, GetRealmQuery, Realm } from '@/generated/graphql';
@@ -144,7 +145,7 @@ export const RealmsArmy = (props) => {
                     size="sm"
                   >
                     <Relic className={` w-3 mr-4 fill-yellow-500`} />{' '}
-                    <h5>Realm {fetchRealmNameById(a.realmId || 0)}</h5>
+                    <h5>Realm {getRealmNameById(a.realmId || 0)}</h5>
                   </Button>
                 </div>
               );
@@ -207,7 +208,7 @@ export const RealmsArmy = (props) => {
         </div>
       ) : (
         <div className="col-span-12">
-          <h3>{fetchRealmNameById(realm.realmId || 0)} has no Armies </h3>
+          <h3>{getRealmNameById(realm.realmId || 0)} has no Armies </h3>
         </div>
       )} */}
       {/* {isOwner && (
@@ -250,10 +251,10 @@ export const RealmsArmy = (props) => {
         </div>
       </div> */}
 
-      <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
+      {/* <AtlasSidebar containerClassName="w-full" isOpen={isRaiding}>
         <SidebarHeader onClose={() => setIsRaiding(false)} />
         <CombatSideBar defendingRealm={realm} />
-      </AtlasSidebar>
+      </AtlasSidebar> */}
       <AtlasSidebar
         containerClassName="w-full md:w-10/12 z-50"
         isOpen={isArmyBuilding}
@@ -267,7 +268,10 @@ export const RealmsArmy = (props) => {
           army={selectedArmy}
         />
       </AtlasSidebar>
-      <AtlasSidebar containerClassName="w-full md:w-3/4" isOpen={isTravel}>
+      <AtlasSidebar
+        containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+        isOpen={isTravel}
+      >
         <SidebarHeader
           title={'Travel to Realm ' + realm.realmId}
           onClose={() => setIsTravel(false)}

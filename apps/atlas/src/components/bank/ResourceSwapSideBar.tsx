@@ -1,8 +1,10 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
+import { sidebarClassNames } from '@/constants/ui';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
@@ -26,7 +28,7 @@ export const ResourceSwapSideBar = ({
     <AtlasSideBar
       position="left"
       isOpen={isOpen}
-      containerClassName="w-full lg:w-5/12 z-20"
+      containerClassName={twMerge(sidebarClassNames, 'ml-20')}
     >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
@@ -65,12 +67,8 @@ export const ResourceSwapSideBarPanel = (
     []
   );
   return (
-    <BaseSideBarPanel
-      className="z-50 px-10 pt-10"
-      position="left"
-      onClose={props.onClose}
-    >
-      <div>
+    <BaseSideBarPanel className="z-50" position="left" onClose={props.onClose}>
+      {/* <div>
         <h2 className="mt-2 mb-4 text-center">Trade</h2>
         {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
           <div className="grid gap-2 sm:grid-cols-2">
@@ -92,20 +90,22 @@ export const ResourceSwapSideBarPanel = (
             </Button>
           </div>
         )}
-      </div>
+      </div> */}
 
-      <div className="relative">
+      <div className="relative px-6 rounded">
         <Tabs className="h-full" variant="primary">
-          <Tabs.List className="">
+          <Tabs.List className="mt-2 rounded">
             {tabs.map((tab) => (
               <Tabs.Tab key={tab.label} className="">
                 {tab.label}
               </Tabs.Tab>
             ))}
           </Tabs.List>
-          <Tabs.Panels className="h-full p-2 rounded shadow-inner bg-gray-1000/10">
+          <Tabs.Panels className="h-full py-2 rounded shadow-inner bg-gray-1000/10">
             {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+              <Tabs.Panel className="mt-0" key={tab.label}>
+                {tab.component}
+              </Tabs.Panel>
             ))}
           </Tabs.Panels>
         </Tabs>
