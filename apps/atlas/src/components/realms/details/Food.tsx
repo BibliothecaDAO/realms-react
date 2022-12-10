@@ -246,15 +246,12 @@ export const RealmsFood = (props: Prop) => {
                 </div>
 
                 {props.realmFoodDetails.farmHarvestsLeft -
-                  props.realmFoodDetails.decayedFarms >
+                  props.realmFoodDetails.farmsDecayed >
                   0 && (
                   <div className="px-4 ">
                     <CountdownTimer
                       date={(
-                        (HARVEST_LENGTH -
-                          props.realmFoodDetails
-                            .totalTimeRemainingUntilFarmHarvest) *
-                          1000 +
+                        props.realmFoodDetails.farmTimeTillHarvest +
                         new Date().getTime()
                       ).toString()}
                     />
@@ -267,7 +264,7 @@ export const RealmsFood = (props: Prop) => {
                       <div className="w-1/2">
                         <h5>To Harvest </h5>
                         <div>
-                          {props.realmFoodDetails.totalFarmHarvest} /{' '}
+                          {props.realmFoodDetails.farmsToHarvest} /{' '}
                           {MAX_HARVESTS}
                         </div>
                       </div>
@@ -275,10 +272,10 @@ export const RealmsFood = (props: Prop) => {
                         <h5>Harvests Left</h5>
                         <div>
                           {props.realmFoodDetails.farmHarvestsLeft -
-                            props.realmFoodDetails.decayedFarms >
+                            props.realmFoodDetails.farmsDecayed >
                           0
                             ? props.realmFoodDetails.farmHarvestsLeft -
-                              props.realmFoodDetails.decayedFarms
+                              props.realmFoodDetails.farmsDecayed
                             : 0}
                         </div>
                       </div>
@@ -294,7 +291,7 @@ export const RealmsFood = (props: Prop) => {
                         }}
                         size="xs"
                         disabled={
-                          props.realmFoodDetails.totalFarmHarvest === 0 ||
+                          props.realmFoodDetails.farmsToHarvest === 0 ||
                           harvestFarmEnqueuedHarvestTx
                         }
                         variant="primary"
@@ -302,7 +299,7 @@ export const RealmsFood = (props: Prop) => {
                         {(
                           BASE_FOOD_PRODUCTION *
                           props.realmFoodDetails.farmsBuilt *
-                          props.realmFoodDetails.totalFarmHarvest
+                          props.realmFoodDetails.farmsToHarvest
                         ).toLocaleString()}{' '}
                         $WHEAT to export
                       </Button>
@@ -401,16 +398,13 @@ export const RealmsFood = (props: Prop) => {
                   </h3>
                 </div>
 
-                {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                  props.realmFoodDetails.decayedVillages >
+                {props.realmFoodDetails.villagesHarvestsLeft -
+                  props.realmFoodDetails.villagesDecayed >
                   0 && (
                   <div className="px-4 text-xl">
                     <CountdownTimer
                       date={(
-                        (HARVEST_LENGTH -
-                          props.realmFoodDetails
-                            .totalTimeRemainingUntilVillageHarvest) *
-                          1000 +
+                        props.realmFoodDetails.villagesTimeTillHarvest +
                         new Date().getTime()
                       ).toString()}
                     />
@@ -422,7 +416,7 @@ export const RealmsFood = (props: Prop) => {
                       <div className="w-1/2 my-2">
                         <h5>To harvest </h5>
                         <div>
-                          {props.realmFoodDetails.totalVillageHarvest} /{' '}
+                          {props.realmFoodDetails.villagesToHarvest} /{' '}
                           {MAX_HARVESTS}
                         </div>
                       </div>
@@ -430,12 +424,11 @@ export const RealmsFood = (props: Prop) => {
                       <div className="w-1/2 my-2">
                         <h5>Harvests Left</h5>
                         <div>
-                          {props.realmFoodDetails.fishingVillagesHarvestsLeft -
-                            props.realmFoodDetails.decayedVillages >
+                          {props.realmFoodDetails.villagesHarvestsLeft -
+                            props.realmFoodDetails.villagesDecayed >
                           0
-                            ? props.realmFoodDetails
-                                .fishingVillagesHarvestsLeft -
-                              props.realmFoodDetails.decayedVillages
+                            ? props.realmFoodDetails.villagesHarvestsLeft -
+                              props.realmFoodDetails.villagesDecayed
                             : 0}
                         </div>
                       </div>
@@ -451,14 +444,14 @@ export const RealmsFood = (props: Prop) => {
                         }}
                         size="xs"
                         disabled={
-                          props.realmFoodDetails.totalVillageHarvest === 0
+                          props.realmFoodDetails.villagesToHarvest === 0
                         }
                         variant="primary"
                       >
                         {(
                           BASE_FOOD_PRODUCTION *
                           props.realmFoodDetails.villagesBuilt *
-                          props.realmFoodDetails.totalVillageHarvest
+                          props.realmFoodDetails.villagesToHarvest
                         ).toLocaleString()}{' '}
                         $FISH to export
                       </Button>

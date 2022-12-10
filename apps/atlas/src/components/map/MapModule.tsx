@@ -60,32 +60,32 @@ export function MapModule() {
     )
   );
 
-  const createScatterPlot = useCallback(
-    (assetType: AssetType, data: any[]) =>
-      new ScatterplotLayer({
-        id: `${assetType}-layer`,
-        data,
-        stroked: true,
-        filled: true,
-        extruded: true,
-        pickable: true,
-        opacity: 1,
-        visible: viewState.zoom < ItemViewLevel ? false : true,
-        getPosition: (d: any) => d.xy,
-        getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
-        getElevation: 10000,
-        lineWidthMinPixels: 2,
-        getFillColor: [0, 0, 0, 0],
-        updateTriggers: {
-          getRadius: parseInt(selectedId),
-          getVisible: viewState,
-        },
-        onClick: (info: any) => {
-          navigateToAsset(info.object.id, assetType);
-        },
-      }),
-    [selectedAsset, selectedId]
-  );
+  // const createScatterPlot = useCallback(
+  //   (assetType: AssetType, data: any[]) =>
+  //     new ScatterplotLayer({
+  //       id: `${assetType}-layer`,
+  //       data,
+  //       stroked: true,
+  //       filled: true,
+  //       extruded: true,
+  //       pickable: true,
+  //       opacity: 1,
+  //       visible: viewState.zoom < ItemViewLevel ? false : true,
+  //       getPosition: (d: any) => d.xy,
+  //       getRadius: (d: any) => (d.id === parseInt(selectedId) ? 4000 : 100),
+  //       getElevation: 10000,
+  //       lineWidthMinPixels: 2,
+  //       getFillColor: [0, 0, 0, 0],
+  //       updateTriggers: {
+  //         getRadius: parseInt(selectedId),
+  //         getVisible: viewState,
+  //       },
+  //       onClick: (info: any) => {
+  //         navigateToAsset(info.object.id, assetType);
+  //       },
+  //     }),
+  //   [selectedAsset, selectedId]
+  // );
 
   const selectedResources = new IconLayer({
     id: 'selected-resources',
@@ -98,9 +98,7 @@ export function MapModule() {
     }),
     sizeScale: 5,
     getPosition: (d: any) => d.xy,
-    pickable: true,
     getSize: (d) => 10,
-    onHover: (info) => setHoverInfo(info),
   });
 
   const arcsLayer = useMemo(() => {
@@ -124,7 +122,7 @@ export function MapModule() {
     ];
 
     return [arcsLayer, selectedResources];
-  }, [arcsLayer, createScatterPlot, selectedResources, selectedId]);
+  }, [arcsLayer, selectedResources, selectedId]);
 
   return (
     <>

@@ -256,14 +256,14 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       </Button>
                       <Button
                         onClick={() => {
-                          if (realmFoodDetails.totalFarmHarvest > 0) {
+                          if (realmFoodDetails.farmsToHarvest > 0) {
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
                               RealmBuildingId.Farm
                             );
                           }
-                          if (realmFoodDetails.totalVillageHarvest > 0) {
+                          if (realmFoodDetails.villagesToHarvest > 0) {
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
@@ -274,15 +274,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         variant="outline"
                         size="xs"
                         className={
-                          (realmFoodDetails.totalFarmHarvest === 0 &&
-                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          (realmFoodDetails.farmsToHarvest === 0 &&
+                            realmFoodDetails.villagesToHarvest === 0) ||
                           harvestFarmEnqueuedHarvestTx
                             ? ''
                             : 'bg-green-800 animate-pulse'
                         }
                         disabled={
-                          (realmFoodDetails.totalFarmHarvest === 0 &&
-                            realmFoodDetails.totalVillageHarvest === 0) ||
+                          (realmFoodDetails.farmsToHarvest === 0 &&
+                            realmFoodDetails.villagesToHarvest === 0) ||
                           harvestFarmEnqueuedHarvestTx
                         }
                       >

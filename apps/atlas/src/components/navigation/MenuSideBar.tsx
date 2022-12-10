@@ -39,14 +39,11 @@ export const MenuSideBar = () => {
   });
 
   const buttonClasses =
-    ' border-transparent w-6 h-6 lg:w-12 lg:h-12 align-self-center mt-1 shadow-2xl rounded-full  transition-all duration-450 transform background-animate slow transition-all shimmer paper';
-
-  const textClasses =
-    'hidden invisible font-display text-center lowercase sm:block lg:mb-5 mb-2 text-xl group-hover:visible  text-shadow-[0_2px_6px_#6366f1]';
+    ' border-transparent w-6 h-6 lg:w-[2.6rem] lg:h-12 align-self-center mt-1 shadow-2xl rounded-full  transition-all duration-450 transform background-animate  paper';
 
   const iconClasses = (page) => {
-    return `lg:w-6 mx-auto w-3  ${
-      isPage(page) ? ' fill-yellow-700' : 'fill-yellow-900 '
+    return `lg:w-5 mx-auto w-2  hover:fill-white transition-all duration-450  ${
+      isPage(page) ? ' fill-white' : 'fill-yellow-600 '
     }`;
   };
 
@@ -70,7 +67,7 @@ export const MenuSideBar = () => {
       },
       {
         page: 'bank',
-        icon: <Lords className={`${iconClasses('bank')} stroke-yellow-900`} />,
+        icon: <Lords className={`${iconClasses('bank')}`} />,
         text: 'Bank',
       },
       // {
@@ -123,37 +120,40 @@ export const MenuSideBar = () => {
         </button>
       </div>
       <div
-        className={`sm:relative h-full px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col  overflow-auto h-screen justify-center space-y-1 shadow-yellow-100/20`}
+        className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        {menus.map((menu) => (
-          <Link
-            onClick={() => {
-              closeAll();
-              menu.sidebar && openAsset(menu.sidebar);
-            }}
-            href={getPageHref(menu.page)}
-            key={menu.page}
-            shallow={true}
-          >
-            <div className="flex flex-col place-items-center group">
-              <IconButton
-                className={`${buttonClasses}  ${
-                  isPage(menu.page) ||
-                  (menu.text == 'Realms' && assetSidebar == 'realm')
-                    ? '   '
-                    : ' '
-                }`}
-                aria-label={menu.text}
-                variant="unstyled"
-                texture={false}
-                icon={menu.icon}
-                size="md"
-              />
+        <div className="py-8 rounded-full bg-gray-1000">
+          {menus.map((menu) => (
+            <Link
+              onClick={() => {
+                closeAll();
+                menu.sidebar && openAsset(menu.sidebar);
+              }}
+              href={getPageHref(menu.page)}
+              key={menu.page}
+              shallow={true}
+            >
+              <div className="flex flex-col place-items-center group">
+                <IconButton
+                  className={`${buttonClasses}  ${
+                    isPage(menu.page) ||
+                    (menu.text == 'Realms' && assetSidebar == 'realm')
+                      ? ''
+                      : ' '
+                  }`}
+                  aria-label={menu.text}
+                  variant="unstyled"
+                  texture={false}
+                  icon={menu.icon}
+                  size="md"
+                />
 
-              {/* <span className={textClasses}>{menu.text}</span> */}
-            </div>
-          </Link>
-        ))}
+                {/* <span className={textClasses}>{menu.text}</span> */}
+              </div>
+            </Link>
+          ))}
+        </div>
+
         <div className="block sm:hidden">
           {/* TODO: Re-enable */}
           {/* <TransactionNavItem onClick={() => {}} /> */}

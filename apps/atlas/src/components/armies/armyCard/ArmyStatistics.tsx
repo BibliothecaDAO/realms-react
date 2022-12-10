@@ -19,16 +19,15 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
       <div className="grid grid-cols-4 gap-2 p-2 ">
         {battalions?.map((battalion, index) => {
           return (
-            <>
+            <span key={index}>
               {army && army[nameArray[index] + 'Qty'] > 0 && (
                 <BattalionWithImage
-                  key={index}
                   {...battalion}
                   quantity={army ? army[nameArray[index] + 'Qty'] : ''}
                   health={army ? army[nameArray[index] + 'Health'] : ''}
                 />
               )}
-            </>
+            </span>
           );
         })}
       </div>
