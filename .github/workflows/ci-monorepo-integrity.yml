@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - dev
-      - monorepo
       - main
     paths:
-      - 'yarn.lock'
+      - 'package.json'
+      - '*.lock'
       - '.yarnrc.yml'
-      - '.github/workflows/**'
+      - '.github/**'
 
   pull_request:
     types:
@@ -17,51 +17,34 @@ on:
       - synchronize
       - reopened
     paths:
-      - 'yarn.lock'
+      - 'package.json'
+      - '*.lock'
       - '.yarnrc.yml'
-      - '.github/workflows/**'
+      - '.github/**'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Why not using setup-node 2.2+ cache option (yet) ?
-      # see https://github.com/belgattitude/nextjs-monorepo-example/pull/369
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-
-
-      - name: Install dependencies
-        run: |
-          yarn install --immutable
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
 
       - name: Check for duplicate dependencies in lock file
         run: |
           yarn dedupe --check
-
       - name: Check for yarn constraints.pro
         run: |
           yarn constraints
-
       - name: Check monorepo dependency graph
         run: |
           yarn check:install

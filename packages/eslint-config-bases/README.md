@@ -1,4 +1,4 @@
-# @your-org/eslint-config-bases
+# @bibliotheca-dao/eslint-config-bases
 
 <p align="left">
   <a aria-label="Build" href="https://github.com/belgattitude/nextjs-monorepo-example/actions?query=workflow%3ACI">
@@ -27,7 +27,7 @@ Add the following devDependencies to workspace (apps/packages in monorepo) or ma
 
 ```bash
 $ yarn add --dev eslint
-$ yarn add --dev @your-org/eslint-config-bases:"workspace:^"
+$ yarn add --dev @bibliotheca-dao/eslint-config-bases:"workspace:^"
 ```
 
 > **Tip** the [workspace:^](https://yarnpkg.com/features/workspaces#workspace-ranges-workspace) is supported by yarn and pnpm.
@@ -39,7 +39,7 @@ existing base configs. For example:
 
 ```javascript
 // Workaround for https://github.com/eslint/eslint/issues/3458 (re-export of @rushstack/eslint-patch)
-require("@your-org/eslint-config-bases/patch/modern-module-resolution");
+require("@bibliotheca-dao/eslint-config-bases/patch/modern-module-resolution");
 
 module.exports = {
   // Be sure to set root to true in monorepo.
@@ -51,15 +51,15 @@ module.exports = {
   },
   ignorePatterns: ["**/node_modules", "**/.cache", "build", ".next"],
   extends: [
-    "@your-org/eslint-config-bases/typescript",
-    "@your-org/eslint-config-bases/sonar",
-    "@your-org/eslint-config-bases/regexp",
-    "@your-org/eslint-config-bases/react",
-    "@your-org/eslint-config-bases/jest",
-    "@your-org/eslint-config-bases/rtl",
-    "@your-org/eslint-config-bases/graphql-schema",
-    "@your-org/eslint-config-bases/storybook",
-    "@your-org/eslint-config-bases/playwright",
+    "@bibliotheca-dao/eslint-config-bases/typescript",
+    "@bibliotheca-dao/eslint-config-bases/sonar",
+    "@bibliotheca-dao/eslint-config-bases/regexp",
+    "@bibliotheca-dao/eslint-config-bases/react",
+    "@bibliotheca-dao/eslint-config-bases/jest",
+    "@bibliotheca-dao/eslint-config-bases/rtl",
+    "@bibliotheca-dao/eslint-config-bases/graphql-schema",
+    "@bibliotheca-dao/eslint-config-bases/storybook",
+    "@bibliotheca-dao/eslint-config-bases/playwright",
 
     // Add specific rules for your framework if needed.
     // ie:
@@ -69,7 +69,7 @@ module.exports = {
 
     // Post configure the prettier base so there won't be
     // any conficts between eslint / prettier
-    "@your-org/eslint-config-bases/prettier",
+    "@bibliotheca-dao/eslint-config-bases/prettier",
   ],
   rules: {
     // Specific global rules for your app or package
@@ -80,7 +80,7 @@ module.exports = {
 };
 ```
 
-> **Tip:** "@your-org/eslint-config-bases/prettier" must be set at the end to disable any
+> **Tip:** "@bibliotheca-dao/eslint-config-bases/prettier" must be set at the end to disable any
 > conflicting rules.
 
 ## Bases
@@ -113,10 +113,12 @@ You can find the bases in [./src/bases](./src/bases).
 
 ## Prettier integration
 
-To prevent conflicts between prettier and eslint, you must re-export the prettier base from `@your-org/eslint-config-bases`.
+To prevent conflicts between prettier and eslint, you must re-export the prettier base from `@bibliotheca-dao/eslint-config-bases`.
 
 ```javascript
-const { getPrettierConfig } = require("@your-org/eslint-config-bases/helpers");
+const {
+  getPrettierConfig,
+} = require("@bibliotheca-dao/eslint-config-bases/helpers");
 module.exports = {
   ...prettierConfig,
   overrides: [
