@@ -36,14 +36,14 @@ export const BasicExample: ComponentStory<typeof TypedText> = (args) => {
             }
           >
             <TypedText
-              css={css`
+              {...args}
+              css={`
                 border: 1px solid grey;
                 padding: 15px 10px;
                 border-radius: 91% 9% 90% 10% / 29% 82% 18% 71%;
                 background-color: blueviolet;
                 color: white;
               `}
-              {...args}
             >
               Hello world
             </TypedText>

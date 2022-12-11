@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type { AssetType } from '@/hooks/useAtlasMap';
 
-export type UIContext = {
+export type UIContextType = {
   assetSidebar: AssetType | null;
   openAsset: (type: AssetType) => void;
   closeAsset: () => void;

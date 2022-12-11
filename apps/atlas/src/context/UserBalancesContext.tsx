@@ -69,12 +69,6 @@ function useUserBalances() {
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
 
-  const { contract: lordsContract } = useLordsContract();
-
-  const ownerAddressInt = address
-    ? toBN(address as string).toString()
-    : undefined;
-
   const { data: walletBalancesData, refetch: updateBalance } =
     useGetWalletBalancesQuery({
       variables: {

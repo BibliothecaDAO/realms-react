@@ -62,7 +62,7 @@ export const AnimatedExample: ComponentStory<typeof GradientText> = (_args) => {
             return (
               <GradientText
                 className={curr ? 'fadeIn' : 'fadeOut'}
-                css={css`
+                css={`
                   visibility: visible;
                 `}
                 key={`${label}-${idx}`}
