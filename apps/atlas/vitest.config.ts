@@ -28,7 +28,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     passWithNoTests: false,
-    setupFiles: './config/tests/setupVitest.ts',
+    setupFiles: ['./config/tests/setupVitest.ts', 'dotenv/config'],
     cache: {
       dir: '../../.cache/vitest/atlas',
     },
