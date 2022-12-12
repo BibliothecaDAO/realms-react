@@ -9,7 +9,7 @@ import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { ArmyCard } from '@/components/armies/ArmyCard';
+import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
 import { Battalion } from '@/components/armies/squad/Battalion';
 import { CostBlock, getRealmNameById } from '@/components/realms/RealmsGetters';
 import {

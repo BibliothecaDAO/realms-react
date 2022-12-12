@@ -9,10 +9,7 @@ import {
 import { animated, useSpring } from '@react-spring/web';
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
-import {
-  genEconomicRealmEvent,
-  generateRealmEvent,
-} from '@/components/realms/EventMappings';
+import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { SettleRealmsSideBar } from '@/components/realms/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
@@ -26,7 +23,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 
 type Prop = {
-  onSettleRealms: () => void;
+  onSettleRealms?: () => void;
 };
 
 export function MyActions(props: Prop) {

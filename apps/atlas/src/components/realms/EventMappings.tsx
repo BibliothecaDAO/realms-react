@@ -10,6 +10,23 @@ export const Event = {
   realmCombatDefend: 'realm_combat_defend',
   realmBuildingBuilt: 'realm_building_built',
   realmTransfer: 'realm_transfer',
+  realmSettle: 'realm_settle',
+  realmUnsettle: 'realm_unsettle',
+  armyTravel: 'army_travel',
+  foodHarvest: 'food_harvest',
+  foodCreated: 'food_created',
+};
+
+export const EventImages = {
+  [Event.realmCombatAttack]: '/vizirs/mj_military_vizir.png',
+  [Event.realmCombatDefend]: '/vizirs/mj_military_vizir.png',
+  [Event.realmBuildingBuilt]: '/vizirs/mj_builder.png',
+  [Event.realmTransfer]: '/vizirs/mj_builder.png',
+  [Event.realmSettle]: '/vizirs/mj_builder.png',
+  [Event.realmUnsettle]: '/vizirs/mj_builder.png',
+  [Event.armyTravel]: '/vizirs/mj_travel.png',
+  [Event.foodHarvest]: '/realm-buildings/mj_farm.png',
+  [Event.foodCreated]: '/realm-buildings/mj_farm.png',
 };
 
 const successClass = '';
@@ -40,6 +57,7 @@ export function generateRealmEvent(event, user?: boolean) {
         resources: resourcePillaged(event.data?.pillagedResources),
         txHash: event.transactionHash,
         attackRealmId: event.data?.attackRealmId,
+        image: EventImages[event.eventType],
         relic: event.data?.relicClaimed ? (
           <span className="text-xl">
             Captured Relic {event.data?.relicClaimed}!
@@ -72,6 +90,7 @@ export function generateRealmEvent(event, user?: boolean) {
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data.pillagedResources),
+          image: EventImages[event.eventType],
           relic: event.data?.relicLost ? (
             <span className="pl-10 text-xl font-semibold uppercase">
               Relic {event.data?.relicLost}
@@ -100,6 +119,7 @@ export function generateRealmEvent(event, user?: boolean) {
           ),
           class: event.data?.success ? successClass : negativeClass,
           resources: resourcePillaged(event.data?.pillagedResources),
+          image: EventImages[event.eventType],
           relic: event.data?.relicLost ? (
             <span className="pl-10 text-xl font-semibold uppercase">
               Relic {event.data?.relicLost}
@@ -121,6 +141,7 @@ export function generateRealmEvent(event, user?: boolean) {
     case Event.realmBuildingBuilt:
       return {
         event: `Built ${event.data?.buildingName}`,
+        image: EventImages[event.eventType],
         class: successClass,
         action: (
           <Button
@@ -132,10 +153,11 @@ export function generateRealmEvent(event, user?: boolean) {
           </Button>
         ),
       };
-    case 'realm_settle':
+    case Event.realmSettle:
       return {
         event: 'Settled',
         class: successClass,
+        image: EventImages[event.eventType],
         action: (
           <Button
             size="xs"
@@ -146,10 +168,11 @@ export function generateRealmEvent(event, user?: boolean) {
           </Button>
         ),
       };
-    case 'realm_unsettle':
+    case Event.realmUnsettle:
       return {
         event: 'Unsettled',
         class: successClass,
+        image: EventImages[event.eventType],
         action: (
           <Button
             size="xs"
@@ -160,10 +183,11 @@ export function generateRealmEvent(event, user?: boolean) {
           </Button>
         ),
       };
-    case 'army_travel':
+    case Event.armyTravel:
       return {
-        event: `Army Travel`,
+        event: `${getRealmNameById(event.data?.originRealmId)} Army Travel`,
         class: successClass,
+        image: EventImages[event.eventType],
         action: (
           <div>
             {checkTimeInPast(event.data?.destinationArrivalTime) ? (
@@ -193,61 +217,33 @@ export function generateRealmEvent(event, user?: boolean) {
           </div>
         ),
       };
-    default:
+    case Event.foodHarvest:
       return {
-        event: '',
-        class: '',
-        action: '',
-      };
-  }
-}
-export function genEconomicRealmEvent(event) {
-  switch (event.eventType) {
-    case 'realm_building_built':
-      return {
-        event: `Built ${event.data?.buildingName}`,
+        event: `${event.data.buildingName} Harvested on ${getRealmNameById(
+          event.realmId
+        )}`,
+        image: EventImages[event.eventType],
         class: successClass,
         action: (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/?asset=realm' + event.data?.realmId}
-          >
-            {event.data?.success ? 'Try again' : 'summon the troops!'}
-          </Button>
+          <div>
+            <span>Harvested: {event.data.qty}</span> <br />
+            <span>Harvests Remaining: {event.data.harvests}</span>
+          </div>
         ),
       };
-    case 'realm_resource_upgraded':
+    case Event.foodCreated:
       return {
-        event: `Upgraded ${event.data?.resourceName} to Level ${event.data?.level}`,
+        event: `${event.data.buildingName} created on ${getRealmNameById(
+          event.realmId
+        )}`,
+        image: EventImages[event.eventType],
         class: successClass,
-        action: '',
-      };
-    // case 'realm_mint':
-    //   return {
-    //     event: `Minted Realm ${event.realmId}`,
-    //     class: successClass,
-    //     action: (
-    //       <Button
-    //         size="xs"
-    //         variant="outline"
-    //         href={'/realm/' + event.realmId + '?tab=Overview'}
-    //       >
-    //         Manage Realm
-    //       </Button>
-    //     ),
-    //   };
-    case 'realm_settle':
-      return {
-        event: 'Settled',
-        class: successClass,
-        action: '',
-      };
-    case 'realm_unsettle':
-      return {
-        event: 'Unsettled',
-        class: successClass,
-        action: '',
+        action: (
+          <div>
+            <span>Created: {event.data.qty}</span> <br />
+            <span>Harvests Remaining: {event.data.harvests}</span>
+          </div>
+        ),
       };
     default:
       return {

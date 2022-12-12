@@ -77,7 +77,7 @@ export function TraitsFilter(props: TraitsFilterProps) {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel
-          className="absolute z-10 mt-2 border-4 border-double rounded md:right-0 border-white/20"
+          className="absolute z-10 mt-2 border-4  rounded md:right-0 border-white/20"
           static
         >
           <div className="flex flex-col px-8 py-4 font-medium bg-gray-1000 rounded-sm shadow-sm w-60">

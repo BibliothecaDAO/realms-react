@@ -16,7 +16,7 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
   const { battalions } = useArmy();
   return (
     <div>
-      <div className="grid grid-cols-4 gap-2 p-2 ">
+      <div className="grid grid-cols-8 gap-2 p-2 ">
         {battalions?.map((battalion, index) => {
           return (
             <span key={index}>
