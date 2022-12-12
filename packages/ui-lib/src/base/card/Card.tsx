@@ -11,7 +11,7 @@ export const Card = forwardRef<any, Props>((props: Props, ref) => {
   return (
     <div
       ref={ref}
-      className={`${props.className}  duration-150 transition-all p-2 sm:p-3  bg-gray-1000/90 group flex flex-col border-4 border-yellow-800 rounded border-double hover:bg-gray-600/10`}
+      className={`${props.className}  duration-150 transition-all p-2 sm:p-3  bg-gradient-to-r from-gray-900 to-gray-1000 group flex flex-col border-4 border-yellow-800/40 rounded  hover:bg-gray-600/10`}
       onClick={props.onClick}
       tabIndex={props.tabIndex}
       role={props.role}

@@ -34,7 +34,7 @@ export const BottomLeftNav = () => {
       <div className="relative">
         <div className="absolute w-16 h-16 bottom-3 left-3">
           <img
-            src={'/realm-troops/vizir.png'}
+            src={'/vizirs/mj_military_vizir.png'}
             alt="map"
             className="w-16 h-16 mb-4 mr-4 rounded-full "
           />

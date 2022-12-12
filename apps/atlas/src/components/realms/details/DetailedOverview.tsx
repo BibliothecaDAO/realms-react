@@ -69,7 +69,7 @@ export function DetailedOverview(
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img
-                src={'/realm-troops/vizir.png'}
+                src={'/vizirs/mj_military_vizir.png'}
                 alt="map"
                 className="w-56 h-56 mr-10 rounded-full shadow-lg shadow-purple-800"
               />

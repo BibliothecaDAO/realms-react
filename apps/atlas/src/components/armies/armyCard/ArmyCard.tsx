@@ -17,8 +17,8 @@ import { useAtlasContext } from '@/context/AtlasContext';
 import type { Army } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import { ArmyBattalions } from './armyCard/ArmyBattalions';
-import { ArmyStatistics } from './armyCard/ArmyStatistics';
+import { ArmyBattalions } from './ArmyBattalions';
+import { ArmyStatistics } from './ArmyStatistics';
 
 export interface ArmyAndOrder extends Army {
   orderType?: string;
@@ -89,38 +89,59 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   return (
     <div
       key={army.armyId}
-      className="flex-row p-3 border border-yellow-900 rounded"
+      className="flex-row p-3 border-4 rounded border-yellow-800/40"
     >
       <div className="">
         <div>
           <div className="flex justify-between">
-            <h3>
-              {getRealmNameById(army.realmId)} | {army.realmId}
-            </h3>
             <div>
-              {army.armyId != 0 &&
-                (isAtLocation ? (
-                  <h5>{hasArrived ? 'on the way' : 'here'}</h5>
-                ) : (
+              <h3>
+                {getRealmNameById(army.realmId)} | {army.realmId}
+              </h3>
+              <div className="flex mt-2 space-x-2">
+                {army.armyId != 0 &&
+                  (isAtLocation ? (
+                    <h5>{hasArrived ? 'on the way' : 'here'}</h5>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        navigateToAsset(
+                          army?.destinationRealmId
+                            ? army?.destinationRealmId
+                            : army.realmId,
+                          'realm'
+                        );
+                      }}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Fly <Globe className="w-3 mx-2 fill-current" />
+                      current location -{' '}
+                      {!isHome ? army?.destinationRealmId : 'Home'}
+                    </Button>
+                  ))}
+                {isHome && isAtLocation && isOwnRealm && (
                   <Button
-                    onClick={() => {
-                      navigateToAsset(
-                        army?.destinationRealmId
-                          ? army?.destinationRealmId
-                          : army.realmId,
-                        'realm'
-                      );
-                    }}
                     variant="outline"
                     size="xs"
-                    className="w-full"
+                    onClick={() => props.onBuildArmy && props.onBuildArmy()}
                   >
-                    <Globe className="w-3 mr-2 fill-current" />
-                    current location -{' '}
-                    {!isHome ? army?.destinationRealmId : 'Home'}
+                    Build Army
                   </Button>
-                ))}
+                )}
+                {props.onTravel && !isAtLocation && isOwnRealm && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => props.onTravel && props.onTravel()}
+                  >
+                    Travel here {'->'}{' '}
+                    {(travelInformation.time / 60 / 60).toFixed(0)} hrs
+                  </Button>
+                )}
+              </div>
             </div>
+
             <h5 className="flex">
               <OrderIcon
                 className="self-center mr-3"
@@ -135,28 +156,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
             </div>
           )}
-
-          <div className="grid grid-cols-2 gap-2 my-2">
-            {isHome && isAtLocation && isOwnRealm && (
-              <Button
-                variant="outline"
-                size="xs"
-                onClick={() => props.onBuildArmy && props.onBuildArmy()}
-              >
-                Build Army
-              </Button>
-            )}
-            {props.onTravel && !isAtLocation && isOwnRealm && (
-              <Button
-                variant="outline"
-                size="xs"
-                onClick={() => props.onTravel && props.onTravel()}
-              >
-                Travel here {'->'}{' '}
-                {(travelInformation.time / 60 / 60).toFixed(0)} hrs
-              </Button>
-            )}
-          </div>
         </div>
         <div className="w-full h-full">
           <div className="flex justify-between mb-2"></div>

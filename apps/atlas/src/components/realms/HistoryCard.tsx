@@ -1,5 +1,3 @@
-import { Card } from '@bibliotheca-dao/ui-lib/base';
-import Image from 'next/image';
 import type { ReactElement } from 'react';
 
 interface Props {
@@ -8,43 +6,37 @@ interface Props {
   event: any;
   action: string | ReactElement;
   eventId?: string | null;
+  image?: string;
 }
 
 export const HistoryCard = (props: Props) => {
+  const { children, timeStamp, event, action, eventId, image } = props;
   return (
     <div
-      className={`flex flex-wrap mb-6 justify-between w-full relative border-4 border-yellow-800 border-double rounded p-3`}
+      className={`flex mb-6 justify-between w-full relative border-4 border-yellow-800/40 bg-gradient-to-r from-gray-900 to-gray-1000    rounded`}
     >
-      {/* <Image
-        objectFit="cover"
-        className="rounded-xl brightness-50 contrast-75 "
-        layout="fill"
-        src={`https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${props.eventId}.png`}
+      <img
+        className="w-32 h-32 rounded-br-full shadow"
+        src={image ? image : `/vizirs/mj_builder.png`}
         alt=""
-      /> */}
-      <div className="z-10 flex flex-wrap w-full">
+      />
+      <div className="z-10 flex flex-wrap flex-grow w-auto p-3 mr-auto">
         <div className="flex">
-          <img
-            className="w-24 h-24 mr-8 rounded-full"
-            src={`/vizirs/mj_builder.png`}
-            alt=""
-          />
           <div className="flex-auto">
             <div className="flex justify-between ">
-              <span className="text-xl"> {props.event}</span>
+              <div className="text-2xl"> {event}</div>
             </div>
 
-            {props.children}
-            {props.action && <div className="mt-2">{props.action}</div>}
+            {children}
+            {action && <div className="mt-2">{action}</div>}
           </div>
         </div>
-
-        <div className="flex justify-end w-full mt-4">
-          <span className="ml-auto text-xs text-gray-700">
+        <div className="flex justify-end w-full mt-4 ml-auto">
+          <span className="ml-auto text-xs text-gray-600">
             {' '}
-            {new Date(props.timeStamp).toLocaleTimeString('en-US')}
+            {new Date(timeStamp).toLocaleTimeString('en-US')}
             {' | '}
-            {new Date(props.timeStamp).toLocaleDateString('en-US')}
+            {new Date(timeStamp).toLocaleDateString('en-US')}
           </span>
         </div>
       </div>

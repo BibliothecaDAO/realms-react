@@ -2,7 +2,7 @@ import { Button } from '@bibliotheca-dao/ui-lib/base';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { ArmyCard } from '@/components/armies/ArmyCard';
+import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
   GetRealmsQuery,

@@ -70,7 +70,7 @@ export function OrdersFilter(props: OrdersFilterProps) {
       >
         <Popover.Panel
           className={clsx(
-            'absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4 border-double border-white/20 rounded',
+            'absolute z-10 mt-2 w-[280px] ml-2 m-auto -translate-x-1/2 md:-translate-x-1/2 border-4  border-white/20 rounded',
             props.popoverClass
           )}
           static

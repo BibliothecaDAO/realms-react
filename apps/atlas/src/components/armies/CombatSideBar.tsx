@@ -9,7 +9,7 @@ import {
 import { useAccount } from '@starknet-react/core';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { ArmyCard } from '@/components/armies/ArmyCard';
+import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
 
 import {
   getRealmNameById,
@@ -195,7 +195,7 @@ export const CombatSideBar: React.FC<Prop> = ({
               <div className="p-2 text-center bg-gray-1000 rounded-t-xl">
                 <h1>Raid</h1>
               </div>
-              <div className="py-10 text-center border-4 border-yellow-900 border-double rounded-b-full bg-gray-1000 ">
+              <div className="py-10 text-center border-4 border-yellow-900  rounded-b-full bg-gray-1000 ">
                 {hasOwnRelic(defendingRealm) ? (
                   <img src="/mj_relic.png" alt="" />
                 ) : (
@@ -241,7 +241,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 disabled={!raidButtonEnabled}
                 variant="primary"
                 size="lg"
-                className="w-full mt-6 text-3xl border-4 border-yellow-600 border-double"
+                className="w-full mt-6 text-3xl border-4 border-yellow-600 "
               >
                 Plunder!
               </Button>

@@ -9,10 +9,7 @@ import {
 import { animated, useSpring } from '@react-spring/web';
 import { useStarknet } from '@starknet-react/core';
 import { useState } from 'react';
-import {
-  genEconomicRealmEvent,
-  generateRealmEvent,
-} from '@/components/realms/EventMappings';
+import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { SettleRealmsSideBar } from '@/components/realms/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
@@ -61,25 +58,6 @@ export function MyActions(props: Prop) {
   const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
 
   const unSettledRealmsCount = accountData?.ownedRealmsCount ?? 0;
-
-  const economicEventData = (accountData?.accountHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...genEconomicRealmEvent(realmEvent),
-        timestamp: realmEvent.timestamp,
-      };
-    })
-    .filter((row) => row.event !== '');
-
-  const militaryEventData = (accountData?.accountHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...generateRealmEvent(realmEvent, true),
-        timestamp: realmEvent.timestamp,
-        eventId: realmEvent.eventId,
-      };
-    })
-    .filter((row) => row.event !== '');
 
   const txQueue = useCommandList();
   const approveTxs = getApproveAllGameContracts();

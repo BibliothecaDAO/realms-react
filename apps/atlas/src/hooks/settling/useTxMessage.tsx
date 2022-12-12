@@ -27,6 +27,8 @@ export function getTxRenderConfig(
 
   const metadata = tx.metadata;
 
+  console.log(metadata);
+
   if (metadata.title && metadata.description) {
     return metadata;
   }

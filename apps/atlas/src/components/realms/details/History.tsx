@@ -6,10 +6,7 @@ import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { RaidDetailsSideBar } from '@/components/armies/RaidDetailsSidebar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
-import {
-  genEconomicRealmEvent,
-  generateRealmEvent,
-} from '@/components/realms/EventMappings';
+
 import { HistoryCard } from '@/components/realms/HistoryCard';
 import { resourcePillaged } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
@@ -39,25 +36,6 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
       event.eventType as unknown as realmEconomicEvents
     )
   );
-
-  const economicEventData1 = (historyData?.getRealmHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...genEconomicRealmEvent(realmEvent),
-        timestamp: realmEvent.timestamp,
-      };
-    })
-    .filter((row) => row.event !== '');
-
-  const militaryEventData1 = (historyData?.getRealmHistory ?? [])
-    .map((realmEvent) => {
-      return {
-        ...generateRealmEvent(realmEvent, false),
-        timestamp: realmEvent.timestamp,
-        eventId: realmEvent.eventId,
-      };
-    })
-    .filter((row) => row.event !== '');
 
   const handleRaidDetailsClick = (event) => {
     setSelectedEvent(event);
