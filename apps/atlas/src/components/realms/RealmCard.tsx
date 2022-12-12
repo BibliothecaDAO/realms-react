@@ -395,17 +395,24 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         </div>
 
         <AtlasSidebar containerClassName="w-full z-40" isOpen={isRaiding}>
-          <CombatSideBar
-            onClose={() => setIsRaiding(false)}
-            defendingRealm={realm}
-          />
+          {isRaiding && (
+            <CombatSideBar
+              onClose={() => setIsRaiding(false)}
+              defendingRealm={realm}
+            />
+          )}
         </AtlasSidebar>
+
         <AtlasSidebar
           containerClassName={sidebarClassNames.replace('z-30', 'z-40')}
           isOpen={isTravel}
         >
-          <SidebarHeader onClose={() => setIsTravel(false)} />
-          <Travel realm={realm} />
+          {isTravel && (
+            <>
+              <SidebarHeader onClose={() => setIsTravel(false)} />
+              <Travel realm={realm} />
+            </>
+          )}
         </AtlasSidebar>
 
         {/* <Disclosure>
