@@ -69,6 +69,9 @@ jobs:
           yarn lint
       - name: Unit tests
         working-directory: apps/atlas
+        env:
+          NEXT_PUBLIC_INFURA_ID: badbe99a05ad427a9ddbbed9e002caf6
+          NEXT_PUBLIC_NETWORK: goerli
         run: |
           yarn test-unit
       - name: Build web-app
