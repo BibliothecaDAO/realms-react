@@ -1,5 +1,4 @@
 // @ts-check
-
 const { pathsToModuleNameMapper } = require('ts-jest');
 
 const tsConfigFile = './tsconfig.jest.json';

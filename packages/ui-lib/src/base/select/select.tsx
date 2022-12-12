@@ -2,7 +2,8 @@
 import { Listbox } from '@headlessui/react';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import { SelectButton } from './select-button';
+import React from 'react';
+import { SelectButton, SelectButtonProps } from './select-button';
 import { SelectOption } from './select-option';
 import { SelectOptions } from './select-options';
 

@@ -77,8 +77,8 @@ jobs:
       # apps build are done already. Otherwise --from & --since
       - name: Run build for changed packages
         run: |
-          yarn workspaces foreach -tv --include '@bibliotheca-dao/*' --exclude '*-app' --since=origin/main run build
+          yarn workspaces foreach -tv --include '@bibliotheca-dao/core-lib' --exclude ['*-app','*ui-lib'] --since=origin/main run build
       # Test storybook build on packages that have changed (--include & --since)
-      - name: Run storybook build for changed packages
-        run: |
-          yarn workspaces foreach -tv --exclude '*-app' --since=origin/main run build-storybook
+      #- name: Run storybook build for changed packages
+      # run: |
+      #   yarn workspaces foreach -tv --exclude '*-app' --since=origin/main run build-storybook
