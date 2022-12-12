@@ -29,6 +29,7 @@ export const BottomLeftNav = () => {
             )
           }
           size="md"
+          className="jr-sound"
         />
       </div>
       <div className="relative">

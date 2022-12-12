@@ -23,7 +23,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 
 type Prop = {
-  onSettleRealms: () => void;
+  onSettleRealms?: () => void;
 };
 
 export function MyActions(props: Prop) {

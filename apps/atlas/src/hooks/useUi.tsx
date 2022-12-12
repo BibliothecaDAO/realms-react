@@ -9,11 +9,13 @@ export type UIContext = {
   closeAsset: () => void;
   toggleEmpire: () => void;
   toggleTrade: () => void;
+  toggleOnboarding: () => void;
   toggleTransactionCart: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
   transactionCart: boolean;
+  onboarding: boolean;
 };
 
 export function useUi() {
@@ -25,6 +27,8 @@ export function useUi() {
   const [empireSidebar, setEmpireSidebar] = useState<boolean>(false);
   const [tradeSidebar, setTradeSidebar] = useState<boolean>(false);
   const [transactionCart, setTransactionCart] = useState<boolean>(false);
+
+  const [onboarding, setOnboarding] = useState<boolean>(false);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -43,22 +47,30 @@ export function useUi() {
     setAssetSidebar(null);
     router.push('/', undefined, { shallow: true });
   };
+
   const toggleEmpire = () => {
     router.push('/', undefined, { shallow: true });
     closeAll();
     setEmpireSidebar(!empireSidebar);
   };
+
   const toggleTrade = () => {
     setTradeSidebar(!tradeSidebar);
   };
+
   const toggleTransactionCart = () => {
     setTransactionCart(!transactionCart);
+  };
+
+  const toggleOnboarding = () => {
+    setOnboarding(!onboarding);
   };
 
   const closeAll = () => {
     setEmpireSidebar(false);
     setTradeSidebar(false);
     setTransactionCart(false);
+    setOnboarding(false);
     setAssetSidebar(null);
   };
 
@@ -72,6 +84,8 @@ export function useUi() {
     toggleTrade,
     transactionCart,
     toggleTransactionCart,
+    toggleOnboarding,
+    onboarding,
     closeAll,
   };
 }

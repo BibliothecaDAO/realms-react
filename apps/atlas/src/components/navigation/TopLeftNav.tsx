@@ -15,13 +15,21 @@ import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import { OnboardingSidebar } from '../onboarding/OnboardingSidebar';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useUserBalancesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
-  const { empireSidebar, toggleEmpire, tradeSidebar, toggleTrade, closeAll } =
-    useUIContext();
+  const {
+    empireSidebar,
+    toggleEmpire,
+    tradeSidebar,
+    toggleTrade,
+    closeAll,
+    onboarding,
+    toggleOnboarding,
+  } = useUIContext();
 
   function onLordsNavClick() {
     // Bank swap panel is already open
@@ -51,7 +59,7 @@ export const TopLeftNav = () => {
         <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none stroke-yellow-900" />
         <TopLeftFrame className="absolute pointer-events-none w-72" />
 
-        <div className="absolute z-50 left-2 top-2">
+        <div className="absolute z-50 left-2 top-2 jr-empire">
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
@@ -62,10 +70,22 @@ export const TopLeftNav = () => {
             </div>
           </Button>
         </div>
+        {/* <div className="absolute z-50 left-[15rem] top-2">
+          <Button
+            onClick={toggleOnboarding}
+            variant="unstyled"
+            className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
+          >
+            <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-[0.8rem] lg:left-[0.8rem] z-50">
+              <EternumIcon className="transition-all duration-300 fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
+            </div>
+          </Button>
+        </div> */}
       </div>
 
       <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />
       <ResourceSwapSideBar isOpen={tradeSidebar} onClose={onLordsNavClick} />
+      {/* <OnboardingSidebar isOpen={onboarding} onClose={toggleOnboarding} /> */}
     </div>
   );
 };
