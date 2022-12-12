@@ -25591,7 +25591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.19, postcss@npm:^7.0.30 || ^8.0.0, postcss@npm:^8.2.1, postcss@npm:^8.2.15, postcss@npm:^8.4.18, postcss@npm:^8.4.19, postcss@npm:^8.4.4":
+"postcss@npm:8.4.19":
   version: 8.4.19
   resolution: "postcss@npm:8.4.19"
   dependencies:
@@ -25612,7 +25612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.20":
+"postcss@npm:^7.0.30 || ^8.0.0, postcss@npm:^8.2.1, postcss@npm:^8.2.15, postcss@npm:^8.4.18, postcss@npm:^8.4.19, postcss@npm:^8.4.20, postcss@npm:^8.4.4":
   version: 8.4.20
   resolution: "postcss@npm:8.4.20"
   dependencies:
