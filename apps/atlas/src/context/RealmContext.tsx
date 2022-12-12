@@ -155,8 +155,10 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     dispatch({ type: 'updateTraitsFilter', payload: filter }),
   updateSelectedOrders: (orders: OrderType[]) =>
     dispatch({ type: 'updateSelectedOrders', payload: orders }),
-  updateSelectedResources: (resources: number[]) =>
-    dispatch({ type: 'updateSelectedResources', payload: resources }),
+  updateSelectedResources: (resources: number[]) => {
+    dispatch({ type: 'clearFilters' });
+    dispatch({ type: 'updateSelectedResources', payload: resources });
+  },
   clearFilters: () => dispatch({ type: 'clearFilters' }),
   addFavouriteRealm: (realmId: number) =>
     dispatch({ type: 'addFavouriteRealm', payload: realmId }),

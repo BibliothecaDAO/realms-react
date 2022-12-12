@@ -338,6 +338,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 </>
               )}
 
+              {realm && !isOwner && IsSettled(realm) && (
+                <Button
+                  onClick={() => {
+                    userArmiesAtLocation && userArmiesAtLocation.length
+                      ? setIsRaiding(true)
+                      : setIsTravel(true);
+                  }}
+                  size="sm"
+                  disabled={getIsRaidable(realm)}
+                  variant={'primary'}
+                >
+                  {realm && getRealmCombatStatus(realm)}
+                </Button>
+              )}
+
               <Button
                 onClick={() => {
                   navigateToAsset(realm.realmId, 'realm');
@@ -371,26 +386,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 ''
               )}
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap justify-between w-full">
-          <div className="flex">
-            {realm && !isOwner && IsSettled(realm) && (
-              <Button
-                onClick={() => {
-                  userArmiesAtLocation && userArmiesAtLocation.length
-                    ? setIsRaiding(true)
-                    : setIsTravel(true);
-                }}
-                size="sm"
-                className="w-full"
-                disabled={getIsRaidable(realm)}
-                variant={'primary'}
-              >
-                {realm && getRealmCombatStatus(realm)}
-              </Button>
-            )}
           </div>
         </div>
 

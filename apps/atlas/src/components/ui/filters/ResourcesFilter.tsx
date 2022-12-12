@@ -55,31 +55,38 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
           className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4  border-white/20 rounded"
           static
         >
-          <div className="flex flex-col items-center gap-4 p-4 pb-8 bg-gray-1000 rounded shadow-lg">
-            <h4 className="text-center">Select Resources</h4>
+          {({ close }) => (
+            <div className="flex flex-col items-center gap-4 p-4 pb-8 rounded shadow-lg bg-gray-1000">
+              <div className="flex justify-between w-full">
+                <h4 className="text-center">Select Resources</h4>
+                <button onClick={() => close()}>close</button>
+              </div>
 
-            <div className="relative grid items-center justify-center grid-cols-2 gap-4">
-              {resourcesOptions.map((resource, idx) => (
-                <div
-                  role="button"
-                  key={resource.value}
-                  tabIndex={idx}
-                  className={clsx(
-                    'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
-                    isSelected(resource) ? 'bg-gray-200/20' : ''
-                  )}
-                  onClick={() => handleOnClickResourceOption(resource)}
-                  aria-hidden="true"
-                >
-                  <ResourceIcon
-                    resource={resource.name.replace(' ', '')}
-                    size="xs"
-                  />{' '}
-                  <span>{resource.name}</span>
-                </div>
-              ))}
+              <div className="relative grid items-center justify-center grid-cols-2 gap-4">
+                {resourcesOptions.map((resource, idx) => (
+                  <div
+                    role="button"
+                    key={resource.value}
+                    tabIndex={idx}
+                    className={clsx(
+                      'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
+                      isSelected(resource) ? 'bg-gray-200/20' : ''
+                    )}
+                    onClick={() => {
+                      handleOnClickResourceOption(resource);
+                    }}
+                    aria-hidden="true"
+                  >
+                    <ResourceIcon
+                      resource={resource.name.replace(' ', '')}
+                      size="xs"
+                    />{' '}
+                    <span>{resource.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </Popover.Panel>
       </Transition>
     </Popover>

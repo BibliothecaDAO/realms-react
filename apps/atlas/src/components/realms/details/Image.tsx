@@ -39,7 +39,7 @@ export const RealmImage = ({ id }) => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="right-0 w-48 bg-gray-1000 border border-cta-100/60">
+          <Menu.Items className="right-0 w-48 border bg-gray-1000 border-cta-100/60">
             <Menu.Group className="flex">
               {menuItems.map((menuItem) => {
                 return (
@@ -70,7 +70,7 @@ export const RealmImage = ({ id }) => {
         <Image
           src={`https://realms-assets.s3.eu-west-3.amazonaws.com/renders/${id}.webp`}
           alt="map"
-          className="w-full mt-4 rounded-xl -scale-x-100"
+          className="w-full rounded-xl -scale-x-100"
           width={500}
           placeholder="blur"
           blurDataURL={rgbDataURL(20, 20, 20)}
@@ -83,7 +83,7 @@ export const RealmImage = ({ id }) => {
         <Image
           src={`https://d23fdhqc1jb9no.cloudfront.net/_Realms/${id}.svg`}
           alt="map"
-          className="w-full mt-4 rounded-xl"
+          className="w-full rounded-xl"
           width={350}
           placeholder="blur"
           blurDataURL={rgbDataURL(20, 20, 20)}
