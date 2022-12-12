@@ -38,6 +38,7 @@ type Props = {
   realm: GetRealmQuery['realm'];
   buildings?: number[];
   availableFood: number | undefined;
+  defendHistory: any;
 };
 
 export const DefendingArmy = (props: Props) => {
@@ -61,6 +62,7 @@ export const DefendingArmy = (props: Props) => {
         army={blankArmy}
         buildings={buildings}
         availableFood={availableFood}
+        defendHistory={props.defendHistory}
       />
     </div>
   );
