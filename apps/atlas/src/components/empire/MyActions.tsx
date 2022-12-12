@@ -7,7 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 
 import { animated, useSpring } from '@react-spring/web';
-import { useStarknet } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
 import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
@@ -27,37 +27,11 @@ type Prop = {
 };
 
 export function MyActions(props: Prop) {
-  const { play } = useUiSounds(soundSelector.pageTurn);
-
   const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealm } = useSettling();
   const { balance } = useUserBalancesContext();
 
-  const { account } = useStarknet();
   const [selectedId, setSelectedId] = useState(0);
-
-  const filter = {
-    OR: [
-      { ownerL2: { equals: getAccountHex(account || '0x0') } },
-      { settledOwner: { equals: getAccountHex(account || '0x0') } },
-    ],
-  };
-  const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
-  const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
-
-  const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: account ? getAccountHex(account) : '', realmIds },
-    pollInterval: 10000,
-    skip: !account,
-  });
-
-  /* const getRealmDetails = (realmId: number) =>
-        realms.features.find((a: any) => a.properties.realm_idx === realmId)
-          ?.properties; */
-
-  const settledRealmsCount = accountData?.settledRealmsCount ?? 0;
-
-  const unSettledRealmsCount = accountData?.ownedRealmsCount ?? 0;
 
   const txQueue = useCommandList();
   const approveTxs = getApproveAllGameContracts();
@@ -149,10 +123,9 @@ export function MyActions(props: Prop) {
               size="lg"
               className="mb-2"
               onClick={async () => {
-                await txQueue.add(
-                  approveTxs.map((t) => ({ ...t, status: ENQUEUED_STATUS }))
-                );
-                await txQueue.executeMulticall();
+                await approveTxs.map(async (t) => await txQueue.add({ ...t }));
+
+                txQueue.executeMulticall();
               }}
             >
               2. Approve All game Contracts

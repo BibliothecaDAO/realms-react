@@ -1,6 +1,7 @@
 import { ENQUEUED_STATUS } from '@/constants/index';
 import type { RealmsTransaction, RealmsTransactionRender } from '@/types/index';
 import { renderTransaction as renderAmmTxs } from '../useSwapResources';
+import { renderTransaction as renderApprovals } from './useApprovals';
 import { renderTransaction as renderBuildingTxs } from './useBuildings';
 import { renderTransaction as renderCombatTxs } from './useCombat';
 import { renderTransaction as renderFoodTxs } from './useFood';
@@ -8,7 +9,6 @@ import { renderTransaction as renderGoblinTxs } from './useGoblinTowns';
 import { renderTransaction as renderResourceTxs } from './useResources';
 import { renderTransaction as renderSettlingTxs } from './useSettling';
 import { renderTransaction as renderTravelTxs } from './useTravel';
-
 export function getTxRenderConfig(
   tx: RealmsTransaction
 ): RealmsTransactionRender {
@@ -23,12 +23,10 @@ export function getTxRenderConfig(
     ...renderSettlingTxs,
     ...renderTravelTxs,
     ...renderGoblinTxs,
+    ...renderApprovals,
   };
 
   const metadata = tx.metadata;
-
-  console.log(metadata);
-
   if (metadata.title && metadata.description) {
     return metadata;
   }

@@ -16,7 +16,10 @@ import {
   useResources1155Contract,
   ModuleAddr as CM,
 } from '@/hooks/settling/stark-contracts';
-import type { CallAndMetadata } from '@/types/index';
+import type {
+  CallAndMetadata,
+  RealmsTransactionRenderConfig,
+} from '@/types/index';
 
 export const queryKeys = {
   isApproved: (operator: any) => ['desiege', 'token-approval', operator],
@@ -148,6 +151,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Realm Resources Contract',
       description: 'Approve spending by Realms Exchange module',
+      action: 'approve_exchange_resources',
     },
   });
 
@@ -162,6 +166,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Lords Contract',
       description: 'Approve spending by Realms Exchange module',
+      action: 'approve_exchange_lords',
     },
   });
 
@@ -172,6 +177,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Realms Resources',
       description: 'Approve spending by Resource Game module',
+      action: 'approve_game_resources',
     },
   });
 
@@ -184,6 +190,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Realms NFT',
       description: 'Approve spending by Settling module',
+      action: 'approve_settling_realms',
     },
   });
 
@@ -195,6 +202,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Realms Resources Contract',
       description: 'Approve spending by Building module',
+      action: 'approve_building_resources',
     },
   });
 
@@ -207,6 +215,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Realm Resources Contract',
       description: 'Approve spending by Combat module',
+      action: 'approve_combat_resources',
     },
   });
 
@@ -219,8 +228,16 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     metadata: {
       title: 'Food approval',
       description: 'Approve spending by Food Module',
+      action: 'approve_food',
     },
   });
 
   return calls;
+};
+
+export const renderTransaction: RealmsTransactionRenderConfig = {
+  ['approvals']: ({ metadata }, ctx) => ({
+    title: metadata.title,
+    description: 'Various contract approvals to interact with Eternum',
+  }),
 };
