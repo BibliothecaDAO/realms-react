@@ -5,13 +5,17 @@ import {
   CardTitle,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
-import Image from 'next/image';
+import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { ArmyCard } from '@/components/armies/ArmyCard';
+import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
 import { Battalion } from '@/components/armies/squad/Battalion';
-import { CostBlock, getRealmNameById } from '@/components/realms/RealmsGetters';
+import {
+  CostBlock,
+  getRealmNameById,
+  resourcePillaged,
+} from '@/components/realms/RealmsGetters';
 import {
   battalionInformation,
   defaultArmy,
@@ -29,17 +33,20 @@ import { Entrypoints } from '@/hooks/settling/useBuildings';
 import useCombat from '@/hooks/settling/useCombat';
 import { useCurrentQueuedBuildings } from '@/hooks/settling/useCurrentQueuedBuildings';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import type {
+import {
   ArmyBattalionQty,
   BattalionInterface,
+  realmMilitaryEvents,
   ResourceCost,
 } from '@/types/index';
+import { HistoryCard } from '../HistoryCard';
 import { ArmyBuilder } from '../RealmArmyBuilder';
 
 type Props = {
   realm: GetRealmQuery['realm'];
   buildings?: number[];
   availableFood: number | undefined;
+  attackHistory: any;
 };
 
 type Battalion = {
@@ -145,6 +152,47 @@ export const AttackingArmy = (props: Props) => {
           />
         </div>
       )}
+      {props.attackHistory &&
+        props.attackHistory.map((a, index) => {
+          return (
+            <>
+              <h3 className="mb-4 mt-8">Attack History</h3>
+              <HistoryCard
+                key={index}
+                timeStamp={a.timestamp}
+                eventId={a.eventId}
+                event={`Army Raided Realm ${a.data.defendRealmId}`}
+                action={''}
+              >
+                {a.eventType === realmMilitaryEvents.realmCombatAttack &&
+                  (a.data.success ? (
+                    <div className="flex">
+                      <Sword className="w-6 mr-2" />
+                      <span className="text-green-300">Successful Raid!</span>
+                    </div>
+                  ) : (
+                    <div className="flex">
+                      <Danger className="self-center w-6 h-6 fill-current" />
+                      <span className="text-red-400">Raid Failed</span>
+                    </div>
+                  ))}
+                {resourcePillaged(a.data?.pillagedResources)}
+                {a.data?.relicLost && (
+                  <span className="pl-10 text-xl font-semibold uppercase">
+                    Relic {a.data?.relicLost}
+                  </span>
+                )}
+                {/* } <Button
+                size="xs"
+                variant="primary"
+                onClick={() => handleRaidDetailsClick(a)}
+              >
+                Raid Details
+              </Button> */}
+              </HistoryCard>
+            </>
+          );
+        })}
     </div>
   );
 };

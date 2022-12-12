@@ -67,7 +67,7 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
     "Greetings, my liege. I regret to inform you that our recent battle was not successful. Despite our best efforts, the enemy proved too strong and we were forced to retreat. Our army suffered heavy losses, and we were unable to hold our ground against the enemy's superior numbers and weaponry. We have regrouped and are currently in retreat, making our way back to our kingdom in the hopes of regrouping and finding a way to overcome this setback. We will continue to fight and do all that we can to protect our kingdom, but I must be honest and admit that the situation is dire. I will continue to do all that I can to lead our forces and turn the tide of this conflict, but I ask for your continued support and guidance. May the gods be with us in these trying times.";
 
   return (
-    <div className="p-3 border-4 border-yellow-800 border-double rounded-2xl bg-gray-1000">
+    <div className="p-3 border-4 border-yellow-800/40  rounded-2xl bg-gray-1000">
       <img
         className="object-cover w-full rounded-xl"
         src={'/backgrounds/combat_4.png'}

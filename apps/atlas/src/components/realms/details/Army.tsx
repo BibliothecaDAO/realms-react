@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { ArmyBuilderSideBar } from '@/components/armies/ArmyBuilderSideBar';
-import { ArmyCard } from '@/components/armies/ArmyCard';
+import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
 import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
 import { Travel } from '@/components/realms/details/Travel';

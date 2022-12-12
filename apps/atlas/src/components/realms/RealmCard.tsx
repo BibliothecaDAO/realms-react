@@ -348,22 +348,23 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 fly
               </Button>
             </div>
-            {/* <div className="flex w-full ml-auto">
-              <span
-                className={`self-center text-xs  uppercase ${
-                  hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
-                }`}
-              >
-                {hasOwnRelic(realm) ? 'free' : 'annexed'}
-              </span>
-              <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
-              <Relic className={`w-3 fill-yellow-500`} />{' '}
-            </div> */}
+
             <div className="flex justify-between w-full mt-3 text-sm">
               <h6 className="text-gray-700">
                 ({getNumberOfTicks(realm)} ticks) |{' '}
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
+              <div className="flex">
+                <span
+                  className={`self-center text-xs  uppercase ${
+                    hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
+                  }`}
+                >
+                  {hasOwnRelic(realm) ? 'free' : 'annexed'}
+                </span>
+                <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
+                <Relic className={`w-3 fill-yellow-500`} />{' '}
+              </div>
               {enqueuedTx ? (
                 <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
               ) : (
@@ -394,17 +395,24 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         </div>
 
         <AtlasSidebar containerClassName="w-full z-40" isOpen={isRaiding}>
-          <CombatSideBar
-            onClose={() => setIsRaiding(false)}
-            defendingRealm={realm}
-          />
+          {isRaiding && (
+            <CombatSideBar
+              onClose={() => setIsRaiding(false)}
+              defendingRealm={realm}
+            />
+          )}
         </AtlasSidebar>
+
         <AtlasSidebar
           containerClassName={sidebarClassNames.replace('z-30', 'z-40')}
           isOpen={isTravel}
         >
-          <SidebarHeader onClose={() => setIsTravel(false)} />
-          <Travel realm={realm} />
+          {isTravel && (
+            <>
+              <SidebarHeader onClose={() => setIsTravel(false)} />
+              <Travel realm={realm} />
+            </>
+          )}
         </AtlasSidebar>
 
         {/* <Disclosure>

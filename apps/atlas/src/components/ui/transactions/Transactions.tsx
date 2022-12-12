@@ -43,8 +43,8 @@ const FORMATED_STATUS = {
   status: {
     REJECTED: 'Rejected',
     NOT_RECEIVED: 'No received',
-    RECEIVED: 'received',
-    PENDING: 'pending',
+    RECEIVED: 'Received',
+    PENDING: 'Pending',
     ACCEPTED_ON_L2: 'Accepted on StarkNet',
     ACCEPTED_ON_L1: 'Accepted on MainNet',
     TRANSACTION_RECEIVED: 'Transaction Received',

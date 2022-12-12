@@ -53,7 +53,7 @@ export function EmpirePanel() {
             <div className="hidden md:block">Empire</div>
           </div>
         ),
-        component: <AccountOverview onSettleRealms={onSettleRealmsClick} />,
+        component: <AccountOverview />,
       },
       {
         label: (
@@ -142,7 +142,7 @@ export function EmpirePanel() {
   return (
     <div className="flex pl-2 pr-6">
       <div className="w-9/12 py-16 pl-16 pr-4">
-        <div className="sticky flex flex-col p-6 bg-gray-1000 rounded-2xl top-10">
+        <div className="sticky flex flex-col p-6 border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl top-10 ">
           <div className="flex w-full gap-2 mb-4 rounded-2xl">
             {quickActions.map((action) => (
               <Button
@@ -191,7 +191,7 @@ export function EmpirePanel() {
         <div className="sticky top-10">
           <img
             className="object-cover h-screen bg-white rounded-2xl"
-            src={'/realm-troops/vizir.png'}
+            src={'/vizirs/mj_military_vizir.png'}
             alt="Vizir"
           />
         </div>

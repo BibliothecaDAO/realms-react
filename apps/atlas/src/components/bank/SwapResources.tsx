@@ -342,7 +342,7 @@ export function SwapResources(): ReactElement {
               leaveTo="transform scale-95 opacity-0"
             >
               <Popover.Panel
-                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4  border-white/20 rounded"
                 static
               >
                 <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">
@@ -413,7 +413,7 @@ export function SwapResources(): ReactElement {
               leaveTo="transform scale-95 opacity-0"
             >
               <Popover.Panel
-                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4 border-double border-white/20 rounded"
+                className="absolute z-100 mt-2 w-[280px] ml-2 m-auto border-4  border-white/20 rounded"
                 static
               >
                 <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">

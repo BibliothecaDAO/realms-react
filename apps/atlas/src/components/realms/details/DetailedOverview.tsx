@@ -1,4 +1,5 @@
 import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
+import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 
 import { useAccount } from '@starknet-react/core';
 
@@ -25,6 +26,7 @@ import {
   getHappinessHasDefendingArmy,
   getHappinessHasFood,
   getFoodIcon,
+  resourcePillaged,
 } from '@/components/realms/RealmsGetters';
 import { findResourceById } from '@/constants/resources';
 
@@ -41,6 +43,7 @@ interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
+  defendHistory?: any;
 }
 
 export function DetailedOverview(
@@ -69,7 +72,7 @@ export function DetailedOverview(
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img
-                src={'/realm-troops/vizir.png'}
+                src={'/vizirs/mj_military_vizir.png'}
                 alt="map"
                 className="w-56 h-56 mr-10 rounded-full shadow-lg shadow-purple-800"
               />
@@ -128,7 +131,6 @@ export function DetailedOverview(
           <h3>
             {getHappiness({ realm: realm, food: availableFood })}{' '}
             <span className="ml-2">
-              {' '}
               {getHappinessIcon({
                 realm: realm,
                 food: availableFood,
@@ -177,7 +179,7 @@ export function DetailedOverview(
           </span>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-8">
         <h3 className="text-2xl font-bold">Resources</h3>
         <div className="flex flex-wrap mt-4">
           {realm.resources?.map((re, index) => (
@@ -197,7 +199,26 @@ export function DetailedOverview(
           ))}
         </div>
       </div>
-
+      {props.defendHistory?.length && (
+        <div className="flex flex-col mt-8">
+          <h3 className="flex">
+            <Sword className="w-4 h-4 my-auto mr-4" />
+            Last Defended Against
+          </h3>
+          <p>
+            <span className="font-lords uppercase">
+              {props.defendHistory[0].data.attackRealmName}
+            </span>
+            <span className="text-gray-700">
+              #{props.defendHistory[0].data.attackRealmId}
+            </span>
+          </p>
+          <p>
+            <h4>Resources Lost:</h4>
+            {resourcePillaged(props.defendHistory[0].data.pillagedResources)}
+          </p>
+        </div>
+      )}
       {/* <div
         className={
           `grid grid-cols-2 gap-4  w-full uppercase font-display ` +

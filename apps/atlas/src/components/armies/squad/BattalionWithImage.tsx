@@ -58,7 +58,7 @@ export const BattalionWithImage: React.FC<
         className="absolute z-50 px-1 py-2"
       />
       <div className="absolute z-10 flex justify-between p-2 mt-auto text-center rounded-full bg-gray-1000/90 left-2 bottom-2">
-        <h4 className="">x {props.quantity || 0}</h4>
+        <h4 className="">{props.quantity || 0}</h4>
       </div>
 
       <Image

@@ -46,8 +46,9 @@ export const useLayers = ({ selectedId }) => {
       sizeUnits: 'pixels',
       pickable: true,
       visible: true,
-      sizeScale: 50,
+      sizeScale: 5,
       sizeMinPixels: 6,
+      getSize: (d) => 10,
       getPosition: (d: any) => d.coordinates,
       onClick: (info: any) => {
         mapContext.navigateToAsset(info.object.id, 'realm');
@@ -68,6 +69,9 @@ export const useLayers = ({ selectedId }) => {
       getSize: (d) => 10,
       onClick: (info: any) => {
         mapContext.navigateToAsset(info.object.id, 'realm');
+      },
+      updateTriggers: {
+        getIcon: parseInt(selectedId),
       },
     });
     const sRealms = new IconLayer({

@@ -31,7 +31,7 @@ export const VARIANTS = {
         'bg-gradient-to-r from-red-600 to-red-900 text-yellow-100 border-yellow-700',
       inactive: 'bg-transparent text-gray-200',
     },
-    tabList: 'flex p-1 space-x-2 border rounded-lg border-yellow-800/60',
+    tabList: 'flex p-1 space-x-2 border rounded-lg border-yellow-800/40',
   },
 };
 
