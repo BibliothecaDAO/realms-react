@@ -5,12 +5,14 @@ import {
   CardTitle,
 } from '@bibliotheca-dao/ui-lib/base';
 import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
+import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
+import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Battalion } from '@/components/armies/squad/Battalion';
-import { CostBlock } from '@/components/realms/RealmsGetters';
+import { CostBlock, resourcePillaged } from '@/components/realms/RealmsGetters';
 import {
   battalionInformation,
   defaultArmy,
@@ -33,13 +35,15 @@ import type {
   BattalionInterface,
   ResourceCost,
 } from '@/types/index';
-
+import { realmMilitaryEvents } from '@/types/index';
+import { HistoryCard } from './HistoryCard';
 type Props = {
   army?: Army;
   armyId: number;
   realm: GetRealmQuery['realm'];
   buildings?: number[];
   availableFood: number | undefined;
+  defendHistory?: any;
 };
 
 type Battalion = {
@@ -406,6 +410,48 @@ export const ArmyBuilder = (props: Props) => {
               summon the battalions
             </Button>
           </div>
+          {props.defendHistory &&
+            props.defendHistory.map((a, index) => {
+              return (
+                <div key={index} className="mt-8">
+                  <h3 className="mb-4">Raids on Realm</h3>
+                  <HistoryCard
+                    timeStamp={a.timestamp}
+                    eventId={a.eventId}
+                    event={`Raided by Realm ${a.data.attackRealmId}`}
+                    action={''}
+                  >
+                    {a.eventType === realmMilitaryEvents.realmCombatDefend &&
+                      (a.data.success ? (
+                        <div className="flex">
+                          <Sword className="w-6" />
+                          <span>Defended</span>
+                        </div>
+                      ) : (
+                        <div className="flex">
+                          <Danger className="self-center w-6 h-6 mr-2 fill-current" />
+                          <span className="text-red-400">Pillaged</span>
+                        </div>
+                      ))}
+                    {resourcePillaged(a.data?.pillagedResources)}
+                    {a.data?.relicLost && (
+                      <span className="pl-10 text-xl font-semibold uppercase">
+                        Relic {a.data?.relicLost}
+                      </span>
+                    )}
+                    {/*
+                <Button
+                  size="xs"
+                  variant="primary"
+                  onClick={() => handleRaidDetailsClick(a)}
+                >
+                  Raid Details
+                </Button>
+                */}
+                  </HistoryCard>
+                </div>
+              );
+            })}
         </CardBody>
       </div>
       {/* <div className="relative col-span-5">
