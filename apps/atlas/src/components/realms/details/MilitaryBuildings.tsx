@@ -38,27 +38,30 @@ export const MilitaryBuildings = (props: Prop) => {
 
   return (
     <div className="flex flex-wrap">
-      {props.buildings
-        ?.filter((a) => a.type === 'military')
-        .map((a, i) => {
-          return (
-            <div key={i} className="flex w-full my-2">
-              <div className="relative self-center border border-yellow-900 rounded">
-                <Image
-                  height={200}
-                  width={200}
-                  className="object-fill bg-white rounded"
-                  src={a.img}
-                  alt=""
-                />
-                <span className="absolute px-2 text-gray-700 bg-white rounded-full bottom-2 left-2">
-                  {a.quantityBuilt}
-                </span>
-              </div>
-              <div className="flex flex-wrap w-full px-4 capitalize">
-                <div className="w-full ">
-                  <div className="bg-gradient-to-r from-gray-1000 via-red-900 to-gray-1000 py-[2px] ">
-                    <h3 className="flex p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
+      {props.buildings &&
+        props.buildings
+          ?.filter((a) => a.type === 'military')
+          .map((a, i) => {
+            return (
+              <div
+                key={i}
+                className="flex w-full my-2 border-4 border-yellow-800/40 rounded-xl"
+              >
+                <div className="relative self-center rounded">
+                  <Image
+                    height={200}
+                    width={200}
+                    className="object-fill bg-white rounded"
+                    src={a.img}
+                    alt=""
+                  />
+                  <span className="absolute px-2 text-gray-700 bg-white rounded-full bottom-2 left-2">
+                    {a.quantityBuilt}
+                  </span>
+                </div>
+                <div className="flex flex-wrap w-full p-4 capitalize">
+                  <div className="w-full ">
+                    <h3 className="flex p-1 px-2 ">
                       {a.name}{' '}
                       <span className="self-center ml-4 text-xs text-gray-700 ">
                         {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
@@ -77,62 +80,61 @@ export const MilitaryBuildings = (props: Prop) => {
                       </span>
                     </h3>
                   </div>
-                </div>
 
-                <div className="flex self-center justify-between w-full">
-                  <div className="flex space-x-2">
-                    {battalionInformation
-                      .filter((b) => b.buildingId === a.id)
-                      .map((c, i) => {
-                        return (
-                          <Image
-                            key={i}
-                            height={90}
-                            width={90}
-                            className="self-center object-fill bg-white border border-yellow-900 rounded shadow-inner"
-                            src={getUnitImage(c.id)}
-                            alt=""
-                          />
-                        );
-                      })}
-                  </div>
-
-                  <div>
-                    <div className="flex mt-2">
-                      {a.cost &&
-                        a.cost.map((b, i) => {
+                  <div className="flex self-center justify-between w-full">
+                    <div className="flex space-x-2">
+                      {battalionInformation
+                        .filter((b) => b.buildingId === a.id)
+                        .map((c, i) => {
                           return (
-                            <CostBlock
+                            <Image
                               key={i}
-                              resourceName={b.resourceName}
-                              amount={b.amount}
-                              id={b.resourceId}
-                              qty={buildQty[a.key]}
+                              height={90}
+                              width={90}
+                              className="self-center object-fill bg-white border border-yellow-900 rounded shadow-inner"
+                              src={getUnitImage(c.id)}
+                              alt=""
                             />
                           );
                         })}
                     </div>
-                    <div className="flex w-full mt-1 space-x-2">
-                      <Button
-                        onClick={() =>
-                          build({
-                            realmId: props.realm.realmId,
-                            buildingId: a.id,
-                            qty: buildQty[a.key],
-                            costs: {
-                              // Mimic ItemCost interface
-                              amount: 0,
-                              resources: a.cost,
-                            },
-                          })
-                        }
-                        size="xs"
-                        variant="primary"
-                        className="ml-auto"
-                      >
-                        construct
-                      </Button>
-                      {/* <InputNumber
+
+                    <div>
+                      <div className="flex mt-2">
+                        {a.cost &&
+                          a.cost.map((b, i) => {
+                            return (
+                              <CostBlock
+                                key={i}
+                                resourceName={b.resourceName}
+                                amount={b.amount}
+                                id={b.resourceId}
+                                qty={buildQty[a.key]}
+                              />
+                            );
+                          })}
+                      </div>
+                      <div className="flex w-full mt-1 space-x-2">
+                        <Button
+                          onClick={() =>
+                            build({
+                              realmId: props.realm.realmId,
+                              buildingId: a.id,
+                              qty: buildQty[a.key],
+                              costs: {
+                                // Mimic ItemCost interface
+                                amount: 0,
+                                resources: a.cost,
+                              },
+                            })
+                          }
+                          size="xs"
+                          variant="primary"
+                          className="ml-auto"
+                        >
+                          construct
+                        </Button>
+                        {/* <InputNumber
                         value={buildQty[a.key]}
                         inputSize="sm"
                         colorScheme="transparent"
@@ -151,13 +153,13 @@ export const MilitaryBuildings = (props: Prop) => {
                           }
                         }}
                       />{' '} */}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
     </div>
   );
 };

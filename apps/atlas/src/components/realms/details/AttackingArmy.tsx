@@ -72,7 +72,7 @@ export const AttackingArmy = (props: Props) => {
     <div>
       <div className="grid grid-cols-12 gap-6 pt-4">
         <div className="col-span-12">
-          <h3>{getRealmNameById(realm.realmId || 0)} Armies </h3>
+          <h2>{getRealmNameById(realm.realmId || 0)} Armies </h2>
         </div>
         {onlyAttackingArmies.length > 0 && !newArmyId && !selectedArmy && (
           <div className="col-span-12">
@@ -156,7 +156,7 @@ export const AttackingArmy = (props: Props) => {
         props.attackHistory.map((a, index) => {
           return (
             <>
-              <h3 className="mb-4 mt-8">Attack History</h3>
+              <h3 className="mt-8 mb-4">Attack History</h3>
               <HistoryCard
                 key={index}
                 timeStamp={a.timestamp}

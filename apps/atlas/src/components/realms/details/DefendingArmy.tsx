@@ -49,21 +49,23 @@ export const DefendingArmy = (props: Props) => {
 
   return (
     <div className="mt-3">
-      <div className="justify-between col-span-12">
+      <div className="justify-between col-span-12 my-4">
         <h2>Defending Army</h2>
         <p className="text-lg text-gray-700">
           This Army will defend your Realm from threats. Make sure to keep it
           fed.
         </p>
       </div>
-      <ArmyBuilder
-        realm={realm}
-        armyId={0}
-        army={blankArmy}
-        buildings={buildings}
-        availableFood={availableFood}
-        defendHistory={props.defendHistory}
-      />
+      {buildings && (
+        <ArmyBuilder
+          realm={realm}
+          armyId={0}
+          army={blankArmy}
+          buildings={buildings}
+          availableFood={availableFood}
+          defendHistory={props.defendHistory}
+        />
+      )}
     </div>
   );
 };
