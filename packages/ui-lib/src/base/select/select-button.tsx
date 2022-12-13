@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react';
 import clsx from 'clsx';
 import type { ReactElement } from 'react';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 const labelVariants = {
@@ -8,7 +9,7 @@ const labelVariants = {
   placeholder: 'text-gray-400 font-medium',
 };
 
-interface Props {
+export interface SelectButtonProps {
   label: string;
   className?: string;
   variant?: keyof typeof labelVariants;
@@ -22,7 +23,7 @@ export const SelectButton = ({
   variant = 'default',
   icon,
   labelIcon,
-}: Props) => {
+}: SelectButtonProps) => {
   const labelVariant = labelVariants[variant];
 
   return (

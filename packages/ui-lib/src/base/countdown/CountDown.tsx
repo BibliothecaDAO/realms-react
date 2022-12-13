@@ -1,4 +1,4 @@
-import useCountdown from '@bibliotheca-dao/core-lib/hooks/use-countdown';
+import { useCountdown } from '@bibliotheca-dao/core-lib';
 
 interface DateProps {
   date: string;

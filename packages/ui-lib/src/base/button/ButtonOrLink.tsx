@@ -45,6 +45,7 @@ const STYLES = {
     danger:
       'text-red-600 focus-visible:bg-red-100 focus-visible:ring-red-600 active:bg-red-200 hover:bg-red-100',
     link: '!p-0 font-semibold text-green-600 focus-visible:ring-transparent focus:underline hover:underline',
+    dao: 'flex self-center px-4 py-1 transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900',
     outline:
       ' hover:text-stone-200 hover:bg-red-700 active:bg-gray-200 active:text-gray-900 rounded border border-yellow-700 hover:shadow-red-800 shadow-lg hover:text-yellow-100',
     unstyled: '',

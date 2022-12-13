@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import type { ComponentProps, ReactNode } from 'react';
 import { Fragment } from 'react';
 
-interface SelectOptionsProps extends ComponentProps<'ul'> {
+export interface SelectOptionsProps extends ComponentProps<'ul'> {
   children: ReactNode;
 }
 

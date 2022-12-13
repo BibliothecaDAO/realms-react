@@ -1,4 +1,4 @@
-# @your-org/eslint-config-bases
+# @bibliotheca-dao/eslint-config-bases
 
 ## 1.5.0
 
