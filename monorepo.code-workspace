@@ -5,6 +5,14 @@
       "path": "apps/atlas"
     },
     {
+      "name": "dao-site",
+      "path": "apps/bibliotheca-dao"
+    },
+    {
+      "name": "realms-landing",
+      "path": "apps/realms-landing"
+    },
+    {
       "name": "core-lib",
       "path": "packages/core-lib"
     },

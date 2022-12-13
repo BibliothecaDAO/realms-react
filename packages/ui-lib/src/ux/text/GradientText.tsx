@@ -44,7 +44,7 @@ type GradientTextProps = {
    * Background color of the text
    */
   bg?: keyof typeof gradients;
-  // css?: SerializedStyles;
+  css?: string;
 };
 
 /*

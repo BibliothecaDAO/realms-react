@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import React from 'react';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
 
-interface SelectOptionProps extends Omit<ComponentProps<'li'>, 'value'> {
+export interface SelectOptionProps extends Omit<ComponentProps<'li'>, 'value'> {
   value: unknown;
   label: ReactNode;
   selectedIcon: ReactElement;

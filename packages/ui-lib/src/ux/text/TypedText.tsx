@@ -6,7 +6,7 @@ type TypedTextProps = {
    * Animation speed in milliseconds
    */
   delay: number;
-
+  css: string;
   children: string;
 } & HTMLAttributes<HTMLSpanElement>;
 
