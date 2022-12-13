@@ -11,7 +11,6 @@ import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
 import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { SettleRealmsSideBar } from '@/components/realms/SettleRealmsSideBar';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
@@ -28,7 +27,7 @@ type Prop = {
 
 export function MyActions(props: Prop) {
   const { claimAll, userData, burnAll } = useUsersRealms();
-  const { mintRealm } = useSettling();
+  const { mintRealms } = useSettling();
   const { balance } = useUserBalancesContext();
 
   const [selectedId, setSelectedId] = useState(0);
@@ -113,7 +112,7 @@ export function MyActions(props: Prop) {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => mintRealm(selectedId)}
+              onClick={() => mintRealms(selectedId)}
             >
               Mint Realms
             </Button>

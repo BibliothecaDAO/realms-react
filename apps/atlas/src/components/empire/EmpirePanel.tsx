@@ -15,6 +15,7 @@ import { MyGA } from '@/components/empire/MyGA';
 import { MyLoot } from '@/components/empire/MyLoot';
 import { MyRealms } from '@/components/empire/MyRealms';
 import { AccountOverview } from '@/components/empire/Overview';
+import { MintSettleRealmsSideBar } from '@/components/realms/MintSettleRealmsSideBar';
 import {
   getAccountHex,
   hasSettledRealms,
@@ -23,7 +24,6 @@ import { useGetRealmsQuery } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { SettleRealmsSideBar } from '../realms/SettleRealmsSideBar';
 import { BasePanel } from '../ui/panel/BasePanel';
 import { MyActions } from './MyActions';
 
@@ -117,6 +117,10 @@ export function EmpirePanel() {
   );
   const { claimAll, userData, userRealms } = useUsersRealms();
 
+  const unsettledRealms = userRealms?.realms.filter(
+    (r) => r.ownerL2 == getAccountHex(address || '0x0')
+  );
+
   const quickActions = useMemo(
     () => [
       {
@@ -124,7 +128,16 @@ export function EmpirePanel() {
         icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
         action: () => claimAll(),
-        enabled: !hasSettledRealms(userRealms?.realms, address),
+        enabled: !userRealms?.realms.length,
+        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
+      },
+      {
+        name: 'Settle Realms (' + unsettledRealms?.length + ')',
+        icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
+        details: <span className="flex"></span>,
+        action: () => onSettleRealmsClick(),
+        enabled:
+          unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
       },
       {
         name: 'Harvest Resources',
@@ -142,7 +155,7 @@ export function EmpirePanel() {
       //   },
       // },
     ],
-    [userData]
+    [userData, userRealms]
   );
 
   const pressedTab = (index) => {
@@ -161,7 +174,7 @@ export function EmpirePanel() {
                   {action.enabled && (
                     <Button
                       key={action.name}
-                      className="flex-col items-start rounded-xl whitespace-nowrap"
+                      className={`flex-col items-start rounded-xl whitespace-nowrap ${action.buttonStyles}`}
                       variant="outline"
                       onClick={() => action.action()}
                     >
@@ -197,7 +210,7 @@ export function EmpirePanel() {
                 </Tabs.Panels>
               </div>
             </Tabs>
-            <SettleRealmsSideBar
+            <MintSettleRealmsSideBar
               isOpen={isSettleRealmsSideBarOpen}
               onClose={onSettleRealmsClick}
             />

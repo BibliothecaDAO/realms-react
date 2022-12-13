@@ -24,7 +24,7 @@ type Settling = {
   approveRealms: () => void;
   settleRealm: (tokenId: number) => void;
   unsettleRealm: (tokenId: number) => void;
-  mintRealm: (tokenId: number) => void;
+  mintRealms: (quantity: number) => void;
 };
 
 export const Entrypoints = {
@@ -134,7 +134,7 @@ const useSettling = (): Settling => {
         })
       );
     },
-    mintRealm: (quantity: number) => {
+    mintRealms: (quantity: number) => {
       txQueue.add(
         createCall.approve({
           quantity: (quantity * 10000000000000000).toString(),
