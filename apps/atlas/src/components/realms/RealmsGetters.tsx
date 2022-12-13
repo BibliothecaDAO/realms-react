@@ -523,3 +523,12 @@ export const getTimeUntilNextTick = (realm: RealmFragmentFragment) => {
 export const resourcesToString = (a) => {
   return resources.find((r) => r.trait === a)?.id ?? 0;
 };
+
+export const hasSettledRealms = (userRealms, address) => {
+  return (
+    userRealms &&
+    userRealms.some(
+      (r) => r.settledOwner === getAccountHex(address || '0x0') ?? 0
+    )
+  );
+};
