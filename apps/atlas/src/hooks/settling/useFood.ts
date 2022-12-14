@@ -194,25 +194,31 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     const getHarvestsAvailable = (food?: Food) => {
       const difference = sinceUpdate(food);
 
-      if (difference > HARVEST_LENGTH * 1000 * BASE_HARVESTS) {
+      const total_harvests_since_creation =
+        difference / (HARVEST_LENGTH * 1000);
+
+      const total_harvested = BASE_HARVESTS - total_harvests_since_creation;
+
+      const to_harvest = harvests(food) - total_harvested;
+
+      if (to_harvest < 1 || to_harvest > 10000) {
         return [0, 0];
       }
 
-      const total_harvests_available = difference / (HARVEST_LENGTH * 1000);
-
-      console.log(realm.realmId, total_harvests_available);
       // remaining harvests
       const remaining_harvests = difference % (HARVEST_LENGTH * 1000);
 
-      const possible_harvest =
-        total_harvests_available >= MAX_HARVESTS ? 6 : total_harvests_available;
+      const possible_harvest = to_harvest >= MAX_HARVESTS ? 6 : to_harvest;
+
+      console.log(realm.realmId, 'total_harvests_available', to_harvest);
+      console.log(realm.realmId, 'remaining_harvests', remaining_harvests);
+      console.log(realm.realmId, 'possible_harvest', possible_harvest);
 
       return [Math.floor(possible_harvest), remaining_harvests];
     };
 
     const getTimeTillHarvest = (food?: Food) => {
       const difference = sinceUpdate(food);
-
       return HARVEST_LENGTH * 1000 - difference;
     };
 

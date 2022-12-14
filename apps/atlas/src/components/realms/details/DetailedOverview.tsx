@@ -27,6 +27,8 @@ import {
   getHappinessHasFood,
   getFoodIcon,
   resourcePillaged,
+  getNumberOfTicks,
+  getTimeSinceLastTick,
 } from '@/components/realms/RealmsGetters';
 import { findResourceById } from '@/constants/resources';
 
@@ -65,6 +67,96 @@ export function DetailedOverview(
   // vault accrued
   const cachedVaultDaysAccrued = getDays(realm?.lastVaultTime);
 
+  const dataCards = [
+    {
+      title: 'Since Last update',
+      value: <span> {getTimeSinceLastTick(realm)} hrs</span>,
+      subTitle: (
+        <span>
+          ({getNumberOfTicks(realm)} cycles ticked) | Every 12hrs your Realm
+          undergoes a cycle. If you do not manage your Realm correctly (keep
+          happiness), your Armies will desert.
+        </span>
+      ),
+      icon: '/icons/loot/loot.svg',
+      img: '/realm-buildings/mj_castle.png',
+    },
+    {
+      title: 'Resources',
+      value: <span>{maxClaimableResources(cachedDaysAccrued)}</span>,
+      subTitle: (
+        <span>{daysAccrued(cachedDaysAccrued)}/3 max days accrued</span>
+      ),
+      icon: '/icons/loot/loot.svg',
+      img: '/resources/1.jpg',
+    },
+    {
+      title: 'Vault',
+      value: <span>{vaultResources(cachedVaultDaysAccrued)}</span>,
+      subTitle: <span>{cachedVaultDaysAccrued}/7 days until claimable</span>,
+      icon: '/icons/loot/loot.svg',
+      img: '/realm-buildings/mj_vault.png',
+    },
+    {
+      title: 'Population',
+      value: getPopulation(realm),
+      subTitle: (
+        <span>
+          {' '}
+          Armies: {getTroopPopulation(realm)} | Buildings:{' '}
+          {getBuildingPopulation(realm)}
+        </span>
+      ),
+      icon: '/icons/loot/loot.svg',
+      img: '/realm-buildings/mj_fishing_village.png',
+    },
+    {
+      title: 'Happiness',
+      value: (
+        <span>
+          {getHappiness({ realm: realm, food: availableFood })}{' '}
+          <span className="ml-2">
+            {getHappinessIcon({
+              realm: realm,
+              food: availableFood,
+            })}
+          </span>
+        </span>
+      ),
+      subTitle: (
+        <span>
+          Relic: -{getHappinessHasOwnRelic({ realm: realm })} | Food: -
+          {getHappinessHasFood({ food: props?.availableFood })} | Defending
+          Army: -{getHappinessHasDefendingArmy({ realm: realm })}
+        </span>
+      ),
+      icon: '/icons/loot/loot.svg',
+      img: '/realm-buildings/mj_barracks.png',
+    },
+    {
+      title: 'Food in Store',
+      value: (
+        <span>
+          {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
+        </span>
+      ),
+      subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
+      icon: '/icons/loot/loot.svg',
+      img: '/realm-buildings/mj_storehouse.png',
+    },
+    {
+      title: 'Building Utilisation (sqm)',
+      value: (
+        <span>
+          {buildingUtilisation?.currentSqm} / {buildingUtilisation?.maxSqm}{' '}
+        </span>
+      ),
+      subTitle: <span>Total Space used</span>,
+      icon: '/icons/loot/loot.svg',
+      img: '/vizirs/mj_builder.png',
+    },
+  ];
+
   return (
     <>
       <div className="flex">
@@ -74,7 +166,7 @@ export function DetailedOverview(
               <img
                 src={'/vizirs/mj_military_vizir.png'}
                 alt="map"
-                className="w-56 h-56 mr-10 rounded-full shadow-lg shadow-purple-800"
+                className="w-56 h-56 mr-10 border-4 rounded-full border-yellow-800/40"
               />
             </div>
 
@@ -111,94 +203,50 @@ export function DetailedOverview(
             })}
           </div>
         )}
-        <div className="w-1/3 h-full">
+        {/* <div className="w-1/3">
           <RealmImage id={realm.realmId} />
-        </div>
+        </div> */}
       </div>
-
-      <div className="flex flex-wrap justify-between">
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">Population</h5>
-          <h3>{getPopulation(realm)} </h3>
-          <span className="text-sm text-gray-700">
-            {' '}
-            Armies: {getTroopPopulation(realm)} | Buildings:{' '}
-            {getBuildingPopulation(realm)}
-          </span>
-        </div>
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">Happiness</h5>
-          <h3>
-            {getHappiness({ realm: realm, food: availableFood })}{' '}
-            <span className="ml-2">
-              {getHappinessIcon({
-                realm: realm,
-                food: availableFood,
-              })}
-            </span>
-          </h3>
-          <span className="text-sm text-gray-700">
-            Relic: -{getHappinessHasOwnRelic({ realm: realm })} | Food: -
-            {getHappinessHasFood({ food: props?.availableFood })} | Defending
-            Army: -{getHappinessHasDefendingArmy({ realm: realm })}
-          </span>
-        </div>
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">Food in Store</h5>
-          <h3>
-            {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
-          </h3>
-          <span className="text-sm text-gray-700">
-            Consuming {getPopulation(realm)} food per second
-          </span>
-        </div>
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">
-            Building Utilisation (sqm)
-          </h5>
-          <h3>
-            {buildingUtilisation?.currentSqm} / {buildingUtilisation?.maxSqm}{' '}
-          </h3>
-          <span className="text-sm text-gray-700"> Total Space used</span>
-        </div>
-
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">Resources</h5>
-          <h3>{maxClaimableResources(cachedDaysAccrued)}</h3>
-          <span className="text-sm text-gray-700">
-            {' '}
-            {daysAccrued(cachedDaysAccrued)}/3 max days accrued
-          </span>
-        </div>
-        <div className="p-2">
-          <h5 className="italic text-yellow-400 opacity-80">Vault</h5>
-          <h2>{vaultResources(cachedVaultDaysAccrued)} </h2>
-          <span className="text-sm text-gray-700">
-            {' '}
-            {cachedVaultDaysAccrued}/7 days until claimable
-          </span>
-        </div>
-      </div>
-      <div className="flex flex-col mt-8">
-        <h3 className="text-2xl font-bold">Resources</h3>
+      <div className="flex flex-col">
         <div className="flex flex-wrap mt-4">
           {realm.resources?.map((re, index) => (
             <div key={index} className="flex flex-col justify-center p-2">
               <Image
                 src={'/resources/' + re.resourceId + '.jpg'}
                 alt="map"
-                width={100}
-                height={100}
-                className="rounded"
+                width={150}
+                height={150}
+                className="border-4 rounded-full rounded-2xl border-yellow-800/40"
               />
 
-              <span className="self-center mt-2">
+              <span className="self-center mt-2 text-3xl">
                 {findResourceById(re.resourceId)?.trait}
               </span>
             </div>
           ))}
         </div>
       </div>
+      <div className="flex flex-wrap w-full">
+        {dataCards.map((card, i) => {
+          return (
+            <div key={i} className="w-1/2 ">
+              <div className="flex m-2 border-4 rounded-2xl border-yellow-800/40">
+                <img
+                  className="object-cover w-24 rounded-l-2xl"
+                  src={card.img}
+                  alt=""
+                />
+                <div className="p-6">
+                  <h4 className="text-gray-600">{card.title}</h4>
+                  <div className="my-3 text-5xl">{card.value} </div>
+                  <span className="text-gray-700 text-md">{card.subTitle}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       {props.defendHistory?.length && (
         <div className="flex flex-col mt-8">
           <h3 className="flex">
@@ -206,7 +254,7 @@ export function DetailedOverview(
             Last Defended Against
           </h3>
           <p>
-            <span className="font-lords uppercase">
+            <span className="uppercase font-lords">
               {props.defendHistory[0].data.attackRealmName}
             </span>
             <span className="text-gray-700">

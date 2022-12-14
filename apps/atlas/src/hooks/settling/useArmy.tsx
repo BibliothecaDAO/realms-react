@@ -165,6 +165,11 @@ export const useArmy = () => {
       archeryDefence: calculateDefence('archeryDefence', army),
       magicDefence: calculateDefence('magicDefence', army),
       infantryDefence: calculateDefence('infantryDefence', army),
+      totalDefence:
+        calculateDefence('cavalryDefence', army) +
+        calculateDefence('archeryDefence', army) +
+        calculateDefence('magicDefence', army) +
+        calculateDefence('infantryDefence', army),
     };
   };
 

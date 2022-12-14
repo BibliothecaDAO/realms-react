@@ -41,7 +41,7 @@ export const Battalion: React.FC<
   return (
     <div
       key={props.battalionId}
-      className={`relative flex-col group p-3 rounded ${data?.color} shadow-red-900/30 shadow-xl border-yellow-900 border`}
+      className={`relative flex-col group p-3 rounded ${data?.color} shadow-red-900/30 shadow-xl border-yellow-800/40 border-4`}
     >
       <div className="flex justify-between">
         <Image
