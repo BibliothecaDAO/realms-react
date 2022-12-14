@@ -158,7 +158,7 @@ export const CommandListItem = (props: CommandListItem) => {
         <div>
           <h3>{title}</h3>
 
-          <p className="text-gray-700">{description}</p>
+          <div className="text-gray-700">{description}</div>
         </div>
       </div>
       {/* <span>{props.call.lastUpdatedAt}</span> */}

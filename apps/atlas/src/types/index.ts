@@ -236,6 +236,7 @@ export interface ArmyStatistics {
   archeryDefence: number;
   magicDefence: number;
   infantryDefence: number;
+  totalDefence: number;
 }
 export interface ArmyInterface extends Army {
   statistics: ArmyStatistics;

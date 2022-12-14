@@ -141,3 +141,9 @@ html {
 div#deckgl-wrapper {
   overflow: hidden;
 }
+
+.background-paper {
+  border-style: solid;
+  border-image: url('https://thumbs.dreamstime.com/b/closeup-old-paper-texture-age-marks-29969606.jpg')
+    12 / 3px 3px 3px 3px / 0 repeat repeat;
+}
