@@ -17,8 +17,9 @@ import {
   SECONDS_PER_KM,
 } from '@/constants/buildings';
 import { findResourceById, resources } from '@/constants/resources';
-import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
+import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
+import { useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type { BuildingDetail } from '@/types/index';
 
@@ -302,7 +303,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   const { checkUserHasAvailableResources } = useGameConstants();
 
   return (
-    <div className="px-1 font-extrabold text-center font-display">
+    <div className="p-1 text-center border rounded border-white/30">
       <ResourceIcon withTooltip size="xs" resource={resourceName} />
       <span
         className={
@@ -377,7 +378,7 @@ export const isFavourite = (
 const DAY_MS = DAY * 1000;
 
 export const getDays = (time) => {
-  return Math.trunc((Date.now() - time) / DAY_MS);
+  return Math.floor((Date.now() - time) / DAY_MS);
 };
 
 export const getRemainingDays = (time) => {
@@ -522,6 +523,36 @@ export const getTimeUntilNextTick = (realm: RealmFragmentFragment) => {
 
 export const resourcesToString = (a) => {
   return resources.find((r) => r.trait === a)?.id ?? 0;
+};
+
+// pass any Army get total defence
+export const GetArmyStrength = (
+  realm: RealmFragmentFragment,
+  armyId: number
+) => {
+  const { getArmyStats } = useArmy();
+  const army = realm.ownArmies.find((a) => a.armyId === armyId);
+
+  if (army) {
+    const armyStats = getArmyStats(army);
+    return armyStrength(armyStats.totalDefence);
+  }
+  return 'No Army';
+};
+
+// pass any Statistic and give a context of that. Eg: Pass the Magic Defence and get a string of 'Strong' or 'Weak'
+export const armyStrength = (armyStrength: number) => {
+  if (armyStrength > 1000) {
+    return 'V.Strong';
+  } else if (armyStrength > 750) {
+    return 'Strong';
+  } else if (armyStrength > 250) {
+    return 'Moderate';
+  } else if (armyStrength > 100) {
+    return 'Weak';
+  } else {
+    return 'V.Weak';
+  }
 };
 
 export const hasSettledRealms = (userRealms, address) => {

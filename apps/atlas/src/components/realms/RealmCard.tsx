@@ -8,7 +8,7 @@ import {
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-
+import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import { Disclosure } from '@headlessui/react';
 import { HeartIcon, ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
@@ -38,6 +38,7 @@ import {
   getTimeSinceLastTick,
   getTimeUntilNextTick,
   getDays,
+  GetArmyStrength,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { HarvestType, RealmBuildingId } from '@/constants/buildings';
@@ -62,6 +63,7 @@ import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { RealmsCardProps } from '@/types/index';
 import { shortenAddressWidth } from '@/util/formatters';
+import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {
@@ -169,6 +171,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const userArmiesAtLocation = userData.attackingArmies?.filter(
       (army) => army.destinationRealmId == realm.realmId
     );
+    const [isDetails, setDetails] = useState(false);
 
     const [isRaiding, setIsRaiding] = useState(false);
     const [isTravel, setIsTravel] = useState(false);
@@ -186,6 +189,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       });
 
     const isOwner = useIsOwner(realm?.settledOwner);
+
+    console.log(realm);
 
     return (
       <Card ref={ref}>
@@ -233,14 +238,26 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </span>
             </span>
           </div>
-          <div className="flex justify-end w-full mb-1 ml-auto text-gray-700">
-            <span className="">{realm.realmId} </span>
-            {' | '}
-            {starknetId ?? starknetId}
-            {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
-            {!starknetId &&
-              isYourRealm(realm, l1Address, address || '') &&
-              isYourRealm(realm, l1Address, address || '')}
+          <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
+            <div className="flex self-end">
+              <span className="">{realm.realmId} </span>
+              {' | '}
+              <span>
+                {' '}
+                {starknetId ?? starknetId}
+                {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
+                {!starknetId &&
+                  isYourRealm(realm, l1Address, address || '') &&
+                  isYourRealm(realm, l1Address, address || '')}
+              </span>
+            </div>
+
+            <div className="flex ">
+              <Shield className={'w-7 fill-gray-500 mr-2'} />
+              <span className="w-full break-normal">
+                {GetArmyStrength(realm, 0)}
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex w-full mt-3">
@@ -265,15 +282,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   {isOwner && (
                     <>
                       <Button
-                        onClick={() => {
-                          openModal('realm-build', {
-                            realm: realm,
-                            buildings: buildings,
-                            realmFoodDetails: realmFoodDetails,
-                            availableFood: availableFood,
-                            buildingUtilisation: buildingUtilisation,
-                          });
-                        }}
+                        onClick={() => setDetails(!isDetails)}
                         variant="outline"
                         size="xs"
                       >
@@ -338,6 +347,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 </>
               )}
 
+              {realm && !isOwner && IsSettled(realm) && (
+                <Button
+                  onClick={() => {
+                    userArmiesAtLocation && userArmiesAtLocation.length
+                      ? setIsRaiding(true)
+                      : setIsTravel(true);
+                  }}
+                  size="sm"
+                  disabled={getIsRaidable(realm)}
+                  variant={'primary'}
+                >
+                  {realm && getRealmCombatStatus(realm)}
+                </Button>
+              )}
+
               <Button
                 onClick={() => {
                   navigateToAsset(realm.realmId, 'realm');
@@ -354,6 +378,12 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 ({getNumberOfTicks(realm)} ticks) |{' '}
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
+              <div className="text-gray-700 ">
+                <span>Days: {getDays(realm?.lastClaimTime)}</span>
+                {' | '}
+                <span>Vault: {getDays(realm?.lastVaultTime)}</span>
+              </div>
+
               <div className="flex">
                 <span
                   className={`self-center text-xs  uppercase ${
@@ -371,26 +401,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 ''
               )}
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap justify-between w-full">
-          <div className="flex">
-            {realm && !isOwner && IsSettled(realm) && (
-              <Button
-                onClick={() => {
-                  userArmiesAtLocation && userArmiesAtLocation.length
-                    ? setIsRaiding(true)
-                    : setIsTravel(true);
-                }}
-                size="sm"
-                className="w-full"
-                disabled={getIsRaidable(realm)}
-                variant={'primary'}
-              >
-                {realm && getRealmCombatStatus(realm)}
-              </Button>
-            )}
           </div>
         </div>
 
@@ -414,6 +424,18 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             </>
           )}
         </AtlasSidebar>
+
+        {isDetails && (
+          <RealmsDetailSideBar
+            isOpen={isDetails}
+            onClose={() => setDetails(false)}
+            realm={realm}
+            buildings={buildings}
+            realmFoodDetails={realmFoodDetails}
+            availableFood={availableFood}
+            buildingUtilisation={buildingUtilisation}
+          />
+        )}
 
         {/* <Disclosure>
               {({ open }) => (

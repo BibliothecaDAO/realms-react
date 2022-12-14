@@ -8,13 +8,17 @@ import {
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
-import { useMemo, useState } from 'react';
+import { BigNumber } from 'ethers';
+import { useEffect, useMemo, useState } from 'react';
 import {
   getRealmNameById,
   getTravelTime,
 } from '@/components/realms/RealmsGetters';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import { Entrypoints } from '@/hooks/settling/useTravel';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { ArmyBattalions } from './ArmyBattalions';
@@ -86,6 +90,25 @@ export const ArmyCard: React.FC<Prop> = (props) => {
     setSelectedTab(index as number);
   };
 
+  const txQueue = useCommandList();
+
+  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
+
+  useEffect(() => {
+    setEnqueuedHarvestTx(
+      !!txQueue.transactions.find(
+        (t: any) =>
+          t.contractAddress == ModuleAddr.Travel &&
+          t.entrypoint == Entrypoints.travel &&
+          t.calldata &&
+          BigNumber.from(t.calldata[1] as string).eq(
+            BigNumber.from(army.realmId)
+          ) &&
+          t.calldata[3] == army.armyId
+      )
+    );
+  }, [txQueue.transactions]);
+
   return (
     <div
       key={army.armyId}
@@ -133,10 +156,17 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                   <Button
                     variant="outline"
                     size="sm"
+                    disabled={enqueuedHarvestTx}
                     onClick={() => props.onTravel && props.onTravel()}
                   >
-                    Travel here {'->'}{' '}
-                    {(travelInformation.time / 60 / 60).toFixed(0)} hrs
+                    {enqueuedHarvestTx ? (
+                      'traveling'
+                    ) : (
+                      <span>
+                        Travel here {'->'}{' '}
+                        {(travelInformation.time / 60 / 60).toFixed(0)} hrs
+                      </span>
+                    )}
                   </Button>
                 )}
               </div>

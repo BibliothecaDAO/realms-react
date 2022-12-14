@@ -57,15 +57,15 @@ export const Modals = () => {
   return (
     <animated.div
       className={clsx(
-        'absolute top-0 z-50 w-full h-full pb-20 bg-center bg-cover backdrop-filter backdrop-blur-md  transition-transform duration-300 ease-in-out',
+        'absolute top-0 z-50 w-full h-full bg-center bg-cover backdrop-filter backdrop-blur-md  transition-transform duration-300 ease-in-out',
         isModalOpened ? ' translate-y-0' : '-translate-y-full'
       )}
     >
       <div
         className={`h-full overflow-y-auto left-0 w-full mx-auto relative top-0 rounded bg-gray-1000 shadow-red-800/30 shadow-2xl border border-gray-700`}
       >
-        <div className={`pt-4 px-4`}>
-          <div className="flex justify-end">
+        <div className={`h-full`}>
+          <div className="absolute z-10 flex justify-end top-10 right-10">
             <div className="flex justify-end mb-2 mr-1">
               <Button
                 size="xs"
