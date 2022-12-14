@@ -127,7 +127,7 @@ export function EmpirePanel() {
         name: 'Get Started',
         icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => claimAll(),
+        action: () => onSettleRealmsClick(),
         enabled: !userRealms?.realms.length,
         buttonStyles: 'border-emerald-500 bg-emerald-100/50',
       },

@@ -191,7 +191,7 @@ export const SettleRealmsSideBarPanel = ({
             {!showMint && (
               <Button
                 className="mt-8"
-                variant="outline"
+                variant="link"
                 onClick={() => setShowMint(true)}
               >
                 Mint Realms
