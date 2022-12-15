@@ -14,21 +14,26 @@ type Prop = {
 export const ArmyStatistics: React.FC<Prop> = (props) => {
   const army = props.army;
   const { battalions } = useArmy();
+
+  const formattedArmy = (army: ArmyAndOrder) => {
+    const newArray: any[] = [];
+    battalions?.forEach((battalion, index) => {
+      if (army && army[nameArray[index] + 'Qty'] > 0) {
+        newArray.push({
+          ...battalion,
+          quantity: army ? army[nameArray[index] + 'Qty'] : '',
+          health: army ? army[nameArray[index] + 'Health'] : '',
+        });
+      }
+    });
+    return newArray;
+  };
+
   return (
     <div>
       <div className="grid grid-cols-8 gap-2 p-2 ">
-        {battalions?.map((battalion, index) => {
-          return (
-            <span key={index}>
-              {army && army[nameArray[index] + 'Qty'] > 0 && (
-                <BattalionWithImage
-                  {...battalion}
-                  quantity={army ? army[nameArray[index] + 'Qty'] : ''}
-                  health={army ? army[nameArray[index] + 'Health'] : ''}
-                />
-              )}
-            </span>
-          );
+        {formattedArmy(army).map((battalion, index) => {
+          return <BattalionWithImage key={index} {...battalion} />;
         })}
       </div>
       <ArmyStatisticsTable army={army} />

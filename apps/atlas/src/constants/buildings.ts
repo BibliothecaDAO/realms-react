@@ -144,7 +144,7 @@ export const WORK_HUT_OUTPUT = 50;
 
 export const PILLAGE_AMOUNT = 25;
 
-export const STORE_HOUSE_SIZE = 1000;
+export const STORE_HOUSE_SIZE = 650000;
 
 export const BASE_HARVESTS = 24;
 export const MAX_HARVESTS = BASE_HARVESTS / 4;
@@ -152,7 +152,7 @@ export const HARVEST_LENGTH = DAY / 10;
 
 export const FARM_LENGTH = (DAY / 3) * BASE_HARVESTS;
 export const FISHING_TRAPS = (DAY / 3) * BASE_HARVESTS;
-export const BASE_FOOD_PRODUCTION = 12000;
+export const BASE_FOOD_PRODUCTION = 14000;
 
 export const FISH_ID = 10001;
 export const WHEAT_ID = 10000;

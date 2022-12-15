@@ -19,7 +19,7 @@ import {
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
-import { useArmy } from '@/hooks/settling/useArmy';
+import { ArmyAndOrder, useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type { BuildingDetail } from '@/types/index';
 
