@@ -168,6 +168,8 @@ export const CommandListItem = (props: CommandListItem) => {
 export const CommandList: React.FC<Prop> = (props) => {
   const txQueue = useCommandList();
   const { play } = useUiSounds(soundSelector.sign);
+  const { checkUserHasCheckoutResources } = useGameConstants();
+  const [hasDeficit, setHasDeficit] = useState(false);
 
   const [resourceCostsById, setResourceCostsById] = useState<
     Record<string, { resourceName: string; amount: number }>
@@ -182,12 +184,24 @@ export const CommandList: React.FC<Prop> = (props) => {
 
     const costsByResourceId = {};
 
+    setHasDeficit(false);
+
     allResourceCosts.forEach((c) => {
+      const amount = (costsByResourceId[c.resourceId]?.amount ?? 0) + c.amount;
       costsByResourceId[c.resourceId] = {
         ...costsByResourceId[c.resourceId],
         resourceName: c.resourceName,
-        amount: (costsByResourceId[c.resourceId]?.amount ?? 0) + c.amount,
+        amount,
       };
+
+      if (
+        !checkUserHasCheckoutResources({
+          cost: amount,
+          id: c.resourceId,
+        })
+      ) {
+        setHasDeficit(true);
+      }
     });
 
     setResourceCostsById(costsByResourceId);
@@ -210,7 +224,6 @@ export const CommandList: React.FC<Prop> = (props) => {
       });
   };
 
-  const { checkUserHasCheckoutResources } = useGameConstants();
   const { balance } = useUserBalancesContext();
   const { batchAddResources } = useBankContext();
   const { toggleTrade } = useUIContext();
@@ -224,7 +237,7 @@ export const CommandList: React.FC<Prop> = (props) => {
           </p>
           <div className="flex justify-between mb-6 space-x-2">
             <Button
-              disabled={txQueue.transactions.length == 0}
+              disabled={txQueue.transactions.length == 0 || hasDeficit}
               className="flex-1"
               size="md"
               variant="primary"

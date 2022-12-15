@@ -11,10 +11,12 @@ export type UIContextType = {
   toggleTrade: () => void;
   toggleOnboarding: () => void;
   toggleTransactionCart: () => void;
+  toggleChatSidebar: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
   transactionCart: boolean;
+  chatSidebar: boolean;
   onboarding: boolean;
 };
 
@@ -27,6 +29,7 @@ export function useUi() {
   const [empireSidebar, setEmpireSidebar] = useState<boolean>(false);
   const [tradeSidebar, setTradeSidebar] = useState<boolean>(false);
   const [transactionCart, setTransactionCart] = useState<boolean>(false);
+  const [chatSidebar, setChatSidebar] = useState<boolean>(false);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -62,6 +65,10 @@ export function useUi() {
     setTransactionCart(!transactionCart);
   };
 
+  const toggleChatSidebar = () => {
+    setChatSidebar(!chatSidebar);
+  };
+
   const toggleOnboarding = () => {
     setOnboarding(!onboarding);
   };
@@ -84,6 +91,8 @@ export function useUi() {
     toggleTrade,
     transactionCart,
     toggleTransactionCart,
+    chatSidebar,
+    toggleChatSidebar,
     toggleOnboarding,
     onboarding,
     closeAll,

@@ -4,14 +4,9 @@ import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
 
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
-import { Popover, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Map from 'react-map-gl';
-
-const ChatComponent = dynamic(() => import('@/components/ui/Chat'), {
-  ssr: false,
-});
 
 import { useTravelTripsLayer } from '@/components/map/useTravelTripLayers';
 import { resourcesToString } from '@/components/realms/RealmsGetters';
@@ -20,6 +15,8 @@ import { Annotation } from '@/components/ui/Icons';
 
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useRealmContext } from '@/context/RealmContext';
+import { useUIContext } from '@/context/UIContext';
+
 import crypts from '@/geodata/crypts.json';
 /* import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json'; */
@@ -47,6 +44,8 @@ export function MapModule() {
     state,
     actions: { updateSearchIdFilter },
   } = useRealmContext();
+
+  const { toggleChatSidebar } = useUIContext();
 
   const selectedId = selectedAsset?.id ?? '0';
 
@@ -167,33 +166,10 @@ export function MapModule() {
           // renderWorldCopies={false}
         />
       </DeckGL>
-      <Popover className="absolute z-30 bottom-10 right-20">
-        <Popover.Button as="div">
-          <Button
-            size="lg"
-            className="absolute bottom-0 w-12 h-12 p-0 rounded-full"
-            variant="outline"
-          >
-            <Annotation className="inline-block w-6 h-6 mr-1" />
-          </Button>
-        </Popover.Button>
-
-        <Transition
-          enter="transition duration-350 ease-out"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-350 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
-        >
-          <Popover.Panel
-            className="absolute w-full md:w-96 -left-96 bottom-16"
-            static
-          >
-            <ChatComponent channelName="desiege-chat" />
-          </Popover.Panel>
-        </Transition>
-      </Popover>
+      <Annotation
+        onClick={toggleChatSidebar}
+        className="absolute inline-block w-10 h-10 p-0 cursor-pointer bottom-6 right-8 fill-black"
+      />
     </>
   );
 }

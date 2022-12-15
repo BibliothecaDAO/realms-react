@@ -6,12 +6,13 @@ import {
   useTransactionReceipt,
 } from '@starknet-react/core';
 import type { ReactElement } from 'react';
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Status, TransactionStatus } from 'starknet';
 import { twMerge } from 'tailwind-merge';
 import { ExternalLink } from '@/components/ui/Icons';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
+import { storage } from '@/util/localStorage';
 
 export interface Metadata {
   description: string;
@@ -136,13 +137,32 @@ export const TxCartItem = (props: TxCartItem) => {
   );
 };
 
+const TX_HISTORY_STORAGE_KEY = 'txHistory';
+
+const TX_HISTORY_LENGTH = 50;
+
 export const TransactionCartTable = () => {
   const { hashes, transactions } = useTransactionManager<Metadata>();
   const transactionStatus = useTransactions({ hashes });
+  const [txHistory, setTxHistory] = useState<any>([]);
+  const historyStorage = storage<any>(TX_HISTORY_STORAGE_KEY, []);
+
+  useEffect(() => {
+    const storageTransactions = historyStorage.get();
+    const lastTx = transactions.pop();
+    if (lastTx) {
+      storageTransactions.push(lastTx);
+      historyStorage.set(storageTransactions);
+    }
+    if (storageTransactions.length > TX_HISTORY_LENGTH) {
+      storageTransactions.shift();
+    }
+    setTxHistory(storageTransactions);
+  }, [transactions]);
 
   return (
     <div className="flex flex-col-reverse flex-wrap w-full">
-      {transactions.map((a, index) => {
+      {txHistory.map((a, index) => {
         return <TxCartItem index={index} key={index} transaction={a} />;
       })}
     </div>
