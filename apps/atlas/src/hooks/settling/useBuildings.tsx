@@ -80,6 +80,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
   const txQueue = useCommandList();
   const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
   const { play: buildBarracks } = useUiSounds(soundSelector.buildBarracks);
+  const { play: buildCastle } = useUiSounds(soundSelector.buildCastle);
   const { play: buildArcherTower } = useUiSounds(
     soundSelector.buildArcherTower
   );
@@ -99,6 +100,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         break;
       case RealmBuildingId.ArcherTower:
         buildArcherTower();
+        break;
+      case RealmBuildingId.Castle:
+        buildCastle();
         break;
       default:
         buildMilitary();
