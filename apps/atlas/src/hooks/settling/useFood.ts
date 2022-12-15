@@ -210,10 +210,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
       const possible_harvest = to_harvest >= MAX_HARVESTS ? 6 : to_harvest;
 
-      console.log(realm.realmId, 'total_harvests_available', to_harvest);
-      console.log(realm.realmId, 'remaining_harvests', remaining_harvests);
-      console.log(realm.realmId, 'possible_harvest', possible_harvest);
-
       return [Math.floor(possible_harvest), remaining_harvests];
     };
 
@@ -230,13 +226,16 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
     };
 
     setRealmFoodDetails({
-      farmsToHarvest: getHarvestsAvailable(farm)[0],
+      farmsToHarvest: harvests(farm) > 0 ? getHarvestsAvailable(farm)[0] : 0,
       farmHarvestsLeft: harvests(farm),
       farmTimeTillHarvest: getTimeTillHarvest(farm),
       farmsDecayed: getHarvestsAvailable(farm)[1],
       farmsBuilt: harvests(farm) > 0 ? qty(farm) : 0,
       // villages
-      villagesToHarvest: getHarvestsAvailable(fishingVillage)[0],
+      villagesToHarvest:
+        harvests(fishingVillage) > 0
+          ? getHarvestsAvailable(fishingVillage)[0]
+          : 0,
       villagesHarvestsLeft: harvests(fishingVillage),
       villagesTimeTillHarvest: getTimeTillHarvest(fishingVillage),
       villagesDecayed: getHarvestsAvailable(fishingVillage)[1],
