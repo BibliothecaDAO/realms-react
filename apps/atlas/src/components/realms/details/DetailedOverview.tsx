@@ -157,10 +157,13 @@ export function DetailedOverview(
     },
   ];
 
+  const realmHeldByRealm =
+    realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
+
   return (
     <>
       <div className="flex">
-        {hasOwnRelic(realm) ? (
+        {hasOwnRelic(realm) || realm?.realmId === realmHeldByRealm ? (
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img
