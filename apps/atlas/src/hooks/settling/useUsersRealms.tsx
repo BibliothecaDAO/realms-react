@@ -75,6 +75,7 @@ const useUsersRealms = () => {
       return userRealmsData.realms
         .filter((a) => RealmClaimable(a))
         .filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
+        .length
         ? true
         : false;
     };

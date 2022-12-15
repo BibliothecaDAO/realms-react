@@ -9,6 +9,7 @@ import type { Contract } from 'starknet';
 import { toBN, toFelt } from 'starknet/dist/utils/number';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import { useBankContext } from '@/context/BankContext';
+import { useCommandList } from '@/context/CommandListContext';
 import {
   useLordsContract,
   useBuildingContract,
@@ -137,6 +138,26 @@ export const useApproveResourcesForExchange = () => {
   };
 
   return { isApproved: isLordsApproved, approveResources };
+};
+// TODO should this be refactored to context so fetch not repeated
+export const useDumbGameApprovals = () => {
+  const { contract: resourcesContract } = useResources1155Contract();
+  const { address } = useAccount();
+
+  const [isGameApproved, setIsGameApproved] = useState<boolean>();
+  const { data: realmsApprovalData } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'isApprovedForAll',
+    args: [toBN(address as string).toString(), toBN(CM.Building).toString()],
+  });
+
+  useEffect(() => {
+    if (realmsApprovalData !== undefined && address !== undefined) {
+      setIsGameApproved(realmsApprovalData.toString() === '1' ? true : false);
+    }
+  }, [realmsApprovalData, address]);
+
+  return { isGameApproved };
 };
 
 export const getApproveAllGameContracts = (): CallAndMetadata[] => {
