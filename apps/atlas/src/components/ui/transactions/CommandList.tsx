@@ -131,7 +131,7 @@ export const CommandListItem = (props: CommandListItem) => {
       ref={ref}
       data-handler-id={handlerId}
       className={twMerge(
-        `rounded-xl flex p-4 w-full mb-2 bg-gray-1000/80 border card`,
+        `rounded-xl flex p-4 w-full mb-2 bg-gray-1000/80 border border-yellow-800`,
         isDragging ? 'opacity-0' : 'opacity-100'
       )}
     >
@@ -157,7 +157,6 @@ export const CommandListItem = (props: CommandListItem) => {
 
         <div>
           <h3>{title}</h3>
-
           <div className="text-gray-700">{description}</div>
         </div>
       </div>

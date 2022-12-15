@@ -46,15 +46,9 @@ interface WorkHutInput {
 export const WorkHuts = (props) => {
   const realm = props.realm;
 
-  const isOwner = useIsOwner(realm?.settledOwner);
-
-  const { getBuildingCostById } = useGameConstants();
-
   const txQueue = useCommandList();
 
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
-
-  const { play: buildWorkHut } = useUiSounds(soundSelector.buildWorkHut);
 
   const [input, setInput] = useState<WorkHutInput>({
     workHutsToBuild: '1',
@@ -77,68 +71,62 @@ export const WorkHuts = (props) => {
     });
   }, [txQueue.transactions, realm?.realmId]);
 
-  if (!realm) {
-    return null;
-  }
-
   const decay =
     props.buildings?.find((a) => a.name === 'House')?.buildingDecay || 0;
 
+  const built =
+    props.buildings?.find((a) => a.name === 'House')?.quantityBuilt || 0;
+
   return (
-    <Card>
+    <div className="flex border-4 border-yellow-900/40 rounded-2xl">
       <div className="flex w-full">
-        <div className="rounded ">
-          <Image
-            width={200}
-            height={200}
-            className={'w-72 h-72 mx-auto rounded'}
+        <div className="relative w-1/2">
+          <img
+            className={' mx-auto w-full rounded-2xl '}
             src={'/realm-buildings/mj_hut.png'}
             alt="Hut"
           />
+
+          <div className="absolute top-0 w-full p-8 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
+            <h2 className="flex justify-between p-1 px-2">
+              Workhuts <br />{' '}
+              <div className="">
+                <span className="">{built}</span>
+              </div>
+            </h2>
+          </div>
+          <div className="absolute bottom-0 flex justify-between w-full p-8 text-xl text-white bg-gradient-to-t from-gray-900 rounded-2xl ">
+            <span className="flex self-center ">
+              <span className="self-center mr-2 ">Time till decay:</span>
+              <CountdownTimer
+                date={(
+                  (decay - buildingIntegrity(RealmBuildingId.House)) *
+                  1000
+                ).toString()}
+              />{' '}
+            </span>
+          </div>
         </div>
 
-        <div className="p-2 ">
-          <div className="bg-gradient-to-r from-gray-1100 via-red-900 to-gray-1100 pb-[2px] ">
-            <h3 className="flex p-1 px-2 shadow-xl shadow-red-700/20 bg-gray-1000">
-              Workhuts{' '}
-              <span className="self-center ml-4 text-xs text-gray-700 ">
-                {(
-                  buildingIntegrity(RealmBuildingId.House) /
-                  60 /
-                  60 /
-                  24
-                ).toFixed(0)}{' '}
-                Day Decay Time
-              </span>
-              <span className="flex self-center ml-auto text-sm">
-                <span className="self-center mr-2 text-xs text-gray-700">
-                  Time till decay:
-                </span>
-                <CountdownTimer
-                  date={(
-                    (decay - buildingIntegrity(RealmBuildingId.House)) *
-                    1000
-                  ).toString()}
-                />{' '}
-              </span>
-            </h3>
-          </div>
-
+        <div className="w-full p-8 ">
           <div className="w-full p-2">
-            <div className="text-4xl opacity-80">
-              <span className="">
-                {
-                  props.buildings?.find((a) => a.name === 'House')
-                    ?.quantityBuilt
-                }
-              </span>
-            </div>
+            <span className="self-center text-2xl">
+              Workhuts increase your output by {WORK_HUT_OUTPUT} per day cycle.
+              They cost {WORK_HUT_COST} of all the resources on your realm. They
+              decay in{' '}
+              {(
+                buildingIntegrity(RealmBuildingId.House) /
+                60 /
+                60 /
+                24
+              ).toFixed(0)}{' '}
+              days.
+            </span>
 
             <div>
               <div className="flex mt-2 space-x-2">
                 <Button
                   onClick={() => {
-                    buildWorkHut();
                     txQueue.add(
                       createBuildingCall.build({
                         realmId: realm.realmId,
@@ -155,16 +143,16 @@ export const WorkHuts = (props) => {
                       })
                     );
                   }}
-                  size="xs"
+                  size="md"
                   variant="primary"
                 >
                   Build
                 </Button>
                 <InputNumber
                   value={input.workHutsToBuild}
-                  inputSize="sm"
+                  inputSize="md"
                   colorScheme="transparent"
-                  className="w-12 bg-white border rounded border-white/40"
+                  className="bg-white border rounded border-white/40"
                   min={1}
                   max={10}
                   stringMode
@@ -178,30 +166,26 @@ export const WorkHuts = (props) => {
                 />{' '}
               </div>
             </div>
-            <div className="flex flex-wrap justify-center mt-4">
+            <div className="flex flex-wrap mt-4">
               {props.realm.resources?.map((re, index) => (
                 <div key={index} className="flex flex-col justify-center p-2">
-                  <ResourceIcon
-                    resource={
-                      findResourceById(re.resourceId)?.trait.replace(' ', '') ||
-                      ''
-                    }
-                    size="sm"
+                  <Image
+                    src={'/resources/' + re.resourceId + '.jpg'}
+                    alt="map"
+                    width={100}
+                    height={100}
+                    className="border-4 rounded-full rounded-2xl border-yellow-800/40"
                   />
 
-                  <span className="self-center mt-2">
+                  <span className="self-center mt-2 text-xl">
                     {WORK_HUT_COST} x {findResourceById(re.resourceId)?.trait}
                   </span>
                 </div>
               ))}
             </div>
-            <span className="p-2 py-1 bg-green-900 border-green-200 rounded">
-              Workhuts increase your output by {WORK_HUT_OUTPUT} per day cycle.
-              They cost {WORK_HUT_COST} of all the resources on your realm.
-            </span>
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };

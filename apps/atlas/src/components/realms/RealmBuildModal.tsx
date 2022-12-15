@@ -185,9 +185,9 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <>
-            {/* <div className="mb-12">
+            <div>
               <WorkHuts buildings={buildings} realm={realm} />
-            </div> */}
+            </div>
             <RealmsFood
               realmFoodDetails={realmFoodDetails}
               availableFood={availableFood}

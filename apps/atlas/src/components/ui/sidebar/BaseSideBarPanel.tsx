@@ -27,7 +27,7 @@ export const BaseSideBarPanel = ({
             size="xs"
             variant="outline"
             className={clsx(
-              'absolute top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-full',
+              ' top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-full sticky bg-gray-1000',
               position != 'left' ? 'left-2' : 'right-2'
             )}
             onClick={() => {

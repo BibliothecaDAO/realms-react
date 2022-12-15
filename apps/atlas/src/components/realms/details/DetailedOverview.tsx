@@ -30,6 +30,7 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
 } from '@/components/realms/RealmsGetters';
+import { STORE_HOUSE_SIZE } from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
 
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
@@ -66,6 +67,14 @@ export function DetailedOverview(
 
   // vault accrued
   const cachedVaultDaysAccrued = getDays(realm?.lastVaultTime);
+
+  const usedStorehouseSpace = availableFood
+    ? availableFood / STORE_HOUSE_SIZE
+    : 0;
+
+  const trueUsedSpace = buildingUtilisation?.currentSqm
+    ? buildingUtilisation?.currentSqm + usedStorehouseSpace
+    : usedStorehouseSpace;
 
   const dataCards = [
     {
@@ -148,7 +157,7 @@ export function DetailedOverview(
       title: 'Building Utilisation (sqm)',
       value: (
         <span>
-          {buildingUtilisation?.currentSqm} / {buildingUtilisation?.maxSqm}{' '}
+          {trueUsedSpace} / {buildingUtilisation?.maxSqm}{' '}
         </span>
       ),
       subTitle: <span>Total Space used</span>,
@@ -157,10 +166,13 @@ export function DetailedOverview(
     },
   ];
 
+  const realmHeldByRealm =
+    realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
+
   return (
     <>
       <div className="flex">
-        {hasOwnRelic(realm) ? (
+        {hasOwnRelic(realm) || realm?.realmId === realmHeldByRealm ? (
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img

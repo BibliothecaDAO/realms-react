@@ -19,7 +19,7 @@ import {
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
-import { useArmy } from '@/hooks/settling/useArmy';
+import { ArmyAndOrder, useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type { BuildingDetail } from '@/types/index';
 
@@ -501,11 +501,9 @@ export const getTimeSinceLastTick = (realm: RealmFragmentFragment) => {
   const date = new Date(realm.lastTick);
   const now = new Date();
 
-  return (
-    Math.floor((now.getTime() - date.getTime()) / 1000) /
-    60 /
-    60
-  ).toFixed(2);
+  const time = Math.floor((now.getTime() - date.getTime()) / 1000) / 60 / 60;
+
+  return time > 1000 ? '0' : time.toFixed();
 };
 
 export const getNumberOfTicks = (realm: RealmFragmentFragment) => {

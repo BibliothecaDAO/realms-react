@@ -94,17 +94,17 @@ export const RealmsFood = (props: Prop) => {
 
   return (
     <div>
-      <div className="flex border-4 border-yellow-900/40 rounded-2xl">
+      <div className="flex w-full border-4 border-yellow-900/40 rounded-2xl">
         <div className={'w-1/2 relative'}>
           <img
             alt="Storehouse"
             className={' mx-auto w-full rounded-xl '}
             src={'/realm-buildings/mj_storehouse.png'}
           />
-          <div className="absolute top-0 w-full p-8 text-white bg-gradient-to-b from-stone-400 rounded-t-xl">
+          <div className="absolute top-0 w-full p-8 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
             <h2 className="flex justify-between p-1 px-2 ">Storehouse</h2>
           </div>
-          <div className="absolute bottom-0 flex w-full p-8 bg-gradient-to-t from-stone-400 rounded-t-xl rounded-xl">
+          <div className="absolute bottom-0 flex w-full p-8 bg-gradient-to-t from-gray-900 rounded-t-xl rounded-xl">
             <div className="self-center mr-3 text-3xl">
               {availableFood?.toLocaleString()
                 ? availableFood?.toLocaleString()
@@ -312,7 +312,7 @@ export const FoodBuildingComponent = (props: {
             src={buildingImageById(id)}
             alt="Hut"
           />
-          <div className="absolute top-0 w-full px-10 py-8 text-white bg-gradient-to-b from-stone-400 rounded-t-xl">
+          <div className="absolute top-0 w-full px-10 py-8 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
             <h2 className="flex justify-between p-1 px-2">
               {buildingIdToString(id)}{' '}
               <span>
@@ -324,7 +324,8 @@ export const FoodBuildingComponent = (props: {
           <div className="absolute bottom-0 w-full px-10 py-8 bg-gradient-to-t from-gray-900">
             <p className="self-center px-2 text-2xl text-white">
               {built} {buildingIdToString(id)} generating{' '}
-              {(BASE_FOOD_PRODUCTION * built).toLocaleString()} $FISH every{' '}
+              {(BASE_FOOD_PRODUCTION * built).toLocaleString()}{' '}
+              {id === RealmBuildingId.Farm ? '$WHEAT' : '$FISH'} every{' '}
               {HARVEST_LENGTH / 60} minutes.
             </p>
           </div>

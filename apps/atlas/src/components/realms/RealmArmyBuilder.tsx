@@ -85,7 +85,8 @@ export const ArmyBuilder = (props: Props) => {
 
   const { battalions, getArmyStats, getArmyCost } = useArmy();
 
-  const hasFood = availableFood && availableFood > 0;
+  // dirty
+  const hasFood = true;
 
   // TODO: move to composable
   if (!hasFood && army) {
