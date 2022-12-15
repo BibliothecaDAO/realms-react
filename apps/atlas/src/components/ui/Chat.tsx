@@ -75,7 +75,6 @@ const ChatSideBarPanel = ({
         behavior: 'smooth',
       });
     }
-    console.log(receivedMessages);
   }, [receivedMessages]);
 
   const sendChatMessage = (messageText) => {
