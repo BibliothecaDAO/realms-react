@@ -86,7 +86,7 @@ export function MyActions(props: Prop) {
           <CardTitle>Quick Actions</CardTitle>
 
           <CardBody>
-            <p className="mb-3 font-semibold">
+            {/* } <p className="mb-3 font-semibold">
               Mint Realms for 0.01 ETH each. Input quantity below.
             </p>
             <Button
@@ -128,9 +128,9 @@ export function MyActions(props: Prop) {
               }}
             >
               2. Approve All game Contracts
-            </Button>
+            </Button> */}
             <Button variant="primary" size="lg" onClick={props.onSettleRealms}>
-              3. Settle Realms
+              Mint & Settle Realms
             </Button>
 
             <div className="w-full mt-4">

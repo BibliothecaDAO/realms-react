@@ -39,7 +39,7 @@ export function AccountOverview() {
     <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
       <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
         <div className="p-4 mb-8 ">
-          <h2>Your Realms</h2>
+          <h2>Your Settled Realms</h2>
           <div className="px-10 mt-4 text-xl italic">
             "Would you like to inspect your lands?"
           </div>

@@ -8,19 +8,24 @@ import {
 
 import { animated, useSpring } from '@react-spring/web';
 import { useAccount } from '@starknet-react/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
 import { ENQUEUED_STATUS } from '@/constants/index';
+import type { Tx } from '@/context/CommandListContext';
 import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
-import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
-import useSettling from '@/hooks/settling/useSettling';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import {
+  getApproveAllGameContracts,
+  useDumbGameApprovals,
+} from '@/hooks/settling/useApprovals';
+import useSettling, { Entrypoints } from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-
 type Prop = {
   onSettleRealms?: () => void;
 };
@@ -42,8 +47,19 @@ export function MintRealms(props: Prop) {
   });
 
   // console.log(userData?.resourcesClaimable);
-  console.log(!!userData?.resourcesClaimable);
+  const [enqueuedMintTx, setEnqueuedMintTx] = useState<Tx[]>();
 
+  useEffect(() => {
+    setEnqueuedMintTx(
+      txQueue.transactions.filter(
+        (t: any) =>
+          t.contractAddress == ModuleAddr.Realms &&
+          t.entrypoint == Entrypoints.mint
+      )
+    );
+  }, [txQueue.transactions]);
+  const { toggleTransactionCart } = useUIContext();
+  const { isGameApproved } = useDumbGameApprovals();
   return (
     <div>
       <animated.div
@@ -109,9 +125,20 @@ export function MintRealms(props: Prop) {
               variant="primary"
               size="lg"
               className="mt-4"
-              onClick={() => mintRealms(quantity)}
+              onClick={async () => {
+                mintRealms(quantity);
+                !isGameApproved &&
+                  (await approveTxs.map(
+                    async (t) => await txQueue.add({ ...t })
+                  ));
+
+                toggleTransactionCart();
+              }}
+              disabled={!!enqueuedMintTx?.length || quantity == 0}
             >
-              Mint Realms
+              {enqueuedMintTx?.length
+                ? `${enqueuedMintTx.length} Realms in queue`
+                : 'Mint Realms'}
             </Button>
           </CardBody>
         </Card>

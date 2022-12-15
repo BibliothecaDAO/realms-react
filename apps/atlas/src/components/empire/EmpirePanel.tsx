@@ -20,11 +20,14 @@ import {
   getAccountHex,
   hasSettledRealms,
 } from '@/components/realms/RealmsGetters';
-import { useGetRealmsQuery } from '@/generated/graphql';
+import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
+import {
+  getApproveAllGameContracts,
+  useDumbGameApprovals,
+} from '@/hooks/settling/useApprovals';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { BasePanel } from '../ui/panel/BasePanel';
 import { MyActions } from './MyActions';
 
 export function EmpirePanel() {
@@ -32,14 +35,6 @@ export function EmpirePanel() {
   const { address } = useAccount();
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
     useState(false);
-
-  const filter = {
-    OR: [
-      { ownerL2: { equals: getAccountHex(address || '0x0') } },
-      { settledOwner: { equals: getAccountHex(address || '0x0') } },
-    ],
-  };
-  const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
 
   function onSettleRealmsClick() {
     setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
@@ -120,7 +115,10 @@ export function EmpirePanel() {
   const unsettledRealms = userRealms?.realms.filter(
     (r) => r.ownerL2 == getAccountHex(address || '0x0')
   );
-
+  const { toggleTransactionCart } = useUIContext();
+  const approveTxs = getApproveAllGameContracts();
+  const txQueue = useCommandList();
+  const { isGameApproved } = useDumbGameApprovals();
   const quickActions = useMemo(
     () => [
       {
@@ -129,6 +127,21 @@ export function EmpirePanel() {
         details: <span className="flex"></span>,
         action: () => onSettleRealmsClick(),
         enabled: !userRealms?.realms.length,
+        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
+      },
+      {
+        name: 'Approve Eternum Contracts',
+        icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
+        details: <span className="flex"></span>,
+        action: async () => {
+          await approveTxs.map(async (t) => await txQueue.add({ ...t }));
+          toggleTransactionCart();
+        },
+        enabled:
+          !!userRealms?.realms.length &&
+          userRealms?.realms.length > 0 &&
+          !!isGameApproved &&
+          !isGameApproved,
         buttonStyles: 'border-emerald-500 bg-emerald-100/50',
       },
       {
@@ -155,7 +168,7 @@ export function EmpirePanel() {
       //   },
       // },
     ],
-    [userData, userRealms]
+    [userData, userRealms, isGameApproved, unsettledRealms]
   );
 
   const pressedTab = (index) => {
