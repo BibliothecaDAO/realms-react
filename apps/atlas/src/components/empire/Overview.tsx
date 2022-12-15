@@ -35,6 +35,8 @@ export function AccountOverview() {
     })
     .filter((row) => row.event !== '');
 
+  console.log(accountData?.accountHistory);
+
   return (
     <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
       <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
