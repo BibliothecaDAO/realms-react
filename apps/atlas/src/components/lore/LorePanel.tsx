@@ -3,7 +3,7 @@ import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import { useAccount } from '@starknet-react/core';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { hexToDecimalString } from 'starknet/dist/utils/number';
+import { number } from 'starknet';
 import { useAccount as useL1Account } from 'wagmi';
 import { LoreCreateEntityForm } from '@/components/lore/LoreCreateEntityForm';
 import { LoreEntitiesOverview } from '@/components/lore/LoreEntitiesOverview';
@@ -42,7 +42,7 @@ export const LorePanel = () => {
     const filter: LoreEntityWhereInput = {};
 
     if (state.selectedTab == 1 && address) {
-      filter.owner = { equals: hexToDecimalString(address) };
+      filter.owner = { equals: number.hexToDecimalString(address) };
     }
 
     if (searchByContent) {

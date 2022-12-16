@@ -93,21 +93,21 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     useStarknetCall({
       contract: nexusContract,
       method: 'previewRedeem',
-      args: [bnToUint256(parseEther(String(input)).toHexString())],
+      args: [uint256.bnToUint256(parseEther(String(input)).toHexString())],
     });
 
   const { data: previewDeposit, refresh: updatePreviewDeposit } =
     useStarknetCall({
       contract: nexusContract,
       method: 'previewDeposit',
-      args: [bnToUint256(parseEther(String(input)).toHexString())],
+      args: [uint256.bnToUint256(parseEther(String(input)).toHexString())],
     });
 
   const { data: previewTotalRedeem, refresh: updatePreviewTotalRedeem } =
     useStarknetCall({
       contract: nexusContract,
       method: 'previewDeposit',
-      args: [bnToUint256(balances.stLords)],
+      args: [uint256.bnToUint256(balances.stLords)],
     });
 
   useEffect(() => {
