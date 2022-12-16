@@ -10,7 +10,8 @@ import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from './sidebar/BaseSideBarPanel';
 
 const prefix =
-  (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL) ||
+  (process.env.NEXT_PUBLIC_SITE_URL ??
+    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`) ||
   'http://localhost:3000';
 
 configureAbly({
