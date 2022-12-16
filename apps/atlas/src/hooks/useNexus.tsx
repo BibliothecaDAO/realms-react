@@ -1,8 +1,7 @@
 import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import type { BigNumber } from 'ethers';
-import { toBN, toFelt } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { useCommandList } from '@/context/CommandListContext';
 import type { CallAndMetadata } from '../types';
 import {
@@ -84,7 +83,7 @@ export const useStakeLords = () => {
       contractAddress: ModuleAddr.Lords,
       entrypoint: Entrypoints.approve,
       calldata: [
-        toBN(ModuleAddr.Nexus).toString(),
+        number.toBN(ModuleAddr.Nexus).toString(),
         lordsAmount.toHexString(),
         0,
       ],
@@ -99,7 +98,7 @@ export const useStakeLords = () => {
     txs.push({
       contractAddress: ModuleAddr.Nexus,
       entrypoint: Entrypoints.deposit,
-      calldata: [lordsAmount.toHexString(), 0, toFelt(receiver)],
+      calldata: [lordsAmount.toHexString(), 0, number.toFelt(receiver)],
       metadata: {
         title: 'Deposit into Nexus',
         description: `You are depositing ${(+formatEther(
@@ -130,9 +129,9 @@ export const useStakeLords = () => {
         )).toLocaleString()} $LORDS to stake into the NEXUS.`,
       },
       args: [
-        bnToUint256(lordsAmount.toHexString()),
-        toFelt(receiver),
-        toFelt(receiver),
+        uint256.bnToUint256(lordsAmount.toHexString()),
+        number.toFelt(receiver),
+        number.toFelt(receiver),
       ],
     });
   };

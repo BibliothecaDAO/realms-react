@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { useState } from 'react';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { uint256 } from 'starknet';
 import {
   getRealmNameById,
   getTravelArcs,
@@ -33,10 +33,10 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     entrypoint: Entrypoints.travel,
     calldata: [
       Assets.realms,
-      ...uint256ToRawCalldata(bnToUint256(args.travellerId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.travellerId)),
       args.armyId,
       Assets.realms,
-      ...uint256ToRawCalldata(bnToUint256(args.destinationId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.destinationId)),
       0, // nested destination is always 0 for now.
     ],
     metadata: {

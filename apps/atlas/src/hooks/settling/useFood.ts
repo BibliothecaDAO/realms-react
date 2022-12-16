@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import {
   RealmBuildingId,
   HarvestType,
@@ -39,7 +38,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.create,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.quantity,
       args.foodBuildingId,
     ],
@@ -56,7 +55,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.harvest,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.harvestType,
       args.foodBuildingId,
     ],
@@ -74,7 +73,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.convert,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.quantity,
       args.resourceId,
     ],
@@ -220,7 +219,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
     const fetchData = async () => {
       const food = await FoodContract.available_food_in_store(
-        bnToUint256(toBN(realm?.realmId ?? 0))
+        uint256.bnToUint256(number.toBN(realm?.realmId ?? 0))
       );
       setAvailableFood(food.toString());
     };

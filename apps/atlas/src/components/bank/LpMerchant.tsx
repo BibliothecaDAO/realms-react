@@ -14,8 +14,7 @@ import { useStarknetCall } from '@starknet-react/core';
 
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import type { BankResource } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
@@ -61,8 +60,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     contract: exchangeContract,
     method: 'get_owed_currency_tokens',
     args: [
-      [bnToUint256(toBN(props.resource.resourceId))],
-      [bnToUint256(toBN(props.resource.lp))],
+      [uint256.bnToUint256(number.toBN(props.resource.resourceId))],
+      [uint256.bnToUint256(number.toBN(props.resource.lp))],
     ],
   });
 
@@ -72,8 +71,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     }
 
     setCurrencyAndTokenBalance({
-      currency: uint256ToBN(currencyAndTokenValues[0][0]).toString(10),
-      token: uint256ToBN(currencyAndTokenValues[1][0]).toString(10),
+      currency: uint256.uint256ToBN(currencyAndTokenValues[0][0]).toString(10),
+      token: uint256.uint256ToBN(currencyAndTokenValues[1][0]).toString(10),
     });
   }, [currencyAndTokenValues]);
 

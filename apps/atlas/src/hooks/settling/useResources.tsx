@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
@@ -23,7 +22,7 @@ export const createResourcesCall: Record<
   claim: ({ realmId }) => ({
     contractAddress: ModuleAddr.ResourceGame,
     entrypoint: Entrypoints.claim,
-    calldata: uint256ToRawCalldata(bnToUint256(toBN(realmId))),
+    calldata: uint256ToRawCalldata(uint256.bnToUint256(number.toBN(realmId))),
     metadata: { realmId, action: Entrypoints.claim },
   }),
 };

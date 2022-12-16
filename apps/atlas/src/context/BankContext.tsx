@@ -12,8 +12,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import {
   getTxCosts,
   getTxResourcesTrades,
@@ -57,7 +56,7 @@ export type LpQty = {
 type ResourcesBalance = Array<BankResource>;
 
 const resourceMapping = resources.map((resource) => {
-  return bnToUint256(toBN(resource.id));
+  return uint256.bnToUint256(number.toBN(resource.id));
 });
 
 const initResources = resources.map((resource) => {
@@ -128,7 +127,7 @@ function useResources() {
 
   const { contract: exchangeContract } = useExchangeContract();
   const ownerAddressInt = address
-    ? toBN(address as string).toString()
+    ? number.toBN(address as string).toString()
     : undefined;
 
   const resourceMappingArray = useMemo(() => {
@@ -244,7 +243,7 @@ function useResources() {
     const pluckData = (data: any) => {
       return data.map((resourceBalance, index) => {
         return {
-          amount: uint256ToBN(resourceBalance).toString(10),
+          amount: uint256.uint256ToBN(resourceBalance).toString(10),
         };
       });
     };
