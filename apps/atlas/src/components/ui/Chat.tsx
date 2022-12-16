@@ -9,8 +9,10 @@ import { shortenAddress } from '@/util/formatters';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from './sidebar/BaseSideBarPanel';
 
+const prefix = process.env.API_ROOT || '';
+
 configureAbly({
-  authUrl: '/api/createAblyTokenRequest',
+  authUrl: `${prefix}/api/createAblyTokenRequest`,
 });
 
 interface ChatSideBarProps {
