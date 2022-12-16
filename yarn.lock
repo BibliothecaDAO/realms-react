@@ -1896,7 +1896,7 @@ __metadata:
     "@tailwindcss/aspect-ratio": "npm:0.4.2"
     "@tailwindcss/forms": "npm:0.5.3"
     "@tailwindcss/line-clamp": "npm:0.4.2"
-    "@tanstack/react-table": "npm:8.7.3"
+    "@tanstack/react-table": "npm:8.7.0"
     "@testing-library/jest-dom": "npm:5.16.5"
     "@testing-library/react": "npm:13.4.0"
     "@testing-library/react-hooks": "npm:8.0.1"
@@ -8220,22 +8220,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:8.7.3":
-  version: 8.7.3
-  resolution: "@tanstack/react-table@npm:8.7.3"
+"@tanstack/react-table@npm:8.7.0":
+  version: 8.7.0
+  resolution: "@tanstack/react-table@npm:8.7.0"
   dependencies:
-    "@tanstack/table-core": "npm:8.7.3"
+    "@tanstack/table-core": "npm:8.7.0"
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: bc24e31538c21cedaad7b9f5623a4201c7d0bfae004d3acacee095dbbfdc28fd05d89e12017f1d5852892d5ac4e8d30e312632d8ad7b5bcd4af07149fa09e5b1
+  checksum: 4d1d37f38989a8d52ca90ee93cfdae85d91f153a061dfee50e85b9027f90a64b40d81770ce8ec477b43c6c8448156ff57b46ed01ce57aacfb574f86277011af1
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.7.3":
-  version: 8.7.3
-  resolution: "@tanstack/table-core@npm:8.7.3"
-  checksum: a73ab27195c6b815b3dd321861cf6c5b679a7ae50340a8f05ad91064fd97095b168e99929bb803ea108bd65e06a6977686f47ab0d19b8cf0e971604598b27d45
+"@tanstack/table-core@npm:8.7.0":
+  version: 8.7.0
+  resolution: "@tanstack/table-core@npm:8.7.0"
+  checksum: 11fe68e29ccdc826b8bb6363d01317d06aaf39b1de926a19d52abcd6a9fb4e901ba1f9dee118874769f00026707be5b9985c981e1838ed949ac07b39c2c628e2
   languageName: node
   linkType: hard
 
