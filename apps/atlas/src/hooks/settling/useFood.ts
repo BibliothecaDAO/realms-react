@@ -38,7 +38,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.create,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.quantity,
       args.foodBuildingId,
     ],
@@ -55,7 +55,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.harvest,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.harvestType,
       args.foodBuildingId,
     ],
@@ -73,7 +73,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.convert,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
       args.quantity,
       args.resourceId,
     ],

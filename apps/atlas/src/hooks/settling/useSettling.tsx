@@ -37,7 +37,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   settle: ({ realmId }) => ({
     contractAddress: ModuleAddr.Settling,
     entrypoint: Entrypoints.settle,
-    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    calldata: uint256ToRawCalldata(uint256.bnToUint256(realmId)),
     metadata: { realmId, action: Entrypoints.settle },
   }),
   approve: ({ quantity }) => ({
@@ -55,7 +55,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   unsettle: ({ realmId }) => ({
     contractAddress: ModuleAddr.Settling,
     entrypoint: Entrypoints.unsettle,
-    calldata: uint256ToRawCalldata(bnToUint256(realmId)),
+    calldata: uint256ToRawCalldata(uint256.bnToUint256(realmId)),
     metadata: { realmId, action: Entrypoints.unsettle },
   }),
 };
