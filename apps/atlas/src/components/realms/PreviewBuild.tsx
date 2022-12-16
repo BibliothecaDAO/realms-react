@@ -3,7 +3,7 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { ExclamationCircleIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 // import { formatEther } from '@ethersproject/units';
-import { toBN } from 'starknet/dist/utils/number';
+import { number } from 'starknet';
 import { RealmBuildingsSize, BASE_SQM } from '@/constants/buildings';
 import { useBankContext } from '@/context/BankContext';
 import type { GetRealmQuery } from '@/generated/graphql';
@@ -50,7 +50,7 @@ const CheckBuildRequirements = (props: Props) => {
   //   if (building) {
   //     const costKeyed = {};
   //     building.buildingCost.resources.forEach((r) => {
-  //       costKeyed[r.resourceId] = toBN(r.amount)
+  //       costKeyed[r.resourceId] = number.toBN(r.amount)
   //         .mul(toBN('1000000000000000000', 10))
   //         .toString();
   //     });

@@ -2,8 +2,7 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { toFelt } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -50,7 +49,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
           uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -77,7 +76,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
           uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -109,7 +108,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
           uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -148,7 +147,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
           uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,

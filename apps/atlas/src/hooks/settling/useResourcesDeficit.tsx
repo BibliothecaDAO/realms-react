@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { number } from 'starknet';
 import type { BigNumberish } from 'starknet/dist/utils/number';
-import { toBN } from 'starknet/dist/utils/number';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 
@@ -28,9 +28,9 @@ const useResourcesDeficit = (props: Props) => {
     if (Object.keys(resourceCosts).length > 0 && balanceStatus == 'success') {
       const deficits = {};
       balance.forEach((r) => {
-        const amount = toBN(r.amount, 10);
+        const amount = number.toBN(r.amount, 10);
         if (resourceCosts[r.resourceId]) {
-          const costBN = toBN(resourceCosts[r.resourceId]);
+          const costBN = number.toBN(resourceCosts[r.resourceId]);
           if (amount.sub(costBN).lte(toBN(0))) {
             deficits[r.resourceId] = costBN.sub(amount);
           }

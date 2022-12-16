@@ -8,8 +8,7 @@ import { useStarknetCall, useAccount } from '@starknet-react/core';
 
 import { useState, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import {
   useNexusContract,
@@ -47,10 +46,12 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     loading: loadingStakeLords,
   } = useStakeLords();
 
-  const ownerAddressInt = toBN(address as string).toString();
+  const ownerAddressInt = number.toBN(address as string).toString();
 
-  const splitterAddressInt = toBN(ModuleAddr.Splitter as string).toString();
-  const nexusAddressInt = toBN(ModuleAddr.Nexus as string).toString();
+  const splitterAddressInt = number
+    .toBN(ModuleAddr.Splitter as string)
+    .toString();
+  const nexusAddressInt = number.toBN(ModuleAddr.Nexus as string).toString();
 
   const [balances, setBalances] = useState({
     nexus: '0',
@@ -128,12 +129,14 @@ const LordsInput = (props: ResourceRowProps): ReactElement => {
     }
 
     setBalances({
-      nexus: uint256ToBN(nexusBalanceValues[0]).toString(10),
-      stLords: uint256ToBN(userStLordsBalanceValues[0]).toString(10),
-      totalStkLords: uint256ToBN(stLordsTotalSupply[0]).toString(10),
-      preview: uint256ToBN(previewWithdraw[0]).toString(10),
-      previewDeposit: uint256ToBN(previewDeposit[0]).toString(10),
-      previewTotalRedeem: uint256ToBN(previewTotalRedeem[0]).toString(10),
+      nexus: uint256.uint256ToBN(nexusBalanceValues[0]).toString(10),
+      stLords: uint256.uint256ToBN(userStLordsBalanceValues[0]).toString(10),
+      totalStkLords: uint256.uint256ToBN(stLordsTotalSupply[0]).toString(10),
+      preview: uint256.uint256ToBN(previewWithdraw[0]).toString(10),
+      previewDeposit: uint256.uint256ToBN(previewDeposit[0]).toString(10),
+      previewTotalRedeem: uint256
+        .uint256ToBN(previewTotalRedeem[0])
+        .toString(10),
     });
   }, [
     nexusBalanceValues,

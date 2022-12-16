@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { useState } from 'react';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { uint256 } from 'starknet';
 import {
   getRealmNameById,
   getTravelArcs,

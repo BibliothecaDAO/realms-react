@@ -1,7 +1,6 @@
 import { useStarknetInvoke } from '@starknet-react/core';
 import Image from 'next/image';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { battalionIdToString, getUnitImage } from '@/constants/army';
@@ -29,7 +28,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.buildArmy,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
+      ...uint256ToRawCalldata(uint256.bnToUint256(number.toBN(args.realmId))),
       args.armyId,
       args.ids.length,
       ...args.ids,
@@ -42,8 +41,8 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   //   contractAddress: ModuleAddr.Combat,
   //   entrypoint: Entrypoints.initiateCombat,
   //   calldata: [
-  //     ...uint256ToRawCalldata(bnToUint256(toBN(args.attackingRealmId))),
-  //     ...uint256ToRawCalldata(bnToUint256(toBN(args.defendingRealmId))),
+  //     ...uint256ToRawCalldata(uint256.bnToUint256(number.toBN(args.attackingRealmId))),
+  //     ...uint256ToRawCalldata(uint256.bnToUint256(number.toBN(args.defendingRealmId))),
   //   ],
   //   metadata: { ...args, action: Entrypoints.initiateCombat },
   // }),
@@ -51,7 +50,9 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Combat,
     entrypoint: Entrypoints.attackGoblins,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(toBN(args.attackingRealmId))),
+      ...uint256ToRawCalldata(
+        uint256.bnToUint256(number.toBN(args.attackingRealmId))
+      ),
     ],
     metadata: { ...args, action: Entrypoints.attackGoblins },
   }),
@@ -131,9 +132,9 @@ const useCombat = () => {
       combatInvoke({
         args: [
           args.attackingArmyId,
-          bnToUint256(toBN(args.attackingRealmId)),
+          uint256.bnToUint256(number.toBN(args.attackingRealmId)),
           0, // only attack base realm
-          bnToUint256(toBN(args.defendingRealmId)),
+          uint256.bnToUint256(number.toBN(args.defendingRealmId)),
         ],
         metadata: {
           action: Entrypoints.initiateCombat,

@@ -4,8 +4,7 @@ import {
   useStarknetCall,
 } from '@starknet-react/core';
 import { useState, useEffect } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import {
@@ -44,7 +43,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   approve: ({ quantity }) => ({
     contractAddress: ModuleAddr.StarkEthereum,
     entrypoint: Entrypoints.approve,
-    calldata: [toBN(ModuleAddr.Realms).toString(), quantity, 0],
+    calldata: [number.toBN(ModuleAddr.Realms).toString(), quantity, 0],
     metadata: { quantity, action: Entrypoints.approve },
   }),
   mint: ({ account }) => ({
@@ -103,8 +102,8 @@ const useSettling = (): Settling => {
     contract: realmsContract,
     method: 'isApprovedForAll',
     args: [
-      toBN(address as string).toString(),
-      toBN(settlingContract?.address as string).toString(),
+      number.toBN(address as string).toString(),
+      number.toBN(settlingContract?.address as string).toString(),
     ],
   });
 
@@ -144,7 +143,7 @@ const useSettling = (): Settling => {
       for (let i = 0; i < quantity; i++) {
         txQueue.add(
           createCall.mint({
-            account: toBN(address as string).toString(),
+            account: number.toBN(address as string).toString(),
           })
         );
       }
@@ -152,7 +151,10 @@ const useSettling = (): Settling => {
     isRealmsApproved,
     approveRealms: () => {
       approve721.invoke({
-        args: [toBN(settlingContract?.address as string).toString(), '1'],
+        args: [
+          number.toBN(settlingContract?.address as string).toString(),
+          '1',
+        ],
       });
     },
   };

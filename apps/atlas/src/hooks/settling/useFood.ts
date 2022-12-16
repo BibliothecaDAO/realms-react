@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import {
   RealmBuildingId,
   HarvestType,
@@ -220,7 +219,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
     const fetchData = async () => {
       const food = await FoodContract.available_food_in_store(
-        bnToUint256(toBN(realm?.realmId ?? 0))
+        uint256.bnToUint256(number.toBN(realm?.realmId ?? 0))
       );
       setAvailableFood(food.toString());
     };

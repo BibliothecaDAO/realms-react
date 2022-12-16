@@ -1,8 +1,7 @@
 import { useAccount, useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import {
   getAccountHex,
   RealmClaimable,
@@ -153,8 +152,8 @@ const useUsersRealms = () => {
       invoke({
         args: [
           address,
-          args.ids.map((a) => bnToUint256(toBN(a))),
-          args.amounts.map((a) => bnToUint256(toBN(a))),
+          args.ids.map((a) => uint256.bnToUint256(number.toBN(a))),
+          args.amounts.map((a) => uint256.bnToUint256(number.toBN(a))),
         ],
         metadata: {
           action: 'burnAll',

@@ -9,9 +9,8 @@ import axios from 'axios';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { defaultProvider } from 'starknet';
 import type { Abi } from 'starknet';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { defaultProvider, uint256 } from 'starknet';
 import loreContractABI from '@/abi/lore/Lore.json';
 import type { UploadArweaveResponse } from '@/pages/api/lore/upload_arweave';
 // import erc20Abi from 'abi/l2/erc20.json';
@@ -80,7 +79,7 @@ export const LoreCreateEntityForm = () => {
   //     starknet.library
   //   ),
   //   method: 'balanceOf',
-  //   args: [toBN(starknet.account as string).toString()],
+  //   args: [number.toBN(starknet.account as string).toString()],
   // });
 
   // useEffect(() => {
@@ -158,10 +157,10 @@ export const LoreCreateEntityForm = () => {
 
     const starkinizedPOIs = entityData.pois.map((poi) => {
       if (poi.assetId) {
-        return { id: poi.id, asset_id: bnToUint256(poi.assetId) };
+        return { id: poi.id, asset_id: uint256.bnToUint256(poi.assetId) };
       }
 
-      return { id: poi.id, asset_id: bnToUint256(0) };
+      return { id: poi.id, asset_id: uint256.bnToUint256(0) };
     });
 
     const args = [

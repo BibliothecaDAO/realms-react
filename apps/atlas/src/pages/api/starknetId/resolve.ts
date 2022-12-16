@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { toFelt } from 'starknet/dist/utils/number';
+import { number } from 'starknet';
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
@@ -10,7 +10,7 @@ export default async function handler(req: NextRequest) {
   try {
     if (address) {
       const response = await fetch(
-        `https://goerli.indexer.starknet.id/addr_to_domain?addr=${toFelt(
+        `https://goerli.indexer.starknet.id/addr_to_domain?addr=${number.toFelt(
           address
         )}`,
         {

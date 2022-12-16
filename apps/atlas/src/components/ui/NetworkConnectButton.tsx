@@ -10,7 +10,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { useAccount, useConnectors } from '@starknet-react/core';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect } from 'react';
-import { removeHexPrefix } from 'starknet/dist/utils/encode';
+import { encode } from 'starknet';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { shortenAddressWidth } from '@/util/formatters';
 
@@ -47,7 +47,7 @@ const NetworkConnectButton = () => {
           <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
           {starknetId ?? starknetId}
           {!starknetId && address
-            ? removeHexPrefix(shortenAddressWidth(address, 4))
+            ? encode.removeHexPrefix(shortenAddressWidth(address, 4))
             : ''}
           {!address && 'Connect'}
         </div>{' '}
