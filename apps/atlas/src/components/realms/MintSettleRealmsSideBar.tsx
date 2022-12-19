@@ -31,6 +31,9 @@ function RealmsSelectable(props: RealmsSelectableProps): ReactElement {
 
   return (
     <div>
+      <span className="pl-2 text-gray-600">
+        {selections.length} Realm(s) selected
+      </span>
       {props.realms?.map((realm: RealmFragmentFragment, index) => (
         <SelectableRealm
           key={index}
@@ -188,6 +191,11 @@ export const SettleRealmsSideBarPanel = ({
                 <Button
                   className="w-full"
                   variant="primary"
+                  disabled={
+                    selectedTab === 0
+                      ? !settleSelections.length
+                      : !unSettleSelections.length
+                  }
                   onClick={() =>
                     selectedTab === 0 ? settleAll() : usSettleAll()
                   }
