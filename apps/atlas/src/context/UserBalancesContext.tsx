@@ -8,8 +8,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { uint256ToBN } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import {
   getTxResourcesTrades,
   getTxCosts,

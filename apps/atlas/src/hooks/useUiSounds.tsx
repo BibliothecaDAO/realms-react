@@ -12,6 +12,7 @@ export const soundSelector = {
   pageTurn: 'ASO_foley_click_04.mp3',
   fly: 'whoosh_low_1.mp3',
   buildMilitary: 'buildings/military.mp3',
+  buildCastle: 'buildings/castle.mp3',
   buildBarracks: 'buildings/barracks.mp3',
   buildArcherTower: 'buildings/archer_tower.mp3',
   buildWorkHut: 'buildings/workhuts.mp3',

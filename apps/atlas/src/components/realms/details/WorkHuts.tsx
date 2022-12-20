@@ -48,6 +48,8 @@ export const WorkHuts = (props) => {
 
   const txQueue = useCommandList();
 
+  const { play: buildWorkHut } = useUiSounds(soundSelector.buildWorkHut);
+
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
   const [input, setInput] = useState<WorkHutInput>({
@@ -127,6 +129,7 @@ export const WorkHuts = (props) => {
               <div className="flex mt-2 space-x-2">
                 <Button
                   onClick={() => {
+                    buildWorkHut();
                     txQueue.add(
                       createBuildingCall.build({
                         realmId: realm.realmId,

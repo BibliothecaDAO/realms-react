@@ -552,3 +552,12 @@ export const armyStrength = (armyStrength: number) => {
     return 'V.Weak';
   }
 };
+
+export const hasSettledRealms = (userRealms, address) => {
+  return (
+    userRealms &&
+    userRealms.some(
+      (r) => r.settledOwner === getAccountHex(address || '0x0') ?? 0
+    )
+  );
+};

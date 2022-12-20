@@ -1,16 +1,21 @@
 import { Tabs, Button } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import { useAccount } from '@starknet-react/core';
+import { useAccount, useTransactionManager } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import type { ReactElement } from 'react';
 import { useEffect, useState, useMemo } from 'react';
+import AtlasSideBar from '@/components/map/AtlasSideBar';
+import { MintRealms } from '@/components/realms/MintRealms';
 import { SelectableRealm } from '@/components/realms/SelectableRealm';
+import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
+import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
+import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
 import useSettling from '@/hooks/settling/useSettling';
 import { useSelections } from '@/hooks/useSelectable';
-import AtlasSideBar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
+import type { Metadata } from '../ui/transactions/Transactions';
 
 type RealmsSelectableProps = {
   realms?: RealmFragmentFragment[];
@@ -43,7 +48,7 @@ interface SettleRealmsSideBarProps {
   onClose?: () => void;
 }
 
-export const SettleRealmsSideBar = ({
+export const MintSettleRealmsSideBar = ({
   isOpen,
   onClose,
 }: SettleRealmsSideBarProps) => {
@@ -91,6 +96,7 @@ export const SettleRealmsSideBarPanel = ({
 
   const { data, loading } = useGetRealmsQuery({
     variables,
+    pollInterval: 10000,
   });
 
   const tabs = useMemo(
@@ -139,30 +145,37 @@ export const SettleRealmsSideBarPanel = ({
     });
   };
 
+  const [showMint, setShowMint] = useState(false);
+  const approveTxs = getApproveAllGameContracts();
+  const { toggleTransactionCart } = useUIContext();
+  const txQueue = useCommandList();
+
   return (
     <BaseSideBarPanel onClose={onClose}>
       <div className="p-8">
-        <Tabs
-          selectedIndex={selectedTab}
-          onChange={(index) => setSelectedTab(index as number)}
-          variant="primary"
-        >
-          <Tabs.List className="">
-            {tabs.map((tab) => (
-              <Tabs.Tab key={tab.label} className="uppercase">
-                {tab.label}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <Tabs.Panels>
-            {tabs.map((tab) => (
-              <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
-        <div className="w-full">
-          {/* Remove when needed  */}
-          {/* {isRealmsApproved != 'approved' && (
+        {data?.realms.length ? (
+          <>
+            <Tabs
+              selectedIndex={selectedTab}
+              onChange={(index) => setSelectedTab(index as number)}
+              variant="primary"
+            >
+              <Tabs.List className="">
+                {tabs.map((tab) => (
+                  <Tabs.Tab key={tab.label} className="uppercase">
+                    {tab.label}
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+              <Tabs.Panels>
+                {tabs.map((tab) => (
+                  <Tabs.Panel key={tab.label}>{tab.component}</Tabs.Panel>
+                ))}
+              </Tabs.Panels>
+            </Tabs>
+            <div className="w-full">
+              {/* Remove when needed  */}
+              {/* {isRealmsApproved != 'approved' && (
             <Button
               className="w-full"
               variant="primary"
@@ -171,17 +184,52 @@ export const SettleRealmsSideBarPanel = ({
               Approve Realms for Settling
             </Button>
           )} */}
-          {isRealmsApproved == 'approved' && (
-            <Button
-              className="w-full"
-              variant="primary"
-              onClick={() => (selectedTab === 0 ? settleAll() : usSettleAll())}
-            >
-              {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
-            </Button>
-          )}
-        </div>
+              {isRealmsApproved == 'approved' ? (
+                <Button
+                  className="w-full"
+                  variant="primary"
+                  onClick={() =>
+                    selectedTab === 0 ? settleAll() : usSettleAll()
+                  }
+                >
+                  {selectedTab === 0 ? 'Settle Realms' : 'Unsettle Realms'}
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="mt-4"
+                  onClick={async () => {
+                    await approveTxs.map(
+                      async (t) => await txQueue.add({ ...t })
+                    );
+
+                    toggleTransactionCart();
+                  }}
+                >
+                  Approve Contracts First
+                </Button>
+              )}
+            </div>
+            {!showMint && (
+              <Button
+                className="mt-8"
+                variant="link"
+                onClick={() => setShowMint(true)}
+              >
+                Mint Realms
+              </Button>
+            )}
+          </>
+        ) : (
+          <h3>No Realms</h3>
+        )}
       </div>
+      {(!data?.realms.length || showMint) && (
+        <div className="w-96">
+          <MintRealms />
+        </div>
+      )}
 
       {loading && (
         <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">

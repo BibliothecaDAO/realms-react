@@ -3,7 +3,7 @@ import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
-import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
+import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import { useAccount } from '@starknet-react/core';
@@ -15,13 +15,19 @@ import { MyGA } from '@/components/empire/MyGA';
 import { MyLoot } from '@/components/empire/MyLoot';
 import { MyRealms } from '@/components/empire/MyRealms';
 import { AccountOverview } from '@/components/empire/Overview';
-import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { useGetRealmsQuery } from '@/generated/graphql';
+import { MintSettleRealmsSideBar } from '@/components/realms/MintSettleRealmsSideBar';
+import {
+  getAccountHex,
+  hasSettledRealms,
+} from '@/components/realms/RealmsGetters';
+import { useCommandList } from '@/context/CommandListContext';
+import { useUIContext } from '@/context/UIContext';
+import {
+  getApproveAllGameContracts,
+  useDumbGameApprovals,
+} from '@/hooks/settling/useApprovals';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import { SettleRealmsSideBar } from '../realms/SettleRealmsSideBar';
-import { BasePanel } from '../ui/panel/BasePanel';
 import { MyActions } from './MyActions';
 
 export function EmpirePanel() {
@@ -29,14 +35,6 @@ export function EmpirePanel() {
   const { address } = useAccount();
   const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
     useState(false);
-
-  const filter = {
-    OR: [
-      { ownerL2: { equals: getAccountHex(address || '0x0') } },
-      { settledOwner: { equals: getAccountHex(address || '0x0') } },
-    ],
-  };
-  const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
 
   function onSettleRealmsClick() {
     setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
@@ -112,15 +110,54 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { claimAll, userData } = useUsersRealms();
+  const { claimAll, userData, userRealms } = useUsersRealms();
 
+  const unsettledRealms = userRealms?.realms.filter(
+    (r) => r.ownerL2 == getAccountHex(address || '0x0')
+  );
+  const { toggleTransactionCart } = useUIContext();
+  const approveTxs = getApproveAllGameContracts();
+  const txQueue = useCommandList();
+  const { isGameApproved } = useDumbGameApprovals();
   const quickActions = useMemo(
     () => [
+      {
+        name: 'Get Started',
+        icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
+        details: <span className="flex"></span>,
+        action: () => onSettleRealmsClick(),
+        enabled: !userRealms?.realms.length,
+        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
+      },
+      {
+        name: 'Approve Eternum Contracts',
+        icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
+        details: <span className="flex"></span>,
+        action: async () => {
+          await approveTxs.map(async (t) => await txQueue.add({ ...t }));
+          toggleTransactionCart();
+        },
+        enabled:
+          !!userRealms?.realms.length &&
+          userRealms?.realms.length > 0 &&
+          !!isGameApproved &&
+          !isGameApproved,
+        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
+      },
+      {
+        name: 'Settle Realms (' + unsettledRealms?.length + ')',
+        icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
+        details: <span className="flex"></span>,
+        action: () => onSettleRealmsClick(),
+        enabled:
+          unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
+      },
       {
         name: 'Harvest Resources',
         icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
         action: () => claimAll(),
+        enabled: userData.resourcesClaimable,
       },
       // {
       //   name: 'Harvest Farms',
@@ -131,7 +168,7 @@ export function EmpirePanel() {
       //   },
       // },
     ],
-    [userData]
+    [userData, userRealms, isGameApproved, unsettledRealms]
   );
 
   const pressedTab = (index) => {
@@ -144,20 +181,26 @@ export function EmpirePanel() {
       <div className="w-9/12 py-16 pl-16 pr-4">
         <div className="sticky flex flex-col p-6 border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl top-10 ">
           <div className="flex w-full gap-2 mb-4 rounded-2xl">
-            {quickActions.map((action) => (
-              <Button
-                key={action.name}
-                className="flex-col items-start rounded-xl whitespace-nowrap"
-                variant="outline"
-                onClick={() => action.action()}
-              >
-                {userData?.resourcesClaimable}
-                <span className="flex">
-                  {action.icon} {action.name}
-                </span>
-                {action.details}
-              </Button>
-            ))}
+            {quickActions.map((action) => {
+              return (
+                <>
+                  {action.enabled && (
+                    <Button
+                      key={action.name}
+                      className={`flex-col items-start rounded-xl whitespace-nowrap ${action.buttonStyles}`}
+                      variant="outline"
+                      onClick={() => action.action()}
+                    >
+                      {userData?.resourcesClaimable}
+                      <span className="flex">
+                        {action.icon} {action.name}
+                      </span>
+                      {action.details}
+                    </Button>
+                  )}
+                </>
+              );
+            })}
           </div>
           <div className="relative">
             <Tabs
@@ -180,7 +223,7 @@ export function EmpirePanel() {
                 </Tabs.Panels>
               </div>
             </Tabs>
-            <SettleRealmsSideBar
+            <MintSettleRealmsSideBar
               isOpen={isSettleRealmsSideBarOpen}
               onClose={onSettleRealmsClick}
             />

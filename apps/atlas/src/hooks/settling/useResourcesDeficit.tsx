@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { BigNumberish } from 'starknet/dist/utils/number';
-import { toBN } from 'starknet/dist/utils/number';
+import { number } from 'starknet';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 
@@ -9,7 +8,7 @@ type Props = {
   Resource costs keyed by resource ID. Values must have correct amount of decimals.
   This is passed in so that the costs are agnostic for multiple entities (buildings, etc...)
   */
-  resourceCosts: Record<number, BigNumberish>;
+  resourceCosts: Record<number, number.BigNumberish>;
 };
 /*
   Function that compares Resource balance in wallet with a cost
@@ -18,7 +17,9 @@ type Props = {
 const useResourcesDeficit = (props: Props) => {
   const { resourceCosts } = props;
 
-  const [deficits, setDeficits] = useState<Record<number, BigNumberish>>({});
+  const [deficits, setDeficits] = useState<Record<number, number.BigNumberish>>(
+    {}
+  );
 
   const resources = useBankContext();
 
@@ -28,10 +29,10 @@ const useResourcesDeficit = (props: Props) => {
     if (Object.keys(resourceCosts).length > 0 && balanceStatus == 'success') {
       const deficits = {};
       balance.forEach((r) => {
-        const amount = toBN(r.amount, 10);
+        const amount = number.toBN(r.amount, 10);
         if (resourceCosts[r.resourceId]) {
-          const costBN = toBN(resourceCosts[r.resourceId]);
-          if (amount.sub(costBN).lte(toBN(0))) {
+          const costBN = number.toBN(resourceCosts[r.resourceId]);
+          if (amount.sub(costBN).lte(number.toBN(0))) {
             deficits[r.resourceId] = costBN.sub(amount);
           }
         }

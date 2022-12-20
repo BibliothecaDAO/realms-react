@@ -6,9 +6,9 @@ import {
 import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
 import type { Contract } from 'starknet';
-import { toBN, toFelt } from 'starknet/dist/utils/number';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import { uint256, number } from 'starknet';
 import { useBankContext } from '@/context/BankContext';
+import { useCommandList } from '@/context/CommandListContext';
 import {
   useLordsContract,
   useBuildingContract,
@@ -31,8 +31,8 @@ const MIN_ALLOWANCE_AMOUNT = ethers.utils.parseUnits('1000', 18);
 const createApprovalParams = (contractAddress: string) => {
   return {
     args: [
-      toBN(contractAddress).toString(),
-      bnToUint256(ALLOWANCE_AMOUNT.toString()),
+      number.toBN(contractAddress).toString(),
+      uint256.bnToUint256(ALLOWANCE_AMOUNT.toString()),
     ],
   };
 };
@@ -45,7 +45,10 @@ const createStarknetAllowanceCall = (
   return {
     contract: lordsContract,
     method: 'allowance',
-    args: [toBN(account).toString(), toBN(contractAddress).toString()],
+    args: [
+      number.toBN(account).toString(),
+      number.toBN(contractAddress).toString(),
+    ],
     options: { watch: false },
   };
 };
@@ -75,8 +78,8 @@ const useApprovalForContract = (contract: Contract) => {
   useEffect(() => {
     if (!outputResult) return;
     setIsResourcesApproved(
-      uint256ToBN(outputResult['remaining']) >=
-        toBN(MIN_ALLOWANCE_AMOUNT.toString())
+      uint256.uint256ToBN(outputResult['remaining']) >=
+        number.toBN(MIN_ALLOWANCE_AMOUNT.toString())
     );
   }, [outputResult]);
 
@@ -119,7 +122,7 @@ export const useApproveResourcesForExchange = () => {
     contract: resourcesContract,
     method: 'isApprovedForAll',
     args: [
-      toBN(address as string).toString(),
+      number.toBN(address as string).toString(),
       exchangeContract?.address.toString(),
     ],
   });
@@ -132,11 +135,37 @@ export const useApproveResourcesForExchange = () => {
   const approveResources = () => {
     console.log(approveResourcesAction.error);
     approveResourcesAction.invoke({
-      args: [toBN(exchangeContract?.address as string).toString(), toFelt(1)],
+      args: [
+        number.toBN(exchangeContract?.address as string).toString(),
+        number.toFelt(1),
+      ],
     });
   };
 
   return { isApproved: isLordsApproved, approveResources };
+};
+// TODO should this be refactored to context so fetch not repeated
+export const useDumbGameApprovals = () => {
+  const { contract: resourcesContract } = useResources1155Contract();
+  const { address } = useAccount();
+
+  const [isGameApproved, setIsGameApproved] = useState<boolean>();
+  const { data: realmsApprovalData } = useStarknetCall({
+    contract: resourcesContract,
+    method: 'isApprovedForAll',
+    args: [
+      number.toBN(address as string).toString(),
+      number.toBN(CM.Building).toString(),
+    ],
+  });
+
+  useEffect(() => {
+    if (realmsApprovalData !== undefined && address !== undefined) {
+      setIsGameApproved(realmsApprovalData.toString() === '1' ? true : false);
+    }
+  }, [realmsApprovalData, address]);
+
+  return { isGameApproved };
 };
 
 export const getApproveAllGameContracts = (): CallAndMetadata[] => {
@@ -147,7 +176,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.Exchange).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.Exchange).toString(), number.toFelt(1)],
     metadata: {
       title: 'Realm Resources Contract',
       description: 'Approve spending by Realms Exchange module',
@@ -159,7 +188,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
     contractAddress: CM.Lords,
     entrypoint: 'approve',
     calldata: [
-      toBN(CM.Exchange).toString(),
+      number.toBN(CM.Exchange).toString(),
       ALLOWANCE_AMOUNT.toString(),
       0, // Extra felt for uint256
     ],
@@ -173,7 +202,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.ResourceGame).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.ResourceGame).toString(), number.toFelt(1)],
     metadata: {
       title: 'Realms Resources',
       description: 'Approve spending by Resource Game module',
@@ -186,7 +215,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.Realms,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.Settling).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.Settling).toString(), number.toFelt(1)],
     metadata: {
       title: 'Realms NFT',
       description: 'Approve spending by Settling module',
@@ -198,7 +227,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.Building).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.Building).toString(), number.toFelt(1)],
     metadata: {
       title: 'Realms Resources Contract',
       description: 'Approve spending by Building module',
@@ -211,7 +240,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.Combat).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.Combat).toString(), number.toFelt(1)],
     metadata: {
       title: 'Realm Resources Contract',
       description: 'Approve spending by Combat module',
@@ -224,7 +253,7 @@ export const getApproveAllGameContracts = (): CallAndMetadata[] => {
   calls.push({
     contractAddress: CM.ResourcesToken,
     entrypoint: 'setApprovalForAll',
-    calldata: [toBN(CM.Food).toString(), toFelt(1)],
+    calldata: [number.toBN(CM.Food).toString(), number.toFelt(1)],
     metadata: {
       title: 'Food approval',
       description: 'Approve spending by Food Module',

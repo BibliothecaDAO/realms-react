@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { getRealmNameById, getTrait } from '@/components/realms/RealmsGetters';
 import {
   RealmBuildingId,
@@ -42,7 +41,7 @@ export const createBuildingCall: Record<
     contractAddress: ModuleAddr.Building,
     entrypoint: Entrypoints.build,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(toBN(args.realmId))),
+      ...uint256ToRawCalldata(uint256.bnToUint256(number.toBN(args.realmId))),
       args.buildingId,
       args.qty,
     ],
@@ -80,6 +79,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
   const txQueue = useCommandList();
   const { play: buildMilitary } = useUiSounds(soundSelector.buildMilitary);
   const { play: buildBarracks } = useUiSounds(soundSelector.buildBarracks);
+  const { play: buildCastle } = useUiSounds(soundSelector.buildCastle);
   const { play: buildArcherTower } = useUiSounds(
     soundSelector.buildArcherTower
   );
@@ -99,6 +99,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         break;
       case RealmBuildingId.ArcherTower:
         buildArcherTower();
+        break;
+      case RealmBuildingId.Castle:
+        buildCastle();
         break;
       default:
         buildMilitary();

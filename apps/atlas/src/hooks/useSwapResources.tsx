@@ -2,8 +2,7 @@ import { ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { formatEther } from '@ethersproject/units';
 import { useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
-import { toFelt } from 'starknet/dist/utils/number';
-import { bnToUint256 } from 'starknet/dist/utils/uint256';
+import { number, uint256 } from 'starknet';
 import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -39,18 +38,22 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Exchange,
     entrypoint: Entrypoints.buyTokens,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.maxAmount.toHexString())),
+      ...uint256ToRawCalldata(
+        uint256.bnToUint256(args.maxAmount.toHexString())
+      ),
       args.tokenIds.length,
       ...args.tokenIds
-        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .map((value) => uint256ToRawCalldata(uint256.bnToUint256(value)))
         .flat(1),
       args.tokenAmounts.length,
       ...args.tokenAmounts
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -66,18 +69,22 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Exchange,
     entrypoint: Entrypoints.sellTokens,
     calldata: [
-      ...uint256ToRawCalldata(bnToUint256(args.minAmount.toHexString())),
+      ...uint256ToRawCalldata(
+        uint256.bnToUint256(args.minAmount.toHexString())
+      ),
       args.tokenIds.length,
       ...args.tokenIds
-        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .map((value) => uint256ToRawCalldata(uint256.bnToUint256(value)))
         .flat(1),
       args.tokenAmounts.length,
       ...args.tokenAmounts
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -96,20 +103,24 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       args.maxCurrencyAmount.length,
       ...args.maxCurrencyAmount
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
       args.tokenIds.length,
       ...args.tokenIds
-        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .map((value) => uint256ToRawCalldata(uint256.bnToUint256(value)))
         .flat(1),
       args.tokenAmounts.length,
       ...args.tokenAmounts
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,
@@ -129,26 +140,32 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       args.minCurrencyAmount.length,
       ...args.minCurrencyAmount
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
       args.tokenIds.length,
       ...args.tokenIds
-        .map((value) => uint256ToRawCalldata(bnToUint256(value)))
+        .map((value) => uint256ToRawCalldata(uint256.bnToUint256(value)))
         .flat(1),
       args.tokenAmounts.length,
       ...args.tokenAmounts
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
       args.lpAmounts.length,
       ...args.lpAmounts
         .map((value) =>
-          uint256ToRawCalldata(bnToUint256(BigNumber.from(value).toHexString()))
+          uint256ToRawCalldata(
+            uint256.bnToUint256(BigNumber.from(value).toHexString())
+          )
         )
         .flat(1),
-      toFelt(args.deadline),
+      number.toFelt(args.deadline),
     ],
     metadata: {
       ...args,

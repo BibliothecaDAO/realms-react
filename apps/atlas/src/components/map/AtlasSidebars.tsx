@@ -4,13 +4,15 @@ import { CryptSideBar } from '../crypts/CryptsSideBar';
 import { GASideBar } from '../ga/GASideBar';
 import { LootSideBar } from '../loot/LootSideBar';
 import { RealmSideBar } from '../realms/RealmsSideBar';
+import { ChatSideBar } from '../ui/Chat';
 
 export function AtlasSidebars() {
   const { mapContext } = useAtlasContext();
 
   const selectedAsset = mapContext.selectedAsset;
 
-  const { assetSidebar, closeAsset } = useUIContext();
+  const { assetSidebar, closeAsset, chatSidebar, toggleChatSidebar } =
+    useUIContext();
 
   return (
     <>
@@ -33,6 +35,11 @@ export function AtlasSidebars() {
         gaId={selectedAsset?.id as string}
         isOpen={assetSidebar === 'ga'}
         onClose={closeAsset}
+      />
+      <ChatSideBar
+        isOpen={chatSidebar}
+        onClose={toggleChatSidebar}
+        channelName={'desiege-chat'}
       />
     </>
   );
