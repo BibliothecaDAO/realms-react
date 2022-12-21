@@ -19,4 +19,10 @@ query getGameConstants @api(name: starkIndexer) {
     battalionName
     resources
   }
+  laborAndToolCosts: getResourceLaborAndToolCosts {
+    resourceId
+    resourceName
+    tier
+    costs
+  }
 }
