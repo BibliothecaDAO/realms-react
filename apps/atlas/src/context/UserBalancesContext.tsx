@@ -104,6 +104,8 @@ function useUserBalances() {
       .map((t) => t.resources)
       .flat(1);
 
+    console.log(getTxCosts(txQueue));
+
     const costsByResourceId = {};
 
     allResourceCosts.forEach((c) => {

@@ -148,7 +148,7 @@ export const RealmsFood = (props: Prop) => {
               colorScheme="transparent"
               className="w-24 bg-white border rounded-r border-white/40"
               min={1}
-              max={100000}
+              max={10000000}
               stringMode
               onChange={(value: ValueType | null) => {
                 if (value) {

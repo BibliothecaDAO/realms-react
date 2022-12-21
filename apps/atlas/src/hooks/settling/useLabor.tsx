@@ -18,7 +18,7 @@ export const Entrypoints = {
 };
 
 export const createCall: Record<string, (args: any) => CallAndMetadata> = {
-  create: (args: { realmId; resourceId; laborUnits }) => ({
+  create: (args: { realmId; resourceId; laborUnits; costs }) => ({
     contractAddress: ModuleAddr.Labor,
     entrypoint: Entrypoints.create_labor,
     calldata: [
@@ -59,23 +59,33 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 type Resources = {
-  create: (resourceId) => void;
+  create: (args: { resourceId; laborUnits; costs }) => void;
   loading: boolean;
 };
 
-const useLabor = (realm: Realm | undefined): Resources => {
+const useLabor = (realm: Realm): Resources => {
   const { play } = useUiSounds(soundSelector.claim);
 
   const txQueue = useCommandList();
 
   return {
-    create: (args: { resourceId; laborUnits }) => {
+    create: (args: { resourceId; laborUnits; costs }) => {
+      console.log(args.costs);
+      const qtyCosts = args.costs.map((a) => {
+        return {
+          resourceId: a.resourceId,
+          amount: (a.amount * args.laborUnits) / 12,
+          resourceName: a.resourceName,
+        };
+      });
+
       play();
       txQueue.add(
         createCall.create({
           realmId: realm?.realmId,
           resourceId: args.resourceId,
           laborUnits: args.laborUnits,
+          costs: { amount: 0, resources: qtyCosts },
         })
       );
     },

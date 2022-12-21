@@ -22,7 +22,10 @@ export const LaborValues = ({ last_harvest, labor_balance }) => {
     part: 0,
     vault: 0,
   });
-  const now = new Date().getTime() / 1000;
+  const now = new Date().getTime();
+  console.log('now', now);
+  console.log('last_harvest', last_harvest);
+  console.log('labor_balance', labor_balance);
 
   const getLaborGenerated = ({ last_harvest, labor_balance }): number[] => {
     const lastHarvest = new Date(last_harvest);
@@ -30,9 +33,9 @@ export const LaborValues = ({ last_harvest, labor_balance }) => {
     let labor;
 
     if (labor_balance > now) {
-      labor = now - lastHarvest.getTime();
+      labor = (now - lastHarvest.getTime()) / 1000;
     } else {
-      labor = labor_balance - lastHarvest.getTime();
+      labor = (labor_balance - lastHarvest.getTime()) / 1000;
     }
 
     const generated_labor = Math.floor(labor / BASE_LABOR_UNITS) * 0.7;

@@ -15,6 +15,7 @@ import {
   BASE_RESOURCES_PER_CYCLE,
 } from '@/constants/buildings';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useLabor from '@/hooks/settling/useLabor';
 import { CostBlock } from '../RealmsGetters';
 import { LaborValues } from './LaborValues';
@@ -48,7 +49,12 @@ export const LaborTable = (props: Prop) => {
 
   const { create } = useLabor(realm as Realm);
 
+  const { gameConstants } = useGameConstants();
+
   const defaultData = resources?.map((resource) => {
+    const costs = gameConstants?.laborAndToolCosts.find(
+      (a) => a.resourceId === resource.resourceId
+    )?.costs;
     return {
       resource: (
         <span className="flex">
@@ -64,7 +70,10 @@ export const LaborTable = (props: Prop) => {
       ),
       generated: (
         <span className="flex justify-center space-x-4">
-          <LaborValues last_harvest={1671466181} labor_balance={1671638981} />
+          <LaborValues
+            last_harvest={resource.labor?.lastUpdate}
+            labor_balance={resource.labor?.balance}
+          />
 
           <Button variant="outline" size="sm">
             Harvest
@@ -77,14 +86,28 @@ export const LaborTable = (props: Prop) => {
             placement="top"
             className="flex"
             tooltipText={
-              <div className="p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
-                <CostBlock resourceName={'Wheat'} amount={100} id={1} qty={1} />
+              <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                {costs?.map((cost, index) => {
+                  return (
+                    <CostBlock
+                      key={index}
+                      resourceName={cost.resourceName}
+                      amount={cost.amount / 12}
+                      id={cost.resourceId}
+                      qty={12}
+                    />
+                  );
+                })}
               </div>
             }
           >
             <Button
               onClick={() =>
-                create({ resourceId: resource.resourceId, laborUnits: 12 })
+                create({
+                  resourceId: resource.resourceId,
+                  laborUnits: 12,
+                  costs: costs,
+                })
               }
               variant="outline"
               size="sm"
@@ -94,7 +117,7 @@ export const LaborTable = (props: Prop) => {
           </Tooltip>
         </div>
       ),
-      vault: <Number end={100} />,
+      vault: <Number end={resource.labor?.vaultBalance} />,
     };
   });
 
