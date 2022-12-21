@@ -24,13 +24,28 @@ type RealmsSelectableProps = {
 };
 
 function RealmsSelectable(props: RealmsSelectableProps): ReactElement {
-  const { isSelected, selections, toggleSelection } = useSelections<number>();
+  const { isSelected, selections, toggleSelection, setSelections } =
+    useSelections<number>();
   useEffect(() => {
     props.onChange(selections);
   }, [selections.length]);
 
+  const toggleSelectAllRealms = () =>
+    selections.length > 0
+      ? setSelections([])
+      : setSelections((props?.realms || []).map((realm) => realm.realmId));
+
   return (
     <div>
+      <div className="mb-2">
+        <span className="px-2 text-gray-600">
+          {selections.length} Realm(s) selected
+        </span>
+        <Button variant="link" size="sm" onClick={toggleSelectAllRealms}>
+          {selections.length > 0 ? `Deselect All` : `Select All`}
+        </Button>
+      </div>
+
       {props.realms?.map((realm: RealmFragmentFragment, index) => (
         <SelectableRealm
           key={index}
@@ -188,6 +203,11 @@ export const SettleRealmsSideBarPanel = ({
                 <Button
                   className="w-full"
                   variant="primary"
+                  disabled={
+                    selectedTab === 0
+                      ? !settleSelections.length
+                      : !unSettleSelections.length
+                  }
                   onClick={() =>
                     selectedTab === 0 ? settleAll() : usSettleAll()
                   }

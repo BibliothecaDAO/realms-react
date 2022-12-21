@@ -23,13 +23,13 @@ export function SelectableRealm(props: SelectableRealmProps) {
       <div
         className={clsx(
           `flex w-full p-2  shadow-inner rounded-t-l`,
-          isSelected ? `bg-gray-1000/60` : `bg-gray-1000/40`
+          isSelected ? `bg-gray-800/60` : `bg-gray-1000/40`
         )}
       >
         <div
-          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-gray-1000 rounded border-2 border-gray-900`}
+          className={`flex self-center ml-2 justify-center items-center w-8 h-8 bg-gray-1000 rounded border-2 border-gray-600`}
         >
-          {isSelected ? `✔️` : ``}
+          <span className="text-white/100">{isSelected ? `✔️` : ``}</span>
         </div>
         <h3 className="self-center mb-1 ml-4">
           <span className="mr-4 text-gray-400">{realm.realmId} | </span>
