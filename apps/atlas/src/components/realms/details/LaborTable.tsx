@@ -6,8 +6,9 @@ import {
   Table,
 } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Image from 'next/image';
-import type { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 import { useSpring, animated } from 'react-spring';
 import {
@@ -15,6 +16,7 @@ import {
   BASE_RESOURCES_PER_CYCLE,
 } from '@/constants/buildings';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useLabor from '@/hooks/settling/useLabor';
 import { CostBlock } from '../RealmsGetters';
@@ -47,14 +49,48 @@ export const LaborTable = (props: Prop) => {
   const { realm } = props;
   const resources = realm.resources;
 
-  const { create } = useLabor(realm as Realm);
+  const { create, harvest } = useLabor(realm as Realm);
 
   const { gameConstants } = useGameConstants();
+
+  const { getTotalLordsCost } = useMarketRate();
+
+  const getLaborUnitsGenerated = (time): number => {
+    return time / 1000 / BASE_LABOR_UNITS;
+  };
+
+  const now = new Date().getTime();
+
+  const getLaborGenerated = ({ last_harvest, labor_balance }): number[] => {
+    const lastHarvest = new Date(last_harvest);
+
+    let labor;
+
+    if (labor_balance > now) {
+      labor = (now - lastHarvest.getTime()) / 1000;
+    } else {
+      labor = (labor_balance - lastHarvest.getTime()) / 1000;
+    }
+
+    const generated_labor = Math.floor(labor / BASE_LABOR_UNITS) * 0.7;
+
+    const labor_remaining = labor % BASE_LABOR_UNITS;
+
+    const vault = Math.floor(generated_labor * 0.3);
+
+    return [generated_labor, labor_remaining / BASE_LABOR_UNITS, vault];
+  };
 
   const defaultData = resources?.map((resource) => {
     const costs = gameConstants?.laborAndToolCosts.find(
       (a) => a.resourceId === resource.resourceId
     )?.costs;
+
+    const generation = getLaborGenerated({
+      last_harvest: resource.labor?.lastUpdate,
+      labor_balance: resource.labor?.balance,
+    });
+
     return {
       resource: (
         <span className="flex">
@@ -71,12 +107,24 @@ export const LaborTable = (props: Prop) => {
       generated: (
         <span className="flex justify-center space-x-4">
           <LaborValues
-            last_harvest={resource.labor?.lastUpdate}
-            labor_balance={resource.labor?.balance}
+            labor_generated={generation[0]}
+            part_labor={generation[1]}
+            vault={generation[2]}
           />
 
-          <Button variant="outline" size="sm">
-            Harvest
+          <Button
+            onClick={() =>
+              harvest({
+                resourceId: resource.resourceId,
+              })
+            }
+            disabled={generation[0] == 0 || generation[0] == null}
+            variant="outline"
+            size="sm"
+          >
+            {generation[0] == 0 || generation[0] == undefined
+              ? 'Generating'
+              : `Generated ${generation[0] || 0}`}
           </Button>
         </span>
       ),
@@ -98,6 +146,13 @@ export const LaborTable = (props: Prop) => {
                     />
                   );
                 })}
+                <div className="p-2">
+                  <Lords className="self-center md:w-4 lg:w-6" />{' '}
+                  {getTotalLordsCost({
+                    costs: costs,
+                    qty: 1,
+                  }).toFixed(2)}
+                </div>
               </div>
             }
           >
@@ -112,12 +167,18 @@ export const LaborTable = (props: Prop) => {
               variant="outline"
               size="sm"
             >
-              Buy Tools and Labor (12)
+              Buy Tools and Labor (12hrs)
             </Button>
           </Tooltip>
         </div>
       ),
-      vault: <Number end={resource.labor?.vaultBalance} />,
+      vault: (
+        <div>
+          <Number
+            end={getLaborUnitsGenerated(resource.labor?.vaultBalance) || 0}
+          />
+        </div>
+      ),
     };
   });
 

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useEffect } from 'react';
 import { number, uint256 } from 'starknet';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { findResourceById } from '@/constants/resources';
@@ -15,6 +14,7 @@ import { useUiSounds, soundSelector } from '../useUiSounds';
 
 export const Entrypoints = {
   create_labor: 'create',
+  harvest_labor: 'harvest',
 };
 
 export const createCall: Record<string, (args: any) => CallAndMetadata> = {
@@ -29,6 +29,17 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       args.laborUnits,
     ],
     metadata: { ...args, action: Entrypoints.create_labor },
+  }),
+  harvest: (args: { realmId; resourceId }) => ({
+    contractAddress: ModuleAddr.Labor,
+    entrypoint: Entrypoints.harvest_labor,
+    calldata: [
+      ...uint256ToRawCalldata(uint256.bnToUint256(number.toBN(args.realmId))),
+      ...uint256ToRawCalldata(
+        uint256.bnToUint256(number.toBN(args.resourceId))
+      ),
+    ],
+    metadata: { ...args, action: Entrypoints.harvest_labor },
   }),
 };
 
@@ -45,12 +56,33 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
             height={80}
             className="border-4 rounded-2xl border-yellow-800/40"
           />
-          <div className="self-center ml-4">
-            <h3>
-              Creating {tx.metadata.laborUnits} Tools & Labor on
-              {getRealmNameById(tx.metadata.realmId)} for{' '}
-              {findResourceById(tx.metadata.resourceId)?.trait}
-            </h3>
+          <div className="self-center ml-4 text-md">
+            Creating {tx.metadata.laborUnits} Tools & Labor on
+            {getRealmNameById(tx.metadata.realmId)} for{' '}
+            {findResourceById(tx.metadata.resourceId)?.trait}
+          </div>
+        </div>
+      </span>
+    ),
+  }),
+  [Entrypoints.harvest_labor]: (tx, ctx) => ({
+    title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} ${
+      findResourceById(tx.metadata.resourceId)?.trait
+    }`,
+    description: (
+      <span>
+        <div className="flex my-1">
+          <Image
+            src={'/resources/' + tx.metadata.resourceId + '.jpg'}
+            alt="map"
+            width={80}
+            height={80}
+            className="border-4 rounded-2xl border-yellow-800/40"
+          />
+          <div className="self-center ml-4 text-md">
+            Harvesting {tx.metadata.laborUnits} Tools & Labor on
+            {getRealmNameById(tx.metadata.realmId)} for{' '}
+            {findResourceById(tx.metadata.resourceId)?.trait}
           </div>
         </div>
       </span>
@@ -60,6 +92,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 
 type Resources = {
   create: (args: { resourceId; laborUnits; costs }) => void;
+  harvest: (args: { resourceId }) => void;
   loading: boolean;
 };
 
@@ -86,6 +119,15 @@ const useLabor = (realm: Realm): Resources => {
           resourceId: args.resourceId,
           laborUnits: args.laborUnits,
           costs: { amount: 0, resources: qtyCosts },
+        })
+      );
+    },
+    harvest: (args: { resourceId }) => {
+      play();
+      txQueue.add(
+        createCall.harvest({
+          realmId: realm?.realmId,
+          resourceId: args.resourceId,
         })
       );
     },
