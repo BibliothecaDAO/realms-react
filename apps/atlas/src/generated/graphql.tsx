@@ -486,6 +486,40 @@ export type JsonWithAggregatesFilter = {
   string_starts_with?: InputMaybe<Scalars['String']>;
 };
 
+export type Labor = {
+  __typename?: 'Labor';
+  balance?: Maybe<Scalars['Timestamp']>;
+  createdAt: Scalars['Timestamp'];
+  id: Scalars['Int'];
+  lastEventId?: Maybe<Scalars['String']>;
+  lastUpdate?: Maybe<Scalars['Timestamp']>;
+  realmId: Scalars['Int'];
+  resourceId: Scalars['Int'];
+  updatedAt: Scalars['Timestamp'];
+  vaultBalance?: Maybe<Scalars['Timestamp']>;
+};
+
+export type LaborRelationFilter = {
+  is?: InputMaybe<LaborWhereInput>;
+  isNot?: InputMaybe<LaborWhereInput>;
+};
+
+export type LaborWhereInput = {
+  AND?: InputMaybe<Array<LaborWhereInput>>;
+  NOT?: InputMaybe<Array<LaborWhereInput>>;
+  OR?: InputMaybe<Array<LaborWhereInput>>;
+  balance?: InputMaybe<DateTimeNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  lastEventId?: InputMaybe<StringNullableFilter>;
+  lastUpdate?: InputMaybe<DateTimeNullableFilter>;
+  realmId?: InputMaybe<IntFilter>;
+  resourceId?: InputMaybe<IntFilter>;
+  resoure?: InputMaybe<ResourceRelationFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  vaultBalance?: InputMaybe<DateTimeNullableFilter>;
+};
+
 /** Lore Entity */
 export type LoreEntity = {
   __typename?: 'LoreEntity';
@@ -868,6 +902,7 @@ export type Query = {
   getRealmHistory: Array<RealmHistory>;
   getRealms: Array<Realm>;
   getResource: Resource;
+  getResourceLaborAndToolCosts: Array<ResourceLaborAndToolCost>;
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
   getTroopStats: Array<TroopStats>;
@@ -1448,6 +1483,7 @@ export type RelicWhereInput = {
 export type Resource = {
   __typename?: 'Resource';
   id: Scalars['ID'];
+  labor?: Maybe<Labor>;
   level: Scalars['Int'];
   realm: Realm;
   realmId?: Maybe<Scalars['Float']>;
@@ -1464,6 +1500,16 @@ export type ResourceAmount = {
   resourceName: Scalars['String'];
 };
 
+/** Resource Labor and Tool Cost Model */
+export type ResourceLaborAndToolCost = {
+  __typename?: 'ResourceLaborAndToolCost';
+  amount: Scalars['Float'];
+  costs: Scalars['JSON'];
+  resourceId: Scalars['Int'];
+  resourceName: Scalars['String'];
+  tier: Scalars['String'];
+};
+
 export type ResourceListRelationFilter = {
   every?: InputMaybe<ResourceWhereInput>;
   none?: InputMaybe<ResourceWhereInput>;
@@ -1474,11 +1520,17 @@ export type ResourceOrderByRelationAggregateInput = {
   _count?: InputMaybe<SortOrder>;
 };
 
+export type ResourceRelationFilter = {
+  is?: InputMaybe<ResourceWhereInput>;
+  isNot?: InputMaybe<ResourceWhereInput>;
+};
+
 export type ResourceWhereInput = {
   AND?: InputMaybe<Array<ResourceWhereInput>>;
   NOT?: InputMaybe<Array<ResourceWhereInput>>;
   OR?: InputMaybe<Array<ResourceWhereInput>>;
   id?: InputMaybe<IntFilter>;
+  labor?: InputMaybe<LaborRelationFilter>;
   level?: InputMaybe<IntFilter>;
   realm?: InputMaybe<RealmRelationFilter>;
   realmId?: InputMaybe<IntNullableFilter>;
@@ -1970,6 +2022,13 @@ export type GetGameConstantsQuery = {
     battalionName: string;
     resources: any;
   }>;
+  laborAndToolCosts: Array<{
+    __typename?: 'ResourceLaborAndToolCost';
+    resourceId: number;
+    resourceName: string;
+    tier: string;
+    costs: any;
+  }>;
 };
 
 export type GetRealmQueryVariables = Exact<{
@@ -2002,6 +2061,12 @@ export type GetRealmQuery = {
       resourceName: string;
       level: number;
       upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
     }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -2240,6 +2305,12 @@ export type GetRealmsQuery = {
       resourceName: string;
       level: number;
       upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
     }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -2358,6 +2429,12 @@ export type GetRealmsWithTravelsQuery = {
       resourceName: string;
       level: number;
       upgrades: Array<string>;
+      labor?: {
+        __typename?: 'Labor';
+        lastUpdate?: any | null;
+        balance?: any | null;
+        vaultBalance?: any | null;
+      } | null;
     }> | null;
     traits?: Array<{
       __typename?: 'RealmTrait';
@@ -2498,6 +2575,12 @@ export type RealmFragmentFragment = {
     resourceName: string;
     level: number;
     upgrades: Array<string>;
+    labor?: {
+      __typename?: 'Labor';
+      lastUpdate?: any | null;
+      balance?: any | null;
+      vaultBalance?: any | null;
+    } | null;
   }> | null;
   traits?: Array<{
     __typename?: 'RealmTrait';
@@ -2882,6 +2965,11 @@ export const RealmFragmentFragmentDoc = gql`
     resources {
       resourceId
       resourceName
+      labor {
+        lastUpdate
+        balance
+        vaultBalance
+      }
       level
       upgrades
     }
@@ -3389,6 +3477,12 @@ export const GetGameConstantsDocument = gql`
       battalionId
       battalionName
       resources
+    }
+    laborAndToolCosts: getResourceLaborAndToolCosts {
+      resourceId
+      resourceName
+      tier
+      costs
     }
   }
 `;

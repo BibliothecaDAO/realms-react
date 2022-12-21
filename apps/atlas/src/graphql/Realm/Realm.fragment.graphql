@@ -18,6 +18,11 @@ fragment RealmFragment on Realm {
   resources {
     resourceId
     resourceName
+    labor {
+      lastUpdate
+      balance
+      vaultBalance
+    }
     level
     upgrades
   }
