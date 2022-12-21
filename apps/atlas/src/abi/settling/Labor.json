@@ -1,0 +1,285 @@
+[
+  {
+    "members": [
+      {
+        "name": "low",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "high",
+        "offset": 1,
+        "type": "felt"
+      }
+    ],
+    "name": "Uint256",
+    "size": 2,
+    "type": "struct"
+  },
+  {
+    "members": [
+      {
+        "name": "resource_count",
+        "offset": 0,
+        "type": "felt"
+      },
+      {
+        "name": "bits",
+        "offset": 1,
+        "type": "felt"
+      },
+      {
+        "name": "packed_ids",
+        "offset": 2,
+        "type": "felt"
+      },
+      {
+        "name": "packed_amounts",
+        "offset": 3,
+        "type": "felt"
+      }
+    ],
+    "name": "Cost",
+    "size": 4,
+    "type": "struct"
+  },
+  {
+    "data": [
+      {
+        "name": "implementation",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "previousAdmin",
+        "type": "felt"
+      },
+      {
+        "name": "newAdmin",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "data": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "last_update",
+        "type": "felt"
+      },
+      {
+        "name": "balance",
+        "type": "felt"
+      },
+      {
+        "name": "vault_balance",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "UpdateLabor",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "name": "address_of_controller",
+        "type": "felt"
+      },
+      {
+        "name": "proxy_admin",
+        "type": "felt"
+      }
+    ],
+    "name": "initializer",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "new_implementation",
+        "type": "felt"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "labor_units",
+        "type": "felt"
+      }
+    ],
+    "name": "create",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "harvest",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "claimer",
+        "type": "felt"
+      }
+    ],
+    "name": "pillage",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "labor_units_generated",
+    "outputs": [
+      {
+        "name": "labor_units_generated",
+        "type": "felt"
+      },
+      {
+        "name": "part_labor_units",
+        "type": "felt"
+      },
+      {
+        "name": "is_labor_complete",
+        "type": "felt"
+      },
+      {
+        "name": "vault_amount",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_vault_balance",
+    "outputs": [
+      {
+        "name": "balance",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_labor_cost",
+    "outputs": [
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_raidable",
+    "outputs": [
+      {
+        "name": "vault_units_generated",
+        "type": "felt"
+      },
+      {
+        "name": "part_vault_units_generated",
+        "type": "felt"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "cost",
+        "type": "Cost"
+      }
+    ],
+    "name": "set_labor_cost",
+    "outputs": [],
+    "type": "function"
+  }
+]

@@ -59,22 +59,18 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
           <input
             value={globalFilter ?? ''}
             onChange={(e) => setGlobalFilter(e.target.value)}
-            className="p-2 text-gray-600 border rounded font-lg bg-white-600/40 border-block"
+            className="p-2 text-gray-600 border rounded bg-white-600/40 border-block"
             placeholder="Search..."
           />
         </div>
       )}
 
       <table className="w-full ">
-        <thead className="uppercase bg-gray-1000/90">
+        <thead className="">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th
-                  className="p-2 text-center "
-                  key={header.id}
-                  colSpan={header.colSpan}
-                >
+                <th className="p-2 " key={header.id} colSpan={header.colSpan}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -91,13 +87,13 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-1000'
-                  : 'bg-gray-1000'
-              } hover:bg-gray-800 font-semibold shadow-inner transition-all duration-30`}
+                  ? 'bg-gray-800'
+                  : 'bg-gray-900'
+              } hover:bg-gray-900 shadow-inner transition-all duration-30`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
-                <td className="px-3 py-1 mx-auto text-left " key={cell.id}>
+                <td className="px-3 py-1 text-center " key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
