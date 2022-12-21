@@ -125,7 +125,10 @@ export enum HarvestType {
 
 export const BASE_SQM = 100;
 export const MAX_DAYS_ACCURED = 3;
-export const BASE_RESOURCES_PER_DAY = 250;
+export const BASE_RESOURCES_PER_DAY = 252;
+
+export const BASE_RESOURCES_PER_CYCLE = BASE_RESOURCES_PER_DAY / 12;
+
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;
 
 export const VAULT_LENGTH = 7;
@@ -172,6 +175,8 @@ export const NUMBER_OF_RANDOM_EVENTS = 9;
 export const MAX_BATTALIONS = 30;
 
 export const ATTACK_COOLDOWN_PERIOD = DAY / 10;
+
+export const BASE_LABOR_UNITS = DAY / 12;
 
 export enum RealmBuildingIntegrity {
   House = 3 * DAY,

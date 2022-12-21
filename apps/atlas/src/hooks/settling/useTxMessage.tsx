@@ -6,9 +6,11 @@ import { renderTransaction as renderBuildingTxs } from './useBuildings';
 import { renderTransaction as renderCombatTxs } from './useCombat';
 import { renderTransaction as renderFoodTxs } from './useFood';
 import { renderTransaction as renderGoblinTxs } from './useGoblinTowns';
+import { renderTransaction as renderLaborTxs } from './useLabor';
 import { renderTransaction as renderResourceTxs } from './useResources';
 import { renderTransaction as renderSettlingTxs } from './useSettling';
 import { renderTransaction as renderTravelTxs } from './useTravel';
+
 export function getTxRenderConfig(
   tx: RealmsTransaction
 ): RealmsTransactionRender {
@@ -24,6 +26,7 @@ export function getTxRenderConfig(
     ...renderTravelTxs,
     ...renderGoblinTxs,
     ...renderApprovals,
+    ...renderLaborTxs,
   };
 
   const metadata = tx.metadata;

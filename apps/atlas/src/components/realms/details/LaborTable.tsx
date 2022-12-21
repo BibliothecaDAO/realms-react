@@ -10,9 +10,14 @@ import Image from 'next/image';
 import type { ReactElement } from 'react';
 
 import { useSpring, animated } from 'react-spring';
+import {
+  BASE_LABOR_UNITS,
+  BASE_RESOURCES_PER_CYCLE,
+} from '@/constants/buildings';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import useLabor from '@/hooks/settling/useLabor';
 import { CostBlock } from '../RealmsGetters';
+import { LaborValues } from './LaborValues';
 
 function Number({ end, start = 0 }) {
   const { number } = useSpring({
@@ -23,12 +28,6 @@ function Number({ end, start = 0 }) {
   });
   return <animated.div>{number.to((x) => x.toFixed(0))}</animated.div>;
 }
-
-type Row = {
-  resource: ReactElement;
-  generated: ReactElement;
-  build: ReactElement;
-};
 
 const columns = [
   { Header: 'Resource', id: 'select', accessor: 'resource' },
@@ -45,7 +44,6 @@ type Prop = {
 
 export const LaborTable = (props: Prop) => {
   const { realm } = props;
-
   const resources = realm.resources;
 
   const { create } = useLabor(realm as Realm);
@@ -66,32 +64,35 @@ export const LaborTable = (props: Prop) => {
       ),
       generated: (
         <span className="flex justify-center space-x-4">
-          <Number end={100} /> <span className="text-gray-700">(2 / 0.7)</span>
+          <LaborValues last_harvest={1671466181} labor_balance={1671638981} />
+
           <Button variant="outline" size="sm">
             Harvest
           </Button>
         </span>
       ),
       build: (
-        <Tooltip
-          placement="top"
-          className="flex"
-          tooltipText={
-            <div className="p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
-              <CostBlock resourceName={'Wheat'} amount={100} id={1} qty={1} />
-            </div>
-          }
-        >
-          <Button
-            onClick={() =>
-              create({ resourceId: resource.resourceId, laborUnits: 1 })
+        <div className="flex justify-center">
+          <Tooltip
+            placement="top"
+            className="flex"
+            tooltipText={
+              <div className="p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                <CostBlock resourceName={'Wheat'} amount={100} id={1} qty={1} />
+              </div>
             }
-            variant="outline"
-            size="sm"
           >
-            Buy Tools and Labor
-          </Button>
-        </Tooltip>
+            <Button
+              onClick={() =>
+                create({ resourceId: resource.resourceId, laborUnits: 12 })
+              }
+              variant="outline"
+              size="sm"
+            >
+              Buy Tools and Labor (12)
+            </Button>
+          </Tooltip>
+        </div>
       ),
       vault: <Number end={100} />,
     };
