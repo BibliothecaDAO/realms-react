@@ -321,7 +321,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         <ResourceIcon resource={'Wheat'} size="xs" />{' '}
                         <ResourceIcon resource={'Fish'} size="xs" />
                       </Button>
-                      <Button
+                      {/* <Button
                         disabled={
                           getDays(realm?.lastClaimTime) === 0 ||
                           resourcesTxPending
@@ -339,7 +339,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         }}
                       >
                         Harvest
-                      </Button>
+                      </Button> */}
                     </>
                   )}
                 </>
