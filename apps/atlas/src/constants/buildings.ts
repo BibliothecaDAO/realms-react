@@ -131,7 +131,7 @@ export const BASE_RESOURCES_PER_CYCLE = BASE_RESOURCES_PER_DAY / 12;
 
 export const WONDER_RATE = BASE_RESOURCES_PER_DAY / 10;
 
-export const VAULT_LENGTH = 7;
+export const VAULT_LENGTH = 4;
 export const DAY = 86400;
 export const VAULT_LENGTH_SECONDS = VAULT_LENGTH * DAY;
 

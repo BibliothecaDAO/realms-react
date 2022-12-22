@@ -128,7 +128,7 @@ html {
 
 .paper {
   mask-image: url('../../public/textures/grit.png');
-  mask-mode: alpha;
+  mask-mode: alpha, match-source;
 }
 
 .rounded-corners-gradient-borders {

@@ -16,6 +16,7 @@ import {
   getDays,
   hasOwnRelic,
   vaultResources,
+  getVaultRaidableLaborUnits,
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
@@ -195,7 +196,7 @@ export const CombatSideBar: React.FC<Prop> = ({
               <div className="p-2 text-center bg-gray-1000 rounded-t-xl">
                 <h1>Raid</h1>
               </div>
-              <div className="py-10 text-center border-4 border-yellow-900  rounded-b-full bg-gray-1000 ">
+              <div className="py-10 text-center border-4 border-yellow-900 rounded-b-full bg-gray-1000 ">
                 {hasOwnRelic(defendingRealm) ? (
                   <img src="/mj_relic.png" alt="" />
                 ) : (
@@ -204,17 +205,20 @@ export const CombatSideBar: React.FC<Prop> = ({
                 <h5 className="my-3">
                   {hasOwnRelic(defendingRealm) ? 'Relic vulnerable' : ''}
                 </h5>
-                <h2 className="text-center">
-                  {vaultResources(getDays(defendingRealm?.lastVaultTime))}x
-                </h2>
-                {defendingRealm?.resources?.map((re, index) => (
+                {defendingRealm?.resources?.map((resource, index) => (
                   <div
                     key={index}
                     className="flex flex-col justify-center p-2 mt-4"
                   >
+                    <span className="self-center text-4xl">
+                      {' '}
+                      {getVaultRaidableLaborUnits(
+                        resource.labor?.vaultBalance
+                      ).toFixed(0)}
+                    </span>
                     <ResourceIcon
                       resource={
-                        findResourceById(re.resourceId)?.trait.replace(
+                        findResourceById(resource.resourceId)?.trait.replace(
                           ' ',
                           ''
                         ) || ''
@@ -223,7 +227,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                     />
 
                     <span className="self-center mt-1">
-                      {findResourceById(re.resourceId)?.trait}
+                      {findResourceById(resource.resourceId)?.trait}
                     </span>
                   </div>
                 ))}

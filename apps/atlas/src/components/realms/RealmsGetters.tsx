@@ -5,6 +5,8 @@ import { ethers, BigNumber } from 'ethers';
 import {
   ATTACK_COOLDOWN_PERIOD,
   BASE_HAPPINESS,
+  BASE_LABOR_UNITS,
+  BASE_RESOURCES_PER_CYCLE,
   BASE_RESOURCES_PER_DAY,
   buildingPopulation,
   DAY,
@@ -561,4 +563,57 @@ export const hasSettledRealms = (userRealms, address) => {
       (r) => r.settledOwner === getAccountHex(address || '0x0') ?? 0
     )
   );
+};
+
+export const getLaborUnitsGenerated = (time): number => {
+  return time / 1000 / BASE_LABOR_UNITS;
+};
+
+export const getUnproducedLabor = (labor_balance) => {
+  const now = new Date().getTime();
+  const balance = labor_balance - now;
+
+  const labor_units = balance / 1000 / BASE_LABOR_UNITS;
+  return labor_units > 0 ? labor_units.toFixed(2) : 0;
+};
+
+export const getLaborGenerated = ({
+  last_harvest,
+  labor_balance,
+}): number[] => {
+  const now = new Date().getTime();
+  const lastHarvest = new Date(last_harvest);
+
+  let labor;
+
+  if (labor_balance > now) {
+    labor = (now - lastHarvest.getTime()) / 1000;
+  } else {
+    labor = (labor_balance - lastHarvest.getTime()) / 1000;
+  }
+
+  const generated_labor = ((labor / BASE_LABOR_UNITS) * 0.7).toFixed(2);
+
+  const labor_remaining = labor % BASE_LABOR_UNITS;
+
+  const vault = Math.floor(parseInt(generated_labor) * 0.3);
+
+  return [parseInt(generated_labor), labor_remaining / BASE_LABOR_UNITS, vault];
+};
+
+export const getVaultRaidableLaborUnits = (time): number => {
+  return (
+    getLaborUnitsGenerated(time || 0) *
+    BASE_RESOURCES_PER_CYCLE *
+    (PILLAGE_AMOUNT / 100)
+  );
+};
+
+export const checkIsRaidable = (realm: RealmFragmentFragment) => {
+  const resource_length = realm?.resources?.filter((r) => {
+    getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
+  });
+
+  console.log(resource_length);
+  return resource_length && resource_length.length > 0 ? false : true;
 };

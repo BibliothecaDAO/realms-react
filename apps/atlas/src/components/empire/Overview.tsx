@@ -21,7 +21,7 @@ export function AccountOverview() {
 
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
     variables: { account: address ? getAccountHex(address) : '', realmIds },
-    pollInterval: 10000,
+    pollInterval: 5000,
     skip: !address,
   });
 

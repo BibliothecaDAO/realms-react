@@ -39,9 +39,16 @@ import {
   getTimeUntilNextTick,
   getDays,
   GetArmyStrength,
+  getLaborUnitsGenerated,
+  getVaultRaidableLaborUnits,
+  checkIsRaidable,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
-import { HarvestType, RealmBuildingId } from '@/constants/buildings';
+import {
+  BASE_RESOURCES_PER_CYCLE,
+  HarvestType,
+  RealmBuildingId,
+} from '@/constants/buildings';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -261,16 +268,21 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <div className="flex w-full mt-3">
           <div className="w-full">
             <div className="flex w-full my-3 space-x-2">
-              {realm.resources?.map((re, index) => (
+              {realm.resources?.map((resource, index) => (
                 <div key={index} className="flex flex-col justify-center">
                   <ResourceIcon
                     withTooltip
                     resource={
-                      findResourceById(re.resourceId)?.trait.replace(' ', '') ||
-                      ''
+                      findResourceById(resource.resourceId)?.trait.replace(
+                        ' ',
+                        ''
+                      ) || ''
                     }
                     size="xs"
                   />
+                  {getVaultRaidableLaborUnits(
+                    resource.labor?.vaultBalance
+                  ).toFixed(0)}
                 </div>
               ))}
             </div>
@@ -353,7 +365,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       : setIsTravel(true);
                   }}
                   size="sm"
-                  disabled={getIsRaidable(realm)}
+                  disabled={checkIsRaidable(realm)}
                   variant={'primary'}
                 >
                   {realm && getRealmCombatStatus(realm)}
@@ -376,11 +388,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 ({getNumberOfTicks(realm)} ticks) |{' '}
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
-              <div className="text-gray-700 ">
-                <span>Days: {getDays(realm?.lastClaimTime)}</span>
-                {' | '}
-                <span>Vault: {getDays(realm?.lastVaultTime)}</span>
-              </div>
 
               <div className="flex">
                 <span
@@ -388,7 +395,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     hasOwnRelic(realm) ? 'text-green-700' : 'text-red-400'
                   }`}
                 >
-                  {hasOwnRelic(realm) ? 'free' : 'annexed'}
+                  {hasOwnRelic(realm) ? 'self sovereign ' : 'annexed'}
                 </span>
                 <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
                 <Relic className={`w-3 fill-yellow-500`} />{' '}

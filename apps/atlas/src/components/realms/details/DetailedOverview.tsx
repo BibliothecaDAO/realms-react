@@ -41,6 +41,7 @@ import type {
   RealmsCardProps,
 } from '@/types/index';
 import { RealmImage } from './Image';
+import { LaborTable } from './LaborTable';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
@@ -219,7 +220,8 @@ export function DetailedOverview(
           <RealmImage id={realm.realmId} />
         </div> */}
       </div>
-      <div className="flex flex-col">
+      <LaborTable realm={realm} />
+      {/* <div className="flex flex-col">
         <div className="flex flex-wrap mt-4">
           {realm.resources?.map((re, index) => (
             <div key={index} className="flex flex-col justify-center p-2">
@@ -237,7 +239,7 @@ export function DetailedOverview(
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-wrap w-full">
         {dataCards.map((card, i) => {
           return (

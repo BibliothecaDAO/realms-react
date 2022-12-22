@@ -40,17 +40,26 @@ export const LaborValues = ({
   });
 
   return (
-    <div className="text-left">
-      <div className="flex">
-        {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()}
-        <div className="flex self-center text-lg text-gray-600">
-          (
-          <Number end={generated.generated} /> |{generated.part.toFixed(3)})
+    <div className="text-base text-left">
+      <div>
+        <div>
+          {' '}
+          <span className="text-gray-600">Produced:</span>{' '}
+          {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()} /{' '}
+          {generated.generated}
+        </div>
+        <div>
+          <span className="text-gray-600">Production:</span>{' '}
+          {(generated.part * 100).toFixed(3)}%
         </div>
       </div>{' '}
-      <div className="flex text-sm text-gray-600 uppercase">
-        <div className="flex">🏗️ {remaining}</div>
-        <span>🔒</span> <Number end={generated.vault} />{' '}
+      <div>
+        {' '}
+        <span className="text-gray-600">Queue: </span>
+        {remaining}
+      </div>
+      <div>
+        <span className="text-gray-600">Vault: </span> {generated.vault}
       </div>
     </div>
   );

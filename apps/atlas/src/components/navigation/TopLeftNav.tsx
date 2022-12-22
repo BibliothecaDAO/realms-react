@@ -40,7 +40,8 @@ export const TopLeftNav = () => {
   }
 
   return (
-    <div className="absolute z-50">
+    <div className="absolute z-50 ">
+      {/* <div className="w-full h-screen pointer-events-none z-100 bg-paperTexture bg-blend-multiply"></div> */}
       <div className="relative">
         <div className="absolute z-50 w-48 h-8 top-1 lg:w-64 lg:h-10 md:pl-16 lg:pl-24 md:text-xs lg:text-lg shadow-red-900 text-gray-1000">
           {address && (
@@ -56,17 +57,17 @@ export const TopLeftNav = () => {
             </Button>
           )}
         </div>
-        <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none fill-yellow-700" />
-        <TopLeftFrame className="absolute pointer-events-none w-72 fill-amber-100 mix-blend-multiply" />
+        <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none fill-yellow-700 " />
+        <TopLeftFrame className="absolute pointer-events-none w-72 fill-amber-100 " />
 
-        <div className="absolute z-50 left-2 top-2 jr-empire">
+        <div className="absolute z-50 left-2 top-2 jr-empire paper">
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
             className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
           >
-            <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 bg-yellow-100 rounded-full p-1">
-              <EternumIcon className="transition-all duration-300 drop-shadow-lg fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
+            <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 rounded-full p-1">
+              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
             </div>
           </Button>
         </div>

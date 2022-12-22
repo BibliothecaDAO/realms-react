@@ -7,6 +7,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import { ReactElement, useEffect } from 'react';
 
@@ -16,12 +17,19 @@ import {
   BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
   BASE_RESOURCES_PER_DAY,
+  VAULT_LENGTH,
 } from '@/constants/buildings';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useLabor from '@/hooks/settling/useLabor';
-import { CostBlock } from '../RealmsGetters';
+import {
+  getLaborUnitsGenerated,
+  CostBlock,
+  getLaborGenerated,
+  getUnproducedLabor,
+} from '../RealmsGetters';
 import { LaborValues } from './LaborValues';
 
 function Number({ end, start = 0 }) {
@@ -36,9 +44,10 @@ function Number({ end, start = 0 }) {
 
 const columns = [
   { Header: 'Tools & Labor', id: 1, accessor: 'build' },
-  { Header: 'Resource', id: 2, accessor: 'resource' },
-  { Header: 'Generated', id: 3, accessor: 'generated' },
-  { Header: 'Vault', id: 4, accessor: 'vault' },
+  { Header: 'Costs', id: 2, accessor: 'costs' },
+  { Header: 'Resource', id: 3, accessor: 'resource' },
+  { Header: 'Generated', id: 4, accessor: 'generated' },
+  { Header: 'Vault', id: 5, accessor: 'vault' },
 ];
 
 const tableOptions = { is_striped: true };
@@ -51,48 +60,13 @@ export const LaborTable = (props: Prop) => {
   const { realm } = props;
   const resources = realm.resources;
 
+  const { getBalanceById } = useUserBalancesContext();
+
   const { create, harvest } = useLabor(realm as Realm);
 
   const { gameConstants } = useGameConstants();
 
   const { getTotalLordsCost, getLordsCostForResourceAmount } = useMarketRate();
-
-  const now = new Date().getTime();
-
-  const getLaborUnitsGenerated = (time): number => {
-    return time / 1000 / BASE_LABOR_UNITS;
-  };
-
-  const getUnproducedLabor = (labor_balance) => {
-    const balance = labor_balance - now;
-
-    const labor_units = balance / 1000 / BASE_LABOR_UNITS;
-    return labor_units > 0 ? labor_units.toFixed(2) : 0;
-  };
-
-  const getLaborGenerated = ({ last_harvest, labor_balance }): number[] => {
-    const lastHarvest = new Date(last_harvest);
-
-    let labor;
-
-    if (labor_balance > now) {
-      labor = (now - lastHarvest.getTime()) / 1000;
-    } else {
-      labor = (labor_balance - lastHarvest.getTime()) / 1000;
-    }
-
-    const generated_labor = ((labor / BASE_LABOR_UNITS) * 0.7).toFixed(2);
-
-    const labor_remaining = labor % BASE_LABOR_UNITS;
-
-    const vault = Math.floor(parseInt(generated_labor) * 0.3);
-
-    return [
-      parseInt(generated_labor),
-      labor_remaining / BASE_LABOR_UNITS,
-      vault,
-    ];
-  };
 
   const defaultData = resources?.map((resource) => {
     const costs = gameConstants?.laborAndToolCosts.find(
@@ -137,13 +111,13 @@ export const LaborTable = (props: Prop) => {
                     />
                   );
                 })}
-                <div className="p-2">
+                {/* <div className="p-2">
                   <Lords className="self-center mx-auto md:w-4 lg:w-6" />
                   cost: {totalLordsCostOfLabor.toFixed(2)} <br />
                   return: {lordsReturnFromLabor.toFixed(2)} <br />
                   profit: {laborProfit.toFixed(2)} <br />
                   {laborProfitMargin.toFixed(2)}%
-                </div>
+                </div> */}
               </div>
             }
           >
@@ -163,20 +137,41 @@ export const LaborTable = (props: Prop) => {
           </Tooltip>
         </div>
       ),
+      costs: (
+        <div className="text-base text-left capitalize">
+          {/* <Lords className="self-center mx-auto md:w-4 lg:w-6" /> */}
+          <span className="text-gray-600"> Cogs: </span>
+          <span>{totalLordsCostOfLabor.toFixed(2)}</span>
+          <br />
+          <span className="text-gray-600"> Profit: </span>{' '}
+          {lordsReturnFromLabor.toFixed(2)} <br />
+          <span className="text-gray-600"> Gross: </span>{' '}
+          {laborProfit.toFixed(2)} <br />
+          <span className="text-gray-600"> Margin: </span>{' '}
+          {laborProfitMargin.toFixed(2)}%
+        </div>
+      ),
       resource: (
         <span className="flex">
           <Image
             src={'/resources/' + resource.resourceId + '.jpg'}
             alt="map"
-            width={80}
-            height={80}
+            width={100}
+            height={100}
             className="border-4 rounded-2xl border-yellow-800/40"
           />
-          <span className="self-center ml-3">{resource.resourceName} </span>
+          <span className="self-center ml-3 text-left">
+            {resource.resourceName} <br />
+            <span className="text-gray-600">
+              {(+formatEther(
+                getBalanceById(resource.resourceId)?.amount || '0'
+              )).toFixed(2)}
+            </span>
+          </span>
         </span>
       ),
       generated: (
-        <span className="flex justify-center space-x-4">
+        <span className="flex space-x-4">
           <LaborValues
             labor_generated={generation[0]}
             part_labor={generation[1]}
@@ -194,9 +189,7 @@ export const LaborTable = (props: Prop) => {
             variant="outline"
             size="sm"
           >
-            {generation[0] == 0 || isNaN(generation[0])
-              ? 'nothing available'
-              : `Harvest ${generation[0] || 0}`}
+            {generation[0] == 0 || isNaN(generation[0]) ? 'nothing' : `Harvest`}
           </Button>
         </span>
       ),
@@ -204,8 +197,14 @@ export const LaborTable = (props: Prop) => {
       vault: (
         <div>
           <Number
-            end={getLaborUnitsGenerated(resource.labor?.vaultBalance) || 0}
-          />
+            end={
+              getLaborUnitsGenerated(resource.labor?.vaultBalance) *
+                BASE_RESOURCES_PER_CYCLE || 0
+            }
+          />{' '}
+          <span className="text-gray-600">
+            / {BASE_RESOURCES_PER_CYCLE * 12 * VAULT_LENGTH}
+          </span>
         </div>
       ),
     };
