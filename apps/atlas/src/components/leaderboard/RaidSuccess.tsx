@@ -11,7 +11,7 @@ import {
 import { shortenAddressWidth } from '@/util/formatters';
 
 type Row = {
-  realm?: number;
+  realm?: string;
   // balance: string;
   // output: number;
   // change: ReactElement;
@@ -28,20 +28,29 @@ export const RaidSuccess = () => {
   const { data: raidSuccessData, loading: loadingData } =
     useGroupByRealmHistoryQuery({
       variables: {
-        by: RealmHistoryScalarFieldEnum.RealmId,
+        by: [
+          RealmHistoryScalarFieldEnum.RealmId,
+          RealmHistoryScalarFieldEnum.RealmOwner,
+          RealmHistoryScalarFieldEnum.RealmName,
+        ],
         where: {
           eventType: { equals: 'realm_combat_attack' },
           data: { path: ['success'], equals: true },
+          realmName: { not: { equals: '' } },
         },
         orderBy: { _count: { realmId: SortOrder.Desc } },
-        isOwner: false,
+        isOwner: true,
         take: 10,
       },
     });
   const [fetchAdventurerRaidSuccess, { loading, data: adventurerSuccessData }] =
     useGroupByRealmHistoryLazyQuery({
       variables: {
-        by: RealmHistoryScalarFieldEnum.RealmOwner,
+        by: [
+          RealmHistoryScalarFieldEnum.RealmOwner,
+          RealmHistoryScalarFieldEnum.RealmId,
+          RealmHistoryScalarFieldEnum.RealmName,
+        ],
         where: {
           eventType: { equals: 'realm_combat_attack' },
           data: { path: ['success'], equals: true },
@@ -55,8 +64,10 @@ export const RaidSuccess = () => {
     raidSuccessData?.groupByRealmHistory ?? []
   ).map((realm) => {
     return {
-      realm: realm?.realmId || 0,
+      realm:
+        (realm?.realmName && realm?.realmName + ' #' + realm?.realmId) || '0',
       successfulRaid: realm?._count?._all || 0,
+      owner: shortenAddressWidth(realm.realmOwner || '', 6),
       action: (
         <Button
           variant="primary"
@@ -102,9 +113,11 @@ export const RaidSuccess = () => {
             Header: 'Realm',
             id: 1,
             accessor: 'realm',
+            size: 50,
           },
-          { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
-          { Header: 'Action', id: 7, accessor: 'action' },
+          { Header: 'Succesful Raids', id: 2, accessor: 'successfulRaid' },
+          { Header: 'Current Owner', id: 3, accessor: 'owner' },
+          { Header: 'Action', id: 4, accessor: 'action', size: 50 },
         ]
       : [
           {
@@ -113,7 +126,7 @@ export const RaidSuccess = () => {
             accessor: 'owner',
           },
           { Header: 'Succesful Raids', id: 6, accessor: 'successfulRaid' },
-          { Header: 'Action', id: 7, accessor: 'action' },
+          { Header: 'Action', id: 7, accessor: 'action', size: 50 },
         ],
     onChange: () => {
       setRaidSuccessOwnerToggle(!raidSuccessOwnerToggle);

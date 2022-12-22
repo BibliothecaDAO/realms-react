@@ -2231,8 +2231,9 @@ export type GroupByRealmHistoryQuery = {
   __typename?: 'Query';
   groupByRealmHistory: Array<{
     __typename?: 'RealmHistoryGroupBy';
-    realmId?: number;
+    realmId: number;
     realmOwner?: string;
+    realmName?: string;
     _count?: { __typename?: 'RealmHistoryCountAggregate'; _all: number } | null;
   }>;
 };
@@ -3812,8 +3813,9 @@ export const GroupByRealmHistoryDocument = gql`
       take: $take
       skip: $skip
     ) {
-      realmId @skip(if: $isOwner)
+      realmId
       realmOwner @include(if: $isOwner)
+      realmName @include(if: $isOwner)
       _count {
         _all
       }

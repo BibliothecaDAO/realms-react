@@ -66,8 +66,9 @@ query groupByRealmHistory(
     take: $take
     skip: $skip
   ) {
-    realmId @skip(if: $isOwner)
+    realmId
     realmOwner @include(if: $isOwner)
+    realmName @include(if: $isOwner)
     _count {
       _all
     }
