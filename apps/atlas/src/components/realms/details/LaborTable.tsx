@@ -11,9 +11,11 @@ import Image from 'next/image';
 import { ReactElement, useEffect } from 'react';
 
 import { useSpring, animated } from 'react-spring';
+import { number } from 'starknet';
 import {
   BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
+  BASE_RESOURCES_PER_DAY,
 } from '@/constants/buildings';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
@@ -33,10 +35,10 @@ function Number({ end, start = 0 }) {
 }
 
 const columns = [
-  { Header: 'Resource', id: 'select', accessor: 'resource' },
-  { Header: 'Generated', id: 2, accessor: 'generated' },
-  { Header: 'Tools & Labor', id: 5, accessor: 'build' },
-  { Header: 'Vault', id: 5, accessor: 'vault' },
+  { Header: 'Tools & Labor', id: 1, accessor: 'build' },
+  { Header: 'Resource', id: 2, accessor: 'resource' },
+  { Header: 'Generated', id: 3, accessor: 'generated' },
+  { Header: 'Vault', id: 4, accessor: 'vault' },
 ];
 
 const tableOptions = { is_striped: true };
@@ -53,13 +55,20 @@ export const LaborTable = (props: Prop) => {
 
   const { gameConstants } = useGameConstants();
 
-  const { getTotalLordsCost } = useMarketRate();
+  const { getTotalLordsCost, getLordsCostForResourceAmount } = useMarketRate();
+
+  const now = new Date().getTime();
 
   const getLaborUnitsGenerated = (time): number => {
     return time / 1000 / BASE_LABOR_UNITS;
   };
 
-  const now = new Date().getTime();
+  const getUnproducedLabor = (labor_balance) => {
+    const balance = labor_balance - now;
+
+    const labor_units = balance / 1000 / BASE_LABOR_UNITS;
+    return labor_units > 0 ? labor_units.toFixed(2) : 0;
+  };
 
   const getLaborGenerated = ({ last_harvest, labor_balance }): number[] => {
     const lastHarvest = new Date(last_harvest);
@@ -72,13 +81,17 @@ export const LaborTable = (props: Prop) => {
       labor = (labor_balance - lastHarvest.getTime()) / 1000;
     }
 
-    const generated_labor = Math.floor(labor / BASE_LABOR_UNITS) * 0.7;
+    const generated_labor = ((labor / BASE_LABOR_UNITS) * 0.7).toFixed(2);
 
     const labor_remaining = labor % BASE_LABOR_UNITS;
 
-    const vault = Math.floor(generated_labor * 0.3);
+    const vault = Math.floor(parseInt(generated_labor) * 0.3);
 
-    return [generated_labor, labor_remaining / BASE_LABOR_UNITS, vault];
+    return [
+      parseInt(generated_labor),
+      labor_remaining / BASE_LABOR_UNITS,
+      vault,
+    ];
   };
 
   const defaultData = resources?.map((resource) => {
@@ -91,43 +104,21 @@ export const LaborTable = (props: Prop) => {
       labor_balance: resource.labor?.balance,
     });
 
-    return {
-      resource: (
-        <span className="flex">
-          <Image
-            src={'/resources/' + resource.resourceId + '.jpg'}
-            alt="map"
-            width={80}
-            height={80}
-            className="border-4 rounded-2xl border-yellow-800/40"
-          />
-          <span className="self-center ml-3">{resource.resourceName}</span>
-        </span>
-      ),
-      generated: (
-        <span className="flex justify-center space-x-4">
-          <LaborValues
-            labor_generated={generation[0]}
-            part_labor={generation[1]}
-            vault={generation[2]}
-          />
+    const totalLordsCostOfLabor = getTotalLordsCost({
+      costs: costs,
+      qty: 1,
+    });
 
-          <Button
-            onClick={() =>
-              harvest({
-                resourceId: resource.resourceId,
-              })
-            }
-            disabled={generation[0] == 0 || generation[0] == null}
-            variant="outline"
-            size="sm"
-          >
-            {generation[0] == 0 || generation[0] == undefined
-              ? 'Generating'
-              : `Generated ${generation[0] || 0}`}
-          </Button>
-        </span>
-      ),
+    const lordsReturnFromLabor = getLordsCostForResourceAmount({
+      resourceId: resource.resourceId,
+      qty: BASE_RESOURCES_PER_DAY,
+    });
+
+    const laborProfit = lordsReturnFromLabor - totalLordsCostOfLabor;
+
+    const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
+
+    return {
       build: (
         <div className="flex justify-center">
           <Tooltip
@@ -147,11 +138,11 @@ export const LaborTable = (props: Prop) => {
                   );
                 })}
                 <div className="p-2">
-                  <Lords className="self-center md:w-4 lg:w-6" />{' '}
-                  {getTotalLordsCost({
-                    costs: costs,
-                    qty: 1,
-                  }).toFixed(2)}
+                  <Lords className="self-center mx-auto md:w-4 lg:w-6" />
+                  cost: {totalLordsCostOfLabor.toFixed(2)} <br />
+                  return: {lordsReturnFromLabor.toFixed(2)} <br />
+                  profit: {laborProfit.toFixed(2)} <br />
+                  {laborProfitMargin.toFixed(2)}%
                 </div>
               </div>
             }
@@ -172,6 +163,44 @@ export const LaborTable = (props: Prop) => {
           </Tooltip>
         </div>
       ),
+      resource: (
+        <span className="flex">
+          <Image
+            src={'/resources/' + resource.resourceId + '.jpg'}
+            alt="map"
+            width={80}
+            height={80}
+            className="border-4 rounded-2xl border-yellow-800/40"
+          />
+          <span className="self-center ml-3">{resource.resourceName} </span>
+        </span>
+      ),
+      generated: (
+        <span className="flex justify-center space-x-4">
+          <LaborValues
+            labor_generated={generation[0]}
+            part_labor={generation[1]}
+            vault={generation[2]}
+            remaining={getUnproducedLabor(resource.labor?.balance)}
+          />
+
+          <Button
+            onClick={() =>
+              harvest({
+                resourceId: resource.resourceId,
+              })
+            }
+            disabled={generation[0] == 0 || isNaN(generation[0])}
+            variant="outline"
+            size="sm"
+          >
+            {generation[0] == 0 || isNaN(generation[0])
+              ? 'nothing available'
+              : `Harvest ${generation[0] || 0}`}
+          </Button>
+        </span>
+      ),
+
       vault: (
         <div>
           <Number

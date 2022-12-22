@@ -16,7 +16,12 @@ function Number({ end, start = 0 }) {
   return <animated.div>{number.to((x) => x.toFixed(0))}</animated.div>;
 }
 
-export const LaborValues = ({ labor_generated, part_labor, vault }) => {
+export const LaborValues = ({
+  labor_generated,
+  part_labor,
+  vault,
+  remaining,
+}) => {
   const [generated, setLaborGenerated] = useState({
     generated: 0,
     part: 0,
@@ -43,9 +48,9 @@ export const LaborValues = ({ labor_generated, part_labor, vault }) => {
           <Number end={generated.generated} /> |{generated.part.toFixed(3)})
         </div>
       </div>{' '}
-      <div className="flex text-lg text-gray-600">
-        <div className="flex"></div>
-        <span>Vault:</span> <Number end={generated.vault} />{' '}
+      <div className="flex text-sm text-gray-600 uppercase">
+        <div className="flex">🏗️ {remaining}</div>
+        <span>🔒</span> <Number end={generated.vault} />{' '}
       </div>
     </div>
   );

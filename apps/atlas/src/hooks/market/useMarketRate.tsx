@@ -90,7 +90,15 @@ export const useMarketRate = () => {
         .add(cost);
     });
 
-    console.log(cost);
+    return +formatEther(cost.toString()).toLocaleString();
+  };
+
+  const getLordsCostForResourceAmount = ({ resourceId, qty }) => {
+    const currentPrice = exchangeInfo?.find(
+      (a) => a.tokenId === resourceId
+    )?.buyAmount;
+
+    const cost = number.toBN(currentPrice || '0').mul(number.toBN(qty));
 
     return +formatEther(cost.toString()).toLocaleString();
   };
@@ -99,5 +107,6 @@ export const useMarketRate = () => {
     exchangeInfo,
     historicPrices,
     getTotalLordsCost,
+    getLordsCostForResourceAmount,
   };
 };
