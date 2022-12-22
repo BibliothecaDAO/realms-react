@@ -49,15 +49,15 @@ export const TopLeftNav = () => {
               onClick={onLordsNavClick}
               variant="unstyled"
             >
-              <Lords className="self-center stroke-current md:w-4 lg:w-6" />{' '}
-              <span className="self-center md:pl-2 lg:pl-4">
+              <Lords className="self-center md:w-4 lg:w-6 fill-amber-100" />{' '}
+              <span className="self-center md:pl-2 lg:pl-4 text-amber-100 ">
                 {(+formatEther(lordsBalance)).toLocaleString()}
               </span>
             </Button>
           )}
         </div>
-        <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none stroke-yellow-900" />
-        <TopLeftFrame className="absolute pointer-events-none w-72" />
+        <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none fill-yellow-700" />
+        <TopLeftFrame className="absolute pointer-events-none w-72 fill-amber-100 mix-blend-multiply" />
 
         <div className="absolute z-50 left-2 top-2 jr-empire">
           <Button
@@ -65,8 +65,8 @@ export const TopLeftNav = () => {
             variant="unstyled"
             className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
           >
-            <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-[0.8rem] lg:left-[0.8rem] z-50">
-              <EternumIcon className="transition-all duration-300 fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
+            <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 bg-yellow-100 rounded-full p-1">
+              <EternumIcon className="transition-all duration-300 drop-shadow-lg fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
             </div>
           </Button>
         </div>

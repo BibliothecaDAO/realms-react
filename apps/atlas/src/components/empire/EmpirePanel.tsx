@@ -152,13 +152,13 @@ export function EmpirePanel() {
         enabled:
           unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
       },
-      {
-        name: 'Harvest Resources',
-        icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
-        details: <span className="flex"></span>,
-        action: () => claimAll(),
-        enabled: userData.resourcesClaimable,
-      },
+      // {
+      //   name: 'Harvest Resources',
+      //   icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
+      //   details: <span className="flex"></span>,
+      //   action: () => claimAll(),
+      //   enabled: userData.resourcesClaimable,
+      // },
       // {
       //   name: 'Harvest Farms',
       //   icon: <Sword className="self-center w-4 h-4 mr-1" />,

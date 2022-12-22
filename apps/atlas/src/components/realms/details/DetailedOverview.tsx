@@ -90,22 +90,22 @@ export function DetailedOverview(
       icon: '/icons/loot/loot.svg',
       img: '/realm-buildings/mj_castle.png',
     },
-    {
-      title: 'Resources',
-      value: <span>{maxClaimableResources(cachedDaysAccrued)}</span>,
-      subTitle: (
-        <span>{daysAccrued(cachedDaysAccrued)}/3 max days accrued</span>
-      ),
-      icon: '/icons/loot/loot.svg',
-      img: '/resources/1.jpg',
-    },
-    {
-      title: 'Vault',
-      value: <span>{vaultResources(cachedVaultDaysAccrued)}</span>,
-      subTitle: <span>{cachedVaultDaysAccrued}/7 days until claimable</span>,
-      icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_vault.png',
-    },
+    // {
+    //   title: 'Resources',
+    //   value: <span>{maxClaimableResources(cachedDaysAccrued)}</span>,
+    //   subTitle: (
+    //     <span>{daysAccrued(cachedDaysAccrued)}/3 max days accrued</span>
+    //   ),
+    //   icon: '/icons/loot/loot.svg',
+    //   img: '/resources/1.jpg',
+    // },
+    // {
+    //   title: 'Vault',
+    //   value: <span>{vaultResources(cachedVaultDaysAccrued)}</span>,
+    //   subTitle: <span>{cachedVaultDaysAccrued}/7 days until claimable</span>,
+    //   icon: '/icons/loot/loot.svg',
+    //   img: '/realm-buildings/mj_vault.png',
+    // },
     {
       title: 'Population',
       value: getPopulation(realm),
@@ -157,7 +157,7 @@ export function DetailedOverview(
       title: 'Building Utilisation (sqm)',
       value: (
         <span>
-          {trueUsedSpace} / {buildingUtilisation?.maxSqm}{' '}
+          {trueUsedSpace.toFixed(2)} / {buildingUtilisation?.maxSqm}{' '}
         </span>
       ),
       subTitle: <span>Total Space used</span>,

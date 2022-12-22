@@ -17,6 +17,10 @@ export const Entrypoints = {
   harvest_labor: 'harvest',
 };
 
+const EntrypointKeys = {
+  [Entrypoints.harvest_labor]: 'harvest_labor',
+};
+
 export const createCall: Record<string, (args: any) => CallAndMetadata> = {
   create: (args: { realmId; resourceId; laborUnits; costs }) => ({
     contractAddress: ModuleAddr.Labor,
@@ -39,7 +43,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
         uint256.bnToUint256(number.toBN(args.resourceId))
       ),
     ],
-    metadata: { ...args, action: Entrypoints.harvest_labor },
+    metadata: { ...args, action: EntrypointKeys.harvest_labor },
   }),
 };
 
@@ -65,7 +69,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
       </span>
     ),
   }),
-  [Entrypoints.harvest_labor]: (tx, ctx) => ({
+  [EntrypointKeys.harvest_labor]: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} ${
       findResourceById(tx.metadata.resourceId)?.trait
     }`,

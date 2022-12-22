@@ -23,9 +23,9 @@ export const BottomLeftNav = () => {
           }}
           icon={
             isSoundActive ? (
-              <VolumeOn className="w-5 stroke-gray-1000 fill-gray-1000" />
+              <VolumeOn className="w-5 stroke-amber-100 fill-amber-100" />
             ) : (
-              <VolumeOff className="w-5 stroke-gray-1000 fill-gray-1000" />
+              <VolumeOff className="w-5 stroke-amber-100 fill-amber-100" />
             )
           }
           size="md"
@@ -44,21 +44,21 @@ export const BottomLeftNav = () => {
           <NetworkConnectButton />
         </div>
         <BottomLeftFrame
-          className={`absolute bottom-0 pointer-events-none w-72 stroke-${framePrimary} fill-${framePrimary}`}
+          className={`absolute bottom-0 pointer-events-none w-72 fill-amber-100 stroke-${framePrimary} fill-${framePrimary}`}
         />
 
         <BottomLeftFrameGold
-          className={`absolute w-[14rem] pointer-events-none bottom-0 fill-${framePrimary} stroke-${framePrimary}`}
+          className={`absolute w-[14rem] pointer-events-none bottom-0 fill-yellow-700 fill-${framePrimary} stroke-${framePrimary}`}
         />
 
         <div
-          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none `}
+          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none `}
         />
       </div>
     </div>

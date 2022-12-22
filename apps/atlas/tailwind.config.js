@@ -132,7 +132,7 @@ module.exports = {
         realmBackground: "url('/backgrounds/castle_landscape.png')",
         snake: "url('/textures/snake_tiling_texture.png')",
         ink: "url('/textures/ink.jpg')",
-        paperTexture: "url('/textures/paperTexture.jpg')",
+        paperTexture: "url('/paper_shape.png')",
         texture: "url('/texture-button.png')",
         hero: "url('/createOrDestroy-desktop.webp')",
         warRoom: "url('/warRoom-desktop.png')",

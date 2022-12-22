@@ -122,7 +122,7 @@ export const MenuSideBar = () => {
       <div
         className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="py-8 rounded-full bg-gray-1000">
+        <div className="py-8 rounded-full mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {
