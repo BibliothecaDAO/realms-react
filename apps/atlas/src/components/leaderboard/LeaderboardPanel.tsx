@@ -13,7 +13,7 @@ import { BasePanel } from '../ui/panel/BasePanel';
 import { RaidSuccess } from './RaidSuccess';
 
 type Row = {
-  realm?: number;
+  realm?: string;
   // balance: string;
   // output: number;
   // change: ReactElement;
@@ -38,7 +38,11 @@ export function LeaderboardPanel(): ReactElement {
   const { data: goblinSuccessData, loading: loadingData } =
     useGroupByRealmHistoryQuery({
       variables: {
-        by: RealmHistoryScalarFieldEnum.RealmId,
+        by: [
+          RealmHistoryScalarFieldEnum.RealmOwner,
+          RealmHistoryScalarFieldEnum.RealmId,
+          RealmHistoryScalarFieldEnum.RealmName,
+        ],
         where: {
           eventType: { equals: 'realm_combat_attack' },
           AND: [
@@ -57,7 +61,8 @@ export function LeaderboardPanel(): ReactElement {
     });
   const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
     return {
-      realm: realm?.realmId || 0,
+      realm: (realm?.name && realm?.name + ' #' + realm?.realmId) || '0',
+
       owner: shortenAddressWidth(realm?.settledOwner || '', 6),
       relics: relicsOwnedByRealm(realm) || 0,
       action: (
@@ -75,6 +80,7 @@ export function LeaderboardPanel(): ReactElement {
       ),
     };
   });
+  /*
   const defaultGoblinData: Row[] = (
     goblinSuccessData?.groupByRealmHistory ?? []
   ).map((realm) => {
@@ -95,26 +101,26 @@ export function LeaderboardPanel(): ReactElement {
         </Button>
       ),
     };
-  });
+  }); */
 
   const sections = [
     {
       name: 'relicsHeld',
       columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm' },
-        { Header: 'Current Owner', id: 5, accessor: 'owner' },
+        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
         { Header: 'Relics Held', id: 6, accessor: 'relics' },
-        { Header: 'Action', id: 7, accessor: 'action' },
+        { Header: 'Current Owner', id: 5, accessor: 'owner' },
+        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
       ],
       defaultData: defaultRelicData,
     },
     {
       name: 'farmsHarvested',
       columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm' },
+        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
         { Header: 'Current Owner', id: 5, accessor: 'owner' },
         { Header: 'Farms Harvested', id: 6, accessor: 'farms' },
-        { Header: 'Action', id: 7, accessor: 'action' },
+        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
       ],
       defaultData: [
         {
@@ -128,10 +134,10 @@ export function LeaderboardPanel(): ReactElement {
     {
       name: 'resourcesHarvested',
       columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm' },
+        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
         { Header: 'Current Owner', id: 5, accessor: 'owner' },
         { Header: 'Resources Harvested', id: 6, accessor: 'resources' },
-        { Header: 'Action', id: 7, accessor: 'action' },
+        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
       ],
       defaultData: [
         {
@@ -143,15 +149,15 @@ export function LeaderboardPanel(): ReactElement {
         },
       ],
     },
-    {
+    /* {
       name: 'goblinTownsDestroyed',
       columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm' },
+        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
         { Header: 'Goblin Towns', id: 6, accessor: 'goblinTowns' },
-        { Header: 'Action', id: 7, accessor: 'action' },
+        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
       ],
       defaultData: defaultGoblinData,
-    },
+    }, */
   ];
 
   const tableOptions = { is_striped: true };
@@ -169,7 +175,7 @@ export function LeaderboardPanel(): ReactElement {
               key={section.name}
               className="p-4 mb-10 border cursor-pointer rounded-2xl border-white/30 card"
             >
-              <h3 className="text-3xl capitalize">
+              <h3 className="pl-4 pt-2 text-3xl capitalize">
                 {section.name.replace(/([A-Z])/g, ' $1')}
               </h3>
               <Table

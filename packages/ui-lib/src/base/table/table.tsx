@@ -37,6 +37,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
       header: column.Header,
       cell: (info: any) => info.getValue(),
       footer: (props: { column: { id: any } }) => props.column.id,
+      size: column.size || 150,
     };
   });
 
@@ -65,12 +66,17 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
         </div>
       )}
 
-      <table className="w-full ">
-        <thead className="">
+      <table className="w-full table-fixed">
+        <thead className="uppercase bg-gray-1000/90">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th className="p-2 " key={header.id} colSpan={header.colSpan}>
+                <th
+                  className="p-2 text-center "
+                  key={header.id}
+                  style={{ width: header.getSize() }}
+                  colSpan={header.colSpan}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -93,7 +99,11 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
-                <td className="px-3 py-1 text-center " key={cell.id}>
+                <td
+                  className="px-3 py-1 mx-auto text-center "
+                  key={cell.id}
+                  style={{ width: cell.column.getSize() }}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
