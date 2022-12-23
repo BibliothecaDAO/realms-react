@@ -19,7 +19,7 @@ export function useTravelTripsLayer() {
   }, []);
 
   // Increase length to slow down
-  const loopLength = 500;
+  const loopLength = 1000;
   const animationSpeed = 1;
   const [time, setTime] = useState(0);
   const [animation] = useState<any>({});
@@ -57,8 +57,8 @@ export function useTravelTripsLayer() {
     getColor: [220, 20, 60],
     opacity: 1,
     widthMinPixels: 4,
-    fadeTrail: true,
-    trailLength: 400,
+    fadeTrail: false,
+    trailLength: 1000,
     currentTime: time,
     pickable: true,
     onHover: (info: any) => {

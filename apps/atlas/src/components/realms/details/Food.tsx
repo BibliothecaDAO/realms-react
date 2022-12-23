@@ -148,7 +148,7 @@ export const RealmsFood = (props: Prop) => {
               colorScheme="transparent"
               className="w-24 bg-white border rounded-r border-white/40"
               min={1}
-              max={100000}
+              max={10000000}
               stringMode
               onChange={(value: ValueType | null) => {
                 if (value) {
@@ -248,7 +248,7 @@ export const FoodBuildingComponent = (props: {
     costs,
   } = props;
 
-  const [qty, setQty] = useState(capacity);
+  const [qty, setQty] = useState(capacity || 1);
 
   const { create, harvest, convert } = useFood(realm as Realm);
 
@@ -395,18 +395,20 @@ export const FoodBuildingComponent = (props: {
                   >
                     {enqueuedBuildTx ? 'Building...' : 'Build'}
                   </Button>
-                  <InputNumber
-                    value={qty}
-                    inputSize="sm"
-                    colorScheme="transparent"
-                    className="w-12 border rounded border-white/40"
-                    min={1}
-                    max={capacity}
-                    stringMode
-                    onChange={(value: ValueType | null) => {
-                      setQty(value);
-                    }}
-                  />{' '}
+                  {capacity && (
+                    <InputNumber
+                      value={qty}
+                      inputSize="sm"
+                      colorScheme="transparent"
+                      className="w-12 border rounded border-white/40"
+                      min={1}
+                      max={capacity}
+                      stringMode
+                      onChange={(value: ValueType | null) => {
+                        setQty(value);
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="flex mt-4">
                   {costs?.resources.map((a, i) => {
@@ -416,7 +418,7 @@ export const FoodBuildingComponent = (props: {
                         resourceName={a.resourceName}
                         amount={a.amount}
                         id={a.resourceId}
-                        qty={parseInt(qty)}
+                        qty={parseInt(qty) || 0}
                       />
                     );
                   })}

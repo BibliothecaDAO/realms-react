@@ -1,5 +1,6 @@
 import { formatEther } from '@ethersproject/units';
 import { useEffect, useState } from 'react';
+import { number } from 'starknet';
 import { resources } from '@/constants/resources';
 import {
   useGetExchangeRatesQuery,
@@ -73,8 +74,39 @@ export const useMarketRate = () => {
     setHistoricPrices(historicPrices);
   }, [historicPricesData]);
 
+  const getTotalLordsCost = ({ costs, qty }) => {
+    let cost = number.toBN(0);
+
+    console.log(costs, qty);
+
+    costs?.forEach((element, index) => {
+      const currentPrice = exchangeInfo?.find(
+        (a) => a.tokenId === element.resourceId
+      )?.buyAmount;
+
+      cost = number
+        .toBN(currentPrice || '0')
+        .mul(number.toBN(element.amount * qty))
+        .add(cost);
+    });
+
+    return +formatEther(cost.toString()).toLocaleString();
+  };
+
+  const getLordsCostForResourceAmount = ({ resourceId, qty }) => {
+    const currentPrice = exchangeInfo?.find(
+      (a) => a.tokenId === resourceId
+    )?.buyAmount;
+
+    const cost = number.toBN(currentPrice || '0').mul(number.toBN(qty));
+
+    return +formatEther(cost.toString()).toLocaleString();
+  };
+
   return {
     exchangeInfo,
     historicPrices,
+    getTotalLordsCost,
+    getLordsCostForResourceAmount,
   };
 };

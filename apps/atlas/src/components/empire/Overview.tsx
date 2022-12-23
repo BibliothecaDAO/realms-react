@@ -21,7 +21,7 @@ export function AccountOverview() {
 
   const { data: accountData, loading: loadingData } = useGetAccountQuery({
     variables: { account: address ? getAccountHex(address) : '', realmIds },
-    pollInterval: 10000,
+    pollInterval: 5000,
     skip: !address,
   });
 
@@ -34,6 +34,8 @@ export function AccountOverview() {
       };
     })
     .filter((row) => row.event !== '');
+
+  console.log(accountData?.accountHistory);
 
   return (
     <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">

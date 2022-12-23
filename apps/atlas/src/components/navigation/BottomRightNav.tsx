@@ -14,15 +14,15 @@ export const BottomRightNav = () => {
   return (
     <div className="absolute bottom-0 right-0 z-50">
       <div className="relative">
-        <BottomRightFrame className="absolute bottom-0 right-0 pointer-events-none w-72" />
+        <BottomRightFrame className="absolute bottom-0 right-0 pointer-events-none w-72 fill-gray-900" />
         {/* {address && <TransactionNavItem onClick={toggleTransactionCart} />} */}
       </div>
 
-      <div className="absolute bottom-1 w-[calc(100vw-28rem)] h-[2.7px] bg-black pointer-events-none"></div>
-      <div className="absolute bottom-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-black mr-72 pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[calc(100vw-28rem)] h-[2px] bg-black mr-64 pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[6px] h-[calc(100vh-28rem)] bg-black mb-64 pointer-events-none"></div>
-      <div className="absolute bottom-5 right-2 w-[2px] h-[calc(100vh-28rem)] bg-black  mb-64 pointer-events-none"></div>
+      <div className="absolute bottom-1 w-[calc(100vw-28rem)] h-[2.7px] bg-gray-900 pointer-events-none"></div>
+      <div className="absolute bottom-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-gray-900 mr-72 pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-[calc(100vw-28rem)] h-[2px] bg-gray-900 mr-64 pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-[6px] h-[calc(100vh-28rem)] bg-gray-900 mb-64 pointer-events-none"></div>
+      <div className="absolute bottom-5 right-2 w-[2px] h-[calc(100vh-28rem)] bg-gray-900  mb-64 pointer-events-none"></div>
       <TransactionCartSideBar
         isOpen={transactionCart}
         onClose={toggleTransactionCart}

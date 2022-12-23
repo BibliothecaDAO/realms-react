@@ -15,9 +15,9 @@ export const TopRightNav = () => {
     <div className="absolute top-0 right-0 z-50">
       <div className="relative">
         {address && <TransactionNavItem onClick={toggleTransactionCart} />}
-        <div className="absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px] bg-black  mr-72 pointer-events-none"></div>
-        <div className="absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-black mr-72 pointer-events-none"></div>
-        <TopRightFrame className="absolute top-0 right-0 pointer-events-none w-72" />
+        <div className="absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px] bg-gray-900  mr-72 pointer-events-none"></div>
+        <div className="absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-gray-900 mr-72 pointer-events-none"></div>
+        <TopRightFrame className="absolute top-0 right-0 pointer-events-none w-72 fill-gray-900" />
       </div>
       <TransactionCartSideBar
         isOpen={transactionCart}

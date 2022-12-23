@@ -1,14 +1,11 @@
-import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+import { Tabs } from '@bibliotheca-dao/ui-lib';
+
 import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { sidebarClassNames } from '@/constants/ui';
-import {
-  useApproveLordsForExchange,
-  useApproveResourcesForExchange,
-} from '@/hooks/settling/useApprovals';
+
 import AtlasSideBar from '../map/AtlasSideBar';
 import { LpMerchant } from './LpMerchant';
 import { Nexus } from './Nexus';
@@ -28,7 +25,7 @@ export const ResourceSwapSideBar = ({
     <AtlasSideBar
       position="left"
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, 'ml-20')}
+      containerClassName={twMerge(sidebarClassNames, 'ml-20 z-40')}
     >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
@@ -44,11 +41,6 @@ type ResourceSwapSideBarPanelProps = {
 export const ResourceSwapSideBarPanel = (
   props: ResourceSwapSideBarPanelProps
 ) => {
-  const { approveLords, isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-
-  const { approveResources, isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
   const tabs = useMemo(
     () => [
       {
@@ -68,30 +60,6 @@ export const ResourceSwapSideBarPanel = (
   );
   return (
     <BaseSideBarPanel className="z-50" position="left" onClose={props.onClose}>
-      {/* <div>
-        <h2 className="mt-2 mb-4 text-center">Trade</h2>
-        {(!isLordsApprovedForExchange || !isResourcesApprovedForExchange) && (
-          <div className="grid gap-2 sm:grid-cols-2">
-            <Button
-              className="w-full"
-              variant="primary"
-              onClick={approveLords}
-              disabled={isLordsApprovedForExchange}
-            >
-              APPROVE $LORDS <Lords className="w-4" />
-            </Button>
-            <Button
-              className="w-full"
-              variant="primary"
-              onClick={approveResources}
-              disabled={isResourcesApprovedForExchange}
-            >
-              APPROVE RESOURCES
-            </Button>
-          </div>
-        )}
-      </div> */}
-
       <div className="relative px-6 rounded">
         <Tabs className="h-full" variant="primary">
           <Tabs.List className="mt-2 rounded">

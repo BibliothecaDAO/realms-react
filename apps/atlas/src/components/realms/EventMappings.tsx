@@ -4,6 +4,7 @@ import {
   getRealmNameById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
+import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
 
 export const Event = {
   realmCombatAttack: 'realm_combat_attack',
@@ -15,6 +16,7 @@ export const Event = {
   armyTravel: 'army_travel',
   foodHarvest: 'food_harvest',
   foodCreated: 'food_created',
+  armyBuild: 'army_built',
 };
 
 export const EventImages = {
@@ -27,6 +29,7 @@ export const EventImages = {
   [Event.armyTravel]: '/vizirs/mj_travel.png',
   [Event.foodHarvest]: '/realm-buildings/mj_farm.png',
   [Event.foodCreated]: '/realm-buildings/mj_farm.png',
+  [Event.armyBuild]: '/vizirs/mj_military_vizir.png',
 };
 
 const successClass = '';
@@ -34,6 +37,14 @@ const negativeClass = '';
 
 export const checkTimeInPast = (time: number) => {
   return time < Date.now();
+};
+
+export const VisitButton = (id) => {
+  return (
+    <Button size="xs" variant="outline" href={'/?asset=realm' + id}>
+      Visit realm
+    </Button>
+  );
 };
 
 export function generateRealmEvent(event, user?: boolean) {
@@ -143,45 +154,21 @@ export function generateRealmEvent(event, user?: boolean) {
         event: `Built ${event.data?.buildingName}`,
         image: EventImages[event.eventType],
         class: successClass,
-        action: (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/?asset=realm' + event.realmId}
-          >
-            Visit
-          </Button>
-        ),
+        action: <VisitButton id={event.realmId} />,
       };
     case Event.realmSettle:
       return {
         event: 'Settled',
         class: successClass,
         image: EventImages[event.eventType],
-        action: (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/?asset=realm' + event.realmId}
-          >
-            Visit
-          </Button>
-        ),
+        action: <VisitButton id={event.realmId} />,
       };
     case Event.realmUnsettle:
       return {
         event: 'Unsettled',
         class: successClass,
         image: EventImages[event.eventType],
-        action: (
-          <Button
-            size="xs"
-            variant="outline"
-            href={'/?asset=realm' + event.realmId}
-          >
-            Visit
-          </Button>
-        ),
+        action: <VisitButton id={event.realmId} />,
       };
     case Event.armyTravel:
       return {
@@ -207,13 +194,7 @@ export function generateRealmEvent(event, user?: boolean) {
                 </p>
               </p>
             )}
-            <Button
-              size="xs"
-              variant="outline"
-              href={'/?asset=realm' + event.data?.destinationRealmId}
-            >
-              Visit {getRealmNameById(event.data?.destinationRealmId)}
-            </Button>
+            <VisitButton id={event.data?.destinationRealmId} />,
           </div>
         ),
       };
@@ -227,7 +208,8 @@ export function generateRealmEvent(event, user?: boolean) {
         action: (
           <div>
             <span>Harvested: {event.data.qty}</span> <br />
-            <span>Harvests Remaining: {event.data.harvests}</span>
+            <span>Harvests Remaining: {event.data.harvests}</span> <br />
+            <VisitButton id={event.realmId} />
           </div>
         ),
       };
@@ -241,7 +223,20 @@ export function generateRealmEvent(event, user?: boolean) {
         action: (
           <div>
             <span>Created: {event.data.qty}</span> <br />
-            <span>Harvests Remaining: {event.data.harvests}</span>
+            <span>Harvests Remaining: {event.data.harvests}</span> <br />
+            <VisitButton id={event.realmId} />
+          </div>
+        ),
+      };
+    case Event.armyBuild:
+      return {
+        event: `Army update on ${getRealmNameById(event.realmId)}`,
+        image: EventImages[event.eventType],
+        class: successClass,
+        action: (
+          <div>
+            <ArmyBattalions army={event.data} />
+            <VisitButton id={event.realmId} />
           </div>
         ),
       };

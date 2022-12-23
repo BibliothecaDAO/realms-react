@@ -110,7 +110,7 @@ export const MenuSideBar = () => {
   }, [query]);
   const { closeAll, assetSidebar, openAsset } = useUIContext();
   return (
-    <div className="absolute z-40">
+    <div className="absolute z-[45]">
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2 "
@@ -122,7 +122,7 @@ export const MenuSideBar = () => {
       <div
         className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="py-8 rounded-full bg-gray-1000">
+        <div className="py-8 rounded-full mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {

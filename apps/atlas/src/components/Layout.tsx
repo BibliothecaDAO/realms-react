@@ -16,8 +16,8 @@ export default function Layout({
   return (
     <div>
       <Head />
-      <div className="absolute inset-0 ">
-        <div className="relative flex h-full overflow-hidden border-8 border-gray-1100 sm:h-screen">
+      <div className="absolute inset-0">
+        <div className="relative flex h-full overflow-hidden border-8 border-gray-900 sm:h-screen ">
           <TopLeftNav />
           <TopRightNav />
           <BottomLeftNav />

@@ -46,6 +46,7 @@ import type {
 import { realmMilitaryEvents } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
 import { DetailedOverview } from './details/DetailedOverview';
+import { LaborTable } from './details/LaborTable';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -186,7 +187,7 @@ export const RealmBuildModal = (props: Prop) => {
         component: (
           <>
             <div>
-              <WorkHuts buildings={buildings} realm={realm} />
+              <LaborTable realm={realm} />
             </div>
             <RealmsFood
               realmFoodDetails={realmFoodDetails}

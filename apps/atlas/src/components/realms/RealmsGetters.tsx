@@ -5,6 +5,8 @@ import { ethers, BigNumber } from 'ethers';
 import {
   ATTACK_COOLDOWN_PERIOD,
   BASE_HAPPINESS,
+  BASE_LABOR_UNITS,
+  BASE_RESOURCES_PER_CYCLE,
   BASE_RESOURCES_PER_DAY,
   buildingPopulation,
   DAY,
@@ -19,6 +21,7 @@ import {
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ArmyAndOrder, useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type { BuildingDetail } from '@/types/index';
@@ -303,7 +306,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   const { checkUserHasAvailableResources } = useGameConstants();
 
   return (
-    <div className="p-1 text-center border rounded border-white/30">
+    <div className="p-1 text-center border rounded border-white/10">
       <ResourceIcon withTooltip size="xs" resource={resourceName} />
       <span
         className={
@@ -315,7 +318,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
             : 'text-red-200'
         }
       >
-        {(amount * qty).toFixed(0)}
+        {(amount * qty).toFixed(2)}
       </span>
     </div>
   );
@@ -560,4 +563,57 @@ export const hasSettledRealms = (userRealms, address) => {
       (r) => r.settledOwner === getAccountHex(address || '0x0') ?? 0
     )
   );
+};
+
+export const getLaborUnitsGenerated = (time): number => {
+  return time / 1000 / BASE_LABOR_UNITS;
+};
+
+export const getUnproducedLabor = (labor_balance) => {
+  const now = new Date().getTime();
+  const balance = labor_balance - now;
+
+  const labor_units = balance / 1000 / BASE_LABOR_UNITS;
+  return labor_units > 0 ? labor_units.toFixed(2) : 0;
+};
+
+export const getLaborGenerated = ({
+  last_harvest,
+  labor_balance,
+}): number[] => {
+  const now = new Date().getTime();
+  const lastHarvest = new Date(last_harvest);
+
+  let labor;
+
+  if (labor_balance > now) {
+    labor = (now - lastHarvest.getTime()) / 1000;
+  } else {
+    labor = (labor_balance - lastHarvest.getTime()) / 1000;
+  }
+
+  const generated_labor = ((labor / BASE_LABOR_UNITS) * 0.7).toFixed(2);
+
+  const labor_remaining = labor % BASE_LABOR_UNITS;
+
+  const vault = parseInt(generated_labor) * 0.3;
+
+  return [parseInt(generated_labor), labor_remaining / BASE_LABOR_UNITS, vault];
+};
+
+export const getVaultRaidableLaborUnits = (time): number => {
+  return (
+    getLaborUnitsGenerated(time || 0) *
+    BASE_RESOURCES_PER_CYCLE *
+    (PILLAGE_AMOUNT / 100)
+  );
+};
+
+export const checkIsRaidable = (realm: RealmFragmentFragment) => {
+  const resource_length = realm?.resources?.filter((r) => {
+    getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
+  });
+
+  console.log(resource_length);
+  return resource_length && resource_length.length > 0 ? false : true;
 };

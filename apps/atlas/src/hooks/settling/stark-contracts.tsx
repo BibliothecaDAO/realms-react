@@ -21,12 +21,12 @@ import Resources from '@/abi/settling/L02_Resources.json';
 import Building from '@/abi/settling/L03_Building.json';
 import Calculator from '@/abi/settling/L04_Calculator.json';
 import Wonder from '@/abi/settling/L05_Wonders.json';
+import Labor from '@/abi/settling/Labor.json';
 import Lords from '@/abi/settling/Lords_ERC20_Mintable.json';
 import Realms721 from '@/abi/settling/Realms_ERC721_Mintable.json';
 import Relics from '@/abi/settling/Relics.json';
 import Resources1155 from '@/abi/settling/Resources_ERC1155_Mintable_Burnable.json';
 import Travel from '@/abi/settling/Travel.json';
-
 // Note: Can use process.env | static definition if needed
 // Lords: process.env.LORDS_ADDR | "0x..."
 export const ModuleAddr = {
@@ -58,7 +58,19 @@ export const ModuleAddr = {
     '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
   GoblinTown:
     '0x00c358a31b8722845d44c98e428bd751f0d769bdaf14a3cb490c61dfd93e59fc',
+  Labor: '0x03c934d404e76daae48d9b17eb2a4a973938dbd3115bd353e756bcefe0d799a3',
 };
+
+/**
+ * Load the Labor Ethereum Contract. This is an ERC20 Contract.
+ * @returns The `StarkEthereum` contract or undefined.
+ */
+export function useLabor() {
+  return useContract({
+    abi: Labor as Abi,
+    address: ModuleAddr.Labor,
+  });
+}
 
 /**
  * Load the Stark Ethereum Contract. This is an ERC20 Contract.

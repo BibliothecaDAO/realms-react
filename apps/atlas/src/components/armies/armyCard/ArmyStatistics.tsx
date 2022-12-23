@@ -12,7 +12,7 @@ type Prop = {
 };
 
 export const ArmyStatistics: React.FC<Prop> = (props) => {
-  const army = props.army;
+  const { army } = props;
   const { battalions } = useArmy();
 
   const formattedArmy = (army: ArmyAndOrder) => {
@@ -36,6 +36,7 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
           return <BattalionWithImage key={index} {...battalion} />;
         })}
       </div>
+
       <ArmyStatisticsTable army={army} />
     </div>
   );

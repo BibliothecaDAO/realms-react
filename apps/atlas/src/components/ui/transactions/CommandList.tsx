@@ -290,7 +290,7 @@ export const CommandList: React.FC<Prop> = (props) => {
                         : 'text-red-200 xs'
                     }
                   >
-                    {resource.amount.toFixed(0)}
+                    {resource.amount.toFixed(2)}
                   </span>
                 </div>
               );
