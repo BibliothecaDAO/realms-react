@@ -111,13 +111,6 @@ export const LaborTable = (props: Prop) => {
                     />
                   );
                 })}
-                {/* <div className="p-2">
-                  <Lords className="self-center mx-auto md:w-4 lg:w-6" />
-                  cost: {totalLordsCostOfLabor.toFixed(2)} <br />
-                  return: {lordsReturnFromLabor.toFixed(2)} <br />
-                  profit: {laborProfit.toFixed(2)} <br />
-                  {laborProfitMargin.toFixed(2)}%
-                </div> */}
               </div>
             }
           >
@@ -148,7 +141,7 @@ export const LaborTable = (props: Prop) => {
           <span className="text-gray-600"> Gross: </span>{' '}
           {laborProfit.toFixed(2)} <br />
           <span className="text-gray-600"> Margin: </span>{' '}
-          {laborProfitMargin.toFixed(2)}%
+          {(laborProfitMargin * 100).toFixed(2)}%
         </div>
       ),
       resource: (

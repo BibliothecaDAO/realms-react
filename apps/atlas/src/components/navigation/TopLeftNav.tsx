@@ -40,7 +40,7 @@ export const TopLeftNav = () => {
   }
 
   return (
-    <div className="absolute z-100 ">
+    <div className="absolute z-50 ">
       {/* <div className="w-full h-screen pointer-events-none z-100 bg-paperTexture bg-blend-multiply"></div> */}
       <div className="relative">
         <div className="absolute z-50 w-48 h-8 top-1 lg:w-64 lg:h-10 md:pl-16 lg:pl-24 md:text-xs lg:text-lg shadow-red-900 text-gray-1000">

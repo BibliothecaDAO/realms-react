@@ -110,7 +110,7 @@ export const MenuSideBar = () => {
   }, [query]);
   const { closeAll, assetSidebar, openAsset } = useUIContext();
   return (
-    <div className="absolute z-50">
+    <div className="absolute z-[45]">
       <div>
         <button
           className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2 "
