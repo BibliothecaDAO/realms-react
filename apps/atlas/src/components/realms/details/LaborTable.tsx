@@ -132,16 +132,22 @@ export const LaborTable = (props: Prop) => {
       ),
       costs: (
         <div className="text-base text-left capitalize">
-          {/* <Lords className="self-center mx-auto md:w-4 lg:w-6" /> */}
-          <span className="text-gray-600"> Cogs: </span>
-          <span>{totalLordsCostOfLabor.toFixed(2)}</span>
-          <br />
-          <span className="text-gray-600"> Profit: </span>{' '}
-          {lordsReturnFromLabor.toFixed(2)} <br />
-          <span className="text-gray-600"> Gross: </span>{' '}
-          {laborProfit.toFixed(2)} <br />
-          <span className="text-gray-600"> Margin: </span>{' '}
-          {(laborProfitMargin * 100).toFixed(2)}%
+          <div className="flex justify-between">
+            <span className="text-gray-600"> Cogs: </span>
+            <span>{totalLordsCostOfLabor.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600"> Profit: </span>{' '}
+            {lordsReturnFromLabor.toFixed(2)} <br />
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600"> Gross: </span>{' '}
+            {laborProfit.toFixed(2)} <br />
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-600"> Margin: </span>{' '}
+            {(laborProfitMargin * 100).toFixed(2)}%
+          </div>
         </div>
       ),
       resource: (
@@ -149,13 +155,13 @@ export const LaborTable = (props: Prop) => {
           <Image
             src={'/resources/' + resource.resourceId + '.jpg'}
             alt="map"
-            width={100}
-            height={100}
+            width={80}
+            height={80}
             className="border-4 rounded-2xl border-yellow-800/40"
           />
           <span className="self-center ml-3 text-left">
             {resource.resourceName} <br />
-            <span className="text-gray-600">
+            <span className="text-base text-gray-600">
               {(+formatEther(
                 getBalanceById(resource.resourceId)?.amount || '0'
               )).toFixed(2)}

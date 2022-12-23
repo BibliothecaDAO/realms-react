@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useSpring, animated } from 'react-spring';
+import { Pulse } from '@/components/ui/Pulse';
 import {
   BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
@@ -42,24 +43,38 @@ export const LaborValues = ({
   return (
     <div className="text-base text-left">
       <div>
-        <div>
-          {' '}
-          <span className="text-gray-600">Produced:</span>{' '}
+        <div className="flex justify-between">
+          <span className="flex">
+            <Pulse
+              active={generated.generated * BASE_RESOURCES_PER_CYCLE > 0}
+            />
+            <span className="mx-1 text-gray-600 ">Produced:</span>{' '}
+          </span>
           {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()} /{' '}
           {generated.generated}
         </div>
-        <div>
-          <span className="text-gray-600">Production:</span>{' '}
+        <div className="flex justify-between">
+          <span className="flex">
+            <Pulse active={generated.part > 0} />
+            <span className="mx-1 text-gray-600">Production:</span>{' '}
+          </span>
           {(generated.part * 100).toFixed(3)}%
         </div>
       </div>{' '}
-      <div>
+      <div className="flex justify-between">
         {' '}
-        <span className="text-gray-600">Queue: </span>
+        <span className="flex">
+          <Pulse active={remaining > 0} />
+          <span className="mx-1 text-gray-600">Queue: </span>
+        </span>
         {remaining}
       </div>
-      <div>
-        <span className="text-gray-600">Vault: </span> {generated.vault}
+      <div className="flex justify-between">
+        <span className="flex">
+          <Pulse active={generated.vault > 0} />
+          <span className="mx-1 text-gray-600">Vault: </span>{' '}
+        </span>
+        {(generated.vault * BASE_RESOURCES_PER_CYCLE).toFixed(2)}
       </div>
     </div>
   );

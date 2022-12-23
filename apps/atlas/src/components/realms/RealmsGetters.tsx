@@ -306,7 +306,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   const { checkUserHasAvailableResources } = useGameConstants();
 
   return (
-    <div className="p-1 text-center border rounded border-white/30">
+    <div className="p-1 text-center border rounded border-white/10">
       <ResourceIcon withTooltip size="xs" resource={resourceName} />
       <span
         className={
@@ -318,7 +318,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
             : 'text-red-200'
         }
       >
-        {(amount * qty).toFixed(0)}
+        {(amount * qty).toFixed(2)}
       </span>
     </div>
   );
@@ -596,7 +596,7 @@ export const getLaborGenerated = ({
 
   const labor_remaining = labor % BASE_LABOR_UNITS;
 
-  const vault = Math.floor(parseInt(generated_labor) * 0.3);
+  const vault = parseInt(generated_labor) * 0.3;
 
   return [parseInt(generated_labor), labor_remaining / BASE_LABOR_UNITS, vault];
 };
