@@ -19,6 +19,7 @@ export const Entrypoints = {
 
 const EntrypointKeys = {
   [Entrypoints.harvest_labor]: 'harvest_labor',
+  [Entrypoints.create_labor]: 'create_labor',
 };
 
 export const createCall: Record<string, (args: any) => CallAndMetadata> = {
@@ -32,7 +33,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       ),
       args.laborUnits,
     ],
-    metadata: { ...args, action: Entrypoints.create_labor },
+    metadata: { ...args, action: EntrypointKeys.create_labor },
   }),
   harvest: (args: { realmId; resourceId }) => ({
     contractAddress: ModuleAddr.Labor,
@@ -48,25 +49,23 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
-  [Entrypoints.create_labor]: (tx, ctx) => ({
+  [EntrypointKeys.create_labor]: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Build' : 'Building'} Tools & Labor`,
     description: (
-      <span>
-        <div className="flex my-1">
-          <Image
-            src={'/resources/' + tx.metadata.resourceId + '.jpg'}
-            alt="map"
-            width={80}
-            height={80}
-            className="border-4 rounded-2xl border-yellow-800/40"
-          />
-          <div className="self-center ml-4 text-md">
-            Creating {tx.metadata.laborUnits} Tools & Labor on
-            {getRealmNameById(tx.metadata.realmId)} for{' '}
-            {findResourceById(tx.metadata.resourceId)?.trait}
-          </div>
+      <div className="flex my-1">
+        <Image
+          src={'/resources/' + tx.metadata.resourceId + '.jpg'}
+          alt="map"
+          width={80}
+          height={80}
+          className="border-4 rounded-2xl border-yellow-800/40"
+        />
+        <div className="self-center ml-4 text-md">
+          Creating {tx.metadata.laborUnits} Tools & Labor on{' '}
+          {getRealmNameById(tx.metadata.realmId)} for{' '}
+          {findResourceById(tx.metadata.resourceId)?.trait}
         </div>
-      </span>
+      </div>
     ),
   }),
   [EntrypointKeys.harvest_labor]: (tx, ctx) => ({
@@ -74,22 +73,20 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
       findResourceById(tx.metadata.resourceId)?.trait
     }`,
     description: (
-      <span>
-        <div className="flex my-1">
-          <Image
-            src={'/resources/' + tx.metadata.resourceId + '.jpg'}
-            alt="map"
-            width={80}
-            height={80}
-            className="border-4 rounded-2xl border-yellow-800/40"
-          />
-          <div className="self-center ml-4 text-md">
-            Harvesting {tx.metadata.laborUnits} Tools & Labor on
-            {getRealmNameById(tx.metadata.realmId)} for{' '}
-            {findResourceById(tx.metadata.resourceId)?.trait}
-          </div>
+      <div className="flex my-1">
+        <Image
+          src={'/resources/' + tx.metadata.resourceId + '.jpg'}
+          alt="map"
+          width={80}
+          height={80}
+          className="border-4 rounded-2xl border-yellow-800/40"
+        />
+        <div className="self-center ml-4 text-md">
+          Harvesting {tx.metadata.laborUnits} Tools & Labor on{' '}
+          {getRealmNameById(tx.metadata.realmId)} for{' '}
+          {findResourceById(tx.metadata.resourceId)?.trait}
         </div>
-      </span>
+      </div>
     ),
   }),
 };

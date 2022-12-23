@@ -44,7 +44,7 @@ export const BottomLeftNav = () => {
           <NetworkConnectButton />
         </div>
         <BottomLeftFrame
-          className={`absolute bottom-0 pointer-events-none w-72 fill-amber-100 stroke-${framePrimary} fill-${framePrimary}`}
+          className={`absolute bottom-0 pointer-events-none w-72 fill-gray-900 stroke-${framePrimary} fill-${framePrimary}`}
         />
 
         <BottomLeftFrameGold
@@ -52,13 +52,13 @@ export const BottomLeftNav = () => {
         />
 
         <div
-          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-amber-100 bg-${framePrimary} mb-72 pointer-events-none `}
+          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none `}
         />
       </div>
     </div>

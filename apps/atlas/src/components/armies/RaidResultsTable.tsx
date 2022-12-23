@@ -2,7 +2,7 @@ import React from 'react';
 
 import { battalionInformation, trueNameFromRawString } from '@/constants/army';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
-import { resourcePillaged } from '../realms/RealmsGetters';
+import { getRealmNameById, resourcePillaged } from '../realms/RealmsGetters';
 
 export const formatArmy = (army) => {
   const arr: any[] = [];
@@ -74,7 +74,8 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
         alt=""
       />
       <div className="w-full my-3 text-center">
-        <h1>Battle report</h1>
+        <h5>Battle report</h5>
+        <h1>{!success ? 'Victory!' : 'Retreat!'}</h1>
       </div>
 
       <div className="p-3 mb-4 text-xl text-center">
@@ -92,7 +93,11 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
         </thead>
         <tbody>
           <tr>
-            <td className="text-2xl">lord</td>
+            <td className="text-2xl">
+              {getRealmNameById(startingAttackingArmy?.realmId)}
+              {' |  '}
+              {startingAttackingArmy?.realmId}
+            </td>
             <td>
               {startingAttackingArmy &&
                 formatArmy(startingAttackingArmy)
@@ -132,7 +137,11 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
         </tbody>
         <tbody className="bg-gray-900">
           <tr>
-            <td className="text-2xl">lord</td>
+            <td className="text-2xl">
+              {getRealmNameById(startingDefendingArmy?.realmId)}
+              {' |  '}
+              {startingDefendingArmy?.realmId}
+            </td>
             <td>
               {startingDefendingArmy &&
                 formatArmy(startingDefendingArmy)

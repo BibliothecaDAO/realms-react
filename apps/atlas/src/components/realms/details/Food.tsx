@@ -418,7 +418,7 @@ export const FoodBuildingComponent = (props: {
                         resourceName={a.resourceName}
                         amount={a.amount}
                         id={a.resourceId}
-                        qty={parseInt(qty)}
+                        qty={parseInt(qty) || 0}
                       />
                     );
                   })}

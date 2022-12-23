@@ -86,7 +86,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
   [Entrypoints.create]: (tx, _context) => ({
-    title: 'Construct building',
+    title: `Construct ${buildingIdToString(tx.metadata.foodBuildingId)}`,
     description: `Build ${tx.metadata.quantity} ${buildingIdToString(
       tx.metadata.foodBuildingId
     )}${tx.metadata.quantity > 1 ? 's' : ''}`,
@@ -200,15 +200,26 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
       const to_harvest = harvests(food) - total_harvested;
 
-      if (to_harvest < 1 || to_harvest > 10000) {
-        return [0, 0];
-      }
+      console.log('to_harvest', to_harvest);
+      console.log('total_harvested', total_harvested);
+      console.log(
+        'total_harvests_since_creation',
+        total_harvests_since_creation
+      );
+      console.log('difference', difference);
 
-      // remaining harvests
       const remaining_harvests = difference % (HARVEST_LENGTH * 1000);
 
       const possible_harvest = to_harvest >= MAX_HARVESTS ? 6 : to_harvest;
 
+      console.log('possible_harvest', possible_harvest);
+      console.log('remaining_harvests', remaining_harvests);
+
+      if (to_harvest < 1 || to_harvest > 10000 || total_harvested < 0) {
+        return [0, remaining_harvests];
+      }
+
+      // remaining harvests
       return [Math.floor(possible_harvest), remaining_harvests];
     };
 

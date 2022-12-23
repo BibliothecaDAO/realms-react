@@ -5,6 +5,7 @@ import {
   Card,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib';
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
@@ -44,6 +45,7 @@ import {
   checkIsRaidable,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
+import { defaultArmy } from '@/constants/army';
 import {
   BASE_RESOURCES_PER_CYCLE,
   HarvestType,
@@ -70,6 +72,10 @@ import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { RealmsCardProps } from '@/types/index';
 import { shortenAddressWidth } from '@/util/formatters';
+import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
+import { ArmyCard } from '../armies/armyCard/ArmyCard';
+import { ArmyStatistics } from '../armies/armyCard/ArmyStatistics';
+import { ArmyStatisticsTable } from '../armies/armyCard/ArmyStatisticsTable';
 import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
@@ -81,20 +87,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
 
     const { enqueuedTx } = usePendingRealmTx({ realmId: realm.realmId });
 
-    const { enqueuedHarvestTx: resourcesTxPending } = useCurrentQueuedTxs({
-      moduleAddr: ModuleAddr.ResourceGame,
-      entryPoint: ResourceEntryPoints.claim,
-      realmId: realm.realmId,
-    });
-
     const {
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
-
-    const ensData = useEnsResolver(realm?.owner as string);
-
-    const { claim } = useResources(realm as Realm);
 
     const {
       buildings,
@@ -211,7 +207,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               size="md"
               order={realm.orderType.toLowerCase()}
             />
-            <h3 className="flex mx-2">{realm.name} </h3>
+            <h3 className="flex mx-2">
+              {realm.name} | <span className="">{realm.realmId} </span>
+            </h3>
             <div className="self-center">
               {!isFavourite(realm, favouriteRealms) ? (
                 <Button
@@ -245,8 +243,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
           <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
             <div className="flex self-end">
-              <span className="">{realm.realmId} </span>
-              {' | '}
               <span>
                 {' '}
                 {starknetId ?? starknetId}
@@ -257,12 +253,31 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </span>
             </div>
 
-            <div className="flex ">
-              <Shield className={'w-7 fill-gray-500 mr-2'} />
-              <span className="w-full break-normal">
-                {GetArmyStrength(realm, 0)}
-              </span>
-            </div>
+            <Tooltip
+              placement="left"
+              className="flex"
+              tooltipText={
+                <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap z-100">
+                  <ArmyStatisticsTable
+                    army={
+                      realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy
+                    }
+                  />
+                  <ArmyBattalions
+                    army={
+                      realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy
+                    }
+                  />
+                </div>
+              }
+            >
+              <div className="flex">
+                <Shield className={'w-7 fill-gray-500 mr-2'} />
+                <span className="w-full break-normal">
+                  {GetArmyStrength(realm, 0)}
+                </span>
+              </div>
+            </Tooltip>
           </div>
         </div>
         <div className="flex w-full mt-3">
@@ -358,18 +373,32 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               )}
 
               {realm && !isOwner && IsSettled(realm) && (
-                <Button
-                  onClick={() => {
-                    userArmiesAtLocation && userArmiesAtLocation.length
-                      ? setIsRaiding(true)
-                      : setIsTravel(true);
-                  }}
-                  size="sm"
-                  disabled={checkIsRaidable(realm)}
-                  variant={'primary'}
-                >
-                  {realm && getRealmCombatStatus(realm)}
-                </Button>
+                <div className="flex space-x-1">
+                  {userArmiesAtLocation && userArmiesAtLocation.length ? (
+                    <Button
+                      onClick={() => {
+                        setIsRaiding(true);
+                      }}
+                      size="sm"
+                      disabled={checkIsRaidable(realm)}
+                      variant={'primary'}
+                    >
+                      {realm && getRealmCombatStatus(realm)}
+                    </Button>
+                  ) : (
+                    ''
+                  )}
+
+                  <Button
+                    onClick={() => {
+                      setIsTravel(true);
+                    }}
+                    size="sm"
+                    variant={'primary'}
+                  >
+                    travel to raid
+                  </Button>
+                </div>
               )}
 
               <Button
@@ -441,40 +470,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             buildingUtilisation={buildingUtilisation}
           />
         )}
-
-        {/* <Disclosure>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button className="py-1 mb-2 border rounded border-white/20 hover:bg-gray-900">
-                    <ChevronDoubleDownIcon
-                      className={`w-5 h-5 mx-auto ${
-                        open ? 'rotate-180 transform' : ''
-                      }`}
-                    />
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="text-gray-500">
-                    {open && (
-                      <Tabs
-                        selectedIndex={selectedTab}
-                        onChange={(index) => pressedTab(index as number)}
-                        variant="small"
-                      >
-                        <Tabs.List className="">
-                          {tabs.map((tab, index) => (
-                            <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
-                          ))}
-                        </Tabs.List>
-                        <Tabs.Panels>
-                          {tabs.map((tab, index) => (
-                            <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-                          ))}
-                        </Tabs.Panels>
-                      </Tabs>
-                    )}
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure> */}
       </Card>
     );
   }

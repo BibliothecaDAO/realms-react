@@ -100,15 +100,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           </Select.Options>
         </Select>
         <div className="flex flex-wrap mt-4">
-          <div className="flex flex-wrap justify-between space-x-2 ">
-            <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
-              swap
-            </span>
+          <div className="flex flex-wrap justify-between w-full space-x-2">
+            <span className="text-xs uppercase opacity-40">swap</span>
             <InputNumber
               value={props.resource.qty}
               inputSize="md"
               colorScheme="transparent"
-              className="text-xl font-semibold w-36 sm:text-3xl"
+              className="text-xl w-36 sm:text-3xl"
               min={0}
               max={1000000}
               stringMode // to support high precision decimals
@@ -120,7 +118,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               }`}
             >
               <span
-                className={`self-center mr-1   ${
+                className={`self-center ml-auto   ${
                   props.buy ? 'text-red-200' : 'text-green-200'
                 }`}
               >
@@ -133,8 +131,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               <LordsIcon className="self-center w-3 h-3 fill-current sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="w-full pt-2 text-xs font-semibold tracking-widest uppercase border-t un sm:text-sm opacity-60 border-white/20">
-            balance:{' '}
+          <div className="w-full pt-2 border-t text-body opacity-60 border-white/20">
             <button
               onClick={() => {
                 props.onQtyChange(
@@ -149,7 +146,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap self-end justify-end w-1/2 text-xs font-semibold tracking-widest text-right uppercase sm:text-sm opacity-80">
+      <div className="flex flex-wrap self-end justify-end w-1/2 text-xs text-right uppercase sm:text-sm opacity-80">
         <div className="flex justify-end w-full">
           1 = {displayRate(props.resource.rate)} <LordsIcon className="w-3" />
         </div>
@@ -171,9 +168,6 @@ export function SwapResources(): ReactElement {
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
     useSellResources();
-
-  const isTransactionInProgress =
-    isBuyTransactionInProgress || isSellTransactionInProgress;
 
   const {
     availableResourceIds,
@@ -321,6 +315,11 @@ export function SwapResources(): ReactElement {
     });
   }, [gameConstants]);
 
+  const isTransactionInProgress =
+    isBuyTransactionInProgress || isSellTransactionInProgress;
+
+  const emptyTransaction = selectedSwapResourcesWithBalance.length < 1;
+
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="w-full mb-4">
@@ -465,10 +464,10 @@ export function SwapResources(): ReactElement {
               </Popover.Panel>
             </Transition>
           </Popover>
-          <div className="flex ml-auto text-sm tracking-widest">
+          <div className="flex ml-auto text-sm ">
             <div
               className={`px-4 uppercase self-center ${
-                tradeType === 'buy' && 'font-semibold'
+                tradeType === 'buy' && ''
               }`}
             >
               Buy
@@ -487,11 +486,7 @@ export function SwapResources(): ReactElement {
                 } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
               />
             </Switch>
-            <div
-              className={`px-4 uppercase self-center ${
-                isSell && 'font-semibold'
-              }`}
-            >
+            <div className={`px-4 uppercase self-center ${isSell && ''}`}>
               Sell
             </div>
           </div>
@@ -552,39 +547,31 @@ export function SwapResources(): ReactElement {
             </Button>
           </div>
           <div className="flex flex-col py-4 rounded ">
-            <div className="flex justify-end text-2xl">
-              <span className="flex">
-                <span className="flex items-center mr-6 text-xs text-gray-700">
-                  {isBuy ? 'Total $LORDS:' : 'Approximate $lords received:'}
-                </span>
-                {calculatedTotalInLords.toLocaleString()}{' '}
-                <LordsIcon key={1} className="w-5 ml-2" />
+            <div className="flex justify-end">
+              <span className="flex items-center mr-4 text-gray-600">
+                {isBuy ? 'Total $LORDS:' : '~ $LORDS received:'}
+              </span>
+              <span> {calculatedTotalInLords.toLocaleString()} </span>
+            </div>
+
+            <div className="flex justify-end">
+              <span className="flex self-center mr-4 text-gray-600">
+                Price impact:
+              </span>
+              <span
+                className={
+                  calculatedPriceImpact < 0 ? 'text-red-200' : 'text-green-200'
+                }
+              >
+                {calculatedPriceImpact}%
               </span>
             </div>
-            <div>
-              <div className="flex justify-end text-md">
-                <span className="flex self-center mr-6 text-xs text-gray-700">
-                  $LORDS price impact:
-                </span>
-                <span
-                  className={
-                    calculatedPriceImpact < 0
-                      ? 'text-red-200'
-                      : 'text-green-200'
-                  }
-                >
-                  {calculatedPriceImpact}%
-                </span>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-end text-md">
-                <span className="flex self-center mr-6 text-xs text-gray-700">
-                  $LORDS balance:
-                </span>
-                {(+formatEther(lordsBalance)).toLocaleString()}{' '}
-                <LordsIcon key={1} className="w-4 ml-1" />
-              </div>
+
+            <div className="flex justify-end">
+              <span className="flex self-center mr-4 text-gray-600">
+                Balance:
+              </span>
+              {(+formatEther(lordsBalance)).toLocaleString()}{' '}
             </div>
           </div>
 
@@ -592,8 +579,8 @@ export function SwapResources(): ReactElement {
             className="w-full"
             variant="primary"
             onClick={onTradeClicked}
-            loading={isTransactionInProgress}
-            disabled={isTransactionInProgress}
+            loading={isTransactionInProgress && !emptyTransaction}
+            disabled={isTransactionInProgress || emptyTransaction}
           >
             {isBuy ? 'buy resources' : 'sell resources'}
           </Button>
