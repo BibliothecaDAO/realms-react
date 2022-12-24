@@ -342,28 +342,29 @@ export const FoodBuildingComponent = (props: {
           })}
         </div>
         <div className="px-5 pb-5">
-          {harvestsLeft - decayed > 0 && (
-            <div className="px-4 text-xl">
-              <CountdownTimer
-                date={(timeTillHarvest + new Date().getTime()).toString()}
-              />
-            </div>
-          )}
           <div className="flex flex-wrap justify-between w-full p-3">
-            <div className="w-1/2">
+            <div className="w-full">
               <div className="flex flex-wrap justify-between p-2 mt-auto">
-                <div className="w-1/2 my-2">
-                  <h5>To harvest </h5>
+                <div className="w-1/3 my-2">
+                  <h5>To Harvest </h5>
                   <div>
                     {toHarvest} / {MAX_HARVESTS}
+                    {harvestsLeft > 0 && (
+                      <div className="flex space-x-1">
+                        Next Harvest:{' '}
+                        <CountdownTimer
+                          date={(
+                            timeTillHarvest + new Date().getTime()
+                          ).toString()}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <div className="w-1/2 my-2">
+                <div className="w-1/3 my-2">
                   <h5>Harvests Left</h5>
-                  <div>
-                    {harvestsLeft - decayed > 0 ? harvestsLeft - decayed : 0}
-                  </div>
+                  <div>{harvestsLeft}</div>
                 </div>
               </div>
               <div>

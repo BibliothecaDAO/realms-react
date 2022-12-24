@@ -77,8 +77,6 @@ export const useMarketRate = () => {
   const getTotalLordsCost = ({ costs, qty }) => {
     let cost = number.toBN(0);
 
-    console.log(costs, qty);
-
     costs?.forEach((element, index) => {
       const currentPrice = exchangeInfo?.find(
         (a) => a.tokenId === element.resourceId
@@ -91,6 +89,10 @@ export const useMarketRate = () => {
     });
 
     return +formatEther(cost.toString()).toLocaleString();
+  };
+
+  const getCurrentMarketById = ({ resourceId }) => {
+    return exchangeInfo?.find((a) => a.tokenId === resourceId);
   };
 
   const getLordsCostForResourceAmount = ({ resourceId, qty }) => {
@@ -108,5 +110,6 @@ export const useMarketRate = () => {
     historicPrices,
     getTotalLordsCost,
     getLordsCostForResourceAmount,
+    getCurrentMarketById,
   };
 };

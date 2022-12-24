@@ -18,7 +18,7 @@ export const Entrypoints = {
 };
 
 const EntrypointKeys = {
-  [Entrypoints.harvest_labor]: 'harvest_labor',
+  harvest_labor: 'harvest_labor',
   [Entrypoints.create_labor]: 'create_labor',
 };
 
@@ -33,7 +33,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       ),
       args.laborUnits,
     ],
-    metadata: { ...args, action: EntrypointKeys.create_labor },
+    metadata: { ...args, action: 'create_labor' },
   }),
   harvest: (args: { realmId; resourceId }) => ({
     contractAddress: ModuleAddr.Labor,
@@ -44,12 +44,12 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
         uint256.bnToUint256(number.toBN(args.resourceId))
       ),
     ],
-    metadata: { ...args, action: EntrypointKeys.harvest_labor },
+    metadata: { ...args, action: 'harvest_labor' },
   }),
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
-  [EntrypointKeys.create_labor]: (tx, ctx) => ({
+  ['create_labor']: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Build' : 'Building'} Tools & Labor`,
     description: (
       <div className="flex my-1">
@@ -61,14 +61,14 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
           className="border-4 rounded-2xl border-yellow-800/40"
         />
         <div className="self-center ml-4 text-md">
-          Creating {tx.metadata.laborUnits} Tools & Labor on{' '}
+          Building {tx.metadata.laborUnits}hrs of Tools & Labor on{' '}
           {getRealmNameById(tx.metadata.realmId)} for{' '}
           {findResourceById(tx.metadata.resourceId)?.trait}
         </div>
       </div>
     ),
   }),
-  [EntrypointKeys.harvest_labor]: (tx, ctx) => ({
+  ['harvest_labor']: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} ${
       findResourceById(tx.metadata.resourceId)?.trait
     }`,
@@ -82,9 +82,9 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
           className="border-4 rounded-2xl border-yellow-800/40"
         />
         <div className="self-center ml-4 text-md">
-          Harvesting {tx.metadata.laborUnits} Tools & Labor on{' '}
-          {getRealmNameById(tx.metadata.realmId)} for{' '}
-          {findResourceById(tx.metadata.resourceId)?.trait}
+          Harvesting
+          {findResourceById(tx.metadata.resourceId)?.trait} on{' '}
+          {getRealmNameById(tx.metadata.realmId)}
         </div>
       </div>
     ),

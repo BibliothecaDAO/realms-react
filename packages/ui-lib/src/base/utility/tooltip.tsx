@@ -43,12 +43,12 @@ export const Tooltip: React.FC<TooltipProps> = (props) => {
   }, [leaveDelay]);
 
   return (
-    <div className={twMerge('relative', className)}>
+    <div className={twMerge('relative w-full', className)}>
       <div
         ref={setReferenceElement}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="relative"
+        className="relative w-full"
       >
         {children}
       </div>
