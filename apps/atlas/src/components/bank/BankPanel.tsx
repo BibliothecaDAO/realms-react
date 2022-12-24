@@ -22,7 +22,7 @@ type Row = {
   action: ReactElement;
 };
 
-export const RateChange = (change: number) => {
+export const RateChange = ({ change }) => {
   const x = (change * 100).toFixed(2);
   return (
     <span
@@ -119,7 +119,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">
-              {RateChange(bankResource?.percentChange || 0)}
+              {RateChange(bankResource?.percentChange as any)}
             </span>
           </span>
         </div>
@@ -235,7 +235,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       chart: (
         <div className="relative flex justify-center">
           <span className="absolute bottom-0 left-0 self-center w-full p-1 text-xs sm:text-sm">
-            {RateChange(bankResource?.percentChange || 0)}
+            {RateChange(bankResource?.percentChange as any)}
           </span>
           <span className="absolute bottom-0 right-0 flex p-1">
             {(+formatEther(bankResource?.rate || 0)).toFixed(4)}

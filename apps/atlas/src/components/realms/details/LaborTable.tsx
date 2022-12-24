@@ -13,6 +13,7 @@ import { ReactElement, useEffect } from 'react';
 
 import { useSpring, animated } from 'react-spring';
 import { number } from 'starknet';
+import { RateChange } from '@/components/bank/BankPanel';
 import {
   BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
@@ -66,7 +67,11 @@ export const LaborTable = (props: Prop) => {
 
   const { gameConstants } = useGameConstants();
 
-  const { getTotalLordsCost, getLordsCostForResourceAmount } = useMarketRate();
+  const {
+    getTotalLordsCost,
+    getLordsCostForResourceAmount,
+    getCurrentMarketById,
+  } = useMarketRate();
 
   const defaultData = resources?.map((resource) => {
     const costs = gameConstants?.laborAndToolCosts.find(
@@ -88,9 +93,15 @@ export const LaborTable = (props: Prop) => {
       qty: BASE_RESOURCES_PER_DAY,
     });
 
+    const currentMarketPriceForResource = getCurrentMarketById({
+      resourceId: resource.resourceId,
+    });
+
     const laborProfit = lordsReturnFromLabor - totalLordsCostOfLabor;
 
     const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
+
+    console.log(currentMarketPriceForResource);
 
     return {
       build: (
@@ -132,22 +143,29 @@ export const LaborTable = (props: Prop) => {
       ),
       costs: (
         <div className="text-base text-left capitalize">
-          <div className="flex justify-between">
-            <span className="text-gray-600"> Cogs: </span>
-            <span>{totalLordsCostOfLabor.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600"> Profit: </span>{' '}
-            {lordsReturnFromLabor.toFixed(2)} <br />
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600"> Gross: </span>{' '}
-            {laborProfit.toFixed(2)} <br />
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600"> Margin: </span>{' '}
-            {(laborProfitMargin * 100).toFixed(2)}%
-          </div>
+          <RateChange
+            change={currentMarketPriceForResource?.percentChange24Hr}
+          />
+          <CostsRow
+            title={'Cogs'}
+            value={totalLordsCostOfLabor.toFixed(2)}
+            tooltipText={'Cost of Labor to Produce in $LORDS'}
+          />
+          <CostsRow
+            title={'Profit'}
+            value={lordsReturnFromLabor.toFixed(2)}
+            tooltipText={'Your Return on Labor in $LORDS'}
+          />
+          <CostsRow
+            title={'Gross'}
+            value={laborProfit.toFixed(2)}
+            tooltipText={'Gross profit'}
+          />
+          <CostsRow
+            title={'Margin'}
+            value={<span>{(laborProfitMargin * 100).toFixed(2)}% </span>}
+            tooltipText={'Your gross profit margin in %'}
+          />
         </div>
       ),
       resource: (
@@ -213,5 +231,24 @@ export const LaborTable = (props: Prop) => {
     <div className="py-8 text-2xl">
       <Table data={defaultData} columns={columns} {...tableOptions} />
     </div>
+  );
+};
+
+export const CostsRow = ({ value, tooltipText, title }) => {
+  return (
+    <Tooltip
+      placement="top"
+      className="flex w-full"
+      tooltipText={
+        <div className="p-2 rounded bg-gray-1000">{tooltipText}</div>
+      }
+    >
+      <div className="flex justify-between w-full rounded hover:bg-gray-1000">
+        <span className="flex">
+          <span className="mx-1 text-gray-600">{title}: </span>{' '}
+        </span>
+        {value}
+      </div>
+    </Tooltip>
   );
 };
