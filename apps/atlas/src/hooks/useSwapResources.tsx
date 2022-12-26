@@ -57,6 +57,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     ],
     metadata: {
       ...args,
+      maxAmount: args.maxAmount,
       action: Entrypoints.buyTokens,
     },
   }),
@@ -88,6 +89,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     ],
     metadata: {
       ...args,
+      minAmount: args.minAmount,
       action: Entrypoints.sellTokens,
     },
   }),
@@ -278,10 +280,9 @@ export const useBuyResources = () => {
     if (loading) {
       return;
     }
-    let insertFirst = false;
-    if (sessionStorage.getItem('reconcileTrade') == 'true') {
-      insertFirst = true;
-      sessionStorage.removeItem('reconcileTrade');
+    const insertFirst = Boolean(sessionStorage.getItem('insertAsFirstTx'));
+    if (insertFirst) {
+      sessionStorage.removeItem('insertAsFirstTx');
     }
     txQueue.add(
       createCall.buyTokens({
@@ -317,13 +318,18 @@ export const useSellResources = () => {
     if (loading) {
       return;
     }
+    const insertFirst = Boolean(sessionStorage.getItem('insertAsFirstTx'));
+    if (insertFirst) {
+      sessionStorage.removeItem('insertAsFirstTx');
+    }
     txQueue.add(
       createCall.sellTokens({
         minAmount,
         tokenIds,
         tokenAmounts,
         deadline,
-      })
+      }),
+      insertFirst
     );
   };
 

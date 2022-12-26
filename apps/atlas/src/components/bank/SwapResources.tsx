@@ -10,6 +10,7 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from '@rc-component/mini-decimal';
+import { BigNumber } from 'ethers';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
@@ -160,6 +161,10 @@ export function SwapResources(): ReactElement {
     return state === 'sell' ? 'buy' : 'sell';
   }, 'buy');
 
+  const [insertAsFirstTx, setInsertAsFirstTx] = useState(
+    sessionStorage.getItem('insertAsFirstTx') === 'true'
+  );
+
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
@@ -181,42 +186,60 @@ export function SwapResources(): ReactElement {
     batchAddResources,
   } = useBankContext();
 
-  const { getBalanceById, lordsBalance, balance } = useUserBalancesContext();
+  const { getBalanceById, lordsBalance, balance, lordsBalanceAfterCheckout } =
+    useUserBalancesContext();
 
   const { isApproved: isLordsApprovedForExchange } =
     useApproveLordsForExchange();
   const { isApproved: isResourcesApprovedForExchange } =
     useApproveResourcesForExchange();
 
-  const [slippage, setSlippage] = useState(0.5);
+  const [slippage, setSlippage] = useState(0.05);
 
-  const calculatedTotalInLords = useMemo(() => {
+  useEffect(() => {
+    if (insertAsFirstTx) {
+      sessionStorage.setItem('insertAsFirstTx', 'true');
+    } else {
+      sessionStorage.removeItem('insertAsFirstTx');
+    }
+  }, [insertAsFirstTx]);
+
+  const calculatedPriceInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
       return acc + calculateLords(resource.rate, resource.qty);
     }, 0);
   }, [selectedSwapResourcesWithBalance]);
 
   const calculatedSlippage = useMemo(() => {
-    return calculatedTotalInLords * slippage;
-  }, [calculatedTotalInLords, slippage]);
+    return calculatedPriceInLords * slippage;
+  }, [calculatedPriceInLords, slippage]);
+
+  const calculatedTotalInLords = useMemo(() => {
+    return calculatedPriceInLords + calculatedSlippage;
+  }, [calculatedPriceInLords, calculatedSlippage, isBuy]);
 
   const isBuyButtonDisabled = () => {
     if (isSell) {
       return false;
     }
-    const balance = parseFloat(formatEther(lordsBalance));
-    const isBalanceSufficient = balance >= calculatedTotalInLords;
+    const balance = BigNumber.from(lordsBalanceAfterCheckout);
+    const isBalanceSufficient = balance.gte(
+      BigNumber.from(parseEther(calculatedTotalInLords.toString()))
+    );
+
     if (!isLordsApprovedForExchange) {
       toast('Please approve Lords for exchange before buying resources.');
       return true;
     }
-    if (balance === 0) {
+    if (balance.isZero()) {
       toast('Insufficient Lords balance.');
       return true;
     }
     if (!isBalanceSufficient) {
       toast(
-        `Insufficient Lords balance. You have ${balance.toLocaleString()} Lords.`
+        `Insufficient Lords balance. You have ${+formatEther(
+          balance
+        ).toLocaleString()} Lords.`
       );
       return true;
     }
@@ -266,20 +289,19 @@ export function SwapResources(): ReactElement {
   function onBuyTokensClick() {
     if (isBuyButtonDisabled()) return;
     const maxAmount = parseEther(
-      String(calculatedTotalInLords + calculatedSlippage)
+      String(calculatedPriceInLords + calculatedSlippage)
     );
     // const maxAmount = parseEther(String('0'));
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
+    removeAllSelectedSwapResources();
   }
 
   // TODO: Set actual slippage when indexer caches rates
   function onSellTokensClick() {
     if (isSellButtonDisabled()) return;
-    // const minAmount = parseEther(
-    //   String(calculatedTotalInLords - calculatedSlippage)
-    // );
-    const minAmount = parseEther(String('0'));
+    const minAmount = parseEther(String(calculatedTotalInLords));
     sellTokens(minAmount, tokenIds, tokenAmounts, deadline());
+    removeAllSelectedSwapResources();
   }
 
   function onTradeClicked() {
@@ -288,13 +310,12 @@ export function SwapResources(): ReactElement {
     } else {
       onSellTokensClick();
     }
-    removeAllSelectedSwapResources();
   }
 
   const calculatedPriceImpact = useMemo(() => {
     // TODO: Set actual slippage when view will be implemented
     return isBuy ? 1 : -1;
-  }, [selectedSwapResourcesWithBalance, calculatedTotalInLords, isBuy]);
+  }, [selectedSwapResourcesWithBalance, calculatedPriceInLords, isBuy]);
 
   const [buildingsQty, setBuildingsQty] = useState({});
 
@@ -551,7 +572,10 @@ export function SwapResources(): ReactElement {
               <span className="flex items-center mr-4 text-gray-600">
                 {isBuy ? 'Total $LORDS:' : '~ $LORDS received:'}
               </span>
-              <span> {calculatedTotalInLords.toLocaleString()} </span>
+              <span>
+                {!isBuy && '-'}
+                {calculatedTotalInLords.toLocaleString()}{' '}
+              </span>
             </div>
 
             <div className="flex justify-end">
@@ -575,6 +599,27 @@ export function SwapResources(): ReactElement {
             </div>
           </div>
 
+          <div className="flex justify-center mb-2 text-sm ">
+            <div className={`px-4 uppercase self-center`}>
+              Insert at end of cart
+            </div>
+            <Switch
+              checked={insertAsFirstTx}
+              onChange={setInsertAsFirstTx}
+              className={`relative inline-flex h-6 w-11 items-center rounded shadow-inner ${
+                insertAsFirstTx ? 'bg-green-800' : 'bg-red-700'
+              }`}
+            >
+              <span
+                className={`${
+                  insertAsFirstTx ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
+              />
+            </Switch>
+            <div className={`px-4 uppercase self-center`}>
+              Insert at start of cart
+            </div>
+          </div>
           <Button
             className="w-full"
             variant="primary"

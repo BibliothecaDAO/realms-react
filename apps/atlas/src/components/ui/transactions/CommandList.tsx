@@ -297,7 +297,7 @@ export const CommandList: React.FC<Prop> = (props) => {
             })}
             <Button
               onClick={() => {
-                sessionStorage.setItem('reconcileTrade', 'true');
+                sessionStorage.setItem('insertAsFirstTx', 'true');
                 batchAddResources(
                   Object.keys(resourceCostsById)
                     .filter(
@@ -319,7 +319,8 @@ export const CommandList: React.FC<Prop> = (props) => {
                           resource.amount * 1.2 -
                           +formatEther(BigNumber.from(checkoutBalance)),
                       };
-                    })
+                    }),
+                  true
                 );
                 toast(
                   <span>

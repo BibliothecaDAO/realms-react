@@ -85,7 +85,7 @@ const BankContext = createContext<{
     newResourceId: number
   ) => void;
   getResourceById: (resourceId: number) => BankResource | undefined;
-  batchAddResources: (cost: ResourceCost[]) => void;
+  batchAddResources: (cost: ResourceCost[], clearCart?: boolean) => void;
   historicPrices: HistoricPrices | undefined;
   isLordsApproved: boolean;
   setIsLordsApproved: (bool) => void;
@@ -154,7 +154,7 @@ function useResources() {
   const { exchangeInfo, historicPrices } = useMarketRate();
 
   // batch add a cost
-  const batchAddResources = (cost: ResourceCost[]) => {
+  const batchAddResources = (cost: ResourceCost[], clearCart = false) => {
     const mapped: ResourceQty[] = cost?.map((a) => {
       return {
         resourceId: a.resourceId,
@@ -162,17 +162,15 @@ function useResources() {
       };
     });
 
+    const cartResources = clearCart ? [] : selectedSwapResources;
     const result: ResourceQty[] = Object.values(
-      [...selectedSwapResources, ...mapped].reduce(
-        (acc, { resourceId, qty }) => {
-          acc[resourceId] = {
-            resourceId,
-            qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
-          };
-          return acc;
-        },
-        {}
-      )
+      [...cartResources, ...mapped].reduce((acc, { resourceId, qty }) => {
+        acc[resourceId] = {
+          resourceId,
+          qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
+        };
+        return acc;
+      }, {})
     );
 
     setSelectedSwapResources([...result]);

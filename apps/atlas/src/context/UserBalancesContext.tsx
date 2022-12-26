@@ -43,6 +43,7 @@ const UserBalancesContext = createContext<{
   balance: ResourcesBalance;
   balanceStatus: NetworkState;
   lordsBalance: string;
+  lordsBalanceAfterCheckout: string;
   updateBalance: () => void;
   getBalanceById: (resourceId: number) => Resource | undefined;
 }>(null!);
@@ -67,6 +68,8 @@ function useUserBalances() {
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
+  const [lordsBalanceAfterCheckout, setLordsBalanceAfterCheckout] =
+    useState('0');
 
   const { data: walletBalancesData, refetch: updateBalance } =
     useGetWalletBalancesQuery({
@@ -119,14 +122,20 @@ function useUserBalances() {
     const allResourcesTrades = getTxResourcesTrades(txQueue);
 
     const tradeChangeByResourceId = {};
+    let lordsTradeChange = BigNumber.from(0);
 
     allResourcesTrades.forEach((t) => {
-      t.forEach((c) => {
+      if (t.action === 'buy_tokens') {
+        lordsTradeChange = lordsTradeChange.sub(t.lordsChange);
+      } else {
+        lordsTradeChange = lordsTradeChange.add(t.lordsChange);
+      }
+      t.resources.forEach((c) => {
         tradeChangeByResourceId[c.resourceId] = {
           ...tradeChangeByResourceId[c.resourceId],
           resourceId: c.resourceId,
           amount:
-            c.action === 'buy_tokens'
+            t.action === 'buy_tokens'
               ? (
                   tradeChangeByResourceId[c.resourceId]?.amount ??
                   BigNumber.from(0)
@@ -138,6 +147,10 @@ function useUserBalances() {
         };
       });
     });
+
+    setLordsBalanceAfterCheckout(
+      BigNumber.from(lordsBalance).add(lordsTradeChange).toString()
+    );
 
     setBalance(
       resources.map((resource, index) => {
@@ -186,6 +199,7 @@ function useUserBalances() {
 
   return {
     balance,
+    lordsBalanceAfterCheckout,
     balanceStatus,
     updateBalance,
     getBalanceById,
