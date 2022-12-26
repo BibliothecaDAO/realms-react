@@ -15,6 +15,7 @@ export const soundSelector = {
   buildCastle: 'buildings/castle.mp3',
   buildBarracks: 'buildings/barracks.mp3',
   buildArcherTower: 'buildings/archer_tower.mp3',
+  buildMageTower: 'buildings/mage_tower.mp3',
   buildWorkHut: 'buildings/workhuts.mp3',
   buildFishingVillage: 'buildings/fishing_village.mp3',
   buildFarm: 'buildings/farm.mp3',
