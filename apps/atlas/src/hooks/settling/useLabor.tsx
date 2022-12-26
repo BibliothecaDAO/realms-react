@@ -33,7 +33,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       ),
       args.laborUnits,
     ],
-    metadata: { ...args, action: 'create_labor' },
+    metadata: { ...args, action: Entrypoints.create_labor },
   }),
   harvest: (args: { realmId; resourceId }) => ({
     contractAddress: ModuleAddr.Labor,
@@ -44,12 +44,12 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
         uint256.bnToUint256(number.toBN(args.resourceId))
       ),
     ],
-    metadata: { ...args, action: 'harvest_labor' },
+    metadata: { ...args, action: Entrypoints.harvest_labor },
   }),
 };
 
 export const renderTransaction: RealmsTransactionRenderConfig = {
-  ['create_labor']: (tx, ctx) => ({
+  [Entrypoints.create_labor]: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Build' : 'Building'} Tools & Labor`,
     description: (
       <div className="flex my-1">
@@ -68,7 +68,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
       </div>
     ),
   }),
-  ['harvest_labor']: (tx, ctx) => ({
+  [Entrypoints.harvest_labor]: (tx, ctx) => ({
     title: `${ctx.isQueued ? 'Harvest' : 'Harvesting'} ${
       findResourceById(tx.metadata.resourceId)?.trait
     }`,
@@ -82,8 +82,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
           className="border-4 rounded-2xl border-yellow-800/40"
         />
         <div className="self-center ml-4 text-md">
-          Harvesting
-          {findResourceById(tx.metadata.resourceId)?.trait} on{' '}
+          Harvesting {findResourceById(tx.metadata.resourceId)?.trait} on{' '}
           {getRealmNameById(tx.metadata.realmId)}
         </div>
       </div>

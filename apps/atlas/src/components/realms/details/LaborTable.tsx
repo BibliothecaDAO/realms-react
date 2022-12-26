@@ -143,26 +143,37 @@ export const LaborTable = (props: Prop) => {
       ),
       costs: (
         <div className="text-base text-left capitalize">
-          <RateChange
-            change={currentMarketPriceForResource?.percentChange24Hr}
-          />
+          <div className="px-1">
+            <span className="mr-2">
+              {(+formatEther(
+                currentMarketPriceForResource?.amount || '0'
+              )).toFixed(2)}{' '}
+            </span>
+
+            <RateChange
+              change={currentMarketPriceForResource?.percentChange24Hr}
+            />
+          </div>
+
           <CostsRow
             title={'Cogs'}
             value={totalLordsCostOfLabor.toFixed(2)}
             tooltipText={'Cost of Labor to Produce in $LORDS'}
           />
           <CostsRow
-            title={'Profit'}
+            title={'Revenue'}
             value={lordsReturnFromLabor.toFixed(2)}
-            tooltipText={'Your Return on Labor in $LORDS'}
+            tooltipText={
+              'Your Revenue on Labor in $LORDS based on current prices'
+            }
           />
           <CostsRow
-            title={'Gross'}
+            title={'Gross Profit'}
             value={laborProfit.toFixed(2)}
             tooltipText={'Gross profit'}
           />
           <CostsRow
-            title={'Margin'}
+            title={'Gross Margin'}
             value={<span>{(laborProfitMargin * 100).toFixed(2)}% </span>}
             tooltipText={'Your gross profit margin in %'}
           />
