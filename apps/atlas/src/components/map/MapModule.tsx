@@ -100,6 +100,8 @@ export function MapModule() {
     getSize: (d) => 10,
   });
 
+  // disable mapbox logo
+
   const arcsLayer = useMemo(() => {
     return new ArcLayer({
       id: 'arc',
@@ -160,6 +162,7 @@ export function MapModule() {
         <Map
           // projection={'globe'}
           attributionControl={false}
+          logoPosition="bottom-right"
           onLoad={() => setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
