@@ -18,8 +18,8 @@ export const Entrypoints = {
 };
 
 const EntrypointKeys = {
-  harvest_labor: 'harvest_labor',
-  [Entrypoints.create_labor]: 'create_labor',
+  [Entrypoints.create_labor]: 'harvest_labor',
+  [Entrypoints.harvest_labor]: 'create_labor',
 };
 
 export const createCall: Record<string, (args: any) => CallAndMetadata> = {

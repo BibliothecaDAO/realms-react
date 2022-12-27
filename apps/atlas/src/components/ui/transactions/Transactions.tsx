@@ -148,16 +148,16 @@ export const TransactionCartTable = () => {
   const historyStorage = storage<any>(TX_HISTORY_STORAGE_KEY, []);
 
   useEffect(() => {
-    const storageTransactions = historyStorage.get();
-    const lastTx = transactions.pop();
-    if (lastTx) {
-      storageTransactions.push(lastTx);
-      historyStorage.set(storageTransactions);
-    }
-    if (storageTransactions.length > TX_HISTORY_LENGTH) {
-      storageTransactions.shift();
-    }
-    setTxHistory(storageTransactions);
+    // const storageTransactions = historyStorage.get();
+    // const lastTx = transactions.pop();
+    // if (lastTx) {
+    //   storageTransactions.push(lastTx);
+    //   // historyStorage.set(storageTransactions);
+    // }
+    // if (storageTransactions.length > TX_HISTORY_LENGTH) {
+    //   storageTransactions.shift();
+    // }
+    setTxHistory(transactions);
   }, [transactions]);
 
   return (
