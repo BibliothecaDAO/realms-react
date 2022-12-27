@@ -278,8 +278,6 @@ const useBuildings = (realm: Realm | undefined): Building => {
 
     const max = cities * (regions / 2) + 100;
 
-    console.log(buildings);
-
     SetBuildingUtilisation({ maxSqm: max, currentSqm: sqm });
   }, [realm, gameConstants]);
 

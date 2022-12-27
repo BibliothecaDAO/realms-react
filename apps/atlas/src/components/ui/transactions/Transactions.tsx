@@ -147,18 +147,18 @@ export const TransactionCartTable = () => {
   const [txHistory, setTxHistory] = useState<any>([]);
   const historyStorage = storage<any>(TX_HISTORY_STORAGE_KEY, []);
 
-  useEffect(() => {
-    const storageTransactions = historyStorage.get();
-    const lastTx = transactions.pop();
-    if (lastTx) {
-      storageTransactions.push(lastTx);
-      historyStorage.set(storageTransactions);
-    }
-    if (storageTransactions.length > TX_HISTORY_LENGTH) {
-      storageTransactions.shift();
-    }
-    setTxHistory(storageTransactions);
-  }, [transactions]);
+  // useEffect(() => {
+  //   const storageTransactions = historyStorage.get();
+  //   const lastTx = transactions.pop();
+  //   if (lastTx) {
+  //     storageTransactions.push(lastTx);
+  //     historyStorage.set(storageTransactions);
+  //   }
+  //   if (storageTransactions.length > TX_HISTORY_LENGTH) {
+  //     storageTransactions.shift();
+  //   }
+  //   setTxHistory(storageTransactions);
+  // }, [transactions]);
 
   return (
     <div className="flex flex-col-reverse flex-wrap w-full">
