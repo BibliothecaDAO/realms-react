@@ -119,7 +119,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">
-              {RateChange(bankResource?.percentChange as any)}
+              {RateChange({ change: bankResource?.percentChange as any })}
             </span>
           </span>
         </div>
@@ -193,7 +193,6 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   const boxData: Row[] = resources?.map((resource) => {
     const bankResource = getResourceById(resource.id);
     const balance = getBalanceById(resource.id);
-
     return {
       resource: (
         <div className="flex px-1 py-2 sm:text-xl">
@@ -235,7 +234,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       chart: (
         <div className="relative flex justify-center">
           <span className="absolute bottom-0 left-0 self-center w-full p-1 text-xs sm:text-sm">
-            {RateChange(bankResource?.percentChange as any)}
+            {RateChange({ change: bankResource?.percentChange as any })}
           </span>
           <span className="absolute bottom-0 right-0 flex p-1">
             {(+formatEther(bankResource?.rate || 0)).toFixed(4)}
