@@ -148,10 +148,13 @@ export function MapModule() {
         layers={[...layers, tripsLayer, ...iconLayers]}
       >
         {!isMapLoaded ? (
-          <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-yellow-50">
+          <div
+            className="fixed z-50 flex flex-wrap justify-center w-screen h-screen"
+            style={{ background: '#20333f' }}
+          >
             {' '}
-            <h1 className="self-center text-black duration-100 animate-pulse">
-              <Ouroboros className="block w-20 mx-auto fill-black" />
+            <h1 className="self-center duration-100 text-amber-100 animate-pulse">
+              <Ouroboros className="block w-20 mx-auto fill-amber-100" />
               loading Atlas...
             </h1>{' '}
           </div>

@@ -43,7 +43,7 @@ body {
 }
 
 #deckgl-wrapper {
-  background: rgb(146 177 185);
+  background: #20333f;
   @apply overflow-auto;
 }
 
