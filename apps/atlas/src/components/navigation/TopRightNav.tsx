@@ -3,13 +3,12 @@
 import TopRightFrame from '@bibliotheca-dao/ui-lib/icons/frame/top-right_no-ink.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
-import { TransactionCartSideBar } from '@/components/ui/transactions/TransactionCartSideBar';
 import { useUIContext } from '@/context/UIContext';
 import TransactionNavItem from './TransactionNavItem';
 
 export const TopRightNav = () => {
   const { address } = useAccount();
-  const { transactionCart, toggleTransactionCart } = useUIContext();
+  const { toggleTransactionCart } = useUIContext();
 
   return (
     <div className="absolute top-0 right-0 z-50">
@@ -19,10 +18,6 @@ export const TopRightNav = () => {
         <div className="absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-gray-900 mr-72 pointer-events-none"></div>
         <TopRightFrame className="absolute top-0 right-0 pointer-events-none w-72 fill-gray-900" />
       </div>
-      <TransactionCartSideBar
-        isOpen={transactionCart}
-        onClose={toggleTransactionCart}
-      />
     </div>
   );
 };

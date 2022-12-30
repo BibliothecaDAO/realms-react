@@ -15,7 +15,6 @@ import { MyGA } from '@/components/empire/MyGA';
 import { MyLoot } from '@/components/empire/MyLoot';
 import { MyRealms } from '@/components/empire/MyRealms';
 import { AccountOverview } from '@/components/empire/Overview';
-import { MintSettleRealmsSideBar } from '@/components/realms/MintSettleRealmsSideBar';
 import {
   getAccountHex,
   hasSettledRealms,
@@ -33,12 +32,7 @@ import { MyActions } from './MyActions';
 export function EmpirePanel() {
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
-
-  function onSettleRealmsClick() {
-    setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
-  }
+  const { toggleSettleRealms } = useUIContext();
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -60,7 +54,7 @@ export function EmpirePanel() {
             <div className="hidden md:block">Quick Actions</div>
           </div>
         ),
-        component: <MyActions onSettleRealms={onSettleRealmsClick} />,
+        component: <MyActions onSettleRealms={toggleSettleRealms} />,
       },
       // {
       //   label: (
@@ -125,7 +119,7 @@ export function EmpirePanel() {
         name: 'Get Started',
         icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => onSettleRealmsClick(),
+        action: () => toggleSettleRealms(),
         enabled: !userRealms?.realms.length,
       },
       {
@@ -146,7 +140,7 @@ export function EmpirePanel() {
         name: 'Settle Realms (' + unsettledRealms?.length + ')',
         icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => onSettleRealmsClick(),
+        action: () => toggleSettleRealms(),
         enabled:
           unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
       },
@@ -223,10 +217,6 @@ export function EmpirePanel() {
                 </Tabs.Panels>
               </div>
             </Tabs>
-            <MintSettleRealmsSideBar
-              isOpen={isSettleRealmsSideBarOpen}
-              onClose={onSettleRealmsClick}
-            />
           </div>
         </div>
       </div>

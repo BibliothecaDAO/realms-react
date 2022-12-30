@@ -12,11 +12,13 @@ export type UIContextType = {
   toggleOnboarding: () => void;
   toggleTransactionCart: () => void;
   toggleChatSidebar: () => void;
+  toggleSettleRealms: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
   transactionCart: boolean;
   chatSidebar: boolean;
+  settleRealmsSidebar: boolean;
   onboarding: boolean;
 };
 
@@ -30,6 +32,7 @@ export function useUi() {
   const [tradeSidebar, setTradeSidebar] = useState<boolean>(false);
   const [transactionCart, setTransactionCart] = useState<boolean>(false);
   const [chatSidebar, setChatSidebar] = useState<boolean>(false);
+  const [settleRealmsSidebar, setSettleRealmsSidebar] = useState(false);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -55,6 +58,10 @@ export function useUi() {
     router.push('/', undefined, { shallow: true });
     closeAll();
     setEmpireSidebar(!empireSidebar);
+  };
+
+  const toggleSettleRealms = () => {
+    setSettleRealmsSidebar(!settleRealmsSidebar);
   };
 
   const toggleTrade = () => {
@@ -94,6 +101,8 @@ export function useUi() {
     chatSidebar,
     toggleChatSidebar,
     toggleOnboarding,
+    settleRealmsSidebar,
+    toggleSettleRealms,
     onboarding,
     closeAll,
   };

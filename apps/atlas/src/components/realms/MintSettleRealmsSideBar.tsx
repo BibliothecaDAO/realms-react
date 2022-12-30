@@ -8,6 +8,7 @@ import AtlasSideBar from '@/components/map/AtlasSideBar';
 import { MintRealms } from '@/components/realms/MintRealms';
 import { SelectableRealm } from '@/components/realms/SelectableRealm';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
+import { sidebarClassNames } from '@/constants/ui';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
@@ -68,7 +69,10 @@ export const MintSettleRealmsSideBar = ({
   onClose,
 }: SettleRealmsSideBarProps) => {
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName="w-full lg:w-5/12">
+    <AtlasSideBar
+      isOpen={isOpen}
+      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+    >
       {isOpen && <SettleRealmsSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
   );

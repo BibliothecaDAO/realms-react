@@ -9,8 +9,6 @@ import { formatEther } from '@ethersproject/units';
 import { useAccount } from '@starknet-react/core';
 
 import { useRouter } from 'next/router';
-import { ResourceSwapSideBar } from '@/components/bank/ResourceSwapSideBar';
-import { EmpireSideBar } from '@/components/empire/EmpireSideBar';
 import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
@@ -21,15 +19,7 @@ export const TopLeftNav = () => {
   const { lordsBalance } = useUserBalancesContext();
   const { pathname } = useRouter();
   const { address } = useAccount();
-  const {
-    empireSidebar,
-    toggleEmpire,
-    tradeSidebar,
-    toggleTrade,
-    closeAll,
-    onboarding,
-    toggleOnboarding,
-  } = useUIContext();
+  const { toggleEmpire, toggleTrade } = useUIContext();
 
   function onLordsNavClick() {
     // Bank swap panel is already open
@@ -83,9 +73,6 @@ export const TopLeftNav = () => {
           </Button>
         </div> */}
       </div>
-
-      <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />
-      <ResourceSwapSideBar isOpen={tradeSidebar} onClose={onLordsNavClick} />
       {/* <OnboardingSidebar isOpen={onboarding} onClose={toggleOnboarding} /> */}
     </div>
   );
