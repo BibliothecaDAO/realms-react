@@ -13,12 +13,14 @@ export type UIContextType = {
   toggleTransactionCart: () => void;
   toggleChatSidebar: () => void;
   toggleSettleRealms: () => void;
+  toggleResourcesList: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
   transactionCart: boolean;
   chatSidebar: boolean;
   settleRealmsSidebar: boolean;
+  resourcesListSidebar: boolean;
   onboarding: boolean;
 };
 
@@ -33,6 +35,7 @@ export function useUi() {
   const [transactionCart, setTransactionCart] = useState<boolean>(false);
   const [chatSidebar, setChatSidebar] = useState<boolean>(false);
   const [settleRealmsSidebar, setSettleRealmsSidebar] = useState(false);
+  const [resourcesListSidebar, setResourcesListSidebar] = useState(false);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -45,7 +48,7 @@ export function useUi() {
   }, [router.isReady, selectedAsset]);
 
   const openAsset = (type: AssetType) => {
-    setEmpireSidebar(false);
+    closeAll();
     setAssetSidebar(type);
   };
 
@@ -58,6 +61,10 @@ export function useUi() {
     router.push('/', undefined, { shallow: true });
     closeAll();
     setEmpireSidebar(!empireSidebar);
+  };
+
+  const toggleResourcesList = () => {
+    setResourcesListSidebar(!resourcesListSidebar);
   };
 
   const toggleSettleRealms = () => {
@@ -86,6 +93,9 @@ export function useUi() {
     setTransactionCart(false);
     setOnboarding(false);
     setAssetSidebar(null);
+    setChatSidebar(false);
+    setSettleRealmsSidebar(false);
+    setResourcesListSidebar(false);
   };
 
   return {
@@ -103,6 +113,8 @@ export function useUi() {
     toggleOnboarding,
     settleRealmsSidebar,
     toggleSettleRealms,
+    resourcesListSidebar,
+    toggleResourcesList,
     onboarding,
     closeAll,
   };

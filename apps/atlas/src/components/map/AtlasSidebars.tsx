@@ -5,6 +5,7 @@ import { MintSettleRealmsSideBar } from '@/components/realms/MintSettleRealmsSid
 import { TransactionCartSideBar } from '@/components/ui/transactions/TransactionCartSideBar';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useUIContext } from '@/context/UIContext';
+import { ResourcesListSideBar } from '../bank/ResourcesListSideBar';
 import { CryptSideBar } from '../crypts/CryptsSideBar';
 import { GASideBar } from '../ga/GASideBar';
 import { LootSideBar } from '../loot/LootSideBar';
@@ -31,6 +32,8 @@ export function AtlasSidebars() {
     toggleTransactionCart,
     settleRealmsSidebar,
     toggleSettleRealms,
+    resourcesListSidebar,
+    toggleResourcesList,
   } = useUIContext();
 
   function onLordsNavClick() {
@@ -75,6 +78,10 @@ export function AtlasSidebars() {
       <ResourceSwapSideBar isOpen={tradeSidebar} onClose={onLordsNavClick} />
 
       <EmpireSideBar isOpen={empireSidebar} onClose={toggleEmpire} />
+      <ResourcesListSideBar
+        isOpen={resourcesListSidebar}
+        onClose={toggleResourcesList}
+      />
       <MintSettleRealmsSideBar
         isOpen={settleRealmsSidebar}
         onClose={toggleSettleRealms}

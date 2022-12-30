@@ -295,62 +295,58 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   });
 
   return (
-    <BasePanel open={true} style="p-10 mt-10 z-30" isLightTheme={true}>
-      <div className="absolute right-0 lg:w-7/12 lg:pl-24 lg:pr-10">
-        <div className="flex flex-col p-6 mb-8 bg-gray-1000 rounded-3xl">
-          <div className="flex justify-center mb-4">
-            <Squares2X2Icon className="w-6 h-6 text-white" />
-            <Switch
-              checked={isTableView}
-              onChange={toggleMarketView}
-              className={`relative inline-flex h-6 w-11 mx-2 items-center rounded shadow-inne border border-yellow-700`}
-            >
-              <span className="sr-only">Table/Cards</span>
-              <span
-                className={`${
-                  isTableView ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
-              />
-            </Switch>
-            <TableCellsIcon className="w-6 h-6 text-white" />
-          </div>
-          {isTableView ? (
-            <div className="relative overflow-x-auto">
-              {balance && (
-                <Table
-                  columns={columns}
-                  data={defaultData}
-                  options={tableOptions}
-                />
-              )}
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 gap-2">
-              {balance &&
-                boxData.map((data, index) => {
-                  return (
-                    <div
-                      className="p-2 border rounded bg-gray-1000 border-yellow-600/20"
-                      key={index}
-                    >
-                      <div className="flex justify-between">
-                        {data.resource}
-                        <div>
-                          {/* {data.rate} */}
-
-                          {data.action}
-                        </div>
-                      </div>
-
-                      {data.chart}
-                      {/* {data.lp_balance} */}
-                    </div>
-                  );
-                })}
-            </div>
+    <div className="flex flex-col mb-8 rounded-3xl">
+      <div className="flex justify-center mb-4">
+        <Squares2X2Icon className="w-6 h-6 text-white" />
+        <Switch
+          checked={isTableView}
+          onChange={toggleMarketView}
+          className={`relative inline-flex h-6 w-11 mx-2 items-center rounded shadow-inne border border-yellow-700`}
+        >
+          <span className="sr-only">Table/Cards</span>
+          <span
+            className={`${
+              isTableView ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
+          />
+        </Switch>
+        <TableCellsIcon className="w-6 h-6 text-white" />
+      </div>
+      {isTableView ? (
+        <div className="relative overflow-x-auto">
+          {balance && (
+            <Table
+              columns={columns}
+              data={defaultData}
+              options={tableOptions}
+            />
           )}
         </div>
-      </div>
-    </BasePanel>
+      ) : (
+        <div className="grid grid-cols-3 gap-2">
+          {balance &&
+            boxData.map((data, index) => {
+              return (
+                <div
+                  className="p-2 border rounded border-yellow-600/20"
+                  key={index}
+                >
+                  <div className="flex justify-between">
+                    {data.resource}
+                    <div>
+                      {/* {data.rate} */}
+
+                      {data.action}
+                    </div>
+                  </div>
+
+                  {data.chart}
+                  {/* {data.lp_balance} */}
+                </div>
+              );
+            })}
+        </div>
+      )}
+    </div>
   );
 }
