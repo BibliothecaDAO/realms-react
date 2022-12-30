@@ -6,6 +6,7 @@ import {
 } from '@bibliotheca-dao/ui-lib';
 
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
+import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
@@ -65,7 +66,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
   return (
-    <div className="flex p-3 mb-4 rounded shadow-[inset_0_3px_5px_0px_rgba(0,0,0,0.2)] bg-gray-900/70">
+    <div className="flex p-3 mb-4 rounded-md bg-white/5">
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
@@ -539,13 +540,13 @@ export function SwapResources(): ReactElement {
                 variant="outline"
                 onClick={() => removeSelectedSwapResource(resource.resourceId)}
               >
-                x
+                <Close viewBox="0 0 24 24" className="w-4 h-4" />
               </Button>
             </div>
           );
         })}
       </div>
-      <div className="sticky flex justify-end w-full pt-4 pb-5 -bottom-5">
+      <div className="sticky bottom-0 flex justify-end px-6 pt-4 pb-5 -mx-6 rounded-md backdrop-blur-xl">
         <div className="flex flex-col justify-end w-full">
           <div className="relative flex w-full">
             <Button
@@ -567,35 +568,41 @@ export function SwapResources(): ReactElement {
               clear
             </Button>
           </div>
-          <div className="flex flex-col py-4 rounded ">
-            <div className="flex justify-end">
-              <span className="flex items-center mr-4 text-gray-600">
-                {isBuy ? 'Total $LORDS:' : '~ $LORDS received:'}
-              </span>
-              <span>
-                {!isBuy && '-'}
-                {calculatedTotalInLords.toLocaleString()}{' '}
-              </span>
-            </div>
-
-            <div className="flex justify-end">
-              <span className="flex self-center mr-4 text-gray-600">
-                Price impact:
-              </span>
-              <span
-                className={
-                  calculatedPriceImpact < 0 ? 'text-red-200' : 'text-green-200'
-                }
-              >
-                {calculatedPriceImpact}%
-              </span>
-            </div>
-
-            <div className="flex justify-end">
-              <span className="flex self-center mr-4 text-gray-600">
+          <div className="flex items-center py-4 rounded ">
+            <div className="flex">
+              <span className="flex self-center mr-2 text-gray-600">
                 Balance:
               </span>
+              <LordsIcon className="w-3 mr-1 fill-white" />
               {(+formatEther(lordsBalance)).toLocaleString()}{' '}
+            </div>
+
+            <div className="flex flex-col items-center ml-auto">
+              <div className="flex whitespace-nowrap">
+                <span className="flex items-center mr-2 text-gray-600">
+                  {isBuy ? 'Total:' : 'To receive:'}
+                </span>
+                <div className="flex">
+                  {' ~'}
+                  <LordsIcon className="w-3 mr-1 fill-white" />
+                  {calculatedTotalInLords.toLocaleString()}{' '}
+                </div>
+              </div>
+
+              <div className="flex text-sm">
+                <span className="flex self-center mr-2 text-gray-600">
+                  Price impact:
+                </span>
+                <span
+                  className={
+                    calculatedPriceImpact < 0
+                      ? 'text-red-200'
+                      : 'text-green-200'
+                  }
+                >
+                  {calculatedPriceImpact}%
+                </span>
+              </div>
             </div>
           </div>
 
