@@ -54,7 +54,7 @@ export function AccountOverview() {
           </div>
         </div>
 
-        <CardBody className="h-screen overflow-y-auto">
+        <CardBody>
           {events
             ? events.map((a, index) => {
                 return (

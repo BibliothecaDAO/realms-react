@@ -16,6 +16,7 @@ export const BaseSideBarPanel = ({
   children,
   position,
   className,
+  withoutTopPadding,
 }: BaseSideBarPanel) => {
   return (
     <div
