@@ -49,7 +49,7 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel onClose={onClose}>
+    <BaseSideBarPanel position="left" onClose={onClose}>
       <div className="relative px-6 rounded">
         <Tabs
           selectedIndex={selectedTab}

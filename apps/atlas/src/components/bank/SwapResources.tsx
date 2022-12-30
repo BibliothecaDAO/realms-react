@@ -545,7 +545,7 @@ export function SwapResources(): ReactElement {
           );
         })}
       </div>
-      <div className="sticky flex justify-end w-full pt-4 pb-5 bg-gray-1000 -bottom-5">
+      <div className="sticky flex justify-end w-full pt-4 pb-5 -bottom-5">
         <div className="flex flex-col justify-end w-full">
           <div className="relative flex w-full">
             <Button
