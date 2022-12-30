@@ -186,7 +186,7 @@ export function EmpirePanel() {
                     {
                       <Button
                         key={action.name}
-                        className={`flex-col items-start rounded-xl whitespace-nowrap ${action.buttonStyles}`}
+                        className={`flex-col items-start rounded-xl whitespace-nowrap`}
                         variant="outline"
                         onClick={() => action.action()}
                       >
