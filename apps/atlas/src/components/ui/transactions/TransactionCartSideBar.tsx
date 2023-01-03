@@ -17,10 +17,10 @@ export const TransactionCartSideBar = ({
   isOpen,
   onClose,
 }: TransactionCartSideBarProps) => {
-  const { empireSidebar } = useUIContext();
+  const { empireSidebar, resourcesListSidebar } = useUIContext();
   const offsetClasses = useMemo(() => {
-    return empireSidebar ? 'mr-12 my-24' : '';
-  }, [empireSidebar]);
+    return empireSidebar || resourcesListSidebar ? 'mr-12 my-24' : '';
+  }, [empireSidebar, resourcesListSidebar]);
   return (
     <AtlasSideBar
       isOpen={isOpen}

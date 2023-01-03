@@ -2,8 +2,10 @@ import { useChannel, usePresence, configureAbly } from '@ably-labs/react-hooks';
 import { Button, Card } from '@bibliotheca-dao/ui-lib/base';
 import { useAccount } from '@starknet-react/core';
 import type { Types } from 'ably';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { sidebarClassNames } from '@/constants/ui';
+import { useUIContext } from '@/context/UIContext';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { shortenAddress } from '@/util/formatters';
 import AtlasSideBar from '../map/AtlasSideBar';
@@ -29,10 +31,14 @@ export const ChatSideBar = ({
   onClose,
   channelName,
 }: ChatSideBarProps) => {
+  const { empireSidebar, resourcesListSidebar } = useUIContext();
+  const offsetClasses = useMemo(() => {
+    return empireSidebar || resourcesListSidebar ? 'mr-12 my-24' : '';
+  }, [empireSidebar, resourcesListSidebar]);
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-50')}
     >
       {isOpen && (
         <ChatSideBarPanel onClose={onClose} channelName={channelName} />
