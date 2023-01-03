@@ -94,7 +94,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
 
             <div className="flex py-4 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
               <span className="self-center w-full">
-                <span className="flex">
+                <span className="flex text-base whitespace-nowrap">
                   <ResourceIcon
                     className="self-center w-4 mr-2"
                     resource={resource?.trait?.replace(' ', '') || ''}
@@ -178,7 +178,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     };
   });
   const columns = [
-    { Header: 'Resource', id: 1, accessor: 'resource' },
+    { Header: 'Resource', id: 1, accessor: 'resource', size: 225 },
     // { Header: 'Balance', id: 2, accessor: 'balance' },
     // { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Price', id: 5, accessor: 'rate' },
@@ -186,7 +186,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
     // { Header: 'Change', id: 4, accessor: 'change' },
 
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
-    { Header: 'Action', id: 7, accessor: 'action' },
+    { Header: 'Action', id: 7, accessor: 'action', size: 75 },
   ];
   const tableOptions = { is_striped: false };
 
