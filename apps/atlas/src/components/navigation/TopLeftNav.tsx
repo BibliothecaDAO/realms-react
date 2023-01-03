@@ -7,6 +7,7 @@ import TopLeftFrameGold from '@bibliotheca-dao/ui-lib/icons/frame/top-left_gold.
 import TopLeftFrame from '@bibliotheca-dao/ui-lib/icons/frame/top-left_no-ink.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
+import { Transition } from '@headlessui/react';
 import { useAccount } from '@starknet-react/core';
 
 import { useRouter } from 'next/router';
@@ -23,6 +24,7 @@ export const TopLeftNav = () => {
   const { pathname } = useRouter();
   const { address } = useAccount();
   const { toggleEmpire, toggleTrade } = useUIContext();
+  const [isBalanceHovered, setIsBalanceHovered] = useState(false);
 
   function onLordsNavClick() {
     // Bank swap panel is already open
@@ -66,18 +68,30 @@ export const TopLeftNav = () => {
             <Tooltip
               placement="right"
               tooltipText={
-                <div className="right-0 p-4 mt-4 -ml-8 text-white border-4 rounded shadow-md rounded-2xl bg-gradient-to-r from-gray-900 to-gray-1000 border-yellow-800/60 shadow-yellow-800/60 z-100">
-                  <div className="text-center">Available resources:</div>
-                  <div className="grid grid-cols-2 gap-4 mt-2 whitespace-nowrap w-80">
-                    {resourcesList}
+                <Transition
+                  show={isBalanceHovered}
+                  enter="transition ease-in-out duration-500"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-150"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
+                >
+                  <div className="right-0 p-4 -ml-8 text-white border-4 rounded shadow-md rounded-2xl bg-gradient-to-r from-gray-900 to-gray-1000 border-yellow-800/60 shadow-yellow-800/60 z-100">
+                    <div className="text-center">Available resources:</div>
+                    <div className="grid grid-cols-2 gap-4 mt-2 whitespace-nowrap w-80">
+                      {resourcesList}
+                    </div>
                   </div>
-                </div>
+                </Transition>
               }
             >
               <Button
                 className="flex px-2 py-1 "
                 onClick={onLordsNavClick}
                 variant="unstyled"
+                onMouseEnter={() => setIsBalanceHovered(true)}
+                onMouseLeave={() => setIsBalanceHovered(false)}
               >
                 <Lords className="self-center md:w-4 lg:w-6 fill-gray-900" />{' '}
                 <span className="self-center md:pl-2 lg:pl-2 text-amber-100 ">
