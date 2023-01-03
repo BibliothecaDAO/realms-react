@@ -154,8 +154,16 @@ export function MapModule() {
           >
             {' '}
             <h1 className="self-center duration-100 text-amber-100 animate-pulse">
-              <Ouroboros className="block w-20 mx-auto fill-amber-100" />
-              loading Atlas...
+              <img
+                alt="Ouroboros Eternum Logo"
+                src="/eternum-logo_animated.png"
+                className="w-20 mx-auto"
+                style={{
+                  filter:
+                    'invert(90%) sepia(17%) saturate(688%) hue-rotate(331deg) brightness(109%) contrast(99%)',
+                }}
+              />
+              Loading Atlas...
             </h1>{' '}
           </div>
         ) : (
