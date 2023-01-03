@@ -23,6 +23,10 @@ export const soundSelector = {
   summonTroops: 'summonTroops.mp3',
   openSidebar: 'sidebar_in.mp3',
   closeSidebar: 'sidebar_out.mp3',
+  addWheat: 'resources/wheat.flac',
+  addWood: 'resources/wood.flac',
+  addStone: 'resources/stone.flac',
+  addAlchemicalSilver: 'resources/alchemical_silver.flac',
 };
 
 export const useUiSounds = (selector: string) => {
