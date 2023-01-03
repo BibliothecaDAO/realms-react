@@ -4,6 +4,7 @@ import { useAccount, useTransactionManager } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import type { ReactElement } from 'react';
 import { useEffect, useState, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import AtlasSideBar from '@/components/map/AtlasSideBar';
 import { MintRealms } from '@/components/realms/MintRealms';
 import { SelectableRealm } from '@/components/realms/SelectableRealm';
@@ -68,10 +69,14 @@ export const MintSettleRealmsSideBar = ({
   isOpen,
   onClose,
 }: SettleRealmsSideBarProps) => {
+  const { empireSidebar } = useUIContext();
+  const offsetClasses = useMemo(() => {
+    return empireSidebar ? 'mr-12 my-24' : '';
+  }, [empireSidebar]);
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-50')}
     >
       {isOpen && <SettleRealmsSideBarPanel onClose={onClose} />}
     </AtlasSideBar>

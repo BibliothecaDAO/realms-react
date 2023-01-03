@@ -42,7 +42,7 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0  bottom-0 rounded-2xl transition-all duration-500 ease-in-out',
+        'absolute top-0  bottom-0 rounded-2xl transition duration-500 ease-in-out',
         props.isTransparent
           ? 'bg-transparent'
           : 'bg-gradient-to-r from-gray-900 to-gray-1000 border-4 border-yellow-800/60 shadow-xl shadow-yellow-800/60',
