@@ -162,10 +162,6 @@ export function SwapResources(): ReactElement {
     return state === 'sell' ? 'buy' : 'sell';
   }, 'buy');
 
-  const [insertAsFirstTx, setInsertAsFirstTx] = useState(
-    sessionStorage.getItem('insertAsFirstTx') === 'true'
-  );
-
   const isBuy = tradeType === 'buy';
   const isSell = tradeType === 'sell';
 
@@ -196,14 +192,6 @@ export function SwapResources(): ReactElement {
     useApproveResourcesForExchange();
 
   const [slippage, setSlippage] = useState(0.05);
-
-  useEffect(() => {
-    if (insertAsFirstTx) {
-      sessionStorage.setItem('insertAsFirstTx', 'true');
-    } else {
-      sessionStorage.removeItem('insertAsFirstTx');
-    }
-  }, [insertAsFirstTx]);
 
   const calculatedPriceInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
@@ -606,27 +594,6 @@ export function SwapResources(): ReactElement {
             </div>
           </div>
 
-          <div className="flex justify-center mb-2 text-sm ">
-            <div className={`px-4 uppercase self-center`}>
-              Insert at end of cart
-            </div>
-            <Switch
-              checked={insertAsFirstTx}
-              onChange={setInsertAsFirstTx}
-              className={`relative inline-flex h-6 w-11 items-center rounded shadow-inner ${
-                insertAsFirstTx ? 'bg-green-800' : 'bg-red-700'
-              }`}
-            >
-              <span
-                className={`${
-                  insertAsFirstTx ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
-              />
-            </Switch>
-            <div className={`px-4 uppercase self-center`}>
-              Insert at start of cart
-            </div>
-          </div>
           <Button
             className="w-full"
             variant="primary"
