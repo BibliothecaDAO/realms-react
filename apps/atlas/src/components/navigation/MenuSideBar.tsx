@@ -25,6 +25,8 @@ export const MenuSideBar = () => {
   const [showMenu, setShowMenu] = useState(breakpoints.lg);
   const { query, pathname } = useRouter();
 
+  const { toggleTrade, toggleResourcesList } = useUIContext();
+
   const isPage = useCallback(
     (name: string) => name === pathname.slice(1).split('/')[0],
     [pathname]
@@ -63,12 +65,18 @@ export const MenuSideBar = () => {
         page: '?asset=realm0',
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
-        sidebar: 'realm' as AssetType,
+        action: () => {
+          openAsset('realm');
+        },
       },
       {
-        page: 'bank',
+        page: '?bank',
         icon: <Lords className={`${iconClasses('bank')}`} />,
         text: 'Bank',
+        action: () => {
+          toggleTrade();
+          toggleResourcesList();
+        },
       },
       // {
       //   page: 'loot',
@@ -127,7 +135,7 @@ export const MenuSideBar = () => {
             <Link
               onClick={() => {
                 closeAll();
-                menu.sidebar && openAsset(menu.sidebar);
+                menu.action && menu.action();
               }}
               href={getPageHref(menu.page)}
               key={menu.page}

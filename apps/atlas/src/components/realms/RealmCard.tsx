@@ -459,7 +459,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           )}
         </AtlasSidebar>
 
-        {isDetails && (
+        {
           <RealmsDetailSideBar
             isOpen={isDetails}
             onClose={() => setDetails(false)}
@@ -469,7 +469,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             availableFood={availableFood}
             buildingUtilisation={buildingUtilisation}
           />
-        )}
+        }
       </Card>
     );
   }

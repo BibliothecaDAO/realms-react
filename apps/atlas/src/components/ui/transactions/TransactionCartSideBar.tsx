@@ -1,9 +1,11 @@
 import { Tabs } from '@bibliotheca-dao/ui-lib';
 import { useState, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CommandList } from '@/components/ui/transactions/CommandList';
 import { TransactionCartTable } from '@/components/ui/transactions/Transactions';
 import { sidebarClassNames } from '@/constants/ui';
+import { useUIContext } from '@/context/UIContext';
 import AtlasSideBar from '../../map/AtlasSideBar';
 
 interface TransactionCartSideBarProps {
@@ -15,10 +17,14 @@ export const TransactionCartSideBar = ({
   isOpen,
   onClose,
 }: TransactionCartSideBarProps) => {
+  const { empireSidebar, resourcesListSidebar } = useUIContext();
+  const offsetClasses = useMemo(() => {
+    return empireSidebar || resourcesListSidebar ? 'mr-12 my-24' : '';
+  }, [empireSidebar, resourcesListSidebar]);
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-50')}
     >
       {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
     </AtlasSideBar>
@@ -49,7 +55,7 @@ const TransactionCartSideBarPanel = ({ onClose }: { onClose?: () => void }) => {
   );
 
   return (
-    <BaseSideBarPanel onClose={onClose}>
+    <BaseSideBarPanel position="left" onClose={onClose}>
       <div className="relative px-6 rounded">
         <Tabs
           selectedIndex={selectedTab}

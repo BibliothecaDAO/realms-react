@@ -11,6 +11,7 @@ type Prop = {
   container?: HTMLElement;
   position?: 'left' | 'right';
   isTransparent?: boolean;
+  overflowHidden?: boolean;
 };
 
 const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
@@ -41,12 +42,13 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0  bottom-0  overflow-y-auto border-white/30 rounded-3xl transition-all duration-500 ease-in-out',
+        'absolute top-0  bottom-0 rounded-2xl transition duration-500 ease-in-out',
         props.isTransparent
           ? 'bg-transparent'
-          : 'bg-gray-1000 border-8  border-gray-900 shadow-xl shadow-yellow-800',
+          : 'bg-gradient-to-r from-gray-900 to-gray-1000 border-4 border-yellow-800/60 shadow-xl shadow-yellow-800/60',
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
         props.position == 'left' ? 'left-0' : 'right-0',
+        props.overflowHidden ? 'overflow-hidden' : 'overflow-y-auto',
         props.isOpen ? 'opacity-100' : 'opacity-0',
         props.isOpen
           ? 'translate-x-0'

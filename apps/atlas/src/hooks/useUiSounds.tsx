@@ -15,6 +15,7 @@ export const soundSelector = {
   buildCastle: 'buildings/castle.mp3',
   buildBarracks: 'buildings/barracks.mp3',
   buildArcherTower: 'buildings/archer_tower.mp3',
+  buildMageTower: 'buildings/mage_tower.mp3',
   buildWorkHut: 'buildings/workhuts.mp3',
   buildFishingVillage: 'buildings/fishing_village.mp3',
   buildFarm: 'buildings/farm.mp3',
@@ -22,6 +23,10 @@ export const soundSelector = {
   summonTroops: 'summonTroops.mp3',
   openSidebar: 'sidebar_in.mp3',
   closeSidebar: 'sidebar_out.mp3',
+  addWheat: 'resources/wheat.flac',
+  addWood: 'resources/wood.flac',
+  addStone: 'resources/stone.flac',
+  addAlchemicalSilver: 'resources/alchemical_silver.flac',
 };
 
 export const useUiSounds = (selector: string) => {

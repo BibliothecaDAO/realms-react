@@ -83,6 +83,7 @@ const useBuildings = (realm: Realm | undefined): Building => {
   const { play: buildArcherTower } = useUiSounds(
     soundSelector.buildArcherTower
   );
+  const { play: buildMageTower } = useUiSounds(soundSelector.buildMageTower);
 
   const { gameConstants } = useGameConstants();
   const [buildings, setBuildings] = useState<BuildingDetail[]>();
@@ -99,6 +100,9 @@ const useBuildings = (realm: Realm | undefined): Building => {
         break;
       case RealmBuildingId.ArcherTower:
         buildArcherTower();
+        break;
+      case RealmBuildingId.MageTower:
+        buildMageTower();
         break;
       case RealmBuildingId.Castle:
         buildCastle();

@@ -22,11 +22,15 @@ export const getTxCosts = (txQueue) => {
 export const getTxResourcesTrades = (txQueue) => {
   return txQueue.transactions
     .filter((t) => ['buy_tokens', 'sell_tokens'].includes(t.metadata.action))
-    .map((t) =>
-      t.metadata.tokenIds.map((id, i) => ({
+    .map((t) => ({
+      lordsChange:
+        t.metadata.action === 'buy_tokens'
+          ? t.metadata.maxAmount
+          : t.metadata.minAmount,
+      action: t.metadata.action,
+      resources: t.metadata.tokenIds.map((id, i) => ({
         resourceId: id,
         amount: t.metadata.tokenAmounts[i],
-        action: t.metadata.action,
-      }))
-    );
+      })),
+    }));
 };

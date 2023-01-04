@@ -15,7 +15,6 @@ import { MyGA } from '@/components/empire/MyGA';
 import { MyLoot } from '@/components/empire/MyLoot';
 import { MyRealms } from '@/components/empire/MyRealms';
 import { AccountOverview } from '@/components/empire/Overview';
-import { MintSettleRealmsSideBar } from '@/components/realms/MintSettleRealmsSideBar';
 import {
   getAccountHex,
   hasSettledRealms,
@@ -33,12 +32,7 @@ import { MyActions } from './MyActions';
 export function EmpirePanel() {
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
-  const [isSettleRealmsSideBarOpen, setIsSettleRealmsSideBarOpen] =
-    useState(false);
-
-  function onSettleRealmsClick() {
-    setIsSettleRealmsSideBarOpen(!isSettleRealmsSideBarOpen);
-  }
+  const { toggleSettleRealms } = useUIContext();
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -60,7 +54,7 @@ export function EmpirePanel() {
             <div className="hidden md:block">Quick Actions</div>
           </div>
         ),
-        component: <MyActions onSettleRealms={onSettleRealmsClick} />,
+        component: <MyActions onSettleRealms={toggleSettleRealms} />,
       },
       // {
       //   label: (
@@ -119,15 +113,14 @@ export function EmpirePanel() {
   const approveTxs = getApproveAllGameContracts();
   const txQueue = useCommandList();
   const { isGameApproved } = useDumbGameApprovals();
-  const quickActions = useMemo(
-    () => [
+  const quickActions = useMemo(() => {
+    const allActions = [
       {
         name: 'Get Started',
         icon: <Globe className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => onSettleRealmsClick(),
+        action: () => toggleSettleRealms(),
         enabled: !userRealms?.realms.length,
-        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
       },
       {
         name: 'Approve Eternum Contracts',
@@ -142,13 +135,12 @@ export function EmpirePanel() {
           userRealms?.realms.length > 0 &&
           !!isGameApproved &&
           !isGameApproved,
-        buttonStyles: 'border-emerald-500 bg-emerald-100/50',
       },
       {
         name: 'Settle Realms (' + unsettledRealms?.length + ')',
         icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
         details: <span className="flex"></span>,
-        action: () => onSettleRealmsClick(),
+        action: () => toggleSettleRealms(),
         enabled:
           unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
       },
@@ -167,9 +159,9 @@ export function EmpirePanel() {
       //     claimAll();
       //   },
       // },
-    ],
-    [userData, userRealms, isGameApproved, unsettledRealms]
-  );
+    ];
+    return allActions.filter((a) => a.enabled);
+  }, [userData, userRealms, isGameApproved, unsettledRealms]);
 
   const pressedTab = (index) => {
     play();
@@ -177,45 +169,47 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="flex pl-2 pr-6">
-      <div className="w-9/12 py-16 pl-16 pr-4">
-        <div className="sticky flex flex-col p-6 border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl top-10 ">
-          <div className="flex w-full gap-2 mb-4 rounded-2xl">
-            {quickActions.map((action) => {
-              return (
-                <>
-                  {action.enabled && (
-                    <Button
-                      key={action.name}
-                      className={`flex-col items-start rounded-xl whitespace-nowrap ${action.buttonStyles}`}
-                      variant="outline"
-                      onClick={() => action.action()}
-                    >
-                      {userData?.resourcesClaimable}
-                      <span className="flex">
-                        {action.icon} {action.name}
-                      </span>
-                      {action.details}
-                    </Button>
-                  )}
-                </>
-              );
-            })}
-          </div>
+    <div className="relative flex h-screen pt-20 pb-24 pl-20 pr-8">
+      <div className="relative w-9/12">
+        <div className="flex-col h-full overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
+          {quickActions.length > 0 && (
+            <div className="flex w-full gap-2 p-4 mb-4 rounded-2xl">
+              {quickActions.map((action) => {
+                return (
+                  <>
+                    {
+                      <Button
+                        key={action.name}
+                        className={`flex-col items-start rounded-xl whitespace-nowrap`}
+                        variant="outline"
+                        onClick={() => action.action()}
+                      >
+                        {userData?.resourcesClaimable}
+                        <span className="flex">
+                          {action.icon} {action.name}
+                        </span>
+                        {action.details}
+                      </Button>
+                    }
+                  </>
+                );
+              })}
+            </div>
+          )}
           <div className="relative">
             <Tabs
               selectedIndex={selectedTab}
               onChange={(index) => pressedTab(index as number)}
               variant="primary"
             >
-              <div className="overflow-x-auto">
-                <Tabs.List>
+              <div className="sticky top-0 z-20 p-4 overflow-x-auto rounded-xl backdrop-blur-sm">
+                <Tabs.List className="py-0">
                   {tabs.map((tab, index) => (
                     <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
                   ))}
                 </Tabs.List>
               </div>
-              <div className="p-0 mt-2">
+              <div className="px-6 pb-6 mt-2">
                 <Tabs.Panels>
                   {tabs.map((tab, index) => (
                     <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
@@ -223,21 +217,15 @@ export function EmpirePanel() {
                 </Tabs.Panels>
               </div>
             </Tabs>
-            <MintSettleRealmsSideBar
-              isOpen={isSettleRealmsSideBarOpen}
-              onClose={onSettleRealmsClick}
-            />
           </div>
         </div>
       </div>
-      <div className="w-3/12 py-16">
-        <div className="sticky top-10">
-          <img
-            className="object-cover h-screen bg-white rounded-2xl"
-            src={'/vizirs/mj_military_vizir.png'}
-            alt="Vizir"
-          />
-        </div>
+      <div className="w-3/12 ml-4">
+        <img
+          className="object-cover h-full bg-white rounded-2xl"
+          src={'/vizirs/mj_military_vizir.png'}
+          alt="Vizir"
+        />
       </div>
     </div>
   );

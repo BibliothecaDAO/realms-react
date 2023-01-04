@@ -26,21 +26,15 @@ export const BaseSideBarPanel = ({
           <Button
             size="xs"
             variant="outline"
-            className={clsx(
-              ' top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-full sticky bg-gray-1000',
-              position != 'left' ? 'left-2' : 'right-2'
-            )}
+            className={
+              ' top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-2xl sticky bg-transparent left-2'
+            }
             onClick={() => {
               onClose();
             }}
           >
             <Close className="w-6 h-6" />
           </Button>
-        )}
-        {(title || onClose) && (
-          <div className="flex justify-between w-full p-2 mb-4">
-            <h1>{title}</h1>
-          </div>
         )}
         {children}
       </div>

@@ -19,7 +19,7 @@ import {
 } from '@/components/bank/MarketGetters';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import type { Metadata } from '@/components/ui/transactions/Transactions';
-import { resources } from '@/constants/resources';
+import { resources, ResourcesIds } from '@/constants/resources';
 import {
   useGetWalletBalancesQuery,
   useGetGameConstantsQuery,
@@ -29,6 +29,7 @@ import {
   useLordsContract,
   useExchangeContract,
 } from '@/hooks/settling/stark-contracts';
+import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
 import { useCommandList } from './CommandListContext';
 
@@ -85,7 +86,7 @@ const BankContext = createContext<{
     newResourceId: number
   ) => void;
   getResourceById: (resourceId: number) => BankResource | undefined;
-  batchAddResources: (cost: ResourceCost[]) => void;
+  batchAddResources: (cost: ResourceCost[], clearCart?: boolean) => void;
   historicPrices: HistoricPrices | undefined;
   isLordsApproved: boolean;
   setIsLordsApproved: (bool) => void;
@@ -153,8 +154,35 @@ function useResources() {
 
   const { exchangeInfo, historicPrices } = useMarketRate();
 
+  const { play: playAddWood } = useUiSounds(soundSelector.addWood);
+  const { play: playAddStone } = useUiSounds(soundSelector.addStone);
+  const { play: playAddAlchemicalSilver } = useUiSounds(
+    soundSelector.addAlchemicalSilver
+  );
+  const { play: playAddWheat } = useUiSounds(soundSelector.addWheat);
+
+  const playResourceSound = (resourceId) => {
+    // eslint-disable-next-line sonarjs/no-small-switch
+    switch (resourceId) {
+      case ResourcesIds.Wood:
+        playAddWood();
+        break;
+      case ResourcesIds.Stone:
+        playAddStone();
+        break;
+      case ResourcesIds.AlchemicalSilver:
+        playAddAlchemicalSilver();
+        break;
+      case ResourcesIds.Wheat:
+        playAddWheat();
+        break;
+      default:
+        break;
+    }
+  };
+
   // batch add a cost
-  const batchAddResources = (cost: ResourceCost[]) => {
+  const batchAddResources = (cost: ResourceCost[], clearCart = false) => {
     const mapped: ResourceQty[] = cost?.map((a) => {
       return {
         resourceId: a.resourceId,
@@ -162,17 +190,15 @@ function useResources() {
       };
     });
 
+    const cartResources = clearCart ? [] : selectedSwapResources;
     const result: ResourceQty[] = Object.values(
-      [...selectedSwapResources, ...mapped].reduce(
-        (acc, { resourceId, qty }) => {
-          acc[resourceId] = {
-            resourceId,
-            qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
-          };
-          return acc;
-        },
-        {}
-      )
+      [...cartResources, ...mapped].reduce((acc, { resourceId, qty }) => {
+        acc[resourceId] = {
+          resourceId,
+          qty: (acc[resourceId] ? acc[resourceId].qty : 0) + qty,
+        };
+        return acc;
+      }, {})
     );
 
     setSelectedSwapResources([...result]);
@@ -183,6 +209,7 @@ function useResources() {
       return;
     }
     const select = resourceId ?? availableResourceIds[0];
+    playResourceSound(select);
     setSelectedSwapResources([
       { resourceId: select, qty: qty ? qty : 0 },
       ...selectedSwapResources,

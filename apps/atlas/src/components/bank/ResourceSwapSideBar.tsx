@@ -6,6 +6,7 @@ import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { sidebarClassNames } from '@/constants/ui';
 
+import { useUIContext } from '@/context/UIContext';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { LpMerchant } from './LpMerchant';
 import { Nexus } from './Nexus';
@@ -21,11 +22,15 @@ export const ResourceSwapSideBar = ({
   onClose,
   resources,
 }: ResourceSwapSideBarProps) => {
+  const { empireSidebar } = useUIContext();
+  const offsetClasses = useMemo(() => {
+    return empireSidebar ? 'ml-24 my-24' : 'ml-20';
+  }, [empireSidebar]);
   return (
     <AtlasSideBar
       position="left"
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, 'ml-20 z-40')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-40')}
     >
       {isOpen && (
         <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />

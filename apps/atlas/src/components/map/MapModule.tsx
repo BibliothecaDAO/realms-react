@@ -100,6 +100,8 @@ export function MapModule() {
     getSize: (d) => 10,
   });
 
+  // disable mapbox logo
+
   const arcsLayer = useMemo(() => {
     return new ArcLayer({
       id: 'arc',
@@ -146,11 +148,22 @@ export function MapModule() {
         layers={[...layers, tripsLayer, ...iconLayers]}
       >
         {!isMapLoaded ? (
-          <div className="fixed z-50 flex flex-wrap justify-center w-screen h-screen bg-yellow-50">
+          <div
+            className="fixed z-50 flex flex-wrap justify-center w-screen h-screen"
+            style={{ background: '#20333f' }}
+          >
             {' '}
-            <h1 className="self-center text-black duration-100 animate-pulse">
-              <Ouroboros className="block w-20 mx-auto fill-black" />
-              loading Atlas...
+            <h1 className="self-center duration-100 text-amber-100 animate-pulse">
+              <img
+                alt="Ouroboros Eternum Logo"
+                src="/eternum-logo_animated.png"
+                className="w-20 mx-auto"
+                style={{
+                  filter:
+                    'invert(90%) sepia(17%) saturate(688%) hue-rotate(331deg) brightness(109%) contrast(99%)',
+                }}
+              />
+              Loading Atlas...
             </h1>{' '}
           </div>
         ) : (
@@ -160,6 +173,7 @@ export function MapModule() {
         <Map
           // projection={'globe'}
           attributionControl={false}
+          logoPosition="bottom-right"
           onLoad={() => setIsMapLoaded(true)}
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}

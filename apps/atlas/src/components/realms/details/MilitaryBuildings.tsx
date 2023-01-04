@@ -3,6 +3,8 @@ import {
   CountdownTimer,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
+import { BigNumber } from 'ethers';
 import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -10,8 +12,11 @@ import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
 import { buildingIntegrity } from '@/constants/buildings';
 import { useBankContext } from '@/context/BankContext';
+import { useUIContext } from '@/context/UIContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { GetRealmQuery, Realm } from '@/generated/graphql';
 import useBuildings from '@/hooks/settling/useBuildings';
+import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import type { BuildingDetail } from '@/types/index';
 
 interface BuildQuantity {
@@ -29,6 +34,11 @@ type Prop = {
 export const MilitaryBuildings = (props: Prop) => {
   const { batchAddResources } = useBankContext();
   const { build } = useBuildings(props.realm as Realm);
+  const { checkUserHasCheckoutResources, checkUserHasAvailableResources } =
+    useGameConstants();
+  const { balance } = useUserBalancesContext();
+  const { toggleTrade } = useUIContext();
+
   const [buildQty, setBuildQty] = useState<BuildQuantity>({
     barracks: '1',
     archerTower: '1',
@@ -114,7 +124,52 @@ export const MilitaryBuildings = (props: Prop) => {
                             );
                           })}
                       </div>
-                      <div className="flex w-full mt-1 space-x-2">
+                      <div className="flex w-full mt-2 space-x-2">
+                        {a.cost && (
+                          <Button
+                            onClick={() => {
+                              batchAddResources(
+                                a.cost
+                                  .filter(
+                                    (r) =>
+                                      r.amount > 0 &&
+                                      !checkUserHasAvailableResources({
+                                        cost: r.amount,
+                                        id: r.resourceId,
+                                      })
+                                  )
+                                  .map((r) => {
+                                    const checkoutBalance =
+                                      balance.find(
+                                        (a) => a.resourceId === r.resourceId
+                                      )?.amount || 0;
+                                    return {
+                                      resourceId: r.resourceId,
+                                      resourceName: r.resourceName,
+                                      amount:
+                                        r.amount * 1.2 -
+                                        +formatEther(
+                                          BigNumber.from(checkoutBalance)
+                                        ),
+                                    };
+                                  })
+                              );
+                              toast(
+                                <span>
+                                  Missing resources added to the cart
+                                  <Button onClick={toggleTrade}>
+                                    Open Now
+                                  </Button>
+                                </span>
+                              );
+                            }}
+                            size="xs"
+                            className="ml-2"
+                            variant="outline"
+                          >
+                            Buy missing resources
+                          </Button>
+                        )}
                         <Button
                           onClick={() =>
                             build({
@@ -131,6 +186,17 @@ export const MilitaryBuildings = (props: Prop) => {
                           size="xs"
                           variant="primary"
                           className="ml-auto"
+                          disabled={
+                            a.cost &&
+                            a.cost.some(
+                              (r) =>
+                                r.amount > 0 &&
+                                !checkUserHasAvailableResources({
+                                  cost: r.amount,
+                                  id: r.resourceId,
+                                })
+                            )
+                          }
                         >
                           construct
                         </Button>
