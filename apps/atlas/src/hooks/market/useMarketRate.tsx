@@ -98,7 +98,7 @@ export const useMarketRate = () => {
   const getLordsCostForResourceAmount = ({ resourceId, qty }) => {
     const currentPrice = exchangeInfo?.find(
       (a) => a.tokenId === resourceId
-    )?.buyAmount;
+    )?.sellAmount;
 
     const cost = number.toBN(currentPrice || '0').mul(number.toBN(qty));
 

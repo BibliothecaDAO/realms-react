@@ -598,7 +598,15 @@ export const getLaborGenerated = ({
 
   const vault = parseInt(generated_labor) * 0.3;
 
-  return [parseInt(generated_labor), labor_remaining / BASE_LABOR_UNITS, vault];
+  let remaining;
+
+  if (labor_balance < now) {
+    remaining = 0;
+  } else {
+    remaining = labor_remaining / BASE_LABOR_UNITS;
+  }
+
+  return [parseInt(generated_labor), remaining, vault];
 };
 
 export const getVaultRaidableLaborUnits = (time): number => {
@@ -611,7 +619,7 @@ export const getVaultRaidableLaborUnits = (time): number => {
 
 export const checkIsRaidable = (realm: RealmFragmentFragment) => {
   const resource_length = realm?.resources?.filter((r) => {
-    getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
+    return getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
   });
 
   console.log(resource_length);

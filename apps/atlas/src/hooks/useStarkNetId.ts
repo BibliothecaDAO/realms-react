@@ -4,6 +4,7 @@ export const useStarkNetId = (addr: string) => {
   const [starknetId, setStarknetId] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log('useStarkNetId', addr);
     if (addr) {
       fetch(`/api/starknetId/resolve?address=${addr}`)
         .then((response) => response.json())

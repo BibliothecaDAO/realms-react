@@ -37,6 +37,8 @@ export type BankResource = {
   resourceId: number;
   resourceName: string;
   rate: string;
+  buyAmount: string;
+  sellAmount: string;
   lp: string;
   currencyAmount: string;
   tokenAmount: string;
@@ -65,6 +67,8 @@ const initResources = resources.map((resource) => {
     resourceId: resource.id,
     resourceName: resource.trait,
     rate: '0',
+    buyAmount: '0',
+    sellAmount: '0',
     lp: '0',
     currencyAmount: '0',
     tokenAmount: '0',
@@ -293,6 +297,8 @@ function useResources() {
           resourceId,
           resourceName,
           rate: rate?.amount ?? '0',
+          buyAmount: rate?.buyAmount ?? '0',
+          sellAmount: rate?.sellAmount ?? '0',
           lp: userLp[index]?.amount ?? '0',
           currencyAmount: currencyExchangeData[index]?.amount ?? '0',
           tokenAmount: tokenExchangeData[index]?.amount ?? '0',
