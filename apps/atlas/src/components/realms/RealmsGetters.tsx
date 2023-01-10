@@ -619,7 +619,7 @@ export const getVaultRaidableLaborUnits = (time): number => {
 
 export const checkIsRaidable = (realm: RealmFragmentFragment) => {
   const resource_length = realm?.resources?.filter((r) => {
-    getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
+    return getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
   });
 
   console.log(resource_length);

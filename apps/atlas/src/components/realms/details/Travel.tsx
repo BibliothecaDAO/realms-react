@@ -38,7 +38,7 @@ export const Travel = ({ realm }: Prop) => {
   return (
     <div className="p-5">
       <div className="mb-4">
-        <h2>No Armies at this Realm</h2>
+        <h2>Your Armies</h2>
         <h5>First travel an Army here, then you will be able to Attack.</h5>
       </div>
 

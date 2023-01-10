@@ -101,8 +101,6 @@ export const LaborTable = (props: Prop) => {
 
     const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
 
-    console.log(currentMarketPriceForResource);
-
     return {
       build: (
         <div className="flex justify-center">
