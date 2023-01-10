@@ -61,7 +61,7 @@ export function getDeckGLTripLayerPath(
   numberOfPoints: number
 ) {
   const percentComplete = (Date.now() - startTime) / (endTime - startTime);
-  const endPoint = intermediatePointTo(origin, destination, percentComplete);
+  const endPoint = intermediatePointTo(origin, destination, 1);
 
   const points: { coordinates: number[]; timestamp: number }[] = [];
   for (let i = 0; i <= numberOfPoints; i++) {
