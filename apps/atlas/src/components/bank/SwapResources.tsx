@@ -4,7 +4,6 @@ import {
   ResourceIcon,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib';
-
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
@@ -15,7 +14,7 @@ import { BigNumber } from 'ethers';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
-import { battalionInformation, battalionIdToString } from '@/constants/army';
+import { battalionIdToString } from '@/constants/army';
 import type { BankResource } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import type { Resource } from '@/context/UserBalancesContext';
@@ -65,6 +64,11 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
   const handleSelectChange = (newValue: number) => {
     props.onResourceChange(props.resource.resourceId, newValue);
   };
+
+  const realRate = useMemo(() => {
+    return props.buy ? props.resource.buyAmount : props.resource.sellAmount;
+  }, [props.resource.buyAmount, props.resource.sellAmount, props.buy]);
+
   return (
     <div className="flex p-3 mb-4 rounded-md bg-white/5">
       <div className="sm:w-1/2">
@@ -110,7 +114,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               colorScheme="transparent"
               className="text-xl w-36 sm:text-3xl"
               min={0}
-              max={1000000}
+              max={10000000}
               stringMode // to support high precision decimals
               onChange={handleValueChange}
             />{' '}
@@ -126,7 +130,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               >
                 {props.buy ? '-' : '+'}
                 {calculateLords(
-                  props.resource.rate,
+                  realRate,
                   props.resource.qty
                 ).toLocaleString()}{' '}
               </span>{' '}
@@ -150,7 +154,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-xs text-right uppercase sm:text-sm opacity-80">
         <div className="flex justify-end w-full">
-          1 = {displayRate(props.resource.rate)} <LordsIcon className="w-3" />
+          1 = {displayRate(realRate)} <LordsIcon className="w-3" />
         </div>
       </div>
     </div>
@@ -195,17 +199,25 @@ export function SwapResources(): ReactElement {
 
   const calculatedPriceInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
-      return acc + calculateLords(resource.rate, resource.qty);
+      return (
+        acc +
+        calculateLords(
+          isBuy ? resource.buyAmount : resource.sellAmount,
+          resource.qty
+        )
+      );
     }, 0);
-  }, [selectedSwapResourcesWithBalance]);
+  }, [selectedSwapResourcesWithBalance, tradeType]);
 
   const calculatedSlippage = useMemo(() => {
-    return calculatedPriceInLords * slippage;
-  }, [calculatedPriceInLords, slippage]);
+    return isBuy
+      ? calculatedPriceInLords * slippage
+      : -(calculatedPriceInLords * slippage);
+  }, [calculatedPriceInLords, slippage, tradeType]);
 
   const calculatedTotalInLords = useMemo(() => {
     return calculatedPriceInLords + calculatedSlippage;
-  }, [calculatedPriceInLords, calculatedSlippage, isBuy]);
+  }, [calculatedPriceInLords, calculatedSlippage, tradeType]);
 
   const isBuyButtonDisabled = () => {
     if (isSell) {
@@ -501,8 +513,6 @@ export function SwapResources(): ReactElement {
             </div>
           </div>
         </div>
-
-        {/* <MarketSelect update={onClickCostRecipe} cost={buildingCosts} /> */}
       </div>
 
       <div>
