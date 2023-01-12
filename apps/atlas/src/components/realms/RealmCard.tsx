@@ -50,7 +50,7 @@ import {
   BASE_RESOURCES_PER_CYCLE,
   HarvestType,
   RealmBuildingId,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';

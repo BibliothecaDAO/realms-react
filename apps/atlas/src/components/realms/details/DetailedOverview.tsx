@@ -30,7 +30,7 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
 } from '@/components/realms/RealmsGetters';
-import { STORE_HOUSE_SIZE } from '@/constants/buildings';
+import { STORE_HOUSE_SIZE } from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 
 import useUsersRealms from '@/hooks/settling/useUsersRealms';

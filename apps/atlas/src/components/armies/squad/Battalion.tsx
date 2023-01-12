@@ -14,7 +14,7 @@ import {
   battalionIdToString,
   getUnitImage,
 } from '@/constants/army';
-import { buildingIdToString, MAX_BATTALIONS } from '@/constants/buildings';
+import { buildingIdToString, MAX_BATTALIONS } from '@/constants/globals';
 
 import type { BattalionInterface } from '@/types/index';
 

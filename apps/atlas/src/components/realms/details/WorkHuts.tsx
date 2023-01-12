@@ -17,7 +17,7 @@ import {
   WORK_HUT_OUTPUT,
   WORK_HUT_COST,
   buildingIntegrity,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
 import type {

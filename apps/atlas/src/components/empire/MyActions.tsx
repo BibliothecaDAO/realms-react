@@ -11,7 +11,7 @@ import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
 import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
+import { BASE_RESOURCES_PER_DAY } from '@/constants/globals';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';

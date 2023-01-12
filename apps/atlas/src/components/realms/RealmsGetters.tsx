@@ -17,7 +17,7 @@ import {
   NO_RELIC_LOSS,
   PILLAGE_AMOUNT,
   SECONDS_PER_KM,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';

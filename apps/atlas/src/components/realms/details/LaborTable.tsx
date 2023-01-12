@@ -1,25 +1,17 @@
-import {
-  OrderIcon,
-  Button,
-  ResourceIcon,
-  Tabs,
-  Table,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, Table } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
-import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
+
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
-import { ReactElement, useEffect } from 'react';
 
 import { useSpring, animated } from 'react-spring';
-import { number } from 'starknet';
+
 import { RateChange } from '@/components/bank/BankPanel';
 import {
-  BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
   BASE_RESOURCES_PER_DAY,
   VAULT_LENGTH,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';

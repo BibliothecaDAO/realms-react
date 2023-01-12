@@ -7,7 +7,7 @@ import { Pulse } from '@/components/ui/Pulse';
 import {
   BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 
 function Number({ end, start = 0 }) {
   const { number } = useSpring({

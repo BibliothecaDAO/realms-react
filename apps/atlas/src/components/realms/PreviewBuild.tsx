@@ -4,7 +4,7 @@ import { ExclamationCircleIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 // import { formatEther } from '@ethersproject/units';
 import { number } from 'starknet';
-import { RealmBuildingsSize, BASE_SQM } from '@/constants/buildings';
+import { RealmBuildingsSize, BASE_SQM } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import type { GetRealmQuery } from '@/generated/graphql';
 import useResourcesDeficit from '@/hooks/settling/useResourcesDeficit';

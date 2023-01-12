@@ -29,7 +29,7 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
 } from '@/components/realms/RealmsGetters';
-import { HAPPINESS_TIME_PERIOD_TICK } from '@/constants/buildings';
+import { HAPPINESS_TIME_PERIOD_TICK } from '@/constants/globals';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';

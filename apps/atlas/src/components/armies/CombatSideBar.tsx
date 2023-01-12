@@ -4,8 +4,10 @@ import {
   ResourceIcon,
   Tabs,
   Table,
+  Select,
 } from '@bibliotheca-dao/ui-lib';
-
+import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import type { ValueType } from '@rc-component/mini-decimal';
 import { useAccount } from '@starknet-react/core';
 
 import React, { useEffect, useMemo, useState } from 'react';
@@ -17,11 +19,12 @@ import {
   hasOwnRelic,
   vaultResources,
   getVaultRaidableLaborUnits,
+  GetArmyStrength,
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
-import type { GetRealmQuery, Realm } from '@/generated/graphql';
+import type { Army, GetRealmQuery, Realm } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
@@ -191,6 +194,12 @@ export const CombatSideBar: React.FC<Prop> = ({
                 army={finalAttackingArmy ? finalAttackingArmy : selectedArmy}
                 owner={address}
               />
+              <ArmySelect
+                selectedArmy={selectedArmy}
+                armys={attackingRealmsAtLocation}
+                defendingRealmId={defendingRealm?.realmId || 0}
+                setSelectedArmy={setSelectedArmy}
+              />
             </div>
             <div className="self-start w-full lg:px-24">
               <div className="p-2 text-center bg-gray-1000 rounded-t-xl">
@@ -259,33 +268,50 @@ export const CombatSideBar: React.FC<Prop> = ({
               }
               owner={defendingRealm?.ownerL2}
             />
-
-            <div className="p-6 mt-20 rounded bg-gray-1000 col-span-full">
-              <h3>Armies at this Realm</h3>
-              <div className="grid gap-2 lg:grid-cols-3">
-                {defendingRealm &&
-                  attackingRealmsAtLocation?.map((army, index) => {
-                    return (
-                      <button onClick={() => setSelectedArmy(army)} key={index}>
-                        <ArmyCard
-                          army={army}
-                          selectedRealm={defendingRealm?.realmId}
-                          onTravel={() =>
-                            travel(
-                              army.armyId,
-                              army.realmId,
-                              defendingRealm.realmId
-                            )
-                          }
-                        />
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+interface ArmySelectProps {
+  armys: Army[];
+  selectedArmy: Army;
+  defendingRealmId: number;
+  setSelectedArmy: (army: Army) => void;
+}
+
+export const ArmySelect = (props: ArmySelectProps) => {
+  const { armys, defendingRealmId, selectedArmy, setSelectedArmy } = props;
+
+  const handleValueChange = (newValue: Army | null) => {
+    setSelectedArmy(newValue as Army);
+  };
+
+  return (
+    <div className="w-full px-4 my-2">
+      <Select
+        optionIcons={true}
+        value={selectedArmy}
+        onChange={handleValueChange}
+      >
+        <Select.Button
+          label={getRealmNameById(selectedArmy.realmId) || 'Select Army'}
+          variant={'default'}
+          icon={<ChevronRightIcon className="w-5 h-5 transform -rotate-90 " />}
+        />
+        <Select.Options>
+          {armys.map((army, idx) => (
+            <Select.Option
+              key={idx}
+              value={army}
+              label={getRealmNameById(army.realmId)}
+              selectedIcon={<ChevronRightIcon />}
+            />
+          ))}
+        </Select.Options>
+      </Select>
     </div>
   );
 };

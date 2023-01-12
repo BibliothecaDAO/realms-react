@@ -19,7 +19,7 @@ import {
   getUnitImage,
   battalionIdToString,
 } from '@/constants/army';
-import { MAX_BATTALIONS } from '@/constants/buildings';
+import { MAX_BATTALIONS } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';

@@ -11,7 +11,7 @@ import { useAccount } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { generateRealmEvent } from '@/components/realms/EventMappings';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { BASE_RESOURCES_PER_DAY } from '@/constants/buildings';
+import { BASE_RESOURCES_PER_DAY } from '@/constants/globals';
 import { ENQUEUED_STATUS } from '@/constants/index';
 import type { Tx } from '@/context/CommandListContext';
 import { useCommandList } from '@/context/CommandListContext';
@@ -83,7 +83,7 @@ export function MintRealms(props: Prop) {
             <div className="flex justify-center">
               <Button
                 variant="outline"
-                className="text-3xl h-6 px-2 pb-1 pt-0 mt-2 leading-4"
+                className="h-6 px-2 pt-0 pb-1 mt-2 text-3xl leading-4"
                 onClick={() => {
                   quantity > 0 && setQuantity(quantity - 1);
                 }}
@@ -94,7 +94,7 @@ export function MintRealms(props: Prop) {
                 value={quantity}
                 inputSize="md"
                 colorScheme="transparent"
-                className="self-center align-top w-12 leading-10	 mb-2 text-3xl bg-white border rounded border-white/40"
+                className="self-center w-12 mb-2 text-3xl leading-10 align-top bg-white border rounded border-white/40"
                 min={1}
                 max={5}
                 stringMode // to support high precision decimals
@@ -104,7 +104,7 @@ export function MintRealms(props: Prop) {
               />
               <Button
                 variant="outline"
-                className="text-2xl h-6 px-2 pb-1 pt-1 mt-2 leading-4"
+                className="h-6 px-2 pt-1 pb-1 mt-2 text-2xl leading-4"
                 onClick={() => {
                   quantity < 5 && setQuantity(quantity + 1);
                 }}
@@ -112,10 +112,10 @@ export function MintRealms(props: Prop) {
                 +
               </Button>
             </div>
-            <p className="text-center text-sm mb-4">Max Mint Amount: 5</p>
+            <p className="mb-4 text-sm text-center">Max Mint Amount: 5</p>
 
             <hr className="my-2" />
-            <div className="font-bold text-lg flex justify-between">
+            <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
               <span>{quantity * 0.01} ETH</span>
             </div>

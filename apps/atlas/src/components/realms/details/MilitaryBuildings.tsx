@@ -10,7 +10,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
-import { buildingIntegrity } from '@/constants/buildings';
+import { buildingIntegrity } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';

@@ -26,6 +26,7 @@ import {
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 import type { ResourceQty } from '@/hooks/useSwapResources';
+import { calculateLords, displayRate } from './BankGetters';
 
 type ResourceRowProps = {
   resource: BankResource & ResourceQty;
@@ -34,14 +35,6 @@ type ResourceRowProps = {
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
   buy?: boolean;
-};
-
-const displayRate = (rate: string) => {
-  return (+formatEther(rate)).toFixed(4);
-};
-
-const calculateLords = (rate: string, qty: number) => {
-  return +formatEther(rate) * qty;
 };
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
