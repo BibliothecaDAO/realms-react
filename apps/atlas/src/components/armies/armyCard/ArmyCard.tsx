@@ -12,6 +12,7 @@ import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import {
   getRealmNameById,
+  getRealmOrderById,
   getTravelTime,
 } from '@/components/realms/RealmsGetters';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -39,6 +40,8 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   const { userRealms } = useUsersRealms();
 
   const army = props.army;
+
+  console.log(army);
 
   const { play } = useUiSounds(soundSelector.pageTurn);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -138,9 +141,22 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                       variant="outline"
                       size="sm"
                     >
-                      Fly <Globe className="w-3 mx-2 fill-current" />
-                      current location -{' '}
-                      {!isHome ? army?.destinationRealmId : 'Home'}
+                      Fly
+                      {!isHome ? (
+                        <span className="flex">
+                          <OrderIcon
+                            className="self-center mx-2"
+                            size="xs"
+                            order={
+                              getRealmOrderById(army?.destinationRealmId) || ''
+                            }
+                          />{' '}
+                          {getRealmNameById(army?.destinationRealmId)} -{' '}
+                          {army?.destinationRealmId}
+                        </span>
+                      ) : (
+                        'Home'
+                      )}
                     </Button>
                   ))}
                 {isHome && isAtLocation && isOwnRealm && (
@@ -172,14 +188,22 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               </div>
             </div>
 
-            <h5 className="flex">
-              <OrderIcon
-                className="self-center mr-3"
-                size="xs"
-                order={army.orderType ? army.orderType.toLowerCase() : ''}
-              />{' '}
-              {army.armyId == 0 ? 'Defending Army' : 'Army ' + army.armyId}
-            </h5>
+            <div>
+              <h5 className="flex">
+                <span className="self-center">
+                  {' '}
+                  <OrderIcon
+                    className="self-center mr-3"
+                    size="xs"
+                    order={army.orderType ? army.orderType.toLowerCase() : ''}
+                  />{' '}
+                </span>
+
+                <span className="self-center">
+                  {army.armyId == 0 ? 'Defending Army' : 'Army ' + army.armyId}
+                </span>
+              </h5>
+            </div>
           </div>
           {hasArrived && (
             <div className="flex text-sm font-semibold rounded ">

@@ -21,6 +21,7 @@ import {
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
+import RawRealmsData from '@/geodata/realms_raw.json';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ArmyAndOrder, useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
@@ -258,6 +259,12 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
 export const getRealmNameById = (id: number | undefined) => {
   return RealmsData.features.find((realm) => realm.id == id)
     ? RealmsData.features.find((realm) => realm.id == id)?.name
+    : '';
+};
+
+export const getRealmOrderById = (id: number | undefined) => {
+  return RawRealmsData.find((realm) => realm.id === id)
+    ? RawRealmsData.find((realm) => realm.id === id)?.order
     : '';
 };
 

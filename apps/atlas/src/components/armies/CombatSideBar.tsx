@@ -195,7 +195,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                 owner={address}
               />
               <ArmySelect
-                selectedArmy={selectedArmy}
+                selectedArmy={selectedArmy || defaultArmy}
                 armys={attackingRealmsAtLocation}
                 defendingRealmId={defendingRealm?.realmId || 0}
                 setSelectedArmy={setSelectedArmy}
@@ -297,7 +297,7 @@ export const ArmySelect = (props: ArmySelectProps) => {
         onChange={handleValueChange}
       >
         <Select.Button
-          label={getRealmNameById(selectedArmy.realmId) || 'Select Army'}
+          label={getRealmNameById(selectedArmy?.realmId || 0) || 'Select Army'}
           variant={'default'}
           icon={<ChevronRightIcon className="w-5 h-5 transform -rotate-90 " />}
         />

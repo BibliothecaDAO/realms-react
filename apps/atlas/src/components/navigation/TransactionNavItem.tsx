@@ -39,7 +39,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
       case 'loading':
         return 'stroke-orange-800';
       default:
-        return 'stroke-gray-1000';
+        return 'stroke-frame-primary';
     }
   };
   const onReceived = () => {

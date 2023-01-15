@@ -1,19 +1,18 @@
-const realms = require('./realms.json');
-const resources = require('./continents.js');
+const realms = require('./realms_raw.json');
 const fs = require('fs');
 
-const mappedRealms = {
-  type: 'FeatureCollection',
-  features: realms.features.map((a) => {
-    return {
-      xy: a.xy,
-      id: a.id,
-      resources: resources.find((b) => b.name === a.id).resource,
-    };
-  }),
+const newfile = () => {
+  let n = [];
+  for (let i = 1; i <= 8000; i++) {
+    n.push({
+      id: i,
+      order: realms[i].attributes.find((a) => a.trait_type === 'Order').value,
+    });
+  }
+  return n;
 };
 
-fs.writeFile('realms_resources.json', JSON.stringify(mappedRealms), (err) => {
+fs.writeFile('realms_raw.json', JSON.stringify(newfile()), (err) => {
   if (err) {
     console.error(err);
     // eslint-disable-next-line sonarjs/no-redundant-jump

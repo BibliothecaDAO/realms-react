@@ -127,7 +127,7 @@ export function MapModule() {
 
   return (
     <>
-      <div className="absolute z-20 top-5 right-32">
+      <div className="absolute z-20 top-5 right-24">
         <SearchFilter
           placeholder="Search by Realm Id"
           onSubmit={(value) => {
