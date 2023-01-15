@@ -629,6 +629,5 @@ export const checkIsRaidable = (realm: RealmFragmentFragment) => {
     return getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
   });
 
-  console.log(resource_length);
   return resource_length && resource_length.length > 0 ? false : true;
 };

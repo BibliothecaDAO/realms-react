@@ -41,8 +41,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
 
   const army = props.army;
 
-  console.log(army);
-
   const { play } = useUiSounds(soundSelector.pageTurn);
   const [selectedTab, setSelectedTab] = useState(0);
 

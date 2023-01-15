@@ -32,11 +32,21 @@ function useRealmsQueryVariables(
   const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
   return useMemo(() => {
     const resourceFilters = state.selectedResources.map((resource) => ({
-      resources: { some: { resourceId: { equals: resource } } },
+      resources: {
+        some: {
+          resourceId: { equals: resource },
+        },
+      },
     }));
 
+    // const laborFilter = {
+    //   resources: {
+    //     some: { labor: { is: { vaultBalance: { gt: 0 } } } },
+    //   },
+    // };
+
     const filter = {} as any;
-    let orderBy = { realmId: 'asc' } as any;
+    const orderBy = { realmId: 'asc' } as any;
 
     if (state.searchIdFilter) {
       filter.realmId = { equals: parseInt(state.searchIdFilter) };
@@ -58,8 +68,10 @@ function useRealmsQueryVariables(
         filter.settledOwner = { not: null };
       }
       if (state.isRaidableFilter) {
-        filter.lastVaultTime = { not: null };
-        orderBy = { lastVaultTime: 'asc' };
+        filter.resources = {
+          some: { labor: { is: { vaultBalance: { gt: 0 } } } },
+        };
+        // orderBy = { resources: { labor: { vaultBalance: 'asc' } } };
       }
       if (
         state.rarityFilter.rank.min > 0 ||
