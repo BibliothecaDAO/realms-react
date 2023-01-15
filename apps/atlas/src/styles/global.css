@@ -146,3 +146,14 @@ div#deckgl-wrapper {
   border-style: solid;
   border-image: url('/paper_shape.png') 12 / 3px 3px 3px 3px / 0 repeat repeat;
 }
+
+.web3mq-channel-container {
+  --tw-bg-opacity: 1;
+
+  background-color: rgb(14 14 14 / var(--tw-bg-opacity)) !important;
+}
+
+.web3mq-dialog {
+  background: #000 !important;
+  color: #a1a1aa;
+}

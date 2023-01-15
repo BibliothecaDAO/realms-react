@@ -212,7 +212,9 @@
     "three.meshline": "1.4.0",
     "threejs-meshline": "2.0.12",
     "use-sound": "^4.0.1",
-    "wagmi": "0.9.3"
+    "wagmi": "0.9.3",
+    "web3-mq": "1.2.56",
+    "web3-mq-react": "1.1.18"
   },
   "resolutions": {
     "bn.js": "^5.2.1"
