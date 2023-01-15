@@ -125,7 +125,7 @@ export const MilitaryBuildings = (props: Prop) => {
                           })}
                       </div>
                       <div className="flex w-full mt-2 space-x-2">
-                        {a.cost && (
+                        {/* {a.cost && (
                           <Button
                             onClick={() => {
                               batchAddResources(
@@ -169,7 +169,7 @@ export const MilitaryBuildings = (props: Prop) => {
                           >
                             Buy missing resources
                           </Button>
-                        )}
+                        )} */}
                         <Button
                           onClick={() =>
                             build({
@@ -186,17 +186,17 @@ export const MilitaryBuildings = (props: Prop) => {
                           size="xs"
                           variant="primary"
                           className="ml-auto"
-                          disabled={
-                            a.cost &&
-                            a.cost.some(
-                              (r) =>
-                                r.amount > 0 &&
-                                !checkUserHasAvailableResources({
-                                  cost: r.amount,
-                                  id: r.resourceId,
-                                })
-                            )
-                          }
+                          // disabled={
+                          //   a.cost &&
+                          //   a.cost.some(
+                          //     (r) =>
+                          //       r.amount > 0 &&
+                          //       !checkUserHasAvailableResources({
+                          //         cost: r.amount,
+                          //         id: r.resourceId,
+                          //       })
+                          //   )
+                          // }
                         >
                           construct
                         </Button>
