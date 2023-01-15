@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@bibliotheca-dao/ui-lib';
-import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
+import Chat from '@bibliotheca-dao/ui-lib/icons/chat_icon.svg';
 
 import { ScatterplotLayer, ArcLayer, IconLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
@@ -180,9 +180,9 @@ export function MapModule() {
           // renderWorldCopies={false}
         />
       </DeckGL>
-      <Annotation
+      <Chat
         onClick={toggleChatSidebar}
-        className="absolute inline-block w-10 h-10 p-0 cursor-pointer bottom-6 right-8 fill-black"
+        className="absolute inline-block w-5 h-5 p-0 cursor-pointer top-[88px] left-[28px] fill-frame-secondary z-50 hover:fill-frame-primary"
       />
     </>
   );

@@ -5,6 +5,7 @@ import { BottomLeftNav } from '@/components/navigation/BottomLeftNav';
 import { MenuSideBar } from '@/components/navigation/MenuSideBar';
 import { TopLeftNav } from '@/components/navigation/TopLeftNav';
 import { TopRightNav } from '@/components/navigation/TopRightNav';
+import { framePrimary } from '@/constants/ui';
 import { Head } from './Head';
 import { BottomRightNav } from './navigation/BottomRightNav';
 
@@ -17,7 +18,9 @@ export default function Layout({
     <div>
       <Head />
       <div className="absolute inset-0">
-        <div className="relative flex h-full overflow-hidden border-8 border-gray-900 sm:h-screen ">
+        <div
+          className={`relative flex h-full overflow-hidden border-8 border-${framePrimary} sm:h-screen border-frame-primary`}
+        >
           <TopLeftNav />
           <TopRightNav />
           <BottomLeftNav />

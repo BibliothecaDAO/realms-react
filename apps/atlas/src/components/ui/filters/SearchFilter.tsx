@@ -21,7 +21,7 @@ export function SearchFilter(props: SearchFilterProps) {
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 p-1 shadow-inner rounded-xl bg-gray-1000 w-72">
+    <div className="flex items-center justify-center gap-1 p-1 shadow-inner rounded-xl bg-frame-primary w-72">
       <input
         className="w-full px-3 py-1 text-sm font-bold leading-tight tracking-widest transition-all duration-300 rounded-lg shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
         type="text"

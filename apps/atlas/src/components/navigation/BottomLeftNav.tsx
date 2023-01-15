@@ -3,7 +3,7 @@ import BottomLeftFrameGold from '@bibliotheca-dao/ui-lib/icons/frame/bottom-left
 import BottomLeftFrame from '@bibliotheca-dao/ui-lib/icons/frame/bottom-left_no-ink.svg';
 import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
-import { framePrimary } from '@/constants/ui';
+import { framePrimary, frameSecondary } from '@/constants/ui';
 import { useSoundContext } from '@/context/soundProvider';
 
 import NetworkConnectButton from '../ui/NetworkConnectButton';
@@ -23,9 +23,9 @@ export const BottomLeftNav = () => {
           }}
           icon={
             isSoundActive ? (
-              <VolumeOn className="w-5 stroke-amber-100 fill-amber-100" />
+              <VolumeOn className="w-5 stroke-primary-100 fill-frame-primary" />
             ) : (
-              <VolumeOff className="w-5 stroke-amber-100 fill-amber-100" />
+              <VolumeOff className="w-5 stroke-primary-100 fill-frame-primary" />
             )
           }
           size="md"
@@ -44,21 +44,21 @@ export const BottomLeftNav = () => {
           <NetworkConnectButton />
         </div>
         <BottomLeftFrame
-          className={`absolute bottom-0 pointer-events-none w-72 fill-gray-900 stroke-${framePrimary} fill-${framePrimary}`}
+          className={`absolute bottom-0 pointer-events-none w-72  stroke-${framePrimary} fill-${framePrimary}`}
         />
 
         <BottomLeftFrameGold
-          className={`absolute w-[14rem] pointer-events-none bottom-0 fill-yellow-700 fill-${framePrimary} stroke-${framePrimary}`}
+          className={`absolute w-[14rem] pointer-events-none bottom-0 fill-frame-secondary fill-${frameSecondary} stroke-frame-secondary stroke-${frameSecondary}`}
         />
 
         <div
-          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-0 w-[8.8px] h-[calc(100vh-30rem)]  bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-3 w-[2px] h-[calc(100vh-32rem)] bg-${framePrimary} mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-gray-900 bg-${framePrimary} mb-72 pointer-events-none `}
+          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none `}
         />
       </div>
     </div>

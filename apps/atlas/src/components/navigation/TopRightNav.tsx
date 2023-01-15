@@ -3,6 +3,7 @@
 import TopRightFrame from '@bibliotheca-dao/ui-lib/icons/frame/top-right_no-ink.svg';
 import { useAccount } from '@starknet-react/core';
 import { useState } from 'react';
+import { framePrimary } from '@/constants/ui';
 import { useUIContext } from '@/context/UIContext';
 import TransactionNavItem from './TransactionNavItem';
 
@@ -14,9 +15,15 @@ export const TopRightNav = () => {
     <div className="absolute top-0 right-0 z-50">
       <div className="relative">
         {address && <TransactionNavItem onClick={toggleTransactionCart} />}
-        <div className="absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px] bg-gray-900  mr-72 pointer-events-none"></div>
-        <div className="absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-gray-900 mr-72 pointer-events-none"></div>
-        <TopRightFrame className="absolute top-0 right-0 pointer-events-none w-72 fill-gray-900" />
+        <div
+          className={`absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px]  bg-${framePrimary} mr-72 pointer-events-none`}
+        />
+        <div
+          className={`absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-${framePrimary} mr-72 pointer-events-none`}
+        />
+        <TopRightFrame
+          className={`absolute top-0 right-0 pointer-events-none w-72 fill-${framePrimary}`}
+        />
       </div>
     </div>
   );
