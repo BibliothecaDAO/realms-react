@@ -17,7 +17,6 @@ import {
 } from '@/hooks/settling/stark-contracts';
 
 import { useStakeLords } from '@/hooks/useNexus';
-import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
   stake?: boolean;
