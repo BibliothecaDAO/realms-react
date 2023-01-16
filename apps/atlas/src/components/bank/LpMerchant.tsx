@@ -4,49 +4,39 @@ import {
   ResourceIcon,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib';
-
 import ChevronRight from '@bibliotheca-dao/ui-lib/icons/chevron-right.svg';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch } from '@headlessui/react';
 import type { ValueType } from '@rc-component/mini-decimal';
 import { useStarknetCall } from '@starknet-react/core';
-
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { number, uint256 } from 'starknet';
-import type { BankResource } from '@/context/BankContext';
+import type { ResourceQty, UserLp } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import type { ExchangeRate } from '@/hooks/market/useMarketRate';
 import { useExchangeContract } from '@/hooks/settling/stark-contracts';
-import {
-  useApproveLordsForExchange,
-  useApproveResourcesForExchange,
-} from '@/hooks/settling/useApprovals';
 import { useAddLiquidity, useRemoveLiquidity } from '@/hooks/useSwapResources';
-import type { ResourceQty } from '@/hooks/useSwapResources';
+
+import { calculateLords, deadline, displayRate } from './BankGetters';
 
 type ResourceRowProps = {
-  resource: BankResource & ResourceQty;
-  availableResources: BankResource[];
+  resource: ExchangeRate & ResourceQty & UserLp;
+  availableResources: ExchangeRate[];
   isRemoveLp?: boolean;
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
 };
 
-const displayRate = (rate: string) => {
-  return (+formatEther(rate)).toFixed(4);
-};
-
-const calculateLords = (rate: string, qty: number) => {
-  return +formatEther(rate) * qty;
-};
-
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
+  const [time, setTime] = useState<NodeJS.Timeout | null>(null);
+
   const { contract: exchangeContract } = useExchangeContract();
   const { getBalanceById } = useUserBalancesContext();
   const amount = getBalanceById(props.resource.resourceId)?.amount;
-  const [time, setTime] = useState<NodeJS.Timeout | null>(null);
+
   const [currencyAndTokenBalance, setCurrencyAndTokenBalance] = useState({
     currency: '0',
     token: '0',
@@ -100,17 +90,17 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
       <div className="sm:w-1/2">
         <Select
           optionIcons={true}
-          value={props.resource?.resourceId}
+          value={props.resource?.tokenId}
           onChange={handleSelectChange}
         >
           <Select.Button
-            label={props.resource?.resourceName ?? ''}
-            variant={props.resource?.resourceName ? 'default' : 'placeholder'}
+            label={props.resource?.tokenName ?? ''}
+            variant={props.resource?.tokenName ? 'default' : 'placeholder'}
             icon={<ChevronRight className="w-5 h-5 transform -rotate-90" />}
             labelIcon={
               <ResourceIcon
                 size="sm"
-                resource={props.resource?.resourceName ?? ''}
+                resource={props.resource?.tokenName ?? ''}
               />
             }
           />
@@ -118,13 +108,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             {props.availableResources.map((resource, idx) => (
               <Select.Option
                 key={idx}
-                value={resource.resourceId}
-                label={resource.resourceName}
+                value={resource.tokenId}
+                label={resource.tokenName}
                 selectedIcon={<ChevronRight />}
                 icon={
                   <ResourceIcon
                     size="sm"
-                    resource={resource?.resourceName ?? ''}
+                    resource={resource?.tokenName ?? ''}
                   />
                 }
               />
@@ -132,9 +122,6 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           </Select.Options>
         </Select>
         <div className="flex flex-wrap mt-4">
-          {/* <div className="self-center w-full text-sm font-semibold tracking-widest uppercase opacity-50">
-
-          </div> */}
           <div className="flex justify-between space-x-2">
             <span className="text-xs font-semibold tracking-widest uppercase opacity-40">
               {props.isRemoveLp ? 'remove' : 'add'}
@@ -153,18 +140,26 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
               <span className="self-center mr-1 font-semibold">
                 ~
                 {calculateLords(
-                  props.resource.rate,
+                  props.resource.amount,
                   props.resource.qty
                 ).toFixed(2)}
               </span>{' '}
               <Lords className="self-center w-4 h-4" />
             </div>
           </div>
-          <div className="w-full pt-2 text-sm font-semibold tracking-widest uppercase border-t opacity-75 border-white/20">
-            lp-{props.resource.resourceName}:{' '}
-            {loading
-              ? 'loading...'
-              : (+formatEther(props.resource.lp)).toLocaleString()}{' '}
+          <div className="w-full pt-2 text-lg border-t opacity-75 border-white/20">
+            LP-{props.resource.tokenName}:{' '}
+            <button
+              onClick={() => {
+                props.onQtyChange(
+                  props.resource.resourceId,
+                  +formatEther(props.resource.lp || 0)
+                );
+              }}
+              className="underline cursor-pointer decoration-dotted"
+            >
+              {(+formatEther(props.resource.lp || 0)).toLocaleString()}
+            </button>
             <br />
             <span className="opacity-60">
               {' '}
@@ -177,7 +172,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                     )).toLocaleString()}{' '}
                 <Lords className="w-3 mr-1" />
               </span>
-              -{props.resource.resourceName}:{' '}
+              -{props.resource.tokenName}:{' '}
               {loading
                 ? 'loading...'
                 : (+formatEther(
@@ -189,7 +184,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
       </div>
       <div className="flex flex-wrap self-end justify-end w-1/2 text-sm font-semibold tracking-widest text-right uppercase opacity-80">
         <div className="flex justify-end w-full">
-          1 = {displayRate(props.resource.rate)} <Lords className="w-3" />
+          1 = {displayRate(props.resource.amount)}{' '}
+          <Lords className="w-3 fill-frame-primary" />
         </div>
         <div className="w-full">
           {(+formatEther(amount || '0')).toLocaleString()}
@@ -229,17 +225,11 @@ export function LpMerchant(): ReactElement {
 
   const { lordsBalance } = useUserBalancesContext();
 
-  const { approveLords, isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-
-  const { approveResources, isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-
   const [slippage, setSlippage] = useState(0.5);
 
   const calculatedTotalInLords = useMemo(() => {
     return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
-      return acc + calculateLords(resource.rate, resource.qty);
+      return acc + calculateLords(resource.amount, resource.qty);
     }, 0);
   }, [selectedSwapResourcesWithBalance]);
 
@@ -247,20 +237,12 @@ export function LpMerchant(): ReactElement {
     return calculatedTotalInLords * slippage;
   }, [calculatedTotalInLords, slippage]);
 
-  const deadline = () => {
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    return Math.floor(maxDate.getTime() / 1000);
-  };
-
   // get token ids
   const tokenIds = selectedSwapResourcesWithBalance.map(
     (resource) => resource.resourceId
   );
 
   function onAddLiquidityClick() {
-    // TODO: check lords balance
-
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
@@ -271,7 +253,7 @@ export function LpMerchant(): ReactElement {
     const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) =>
       parseEther(
         String(
-          resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 + slippage)
+          resource.qty * (parseInt(resource.amount) / 10 ** 18) * (1 + slippage)
         )
       )
     );
@@ -285,10 +267,10 @@ export function LpMerchant(): ReactElement {
     if (calculatedTotalInLords === 0 || isTransactionInProgress) return;
 
     const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) => {
-      // TODO: using 0 until the real rate is cached in indexer
+      // TODO: using 0 until the real amount is cached in indexer
       // const amount = String(
       //   resource.qty *
-      //     (parseInt(resource.rate) / 10 ** 18) *
+      //     (parseInt(resource.amount) / 10 ** 18) *
       //     (1 - slippage) *
       //     1000
       // );
@@ -298,9 +280,9 @@ export function LpMerchant(): ReactElement {
 
     // tokens * lords_price * (1 + slippage) / 1000
     const currencyAmounts = selectedSwapResourcesWithBalance.map((resource) => {
-      // TODO: using 0 until the real rate is cached in indexer
+      // TODO: using 0 until the real amount is cached in indexer
       // const amount = String(
-      //   resource.qty * (parseInt(resource.rate) / 10 ** 18) * (1 - slippage)
+      //   resource.qty * (parseInt(resource.amount) / 10 ** 18) * (1 - slippage)
       // );
       return parseEther('0');
     });
@@ -361,7 +343,7 @@ export function LpMerchant(): ReactElement {
               resource={resource}
               isRemoveLp={isSell}
               availableResources={availableResourceIds.map(
-                (resourceId) => getResourceById(resourceId) as BankResource
+                (resourceId) => getResourceById(resourceId) as ExchangeRate
               )}
               onResourceChange={updateSelectedSwapResource}
               onQtyChange={updateSelectedSwapResourceQty}

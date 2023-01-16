@@ -15,23 +15,24 @@ import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { battalionIdToString } from '@/constants/army';
-import type { BankResource } from '@/context/BankContext';
+import type { ResourceQty } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import type { Resource } from '@/context/UserBalancesContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import type { ExchangeRate } from '@/hooks/market/useMarketRate';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
-import type { ResourceQty } from '@/hooks/useSwapResources';
-import { calculateLords, displayRate } from './BankGetters';
+
+import { calculateLords, deadline, displayRate } from './BankGetters';
 
 type ResourceRowProps = {
-  resource: BankResource & ResourceQty;
+  resource: ExchangeRate & ResourceQty;
   balance?: Resource;
-  availableResources: BankResource[];
+  availableResources: ExchangeRate[];
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
   buy?: boolean;
@@ -71,13 +72,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           onChange={handleSelectChange}
         >
           <Select.Button
-            label={props.resource?.resourceName ?? ''}
-            variant={props.resource?.resourceName ? 'default' : 'placeholder'}
+            label={props.resource?.tokenName ?? ''}
+            variant={props.resource?.tokenName ? 'default' : 'placeholder'}
             icon={<ChevronRight className="w-5 h-5 transform -rotate-90 " />}
             labelIcon={
               <ResourceIcon
                 size="sm"
-                resource={props.resource?.resourceName ?? ''}
+                resource={props.resource?.tokenName ?? ''}
               />
             }
           />
@@ -85,13 +86,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             {props.availableResources.map((resource, idx) => (
               <Select.Option
                 key={idx}
-                value={resource.resourceId}
-                label={resource.resourceName}
+                value={resource.tokenId}
+                label={resource.tokenName}
                 selectedIcon={<ChevronRight />}
                 icon={
                   <ResourceIcon
                     size="sm"
-                    resource={resource?.resourceName ?? ''}
+                    resource={resource?.tokenName ?? ''}
                   />
                 }
               />
@@ -262,12 +263,6 @@ export function SwapResources(): ReactElement {
       return true;
     }
     return false;
-  };
-
-  const deadline = () => {
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    return Math.floor(maxDate.getTime() / 1000);
   };
 
   // get token ids
@@ -519,7 +514,7 @@ export function SwapResources(): ReactElement {
                 resource={resource}
                 balance={balance}
                 availableResources={availableResourceIds.map(
-                  (resourceId) => getResourceById(resourceId) as BankResource
+                  (resourceId) => getResourceById(resourceId) as ExchangeRate
                 )}
                 onResourceChange={updateSelectedSwapResource}
                 onQtyChange={updateSelectedSwapResourceQty}

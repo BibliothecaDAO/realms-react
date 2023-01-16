@@ -1,30 +1,16 @@
-import {
-  OrderIcon,
-  Button,
-  ResourceIcon,
-  Tabs,
-  Table,
-  Select,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, ResourceIcon, Select } from '@bibliotheca-dao/ui-lib';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
-import type { ValueType } from '@rc-component/mini-decimal';
 import { useAccount } from '@starknet-react/core';
-
 import React, { useEffect, useMemo, useState } from 'react';
-import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
-
 import {
   getRealmNameById,
-  getDays,
   hasOwnRelic,
-  vaultResources,
   getVaultRaidableLaborUnits,
-  GetArmyStrength,
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
-import type { Army, GetRealmQuery, Realm } from '@/generated/graphql';
+import type { Army, GetRealmQuery } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';

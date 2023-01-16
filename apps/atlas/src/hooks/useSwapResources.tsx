@@ -10,17 +10,6 @@ import type { CallAndMetadata, RealmsTransactionRenderConfig } from '../types';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
-export type ResourceQty = {
-  resourceId: number;
-  qty: number;
-};
-
-export type LpQty = {
-  resourceId: number;
-  lpqty: number;
-  currencyqty: number;
-};
-
 export const Entrypoints = {
   buyTokens: 'buy_tokens',
   sellTokens: 'sell_tokens',

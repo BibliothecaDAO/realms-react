@@ -48,10 +48,9 @@ export const LaborValues = ({
         title={'Produced'}
         pulse={generated.generated * BASE_RESOURCES_PER_CYCLE > 0}
         value={
-          <span>
+          <span className="text-lg">
             {' '}
-            {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()} /{' '}
-            {generated.generated}
+            {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()}
           </span>
         }
         tooltipText={<span>Resources produced | total labor units</span>}
