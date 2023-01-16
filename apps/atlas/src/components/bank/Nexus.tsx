@@ -22,14 +22,6 @@ type ResourceRowProps = {
   stake?: boolean;
 };
 
-const displayRate = (rate: string) => {
-  return (+formatEther(rate)).toFixed(4);
-};
-
-const calculateLords = (rate: string, qty: number) => {
-  return +formatEther(rate) * qty;
-};
-
 const LordsInput = (props: ResourceRowProps): ReactElement => {
   const [time, setTime] = useState<NodeJS.Timeout | null>(null);
   const [input, setInput] = useState<any>(0);

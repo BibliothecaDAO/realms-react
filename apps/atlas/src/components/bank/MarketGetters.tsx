@@ -1,5 +1,3 @@
-import type { ItemCost } from '@/types/index';
-
 export const RateChange = (change: number) => {
   const x = (change * 100).toFixed(2);
   return (

@@ -19,7 +19,7 @@ export default function Layout({
       <Head />
       <div className="absolute inset-0">
         <div
-          className={`relative flex h-full overflow-hidden border-8 border-${framePrimary} sm:h-screen border-frame-primary`}
+          className={`relative flex h-full overflow-hidden border-4 border-${framePrimary} sm:h-screen border-frame-primary`}
         >
           <TopLeftNav />
           <TopRightNav />

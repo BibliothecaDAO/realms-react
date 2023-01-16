@@ -175,7 +175,7 @@ module.exports = {
       colors: {
         frame: {
           primary: '#cebba2',
-          secondary: '#be9f66',
+          secondary: '#c49c5c',
         },
         gray: {
           100: '#edece9',
