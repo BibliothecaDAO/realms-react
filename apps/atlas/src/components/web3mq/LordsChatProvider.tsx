@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Client, getDataSignature } from 'web3-mq';
+import { Client } from 'web3-mq';
 import type { KeyPairsType, EventTypes } from 'web3-mq';
 import { useChatContext } from 'web3-mq-react';
 
@@ -23,7 +22,10 @@ export const botMainKeys = {
   password: 'web3mq',
 };
 export const groupid = 'group:093515bd06581759d05328cf241c399a05f1161f';
-
+const PAGE = {
+  page: 1,
+  size: 9999,
+};
 export const LordsChatProvider = (props: {
   fastestUrl: string;
   keys: KeyPairsType;
@@ -36,10 +38,7 @@ export const LordsChatProvider = (props: {
   const [channels, setChannels] = useState<any[]>([]);
 
   const queryChatList = async () => {
-    await client.channel.queryChannels({
-      page: 1,
-      size: 9999,
-    });
+    await client.channel.queryChannels(PAGE);
   };
   const joinLordsChat = useCallback(async () => {
     await client.channel.joinGroup(groupid);
