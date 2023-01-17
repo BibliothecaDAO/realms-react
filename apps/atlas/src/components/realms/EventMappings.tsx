@@ -39,9 +39,9 @@ export const checkTimeInPast = (time: number) => {
   return time < Date.now();
 };
 
-export const VisitButton = (id) => {
+export const VisitButton = (id: any) => {
   return (
-    <Button size="xs" variant="outline" href={'/?asset=realm' + id}>
+    <Button size="xs" variant="outline" href={'/?asset=realm' + id.id}>
       Visit realm
     </Button>
   );
@@ -194,7 +194,7 @@ export function generateRealmEvent(event, user?: boolean) {
                 </p>
               </p>
             )}
-            <VisitButton id={event.data?.destinationRealmId} />,
+            <VisitButton id={event.data?.destinationRealmId} />
           </div>
         ),
       };

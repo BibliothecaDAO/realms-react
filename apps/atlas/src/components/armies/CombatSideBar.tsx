@@ -1,4 +1,9 @@
-import { Button, ResourceIcon, Select } from '@bibliotheca-dao/ui-lib';
+import {
+  Button,
+  CountdownTimer,
+  ResourceIcon,
+  Select,
+} from '@bibliotheca-dao/ui-lib';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -14,6 +19,7 @@ import type { Army, GetRealmQuery } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { hasArrived } from './ArmyGetters';
 import { ArmyDisplayContainer } from './combat/ArmyDisplayContainer';
 import { ImageSlideLoader } from './combat/ImageSlideLoader';
 import { RaidResultTable } from './RaidResultsTable';
@@ -269,7 +275,7 @@ interface ArmySelectProps {
 }
 
 export const ArmySelect = (props: ArmySelectProps) => {
-  const { armys, defendingRealmId, selectedArmy, setSelectedArmy } = props;
+  const { armys, selectedArmy, setSelectedArmy } = props;
 
   const handleValueChange = (newValue: Army | null) => {
     setSelectedArmy(newValue as Army);
@@ -292,7 +298,14 @@ export const ArmySelect = (props: ArmySelectProps) => {
             <Select.Option
               key={idx}
               value={army}
-              label={getRealmNameById(army.realmId)}
+              label={
+                <span>
+                  {getRealmNameById(army.realmId)}{' '}
+                  {hasArrived(army) && (
+                    <CountdownTimer date={army?.destinationArrivalTime} />
+                  )}
+                </span>
+              }
               selectedIcon={<ChevronRightIcon />}
             />
           ))}

@@ -1,9 +1,5 @@
 import type { Army } from '@/generated/graphql';
 
-export interface ArmyAndOrder extends Army {
-  orderType?: string;
-}
-
 type Props = {
   army: Army;
 };
