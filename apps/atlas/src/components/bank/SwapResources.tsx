@@ -10,38 +10,37 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from '@rc-component/mini-decimal';
-import { BigNumber } from 'ethers';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { battalionIdToString } from '@/constants/army';
-import type { BankResource } from '@/context/BankContext';
+import type { ResourceQty } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import type { Resource } from '@/context/UserBalancesContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import type { ExchangeRate } from '@/hooks/market/useMarketRate';
 import {
   useApproveLordsForExchange,
   useApproveResourcesForExchange,
 } from '@/hooks/settling/useApprovals';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
-import type { ResourceQty } from '@/hooks/useSwapResources';
+
+import {
+  calculateLords,
+  convertBalance,
+  deadline,
+  displayRate,
+  getIsBalanceSufficient,
+} from './BankGetters';
 
 type ResourceRowProps = {
-  resource: BankResource & ResourceQty;
+  resource: ExchangeRate & ResourceQty;
   balance?: Resource;
-  availableResources: BankResource[];
+  availableResources: ExchangeRate[];
   onResourceChange: (resourceId: number, newResourceId: number) => void;
   onQtyChange: (resourceId: number, qty: number) => void;
   buy?: boolean;
-};
-
-const displayRate = (rate: string) => {
-  return (+formatEther(rate)).toFixed(4);
-};
-
-const calculateLords = (rate: string, qty: number) => {
-  return +formatEther(rate) * qty;
 };
 
 const ResourceRow = (props: ResourceRowProps): ReactElement => {
@@ -78,13 +77,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
           onChange={handleSelectChange}
         >
           <Select.Button
-            label={props.resource?.resourceName ?? ''}
-            variant={props.resource?.resourceName ? 'default' : 'placeholder'}
+            label={props.resource?.tokenName ?? ''}
+            variant={props.resource?.tokenName ? 'default' : 'placeholder'}
             icon={<ChevronRight className="w-5 h-5 transform -rotate-90 " />}
             labelIcon={
               <ResourceIcon
                 size="sm"
-                resource={props.resource?.resourceName ?? ''}
+                resource={props.resource?.tokenName ?? ''}
               />
             }
           />
@@ -92,13 +91,13 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             {props.availableResources.map((resource, idx) => (
               <Select.Option
                 key={idx}
-                value={resource.resourceId}
-                label={resource.resourceName}
+                value={resource.tokenId}
+                label={resource.tokenName}
                 selectedIcon={<ChevronRight />}
                 icon={
                   <ResourceIcon
                     size="sm"
-                    resource={resource?.resourceName ?? ''}
+                    resource={resource?.tokenName ?? ''}
                   />
                 }
               />
@@ -162,20 +161,21 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
-    return state === 'sell' ? 'buy' : 'sell';
-  }, 'buy');
-
-  const isBuy = tradeType === 'buy';
-  const isSell = tradeType === 'sell';
-
   const { gameConstants } = useGameConstants();
+  const { isApproved: isLordsApprovedForExchange } =
+    useApproveLordsForExchange();
+  const { isApproved: isResourcesApprovedForExchange } =
+    useApproveResourcesForExchange();
+  const { getBalanceById, lordsBalance, lordsBalanceAfterCheckout } =
+    useUserBalancesContext();
 
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
     useSellResources();
 
   const {
+    tokenIds,
+    tokenAmounts,
     availableResourceIds,
     selectedSwapResourcesWithBalance,
     getResourceById,
@@ -185,47 +185,25 @@ export function SwapResources(): ReactElement {
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
+    tradeType,
+    toggleTradeType,
+    isBuy,
+    isSell,
+    slippage,
+    setSlippage,
+    calculatedPriceInLords,
+    calculatedSlippage,
+    calculatedTotalInLords,
   } = useBankContext();
-
-  const { getBalanceById, lordsBalance, balance, lordsBalanceAfterCheckout } =
-    useUserBalancesContext();
-
-  const { isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-  const { isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-
-  const [slippage, setSlippage] = useState(0.05);
-
-  const calculatedPriceInLords = useMemo(() => {
-    return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
-      return (
-        acc +
-        calculateLords(
-          isBuy ? resource.buyAmount : resource.sellAmount,
-          resource.qty
-        )
-      );
-    }, 0);
-  }, [selectedSwapResourcesWithBalance, tradeType]);
-
-  const calculatedSlippage = useMemo(() => {
-    return isBuy
-      ? calculatedPriceInLords * slippage
-      : -(calculatedPriceInLords * slippage);
-  }, [calculatedPriceInLords, slippage, tradeType]);
-
-  const calculatedTotalInLords = useMemo(() => {
-    return calculatedPriceInLords + calculatedSlippage;
-  }, [calculatedPriceInLords, calculatedSlippage, tradeType]);
 
   const isBuyButtonDisabled = () => {
     if (isSell) {
       return false;
     }
-    const balance = BigNumber.from(lordsBalanceAfterCheckout);
-    const isBalanceSufficient = balance.gte(
-      BigNumber.from(parseEther(calculatedTotalInLords.toString()))
+    const balance = convertBalance(lordsBalanceAfterCheckout);
+    const isBalanceSufficient = getIsBalanceSufficient(
+      balance,
+      calculatedTotalInLords
     );
 
     if (!isLordsApprovedForExchange) {
@@ -271,20 +249,7 @@ export function SwapResources(): ReactElement {
     return false;
   };
 
-  const deadline = () => {
-    const maxDate = new Date();
-    maxDate.setMinutes(maxDate.getMinutes() + 30);
-    return Math.floor(maxDate.getTime() / 1000);
-  };
-
   // get token ids
-  const tokenIds = selectedSwapResourcesWithBalance.map(
-    (resource) => resource.resourceId
-  );
-
-  const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-    parseEther(String(resource.qty))
-  );
 
   // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
@@ -292,7 +257,6 @@ export function SwapResources(): ReactElement {
     const maxAmount = parseEther(
       String(calculatedPriceInLords + calculatedSlippage)
     );
-    // const maxAmount = parseEther(String('0'));
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
     removeAllSelectedSwapResources();
   }
@@ -526,7 +490,7 @@ export function SwapResources(): ReactElement {
                 resource={resource}
                 balance={balance}
                 availableResources={availableResourceIds.map(
-                  (resourceId) => getResourceById(resourceId) as BankResource
+                  (resourceId) => getResourceById(resourceId) as ExchangeRate
                 )}
                 onResourceChange={updateSelectedSwapResource}
                 onQtyChange={updateSelectedSwapResourceQty}

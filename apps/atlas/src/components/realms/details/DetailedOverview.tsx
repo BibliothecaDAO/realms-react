@@ -29,8 +29,10 @@ import {
   resourcePillaged,
   getNumberOfTicks,
   getTimeSinceLastTick,
+  getIfRelicIsHeldBySelf,
+  getIsRealmAnnexed,
 } from '@/components/realms/RealmsGetters';
-import { STORE_HOUSE_SIZE } from '@/constants/buildings';
+import { STORE_HOUSE_SIZE } from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
@@ -167,13 +169,10 @@ export function DetailedOverview(
     },
   ];
 
-  const realmHeldByRealm =
-    realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
-
   return (
     <>
       <div className="flex">
-        {hasOwnRelic(realm) || realm?.realmId === realmHeldByRealm ? (
+        {getIsRealmAnnexed(realm) ? (
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img
@@ -184,7 +183,7 @@ export function DetailedOverview(
             </div>
 
             <div className="self-center w-2/3">
-              <p className="text-3xl italic">
+              <p className="text-3xl italic ">
                 "Citizens of {realm?.name} are living peacefully on its lands.
                 The Lord of {realm?.name} is keeping them safe from Goblins and
                 other warmongering realms."
@@ -195,20 +194,21 @@ export function DetailedOverview(
           <div className="px-2">
             {realm?.relic?.map((a, i) => {
               return (
-                <div key={i} className="mb-1">
-                  <p className="text-3xl italic">
+                <div key={i} className="p-8 mb-1">
+                  <p className="text-4xl italic">
                     {realm?.name} has been Conquered by{' '}
-                    {getRealmNameById(a.heldByRealm || 0)}. The citizens shake
-                    in fear everyday thinking it will be their last... won't
-                    someone think of the children!
+                    {getRealmNameById(a.heldByRealm || 0)}! <br /> The citizens
+                    shake in fear everyday thinking it will be their last...
+                    won't someone think of the children!
                   </p>
+                  <p>This is effecting the Happiness on your Realm.</p>
                   <div className="mt-4">
                     <Button
                       href={'/?asset=realm' + a.heldByRealm}
                       variant="outline"
                       size="sm"
                     >
-                      Fly To {getRealmNameById(a.heldByRealm || 0)}
+                      Get Relic Back {getRealmNameById(a.heldByRealm || 0)}
                     </Button>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ export function DetailedOverview(
         })}
       </div>
 
-      {props.defendHistory?.length && (
+      {/* {props.defendHistory?.length && (
         <div className="flex flex-col mt-8">
           <h3 className="flex">
             <Sword className="w-4 h-4 my-auto mr-4" />
@@ -280,7 +280,7 @@ export function DetailedOverview(
             {resourcePillaged(props.defendHistory[0].data.pillagedResources)}
           </p>
         </div>
-      )}
+      )} */}
       {/* <div
         className={
           `grid grid-cols-2 gap-4  w-full uppercase font-display ` +
@@ -301,8 +301,8 @@ export function DetailedOverview(
           traitAmount={getTrait(realm, 'River')}
         />
       </div> */}
-      <div className="w-full pt-4 shadow-inner bg-gray-1000">
-        <div className="flex w-full mt-auto space-x-2">
+      {/* <div className="w-full pt-4 shadow-inner bg-gray-1000"> */}
+      {/* <div className="flex w-full mt-auto space-x-2">
           {' '}
           {isYourRealm(realm, l1Address, address || '') && (
             <div>
@@ -333,8 +333,8 @@ export function DetailedOverview(
                 </Button>
               )}
             </div>
-          )}
-          {/* <div className="w-full">
+          )} */}
+      {/* <div className="w-full">
             <Button
               onClick={() => {
                 router.push(
@@ -357,8 +357,8 @@ export function DetailedOverview(
               {isOwner ? 'manage' : 'details'}
             </Button>
           </div> */}
-        </div>
-      </div>
+      {/* </div> */}
+      {/* </div> */}
       {/* <MarketplaceByPanel
         id={realm.realmId.toString()}
         address={ModuleAddr.StakedRealms}

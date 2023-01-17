@@ -4,7 +4,7 @@ import ArgentX from '@bibliotheca-dao/ui-lib/icons/argentX.svg';
 import Braavos from '@bibliotheca-dao/ui-lib/icons/braavos.svg';
 import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import Guildly from '@bibliotheca-dao/ui-lib/icons/guildly.svg';
-import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
+import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet_icon.svg';
 import { Popover, Transition } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { useAccount, useConnectors } from '@starknet-react/core';
@@ -42,9 +42,11 @@ const NetworkConnectButton = () => {
   return (
     <Popover className="relative">
       <Popover.Button as="div">
-        <div className="px-4 py-1 text-amber-100 lg:py-2">
+        <div className="px-4 py-1 text-frame-primary lg:py-2">
           {' '}
-          <StarkNet className={'inline-block w-4 mr-2 -ml-2'} />{' '}
+          <StarkNet
+            className={'inline-block w-4 mr-2 -ml-2 fill-frame-secondary pb-1'}
+          />{' '}
           {starknetId ?? starknetId}
           {!starknetId && address
             ? encode.removeHexPrefix(shortenAddressWidth(address, 4))

@@ -10,7 +10,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
-import { buildingIntegrity } from '@/constants/buildings';
+import { buildingIntegrity } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
@@ -125,7 +125,7 @@ export const MilitaryBuildings = (props: Prop) => {
                           })}
                       </div>
                       <div className="flex w-full mt-2 space-x-2">
-                        {a.cost && (
+                        {/* {a.cost && (
                           <Button
                             onClick={() => {
                               batchAddResources(
@@ -169,7 +169,7 @@ export const MilitaryBuildings = (props: Prop) => {
                           >
                             Buy missing resources
                           </Button>
-                        )}
+                        )} */}
                         <Button
                           onClick={() =>
                             build({
@@ -186,17 +186,17 @@ export const MilitaryBuildings = (props: Prop) => {
                           size="xs"
                           variant="primary"
                           className="ml-auto"
-                          disabled={
-                            a.cost &&
-                            a.cost.some(
-                              (r) =>
-                                r.amount > 0 &&
-                                !checkUserHasAvailableResources({
-                                  cost: r.amount,
-                                  id: r.resourceId,
-                                })
-                            )
-                          }
+                          // disabled={
+                          //   a.cost &&
+                          //   a.cost.some(
+                          //     (r) =>
+                          //       r.amount > 0 &&
+                          //       !checkUserHasAvailableResources({
+                          //         cost: r.amount,
+                          //         id: r.resourceId,
+                          //       })
+                          //   )
+                          // }
                         >
                           construct
                         </Button>

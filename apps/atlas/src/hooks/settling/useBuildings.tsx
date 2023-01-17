@@ -8,7 +8,7 @@ import {
   RealmBuildingIntegrity,
   buildingIdToString,
   buildingImageById,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';

@@ -75,7 +75,7 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
       />
       <div className="w-full my-3 text-center">
         <h5>Battle report</h5>
-        <h1>{!success ? 'Victory!' : 'Retreat!'}</h1>
+        <h1>{!success ? 'Victory' : 'Retreat'}</h1>
       </div>
 
       <div className="p-3 mb-4 text-xl text-center">

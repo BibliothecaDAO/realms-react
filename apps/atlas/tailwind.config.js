@@ -9,6 +9,10 @@ module.exports = {
     'stroke-gray-1000',
     'fill-gray-1000',
     'bg-gray-1000',
+    'bg-frame-primary',
+    'border-frame-primary',
+    'fill-frame-secondary',
+    'fill-frame-primary',
     'paper',
     'shadow-order-perfection',
     'shadow-order-power',
@@ -169,6 +173,10 @@ module.exports = {
           'radial-gradient(ellipse at bottom right, var(--tw-gradient-stops))',
       },
       colors: {
+        frame: {
+          primary: '#cebba2',
+          secondary: '#c49c5c',
+        },
         gray: {
           100: '#edece9',
           200: '#eeeeee',

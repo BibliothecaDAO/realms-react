@@ -8,13 +8,15 @@ import {
 } from '@/generated/graphql';
 import type { HistoricPrices } from '@/types/index';
 
-interface ExchangeRate {
-  amount: string | undefined;
-  buyAmount: string | undefined;
+export interface ExchangeRate {
+  amount: string;
+  buyAmount: string;
   percentChange24Hr: number | null | undefined;
-  sellAmount: string | undefined;
-  tokenId: number | undefined;
-  tokenName: string | undefined;
+  sellAmount: string;
+  tokenId: number;
+  tokenName: string;
+  currencyReserve: string | undefined;
+  tokenReserve: string | undefined;
 }
 
 export const useMarketRate = () => {
@@ -46,6 +48,8 @@ export const useMarketRate = () => {
           sellAmount: exchange.sellAmount,
           tokenId: exchange.tokenId,
           tokenName: exchange.tokenName,
+          currencyReserve: exchange.currencyReserve,
+          tokenReserve: exchange.tokenReserve,
         };
       })
     );

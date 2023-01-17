@@ -9,7 +9,7 @@ import {
   MAX_HARVESTS,
   DAY,
   BASE_HARVESTS,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Food, Realm } from '@/generated/graphql';
 

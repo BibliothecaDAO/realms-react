@@ -32,7 +32,7 @@ export const ImageSlideLoader = (props: ImageSlideLoaderProps) => {
 
       {strings && (
         <span className="absolute self-center text-5xl capitalize animate-pulse">
-          {strings[index % strings.length]}
+          {strings[index % strings.length]} <br />
         </span>
       )}
     </div>

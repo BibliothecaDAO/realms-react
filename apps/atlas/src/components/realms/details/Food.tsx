@@ -23,7 +23,7 @@ import {
   WHEAT_ID,
   buildingIdToString,
   buildingImageById,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';

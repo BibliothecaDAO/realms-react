@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
 import { resources } from '@/constants/resources';
+import { framePrimary, frameSecondary } from '@/constants/ui';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
@@ -93,16 +94,20 @@ export const TopLeftNav = () => {
                 onMouseEnter={() => setIsBalanceHovered(true)}
                 onMouseLeave={() => setIsBalanceHovered(false)}
               >
-                <Lords className="self-center md:w-4 lg:w-6 fill-gray-900" />{' '}
-                <span className="self-center md:pl-2 lg:pl-2 text-amber-100 ">
+                <Lords className="self-center md:w-4 lg:w-6 fill-frame-primary" />{' '}
+                <span className="self-center md:pl-2 lg:pl-2 text-frame-primary ">
                   {(+formatEther(lordsBalance)).toLocaleString()}
                 </span>
               </Button>
             </Tooltip>
           )}
         </div>
-        <TopLeftFrameGold className="absolute w-[14rem] pointer-events-none fill-yellow-700 " />
-        <TopLeftFrame className="absolute pointer-events-none w-72 fill-gray-900 " />
+        <TopLeftFrameGold
+          className={`absolute w-[14rem] pointer-events-none fill-frame-secondary stroke-frame-secondary`}
+        />
+        <TopLeftFrame
+          className={`absolute pointer-events-none w-72 fill-${framePrimary} `}
+        />
 
         <div className="absolute z-50 left-2 top-2 jr-empire paper">
           <Button
@@ -111,23 +116,11 @@ export const TopLeftNav = () => {
             className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
           >
             <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 rounded-full p-1">
-              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-gray-900 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
+              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-primary md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-frame-secondary" />
             </div>
           </Button>
         </div>
-        {/* <div className="absolute z-50 left-[15rem] top-2">
-          <Button
-            onClick={toggleOnboarding}
-            variant="unstyled"
-            className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
-          >
-            <div className="absolute top-0 left-0 md:top-[4.75rem] md:left-[4.75rem] lg:top-[0.8rem] lg:left-[0.8rem] z-50">
-              <EternumIcon className="transition-all duration-300 fill-yellow-700 md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-yellow-800" />
-            </div>
-          </Button>
-        </div> */}
       </div>
-      {/* <OnboardingSidebar isOpen={onboarding} onClose={toggleOnboarding} /> */}
     </div>
   );
 };

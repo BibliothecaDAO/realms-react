@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { HealthBar } from '@/components/armies/BattalionImagesCard';
 import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
-import { buildingIdToString } from '@/constants/buildings';
+import { buildingIdToString } from '@/constants/globals';
 
 import type { BattalionInterface } from '@/types/index';
 

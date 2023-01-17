@@ -1,86 +1,57 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import {
-  useAccount,
-  useStarknetCall,
-  useTransactionManager,
-} from '@starknet-react/core';
-import { BigNumber } from 'ethers';
+import { parseEther } from '@ethersproject/units';
+import { useAccount, useStarknetCall } from '@starknet-react/core';
+import type { BigNumber } from 'ethers';
 import React, {
   createContext,
   useCallback,
   useContext,
   useMemo,
+  useReducer,
   useState,
 } from 'react';
 import { number, uint256 } from 'starknet';
 import {
-  getTxCosts,
-  getTxResourcesTrades,
-} from '@/components/bank/MarketGetters';
-import { getAccountHex } from '@/components/realms/RealmsGetters';
-import type { Metadata } from '@/components/ui/transactions/Transactions';
+  calculateLords,
+  convertBalance,
+  getIsBalanceSufficient,
+  initResources,
+  resourceMapping,
+} from '@/components/bank/BankGetters';
 import { resources, ResourcesIds } from '@/constants/resources';
-import {
-  useGetWalletBalancesQuery,
-  useGetGameConstantsQuery,
-} from '@/generated/graphql';
+import type { ExchangeRate } from '@/hooks/market/useMarketRate';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
-import {
-  useLordsContract,
-  useExchangeContract,
-} from '@/hooks/settling/stark-contracts';
+import { useExchangeContract } from '@/hooks/settling/stark-contracts';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import type { ResourceCost, NetworkState, HistoricPrices } from '@/types/index';
-import { useCommandList } from './CommandListContext';
-
-export type BankResource = {
-  resourceId: number;
-  resourceName: string;
-  rate: string;
-  buyAmount: string;
-  sellAmount: string;
-  lp: string;
-  currencyAmount: string;
-  tokenAmount: string;
-  percentChange: number;
-};
+import type { ResourceCost, HistoricPrices } from '@/types/index';
+import { useUserBalancesContext } from './UserBalancesContext';
 
 export type ResourceQty = {
   resourceId: number;
   qty: number;
 };
 
-export type LpQty = {
-  resourceId: number;
-  lpqty: number;
-  currencyqty: number;
+export type UserLp = {
+  lp: number;
 };
 
-type ResourcesBalance = Array<BankResource>;
-
-const resourceMapping = resources.map((resource) => {
-  return uint256.bnToUint256(number.toBN(resource.id));
-});
-
-const initResources = resources.map((resource) => {
-  return {
-    resourceId: resource.id,
-    resourceName: resource.trait,
-    rate: '0',
-    buyAmount: '0',
-    sellAmount: '0',
-    lp: '0',
-    currencyAmount: '0',
-    tokenAmount: '0',
-    percentChange: 0,
-  };
-});
-
 const BankContext = createContext<{
-  bankResources: BankResource[];
+  checkBalance: () => boolean;
+  tokenIds: number[];
+  tokenAmounts: BigNumber[];
+  calculatedSlippage: number;
+  calculatedTotalInLords: number;
+  calculatedPriceInLords: number;
+  slippage: number;
+  setSlippage: (slippage: number) => void;
+  tradeType: string;
+  toggleTradeType: () => void;
+  isBuy: boolean;
+  isSell: boolean;
+  bankResources: (ExchangeRate & UserLp)[];
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
-  selectedSwapResourcesWithBalance: (BankResource & ResourceQty)[];
+  selectedSwapResourcesWithBalance: (ExchangeRate & ResourceQty & UserLp)[];
   addSelectedSwapResources: (resourceId?: number, qty?: number) => void;
   removeSelectedSwapResource: (resourceId: number) => void;
   removeAllSelectedSwapResources: () => void;
@@ -89,7 +60,7 @@ const BankContext = createContext<{
     resourceId: number,
     newResourceId: number
   ) => void;
-  getResourceById: (resourceId: number) => BankResource | undefined;
+  getResourceById: (resourceId: number) => (ExchangeRate & UserLp) | undefined;
   batchAddResources: (cost: ResourceCost[], clearCart?: boolean) => void;
   historicPrices: HistoricPrices | undefined;
   isLordsApproved: boolean;
@@ -110,19 +81,26 @@ export const BankProvider = (props: BankProviderProps) => {
   );
 };
 
+const buy = 'buy';
+const sell = 'sell';
+
 function useResources() {
-  // const txQueue = useCommandList();
-  // const { hashes, transactions } = useTransactionManager<Metadata>();
+  const [tradeType, toggleTradeType] = useReducer(
+    (state: typeof buy | typeof sell) => {
+      return state === sell ? buy : sell;
+    },
+    buy
+  );
 
-  const { address } = useAccount();
+  const isBuy = tradeType === buy;
+  const isSell = tradeType === sell;
 
+  const [slippage, setSlippage] = useState(0.05);
   const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
   const [isResourcesApproved, setIsResourcesApproved] =
     useState<boolean>(false);
-
   const [bankResources, setBankResources] =
-    useState<BankResource[]>(initResources);
-
+    useState<(ExchangeRate & UserLp)[]>(initResources);
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
     resources.map((resource) => resource.id)
   );
@@ -130,7 +108,10 @@ function useResources() {
     ResourceQty[]
   >([]);
 
+  const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
+  const { exchangeInfo, historicPrices } = useMarketRate();
+
   const ownerAddressInt = address
     ? number.toBN(address as string).toString()
     : undefined;
@@ -146,17 +127,6 @@ function useResources() {
     method: 'balanceOfBatch',
     args: [resourceMappingArray, resourceMapping],
   });
-
-  const { data: exchangePairData } = useStarknetCall({
-    contract: exchangeContract,
-    method: 'get_all_currency_reserves',
-    args: [resourceMapping],
-    options: {
-      watch: false,
-    },
-  });
-
-  const { exchangeInfo, historicPrices } = useMarketRate();
 
   const { play: playAddWood } = useUiSounds(soundSelector.addWood);
   const { play: playAddStone } = useUiSounds(soundSelector.addStone);
@@ -190,7 +160,7 @@ function useResources() {
     const mapped: ResourceQty[] = cost?.map((a) => {
       return {
         resourceId: a.resourceId,
-        qty: a.amount * 1.1,
+        qty: a.amount * 1.05,
       };
     });
 
@@ -255,10 +225,6 @@ function useResources() {
   };
 
   useMemo(() => {
-    if (!exchangePairData) {
-      return;
-    }
-
     setAvailableResourceIds(
       resources
         .map((resource) => resource.id)
@@ -279,40 +245,31 @@ function useResources() {
       });
     };
     const userLp = lpBalanceData ? pluckData(lpBalanceData[0]) : [];
-    const currencyExchangeData = exchangePairData
-      ? pluckData(exchangePairData[0])
-      : [];
-    const tokenExchangeData = exchangePairData
-      ? pluckData(exchangePairData[1])
-      : [];
 
     setBankResources(
       resources.map((resource, index) => {
         const resourceId = resource.id ?? 0;
-        const resourceName = resource.trait ?? 0;
 
         const rate = rates.find((rate) => rate.tokenId === resourceId);
 
         return {
-          resourceId,
-          resourceName,
-          rate: rate?.amount ?? '0',
+          tokenName: rate?.tokenName ?? '0',
+          tokenId: rate?.tokenId ?? 0,
+          amount: rate?.amount ?? '0',
           buyAmount: rate?.buyAmount ?? '0',
           sellAmount: rate?.sellAmount ?? '0',
           lp: userLp[index]?.amount ?? '0',
-          currencyAmount: currencyExchangeData[index]?.amount ?? '0',
-          tokenAmount: tokenExchangeData[index]?.amount ?? '0',
-          percentChange: rate?.percentChange24Hr ?? 0,
+          currencyReserve: rate?.currencyReserve ?? '0',
+          tokenReserve: rate?.tokenReserve ?? '0',
+          percentChange24Hr: rate?.percentChange24Hr ?? 0,
         };
       })
     );
-  }, [lpBalanceData, exchangePairData, exchangeInfo, selectedSwapResources]);
+  }, [lpBalanceData, exchangeInfo, selectedSwapResources]);
 
   const getResourceById = useCallback(
     (resourceId: number) => {
-      return bankResources.find(
-        (resource) => resource.resourceId === resourceId
-      );
+      return bankResources.find((resource) => resource.tokenId === resourceId);
     },
     [bankResources]
   );
@@ -322,11 +279,64 @@ function useResources() {
       return {
         ...resource,
         ...getResourceById(resource.resourceId),
-      } as BankResource & ResourceQty;
+      } as ExchangeRate & ResourceQty & UserLp;
     });
   }, [selectedSwapResources, getResourceById]);
 
+  const calculatedPriceInLords = useMemo(() => {
+    return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
+      return (
+        acc +
+        calculateLords(
+          isBuy ? resource.buyAmount : resource.sellAmount,
+          resource.qty
+        )
+      );
+    }, 0);
+  }, [selectedSwapResourcesWithBalance, tradeType]);
+
+  const calculatedSlippage = useMemo(() => {
+    return isBuy
+      ? calculatedPriceInLords * slippage
+      : -(calculatedPriceInLords * slippage);
+  }, [calculatedPriceInLords, slippage, tradeType]);
+
+  const calculatedTotalInLords = useMemo(() => {
+    return calculatedPriceInLords + calculatedSlippage;
+  }, [calculatedPriceInLords, calculatedSlippage, tradeType]);
+
+  const tokenIds = useMemo(() => {
+    return selectedSwapResourcesWithBalance.map(
+      (resource) => resource.resourceId
+    );
+  }, [selectedSwapResources]);
+
+  const tokenAmounts = useMemo(() => {
+    return selectedSwapResourcesWithBalance.map((resource) =>
+      parseEther(String(resource.qty))
+    );
+  }, [selectedSwapResources]);
+
+  const { lordsBalanceAfterCheckout } = useUserBalancesContext();
+
+  const checkBalance = () => {
+    const balance = convertBalance(lordsBalanceAfterCheckout);
+    return getIsBalanceSufficient(balance, calculatedTotalInLords);
+  };
+
   return {
+    checkBalance,
+    tokenIds,
+    tokenAmounts,
+    calculatedSlippage,
+    calculatedTotalInLords,
+    calculatedPriceInLords,
+    slippage,
+    setSlippage,
+    tradeType,
+    toggleTradeType,
+    isBuy,
+    isSell,
     bankResources,
     availableResourceIds,
     selectedSwapResources,

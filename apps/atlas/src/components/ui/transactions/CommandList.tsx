@@ -225,7 +225,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   };
 
   const { balance } = useUserBalancesContext();
-  const { batchAddResources } = useBankContext();
+  const { batchAddResources, checkBalance } = useBankContext();
   const { toggleTrade } = useUIContext();
   return (
     <>

@@ -5,11 +5,11 @@ export const useStarkNetId = (addr: string) => {
 
   useEffect(() => {
     console.log('useStarkNetId', addr);
-    if (addr) {
-      fetch(`/api/starknetId/resolve?address=${addr}`)
-        .then((response) => response.json())
-        .then((a) => setStarknetId(a.domain as string));
-    }
+    // if (addr) {
+    //   fetch(`/api/starknetId/resolve?address=${addr}`)
+    //     .then((response) => response.json())
+    //     .then((a) => setStarknetId(a.domain as string));
+    // }
   }, [addr]);
 
   return {

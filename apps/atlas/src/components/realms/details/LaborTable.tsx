@@ -1,25 +1,18 @@
-import {
-  OrderIcon,
-  Button,
-  ResourceIcon,
-  Tabs,
-  Table,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, Table } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
-import { ReactElement, useEffect } from 'react';
 
 import { useSpring, animated } from 'react-spring';
+
 import { number } from 'starknet';
 import { RateChange } from '@/components/bank/BankPanel';
 import {
-  BASE_LABOR_UNITS,
   BASE_RESOURCES_PER_CYCLE,
   BASE_RESOURCES_PER_DAY,
   VAULT_LENGTH,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
@@ -101,6 +94,21 @@ export const LaborTable = (props: Prop) => {
 
     const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
 
+    const vaultValueAtMarketprice = () => {
+      const c = number
+        .toBN(currentMarketPriceForResource?.amount || '0')
+        .mul(
+          number.toBN(
+            (
+              getLaborUnitsGenerated(resource.labor?.vaultBalance) *
+                BASE_RESOURCES_PER_CYCLE || 0
+            ).toFixed()
+          )
+        );
+
+      return +formatEther(c.toString()).toLocaleString();
+    };
+
     return {
       build: (
         <div className="flex justify-center">
@@ -152,8 +160,29 @@ export const LaborTable = (props: Prop) => {
               change={currentMarketPriceForResource?.percentChange24Hr}
             />
           </div>
-
           <CostsRow
+            title={'Gross Margin'}
+            value={<span>{(laborProfitMargin * 100).toFixed(2)}% </span>}
+            tooltipText={
+              <span>
+                <span>
+                  Cost in $LORDS: <br />
+                  {totalLordsCostOfLabor.toFixed(2)}
+                </span>{' '}
+                <br />
+                <span>
+                  Revenue in $LORDS : <br />
+                  {lordsReturnFromLabor.toFixed(2)}
+                </span>
+                <br />
+                <span>
+                  Gross profit:
+                  <br /> {laborProfit.toFixed(2)}
+                </span>
+              </span>
+            }
+          />
+          {/* <CostsRow
             title={'Cogs'}
             value={totalLordsCostOfLabor.toFixed(2)}
             tooltipText={'Cost of Labor to Produce in $LORDS'}
@@ -169,12 +198,7 @@ export const LaborTable = (props: Prop) => {
             title={'Gross Profit'}
             value={laborProfit.toFixed(2)}
             tooltipText={'Gross profit'}
-          />
-          <CostsRow
-            title={'Gross Margin'}
-            value={<span>{(laborProfitMargin * 100).toFixed(2)}% </span>}
-            tooltipText={'Your gross profit margin in %'}
-          />
+          /> */}
         </div>
       ),
       resource: (
@@ -197,7 +221,7 @@ export const LaborTable = (props: Prop) => {
         </span>
       ),
       generated: (
-        <span className="flex space-x-4">
+        <span className="flex flex-col space-x-4">
           <LaborValues
             labor_generated={generation[0]}
             part_labor={generation[1]}
@@ -213,23 +237,35 @@ export const LaborTable = (props: Prop) => {
             }
             disabled={generation[0] == 0 || isNaN(generation[0])}
             variant="outline"
-            size="sm"
+            size="xs"
           >
-            {generation[0] == 0 || isNaN(generation[0]) ? 'nothing' : `Harvest`}
+            {generation[0] == 0 || isNaN(generation[0])
+              ? 'nothing available'
+              : `Harvest`}
           </Button>
         </span>
       ),
 
       vault: (
         <div>
-          <Number
+          {(
+            getLaborUnitsGenerated(resource.labor?.vaultBalance) *
+              BASE_RESOURCES_PER_CYCLE || 0
+          ).toFixed()}
+
+          {/* <Number
             end={
               getLaborUnitsGenerated(resource.labor?.vaultBalance) *
                 BASE_RESOURCES_PER_CYCLE || 0
             }
-          />{' '}
+          />{' '} */}
           <span className="text-gray-600">
             / {BASE_RESOURCES_PER_CYCLE * 12 * VAULT_LENGTH}
+          </span>
+          <br />
+          <span className="flex justify-center mx-auto text-lg">
+            <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
+            {vaultValueAtMarketprice().toFixed(2)}
           </span>
         </div>
       ),

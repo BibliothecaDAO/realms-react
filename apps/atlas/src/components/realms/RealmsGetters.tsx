@@ -17,10 +17,11 @@ import {
   NO_RELIC_LOSS,
   PILLAGE_AMOUNT,
   SECONDS_PER_KM,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { findResourceById, resources } from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
+import RawRealmsData from '@/geodata/realms_raw.json';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { ArmyAndOrder, useArmy } from '@/hooks/settling/useArmy';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
@@ -258,6 +259,12 @@ export const hasOwnRelic = (realm: RealmFragmentFragment | undefined) => {
 export const getRealmNameById = (id: number | undefined) => {
   return RealmsData.features.find((realm) => realm.id == id)
     ? RealmsData.features.find((realm) => realm.id == id)?.name
+    : '';
+};
+
+export const getRealmOrderById = (id: number | undefined) => {
+  return RawRealmsData.find((realm) => realm.id === id)
+    ? RawRealmsData.find((realm) => realm.id === id)?.order
     : '';
 };
 
@@ -622,6 +629,13 @@ export const checkIsRaidable = (realm: RealmFragmentFragment) => {
     return getVaultRaidableLaborUnits(r.labor?.vaultBalance) > 0;
   });
 
-  console.log(resource_length);
   return resource_length && resource_length.length > 0 ? false : true;
+};
+
+export const getIfRelicIsHeldBySelf = (realm: RealmFragmentFragment) => {
+  return realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
+};
+
+export const getIsRealmAnnexed = (realm: RealmFragmentFragment) => {
+  return hasOwnRelic(realm) || realm?.realmId === getIfRelicIsHeldBySelf(realm);
 };

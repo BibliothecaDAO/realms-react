@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { Army } from '@/generated/graphql';
-import { RealmBuildingId } from './buildings';
+import { RealmBuildingId } from './globals';
 
 export const COMBAT_OUTCOME_ATTACKER_WINS = 1;
 export const COMBAT_OUTCOME_DEFENDER_WINS = 2;

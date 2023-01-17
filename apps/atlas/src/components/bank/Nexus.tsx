@@ -17,18 +17,9 @@ import {
 } from '@/hooks/settling/stark-contracts';
 
 import { useStakeLords } from '@/hooks/useNexus';
-import type { ResourceQty, LpQty } from '@/hooks/useSwapResources';
 
 type ResourceRowProps = {
   stake?: boolean;
-};
-
-const displayRate = (rate: string) => {
-  return (+formatEther(rate)).toFixed(4);
-};
-
-const calculateLords = (rate: string, qty: number) => {
-  return +formatEther(rate) * qty;
 };
 
 const LordsInput = (props: ResourceRowProps): ReactElement => {

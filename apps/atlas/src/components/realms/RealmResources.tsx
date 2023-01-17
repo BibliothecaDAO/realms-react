@@ -14,7 +14,7 @@ import {
   DAY,
   MAX_DAYS_ACCURED,
   PILLAGE_AMOUNT,
-} from '@/constants/buildings';
+} from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Realm } from '@/generated/graphql';
@@ -185,7 +185,7 @@ export function RealmResources(props: RealmsCardProps & Prop): ReactElement {
               <span className="opacity-50"> / 3</span>
             </h4>
             {days != MAX_DAYS_ACCURED && (
-              <div className="flex justify-between px-3 uppercase self-center">
+              <div className="flex self-center justify-between px-3 uppercase">
                 <CountdownTimer date={cachedDaysRemained.toString()} />
               </div>
             )}

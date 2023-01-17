@@ -12,6 +12,7 @@ import { BasePanel } from '@/components/ui/panel/BasePanel';
 import { resources } from '@/constants/resources';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import { formatToken } from './BankGetters';
 
 type Row = {
   resource: ReactElement;
@@ -115,11 +116,12 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center">
           <span className="text-sm sm:text-lg">
             <span className="flex">
-              {(+formatEther(bankResource?.rate || 0)).toFixed(4)}
+              {formatToken(bankResource?.amount)}
+
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
             <span className="w-full text-xs sm:text-sm">
-              {RateChange({ change: bankResource?.percentChange as any })}
+              {RateChange({ change: bankResource?.percentChange24Hr as any })}
             </span>
           </span>
         </div>
@@ -128,8 +130,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center">
           <XYChart
             theme={
-              parseFloat((bankResource?.percentChange || 0 * 100).toFixed(2)) >=
-              0
+              parseFloat(
+                (bankResource?.percentChange24Hr || 0 * 100).toFixed(2)
+              ) >= 0
                 ? greenChartTheme
                 : redChartTheme
             }
@@ -154,13 +157,18 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         </div>
       ),
       lp_balance: (
-        <span className="text-xs uppercase sm:text-lg">
-          {(+formatEther(bankResource?.lp || 0)).toLocaleString()} <br />
-          {/* <span className="text-xs sm:text-sm text-stone-500">
-            LORDS: {(+formatEther(resource.currencyAmount)).toLocaleString()}
-            <br />
-            Token: {(+formatEther(resource.tokenAmount)).toLocaleString()}
-          </span> */}
+        <span className="text-lg uppercase">
+          {formatToken(bankResource?.lp)}
+          <br />
+          <hr className="opacity-20" />
+          <span className="text-base opacity-40 hover:opacity-100">
+            <span className="flex justify-center">
+              <Lords className="self-center mr-2 md:w-4 fill-frame-primary" />
+              {formatToken(bankResource?.currencyReserve)}
+            </span>
+
+            {formatToken(bankResource?.tokenReserve)}
+          </span>
         </span>
       ),
       action: (
@@ -179,11 +187,8 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
   });
   const columns = [
     { Header: 'Resource', id: 1, accessor: 'resource', size: 225 },
-    // { Header: 'Balance', id: 2, accessor: 'balance' },
-    // { Header: 'Output', id: 3, accessor: 'output' },
     { Header: 'Price', id: 5, accessor: 'rate' },
     { Header: '7d Chart', id: 8, accessor: 'chart' },
-    // { Header: 'Change', id: 4, accessor: 'change' },
 
     { Header: 'Your LP', id: 6, accessor: 'lp_balance' },
     { Header: 'Action', id: 7, accessor: 'action', size: 75 },
@@ -225,7 +230,7 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         <div className="flex justify-center px-1 my-2">
           <span className="flex flex-col text-sm sm:text-lg">
             <span className="flex">
-              {(+formatEther(bankResource?.rate || 0)).toFixed(4)}
+              {(+formatEther(bankResource?.amount || 0)).toFixed(4)}
               <Lords className="w-4 ml-1 text-white opacity-50" />
             </span>
           </span>
@@ -234,16 +239,17 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       chart: (
         <div className="relative flex justify-center">
           <span className="absolute bottom-0 left-0 self-center w-full p-1 text-xs sm:text-sm">
-            {RateChange({ change: bankResource?.percentChange as any })}
+            {RateChange({ change: bankResource?.percentChange24Hr as any })}
           </span>
           <span className="absolute bottom-0 right-0 flex p-1">
-            {(+formatEther(bankResource?.rate || 0)).toFixed(4)}
+            {(+formatEther(bankResource?.amount || 0)).toFixed(4)}
             <Lords className="w-4 ml-1 text-white" />
           </span>
           <XYChart
             theme={
-              parseFloat((bankResource?.percentChange || 0 * 100).toFixed(2)) >=
-              0
+              parseFloat(
+                (bankResource?.percentChange24Hr || 0 * 100).toFixed(2)
+              ) >= 0
                 ? greenChartTheme
                 : redChartTheme
             }
@@ -268,13 +274,16 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
         </div>
       ),
       lp_balance: (
-        <span className="text-xs uppercase sm:text-lg">
-          {(+formatEther(bankResource?.lp || 0)).toLocaleString()} <br />
-          {/* <span className="text-xs sm:text-sm text-stone-500">
-            LORDS: {(+formatEther(resource.currencyAmount)).toLocaleString()}
+        <span className="text-xs uppercase">
+          <span className="text-xs sm:text-sm text-stone-500">
+            LORDS:{' '}
+            {(+formatEther(
+              bankResource?.currencyReserve || 0
+            )).toLocaleString()}
             <br />
-            Token: {(+formatEther(resource.tokenAmount)).toLocaleString()}
-          </span> */}
+            Token:{' '}
+            {(+formatEther(bankResource?.tokenReserve || 0)).toLocaleString()}
+          </span>
         </span>
       ),
       action: (
