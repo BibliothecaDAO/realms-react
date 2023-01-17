@@ -3,7 +3,7 @@ import type { MessageItem } from 'web3-mq-react';
 
 import { botMainKeys, getShortAddress } from './LordsChatProvider';
 
-export const MsgSimple = (props: { message: MessageItem }) => {
+export const CustomMessageContainer = (props: { message: MessageItem }) => {
   const { message } = props;
   const { content, date, timestamp, senderId, senderInfo = {} } = message;
   const { avatar_url: avatarUrl, nickname } = senderInfo.web3mqInfo || {};

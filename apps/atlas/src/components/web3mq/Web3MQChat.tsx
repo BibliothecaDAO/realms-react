@@ -10,10 +10,10 @@ import {
   MessageInput,
 } from 'web3-mq-react';
 
+import { CustomMessageContainer } from './CustomMessageContainer';
 import { LordsChatProvider } from './LordsChatProvider';
 import { MsgHeader } from './MsgHeader';
 import { MsgInput } from './MsgInput';
-import { MsgSimple } from './MsgSimple';
 
 export const Web3MQChat = (props: {
   fastestUrl: string;
@@ -34,7 +34,7 @@ export const Web3MQChat = (props: {
         <Channel className={'web3mq-channel-container p-6'}>
           <Window hasContainer>
             <MsgHeader />
-            <MessageList Message={MsgSimple} />
+            <MessageList Message={CustomMessageContainer} />
             <MessageInput Input={MsgInput} />
           </Window>
         </Channel>

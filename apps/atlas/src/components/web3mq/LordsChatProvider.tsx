@@ -82,7 +82,7 @@ export const LordsChatProvider = (props: {
     client.keys.PrivateKey = keys.PrivateKey;
   }, [loginUserInfo, fastestUrl, keys]);
 
-  const getActiveChannel = useCallback(
+  const getLordsChannel = useCallback(
     async (channelList: any[]) => {
       const lordschat = channelList.find(
         (channel) => channel.chatid === groupid
@@ -113,10 +113,10 @@ export const LordsChatProvider = (props: {
         return;
       }
       if (type === 'channel.getList') {
-        const activeChannel = await getActiveChannel(channelList);
+        const lordsChannel = await getLordsChannel(channelList);
         setLoading(false);
         setChannels(channelList);
-        await client.channel.setActiveChannel(activeChannel);
+        await client.channel.setActiveChannel(lordsChannel);
       }
     },
     [joinLordsChat]
