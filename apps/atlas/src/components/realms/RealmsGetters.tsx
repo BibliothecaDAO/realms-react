@@ -631,3 +631,11 @@ export const checkIsRaidable = (realm: RealmFragmentFragment) => {
 
   return resource_length && resource_length.length > 0 ? false : true;
 };
+
+export const getIfRelicIsHeldBySelf = (realm: RealmFragmentFragment) => {
+  return realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
+};
+
+export const getIsRealmAnnexed = (realm: RealmFragmentFragment) => {
+  return hasOwnRelic(realm) || realm?.realmId === getIfRelicIsHeldBySelf(realm);
+};

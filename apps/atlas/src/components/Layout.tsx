@@ -19,16 +19,15 @@ export default function Layout({
       <Head />
       <div className="absolute inset-0">
         <div
-          className={`relative flex h-full overflow-hidden border-4 border-${framePrimary} sm:h-screen border-frame-primary`}
+          className={`relative flex h-full overflow-hidden border-4 border-${framePrimary} sm:h-screen border-frame-primary vignette-inset`}
         >
           <TopLeftNav />
           <TopRightNav />
           <BottomLeftNav />
           <BottomRightNav />
           <MenuSideBar />
-          <div className="relative flex flex-col w-full">
-            {/* <Header /> */}
-            <div className="relative w-full h-full pt-32 bg-gray-1000">
+          <div className="relative flex flex-col w-full ">
+            <div className="relative w-full h-full pt-32 bg-gray-1000 ">
               {children}
               <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
               <div id="sidebar-root">

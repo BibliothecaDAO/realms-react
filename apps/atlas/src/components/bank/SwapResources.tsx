@@ -10,7 +10,6 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther, parseEther } from '@ethersproject/units';
 import { Switch, Popover, Transition } from '@headlessui/react';
 import type { ValueType } from '@rc-component/mini-decimal';
-import { BigNumber } from 'ethers';
 import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
@@ -27,7 +26,13 @@ import {
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
 
-import { calculateLords, deadline, displayRate } from './BankGetters';
+import {
+  calculateLords,
+  convertBalance,
+  deadline,
+  displayRate,
+  getIsBalanceSufficient,
+} from './BankGetters';
 
 type ResourceRowProps = {
   resource: ExchangeRate & ResourceQty;
@@ -156,20 +161,21 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 };
 
 export function SwapResources(): ReactElement {
-  const [tradeType, toggleTradeType] = useReducer((state: 'buy' | 'sell') => {
-    return state === 'sell' ? 'buy' : 'sell';
-  }, 'buy');
-
-  const isBuy = tradeType === 'buy';
-  const isSell = tradeType === 'sell';
-
   const { gameConstants } = useGameConstants();
+  const { isApproved: isLordsApprovedForExchange } =
+    useApproveLordsForExchange();
+  const { isApproved: isResourcesApprovedForExchange } =
+    useApproveResourcesForExchange();
+  const { getBalanceById, lordsBalance, lordsBalanceAfterCheckout } =
+    useUserBalancesContext();
 
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
     useSellResources();
 
   const {
+    tokenIds,
+    tokenAmounts,
     availableResourceIds,
     selectedSwapResourcesWithBalance,
     getResourceById,
@@ -179,47 +185,25 @@ export function SwapResources(): ReactElement {
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
+    tradeType,
+    toggleTradeType,
+    isBuy,
+    isSell,
+    slippage,
+    setSlippage,
+    calculatedPriceInLords,
+    calculatedSlippage,
+    calculatedTotalInLords,
   } = useBankContext();
-
-  const { getBalanceById, lordsBalance, balance, lordsBalanceAfterCheckout } =
-    useUserBalancesContext();
-
-  const { isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-  const { isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-
-  const [slippage, setSlippage] = useState(0.05);
-
-  const calculatedPriceInLords = useMemo(() => {
-    return selectedSwapResourcesWithBalance.reduce((acc, resource) => {
-      return (
-        acc +
-        calculateLords(
-          isBuy ? resource.buyAmount : resource.sellAmount,
-          resource.qty
-        )
-      );
-    }, 0);
-  }, [selectedSwapResourcesWithBalance, tradeType]);
-
-  const calculatedSlippage = useMemo(() => {
-    return isBuy
-      ? calculatedPriceInLords * slippage
-      : -(calculatedPriceInLords * slippage);
-  }, [calculatedPriceInLords, slippage, tradeType]);
-
-  const calculatedTotalInLords = useMemo(() => {
-    return calculatedPriceInLords + calculatedSlippage;
-  }, [calculatedPriceInLords, calculatedSlippage, tradeType]);
 
   const isBuyButtonDisabled = () => {
     if (isSell) {
       return false;
     }
-    const balance = BigNumber.from(lordsBalanceAfterCheckout);
-    const isBalanceSufficient = balance.gte(
-      BigNumber.from(parseEther(calculatedTotalInLords.toString()))
+    const balance = convertBalance(lordsBalanceAfterCheckout);
+    const isBalanceSufficient = getIsBalanceSufficient(
+      balance,
+      calculatedTotalInLords
     );
 
     if (!isLordsApprovedForExchange) {
@@ -266,13 +250,6 @@ export function SwapResources(): ReactElement {
   };
 
   // get token ids
-  const tokenIds = selectedSwapResourcesWithBalance.map(
-    (resource) => resource.resourceId
-  );
-
-  const tokenAmounts = selectedSwapResourcesWithBalance.map((resource) =>
-    parseEther(String(resource.qty))
-  );
 
   // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
@@ -280,7 +257,6 @@ export function SwapResources(): ReactElement {
     const maxAmount = parseEther(
       String(calculatedPriceInLords + calculatedSlippage)
     );
-    // const maxAmount = parseEther(String('0'));
     buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
     removeAllSelectedSwapResources();
   }

@@ -1,4 +1,5 @@
-import { formatEther } from '@ethersproject/units';
+import { formatEther, parseEther } from '@ethersproject/units';
+import { BigNumber } from 'ethers';
 import { number, uint256 } from 'starknet';
 import { resources } from '@/constants/resources';
 import type { UserLp } from '@/context/BankContext';
@@ -40,4 +41,14 @@ export const deadline = () => {
   const maxDate = new Date();
   maxDate.setMinutes(maxDate.getMinutes() + 30);
   return Math.floor(maxDate.getTime() / 1000);
+};
+
+export const convertBalance = (value) => {
+  return BigNumber.from(value);
+};
+
+export const getIsBalanceSufficient = (balance, total) => {
+  return convertBalance(balance).gte(
+    BigNumber.from(parseEther(total.toString()))
+  );
 };

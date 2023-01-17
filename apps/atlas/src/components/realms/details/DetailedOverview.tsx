@@ -29,6 +29,8 @@ import {
   resourcePillaged,
   getNumberOfTicks,
   getTimeSinceLastTick,
+  getIfRelicIsHeldBySelf,
+  getIsRealmAnnexed,
 } from '@/components/realms/RealmsGetters';
 import { STORE_HOUSE_SIZE } from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
@@ -167,13 +169,10 @@ export function DetailedOverview(
     },
   ];
 
-  const realmHeldByRealm =
-    realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
-
   return (
     <>
       <div className="flex">
-        {hasOwnRelic(realm) || realm?.realmId === realmHeldByRealm ? (
+        {getIsRealmAnnexed(realm) ? (
           <div className="flex px-2 my-4">
             <div className="self-center">
               <img
