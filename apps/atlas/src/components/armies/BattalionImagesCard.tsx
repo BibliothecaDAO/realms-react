@@ -1,10 +1,5 @@
-import { Button, Card, CountdownTimer } from '@bibliotheca-dao/ui-lib/base';
 import Image from 'next/image';
-import {
-  COMBAT_OUTCOME_ATTACKER_WINS,
-  battalionInformation,
-  getUnitImage,
-} from '@/constants/army';
+import { battalionInformation, getUnitImage } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 

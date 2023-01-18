@@ -127,9 +127,9 @@ export function MapModule() {
 
   return (
     <>
-      <div className="absolute z-20 top-5 right-24">
+      <div className="absolute top-0 z-20 right-16">
         <SearchFilter
-          placeholder="Search by Realm Id"
+          placeholder="Realm Id"
           onSubmit={(value) => {
             updateSearchIdFilter(parseInt(value) ? value : '');
             navigateToAsset(parseInt(value), 'realm');
@@ -153,7 +153,7 @@ export function MapModule() {
             style={{ background: '#20333f' }}
           >
             {' '}
-            <h1 className="self-center duration-100 text-amber-100 animate-pulse">
+            <h1 className="self-center duration-100 text-frame-primary animate-pulse">
               <img
                 alt="Ouroboros Eternum Logo"
                 src="/eternum-logo_animated.png"

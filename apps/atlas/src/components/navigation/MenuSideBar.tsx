@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
 import { useUIContext } from '@/context/UIContext';
-import type { AssetType } from '@/hooks/useAtlasMap';
+
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const MenuSideBar = () => {
@@ -36,15 +36,12 @@ export const MenuSideBar = () => {
       name === (query.segment && query.segment[0]) ? '/' : `/${name}`,
     [query]
   );
-  const animation = useSpring({
-    opacity: showMenu ? 1 : 0.7,
-  });
 
   const buttonClasses =
     ' border-transparent w-6 h-6 lg:w-[2.6rem] lg:h-12 align-self-center mt-1 shadow-2xl rounded-full  transition-all duration-450 transform background-animate  paper';
 
   const iconClasses = (page) => {
-    return `lg:w-5 mx-auto w-2  hover:fill-white transition-all duration-450  ${
+    return `lg:w-5 mx-auto w-3  hover:fill-white transition-all duration-450  ${
       isPage(page) ? ' fill-white' : 'fill-gray-800'
     }`;
   };
@@ -130,7 +127,7 @@ export const MenuSideBar = () => {
       <div
         className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="py-8 rounded-full bg-frame-primary mix-blend-exclusion">
+        <div className="rounded-full sm:py-8 bg-frame-primary mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {

@@ -130,6 +130,8 @@
     "@bibliotheca-dao/postcss-100vh-fix": "^1.0.3",
     "@bibliotheca-dao/ui-lib": "workspace:^",
     "@bundlr-network/client": "0.9.11",
+    "@cartridge/connector": "0.2.19",
+    "@cartridge/controller": "0.2.19",
     "@codemirror/lang-markdown": "6.0.5",
     "@codemirror/theme-one-dark": "6.1.0",
     "@danmarshall/deckgl-typings": "^4.9.27",
@@ -170,6 +172,7 @@
     "@visx/tooltip": "2.16.0",
     "@visx/xychart": "2.16.0",
     "ably": "1.2.34",
+    "add": "2.0.6",
     "arweave": "1.11.8",
     "axios": "^1.2.1",
     "classnames": "^2.3.2",
@@ -214,7 +217,8 @@
     "use-sound": "^4.0.1",
     "wagmi": "0.9.3",
     "web3-mq": "1.2.56",
-    "web3-mq-react": "1.1.18"
+    "web3-mq-react": "1.1.18",
+    "yarn": "1.22.19"
   },
   "resolutions": {
     "bn.js": "^5.2.1"

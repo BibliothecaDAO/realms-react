@@ -32,8 +32,6 @@ export const CommandListProvider = ({
   children: React.ReactNode;
 }) => {
   const [txs, setTx] = useState<Tx[]>([]);
-  const [inlineTx, setInlineTx] = useState<Tx[]>([]);
-
   const { addTransaction } = useTransactionManager();
   const { execute } = useStarknetExecute({ calls: txs });
 

@@ -41,18 +41,20 @@ const NetworkConnectButton = () => {
 
   return (
     <Popover className="relative">
-      <Popover.Button as="div">
-        <div className="px-4 py-1 text-frame-primary lg:py-2">
-          {' '}
-          <StarkNet
-            className={'inline-block w-4 mr-2 -ml-2 fill-frame-secondary pb-1'}
-          />{' '}
-          {starknetId ?? starknetId}
-          {!starknetId && address
-            ? encode.removeHexPrefix(shortenAddressWidth(address, 4))
-            : ''}
-          {!address && 'Connect'}
-        </div>{' '}
+      <Popover.Button
+        className={
+          'px-4 py-1 text-frame-primary lg:py-2 hover:bg-white/30 transition-all duration-200 rounded-md'
+        }
+        as="div"
+      >
+        <StarkNet
+          className={'inline-block w-4 mr-2 -ml-2 fill-frame-secondary pb-1'}
+        />{' '}
+        {starknetId ?? starknetId}
+        {!starknetId && address
+          ? encode.removeHexPrefix(shortenAddressWidth(address, 4))
+          : ''}
+        {!address && 'Connect'}
       </Popover.Button>
       <Transition
         enter="transition duration-100 ease-out"
@@ -62,15 +64,15 @@ const NetworkConnectButton = () => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute left-0 w-64 p-6 my-2 -mt-64 rounded-md shadow-xl z-100 bg-gray-1000">
+        <Popover.Panel className="absolute left-0 w-64 p-6 my-2 rounded-md shadow-xl z-100 bg-gray-1000">
           <>
-            <h3>Game Networks</h3>
-            <hr />
+            <h4>Game Networks</h4>
+
             <div className="flex justify-between my-2 text-sm ">
-              <p className="font-semibold tracking-widest uppercase">
-                <StarkNet className="inline-block w-4 mr-2" />
+              <span className="flex uppercase ">
+                <StarkNet className="inline-block w-4 mr-2 fill-current" />
                 StarkNet
-              </p>
+              </span>
               <Tooltip
                 placement="auto-start"
                 className="ml-5 "
@@ -123,10 +125,10 @@ const NetworkConnectButton = () => {
 
             <hr className="my-4" />
             <div className="flex justify-between my-2 text-sm ">
-              <p className="font-semibold tracking-widest uppercase">
+              <span className="flex uppercase">
                 <Ethereum className="inline-block w-3 mr-2" />
                 Ethereum
-              </p>
+              </span>
               <Tooltip
                 placement="auto-start"
                 tooltipText={
