@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Client } from 'web3-mq';
 import type { KeyPairsType, EventTypes } from 'web3-mq';
-import { useChatContext } from 'web3-mq-react';
+import { Loading, useChatContext } from 'web3-mq-react';
 
 export const getShortAddress = (address = '', num = 5, endNum = 4) => {
   const strLength = address.length;
@@ -147,15 +147,7 @@ export const LordsChatProvider = (props: {
     <>
       {loading ? (
         <div className="flex items-center justify-center w-full h-full">
-          <div
-            style={{
-              border: '6px solid rgba(97, 94, 240, 1)',
-              borderTopColor: 'rgba(97, 94, 240, 0.2)',
-              borderRightColor: 'rgba(97, 94, 240, 0.2)',
-              borderBottomColor: 'rgba(97, 94, 240, 0.2)',
-            }}
-            className="relative border-6 rounded-full w-9 h-9 border-purple-400 animate-spin"
-          ></div>
+          <Loading className="web3mq-load" />
         </div>
       ) : (
         <>{children}</>

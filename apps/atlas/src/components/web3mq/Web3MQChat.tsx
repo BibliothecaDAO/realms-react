@@ -5,6 +5,7 @@ import {
   AppTypeEnum,
   Chat,
   Channel,
+  Loading,
   Window,
   MessageList,
   MessageInput,
@@ -34,7 +35,10 @@ export const Web3MQChat = (props: {
         <Channel className={'web3mq-channel-container p-6'}>
           <Window hasContainer>
             <MsgHeader />
-            <MessageList Message={CustomMessageContainer} />
+            <MessageList
+              Message={CustomMessageContainer}
+              Load={<Loading className="web3mq-load" />}
+            />
             <MessageInput Input={MsgInput} />
           </Window>
         </Channel>

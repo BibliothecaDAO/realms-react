@@ -157,3 +157,11 @@ div#deckgl-wrapper {
   background: #000 !important;
   color: #a1a1aa;
 }
+
+.web3mq-dialog div::after {
+  background-color: #52525b !important;
+}
+
+.web3mq-load div::after {
+  background-color: #000 !important;
+}
