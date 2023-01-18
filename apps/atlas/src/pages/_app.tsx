@@ -84,7 +84,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <WagmiConfig client={wagmiClient}>
             <ConnectKitProvider theme="midnight">
               <StarknetConfig connectors={connectors} autoConnect>
-                {/* <QueryClientProvider client={queryClient}> */}
                 <CommandListProvider>
                   <UserBalancesProvider>
                     <BankProvider>
@@ -103,15 +102,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </BankProvider>
                   </UserBalancesProvider>
                 </CommandListProvider>
-                {/* <PageTransition
-                Component={Component}
-                pageProps={pageProps}
-              ></PageTransition> */}
-                {/* <ReactQueryDevtools
-                  initialIsOpen={false}
-                  position="bottom-right"
-                />
-                </QueryClientProvider> */}
               </StarknetConfig>
             </ConnectKitProvider>
           </WagmiConfig>{' '}

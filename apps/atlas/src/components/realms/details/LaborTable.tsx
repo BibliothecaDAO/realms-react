@@ -56,7 +56,7 @@ export const LaborTable = (props: Prop) => {
 
   const { getBalanceById } = useUserBalancesContext();
 
-  const { create, harvest } = useLabor(realm as Realm);
+  const { create, harvest } = useLabor();
 
   const { gameConstants } = useGameConstants();
 
@@ -134,6 +134,7 @@ export const LaborTable = (props: Prop) => {
             <Button
               onClick={() =>
                 create({
+                  realmId: realm.realmId,
                   resourceId: resource.resourceId,
                   laborUnits: 12,
                   costs: costs,
@@ -232,6 +233,7 @@ export const LaborTable = (props: Prop) => {
           <Button
             onClick={() =>
               harvest({
+                realmId: realm.realmId,
                 resourceId: resource.resourceId,
               })
             }

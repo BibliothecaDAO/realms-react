@@ -1,25 +1,6 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  ResourceIcon,
-} from '@bibliotheca-dao/ui-lib';
-
-import { animated, useSpring } from '@react-spring/web';
-import { useAccount } from '@starknet-react/core';
-import { useState } from 'react';
-import { generateRealmEvent } from '@/components/realms/EventMappings';
-import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { BASE_RESOURCES_PER_DAY } from '@/constants/globals';
-import { ENQUEUED_STATUS } from '@/constants/index';
-import { useCommandList } from '@/context/CommandListContext';
+import { Button, Card, CardBody, CardTitle } from '@bibliotheca-dao/ui-lib';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
-import { getApproveAllGameContracts } from '@/hooks/settling/useApprovals';
-import useSettling from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { LaborTable } from '../realms/details/LaborTable';
 
 type Prop = {
@@ -27,8 +8,7 @@ type Prop = {
 };
 
 export function MyActions(props: Prop) {
-  const { claimAll, userData, burnAll, userRealms } = useUsersRealms();
-  const { mintRealms } = useSettling();
+  const { burnAll, userRealms } = useUsersRealms();
   const { balance } = useUserBalancesContext();
 
   return (
@@ -38,37 +18,6 @@ export function MyActions(props: Prop) {
           return <LaborTable key={index} realm={realm} />;
         })}
       </div>
-      {/* <Card className="col-start-1 col-end-13 md:col-start-1 md:col-end-6">
-        <CardTitle>Production rate daily</CardTitle>
-
-        <CardBody>
-          {userData.resourcesAcrossEmpire.map((a, i) => {
-            return (
-              <div key={i} className="flex justify-between my-1">
-                <div className="flex">
-                  <ResourceIcon
-                    size="sm"
-                    label
-                    className="self-center mr-2"
-                    resource={a.resourceName.replace('_', '') as string}
-                  />{' '}
-                </div>
-                + {a.resourceCount * BASE_RESOURCES_PER_DAY}
-              </div>
-            );
-          })}
-        </CardBody>
-        <Button
-          disabled={!userData?.resourcesClaimable}
-          variant="primary"
-          size="md"
-          onClick={() => claimAll()}
-        >
-          {userData?.resourcesClaimable
-            ? 'Harvest All Resources'
-            : 'nothing to claim'}
-        </Button>
-      </Card> */}
 
       <Card className="col-span-12 sm:col-start-1 sm:col-end-5">
         <CardTitle>Quick Actions</CardTitle>

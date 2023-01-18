@@ -146,6 +146,7 @@ const useUsersRealms = () => {
 
   return {
     userRealms,
+    userLoading,
     claimAll,
     userData,
     burnAll: (args: { ids; amounts }) => {
