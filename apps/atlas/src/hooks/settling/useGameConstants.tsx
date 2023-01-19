@@ -24,7 +24,7 @@ export const useGameConstants = () => {
   };
 
   const checkUserHasAvailableResources = ({ cost, id }) => {
-    const co = BigNumber.from(parseInt(cost).toFixed().toString());
+    const co = BigNumber.from(Math.ceil(cost).toFixed().toString());
 
     const baseBn = BigNumber.from('1000000000000000000').mul(co);
 
@@ -35,13 +35,18 @@ export const useGameConstants = () => {
   };
 
   const checkUserHasCheckoutResources = ({ cost, id }) => {
-    const co = BigNumber.from(parseInt(cost).toFixed().toString());
+    const co = BigNumber.from(Math.ceil(cost).toFixed().toString());
 
     const baseBn = BigNumber.from('1000000000000000000').mul(co);
 
     const currentBalance =
       balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount || 0;
-
+    console.log(
+      balance.find((a) => a.resourceId === parseInt(id))?.resourceName,
+      balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount,
+      cost,
+      BigNumber.from(currentBalance).gte(baseBn) ? true : false
+    );
     return BigNumber.from(currentBalance).gte(baseBn) ? true : false;
   };
 
