@@ -55,14 +55,14 @@ export const LaborValues = ({
           <span>You will continue to produce for {remaining} more cycles.</span>
         }
       />
-      <LaborRow
+      {/* <LaborRow
         title={'Vault'}
         pulse={generated.vault > 0}
         value={(generated.vault * BASE_RESOURCES_PER_CYCLE).toFixed(2)}
         tooltipText={
           <span>This is what will accrue to your vault after harvest.</span>
         }
-      />
+      /> */}
     </div>
   );
 };

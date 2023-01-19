@@ -181,7 +181,7 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
         </tbody>
       </table>
       <div className="w-full my-3 text-center">
-        <h1>Resources Plunded</h1>
+        <h1>Resources Plundered</h1>
         <div className="mx-auto">
           {resources && (
             <div className="flex">{resourcePillaged(resources)}</div>

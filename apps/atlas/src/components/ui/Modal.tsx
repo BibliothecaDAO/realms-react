@@ -62,7 +62,7 @@ export const Modals = () => {
       )}
     >
       <div
-        className={`h-full overflow-y-auto left-0 w-full mx-auto relative top-0 rounded bg-gray-1000 shadow-red-800/30 shadow-2xl border border-gray-700`}
+        className={`h-full overflow-y-auto left-0 w-full mx-auto relative top-0 rounded bg-gray-1000 shadow-red-800/30 shadow-2xl border border-gray-700 `}
       >
         <div className={`h-full`}>
           <div className="absolute z-10 flex justify-end top-10 right-10">

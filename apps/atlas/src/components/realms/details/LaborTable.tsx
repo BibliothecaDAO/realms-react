@@ -1,4 +1,4 @@
-import { Button, Table } from '@bibliotheca-dao/ui-lib';
+import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
@@ -121,7 +121,7 @@ export const LaborTable = (props: Prop) => {
               variant="outline"
               size="sm"
             >
-              Buy Tools and Labor (12hrs)
+              Buy Tools (12hrs)
             </Button>
           </Tooltip>
         </div>
@@ -182,14 +182,21 @@ export const LaborTable = (props: Prop) => {
       ),
       resource: (
         <span className="flex">
-          <Image
+          <span className="flex text-base whitespace-nowrap">
+            <ResourceIcon
+              className="self-center mr-2"
+              resource={resource?.resourceName?.replace(' ', '') || ''}
+              size="md"
+            />
+          </span>
+          {/* <Image
             src={'/resources/' + resource.resourceId + '.jpg'}
             alt="map"
             width={80}
             height={80}
             className="border-4 rounded-2xl border-yellow-800/40"
-          />
-          <span className="self-center ml-3 text-left">
+          /> */}
+          <span className="self-center ml-3 text-xl text-left">
             {resource.resourceName} <br />
             <span className="text-base text-gray-600">
               {(+formatEther(
@@ -227,7 +234,7 @@ export const LaborTable = (props: Prop) => {
       ),
 
       vault: (
-        <div>
+        <div className="text-2xl">
           {(
             getLaborUnitsGenerated(resource.labor?.vaultBalance) *
               BASE_RESOURCES_PER_CYCLE || 0
@@ -253,7 +260,7 @@ export const LaborTable = (props: Prop) => {
   });
 
   return (
-    <div className="py-8 text-2xl">
+    <div className="py-3 text-sm">
       <Table data={defaultData} columns={columns} {...tableOptions} />
     </div>
   );

@@ -227,41 +227,54 @@ export const RealmBuildModal = (props: Prop) => {
   };
 
   return (
-    <div className="flex flex-wrap">
-      <div className="relative w-full my-8 text-center">
-        <div className="flex justify-center w-full py-3 text-center ">
-          <OrderIcon size="lg" order={realm.orderType.toLowerCase()} />
-          <h1>{realm.name}</h1>
+    <div className="flex flex-wrap h-full">
+      <div className="flex h-full">
+        <div className="w-1/3">
+          <img
+            src="/realm-buildings/mj_castle.png"
+            alt=""
+            className="object-cover w-full h-full"
+          />
         </div>
-      </div>
+        <div className="w-2/3 p-10 mx-auto rounded-2xl">
+          <div className="relative w-full text-center">
+            <div className="flex justify-center w-full py-3 text-center ">
+              <OrderIcon
+                withTooltip
+                size="lg"
+                order={realm.orderType.toLowerCase()}
+              />
+              <h1 className="self-center ml-3">{realm.name}</h1>
+            </div>
+          </div>
 
-      {/* <div className="flex justify-center w-full">
-        <h6 className="animate-pulse">
-          ({getNumberOfTicks(realm)} cycles) | {getTimeSinceLastTick(realm)} hrs
-          since update
-        </h6>
-      </div> */}
-      <div className="container flex w-full p-8 mx-auto bg-gray-900 rounded-2xl">
-        <Tabs
-          selectedIndex={Object.keys(HotKeys).indexOf(subview || 'Overview')}
-          onChange={(index) => pressedTab(index as number)}
-          variant="small"
-        >
-          <Tabs.List className="">
-            {tabs.map((tab, index) => (
-              <Tabs.Tab key={index}>
-                {tab.label}
-                <RealmBuildTabHotkey hotkey={tab.hotkey} />
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
+          {/* <div className="flex justify-center w-full">
+            <h6 className="">
+              ({getNumberOfTicks(realm)} cycles) | {getTimeSinceLastTick(realm)}{' '}
+              hrs since update
+            </h6>
+          </div> */}
+          <Tabs
+            selectedIndex={Object.keys(HotKeys).indexOf(subview || 'Overview')}
+            onChange={(index) => pressedTab(index as number)}
+            variant="small"
+          >
+            <Tabs.List className="">
+              {tabs.map((tab, index) => (
+                <Tabs.Tab key={index}>
+                  {tab.label}
+                  <RealmBuildTabHotkey hotkey={tab.hotkey} />
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
 
-          <Tabs.Panels className="pb-20">
-            {tabs.map((tab, index) => (
-              <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
-            ))}
-          </Tabs.Panels>
-        </Tabs>
+            <Tabs.Panels>
+              {tabs.map((tab, index) => (
+                <Tabs.Panel key={index}>{tab.component}</Tabs.Panel>
+              ))}
+            </Tabs.Panels>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

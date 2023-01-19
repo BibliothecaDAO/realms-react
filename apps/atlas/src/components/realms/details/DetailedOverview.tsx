@@ -1,23 +1,9 @@
-import { ResourceIcon, Button } from '@bibliotheca-dao/ui-lib';
-import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
-
-import { useAccount } from '@starknet-react/core';
-
-import Image from 'next/image';
+import { Button } from '@bibliotheca-dao/ui-lib';
 import type { ReactElement } from 'react';
 import React from 'react';
-import { useAccount as useL1Account } from 'wagmi';
 import {
-  isYourRealm,
-  RealmStatus,
-  getDays,
-  getRemainingDays,
-  vaultResources,
-  daysAccrued,
-  maxClaimableResources,
   getHappiness,
   getRealmNameById,
-  hasOwnRelic,
   getHappinessIcon,
   getPopulation,
   getTroopPopulation,
@@ -26,16 +12,11 @@ import {
   getHappinessHasDefendingArmy,
   getHappinessHasFood,
   getFoodIcon,
-  resourcePillaged,
   getNumberOfTicks,
   getTimeSinceLastTick,
-  getIfRelicIsHeldBySelf,
   getIsRealmAnnexed,
 } from '@/components/realms/RealmsGetters';
 import { STORE_HOUSE_SIZE } from '@/constants/globals';
-import { findResourceById } from '@/constants/resources';
-
-import useUsersRealms from '@/hooks/settling/useUsersRealms';
 
 import type {
   BuildingFootprint,
@@ -55,21 +36,7 @@ interface RealmOverview {
 export function DetailedOverview(
   props: RealmsCardProps & RealmOverview
 ): ReactElement {
-  const { realm, realmFoodDetails, availableFood, buildingUtilisation } = props;
-
-  const { address: l1Address } = useL1Account();
-  const { address } = useAccount();
-
-  const { userData, userRealms } = useUsersRealms();
-
-  // days accrued
-  const cachedDaysAccrued = getDays(realm?.lastClaimTime);
-
-  // time until next claim
-  const cachedDaysRemained = getRemainingDays(realm?.lastClaimTime);
-
-  // vault accrued
-  const cachedVaultDaysAccrued = getDays(realm?.lastVaultTime);
+  const { realm, availableFood, buildingUtilisation } = props;
 
   const usedStorehouseSpace = availableFood
     ? availableFood / STORE_HOUSE_SIZE
@@ -86,29 +53,14 @@ export function DetailedOverview(
       subTitle: (
         <span>
           ({getNumberOfTicks(realm)} cycles ticked) | Every 12hrs your Realm
-          undergoes a cycle. If you do not manage your Realm correctly (keep
-          happiness), your Armies will desert.
+          undergoes a cycle.
+          {/* If you do not manage your Realm correctly (keep
+          happiness), your Armies will desert. */}
         </span>
       ),
       icon: '/icons/loot/loot.svg',
       img: '/realm-buildings/mj_castle.png',
     },
-    // {
-    //   title: 'Resources',
-    //   value: <span>{maxClaimableResources(cachedDaysAccrued)}</span>,
-    //   subTitle: (
-    //     <span>{daysAccrued(cachedDaysAccrued)}/3 max days accrued</span>
-    //   ),
-    //   icon: '/icons/loot/loot.svg',
-    //   img: '/resources/1.jpg',
-    // },
-    // {
-    //   title: 'Vault',
-    //   value: <span>{vaultResources(cachedVaultDaysAccrued)}</span>,
-    //   subTitle: <span>{cachedVaultDaysAccrued}/7 days until claimable</span>,
-    //   icon: '/icons/loot/loot.svg',
-    //   img: '/realm-buildings/mj_vault.png',
-    // },
     {
       title: 'Population',
       value: getPopulation(realm),
@@ -157,10 +109,10 @@ export function DetailedOverview(
       img: '/realm-buildings/mj_storehouse.png',
     },
     {
-      title: 'Building Utilisation (sqm)',
+      title: 'Utilisation',
       value: (
         <span>
-          {trueUsedSpace.toFixed(2)} / {buildingUtilisation?.maxSqm}{' '}
+          {trueUsedSpace.toFixed(0)} / {buildingUtilisation?.maxSqm}{' '}
         </span>
       ),
       subTitle: <span>Total Space used</span>,
@@ -173,17 +125,17 @@ export function DetailedOverview(
     <>
       <div className="flex">
         {getIsRealmAnnexed(realm) ? (
-          <div className="flex px-2 my-4">
+          <div className="flex w-full px-2 my-4">
             <div className="self-center">
               <img
                 src={'/vizirs/mj_military_vizir.png'}
                 alt="map"
-                className="w-56 h-56 mr-10 border-4 rounded-full border-yellow-800/40"
+                className="w-32 h-32 mr-10 border rounded-full shadow-inner border-yellow-800/40"
               />
             </div>
 
             <div className="self-center w-2/3">
-              <p className="text-3xl italic ">
+              <p className="text-2xl">
                 "Citizens of {realm?.name} are living peacefully on its lands.
                 The Lord of {realm?.name} is keeping them safe from Goblins and
                 other warmongering realms."
@@ -191,15 +143,15 @@ export function DetailedOverview(
             </div>
           </div>
         ) : (
-          <div className="px-2">
+          <div className="w-full px-2">
             {realm?.relic?.map((a, i) => {
               return (
                 <div key={i} className="p-8 mb-1">
-                  <p className="text-4xl italic">
+                  <p className="text-2xl">
                     {realm?.name} has been Conquered by{' '}
-                    {getRealmNameById(a.heldByRealm || 0)}! <br /> The citizens
-                    shake in fear everyday thinking it will be their last...
-                    won't someone think of the children!
+                    {getRealmNameById(a.heldByRealm || 0)}! The citizens shake
+                    in fear everyday thinking it will be their last... won't
+                    someone think of the children!
                   </p>
                   <p>This is effecting the Happiness on your Realm.</p>
                   <div className="mt-4">
@@ -216,11 +168,10 @@ export function DetailedOverview(
             })}
           </div>
         )}
-        {/* <div className="w-1/3">
+        {/* <div className="w-1/2">
           <RealmImage id={realm.realmId} />
         </div> */}
       </div>
-      <LaborTable realm={realm} />
       {/* <div className="flex flex-col">
         <div className="flex flex-wrap mt-4">
           {realm.resources?.map((re, index) => (
@@ -243,17 +194,17 @@ export function DetailedOverview(
       <div className="flex flex-wrap w-full">
         {dataCards.map((card, i) => {
           return (
-            <div key={i} className="w-1/2 ">
-              <div className="flex m-2 border-4 rounded-2xl border-yellow-800/40">
+            <div key={i} className="flex w-1/3 h-full">
+              <div className="flex flex-grow m-2 border rounded-2xl border-yellow-800/40">
                 <img
                   className="object-cover w-24 rounded-l-2xl"
                   src={card.img}
                   alt=""
                 />
                 <div className="p-6">
-                  <h4 className="text-gray-600">{card.title}</h4>
-                  <div className="my-3 text-5xl">{card.value} </div>
-                  <span className="text-gray-700 text-md">{card.subTitle}</span>
+                  <h5 className="text-gray-600">{card.title}</h5>
+                  <div className="my-3 text-3xl">{card.value} </div>
+                  <p className="text-xs text-gray-700">{card.subTitle}</p>
                 </div>
               </div>
             </div>
@@ -261,26 +212,6 @@ export function DetailedOverview(
         })}
       </div>
 
-      {/* {props.defendHistory?.length && (
-        <div className="flex flex-col mt-8">
-          <h3 className="flex">
-            <Sword className="w-4 h-4 my-auto mr-4" />
-            Last Defended Against
-          </h3>
-          <p>
-            <span className="uppercase font-lords">
-              {props.defendHistory[0].data.attackRealmName}
-            </span>
-            <span className="text-gray-700">
-              #{props.defendHistory[0].data.attackRealmId}
-            </span>
-          </p>
-          <p>
-            <h4>Resources Lost:</h4>
-            {resourcePillaged(props.defendHistory[0].data.pillagedResources)}
-          </p>
-        </div>
-      )} */}
       {/* <div
         className={
           `grid grid-cols-2 gap-4  w-full uppercase font-display ` +

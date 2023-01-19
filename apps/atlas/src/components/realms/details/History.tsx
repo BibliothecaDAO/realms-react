@@ -52,6 +52,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                 <HistoryCard
                   key={index}
                   timeStamp={a.timestamp}
+                  realmId={a.realmId}
                   event={
                     a.eventType == realmEconomicEvents.realmBuildingBuilt
                       ? 'Building Built'
@@ -72,6 +73,7 @@ export function RealmHistory({ realmId }: RealmHistoryProps): ReactElement {
                 return (
                   <HistoryCard
                     key={index}
+                    realmId={a.realmId}
                     timeStamp={a.timestamp}
                     eventId={a.eventId}
                     event={
