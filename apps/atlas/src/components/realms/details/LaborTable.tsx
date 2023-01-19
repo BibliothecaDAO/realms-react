@@ -3,9 +3,6 @@ import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
-
-import { useSpring, animated } from 'react-spring';
-
 import { number } from 'starknet';
 import { RateChange } from '@/components/bank/BankPanel';
 import {
@@ -14,7 +11,7 @@ import {
   VAULT_LENGTH,
 } from '@/constants/globals';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useLabor from '@/hooks/settling/useLabor';
@@ -25,16 +22,6 @@ import {
   getUnproducedLabor,
 } from '../RealmsGetters';
 import { LaborValues } from './LaborValues';
-
-function Number({ end, start = 0 }) {
-  const { number } = useSpring({
-    number: end,
-    from: { number: start },
-    delay: 200,
-    config: { mass: 1, tension: 20, friction: 10 },
-  });
-  return <animated.div>{number.to((x) => x.toFixed(0))}</animated.div>;
-}
 
 const columns = [
   { Header: 'Tools & Labor', id: 1, accessor: 'build' },

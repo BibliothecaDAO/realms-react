@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useAccount, useStarknetCall } from '@starknet-react/core';
+import { useAccount } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import React, {
   createContext,
@@ -8,15 +8,17 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { number, uint256 } from 'starknet';
 import {
   getTxResourcesTrades,
   getTxCosts,
 } from '@/components/bank/MarketGetters';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { resources } from '@/constants/resources';
-import { useGetWalletBalancesQuery } from '@/generated/graphql';
-import { useLordsContract } from '@/hooks/settling/stark-contracts';
+import {
+  useGetRealmsQuery,
+  useGetWalletBalancesQuery,
+} from '@/generated/graphql';
+import type { GetRealmsQuery } from '@/generated/graphql';
 import type { NetworkState } from '@/types/index';
 import { LORDS_TOKEN_TOKENID } from '../constants';
 import { useCommandList } from './CommandListContext';
@@ -40,6 +42,7 @@ const initBalance = resources.map((resource) => {
 });
 
 const UserBalancesContext = createContext<{
+  userRealms: GetRealmsQuery | undefined;
   balance: ResourcesBalance;
   balanceStatus: NetworkState;
   lordsBalance: string;
@@ -62,9 +65,10 @@ export const UserBalancesProvider = (props: UserBalancesProviderProps) => {
 
 function useUserBalances() {
   const txQueue = useCommandList();
-  // const { hashes, transactions } = useTransactionManager<Metadata>();
 
   const { address } = useAccount();
+  const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
+  const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
   const [balance, setBalance] = useState([...initBalance]);
   const [balanceStatus, setBalanceStatus] = useState<NetworkState>('loading');
   const [lordsBalance, setLordsBalance] = useState('0');
@@ -79,21 +83,42 @@ function useUserBalances() {
       pollInterval: 5000,
     });
 
+  const variables = useMemo(() => {
+    const filter = {} as any;
+
+    filter.OR = [
+      { ownerL2: { equals: starknetWallet } },
+      { settledOwner: { equals: starknetWallet } },
+    ];
+
+    return {
+      filter,
+      take: 50,
+    };
+  }, [starknetWallet]);
+
+  const {
+    data: userRealmsData,
+    loading: userDataLoading,
+    refetch,
+  } = useGetRealmsQuery({
+    variables,
+    skip: false,
+    pollInterval: 5000,
+  });
+
+  useMemo(() => {
+    if (!userRealmsData || !userRealmsData.realms) {
+      return;
+    }
+    setUserRealms(userRealmsData);
+    console.log('userRealmsData', userRealmsData);
+  }, [txQueue]);
+
   useMemo(() => {
     if (!walletBalancesData || !walletBalancesData.walletBalances) {
       return;
     }
-
-    /* setAvailableResourceIds(
-      resources
-        .map((resource) => resource.id)
-        .filter(
-          (resourceId) =>
-            selectedSwapResources.find(
-              (resource) => resource.resourceId === resourceId
-            ) === undefined
-        )
-    ); */
 
     setLordsBalance(
       BigNumber.from(
@@ -196,6 +221,8 @@ function useUserBalances() {
   );
 
   return {
+    userRealms,
+    userDataLoading,
     balance,
     lordsBalanceAfterCheckout,
     balanceStatus,

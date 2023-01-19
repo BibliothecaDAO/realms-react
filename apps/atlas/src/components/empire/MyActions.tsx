@@ -8,15 +8,17 @@ type Prop = {
 };
 
 export function MyActions(props: Prop) {
-  const { burnAll, userRealms } = useUsersRealms();
-  const { balance } = useUserBalancesContext();
+  const { burnAll } = useUsersRealms();
+  const { balance, userRealms } = useUserBalancesContext();
 
   return (
     <div className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6">
       <div className="col-start-1 col-end-13">
-        {userRealms?.realms.map((realm, index) => {
-          return <LaborTable key={index} realm={realm} />;
-        })}
+        {userRealms
+          ? userRealms?.realms.map((realm, index) => {
+              return <LaborTable key={index} realm={realm} />;
+            })
+          : ''}
       </div>
 
       <Card className="col-span-12 sm:col-start-1 sm:col-end-5">

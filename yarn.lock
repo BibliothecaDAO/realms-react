@@ -10788,13 +10788,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"add@npm:2.0.6":
-  version: 2.0.6
-  resolution: "add@npm:2.0.6"
-  checksum: a899e4bd5ad974fac367c83be3ba3adebb143af21eb9ce792f10e12db0a2f7a81e90695524307a3833089eadc187c614d8d0df51f50d8398fdc4150677f3a826
-  languageName: node
-  linkType: hard
-
 "address@npm:^1.0.1":
   version: 1.2.1
   resolution: "address@npm:1.2.1"
@@ -11691,7 +11684,6 @@ __metadata:
     "@vitest/ui": "npm:0.25.8"
     "@web3-react/types": "npm:6.0.7"
     ably: "npm:1.2.34"
-    add: "npm:2.0.6"
     arweave: "npm:1.11.8"
     autoprefixer: "npm:10.4.13"
     axios: "npm:^1.2.1"
@@ -11717,11 +11709,9 @@ __metadata:
     eslint-plugin-testing-library: "npm:5.9.1"
     ethers: "npm:5.7.2"
     get-starknet: "npm:^2.0.0"
-    gl-matrix: "npm:^3.4.3"
     graphql: "npm:^16.6.0"
     happy-dom: "npm:8.1.0"
     heroicons: "npm:^2.0.13"
-    listplayer: "npm:0.2.3"
     loot-rarity: "npm:^5.0.1"
     loot-sdk: "npm:^0.1.2"
     mapbox-gl: "npm:^2.11.1"
@@ -21725,13 +21715,6 @@ __metadata:
   bin:
     lint-staged: bin/lint-staged.js
   checksum: 7b4aaafc636daea65b3165e6fbc17f88095b86da65ffb32fc81586faf6b61033e42507e5d6f9fc23fe34c6b43c27cfe98d0e308736d53bf133c5fce933ea53e8
-  languageName: node
-  linkType: hard
-
-"listplayer@npm:0.2.3":
-  version: 0.2.3
-  resolution: "listplayer@npm:0.2.3"
-  checksum: af72f466c7c703401e0b65f40f0bb529d73fb87caa85e003fb0f79433b41b904330f431bb510711bb6af4cb998e8d9545875b2b68a05f24dc2f35c6746f2fd74
   languageName: node
   linkType: hard
 

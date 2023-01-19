@@ -7,6 +7,7 @@ import {
   RealmClaimable,
 } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 import { useResources1155Contract } from '@/hooks/settling/stark-contracts';
@@ -27,9 +28,9 @@ interface Resource {
   resourceCount: number;
 }
 const useUsersRealms = () => {
+  const { userRealms } = useUserBalancesContext();
   const { play } = useUiSounds(soundSelector.claim);
   const { findRealmsAttackingArmies } = useArmy();
-  const [userRealms, setUserRealms] = useState<GetRealmsQuery>();
   const [userData, setUserData] = useState<UserRealmsDetailedData>({
     attackingArmies: [],
     resourcesClaimable: false,
@@ -54,24 +55,13 @@ const useUsersRealms = () => {
     };
   }, [starknetWallet]);
 
-  const {
-    data: userRealmsData,
-    loading: userLoading,
-    refetch,
-  } = useGetRealmsQuery({
-    variables,
-    skip: false,
-  });
-
   useEffect(() => {
-    if (!userRealmsData) {
+    if (!userRealms) {
       return;
     }
 
-    setUserRealms(userRealmsData);
-
     const isClaimable = () => {
-      return userRealmsData.realms
+      return userRealms.realms
         .filter((a) => RealmClaimable(a))
         .filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
         .length
@@ -80,12 +70,12 @@ const useUsersRealms = () => {
     };
 
     const relicsHeld = () => {
-      return userRealmsData.realms.map((a) => a.relicsOwned).flat().length || 0;
+      return userRealms.realms.map((a) => a.relicsOwned).flat().length || 0;
     };
 
     const resourcesAcrossRealms = () => {
       const allResources =
-        userRealmsData.realms
+        userRealms.realms
           .filter((a) => a.settledOwner === getAccountHex(address || '0x0'))
           .map((a) => a.resources)
           .flat() || [];
@@ -108,14 +98,12 @@ const useUsersRealms = () => {
     };
 
     setUserData({
-      attackingArmies: findRealmsAttackingArmies(userRealmsData.realms),
+      attackingArmies: findRealmsAttackingArmies(userRealms.realms),
       resourcesClaimable: isClaimable(),
       relicsHeld: relicsHeld(),
       resourcesAcrossEmpire: resourcesAcrossRealms(),
     });
-
-    // console.log(isClaimable());
-  }, [userRealmsData, address]);
+  }, [userRealms, address]);
 
   const claimAll = () => {
     play();
@@ -146,7 +134,6 @@ const useUsersRealms = () => {
 
   return {
     userRealms,
-    userLoading,
     claimAll,
     userData,
     burnAll: (args: { ids; amounts }) => {

@@ -149,7 +149,7 @@ export function MapModule() {
       >
         {!isMapLoaded ? (
           <div
-            className="fixed z-50 flex flex-wrap justify-center w-screen h-screen"
+            className="fixed flex flex-wrap justify-center w-screen h-screen z-100"
             style={{ background: '#20333f' }}
           >
             {' '}

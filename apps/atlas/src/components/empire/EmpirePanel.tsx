@@ -21,6 +21,7 @@ import {
 } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
+import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import {
   getApproveAllGameContracts,
   useDumbGameApprovals,
@@ -104,7 +105,8 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { claimAll, userData, userRealms } = useUsersRealms();
+  const { balance, userRealms } = useUserBalancesContext();
+  // const { userData } = useUsersRealms();
 
   const unsettledRealms = userRealms?.realms.filter(
     (r) => r.ownerL2 == getAccountHex(address || '0x0')
@@ -161,7 +163,7 @@ export function EmpirePanel() {
       // },
     ];
     return allActions.filter((a) => a.enabled);
-  }, [userData, userRealms, isGameApproved, unsettledRealms]);
+  }, [userRealms, isGameApproved, unsettledRealms]);
 
   const pressedTab = (index) => {
     play();
@@ -184,7 +186,7 @@ export function EmpirePanel() {
                         variant="outline"
                         onClick={() => action.action()}
                       >
-                        {userData?.resourcesClaimable}
+                        {/* {userData?.resourcesClaimable} */}
                         <span className="flex">
                           {action.icon} {action.name}
                         </span>
