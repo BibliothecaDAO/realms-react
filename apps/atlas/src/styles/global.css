@@ -165,3 +165,18 @@ div#deckgl-wrapper {
 .web3mq-load div::after {
   background-color: #000 !important;
 }
+
+.web3mq-msg-load {
+  width: auto !important;
+  margin-left: 10px;
+}
+
+.web3mq-msg-load > div {
+  width: 21px !important;
+  height: 21px !important;
+}
+
+.web3mq-msg-load > div::after {
+  background-color: #000 !important;
+  border: 3px solid transparent !important;
+}

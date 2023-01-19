@@ -1,11 +1,19 @@
-import { Avatar } from 'web3-mq-react';
+import { SendMsgLoadingMap } from 'web3-mq';
+import { Avatar, Loading } from 'web3-mq-react';
 import type { MessageItem } from 'web3-mq-react';
 
 import { botMainKeys, getShortAddress } from './LordsChatProvider';
 
 export const CustomMessageContainer = (props: { message: MessageItem }) => {
   const { message } = props;
-  const { content, date, timestamp, senderId, senderInfo = {} } = message;
+  const {
+    content,
+    date,
+    timestamp,
+    senderId,
+    senderInfo = {},
+    msgLoading = SendMsgLoadingMap['success'],
+  } = message;
   const { avatar_url: avatarUrl, nickname } = senderInfo.web3mqInfo || {};
   const avatar = avatarUrl || senderInfo.defaultUserAvatar;
   const nickName =
@@ -39,8 +47,15 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
             {date}&nbsp;{timestamp}
           </span>
         </div>
-        <div className="break-all leading-6 text-base font-normal">
-          {content}
+        <div className="flex items-center">
+          <div className="flex-nowrap">
+            <div className="break-all leading-6 text-base font-normal">
+              {content}
+            </div>
+          </div>
+          {msgLoading === SendMsgLoadingMap['loading'] && (
+            <Loading className="web3mq-msg-load" />
+          )}
         </div>
       </div>
     </div>

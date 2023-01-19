@@ -77,8 +77,15 @@ export const Web3MQChatSideBar = ({
   onClose,
   channelName,
 }: ChatSideBarProps) => {
-  const { init, fastestUrl, keys, getEthAccount, login, logout, register } =
-    useWeb3MQLogin();
+  const {
+    init,
+    fastestUrl,
+    keys,
+    mainKeys,
+    userAccount,
+    logout,
+    handleLoginEvent,
+  } = useWeb3MQLogin();
 
   useEffect(() => {
     document
@@ -104,11 +111,11 @@ export const Web3MQChatSideBar = ({
                   <Button>Login</Button>
                 </div>
               }
+              account={userAccount}
+              keys={mainKeys}
               modalClassName={'web3mq-dialog'}
               styles={styles}
-              getEthAccount={getEthAccount}
-              login={login}
-              register={register}
+              handleLoginEvent={handleLoginEvent}
             />
           ) : fastestUrl ? (
             <Web3MQChat
