@@ -4,6 +4,7 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
 import { number } from 'starknet';
+import { vaultValueAtMarketprice } from '@/components/bank/BankGetters';
 import { RateChange } from '@/components/bank/BankPanel';
 import {
   BASE_RESOURCES_PER_CYCLE,
@@ -81,20 +82,10 @@ export const LaborTable = (props: Prop) => {
 
     const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
 
-    const vaultValueAtMarketprice = () => {
-      const c = number
-        .toBN(currentMarketPriceForResource?.amount || '0')
-        .mul(
-          number.toBN(
-            (
-              getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-                BASE_RESOURCES_PER_CYCLE || 0
-            ).toFixed()
-          )
-        );
-
-      return +formatEther(c.toString()).toLocaleString();
-    };
+    const valueAtMarketprice = vaultValueAtMarketprice({
+      currentPrice: currentMarketPriceForResource?.amount,
+      units: getLaborUnitsGenerated(resource.labor?.vaultBalance),
+    });
 
     return {
       build: (
@@ -254,7 +245,7 @@ export const LaborTable = (props: Prop) => {
           <br />
           <span className="flex justify-center mx-auto text-lg">
             <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
-            {vaultValueAtMarketprice().toFixed(2)}
+            {valueAtMarketprice.toFixed(2)}
           </span>
         </div>
       ),

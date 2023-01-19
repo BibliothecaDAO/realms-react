@@ -30,11 +30,12 @@ import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { MyActions } from './MyActions';
 
 export function EmpirePanel() {
+  const [selectedTab, setSelectedTab] = useState(0);
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
-  const { toggleSettleRealms } = useUIContext();
+  const { userRealms } = useUsersRealms();
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const { toggleSettleRealms } = useUIContext();
 
   const tabs = useMemo(
     () => [
@@ -104,7 +105,6 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { userRealms } = useUsersRealms();
 
   const unsettledRealms = userRealms?.realms.filter(
     (r) => r.ownerL2 == getAccountHex(address || '0x0')

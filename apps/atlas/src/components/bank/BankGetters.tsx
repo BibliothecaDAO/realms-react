@@ -1,6 +1,7 @@
 import { formatEther, parseEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 import { number, uint256 } from 'starknet';
+import { BASE_RESOURCES_PER_CYCLE } from '@/constants/globals';
 import { resources } from '@/constants/resources';
 import type { UserLp } from '@/context/BankContext';
 import type { ExchangeRate } from '@/hooks/market/useMarketRate';
@@ -51,4 +52,12 @@ export const getIsBalanceSufficient = (balance, total) => {
   return convertBalance(balance).gte(
     BigNumber.from(parseEther(total.toString()))
   );
+};
+
+export const vaultValueAtMarketprice = ({ currentPrice, units }) => {
+  const c = number
+    .toBN(currentPrice || '0')
+    .mul(number.toBN((units * BASE_RESOURCES_PER_CYCLE || 0).toFixed()));
+
+  return +formatEther(c.toString()).toLocaleString();
 };

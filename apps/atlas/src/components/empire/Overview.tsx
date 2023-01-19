@@ -1,36 +1,39 @@
-import { CardBody } from '@bibliotheca-dao/ui-lib';
+import { Button, CardBody } from '@bibliotheca-dao/ui-lib';
 import { useAccount } from '@starknet-react/core';
-import { generateRealmEvent } from '@/components/realms/EventMappings';
+import { useState } from 'react';
+import {
+  generateRealmEvent,
+  Event as EventType,
+  EventLabels,
+} from '@/components/realms/EventMappings';
 import { HistoryCard } from '@/components/realms/HistoryCard';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
+import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { MyRealms } from './MyRealms';
 
 export function AccountOverview() {
   const { address } = useAccount();
 
-  const filter = {
-    OR: [
-      { ownerL2: { equals: getAccountHex(address || '0x0') } },
-      { settledOwner: { equals: getAccountHex(address || '0x0') } },
-    ],
-  };
-  const { data: realmsData } = useGetRealmsQuery({ variables: { filter } });
+  const [eventType, setEventType] = useState<EventType>();
 
-  const realmIds = realmsData?.realms?.map((realm) => realm.realmId) ?? [];
-
-  const { data: accountData, loading: loadingData } = useGetAccountQuery({
-    variables: { account: address ? getAccountHex(address) : '', realmIds },
+  const { data: accountData } = useGetRealmHistoryQuery({
+    variables: {
+      filter: {
+        realmOwner: { equals: address ? getAccountHex(address) : '' },
+        eventType: { equals: eventType },
+      },
+    },
     pollInterval: 5000,
     skip: !address,
   });
 
-  const events = (accountData?.accountHistory ?? [])
+  const events = (accountData?.getRealmHistory ?? [])
     .map((realmEvent) => {
       return {
         ...generateRealmEvent(realmEvent, true),
         timestamp: realmEvent.timestamp,
         eventId: realmEvent.eventId,
+        realmId: realmEvent.realmId,
       };
     })
     .filter((row) => row.event !== '');
@@ -38,7 +41,7 @@ export function AccountOverview() {
   return (
     <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
       <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
-        <div className="p-4 mb-8 ">
+        <div className="p-2 mb-8 ">
           <h2>Your Settled Realms</h2>
           <div className="px-10 mt-4 text-xl italic">
             "Would you like to inspect your lands?"
@@ -47,11 +50,26 @@ export function AccountOverview() {
         <MyRealms />
       </div>
       <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
-        <div className="p-4 mb-8 ">
+        <div className="p-2 ">
           <h2>Vizir Reports</h2>
           <div className="px-10 mt-4 text-xl italic ">
             "Your Majesty, we have been busy since you have been away."
           </div>
+        </div>
+        <div className="flex flex-wrap mb-3">
+          {Object.keys(EventType).map((key) => {
+            return (
+              <div className="m-1" key={key}>
+                <Button
+                  onClick={() => setEventType(EventType[key])}
+                  variant="outline"
+                  size="xs"
+                >
+                  {EventLabels[EventType[key]]}
+                </Button>
+              </div>
+            );
+          })}
         </div>
 
         <CardBody>
@@ -65,6 +83,7 @@ export function AccountOverview() {
                     eventId={a.eventId}
                     action={a.action}
                     image={a.image}
+                    realmId={a.realmId}
                   >
                     {a.relic}
                     {a.resources}
