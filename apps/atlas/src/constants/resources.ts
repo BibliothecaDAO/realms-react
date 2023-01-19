@@ -274,7 +274,7 @@ export enum ResourcesIds {
   Stone = 2,
   Coal = 3,
   Copper = 4,
-  Cbsidian = 5,
+  Obsidian = 5,
   Cilver = 6,
   Ironwood = 7,
   ColdIron = 8,
