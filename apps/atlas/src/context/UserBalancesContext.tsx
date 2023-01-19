@@ -15,10 +15,14 @@ import {
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { resources } from '@/constants/resources';
 import {
+  useGetGameConstantsQuery,
   useGetRealmsQuery,
   useGetWalletBalancesQuery,
 } from '@/generated/graphql';
-import type { GetRealmsQuery } from '@/generated/graphql';
+import type {
+  GetRealmsQuery,
+  GetGameConstantsQuery,
+} from '@/generated/graphql';
 import type { NetworkState } from '@/types/index';
 import { LORDS_TOKEN_TOKENID } from '../constants';
 import { useCommandList } from './CommandListContext';
@@ -42,6 +46,7 @@ const initBalance = resources.map((resource) => {
 });
 
 const UserBalancesContext = createContext<{
+  gameConstants: GetGameConstantsQuery | undefined;
   userRealms: GetRealmsQuery | undefined;
   balance: ResourcesBalance;
   balanceStatus: NetworkState;
@@ -107,12 +112,16 @@ function useUserBalances() {
     pollInterval: 5000,
   });
 
+  const [gameConstants, setGameConstants] = useState<GetGameConstantsQuery>();
+
+  const { data: gameConstantsData } = useGetGameConstantsQuery();
+
   useMemo(() => {
-    if (!userRealmsData || !userRealmsData.realms) {
-      return;
-    }
+    setGameConstants(gameConstantsData);
+  }, [address]);
+
+  useMemo(() => {
     setUserRealms(userRealmsData);
-    console.log('userRealmsData', userRealmsData);
   }, [txQueue]);
 
   useMemo(() => {
@@ -221,6 +230,7 @@ function useUserBalances() {
   );
 
   return {
+    gameConstants,
     userRealms,
     userDataLoading,
     balance,

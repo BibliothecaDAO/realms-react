@@ -21,7 +21,6 @@ import {
 } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
-import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import {
   getApproveAllGameContracts,
   useDumbGameApprovals,
@@ -105,8 +104,7 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { balance, userRealms } = useUserBalancesContext();
-  // const { userData } = useUsersRealms();
+  const { userRealms } = useUsersRealms();
 
   const unsettledRealms = userRealms?.realms.filter(
     (r) => r.ownerL2 == getAccountHex(address || '0x0')

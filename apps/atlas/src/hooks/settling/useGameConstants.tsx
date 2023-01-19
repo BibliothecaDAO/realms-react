@@ -1,23 +1,9 @@
 import { BigNumber } from 'ethers';
-import { useEffect, useState } from 'react';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import type { GetGameConstantsQuery } from '@/generated/graphql';
-import { useGetGameConstantsQuery } from '@/generated/graphql';
 
 // TODO this should be refactored (doesnt need user balances for getting constants)
 export const useGameConstants = () => {
-  const { balance } = useUserBalancesContext();
-  const [gameConstants, setGameConstants] = useState<GetGameConstantsQuery>();
-
-  const { data } = useGetGameConstantsQuery();
-
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    setGameConstants(data);
-  }, [data]);
+  const { balance, gameConstants } = useUserBalancesContext();
 
   const getBuildingCostById = (id) => {
     return gameConstants?.buildingCosts.find((a) => a.buildingId === id);
