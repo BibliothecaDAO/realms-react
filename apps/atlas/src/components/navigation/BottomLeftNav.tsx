@@ -23,9 +23,9 @@ export const BottomLeftNav = () => {
           }}
           icon={
             isSoundActive ? (
-              <VolumeOn className="w-5 stroke-primary-100 fill-frame-primary" />
+              <VolumeOn className="w-5 stroke-primary-100 fill-frame-secondary" />
             ) : (
-              <VolumeOff className="w-5 stroke-primary-100 fill-frame-primary" />
+              <VolumeOff className="w-5 stroke-primary-100 fill-frame-secondary" />
             )
           }
           size="md"

@@ -18,15 +18,11 @@ import {
   getHolderOfRelic,
 } from '@/components/realms/RealmsGetters';
 import { STORE_HOUSE_SIZE } from '@/constants/globals';
-
-import { RealmFragmentFragment } from '@/generated/graphql';
 import type {
   BuildingFootprint,
   RealmFoodDetails,
   RealmsCardProps,
 } from '@/types/index';
-import { RealmImage } from './Image';
-import { LaborTable } from './LaborTable';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
@@ -122,36 +118,6 @@ export function DetailedOverview(
       img: '/vizirs/mj_builder.png',
     },
   ];
-
-  const realmStatusTest = (realm) => {
-    switch (realm) {
-      case true: {
-        return `"Citizens of ${realm?.name} are living peacefully on its lands.
-        The Lord of ${realm?.name} is keeping them safe from Goblins and
-        other warmongering realms."`;
-      }
-      case getHolderOfRelic(realm) != 0: {
-        return (
-          <div>
-            {realm?.name} has been Conquered by{' '}
-            {getRealmNameById(getHolderOfRelic(realm) || 0)}! The citizens shake
-            in fear everyday thinking it will be their last... won't someone
-            think of the children!
-            <div className="mt-4">
-              <Button
-                href={'/?asset=realm' + getHolderOfRelic(realm)}
-                variant="outline"
-                size="sm"
-              >
-                Get Relic Back {getRealmNameById(getHolderOfRelic(realm) || 0)}
-              </Button>
-            </div>
-          </div>
-        );
-      }
-      default:
-    }
-  };
 
   return (
     <>

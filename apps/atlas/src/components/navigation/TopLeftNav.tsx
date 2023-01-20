@@ -12,13 +12,11 @@ import { useAccount } from '@starknet-react/core';
 
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import NetworkConnectButton from '@/components/ui/NetworkConnectButton';
+
 import { resources } from '@/constants/resources';
 import { framePrimary, frameSecondary } from '@/constants/ui';
-import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import { OnboardingSidebar } from '../onboarding/OnboardingSidebar';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useUserBalancesContext();
@@ -35,12 +33,9 @@ export const TopLeftNav = () => {
     toggleTrade();
   }
 
-  const { getResourceById } = useBankContext();
-
-  const { balance, getBalanceById } = useUserBalancesContext();
+  const { getBalanceById } = useUserBalancesContext();
 
   const resourcesList = resources?.map((resource) => {
-    const bankResource = getResourceById(resource.id);
     const balance = getBalanceById(resource.id);
 
     return (
@@ -94,8 +89,8 @@ export const TopLeftNav = () => {
                 onMouseEnter={() => setIsBalanceHovered(true)}
                 onMouseLeave={() => setIsBalanceHovered(false)}
               >
-                <Lords className="self-center md:w-4 lg:w-6 fill-frame-primary" />{' '}
-                <span className="self-center md:pl-2 lg:pl-2 text-frame-primary ">
+                <Lords className="self-center md:w-4 lg:w-6 fill-frame-secondary" />{' '}
+                <span className="self-center md:pl-2 lg:pl-2 text-frame-secondary ">
                   {(+formatEther(lordsBalance)).toLocaleString()}
                 </span>
               </Button>
@@ -116,7 +111,7 @@ export const TopLeftNav = () => {
             className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
           >
             <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 rounded-full p-1">
-              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-primary md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-frame-secondary" />
+              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-secondary md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-frame-secondary" />
             </div>
           </Button>
         </div>

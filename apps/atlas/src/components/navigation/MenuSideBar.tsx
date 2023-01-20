@@ -42,7 +42,7 @@ export const MenuSideBar = () => {
 
   const iconClasses = (page) => {
     return `lg:w-5 mx-auto w-3  hover:fill-white transition-all duration-450  ${
-      isPage(page) ? ' fill-white' : 'fill-gray-800'
+      isPage(page) ? ' fill-frame-secondary' : 'fill-frame-secondary'
     }`;
   };
 
@@ -127,7 +127,7 @@ export const MenuSideBar = () => {
       <div
         className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="rounded-full sm:py-8 bg-frame-primary mix-blend-exclusion">
+        <div className="rounded-full sm:py-8 mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {
