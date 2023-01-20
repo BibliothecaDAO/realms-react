@@ -1,7 +1,8 @@
-import { Table, Button } from '@bibliotheca-dao/ui-lib';
+import { Table, Button, Card } from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import { relicsOwnedByRealm } from '@/components/realms/RealmsGetters';
+import { useUIContext } from '@/context/UIContext';
 import {
   useGetRealmsQuery,
   SortOrder,
@@ -27,6 +28,7 @@ type Row = {
 
 export function LeaderboardPanel(): ReactElement {
   const router = useRouter();
+  const { closeAll } = useUIContext();
 
   const { data: relicData } = useGetRealmsQuery({
     variables: {
@@ -70,12 +72,13 @@ export function LeaderboardPanel(): ReactElement {
           variant="primary"
           size="xs"
           onClick={() => {
+            closeAll();
             router.push(`/?asset=realm${realm?.realmId}`, undefined, {
               shallow: true,
             });
           }}
         >
-          View
+          View Realm
         </Button>
       ),
     };
@@ -163,30 +166,29 @@ export function LeaderboardPanel(): ReactElement {
   const tableOptions = { is_striped: true };
 
   return (
-    <BasePanel open={true} style="lg:w-12/12">
-      <div className="p-4 md:p-10">
-        <div className="w-full pb-10">
-          <h1 className="w-full text-center">The Lords Leaderboard</h1>
-        </div>
-        <div className="relative">
-          <RaidSuccess />
-          {sections.map((section, index) => (
-            <div
-              key={section.name}
-              className="p-4 mb-10 border cursor-pointer rounded-2xl border-white/30 card"
-            >
-              <h3 className="pl-4 pt-2 text-3xl capitalize">
-                {section.name.replace(/([A-Z])/g, ' $1')}
-              </h3>
-              <Table
-                columns={section.columns}
-                data={section.defaultData}
-                options={tableOptions}
-              />
-            </div>
-          ))}
+    <div className="relative flex flex-col h-screen pt-20 pb-20 pl-20 pr-8">
+      <div className="flex-col h-full pb-4 overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
+        <div className="p-4 md:p-10">
+          <div className="w-full pb-10">
+            <h1 className="w-full text-center">The Lords Leaderboard</h1>
+          </div>
+          <div className="relative">
+            <RaidSuccess />
+            {sections.map((section, index) => (
+              <Card key={section.name} className="mb-8">
+                <h3 className="pt-2 pl-4 text-3xl capitalize">
+                  {section.name.replace(/([A-Z])/g, ' $1')}
+                </h3>
+                <Table
+                  columns={section.columns}
+                  data={section.defaultData}
+                  options={tableOptions}
+                />
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
-    </BasePanel>
+    </div>
   );
 }

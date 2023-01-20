@@ -8,6 +8,7 @@ import { useUIContext } from '@/context/UIContext';
 import { ResourcesListSideBar } from '../bank/ResourcesListSideBar';
 import { CryptSideBar } from '../crypts/CryptsSideBar';
 import { GASideBar } from '../ga/GASideBar';
+import { LeaderboardSideBar } from '../leaderboard/LeadeboardSideBar';
 import { LootSideBar } from '../loot/LootSideBar';
 import { LoreSideBar } from '../lore/LoreSideBar';
 import { RealmSideBar } from '../realms/RealmsSideBar';
@@ -88,6 +89,10 @@ export function AtlasSidebars() {
         onClose={toggleResourcesList}
       />
       <LoreSideBar isOpen={loreSidebar} onClose={toggleLore} />
+      <LeaderboardSideBar
+        isOpen={leaderboardSidebar}
+        onClose={toggleLeaderboard}
+      />
       <MintSettleRealmsSideBar
         isOpen={settleRealmsSidebar}
         onClose={toggleSettleRealms}

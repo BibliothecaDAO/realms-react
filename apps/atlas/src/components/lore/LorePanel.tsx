@@ -103,10 +103,10 @@ export const LorePanel = () => {
     !loading && (data?.getLoreEntities?.length ?? 0) === 0;
 
   return (
-    <div className="relative flex flex-col h-screen pt-20 pb-24 pl-20 pr-8">
-      <div className="flex-col h-full pb-4 overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
+    <div className="relative flex flex-col h-screen pt-20 pb-20 pl-20 pr-8">
+      <div className="flex-col h-full p-10 overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
         <div className="flex justify-between">
-          <div className="flex flex-col items-center justify-center w-full pt-4">
+          <div className="flex flex-col items-center justify-center w-full">
             <h1>Bibliopedia</h1>
             <p className="mt-4 sm:text-xl opacity-70">
               Write stories about your favourite Realms, Loot Bags, GA, and
