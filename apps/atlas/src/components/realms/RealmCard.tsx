@@ -39,7 +39,6 @@ import {
   getTimeSinceLastTick,
   getTimeUntilNextTick,
   getDays,
-  GetArmyStrength,
   getLaborUnitsGenerated,
   getVaultRaidableLaborUnits,
   checkIsRaidable,
@@ -77,6 +76,7 @@ import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
 import { ArmyCard } from '../armies/armyCard/ArmyCard';
 import { ArmyStatistics } from '../armies/armyCard/ArmyStatistics';
 import { ArmyStatisticsTable } from '../armies/armyCard/ArmyStatisticsTable';
+import { getArmyById, GetArmyStrength } from '../armies/ArmyGetters';
 import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
@@ -275,7 +275,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               <div className="flex">
                 <Shield className={'w-7 fill-gray-500 mr-2'} />
                 <span className="w-full break-normal">
-                  {GetArmyStrength(realm, 0)}
+                  {GetArmyStrength(getArmyById(0, realm))}
                 </span>
               </div>
             </Tooltip>
@@ -349,25 +349,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                         <ResourceIcon resource={'Wheat'} size="xs" />{' '}
                         <ResourceIcon resource={'Fish'} size="xs" />
                       </Button>
-                      {/* <Button
-                        disabled={
-                          getDays(realm?.lastClaimTime) === 0 ||
-                          resourcesTxPending
-                        }
-                        size="xs"
-                        variant={'outline'}
-                        className={
-                          getDays(realm?.lastClaimTime) === 0 ||
-                          resourcesTxPending
-                            ? ''
-                            : 'bg-green-800 animate-pulse'
-                        }
-                        onClick={() => {
-                          claim();
-                        }}
-                      >
-                        Harvest
-                      </Button> */}
                     </>
                   )}
                 </>

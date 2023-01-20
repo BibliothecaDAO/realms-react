@@ -227,16 +227,16 @@ export const RealmBuildModal = (props: Prop) => {
   };
 
   return (
-    <div className="flex flex-wrap h-full">
-      <div className="flex h-full">
-        <div className="w-1/3">
+    <div className="flex flex-wrap">
+      <div className="flex flex-wrap w-full">
+        {/* <div className="w-full">
           <img
             src="/realm-buildings/mj_castle.png"
             alt=""
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full max-h-fit"
           />
-        </div>
-        <div className="w-2/3 p-10 mx-auto rounded-2xl">
+        </div> */}
+        <div className="w-full h-full p-10 mx-auto overflow-y-scroll rounded-2xl">
           <div className="relative w-full text-center">
             <div className="flex justify-center w-full py-3 text-center ">
               <OrderIcon

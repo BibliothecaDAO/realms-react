@@ -53,6 +53,7 @@ export const RealmsTravel = ({ realm, userRealms }: Prop) => {
   const travelTableFiltered = travelTable?.sort(
     (a, b) => parseInt(a.distance) - parseInt(b.distance)
   );
+
   const columns = [
     { Header: 'Name', id: 1, accessor: 'name' },
     { Header: 'Distance', id: 2, accessor: 'distance' },

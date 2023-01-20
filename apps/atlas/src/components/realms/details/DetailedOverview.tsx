@@ -15,9 +15,11 @@ import {
   getNumberOfTicks,
   getTimeSinceLastTick,
   getIsRealmAnnexed,
+  getHolderOfRelic,
 } from '@/components/realms/RealmsGetters';
 import { STORE_HOUSE_SIZE } from '@/constants/globals';
 
+import { RealmFragmentFragment } from '@/generated/graphql';
 import type {
   BuildingFootprint,
   RealmFoodDetails,
@@ -121,53 +123,76 @@ export function DetailedOverview(
     },
   ];
 
+  const realmStatusTest = (realm) => {
+    switch (realm) {
+      case true: {
+        return `"Citizens of ${realm?.name} are living peacefully on its lands.
+        The Lord of ${realm?.name} is keeping them safe from Goblins and
+        other warmongering realms."`;
+      }
+      case getHolderOfRelic(realm) != 0: {
+        return (
+          <div>
+            {realm?.name} has been Conquered by{' '}
+            {getRealmNameById(getHolderOfRelic(realm) || 0)}! The citizens shake
+            in fear everyday thinking it will be their last... won't someone
+            think of the children!
+            <div className="mt-4">
+              <Button
+                href={'/?asset=realm' + getHolderOfRelic(realm)}
+                variant="outline"
+                size="sm"
+              >
+                Get Relic Back {getRealmNameById(getHolderOfRelic(realm) || 0)}
+              </Button>
+            </div>
+          </div>
+        );
+      }
+      default:
+    }
+  };
+
   return (
     <>
       <div className="flex">
-        {getIsRealmAnnexed(realm) ? (
-          <div className="flex w-full px-2 my-4">
-            <div className="self-center">
-              <img
-                src={'/vizirs/mj_military_vizir.png'}
-                alt="map"
-                className="w-32 h-32 mr-10 border rounded-full shadow-inner border-yellow-800/40"
-              />
-            </div>
+        <div className="flex w-full px-2 my-4">
+          <div className="self-center">
+            <img
+              src={'/vizirs/mj_military_vizir.png'}
+              alt="map"
+              className="w-32 h-32 mr-10 border rounded-full shadow-inner border-yellow-800/40"
+            />
+          </div>
 
-            <div className="self-center w-2/3">
-              <p className="text-2xl">
+          <div className="self-center w-2/3 text-2xl">
+            {getIsRealmAnnexed(realm) ? (
+              <div>
                 "Citizens of {realm?.name} are living peacefully on its lands.
                 The Lord of {realm?.name} is keeping them safe from Goblins and
                 other warmongering realms."
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full px-2">
-            {realm?.relic?.map((a, i) => {
-              return (
-                <div key={i} className="p-8 mb-1">
-                  <p className="text-2xl">
-                    {realm?.name} has been Conquered by{' '}
-                    {getRealmNameById(a.heldByRealm || 0)}! The citizens shake
-                    in fear everyday thinking it will be their last... won't
-                    someone think of the children!
-                  </p>
-                  <p>This is effecting the Happiness on your Realm.</p>
-                  <div className="mt-4">
-                    <Button
-                      href={'/?asset=realm' + a.heldByRealm}
-                      variant="outline"
-                      size="sm"
-                    >
-                      Get Relic Back {getRealmNameById(a.heldByRealm || 0)}
-                    </Button>
-                  </div>
+              </div>
+            ) : (
+              <div>
+                {realm?.name} has been Conquered by{' '}
+                {getRealmNameById(getHolderOfRelic(realm) || 0)}! The citizens
+                shake in fear everyday thinking it will be their last... won't
+                someone think of the children!
+                <div className="mt-4">
+                  <Button
+                    href={'/?asset=realm' + getHolderOfRelic(realm)}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Get Relic Back{' '}
+                    {getRealmNameById(getHolderOfRelic(realm) || 0)}
+                  </Button>
                 </div>
-              );
-            })}
+              </div>
+            )}
           </div>
-        )}
+        </div>
+
         {/* <div className="w-1/2">
           <RealmImage id={realm.realmId} />
         </div> */}

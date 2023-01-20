@@ -2,6 +2,7 @@ import { useAccount, useStarknetInvoke } from '@starknet-react/core';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { number, uint256 } from 'starknet';
+import { getAttackingArmies } from '@/components/armies/ArmyGetters';
 import {
   getAccountHex,
   RealmClaimable,
@@ -30,7 +31,6 @@ interface Resource {
 const useUsersRealms = () => {
   const { userRealms } = useUserBalancesContext();
   const { play } = useUiSounds(soundSelector.claim);
-  const { findRealmsAttackingArmies } = useArmy();
   const [userData, setUserData] = useState<UserRealmsDetailedData>({
     attackingArmies: [],
     resourcesClaimable: false,
@@ -98,7 +98,7 @@ const useUsersRealms = () => {
     };
 
     setUserData({
-      attackingArmies: findRealmsAttackingArmies(userRealms.realms),
+      attackingArmies: getAttackingArmies(userRealms.realms),
       resourcesClaimable: isClaimable(),
       relicsHeld: relicsHeld(),
       resourcesAcrossEmpire: resourcesAcrossRealms(),

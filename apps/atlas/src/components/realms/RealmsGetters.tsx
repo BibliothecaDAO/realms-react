@@ -331,7 +331,7 @@ export const CostBlock = ({ resourceName, amount, id, qty }) => {
   );
 };
 
-const getCoordinates = (id: number) => {
+export const getCoordinates = (id: number) => {
   return RealmsData.features.find((a) => a.id === id);
 };
 
@@ -533,36 +533,6 @@ export const resourcesToString = (a) => {
   return resources.find((r) => r.trait === a)?.id ?? 0;
 };
 
-// pass any Army get total defence
-export const GetArmyStrength = (
-  realm: RealmFragmentFragment,
-  armyId: number
-) => {
-  const { getArmyStats } = useArmy();
-  const army = realm.ownArmies.find((a) => a.armyId === armyId);
-
-  if (army) {
-    const armyStats = getArmyStats(army);
-    return armyStrength(armyStats.totalDefence);
-  }
-  return 'No Army';
-};
-
-// pass any Statistic and give a context of that. Eg: Pass the Magic Defence and get a string of 'Strong' or 'Weak'
-export const armyStrength = (armyStrength: number) => {
-  if (armyStrength > 1000) {
-    return 'V.Strong';
-  } else if (armyStrength > 750) {
-    return 'Strong';
-  } else if (armyStrength > 250) {
-    return 'Moderate';
-  } else if (armyStrength > 100) {
-    return 'Weak';
-  } else {
-    return 'V.Weak';
-  }
-};
-
 export const hasSettledRealms = (userRealms, address) => {
   return (
     userRealms &&
@@ -632,10 +602,14 @@ export const checkIsRaidable = (realm: RealmFragmentFragment) => {
   return resource_length && resource_length.length > 0 ? false : true;
 };
 
-export const getIfRelicIsHeldBySelf = (realm: RealmFragmentFragment) => {
+export const getHolderOfRelic = (realm: RealmFragmentFragment) => {
   return realm?.relic && realm?.relic.length ? realm?.relic[0].heldByRealm : 0;
 };
 
 export const getIsRealmAnnexed = (realm: RealmFragmentFragment) => {
-  return hasOwnRelic(realm) || realm?.realmId === getIfRelicIsHeldBySelf(realm);
+  return hasOwnRelic(realm) || realm?.realmId === getHolderOfRelic(realm);
+};
+
+export const getRelicsOwned = (realm: RealmFragmentFragment) => {
+  return realm?.relicsOwned;
 };

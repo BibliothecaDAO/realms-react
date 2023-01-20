@@ -29,7 +29,6 @@ export const nameArray = [
 
 export const useArmy = () => {
   const { gameConstants } = useGameConstants();
-
   const [battalions, setBattalions] = useState<BattalionInterface[]>();
 
   const findBattalionStat = (id, type?) => {
@@ -55,20 +54,6 @@ export const useArmy = () => {
 
   const getBattalionStat = (name): BattalionInterface | undefined => {
     return battalions?.find((a) => a.battalionName === name);
-  };
-
-  const findRealmsAttackingArmies = (
-    realms?: GetRealmsQuery['realms']
-  ): ArmyAndOrder[] | undefined => {
-    return realms?.flatMap(({ orderType, ownArmies }) =>
-      ownArmies.length
-        ? ownArmies
-            .filter((army) => army.armyId != 0)
-            .map((army) => {
-              return { ...army, orderType };
-            })
-        : []
-    );
   };
 
   const getArmyCost = (armyQtys: ArmyBattalionQty): ResourceCost[] => {
@@ -191,6 +176,5 @@ export const useArmy = () => {
     battalions,
     getArmyStats,
     getArmyCost,
-    findRealmsAttackingArmies,
   };
 };
