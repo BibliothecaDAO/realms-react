@@ -9,6 +9,7 @@ import { ResourcesListSideBar } from '../bank/ResourcesListSideBar';
 import { CryptSideBar } from '../crypts/CryptsSideBar';
 import { GASideBar } from '../ga/GASideBar';
 import { LootSideBar } from '../loot/LootSideBar';
+import { LoreSideBar } from '../lore/LoreSideBar';
 import { RealmSideBar } from '../realms/RealmsSideBar';
 import { ChatSideBar } from '../ui/Chat';
 
@@ -34,6 +35,10 @@ export function AtlasSidebars() {
     toggleSettleRealms,
     resourcesListSidebar,
     toggleResourcesList,
+    loreSidebar,
+    toggleLore,
+    leaderboardSidebar,
+    toggleLeaderboard,
   } = useUIContext();
 
   function onLordsNavClick() {
@@ -82,6 +87,7 @@ export function AtlasSidebars() {
         isOpen={resourcesListSidebar}
         onClose={toggleResourcesList}
       />
+      <LoreSideBar isOpen={loreSidebar} onClose={toggleLore} />
       <MintSettleRealmsSideBar
         isOpen={settleRealmsSidebar}
         onClose={toggleSettleRealms}
