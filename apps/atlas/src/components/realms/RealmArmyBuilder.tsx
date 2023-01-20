@@ -179,7 +179,7 @@ export const ArmyBuilder = (props: Props) => {
   };
 
   const summonDisabled = () => {
-    return maxBattalionQtyReached || !addedBattalions.length;
+    return !addedBattalions.length;
   };
 
   useEffect(() => {
