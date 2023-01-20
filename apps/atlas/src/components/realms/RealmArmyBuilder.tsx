@@ -9,7 +9,7 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { Battalion } from '@/components/armies/squad/Battalion';
 import { CostBlock, resourcePillaged } from '@/components/realms/RealmsGetters';
@@ -63,22 +63,6 @@ export const ArmyBuilder = (props: Props) => {
     entryPoint: Entrypoints.build,
     realmId: realm?.realmId,
   });
-
-  const checkCanBuilt = (id) => {
-    const militaryBuildings = buildings ?? [];
-    return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
-      .length > 0 &&
-      totalBattalionQty &&
-      sumTotalBattalions(totalBattalionQty) < MAX_BATTALIONS
-      ? false
-      : true;
-  };
-
-  const getDisabledReason = (id) => {
-    return sumTotalBattalions(totalBattalionQty) < MAX_BATTALIONS
-      ? `! Build a ${buildingIdToString(id || 0)} First`
-      : `! Max Battalion Qty Reached`;
-  };
 
   const { build } = useCombat();
   const [activeBattalion, setActiveBattalion] = useState<BattalionInterface>();
@@ -173,11 +157,29 @@ export const ArmyBuilder = (props: Props) => {
   const sumTotalBattalions = (armyQtys: ArmyBattalionQty) =>
     Object.values(armyQtys).reduce((a, b) => a + b);
 
-  const summonDisabled = () => {
+  const maxBattalionQtyReached = useMemo(() => {
     return (
-      sumTotalBattalions(totalBattalionQty) > MAX_BATTALIONS ||
-      !addedBattalions.length
+      totalBattalionQty &&
+      sumTotalBattalions(totalBattalionQty) >= MAX_BATTALIONS
     );
+  }, [totalBattalionQty]);
+
+  const checkCanBuilt = (id) => {
+    const militaryBuildings = buildings ?? [];
+    return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
+      .length > 0 && !maxBattalionQtyReached
+      ? false
+      : true;
+  };
+
+  const getDisabledReason = (id) => {
+    return !maxBattalionQtyReached
+      ? `! Build a ${buildingIdToString(id || 0)} First`
+      : `! Max Battalion Qty Reached`;
+  };
+
+  const summonDisabled = () => {
+    return maxBattalionQtyReached || !addedBattalions.length;
   };
 
   useEffect(() => {
@@ -341,7 +343,55 @@ export const ArmyBuilder = (props: Props) => {
                   key={index}
                 >
                   <h5>{battalionIdToString(battalion.battalionId)}</h5>
-                  <div className="mb-4">Qty: {battalion.battalionQty}</div>
+                  <div className="flex mb-4">
+                    Qty:{' '}
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      className="px-2 mx-2"
+                      onClick={() => {
+                        if (battalion.battalionQty == 1) {
+                          removeFromArray(index);
+                        } else {
+                          setAddedBattalions((current) => {
+                            return current.map((object) => {
+                              if (
+                                object.battalionId === battalion.battalionId
+                              ) {
+                                return {
+                                  ...object,
+                                  battalionQty: Number(object.battalionQty) - 1,
+                                };
+                              } else return object;
+                            });
+                          });
+                        }
+                      }}
+                    >
+                      -
+                    </Button>
+                    {battalion.battalionQty}
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      className="px-2 mx-2"
+                      disabled={maxBattalionQtyReached}
+                      onClick={() =>
+                        setAddedBattalions((current) => {
+                          return current.map((object) => {
+                            if (object.battalionId === battalion.battalionId) {
+                              return {
+                                ...object,
+                                battalionQty: Number(object.battalionQty) + 1,
+                              };
+                            } else return object;
+                          });
+                        })
+                      }
+                    >
+                      +
+                    </Button>
+                  </div>
 
                   <Button
                     size="xs"
