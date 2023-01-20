@@ -28,7 +28,7 @@ export const getAttackingArmies = (
 };
 
 export const getArmyById = (armyId: number, realm: RealmFragmentFragment) => {
-  return realm.ownArmies.find((a) => a.armyId === armyId);
+  return realm.ownArmies.find((a) => a.armyId === armyId) || defaultArmy;
 };
 
 // pass any Army get total defence

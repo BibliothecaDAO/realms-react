@@ -122,7 +122,7 @@ function useUserBalances() {
 
   useMemo(() => {
     setUserRealms(userRealmsData);
-  }, [txQueue]);
+  }, [address, userRealmsData]);
 
   useMemo(() => {
     if (!walletBalancesData || !walletBalancesData.walletBalances) {

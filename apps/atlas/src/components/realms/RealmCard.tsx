@@ -77,6 +77,7 @@ import { ArmyCard } from '../armies/armyCard/ArmyCard';
 import { ArmyStatistics } from '../armies/armyCard/ArmyStatistics';
 import { ArmyStatisticsTable } from '../armies/armyCard/ArmyStatisticsTable';
 import { getArmyById, GetArmyStrength } from '../armies/ArmyGetters';
+import { ArmyToolTip } from '../armies/ArmyToolTip';
 import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
@@ -253,32 +254,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   isYourRealm(realm, l1Address, address || '')}
               </span>
             </div>
-
-            <Tooltip
-              placement="left"
-              className="flex"
-              tooltipText={
-                <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap z-100">
-                  <ArmyStatisticsTable
-                    army={
-                      realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy
-                    }
-                  />
-                  <ArmyBattalions
-                    army={
-                      realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy
-                    }
-                  />
-                </div>
-              }
-            >
-              <div className="flex">
-                <Shield className={'w-7 fill-gray-500 mr-2'} />
-                <span className="w-full break-normal">
-                  {GetArmyStrength(getArmyById(0, realm))}
-                </span>
-              </div>
-            </Tooltip>
+            <ArmyToolTip army={getArmyById(0, realm)} />
           </div>
         </div>
         <div className="flex w-full mt-3">

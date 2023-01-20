@@ -1,6 +1,7 @@
 import { Button, OrderIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
+
+import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
@@ -8,6 +9,7 @@ import {
   GetArmyStrength,
   getAttackingArmies,
 } from '@/components/armies/ArmyGetters';
+import { ArmyToolTip } from '@/components/armies/ArmyToolTip';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
   GetRealmsQuery,
@@ -34,7 +36,9 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
 
-  const allArmies = getAttackingArmies(userRealms?.realms);
+  const allArmies = getAttackingArmies(userRealms?.realms)?.filter(
+    (a) => a.orderType != realm.orderType
+  );
 
   const ids = allArmies?.map((a) => a.destinationRealmId) || [];
 
@@ -47,18 +51,19 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const armyTravelTable = allArmies
     ?.map((army) => {
       const travelInformation = getTravelTime({
-        travellerId: realm.realmId,
-        destinationId: army.realmId,
+        travellerId: army.destinationRealmId,
+        destinationId: realm.realmId,
       });
       return {
         details: (
           <span className="flex justify-between">
-            <span>{GetArmyStrength(army)}</span>{' '}
+            <ArmyToolTip army={army} />
+
             {getRealmOrderById(army.realmId) == realm.orderType && (
               <Helm className={'w-5 h-5 fill-frame-primary'} />
             )}
             {hasRelicOfRealm(army.realmId) && (
-              <Sword className={'w-5 h-5 fill-frame-primary'} />
+              <Relic className={`w-3 fill-yellow-500`} />
             )}
           </span>
         ),
@@ -107,7 +112,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
 
   return (
     <div>
-      <div className="relative mt-4 overflow-x-auto">
+      <div className="relative mb-4 overflow-x-auto">
         {armyTravelTable && (
           <Table
             columns={columns}
@@ -132,7 +137,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
         {travelArcs?.length ? 'Hide ' : 'Show '}
         armies distance
       </Button>
-      <div className="relative grid grid-cols-1 gap-2 mt-4 overflow-x-auto">
+      {/* <div className="relative grid grid-cols-1 gap-2 mt-4 overflow-x-auto">
         {allArmies?.map((army, index) => {
           return (
             <ArmyCard
@@ -148,7 +153,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
             />
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };

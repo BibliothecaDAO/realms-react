@@ -7,7 +7,7 @@ export const ArmyStatisticsTable = ({ army }) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h4 className="">Statistics</h4>
+        <h5 className="font-semibold">Statistics</h5>
         <span className="pr-6 ml-auto">A</span> <span>D</span>
       </div>
       <hr className="border-white/30" />

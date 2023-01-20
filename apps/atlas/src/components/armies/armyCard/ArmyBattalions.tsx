@@ -18,6 +18,7 @@ export const ArmyBattalions = (props: Props) => {
               <th className="text-right">Health</th>
             </tr>
           </thead>
+          <hr className="border-white/30" />
           <tbody>
             <Row
               qty={army.lightCavalryQty}
@@ -68,9 +69,9 @@ export const ArmyBattalions = (props: Props) => {
 
 export const Row = ({ qty, health, name }) => {
   return (
-    <tr>
+    <tr className={`${qty > 0 ? 'text-green-500' : ''}`}>
       <td className="text-left">{name}</td>
-      <td className="text-right">{qty}</td>
+      <td className={`text-right`}>{qty}</td>
       <td className="text-right">{health}</td>
     </tr>
   );
