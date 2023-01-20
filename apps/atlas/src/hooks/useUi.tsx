@@ -5,7 +5,7 @@ import type { AssetType } from '@/hooks/useAtlasMap';
 
 export type UIContextType = {
   assetSidebar: AssetType | null;
-  openAsset: (type: AssetType) => void;
+  toggleAsset: (type: AssetType) => void;
   closeAsset: () => void;
   toggleEmpire: () => void;
   toggleTrade: () => void;
@@ -53,8 +53,12 @@ export function useUi() {
     }
   }, [router.isReady, selectedAsset]);
 
-  const openAsset = (type: AssetType) => {
+  const toggleAsset = (type: AssetType) => {
     closeAll();
+    if (type == assetSidebar) {
+      closeAsset();
+      return;
+    }
     setAssetSidebar(type);
   };
 
@@ -115,7 +119,7 @@ export function useUi() {
   };
 
   return {
-    openAsset,
+    toggleAsset,
     closeAsset,
     assetSidebar,
     empireSidebar,

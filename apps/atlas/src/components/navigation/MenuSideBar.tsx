@@ -67,7 +67,7 @@ export const MenuSideBar = () => {
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
         action: () => {
-          openAsset('realm');
+          toggleAsset('realm');
         },
       },
       {
@@ -123,7 +123,7 @@ export const MenuSideBar = () => {
       // },
     ];
   }, [query]);
-  const { closeAll, assetSidebar, openAsset } = useUIContext();
+  const { closeAll, assetSidebar, toggleAsset } = useUIContext();
   return (
     <div className="absolute z-[45]">
       <div>
