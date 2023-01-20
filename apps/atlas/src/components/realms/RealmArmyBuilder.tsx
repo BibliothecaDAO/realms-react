@@ -19,7 +19,7 @@ import {
   getUnitImage,
   battalionIdToString,
 } from '@/constants/army';
-import { MAX_BATTALIONS } from '@/constants/globals';
+import { buildingIdToString, MAX_BATTALIONS } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
@@ -67,9 +67,17 @@ export const ArmyBuilder = (props: Props) => {
   const checkCanBuilt = (id) => {
     const militaryBuildings = buildings ?? [];
     return militaryBuildings.concat(buildingIdsEnqueued).filter((a) => a === id)
-      .length > 0
+      .length > 0 &&
+      totalBattalionQty &&
+      sumTotalBattalions(totalBattalionQty) < MAX_BATTALIONS
       ? false
       : true;
+  };
+
+  const getDisabledReason = (id) => {
+    return sumTotalBattalions(totalBattalionQty) < MAX_BATTALIONS
+      ? `! Build a ${buildingIdToString(id || 0)} First`
+      : `! Max Battalion Qty Reached`;
   };
 
   const { build } = useCombat();
@@ -244,6 +252,7 @@ export const ArmyBuilder = (props: Props) => {
                 quantity={blankArmy ? blankArmy[nameArray[index] + 'Qty'] : ''}
                 health={blankArmy ? blankArmy[nameArray[index] + 'Health'] : ''}
                 disabled={checkCanBuilt(battalion.buildingId)}
+                disabledReason={getDisabledReason(battalion.buildingId)}
               />
             </div>
           ))}
