@@ -1,6 +1,9 @@
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import { useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { RealmCard } from '@/components/realms/RealmCard';
 import { sidebarClassNames } from '@/constants/ui';
+import { useUIContext } from '@/context/UIContext';
 import { useGetRealmQuery } from '@/generated/graphql';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
@@ -17,8 +20,27 @@ export const RealmSideBar = ({
   isOpen,
   onClose,
 }: RealmSideBarProps) => {
+  const {
+    empireSidebar,
+    resourcesListSidebar,
+    loreSidebar,
+    leaderboardSidebar,
+  } = useUIContext();
+
+  const offsetClasses = useMemo(() => {
+    return empireSidebar ||
+      resourcesListSidebar ||
+      loreSidebar ||
+      leaderboardSidebar
+      ? 'mr-12 my-24'
+      : '';
+  }, [empireSidebar, resourcesListSidebar]);
+
   return (
-    <AtlasSideBar isOpen={isOpen} containerClassName={sidebarClassNames}>
+    <AtlasSideBar
+      isOpen={isOpen}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses)}
+    >
       {isOpen && <RealmsQuickView realmId={realmId} onClose={onClose} />}
     </AtlasSideBar>
   );

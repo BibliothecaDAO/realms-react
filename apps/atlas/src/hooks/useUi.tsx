@@ -5,7 +5,7 @@ import type { AssetType } from '@/hooks/useAtlasMap';
 
 export type UIContextType = {
   assetSidebar: AssetType | null;
-  openAsset: (type: AssetType) => void;
+  toggleAsset: (type: AssetType) => void;
   closeAsset: () => void;
   toggleEmpire: () => void;
   toggleTrade: () => void;
@@ -14,6 +14,8 @@ export type UIContextType = {
   toggleChatSidebar: () => void;
   toggleSettleRealms: () => void;
   toggleResourcesList: () => void;
+  toggleLeaderboard: () => void;
+  toggleLore: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
   tradeSidebar: boolean;
@@ -21,6 +23,8 @@ export type UIContextType = {
   chatSidebar: boolean;
   settleRealmsSidebar: boolean;
   resourcesListSidebar: boolean;
+  loreSidebar: boolean;
+  leaderboardSidebar: boolean;
   onboarding: boolean;
 };
 
@@ -36,6 +40,8 @@ export function useUi() {
   const [chatSidebar, setChatSidebar] = useState<boolean>(false);
   const [settleRealmsSidebar, setSettleRealmsSidebar] = useState(false);
   const [resourcesListSidebar, setResourcesListSidebar] = useState(false);
+  const [loreSidebar, setLoreSidebar] = useState(false);
+  const [leaderboardSidebar, setLeaderboardSidebar] = useState(false);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -47,8 +53,12 @@ export function useUi() {
     }
   }, [router.isReady, selectedAsset]);
 
-  const openAsset = (type: AssetType) => {
+  const toggleAsset = (type: AssetType) => {
     closeAll();
+    if (type == assetSidebar) {
+      closeAsset();
+      return;
+    }
     setAssetSidebar(type);
   };
 
@@ -87,6 +97,14 @@ export function useUi() {
     setOnboarding(!onboarding);
   };
 
+  const toggleLeaderboard = () => {
+    setLeaderboardSidebar(!leaderboardSidebar);
+  };
+
+  const toggleLore = () => {
+    setLoreSidebar(!loreSidebar);
+  };
+
   const closeAll = () => {
     setEmpireSidebar(false);
     setTradeSidebar(false);
@@ -96,10 +114,12 @@ export function useUi() {
     setChatSidebar(false);
     setSettleRealmsSidebar(false);
     setResourcesListSidebar(false);
+    setLoreSidebar(false);
+    setLeaderboardSidebar(false);
   };
 
   return {
-    openAsset,
+    toggleAsset,
     closeAsset,
     assetSidebar,
     empireSidebar,
@@ -115,6 +135,10 @@ export function useUi() {
     toggleSettleRealms,
     resourcesListSidebar,
     toggleResourcesList,
+    leaderboardSidebar,
+    toggleLeaderboard,
+    loreSidebar,
+    toggleLore,
     onboarding,
     closeAll,
   };

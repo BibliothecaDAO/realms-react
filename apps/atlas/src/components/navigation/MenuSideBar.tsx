@@ -25,7 +25,8 @@ export const MenuSideBar = () => {
   const [showMenu, setShowMenu] = useState(breakpoints.lg);
   const { query, pathname } = useRouter();
 
-  const { toggleTrade, toggleResourcesList } = useUIContext();
+  const { toggleTrade, toggleResourcesList, toggleLore, toggleLeaderboard } =
+    useUIContext();
 
   const isPage = useCallback(
     (name: string) => name === pathname.slice(1).split('/')[0],
@@ -66,7 +67,7 @@ export const MenuSideBar = () => {
         icon: <Castle className={`${iconClasses('realm')}`} />,
         text: 'Realms',
         action: () => {
-          openAsset('realm');
+          toggleAsset('realm');
         },
       },
       {
@@ -94,14 +95,20 @@ export const MenuSideBar = () => {
       //   text: 'Crypts',
       // },
       {
-        page: 'lore',
+        page: '?lore',
         icon: <Library className={`${iconClasses('lore')}`} />,
         text: 'Lore',
+        action: () => {
+          toggleLore();
+        },
       },
       {
-        page: 'leaderboard',
+        page: '?leaderboard',
         icon: <Laurel className={`${iconClasses('leaderboard')}`} />,
         text: 'Leaders',
+        action: () => {
+          toggleLeaderboard();
+        },
       },
       // {
       //   page: 'noticeBoard',
@@ -116,7 +123,7 @@ export const MenuSideBar = () => {
       // },
     ];
   }, [query]);
-  const { closeAll, assetSidebar, openAsset } = useUIContext();
+  const { closeAll, assetSidebar, toggleAsset } = useUIContext();
   return (
     <div className="absolute z-[45]">
       <div>

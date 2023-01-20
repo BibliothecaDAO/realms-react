@@ -256,9 +256,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
 
             <Tooltip
               placement="left"
-              className="flex"
+              className="flex z-100"
               tooltipText={
-                <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap z-100">
+                <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
                   <ArmyStatisticsTable
                     army={
                       realm.ownArmies.find((a) => a.armyId === 0) || defaultArmy

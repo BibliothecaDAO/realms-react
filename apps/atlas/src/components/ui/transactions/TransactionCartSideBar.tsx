@@ -17,9 +17,19 @@ export const TransactionCartSideBar = ({
   isOpen,
   onClose,
 }: TransactionCartSideBarProps) => {
-  const { empireSidebar, resourcesListSidebar } = useUIContext();
+  const {
+    empireSidebar,
+    resourcesListSidebar,
+    loreSidebar,
+    leaderboardSidebar,
+  } = useUIContext();
   const offsetClasses = useMemo(() => {
-    return empireSidebar || resourcesListSidebar ? 'mr-12 my-24' : '';
+    return empireSidebar ||
+      resourcesListSidebar ||
+      loreSidebar ||
+      leaderboardSidebar
+      ? 'mr-12 my-24'
+      : '';
   }, [empireSidebar, resourcesListSidebar]);
   return (
     <AtlasSideBar
