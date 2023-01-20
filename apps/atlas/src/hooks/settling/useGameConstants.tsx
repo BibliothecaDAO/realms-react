@@ -41,12 +41,7 @@ export const useGameConstants = () => {
 
     const currentBalance =
       balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount || 0;
-    console.log(
-      balance.find((a) => a.resourceId === parseInt(id))?.resourceName,
-      balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount,
-      cost,
-      BigNumber.from(currentBalance).gte(baseBn) ? true : false
-    );
+
     return BigNumber.from(currentBalance).gte(baseBn) ? true : false;
   };
 
