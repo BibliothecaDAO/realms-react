@@ -2,7 +2,7 @@
 import { Button, ResourceIcon, Select } from '@bibliotheca-dao/ui-lib';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   getRealmNameById,
   hasOwnRelic,
@@ -86,6 +86,14 @@ export const CombatSideBar: React.FC<Prop> = ({
   const [txSubmitted, setTxSubmitted] = useState(false);
   const { toggleSound, isSoundActive } = useSoundContext();
 
+  const videoRef = useRef<any>();
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.2;
+    }
+  }, [videoRef]);
+
   useEffect(() => {
     if (combatData) {
       setTxSubmitted(true);
@@ -160,6 +168,7 @@ export const CombatSideBar: React.FC<Prop> = ({
             height="200"
             autoPlay
             loop
+            ref={videoRef}
           >
             <source src="/videos/combat.webm" type="video/webm" />
           </video>
