@@ -24,8 +24,14 @@ export const soundSelector = {
   openSidebar: 'sidebar_in.mp3',
   closeSidebar: 'sidebar_out.mp3',
   addWheat: 'resources/wheat.flac',
+  addFish: 'resources/fish.flac',
   addWood: 'resources/wood.flac',
   addStone: 'resources/stone.flac',
+  addCoal: 'resources/coal.flac',
+  addCopper: 'resources/copper.flac',
+  addObsidian: 'resources/obsidian.flac',
+  addDiamonds: 'resources/diamonds.flac',
+  addTrueIce: 'resources/true_ice.flac',
   addAlchemicalSilver: 'resources/alchemical_silver.flac',
 };
 

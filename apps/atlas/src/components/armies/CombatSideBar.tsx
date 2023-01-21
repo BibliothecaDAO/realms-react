@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { Button, ResourceIcon, Select } from '@bibliotheca-dao/ui-lib';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
@@ -141,7 +142,18 @@ export const CombatSideBar: React.FC<Prop> = ({
 
       {/* loader */}
       {txSubmitted && (
-        <ImageSlideLoader strings={combatStrings} images={combatImages} />
+        // <ImageSlideLoader strings={combatStrings} images={combatImages} />
+        <div className="absolute top-0 flex flex-wrap justify-center w-full h-full overflow-y-hidden z-100 bg-gray-1000">
+          <video
+            className="object-cover w-full"
+            width="300"
+            height="200"
+            autoPlay
+            loop
+          >
+            <source src="/videos/combat.webm" type="video/webm" />
+          </video>
+        </div>
       )}
 
       <div className="p-16">
