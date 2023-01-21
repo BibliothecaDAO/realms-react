@@ -169,7 +169,7 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="relative flex h-screen pt-20 pb-24 pl-20 pr-8">
+    <div className="relative flex h-screen pt-20 pb-20 pl-20 pr-8">
       <div className="relative w-9/12">
         <div className="flex-col h-full overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
           {quickActions.length > 0 && (

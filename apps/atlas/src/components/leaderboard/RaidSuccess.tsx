@@ -1,7 +1,8 @@
-import { Table, Button, Switch } from '@bibliotheca-dao/ui-lib';
+import { Table, Button, Switch, Card } from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { ReactElement } from 'react';
+import { useUIContext } from '@/context/UIContext';
 import {
   useGroupByRealmHistoryQuery,
   useGroupByRealmHistoryLazyQuery,
@@ -25,6 +26,7 @@ type Row = {
 export const RaidSuccess = () => {
   const router = useRouter();
   const [raidSuccessOwnerToggle, setRaidSuccessOwnerToggle] = useState(true);
+  const { closeAll } = useUIContext();
   const { data: raidSuccessData, loading: loadingData } =
     useGroupByRealmHistoryQuery({
       variables: {
@@ -73,6 +75,7 @@ export const RaidSuccess = () => {
           variant="primary"
           size="xs"
           onClick={() => {
+            closeAll();
             router.push(`/?asset=realm${realm?.realmId}`, undefined, {
               shallow: true,
             });
@@ -137,10 +140,7 @@ export const RaidSuccess = () => {
 
   return (
     <>
-      <div
-        key={section.name}
-        className="p-4 mb-10 border cursor-pointer card rounded-2xl border-white/30 shadow-black"
-      >
+      <Card className="mb-8">
         <h3 className="text-3xl capitalize">
           {section.name.replace(/([A-Z])/g, ' $1')}
         </h3>
@@ -184,7 +184,7 @@ export const RaidSuccess = () => {
             )}
           </>
         )}
-      </div>
+      </Card>
     </>
   );
 };

@@ -103,112 +103,111 @@ export const LorePanel = () => {
     !loading && (data?.getLoreEntities?.length ?? 0) === 0;
 
   return (
-    <BasePanel
-      open={isLorePanel}
-      // style={clsx({ 'lg:w-7/12': state.selectedTab !== 2 })}
-    >
-      <div className="flex justify-between">
-        <div className="w-full p-10 pt-20 bg-gray-1000/90">
-          <h1 className="w-full">Bibliopedia</h1>
-          <p className="mt-4 sm:text-xl opacity-70">
-            Write stories about your favourite Realms, Loot Bags, GA, and more!
-          </p>
+    <div className="relative flex flex-col h-screen pt-20 pb-20 pl-20 pr-8">
+      <div className="flex-col h-full p-10 overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
+        <div className="flex justify-between">
+          <div className="flex flex-col items-center justify-center w-full">
+            <h1>Bibliopedia</h1>
+            <p className="mt-4 sm:text-xl opacity-70">
+              Write stories about your favourite Realms, Loot Bags, GA, and
+              more!
+            </p>
+          </div>
         </div>
-      </div>
-      <Tabs
-        selectedIndex={state.selectedTab}
-        className={'bg-gray-1000'}
-        onChange={actions.updateSelectedTab as any}
-      >
-        <Tabs.List>
-          {tabs.map((tab) => (
-            <Tabs.Tab key={tab} className="uppercase">
-              {tab}
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
-      </Tabs>
+        <Tabs
+          selectedIndex={state.selectedTab}
+          onChange={actions.updateSelectedTab as any}
+        >
+          <Tabs.List>
+            {tabs.map((tab) => (
+              <Tabs.Tab key={tab} className="uppercase">
+                {tab}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+        </Tabs>
 
-      <div className="h-full px-2 bg-gray-1000">
-        {state.selectedTab !== 2 && (
-          <div className="flex flex-wrap justify-between mb-2 ">
-            <div className="grid grid-cols-2 gap-2">
-              <SearchFilter
-                placeholder="Search by content"
-                onSubmit={(value) => {
-                  setSearchByContent(value);
-                }}
-                defaultValue={searchByContent}
-              />
-              <SearchFilter
-                placeholder="Search by author"
-                onSubmit={(value) => {
-                  setSearchByAuthor(value);
-                }}
-                defaultValue={searchByAuthor}
-              />
+        <div className="px-2">
+          {state.selectedTab !== 2 && (
+            <div className="flex flex-wrap justify-between px-4 mb-8 ">
+              <div className="grid grid-cols-2 gap-2">
+                <SearchFilter
+                  placeholder="Search by content"
+                  onSubmit={(value) => {
+                    setSearchByContent(value);
+                  }}
+                  defaultValue={searchByContent}
+                />
+                <SearchFilter
+                  placeholder="Search by author"
+                  onSubmit={(value) => {
+                    setSearchByAuthor(value);
+                  }}
+                  defaultValue={searchByAuthor}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {loading && (
-          <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
-            <Castle className="block w-20 fill-current" />
-            <h2>Loading</h2>
-          </div>
-        )}
-        {state.selectedTab === 2 && <LoreCreateEntityForm />}
+          {loading && (
+            <div className="flex flex-col items-center w-20 gap-2 mx-auto my-40 animate-pulse">
+              <Castle className="block w-20 fill-current" />
+              <h2>Loading</h2>
+            </div>
+          )}
+          {state.selectedTab === 2 && <LoreCreateEntityForm />}
 
-        {state.selectedTab !== 2 && (
-          <div className="grid gap-8 px-4 sm:grid-cols-2 md:grid-cols-3">
-            <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
-          </div>
-        )}
+          {state.selectedTab !== 2 && (
+            <div className="grid gap-8 px-4 sm:grid-cols-2 md:grid-cols-3">
+              <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
+            </div>
+          )}
 
-        {/* don't show feedback and menu at the "create" tab */}
-        {hasNoResults() && state.selectedTab != 2 && (
-          <div className="flex flex-col items-center justify-center gap-8 my-8">
-            <h2>No results.</h2>
-            <div className="flex gap-4">
+          {/* don't show feedback and menu at the "create" tab */}
+          {hasNoResults() && state.selectedTab != 2 && (
+            <div className="flex flex-col items-center justify-center gap-8 my-8">
+              <h2>No results.</h2>
+              <div className="flex gap-4">
+                <Button
+                  variant="primary"
+                  className="whitespace-nowrap"
+                  onClick={actions.clearFilters}
+                >
+                  Clear Filters
+                </Button>
+                {state.selectedTab !== 1 && (
+                  <Button
+                    className="whitespace-nowrap"
+                    variant="primary"
+                    onClick={() => actions.updateSelectedTab(1)}
+                  >
+                    See All Realms
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {showPagination() && (
+            <div className="flex gap-2 my-8">
               <Button
                 variant="primary"
-                className="whitespace-nowrap"
-                onClick={actions.clearFilters}
+                onClick={previousPage}
+                disabled={page === 1}
               >
-                Clear Filters
+                Previous
               </Button>
-              {state.selectedTab !== 1 && (
-                <Button
-                  className="whitespace-nowrap"
-                  variant="primary"
-                  onClick={() => actions.updateSelectedTab(1)}
-                >
-                  See All Realms
-                </Button>
-              )}
+              <Button
+                variant="primary"
+                onClick={nextPage}
+                disabled={data?.getLoreEntities?.length !== limit}
+              >
+                Next
+              </Button>
             </div>
-          </div>
-        )}
-
-        {showPagination() && (
-          <div className="flex gap-2 my-8">
-            <Button
-              variant="primary"
-              onClick={previousPage}
-              disabled={page === 1}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="primary"
-              onClick={nextPage}
-              disabled={data?.getLoreEntities?.length !== limit}
-            >
-              Next
-            </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </BasePanel>
+    </div>
   );
 };

@@ -14,7 +14,7 @@ import {
   battalionIdToString,
   getUnitImage,
 } from '@/constants/army';
-import { buildingIdToString, MAX_BATTALIONS } from '@/constants/globals';
+import { MAX_BATTALIONS } from '@/constants/globals';
 
 import type { BattalionInterface } from '@/types/index';
 
@@ -31,6 +31,7 @@ export const Battalion: React.FC<
     quantity;
     health;
     disabled?;
+    disabledReason?: string;
     show?: boolean;
   }
 > = (props) => {
@@ -124,7 +125,7 @@ export const Battalion: React.FC<
             </div>
             {props.disabled && (
               <div className="px-2 mt-4 text-center text-red-300 border border-red-900 rounded">
-                ! Build a {buildingIdToString(props.buildingId || 0)} First
+                {props.disabledReason}
               </div>
             )}
           </div>

@@ -1,3 +1,4 @@
+import { parseEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 
@@ -10,25 +11,21 @@ export const useGameConstants = () => {
   };
 
   const checkUserHasAvailableResources = ({ cost, id }) => {
-    const co = BigNumber.from(parseInt(cost).toFixed().toString());
-
-    const baseBn = BigNumber.from('1000000000000000000').mul(co);
+    const co = parseEther(String(cost));
 
     const currentBalance =
       balance.find((a) => a.resourceId === id)?.amount || 0;
 
-    return BigNumber.from(currentBalance).gte(baseBn) ? true : false;
+    return BigNumber.from(currentBalance).gte(co) ? true : false;
   };
 
   const checkUserHasCheckoutResources = ({ cost, id }) => {
-    const co = BigNumber.from(parseInt(cost).toFixed().toString());
-
-    const baseBn = BigNumber.from('1000000000000000000').mul(co);
+    const co = parseEther(String(cost));
 
     const currentBalance =
       balance.find((a) => a.resourceId === parseInt(id))?.checkoutAmount || 0;
 
-    return BigNumber.from(currentBalance).gte(baseBn) ? true : false;
+    return BigNumber.from(currentBalance).gte(co) ? true : false;
   };
 
   return {

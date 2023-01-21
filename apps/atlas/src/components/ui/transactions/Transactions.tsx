@@ -138,6 +138,7 @@ export const TxCartItem = (props: TxCartItem) => {
 };
 
 const TX_HISTORY_STORAGE_KEY = 'txHistory';
+const CLEAR_STORAGE_FLAG_KEY = 'clearStorageFlag';
 
 const TX_HISTORY_LENGTH = 50;
 
@@ -148,16 +149,21 @@ export const TransactionCartTable = () => {
   const historyStorage = storage<any>(TX_HISTORY_STORAGE_KEY, []);
 
   useEffect(() => {
-    // const storageTransactions = historyStorage.get();
-    // const lastTx = transactions.pop();
-    // if (lastTx) {
-    //   storageTransactions.push(lastTx);
-    //   // historyStorage.set(storageTransactions);
-    // }
-    // if (storageTransactions.length > TX_HISTORY_LENGTH) {
-    //   storageTransactions.shift();
-    // }
-    setTxHistory(transactions);
+    // fix for tx format breaking changes
+    if (!localStorage.getItem(CLEAR_STORAGE_FLAG_KEY)) {
+      historyStorage.set([]);
+      localStorage.setItem(CLEAR_STORAGE_FLAG_KEY, 'true');
+    }
+    const storageTransactions = historyStorage.get();
+    const lastTx = transactions.pop();
+    if (lastTx) {
+      storageTransactions.push(lastTx);
+      historyStorage.set(storageTransactions);
+    }
+    if (storageTransactions.length > TX_HISTORY_LENGTH) {
+      storageTransactions.shift();
+    }
+    setTxHistory(storageTransactions);
   }, [transactions]);
 
   return (
