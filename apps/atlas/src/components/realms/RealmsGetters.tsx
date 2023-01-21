@@ -16,6 +16,7 @@ import {
   NO_FOOD_LOSS,
   NO_RELIC_LOSS,
   PILLAGE_AMOUNT,
+  RealmHappinessImages,
   SECONDS_PER_KM,
 } from '@/constants/globals';
 import { findResourceById, resources } from '@/constants/resources';
@@ -409,7 +410,7 @@ export const daysAccrued = (daysAccrued) =>
   daysAccrued > MAX_DAYS_ACCURED ? MAX_DAYS_ACCURED : daysAccrued;
 
 export const getHappinessHasOwnRelic = ({ realm }) => {
-  return hasOwnRelic(realm) ? 0 : NO_RELIC_LOSS;
+  return getIsRealmAnnexed(realm) ? 0 : NO_RELIC_LOSS;
 };
 
 export const getHappinessHasFood = ({ food }) => {
@@ -437,6 +438,18 @@ export const getHappinessIcon = ({ realm, food }) => {
     return '😀';
   } else {
     return '😢';
+  }
+};
+
+export const getHappinessImage = ({ realm, food }) => {
+  const happiness = getHappiness({ realm, food });
+
+  if (happiness >= BASE_HAPPINESS) {
+    return RealmHappinessImages.Abundant;
+  } else if (happiness >= 95) {
+    return RealmHappinessImages.Average;
+  } else {
+    return RealmHappinessImages.Unhappy;
   }
 };
 

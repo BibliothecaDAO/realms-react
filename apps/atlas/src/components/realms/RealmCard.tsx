@@ -1,17 +1,7 @@
-import {
-  OrderIcon,
-  Tabs,
-  Button,
-  Card,
-  ResourceIcon,
-} from '@bibliotheca-dao/ui-lib';
-import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import { OrderIcon, Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
-import { Disclosure } from '@headlessui/react';
-import { HeartIcon, ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
+import { HeartIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
 import React, {
   forwardRef,
@@ -23,59 +13,37 @@ import { useAccount as useL1Account } from 'wagmi';
 import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
 import { RealmOverview, Travel } from '@/components/realms/details';
-
 import {
-  hasOwnRelic,
   isFavourite,
   IsSettled,
   isYourRealm,
   getRealmCombatStatus,
   RealmOwner,
-  RealmStatus,
-  getIsRaidable,
-  getHappiness,
   getHappinessIcon,
   getNumberOfTicks,
-  getTimeSinceLastTick,
   getTimeUntilNextTick,
-  getDays,
-  getLaborUnitsGenerated,
   getVaultRaidableLaborUnits,
-  checkIsRaidable,
   getIsRealmAnnexed,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
-import { defaultArmy } from '@/constants/army';
-import {
-  BASE_RESOURCES_PER_CYCLE,
-  HarvestType,
-  RealmBuildingId,
-} from '@/constants/globals';
+import { HarvestType, RealmBuildingId } from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useModalContext } from '@/context/ModalContext';
 import { useRealmContext } from '@/context/RealmContext';
-import type { GetRealmQuery, Realm } from '@/generated/graphql';
+import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useBuildings from '@/hooks/settling/useBuildings';
 import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
 import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
-import useResources, {
-  Entrypoints as ResourceEntryPoints,
-} from '@/hooks/settling/useResources';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useEnsResolver } from '@/hooks/useEnsResolver';
 import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { RealmsCardProps } from '@/types/index';
 import { shortenAddressWidth } from '@/util/formatters';
-import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
-import { ArmyCard } from '../armies/armyCard/ArmyCard';
-import { ArmyStatistics } from '../armies/armyCard/ArmyStatistics';
-import { ArmyStatisticsTable } from '../armies/armyCard/ArmyStatisticsTable';
 import { getArmyById, GetArmyStrength } from '../armies/ArmyGetters';
 import { ArmyToolTip } from '../armies/ArmyToolTip';
 import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
@@ -94,18 +62,11 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
       actions,
     } = useRealmContext();
 
-    const {
-      buildings,
-      buildingUtilisation,
-      loading: loadingBuildings,
-    } = useBuildings(realm as Realm);
+    const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
 
-    const {
-      realmFoodDetails,
-      availableFood,
-      loading: loadingFood,
-      harvest,
-    } = useFood(realm as Realm);
+    const { realmFoodDetails, availableFood, harvest } = useFood(
+      realm as Realm
+    );
 
     const tabs = useMemo(
       () => [
@@ -184,7 +145,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const {
       mapContext: { navigateToAsset },
     } = useAtlasContext();
-    const { openModal } = useModalContext();
 
     const { enqueuedHarvestTx: harvestFarmEnqueuedHarvestTx } =
       useCurrentQueuedTxs({

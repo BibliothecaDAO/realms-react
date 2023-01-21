@@ -118,7 +118,7 @@ function useUserBalances() {
 
   useMemo(() => {
     setGameConstants(gameConstantsData);
-  }, [address]);
+  }, [address, userRealmsData]);
 
   useMemo(() => {
     setUserRealms(userRealmsData);
