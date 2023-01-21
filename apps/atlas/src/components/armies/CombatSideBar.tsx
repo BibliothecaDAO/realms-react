@@ -11,6 +11,7 @@ import {
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { useSoundContext } from '@/context/soundProvider';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
@@ -83,10 +84,15 @@ export const CombatSideBar: React.FC<Prop> = ({
     useCombat();
 
   const [txSubmitted, setTxSubmitted] = useState(false);
+  const { toggleSound, isSoundActive } = useSoundContext();
 
   useEffect(() => {
     if (combatData) {
       setTxSubmitted(true);
+      if (isSoundActive) {
+        localStorage.setItem('RESTORE_SOUND_FLAG', 'true');
+        toggleSound();
+      }
     }
   }, [combatData]);
 
@@ -109,6 +115,10 @@ export const CombatSideBar: React.FC<Prop> = ({
       setFinalDefendingArmy(defendingEndArmy);
       setFinalAttackingArmy(attackingEndArmy);
       setTxSubmitted(false);
+      if (localStorage.getItem('RESTORE_SOUND_FLAG')) {
+        toggleSound();
+        localStorage.removeItem('RESTORE_SOUND_FLAG');
+      }
     }
   }, [result]);
 
