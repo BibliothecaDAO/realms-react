@@ -2,7 +2,7 @@
 import { Button, ResourceIcon, Select } from '@bibliotheca-dao/ui-lib';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   getRealmNameById,
   hasOwnRelic,
@@ -11,6 +11,7 @@ import {
 import { defaultArmy } from '@/constants/army';
 import { findResourceById } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
+import { useSoundContext } from '@/context/soundProvider';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
@@ -83,10 +84,23 @@ export const CombatSideBar: React.FC<Prop> = ({
     useCombat();
 
   const [txSubmitted, setTxSubmitted] = useState(false);
+  const { toggleSound, isSoundActive } = useSoundContext();
+
+  const videoRef = useRef<any>();
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.2;
+    }
+  }, [videoRef]);
 
   useEffect(() => {
     if (combatData) {
       setTxSubmitted(true);
+      if (isSoundActive) {
+        localStorage.setItem('RESTORE_SOUND_FLAG', 'true');
+        toggleSound();
+      }
     }
   }, [combatData]);
 
@@ -109,6 +123,10 @@ export const CombatSideBar: React.FC<Prop> = ({
       setFinalDefendingArmy(defendingEndArmy);
       setFinalAttackingArmy(attackingEndArmy);
       setTxSubmitted(false);
+      if (localStorage.getItem('RESTORE_SOUND_FLAG')) {
+        toggleSound();
+        localStorage.removeItem('RESTORE_SOUND_FLAG');
+      }
     }
   }, [result]);
 
@@ -150,6 +168,7 @@ export const CombatSideBar: React.FC<Prop> = ({
             height="200"
             autoPlay
             loop
+            ref={videoRef}
           >
             <source src="/videos/combat.webm" type="video/webm" />
           </video>
