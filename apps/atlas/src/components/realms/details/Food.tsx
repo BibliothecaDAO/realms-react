@@ -6,6 +6,8 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import ChevronDown from '@bibliotheca-dao/ui-lib/icons/chevron-down.svg';
+import ChevronUp from '@bibliotheca-dao/ui-lib/icons/chevron-up.svg';
 import { formatEther } from '@ethersproject/units';
 import type { ValueType } from '@rc-component/mini-decimal';
 import { BigNumber } from 'ethers';
@@ -13,6 +15,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { CostBlock, getPopulation } from '@/components/realms/RealmsGetters';
+
 import {
   RealmBuildingId,
   HarvestType,
@@ -63,10 +66,10 @@ export const RealmsFood = (props: Prop) => {
   const { create, harvest, convert } = useFood(realm as Realm);
   const isOwner = useIsOwner(realm?.settledOwner);
 
-  const getFishBalance = balance.find((a) => a.resourceId === FISH_ID)?.amount;
-  const getWheatBalance = balance.find(
-    (a) => a.resourceId === WHEAT_ID
-  )?.amount;
+  const getFishBalance =
+    balance.find((a) => a.resourceId === FISH_ID)?.amount || '0';
+  const getWheatBalance =
+    balance.find((a) => a.resourceId === WHEAT_ID)?.amount || '0';
 
   const { enqueuedHarvestTx: harvestFarmEnqueuedHarvestTx } =
     useCurrentQueuedTxs({
@@ -90,44 +93,282 @@ export const RealmsFood = (props: Prop) => {
     RealmBuildingId.FishingVillage
   );
 
-  console.log(realm);
-
   return (
     <div>
-      <div className="flex w-full border-4 border-yellow-900/40 rounded-2xl">
-        <div className={'w-1/2 relative'}>
-          <img
-            alt="Storehouse"
-            className={' mx-auto w-full rounded-xl '}
-            src={'/realm-buildings/mj_storehouse.png'}
-          />
-          <div className="absolute top-0 w-full p-8 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
-            <h2 className="flex justify-between p-1 px-2 ">Storehouse</h2>
-          </div>
-          <div className="absolute bottom-0 flex w-full p-8 bg-gradient-to-t from-gray-900 rounded-t-xl rounded-xl">
-            <div className="self-center mr-3 text-3xl">
-              {availableFood?.toLocaleString()
-                ? availableFood?.toLocaleString()
-                : '0 Food in Store'}
+      <div>
+        <div className="relative flex flex-wrap w-1/3 pb-2 border rounded border-white/10">
+          <div className="relative">
+            <img
+              alt="Storehouse"
+              className={' mx-auto w-full rounded-xl '}
+              src={'/realm-buildings/mj_storehouse.png'}
+            />
+            <div className="absolute top-0 w-full p-4 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
+              <h3 className="flex justify-between p-1 px-2 ">Storehouse</h3>
             </div>
-            {availableFood && availableFood > 0 ? (
-              <div className="flex justify-end">
-                <CountdownTimer
-                  date={(
-                    (availableFood / getPopulation(realm)) * 1000 +
-                    new Date().getTime()
-                  ).toString()}
-                />
+            <div className="absolute bottom-0 flex w-full p-8 bg-gradient-to-t from-gray-900 rounded-t-xl rounded-xl">
+              <div className="self-center mr-3 text-3xl">
+                {availableFood?.toLocaleString()
+                  ? availableFood?.toLocaleString()
+                  : '0 Food in Store'}
               </div>
-            ) : (
-              <span className="self-center">
-                Ser, your serfs are starving!!
-              </span>
-            )}
+              {availableFood && availableFood > 0 ? (
+                <div className="flex justify-end">
+                  <CountdownTimer
+                    date={(
+                      (availableFood / getPopulation(realm)) * 1000 +
+                      new Date().getTime()
+                    ).toString()}
+                  />
+                </div>
+              ) : (
+                <span className="self-center">
+                  Ser, your serfs are starving!!
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex justify-between w-full p-3 font-semibold">
+            <div className="flex ">
+              <ResourceIcon
+                className="self-center mr-2"
+                resource={'Wheat'}
+                size="sm"
+              />
+              <span>Wheat</span>
+            </div>
+            <span>{(+formatEther(getWheatBalance ?? 0)).toLocaleString()}</span>
+          </div>
+
+          <div className="flex justify-between w-full px-2 pb-2">
+            <Button
+              onClick={() => {
+                convert(realm?.realmId, input.wheatConversion, WHEAT_ID);
+              }}
+              size="md"
+              variant="outline"
+            >
+              Store
+            </Button>
+            <InputNumber
+              value={input.wheatConversion}
+              inputSize="md"
+              colorScheme="transparent"
+              className="w-2/3 mx-2 text-xl border rounded bg-black/10 border-white/10"
+              min={1}
+              inputClass="h-full mt-3"
+              max={10000000}
+              stringMode
+              onChange={(value: ValueType | null) => {
+                if (value) {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      wheatConversion: value.toString(),
+                    };
+                  });
+                }
+              }}
+            />
+            <div className="flex flex-grow">
+              <div className="flex flex-col flex-grow">
+                <Button
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        wheatConversion: (
+                          parseInt(current.wheatConversion) + 10000
+                        ).toString(),
+                      };
+                    });
+                  }}
+                  size="xs"
+                  variant="unstyled"
+                  className="flex justify-center px-2 border rounded border-white/10 hover:bg-white/10"
+                >
+                  <ChevronUp />
+                </Button>
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        wheatConversion: (
+                          parseInt(current.wheatConversion) - 10000
+                        ).toString(),
+                      };
+                    });
+                  }}
+                  className="flex justify-center px-2 border rounded border-white/10 hover:bg-white/10"
+                >
+                  <ChevronDown />
+                </Button>
+              </div>
+              <div className="flex flex-col flex-grow uppercase">
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        wheatConversion: (+formatEther(
+                          getWheatBalance ?? 0
+                        )).toString(),
+                      };
+                    });
+                  }}
+                >
+                  all
+                </Button>
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        wheatConversion: (
+                          +formatEther(getWheatBalance ?? 0) / 2
+                        ).toString(),
+                      };
+                    });
+                  }}
+                >
+                  half
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between w-full p-3 font-semibold">
+            <div className="flex ">
+              <ResourceIcon
+                className="self-center mr-2"
+                resource={'Fish'}
+                size="sm"
+              />
+              <span>Fish</span>
+            </div>
+
+            <span>{(+formatEther(getFishBalance ?? 0)).toLocaleString()}</span>
+          </div>
+
+          <div className="flex justify-between w-full px-2">
+            <Button
+              onClick={() => {
+                convert(realm?.realmId, input.fishConversion, FISH_ID);
+              }}
+              size="md"
+              variant="outline"
+            >
+              Store
+            </Button>
+            <InputNumber
+              value={input.fishConversion}
+              inputSize="md"
+              colorScheme="transparent"
+              className="w-2/3 mx-2 text-xl border rounded bg-black/10 border-white/10"
+              min={1}
+              inputClass="h-full mt-3"
+              max={10000000}
+              stringMode
+              onChange={(value: ValueType | null) => {
+                if (value) {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      fishConversion: value.toString(),
+                    };
+                  });
+                }
+              }}
+            />
+            <div className="flex flex-grow">
+              <div className="flex flex-col flex-grow">
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="flex justify-center px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishConversion: (
+                          parseInt(current.fishConversion) + 10000
+                        ).toString(),
+                      };
+                    });
+                  }}
+                >
+                  <ChevronUp />
+                </Button>
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="flex justify-center px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishConversion: (
+                          parseInt(current.fishConversion) - 10000
+                        ).toString(),
+                      };
+                    });
+                  }}
+                >
+                  <ChevronDown />
+                </Button>
+              </div>
+              <div className="flex flex-col flex-grow uppercase">
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishConversion: (+formatEther(
+                          getFishBalance ?? 0
+                        )).toString(),
+                      };
+                    });
+                  }}
+                >
+                  all
+                </Button>
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="px-2 border rounded border-white/10 hover:bg-white/10"
+                  onClick={() => {
+                    setInput((current) => {
+                      return {
+                        ...current,
+                        fishConversion: (
+                          +formatEther(getFishBalance ?? 0) / 2
+                        ).toString(),
+                      };
+                    });
+                  }}
+                >
+                  half
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="w-full p-8">
+      </div>
+      <div className="flex w-full border-4 border-yellow-900/40 rounded-2xl">
+        {/* <div className="w-full p-8">
           <div className=""></div>{' '}
           <div className="flex flex-wrap w-full p-2">
             <div className="w-full mb-2 text-3xl">
@@ -195,9 +436,9 @@ export const RealmsFood = (props: Prop) => {
               }}
             />{' '}
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="grid grid-cols-2">
+      {/* <div className="grid grid-cols-2">
         <FoodBuildingComponent
           realm={realm}
           id={RealmBuildingId.Farm}
@@ -220,7 +461,7 @@ export const RealmsFood = (props: Prop) => {
           decayed={realmFoodDetails.villagesDecayed}
           costs={fishingVillageCosts}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

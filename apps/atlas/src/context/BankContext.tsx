@@ -130,10 +130,16 @@ function useResources() {
 
   const { play: playAddWood } = useUiSounds(soundSelector.addWood);
   const { play: playAddStone } = useUiSounds(soundSelector.addStone);
+  const { play: playAddCoal } = useUiSounds(soundSelector.addCoal);
+  const { play: playAddCopper } = useUiSounds(soundSelector.addCopper);
+  const { play: playAddObsidian } = useUiSounds(soundSelector.addObsidian);
+  const { play: playAddDiamonds } = useUiSounds(soundSelector.addDiamonds);
+  const { play: playAddTrueIce } = useUiSounds(soundSelector.addTrueIce);
   const { play: playAddAlchemicalSilver } = useUiSounds(
     soundSelector.addAlchemicalSilver
   );
   const { play: playAddWheat } = useUiSounds(soundSelector.addWheat);
+  const { play: playAddFish } = useUiSounds(soundSelector.addFish);
 
   const playResourceSound = (resourceId) => {
     // eslint-disable-next-line sonarjs/no-small-switch
@@ -144,11 +150,29 @@ function useResources() {
       case ResourcesIds.Stone:
         playAddStone();
         break;
+      case ResourcesIds.Coal:
+        playAddCoal();
+        break;
+      case ResourcesIds.Copper:
+        playAddCopper();
+        break;
+      case ResourcesIds.Obsidian:
+        playAddObsidian();
+        break;
+      case ResourcesIds.Diamonds:
+        playAddDiamonds();
+        break;
+      case ResourcesIds.TrueIce:
+        playAddTrueIce();
+        break;
       case ResourcesIds.AlchemicalSilver:
         playAddAlchemicalSilver();
         break;
       case ResourcesIds.Wheat:
         playAddWheat();
+        break;
+      case ResourcesIds.Fish:
+        playAddFish();
         break;
       default:
         break;
