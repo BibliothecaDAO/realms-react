@@ -31,7 +31,7 @@ export const LoreScrollEntity = ({ entity }) => {
       <CryptProvider>
         <>
           {entity.revisions[0].title ? (
-            <h2 className={``}>{entity.revisions[0].title}</h2>
+            <h2 className={`text-center`}>{entity.revisions[0].title}</h2>
           ) : null}
 
           <LoreMarkdownRenderer
