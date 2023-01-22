@@ -158,6 +158,7 @@ export const AttackingArmy = (props: Props) => {
             <>
               <h3 className="mt-8 mb-4">Attack History</h3>
               <HistoryCard
+                realmId={a.realmId}
                 key={index}
                 timeStamp={a.timestamp}
                 eventId={a.eventId}
