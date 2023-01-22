@@ -1,4 +1,10 @@
-import { Table, Button, Switch, Card } from '@bibliotheca-dao/ui-lib';
+import {
+  Table,
+  Button,
+  Switch,
+  Card,
+  OrderIcon,
+} from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { ReactElement } from 'react';
@@ -10,9 +16,10 @@ import {
   SortOrder,
 } from '@/generated/graphql';
 import { shortenAddressWidth } from '@/util/formatters';
+import { getRealmOrderById } from '../realms/RealmsGetters';
 
 type Row = {
-  realm?: string;
+  realm?: ReactElement;
   // balance: string;
   // output: number;
   // change: ReactElement;
@@ -66,8 +73,16 @@ export const RaidSuccess = () => {
     raidSuccessData?.groupByRealmHistory ?? []
   ).map((realm) => {
     return {
-      realm:
-        (realm?.realmName && realm?.realmName + ' #' + realm?.realmId) || '0',
+      realm: (
+        <span className="flex">
+          <OrderIcon
+            className="self-center mx-2"
+            size="xs"
+            order={getRealmOrderById(realm?.realmId) || ''}
+          />
+          {(realm.realmName && realm?.realmName + ' #' + realm?.realmId) || '0'}
+        </span>
+      ),
       successfulRaid: realm?._count?._all || 0,
       owner: shortenAddressWidth(realm.realmOwner || '', 6),
       action: (

@@ -1,4 +1,3 @@
-import { RealmsArmy } from './Army';
 import { RealmsFood } from './Food';
 import { RealmHistory } from './History';
 import { RealmLore } from './Lore';
@@ -14,6 +13,5 @@ export {
   RealmsTravel,
   RealmLore,
   RealmsFood,
-  RealmsArmy,
   WorkHuts,
 };

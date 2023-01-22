@@ -1,11 +1,7 @@
 import { BattalionWithImage } from '@/components/armies/squad/BattalionWithImage';
-import type { Army } from '@/generated/graphql';
+import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { nameArray, useArmy } from '@/hooks/settling/useArmy';
 import { ArmyStatisticsTable } from './ArmyStatisticsTable';
-
-export interface ArmyAndOrder extends Army {
-  orderType?: string;
-}
 
 type Prop = {
   army: ArmyAndOrder;

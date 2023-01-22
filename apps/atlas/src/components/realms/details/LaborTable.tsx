@@ -1,12 +1,10 @@
-import { Button, Table } from '@bibliotheca-dao/ui-lib';
+import { Button, ResourceIcon, Table } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import { formatEther } from '@ethersproject/units';
 import Image from 'next/image';
-
-import { useSpring, animated } from 'react-spring';
-
 import { number } from 'starknet';
+import { vaultValueAtMarketprice } from '@/components/bank/BankGetters';
 import { RateChange } from '@/components/bank/BankPanel';
 import {
   BASE_RESOURCES_PER_CYCLE,
@@ -14,7 +12,7 @@ import {
   VAULT_LENGTH,
 } from '@/constants/globals';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
+import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useLabor from '@/hooks/settling/useLabor';
@@ -25,16 +23,6 @@ import {
   getUnproducedLabor,
 } from '../RealmsGetters';
 import { LaborValues } from './LaborValues';
-
-function Number({ end, start = 0 }) {
-  const { number } = useSpring({
-    number: end,
-    from: { number: start },
-    delay: 200,
-    config: { mass: 1, tension: 20, friction: 10 },
-  });
-  return <animated.div>{number.to((x) => x.toFixed(0))}</animated.div>;
-}
 
 const columns = [
   { Header: 'Tools & Labor', id: 1, accessor: 'build' },
@@ -56,7 +44,7 @@ export const LaborTable = (props: Prop) => {
 
   const { getBalanceById } = useUserBalancesContext();
 
-  const { create, harvest } = useLabor(realm as Realm);
+  const { create, harvest } = useLabor();
 
   const { gameConstants } = useGameConstants();
 
@@ -94,20 +82,10 @@ export const LaborTable = (props: Prop) => {
 
     const laborProfitMargin = 1 - totalLordsCostOfLabor / lordsReturnFromLabor;
 
-    const vaultValueAtMarketprice = () => {
-      const c = number
-        .toBN(currentMarketPriceForResource?.amount || '0')
-        .mul(
-          number.toBN(
-            (
-              getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-                BASE_RESOURCES_PER_CYCLE || 0
-            ).toFixed()
-          )
-        );
-
-      return +formatEther(c.toString()).toLocaleString();
-    };
+    const valueAtMarketprice = vaultValueAtMarketprice({
+      currentPrice: currentMarketPriceForResource?.amount,
+      units: getLaborUnitsGenerated(resource.labor?.vaultBalance),
+    });
 
     return {
       build: (
@@ -134,6 +112,7 @@ export const LaborTable = (props: Prop) => {
             <Button
               onClick={() =>
                 create({
+                  realmId: realm.realmId,
                   resourceId: resource.resourceId,
                   laborUnits: 12,
                   costs: costs,
@@ -142,7 +121,7 @@ export const LaborTable = (props: Prop) => {
               variant="outline"
               size="sm"
             >
-              Buy Tools and Labor (12hrs)
+              Buy Tools (12hrs)
             </Button>
           </Tooltip>
         </div>
@@ -203,14 +182,21 @@ export const LaborTable = (props: Prop) => {
       ),
       resource: (
         <span className="flex">
-          <Image
+          <span className="flex text-base whitespace-nowrap">
+            <ResourceIcon
+              className="self-center mr-2"
+              resource={resource?.resourceName?.replace(' ', '') || ''}
+              size="md"
+            />
+          </span>
+          {/* <Image
             src={'/resources/' + resource.resourceId + '.jpg'}
             alt="map"
             width={80}
             height={80}
             className="border-4 rounded-2xl border-yellow-800/40"
-          />
-          <span className="self-center ml-3 text-left">
+          /> */}
+          <span className="self-center ml-3 text-xl text-left">
             {resource.resourceName} <br />
             <span className="text-base text-gray-600">
               {(+formatEther(
@@ -232,6 +218,7 @@ export const LaborTable = (props: Prop) => {
           <Button
             onClick={() =>
               harvest({
+                realmId: realm.realmId,
                 resourceId: resource.resourceId,
               })
             }
@@ -247,7 +234,7 @@ export const LaborTable = (props: Prop) => {
       ),
 
       vault: (
-        <div>
+        <div className="text-2xl">
           {(
             getLaborUnitsGenerated(resource.labor?.vaultBalance) *
               BASE_RESOURCES_PER_CYCLE || 0
@@ -265,7 +252,7 @@ export const LaborTable = (props: Prop) => {
           <br />
           <span className="flex justify-center mx-auto text-lg">
             <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
-            {vaultValueAtMarketprice().toFixed(2)}
+            {valueAtMarketprice.toFixed(2)}
           </span>
         </div>
       ),
@@ -273,7 +260,7 @@ export const LaborTable = (props: Prop) => {
   });
 
   return (
-    <div className="py-8 text-2xl">
+    <div className="py-3 text-sm">
       <Table data={defaultData} columns={columns} {...tableOptions} />
     </div>
   );

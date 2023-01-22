@@ -9,6 +9,7 @@ import {
   MAX_HARVESTS,
   DAY,
   BASE_HARVESTS,
+  FISH_ID,
 } from '@/constants/globals';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Food, Realm } from '@/generated/graphql';
@@ -306,7 +307,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
               {
                 resourceId: resourceId,
                 amount: parseInt(quantity),
-                resourceName: 'Wheat',
+                resourceName: resourceId == FISH_ID ? 'Fish' : 'Wheat',
               },
             ],
           },

@@ -3,7 +3,6 @@ import { number, uint256 } from 'starknet';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
-import type { Realm } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import type {
   CallAndMetadata,
@@ -91,18 +90,18 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
 };
 
 type Resources = {
-  create: (args: { resourceId; laborUnits; costs }) => void;
-  harvest: (args: { resourceId }) => void;
+  create: (args: { realmId; resourceId; laborUnits; costs }) => void;
+  harvest: (args: { realmId; resourceId }) => void;
   loading: boolean;
 };
 
-const useLabor = (realm: Realm): Resources => {
+const useLabor = (): Resources => {
   const { play } = useUiSounds(soundSelector.claim);
 
   const txQueue = useCommandList();
 
   return {
-    create: (args: { resourceId; laborUnits; costs }) => {
+    create: (args: { realmId; resourceId; laborUnits; costs }) => {
       console.log(args.costs);
       const qtyCosts = args.costs.map((a) => {
         return {
@@ -115,18 +114,18 @@ const useLabor = (realm: Realm): Resources => {
       play();
       txQueue.add(
         createCall.create({
-          realmId: realm?.realmId,
+          realmId: args.realmId,
           resourceId: args.resourceId,
           laborUnits: args.laborUnits,
           costs: { amount: 0, resources: qtyCosts },
         })
       );
     },
-    harvest: (args: { resourceId }) => {
+    harvest: (args: { realmId; resourceId }) => {
       play();
       txQueue.add(
         createCall.harvest({
-          realmId: realm?.realmId,
+          realmId: args.realmId,
           resourceId: args.resourceId,
         })
       );

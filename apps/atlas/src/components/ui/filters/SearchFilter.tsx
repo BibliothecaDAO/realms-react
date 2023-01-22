@@ -1,3 +1,4 @@
+import Search from '@bibliotheca-dao/ui-lib/icons/frame/search_icon.svg';
 import React, { useEffect, useState } from 'react';
 
 interface SearchFilterProps {
@@ -21,9 +22,15 @@ export function SearchFilter(props: SearchFilterProps) {
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 p-1 shadow-inner rounded-xl bg-frame-primary w-72">
+    <div className="flex items-center justify-center w-48 gap-1 p-1 rounded-xl ">
+      <button
+        className="flex items-center justify-center p-2 transition-all duration-300 cursor-pointer rounded-xl h-9 hover:bg-gray-300/20"
+        onClick={doSubmit}
+      >
+        <Search className={'w-5 fill-frame-secondary'} />
+      </button>
       <input
-        className="w-full px-3 py-1 text-sm font-bold leading-tight tracking-widest transition-all duration-300 rounded-lg shadow-md appearance-none h-9 focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
+        className="w-full px-3 py-1 text-sm font-bold leading-tight tracking-widest transition-all duration-300 bg-transparent rounded-lg shadow-md appearance-none h-9 focus:outline-none hover:bg-gray-300/10 placeholder:text-frame-primary"
         type="text"
         value={value}
         onChange={(e) => {
@@ -40,46 +47,6 @@ export function SearchFilter(props: SearchFilterProps) {
         }}
         placeholder={props.placeholder ?? ''}
       />
-
-      <button
-        className="flex items-center justify-center p-2 transition-all duration-300 cursor-pointer rounded-xl h-9 hover:bg-gray-300/20"
-        onClick={doSubmit}
-      >
-        <svg
-          width="13"
-          height="14"
-          viewBox="0 0 13 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clipPath="url(#clip0_566_2495)">
-            <path
-              d="M5.95833 10.6472C8.35157 10.6472 10.2917 8.70713 10.2917 6.31389C10.2917 3.92066 8.35157 1.98056 5.95833 1.98056C3.5651 1.98056 1.625 3.92066 1.625 6.31389C1.625 8.70713 3.5651 10.6472 5.95833 10.6472Z"
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M11.3748 11.7305L9.01855 9.3743"
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_566_2495">
-              <rect
-                width="13"
-                height="13"
-                fill="white"
-                transform="translate(0 0.35556)"
-              />
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
     </div>
   );
 }

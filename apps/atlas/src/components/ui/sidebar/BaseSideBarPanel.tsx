@@ -22,20 +22,23 @@ export const BaseSideBarPanel = ({
       className={`relative w-full ${className} ${!title && !onClose && 'pt-2'}`}
     >
       <div>
-        {onClose && (
-          <Button
-            size="xs"
-            variant="outline"
-            className={
-              ' top-2 z-10 flex items-center justify-center w-8 h-8 p-0 border-0 rounded-2xl sticky bg-transparent left-2'
-            }
-            onClick={() => {
-              onClose();
-            }}
-          >
-            <Close className="w-6 h-6" />
-          </Button>
-        )}
+        <div className="sticky top-0 z-10 h-full">
+          {onClose && (
+            <Button
+              size="xs"
+              variant="outline"
+              className={
+                ' top-2  flex items-center justify-center w-8 h-8 p-0 border-0 rounded-2xl absolute bg-transparent left-2 '
+              }
+              onClick={() => {
+                onClose();
+              }}
+            >
+              <Close className="w-6 h-6" />
+            </Button>
+          )}
+        </div>
+
         {children}
       </div>
     </div>

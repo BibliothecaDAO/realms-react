@@ -1998,6 +1998,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cartridge/connector@npm:0.2.19":
+  version: 0.2.19
+  resolution: "@cartridge/connector@npm:0.2.19"
+  dependencies:
+    "@cartridge/controller": "npm:0.2.19"
+    "@starknet-react/core": "npm:^0.14.8"
+    starknet: "npm:^4.15.1"
+  checksum: 496d298bfb96d838d1c2550acc3a7d21e99dc13f97a9312a86403a7300f7561705291bb9e49f6611f2c116c48ddb133d5cd17cbf0fa0f8249f8b18dd577b1f89
+  languageName: node
+  linkType: hard
+
+"@cartridge/controller@npm:0.2.19":
+  version: 0.2.19
+  resolution: "@cartridge/controller@npm:0.2.19"
+  dependencies:
+    "@cartridge/penpal": "npm:^6.2.3"
+    base64url: "npm:^3.0.1"
+    bn.js: "npm:^5.2.1"
+    fast-deep-equal: "npm:^3.1.3"
+    query-string: "npm:^7.1.1"
+    starknet: "npm:^4.15.1"
+  checksum: 908580b6d009005e055eb9eaea332197490a35af538284ad69c2e1797257a06939f203e2f3e3f99406762f15287b43b0fe6a4fb8b63955b0a46948d965f1dddd
+  languageName: node
+  linkType: hard
+
+"@cartridge/penpal@npm:^6.2.3":
+  version: 6.2.3
+  resolution: "@cartridge/penpal@npm:6.2.3"
+  checksum: 0a524c73bbd36751421ef10b7a12a76ce4d62a7fa04cac6ba3899d02f0b30e217536c182c09257e44183e484e1baae616aef4f236c74f9eb41329e045078d462
+  languageName: node
+  linkType: hard
+
 "@changesets/apply-release-plan@npm:^6.1.2":
   version: 6.1.2
   resolution: "@changesets/apply-release-plan@npm:6.1.2"
@@ -5942,6 +5974,57 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@protobuf-ts/plugin-framework@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@protobuf-ts/plugin-framework@npm:2.8.2"
+  dependencies:
+    "@protobuf-ts/runtime": "npm:^2.8.2"
+    typescript: "npm:^3.9"
+  checksum: a6e3060ab400f9d6065dad99c763b07ec561af026b3c7b0713ebd370f877bb12789c6152a471391c0458b5e4dba5bcd7b3f413274e31d1db6c054ac2ede89c4c
+  languageName: node
+  linkType: hard
+
+"@protobuf-ts/plugin@npm:^2.7.0":
+  version: 2.8.2
+  resolution: "@protobuf-ts/plugin@npm:2.8.2"
+  dependencies:
+    "@protobuf-ts/plugin-framework": "npm:^2.8.2"
+    "@protobuf-ts/protoc": "npm:^2.8.2"
+    "@protobuf-ts/runtime": "npm:^2.8.2"
+    "@protobuf-ts/runtime-rpc": "npm:^2.8.2"
+    typescript: "npm:^3.9"
+  bin:
+    protoc-gen-dump: bin/protoc-gen-dump
+    protoc-gen-ts: bin/protoc-gen-ts
+  checksum: 648788e1fce0cabda104f4d2c215c43ac1fa141d516fc47c18263b3a1ec95978951548dc3302a22275fc1746a1f28e35ec1aaf3ec03b80ca714d9638bdc8b5cb
+  languageName: node
+  linkType: hard
+
+"@protobuf-ts/protoc@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@protobuf-ts/protoc@npm:2.8.2"
+  bin:
+    protoc: protoc.js
+  checksum: 3ac070889347448268058cda76e0bc53119d075f238cadba3e83f05c253ca731789791333b0b0d475de2376596e7b9f040360747dd1ea3e4a3777ef0bad2e646
+  languageName: node
+  linkType: hard
+
+"@protobuf-ts/runtime-rpc@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@protobuf-ts/runtime-rpc@npm:2.8.2"
+  dependencies:
+    "@protobuf-ts/runtime": "npm:^2.8.2"
+  checksum: 8e88fd1e0e9975046eb60c5a25d121c6bea32585795e474ac75208919275d744b21852ff83ff903407aa9a79a48e3c3dd92a46a886a6688e3c02523d27e1f14d
+  languageName: node
+  linkType: hard
+
+"@protobuf-ts/runtime@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@protobuf-ts/runtime@npm:2.8.2"
+  checksum: 116bb74a53622146ecc4cd939c28d9f11e7475547e0c6381f6e3f51b5ca24bd67ec184eec085c9cba85454ea321926fabeebeedd55658fdfd9c0f21235b38856
+  languageName: node
+  linkType: hard
+
 "@quentin-sommer/react-useragent@npm:3.2.0":
   version: 3.2.0
   resolution: "@quentin-sommer/react-useragent@npm:3.2.0"
@@ -6635,7 +6718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@starknet-react/core@npm:0.14.8":
+"@starknet-react/core@npm:0.14.8, @starknet-react/core@npm:^0.14.8":
   version: 0.14.8
   resolution: "@starknet-react/core@npm:0.14.8"
   dependencies:
@@ -11530,6 +11613,8 @@ __metadata:
     "@bibliotheca-dao/postcss-100vh-fix": "npm:^1.0.3"
     "@bibliotheca-dao/ui-lib": "workspace:^"
     "@bundlr-network/client": "npm:0.9.11"
+    "@cartridge/connector": "npm:0.2.19"
+    "@cartridge/controller": "npm:0.2.19"
     "@codemirror/lang-markdown": "npm:6.0.5"
     "@codemirror/theme-one-dark": "npm:6.1.0"
     "@danmarshall/deckgl-typings": "npm:^4.9.27"
@@ -11624,11 +11709,9 @@ __metadata:
     eslint-plugin-testing-library: "npm:5.9.1"
     ethers: "npm:5.7.2"
     get-starknet: "npm:^2.0.0"
-    gl-matrix: "npm:^3.4.3"
     graphql: "npm:^16.6.0"
     happy-dom: "npm:8.1.0"
     heroicons: "npm:^2.0.13"
-    listplayer: "npm:0.2.3"
     loot-rarity: "npm:^5.0.1"
     loot-sdk: "npm:^0.1.2"
     mapbox-gl: "npm:^2.11.1"
@@ -11680,6 +11763,9 @@ __metadata:
     vite-tsconfig-paths: "npm:4.0.3"
     vitest: "npm:0.25.8"
     wagmi: "npm:0.9.3"
+    web3-mq: "npm:1.2.56"
+    web3-mq-react: "npm:1.1.18"
+    yarn: "npm:1.22.19"
   languageName: unknown
   linkType: soft
 
@@ -15034,6 +15120,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"decode-uri-component@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "decode-uri-component@npm:0.2.2"
+  checksum: 470428dd2c9310a948f7a942a64e5e5005a992beba979a6ac0b3635ca1a3915753c7871e3e85d3fd21ea5a7b829f62b7b4c2b368fc8b7cc7455b4d7182807e72
+  languageName: node
+  linkType: hard
+
 "decompress-response@npm:^6.0.0":
   version: 6.0.0
   resolution: "decompress-response@npm:6.0.0"
@@ -17374,6 +17467,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filter-obj@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "filter-obj@npm:1.1.0"
+  checksum: ae94072c11c7bf14d8baa6e9b99770dc2324088ae47081b2961e461d35b4cfa3dbe34a2e747ae98a8e789255480d0e28b2cf970dd8ce3cfba301e76cda03344c
+  languageName: node
+  linkType: hard
+
 "finalhandler@npm:1.2.0":
   version: 1.2.0
   resolution: "finalhandler@npm:1.2.0"
@@ -19255,6 +19355,13 @@ __metadata:
   peerDependencies:
     postcss: ^8.1.0
   checksum: 19cb70f105e8af6b53aa518012a5aae6788985b93ee76b8a9fabed8efdfd39f5d14dbad7f15723b470794bac862d33a7d2bccedf43ece5d84f874bb0346d5abf
+  languageName: node
+  linkType: hard
+
+"idb@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "idb@npm:7.1.1"
+  checksum: 9f9a55d7ef9409d37a0270104b89137cdd2a29fbc5cab65561a1dc1d4cdb25f1239ce9dcd1abdb25b81bf81269fad0e601be7d3bd3d8f06f2060c4c65d059748
   languageName: node
   linkType: hard
 
@@ -21608,13 +21715,6 @@ __metadata:
   bin:
     lint-staged: bin/lint-staged.js
   checksum: 7b4aaafc636daea65b3165e6fbc17f88095b86da65ffb32fc81586faf6b61033e42507e5d6f9fc23fe34c6b43c27cfe98d0e308736d53bf133c5fce933ea53e8
-  languageName: node
-  linkType: hard
-
-"listplayer@npm:0.2.3":
-  version: 0.2.3
-  resolution: "listplayer@npm:0.2.3"
-  checksum: af72f466c7c703401e0b65f40f0bb529d73fb87caa85e003fb0f79433b41b904330f431bb510711bb6af4cb998e8d9545875b2b68a05f24dc2f35c6746f2fd74
   languageName: node
   linkType: hard
 
@@ -26174,6 +26274,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"query-string@npm:^7.1.1":
+  version: 7.1.3
+  resolution: "query-string@npm:7.1.3"
+  dependencies:
+    decode-uri-component: "npm:^0.2.2"
+    filter-obj: "npm:^1.1.0"
+    split-on-first: "npm:^1.0.0"
+    strict-uri-encode: "npm:^2.0.0"
+  checksum: cff143c1b97746e6279d781671acd515254196bc99ab49c0ec3549a1232a50ece2a5fdff678d8c458fb1371821b4576d89fd499949d610dcee39bd37d9e6fea4
+  languageName: node
+  linkType: hard
+
 "querystring-es3@npm:^0.2.0":
   version: 0.2.1
   resolution: "querystring-es3@npm:0.2.1"
@@ -28925,6 +29037,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"starknet@npm:^4.15.1":
+  version: 4.20.0
+  resolution: "starknet@npm:4.20.0"
+  dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
+    bn.js: "npm:^5.2.1"
+    elliptic: "npm:^6.5.4"
+    ethereum-cryptography: "npm:^1.0.3"
+    hash.js: "npm:^1.1.7"
+    isomorphic-fetch: "npm:^3.0.0"
+    json-bigint: "npm:^1.0.0"
+    minimalistic-assert: "npm:^1.0.1"
+    pako: "npm:^2.0.4"
+    ts-custom-error: "npm:^3.3.1"
+    url-join: "npm:^4.0.1"
+  checksum: 63311c66fcec732f58776ac1642645e63eb44fcd0dc98df61ff8841239ea1ee49a9f27de45059f3917a27094057e7b0b70f40d71754191071a205738730c4cde
+  languageName: node
+  linkType: hard
+
+"starknet@npm:^4.17.1":
+  version: 4.19.3
+  resolution: "starknet@npm:4.19.3"
+  dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
+    bn.js: "npm:^5.2.1"
+    elliptic: "npm:^6.5.4"
+    ethereum-cryptography: "npm:^1.0.3"
+    hash.js: "npm:^1.1.7"
+    isomorphic-fetch: "npm:^3.0.0"
+    json-bigint: "npm:^1.0.0"
+    minimalistic-assert: "npm:^1.0.1"
+    pako: "npm:^2.0.4"
+    ts-custom-error: "npm:^3.3.1"
+    url-join: "npm:^4.0.1"
+  checksum: 054cb6750abc3b9c54e2b737a3ca2ee754e3ad9999fa354cd2caefbf026f1a870b6d8173dc1b2e8842de76ed90dd8141aa797fefdad6a6ebf8731fe6686ac3e0
+  languageName: node
+  linkType: hard
+
 "state-toggle@npm:^1.0.0":
   version: 1.0.3
   resolution: "state-toggle@npm:1.0.3"
@@ -30796,6 +30946,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^3.9":
+  version: 3.9.10
+  resolution: "typescript@npm:3.9.10"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 2137104612d9b7544db57b0bd202d0f15f9d8d339070fe9af54ae9568bb774e62f666e51378a8c8c627d0fa7b635ac6060d7ff1f6bcb69734c981c29dd3dbea9
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
   version: 4.9.4
   resolution: "typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>::version=4.9.4&hash=ad5954"
@@ -30803,6 +30963,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: e7321aeb1e2c0e3c19599808707208e2b730de8d17a5624f0a7297b9a1ffa39974edd4a819108b3b635bc00171476ddfa339e04d928a03ce8d8c6944cb8ec008
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^3.9#optional!builtin<compat/typescript>":
+  version: 3.9.10
+  resolution: "typescript@patch:typescript@npm%3A3.9.10#optional!builtin<compat/typescript>::version=3.9.10&hash=3bd3d3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 060f1bcb5c91a16d01b042974be047455b6471aceae5b17651119d0f690ddba45bdfcefdb92a05ca1563a6f0313f8dd63dc4e8cde0ebf221b3e6b435c32d0ddf
   languageName: node
   linkType: hard
 
@@ -31837,6 +32007,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"web3-mq-react@npm:1.1.18":
+  version: 1.1.18
+  resolution: "web3-mq-react@npm:1.1.18"
+  peerDependencies:
+    react: ^18.2.0 || ^17.0.0 || ^16.8.0
+    react-dom: ^18.2.0 || ^17.0.0 || ^16.8.0
+    web3-mq: ^1.2.55
+  checksum: 104c464586a19a258e506ca4e4540e01aad812eb0689c8b8f4952457d4f8351343be790b0d85e012c0788f86472220a560eafdb5ac9416b70b0592c02995ce71
+  languageName: node
+  linkType: hard
+
+"web3-mq@npm:1.2.56":
+  version: 1.2.56
+  resolution: "web3-mq@npm:1.2.56"
+  dependencies:
+    "@noble/ed25519": "npm:^1.6.1"
+    "@protobuf-ts/plugin": "npm:^2.7.0"
+    axios: "npm:^0.27.2"
+    get-starknet: "npm:^2.0.0"
+    idb: "npm:^7.1.1"
+    js-sha256: "npm:^0.9.0"
+    js-sha3: "npm:^0.8.0"
+    starknet: "npm:^4.17.1"
+  checksum: 3afd103e87b8b970dd9d35e5ac2cd5587b1ed347159d71392702c4ad13ddbfcf608f67cd2beabd2c2dee926065fd849a53f49a82d774b2c3cf927dc0ff9a2be8
+  languageName: node
+  linkType: hard
+
 "web3-utils@npm:1.8.1":
   version: 1.8.1
   resolution: "web3-utils@npm:1.8.1"
@@ -32637,6 +32834,16 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
   checksum: 31c667c5c38d1738ac4ecb6f5228eb94f53d0555db4e4091bd55bc7864d96f3e58e1b8126e1b19bfa056f4f1aeb7643723c3a8309267df36e30afb91e796a3fc
+  languageName: node
+  linkType: hard
+
+"yarn@npm:1.22.19":
+  version: 1.22.19
+  resolution: "yarn@npm:1.22.19"
+  bin:
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: f0854159fdac7da1fc226fad61b314b1eca6098b5450959071794c2c6a0ab92936ba69b437d6f097f549f1c2b5ca16a5f9177f0fc02eddb8d96c3295e187adc6
   languageName: node
   linkType: hard
 

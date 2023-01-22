@@ -79,7 +79,7 @@ export const Modals = () => {
         </div>
       </div>
       <div
-        className={`relative overflow-y-auto left-0 w-full mx-auto relative top-0 p-16`}
+        className={`overflow-y-auto left-0 w-full mx-auto relative top-0 p-16`}
       >
         <div className={`h-full`}>{component}</div>
       </div>

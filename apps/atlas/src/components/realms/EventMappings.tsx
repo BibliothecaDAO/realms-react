@@ -6,18 +6,18 @@ import {
 } from '@/components/realms/RealmsGetters';
 import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
 
-export const Event = {
-  realmCombatAttack: 'realm_combat_attack',
-  realmCombatDefend: 'realm_combat_defend',
-  realmBuildingBuilt: 'realm_building_built',
-  realmTransfer: 'realm_transfer',
-  realmSettle: 'realm_settle',
-  realmUnsettle: 'realm_unsettle',
-  armyTravel: 'army_travel',
-  foodHarvest: 'food_harvest',
-  foodCreated: 'food_created',
-  armyBuild: 'army_built',
-};
+export enum Event {
+  realmCombatAttack = 'realm_combat_attack',
+  realmCombatDefend = 'realm_combat_defend',
+  realmBuildingBuilt = 'realm_building_built',
+  realmTransfer = 'realm_transfer',
+  realmSettle = 'realm_settle',
+  realmUnsettle = 'realm_unsettle',
+  armyTravel = 'army_travel',
+  foodHarvest = 'food_harvest',
+  foodCreated = 'food_created',
+  armyBuild = 'army_built',
+}
 
 export const EventImages = {
   [Event.realmCombatAttack]: '/vizirs/mj_military_vizir.png',
@@ -32,6 +32,19 @@ export const EventImages = {
   [Event.armyBuild]: '/vizirs/mj_military_vizir.png',
 };
 
+export const EventLabels = {
+  [Event.realmCombatAttack]: 'Combat Attack',
+  [Event.realmCombatDefend]: 'Combat Defend',
+  [Event.realmBuildingBuilt]: 'Building Built',
+  [Event.realmTransfer]: 'Realm Transfer',
+  [Event.realmSettle]: 'Realm Settle',
+  [Event.realmUnsettle]: 'Realm Unsettle',
+  [Event.armyTravel]: 'Army Travel',
+  [Event.foodHarvest]: 'Food Harvest',
+  [Event.foodCreated]: 'Food Created',
+  [Event.armyBuild]: 'Army Built',
+};
+
 const successClass = '';
 const negativeClass = '';
 
@@ -39,9 +52,9 @@ export const checkTimeInPast = (time: number) => {
   return time < Date.now();
 };
 
-export const VisitButton = (id) => {
+export const VisitButton = (id: any) => {
   return (
-    <Button size="xs" variant="outline" href={'/?asset=realm' + id}>
+    <Button size="xs" variant="outline" href={'/?asset=realm' + id.id}>
       Visit realm
     </Button>
   );
@@ -70,9 +83,9 @@ export function generateRealmEvent(event, user?: boolean) {
         attackRealmId: event.data?.attackRealmId,
         image: EventImages[event.eventType],
         relic: event.data?.relicClaimed ? (
-          <span className="text-xl">
+          <div className="p-1 m-1 border rounded border-white/20">
             Captured Relic {event.data?.relicClaimed}!
-          </span>
+          </div>
         ) : null,
         action: (
           <Button
@@ -94,7 +107,7 @@ export function generateRealmEvent(event, user?: boolean) {
                 ? `Defended raid from ${getRealmNameById(
                     event.data?.attackRealmId
                   )}`
-                : `We have been Pillaged by Realm ${getRealmNameById(
+                : `We have been Pillaged by ${getRealmNameById(
                     event.data?.attackRealmId
                   )}`}
             </span>
@@ -103,8 +116,8 @@ export function generateRealmEvent(event, user?: boolean) {
           resources: resourcePillaged(event.data.pillagedResources),
           image: EventImages[event.eventType],
           relic: event.data?.relicLost ? (
-            <span className="pl-10 text-xl font-semibold uppercase">
-              Relic {event.data?.relicLost}
+            <span className="text-xl">
+              Relic {event.data?.relicLost} stolen!
             </span>
           ) : null,
           txHash: event.transactionHash,
@@ -125,7 +138,7 @@ export function generateRealmEvent(event, user?: boolean) {
             <span>
               {event.data?.success
                 ? `Defended raid from ${event.data?.attackRealmId}`
-                : `Realm Pillaged by Realm ${event.data?.attackRealmId}`}
+                : `Pillaged by ${event.data?.attackRealmId}`}
             </span>
           ),
           class: event.data?.success ? successClass : negativeClass,
@@ -194,7 +207,7 @@ export function generateRealmEvent(event, user?: boolean) {
                 </p>
               </p>
             )}
-            <VisitButton id={event.data?.destinationRealmId} />,
+            <VisitButton id={event.data?.destinationRealmId} />
           </div>
         ),
       };

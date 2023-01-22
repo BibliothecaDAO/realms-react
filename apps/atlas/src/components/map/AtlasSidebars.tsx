@@ -12,7 +12,9 @@ import { LeaderboardSideBar } from '../leaderboard/LeadeboardSideBar';
 import { LootSideBar } from '../loot/LootSideBar';
 import { LoreSideBar } from '../lore/LoreSideBar';
 import { RealmSideBar } from '../realms/RealmsSideBar';
-import { ChatSideBar } from '../ui/Chat';
+// import { ChatSideBar } from '../ui/Chat';
+import { VizirSideBar } from '../ui/vizir/VizirSideBar';
+import { Web3MQChatSideBar } from '../web3mq/Web3MQChatSideBar';
 
 export function AtlasSidebars() {
   const { mapContext } = useAtlasContext();
@@ -40,6 +42,8 @@ export function AtlasSidebars() {
     toggleLore,
     leaderboardSidebar,
     toggleLeaderboard,
+    toggleVizir,
+    vizirSidebar,
   } = useUIContext();
 
   function onLordsNavClick() {
@@ -72,10 +76,15 @@ export function AtlasSidebars() {
         isOpen={assetSidebar === 'ga'}
         onClose={closeAsset}
       />
-      <ChatSideBar
+      {/* <ChatSideBar
         isOpen={chatSidebar}
         onClose={toggleChatSidebar}
         channelName={'desiege-chat'}
+      /> */}
+      <Web3MQChatSideBar
+        isOpen={chatSidebar}
+        onClose={toggleChatSidebar}
+        channelName="web3mq-chat"
       />
       <TransactionCartSideBar
         isOpen={transactionCart}
@@ -97,6 +106,7 @@ export function AtlasSidebars() {
         isOpen={settleRealmsSidebar}
         onClose={toggleSettleRealms}
       />
+      <VizirSideBar isOpen={vizirSidebar} onClose={toggleVizir} />
     </>
   );
 }

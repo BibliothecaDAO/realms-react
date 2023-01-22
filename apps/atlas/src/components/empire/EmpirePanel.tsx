@@ -30,11 +30,12 @@ import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { MyActions } from './MyActions';
 
 export function EmpirePanel() {
+  const [selectedTab, setSelectedTab] = useState(0);
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
-  const { toggleSettleRealms } = useUIContext();
+  const { userRealms } = useUsersRealms();
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const { toggleSettleRealms } = useUIContext();
 
   const tabs = useMemo(
     () => [
@@ -104,7 +105,6 @@ export function EmpirePanel() {
     ],
     [selectedTab]
   );
-  const { claimAll, userData, userRealms } = useUsersRealms();
 
   const unsettledRealms = userRealms?.realms.filter(
     (r) => r.ownerL2 == getAccountHex(address || '0x0')
@@ -161,7 +161,7 @@ export function EmpirePanel() {
       // },
     ];
     return allActions.filter((a) => a.enabled);
-  }, [userData, userRealms, isGameApproved, unsettledRealms]);
+  }, [userRealms, isGameApproved, unsettledRealms]);
 
   const pressedTab = (index) => {
     play();
@@ -184,7 +184,7 @@ export function EmpirePanel() {
                         variant="outline"
                         onClick={() => action.action()}
                       >
-                        {userData?.resourcesClaimable}
+                        {/* {userData?.resourcesClaimable} */}
                         <span className="flex">
                           {action.icon} {action.name}
                         </span>

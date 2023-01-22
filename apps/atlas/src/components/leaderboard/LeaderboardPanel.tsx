@@ -1,7 +1,10 @@
-import { Table, Button, Card } from '@bibliotheca-dao/ui-lib';
+import { Table, Button, Card, OrderIcon } from '@bibliotheca-dao/ui-lib';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
-import { relicsOwnedByRealm } from '@/components/realms/RealmsGetters';
+import {
+  getRealmOrderById,
+  relicsOwnedByRealm,
+} from '@/components/realms/RealmsGetters';
 import { useUIContext } from '@/context/UIContext';
 import {
   useGetRealmsQuery,
@@ -14,10 +17,7 @@ import { BasePanel } from '../ui/panel/BasePanel';
 import { RaidSuccess } from './RaidSuccess';
 
 type Row = {
-  realm?: string;
-  // balance: string;
-  // output: number;
-  // change: ReactElement;
+  realm?: ReactElement;
   owner?: string | undefined;
   successfulRaid?: number;
   goblinTowns?: number;
@@ -37,33 +37,18 @@ export function LeaderboardPanel(): ReactElement {
     },
   });
 
-  const { data: goblinSuccessData, loading: loadingData } =
-    useGroupByRealmHistoryQuery({
-      variables: {
-        by: [
-          RealmHistoryScalarFieldEnum.RealmOwner,
-          RealmHistoryScalarFieldEnum.RealmId,
-          RealmHistoryScalarFieldEnum.RealmName,
-        ],
-        where: {
-          eventType: { equals: 'realm_combat_attack' },
-          AND: [
-            {
-              data: { path: ['success'], equals: true },
-            },
-            {
-              data: { path: ['defendRealmId'], equals: 0 },
-            },
-          ],
-        },
-        orderBy: { _count: { realmId: SortOrder.Desc } },
-        isOwner: false,
-        take: 10,
-      },
-    });
   const defaultRelicData: Row[] = (relicData?.realms ?? []).map((realm) => {
     return {
-      realm: (realm?.name && realm?.name + ' #' + realm?.realmId) || '0',
+      realm: (
+        <span className="flex">
+          <OrderIcon
+            className="self-center mx-2"
+            size="xs"
+            order={getRealmOrderById(realm?.realmId) || ''}
+          />
+          {(realm?.name && realm?.name + ' #' + realm?.realmId) || '0'}
+        </span>
+      ),
 
       owner: shortenAddressWidth(realm?.settledOwner || '', 6),
       relics: relicsOwnedByRealm(realm) || 0,
@@ -83,28 +68,6 @@ export function LeaderboardPanel(): ReactElement {
       ),
     };
   });
-  /*
-  const defaultGoblinData: Row[] = (
-    goblinSuccessData?.groupByRealmHistory ?? []
-  ).map((realm) => {
-    return {
-      realm: realm?.realmId || 0,
-      goblinTowns: realm?._count?._all || 0,
-      action: (
-        <Button
-          variant="primary"
-          size="xs"
-          onClick={() => {
-            router.push(`/?asset=realm${realm?.realmId}`, undefined, {
-              shallow: true,
-            });
-          }}
-        >
-          View
-        </Button>
-      ),
-    };
-  }); */
 
   const sections = [
     {
@@ -117,50 +80,41 @@ export function LeaderboardPanel(): ReactElement {
       ],
       defaultData: defaultRelicData,
     },
-    {
-      name: 'farmsHarvested',
-      columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
-        { Header: 'Current Owner', id: 5, accessor: 'owner' },
-        { Header: 'Farms Harvested', id: 6, accessor: 'farms' },
-        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
-      ],
-      defaultData: [
-        {
-          realm: 1,
-          owner: '0x0000',
-          goblinTowns: '12',
-          action: <div>view all</div>,
-        },
-      ],
-    },
-    {
-      name: 'resourcesHarvested',
-      columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
-        { Header: 'Current Owner', id: 5, accessor: 'owner' },
-        { Header: 'Resources Harvested', id: 6, accessor: 'resources' },
-        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
-      ],
-      defaultData: [
-        {
-          realm: 1,
-          owner: '0x0000',
-          goblinTowns: '12',
-          action: <div>view all</div>,
-          onChange: () => null,
-        },
-      ],
-    },
-    /* {
-      name: 'goblinTownsDestroyed',
-      columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
-        { Header: 'Goblin Towns', id: 6, accessor: 'goblinTowns' },
-        { Header: 'Action', id: 7, accessor: 'action', size: 50 },
-      ],
-      defaultData: defaultGoblinData,
-    }, */
+    // {
+    //   name: 'farmsHarvested',
+    //   columns: [
+    //     { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
+    //     { Header: 'Current Owner', id: 5, accessor: 'owner' },
+    //     { Header: 'Farms Harvested', id: 6, accessor: 'farms' },
+    //     { Header: 'Action', id: 7, accessor: 'action', size: 50 },
+    //   ],
+    //   defaultData: [
+    //     {
+    //       realm: 1,
+    //       owner: '0x0000',
+    //       goblinTowns: '12',
+    //       action: <div>view all</div>,
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: 'resourcesHarvested',
+    //   columns: [
+    //     { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
+    //     { Header: 'Current Owner', id: 5, accessor: 'owner' },
+    //     { Header: 'Resources Harvested', id: 6, accessor: 'resources' },
+    //     { Header: 'Action', id: 7, accessor: 'action', size: 50 },
+    //   ],
+    //   defaultData: [
+    //     {
+    //       realm: 1,
+    //       owner: '0x0000',
+    //       goblinTowns: '12',
+    //       action: <div>view all</div>,
+    //       onChange: () => null,
+    //     },
+    //   ],
+    // },
   ];
 
   const tableOptions = { is_striped: true };

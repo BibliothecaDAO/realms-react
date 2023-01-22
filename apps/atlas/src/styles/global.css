@@ -161,3 +161,14 @@ div#deckgl-wrapper {
   pointer-events: none;
   box-shadow: inset 0 0 150px black;
 }
+
+.web3mq-channel-container {
+  --tw-bg-opacity: 1;
+
+  background-color: rgb(14 14 14 / var(--tw-bg-opacity)) !important;
+}
+
+.web3mq-dialog {
+  background: #000 !important;
+  color: #a1a1aa;
+}

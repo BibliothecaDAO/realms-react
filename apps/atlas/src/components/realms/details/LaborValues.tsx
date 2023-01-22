@@ -1,23 +1,8 @@
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useSpring, animated } from 'react-spring';
-import { Span } from 'slate';
 import { Pulse } from '@/components/ui/Pulse';
-import {
-  BASE_LABOR_UNITS,
-  BASE_RESOURCES_PER_CYCLE,
-} from '@/constants/globals';
-
-function Number({ end, start = 0 }) {
-  const { number } = useSpring({
-    number: end,
-    from: { number: start },
-    delay: 200,
-    config: { mass: 1, tension: 20, friction: 10 },
-  });
-  return <animated.div>{number.to((x) => x.toFixed(0))}</animated.div>;
-}
+import { BASE_RESOURCES_PER_CYCLE } from '@/constants/globals';
 
 export const LaborValues = ({
   labor_generated,
@@ -38,9 +23,9 @@ export const LaborValues = ({
         part: part_labor || 0,
         vault: vault || 0,
       });
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
-  });
+  }, [labor_generated, part_labor, vault]);
 
   return (
     <div className="text-base text-left">
@@ -70,14 +55,14 @@ export const LaborValues = ({
           <span>You will continue to produce for {remaining} more cycles.</span>
         }
       />
-      <LaborRow
+      {/* <LaborRow
         title={'Vault'}
         pulse={generated.vault > 0}
         value={(generated.vault * BASE_RESOURCES_PER_CYCLE).toFixed(2)}
         tooltipText={
           <span>This is what will accrue to your vault after harvest.</span>
         }
-      />
+      /> */}
     </div>
   );
 };

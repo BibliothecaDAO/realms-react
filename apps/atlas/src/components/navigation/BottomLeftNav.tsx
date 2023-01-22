@@ -6,10 +6,13 @@ import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { framePrimary, frameSecondary } from '@/constants/ui';
 import { useSoundContext } from '@/context/soundProvider';
 
+import { useUIContext } from '../../context/UIContext';
 import NetworkConnectButton from '../ui/NetworkConnectButton';
 
 export const BottomLeftNav = () => {
   const { toggleSound, isSoundActive } = useSoundContext();
+
+  const { toggleVizir } = useUIContext();
 
   return (
     <div className="absolute bottom-0 z-50">
@@ -23,9 +26,9 @@ export const BottomLeftNav = () => {
           }}
           icon={
             isSoundActive ? (
-              <VolumeOn className="w-5 stroke-primary-100 fill-frame-primary" />
+              <VolumeOn className="w-5 stroke-primary-100 fill-frame-secondary" />
             ) : (
-              <VolumeOff className="w-5 stroke-primary-100 fill-frame-primary" />
+              <VolumeOff className="w-5 stroke-primary-100 fill-frame-secondary" />
             )
           }
           size="md"
@@ -34,11 +37,13 @@ export const BottomLeftNav = () => {
       </div>
       <div className="relative">
         <div className="absolute w-16 h-16 bottom-3 left-3">
-          <img
-            src={'/vizirs/mj_military_vizir.png'}
-            alt="map"
-            className="w-16 h-16 mb-4 mr-4 rounded-full "
-          />
+          <button onClick={() => toggleVizir()}>
+            <img
+              src={'/vizirs/mj_military_vizir.png'}
+              alt="map"
+              className="w-16 h-16 mb-4 mr-4 rounded-full hover:opacity-80 "
+            />
+          </button>
         </div>
         <div className="pl-48 lg:pl-[5rem]">
           <NetworkConnectButton />

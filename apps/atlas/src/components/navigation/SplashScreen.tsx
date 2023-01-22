@@ -16,14 +16,14 @@ export const SplashScreen = ({ children }) => {
   return (
     <>
       {loading && (
-        <div className="absolute left-0 flex items-center justify-center w-full h-screen bg-cover z-100 bg-gray-1000 bg-realmBackground">
-          <div className="relative flex flex-col text-center lg:w-1/3">
-            <Ouroboros className="self-center h-32 ml-2 mr-4 fill-yellow-600 " />
+        <div className="absolute left-0 flex items-center justify-center w-full h-screen bg-cover z-100 bg-gray-1000 bg-realmBackground vignette-inset">
+          <div className="relative flex flex-col w-full px-10 text-center lg:w-1/3">
+            <Ouroboros className="self-center w-full h-32 ml-2 mr-4 fill-frame-primary " />
             <h1 className="mb-8">Eternum</h1>
             {address && status === 'connected' ? (
-              <div className="flex gap-4">
+              <div className="flex w-full gap-4">
                 <Button
-                  className="w-1/2"
+                  className="sm:w-1/2"
                   variant="primary"
                   onClick={() => {
                     setLoading(false);
@@ -33,7 +33,7 @@ export const SplashScreen = ({ children }) => {
                   Launch
                 </Button>
                 <Button
-                  className="w-1/2"
+                  className="sm:w-1/2"
                   variant="primary"
                   onClick={() => {
                     toggleFullScreen();

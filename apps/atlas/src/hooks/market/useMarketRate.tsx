@@ -1,5 +1,5 @@
 import { formatEther } from '@ethersproject/units';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { number } from 'starknet';
 import { resources } from '@/constants/resources';
 import {
@@ -55,7 +55,7 @@ export const useMarketRate = () => {
     );
   }, [exchangeRateData]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (!historicPricesData) {
       return;
     }

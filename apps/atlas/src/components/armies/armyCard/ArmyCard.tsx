@@ -19,15 +19,13 @@ import { useAtlasContext } from '@/context/AtlasContext';
 import { useCommandList } from '@/context/CommandListContext';
 import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { Entrypoints } from '@/hooks/settling/useTravel';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
+import { armyLocation, hasArrived } from '../ArmyGetters';
 import { ArmyBattalions } from './ArmyBattalions';
 import { ArmyStatistics } from './ArmyStatistics';
-
-export interface ArmyAndOrder extends Army {
-  orderType?: string;
-}
 
 type Prop = {
   army: ArmyAndOrder;
@@ -37,53 +35,38 @@ type Prop = {
 };
 
 export const ArmyCard: React.FC<Prop> = (props) => {
-  const { userRealms } = useUsersRealms();
-
-  const army = props.army;
-
-  const { play } = useUiSounds(soundSelector.pageTurn);
+  const { army, onBuildArmy, onTravel, selectedRealm } = props;
   const [selectedTab, setSelectedTab] = useState(0);
 
+  const { userRealms } = useUsersRealms();
   const {
     mapContext: { navigateToAsset },
   } = useAtlasContext();
-
-  const armyLocation =
-    army.destinationRealmId == 0 ? army.realmId : army.destinationRealmId;
+  const { play } = useUiSounds(soundSelector.pageTurn);
 
   const travelInformation = getTravelTime({
-    travellerId: armyLocation,
-    destinationId: props.selectedRealm,
+    travellerId: armyLocation(army),
+    destinationId: selectedRealm,
   });
 
-  // bools
-  const isAtLocation = armyLocation == props.selectedRealm;
-  const hasArrived = army?.destinationArrivalTime > new Date().getTime();
+  const isAtLocation = armyLocation(army) == selectedRealm;
+
   const isHome = [0, army.realmId].includes(army?.destinationRealmId);
 
-  const isOwnRealm = userRealms?.realms.find(
-    (a) => a.realmId === props.army.realmId
-  );
+  const isOwnRealm = userRealms?.realms.find((a) => a.realmId === army.realmId);
 
   const tabs = useMemo(
     () => [
       {
         label: <Map className="self-center w-3 h-3 fill-current" />,
-        component: <ArmyStatistics army={props.army} />,
+        component: <ArmyStatistics army={army} />,
       },
       {
         label: <Head className="self-center w-3 h-3 fill-current" />,
-        component: <ArmyBattalions army={props.army} />,
+        component: <ArmyBattalions army={army} />,
       },
     ],
-    [
-      isAtLocation,
-      isHome,
-      props.onTravel,
-      props.onBuildArmy,
-      props.army,
-      props.selectedRealm,
-    ]
+    [isAtLocation, isHome, onTravel, onBuildArmy, army, selectedRealm]
   );
 
   const pressedTab = (index) => {
@@ -92,7 +75,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
   };
 
   const txQueue = useCommandList();
-
   const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
 
   useEffect(() => {
@@ -125,7 +107,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               <div className="flex mt-2 space-x-2">
                 {army.armyId != 0 &&
                   (isAtLocation ? (
-                    <h5>{hasArrived ? 'on the way' : 'here'}</h5>
+                    <h5>{hasArrived(army) ? 'on the way' : 'here'}</h5>
                   ) : (
                     <Button
                       onClick={() => {
@@ -161,17 +143,17 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                   <Button
                     variant="outline"
                     size="xs"
-                    onClick={() => props.onBuildArmy && props.onBuildArmy()}
+                    onClick={() => onBuildArmy && onBuildArmy()}
                   >
                     Build Army
                   </Button>
                 )}
-                {props.onTravel && !isAtLocation && isOwnRealm && (
+                {onTravel && !isAtLocation && isOwnRealm && (
                   <Button
                     variant="outline"
                     size="sm"
                     disabled={enqueuedHarvestTx}
-                    onClick={() => props.onTravel && props.onTravel()}
+                    onClick={() => onTravel && onTravel()}
                   >
                     {enqueuedHarvestTx ? (
                       'traveling'
@@ -203,7 +185,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
               </h5>
             </div>
           </div>
-          {hasArrived && (
+          {hasArrived(army) && (
             <div className="flex text-sm font-semibold rounded ">
               <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
             </div>

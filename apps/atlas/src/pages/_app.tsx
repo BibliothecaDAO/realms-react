@@ -1,5 +1,6 @@
 import { ApolloProvider } from '@apollo/client';
 import { Button } from '@bibliotheca-dao/ui-lib/base';
+import CartridgeConnector from '@cartridge/connector';
 import { UserAgentProvider } from '@quentin-sommer/react-useragent';
 import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
 import { ConnectKitProvider } from 'connectkit';
@@ -19,7 +20,6 @@ import { SoundProvider } from '@/context/soundProvider';
 import { UIProvider } from '@/context/UIContext';
 import { UserBalancesProvider } from '@/context/UserBalancesContext';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
-
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import apolloClient from '@/util/apolloClient';
@@ -68,6 +68,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       new InjectedConnector({ options: { id: 'argentX' } }),
       new InjectedConnector({ options: { id: 'braavos' } }),
       new InjectedConnector({ options: { id: 'guildly' } }),
+      // new CartridgeConnector([
+      //   {
+      //     target: ModuleAddr.Labor,
+      //     method: 'harvest',
+      //   },
+      // ]),
     ],
     []
   );
@@ -78,7 +84,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <WagmiConfig client={wagmiClient}>
             <ConnectKitProvider theme="midnight">
               <StarknetConfig connectors={connectors} autoConnect>
-                {/* <QueryClientProvider client={queryClient}> */}
                 <CommandListProvider>
                   <UserBalancesProvider>
                     <BankProvider>
@@ -97,15 +102,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </BankProvider>
                   </UserBalancesProvider>
                 </CommandListProvider>
-                {/* <PageTransition
-                Component={Component}
-                pageProps={pageProps}
-              ></PageTransition> */}
-                {/* <ReactQueryDevtools
-                  initialIsOpen={false}
-                  position="bottom-right"
-                />
-                </QueryClientProvider> */}
               </StarknetConfig>
             </ConnectKitProvider>
           </WagmiConfig>{' '}
