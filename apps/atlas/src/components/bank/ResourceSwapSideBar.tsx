@@ -4,7 +4,11 @@ import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { SwapResources } from '@/components/bank/SwapResources';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
-import { sidebarClassNames } from '@/constants/ui';
+import {
+  leftExpandedOffsets,
+  leftShrinkedOffsets,
+  sidebarClassNames,
+} from '@/constants/ui';
 
 import { useUIContext } from '@/context/UIContext';
 import AtlasSideBar from '../map/AtlasSideBar';
@@ -24,7 +28,7 @@ export const ResourceSwapSideBar = ({
 }: ResourceSwapSideBarProps) => {
   const { empireSidebar } = useUIContext();
   const offsetClasses = useMemo(() => {
-    return empireSidebar ? 'ml-24 my-24' : 'ml-20';
+    return empireSidebar ? leftShrinkedOffsets : leftExpandedOffsets;
   }, [empireSidebar]);
   return (
     <AtlasSideBar
