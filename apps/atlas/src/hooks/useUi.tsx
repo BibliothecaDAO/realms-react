@@ -15,6 +15,7 @@ export type UIContextType = {
   toggleSettleRealms: () => void;
   toggleResourcesList: () => void;
   toggleLeaderboard: () => void;
+  toggleVizir: () => void;
   toggleLore: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
@@ -26,6 +27,7 @@ export type UIContextType = {
   loreSidebar: boolean;
   leaderboardSidebar: boolean;
   onboarding: boolean;
+  vizirSidebar: boolean;
 };
 
 export function useUi() {
@@ -42,6 +44,7 @@ export function useUi() {
   const [resourcesListSidebar, setResourcesListSidebar] = useState(false);
   const [loreSidebar, setLoreSidebar] = useState(false);
   const [leaderboardSidebar, setLeaderboardSidebar] = useState(false);
+  const [vizirSidebar, setVizirSidebar] = useState(false);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -141,5 +144,7 @@ export function useUi() {
     toggleLore,
     onboarding,
     closeAll,
+    vizirSidebar,
+    toggleVizir: () => setVizirSidebar(!vizirSidebar),
   };
 }
