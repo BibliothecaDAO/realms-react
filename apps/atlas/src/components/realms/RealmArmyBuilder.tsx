@@ -476,6 +476,7 @@ export const ArmyBuilder = (props: Props) => {
                 <div key={index} className="mt-8">
                   <h3 className="mb-4">Raids on Realm</h3>
                   <HistoryCard
+                    realmId={a.realmId}
                     timeStamp={a.timestamp}
                     eventId={a.eventId}
                     event={`Raided by Realm ${a.data.attackRealmId}`}
