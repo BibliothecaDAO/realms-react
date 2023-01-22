@@ -18,8 +18,7 @@ export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
     <AtlasSideBar
       isOpen={isOpen}
       position="left"
-      containerClassName="w-full !p-0"
-      isTransparent={true}
+      containerClassName="right-0 top-0 left-0 bottom-0 my-20 ml-20 mr-8 !p-0"
       overflowHidden={true}
     >
       <EmpireQuickView onClose={onClose} />
@@ -35,7 +34,7 @@ export const EmpireQuickView = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <>
-      <BaseSideBarPanel position="left" className="bg-cover !pt-0">
+      <BaseSideBarPanel position="left" className="bg-cover !flex-row !pt-0">
         <RealmProvider>
           <CryptProvider>
             <LootProvider>

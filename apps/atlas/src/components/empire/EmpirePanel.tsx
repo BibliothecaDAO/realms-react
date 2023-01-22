@@ -169,9 +169,9 @@ export function EmpirePanel() {
   };
 
   return (
-    <div className="relative flex h-screen pt-20 pb-20 pl-20 pr-8">
+    <div className="relative flex flex-1 bg-yellow-scroll">
       <div className="relative w-9/12">
-        <div className="flex-col h-full overflow-auto border-4 border-yellow-800/60 bg-gradient-to-r from-gray-900 to-gray-1000 rounded-2xl">
+        <div className="flex-col h-full overflow-auto bg-gradient-to-r from-gray-900 to-gray-1000 rounded-xl">
           {quickActions.length > 0 && (
             <div className="flex w-full gap-2 p-4 mb-4 rounded-2xl">
               {quickActions.map((action) => {
@@ -222,7 +222,7 @@ export function EmpirePanel() {
       </div>
       <div className="w-3/12 ml-4">
         <img
-          className="object-cover h-full bg-white rounded-2xl"
+          className="object-cover h-full bg-white rounded-xl"
           src={'/vizirs/mj_military_vizir.png'}
           alt="Vizir"
         />

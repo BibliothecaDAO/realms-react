@@ -4,7 +4,11 @@ import { twMerge } from 'tailwind-merge';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CommandList } from '@/components/ui/transactions/CommandList';
 import { TransactionCartTable } from '@/components/ui/transactions/Transactions';
-import { sidebarClassNames } from '@/constants/ui';
+import {
+  rightExpandedOffsets,
+  rightShrinkedOffsets,
+  sidebarClassNames,
+} from '@/constants/ui';
 import { useUIContext } from '@/context/UIContext';
 import AtlasSideBar from '../../map/AtlasSideBar';
 
@@ -28,8 +32,8 @@ export const TransactionCartSideBar = ({
       resourcesListSidebar ||
       loreSidebar ||
       leaderboardSidebar
-      ? 'mr-12 my-24'
-      : '';
+      ? rightShrinkedOffsets
+      : rightExpandedOffsets;
   }, [empireSidebar, resourcesListSidebar]);
   return (
     <AtlasSideBar

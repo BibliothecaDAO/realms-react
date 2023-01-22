@@ -36,7 +36,7 @@ export const ResourcesListSideBarPanel = (
 ) => {
   return (
     <BaseSideBarPanel className="z-50" position="right" onClose={props.onClose}>
-      <div className="relative px-6 rounded">
+      <div className="relative p-6 rounded">
         <BankPanel />
       </div>
     </BaseSideBarPanel>

@@ -73,10 +73,12 @@ export const TopLeftNav = () => {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <div className="right-0 p-4 -ml-8 text-white border-4 rounded shadow-md rounded-2xl bg-gradient-to-r from-gray-900 to-gray-1000 border-yellow-800/60 shadow-yellow-800/60 z-100">
-                    <div className="text-center">Available resources:</div>
-                    <div className="grid grid-cols-2 gap-4 mt-2 whitespace-nowrap w-80">
-                      {resourcesList}
+                  <div className="right-0 p-2 -ml-8 rounded bg-yellow-scroll z-100">
+                    <div className="p-4 text-white rounded-xl bg-gradient-to-r from-gray-900 to-gray-1000">
+                      <div className="text-center">Available resources:</div>
+                      <div className="grid grid-cols-2 gap-4 mt-4 whitespace-nowrap w-80">
+                        {resourcesList}
+                      </div>
                     </div>
                   </div>
                 </Transition>

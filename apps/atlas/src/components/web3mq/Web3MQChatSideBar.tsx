@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { AppTypeEnum, LoginModal, Button } from 'web3-mq-react';
+import { useUIContext } from '@/context/UIContext';
 
-import { sidebarClassNames } from '../../constants/ui';
+import {
+  rightExpandedOffsets,
+  rightShrinkedOffsets,
+  sidebarClassNames,
+} from '../../constants/ui';
 import useWeb3MQLogin from '../../hooks/useWeb3MQLogin';
 import AtlasSideBar from '../map/AtlasSideBar';
 
@@ -80,6 +86,22 @@ export const Web3MQChatSideBar = ({
   const { init, fastestUrl, keys, getEthAccount, login, logout, register } =
     useWeb3MQLogin();
 
+  const {
+    empireSidebar,
+    resourcesListSidebar,
+    loreSidebar,
+    leaderboardSidebar,
+  } = useUIContext();
+
+  const offsetClasses = useMemo(() => {
+    return empireSidebar ||
+      resourcesListSidebar ||
+      loreSidebar ||
+      leaderboardSidebar
+      ? rightShrinkedOffsets
+      : rightExpandedOffsets;
+  }, [empireSidebar, resourcesListSidebar]);
+
   useEffect(() => {
     document
       .getElementsByTagName('body')[0]
@@ -90,7 +112,7 @@ export const Web3MQChatSideBar = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-50')}
     >
       {isOpen && (
         <div id={'chat-content'} className={'relative w-full h-full'}>
@@ -100,7 +122,7 @@ export const Web3MQChatSideBar = ({
               containerId="chat-content"
               isShow={true}
               loginBtnNode={
-                <div className="absolute left-2/4 top-2/4 -translate-x-1/2 -translate-y-1/2">
+                <div className="absolute -translate-x-1/2 -translate-y-1/2 left-2/4 top-2/4">
                   <Button>Login</Button>
                 </div>
               }

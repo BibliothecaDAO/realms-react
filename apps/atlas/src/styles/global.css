@@ -172,3 +172,19 @@ div#deckgl-wrapper {
   background: #000 !important;
   color: #a1a1aa;
 }
+
+.bg-yellow-scroll {
+  background-color: #cebba2;
+}
+
+.fill-yellow-scroll {
+  fill: #cebba2;
+}
+
+.color-yellow-scroll {
+  color: #cebba2;
+}
+
+.stroke-yellow-scroll {
+  stroke: #cebba2;
+}

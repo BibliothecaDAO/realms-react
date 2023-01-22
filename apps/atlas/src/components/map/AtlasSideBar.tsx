@@ -42,10 +42,10 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
   return ReactDOM.createPortal(
     <animated.div
       className={clsx(
-        'absolute top-0  bottom-0 rounded-2xl transition duration-500 ease-in-out',
+        'absolute top-0 flex flex-col  bottom-0 rounded transition duration-500 ease-in-out',
         props.isTransparent
           ? 'bg-transparent'
-          : 'bg-gradient-to-r from-gray-900 to-gray-1000 border-4 border-yellow-800/60 shadow-xl shadow-yellow-800/60',
+          : 'bg-yellow-scroll shadow-md shadow-black p-2',
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
         props.position == 'left' ? 'left-0' : 'right-0',
         props.overflowHidden ? 'overflow-hidden' : 'overflow-y-auto',
@@ -57,7 +57,16 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
           : 'translate-x-full'
       )}
     >
-      {props.children}
+      <div
+        className={clsx(
+          'fixed top-2 bottom-2 overflow-hidden right-2 left-2 flex-1 rounded-xl flex',
+          props.isTransparent
+            ? 'bg-transparent'
+            : 'bg-gradient-to-r from-gray-900 to-gray-1000'
+        )}
+      >
+        {props.children}
+      </div>
     </animated.div>,
     props.container || document.getElementById('sidebar-root')!,
     'sidebar-root'
