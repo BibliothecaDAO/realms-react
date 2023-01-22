@@ -229,15 +229,15 @@ export const RealmBuildModal = (props: Prop) => {
 
   return (
     <div className="flex flex-wrap">
-      <div className="flex flex-wrap w-full min-h-max">
-        <div className="relative w-1/3">
+      <div className="relative flex flex-wrap w-full min-h-max">
+        <div className="w-1/3">
           <img
             src={getHappinessImage({
               realm: props.realm,
               food: props.availableFood,
             })}
             alt=""
-            className="object-cover w-full rounded-br-full"
+            className="sticky top-0 object-cover w-full rounded-br-full"
           />
         </div>
         <div className="w-2/3 h-full p-10 mx-auto overflow-y-scroll rounded-2xl">
