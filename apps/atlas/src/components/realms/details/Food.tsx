@@ -611,7 +611,12 @@ export const FoodBuildingComponent = (props: {
               <div>
                 <Button
                   onClick={() => {
-                    harvest(realm?.realmId, HarvestType.Export, id);
+                    harvest(
+                      realm?.realmId,
+                      HarvestType.Export,
+                      id,
+                      RealmBuildingId.Farm === id ? WHEAT_ID : FISH_ID
+                    );
                   }}
                   size="lg"
                   disabled={toHarvest === 0 || enqueuedHarvestTx}
