@@ -14,6 +14,7 @@ export default function VizirAsk() {
   return (
     <main className="flex justify-center">
       <div className="w-full p-4">
+        <div className="flex justify-center mb-8 text-3xl">Vizir AI</div>
         <div className="flex items-center">
           <img
             alt="vizir"
