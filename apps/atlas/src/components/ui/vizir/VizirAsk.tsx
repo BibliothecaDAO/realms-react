@@ -12,28 +12,35 @@ export default function VizirAsk() {
   };
 
   return (
-    <main className="flex justify-center p-10 ">
+    <main className="flex justify-center">
       <div className="w-full p-4">
-        <img
-          alt="vizir"
-          src="/vizirs/mj_military_vizir.png"
-          className="w-full mx-auto border-4 border-white rounded-full shadow-xl shadow-green-500/30"
-        />
-        <div className="py-3 my-4">
-          I am trained on the{' '}
-          <a href="https://scroll.bibliothecadao.xyz/">Master Scroll</a>. Ask me
-          anything about Loot, Realms, Eternum or BibliothecaDAO.
+        <div className="flex items-center">
+          <img
+            alt="vizir"
+            src="/vizirs/mj_military_vizir.png"
+            className="w-32 h-32 mr-8 border border-yellow-900 rounded-xl"
+          />
+          <div className="text-lg">
+            Greetings, my Lord! Ask me anything about Loot, Realms, Eternum or
+            BibliothecaDAO.
+            <br /> I am trained on the{' '}
+            <a className="underline" href="https://scroll.bibliothecadao.xyz/">
+              Master Scroll
+            </a>{' '}
+            and can anwer your questions.
+          </div>
         </div>
+
         {!data && !loading && (
-          <>
+          <div className="flex flex-col items-center justify-center">
             <TextInput
               placeholder="What do you want to know?"
               value={inputValue.logline}
               onChange={handleChange}
-              className="w-full p-5 mt-8 text-2xl text-white shadow-inner bg-gray-300/20 placeholder:italic placeholder:text-slate-100 focus:ring-0 rounded-3xl"
+              className="w-full p-5 mt-8 text-2xl font-bold leading-tight tracking-widest transition-all duration-300 rounded-lg shadow-md appearance-none focus:outline-none bg-gray-800/40 hover:bg-gray-300/20"
             />
 
-            <div className="my-4">
+            <div className="mx-auto my-4">
               <Button
                 disabled={inputValue.logline === ''}
                 variant="primary"
@@ -46,12 +53,12 @@ export default function VizirAsk() {
                 Search the Scroll
               </Button>
             </div>
-          </>
+          </div>
         )}
 
         {data && !loading && (
-          <>
-            <div className="p-5 mb-4 text-2xl border-4 shadow-inner bg-black/20 rounded-3xl">
+          <div className="flex flex-col items-center justify-center">
+            <div className="p-5 mt-8 mb-4 text-2xl shadow-inner bg-gray-800/40 rounded-3xl">
               {' '}
               {data.item_id}
             </div>
@@ -64,7 +71,7 @@ export default function VizirAsk() {
             >
               Try again?
             </Button>
-          </>
+          </div>
         )}
         {loading && (
           <div className="flex justify-center mx-auto my-4">

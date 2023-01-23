@@ -112,7 +112,7 @@ export const Web3MQChatSideBar = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-100')}
     >
       {
         <div id={'chat-content'} className={'relative w-full h-full'}>
