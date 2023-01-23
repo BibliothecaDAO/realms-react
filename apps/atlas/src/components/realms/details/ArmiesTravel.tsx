@@ -51,7 +51,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   const armyTravelTable = allArmies
     ?.map((army) => {
       const travelInformation = getTravelTime({
-        travellerId: army.destinationRealmId,
+        travellerId: army.destinationRealmId || army.realmId,
         destinationId: realm.realmId,
       });
       return {
