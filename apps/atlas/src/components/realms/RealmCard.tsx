@@ -343,7 +343,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
 
-              <div className="flex">
+              <div className="flex ml-auto">
                 <span
                   className={`self-center text-xs  uppercase ${
                     getIsRealmAnnexed(realm) ? 'text-green-700' : 'text-red-400'

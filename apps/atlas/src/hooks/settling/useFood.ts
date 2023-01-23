@@ -57,7 +57,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.harvest,
     calldata: [
-      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.realmId)),
       args.harvestType,
       args.foodBuildingId,
     ],
