@@ -114,7 +114,7 @@ export const Web3MQChatSideBar = ({
       isOpen={isOpen}
       containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-50')}
     >
-      {isOpen && (
+      {
         <div id={'chat-content'} className={'relative w-full h-full'}>
           {!keys ? (
             <LoginModal
@@ -141,7 +141,7 @@ export const Web3MQChatSideBar = ({
             />
           ) : null}
         </div>
-      )}
+      }
     </AtlasSideBar>
   );
 };
