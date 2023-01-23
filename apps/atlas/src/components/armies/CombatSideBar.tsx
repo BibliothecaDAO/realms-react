@@ -158,7 +158,7 @@ export const CombatSideBar: React.FC<Prop> = ({
   ];
 
   return (
-    <div className="z-50 h-full bg-cover bg-realmCombatBackground">
+    <div className="z-50 flex-1 h-full overflow-auto bg-cover bg-realmCombatBackground">
       <div className="flex justify-center w-full pt-3">
         <Button variant="outline" onClick={() => onClose()}>
           Return to Atlas
