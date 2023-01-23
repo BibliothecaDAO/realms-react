@@ -15,7 +15,7 @@ export const VizirSideBar = ({ isOpen, onClose }: ChatSideBarProps) => {
       isOpen={isOpen}
       containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
     >
-      <div className="p-10">
+      <div className="p-10 overflow-auto">
         <VizirAsk />
       </div>
     </AtlasSidebar>
