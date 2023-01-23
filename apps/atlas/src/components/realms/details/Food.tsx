@@ -6,6 +6,7 @@ import {
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import ChevronDown from '@bibliotheca-dao/ui-lib/icons/chevron-down.svg';
 import ChevronUp from '@bibliotheca-dao/ui-lib/icons/chevron-up.svg';
 import { formatEther } from '@ethersproject/units';
@@ -95,8 +96,8 @@ export const RealmsFood = (props: Prop) => {
 
   return (
     <div>
-      <div>
-        <div className="relative flex flex-wrap w-1/3 pb-2 border rounded border-white/10">
+      <div className="grid items-start grid-cols-3 gap-2">
+        <div className="relative flex flex-wrap w-full pb-2 border rounded border-white/10">
           <div className="relative">
             <img
               alt="Storehouse"
@@ -106,14 +107,14 @@ export const RealmsFood = (props: Prop) => {
             <div className="absolute top-0 w-full p-4 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
               <h3 className="flex justify-between p-1 px-2 ">Storehouse</h3>
             </div>
-            <div className="absolute bottom-0 flex w-full p-8 bg-gradient-to-t from-gray-900 rounded-t-xl rounded-xl">
+            <div className="absolute bottom-0 flex items-center w-full p-8 bg-gradient-to-t from-gray-900 rounded-t-xl rounded-xl">
               <div className="self-center mr-3 text-3xl">
                 {availableFood?.toLocaleString()
                   ? availableFood?.toLocaleString()
                   : '0 Food in Store'}
               </div>
               {availableFood && availableFood > 0 ? (
-                <div className="flex justify-end">
+                <div className="flex justify-end p-1 rounded bg-black/70">
                   <CountdownTimer
                     date={(
                       (availableFood / getPopulation(realm)) * 1000 +
@@ -366,102 +367,33 @@ export const RealmsFood = (props: Prop) => {
             </div>
           </div>
         </div>
+        <div className="relative flex flex-wrap w-full pb-2 border rounded border-white/10">
+          <FoodBuildingComponent
+            realm={realm}
+            id={RealmBuildingId.Farm}
+            built={realmFoodDetails.farmsBuilt}
+            capacity={farmCapacity}
+            harvestsLeft={realmFoodDetails.farmHarvestsLeft}
+            timeTillHarvest={realmFoodDetails.farmTimeTillHarvest}
+            toHarvest={realmFoodDetails.farmsToHarvest}
+            decayed={realmFoodDetails.farmsDecayed}
+            costs={farmCosts}
+          />
+        </div>
+        <div className="relative flex flex-wrap w-full pb-2 border rounded border-white/10">
+          <FoodBuildingComponent
+            realm={realm}
+            id={RealmBuildingId.FishingVillage}
+            built={realmFoodDetails.villagesBuilt}
+            capacity={fishingVillageCapacity}
+            harvestsLeft={realmFoodDetails.villagesHarvestsLeft}
+            timeTillHarvest={realmFoodDetails.villagesTimeTillHarvest}
+            toHarvest={realmFoodDetails.villagesToHarvest}
+            decayed={realmFoodDetails.villagesDecayed}
+            costs={fishingVillageCosts}
+          />
+        </div>
       </div>
-      <div className="flex w-full border-4 border-yellow-900/40 rounded-2xl">
-        {/* <div className="w-full p-8">
-          <div className=""></div>{' '}
-          <div className="flex flex-wrap w-full p-2">
-            <div className="w-full mb-2 text-3xl">
-              {(+formatEther(getFishBalance ?? 0)).toLocaleString()} $FISH
-            </div>
-            <Button
-              onClick={() => {
-                convert(realm?.realmId, input.fishConversion, FISH_ID);
-              }}
-              size="md"
-              variant="primary"
-            >
-              Convert $FISH into Storehouse
-            </Button>
-            <InputNumber
-              value={input.fishConversion}
-              inputSize="md"
-              colorScheme="transparent"
-              className="w-24 bg-white border rounded-r border-white/40"
-              min={1}
-              max={10000000}
-              stringMode
-              onChange={(value: ValueType | null) => {
-                if (value) {
-                  setInput((current) => {
-                    return {
-                      ...current,
-                      fishConversion: value.toString(),
-                    };
-                  });
-                }
-              }}
-            />
-          </div>
-          <div className="flex flex-wrap w-full p-2">
-            <div className="w-full mb-2 text-3xl">
-              {(+formatEther(getWheatBalance ?? 0)).toLocaleString()} $WHEAT
-            </div>
-            <Button
-              onClick={() => {
-                convert(realm?.realmId, input.wheatConversion, WHEAT_ID);
-              }}
-              size="md"
-              variant="primary"
-            >
-              Convert $WHEAT into Storehouse
-            </Button>
-            <InputNumber
-              value={input.wheatConversion}
-              inputSize="md"
-              colorScheme="transparent"
-              className="w-24 bg-white border rounded-r border-white/40"
-              min={1}
-              max={100000}
-              stringMode
-              onChange={(value: ValueType | null) => {
-                if (value) {
-                  setInput((current) => {
-                    return {
-                      ...current,
-                      wheatConversion: value.toString(),
-                    };
-                  });
-                }
-              }}
-            />{' '}
-          </div>
-        </div> */}
-      </div>
-      {/* <div className="grid grid-cols-2">
-        <FoodBuildingComponent
-          realm={realm}
-          id={RealmBuildingId.Farm}
-          built={realmFoodDetails.farmsBuilt}
-          capacity={farmCapacity}
-          harvestsLeft={realmFoodDetails.farmHarvestsLeft}
-          timeTillHarvest={realmFoodDetails.farmTimeTillHarvest}
-          toHarvest={realmFoodDetails.farmsToHarvest}
-          decayed={realmFoodDetails.farmsDecayed}
-          costs={farmCosts}
-        />
-        <FoodBuildingComponent
-          realm={realm}
-          id={RealmBuildingId.FishingVillage}
-          built={realmFoodDetails.villagesBuilt}
-          capacity={fishingVillageCapacity}
-          harvestsLeft={realmFoodDetails.villagesHarvestsLeft}
-          timeTillHarvest={realmFoodDetails.villagesTimeTillHarvest}
-          toHarvest={realmFoodDetails.villagesToHarvest}
-          decayed={realmFoodDetails.villagesDecayed}
-          costs={fishingVillageCosts}
-        />
-      </div> */}
     </div>
   );
 };
@@ -531,7 +463,7 @@ export const FoodBuildingComponent = (props: {
     return Array.from({ length: level }, (item, index) => (
       <div key={index}>
         <div
-          className={`h-4 p-4 border border-white/30 rounded flex m-1 ${
+          className={`h-2 p-2 border border-white/30 rounded flex m-1 ${
             toHarvest > 0 ? 'animate-pulse' : ''
           }  ${index < built ? color : ''}`}
         >
@@ -545,7 +477,7 @@ export const FoodBuildingComponent = (props: {
   };
 
   return (
-    <div className="border-4 border-yellow-800/40 rounded-2xl">
+    <div className="w-full">
       <div className="flex flex-wrap justify-between ">
         <div className="relative">
           <img
@@ -553,17 +485,17 @@ export const FoodBuildingComponent = (props: {
             src={buildingImageById(id)}
             alt="Hut"
           />
-          <div className="absolute top-0 w-full px-10 py-8 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
-            <h2 className="flex justify-between p-1 px-2">
+          <div className="absolute top-0 w-full p-4 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
+            <h3 className="flex justify-between p-1 px-2 ">
               {buildingIdToString(id)}{' '}
               <span>
                 {built} / {capacity}{' '}
               </span>
-            </h2>
+            </h3>
           </div>
 
-          <div className="absolute bottom-0 w-full px-10 py-8 bg-gradient-to-t from-gray-900">
-            <p className="self-center px-2 text-2xl text-white">
+          <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-gray-900">
+            <p className="self-center px-2 text-white">
               {built} {buildingIdToString(id)} generating{' '}
               {(BASE_FOOD_PRODUCTION * built).toLocaleString()}{' '}
               {id === RealmBuildingId.Farm ? '$WHEAT' : '$FISH'} every{' '}
@@ -571,7 +503,7 @@ export const FoodBuildingComponent = (props: {
             </p>
           </div>
         </div>{' '}
-        <div className="flex flex-wrap px-6">
+        <div className="flex flex-wrap p-2">
           {' '}
           {cropLand({
             level: capacity,
@@ -582,94 +514,100 @@ export const FoodBuildingComponent = (props: {
             built: built,
           })}
         </div>
-        <div className="px-5 pb-5">
-          <div className="flex flex-wrap justify-between w-full p-3">
-            <div className="w-full">
-              <div className="flex flex-wrap justify-between p-2 mt-auto">
-                <div className="w-1/3 my-2">
-                  <h5>To Harvest </h5>
-                  <div>
-                    {toHarvest} / {MAX_HARVESTS}
-                    {harvestsLeft > 0 && (
-                      <div className="flex space-x-1">
-                        Next Harvest:{' '}
-                        <CountdownTimer
-                          date={(
-                            timeTillHarvest + new Date().getTime()
-                          ).toString()}
-                        />
-                      </div>
-                    )}
+        <div className="flex flex-wrap justify-between w-full px-2 pb-2">
+          <div className="w-full">
+            <div className="flex flex-col">
+              <div className="flex my-2">
+                <h5>To Harvest: </h5>
+                <div className="ml-2">
+                  {toHarvest} / {MAX_HARVESTS}
+                </div>
+              </div>
+              {harvestsLeft > 0 && (
+                <div className="flex mb-2">
+                  <h5>Next Harvest: </h5>
+                  <div className="ml-2">
+                    <CountdownTimer
+                      statement={<div className="text-green-600">Now</div>}
+                      date={(timeTillHarvest + new Date().getTime()).toString()}
+                    />
                   </div>
                 </div>
-
-                <div className="w-1/3 my-2">
-                  <h5>Harvests Left</h5>
-                  <div>{harvestsLeft}</div>
-                </div>
-              </div>
-              <div>
-                <Button
-                  onClick={() => {
-                    harvest(
-                      realm?.realmId,
-                      HarvestType.Export,
-                      id,
-                      RealmBuildingId.Farm === id ? WHEAT_ID : FISH_ID
-                    );
-                  }}
-                  size="lg"
-                  disabled={toHarvest === 0 || enqueuedHarvestTx}
-                  variant="primary"
-                >
-                  {(BASE_FOOD_PRODUCTION * built * toHarvest).toLocaleString()}{' '}
-                  {RealmBuildingId.Farm === id ? '$WHEAT' : '$FISH'}
-                  {enqueuedHarvestTx ? ' Harvesting...' : ' to harvest'}
-                </Button>
+              )}
+              <div className="flex mb-2">
+                <h5>Harvests Left</h5>
+                <div className="ml-2">{harvestsLeft}</div>
               </div>
             </div>
+            <div>
+              <Button
+                onClick={() => {
+                  harvest(
+                    realm?.realmId,
+                    HarvestType.Export,
+                    id,
+                    RealmBuildingId.Farm === id ? WHEAT_ID : FISH_ID
+                  );
+                }}
+                size="xs"
+                disabled={toHarvest === 0 || enqueuedHarvestTx}
+                variant="primary"
+              >
+                {(BASE_FOOD_PRODUCTION * built * toHarvest).toLocaleString()}{' '}
+                {RealmBuildingId.Farm === id ? '$WHEAT' : '$FISH'}
+                {enqueuedHarvestTx ? ' Harvesting...' : ' to harvest'}
+              </Button>
+            </div>
+          </div>
 
-            <div className="w-full my-4">
-              <div className="flex flex-wrap ">
-                <div className="flex w-full space-x-2">
+          <div className="w-full my-4">
+            <div className="flex flex-wrap ">
+              <div className="flex w-full space-x-2">
+                <Tooltip
+                  placement="top"
+                  className="flex w-min"
+                  tooltipText={
+                    <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                      {costs?.resources.map((a, i) => {
+                        return (
+                          <CostBlock
+                            key={i}
+                            resourceName={a.resourceName}
+                            amount={a.amount}
+                            id={a.resourceId}
+                            qty={parseInt(qty) || 0}
+                          />
+                        );
+                      })}
+                    </div>
+                  }
+                >
                   <Button
                     onClick={() => {
                       create(realm?.realmId, qty, id, costs);
                     }}
-                    size="sm"
+                    size="xs"
                     variant="primary"
                     disabled={enqueuedBuildTx}
                   >
                     {enqueuedBuildTx ? 'Building...' : 'Build'}
                   </Button>
-                  {capacity && (
-                    <InputNumber
-                      value={qty}
-                      inputSize="sm"
-                      colorScheme="transparent"
-                      className="w-12 border rounded border-white/40"
-                      min={1}
-                      max={capacity}
-                      stringMode
-                      onChange={(value: ValueType | null) => {
-                        setQty(value);
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="flex mt-4">
-                  {costs?.resources.map((a, i) => {
-                    return (
-                      <CostBlock
-                        key={i}
-                        resourceName={a.resourceName}
-                        amount={a.amount}
-                        id={a.resourceId}
-                        qty={parseInt(qty) || 0}
-                      />
-                    );
-                  })}
-                </div>
+                </Tooltip>
+
+                {capacity && (
+                  <InputNumber
+                    value={qty}
+                    inputSize="sm"
+                    colorScheme="transparent"
+                    className="w-12 border rounded border-white/40"
+                    min={1}
+                    max={capacity}
+                    stringMode
+                    onChange={(value: ValueType | null) => {
+                      setQty(value);
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>

@@ -39,7 +39,7 @@ export const RealmSideBar = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-50')}
+      containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-30')}
     >
       {isOpen && <RealmsQuickView realmId={realmId} onClose={onClose} />}
     </AtlasSideBar>

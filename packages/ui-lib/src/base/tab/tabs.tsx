@@ -55,7 +55,7 @@ export const Tabs = ({
       {onChange ? (
         <HeadlessTab.Group
           as="div"
-          className={clsx('flex flex-1 flex-col ', className)}
+          className={clsx('flex  flex-col ', className)}
           selectedIndex={selectedIndex}
           onChange={onChange}
         >
@@ -64,7 +64,7 @@ export const Tabs = ({
       ) : (
         <HeadlessTab.Group
           as="div"
-          className={clsx('flex flex-1 flex-col ', className)}
+          className={clsx('flex flex-col ', className)}
         >
           {children}
         </HeadlessTab.Group>

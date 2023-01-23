@@ -213,7 +213,7 @@ export const buildingPopulation = (id: RealmBuildingId) => {
 };
 
 export enum RealmHappinessImages {
-  Abundant = '/realm/happiness/abundant.png',
+  Abundant = '/realm/happiness/abundance.png',
   Average = '/realm/happiness/average.png',
   Unhappy = '/realm/happiness/unhappy.png',
 }

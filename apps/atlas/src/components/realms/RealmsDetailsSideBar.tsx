@@ -29,7 +29,7 @@ export const RealmsDetailSideBar = (props: RealmSideBarProps) => {
         'left-0 right-0 ml-24 mr-12 my-24 z-30 w-fit-content'
       )}
     >
-      <RealmsQuickView {...props} />
+      {props.isOpen && <RealmsQuickView {...props} />}
     </AtlasSideBar>
   );
 };

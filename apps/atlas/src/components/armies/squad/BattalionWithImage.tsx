@@ -55,7 +55,7 @@ export const BattalionWithImage: React.FC<
         troopId={props.battalionId}
         health={props.health}
         baseHealth={100} // TODO add base amount of health (unit health * qty)
-        className="absolute z-50 px-1 py-2"
+        className="absolute z-10 px-1 py-2"
       />
       <div className="absolute z-10 flex justify-between p-2 mt-auto text-center rounded-full bg-gray-1000/90 left-2 bottom-2">
         <h4 className="">{props.quantity || 0}</h4>

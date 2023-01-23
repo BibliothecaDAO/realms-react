@@ -373,7 +373,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         </AtlasSidebar>
 
         <AtlasSidebar
-          containerClassName={sidebarClassNames.replace('z-30', 'z-40')}
+          containerClassName={sidebarClassNames.replace('z-30', 'z-100')}
           isOpen={isTravel}
         >
           {isTravel && (

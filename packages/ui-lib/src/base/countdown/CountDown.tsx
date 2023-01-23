@@ -2,7 +2,7 @@ import { useCountdown } from '@bibliotheca-dao/core-lib';
 
 interface DateProps {
   date: string;
-  statement?: string;
+  statement?: any;
 }
 
 interface TimeDisplay {
