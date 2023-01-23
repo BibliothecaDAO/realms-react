@@ -26,7 +26,12 @@ import {
   getIsRealmAnnexed,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
-import { HarvestType, RealmBuildingId } from '@/constants/globals';
+import {
+  FISH_ID,
+  HarvestType,
+  RealmBuildingId,
+  WHEAT_ID,
+} from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
@@ -256,14 +261,16 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
-                              RealmBuildingId.Farm
+                              RealmBuildingId.Farm,
+                              WHEAT_ID
                             );
                           }
                           if (realmFoodDetails.villagesToHarvest > 0) {
                             harvest(
                               realm?.realmId,
                               HarvestType.Export,
-                              RealmBuildingId.FishingVillage
+                              RealmBuildingId.FishingVillage,
+                              FISH_ID
                             );
                           }
                         }}
@@ -336,7 +343,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 {getTimeUntilNextTick(realm)} hrs
               </h6>
 
-              <div className="flex">
+              <div className="flex ml-auto">
                 <span
                   className={`self-center text-xs  uppercase ${
                     getIsRealmAnnexed(realm) ? 'text-green-700' : 'text-red-400'

@@ -52,16 +52,18 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     tokenId: number;
     harvestType: number;
     foodBuildingId: number;
+    realmId: number;
   }) => ({
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.harvest,
     calldata: [
-      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.realmId)),
       args.harvestType,
       args.foodBuildingId,
     ],
     metadata: {
       ...args,
+      resourceId: args.tokenId,
       action: Entrypoints.harvest,
     },
   }),
@@ -107,7 +109,7 @@ type UseRealmFoodDetails = {
   availableFood: number | undefined;
   loading: boolean;
   create: (tokenId, quantity, foodBuildingId, costs) => void;
-  harvest: (tokenId, harvestType, foodBuildingId) => void;
+  harvest: (realmId, harvestType, foodBuildingId, tokenId) => void;
   convert: (tokenId, quantity, resourceId) => void;
 };
 
@@ -271,7 +273,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
         })
       );
     },
-    harvest: (tokenId, harvestType, foodBuildingId) => {
+    harvest: (realmId, harvestType, foodBuildingId, tokenId) => {
       if (harvestType === RealmBuildingId.FishingVillage) {
         if (harvestType === HarvestType.Export) {
           harvestFish();
@@ -288,6 +290,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
       txQueue.add(
         createCall.harvest({
+          realmId,
           tokenId,
           harvestType,
           foodBuildingId,

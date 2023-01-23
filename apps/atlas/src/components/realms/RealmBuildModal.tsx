@@ -237,7 +237,7 @@ export const RealmBuildModal = (props: Prop) => {
               food: props.availableFood,
             })}
             alt=""
-            className="sticky top-0 object-cover w-full rounded-br-full"
+            className="sticky top-0 object-cover w-full -translate-y-8 rounded-br-full"
           />
         </div>
         <div className="w-2/3 h-full p-10 mx-auto overflow-y-scroll rounded-2xl">
