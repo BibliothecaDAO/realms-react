@@ -29,7 +29,7 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
     <div
       className={clsx(
         'flex items-end mb-4 mr-2',
-        senderInfo?.address == currentUserAddress && 'flex-row-reverse'
+        senderInfo?.wallet_address == currentUserAddress && 'flex-row-reverse'
       )}
     >
       <Avatar
@@ -37,12 +37,12 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
         image={avatar}
         size={30}
         className={`${
-          senderInfo?.address !== currentUserAddress ? '' : 'ml-2 !mr-0'
+          senderInfo?.wallet_address !== currentUserAddress ? '' : 'ml-2 !mr-0'
         }`}
       />
       <div
         className={`flex flex-col p-2 px-2 bg-white relative rounded-xl bg-opacity-5 w-fit ${
-          senderInfo?.address == currentUserAddress
+          senderInfo?.wallet_address == currentUserAddress
             ? 'ml-auto text-right'
             : 'mr-auto'
         }`}
@@ -51,7 +51,7 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
           className="text-yellow-600"
           style={{
             color:
-              senderInfo?.address == currentUserAddress
+              senderInfo?.wallet_address == currentUserAddress
                 ? ''
                 : `#${senderInfo?.address.substr(2, 6) || '000000'}`,
           }}
