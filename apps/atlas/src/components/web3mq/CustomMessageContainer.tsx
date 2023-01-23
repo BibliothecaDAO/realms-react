@@ -8,11 +8,11 @@ import { botMainKeys, getShortAddress } from './LordsChatProvider';
 export const CustomMessageContainer = (props: { message: MessageItem }) => {
   const { message } = props;
   const { content, date, timestamp, senderId, senderInfo = {} } = message;
-  const { avatar_url: avatarUrl, nickname } = senderInfo.web3mqInfo || {};
+  const { avatar_url: avatarUrl, nickname } = senderInfo?.web3mqInfo || {};
   const { address: currentUserAddress } = useAccount();
-  const avatar = avatarUrl || senderInfo.defaultUserAvatar;
+  const avatar = avatarUrl || senderInfo?.defaultUserAvatar;
   const nickName =
-    nickname || senderInfo.defaultUserName || getShortAddress(senderId);
+    nickname || senderInfo?.defaultUserName || getShortAddress(senderId);
 
   if (senderId === botMainKeys.userid) {
     return (
@@ -24,17 +24,12 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
       </div>
     );
   }
-  console.log(
-    'senderId',
-    senderInfo,
-    'currentUserAddress',
-    currentUserAddress?.substring(2)
-  );
+
   return (
     <div
       className={clsx(
         'flex items-end mb-4 mr-2',
-        senderInfo.address == currentUserAddress && 'flex-row-reverse'
+        senderInfo?.address == currentUserAddress && 'flex-row-reverse'
       )}
     >
       <Avatar
@@ -42,12 +37,12 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
         image={avatar}
         size={30}
         className={`${
-          senderInfo.address !== currentUserAddress ? '' : 'ml-2 !mr-0'
+          senderInfo?.address !== currentUserAddress ? '' : 'ml-2 !mr-0'
         }`}
       />
       <div
         className={`flex flex-col p-2 px-2 bg-white relative rounded-xl bg-opacity-5 w-fit ${
-          senderInfo.address == currentUserAddress
+          senderInfo?.address == currentUserAddress
             ? 'ml-auto text-right'
             : 'mr-auto'
         }`}
@@ -56,9 +51,9 @@ export const CustomMessageContainer = (props: { message: MessageItem }) => {
           className="text-yellow-600"
           style={{
             color:
-              senderInfo.address == currentUserAddress
+              senderInfo?.address == currentUserAddress
                 ? ''
-                : `#${senderInfo.address.substr(2, 6) || '000000'}`,
+                : `#${senderInfo?.address.substr(2, 6) || '000000'}`,
           }}
         >
           {nickName}
