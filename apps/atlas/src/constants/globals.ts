@@ -217,3 +217,5 @@ export enum RealmHappinessImages {
   Average = '/realm/happiness/average.png',
   Unhappy = '/realm/happiness/unhappy.jpg',
 }
+
+export const RelicImage = '/mj_relic.png';

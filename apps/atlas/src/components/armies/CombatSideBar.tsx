@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import {
   Button,
+  Checkbox,
   CountdownTimer,
   ResourceIcon,
   Select,
@@ -15,7 +16,8 @@ import {
   getVaultRaidableLaborUnits,
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
-import { findResourceById } from '@/constants/resources';
+import { RelicImage } from '@/constants/globals';
+import { findResourceById, ResourcesIds } from '@/constants/resources';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useSoundContext } from '@/context/soundProvider';
 import type { Army, GetRealmQuery } from '@/generated/graphql';
@@ -41,6 +43,8 @@ export const CombatSideBar: React.FC<Prop> = ({
 }) => {
   const { address } = useAccount();
   const { userData } = useUsersRealms();
+
+  const [takeRelic, setTakeRelic] = useState(true);
 
   const {
     travelContext: { travel },
@@ -160,7 +164,7 @@ export const CombatSideBar: React.FC<Prop> = ({
   return (
     <div className="z-50 flex-1 h-full overflow-auto bg-cover bg-realmCombatBackground">
       <div className="flex justify-center w-full pt-3">
-        <Button variant="outline" onClick={() => onClose()}>
+        <Button variant="primary" onClick={() => onClose()}>
           Return to Atlas
         </Button>
       </div>
@@ -225,45 +229,67 @@ export const CombatSideBar: React.FC<Prop> = ({
                 setSelectedArmy={setSelectedArmy}
               />
             </div>
-            <div className="self-start w-full lg:px-24">
-              <div className="p-2 text-center bg-gray-1000 rounded-t-xl">
-                <h1>Raid</h1>
-              </div>
-              <div className="py-10 text-center border-4 border-yellow-900 rounded-b-full bg-gray-1000 ">
-                {hasOwnRelic(defendingRealm) ? (
-                  <img src="/mj_relic.png" alt="" />
-                ) : (
-                  ''
-                )}
-                <h5 className="my-3">
-                  {hasOwnRelic(defendingRealm) ? 'Relic vulnerable' : ''}
-                </h5>
-                {defendingRealm?.resources?.map((resource, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col justify-center p-2 mt-4"
-                  >
-                    <span className="self-center text-4xl">
-                      {' '}
-                      {getVaultRaidableLaborUnits(
-                        resource.labor?.vaultBalance
-                      ).toFixed(0)}
-                    </span>
-                    <ResourceIcon
-                      resource={
-                        findResourceById(resource.resourceId)?.trait.replace(
-                          ' ',
-                          ''
-                        ) || ''
-                      }
-                      size="sm"
-                    />
+            <div className="self-start w-full lg:px-24 ">
+              <div className="p-2 text-center bg-yellow-scroll">
+                <div className="py-3 mb-2 bg-gray-900 rounded-xl">
+                  <h1>Raid</h1>
+                </div>
+                <div className="rounded-xl bg-gray-1000">
+                  {hasOwnRelic(defendingRealm) && (
+                    <div>
+                      <img src={RelicImage} alt="" className="rounded" />
 
-                    <span className="self-center mt-1">
-                      {findResourceById(resource.resourceId)?.trait}
-                    </span>
+                      <h4 className="p-3 my-3">'The Relic is Vulnerable!'</h4>
+                      <div className="px-4">
+                        <Checkbox
+                          onChange={() => setTakeRelic(!takeRelic)}
+                          checked={takeRelic}
+                          label="Take Relic"
+                        />
+                        <span className="mt-2 italic">
+                          If you take a Relic - you will have a target on your
+                          back!
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex justify-center">
+                    {defendingRealm?.resources
+                      ?.filter(
+                        (a) =>
+                          a.resourceId != ResourcesIds.Fish &&
+                          a.resourceId != ResourcesIds.Wheat
+                      )
+                      .map((resource, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-col justify-center p-2 mt-4"
+                        >
+                          <span className="self-center text-4xl">
+                            {' '}
+                            {getVaultRaidableLaborUnits(
+                              resource.labor?.vaultBalance
+                            ).toFixed(0)}
+                          </span>
+                          <div>
+                            <ResourceIcon
+                              resource={
+                                findResourceById(
+                                  resource.resourceId
+                                )?.trait.replace(' ', '') || ''
+                              }
+                              size="sm"
+                            />
+                          </div>
+
+                          <span className="self-center mt-1">
+                            {findResourceById(resource.resourceId)?.trait}
+                          </span>
+                        </div>
+                      ))}
                   </div>
-                ))}
+                </div>
               </div>
               <Button
                 onClick={() => {
@@ -271,7 +297,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                     attackingArmyId: selectedArmy?.armyId,
                     attackingRealmId: selectedArmy?.realmId,
                     defendingRealmId: defendingRealm?.realmId,
-                    take_relic: 1,
+                    take_relic: takeRelic ? 1 : 0,
                   });
                 }}
                 loading={combatLoading}

@@ -1,6 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
 import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-import clsx from 'clsx';
 
 interface BaseSideBarPanel {
   title?: string | null | undefined;

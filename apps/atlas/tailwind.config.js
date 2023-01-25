@@ -297,6 +297,7 @@ module.exports = {
     'tailwindcss',
     'autoprefixer',
     'postcss-100vh-fix',
+    require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     plugin(function ({ addUtilities }) {
       addUtilities({

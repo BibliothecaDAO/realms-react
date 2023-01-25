@@ -19,3 +19,4 @@ export {
 } from './card/Card';
 export { Donut } from './chart/Donut';
 export { CountdownTimer } from './countdown/CountDown';
+export { Checkbox } from './check/Check';
