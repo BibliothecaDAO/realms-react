@@ -11,6 +11,7 @@ import {
   BASE_RESOURCES_PER_DAY,
   VAULT_LENGTH,
 } from '@/constants/globals';
+import { ResourcesIds } from '@/constants/resources';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
@@ -44,7 +45,7 @@ export const LaborTable = (props: Prop) => {
 
   const { getBalanceById } = useUserBalancesContext();
 
-  const { create, harvest } = useLabor();
+  const { create, harvest, create_food, harvest_food } = useLabor();
 
   const { gameConstants } = useGameConstants();
 
@@ -87,6 +88,10 @@ export const LaborTable = (props: Prop) => {
       units: getLaborUnitsGenerated(resource.labor?.vaultBalance),
     });
 
+    const isFood =
+      resource.resourceId === ResourcesIds.Fish ||
+      resource.resourceId === ResourcesIds.Wheat;
+
     return {
       build: (
         <div className="flex justify-center">
@@ -109,20 +114,38 @@ export const LaborTable = (props: Prop) => {
               </div>
             }
           >
-            <Button
-              onClick={() =>
-                create({
-                  realmId: realm.realmId,
-                  resourceId: resource.resourceId,
-                  laborUnits: 12,
-                  costs: costs,
-                })
-              }
-              variant="outline"
-              size="sm"
-            >
-              Buy Tools (12hrs)
-            </Button>
+            {!isFood ? (
+              <Button
+                onClick={() =>
+                  create({
+                    realmId: realm.realmId,
+                    resourceId: resource.resourceId,
+                    laborUnits: 12,
+                    costs: costs,
+                  })
+                }
+                variant="outline"
+                size="sm"
+              >
+                Buy Tools (12hrs)
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  create_food({
+                    realmId: realm.realmId,
+                    resourceId: resource.resourceId,
+                    laborUnits: 12,
+                    qtyBuilt: 5,
+                    costs: costs,
+                  })
+                }
+                variant="outline"
+                size="sm"
+              >
+                Build
+              </Button>
+            )}
           </Tooltip>
         </div>
       ),
@@ -141,61 +164,40 @@ export const LaborTable = (props: Prop) => {
           </div>
           <CostsRow
             title={'Gross Margin'}
-            value={<span>{(laborProfitMargin * 100).toFixed(2)}% </span>}
+            value={<span>{(laborProfitMargin * 100).toFixed(4)}% </span>}
             tooltipText={
               <span>
                 <span>
                   Cost in $LORDS: <br />
-                  {totalLordsCostOfLabor.toFixed(2)}
+                  {totalLordsCostOfLabor.toFixed(4)}
                 </span>{' '}
                 <br />
+                <hr />
                 <span>
-                  Revenue in $LORDS : <br />
-                  {lordsReturnFromLabor.toFixed(2)}
+                  Revenue in <br />
+                  $LORDS: <br />
+                  {lordsReturnFromLabor.toFixed(4)}
                 </span>
                 <br />
+                <hr />
                 <span>
                   Gross profit:
-                  <br /> {laborProfit.toFixed(2)}
+                  <br /> {laborProfit.toFixed(4)}
                 </span>
               </span>
             }
           />
-          {/* <CostsRow
-            title={'Cogs'}
-            value={totalLordsCostOfLabor.toFixed(2)}
-            tooltipText={'Cost of Labor to Produce in $LORDS'}
-          />
-          <CostsRow
-            title={'Revenue'}
-            value={lordsReturnFromLabor.toFixed(2)}
-            tooltipText={
-              'Your Revenue on Labor in $LORDS based on current prices'
-            }
-          />
-          <CostsRow
-            title={'Gross Profit'}
-            value={laborProfit.toFixed(2)}
-            tooltipText={'Gross profit'}
-          /> */}
         </div>
       ),
       resource: (
         <span className="flex">
           <span className="flex text-base whitespace-nowrap">
             <ResourceIcon
-              className="self-center mr-2"
+              className="self-center"
               resource={resource?.resourceName?.replace(' ', '') || ''}
               size="md"
             />
           </span>
-          {/* <Image
-            src={'/resources/' + resource.resourceId + '.jpg'}
-            alt="map"
-            width={80}
-            height={80}
-            className="border-4 rounded-2xl border-yellow-800/40"
-          /> */}
           <span className="self-center ml-3 text-xl text-left">
             {resource.resourceName} <br />
             <span className="text-base text-gray-600">
@@ -239,13 +241,6 @@ export const LaborTable = (props: Prop) => {
             getLaborUnitsGenerated(resource.labor?.vaultBalance) *
               BASE_RESOURCES_PER_CYCLE || 0
           ).toFixed()}
-
-          {/* <Number
-            end={
-              getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-                BASE_RESOURCES_PER_CYCLE || 0
-            }
-          />{' '} */}
           <span className="text-gray-600">
             / {BASE_RESOURCES_PER_CYCLE * 12 * VAULT_LENGTH}
           </span>
@@ -260,7 +255,7 @@ export const LaborTable = (props: Prop) => {
   });
 
   return (
-    <div className="py-3 text-sm">
+    <div className="mb-6 text-sm">
       <Table data={defaultData} columns={columns} {...tableOptions} />
     </div>
   );

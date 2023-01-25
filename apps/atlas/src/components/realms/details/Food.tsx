@@ -102,7 +102,7 @@ export const RealmsFood = (props: Prop) => {
             <img
               alt="Storehouse"
               className={' mx-auto w-full rounded-xl '}
-              src={'/realm-buildings/mj_storehouse.png'}
+              src={buildingImageById(RealmBuildingId.StoreHouse)}
             />
             <div className="absolute top-0 w-full p-4 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
               <h3 className="flex justify-between p-1 px-2 ">Storehouse</h3>
@@ -132,12 +132,15 @@ export const RealmsFood = (props: Prop) => {
 
           <div className="flex justify-between w-full p-3 font-semibold">
             <div className="flex ">
-              <ResourceIcon
-                className="self-center mr-2"
-                resource={'Wheat'}
-                size="sm"
-              />
-              <span>Wheat</span>
+              <div className="mr-3">
+                <ResourceIcon
+                  className="self-center"
+                  resource={'Wheat'}
+                  size="sm"
+                />
+              </div>
+
+              <span className="self-center">Wheat</span>
             </div>
             <span>{(+formatEther(getWheatBalance ?? 0)).toLocaleString()}</span>
           </div>
@@ -367,7 +370,7 @@ export const RealmsFood = (props: Prop) => {
             </div>
           </div>
         </div>
-        <div className="relative flex flex-wrap w-full pb-2 border rounded border-white/10">
+        {/* <div className="relative flex flex-wrap w-full pb-2 border rounded border-white/10">
           <FoodBuildingComponent
             realm={realm}
             id={RealmBuildingId.Farm}
@@ -392,7 +395,7 @@ export const RealmsFood = (props: Prop) => {
             decayed={realmFoodDetails.villagesDecayed}
             costs={fishingVillageCosts}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -255,7 +255,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       >
                         construct
                       </Button>
-                      <Button
+                      {/* <Button
                         onClick={() => {
                           if (realmFoodDetails.farmsToHarvest > 0) {
                             harvest(
@@ -291,7 +291,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       >
                         <ResourceIcon resource={'Wheat'} size="xs" />{' '}
                         <ResourceIcon resource={'Fish'} size="xs" />
-                      </Button>
+                      </Button> */}
                     </>
                   )}
                 </>

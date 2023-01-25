@@ -20,7 +20,6 @@ import {
   RealmOverview,
   RealmsFood,
   Travel,
-  WorkHuts,
 } from '@/components/realms/details';
 import { DefendingArmy } from '@/components/realms/details/DefendingArmy';
 import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings';
@@ -170,14 +169,6 @@ export const RealmBuildModal = (props: Prop) => {
           />
         ),
       },
-      /* {
-        label: (
-          <span className="flex">
-            <Sickle className="self-center w-4 h-4 mr-2 fill-current" />{' '}
-          </span>
-        ),
-        component: <WorkHuts buildings={buildings} realm={realm} />,
-      }, */
       {
         hotkey: HotKeys.FoodResources,
         label: (
@@ -240,24 +231,22 @@ export const RealmBuildModal = (props: Prop) => {
             className="sticky top-0 object-cover w-full -translate-y-8 rounded-br-full"
           />
         </div>
-        <div className="w-2/3 h-full p-10 mx-auto overflow-y-scroll rounded-2xl">
-          <div className="relative w-full text-center">
+        <div className="w-2/3 h-full px-10 mx-auto overflow-y-scroll rounded-2xl">
+          <div className="relative w-full text-center rounded">
             <div className="flex justify-center w-full py-3 text-center ">
-              <OrderIcon
-                withTooltip
-                size="lg"
-                order={realm.orderType.toLowerCase()}
-              />
-              <h1 className="self-center ml-3">{realm.name}</h1>
+              <div className="self-center">
+                <OrderIcon
+                  withTooltip
+                  size="lg"
+                  className="self-center"
+                  order={realm.orderType.toLowerCase()}
+                />
+              </div>
+
+              <h1 className="ml-3">{realm.name}</h1>
             </div>
           </div>
 
-          {/* <div className="flex justify-center w-full">
-            <h6 className="">
-              ({getNumberOfTicks(realm)} cycles) | {getTimeSinceLastTick(realm)}{' '}
-              hrs since update
-            </h6>
-          </div> */}
           <Tabs
             selectedIndex={Object.keys(HotKeys).indexOf(subview || 'Overview')}
             onChange={(index) => pressedTab(index as number)}

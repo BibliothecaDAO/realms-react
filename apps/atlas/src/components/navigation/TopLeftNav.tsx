@@ -39,27 +39,31 @@ export const TopLeftNav = () => {
     const balance = getBalanceById(resource.id);
 
     return (
-      <div key={resource.id} className="flex items-center text-sm">
-        <ResourceIcon className="mr-2" size="xs" resource={resource.trait} />
-        {resource?.trait}:
-        <div
-          className={
-            'block w-full ml-2 tracking-widest uppercase ' +
-            ((balance?.amount || 0) > 0
-              ? 'text-green-600 shadow-green-100 drop-shadow-lg'
-              : 'text-red-200')
-          }
-        >
-          {(+formatEther(balance?.amount || 0)).toLocaleString()}
+      <div key={resource.id} className="flex flex-wrap items-center text-sm">
+        <div className="mr-2">
+          <ResourceIcon size="xs" resource={resource.trait} />
+        </div>
+        <div>
+          <span className="opacity-80"> {resource?.trait}</span>
+
+          <div
+            className={
+              'block w-full tracking-widest uppercase ' +
+              ((balance?.amount || 0) > 0
+                ? 'text-green-600 shadow-green-100 drop-shadow-lg font-semibold'
+                : 'text-red-200')
+            }
+          >
+            {(+formatEther(balance?.amount || 0)).toLocaleString()}
+          </div>
         </div>
       </div>
     );
   });
   return (
     <div className="absolute z-50 ">
-      {/* <div className="w-full h-screen pointer-events-none z-100 bg-paperTexture bg-blend-multiply"></div> */}
       <div className="relative">
-        <div className="absolute z-50 w-48 h-8 top-1 lg:w-64 lg:h-10 md:pl-16 lg:pl-24 md:text-xs lg:text-lg shadow-red-900 text-gray-1000">
+        <div className="absolute z-50 w-48 h-8 top-1 lg:w-96 lg:h-10 md:pl-16 lg:pl-24 md:text-xs lg:text-lg shadow-red-900 text-gray-1000">
           {address && (
             <Tooltip
               placement="right"
@@ -75,8 +79,8 @@ export const TopLeftNav = () => {
                 >
                   <div className="right-0 p-2 -ml-8 rounded bg-yellow-scroll z-100">
                     <div className="p-4 text-white rounded-xl bg-gradient-to-r from-gray-900 to-gray-1000">
-                      <div className="text-center">Available resources:</div>
-                      <div className="grid grid-cols-2 gap-4 mt-4 whitespace-nowrap w-80">
+                      <div className="text-center">Available Resources</div>
+                      <div className="grid grid-cols-2 gap-2 mt-4 whitespace-nowrap w-80">
                         {resourcesList}
                       </div>
                     </div>
