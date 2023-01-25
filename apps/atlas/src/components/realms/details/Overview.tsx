@@ -71,16 +71,16 @@ export function RealmOverview(
         </span>
       </div> */}
       {hasOwnRelic(props.realm) ? (
-        <div className="px-2 flex my-4">
+        <div className="flex px-2 my-4">
           <div className="self-center">
             <img
               src={'/vizirs/mj_military_vizir.png'}
               alt="map"
-              className="shadow-lg rounded-full  w-32 h-32 mr-4 shadow-purple-800"
+              className="object-fill w-32 h-32 mr-4 rounded-full shadow-lg shadow-purple-800"
             />
           </div>
 
-          <div className="w-2/3 self-center">
+          <div className="self-center w-2/3">
             <p className="italic">
               Visir: "Citizens of {props.realm?.name} are living peacefully on
               its lands. The Lord of {props.realm?.name} is keeping them safe
@@ -117,7 +117,7 @@ export function RealmOverview(
       <div className="flex justify-between">
         <div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400  italic">Population</h5>
+            <h5 className="italic text-yellow-400 opacity-80">Population</h5>
             <h3>{getPopulation(props.realm)} </h3>
             <span className="text-sm text-gray-700">
               {' '}
@@ -126,7 +126,7 @@ export function RealmOverview(
             </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400  italic">Happiness</h5>
+            <h5 className="italic text-yellow-400 opacity-80">Happiness</h5>
             <h3>
               {getHappiness({ realm: props.realm, food: props.availableFood })}{' '}
               <span className="ml-2">
@@ -144,7 +144,7 @@ export function RealmOverview(
             </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 italic">Food in Store</h5>
+            <h5 className="italic text-yellow-400 opacity-80">Food in Store</h5>
             <h3>
               {props.availableFood?.toLocaleString()}{' '}
               {getFoodIcon(props.availableFood || 0)}
@@ -154,7 +154,7 @@ export function RealmOverview(
             </span>
           </div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 italic">
+            <h5 className="italic text-yellow-400 opacity-80">
               Building Utilisation (sqm)
             </h5>
             <h3>
@@ -165,7 +165,7 @@ export function RealmOverview(
         </div>
         <div>
           <div className="p-2">
-            <h5 className="opacity-80 text-yellow-400 italic">Resources</h5>
+            <h5 className="italic text-yellow-400 opacity-80">Resources</h5>
             <h3>{maxClaimableResources(cachedDaysAccrued)}</h3>
             <span className="text-sm text-gray-700">
               {' '}
@@ -222,7 +222,7 @@ export function RealmOverview(
           traitAmount={getTrait(props.realm, 'River')}
         />
       </div> */}
-      <div className="w-full pt-4 bg-gray-1000 shadow-inner">
+      <div className="w-full pt-4 shadow-inner bg-gray-1000">
         <div className="flex w-full mt-auto space-x-2">
           {' '}
           {isYourRealm(props.realm, l1Address, address || '') && (

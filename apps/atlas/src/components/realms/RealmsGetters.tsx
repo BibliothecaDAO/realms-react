@@ -626,3 +626,9 @@ export const getIsRealmAnnexed = (realm: RealmFragmentFragment) => {
 export const getRelicsOwned = (realm: RealmFragmentFragment) => {
   return realm?.relicsOwned;
 };
+
+export function isLessThan10MinutesOld(timestamp) {
+  const now = new Date();
+  const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
+  return timestamp > tenMinutesAgo;
+}

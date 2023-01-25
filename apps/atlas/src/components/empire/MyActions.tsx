@@ -11,6 +11,8 @@ export function MyActions(props: Prop) {
   const { burnAll } = useUsersRealms();
   const { balance, userRealms } = useUserBalancesContext();
 
+  console.log('userRealms', userRealms);
+
   return (
     <div className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6">
       <div className="col-start-1 col-end-13">

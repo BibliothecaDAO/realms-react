@@ -17,7 +17,11 @@ import {
   getIsRealmAnnexed,
   getHolderOfRelic,
 } from '@/components/realms/RealmsGetters';
-import { STORE_HOUSE_SIZE } from '@/constants/globals';
+import {
+  buildingImageById,
+  RealmBuildingId,
+  STORE_HOUSE_SIZE,
+} from '@/constants/globals';
 import type {
   BuildingFootprint,
   RealmFoodDetails,
@@ -57,7 +61,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_castle.png',
+      img: buildingImageById(RealmBuildingId.Castle),
     },
     {
       title: 'Population',
@@ -70,7 +74,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_fishing_village.png',
+      img: buildingImageById(RealmBuildingId.Castle),
     },
     {
       title: 'Happiness',
@@ -93,7 +97,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_barracks.png',
+      img: buildingImageById(RealmBuildingId.Barracks),
     },
     {
       title: 'Food in Store',
@@ -104,7 +108,7 @@ export function DetailedOverview(
       ),
       subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_storehouse.png',
+      img: buildingImageById(RealmBuildingId.StoreHouse),
     },
     {
       title: 'Utilisation',
@@ -127,7 +131,7 @@ export function DetailedOverview(
             <img
               src={'/vizirs/mj_military_vizir.png'}
               alt="map"
-              className="w-32 h-32 mr-10 border rounded-full shadow-inner border-yellow-800/40"
+              className="object-cover w-48 h-48 mr-10 border rounded shadow-inner border-yellow-800/40"
             />
           </div>
 
@@ -186,9 +190,9 @@ export function DetailedOverview(
         {dataCards.map((card, i) => {
           return (
             <div key={i} className="flex w-1/3 h-full">
-              <div className="flex flex-grow m-2 border rounded-2xl border-yellow-800/40">
+              <div className="flex flex-grow m-2 border rounded-xl border-yellow-800/40">
                 <img
-                  className="object-cover w-24 rounded-l-2xl"
+                  className="object-cover w-24 rounded-xl"
                   src={card.img}
                   alt=""
                 />

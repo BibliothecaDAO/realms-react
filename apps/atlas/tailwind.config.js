@@ -139,8 +139,6 @@ module.exports = {
         paperTexture: "url('/paper_shape.png')",
         texture: "url('/texture-button.png')",
         hero: "url('/createOrDestroy-desktop.webp')",
-        warRoom: "url('/warRoom-desktop.png')",
-        bank: "url('/riches-desktop.png')",
         realm: "url('/realm.jpg')",
         crypt: "url('/crypt.jpg')",
         conic: 'conic-gradient(var(--tw-gradient-stops))',
