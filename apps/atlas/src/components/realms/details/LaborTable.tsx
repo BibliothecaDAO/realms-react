@@ -23,6 +23,7 @@ import {
   getLaborGenerated,
   getUnproducedLabor,
 } from '../RealmsGetters';
+import { HarvestButton } from './HarvestButton';
 import { LaborValues } from './LaborValues';
 
 const columns = [
@@ -216,22 +217,11 @@ export const LaborTable = (props: Prop) => {
             vault={generation[2]}
             remaining={getUnproducedLabor(resource.labor?.balance)}
           />
-
-          <Button
-            onClick={() =>
-              harvest({
-                realmId: realm.realmId,
-                resourceId: resource.resourceId,
-              })
-            }
-            disabled={generation[0] == 0 || isNaN(generation[0])}
-            variant="outline"
-            size="xs"
-          >
-            {generation[0] == 0 || isNaN(generation[0])
-              ? 'nothing available'
-              : `Harvest`}
-          </Button>
+          <HarvestButton
+            realmId={realm.realmId}
+            resourceId={resource.resourceId}
+            generation={generation[0]}
+          />
         </span>
       ),
 
