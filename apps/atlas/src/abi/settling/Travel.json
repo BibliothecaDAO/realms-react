@@ -101,6 +101,18 @@
         "type": "felt"
       },
       {
+        "name": "location_contract_id",
+        "type": "felt"
+      },
+      {
+        "name": "location_token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "location_nested_id",
+        "type": "felt"
+      },
+      {
         "name": "destination_contract_id",
         "type": "felt"
       },
@@ -118,7 +130,7 @@
       }
     ],
     "keys": [],
-    "name": "TravelAction",
+    "name": "TravelAction_2",
     "type": "event"
   },
   {

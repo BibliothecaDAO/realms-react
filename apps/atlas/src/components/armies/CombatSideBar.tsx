@@ -271,6 +271,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                     attackingArmyId: selectedArmy?.armyId,
                     attackingRealmId: selectedArmy?.realmId,
                     defendingRealmId: defendingRealm?.realmId,
+                    take_relic: 1,
                   });
                 }}
                 loading={combatLoading}
