@@ -219,3 +219,8 @@ export enum RealmHappinessImages {
 }
 
 export const RelicImage = '/mj_relic.png';
+
+export enum CombatImages {
+  win = '/combat/win.jpg',
+  loss = '/combat/loss.jpg',
+}

@@ -14,6 +14,7 @@ import {
   getRealmNameById,
   hasOwnRelic,
   getVaultRaidableLaborUnits,
+  filterFoodResources,
 } from '@/components/realms/RealmsGetters';
 import { defaultArmy } from '@/constants/army';
 import { RelicImage } from '@/constants/globals';
@@ -255,13 +256,8 @@ export const CombatSideBar: React.FC<Prop> = ({
                   )}
 
                   <div className="flex justify-center">
-                    {defendingRealm?.resources
-                      ?.filter(
-                        (a) =>
-                          a.resourceId != ResourcesIds.Fish &&
-                          a.resourceId != ResourcesIds.Wheat
-                      )
-                      .map((resource, index) => (
+                    {filterFoodResources(defendingRealm?.resources).map(
+                      (resource, index) => (
                         <div
                           key={index}
                           className="flex flex-col justify-center p-2 mt-4"
@@ -287,7 +283,8 @@ export const CombatSideBar: React.FC<Prop> = ({
                             {findResourceById(resource.resourceId)?.trait}
                           </span>
                         </div>
-                      ))}
+                      )
+                    )}
                   </div>
                 </div>
               </div>

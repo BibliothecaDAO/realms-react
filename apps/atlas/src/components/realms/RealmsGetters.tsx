@@ -19,7 +19,11 @@ import {
   RealmHappinessImages,
   SECONDS_PER_KM,
 } from '@/constants/globals';
-import { findResourceById, resources } from '@/constants/resources';
+import {
+  findResourceById,
+  resources,
+  ResourcesIds,
+} from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
 import RawRealmsData from '@/geodata/realms_raw.json';
@@ -232,11 +236,14 @@ export const resourcePillaged = (resources: any) => {
               key={index}
             >
               <div className="flex">
-                <ResourceIcon
-                  size="xs"
-                  className="self-center"
-                  resource={info?.trait?.replace('_', '') as string}
-                />{' '}
+                <div>
+                  <ResourceIcon
+                    size="xs"
+                    className="self-center"
+                    resource={info?.trait?.replace('_', '') as string}
+                  />{' '}
+                </div>
+
                 <span className="self-center ml-4 mr-1">{info?.trait}</span>
               </div>
 
@@ -632,3 +639,10 @@ export function isLessThan10MinutesOld(timestamp) {
   const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
   return timestamp > tenMinutesAgo;
 }
+
+export const filterFoodResources = (resources) => {
+  return resources.filter(
+    (r) =>
+      r.resourceId != ResourcesIds.Fish && r.resourceId != ResourcesIds.Wheat
+  );
+};
