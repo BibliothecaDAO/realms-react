@@ -19,42 +19,42 @@
   {
     "members": [
       {
-        "name": "LightCavalry",
+        "name": "light_cavalry",
         "offset": 0,
         "type": "Battalion"
       },
       {
-        "name": "HeavyCavalry",
+        "name": "heavy_cavalry",
         "offset": 2,
         "type": "Battalion"
       },
       {
-        "name": "Archer",
+        "name": "archer",
         "offset": 4,
         "type": "Battalion"
       },
       {
-        "name": "Longbow",
+        "name": "longbow",
         "offset": 6,
         "type": "Battalion"
       },
       {
-        "name": "Mage",
+        "name": "mage",
         "offset": 8,
         "type": "Battalion"
       },
       {
-        "name": "Arcanist",
+        "name": "arcanist",
         "offset": 10,
         "type": "Battalion"
       },
       {
-        "name": "LightInfantry",
+        "name": "light_infantry",
         "offset": 12,
         "type": "Battalion"
       },
       {
-        "name": "HeavyInfantry",
+        "name": "heavy_infantry",
         "offset": 14,
         "type": "Battalion"
       }
@@ -66,12 +66,12 @@
   {
     "members": [
       {
-        "name": "Quantity",
+        "name": "quantity",
         "offset": 0,
         "type": "felt"
       },
       {
-        "name": "Health",
+        "name": "health",
         "offset": 1,
         "type": "felt"
       }
@@ -83,12 +83,12 @@
   {
     "members": [
       {
-        "name": "ArmyPacked",
+        "name": "packed",
         "offset": 0,
         "type": "felt"
       },
       {
-        "name": "LastAttacked",
+        "name": "last_attacked",
         "offset": 1,
         "type": "felt"
       },
@@ -98,12 +98,12 @@
         "type": "felt"
       },
       {
-        "name": "Level",
+        "name": "level",
         "offset": 3,
         "type": "felt"
       },
       {
-        "name": "CallSign",
+        "name": "call_sign",
         "offset": 4,
         "type": "felt"
       }
@@ -359,6 +359,10 @@
       {
         "name": "defending_realm_id",
         "type": "Uint256"
+      },
+      {
+        "name": "capture_relic",
+        "type": "felt"
       }
     ],
     "name": "initiate_combat",
@@ -403,6 +407,65 @@
       {
         "name": "army_data",
         "type": "ArmyData"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_all_armies",
+    "outputs": [
+      {
+        "name": "armies_len",
+        "type": "felt"
+      },
+      {
+        "name": "armies",
+        "type": "felt*"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_all_army_ids",
+    "outputs": [
+      {
+        "name": "army_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "army_ids",
+        "type": "felt*"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "get_population_of_armies",
+    "outputs": [
+      {
+        "name": "population",
+        "type": "felt"
       }
     ],
     "stateMutability": "view",
@@ -460,6 +523,55 @@
       }
     ],
     "name": "set_xoroshiro",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "ticks",
+        "type": "felt"
+      }
+    ],
+    "name": "combat_callback",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "ticks",
+        "type": "felt"
+      },
+      {
+        "name": "army_ids_len",
+        "type": "felt"
+      },
+      {
+        "name": "army_ids",
+        "type": "felt*"
+      }
+    ],
+    "name": "combat_callback_loop",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "realm_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "build_start_army",
     "outputs": [],
     "type": "function"
   }

@@ -97,6 +97,25 @@
     "type": "event"
   },
   {
+    "data": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "qty_built",
+        "type": "felt"
+      }
+    ],
+    "keys": [],
+    "name": "FoodBuildingsBuilt",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "name": "address_of_controller",
@@ -279,6 +298,44 @@
       }
     ],
     "name": "set_labor_cost",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "labor_units",
+        "type": "felt"
+      },
+      {
+        "name": "qty_built",
+        "type": "felt"
+      }
+    ],
+    "name": "create_food",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "token_id",
+        "type": "Uint256"
+      },
+      {
+        "name": "resource_id",
+        "type": "Uint256"
+      }
+    ],
+    "name": "harvest_food",
     "outputs": [],
     "type": "function"
   }

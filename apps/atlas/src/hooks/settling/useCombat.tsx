@@ -125,6 +125,7 @@ const useCombat = () => {
       attackingArmyId;
       attackingRealmId;
       defendingRealmId;
+      take_relic;
     }) => {
       raidSound();
 
@@ -135,6 +136,7 @@ const useCombat = () => {
           uint256.bnToUint256(number.toBN(args.attackingRealmId)),
           0, // only attack base realm
           uint256.bnToUint256(number.toBN(args.defendingRealmId)),
+          args.take_relic,
         ],
         metadata: {
           action: Entrypoints.initiateCombat,
