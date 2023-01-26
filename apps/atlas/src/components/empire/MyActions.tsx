@@ -11,12 +11,19 @@ export function MyActions(props: Prop) {
   const { burnAll } = useUsersRealms();
   const { balance, userRealms } = useUserBalancesContext();
 
+  console.log('userRealms', userRealms);
+
   return (
     <div className="grid grid-cols-12 gap-3 p-3 md:gap-6 md:grid-cols-12 sm:px-6">
       <div className="col-start-1 col-end-13">
         {userRealms
           ? userRealms?.realms.map((realm, index) => {
-              return <LaborTable key={index} realm={realm} />;
+              return (
+                <div key={index}>
+                  <h2>{realm.name}</h2>
+                  <LaborTable realm={realm} />
+                </div>
+              );
             })
           : ''}
       </div>

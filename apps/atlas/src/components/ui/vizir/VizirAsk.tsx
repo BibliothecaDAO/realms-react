@@ -19,13 +19,18 @@ export default function VizirAsk() {
           <img
             alt="vizir"
             src="/vizirs/mj_military_vizir.png"
-            className="w-32 h-32 mr-8 border border-yellow-900 rounded-xl"
+            className="object-cover w-32 h-32 mr-8 border border-yellow-900 rounded-xl"
           />
           <div className="text-lg">
             Greetings, my Lord! Ask me anything about Loot, Realms, Eternum or
             BibliothecaDAO.
             <br /> I am trained on the{' '}
-            <a className="underline" href="https://scroll.bibliothecadao.xyz/">
+            <a
+              target={'_blank'}
+              className="underline"
+              href="https://scroll.bibliothecadao.xyz/"
+              rel="noreferrer"
+            >
               Master Scroll
             </a>{' '}
             and can anwer your questions.

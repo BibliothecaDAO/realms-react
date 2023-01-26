@@ -32,31 +32,31 @@ export const buildingImageById = (id: RealmBuildingId) => {
   let name = 'n/a';
   switch (id) {
     case RealmBuildingId.House:
-      name = '/realm-buildings/mj_storehouse.png';
+      name = '/realm-buildings/storehouse.jpg';
       break;
     case RealmBuildingId.StoreHouse:
-      name = '/realm-buildings/storeHouse.png';
+      name = '/realm-buildings/storehouse.jpg';
       break;
     case RealmBuildingId.Granary:
       name = barracks;
       break;
     case RealmBuildingId.Farm:
-      name = '/realm-buildings/mj_farm.png';
+      name = '/realm-buildings/farm.jpg';
       break;
     case RealmBuildingId.FishingVillage:
       name = '/realm-buildings/mj_fishing_village.png';
       break;
     case RealmBuildingId.Barracks:
-      name = '/realm-buildings/mj_barracks.png';
+      name = '/realm-buildings/barracks.jpg';
       break;
     case RealmBuildingId.MageTower:
-      name = '/realm-buildings/mj_mage_tower.png';
+      name = '/realm-buildings/mageTower.jpg';
       break;
     case RealmBuildingId.ArcherTower:
-      name = '/realm-buildings/mj_archery_range.png';
+      name = '/realm-buildings/archerTower.jpg';
       break;
     case RealmBuildingId.Castle:
-      name = '/realm-buildings/mj_castle.png';
+      name = '/realm-buildings/castle.jpg';
       break;
   }
   return name;
@@ -213,7 +213,14 @@ export const buildingPopulation = (id: RealmBuildingId) => {
 };
 
 export enum RealmHappinessImages {
-  Abundant = '/realm/happiness/abundance.png',
+  Abundant = '/realm/happiness/abundance.jpg',
   Average = '/realm/happiness/average.png',
-  Unhappy = '/realm/happiness/unhappy.png',
+  Unhappy = '/realm/happiness/unhappy.jpg',
+}
+
+export const RelicImage = '/mj_relic.png';
+
+export enum CombatImages {
+  win = '/combat/win.jpg',
+  loss = '/combat/loss.jpg',
 }

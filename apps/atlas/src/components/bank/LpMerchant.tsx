@@ -99,7 +99,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             icon={<ChevronRight className="w-5 h-5 transform -rotate-90" />}
             labelIcon={
               <ResourceIcon
-                size="sm"
+                size="xs"
                 resource={props.resource?.tokenName ?? ''}
               />
             }
@@ -113,7 +113,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                 selectedIcon={<ChevronRight />}
                 icon={
                   <ResourceIcon
-                    size="sm"
+                    size="xs"
                     resource={resource?.tokenName ?? ''}
                   />
                 }
@@ -374,7 +374,7 @@ export function LpMerchant(): ReactElement {
       <div className="flex justify-end w-full pt-4">
         <div className="flex flex-col justify-end w-full">
           <div className="flex flex-col py-4 rounded ">
-            <div className="flex justify-end text-2xl font-semibold">
+            {/* <div className="flex justify-end text-2xl font-semibold">
               <span className="flex">
                 <span className="flex items-center mr-6 text-xs tracking-widest uppercase opacity-80">
                   {isBuy ? 'Total lords to spend:' : 'Total lords received:'}
@@ -382,7 +382,7 @@ export function LpMerchant(): ReactElement {
                 {calculatedTotalInLords.toLocaleString()}{' '}
                 <Lords key={1} className="w-5 ml-2" />
               </span>
-            </div>
+            </div> */}
             <div>
               <div className="flex justify-end text-md">
                 <span className="flex self-center mr-6 text-xs font-semibold tracking-widest uppercase opacity-80">

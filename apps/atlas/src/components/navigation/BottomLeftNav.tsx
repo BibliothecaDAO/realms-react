@@ -41,7 +41,7 @@ export const BottomLeftNav = () => {
             <img
               src={'/vizirs/mj_military_vizir.png'}
               alt="map"
-              className="w-16 h-16 mb-4 mr-4 rounded-full hover:opacity-80 "
+              className="object-cover w-16 h-16 mb-4 mr-4 rounded-full hover:opacity-80 "
             />
           </button>
         </div>

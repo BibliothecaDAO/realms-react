@@ -55,7 +55,7 @@ export const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> =
             type="number"
             ref={ref}
             className={clsx(
-              `bg-${colorScheme}`,
+              `bg-${colorScheme} border-0`,
               `input-number-${inputSize}`,
               inputClass
             )}

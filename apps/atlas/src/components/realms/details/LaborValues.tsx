@@ -1,6 +1,7 @@
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import ChevronDown from '@bibliotheca-dao/ui-lib/icons/chevron-down.svg';
+import { Disclosure } from '@headlessui/react';
 import { useEffect, useMemo, useState } from 'react';
-
 import { Pulse } from '@/components/ui/Pulse';
 import { BASE_RESOURCES_PER_CYCLE } from '@/constants/globals';
 
@@ -28,34 +29,41 @@ export const LaborValues = ({
   }, [labor_generated, part_labor, vault]);
 
   return (
-    <div className="text-base text-left">
-      <LaborRow
-        title={'Produced'}
-        pulse={generated.generated * BASE_RESOURCES_PER_CYCLE > 0}
-        value={
-          <span className="text-lg">
-            {' '}
-            {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()}
-          </span>
-        }
-        tooltipText={<span>Resources produced | total labor units</span>}
-      />
-      <LaborRow
-        title={'Production'}
-        pulse={generated.part > 0}
-        value={<span>{(generated.part * 100).toFixed(3)}%</span>}
-        tooltipText={<span>% completion of production</span>}
-      />
+    <Disclosure>
+      <Disclosure.Button className="flex justify-center w-full py-2 rounded bg-black/20 hover:bg-black/40">
+        <ChevronDown className="h-4" />
+      </Disclosure.Button>
+      <Disclosure.Panel className="text-gray-500">
+        <div className="text-base text-left">
+          <LaborRow
+            title={'Produced'}
+            pulse={generated.generated * BASE_RESOURCES_PER_CYCLE > 0}
+            value={
+              <span className="text-lg">
+                {' '}
+                {(generated.generated * BASE_RESOURCES_PER_CYCLE).toFixed()}
+              </span>
+            }
+            tooltipText={<span>Resources produced | total labor units</span>}
+          />
+          <LaborRow
+            title={'Production'}
+            pulse={generated.part > 0}
+            value={<span>{(generated.part * 100).toFixed(3)}%</span>}
+            tooltipText={<span>% completion of production</span>}
+          />
 
-      <LaborRow
-        title={'Queue'}
-        pulse={remaining > 0}
-        value={remaining}
-        tooltipText={
-          <span>You will continue to produce for {remaining} more cycles.</span>
-        }
-      />
-      {/* <LaborRow
+          <LaborRow
+            title={'Queue'}
+            pulse={remaining > 0}
+            value={remaining}
+            tooltipText={
+              <span>
+                You will continue to produce for {remaining} more cycles.
+              </span>
+            }
+          />
+          {/* <LaborRow
         title={'Vault'}
         pulse={generated.vault > 0}
         value={(generated.vault * BASE_RESOURCES_PER_CYCLE).toFixed(2)}
@@ -63,7 +71,9 @@ export const LaborValues = ({
           <span>This is what will accrue to your vault after harvest.</span>
         }
       /> */}
-    </div>
+        </div>
+      </Disclosure.Panel>
+    </Disclosure>
   );
 };
 

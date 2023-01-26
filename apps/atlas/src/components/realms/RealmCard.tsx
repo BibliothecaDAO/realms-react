@@ -24,6 +24,8 @@ import {
   getTimeUntilNextTick,
   getVaultRaidableLaborUnits,
   getIsRealmAnnexed,
+  filterFoodResources,
+  checkIsRaidable,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import {
@@ -168,47 +170,20 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         )}
         <div className="flex w-full">
-          <div className="flex self-center w-full">
+          <div className="flex self-center justify-between w-full pb-2 border-b border-white/30">
+            <div>
+              <h3 className="flex">
+                {realm.name} | <span className="px-2">{realm.realmId} </span>
+              </h3>
+            </div>
+
             <OrderIcon
               className="self-center"
               size="md"
               order={realm.orderType.toLowerCase()}
             />
-            <h3 className="flex mx-2">
-              {realm.name} | <span className="">{realm.realmId} </span>
-            </h3>
-            <div className="self-center">
-              {!isFavourite(realm, favouriteRealms) ? (
-                <Button
-                  size="xs"
-                  variant="unstyled"
-                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                >
-                  <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
-                </Button>
-              ) : (
-                <Button
-                  size="xs"
-                  variant="unstyled"
-                  className="w-full"
-                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                >
-                  <HeartIcon className="w-5" />
-                </Button>
-              )}
-            </div>
-
-            <span className="self-center">
-              <span className="ml-2">
-                {' '}
-                {getHappinessIcon({
-                  realm: realm,
-                  food: availableFood,
-                })}
-              </span>
-            </span>
           </div>
-          <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
+          {/* <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
             <div className="flex self-end">
               <span>
                 {' '}
@@ -220,13 +195,16 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </span>
             </div>
             <ArmyToolTip army={getArmyById(0, realm)} />
-          </div>
+          </div> */}
         </div>
         <div className="flex w-full mt-3">
           <div className="w-full">
             <div className="flex w-full my-3 space-x-2">
-              {realm.resources?.map((resource, index) => (
-                <div key={index} className="flex flex-col justify-center">
+              {filterFoodResources(realm.resources).map((resource, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col justify-center text-center"
+                >
                   <ResourceIcon
                     withTooltip
                     resource={
@@ -237,9 +215,12 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     }
                     size="xs"
                   />
-                  {getVaultRaidableLaborUnits(
-                    resource.labor?.vaultBalance
-                  ).toFixed(0)}
+                  <span className="font-semibold">
+                    {' '}
+                    {getVaultRaidableLaborUnits(
+                      resource.labor?.vaultBalance
+                    ).toFixed(0)}
+                  </span>
                 </div>
               ))}
             </div>
@@ -255,7 +236,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       >
                         construct
                       </Button>
-                      <Button
+                      {/* <Button
                         onClick={() => {
                           if (realmFoodDetails.farmsToHarvest > 0) {
                             harvest(
@@ -291,7 +272,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       >
                         <ResourceIcon resource={'Wheat'} size="xs" />{' '}
                         <ResourceIcon resource={'Fish'} size="xs" />
-                      </Button>
+                      </Button> */}
                     </>
                   )}
                 </>
@@ -306,7 +287,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       }}
                       size="sm"
                       // disabled={checkIsRaidable(realm)}
-                      variant={'primary'}
+                      variant={checkIsRaidable(realm) ? 'primary' : 'outline'}
                     >
                       {realm && getRealmCombatStatus(realm)}
                     </Button>
@@ -319,7 +300,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       setIsTravel(true);
                     }}
                     size="sm"
-                    variant={'primary'}
+                    variant={'outline'}
                   >
                     travel to raid
                   </Button>
@@ -338,6 +319,35 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             </div>
 
             <div className="flex justify-between w-full mt-3 text-sm">
+              <span className="self-center">
+                <span className="mr-2">
+                  {' '}
+                  {getHappinessIcon({
+                    realm: realm,
+                    food: availableFood,
+                  })}
+                </span>
+              </span>
+              <div className="self-center mr-2">
+                {!isFavourite(realm, favouriteRealms) ? (
+                  <Button
+                    size="xs"
+                    variant="unstyled"
+                    onClick={() => actions.addFavouriteRealm(realm.realmId)}
+                  >
+                    <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="xs"
+                    variant="unstyled"
+                    className="w-full"
+                    onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                  >
+                    <HeartIcon className="w-5" />
+                  </Button>
+                )}
+              </div>
               <h6 className="text-gray-700">
                 ({getNumberOfTicks(realm)} ticks) |{' '}
                 {getTimeUntilNextTick(realm)} hrs

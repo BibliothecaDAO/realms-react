@@ -32,17 +32,17 @@ export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
 
   return (
     <div>
-      <div className="">
-        <div className="flex justify-start w-full py-4 text-3xl text-center border-4 border-yellow-900  bg-gray-1000 rounded-t-2xl">
+      <div className="p-2 bg-yellow-scroll">
+        <div className="flex justify-between w-full p-4 text-3xl text-center bg-gray-1000 rounded-t-2xl">
           {/* <span>{starknetId}</span> */}
+          <span className="self-center">{getRealmNameById(realmId)}</span>
           <OrderIcon
             containerClassName="inline-block mx-4"
             size="md"
             order={order || ''}
           />{' '}
-          <span className="self-center">{getRealmNameById(realmId)}</span>
         </div>
-        <div className="grid grid-cols-4 gap-2 p-4 border-4 border-yellow-900  bg-gray-1000 rounded-b-2xl">
+        <div className="grid grid-cols-4 gap-2 p-4 bg-gray-1000 rounded-b-2xl">
           {battalions?.map((battalion, index) => {
             return (
               <span key={index}>
@@ -57,7 +57,7 @@ export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
             );
           })}
         </div>
-        <div className="w-full p-4 mt-3 border-4 border-yellow-900  bg-gray-1000 rounded-2xl">
+        <div className="w-full p-4 mt-3 bg-gray-1000 rounded-2xl">
           <Tabs
             selectedIndex={selectedTab}
             onChange={(index) => pressedTab(index as number)}

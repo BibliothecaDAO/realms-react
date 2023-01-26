@@ -1,6 +1,6 @@
 import { Button, CardBody } from '@bibliotheca-dao/ui-lib';
 import { useAccount } from '@starknet-react/core';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   generateRealmEvent,
   Event as EventType,
@@ -15,6 +15,7 @@ export function AccountOverview() {
   const { address } = useAccount();
 
   const [eventType, setEventType] = useState<EventType>();
+  const [lastUpdate, setLastUpdate] = useState<number>(0);
 
   const { data: accountData } = useGetRealmHistoryQuery({
     variables: {
@@ -38,6 +39,12 @@ export function AccountOverview() {
     })
     .filter((row) => row.event !== '');
 
+  useMemo(() => {
+    const now = new Date().getTime();
+
+    setLastUpdate(now);
+  }, [accountData]);
+
   return (
     <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
       <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
@@ -56,6 +63,7 @@ export function AccountOverview() {
             "Your Majesty, we have been busy since you have been away."
           </div>
         </div>
+
         <div className="flex flex-wrap mb-3">
           {Object.keys(EventType).map((key) => {
             return (
@@ -70,6 +78,9 @@ export function AccountOverview() {
               </div>
             );
           })}
+        </div>
+        <div className="mb-1 text-sm">
+          Last Update: {new Date(lastUpdate).toLocaleTimeString('en-US')}
         </div>
 
         <CardBody>

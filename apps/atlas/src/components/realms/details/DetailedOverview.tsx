@@ -17,12 +17,17 @@ import {
   getIsRealmAnnexed,
   getHolderOfRelic,
 } from '@/components/realms/RealmsGetters';
-import { STORE_HOUSE_SIZE } from '@/constants/globals';
+import {
+  buildingImageById,
+  RealmBuildingId,
+  STORE_HOUSE_SIZE,
+} from '@/constants/globals';
 import type {
   BuildingFootprint,
   RealmFoodDetails,
   RealmsCardProps,
 } from '@/types/index';
+import { RealmsFood } from './Food';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
@@ -34,7 +39,7 @@ interface RealmOverview {
 export function DetailedOverview(
   props: RealmsCardProps & RealmOverview
 ): ReactElement {
-  const { realm, availableFood, buildingUtilisation } = props;
+  const { realm, availableFood, buildingUtilisation, realmFoodDetails } = props;
 
   const usedStorehouseSpace = availableFood
     ? availableFood / STORE_HOUSE_SIZE
@@ -57,7 +62,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_castle.png',
+      img: buildingImageById(RealmBuildingId.Castle),
     },
     {
       title: 'Population',
@@ -70,7 +75,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_fishing_village.png',
+      img: buildingImageById(RealmBuildingId.Castle),
     },
     {
       title: 'Happiness',
@@ -93,19 +98,19 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_barracks.png',
+      img: buildingImageById(RealmBuildingId.Barracks),
     },
-    {
-      title: 'Food in Store',
-      value: (
-        <span>
-          {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
-        </span>
-      ),
-      subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
-      icon: '/icons/loot/loot.svg',
-      img: '/realm-buildings/mj_storehouse.png',
-    },
+    // {
+    //   title: 'Food in Store',
+    //   value: (
+    //     <span>
+    //       {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
+    //     </span>
+    //   ),
+    //   subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
+    //   icon: '/icons/loot/loot.svg',
+    //   img: buildingImageById(RealmBuildingId.StoreHouse),
+    // },
     {
       title: 'Utilisation',
       value: (
@@ -127,7 +132,7 @@ export function DetailedOverview(
             <img
               src={'/vizirs/mj_military_vizir.png'}
               alt="map"
-              className="w-32 h-32 mr-10 border rounded-full shadow-inner border-yellow-800/40"
+              className="object-cover w-48 h-48 mr-10 border rounded shadow-inner border-yellow-800/40"
             />
           </div>
 
@@ -182,25 +187,36 @@ export function DetailedOverview(
           ))}
         </div>
       </div> */}
-      <div className="flex flex-wrap w-full">
-        {dataCards.map((card, i) => {
-          return (
-            <div key={i} className="flex w-1/3 h-full">
-              <div className="flex flex-grow m-2 border rounded-2xl border-yellow-800/40">
-                <img
-                  className="object-cover w-24 rounded-l-2xl"
-                  src={card.img}
-                  alt=""
-                />
-                <div className="p-6">
-                  <h5 className="text-gray-600">{card.title}</h5>
-                  <div className="my-3 text-3xl">{card.value} </div>
-                  <p className="text-xs text-gray-700">{card.subTitle}</p>
+      <div className="flex w-full">
+        <div className="w-1/2">
+          <RealmsFood
+            realmFoodDetails={realmFoodDetails}
+            availableFood={availableFood}
+            realm={realm}
+            loading={false}
+          />
+        </div>
+
+        <div className="w-1/2">
+          {dataCards.map((card, i) => {
+            return (
+              <div key={i} className="flex w-full">
+                <div className="flex flex-grow mx-2 mb-2 border rounded-xl border-yellow-800/40">
+                  <img
+                    className="object-cover w-24 rounded-xl"
+                    src={card.img}
+                    alt=""
+                  />
+                  <div className="p-6">
+                    <h5 className="text-gray-600">{card.title}</h5>
+                    <div className="my-3 text-3xl">{card.value} </div>
+                    <p className="text-xs text-gray-700">{card.subTitle}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* <div

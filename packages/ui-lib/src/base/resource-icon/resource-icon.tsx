@@ -92,8 +92,15 @@ const STYLES = {
 
 export const ResourceIcon = (props: Props) => {
   const Icon = (
-    <div className={`flex self-center paper relative`}>
-      <span className={`${twMerge(STYLES.size[props.size], props.className)} `}>
+    <div
+      className={` flex self-center paper relative border rounded-xl p-2 justify-center w-full border-frame-primary/20 bg-white/10`}
+    >
+      <span
+        className={` mx-auto ${twMerge(
+          STYLES.size[props.size],
+          props.className
+        )} `}
+      >
         {
           Components[props.resource.replace(' ', '').replace("'", '')]
             ?.component
@@ -101,7 +108,7 @@ export const ResourceIcon = (props: Props) => {
       </span>
 
       {props.label && (
-        <span className="self-center ml-4">
+        <span className="self-center ml-4 text-center">
           {Components[props.resource.replace(' ', '').replace("'", '')]?.name}
         </span>
       )}
@@ -112,7 +119,7 @@ export const ResourceIcon = (props: Props) => {
       placement="top"
       className="flex"
       tooltipText={
-        <div className="p-1 text-sm bg-gray-1000 rounded whitespace-nowrap">
+        <div className="p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
           {props.resource}
         </div>
       }

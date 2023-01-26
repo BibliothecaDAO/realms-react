@@ -19,7 +19,11 @@ import {
   RealmHappinessImages,
   SECONDS_PER_KM,
 } from '@/constants/globals';
-import { findResourceById, resources } from '@/constants/resources';
+import {
+  findResourceById,
+  resources,
+  ResourcesIds,
+} from '@/constants/resources';
 import type { Army, Realm, RealmFragmentFragment } from '@/generated/graphql';
 import RealmsData from '@/geodata/realms.json';
 import RawRealmsData from '@/geodata/realms_raw.json';
@@ -232,11 +236,14 @@ export const resourcePillaged = (resources: any) => {
               key={index}
             >
               <div className="flex">
-                <ResourceIcon
-                  size="xs"
-                  className="self-center"
-                  resource={info?.trait?.replace('_', '') as string}
-                />{' '}
+                <div>
+                  <ResourceIcon
+                    size="xs"
+                    className="self-center"
+                    resource={info?.trait?.replace('_', '') as string}
+                  />{' '}
+                </div>
+
                 <span className="self-center ml-4 mr-1">{info?.trait}</span>
               </div>
 
@@ -626,3 +633,30 @@ export const getIsRealmAnnexed = (realm: RealmFragmentFragment) => {
 export const getRelicsOwned = (realm: RealmFragmentFragment) => {
   return realm?.relicsOwned;
 };
+
+export function isLessThan10MinutesOld(timestamp) {
+  const now = new Date();
+  const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000);
+  return timestamp > tenMinutesAgo;
+}
+
+export const filterFoodResources = (resources) => {
+  return resources.filter(
+    (r) =>
+      r.resourceId != ResourcesIds.Fish && r.resourceId != ResourcesIds.Wheat
+  );
+};
+
+export const getIsFood = (resourceId) => {
+  return resourceId === ResourcesIds.Fish || resourceId === ResourcesIds.Wheat;
+};
+
+export function convertToK(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  } else if (isNaN(num)) {
+    return 0;
+  }
+
+  return num.toFixed(2);
+}
