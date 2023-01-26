@@ -28,7 +28,6 @@ export const Tab = ({ className, children, ...props }: TabProps) => {
       {...props}
     >
       {(props) => {
-        console.log(variant);
         return (
           <>
             {isPrimary && (
@@ -57,6 +56,7 @@ export const Tab = ({ className, children, ...props }: TabProps) => {
                 )}
               </>
             )}
+            {!isPrimary && <>{children}</>}
           </>
         );
       }}
