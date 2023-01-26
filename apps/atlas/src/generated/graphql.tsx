@@ -493,6 +493,7 @@ export type Labor = {
   id: Scalars['Int'];
   lastEventId?: Maybe<Scalars['String']>;
   lastUpdate?: Maybe<Scalars['Timestamp']>;
+  qtyBuilt: Scalars['Int'];
   realmId: Scalars['Int'];
   resourceId: Scalars['Int'];
   updatedAt: Scalars['Timestamp'];
@@ -513,6 +514,7 @@ export type LaborWhereInput = {
   id?: InputMaybe<IntFilter>;
   lastEventId?: InputMaybe<StringNullableFilter>;
   lastUpdate?: InputMaybe<DateTimeNullableFilter>;
+  qtyBuilt?: InputMaybe<IntFilter>;
   realmId?: InputMaybe<IntFilter>;
   resourceId?: InputMaybe<IntFilter>;
   resoure?: InputMaybe<ResourceRelationFilter>;

@@ -26,6 +26,7 @@ import {
   getUnproducedLabor,
   getIsFood,
   convertToK,
+  getTrait,
 } from '../RealmsGetters';
 import { HarvestButton } from './HarvestButton';
 import { LaborValues } from './LaborValues';
@@ -47,6 +48,8 @@ type Prop = {
 export const LaborTable = (props: Prop) => {
   const { realm } = props;
   const resources = realm.resources;
+
+  console.log(realm);
 
   const { getBalanceById } = useUserBalancesContext();
 
@@ -439,8 +442,9 @@ export const LaborTable = (props: Prop) => {
               <div
                 className={`flex justify-between flex-grow w-full p-2 border rounded ${generatingClass}`}
               >
-                <div className="self-center mr-3 text-lg capitalize opacity-80">
-                  {isGenerating ? 'producing' : 'idle'} <Pulse active={true} />
+                <div className="flex self-center mr-3 text-lg text-gray-600 capitalize ">
+                  {isGenerating ? 'producing' : 'idle'}{' '}
+                  <Pulse active={isGenerating} pulse={isGenerating} />
                 </div>
                 <div>
                   <Tooltip
@@ -501,7 +505,7 @@ export const LaborTable = (props: Prop) => {
                 className={`flex justify-between flex-grow w-full p-2 border rounded  ${hasGeneratedClass}`}
               >
                 <div className="self-center mr-3 text-lg">
-                  <span className=" opacity-80">Produced:</span>{' '}
+                  <span className="text-gray-600 ">Produced</span>{' '}
                   {convertToK(generation[0] * productionAmount)}
                 </div>
                 <div>
@@ -512,7 +516,7 @@ export const LaborTable = (props: Prop) => {
                   />
                 </div>
               </div>
-              {!isFood && (
+              {!isFood ? (
                 <div className="flex justify-between px-2 pt-1 text-lg">
                   <div>
                     Vault:{' '}
@@ -529,6 +533,17 @@ export const LaborTable = (props: Prop) => {
                     <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
                     {valueAtMarketprice.toFixed(2)}
                   </div>
+                </div>
+              ) : (
+                <div className="flex justify-between px-2 pt-1">
+                  10 /{' '}
+                  {resource.resourceId == ResourcesIds.Fish
+                    ? getTrait(realm, 'Harbor')
+                    : getTrait(realm, 'River')}{' '}
+                  {resource.resourceId == ResourcesIds.Fish
+                    ? 'Fishing Villages'
+                    : 'Farms'}{' '}
+                  Producing
                 </div>
               )}
             </div>
