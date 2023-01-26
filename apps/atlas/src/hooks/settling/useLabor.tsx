@@ -180,7 +180,6 @@ const useLabor = (): Resources => {
 
   return {
     create: (args: { realmId; resourceId; laborUnits; costs }) => {
-      console.log(args.costs);
       const qtyCosts = args.costs.map((a) => {
         return {
           resourceId: a.resourceId,
@@ -206,7 +205,6 @@ const useLabor = (): Resources => {
       qtyBuilt;
       costs;
     }) => {
-      console.log(args.costs);
       const qtyCosts = args.costs.map((a) => {
         return {
           resourceId: a.resourceId,

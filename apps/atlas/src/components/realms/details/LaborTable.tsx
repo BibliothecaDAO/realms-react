@@ -28,6 +28,7 @@ import {
   convertToK,
   getTrait,
 } from '../RealmsGetters';
+import { BuyLabor } from './BuyLabor';
 import { HarvestButton } from './HarvestButton';
 import { LaborValues } from './LaborValues';
 
@@ -447,58 +448,12 @@ export const LaborTable = (props: Prop) => {
                   <Pulse active={isGenerating} pulse={isGenerating} />
                 </div>
                 <div>
-                  <Tooltip
-                    placement="top"
-                    className="flex"
-                    tooltipText={
-                      <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
-                        {costs?.map((cost, index) => {
-                          return (
-                            <CostBlock
-                              key={index}
-                              resourceName={cost.resourceName}
-                              amount={cost.amount / 12}
-                              id={cost.resourceId}
-                              qty={12}
-                            />
-                          );
-                        })}
-                      </div>
-                    }
-                  >
-                    {!isFood ? (
-                      <Button
-                        onClick={() =>
-                          create({
-                            realmId: realm.realmId,
-                            resourceId: resource.resourceId,
-                            laborUnits: 12,
-                            costs: costs,
-                          })
-                        }
-                        variant="outline"
-                        size="xs"
-                      >
-                        Buy Tools
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          create_food({
-                            realmId: realm.realmId,
-                            resourceId: resource.resourceId,
-                            laborUnits: 12,
-                            qtyBuilt: 5,
-                            costs: costs,
-                          })
-                        }
-                        variant="outline"
-                        size="xs"
-                      >
-                        Build
-                      </Button>
-                    )}
-                  </Tooltip>
+                  <BuyLabor
+                    realm={realm}
+                    resource={resource}
+                    costs={costs}
+                    isFood={isFood}
+                  />
                 </div>
               </div>
               <div
