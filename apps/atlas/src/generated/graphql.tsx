@@ -2065,6 +2065,7 @@ export type GetRealmQuery = {
       upgrades: Array<string>;
       labor?: {
         __typename?: 'Labor';
+        qtyBuilt: number;
         lastUpdate?: any | null;
         balance?: any | null;
         vaultBalance?: any | null;
@@ -2310,6 +2311,7 @@ export type GetRealmsQuery = {
       upgrades: Array<string>;
       labor?: {
         __typename?: 'Labor';
+        qtyBuilt: number;
         lastUpdate?: any | null;
         balance?: any | null;
         vaultBalance?: any | null;
@@ -2434,6 +2436,7 @@ export type GetRealmsWithTravelsQuery = {
       upgrades: Array<string>;
       labor?: {
         __typename?: 'Labor';
+        qtyBuilt: number;
         lastUpdate?: any | null;
         balance?: any | null;
         vaultBalance?: any | null;
@@ -2580,6 +2583,7 @@ export type RealmFragmentFragment = {
     upgrades: Array<string>;
     labor?: {
       __typename?: 'Labor';
+      qtyBuilt: number;
       lastUpdate?: any | null;
       balance?: any | null;
       vaultBalance?: any | null;
@@ -2969,6 +2973,7 @@ export const RealmFragmentFragmentDoc = gql`
       resourceId
       resourceName
       labor {
+        qtyBuilt
         lastUpdate
         balance
         vaultBalance

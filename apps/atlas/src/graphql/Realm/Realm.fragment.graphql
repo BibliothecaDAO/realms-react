@@ -19,6 +19,7 @@ fragment RealmFragment on Realm {
     resourceId
     resourceName
     labor {
+      qtyBuilt
       lastUpdate
       balance
       vaultBalance
