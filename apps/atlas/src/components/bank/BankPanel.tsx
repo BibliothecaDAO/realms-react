@@ -30,7 +30,7 @@ export const RateChange = ({ change }) => {
     <span
       className={`${parseFloat(x) < 0 ? 'text-red-200' : 'text-green-200/80'}`}
     >
-      24hr {x} %
+      {x} %
     </span>
   );
 };
@@ -106,7 +106,9 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
                   <div className="text-left">
                     {resource?.trait}
                     <div className="block w-full tracking-widest text-gray-700 uppercase sm:flex">
-                      {convertToK(+formatEther(balance?.amount || 0))}
+                      {convertToK(
+                        +formatEther(balance?.amount || 0).toString()
+                      )}
                     </div>
                   </div>
                 </div>

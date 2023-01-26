@@ -18,7 +18,12 @@ export function MyActions(props: Prop) {
       <div className="col-start-1 col-end-13">
         {userRealms
           ? userRealms?.realms.map((realm, index) => {
-              return <LaborTable key={index} realm={realm} />;
+              return (
+                <div key={index}>
+                  <h2>{realm.name}</h2>
+                  <LaborTable realm={realm} />
+                </div>
+              );
             })
           : ''}
       </div>

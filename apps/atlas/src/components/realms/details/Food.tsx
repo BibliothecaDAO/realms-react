@@ -114,8 +114,9 @@ export const RealmsFood = (props: Prop) => {
         </div>
         <div className="absolute bottom-0 flex items-center justify-between w-full p-4 bg-gradient-to-t from-gray-900">
           <div className="self-center mr-3 text-3xl">
-            {availableFood ? convertToK(availableFood) : '0 Food in Store'}
+            {availableFood ? availableFood : '0 Food in Store'}
           </div>
+
           {availableFood && availableFood > 0 ? (
             <div className="flex justify-end p-1 rounded bg-black/70">
               <CountdownTimer

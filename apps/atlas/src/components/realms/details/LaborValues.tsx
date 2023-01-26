@@ -1,7 +1,7 @@
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import ChevronDown from '@bibliotheca-dao/ui-lib/icons/chevron-down.svg';
 import { Disclosure } from '@headlessui/react';
 import { useEffect, useMemo, useState } from 'react';
-
 import { Pulse } from '@/components/ui/Pulse';
 import { BASE_RESOURCES_PER_CYCLE } from '@/constants/globals';
 
@@ -30,8 +30,8 @@ export const LaborValues = ({
 
   return (
     <Disclosure>
-      <Disclosure.Button className="w-full py-2 rounded bg-black/20">
-        Detail
+      <Disclosure.Button className="flex justify-center w-full py-2 rounded bg-black/20 hover:bg-black/40">
+        <ChevronDown className="h-4" />
       </Disclosure.Button>
       <Disclosure.Panel className="text-gray-500">
         <div className="text-base text-left">

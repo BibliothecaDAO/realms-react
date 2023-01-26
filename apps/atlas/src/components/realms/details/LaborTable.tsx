@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { number } from 'starknet';
 import { vaultValueAtMarketprice } from '@/components/bank/BankGetters';
 import { RateChange } from '@/components/bank/BankPanel';
+import { Pulse } from '@/components/ui/Pulse';
 import {
   BASE_FOOD_PRODUCTION,
   BASE_RESOURCES_PER_CYCLE,
@@ -246,6 +247,7 @@ export const LaborTable = (props: Prop) => {
       ),
     };
   });
+
   const newTable = resources?.map((resource) => {
     const costs = gameConstants?.laborAndToolCosts.find(
       (a) => a.resourceId === resource.resourceId
@@ -284,6 +286,18 @@ export const LaborTable = (props: Prop) => {
     const productionAmount = isFood
       ? BASE_FOOD_PRODUCTION
       : BASE_RESOURCES_PER_CYCLE;
+
+    const isGenerating = generation[1] > 0;
+
+    const hasGenerated = generation[0] > 0;
+
+    const generatingClass = isGenerating
+      ? 'bg-green-900/30 border-green-200/10'
+      : 'bg-red-900/30 border-red-200/10';
+
+    const hasGeneratedClass = hasGenerated
+      ? 'bg-green-900/30 border-green-200/10'
+      : 'bg-red-900/30 border-red-200/10';
 
     return {
       build: (
@@ -383,130 +397,143 @@ export const LaborTable = (props: Prop) => {
         </div>
       ),
       resource: (
-        <div className="flex flex-wrap justify-between">
-          <div className="w-1/3">
-            <div className="flex">
-              <div>
-                <ResourceIcon
-                  className="self-center"
-                  resource={resource?.resourceName?.replace(' ', '') || ''}
-                  size="md"
-                />
-              </div>
-              <div className="p-2 text-xl ">
-                <span className="truncate">{resource.resourceName}</span> <br />
-                <span className="text-base text-gray-600">
-                  {convertToK(
-                    (+formatEther(
-                      getBalanceById(resource.resourceId)?.amount || '0'
-                    )).toFixed(2)
-                  )}
-                </span>
-              </div>
-            </div>
-            <div className="mt-3 text-base font-semibold">
-              Margin: {(laborProfitMargin * 100).toFixed(1)}%
-            </div>
-            <div className="font-semibold">
-              <span className="mr-2 text-base">
-                {(+formatEther(
-                  currentMarketPriceForResource?.amount || '0'
-                )).toFixed(2)}{' '}
-              </span>
-
-              <RateChange
-                change={currentMarketPriceForResource?.percentChange24Hr}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col space-y-1 flex-2/3">
-            <div className="flex justify-between flex-grow w-full p-2 border rounded bg-green-900/30 border-green-200/10">
-              <div className="self-center mr-3 text-lg">Producing </div>
-              <div>
-                <Tooltip
-                  placement="top"
-                  className="flex"
-                  tooltipText={
-                    <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
-                      {costs?.map((cost, index) => {
-                        return (
-                          <CostBlock
-                            key={index}
-                            resourceName={cost.resourceName}
-                            amount={cost.amount / 12}
-                            id={cost.resourceId}
-                            qty={12}
-                          />
-                        );
-                      })}
-                    </div>
-                  }
-                >
-                  {!isFood ? (
-                    <Button
-                      onClick={() =>
-                        create({
-                          realmId: realm.realmId,
-                          resourceId: resource.resourceId,
-                          laborUnits: 12,
-                          costs: costs,
-                        })
-                      }
-                      variant="outline"
-                      size="xs"
-                    >
-                      Buy Tools
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() =>
-                        create_food({
-                          realmId: realm.realmId,
-                          resourceId: resource.resourceId,
-                          laborUnits: 12,
-                          qtyBuilt: 5,
-                          costs: costs,
-                        })
-                      }
-                      variant="outline"
-                      size="xs"
-                    >
-                      Build
-                    </Button>
-                  )}
-                </Tooltip>
-              </div>
-            </div>
-            <div className="flex justify-between flex-grow w-full p-2 border rounded bg-green-900/30 border-green-200/10">
-              <div className="self-center mr-3 text-lg">
-                Produced: {(generation[0] * productionAmount).toFixed()}
-              </div>
-              <HarvestButton
-                realmId={realm.realmId}
-                resourceId={resource.resourceId}
-                generation={generation[0]}
-              />
-            </div>
-            {!isFood && (
-              <div className="flex justify-between pt-1 text-lg">
-                <div>
-                  Vault:{' '}
-                  {(
-                    getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-                      productionAmount || 0
-                  ).toFixed()}
-                  <span className="text-gray-600">
-                    / {productionAmount * 12 * VAULT_LENGTH}
+        <div>
+          <div className="flex justify-between">
+            <div className="pr-3">
+              <div className="flex">
+                <div className="self-center">
+                  <ResourceIcon
+                    resource={resource?.resourceName?.replace(' ', '') || ''}
+                    size="md"
+                  />
+                </div>
+                <div className="px-3 text-xl ">
+                  <span className="truncate">{resource.resourceName}</span>{' '}
+                  <br />
+                  <span className="text-base text-gray-600">
+                    {convertToK(
+                      +formatEther(
+                        getBalanceById(resource.resourceId)?.amount || '0'
+                      ).toString()
+                    )}
                   </span>
                 </div>
+              </div>
+              <div className="mt-3 text-base ">
+                <span className="text-gray-600">Margin:</span>{' '}
+                {(laborProfitMargin * 100).toFixed(1)}%
+              </div>
+              <div className="">
+                <span className="mr-2 text-base">
+                  {(+formatEther(
+                    currentMarketPriceForResource?.amount || '0'
+                  )).toFixed(2)}{' '}
+                </span>
 
-                <div className="flex text-lg">
-                  <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
-                  {valueAtMarketprice.toFixed(2)}
+                <RateChange
+                  change={currentMarketPriceForResource?.percentChange24Hr}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-1">
+              <div
+                className={`flex justify-between flex-grow w-full p-2 border rounded ${generatingClass}`}
+              >
+                <div className="self-center mr-3 text-lg capitalize opacity-80">
+                  {isGenerating ? 'producing' : 'idle'} <Pulse active={true} />
+                </div>
+                <div>
+                  <Tooltip
+                    placement="top"
+                    className="flex"
+                    tooltipText={
+                      <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                        {costs?.map((cost, index) => {
+                          return (
+                            <CostBlock
+                              key={index}
+                              resourceName={cost.resourceName}
+                              amount={cost.amount / 12}
+                              id={cost.resourceId}
+                              qty={12}
+                            />
+                          );
+                        })}
+                      </div>
+                    }
+                  >
+                    {!isFood ? (
+                      <Button
+                        onClick={() =>
+                          create({
+                            realmId: realm.realmId,
+                            resourceId: resource.resourceId,
+                            laborUnits: 12,
+                            costs: costs,
+                          })
+                        }
+                        variant="outline"
+                        size="xs"
+                      >
+                        Buy Tools
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          create_food({
+                            realmId: realm.realmId,
+                            resourceId: resource.resourceId,
+                            laborUnits: 12,
+                            qtyBuilt: 5,
+                            costs: costs,
+                          })
+                        }
+                        variant="outline"
+                        size="xs"
+                      >
+                        Build
+                      </Button>
+                    )}
+                  </Tooltip>
                 </div>
               </div>
-            )}
+              <div
+                className={`flex justify-between flex-grow w-full p-2 border rounded  ${hasGeneratedClass}`}
+              >
+                <div className="self-center mr-3 text-lg">
+                  <span className=" opacity-80">Produced:</span>{' '}
+                  {convertToK(generation[0] * productionAmount)}
+                </div>
+                <div>
+                  <HarvestButton
+                    realmId={realm.realmId}
+                    resourceId={resource.resourceId}
+                    generation={generation[0]}
+                  />
+                </div>
+              </div>
+              {!isFood && (
+                <div className="flex justify-between px-2 pt-1 text-lg">
+                  <div>
+                    Vault:{' '}
+                    {(
+                      getLaborUnitsGenerated(resource.labor?.vaultBalance) *
+                        productionAmount || 0
+                    ).toFixed()}
+                    <span className="text-gray-600">
+                      / {productionAmount * 12 * VAULT_LENGTH}
+                    </span>
+                  </div>
+
+                  <div className="flex text-lg">
+                    <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
+                    {valueAtMarketprice.toFixed(2)}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
           <div className="w-full mt-2">
             <LaborValues
               labor_generated={generation[0]}
@@ -531,23 +558,6 @@ export const LaborTable = (props: Prop) => {
             generation={generation[0]}
           />
         </span>
-      ),
-
-      vault: (
-        <div className="text-2xl">
-          {(
-            getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-              BASE_RESOURCES_PER_CYCLE || 0
-          ).toFixed()}
-          <span className="text-gray-600">
-            / {BASE_RESOURCES_PER_CYCLE * 12 * VAULT_LENGTH}
-          </span>
-          <br />
-          <span className="flex justify-center mx-auto text-lg">
-            <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
-            {valueAtMarketprice.toFixed(2)}
-          </span>
-        </div>
       ),
     };
   });
