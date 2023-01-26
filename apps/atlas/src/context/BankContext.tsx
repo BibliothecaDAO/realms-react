@@ -45,7 +45,7 @@ const BankContext = createContext<{
   slippage: number;
   setSlippage: (slippage: number) => void;
   tradeType: string;
-  toggleTradeType: () => void;
+  toggleTradeType: (state?: typeof buy | typeof sell) => void;
   isBuy: boolean;
   isSell: boolean;
   bankResources: (ExchangeRate & UserLp)[];
