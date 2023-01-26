@@ -491,7 +491,7 @@ export const LaborTable = (props: Prop) => {
                 </div>
               ) : (
                 <div className="flex justify-between px-2 pt-1">
-                  10 /{' '}
+                  {resource.labor?.qtyBuilt} /{' '}
                   {resource.resourceId == ResourcesIds.Fish
                     ? getTrait(realm, 'Harbor')
                     : getTrait(realm, 'River')}{' '}
