@@ -1,3 +1,5 @@
+import CardCloseIcon from '@bibliotheca-dao/ui-lib/icons/frame/card-close-icon.svg';
+import CardCornerTopLeft from '@bibliotheca-dao/ui-lib/icons/frame/card-corner_top-left.svg';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
@@ -12,6 +14,7 @@ type Prop = {
   position?: 'left' | 'right';
   isTransparent?: boolean;
   overflowHidden?: boolean;
+  onClose?: () => void;
 };
 
 const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
@@ -67,6 +70,15 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
       >
         {props.children}
       </div>
+      {props.onClose && (
+        <>
+          <CardCornerTopLeft className="absolute w-16 top-2 left-2 fill-yellow-scroll -mt-0.5 -ml-0.5" />
+          <CardCloseIcon
+            className="absolute w-10 top-2 left-2 fill-frame-secondary -mt-0.5 -ml-0.5 cursor-pointer"
+            onClick={props.onClose}
+          />
+        </>
+      )}
     </animated.div>,
     props.container || document.getElementById('sidebar-root')!,
     'sidebar-root'

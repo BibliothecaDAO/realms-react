@@ -15,8 +15,9 @@ export const VizirSideBar = ({ isOpen, onClose }: ChatSideBarProps) => {
     <AtlasSidebar
       isOpen={isOpen}
       containerClassName={sidebarClassNames.replace('z-30', 'z-50')}
+      onClose={onClose}
     >
-      <BaseSideBarPanel position="right" onClose={onClose}>
+      <BaseSideBarPanel position="right">
         <VizirAsk />
       </BaseSideBarPanel>
     </AtlasSidebar>

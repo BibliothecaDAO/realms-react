@@ -39,8 +39,9 @@ export const TransactionCartSideBar = ({
     <AtlasSideBar
       isOpen={isOpen}
       containerClassName={twMerge(sidebarClassNames, offsetClasses, ' z-50')}
+      onClose={onClose}
     >
-      {isOpen && <TransactionCartSideBarPanel onClose={onClose} />}
+      {isOpen && <TransactionCartSideBarPanel />}
     </AtlasSideBar>
   );
 };

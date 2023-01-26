@@ -28,6 +28,7 @@ export const RealmsDetailSideBar = (props: RealmSideBarProps) => {
       containerClassName={twMerge(
         'left-0 right-0 ml-24 mr-12 my-24 z-30 w-fit-content'
       )}
+      onClose={props.onClose}
     >
       {props.isOpen && <RealmsQuickView {...props} />}
     </AtlasSideBar>
