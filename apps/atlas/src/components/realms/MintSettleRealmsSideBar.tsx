@@ -77,8 +77,9 @@ export const MintSettleRealmsSideBar = ({
     <AtlasSideBar
       isOpen={isOpen}
       containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-50')}
+      onClose={onClose}
     >
-      {isOpen && <SettleRealmsSideBarPanel onClose={onClose} />}
+      {isOpen && <SettleRealmsSideBarPanel />}
     </AtlasSideBar>
   );
 };

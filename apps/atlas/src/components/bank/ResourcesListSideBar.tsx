@@ -22,8 +22,9 @@ export const ResourcesListSideBar = ({
         'lg:w-5/12',
         'lg:w-1/2'
       )}
+      onClose={onClose}
     >
-      {isOpen && <ResourcesListSideBarPanel onClose={onClose} />}
+      {isOpen && <ResourcesListSideBarPanel />}
     </AtlasSideBar>
   );
 };

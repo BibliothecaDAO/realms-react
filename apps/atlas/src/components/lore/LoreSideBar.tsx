@@ -17,8 +17,9 @@ export const LoreSideBar = ({ isOpen, onClose }: LoreSideBarProps) => {
       isOpen={isOpen}
       containerClassName="right-0 top-0 left-0 bottom-0 my-20 ml-20 mr-8 !p-0"
       overflowHidden={true}
+      onClose={onClose}
     >
-      <LoreSideBarPanel onClose={onClose} />
+      <LoreSideBarPanel />
     </AtlasSideBar>
   );
 };

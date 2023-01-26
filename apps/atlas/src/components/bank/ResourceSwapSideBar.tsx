@@ -35,10 +35,9 @@ export const ResourceSwapSideBar = ({
       position="left"
       isOpen={isOpen}
       containerClassName={twMerge(sidebarClassNames, offsetClasses, 'z-40')}
+      onClose={onClose}
     >
-      {isOpen && (
-        <ResourceSwapSideBarPanel resources={resources} onClose={onClose} />
-      )}
+      {isOpen && <ResourceSwapSideBarPanel resources={resources} />}
     </AtlasSideBar>
   );
 };
