@@ -2,7 +2,7 @@ import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
 import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
 import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
+import Crown from '@bibliotheca-dao/ui-lib/icons/crown_icon.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
@@ -42,7 +42,7 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex">
-            <Crown className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <Crown className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
             <div className="hidden md:block">Empire</div>
           </div>
         ),
@@ -51,7 +51,7 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex whitespace-nowrap">
-            <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <Sword className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
             <div className="hidden md:block">Quick Actions</div>
           </div>
         ),
@@ -69,7 +69,7 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex whitespace-nowrap">
-            <Helm className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <Helm className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
             <div className="hidden md:block">My Armies</div>
           </div>
         ),
@@ -222,7 +222,7 @@ export function EmpirePanel() {
       </div>
       <div className="w-3/12 ml-4">
         <img
-          className="object-cover h-full bg-white rounded-xl"
+          className="object-cover w-full h-full bg-white rounded-xl"
           src={'/vizirs/mj_military_vizir.png'}
           alt="Vizir"
         />

@@ -15,9 +15,9 @@ import type { RealmTraitType } from '@/generated/graphql';
 import { useGetRealmsQuery } from '@/generated/graphql';
 
 const TABS = [
-  { key: 'Your', name: 'Your Realms' },
-  { key: 'All', name: 'All Realms' },
-  { key: 'Favourite', name: 'Favourite Realms' },
+  { key: 'Your', name: 'Your' },
+  { key: 'All', name: 'All' },
+  { key: 'Favourite', name: 'Favorite' },
 ];
 
 function useRealmsQueryVariables(

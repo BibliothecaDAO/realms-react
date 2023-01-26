@@ -188,3 +188,11 @@ div#deckgl-wrapper {
 .stroke-yellow-scroll {
   stroke: #cebba2;
 }
+
+.bg-yellow-secondary {
+  background-color: #c49c5c;
+}
+
+.color-yellow-secondary {
+  color: #c49c5c;
+}
