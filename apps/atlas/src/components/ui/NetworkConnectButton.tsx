@@ -24,13 +24,10 @@ const NetworkConnectButton = () => {
     switch (connector) {
       case 'argentX':
         return <ArgentX className="inline-block w-4 mr-4" />;
-        break;
       case 'braavos':
         return <Braavos className="inline-block w-4 mr-4" />;
-        break;
       case 'guildly':
         return <Guildly className="inline-block w-5 mr-4" />;
-        break;
     }
   };
 
@@ -64,7 +61,7 @@ const NetworkConnectButton = () => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute left-0 w-64 p-6 my-2 rounded-md shadow-xl z-100 bg-gray-1000">
+        <Popover.Panel className="absolute left-0 w-64 p-6 my-2 -mt-64 rounded-md shadow-xl z-100 bg-gray-1000">
           <>
             <h4>Game Networks</h4>
 

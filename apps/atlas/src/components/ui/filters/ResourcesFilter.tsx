@@ -34,7 +34,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
   }));
 
   return (
-    <Popover className="relative z-50">
+    <Popover className="relative">
       <Popover.Button as="div">
         <Button
           size="xs"
@@ -50,9 +50,10 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
         leave="transition duration-350 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
+        className="z-50"
       >
         <Popover.Panel
-          className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4  border-white/20 rounded"
+          className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4  border-white/20"
           static
         >
           {({ close }) => (
