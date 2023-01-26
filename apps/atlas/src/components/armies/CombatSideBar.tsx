@@ -231,7 +231,7 @@ export const CombatSideBar: React.FC<Prop> = ({
               />
             </div>
             <div className="self-start w-full lg:px-24 ">
-              <div className="p-2 text-center bg-yellow-scroll">
+              <div className="p-2 text-center rounded bg-yellow-scroll">
                 <div className="py-3 mb-2 bg-gray-900 rounded-xl">
                   <h1>Raid</h1>
                 </div>
