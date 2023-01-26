@@ -12,6 +12,7 @@ import { BasePanel } from '@/components/ui/panel/BasePanel';
 import { resources } from '@/constants/resources';
 import { useBankContext } from '@/context/BankContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import { convertToK } from '../realms/RealmsGetters';
 import { formatToken } from './BankGetters';
 
 type Row = {
@@ -87,27 +88,29 @@ export function BankPanel({ onOpenSwap }: BankPanel): ReactElement {
       resource: (
         <div>
           <div className="flex sm:text-xl">
-            <img
+            {/* <img
               alt={resource?.trait}
               src={'/resources/' + resource.id.toString() + '.jpg'}
               className="w-24 h-24 border rounded border-yellow-900/30"
-            />
+            /> */}
 
-            <div className="flex py-4 ml-3 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
-              <span className="self-center w-full">
-                <span className="flex text-base whitespace-nowrap">
-                  <ResourceIcon
-                    className="self-center w-4 mr-2"
-                    resource={resource?.trait?.replace(' ', '') || ''}
-                    size="xs"
-                  />
-                  {resource?.trait}
-                </span>
-
-                <span className="block w-full tracking-widest text-gray-700 uppercase sm:flex">
-                  {(+formatEther(balance?.amount || 0)).toLocaleString()}
-                </span>
-              </span>
+            <div className="flex py-4 sm:flex-col md:ml-4 sm:w-2/3 md:mt-0">
+              <div className="self-center w-full">
+                <div className="flex text-base whitespace-nowrap">
+                  <div className="self-center mr-2">
+                    <ResourceIcon
+                      resource={resource?.trait?.replace(' ', '') || ''}
+                      size="md"
+                    />
+                  </div>
+                  <div className="text-left">
+                    {resource?.trait}
+                    <div className="block w-full tracking-widest text-gray-700 uppercase sm:flex">
+                      {convertToK(+formatEther(balance?.amount || 0))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

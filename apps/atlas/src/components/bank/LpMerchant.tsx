@@ -99,7 +99,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
             icon={<ChevronRight className="w-5 h-5 transform -rotate-90" />}
             labelIcon={
               <ResourceIcon
-                size="sm"
+                size="xs"
                 resource={props.resource?.tokenName ?? ''}
               />
             }
@@ -113,7 +113,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
                 selectedIcon={<ChevronRight />}
                 icon={
                   <ResourceIcon
-                    size="sm"
+                    size="xs"
                     resource={resource?.tokenName ?? ''}
                   />
                 }

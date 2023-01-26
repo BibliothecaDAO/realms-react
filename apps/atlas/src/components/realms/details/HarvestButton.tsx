@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useCommandList } from '@/context/CommandListContext';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useLabor, { Entrypoints } from '@/hooks/settling/useLabor';
+import { getIsFood } from '../RealmsGetters';
 
 export const HarvestButton = ({ generation, realmId, resourceId }) => {
   const txQueue = useCommandList();
@@ -21,16 +22,23 @@ export const HarvestButton = ({ generation, realmId, resourceId }) => {
     );
   }, [txQueue.transactions]);
 
-  const { harvest } = useLabor();
+  const { harvest, harvest_food } = useLabor();
 
   return (
     <Button
-      onClick={() =>
-        harvest({
-          realmId: realmId,
-          resourceId: resourceId,
-        })
-      }
+      onClick={() => {
+        if (getIsFood(resourceId)) {
+          harvest_food({
+            realmId: realmId,
+            resourceId: resourceId,
+          });
+        } else {
+          harvest({
+            realmId: realmId,
+            resourceId: resourceId,
+          });
+        }
+      }}
       disabled={generation == 0 || isNaN(generation) || enqueuedTx}
       variant="outline"
       size="xs"

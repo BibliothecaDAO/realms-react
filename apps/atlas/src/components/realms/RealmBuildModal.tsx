@@ -181,13 +181,13 @@ export const RealmBuildModal = (props: Prop) => {
             <div>
               <LaborTable realm={realm} />
             </div>
-            <RealmsFood
+            {/* <RealmsFood
               realmFoodDetails={realmFoodDetails}
               availableFood={availableFood}
-              buildings={buildings}
+              
               realm={realm}
               loading={false}
-            />
+            /> */}
           </>
         ),
       },

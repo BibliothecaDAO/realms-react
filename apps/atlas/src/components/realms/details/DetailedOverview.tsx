@@ -27,6 +27,7 @@ import type {
   RealmFoodDetails,
   RealmsCardProps,
 } from '@/types/index';
+import { RealmsFood } from './Food';
 
 interface RealmOverview {
   realmFoodDetails: RealmFoodDetails;
@@ -38,7 +39,7 @@ interface RealmOverview {
 export function DetailedOverview(
   props: RealmsCardProps & RealmOverview
 ): ReactElement {
-  const { realm, availableFood, buildingUtilisation } = props;
+  const { realm, availableFood, buildingUtilisation, realmFoodDetails } = props;
 
   const usedStorehouseSpace = availableFood
     ? availableFood / STORE_HOUSE_SIZE
@@ -99,17 +100,17 @@ export function DetailedOverview(
       icon: '/icons/loot/loot.svg',
       img: buildingImageById(RealmBuildingId.Barracks),
     },
-    {
-      title: 'Food in Store',
-      value: (
-        <span>
-          {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
-        </span>
-      ),
-      subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
-      icon: '/icons/loot/loot.svg',
-      img: buildingImageById(RealmBuildingId.StoreHouse),
-    },
+    // {
+    //   title: 'Food in Store',
+    //   value: (
+    //     <span>
+    //       {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
+    //     </span>
+    //   ),
+    //   subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
+    //   icon: '/icons/loot/loot.svg',
+    //   img: buildingImageById(RealmBuildingId.StoreHouse),
+    // },
     {
       title: 'Utilisation',
       value: (
@@ -186,25 +187,36 @@ export function DetailedOverview(
           ))}
         </div>
       </div> */}
-      <div className="flex flex-wrap w-full">
-        {dataCards.map((card, i) => {
-          return (
-            <div key={i} className="flex w-1/3 h-full">
-              <div className="flex flex-grow m-2 border rounded-xl border-yellow-800/40">
-                <img
-                  className="object-cover w-24 rounded-xl"
-                  src={card.img}
-                  alt=""
-                />
-                <div className="p-6">
-                  <h5 className="text-gray-600">{card.title}</h5>
-                  <div className="my-3 text-3xl">{card.value} </div>
-                  <p className="text-xs text-gray-700">{card.subTitle}</p>
+      <div className="flex w-full">
+        <div className="w-1/2">
+          <RealmsFood
+            realmFoodDetails={realmFoodDetails}
+            availableFood={availableFood}
+            realm={realm}
+            loading={false}
+          />
+        </div>
+
+        <div className="w-1/2">
+          {dataCards.map((card, i) => {
+            return (
+              <div key={i} className="flex w-full">
+                <div className="flex flex-grow mx-2 mb-2 border rounded-xl border-yellow-800/40">
+                  <img
+                    className="object-cover w-24 rounded-xl"
+                    src={card.img}
+                    alt=""
+                  />
+                  <div className="p-6">
+                    <h5 className="text-gray-600">{card.title}</h5>
+                    <div className="my-3 text-3xl">{card.value} </div>
+                    <p className="text-xs text-gray-700">{card.subTitle}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* <div

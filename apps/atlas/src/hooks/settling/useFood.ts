@@ -220,13 +220,6 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       return HARVEST_LENGTH * 1000 - difference;
     };
 
-    const fetchData = async () => {
-      const food = await FoodContract.available_food_in_store(
-        uint256.bnToUint256(number.toBN(realm?.realmId ?? 0))
-      );
-      setAvailableFood(food.toString());
-    };
-
     setRealmFoodDetails({
       farmsToHarvest: harvests(farm) > 0 ? getHarvestsAvailable(farm)[0] : 0,
       farmHarvestsLeft: harvests(farm),
@@ -243,9 +236,18 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       villagesDecayed: getHarvestsAvailable(fishingVillage)[1],
       villagesBuilt: harvests(fishingVillage) > 0 ? qty(fishingVillage) : 0,
     });
-
-    fetchData().catch(console.error);
   }, [realm]);
+
+  const fetchData = async () => {
+    const food = await FoodContract.available_food_in_store(
+      uint256.bnToUint256(number.toBN(realm?.realmId ?? 0))
+    );
+    setAvailableFood(food.toString());
+  };
+
+  useEffect(() => {
+    fetchData().catch(console.error);
+  }, [availableFood]);
 
   return {
     realmFoodDetails,

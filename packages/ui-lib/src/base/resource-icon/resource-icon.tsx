@@ -93,7 +93,7 @@ const STYLES = {
 export const ResourceIcon = (props: Props) => {
   const Icon = (
     <div
-      className={` flex self-center paper relative border rounded-xl p-2 justify-center w-full border-frame-primary bg-white/10`}
+      className={` flex self-center paper relative border rounded-xl p-2 justify-center w-full border-frame-primary/20 bg-white/10`}
     >
       <span
         className={` mx-auto ${twMerge(

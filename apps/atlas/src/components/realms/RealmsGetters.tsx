@@ -646,3 +646,14 @@ export const filterFoodResources = (resources) => {
       r.resourceId != ResourcesIds.Fish && r.resourceId != ResourcesIds.Wheat
   );
 };
+
+export const getIsFood = (resourceId) => {
+  return resourceId === ResourcesIds.Fish || resourceId === ResourcesIds.Wheat;
+};
+
+export function convertToK(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  }
+  return num.toFixed(2);
+}
