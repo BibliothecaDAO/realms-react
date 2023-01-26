@@ -1,4 +1,5 @@
 import { OrderIcon, Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
+import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
@@ -176,6 +177,9 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 {realm.name} | <span className="px-2">{realm.realmId} </span>
               </h3>
             </div>
+            <div className="self-center">
+              <ArmyToolTip army={getArmyById(0, realm)} />
+            </div>
 
             <OrderIcon
               className="self-center"
@@ -183,21 +187,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               order={realm.orderType.toLowerCase()}
             />
           </div>
-          {/* <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
-            <div className="flex self-end">
-              <span>
-                {' '}
-                {starknetId ?? starknetId}
-                {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
-                {!starknetId &&
-                  isYourRealm(realm, l1Address, address || '') &&
-                  isYourRealm(realm, l1Address, address || '')}
-              </span>
-            </div>
-            <ArmyToolTip army={getArmyById(0, realm)} />
-          </div> */}
         </div>
-        <div className="flex w-full mt-3">
+        <div className="flex w-full mt-1">
           <div className="w-full">
             <div className="flex w-full my-3 space-x-2">
               {filterFoodResources(realm.resources).map((resource, index) => (
@@ -236,43 +227,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                       >
                         construct
                       </Button>
-                      {/* <Button
-                        onClick={() => {
-                          if (realmFoodDetails.farmsToHarvest > 0) {
-                            harvest(
-                              realm?.realmId,
-                              HarvestType.Export,
-                              RealmBuildingId.Farm,
-                              WHEAT_ID
-                            );
-                          }
-                          if (realmFoodDetails.villagesToHarvest > 0) {
-                            harvest(
-                              realm?.realmId,
-                              HarvestType.Export,
-                              RealmBuildingId.FishingVillage,
-                              FISH_ID
-                            );
-                          }
-                        }}
-                        variant="outline"
-                        size="xs"
-                        className={
-                          (realmFoodDetails.farmsToHarvest === 0 &&
-                            realmFoodDetails.villagesToHarvest === 0) ||
-                          harvestFarmEnqueuedHarvestTx
-                            ? ''
-                            : 'bg-green-800 animate-pulse'
-                        }
-                        disabled={
-                          (realmFoodDetails.farmsToHarvest === 0 &&
-                            realmFoodDetails.villagesToHarvest === 0) ||
-                          harvestFarmEnqueuedHarvestTx
-                        }
-                      >
-                        <ResourceIcon resource={'Wheat'} size="xs" />{' '}
-                        <ResourceIcon resource={'Fish'} size="xs" />
-                      </Button> */}
                     </>
                   )}
                 </>
@@ -318,14 +272,24 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               </Button>
             </div>
 
-            <div className="flex justify-between w-full mt-3 text-sm">
+            <div className="flex justify-between w-full pt-3 mt-3 text-sm border-t border-white/20">
               <span className="self-center">
-                <span className="mr-2">
-                  {' '}
-                  {getHappinessIcon({
-                    realm: realm,
-                    food: availableFood,
-                  })}
+                <span className="flex mr-2">
+                  <Tooltip
+                    placement="bottom"
+                    className="flex self-center z-100"
+                    tooltipText={
+                      <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                        You must keep your Realm happy to keep it from
+                        revolting...
+                      </div>
+                    }
+                  >
+                    {getHappinessIcon({
+                      realm: realm,
+                      food: availableFood,
+                    })}
+                  </Tooltip>{' '}
                 </span>
               </span>
               <div className="self-center mr-2">
@@ -348,27 +312,70 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   </Button>
                 )}
               </div>
-              <h6 className="text-gray-700">
-                ({getNumberOfTicks(realm)} ticks) |{' '}
-                {getTimeUntilNextTick(realm)} hrs
-              </h6>
+              <div>
+                <Tooltip
+                  placement="bottom"
+                  className="flex self-center z-100"
+                  tooltipText={
+                    <div className="p-4 text-sm rounded w-72 bg-gray-1000">
+                      Eternum works on a 12hr Cycle. Every 12hrs the game ticks
+                      over. There are consequences for not maintaining happy
+                      Realms which occur after a tick.
+                    </div>
+                  }
+                >
+                  <h6 className="text-gray-700">
+                    ({getNumberOfTicks(realm)} ticks) |{' '}
+                    {getTimeUntilNextTick(realm)} hrs
+                  </h6>
+                </Tooltip>{' '}
+              </div>
 
               <div className="flex ml-auto">
-                <span
-                  className={`self-center text-xs  uppercase ${
-                    getIsRealmAnnexed(realm) ? 'text-green-700' : 'text-red-400'
-                  }`}
+                <Tooltip
+                  placement="bottom"
+                  className="flex self-center ml-auto z-100"
+                  tooltipText={
+                    <div className="p-4 text-sm rounded w-72 bg-gray-1000">
+                      This Realm is holding {realm.relicsOwned?.length} Relics!
+                      <br />
+                      Annexed: The Realm has lost its Relic.
+                      <br /> Self Sovereign: The Realm has its Relic.
+                    </div>
+                  }
                 >
-                  {getIsRealmAnnexed(realm) ? 'self sovereign ' : 'annexed'}
-                </span>
-                <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
-                <Relic className={`w-3 fill-yellow-500`} />{' '}
+                  <div className="flex">
+                    <span
+                      className={`self-center text-xs  uppercase ${
+                        getIsRealmAnnexed(realm)
+                          ? 'text-green-700'
+                          : 'text-red-400'
+                      }`}
+                    >
+                      {getIsRealmAnnexed(realm) ? 'self sovereign ' : 'annexed'}
+                    </span>
+                    <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
+                    <Relic className={`w-3 fill-yellow-500`} />{' '}
+                  </div>
+                </Tooltip>{' '}
               </div>
               {enqueuedTx ? (
                 <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
               ) : (
                 ''
               )}
+              <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
+                <div className="flex self-end">
+                  <span>
+                    {' '}
+                    {starknetId ?? starknetId}
+                    {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
+                    {!starknetId &&
+                      isYourRealm(realm, l1Address, address || '') &&
+                      isYourRealm(realm, l1Address, address || '')}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
