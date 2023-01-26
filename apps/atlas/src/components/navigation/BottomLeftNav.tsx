@@ -45,7 +45,7 @@ export const BottomLeftNav = () => {
             />
           </button>
         </div>
-        <div className="pl-48 lg:pl-[5rem]">
+        <div className="pl-48 lg:pl-[5rem] relative z-10">
           <NetworkConnectButton />
         </div>
         <BottomLeftFrame

@@ -277,7 +277,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 <span className="flex mr-2">
                   <Tooltip
                     placement="bottom"
-                    className="flex self-center z-100"
+                    className="z-10 flex self-center"
                     tooltipText={
                       <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
                         You must keep your Realm happy to keep it from
@@ -315,7 +315,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               <div>
                 <Tooltip
                   placement="bottom"
-                  className="flex self-center z-100"
+                  className="z-10 flex self-center"
                   tooltipText={
                     <div className="p-4 text-sm rounded w-72 bg-gray-1000">
                       Eternum works on a 12hr Cycle. Every 12hrs the game ticks
@@ -334,7 +334,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
               <div className="flex ml-auto">
                 <Tooltip
                   placement="bottom"
-                  className="flex self-center ml-auto z-100"
+                  className="z-10 flex self-center ml-auto"
                   tooltipText={
                     <div className="p-4 text-sm rounded w-72 bg-gray-1000">
                       This Realm is holding {realm.relicsOwned?.length} Relics!

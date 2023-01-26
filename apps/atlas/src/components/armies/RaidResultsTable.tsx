@@ -68,8 +68,8 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
     "Greetings, my liege. I regret to inform you that our recent battle was not successful. Despite our best efforts, the enemy proved too strong and we were forced to retreat. Our army suffered heavy losses, and we were unable to hold our ground against the enemy's superior numbers and weaponry.";
 
   return (
-    <div className="p-3 rounded-2xl bg-yellow-scroll">
-      <div className=" bg-gray-1000">
+    <div className="p-2 rounded bg-yellow-scroll">
+      <div className="p-4 bg-gray-1000 rounded-xl">
         <img
           className="object-cover w-full rounded-xl"
           src={!success ? CombatImages.win : CombatImages.loss}
@@ -181,7 +181,7 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
             </tr>
           </tbody>
         </table>
-        <div className="w-full my-3 text-center">
+        <div className="w-full mt-3 text-center">
           <h1>Resources Plundered</h1>
           <div className="mx-auto">
             {resources && (
