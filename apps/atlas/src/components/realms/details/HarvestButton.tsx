@@ -12,14 +12,14 @@ export const HarvestButton = ({ generation, realmId, resourceId }) => {
 
   useEffect(() => {
     setEnqueuedTx(
-      !!txQueue.transactions.find(
+      txQueue.transactions.findIndex(
         (t: any) =>
-          (t.contractAddress == ModuleAddr.Labor &&
-            t.entrypoint == Entrypoints.harvest_labor) ||
-          (t.entrypoint == Entrypoints.harvest_food &&
-            t.metadata['realmId'] == realmId &&
-            t.metadata['resourceId'] == resourceId)
-      )
+          t.contractAddress == ModuleAddr.Labor &&
+          (t.entrypoint == Entrypoints.harvest_labor ||
+            t.entrypoint == Entrypoints.harvest_food) &&
+          t.metadata['realmId'] == realmId &&
+          t.metadata['resourceId'] == resourceId
+      ) >= 0
     );
   }, [txQueue.transactions]);
 
