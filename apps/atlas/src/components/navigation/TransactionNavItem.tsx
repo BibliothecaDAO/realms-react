@@ -96,7 +96,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
     >
       <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-32 lg:right-32 flex pointer-events-none">
         {txQueue.transactions.length > 0 ? (
-          <div className="absolute top-0 left-0 flex items-center justify-center h-6 px-2 leading-6 text-white -translate-x-1/2 -translate-y-1/2 bg-red-800 rounded-full">
+          <div className="absolute top-0 left-0 z-10 flex items-center justify-center h-6 px-2 leading-6 text-white -translate-x-1/2 -translate-y-1/2 bg-red-800 rounded-full">
             {txQueue.transactions.length}
           </div>
         ) : (
