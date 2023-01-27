@@ -10,7 +10,7 @@ export const ArmyBattalions = (props: Props) => {
 
   return (
     <div key={army.armyId}>
-      <div className="w-full mt-3">
+      <div className="p-3 border rounded-1 border-white/20">
         <table className="w-full">
           <thead>
             <tr>

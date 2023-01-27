@@ -27,7 +27,7 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
 
   return (
     <div>
-      <div className="grid grid-cols-8 gap-2 p-2 ">
+      <div className="grid grid-cols-4 gap-2 p-2 ">
         {formattedArmy(army).map((battalion, index) => {
           return <BattalionWithImage key={index} {...battalion} />;
         })}

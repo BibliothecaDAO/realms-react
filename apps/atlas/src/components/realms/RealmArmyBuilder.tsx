@@ -470,7 +470,7 @@ export const ArmyBuilder = (props: Props) => {
               summon the battalions
             </Button>
           </div>
-          {props.defendHistory &&
+          {/* {props.defendHistory &&
             props.defendHistory.map((a, index) => {
               return (
                 <div key={index} className="mt-8">
@@ -500,19 +500,10 @@ export const ArmyBuilder = (props: Props) => {
                         Relic {a.data?.relicLost}
                       </span>
                     )}
-                    {/*
-                <Button
-                  size="xs"
-                  variant="primary"
-                  onClick={() => handleRaidDetailsClick(a)}
-                >
-                  Raid Details
-                </Button>
-                */}
                   </HistoryCard>
                 </div>
               );
-            })}
+            })} */}
         </CardBody>
       </div>
       {/* <div className="relative col-span-5">
