@@ -170,6 +170,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             {realm?.wonder}
           </div>
         )}
+        {/* Header */}
         <div className="flex w-full">
           <div className="flex self-center justify-between w-full pb-2 border-b border-white/30">
             <div>
@@ -177,7 +178,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 {realm.name} | <span className="px-2">{realm.realmId} </span>
               </h3>
             </div>
-            <div className="self-center">
+            <div className="self-center ml-auto">
               <ArmyToolTip army={getArmyById(0, realm)} />
             </div>
 
@@ -188,8 +189,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
             />
           </div>
         </div>
-        <div className="flex w-full mt-1">
-          <div className="w-full">
+        {/* Body */}
+
+        <div className="flex justify-between w-full mt-1">
+          <div>
             <div className="flex w-full my-3 space-x-2">
               {filterFoodResources(realm.resources).map((resource, index) => (
                 <div
@@ -271,110 +274,119 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                 fly
               </Button>
             </div>
-
-            <div className="flex justify-between w-full pt-3 mt-3 text-sm border-t border-white/20">
-              <span className="self-center">
-                <span className="flex mr-2">
-                  <Tooltip
-                    placement="bottom"
-                    className="z-10 flex self-center"
-                    tooltipText={
-                      <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
-                        You must keep your Realm happy to keep it from
-                        revolting...
-                      </div>
-                    }
-                  >
-                    {getHappinessIcon({
-                      realm: realm,
-                      food: availableFood,
-                    })}
-                  </Tooltip>{' '}
-                </span>
-              </span>
-              <div className="self-center mr-2">
-                {!isFavourite(realm, favouriteRealms) ? (
-                  <Button
-                    size="xs"
-                    variant="unstyled"
-                    onClick={() => actions.addFavouriteRealm(realm.realmId)}
-                  >
-                    <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
-                  </Button>
-                ) : (
-                  <Button
-                    size="xs"
-                    variant="unstyled"
-                    className="w-full"
-                    onClick={() => actions.removeFavouriteRealm(realm.realmId)}
-                  >
-                    <HeartIcon className="w-5" />
-                  </Button>
-                )}
+          </div>
+          <div>
+            <Tooltip
+              placement="bottom"
+              className="z-10 flex self-center"
+              tooltipText={
+                <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                  Annexed: The Realm has lost its Relic.
+                  <br /> Self Sovereign: The Realm has its Relic.
+                </div>
+              }
+            >
+              <div
+                className={`self-start text-xs  uppercase ${
+                  getIsRealmAnnexed(realm) ? 'text-green-700' : 'text-red-400'
+                }`}
+              >
+                {getIsRealmAnnexed(realm) ? 'self sovereign ' : 'annexed'}
               </div>
-              <div>
+            </Tooltip>{' '}
+          </div>
+        </div>
+        <div className="w-full">
+          <div className="flex justify-between w-full pt-3 mt-3 text-sm border-t border-white/20">
+            <span className="self-center">
+              <span className="flex mr-2">
                 <Tooltip
                   placement="bottom"
                   className="z-10 flex self-center"
                   tooltipText={
-                    <div className="p-4 text-sm rounded w-72 bg-gray-1000">
-                      Eternum works on a 12hr Cycle. Every 12hrs the game ticks
-                      over. There are consequences for not maintaining happy
-                      Realms which occur after a tick.
+                    <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                      You must keep your Realm happy to keep it from
+                      revolting...
                     </div>
                   }
                 >
-                  <h6 className="text-gray-700">
-                    ({getNumberOfTicks(realm)} ticks) |{' '}
-                    {getTimeUntilNextTick(realm)} hrs
-                  </h6>
+                  {getHappinessIcon({
+                    realm: realm,
+                    food: availableFood,
+                  })}
                 </Tooltip>{' '}
-              </div>
-
-              <div className="flex ml-auto">
-                <Tooltip
-                  placement="bottom"
-                  className="z-10 flex self-center ml-auto"
-                  tooltipText={
-                    <div className="p-4 text-sm rounded w-72 bg-gray-1000">
-                      This Realm is holding {realm.relicsOwned?.length} Relics!
-                      <br />
-                      Annexed: The Realm has lost its Relic.
-                      <br /> Self Sovereign: The Realm has its Relic.
-                    </div>
-                  }
+              </span>
+            </span>
+            <div className="self-center mr-2">
+              {!isFavourite(realm, favouriteRealms) ? (
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  onClick={() => actions.addFavouriteRealm(realm.realmId)}
                 >
-                  <div className="flex">
-                    <span
-                      className={`self-center text-xs  uppercase ${
-                        getIsRealmAnnexed(realm)
-                          ? 'text-green-700'
-                          : 'text-red-400'
-                      }`}
-                    >
-                      {getIsRealmAnnexed(realm) ? 'self sovereign ' : 'annexed'}
-                    </span>
-                    <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
-                    <Relic className={`w-3 fill-yellow-500`} />{' '}
-                  </div>
-                </Tooltip>{' '}
-              </div>
-              {enqueuedTx ? (
-                <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
+                  <HeartIcon className="w-5 fill-gray-1000 stroke-yellow-800 hover:fill-current" />
+                </Button>
               ) : (
-                ''
+                <Button
+                  size="xs"
+                  variant="unstyled"
+                  className="w-full"
+                  onClick={() => actions.removeFavouriteRealm(realm.realmId)}
+                >
+                  <HeartIcon className="w-5" />
+                </Button>
               )}
-              <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
-                <div className="flex self-end">
-                  <span>
-                    {' '}
-                    {starknetId ?? starknetId}
-                    {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
-                    {!starknetId &&
-                      isYourRealm(realm, l1Address, address || '') &&
-                      isYourRealm(realm, l1Address, address || '')}
-                  </span>
+            </div>
+            <div>
+              <Tooltip
+                placement="bottom"
+                className="z-10 flex self-center"
+                tooltipText={
+                  <div className="p-4 text-sm rounded w-72 bg-gray-1000">
+                    Eternum works on a 12hr Cycle. Every 12hrs the game ticks
+                    over. There are consequences for not maintaining happy
+                    Realms which occur after a tick.
+                  </div>
+                }
+              >
+                <h6 className="text-gray-700">
+                  ({getNumberOfTicks(realm)} ticks) |{' '}
+                  {getTimeUntilNextTick(realm)} hrs
+                </h6>
+              </Tooltip>{' '}
+            </div>
+
+            <div className="flex ml-auto">
+              <Tooltip
+                placement="bottom"
+                className="z-10 flex self-center ml-auto"
+                tooltipText={
+                  <div className="p-4 text-sm rounded w-72 bg-gray-1000">
+                    This Realm is holding {realm.relicsOwned?.length} Relics!
+                  </div>
+                }
+              >
+                <div className="flex">
+                  <span className="mx-2">{realm.relicsOwned?.length}</span>{' '}
+                  <Relic className={`w-3 fill-yellow-500`} />{' '}
                 </div>
+              </Tooltip>{' '}
+            </div>
+            {enqueuedTx ? (
+              <span className="self-center w-3 h-3 ml-2 bg-green-900 border border-green-500 rounded-full animate-pulse"></span>
+            ) : (
+              ''
+            )}
+            <div className="flex flex-col justify-end mb-1 ml-auto text-gray-500">
+              <div className="flex self-end">
+                <span>
+                  {' '}
+                  {starknetId ?? starknetId}
+                  {!starknetId && shortenAddressWidth(RealmOwner(realm), 6)}
+                  {!starknetId &&
+                    isYourRealm(realm, l1Address, address || '') &&
+                    isYourRealm(realm, l1Address, address || '')}
+                </span>
               </div>
             </div>
           </div>

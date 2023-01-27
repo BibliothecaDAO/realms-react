@@ -4,20 +4,16 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
-import {
-  GetArmyStrength,
-  getAttackingArmies,
-} from '@/components/armies/ArmyGetters';
+
+import { getAttackingArmies } from '@/components/armies/ArmyGetters';
 import { ArmyToolTip } from '@/components/armies/ArmyToolTip';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
   GetRealmsQuery,
   RealmFragmentFragment,
 } from '@/generated/graphql';
-import { useArmy } from '@/hooks/settling/useArmy';
+
 import {
-  getHolderOfRelic,
   getRealmNameById,
   getRealmOrderById,
   getRelicsOwned,
@@ -30,7 +26,6 @@ type Prop = {
 };
 
 export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
-  const router = useRouter();
   const {
     travelContext: { travel, setTravelArcs, clearTravelArcs, travelArcs },
     mapContext: { navigateToAsset },
@@ -80,7 +75,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
         distance: travelInformation.distance,
         time: <span>{(travelInformation.time / 60 / 60).toFixed(2)} Hrs</span>,
         action: (
-          <div className="space-x-2">
+          <div className="flex flex-col space-y-2">
             <Button
               onClick={() => travel(army.armyId, army.realmId, realm.realmId)}
               variant="outline"
@@ -112,7 +107,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
 
   return (
     <div>
-      <div className="relative mb-4 overflow-x-auto">
+      <div className="relative mb-4 overflow-x-scroll min-h-96">
         {armyTravelTable && (
           <Table
             columns={columns}
@@ -137,23 +132,6 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
         {travelArcs?.length ? 'Hide ' : 'Show '}
         armies distance
       </Button>
-      {/* <div className="relative grid grid-cols-1 gap-2 mt-4 overflow-x-auto">
-        {allArmies?.map((army, index) => {
-          return (
-            <ArmyCard
-              key={index}
-              army={army}
-              selectedRealm={realm.realmId}
-              onTravel={() => travel(army.armyId, army.realmId, realm.realmId)}
-              onBuildArmy={() => {
-                router.push(`/realm/${realm.realmId}?tab=Army`, undefined, {
-                  shallow: true,
-                });
-              }}
-            />
-          );
-        })}
-      </div> */}
     </div>
   );
 };

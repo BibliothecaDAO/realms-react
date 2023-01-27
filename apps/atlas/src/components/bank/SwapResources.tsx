@@ -14,6 +14,7 @@ import { useState, useMemo, useReducer, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { battalionIdToString } from '@/constants/army';
+import { buildingIdToString } from '@/constants/globals';
 import type { ResourceQty } from '@/context/BankContext';
 import { useBankContext } from '@/context/BankContext';
 import type { Resource } from '@/context/UserBalancesContext';
@@ -330,7 +331,7 @@ export function SwapResources(): ReactElement {
                 static
               >
                 <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">
-                  Add resources required for:
+                  Add resources required for (Max 1000):
                   {gameConstants?.buildingCosts
                     ?.filter((b) => b.resources.length)
                     .map((a, i) => {
@@ -360,7 +361,7 @@ export function SwapResources(): ReactElement {
                             colorScheme="transparent"
                             className="w-12 mx-2 bg-white border rounded border-white/40"
                             min={1}
-                            max={100}
+                            max={1000}
                             stringMode
                             onChange={(value) => {
                               if (value) {
@@ -373,7 +374,7 @@ export function SwapResources(): ReactElement {
                               }
                             }}
                           />
-                          <div>{a.buildingName}</div>
+                          <div>{buildingIdToString(a.buildingId)}</div>
                         </div>
                       );
                     })}
@@ -401,7 +402,7 @@ export function SwapResources(): ReactElement {
                 static
               >
                 <div className="flex flex-col gap-4 p-4 pb-8 font-medium rounded shadow-sm bg-gray-1000">
-                  Add resources required for:
+                  Add resources required for (Max 1000):
                   {gameConstants?.battalionCosts?.map((a, i) => {
                     return (
                       <div key={i} className="flex items-center">
@@ -429,7 +430,7 @@ export function SwapResources(): ReactElement {
                           colorScheme="transparent"
                           className="w-12 mx-2 bg-white border rounded border-white/40"
                           min={1}
-                          max={100}
+                          max={1000}
                           stringMode
                           onChange={(value) => {
                             if (value) {
@@ -460,7 +461,7 @@ export function SwapResources(): ReactElement {
             </div>
             <Switch
               checked={isBuy}
-              onChange={toggleTradeType}
+              onChange={() => toggleTradeType()}
               className={`relative inline-flex h-6 w-11 items-center rounded shadow-inner ${
                 isBuy ? 'bg-green-800' : 'bg-red-700'
               }`}
