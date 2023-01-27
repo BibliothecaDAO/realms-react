@@ -506,9 +506,6 @@ export const ArmyBuilder = (props: Props) => {
             })} */}
         </CardBody>
       </div>
-      {/* <div className="relative col-span-5">
-          <RadarMap armyOne={armyStats} height={400} width={400} />
-        </div> */}
     </div>
   );
 };

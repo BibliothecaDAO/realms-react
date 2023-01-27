@@ -6,6 +6,7 @@ import Crown from '@bibliotheca-dao/ui-lib/icons/crown_icon.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
+import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { useAccount } from '@starknet-react/core';
 import Image from 'next/image';
 import { useState, useMemo } from 'react';
@@ -28,6 +29,7 @@ import {
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { MyActions } from './MyActions';
+import { MyFood } from './MyFood';
 
 export function EmpirePanel() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -57,15 +59,15 @@ export function EmpirePanel() {
         ),
         component: <MyActions onSettleRealms={toggleSettleRealms} />,
       },
-      // {
-      //   label: (
-      //     <div className="flex whitespace-nowrap">
-      //       <Castle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-      //       <div className="hidden md:block">My Realms</div>
-      //     </div>
-      //   ),
-      //   component: <MyRealms />,
-      // },
+      {
+        label: (
+          <div className="flex whitespace-nowrap">
+            <Sickle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
+            <div className="hidden md:block">Food</div>
+          </div>
+        ),
+        component: <MyFood />,
+      },
       {
         label: (
           <div className="flex whitespace-nowrap">

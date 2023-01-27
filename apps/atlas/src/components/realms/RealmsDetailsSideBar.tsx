@@ -4,7 +4,7 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import type {
   BuildingDetail,
   BuildingFootprint,
-  RealmFoodDetails,
+  foodDetails,
 } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
@@ -14,7 +14,7 @@ import { RealmBuildModal } from './RealmBuildModal';
 interface RealmSideBarProps {
   realm: RealmFragmentFragment;
   buildings: BuildingDetail[] | undefined;
-  realmFoodDetails: RealmFoodDetails;
+  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
   isOpen: boolean;

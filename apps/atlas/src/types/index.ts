@@ -307,7 +307,7 @@ export interface BuildingDetail {
   buildingDecay: number;
 }
 
-export interface RealmFoodDetails {
+export interface FoodDetails {
   farmsToHarvest: number;
   farmTimeTillHarvest: number;
   farmsDecayed: number;

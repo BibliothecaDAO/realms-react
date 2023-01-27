@@ -41,7 +41,7 @@ import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type {
   BuildingDetail,
   BuildingFootprint,
-  RealmFoodDetails,
+  foodDetails,
 } from '@/types/index';
 import { realmMilitaryEvents } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
@@ -51,7 +51,7 @@ import { LaborTable } from './details/LaborTable';
 type Prop = {
   realm: RealmFragmentFragment;
   buildings: BuildingDetail[] | undefined;
-  realmFoodDetails: RealmFoodDetails;
+  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
   next?: () => void;
@@ -76,7 +76,7 @@ export const RealmBuildModal = (props: Prop) => {
   const {
     realm,
     buildings,
-    realmFoodDetails,
+    foodDetails,
     availableFood,
     buildingUtilisation,
     next,
@@ -121,7 +121,7 @@ export const RealmBuildModal = (props: Prop) => {
           <DetailedOverview
             buildingUtilisation={buildingUtilisation}
             availableFood={availableFood}
-            realmFoodDetails={realmFoodDetails}
+            foodDetails={foodDetails}
             realm={realm}
             loading={false}
             defendHistory={realmDefendEventData}
@@ -182,7 +182,7 @@ export const RealmBuildModal = (props: Prop) => {
               <LaborTable realm={realm} />
             </div>
             {/* <RealmsFood
-              realmFoodDetails={realmFoodDetails}
+              foodDetails={foodDetails}
               availableFood={availableFood}
               
               realm={realm}
@@ -210,7 +210,7 @@ export const RealmBuildModal = (props: Prop) => {
         ),
       },
     ],
-    [realm, buildings, availableFood, realmFoodDetails, historyData]
+    [realm, buildings, availableFood, foodDetails, historyData]
   );
 
   const pressedTab = (index) => {

@@ -31,12 +31,12 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 
 import type {
   BuildingFootprint,
-  RealmFoodDetails,
+  foodDetails,
   RealmsCardProps,
 } from '@/types/index';
 
 interface RealmOverview {
-  realmFoodDetails: RealmFoodDetails;
+  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
 }

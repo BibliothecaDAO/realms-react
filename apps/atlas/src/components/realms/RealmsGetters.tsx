@@ -652,7 +652,9 @@ export const getIsFood = (resourceId) => {
 };
 
 export function convertToK(num) {
-  if (num >= 1000) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'm';
+  } else if (num >= 1000) {
     return (num / 1000).toFixed(1) + 'k';
   } else if (isNaN(num)) {
     return 0;

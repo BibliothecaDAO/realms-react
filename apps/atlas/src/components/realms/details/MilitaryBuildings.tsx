@@ -47,7 +47,7 @@ export const MilitaryBuildings = (props: Prop) => {
   });
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap ">
       {props.buildings &&
         props.buildings
           ?.filter((a) => a.type === 'military')
@@ -55,31 +55,19 @@ export const MilitaryBuildings = (props: Prop) => {
             return (
               <div
                 key={i}
-                className="flex w-full my-2 border-4 border-yellow-800/40 rounded-xl"
+                className="w-full p-1 my-1 border-2 rounded border-white/30"
               >
-                <div className="relative self-center rounded">
-                  <Image
-                    height={200}
-                    width={200}
-                    className="object-fill bg-white rounded"
-                    src={a.img}
-                    alt=""
-                  />
-                  <span className="absolute px-2 text-gray-700 bg-white rounded-full bottom-2 left-2">
-                    {a.quantityBuilt}
-                  </span>
-                </div>
-                <div className="flex flex-wrap w-full p-4 capitalize">
-                  <div className="w-full ">
-                    <h3 className="flex p-1 px-2 ">
-                      {a.name}{' '}
-                      <span className="self-center ml-4 text-xs text-gray-700 ">
-                        {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)}{' '}
-                        Day Decay Time
-                      </span>
+                <div className="w-full border-b border-white/30 ">
+                  <h3 className="flex p-1 px-2 ">
+                    {a.name}
+                    <span className="self-center ml-4 text-sm text-gray-700 ">
+                      {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)} Day
+                      Decay Time
+                    </span>
+                    {a.quantityBuilt > 0 ? (
                       <span className="flex self-center ml-auto text-sm">
                         <span className="self-center mr-2 text-xs text-gray-700">
-                          Time till decay:
+                          {a.quantityBuilt} Built | Decay in:
                         </span>
                         <CountdownTimer
                           date={(
@@ -88,138 +76,73 @@ export const MilitaryBuildings = (props: Prop) => {
                           ).toString()}
                         />{' '}
                       </span>
-                    </h3>
+                    ) : (
+                      ''
+                    )}
+                  </h3>
+                </div>
+
+                <div className="flex self-center justify-between w-full">
+                  <div className="relative self-center p-2">
+                    <Image
+                      height={200}
+                      width={200}
+                      className="rounded"
+                      src={a.img}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex space-x-2">
+                    {battalionInformation
+                      .filter((b) => b.buildingId === a.id)
+                      .map((c, i) => {
+                        return (
+                          <Image
+                            key={i}
+                            height={200}
+                            width={125}
+                            className="self-center object-fill rounded shadow-inner"
+                            src={getUnitImage(c.id)}
+                            alt=""
+                          />
+                        );
+                      })}
                   </div>
 
-                  <div className="flex self-center justify-between w-full">
-                    <div className="flex space-x-2">
-                      {battalionInformation
-                        .filter((b) => b.buildingId === a.id)
-                        .map((c, i) => {
+                  <div className="w-1/3 p-3 ml-auto">
+                    <div className="flex flex-wrap">
+                      {a.cost &&
+                        a.cost.map((b, i) => {
                           return (
-                            <Image
+                            <CostBlock
                               key={i}
-                              height={90}
-                              width={90}
-                              className="self-center object-fill bg-white border border-yellow-900 rounded shadow-inner"
-                              src={getUnitImage(c.id)}
-                              alt=""
+                              resourceName={b.resourceName}
+                              amount={b.amount}
+                              id={b.resourceId}
+                              qty={buildQty[a.key]}
                             />
                           );
                         })}
                     </div>
-
-                    <div>
-                      <div className="flex mt-2">
-                        {a.cost &&
-                          a.cost.map((b, i) => {
-                            return (
-                              <CostBlock
-                                key={i}
-                                resourceName={b.resourceName}
-                                amount={b.amount}
-                                id={b.resourceId}
-                                qty={buildQty[a.key]}
-                              />
-                            );
-                          })}
-                      </div>
-                      <div className="flex w-full mt-2 space-x-2">
-                        {/* {a.cost && (
-                          <Button
-                            onClick={() => {
-                              batchAddResources(
-                                a.cost
-                                  .filter(
-                                    (r) =>
-                                      r.amount > 0 &&
-                                      !checkUserHasAvailableResources({
-                                        cost: r.amount,
-                                        id: r.resourceId,
-                                      })
-                                  )
-                                  .map((r) => {
-                                    const checkoutBalance =
-                                      balance.find(
-                                        (a) => a.resourceId === r.resourceId
-                                      )?.amount || 0;
-                                    return {
-                                      resourceId: r.resourceId,
-                                      resourceName: r.resourceName,
-                                      amount:
-                                        r.amount * 1.2 -
-                                        +formatEther(
-                                          BigNumber.from(checkoutBalance)
-                                        ),
-                                    };
-                                  })
-                              );
-                              toast(
-                                <span>
-                                  Missing resources added to the cart
-                                  <Button onClick={toggleTrade}>
-                                    Open Now
-                                  </Button>
-                                </span>
-                              );
-                            }}
-                            size="xs"
-                            className="ml-2"
-                            variant="outline"
-                          >
-                            Buy missing resources
-                          </Button>
-                        )} */}
-                        <Button
-                          onClick={() =>
-                            build({
-                              realmId: props.realm.realmId,
-                              buildingId: a.id,
-                              qty: buildQty[a.key],
-                              costs: {
-                                // Mimic ItemCost interface
-                                amount: 0,
-                                resources: a.cost,
-                              },
-                            })
-                          }
-                          size="xs"
-                          variant="primary"
-                          className="ml-auto"
-                          // disabled={
-                          //   a.cost &&
-                          //   a.cost.some(
-                          //     (r) =>
-                          //       r.amount > 0 &&
-                          //       !checkUserHasAvailableResources({
-                          //         cost: r.amount,
-                          //         id: r.resourceId,
-                          //       })
-                          //   )
-                          // }
-                        >
-                          construct
-                        </Button>
-                        {/* <InputNumber
-                        value={buildQty[a.key]}
-                        inputSize="sm"
-                        colorScheme="transparent"
-                        className="w-12 bg-white border rounded border-white/40"
-                        min={1}
-                        max={10}
-                        stringMode
-                        onChange={(value) => {
-                          if (value) {
-                            setBuildQty((current) => {
-                              return {
-                                ...current,
-                                [a.key]: value.toString(),
-                              };
-                            });
-                          }
-                        }}
-                      />{' '} */}
-                      </div>
+                    <div className="flex w-full mt-6 space-x-2">
+                      <Button
+                        onClick={() =>
+                          build({
+                            realmId: props.realm.realmId,
+                            buildingId: a.id,
+                            qty: buildQty[a.key],
+                            costs: {
+                              amount: 0,
+                              resources: a.cost,
+                            },
+                          })
+                        }
+                        size="md"
+                        variant="outline"
+                        className="ml-auto"
+                      >
+                        construct
+                      </Button>
                     </div>
                   </div>
                 </div>

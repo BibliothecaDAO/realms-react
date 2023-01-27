@@ -16,7 +16,7 @@ import type { Food, Realm } from '@/generated/graphql';
 
 import type {
   CallAndMetadata,
-  RealmFoodDetails,
+  FoodDetails,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
@@ -104,8 +104,8 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
   }),
 };
 
-type UseRealmFoodDetails = {
-  realmFoodDetails: RealmFoodDetails;
+type UsefoodDetails = {
+  foodDetails: FoodDetails;
   availableFood: number | undefined;
   loading: boolean;
   create: (tokenId, quantity, foodBuildingId, costs) => void;
@@ -113,7 +113,7 @@ type UseRealmFoodDetails = {
   convert: (tokenId, quantity, resourceId) => void;
 };
 
-const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
+const useFood = (realm: Realm | undefined): UsefoodDetails => {
   const { play: harvestFish } = useUiSounds(soundSelector.harvestFish);
   const { play: harvestWheat } = useUiSounds(soundSelector.harvestWheat);
   const { play: exportFood } = useUiSounds(soundSelector.exportWheat);
@@ -151,7 +151,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
 
   const txQueue = useCommandList();
 
-  const [realmFoodDetails, setRealmFoodDetails] = useState<RealmFoodDetails>({
+  const [foodDetails, setfoodDetails] = useState<FoodDetails>({
     farmsToHarvest: 0,
     farmTimeTillHarvest: 0,
     farmHarvestsLeft: 0,
@@ -220,7 +220,7 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
       return HARVEST_LENGTH * 1000 - difference;
     };
 
-    setRealmFoodDetails({
+    setfoodDetails({
       farmsToHarvest: harvests(farm) > 0 ? getHarvestsAvailable(farm)[0] : 0,
       farmHarvestsLeft: harvests(farm),
       farmTimeTillHarvest: getTimeTillHarvest(farm),
@@ -246,11 +246,17 @@ const useFood = (realm: Realm | undefined): UseRealmFoodDetails => {
   };
 
   useEffect(() => {
+    if (!realm) {
+      return;
+    }
+
     fetchData().catch(console.error);
-  }, [availableFood]);
+
+    console.log(availableFood);
+  }, [availableFood, realm]);
 
   return {
-    realmFoodDetails,
+    foodDetails,
     availableFood,
     create: (tokenId, quantity, foodBuildingId, costs) => {
       playFoodBuildingSound(foodBuildingId);

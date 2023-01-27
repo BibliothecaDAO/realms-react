@@ -40,11 +40,11 @@ import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
 import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useIsOwner from '@/hooks/useIsOwner';
-import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
+import type { BuildingDetail, FoodDetails } from '@/types/index';
 
 type Prop = {
   realm: RealmFragmentFragment;
-  realmFoodDetails: RealmFoodDetails;
+  foodDetails: FoodDetails;
   availableFood: number | undefined;
   loading: boolean;
 };
@@ -63,7 +63,7 @@ interface ResourceAndFoodInput {
 }
 
 export const RealmsFood = (props: Prop) => {
-  const { realm, realmFoodDetails, availableFood, loading } = props;
+  const { realm, foodDetails, availableFood, loading } = props;
 
   const { balance } = useUserBalancesContext();
   const { getBuildingCostById } = useGameConstants();

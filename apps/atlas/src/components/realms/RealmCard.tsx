@@ -1,19 +1,13 @@
 import { OrderIcon, Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
-import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useMemo,
-} from 'react';
+import React, { forwardRef, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
-import { RealmOverview, Travel } from '@/components/realms/details';
+import { Travel } from '@/components/realms/details';
 import {
   isFavourite,
   IsSettled,
@@ -29,139 +23,53 @@ import {
   checkIsRaidable,
 } from '@/components/realms/RealmsGetters';
 import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
-import {
-  FISH_ID,
-  HarvestType,
-  RealmBuildingId,
-  WHEAT_ID,
-} from '@/constants/globals';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useModalContext } from '@/context/ModalContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { Realm } from '@/generated/graphql';
-import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useBuildings from '@/hooks/settling/useBuildings';
-import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
-import useFood, { Entrypoints } from '@/hooks/settling/useFood';
+import useFood from '@/hooks/settling/useFood';
 import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import useIsOwner from '@/hooks/useIsOwner';
 import { useStarkNetId } from '@/hooks/useStarkNetId';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { RealmsCardProps } from '@/types/index';
 import { shortenAddressWidth } from '@/util/formatters';
-import { getArmyById, GetArmyStrength } from '../armies/ArmyGetters';
+import { getArmyById } from '../armies/ArmyGetters';
 import { ArmyToolTip } from '../armies/ArmyToolTip';
 import { RealmsDetailSideBar } from './RealmsDetailsSideBar';
 
 export const RealmCard = forwardRef<any, RealmsCardProps>(
   (props: RealmsCardProps, ref) => {
-    const { realm, ...rest } = props;
-    const { play } = useUiSounds(soundSelector.pageTurn);
-    const { address: l1Address } = useL1Account();
-    const { address } = useAccount();
+    const { realm } = props;
 
-    const { enqueuedTx } = usePendingRealmTx({ realmId: realm.realmId });
+    const [isDetails, setDetails] = useState(false);
+    const [isRaiding, setIsRaiding] = useState(false);
+    const [isTravel, setIsTravel] = useState(false);
 
     const {
       state: { favouriteRealms },
       actions,
     } = useRealmContext();
+    const { enqueuedTx } = usePendingRealmTx({ realmId: realm.realmId });
 
+    const { address: l1Address } = useL1Account();
+    const { address } = useAccount();
     const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
-
-    const { realmFoodDetails, availableFood, harvest } = useFood(
-      realm as Realm
-    );
-
-    const tabs = useMemo(
-      () => [
-        {
-          label: <Castle className="self-center w-4 h-4 fill-current" />,
-          component: (
-            <RealmOverview
-              buildingUtilisation={buildingUtilisation}
-              availableFood={availableFood}
-              realmFoodDetails={realmFoodDetails}
-              {...props}
-            />
-          ),
-        },
-
-        // {
-        //   label: <Sword className="self-center w-4 h-4 fill-current" />,
-        //   component: <RealmsArmy buildings={buildings} realm={realm} />,
-        // },
-        // {
-        //   label: <Sickle className="self-center w-4 h-4 fill-current" />,
-        //   component: (
-        //     <RealmsFood
-        //       realmFoodDetails={realmFoodDetails}
-        //       availableFood={availableFood}
-        //       buildings={buildings}
-        //       realm={realm}
-        //       loading={false}
-        //     />
-        //   ),
-        // },
-        // {
-        //   label: <Globe className="self-center w-4 h-4 fill-current" />,
-        //   component: <Travel realm={realm} />,
-        // },
-        // {
-        //   label: <Scroll className="self-center w-4 h-4 fill-current" />,
-        //   component: <RealmHistory realmId={realm.realmId} />,
-        // },
-        // {
-        //   label: <Library className="self-center w-4 h-4 fill-current" />,
-        //   component: (
-        //     <RealmLore
-        //       realmName={realm.name || ''}
-        //       realmId={realm.realmId || 0}
-        //     />
-        //   ),
-        // },
-      ],
-      [availableFood, buildings, realmFoodDetails, props, buildingUtilisation]
-    );
+    const { foodDetails, availableFood } = useFood(realm as Realm);
     const { userData } = useUsersRealms();
-    const [selectedTab, setSelectedTab] = useState(0);
-
-    useImperativeHandle(ref, () => ({
-      selectTab(index) {
-        setSelectedTab(index);
-      },
-    }));
-
-    const pressedTab = (index) => {
-      play();
-      setSelectedTab(index as number);
-    };
-
     const { starknetId } = useStarkNetId(RealmOwner(realm) || '');
-
-    const userArmiesAtLocation = userData.attackingArmies?.filter(
-      (army) => army.destinationRealmId == realm.realmId
-    );
-    const [isDetails, setDetails] = useState(false);
-
-    const [isRaiding, setIsRaiding] = useState(false);
-    const [isTravel, setIsTravel] = useState(false);
 
     const {
       mapContext: { navigateToAsset },
     } = useAtlasContext();
 
-    const { enqueuedHarvestTx: harvestFarmEnqueuedHarvestTx } =
-      useCurrentQueuedTxs({
-        moduleAddr: ModuleAddr.Food,
-        entryPoint: Entrypoints.harvest,
-        realmId: realm?.realmId,
-      });
-
     const isOwner = useIsOwner(realm?.settledOwner);
+
+    const userArmiesAtLocation = userData.attackingArmies?.filter(
+      (army) => army.destinationRealmId == realm.realmId
+    );
 
     return (
       <Card ref={ref}>
@@ -413,17 +321,15 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           )}
         </AtlasSidebar>
 
-        {
-          <RealmsDetailSideBar
-            isOpen={isDetails}
-            onClose={() => setDetails(false)}
-            realm={realm}
-            buildings={buildings}
-            realmFoodDetails={realmFoodDetails}
-            availableFood={availableFood}
-            buildingUtilisation={buildingUtilisation}
-          />
-        }
+        <RealmsDetailSideBar
+          isOpen={isDetails}
+          onClose={() => setDetails(false)}
+          realm={realm}
+          buildings={buildings}
+          foodDetails={foodDetails}
+          availableFood={availableFood}
+          buildingUtilisation={buildingUtilisation}
+        />
       </Card>
     );
   }
