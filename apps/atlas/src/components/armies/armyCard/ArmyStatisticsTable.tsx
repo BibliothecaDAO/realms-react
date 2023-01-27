@@ -5,7 +5,7 @@ export const ArmyStatisticsTable = ({ army }) => {
 
   const armyStats = getArmyStats(army);
   return (
-    <div>
+    <div className="p-3 border rounded-1 border-white/20">
       <div className="flex justify-between">
         <h5 className="font-semibold">Statistics</h5>
         <span className="pr-6 ml-auto">A</span> <span>D</span>

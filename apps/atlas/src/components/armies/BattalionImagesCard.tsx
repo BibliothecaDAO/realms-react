@@ -21,15 +21,15 @@ export const HealthBar = (props: HealthBarProps) => {
   const getColour = () => {
     const vit = getVitality();
     if (vit >= 100) {
-      return 'bg-green-700 ';
+      return 'bg-green-700/60 ';
     } else if (vit > 70) {
       return 'bg-green-800/70 ';
     } else if (vit > 50) {
-      return 'bg-yellow-600 ';
+      return 'bg-yellow-600/60 ';
     } else if (vit > 25) {
-      return 'bg-red-200 ';
+      return 'bg-red-200/60 ';
     } else {
-      return 'bg-red-500 ';
+      return 'bg-red-500/60 ';
     }
   };
 
@@ -41,7 +41,7 @@ export const HealthBar = (props: HealthBarProps) => {
         style={{
           height: `${getVitality() > 100 ? 100 : getVitality()}%`,
         }}
-        className={`${getColour()} transform w-2 rounded border border-white/30`}
+        className={`${getColour()} transform w-2  border border-white/30`}
       ></div>
     </div>
   );

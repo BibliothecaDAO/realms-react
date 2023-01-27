@@ -37,7 +37,7 @@ export const BattalionWithImage: React.FC<
   return (
     <div
       key={props.battalionId}
-      className={`border-2 border-yellow-900 relative flex-col justify-between group h-56 rounded-md`}
+      className={`border border-yellow-900/30 relative flex-col justify-between group h-36 rounded-md`}
     >
       {/* <h2 className="z-20 flex justify-center text-center  text-shadow-[0_2px_6px_#6366f1] absolute">
         {data?.name}
