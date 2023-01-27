@@ -1,3 +1,4 @@
+import { BattalionIds, battalionIdToString } from '@/constants/army';
 import type { Army } from '@/generated/graphql';
 
 type Props = {
@@ -22,42 +23,42 @@ export const ArmyBattalions = (props: Props) => {
           <tbody>
             <Row
               qty={army.lightCavalryQty}
-              name="Cavalry"
+              name={battalionIdToString(BattalionIds.LightCavalry)}
               health={army.lightCavalryHealth}
             />
             <Row
               qty={army.heavyCavalryQty}
-              name="Knights"
+              name={battalionIdToString(BattalionIds.HeavyCavalry)}
               health={army.heavyCavalryHealth}
             />
             <Row
               qty={army.archerQty}
-              name="Archers"
+              name={battalionIdToString(BattalionIds.Archer)}
               health={army.archerHealth}
             />
             <Row
               qty={army.longbowQty}
-              name="Longbow"
+              name={battalionIdToString(BattalionIds.Longbow)}
               health={army.longbowHealth}
             />
             <Row
               qty={army.mageQty}
-              name="Apprentice"
+              name={battalionIdToString(BattalionIds.Mage)}
               health={army.mageHealth}
             />
             <Row
               qty={army.arcanistQty}
-              name="Archanist"
+              name={battalionIdToString(BattalionIds.Arcanist)}
               health={army.arcanistHealth}
             />
             <Row
               qty={army.lightInfantryQty}
-              name="Solider"
+              name={battalionIdToString(BattalionIds.LightInfantry)}
               health={army.lightInfantryHealth}
             />
             <Row
               qty={army.heavyInfantryQty}
-              name="Paladin"
+              name={battalionIdToString(BattalionIds.HeavyInfantry)}
               health={army.heavyInfantryHealth}
             />
           </tbody>

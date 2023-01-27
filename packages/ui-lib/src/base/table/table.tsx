@@ -54,7 +54,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-scroll">
       {options?.search && (
         <div>
           <input

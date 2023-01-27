@@ -461,7 +461,13 @@ export const LaborTable = (props: Prop) => {
               >
                 <div className="self-center mr-3 text-lg">
                   <span className="text-gray-600 ">Produced</span>{' '}
-                  {convertToK(generation[0] * productionAmount)}
+                  {isFood
+                    ? convertToK(
+                        generation[0] *
+                          productionAmount *
+                          (resource.labor?.qtyBuilt || 1)
+                      )
+                    : convertToK(generation[0] * productionAmount)}
                 </div>
                 <div>
                   <HarvestButton
@@ -473,20 +479,42 @@ export const LaborTable = (props: Prop) => {
               </div>
               {!isFood ? (
                 <div className="flex justify-between px-2 pt-1 text-lg">
-                  <div>
-                    Vault:{' '}
-                    {(
-                      getLaborUnitsGenerated(resource.labor?.vaultBalance) *
-                        productionAmount || 0
-                    ).toFixed()}
-                    <span className="text-gray-600">
-                      / {productionAmount * 12 * VAULT_LENGTH}
-                    </span>
-                  </div>
+                  <Tooltip
+                    placement="top"
+                    className="flex w-full"
+                    tooltipText={
+                      <div className="p-2 rounded bg-gray-1000">
+                        Once your vault gets to 1008 you can claim it all!
+                      </div>
+                    }
+                  >
+                    <div>
+                      Vault:{' '}
+                      {(
+                        getLaborUnitsGenerated(resource.labor?.vaultBalance) *
+                          productionAmount || 0
+                      ).toFixed()}
+                      <span className="text-gray-600">
+                        / {productionAmount * 12 * VAULT_LENGTH}
+                      </span>
+                    </div>
+                  </Tooltip>
 
                   <div className="flex text-lg">
-                    <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
-                    {valueAtMarketprice.toFixed(2)}
+                    <Tooltip
+                      placement="top"
+                      className="flex w-full"
+                      tooltipText={
+                        <div className="p-2 rounded bg-gray-1000">
+                          Market price of your Vault at current prices.
+                        </div>
+                      }
+                    >
+                      <div className="flex">
+                        <Lords className="self-center mr-2 md:w-4 lg:w-5 fill-frame-primary" />
+                        {valueAtMarketprice.toFixed(2)}
+                      </div>
+                    </Tooltip>
                   </div>
                 </div>
               ) : (
