@@ -461,19 +461,18 @@ export const LaborTable = (props: Prop) => {
               >
                 <div className="self-center mr-3 text-lg">
                   <span className="text-gray-600 ">Produced</span>{' '}
-                  {isFood
-                    ? convertToK(
-                        generation[0] *
-                          productionAmount *
-                          (resource.labor?.qtyBuilt || 1)
-                      )
-                    : convertToK(generation[0] * productionAmount)}
                 </div>
                 <div>
                   <HarvestButton
                     realmId={realm.realmId}
                     resourceId={resource.resourceId}
-                    generation={generation[0]}
+                    generation={
+                      isFood
+                        ? generation[0] *
+                          productionAmount *
+                          (resource.labor?.qtyBuilt || 1)
+                        : generation[0] * productionAmount
+                    }
                   />
                 </div>
               </div>

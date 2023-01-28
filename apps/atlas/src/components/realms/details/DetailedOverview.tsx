@@ -22,15 +22,10 @@ import {
   RealmBuildingId,
   STORE_HOUSE_SIZE,
 } from '@/constants/globals';
-import type {
-  BuildingFootprint,
-  RealmFoodDetails,
-  RealmsCardProps,
-} from '@/types/index';
+import type { BuildingFootprint, RealmsCardProps } from '@/types/index';
 import { RealmsFood } from './Food';
 
 interface RealmOverview {
-  realmFoodDetails: RealmFoodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
   defendHistory?: any;
@@ -39,7 +34,7 @@ interface RealmOverview {
 export function DetailedOverview(
   props: RealmsCardProps & RealmOverview
 ): ReactElement {
-  const { realm, availableFood, buildingUtilisation, realmFoodDetails } = props;
+  const { realm, availableFood, buildingUtilisation } = props;
 
   const usedStorehouseSpace = availableFood
     ? availableFood / STORE_HOUSE_SIZE
@@ -189,12 +184,7 @@ export function DetailedOverview(
       </div> */}
       <div className="flex w-full">
         <div className="w-1/2">
-          <RealmsFood
-            realmFoodDetails={realmFoodDetails}
-            availableFood={availableFood}
-            realm={realm}
-            loading={false}
-          />
+          <RealmsFood realm={realm} />
         </div>
 
         <div className="w-1/2">

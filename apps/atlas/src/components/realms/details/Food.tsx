@@ -1,38 +1,28 @@
 import {
-  Card,
-  CardTitle,
   Button,
   CountdownTimer,
   InputNumber,
   ResourceIcon,
 } from '@bibliotheca-dao/ui-lib/base';
-import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+
 import ChevronDown from '@bibliotheca-dao/ui-lib/icons/chevron-down.svg';
 import ChevronUp from '@bibliotheca-dao/ui-lib/icons/chevron-up.svg';
 import { formatEther } from '@ethersproject/units';
 import type { ValueType } from '@rc-component/mini-decimal';
-import { BigNumber } from 'ethers';
-import Image from 'next/image';
-import React, { useEffect, useMemo, useState } from 'react';
 
+import React, { useMemo, useState } from 'react';
 import {
   convertToK,
-  CostBlock,
   getPopulation,
+  getTrait,
 } from '@/components/realms/RealmsGetters';
-
 import {
   RealmBuildingId,
-  HarvestType,
-  HARVEST_LENGTH,
-  MAX_HARVESTS,
-  BASE_FOOD_PRODUCTION,
   FISH_ID,
   WHEAT_ID,
-  buildingIdToString,
   buildingImageById,
 } from '@/constants/globals';
-import { useCommandList } from '@/context/CommandListContext';
+
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import type { Realm, RealmFragmentFragment } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
@@ -40,21 +30,10 @@ import { useCurrentQueuedTxs } from '@/hooks/settling/useCurrentQueuedTxs';
 import useFood, { Entrypoints } from '@/hooks/settling/useFood';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import useIsOwner from '@/hooks/useIsOwner';
-import type { BuildingDetail, RealmFoodDetails } from '@/types/index';
 
 type Prop = {
   realm: RealmFragmentFragment;
-  realmFoodDetails: RealmFoodDetails;
-  availableFood: number | undefined;
-  loading: boolean;
 };
-
-const getTrait = (realm: any, trait: string) => {
-  return realm?.traits?.find((o) => o.type === trait)
-    ? realm.traits?.find((o) => o.type === trait).qty
-    : '0';
-};
-
 interface ResourceAndFoodInput {
   farmsToBuild: string;
   fishingVillagesToBuild: string;
@@ -63,11 +42,11 @@ interface ResourceAndFoodInput {
 }
 
 export const RealmsFood = (props: Prop) => {
-  const { realm, realmFoodDetails, availableFood, loading } = props;
+  const { realm } = props;
 
   const { balance } = useUserBalancesContext();
   const { getBuildingCostById } = useGameConstants();
-  const { create, harvest, convert } = useFood(realm as Realm);
+  const { convert, availableFood } = useFood(realm as Realm);
   const isOwner = useIsOwner(realm?.settledOwner);
 
   const getFishBalance = useMemo(() => {
@@ -91,8 +70,8 @@ export const RealmsFood = (props: Prop) => {
   const [input, setInput] = useState<ResourceAndFoodInput>({
     farmsToBuild: farmCapacity,
     fishingVillagesToBuild: fishingVillageCapacity,
-    fishConversion: '1000',
-    wheatConversion: '1000',
+    fishConversion: '10000',
+    wheatConversion: '10000',
   });
 
   const farmCosts = getBuildingCostById(RealmBuildingId.Farm);
@@ -113,7 +92,7 @@ export const RealmsFood = (props: Prop) => {
           <p>You must keep your citizens fed!</p>
         </div>
         <div className="absolute bottom-0 flex items-center justify-between w-full p-4 bg-gradient-to-t from-gray-900">
-          <div className="self-center mr-3 text-3xl">
+          <div className="self-center p-1 mr-3 text-xl rounded bg-black/70">
             {availableFood ? availableFood : '0 Food in Store'}
           </div>
 
@@ -369,225 +348,6 @@ export const RealmsFood = (props: Prop) => {
             >
               half
             </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const FoodBuildingComponent = (props: {
-  realm;
-  id;
-  built;
-  capacity;
-  harvestsLeft;
-  timeTillHarvest;
-  toHarvest;
-  decayed;
-  costs;
-}) => {
-  const {
-    realm,
-    id,
-    toHarvest,
-    built,
-    capacity,
-    harvestsLeft,
-    timeTillHarvest,
-    decayed,
-    costs,
-  } = props;
-
-  const [qty, setQty] = useState(capacity || 1);
-
-  const { create, harvest, convert } = useFood(realm as Realm);
-
-  const txQueue = useCommandList();
-
-  const [enqueuedHarvestTx, setEnqueuedHarvestTx] = useState(false);
-
-  const [enqueuedBuildTx, setEnqueuedBuildTx] = useState(false);
-
-  useEffect(() => {
-    setEnqueuedHarvestTx(
-      !!txQueue.transactions.find(
-        (t: any) =>
-          t.contractAddress == ModuleAddr.Food &&
-          t.entrypoint == Entrypoints.harvest &&
-          t.calldata &&
-          BigNumber.from(t.calldata[0] as string).eq(
-            BigNumber.from(realm.realmId)
-          ) &&
-          t.calldata[3] == id
-      )
-    );
-
-    setEnqueuedBuildTx(
-      !!txQueue.transactions.find(
-        (t: any) =>
-          t.contractAddress == ModuleAddr.Food &&
-          t.entrypoint == Entrypoints.create &&
-          t.calldata &&
-          BigNumber.from(t.calldata[0] as string).eq(
-            BigNumber.from(realm.realmId)
-          ) &&
-          t.calldata[3] == id
-      )
-    );
-  }, [txQueue.transactions]);
-
-  const cropLand = ({ level, color, built }) => {
-    return Array.from({ length: level }, (item, index) => (
-      <div key={index}>
-        <div
-          className={`h-2 p-2 border border-white/30 rounded flex m-1 ${
-            toHarvest > 0 ? 'animate-pulse' : ''
-          }  ${index < built ? color : ''}`}
-        >
-          <ResourceIcon
-            size="xs"
-            resource={id === RealmBuildingId.Farm ? 'Wheat' : 'Fish'}
-          />
-        </div>
-      </div>
-    ));
-  };
-
-  return (
-    <div className="w-full">
-      <div className="flex flex-wrap justify-between ">
-        <div className="relative">
-          <img
-            className={'mx-auto rounded-t-2xl'}
-            src={buildingImageById(id)}
-            alt="Hut"
-          />
-          <div className="absolute top-0 w-full p-4 text-white bg-gradient-to-b from-gray-900 rounded-t-xl">
-            <h3 className="flex justify-between p-1 px-2 ">
-              {buildingIdToString(id)}{' '}
-              <span>
-                {built} / {capacity}{' '}
-              </span>
-            </h3>
-          </div>
-
-          <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-gray-900">
-            <p className="self-center px-2 text-white">
-              {built} {buildingIdToString(id)} generating{' '}
-              {(BASE_FOOD_PRODUCTION * built).toLocaleString()}{' '}
-              {id === RealmBuildingId.Farm ? '$WHEAT' : '$FISH'} every{' '}
-              {HARVEST_LENGTH / 60} minutes.
-            </p>
-          </div>
-        </div>{' '}
-        <div className="flex flex-wrap p-2">
-          {' '}
-          {cropLand({
-            level: capacity,
-            color:
-              id === RealmBuildingId.Farm
-                ? 'bg-yellow-300/30'
-                : 'bg-blue-300/30',
-            built: built,
-          })}
-        </div>
-        <div className="flex flex-wrap justify-between w-full px-2 pb-2">
-          <div className="w-full">
-            <div className="flex flex-col">
-              <div className="flex my-2">
-                <h5>To Harvest: </h5>
-                <div className="ml-2">
-                  {toHarvest} / {MAX_HARVESTS}
-                </div>
-              </div>
-              {harvestsLeft > 0 && (
-                <div className="flex mb-2">
-                  <h5>Next Harvest: </h5>
-                  <div className="ml-2">
-                    <CountdownTimer
-                      statement={<div className="text-green-600">Now</div>}
-                      date={(timeTillHarvest + new Date().getTime()).toString()}
-                    />
-                  </div>
-                </div>
-              )}
-              <div className="flex mb-2">
-                <h5>Harvests Left</h5>
-                <div className="ml-2">{harvestsLeft}</div>
-              </div>
-            </div>
-            <div>
-              <Button
-                onClick={() => {
-                  harvest(
-                    realm?.realmId,
-                    HarvestType.Export,
-                    id,
-                    RealmBuildingId.Farm === id ? WHEAT_ID : FISH_ID
-                  );
-                }}
-                size="xs"
-                disabled={toHarvest === 0 || enqueuedHarvestTx}
-                variant="primary"
-              >
-                {(BASE_FOOD_PRODUCTION * built * toHarvest).toLocaleString()}{' '}
-                {RealmBuildingId.Farm === id ? '$WHEAT' : '$FISH'}
-                {enqueuedHarvestTx ? ' Harvesting...' : ' to harvest'}
-              </Button>
-            </div>
-          </div>
-
-          <div className="w-full my-4">
-            <div className="flex flex-wrap ">
-              <div className="flex w-full space-x-2">
-                <Tooltip
-                  placement="top"
-                  className="flex w-min"
-                  tooltipText={
-                    <div className="flex p-1 text-sm rounded bg-gray-1000 whitespace-nowrap">
-                      {costs?.resources.map((a, i) => {
-                        return (
-                          <CostBlock
-                            key={i}
-                            resourceName={a.resourceName}
-                            amount={a.amount}
-                            id={a.resourceId}
-                            qty={parseInt(qty) || 0}
-                          />
-                        );
-                      })}
-                    </div>
-                  }
-                >
-                  <Button
-                    onClick={() => {
-                      create(realm?.realmId, qty, id, costs);
-                    }}
-                    size="xs"
-                    variant="primary"
-                    disabled={enqueuedBuildTx}
-                  >
-                    {enqueuedBuildTx ? 'Building...' : 'Build'}
-                  </Button>
-                </Tooltip>
-
-                {capacity && (
-                  <InputNumber
-                    value={qty}
-                    inputSize="sm"
-                    colorScheme="transparent"
-                    className="w-12 border rounded border-white/40"
-                    min={1}
-                    max={capacity}
-                    stringMode
-                    onChange={(value: ValueType | null) => {
-                      setQty(value);
-                    }}
-                  />
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </div>

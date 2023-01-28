@@ -10,7 +10,7 @@ export const MyArmies = () => {
   return (
     <div className="px-4 mt-4 ">
       <h2 className="mb-4">Your Armies</h2>
-      <div className="relative grid gap-4 overflow-x-auto sm:grid-cols-2">
+      <div className="relative grid gap-4 sm:grid-cols-2">
         {userData.attackingArmies?.map((army, index) => {
           return (
             <ArmyCard

@@ -26,7 +26,7 @@ export const ArmyStatistics: React.FC<Prop> = (props) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-between h-full">
       <div className="grid grid-cols-4 gap-2 p-2 ">
         {formattedArmy(army).map((battalion, index) => {
           return <BattalionWithImage key={index} {...battalion} />;

@@ -20,7 +20,7 @@ const getModalComponent = (currentModal: TModal) => {
       <RealmBuildModal
         realm={props.realm}
         buildings={props.buildings}
-        realmFoodDetails={props.realmFoodDetails}
+        foodDetails={props.foodDetails}
         availableFood={props.availableFood}
         buildingUtilisation={props.buildingUtilisation}
         prev={props.prev}
