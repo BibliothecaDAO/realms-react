@@ -10,7 +10,7 @@ export const ArmyBattalions = (props: Props) => {
 
   return (
     <div key={army.armyId}>
-      <div className="p-3 border rounded-1 border-white/20">
+      <div className="p-1 border rounded-1 border-white/20">
         <table className="w-full">
           <thead>
             <tr>
@@ -19,7 +19,7 @@ export const ArmyBattalions = (props: Props) => {
               <th className="text-right">Health</th>
             </tr>
           </thead>
-          <hr className="border-white/30" />
+
           <tbody>
             <Row
               qty={army.lightCavalryQty}
@@ -70,10 +70,20 @@ export const ArmyBattalions = (props: Props) => {
 
 export const Row = ({ qty, health, name }) => {
   return (
-    <tr className={`${qty > 0 ? 'text-green-500' : ''}`}>
-      <td className="text-left">{name}</td>
-      <td className={`text-right`}>{qty}</td>
-      <td className="text-right">{health}</td>
+    <tr
+      className={`${
+        qty > 0 ? 'text-green-500' : ''
+      } border rounded-1 border-white/20`}
+    >
+      <td className="px-1 text-left border rounded-1 border-white/20">
+        {name}
+      </td>
+      <td className={`text-right border rounded-1 border-white/20 px-1`}>
+        {qty}
+      </td>
+      <td className="px-1 text-right border rounded-1 border-white/20">
+        {health}
+      </td>
     </tr>
   );
 };

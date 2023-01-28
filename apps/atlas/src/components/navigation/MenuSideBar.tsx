@@ -16,6 +16,7 @@ import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useUIContext } from '@/context/UIContext';
 
 import { useBreakpoint } from '@/hooks/useBreakPoint';
@@ -27,6 +28,10 @@ export const MenuSideBar = () => {
 
   const { toggleTrade, toggleResourcesList, toggleLore, toggleLeaderboard } =
     useUIContext();
+
+  const {
+    mapContext: { resetViewState },
+  } = useAtlasContext();
 
   const isPage = useCallback(
     (name: string) => name === pathname.slice(1).split('/')[0],
@@ -53,6 +58,9 @@ export const MenuSideBar = () => {
         page: '',
         icon: <Globe className={`${iconClasses('')}`} />,
         text: 'atlas',
+        action: () => {
+          resetViewState();
+        },
       },
       // {
       //   page: 'account',

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-// Baseline square meter for building capacity calculations.
-
 export enum LightDark {
   light = 1,
   dark = 2,

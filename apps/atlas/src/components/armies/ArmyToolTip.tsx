@@ -8,7 +8,7 @@ export const ArmyToolTip = ({ army }) => {
   return (
     <Tooltip
       placement="left"
-      className="z-10 flex"
+      className="flex z-100"
       tooltipText={
         <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
           <ArmyStatisticsTable army={army} />
