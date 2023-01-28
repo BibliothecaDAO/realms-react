@@ -255,7 +255,7 @@ export const CombatSideBar: React.FC<Prop> = ({
                     </div>
                   )}
 
-                  <div className="flex justify-center">
+                  <div className="flex flex-wrap justify-center">
                     {filterFoodResources(defendingRealm?.resources).map(
                       (resource, index) => (
                         <div

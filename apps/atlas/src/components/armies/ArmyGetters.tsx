@@ -56,3 +56,17 @@ export const armyStrength = (armyStrength: number) => {
     return 'V.Weak';
   }
 };
+
+export const armyStrengthColors = (armyStrength: number) => {
+  if (armyStrength > 1000) {
+    return 'text-green-500';
+  } else if (armyStrength > 750) {
+    return 'text-green-400';
+  } else if (armyStrength > 250) {
+    return 'text-yellow-400';
+  } else if (armyStrength > 100) {
+    return 'text-yellow-500';
+  } else {
+    return 'text-red-500';
+  }
+};

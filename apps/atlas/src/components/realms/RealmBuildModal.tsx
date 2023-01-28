@@ -1,35 +1,21 @@
 import { OrderIcon, Tabs } from '@bibliotheca-dao/ui-lib/base';
-
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
-import Crown from '@bibliotheca-dao/ui-lib/icons/crown.svg';
-import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Library from '@bibliotheca-dao/ui-lib/icons/library.svg';
 import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
-import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
-import Scroll from '@bibliotheca-dao/ui-lib/icons/scroll-svgrepo-com.svg';
 import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import clsx from 'clsx';
-
 import router from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
-import {
-  RealmHistory,
-  RealmLore,
-  RealmOverview,
-  RealmsFood,
-  Travel,
-} from '@/components/realms/details';
+import { useEffect, useMemo } from 'react';
+import { RealmLore } from '@/components/realms/details';
 import { DefendingArmy } from '@/components/realms/details/DefendingArmy';
 import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings';
 import {
   getHappinessImage,
   getMilitaryBuildingsBuilt,
-  getNumberOfTicks,
-  getTimeSinceLastTick,
 } from '@/components/realms/RealmsGetters';
-import { HAPPINESS_TIME_PERIOD_TICK } from '@/constants/globals';
+
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
@@ -38,11 +24,7 @@ import useRealmDetailHotkeys, {
 } from '@/hooks/settling/useRealmDetailHotkeys';
 import useKeyPress from '@/hooks/useKeyPress';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
-import type {
-  BuildingDetail,
-  BuildingFootprint,
-  foodDetails,
-} from '@/types/index';
+import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import { realmMilitaryEvents } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
 import { DetailedOverview } from './details/DetailedOverview';
@@ -51,7 +33,6 @@ import { LaborTable } from './details/LaborTable';
 type Prop = {
   realm: RealmFragmentFragment;
   buildings: BuildingDetail[] | undefined;
-  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
   next?: () => void;
@@ -73,15 +54,8 @@ export const RealmBuildTabHotkey = (props) => {
 };
 
 export const RealmBuildModal = (props: Prop) => {
-  const {
-    realm,
-    buildings,
-    foodDetails,
-    availableFood,
-    buildingUtilisation,
-    next,
-    prev,
-  } = props;
+  const { realm, buildings, availableFood, buildingUtilisation, next, prev } =
+    props;
   const { data: historyData, loading: loadingData } = useGetRealmHistoryQuery({
     variables: { filter: { realmId: { equals: realm.realmId } } },
     pollInterval: 30000,
@@ -121,7 +95,6 @@ export const RealmBuildModal = (props: Prop) => {
           <DetailedOverview
             buildingUtilisation={buildingUtilisation}
             availableFood={availableFood}
-            foodDetails={foodDetails}
             realm={realm}
             loading={false}
             defendHistory={realmDefendEventData}
@@ -178,16 +151,7 @@ export const RealmBuildModal = (props: Prop) => {
         ),
         component: (
           <>
-            <div>
-              <LaborTable realm={realm} />
-            </div>
-            {/* <RealmsFood
-              foodDetails={foodDetails}
-              availableFood={availableFood}
-              
-              realm={realm}
-              loading={false}
-            /> */}
+            <LaborTable realm={realm} />
           </>
         ),
       },
@@ -210,7 +174,7 @@ export const RealmBuildModal = (props: Prop) => {
         ),
       },
     ],
-    [realm, buildings, availableFood, foodDetails, historyData]
+    [realm, buildings, availableFood, historyData]
   );
 
   const pressedTab = (index) => {

@@ -182,3 +182,19 @@ export const trueNameFromRawString = (name: string) => {
     battalionInformation.find((a) => a.name === name)?.id || 0
   );
 };
+
+export const getBattlionStrengthByBuildingId = (id: RealmBuildingId) => {
+  return battalionInformation.find((a) => a.buildingId === id)?.strength;
+};
+
+export const getBattalionWeaknessByBuildingId = (id: RealmBuildingId) => {
+  return battalionInformation.find((a) => a.buildingId === id)?.weakness;
+};
+
+export const getBattlionStrengthById = (id: BattalionIds) => {
+  return battalionInformation.find((a) => a.id === id)?.strength;
+};
+
+export const getBattalionWeaknessById = (id: BattalionIds) => {
+  return battalionInformation.find((a) => a.id === id)?.weakness;
+};

@@ -73,7 +73,18 @@ export const AttackingArmy = (props: Props) => {
       <div className="grid grid-cols-12 gap-6 pt-4">
         <div className="col-span-12">
           <h2>{getRealmNameById(realm.realmId || 0)} Armies </h2>
+          {!newArmyId && !selectedArmy && (
+            <div>
+              <Button
+                onClick={() => setNewArmyId(onlyAttackingArmies.length + 1)}
+                variant="outline"
+              >
+                Summon new Army ID {onlyAttackingArmies.length + 1}
+              </Button>
+            </div>
+          )}
         </div>
+
         {onlyAttackingArmies.length > 0 && !newArmyId && !selectedArmy && (
           <div className="col-span-12">
             <div className="grid grid-cols-2 gap-4">
@@ -97,18 +108,6 @@ export const AttackingArmy = (props: Props) => {
           </div>
         )}
       </div>
-      {!newArmyId && !selectedArmy && (
-        <div>
-          <div className="mt-20">
-            <Button
-              onClick={() => setNewArmyId(onlyAttackingArmies.length + 1)}
-              variant="outline"
-            >
-              Summon new Army ID {onlyAttackingArmies.length + 1}
-            </Button>
-          </div>
-        </div>
-      )}
 
       {selectedArmy && (
         <div className="mt-10">

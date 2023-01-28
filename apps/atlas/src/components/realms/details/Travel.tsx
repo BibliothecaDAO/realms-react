@@ -15,7 +15,7 @@ export const Travel = ({ realm }: Prop) => {
   const { play } = useUiSounds(soundSelector.pageTurn);
 
   return (
-    <div className="p-5">
+    <div className="p-5 overflow-scroll">
       <div className="mb-4">
         <h1 className="flex">
           {' '}

@@ -13,6 +13,8 @@ import {
   battalionInformation,
   battalionIdToString,
   getUnitImage,
+  getBattalionWeaknessById,
+  getBattlionStrengthById,
 } from '@/constants/army';
 import { MAX_BATTALIONS } from '@/constants/globals';
 
@@ -42,8 +44,30 @@ export const Battalion: React.FC<
   return (
     <div
       key={props.battalionId}
-      className={`relative flex-col group p-3 rounded ${data?.color} shadow-red-900/30 shadow-xl border-yellow-800/40 border-4`}
+      className={`relative flex-col group p-3 rounded ${data?.color}`}
     >
+      <div className="flex justify-between pb-3 mb-3 border-b border-white/30">
+        {data?.id && (
+          <div>
+            <div className="self-center text-3xl">
+              {battalionIdToString(data.id)}
+            </div>
+            <div>
+              Strong vs {getBattlionStrengthById(data.id)} | Weak vs{' '}
+              {getBattalionWeaknessById(data.id)}
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col p-1 px-2 rounded bg-gray-50/20">
+          <div className="w-full text-xl">
+            <span>{props.quantity || 0} Battalion</span>
+          </div>
+          <div className="w-full text-lg">
+            <span>{props.health || 0} Health</span>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-between">
         <Image
           height={130}
@@ -52,19 +76,6 @@ export const Battalion: React.FC<
           src={getUnitImage(props.battalionId)}
           alt=""
         />
-        <div className="p-3">
-          {data?.id && (
-            <span className="text-3xl">{battalionIdToString(data.id)}</span>
-          )}
-          <div className="flex flex-col">
-            <div className="w-full text-xl">
-              <span>Currently: {props.quantity || 0} units</span>
-            </div>
-            <div className="w-full text-lg">
-              <span>Currently: {props.health || 0} hp</span>
-            </div>
-          </div>
-        </div>
 
         {props.show && (
           <div className="flex flex-col justify-center ml-auto transition-all cursor-pointe">
@@ -81,7 +92,7 @@ export const Battalion: React.FC<
                     />
                   );
                 })}
-              {props.addResources && (
+              {/* {props.addResources && (
                 <Button
                   onClick={() => {
                     props.addResources?.(input);
@@ -92,7 +103,7 @@ export const Battalion: React.FC<
                 >
                   Buy
                 </Button>
-              )}
+              )} */}
             </div>
             <div className="flex self-center space-x-3">
               {props.add && (

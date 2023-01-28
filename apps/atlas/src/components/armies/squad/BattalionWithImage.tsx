@@ -1,27 +1,8 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  InputNumber,
-} from '@bibliotheca-dao/ui-lib/base';
-
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import { HealthBar } from '@/components/armies/BattalionImagesCard';
-import { CostBlock } from '@/components/realms/RealmsGetters';
 import { battalionInformation, getUnitImage } from '@/constants/army';
-import { buildingIdToString } from '@/constants/globals';
-
 import type { BattalionInterface } from '@/types/index';
-
-type Battalion = {
-  battalionId: number;
-  battalionName: string;
-  battalionQty: number;
-};
-
-const MAX_BATTALIONS = 30;
 
 export const BattalionWithImage: React.FC<
   BattalionInterface & {

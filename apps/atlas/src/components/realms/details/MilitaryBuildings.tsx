@@ -9,7 +9,12 @@ import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CostBlock } from '@/components/realms/RealmsGetters';
-import { battalionInformation, getUnitImage } from '@/constants/army';
+import {
+  battalionInformation,
+  getBattalionWeaknessByBuildingId,
+  getBattlionStrengthByBuildingId,
+  getUnitImage,
+} from '@/constants/army';
 import { buildingIntegrity } from '@/constants/globals';
 import { useBankContext } from '@/context/BankContext';
 import { useUIContext } from '@/context/UIContext';
@@ -57,8 +62,8 @@ export const MilitaryBuildings = (props: Prop) => {
                 key={i}
                 className="w-full p-1 my-1 border-2 rounded border-white/30"
               >
-                <div className="w-full border-b border-white/30 ">
-                  <h3 className="flex p-1 px-2 ">
+                <div className="w-full px-2 border-b border-white/30">
+                  <h3 className="flex py-1 ">
                     {a.name}
                     <span className="self-center ml-4 text-sm text-gray-700 ">
                       {(buildingIntegrity(a.id) / 60 / 60 / 24).toFixed(0)} Day
@@ -80,6 +85,11 @@ export const MilitaryBuildings = (props: Prop) => {
                       ''
                     )}
                   </h3>
+
+                  <div>
+                    Strong vs {getBattlionStrengthByBuildingId(a.id)} | Weak vs{' '}
+                    {getBattalionWeaknessByBuildingId(a.id)}
+                  </div>
                 </div>
 
                 <div className="flex self-center justify-between w-full">

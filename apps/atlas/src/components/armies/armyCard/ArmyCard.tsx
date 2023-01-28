@@ -101,9 +101,18 @@ export const ArmyCard: React.FC<Prop> = (props) => {
         <div className="flex justify-between">
           <div className="w-full">
             <div className="flex justify-between w-full pb-2 border-b border-white/20">
-              <h3>
-                {getRealmNameById(army.realmId)} | {army.realmId}
-              </h3>
+              <div>
+                <h3>
+                  {getRealmNameById(army.realmId)} | {army.realmId}
+                </h3>
+                {hasArrived(army) && (
+                  <div className="flex text-sm font-semibold rounded ">
+                    <CountdownTimer date={army?.destinationArrivalTime} /> ETA
+                    arrival
+                  </div>
+                )}
+              </div>
+
               <h5 className="flex">
                 <span className="self-center">
                   {' '}
@@ -138,9 +147,9 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                       variant="outline"
                       size="sm"
                     >
-                      Fly
                       {!isHome ? (
                         <span className="flex">
+                          Fly{' '}
                           <OrderIcon
                             className="self-center mx-2"
                             size="xs"
@@ -152,7 +161,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                           {army?.destinationRealmId}
                         </span>
                       ) : (
-                        'Home'
+                        'Home Realm'
                       )}
                     </Button>
                   </div>
@@ -190,11 +199,6 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             </div>
           </div>
         </div>
-        {/* {hasArrived(army) && (
-          <div className="flex text-sm font-semibold rounded ">
-            <CountdownTimer date={army?.destinationArrivalTime} /> ETA arrival
-          </div>
-        )} */}
       </div>
       <div className="w-full h-full">
         <div className="flex justify-between mb-2"></div>

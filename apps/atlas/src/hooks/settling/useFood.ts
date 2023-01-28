@@ -250,9 +250,11 @@ const useFood = (realm: Realm | undefined): UsefoodDetails => {
       return;
     }
 
-    fetchData().catch(console.error);
-
-    console.log(availableFood);
+    try {
+      fetchData().catch(console.error);
+    } catch (e) {
+      console.error(e);
+    }
   }, [availableFood, realm]);
 
   return {

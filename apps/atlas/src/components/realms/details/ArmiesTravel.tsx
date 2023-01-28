@@ -107,7 +107,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
 
   return (
     <div>
-      <div className="relative mb-4 overflow-x-scroll min-h-96">
+      <div className="relative mb-4 overflow-scroll min-h-96">
         {armyTravelTable && (
           <Table
             columns={columns}
