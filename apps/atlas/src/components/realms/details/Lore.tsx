@@ -1,8 +1,8 @@
-import { Button, Card, CardBody, CardTitle } from '@bibliotheca-dao/ui-lib';
-import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
+import { Button, CardBody, CardTitle } from '@bibliotheca-dao/ui-lib';
+
 import { useMemo, useState } from 'react';
 import { LoreEntitiesOverview } from '@/components/lore/LoreEntitiesOverview';
-import type { GetRealmQuery, LoreEntityWhereInput } from '@/generated/graphql';
+import type { LoreEntityWhereInput } from '@/generated/graphql';
 import { useGetLoreEntitiesQuery } from '@/generated/graphql';
 
 export const RealmLore = ({ realmId, realmName }) => {

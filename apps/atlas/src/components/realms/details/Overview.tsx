@@ -29,14 +29,9 @@ import { findResourceById } from '@/constants/resources';
 
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 
-import type {
-  BuildingFootprint,
-  foodDetails,
-  RealmsCardProps,
-} from '@/types/index';
+import type { BuildingFootprint, RealmsCardProps } from '@/types/index';
 
 interface RealmOverview {
-  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
 }

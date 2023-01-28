@@ -1,20 +1,13 @@
 import { twMerge } from 'tailwind-merge';
-import { sidebarClassNames } from '@/constants/ui';
 import type { RealmFragmentFragment } from '@/generated/graphql';
-import type {
-  BuildingDetail,
-  BuildingFootprint,
-  foodDetails,
-} from '@/types/index';
+import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
-
 import { RealmBuildModal } from './RealmBuildModal';
 
 interface RealmSideBarProps {
   realm: RealmFragmentFragment;
   buildings: BuildingDetail[] | undefined;
-  foodDetails: foodDetails;
   availableFood: number | undefined;
   buildingUtilisation: BuildingFootprint | undefined;
   isOpen: boolean;
@@ -30,15 +23,11 @@ export const RealmsDetailSideBar = (props: RealmSideBarProps) => {
       )}
       onClose={props.onClose}
     >
-      {props.isOpen && <RealmsQuickView {...props} />}
+      {props.isOpen && (
+        <BaseSideBarPanel onClose={props.onClose}>
+          <RealmBuildModal {...props} />
+        </BaseSideBarPanel>
+      )}
     </AtlasSideBar>
   );
 };
-
-function RealmsQuickView(props: RealmSideBarProps) {
-  return (
-    <BaseSideBarPanel onClose={props.onClose}>
-      <RealmBuildModal {...props} />
-    </BaseSideBarPanel>
-  );
-}

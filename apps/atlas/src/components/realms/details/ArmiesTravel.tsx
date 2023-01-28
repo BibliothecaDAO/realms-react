@@ -1,10 +1,8 @@
 import { Button, OrderIcon, Table } from '@bibliotheca-dao/ui-lib/base';
 import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
-
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { useRouter } from 'next/router';
 import React from 'react';
-
 import { getAttackingArmies } from '@/components/armies/ArmyGetters';
 import { ArmyToolTip } from '@/components/armies/ArmyToolTip';
 import { useAtlasContext } from '@/context/AtlasContext';

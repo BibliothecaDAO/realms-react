@@ -326,7 +326,6 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           onClose={() => setDetails(false)}
           realm={realm}
           buildings={buildings}
-          foodDetails={foodDetails}
           availableFood={availableFood}
           buildingUtilisation={buildingUtilisation}
         />
