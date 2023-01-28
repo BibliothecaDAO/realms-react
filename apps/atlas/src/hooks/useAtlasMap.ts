@@ -60,7 +60,22 @@ export interface AtlasMap {
   selectedAsset: Asset;
   isMapLoaded: boolean;
   setIsMapLoaded: (loaded: boolean) => void;
+  resetViewState: () => void;
 }
+
+export const baseViewState = {
+  longitude: 0,
+  latitude: 0,
+  zoom: 2,
+  minZoom: 1,
+  maxZoom: 10,
+  pitch: 45,
+  bearing: 0,
+  bounds: [
+    [-180, -180], // Southwest coordinates
+    [180, 180], // Northeast coordinates
+  ],
+};
 
 export function useAtlasMap(): AtlasMap {
   const { play: fly } = useUiSounds(soundSelector.fly);
@@ -70,21 +85,7 @@ export function useAtlasMap(): AtlasMap {
   const [coordinates, setCoordinates] = useState<Coordinate>(null!);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
-  const [viewState, setViewState] = useState({
-    longitude: 0,
-    latitude: 0,
-    zoom: 4,
-    minZoom: 1,
-    maxZoom: 10,
-    pitch: 45,
-    bearing: 0,
-    bounds: [
-      [-180, -180], // Southwest coordinates
-      [180, 180], // Northeast coordinates
-    ],
-    transitionDuration: 0,
-    transitionInterpolator: new FlyToInterpolator(),
-  });
+  const [viewState, setViewState] = useState(baseViewState);
 
   // check for asset in query string
   useEffect(() => {
@@ -124,8 +125,6 @@ export function useAtlasMap(): AtlasMap {
         [-180, -180], // Southwest coordinates
         [180, 180], // Northeast coordinates
       ],
-      transitionDuration: 3000,
-      transitionInterpolator: new FlyToInterpolator({ speed: 2.5, curve: 1 }),
     });
   }, [coordinates?.latitude, coordinates?.latitude]);
 
@@ -137,6 +136,10 @@ export function useAtlasMap(): AtlasMap {
     router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
   }
 
+  const resetViewState = () => {
+    setViewState(baseViewState);
+  };
+
   return {
     setViewState,
     viewState,
@@ -144,5 +147,6 @@ export function useAtlasMap(): AtlasMap {
     selectedAsset,
     isMapLoaded,
     setIsMapLoaded,
+    resetViewState,
   };
 }

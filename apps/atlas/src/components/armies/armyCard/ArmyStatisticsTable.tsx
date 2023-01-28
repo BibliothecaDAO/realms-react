@@ -1,4 +1,3 @@
-import { Table } from '@bibliotheca-dao/ui-lib/base';
 import { useArmy } from '@/hooks/settling/useArmy';
 import { armyStrength, armyStrengthColors } from '../ArmyGetters';
 
@@ -6,15 +5,6 @@ export const ArmyStatisticsTable = ({ army }) => {
   const { getArmyStats } = useArmy();
 
   const armyStats = getArmyStats(army);
-
-  const columns = [
-    { Header: 'Name', id: 1, accessor: 'name' },
-    { Header: 'attack', id: 2, accessor: 'attack' },
-    // { Header: 'Distance', id: 3, accessor: 'distance' },
-    { Header: 'defence', id: 3, accessor: 'defence' },
-    { Header: 'strength', id: 4, accessor: 'strength' },
-  ];
-  const tableOptions = { is_striped: false };
 
   const statistics = [
     {
@@ -49,25 +39,33 @@ export const ArmyStatisticsTable = ({ army }) => {
   });
 
   return (
-    <div className="p-3 border bg-gray-1000 rounded-1 border-white/20">
+    <div className="p-1 border bg-gray-1000 rounded-1 border-white/20">
       <table className="w-full">
         <thead>
-          <tr className="text-left">
-            <th className="w-1/2">Battlions</th>
-            <th className="w-1/4">Attack</th>
-            <th className="w-1/4">Defence</th>
+          <tr className="text-left border border-white/30">
+            <th className="w-1/2 px-1 border border-white/30">Battlions</th>
+            <th className="w-1/4 px-1 border border-white/30">Attack</th>
+            <th className="w-1/4 px-1 border border-white/30">Defence</th>
           </tr>
         </thead>
         <tbody>
           {table.map((row, index) => {
             return (
-              <tr key={index}>
-                <td>{row.name}</td>
-                <td className={armyStrengthColors(row.attack)}>
+              <tr className="border border-white/30" key={index}>
+                <td className="px-1 border border-white/30 ">{row.name}</td>
+                <td
+                  className={`${armyStrengthColors(
+                    row.attack
+                  )} px-1 border border-white/30`}
+                >
                   {' '}
                   {armyStrength(row.attack)}
                 </td>
-                <td className={armyStrengthColors(row.defence)}>
+                <td
+                  className={`${armyStrengthColors(
+                    row.defence
+                  )} px-1 border border-white/30`}
+                >
                   {armyStrength(row.defence)}
                 </td>
               </tr>

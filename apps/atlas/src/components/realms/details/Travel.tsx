@@ -17,15 +17,15 @@ export const Travel = ({ realm }: Prop) => {
   return (
     <div className="p-5 overflow-scroll">
       <div className="mb-4">
-        <h1 className="flex">
-          {' '}
+        <div className="flex justify-between">
+          <h1 className="self-center">{realm.name}</h1>
           <OrderIcon
-            className="self-center mx-2"
-            size="lg"
+            className="self-center"
+            size="md"
             order={getRealmOrderById(realm.realmId) || ''}
           />{' '}
-          <span className="self-center">{realm.name}</span>
-        </h1>
+        </div>
+
         <hr />
         <h3 className="mt-3">
           Travel an Army to {realm.name}, then you will be able to Attack.

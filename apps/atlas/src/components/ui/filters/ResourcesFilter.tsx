@@ -34,7 +34,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
   }));
 
   return (
-    <Popover className="relative">
+    <Popover className="relative z-100">
       <Popover.Button as="div">
         <Button
           size="xs"
@@ -50,7 +50,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
         leave="transition duration-350 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
-        className="z-50"
+        className="z-100"
       >
         <Popover.Panel
           className="absolute  mt-2 w-[420px] ml-2 -translate-x-1/3 shadow-black border-4  border-white/20"
@@ -70,7 +70,7 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                     key={resource.value}
                     tabIndex={idx}
                     className={clsx(
-                      'flex items-center gap-2 uppercase cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all tracking-normal md:tracking-wide rounded font-semibold',
+                      'flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-200/20 duration-150 transition-all  rounded font-semibold',
                       isSelected(resource) ? 'bg-gray-200/20' : ''
                     )}
                     onClick={() => {
@@ -78,10 +78,13 @@ export function ResourcesFilter(props: ResourcesFilterProps) {
                     }}
                     aria-hidden="true"
                   >
-                    <ResourceIcon
-                      resource={resource.name.replace(' ', '')}
-                      size="xs"
-                    />{' '}
+                    <div>
+                      <ResourceIcon
+                        resource={resource.name.replace(' ', '')}
+                        size="xs"
+                      />{' '}
+                    </div>
+
                     <span>{resource.name}</span>
                   </div>
                 ))}

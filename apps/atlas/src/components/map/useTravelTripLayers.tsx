@@ -9,6 +9,8 @@ export function useTravelTripsLayer() {
     where: { destinationArrivalTime: { gt: Date.now() } },
   });
   const { data: travels } = useGetTravelsQuery({ variables });
+
+  console.log(travels);
   useEffect(() => {
     const timer = setInterval(() => {
       setVariables({ where: { destinationArrivalTime: { gt: Date.now() } } });
@@ -54,10 +56,10 @@ export function useTravelTripsLayer() {
     data: travelData,
     getPath: (d: any) => d.path,
     getTimestamps: (d: any) => d.timestamps,
-    getColor: [220, 20, 60],
-    opacity: 1,
-    widthMinPixels: 4,
-    fadeTrail: false,
+    getColor: [200, 20, 60],
+    opacity: 0.8,
+    widthMinPixels: 5,
+    fadeTrail: true,
     trailLength: 1000,
     currentTime: time,
     pickable: true,
