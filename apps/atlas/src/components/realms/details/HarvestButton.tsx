@@ -11,16 +11,27 @@ export const HarvestButton = ({ generation, realmId, resourceId }) => {
   const [enqueuedTx, setEnqueuedTx] = useState(false);
 
   useEffect(() => {
-    setEnqueuedTx(
-      txQueue.transactions.findIndex(
-        (t: any) =>
-          t.contractAddress == ModuleAddr.Labor &&
-          (t.entrypoint == Entrypoints.harvest_labor ||
-            t.entrypoint == Entrypoints.harvest_food) &&
-          t.metadata['realmId'] == realmId &&
-          t.metadata['resourceId'] == resourceId
-      ) >= 0
-    );
+    if (getIsFood(resourceId)) {
+      setEnqueuedTx(
+        !!txQueue.transactions.find(
+          (t: any) =>
+            t.contractAddress == ModuleAddr.Labor &&
+            t.entrypoint == Entrypoints.harvest_food &&
+            t.metadata['realmId'] == realmId &&
+            t.metadata['resourceId'] == resourceId
+        )
+      );
+    } else {
+      setEnqueuedTx(
+        !!txQueue.transactions.find(
+          (t: any) =>
+            t.contractAddress == ModuleAddr.Labor &&
+            t.entrypoint == Entrypoints.harvest_labor &&
+            t.metadata['realmId'] == realmId &&
+            t.metadata['resourceId'] == resourceId
+        )
+      );
+    }
   }, [txQueue.transactions]);
 
   const { harvest, harvest_food } = useLabor();
