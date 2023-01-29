@@ -9,8 +9,8 @@ import Danger from '@bibliotheca-dao/ui-lib/icons/danger.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
-import { Battalion } from '@/components/armies/squad/Battalion';
+import { Battalion } from '@/components/armies/battlion/Battalion';
+import { ArmyCard } from '@/components/armies/card/ArmyCard';
 import {
   CostBlock,
   getRealmNameById,

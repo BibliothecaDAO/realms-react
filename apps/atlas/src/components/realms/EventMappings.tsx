@@ -4,7 +4,7 @@ import {
   getRealmNameById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
-import { ArmyBattalions } from '../armies/armyCard/ArmyBattalions';
+import { ArmyBattalions } from '../armies/card/ArmyBattalions';
 
 export enum Event {
   realmCombatAttack = 'realm_combat_attack',

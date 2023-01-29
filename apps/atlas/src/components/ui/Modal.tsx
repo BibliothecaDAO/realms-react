@@ -7,7 +7,7 @@ import { useModalContext } from '@/context/ModalContext';
 import type { TModal } from '@/hooks/useModal';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { LoreEntityModal } from '../lore/LoreEntityModal';
-import { RealmBuildModal } from '../realms/RealmBuildModal';
+import { RealmModal } from '../realms/RealmModal';
 
 const getModalComponent = (currentModal: TModal) => {
   const props: any = currentModal?.props;
@@ -17,7 +17,7 @@ const getModalComponent = (currentModal: TModal) => {
   }
   if (currentModal?.type === 'realm-build') {
     return (
-      <RealmBuildModal
+      <RealmModal
         realm={props.realm}
         buildings={props.buildings}
         availableFood={props.availableFood}

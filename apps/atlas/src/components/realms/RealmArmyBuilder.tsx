@@ -11,7 +11,7 @@ import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import Image from 'next/image';
 import React, { useState, useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
-import { Battalion } from '@/components/armies/squad/Battalion';
+import { Battalion } from '@/components/armies/battlion/Battalion';
 import { CostBlock, resourcePillaged } from '@/components/realms/RealmsGetters';
 import {
   battalionInformation,

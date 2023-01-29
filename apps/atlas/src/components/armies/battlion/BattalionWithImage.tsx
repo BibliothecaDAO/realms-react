@@ -13,8 +13,6 @@ export const BattalionWithImage: React.FC<
     show?: boolean;
   }
 > = (props) => {
-  const data = battalionInformation.find((a) => a.id === props.battalionId);
-
   return (
     <div
       key={props.battalionId}

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { ArmyCard } from '@/components/armies/armyCard/ArmyCard';
+import { ArmyCard } from '@/components/armies/card/ArmyCard';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 
 export const MyArmies = () => {

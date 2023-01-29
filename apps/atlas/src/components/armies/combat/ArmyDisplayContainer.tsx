@@ -4,9 +4,9 @@ import Map from '@bibliotheca-dao/ui-lib/icons/map.svg';
 import { useMemo, useState } from 'react';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { nameArray, useArmy } from '@/hooks/settling/useArmy';
-import { ArmyBattalions } from '../armyCard/ArmyBattalions';
-import { ArmyStatisticsTable } from '../armyCard/ArmyStatisticsTable';
-import { BattalionWithImage } from '../squad/BattalionWithImage';
+import { BattalionWithImage } from '../battlion/BattalionWithImage';
+import { ArmyBattalions } from '../card/ArmyBattalions';
+import { ArmyStatisticsTable } from '../card/ArmyStatisticsTable';
 
 export const ArmyDisplayContainer = ({ order, realmId, army, owner }) => {
   const { battalions } = useArmy();

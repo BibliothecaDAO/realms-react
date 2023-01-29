@@ -186,10 +186,8 @@ export function SwapResources(): ReactElement {
     updateSelectedSwapResourceQty,
     updateSelectedSwapResource,
     batchAddResources,
-    tradeType,
-    toggleTradeType,
     isBuy,
-    isSell,
+    setIsBuy,
     slippage,
     setSlippage,
     calculatedPriceInLords,
@@ -198,7 +196,7 @@ export function SwapResources(): ReactElement {
   } = useBankContext();
 
   const isBuyButtonDisabled = () => {
-    if (isSell) {
+    if (!isBuy) {
       return false;
     }
     const balance = convertBalance(lordsBalanceAfterCheckout);
@@ -452,16 +450,10 @@ export function SwapResources(): ReactElement {
             </Transition>
           </Popover>
           <div className="flex ml-auto text-sm ">
-            <div
-              className={`px-4 uppercase self-center ${
-                tradeType === 'buy' && ''
-              }`}
-            >
-              Buy
-            </div>
+            <div className={`px-4 uppercase self-center`}>Buy</div>
             <Switch
               checked={isBuy}
-              onChange={() => toggleTradeType()}
+              onChange={() => setIsBuy(!isBuy)}
               className={`relative inline-flex h-6 w-11 items-center rounded shadow-inner ${
                 isBuy ? 'bg-green-800' : 'bg-red-700'
               }`}
@@ -469,13 +461,11 @@ export function SwapResources(): ReactElement {
               <span className="sr-only">Buy/Sell</span>
               <span
                 className={`${
-                  isSell ? 'translate-x-6' : 'translate-x-1'
+                  !isBuy ? 'translate-x-6' : 'translate-x-1'
                 } inline-block h-4 w-4 transform rounded bg-white transition-all duration-300`}
               />
             </Switch>
-            <div className={`px-4 uppercase self-center ${isSell && ''}`}>
-              Sell
-            </div>
+            <div className={`px-4 uppercase self-center`}>Sell</div>
           </div>
         </div>
       </div>

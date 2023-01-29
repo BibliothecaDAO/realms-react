@@ -1,8 +1,8 @@
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
 import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
-import { ArmyBattalions } from './armyCard/ArmyBattalions';
-import { ArmyStatisticsTable } from './armyCard/ArmyStatisticsTable';
 import { getArmyById, GetArmyStrength } from './ArmyGetters';
+import { ArmyBattalions } from './card/ArmyBattalions';
+import { ArmyStatisticsTable } from './card/ArmyStatisticsTable';
 
 export const ArmyToolTip = ({ army }) => {
   return (

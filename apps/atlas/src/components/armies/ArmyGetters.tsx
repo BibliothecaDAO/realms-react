@@ -1,4 +1,8 @@
-import { defaultArmy } from '@/constants/army';
+import {
+  battalionInformation,
+  defaultArmy,
+  trueNameFromRawString,
+} from '@/constants/army';
 import type {
   Army,
   GetRealmsQuery,
@@ -69,4 +73,16 @@ export const armyStrengthColors = (armyStrength: number) => {
   } else {
     return 'text-red-500';
   }
+};
+
+export const formatArmy = (army) => {
+  const arr: any[] = [];
+  battalionInformation.forEach((unit) => {
+    arr.push({
+      name: trueNameFromRawString(unit.name),
+      quantity: army[unit.name + 'Qty'],
+    });
+  });
+
+  return arr;
 };
