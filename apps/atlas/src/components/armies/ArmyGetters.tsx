@@ -12,7 +12,7 @@ import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { useArmy } from '@/hooks/settling/useArmy';
 
 export const hasArrived = (army) =>
-  army?.destinationArrivalTime > new Date().getTime();
+  army?.destinationArrivalTime < new Date().getTime();
 
 export const armyLocation = (army) =>
   army.destinationRealmId == 0 ? army.realmId : army.destinationRealmId;

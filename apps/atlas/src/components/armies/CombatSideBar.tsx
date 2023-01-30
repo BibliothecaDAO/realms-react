@@ -357,7 +357,7 @@ export const ArmySelect = (props: ArmySelectProps) => {
               label={
                 <span>
                   {getRealmNameById(army.realmId)}{' '}
-                  {hasArrived(army) && (
+                  {!hasArrived(army) && (
                     <CountdownTimer date={army?.destinationArrivalTime} />
                   )}
                 </span>

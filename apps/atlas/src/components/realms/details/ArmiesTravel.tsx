@@ -3,7 +3,10 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { getAttackingArmies } from '@/components/armies/ArmyGetters';
+import {
+  getAttackingArmies,
+  hasArrived,
+} from '@/components/armies/ArmyGetters';
 import { ArmyToolTip } from '@/components/armies/ArmyToolTip';
 import { useAtlasContext } from '@/context/AtlasContext';
 import type {
@@ -17,6 +20,7 @@ import {
   getRelicsOwned,
   getTravelTime,
 } from '../RealmsGetters';
+import { ArmyTravelButton } from './ArmyTravelButton';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -64,12 +68,17 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
         name: (
           <div>
             <div className="flex justify-start space-x-2">
-              <OrderIcon
-                className="mr-2"
-                size="sm"
-                order={getRealmOrderById(army.realmId) || ''}
-              />{' '}
-              {getRealmNameById(army.realmId)}
+              <div className="self-center mr-2">
+                <OrderIcon
+                  size="sm"
+                  order={getRealmOrderById(army.realmId) || ''}
+                />{' '}
+              </div>
+
+              <div className="text-left">
+                {getRealmNameById(army.realmId)} <br />{' '}
+                <span className="text-gray-600">Army: {army.armyId}</span>
+              </div>
             </div>
           </div>
         ),
@@ -79,14 +88,13 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
             {' '}
             <span>{(travelInformation.time / 60 / 60).toFixed(2)} Hrs</span>
             <div className="flex justify-center p-1 mt-2 space-x-2 border rounded border-white/30">
-              <Button
+              <ArmyTravelButton
+                armyId={army.armyId}
+                realmId={army.realmId}
+                hasArrived={hasArrived(army)}
                 onClick={() => travel(army.armyId, army.realmId, realm.realmId)}
-                variant="outline"
-                className="w-full"
-                size="xs"
-              >
-                travel
-              </Button>
+                destinationId={realm.realmId}
+              />
               <Button
                 onClick={() => navigateToAsset(army.realmId, 'realm')}
                 variant="secondary"

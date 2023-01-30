@@ -65,7 +65,7 @@ export const OrderIcon = (props: Props) => {
       </div>
       {props.withTooltip && (
         <div className="absolute top-0 flex flex-col items-center hidden -translate-y-full w-max group-hover:flex">
-          <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-gray-1000 rounded shadow-lg">
+          <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap rounded shadow-lg bg-gray-1000">
             Order of {order.includes('the') && 'the '}
             <span className="capitalize">{order.replace('the ', '')}</span>
           </span>
