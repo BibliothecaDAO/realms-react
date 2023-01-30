@@ -16,9 +16,9 @@ export const ArmyToolTip = ({ army }) => {
         </div>
       }
     >
-      <div className="flex">
+      <div className="flex justify-start">
         <Shield className={'w-7 fill-gray-500 mr-2'} />
-        <span className="w-full break-normal">{GetArmyStrength(army)}</span>
+        <span className="break-normal">{GetArmyStrength(army)}</span>
       </div>
     </Tooltip>
   );
