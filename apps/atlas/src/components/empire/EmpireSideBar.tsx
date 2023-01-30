@@ -1,12 +1,9 @@
-import { useQuery } from '@apollo/client';
-
 import { EmpirePanel } from '@/components/empire/EmpirePanel';
 import { BaseSideBarPanel } from '@/components/ui/sidebar/BaseSideBarPanel';
 import { CryptProvider } from '@/context/CryptContext';
 import { GaProvider } from '@/context/GaContext';
 import { LootProvider } from '@/context/LootContext';
 import { RealmProvider } from '@/context/RealmContext';
-import { ArtBackground } from '../map/ArtBackground';
 import AtlasSideBar from '../map/AtlasSideBar';
 
 interface EmpireSideBarProps {

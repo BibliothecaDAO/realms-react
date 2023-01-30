@@ -14,10 +14,12 @@ import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings
 import {
   getHappinessImage,
   getMilitaryBuildingsBuilt,
+  getStoreHouseSize,
 } from '@/components/realms/RealmsGetters';
 
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
+import { useProjectedBuildingSpace } from '@/hooks/settling/useProjectedBuildingSpace';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys, {
   HotKeys,
@@ -27,6 +29,7 @@ import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import { realmMilitaryEvents } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
+import { BuildingUtilisation } from './details/BuildingUtilisation';
 import { DetailedOverview } from './details/DetailedOverview';
 import { LaborTable } from './details/LaborTable';
 
@@ -183,6 +186,9 @@ export const RealmModal = (props: Prop) => {
     set(Object.keys(HotKeys)[index as number] as Subview);
   };
 
+  const { buildingSpaceEnqueued, storehouseSpaceEnqueued } =
+    useProjectedBuildingSpace(realm);
+
   return (
     <div className="flex flex-wrap">
       <div className="relative flex flex-wrap w-full min-h-max">
@@ -225,6 +231,13 @@ export const RealmModal = (props: Prop) => {
                 </Tabs.Tab>
               ))}
             </Tabs.List>
+            <BuildingUtilisation
+              totalSpace={buildingUtilisation?.maxSqm}
+              buildings={buildingUtilisation?.currentSqm}
+              storehouse={getStoreHouseSize(availableFood)}
+              projectedStorehouseSpace={storehouseSpaceEnqueued}
+              projectedBuildingSpace={buildingSpaceEnqueued}
+            />
 
             <Tabs.Panels>
               {tabs.map((tab, index) => (

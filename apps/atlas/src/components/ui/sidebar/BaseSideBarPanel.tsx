@@ -1,6 +1,3 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
-import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
-
 interface BaseSideBarPanel {
   title?: string | null | undefined;
   children: React.ReactNode[] | React.ReactNode;

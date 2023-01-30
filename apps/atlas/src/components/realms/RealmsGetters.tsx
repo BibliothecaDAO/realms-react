@@ -18,6 +18,7 @@ import {
   PILLAGE_AMOUNT,
   RealmHappinessImages,
   SECONDS_PER_KM,
+  STORE_HOUSE_SIZE,
 } from '@/constants/globals';
 import {
   findResourceById,
@@ -662,3 +663,11 @@ export function convertToK(num) {
 
   return num.toFixed(2);
 }
+
+export const getStoreHouseSize = (food) => {
+  return food ? food / STORE_HOUSE_SIZE : 0;
+};
+
+export const getTotalUsedSpace = (buildingSpace, storehouse) => {
+  return buildingSpace ? buildingSpace + storehouse : storehouse;
+};

@@ -80,7 +80,7 @@ export const RealmsFood = (props: Prop) => {
   );
 
   return (
-    <div className="relative flex flex-wrap pb-2 border rounded border-white/10">
+    <div className="relative flex flex-wrap pb-2 border-4 rounded border-yellow-800/40">
       <div className="relative">
         <img
           alt="Storehouse"
@@ -111,7 +111,7 @@ export const RealmsFood = (props: Prop) => {
         </div>
       </div>
 
-      <div className="flex justify-between w-full p-3 font-semibold">
+      <div className="flex justify-between w-full p-3 text-xl font-semibold">
         <div className="flex ">
           <div className="mr-3">
             <ResourceIcon
@@ -123,7 +123,9 @@ export const RealmsFood = (props: Prop) => {
 
           <span className="self-center">Wheat</span>
         </div>
-        <span>{convertToK(+formatEther(getWheatBalance ?? 0))}</span>
+        <span className="self-center">
+          {convertToK(+formatEther(getWheatBalance ?? 0))}
+        </span>
       </div>
 
       <div className="flex justify-between w-full px-2 pb-2">
@@ -232,8 +234,8 @@ export const RealmsFood = (props: Prop) => {
         </div>
       </div>
 
-      <div className="flex justify-between w-full p-3 font-semibold">
-        <div className="flex ">
+      <div className="flex justify-between w-full p-3 text-xl font-semibold">
+        <div className="flex">
           <div className="mr-2 ">
             <ResourceIcon className="self-center" resource={'Fish'} size="sm" />
           </div>

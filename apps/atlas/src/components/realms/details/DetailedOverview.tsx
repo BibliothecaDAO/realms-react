@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import Image from 'next/image';
 import type { ReactElement } from 'react';
 import React from 'react';
 import {
@@ -22,6 +23,7 @@ import {
   RealmBuildingId,
   STORE_HOUSE_SIZE,
 } from '@/constants/globals';
+import { findResourceById } from '@/constants/resources';
 import type { BuildingFootprint, RealmsCardProps } from '@/types/index';
 import { RealmsFood } from './Food';
 
@@ -70,7 +72,7 @@ export function DetailedOverview(
         </span>
       ),
       icon: '/icons/loot/loot.svg',
-      img: buildingImageById(RealmBuildingId.Castle),
+      img: buildingImageById(RealmBuildingId.StoreHouse),
     },
     {
       title: 'Happiness',
@@ -95,17 +97,6 @@ export function DetailedOverview(
       icon: '/icons/loot/loot.svg',
       img: buildingImageById(RealmBuildingId.Barracks),
     },
-    // {
-    //   title: 'Food in Store',
-    //   value: (
-    //     <span>
-    //       {availableFood?.toLocaleString()} {getFoodIcon(availableFood || 0)}
-    //     </span>
-    //   ),
-    //   subTitle: <span>Consuming {getPopulation(realm)} food per second</span>,
-    //   icon: '/icons/loot/loot.svg',
-    //   img: buildingImageById(RealmBuildingId.StoreHouse),
-    // },
     {
       title: 'Utilisation',
       value: (
@@ -121,17 +112,17 @@ export function DetailedOverview(
 
   return (
     <>
-      <div className="flex">
-        <div className="flex w-full px-2 my-4">
-          <div className="self-center">
+      <div className="flex p-2 mb-4 border-4 rounded border-yellow-800/40">
+        <div className="flex w-full ">
+          <div className="self-center w-72">
             <img
               src={'/vizirs/mj_military_vizir.png'}
               alt="map"
-              className="object-cover w-48 h-48 mr-10 border rounded shadow-inner border-yellow-800/40"
+              className="object-cover mr-10 border rounded shadow-inner border-yellow-800/40"
             />
           </div>
 
-          <div className="self-center w-2/3 text-2xl">
+          <div className="self-center p-6 text-2xl">
             {getIsRealmAnnexed(realm) ? (
               <div>
                 "Citizens of {realm?.name} are living peacefully on its lands.
@@ -148,7 +139,7 @@ export function DetailedOverview(
                   <Button
                     href={'/?asset=realm' + getHolderOfRelic(realm)}
                     variant="outline"
-                    size="sm"
+                    size="lg"
                   >
                     Get Relic Back{' '}
                     {getRealmNameById(getHolderOfRelic(realm) || 0)}
@@ -163,8 +154,8 @@ export function DetailedOverview(
           <RealmImage id={realm.realmId} />
         </div> */}
       </div>
-      {/* <div className="flex flex-col">
-        <div className="flex flex-wrap mt-4">
+      <div className="flex flex-col">
+        <div className="flex flex-wrap my-2">
           {realm.resources?.map((re, index) => (
             <div key={index} className="flex flex-col justify-center p-2">
               <Image
@@ -175,32 +166,31 @@ export function DetailedOverview(
                 className="border-4 rounded-full rounded-2xl border-yellow-800/40"
               />
 
-              <span className="self-center mt-2 text-3xl">
+              <span className="self-center mt-2 text-xl">
                 {findResourceById(re.resourceId)?.trait}
               </span>
             </div>
           ))}
         </div>
-      </div> */}
-      <div className="flex w-full">
-        <div className="w-1/2">
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
           <RealmsFood realm={realm} />
         </div>
 
-        <div className="w-1/2">
+        <div>
           {dataCards.map((card, i) => {
             return (
-              <div key={i} className="flex w-full">
-                <div className="flex flex-grow mx-2 mb-2 border rounded-xl border-yellow-800/40">
-                  <img
-                    className="object-cover w-24 rounded-xl"
-                    src={card.img}
-                    alt=""
-                  />
+              <div
+                key={i}
+                className="flex w-full p-1 mb-2 border-4 rounded border-yellow-800/40"
+              >
+                <div className="flex flex-grow">
+                  {/* <img className="object-cover w-24" src={card.img} alt="" /> */}
                   <div className="p-6">
                     <h5 className="text-gray-600">{card.title}</h5>
                     <div className="my-3 text-3xl">{card.value} </div>
-                    <p className="text-xs text-gray-700">{card.subTitle}</p>
+                    <p className="text-sm text-gray-600">{card.subTitle}</p>
                   </div>
                 </div>
               </div>
