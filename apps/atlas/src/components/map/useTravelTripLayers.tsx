@@ -10,7 +10,6 @@ export function useTravelTripsLayer() {
   });
   const { data: travels } = useGetTravelsQuery({ variables });
 
-  console.log(travels);
   useEffect(() => {
     const timer = setInterval(() => {
       setVariables({ where: { destinationArrivalTime: { gt: Date.now() } } });

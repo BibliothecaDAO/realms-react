@@ -4,12 +4,11 @@ import {
   CardBody,
   CardTitle,
 } from '@bibliotheca-dao/ui-lib/base';
-import { RadarMap } from '@bibliotheca-dao/ui-lib/graph/Radar';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Battalion } from '@/components/armies/squad/Battalion';
+import { Battalion } from '@/components/armies/battlion/Battalion';
 import { CostBlock } from '@/components/realms/RealmsGetters';
 import {
   battalionInformation,
@@ -32,6 +31,7 @@ import type {
   BattalionInterface,
   ResourceCost,
 } from '@/types/index';
+
 type Prop = {
   army?: Army;
   buildings?: number[];
@@ -123,8 +123,6 @@ export const ArmyBuilderSideBar: React.FC<Prop> = (props) => {
     });
     return { ...battalionQtys, ...reMapped };
   };
-
-  const armyStats = getArmyStats(props.army);
 
   const sumTotalBattalions = (armyQtys: ArmyBattalionQty) =>
     Object.values(armyQtys).reduce((a, b) => a + b);

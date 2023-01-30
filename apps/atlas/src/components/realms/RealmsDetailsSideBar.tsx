@@ -3,7 +3,7 @@ import type { RealmFragmentFragment } from '@/generated/graphql';
 import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
 import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
-import { RealmBuildModal } from './RealmBuildModal';
+import { RealmModal } from './RealmModal';
 
 interface RealmSideBarProps {
   realm: RealmFragmentFragment;
@@ -25,7 +25,7 @@ export const RealmsDetailSideBar = (props: RealmSideBarProps) => {
     >
       {props.isOpen && (
         <BaseSideBarPanel onClose={props.onClose}>
-          <RealmBuildModal {...props} />
+          <RealmModal {...props} />
         </BaseSideBarPanel>
       )}
     </AtlasSideBar>

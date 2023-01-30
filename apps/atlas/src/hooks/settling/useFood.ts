@@ -68,7 +68,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     },
   }),
   convert: (args: {
-    tokenId: number;
+    realmId: number;
     quantity: number;
     resourceId: number;
     costs: any;
@@ -76,7 +76,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     contractAddress: ModuleAddr.Food,
     entrypoint: Entrypoints.convert,
     calldata: [
-      ...uint256ToRawCalldata(uint256.bnToUint256(args.tokenId)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.realmId)),
       args.quantity,
       args.resourceId,
     ],
@@ -100,7 +100,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
   }),
   [Entrypoints.convert]: (tx, _context) => ({
     title: `Resupply Storehouse`,
-    description: `Storing food in #${tx.metadata.tokenId}`,
+    description: `Storing food in #${tx.metadata.realmId}`,
   }),
 };
 
@@ -307,11 +307,11 @@ const useFood = (realm: Realm | undefined): UsefoodDetails => {
         })
       );
     },
-    convert: (tokenId, quantity, resourceId) => {
+    convert: (realmId, quantity, resourceId) => {
       exportFood();
       txQueue.add(
         createCall.convert({
-          tokenId,
+          realmId,
           quantity,
           resourceId,
           costs: {

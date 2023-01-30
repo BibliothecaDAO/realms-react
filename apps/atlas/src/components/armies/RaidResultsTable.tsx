@@ -1,21 +1,11 @@
+import { ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
+import { formatEther } from '@ethersproject/units';
 import React from 'react';
-
-import { battalionInformation, trueNameFromRawString } from '@/constants/army';
 import { CombatImages } from '@/constants/globals';
+import { findResourceById } from '@/constants/resources';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { getRealmNameById, resourcePillaged } from '../realms/RealmsGetters';
-
-export const formatArmy = (army) => {
-  const arr: any[] = [];
-  battalionInformation.forEach((unit) => {
-    arr.push({
-      name: trueNameFromRawString(unit.name),
-      quantity: army[unit.name + 'Qty'],
-    });
-  });
-
-  return arr;
-};
+import { formatArmy } from './ArmyGetters';
 
 interface RaidResultTableProps {
   startingAttackingArmy: ArmyAndOrder | undefined;
@@ -182,11 +172,34 @@ export const RaidResultTable = (props: RaidResultTableProps) => {
           </tbody>
         </table>
         <div className="w-full mt-3 text-center">
-          <h1>Resources Plundered</h1>
-          <div className="mx-auto">
-            {resources && (
-              <div className="flex">{resourcePillaged(resources)}</div>
-            )}
+          <h2>Resources Plundered</h2>
+          <div className="flex justify-center mx-auto">
+            {resources &&
+              resources.map((resource, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col justify-center p-2 text-xl"
+                  >
+                    {(+formatEther(resource.amount)).toLocaleString()}
+                    <div>
+                      <ResourceIcon
+                        resource={
+                          findResourceById(resource.resourceId)?.trait.replace(
+                            ' ',
+                            ''
+                          ) || ''
+                        }
+                        size="sm"
+                      />
+                    </div>
+
+                    <span className="self-center mt-1">
+                      {findResourceById(resource.resourceId)?.trait}
+                    </span>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

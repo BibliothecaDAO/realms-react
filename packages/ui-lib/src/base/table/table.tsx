@@ -26,9 +26,15 @@ type TableProps = {
   data: any;
   columns: Array<any>;
   options?: TableOptions;
+  className?: string;
 };
 
-export function Table({ data, columns: customColumns, options }: TableProps) {
+export function Table({
+  data,
+  columns: customColumns,
+  options,
+  className,
+}: TableProps) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const defaultColumns = customColumns?.map((column) => {
@@ -54,7 +60,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
   });
 
   return (
-    <div className="w-full overflow-x-scroll">
+    <div className={`w-full overflow-x-scroll ${className}`}>
       {options?.search && (
         <div>
           <input
@@ -93,7 +99,7 @@ export function Table({ data, columns: customColumns, options }: TableProps) {
             <tr
               className={`${
                 !ArrayUtils.isEven(index + 1) && options?.is_striped
-                  ? 'bg-gray-800'
+                  ? 'bg-gray-900/50'
                   : 'bg-gray-900'
               } hover:bg-gray-900 shadow-inner transition-all duration-30`}
               key={row.id}

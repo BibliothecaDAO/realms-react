@@ -225,7 +225,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   };
 
   const { balance } = useUserBalancesContext();
-  const { batchAddResources, checkBalance, toggleTradeType } = useBankContext();
+  const { batchAddResources, checkBalance, setIsBuy } = useBankContext();
   const { toggleTrade } = useUIContext();
   return (
     <>
@@ -298,7 +298,7 @@ export const CommandList: React.FC<Prop> = (props) => {
             <Button
               onClick={() => {
                 sessionStorage.setItem('insertAsFirstTx', 'true');
-                toggleTradeType('buy');
+                setIsBuy(true);
                 batchAddResources(
                   Object.keys(resourceCostsById)
                     .filter(

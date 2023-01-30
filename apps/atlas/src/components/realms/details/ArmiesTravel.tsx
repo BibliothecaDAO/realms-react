@@ -42,6 +42,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
   };
 
   const armyTravelTable = allArmies
+
     ?.map((army) => {
       const travelInformation = getTravelTime({
         travellerId: army.destinationRealmId || army.realmId,
@@ -49,7 +50,7 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
       });
       return {
         details: (
-          <span className="flex justify-between">
+          <div className="flex justify-start">
             <ArmyToolTip army={army} />
 
             {getRealmOrderById(army.realmId) == realm.orderType && (
@@ -58,36 +59,43 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
             {hasRelicOfRealm(army.realmId) && (
               <Relic className={`w-3 fill-yellow-500`} />
             )}
-          </span>
+          </div>
         ),
         name: (
-          <span className="flex justify-start space-x-2">
-            <OrderIcon
-              className="mr-2"
-              size="sm"
-              order={getRealmOrderById(army.realmId) || ''}
-            />{' '}
-            {getRealmNameById(army.realmId)}
-          </span>
+          <div>
+            <div className="flex justify-start space-x-2">
+              <OrderIcon
+                className="mr-2"
+                size="sm"
+                order={getRealmOrderById(army.realmId) || ''}
+              />{' '}
+              {getRealmNameById(army.realmId)}
+            </div>
+          </div>
         ),
         distance: travelInformation.distance,
-        time: <span>{(travelInformation.time / 60 / 60).toFixed(2)} Hrs</span>,
-        action: (
-          <div className="flex flex-col space-y-2">
-            <Button
-              onClick={() => travel(army.armyId, army.realmId, realm.realmId)}
-              variant="outline"
-              size="xs"
-            >
-              travel
-            </Button>
-            <Button
-              onClick={() => navigateToAsset(army.realmId, 'realm')}
-              variant="secondary"
-              size="xs"
-            >
-              Fly
-            </Button>
+        time: (
+          <div>
+            {' '}
+            <span>{(travelInformation.time / 60 / 60).toFixed(2)} Hrs</span>
+            <div className="flex justify-center p-1 mt-2 space-x-2 border rounded border-white/30">
+              <Button
+                onClick={() => travel(army.armyId, army.realmId, realm.realmId)}
+                variant="outline"
+                className="w-full"
+                size="xs"
+              >
+                travel
+              </Button>
+              <Button
+                onClick={() => navigateToAsset(army.realmId, 'realm')}
+                variant="secondary"
+                className="w-full"
+                size="xs"
+              >
+                Fly
+              </Button>
+            </div>
           </div>
         ),
       };
@@ -99,21 +107,20 @@ export const ArmiesTravel = ({ realm, userRealms }: Prop) => {
     { Header: 'Details', id: 1, accessor: 'details' },
     // { Header: 'Distance', id: 3, accessor: 'distance' },
     { Header: 'Time', id: 4, accessor: 'time' },
-    { Header: 'Action', id: 5, accessor: 'action' },
+    // { Header: 'Action', id: 5, accessor: 'action' },
   ];
-  const tableOptions = { is_striped: false };
+  const tableOptions = { is_striped: true };
 
   return (
-    <div>
-      <div className="relative mb-4 overflow-scroll min-h-96">
-        {armyTravelTable && (
-          <Table
-            columns={columns}
-            data={armyTravelTable}
-            options={tableOptions}
-          />
-        )}
-      </div>
+    <div className="h-full">
+      {armyTravelTable && (
+        <Table
+          className="min-h-[26rem]"
+          columns={columns}
+          data={armyTravelTable}
+          options={tableOptions}
+        />
+      )}
 
       <Button
         onClick={() => {

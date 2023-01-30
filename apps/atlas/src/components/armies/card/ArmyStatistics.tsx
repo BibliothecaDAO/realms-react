@@ -1,4 +1,4 @@
-import { BattalionWithImage } from '@/components/armies/squad/BattalionWithImage';
+import { BattalionWithImage } from '@/components/armies/battlion/BattalionWithImage';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import { nameArray, useArmy } from '@/hooks/settling/useArmy';
 import { ArmyStatisticsTable } from './ArmyStatisticsTable';

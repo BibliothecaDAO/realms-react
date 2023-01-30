@@ -44,10 +44,8 @@ const BankContext = createContext<{
   calculatedPriceInLords: number;
   slippage: number;
   setSlippage: (slippage: number) => void;
-  tradeType: string;
-  toggleTradeType: (state?: typeof buy | typeof sell) => void;
+  setIsBuy: (bool) => void;
   isBuy: boolean;
-  isSell: boolean;
   bankResources: (ExchangeRate & UserLp)[];
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
@@ -81,19 +79,8 @@ export const BankProvider = (props: BankProviderProps) => {
   );
 };
 
-const buy = 'buy';
-const sell = 'sell';
-
 function useResources() {
-  const [tradeType, toggleTradeType] = useReducer(
-    (state: typeof buy | typeof sell) => {
-      return state === sell ? buy : sell;
-    },
-    buy
-  );
-
-  const isBuy = tradeType === buy;
-  const isSell = tradeType === sell;
+  const [isBuy, setIsBuy] = useState<boolean>(false);
 
   const [slippage, setSlippage] = useState(0.05);
   const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
@@ -317,17 +304,17 @@ function useResources() {
         )
       );
     }, 0);
-  }, [selectedSwapResourcesWithBalance, tradeType]);
+  }, [selectedSwapResourcesWithBalance, isBuy]);
 
   const calculatedSlippage = useMemo(() => {
     return isBuy
       ? calculatedPriceInLords * slippage
       : -(calculatedPriceInLords * slippage);
-  }, [calculatedPriceInLords, slippage, tradeType]);
+  }, [calculatedPriceInLords, slippage, isBuy]);
 
   const calculatedTotalInLords = useMemo(() => {
     return calculatedPriceInLords + calculatedSlippage;
-  }, [calculatedPriceInLords, calculatedSlippage, tradeType]);
+  }, [calculatedPriceInLords, calculatedSlippage, isBuy]);
 
   const tokenIds = useMemo(() => {
     return selectedSwapResourcesWithBalance.map(
@@ -357,10 +344,8 @@ function useResources() {
     calculatedPriceInLords,
     slippage,
     setSlippage,
-    tradeType,
-    toggleTradeType,
+    setIsBuy,
     isBuy,
-    isSell,
     bankResources,
     availableResourceIds,
     selectedSwapResources,

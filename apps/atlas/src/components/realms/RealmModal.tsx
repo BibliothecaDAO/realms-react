@@ -14,10 +14,12 @@ import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings
 import {
   getHappinessImage,
   getMilitaryBuildingsBuilt,
+  getStoreHouseSize,
 } from '@/components/realms/RealmsGetters';
 
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
+import { useProjectedBuildingSpace } from '@/hooks/settling/useProjectedBuildingSpace';
 import type { Subview } from '@/hooks/settling/useRealmDetailHotkeys';
 import useRealmDetailHotkeys, {
   HotKeys,
@@ -27,6 +29,7 @@ import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import { realmMilitaryEvents } from '@/types/index';
 import { AttackingArmy } from './details/AttackingArmy';
+import { BuildingUtilisation } from './details/BuildingUtilisation';
 import { DetailedOverview } from './details/DetailedOverview';
 import { LaborTable } from './details/LaborTable';
 
@@ -53,13 +56,14 @@ export const RealmBuildTabHotkey = (props) => {
   );
 };
 
-export const RealmBuildModal = (props: Prop) => {
+export const RealmModal = (props: Prop) => {
   const { realm, buildings, availableFood, buildingUtilisation, next, prev } =
     props;
-  const { data: historyData, loading: loadingData } = useGetRealmHistoryQuery({
-    variables: { filter: { realmId: { equals: realm.realmId } } },
-    pollInterval: 30000,
-  });
+  const { data: historyData, loading: loadingHistory } =
+    useGetRealmHistoryQuery({
+      variables: { filter: { realmId: { equals: realm.realmId } } },
+      pollInterval: 30000,
+    });
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
@@ -182,6 +186,9 @@ export const RealmBuildModal = (props: Prop) => {
     set(Object.keys(HotKeys)[index as number] as Subview);
   };
 
+  const { buildingSpaceEnqueued, storehouseSpaceEnqueued } =
+    useProjectedBuildingSpace(realm);
+
   return (
     <div className="flex flex-wrap">
       <div className="relative flex flex-wrap w-full min-h-max">
@@ -214,16 +221,23 @@ export const RealmBuildModal = (props: Prop) => {
           <Tabs
             selectedIndex={Object.keys(HotKeys).indexOf(subview || 'Overview')}
             onChange={(index) => pressedTab(index as number)}
-            variant="small"
+            variant="primary"
           >
             <Tabs.List className="">
               {tabs.map((tab, index) => (
                 <Tabs.Tab key={index}>
                   {tab.label}
-                  <RealmBuildTabHotkey hotkey={tab.hotkey} />
+                  {/* <RealmBuildTabHotkey hotkey={tab.hotkey} /> */}
                 </Tabs.Tab>
               ))}
             </Tabs.List>
+            <BuildingUtilisation
+              totalSpace={buildingUtilisation?.maxSqm}
+              buildings={buildingUtilisation?.currentSqm}
+              storehouse={getStoreHouseSize(availableFood)}
+              projectedStorehouseSpace={storehouseSpaceEnqueued}
+              projectedBuildingSpace={buildingSpaceEnqueued}
+            />
 
             <Tabs.Panels>
               {tabs.map((tab, index) => (

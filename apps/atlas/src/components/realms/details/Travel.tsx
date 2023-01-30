@@ -1,9 +1,7 @@
 import { OrderIcon } from '@bibliotheca-dao/ui-lib';
-import Head from '@bibliotheca-dao/ui-lib/icons/loot/head.svg';
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { getRealmOrderById } from '../RealmsGetters';
 import { ArmiesTravel } from './ArmiesTravel';
 type Prop = {
@@ -12,10 +10,9 @@ type Prop = {
 
 export const Travel = ({ realm }: Prop) => {
   const { userRealms } = useUsersRealms();
-  const { play } = useUiSounds(soundSelector.pageTurn);
 
   return (
-    <div className="p-5 overflow-scroll">
+    <div className="min-h-full p-5 overflow-scroll">
       <div className="mb-4">
         <div className="flex justify-between">
           <h1 className="self-center">{realm.name}</h1>

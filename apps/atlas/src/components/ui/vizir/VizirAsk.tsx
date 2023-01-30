@@ -33,7 +33,7 @@ export default function VizirAsk() {
             >
               Master Scroll
             </a>{' '}
-            and can anwer your questions.
+            and can answer your questions.
           </div>
         </div>
 

@@ -60,7 +60,7 @@ export const MilitaryBuildings = (props: Prop) => {
             return (
               <div
                 key={i}
-                className="w-full p-1 my-1 border-2 rounded border-white/30"
+                className="w-full p-1 my-1 border-4 rounded border-yellow-800/40"
               >
                 <div className="w-full px-2 border-b border-white/30">
                   <h3 className="flex py-1 ">
