@@ -189,6 +189,15 @@ const nextConfig = {
     // to bypass https://github.com/zeit/next.js/issues/8251
     PROJECT_ROOT: __dirname,
   },
+  async redirects() {
+    return [
+      {
+        source: '/settling',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 let config = nextConfig;
