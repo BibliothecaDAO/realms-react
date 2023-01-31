@@ -105,7 +105,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                 <h3>
                   {getRealmNameById(army.realmId)} | {army.realmId}
                 </h3>
-                {hasArrived(army) && (
+                {!hasArrived(army) && (
                   <div className="flex text-sm font-semibold rounded ">
                     <CountdownTimer date={army?.destinationArrivalTime} /> ETA
                     arrival
@@ -132,7 +132,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
             <div className="flex mt-2 space-x-2">
               {army.armyId != 0 &&
                 (isAtLocation ? (
-                  <h5>{hasArrived(army) ? 'on the way' : 'here'}</h5>
+                  <h5>{!hasArrived(army) ? 'on the way' : 'here'}</h5>
                 ) : (
                   <div>
                     <Button
