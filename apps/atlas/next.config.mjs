@@ -1,11 +1,15 @@
 // @ts-check
 
-const pc = require('picocolors');
+import pc from 'picocolors';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
-const packageJson = require('./package.json');
-
+const packageJson = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url)).toString('utf-8')
+);
 const trueEnv = ['true', '1', 'yes'];
-
 const isProd = process.env.NODE_ENV === 'production';
 
 const NEXTJS_IGNORE_ESLINT = trueEnv.includes(
@@ -15,6 +19,11 @@ const NEXTJS_IGNORE_TYPECHECK = trueEnv.includes(
   process.env?.NEXTJS_IGNORE_TYPECHECK ?? 'false'
 );
 
+const workspaceRoot = path.resolve(
+  path.dirname(url.fileURLToPath(import.meta.url)),
+  '..',
+  '..'
+);
 /**
  * A way to allow CI optimization when the build done there is not used
  * to deliver an image or deploy the files.
@@ -87,7 +96,7 @@ const nextConfig = {
   experimental: {
     legacyBrowsers: false,
     // @link https://nextjs.org/docs/advanced-features/output-file-tracing#caveats
-    outputFileTracingRoot: undefined, // ,path.join(__dirname, '../../'),
+    outputFileTracingRoot: workspaceRoot, // ,path.join(__dirname, '../../'),
     // Prefer loading of ES Modules over CommonJS
     // @link {https://nextjs.org/blog/next-11-1#es-modules-support|Blog 11.1.0}
     // @link {https://github.com/vercel/next.js/discussions/27876|Discussion}
@@ -100,12 +109,11 @@ const nextConfig = {
 
   typescript: {
     ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
-    tsconfigPath: './tsconfig.json',
   },
 
   eslint: {
     ignoreDuringBuilds: NEXTJS_IGNORE_ESLINT,
-    dirs: ['src'],
+    // dirs: ['src'],
   },
 
   async headers() {
@@ -189,13 +197,9 @@ const nextConfig = {
     return config;
   },
   env: {
-    APP_NAME: packageJson.name,
-    APP_VERSION: packageJson.version,
+    APP_NAME: packageJson.name ?? 'not-in-package.json',
+    APP_VERSION: packageJson.version ?? 'not-in-package.json',
     BUILD_TIME: new Date().toISOString(),
-  },
-  serverRuntimeConfig: {
-    // to bypass https://github.com/zeit/next.js/issues/8251
-    PROJECT_ROOT: __dirname,
   },
 };
 
@@ -217,11 +221,9 @@ if (tmModules.length > 0) {
 }
 
 if (process.env.ANALYZE === 'true') {
-  // @ts-ignore
-  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  config = withBundleAnalyzer({
     enabled: true,
-  });
-  config = withBundleAnalyzer(config);
+  })(config);
 }
 
-module.exports = config;
+export default config;

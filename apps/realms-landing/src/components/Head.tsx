@@ -38,7 +38,7 @@ export function Head(): ReactElement {
       <link
         rel="preconnect"
         href="https://fonts.gstatic.com"
-        crossOrigin="true"
+        crossOrigin="anonymous"
       />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link

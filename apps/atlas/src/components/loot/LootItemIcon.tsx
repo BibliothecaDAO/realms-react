@@ -10,7 +10,7 @@ import type { ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
 type Props = {
   item: string;
-  size: keyof typeof STYLES['size'];
+  size: keyof (typeof STYLES)['size'];
   className?: string;
 };
 
