@@ -44,7 +44,7 @@ export const AccountClaim = () => {
     UserClaim.find((a) => a.payee === address?.toLowerCase())?.amount || 0;
 
   const { refetch } = useContractRead({
-    address: contractAddress,
+    address: contractAddress as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: 'withdrawals',
     args: address && [address],
@@ -78,7 +78,7 @@ export const AccountClaim = () => {
     ); */
 
   const { config } = usePrepareContractWrite({
-    address: contractAddress,
+    address: contractAddress as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: 'withdraw',
     args: [

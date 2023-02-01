@@ -4,7 +4,7 @@ const walletaddress = process.env.WALLETADDRESS || ''; // need to put as env
 const apikey = process.env.NEXT_PUBLIC_APIKEY;
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 };
 
 export default async function handler(req: NextRequest) {

@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -28,7 +26,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     passWithNoTests: false,
-    setupFiles: ['./config/tests/setupVitest.ts', 'dotenv/config'],
+    setupFiles: './config/tests/setupVitest.ts',
     cache: {
       dir: '../../.cache/vitest/atlas',
     },

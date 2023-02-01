@@ -8,7 +8,7 @@ const supportedChains =
   process.env.NEXT_PUBLIC_NETWORK === 'goerli' ? [goerli] : [mainnet];
 
 export const { chains, provider, webSocketProvider } = configureChains(
-  supportedChains,
+  [goerli, mainnet],
   [
     infuraProvider({
       apiKey: 'd55e01eb6d8e4003a472cb13e3fc3d77',
