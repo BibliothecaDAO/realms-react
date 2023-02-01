@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { parseEther } from '@ethersproject/units';
+import { formatEther, parseEther } from '@ethersproject/units';
 import { useAccount, useStarknetCall } from '@starknet-react/core';
 import type { BigNumber } from 'ethers';
 import React, {
@@ -10,10 +10,12 @@ import React, {
   useReducer,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 import { number, uint256 } from 'starknet';
 import {
   calculateLords,
   convertBalance,
+  deadline,
   getIsBalanceSufficient,
   initResources,
   resourceMapping,
@@ -22,6 +24,11 @@ import { resources, ResourcesIds } from '@/constants/resources';
 import type { ExchangeRate } from '@/hooks/market/useMarketRate';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useExchangeContract } from '@/hooks/settling/stark-contracts';
+import {
+  useApproveLordsForExchange,
+  useApproveResourcesForExchange,
+} from '@/hooks/settling/useApprovals';
+import { useBuyResources } from '@/hooks/useSwapResources';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { ResourceCost, HistoricPrices } from '@/types/index';
 import { useUserBalancesContext } from './UserBalancesContext';
@@ -46,6 +53,11 @@ const BankContext = createContext<{
   setSlippage: (slippage: number) => void;
   setIsBuy: (bool) => void;
   isBuy: boolean;
+  maxBuyAmount: BigNumber;
+  minSellAmount: BigNumber;
+  isBuyAvailable: () => boolean;
+  isSellAvailable: () => boolean;
+  buySelectedResources: () => void;
   bankResources: (ExchangeRate & UserLp)[];
   availableResourceIds: number[];
   selectedSwapResources: ResourceQty[];
@@ -98,6 +110,7 @@ function useResources() {
   const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
   const { exchangeInfo, historicPrices } = useMarketRate();
+  const { buyTokens } = useBuyResources();
 
   const ownerAddressInt = address
     ? number.toBN(address as string).toString()
@@ -328,11 +341,84 @@ function useResources() {
     );
   }, [selectedSwapResources]);
 
-  const { lordsBalanceAfterCheckout } = useUserBalancesContext();
+  const { lordsBalanceAfterCheckout, getBalanceById } =
+    useUserBalancesContext();
 
   const checkBalance = () => {
     const balance = convertBalance(lordsBalanceAfterCheckout);
     return getIsBalanceSufficient(balance, calculatedTotalInLords);
+  };
+
+  const maxBuyAmount = useMemo(
+    () => parseEther(String(calculatedPriceInLords + calculatedSlippage)),
+    [calculatedPriceInLords, calculatedSlippage]
+  );
+
+  const minSellAmount = useMemo(
+    () => parseEther(String(calculatedTotalInLords)),
+    [calculatedTotalInLords]
+  );
+
+  const isBuyAvailable = () => {
+    if (!isBuy) {
+      return false;
+    }
+    const balance = convertBalance(lordsBalanceAfterCheckout);
+    const isBalanceSufficient = getIsBalanceSufficient(
+      balance,
+      calculatedTotalInLords
+    );
+
+    // if (!isLordsApproved) {
+    //   toast('Please approve Lords for exchange before buying resources.');
+    //   return false;
+    // }
+    if (balance.isZero()) {
+      toast('Insufficient Lords balance.');
+      return false;
+    }
+    if (!isBalanceSufficient) {
+      toast(
+        `Insufficient Lords balance. You have ${+formatEther(
+          balance
+        ).toLocaleString()} Lords.`
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const isSellAvailable = () => {
+    if (isBuy) {
+      return false;
+    }
+    // if (!isResourcesApproved) {
+    //   toast('Please approve resources for exchange before selling resources.');
+    //   return false;
+    // }
+    if (
+      selectedSwapResourcesWithBalance.filter((resource) => {
+        return (
+          resource.qty >
+          parseFloat(
+            formatEther(getBalanceById(resource.resourceId)?.amount || '0')
+          )
+        );
+      }).length !== 0
+    ) {
+      toast('Insufficient resource balance.');
+      return false;
+    }
+    return true;
+  };
+
+  const buySelectedResources = async () => {
+    if (!isBuyAvailable()) {
+      return;
+    }
+    console.log('buying', tokenIds, tokenAmounts, maxBuyAmount);
+    buyTokens(maxBuyAmount, tokenIds, tokenAmounts, deadline());
+    // removeAllSelectedSwapResources();
   };
 
   return {
@@ -362,6 +448,11 @@ function useResources() {
     setIsLordsApproved,
     isResourcesApproved,
     setIsResourcesApproved,
+    isBuyAvailable,
+    isSellAvailable,
+    maxBuyAmount,
+    minSellAmount,
+    buySelectedResources,
   };
 }
 
