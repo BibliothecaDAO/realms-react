@@ -416,9 +416,8 @@ function useResources() {
     if (!isBuyAvailable()) {
       return;
     }
-    console.log('buying', tokenIds, tokenAmounts, maxBuyAmount);
     buyTokens(maxBuyAmount, tokenIds, tokenAmounts, deadline());
-    // removeAllSelectedSwapResources();
+    removeAllSelectedSwapResources();
   };
 
   return {

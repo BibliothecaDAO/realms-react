@@ -230,8 +230,22 @@ export const CommandList: React.FC<Prop> = (props) => {
 
   const { buyTokens } = useBuyResources();
 
-  const { batchAddResources, setIsBuy, buySelectedResources } =
-    useBankContext();
+  const {
+    batchAddResources,
+    setIsBuy,
+    buySelectedResources,
+    selectedSwapResources,
+  } = useBankContext();
+
+  useEffect(() => {
+    if (
+      selectedSwapResources.length > 0 &&
+      sessionStorage.getItem('waitingForBuy')
+    ) {
+      buySelectedResources();
+      sessionStorage.removeItem('waitingForBuy');
+    }
+  }, [selectedSwapResources]);
 
   const reconcileDeficits = () => {
     sessionStorage.setItem('insertAsFirstTx', 'true');
@@ -260,7 +274,7 @@ export const CommandList: React.FC<Prop> = (props) => {
         }),
       true
     );
-    buySelectedResources();
+    sessionStorage.setItem('waitingForBuy', 'true');
     toast(<span>Missing resources added to the TX queue</span>);
   };
 
