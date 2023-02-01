@@ -55,7 +55,8 @@ const createStarknetAllowanceCall = (
 
 const useApprovalForContract = (contract: Contract) => {
   const { address } = useAccount();
-  const { isResourcesApproved, setIsResourcesApproved } = useBankContext();
+  const [isResourcesApproved, setIsResourcesApproved] =
+    useState<boolean>(false);
   const { contract: lordsContract } = useLordsContract();
   const approveLordsAction = useStarknetInvoke({
     contract: lordsContract,
@@ -107,7 +108,7 @@ export const useApproveResourcesForExchange = () => {
   const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
   const { contract: resourcesContract } = useResources1155Contract();
-  const { isLordsApproved, setIsLordsApproved } = useBankContext();
+  const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
 
   const approveResourcesAction = useStarknetInvoke({
     contract: resourcesContract,

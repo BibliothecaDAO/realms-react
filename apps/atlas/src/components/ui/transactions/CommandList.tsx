@@ -8,6 +8,7 @@ import { useCallback, useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
+import { deadline } from '@/components/bank/BankGetters';
 import { RateChange, getTxCosts } from '@/components/bank/MarketGetters';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useBankContext } from '@/context/BankContext';
@@ -16,6 +17,7 @@ import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
+import { useBuyResources } from '@/hooks/useSwapResources';
 import { useUi } from '@/hooks/useUi';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import type { ItemCost, CallAndMetadata } from '@/types/index';
@@ -170,6 +172,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   const { play } = useUiSounds(soundSelector.sign);
   const { checkUserHasCheckoutResources } = useGameConstants();
   const [hasDeficit, setHasDeficit] = useState(false);
+  const [waitingForBatchAdding, setWaitingForBatchAdding] = useState(false);
 
   const [resourceCostsById, setResourceCostsById] = useState<
     Record<string, { resourceName: string; amount: number }>
@@ -225,8 +228,54 @@ export const CommandList: React.FC<Prop> = (props) => {
   };
 
   const { balance } = useUserBalancesContext();
-  const { batchAddResources, checkBalance, setIsBuy } = useBankContext();
-  const { toggleTrade } = useUIContext();
+
+  const {
+    batchAddResources,
+    setIsBuy,
+    buySelectedResources,
+    selectedSwapResources,
+  } = useBankContext();
+
+  useEffect(() => {
+    if (
+      selectedSwapResources.length > 0 &&
+      sessionStorage.getItem('waitingForBuy')
+    ) {
+      buySelectedResources();
+      sessionStorage.removeItem('waitingForBuy');
+    }
+  }, [selectedSwapResources]);
+
+  const reconcileDeficits = () => {
+    sessionStorage.setItem('insertAsFirstTx', 'true');
+    setIsBuy(true);
+    batchAddResources(
+      Object.keys(resourceCostsById)
+        .filter(
+          (r) =>
+            !checkUserHasCheckoutResources({
+              cost: resourceCostsById[r].amount,
+              id: r,
+            })
+        )
+        .map((r) => {
+          const resource = resourceCostsById[r];
+          const checkoutBalance =
+            balance.find((a) => a.resourceId === parseInt(r))?.checkoutAmount ||
+            0;
+          return {
+            resourceId: parseInt(r),
+            resourceName: resource.resourceName,
+            amount:
+              resource.amount * 1.2 -
+              +formatEther(BigNumber.from(checkoutBalance)),
+          };
+        }),
+      true
+    );
+    sessionStorage.setItem('waitingForBuy', 'true');
+  };
+
   return (
     <>
       {txQueue.transactions.length > 0 ? (
@@ -296,40 +345,7 @@ export const CommandList: React.FC<Prop> = (props) => {
               );
             })}
             <Button
-              onClick={() => {
-                sessionStorage.setItem('insertAsFirstTx', 'true');
-                setIsBuy(true);
-                batchAddResources(
-                  Object.keys(resourceCostsById)
-                    .filter(
-                      (r) =>
-                        !checkUserHasCheckoutResources({
-                          cost: resourceCostsById[r].amount,
-                          id: r,
-                        })
-                    )
-                    .map((r) => {
-                      const resource = resourceCostsById[r];
-                      const checkoutBalance =
-                        balance.find((a) => a.resourceId === parseInt(r))
-                          ?.checkoutAmount || 0;
-                      return {
-                        resourceId: parseInt(r),
-                        resourceName: resource.resourceName,
-                        amount:
-                          resource.amount * 1.2 -
-                          +formatEther(BigNumber.from(checkoutBalance)),
-                      };
-                    }),
-                  true
-                );
-                toast(
-                  <span>
-                    Missing resources added to the cart
-                    <Button onClick={toggleTrade}>Open Now</Button>
-                  </span>
-                );
-              }}
+              onClick={reconcileDeficits}
               size="xs"
               variant="outline"
               className="ml-auto"

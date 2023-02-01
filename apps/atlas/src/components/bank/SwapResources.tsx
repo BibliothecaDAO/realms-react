@@ -163,12 +163,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 
 export function SwapResources(): ReactElement {
   const { gameConstants } = useGameConstants();
-  const { isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-  const { isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-  const { getBalanceById, lordsBalance, lordsBalanceAfterCheckout } =
-    useUserBalancesContext();
+
+  const { getBalanceById, lordsBalance } = useUserBalancesContext();
 
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =
@@ -187,84 +183,29 @@ export function SwapResources(): ReactElement {
     updateSelectedSwapResource,
     batchAddResources,
     isBuy,
+    isBuyAvailable,
+    isSellAvailable,
     setIsBuy,
-    slippage,
-    setSlippage,
     calculatedPriceInLords,
     calculatedSlippage,
     calculatedTotalInLords,
+    maxBuyAmount,
+    minSellAmount,
   } = useBankContext();
-
-  const isBuyButtonDisabled = () => {
-    if (!isBuy) {
-      return false;
-    }
-    const balance = convertBalance(lordsBalanceAfterCheckout);
-    const isBalanceSufficient = getIsBalanceSufficient(
-      balance,
-      calculatedTotalInLords
-    );
-
-    if (!isLordsApprovedForExchange) {
-      toast('Please approve Lords for exchange before buying resources.');
-      return true;
-    }
-    if (balance.isZero()) {
-      toast('Insufficient Lords balance.');
-      return true;
-    }
-    if (!isBalanceSufficient) {
-      toast(
-        `Insufficient Lords balance. You have ${+formatEther(
-          balance
-        ).toLocaleString()} Lords.`
-      );
-      return true;
-    }
-    return false;
-  };
-
-  const isSellButtonDisabled = () => {
-    if (isBuy) {
-      return false;
-    }
-    if (!isResourcesApprovedForExchange) {
-      toast('Please approve resources for exchange before selling resources.');
-      return true;
-    }
-    if (
-      selectedSwapResourcesWithBalance.filter((resource) => {
-        return (
-          resource.qty >
-          parseFloat(
-            formatEther(getBalanceById(resource.resourceId)?.amount || '0')
-          )
-        );
-      }).length !== 0
-    ) {
-      toast('Insufficient resource balance.');
-      return true;
-    }
-    return false;
-  };
 
   // get token ids
 
   // TODO: Set actual slippage when indexer caches rates
   function onBuyTokensClick() {
-    if (isBuyButtonDisabled()) return;
-    const maxAmount = parseEther(
-      String(calculatedPriceInLords + calculatedSlippage)
-    );
-    buyTokens(maxAmount, tokenIds, tokenAmounts, deadline());
+    if (!isBuyAvailable()) return;
+    buyTokens(maxBuyAmount, tokenIds, tokenAmounts, deadline());
     removeAllSelectedSwapResources();
   }
 
   // TODO: Set actual slippage when indexer caches rates
   function onSellTokensClick() {
-    if (isSellButtonDisabled()) return;
-    const minAmount = parseEther(String(calculatedTotalInLords));
-    sellTokens(minAmount, tokenIds, tokenAmounts, deadline());
+    if (!isSellAvailable()) return;
+    sellTokens(minSellAmount, tokenIds, tokenAmounts, deadline());
     removeAllSelectedSwapResources();
   }
 
