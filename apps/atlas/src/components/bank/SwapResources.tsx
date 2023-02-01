@@ -163,12 +163,8 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
 
 export function SwapResources(): ReactElement {
   const { gameConstants } = useGameConstants();
-  const { isApproved: isLordsApprovedForExchange } =
-    useApproveLordsForExchange();
-  const { isApproved: isResourcesApprovedForExchange } =
-    useApproveResourcesForExchange();
-  const { getBalanceById, lordsBalance, lordsBalanceAfterCheckout } =
-    useUserBalancesContext();
+
+  const { getBalanceById, lordsBalance } = useUserBalancesContext();
 
   const { buyTokens, loading: isBuyTransactionInProgress } = useBuyResources();
   const { sellTokens, loading: isSellTransactionInProgress } =

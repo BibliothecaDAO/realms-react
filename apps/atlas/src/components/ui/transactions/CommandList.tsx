@@ -172,6 +172,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   const { play } = useUiSounds(soundSelector.sign);
   const { checkUserHasCheckoutResources } = useGameConstants();
   const [hasDeficit, setHasDeficit] = useState(false);
+  const [waitingForBatchAdding, setWaitingForBatchAdding] = useState(false);
 
   const [resourceCostsById, setResourceCostsById] = useState<
     Record<string, { resourceName: string; amount: number }>
@@ -228,8 +229,6 @@ export const CommandList: React.FC<Prop> = (props) => {
 
   const { balance } = useUserBalancesContext();
 
-  const { buyTokens } = useBuyResources();
-
   const {
     batchAddResources,
     setIsBuy,
@@ -275,7 +274,6 @@ export const CommandList: React.FC<Prop> = (props) => {
       true
     );
     sessionStorage.setItem('waitingForBuy', 'true');
-    toast(<span>Missing resources added to the TX queue</span>);
   };
 
   return (

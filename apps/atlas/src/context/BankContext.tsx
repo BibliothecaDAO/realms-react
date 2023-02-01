@@ -73,10 +73,6 @@ const BankContext = createContext<{
   getResourceById: (resourceId: number) => (ExchangeRate & UserLp) | undefined;
   batchAddResources: (cost: ResourceCost[], clearCart?: boolean) => void;
   historicPrices: HistoricPrices | undefined;
-  isLordsApproved: boolean;
-  setIsLordsApproved: (bool) => void;
-  isResourcesApproved: boolean;
-  setIsResourcesApproved: (bool) => void;
 }>(null!);
 
 interface BankProviderProps {
@@ -95,9 +91,7 @@ function useResources() {
   const [isBuy, setIsBuy] = useState<boolean>(false);
 
   const [slippage, setSlippage] = useState(0.05);
-  const [isLordsApproved, setIsLordsApproved] = useState<boolean>(false);
-  const [isResourcesApproved, setIsResourcesApproved] =
-    useState<boolean>(false);
+
   const [bankResources, setBankResources] =
     useState<(ExchangeRate & UserLp)[]>(initResources);
   const [availableResourceIds, setAvailableResourceIds] = useState<number[]>(
@@ -106,6 +100,11 @@ function useResources() {
   const [selectedSwapResources, setSelectedSwapResources] = useState<
     ResourceQty[]
   >([]);
+
+  const { isApproved: isLordsApprovedForExchange } =
+    useApproveLordsForExchange();
+  const { isApproved: isResourcesApprovedForExchange } =
+    useApproveResourcesForExchange();
 
   const { address } = useAccount();
   const { contract: exchangeContract } = useExchangeContract();
@@ -369,10 +368,10 @@ function useResources() {
       calculatedTotalInLords
     );
 
-    // if (!isLordsApproved) {
-    //   toast('Please approve Lords for exchange before buying resources.');
-    //   return false;
-    // }
+    if (!isLordsApprovedForExchange) {
+      toast('Please approve Lords for exchange before buying resources.');
+      return false;
+    }
     if (balance.isZero()) {
       toast('Insufficient Lords balance.');
       return false;
@@ -392,10 +391,10 @@ function useResources() {
     if (isBuy) {
       return false;
     }
-    // if (!isResourcesApproved) {
-    //   toast('Please approve resources for exchange before selling resources.');
-    //   return false;
-    // }
+    if (!isResourcesApprovedForExchange) {
+      toast('Please approve resources for exchange before selling resources.');
+      return false;
+    }
     if (
       selectedSwapResourcesWithBalance.filter((resource) => {
         return (
@@ -443,10 +442,6 @@ function useResources() {
     getResourceById,
     batchAddResources,
     historicPrices,
-    isLordsApproved,
-    setIsLordsApproved,
-    isResourcesApproved,
-    setIsResourcesApproved,
     isBuyAvailable,
     isSellAvailable,
     maxBuyAmount,
