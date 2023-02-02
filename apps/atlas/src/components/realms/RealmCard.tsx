@@ -312,10 +312,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         <AtlasSidebar
           containerClassName={sidebarClassNames.replace('z-30', 'z-100')}
           isOpen={isTravel}
+          onClose={() => setIsTravel(false)}
         >
           {isTravel && (
             <>
-              <SidebarHeader onClose={() => setIsTravel(false)} />
               <Travel realm={realm} />
             </>
           )}

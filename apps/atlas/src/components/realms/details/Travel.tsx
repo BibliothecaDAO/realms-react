@@ -14,8 +14,8 @@ export const Travel = ({ realm }: Prop) => {
   return (
     <div className="min-h-full p-5 overflow-scroll">
       <div className="mb-4">
-        <div className="flex justify-between">
-          <h1 className="self-center">{realm.name}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="self-center w-full text-center">{realm.name}</h1>
           <OrderIcon
             className="self-center"
             size="md"
