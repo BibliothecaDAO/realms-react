@@ -237,10 +237,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   } = useBankContext();
 
   useEffect(() => {
-    if (
-      selectedSwapResources.length > 0 &&
-      sessionStorage.getItem('waitingForBuy')
-    ) {
+    if (sessionStorage.getItem('waitingForBuy')) {
       buySelectedResources();
       sessionStorage.removeItem('waitingForBuy');
     }
