@@ -237,10 +237,7 @@ export const CommandList: React.FC<Prop> = (props) => {
   } = useBankContext();
 
   useEffect(() => {
-    if (
-      selectedSwapResources.length > 0 &&
-      sessionStorage.getItem('waitingForBuy')
-    ) {
+    if (sessionStorage.getItem('waitingForBuy')) {
       buySelectedResources();
       sessionStorage.removeItem('waitingForBuy');
     }
@@ -349,6 +346,7 @@ export const CommandList: React.FC<Prop> = (props) => {
               size="xs"
               variant="outline"
               className="ml-auto"
+              disabled={!hasDeficit}
             >
               reconcile deficits
             </Button>

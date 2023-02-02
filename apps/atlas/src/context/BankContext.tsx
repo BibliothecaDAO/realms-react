@@ -132,6 +132,11 @@ function useResources() {
   const { play: playAddCoal } = useUiSounds(soundSelector.addCoal);
   const { play: playAddCopper } = useUiSounds(soundSelector.addCopper);
   const { play: playAddObsidian } = useUiSounds(soundSelector.addObsidian);
+  const { play: playAddSilver } = useUiSounds(soundSelector.addSilver);
+  const { play: playAddIronwood } = useUiSounds(soundSelector.addIronwood);
+  const { play: playAddColdIron } = useUiSounds(soundSelector.addColdIron);
+  const { play: playAddGold } = useUiSounds(soundSelector.addGold);
+  const { play: playAddHartwood } = useUiSounds(soundSelector.addHartwood);
   const { play: playAddDiamonds } = useUiSounds(soundSelector.addDiamonds);
   const { play: playAddTrueIce } = useUiSounds(soundSelector.addTrueIce);
   const { play: playAddAlchemicalSilver } = useUiSounds(
@@ -157,6 +162,21 @@ function useResources() {
         break;
       case ResourcesIds.Obsidian:
         playAddObsidian();
+        break;
+      case ResourcesIds.Silver:
+        playAddSilver();
+        break;
+      case ResourcesIds.Ironwood:
+        playAddIronwood();
+        break;
+      case ResourcesIds.ColdIron:
+        playAddColdIron();
+        break;
+      case ResourcesIds.Gold:
+        playAddGold();
+        break;
+      case ResourcesIds.Hartwood:
+        playAddHartwood();
         break;
       case ResourcesIds.Diamonds:
         playAddDiamonds();
