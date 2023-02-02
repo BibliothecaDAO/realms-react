@@ -34,7 +34,7 @@ export const useMarketRate = () => {
     },
   });
 
-  useEffect(() => {
+  useMemo(() => {
     if (!exchangeRateData) {
       return;
     }
