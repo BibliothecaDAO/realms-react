@@ -346,6 +346,7 @@ export const CommandList: React.FC<Prop> = (props) => {
               size="xs"
               variant="outline"
               className="ml-auto"
+              disabled={!hasDeficit}
             >
               reconcile deficits
             </Button>
