@@ -163,6 +163,11 @@ const nextConfig = {
       config.resolve.fallback = { ...config.resolve.fallback, fs: false };
     }
 
+    config.module.rules.push({
+      test: /\.geojson$/,
+      use: ["json-loader"]
+    });
+
     config.module.rules.push(
       {
         test: /\.(glb|gltf)$/,

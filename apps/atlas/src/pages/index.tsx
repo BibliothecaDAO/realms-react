@@ -4,7 +4,7 @@ import Layout from '@/components/Layout';
 import { AtlasSidebars } from '@/components/map/AtlasSidebars';
 import { MapModule } from '@/components/map/MapModule';
 import { ThreeCanvas } from '@/components/map/three/Canvas';
-import { Planet } from '@/components/map/three/ThreeGeo';
+
 import { RealmProvider } from '@/context/RealmContext';
 
 export default function AtlasPage() {

@@ -6,16 +6,32 @@ const DynamicPlanet = dynamic(() => import('./Planet'), {
   ssr: false,
 });
 
-const ThreeGeo = dynamic(() => import('./ThreeGeo'), {
+const ThreeGeo = dynamic(() => import('./Continents'), {
+  ssr: false,
+});
+
+const RealmsGeo = dynamic(() => import('./Realms'), {
   ssr: false,
 });
 
 export const ThreeCanvas = () => {
   return (
-    <Canvas>
-      <DynamicPlanet />
+    <Canvas
+      gl={{ antialias: false, alpha: false }}
+      camera={{
+        fov: 45,
+        position: [0, 0, 300],
+      }}
+      onCreated={({ gl }) => {
+        gl.setClearColor('#000000');
+      }}
+    >
       <OrbitControls makeDefault />
-      <ThreeGeo />
+      <DynamicPlanet />
+      {/* <ThreeGeo /> */}
+      <RealmsGeo />
+
+      <ambientLight />
     </Canvas>
   );
 };
