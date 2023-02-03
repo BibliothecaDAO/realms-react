@@ -27,7 +27,7 @@ export default function Layout({
           <BottomRightNav />
           <MenuSideBar />
           <div className="relative flex flex-col w-full ">
-            <div className="relative w-full h-full pt-32 bg-gray-1000 ">
+            <div className="relative w-full h-full bg-gray-1000 ">
               {children}
               <div className="object-cover object-right w-full h-full bg-center bg-fill bg-warRoom" />
               <div id="sidebar-root">

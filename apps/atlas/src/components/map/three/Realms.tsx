@@ -22,27 +22,49 @@ export default function Continents() {
     set(false);
   }, []);
 
+  const bufferGeometry = new THREE.BufferGeometry();
+
+  const pointsMaterial = new THREE.PointsMaterial({ color: 'black' });
+
+  const vertices: any = [];
+  const colors: any = [];
+
+  realms.features.forEach(({ geometry, _properties }, index) => {
+    const g: any = new GeoJsonGeometry(geometry, 200);
+    const positions = g.attributes.position.array;
+    for (let i = 0; i < positions.length; i += 3) {
+      vertices.push(positions[i], positions[i + 1], positions[i + 2]);
+      colors.push(0, 0, 0);
+    }
+  });
+
+  bufferGeometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(vertices, 3)
+  );
+  bufferGeometry.setAttribute(
+    'color',
+    new THREE.Float32BufferAttribute(colors, 3)
+  );
+
   return (
-    <Fragment>
-      {realms ? (
-        <Fragment>
-          {realms.features.map(({ geometry, properties }, index) => {
-            const g = new GeoJsonGeometry(geometry, 200);
-            return (
-              <mesh
-                key={index}
-                geometry={g}
-                onPointerOver={onPointHoverHandler}
-                onPointerOut={onPointOutHandler}
-              >
-                <points scale={1} geometry={g}>
-                  <pointsMaterial attach="material" color={'black'} />
-                </points>
-              </mesh>
-            );
-          })}
-        </Fragment>
-      ) : null}
-    </Fragment>
+    <>
+      <mesh
+        // geometry={bufferGeometry}
+        receiveShadow
+        castShadow
+        // onPointerOver={onPointHoverHandler}
+        // onPointerOut={onPointOutHandler}
+        // onClick={(e) => console.log(e.stopPropagation())}
+        // material={pointsMaterial}
+      >
+        <points
+          onClick={(e) => console.log(e)}
+          scale={1}
+          geometry={bufferGeometry}
+          material={pointsMaterial}
+        />
+      </mesh>
+    </>
   );
 }
