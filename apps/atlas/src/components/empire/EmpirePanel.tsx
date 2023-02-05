@@ -1,6 +1,4 @@
 import { Button, Tabs } from '@bibliotheca-dao/ui-lib';
-import Bag from '@bibliotheca-dao/ui-lib/icons/bag.svg';
-import Bank from '@bibliotheca-dao/ui-lib/icons/bank.svg';
 import Castle from '@bibliotheca-dao/ui-lib/icons/castle.svg';
 import Crown from '@bibliotheca-dao/ui-lib/icons/crown_icon.svg';
 import Globe from '@bibliotheca-dao/ui-lib/icons/globe.svg';
@@ -8,18 +6,10 @@ import Helm from '@bibliotheca-dao/ui-lib/icons/helm.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/loot/sword.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import { useAccount } from '@starknet-react/core';
-import Image from 'next/image';
 import { useState, useMemo } from 'react';
 import { MyArmies } from '@/components/empire/MyArmies';
-import { MyCrypts } from '@/components/empire/MyCrypts';
-import { MyGA } from '@/components/empire/MyGA';
-import { MyLoot } from '@/components/empire/MyLoot';
-import { MyRealms } from '@/components/empire/MyRealms';
 import { AccountOverview } from '@/components/empire/Overview';
-import {
-  getAccountHex,
-  hasSettledRealms,
-} from '@/components/realms/RealmsGetters';
+import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
 import {
@@ -204,7 +194,7 @@ export function EmpirePanel() {
               onChange={(index) => pressedTab(index as number)}
               variant="primary"
             >
-              <div className="sticky top-0 z-20 p-4 overflow-x-auto rounded-xl backdrop-blur-sm">
+              <div className="sticky top-0 z-20 p-4 overflow-x-auto text-sm bg-gradient-to-r from-gray-900 to-gray-1000">
                 <Tabs.List className="py-0">
                   {tabs.map((tab, index) => (
                     <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
