@@ -140,7 +140,7 @@ export const TxCartItem = (props: TxCartItem) => {
 const TX_HISTORY_STORAGE_KEY = 'txHistory';
 const CLEAR_STORAGE_FLAG_KEY = 'clearStorageFlag';
 
-const TX_HISTORY_LENGTH = 50;
+const TX_HISTORY_LENGTH = 15;
 
 export const TransactionCartTable = () => {
   const { hashes, transactions } = useTransactionManager<Metadata>();
