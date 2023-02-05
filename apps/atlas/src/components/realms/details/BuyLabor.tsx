@@ -9,8 +9,8 @@ import { CostBlock, getTrait } from '../RealmsGetters';
 export const BuyLabor = ({ costs, isFood, realm, resource }) => {
   const { create, harvest, create_food, harvest_food } = useLabor();
 
-  const getFarms = 10;
-  const getFishingVillages = 10;
+  const getFarms = getTrait(realm, 'River');
+  const getFishingVillages = getTrait(realm, 'Harbor');
 
   const foodProductionCap =
     resource.resourceId === ResourcesIds.Wheat ? getFarms : getFishingVillages;
