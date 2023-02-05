@@ -26,6 +26,9 @@ export const CommandListContext = createContext<CommandList | undefined>(
   undefined
 );
 
+export const SESSION_TXS_KEY = 'SESSION_TXS_KEY';
+export const SESSION_TXS_EXPIRY_KEY = 'SESSION_TXS_EXPIRY_KEY';
+
 export const CommandListProvider = ({
   children,
 }: {
@@ -34,6 +37,27 @@ export const CommandListProvider = ({
   const [txs, setTx] = useState<Tx[]>([]);
   const { addTransaction } = useTransactionManager();
   const { execute } = useStarknetExecute({ calls: txs });
+
+  useEffect(() => {
+    if (txs.length > 0) {
+      localStorage.setItem(SESSION_TXS_KEY, JSON.stringify(txs));
+      localStorage.setItem(SESSION_TXS_EXPIRY_KEY, Date.now().toString());
+    }
+  }, [txs]);
+
+  useEffect(() => {
+    const sessionTxs = localStorage.getItem(SESSION_TXS_KEY);
+    const sessionTxsExpiry = localStorage.getItem(SESSION_TXS_EXPIRY_KEY);
+    if (sessionTxs && sessionTxsExpiry) {
+      const expiry = parseInt(sessionTxsExpiry);
+      if (Date.now() - expiry < 1000 * 60 * 60 * 24 * 7) {
+        setTx(JSON.parse(sessionTxs));
+      } else {
+        localStorage.removeItem(SESSION_TXS_KEY);
+        localStorage.removeItem(SESSION_TXS_EXPIRY_KEY);
+      }
+    }
+  }, []);
 
   const add = (tx: Call[] | Call, insertFirst = false) => {
     const { title: configTitle } = getTxRenderConfig(tx as RealmsTransaction);
@@ -72,6 +96,9 @@ export const CommandListProvider = ({
 
   const remove = (tx: Tx) => {
     const i = txs.indexOf(tx);
+    if (txs.length === 1) {
+      empty();
+    }
     setTx((prev) => {
       const next = [...prev];
       next.splice(i, 1);
@@ -89,6 +116,8 @@ export const CommandListProvider = ({
 
   const empty = () => {
     setTx([]);
+    localStorage.removeItem(SESSION_TXS_KEY);
+    localStorage.removeItem(SESSION_TXS_EXPIRY_KEY);
   };
 
   const executeMulticall = async (inline?: Tx[]) => {
@@ -121,7 +150,7 @@ export const CommandListProvider = ({
         })),
       },
     });
-    setTx([]);
+    empty();
     return resp;
   };
 

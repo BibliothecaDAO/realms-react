@@ -92,7 +92,7 @@ export const RealmModal = (props: Prop) => {
         hotkey: HotKeys.Overview,
         label: (
           <span className="flex">
-            <Map className="self-center w-4 h-4 mr-2 fill-current" />
+            <Map className="self-center w-4 h-4 fill-current" />
           </span>
         ),
         component: (
@@ -109,7 +109,7 @@ export const RealmModal = (props: Prop) => {
         hotkey: HotKeys.MilitaryBuildings,
         label: (
           <span className="flex">
-            <Castle className="self-center w-4 h-4 mr-2 fill-current" />
+            <Castle className="self-center w-4 h-4 fill-current" />
           </span>
         ),
         component: <MilitaryBuildings buildings={buildings} realm={realm} />,
@@ -118,7 +118,7 @@ export const RealmModal = (props: Prop) => {
         hotkey: HotKeys.DefendingArmy,
         label: (
           <span className="flex">
-            <Shield className="self-center w-4 h-4 mr-2 fill-current" />
+            <Shield className="self-center w-4 h-4 fill-current" />
           </span>
         ),
         component: (
@@ -134,7 +134,7 @@ export const RealmModal = (props: Prop) => {
         hotkey: HotKeys.AttackingArmy,
         label: (
           <span className="flex">
-            <Sword className="self-center w-4 h-4 mr-2 fill-current" />
+            <Sword className="self-center w-4 h-4 fill-current" />
           </span>
         ),
         component: (
@@ -150,7 +150,7 @@ export const RealmModal = (props: Prop) => {
         hotkey: HotKeys.FoodResources,
         label: (
           <span className="flex">
-            <Sickle className="self-center w-4 h-4 mr-2 fill-current" />
+            <Sickle className="self-center w-4 h-4 fill-current" />
           </span>
         ),
         component: (
@@ -225,7 +225,7 @@ export const RealmModal = (props: Prop) => {
           >
             <Tabs.List className="">
               {tabs.map((tab, index) => (
-                <Tabs.Tab key={index}>
+                <Tabs.Tab key={index} noText={true}>
                   {tab.label}
                   {/* <RealmBuildTabHotkey hotkey={tab.hotkey} /> */}
                 </Tabs.Tab>

@@ -7,9 +7,9 @@ import ActiveTabRight from '../../icons/frame/activeTab_right.svg';
 import { TabContext } from './tab-provider';
 import { VARIANTS } from './tabs';
 
-type TabProps = ComponentProps<'button'>;
+type TabProps = ComponentProps<'button'> & { noText?: boolean };
 
-export const Tab = ({ className, children, ...props }: TabProps) => {
+export const Tab = ({ className, children, noText, ...props }: TabProps) => {
   const { variant } = useContext(TabContext)!;
 
   const isPrimary = variant === 'primary';
@@ -37,8 +37,12 @@ export const Tab = ({ className, children, ...props }: TabProps) => {
                     <ActiveTabLeft className="absolute top-0 left-0 h-full fill-frame-secondary" />
                     <ActiveTabRight className="absolute -top-[1px] right-0 h-full fill-frame-secondary" />
 
-                    <div className="absolute top-[4.5px] right-0 w-1/2 h-[1px] bg-yellow-secondary -translate-x-1/2" />
-                    <div className="absolute top-[3px] right-0  w-1/2 h-[1px] bg-yellow-secondary -translate-x-1/2" />
+                    {!noText && (
+                      <>
+                        <div className="absolute top-[4.5px] right-0 w-1/2 h-[1px] bg-yellow-secondary -translate-x-1/2" />
+                        <div className="absolute top-[3px] right-0  w-1/2 h-[1px] bg-yellow-secondary -translate-x-1/2" />
+                      </>
+                    )}
                     <div
                       className="absolute bottom-[8px] right-0 w-1/2 h-[1px] bg-yellow-secondary"
                       style={{ transform: 'translateX(-44%)' }}
