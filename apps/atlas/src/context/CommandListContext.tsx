@@ -26,6 +26,8 @@ export const CommandListContext = createContext<CommandList | undefined>(
   undefined
 );
 
+export const SESSION_TXS_KEY = 'SESSION_TXS_KEY';
+
 export const CommandListProvider = ({
   children,
 }: {
@@ -34,6 +36,18 @@ export const CommandListProvider = ({
   const [txs, setTx] = useState<Tx[]>([]);
   const { addTransaction } = useTransactionManager();
   const { execute } = useStarknetExecute({ calls: txs });
+
+  useEffect(() => {
+    if (txs.length > 0)
+      sessionStorage.setItem(SESSION_TXS_KEY, JSON.stringify(txs));
+  }, [txs]);
+
+  useEffect(() => {
+    const sessionTxs = sessionStorage.getItem(SESSION_TXS_KEY);
+    if (sessionTxs) {
+      setTx(JSON.parse(sessionTxs));
+    }
+  }, []);
 
   const add = (tx: Call[] | Call, insertFirst = false) => {
     const { title: configTitle } = getTxRenderConfig(tx as RealmsTransaction);
@@ -72,6 +86,9 @@ export const CommandListProvider = ({
 
   const remove = (tx: Tx) => {
     const i = txs.indexOf(tx);
+    if (txs.length === 1) {
+      sessionStorage.removeItem(SESSION_TXS_KEY);
+    }
     setTx((prev) => {
       const next = [...prev];
       next.splice(i, 1);
@@ -89,6 +106,7 @@ export const CommandListProvider = ({
 
   const empty = () => {
     setTx([]);
+    sessionStorage.removeItem(SESSION_TXS_KEY);
   };
 
   const executeMulticall = async (inline?: Tx[]) => {
@@ -121,7 +139,7 @@ export const CommandListProvider = ({
         })),
       },
     });
-    setTx([]);
+    empty();
     return resp;
   };
 
