@@ -39,11 +39,11 @@ export const CommandListProvider = ({
 
   useEffect(() => {
     if (txs.length > 0)
-      sessionStorage.setItem(SESSION_TXS_KEY, JSON.stringify(txs));
+      localStorage.setItem(SESSION_TXS_KEY, JSON.stringify(txs));
   }, [txs]);
 
   useEffect(() => {
-    const sessionTxs = sessionStorage.getItem(SESSION_TXS_KEY);
+    const sessionTxs = localStorage.getItem(SESSION_TXS_KEY);
     if (sessionTxs) {
       setTx(JSON.parse(sessionTxs));
     }
@@ -87,7 +87,7 @@ export const CommandListProvider = ({
   const remove = (tx: Tx) => {
     const i = txs.indexOf(tx);
     if (txs.length === 1) {
-      sessionStorage.removeItem(SESSION_TXS_KEY);
+      localStorage.removeItem(SESSION_TXS_KEY);
     }
     setTx((prev) => {
       const next = [...prev];
@@ -106,7 +106,7 @@ export const CommandListProvider = ({
 
   const empty = () => {
     setTx([]);
-    sessionStorage.removeItem(SESSION_TXS_KEY);
+    localStorage.removeItem(SESSION_TXS_KEY);
   };
 
   const executeMulticall = async (inline?: Tx[]) => {
