@@ -33,6 +33,7 @@ import useIsOwner from '@/hooks/useIsOwner';
 
 type Prop = {
   realm: RealmFragmentFragment;
+  totalRealmsCount?: number;
 };
 interface ResourceAndFoodInput {
   farmsToBuild: string;
@@ -42,7 +43,7 @@ interface ResourceAndFoodInput {
 }
 
 export const RealmsFood = (props: Prop) => {
-  const { realm } = props;
+  const { realm, totalRealmsCount } = props;
 
   const { balance } = useUserBalancesContext();
   const { getBuildingCostById } = useGameConstants();
@@ -231,6 +232,46 @@ export const RealmsFood = (props: Prop) => {
               half
             </Button>
           </div>
+          {totalRealmsCount && (
+            <div className="flex flex-col flex-grow uppercase">
+              <Button
+                size="xs"
+                variant="unstyled"
+                className="px-2 border rounded border-white/10 hover:bg-white/10"
+                onClick={() => {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      wheatConversion: Math.floor(
+                        +formatEther(getWheatBalance ?? 0) / totalRealmsCount
+                      ).toString(),
+                    };
+                  });
+                }}
+              >
+                1/{totalRealmsCount}
+              </Button>
+              <Button
+                size="xs"
+                variant="unstyled"
+                className="px-2 border rounded border-white/10 hover:bg-white/10"
+                onClick={() => {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      wheatConversion: Math.floor(
+                        +formatEther(getWheatBalance ?? 0) /
+                          totalRealmsCount /
+                          2
+                      ).toString(),
+                    };
+                  });
+                }}
+              >
+                1/{totalRealmsCount * 2}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -351,6 +392,44 @@ export const RealmsFood = (props: Prop) => {
               half
             </Button>
           </div>
+          {totalRealmsCount && (
+            <div className="flex flex-col flex-grow uppercase">
+              <Button
+                size="xs"
+                variant="unstyled"
+                className="px-2 border rounded border-white/10 hover:bg-white/10"
+                onClick={() => {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      fishConversion: Math.floor(
+                        +formatEther(getFishBalance ?? 0) / totalRealmsCount
+                      ).toString(),
+                    };
+                  });
+                }}
+              >
+                1/{totalRealmsCount}
+              </Button>
+              <Button
+                size="xs"
+                variant="unstyled"
+                className="px-2 border rounded border-white/10 hover:bg-white/10"
+                onClick={() => {
+                  setInput((current) => {
+                    return {
+                      ...current,
+                      fishConversion: Math.floor(
+                        +formatEther(getFishBalance ?? 0) / totalRealmsCount / 2
+                      ).toString(),
+                    };
+                  });
+                }}
+              >
+                1/{totalRealmsCount * 2}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
