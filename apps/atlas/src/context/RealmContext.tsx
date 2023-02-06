@@ -19,8 +19,11 @@ type TraitsFilter = {
   [RealmTraitType.River]: MinMaxRange;
 };
 
+type RelicFilter = null | 'annexed' | 'self sovereign';
+
 interface RealmState {
   rarityFilter: RarityFilter;
+  relicFilter: RelicFilter;
   traitsFilter: TraitsFilter;
   selectedOrders: OrderType[];
   selectedResources: number[];
@@ -35,6 +38,7 @@ interface RealmState {
 type RealmAction =
   | { type: 'updateRarityFilter'; payload: RarityFilter }
   | { type: 'updateTraitsFilter'; payload: TraitsFilter }
+  | { type: 'updateRelicFilter'; payload: RelicFilter }
   | { type: 'updateSelectedOrders'; payload: OrderType[] }
   | { type: 'updateSelectedResources'; payload: number[] }
   | { type: 'toggleHasWonderFilter' }
@@ -50,6 +54,7 @@ type RealmAction =
 interface RealmActions {
   updateRarityFilter(filter: RarityFilter): void;
   updateTraitsFilter(filter: TraitsFilter): void;
+  updateRelicFilter(filter: RelicFilter): void;
   updateSelectedOrders(orders: OrderType[]): void;
   updateSelectedResources(resources: number[]): void;
   toggleHasWonderFilter(): void;
@@ -78,6 +83,7 @@ const defaultFilters = {
     [RealmTraitType.Harbor]: { min: 0, max: RealmsMax.Harbour },
     [RealmTraitType.River]: { min: 0, max: RealmsMax.River },
   },
+  relicFilter: null,
   selectedOrders: [] as OrderType[],
   selectedResources: [] as number[],
   searchIdFilter: '',
@@ -96,6 +102,8 @@ function realmReducer(state: RealmState, action: RealmAction): RealmState {
   switch (action.type) {
     case 'updateRarityFilter':
       return { ...state, rarityFilter: action.payload };
+    case 'updateRelicFilter':
+      return { ...state, relicFilter: action.payload };
     case 'updateSearchIdFilter':
       return { ...state, searchIdFilter: action.payload };
     case 'updateTraitsFilter':
@@ -147,7 +155,8 @@ const mapActions = (dispatch: Dispatch<RealmAction>): RealmActions => ({
     }),
   updateSearchIdFilter: (realmId: string) =>
     dispatch({ type: 'updateSearchIdFilter', payload: realmId }),
-
+  updateRelicFilter: (filter: RelicFilter) =>
+    dispatch({ type: 'updateRelicFilter', payload: filter }),
   toggleHasWonderFilter: () => dispatch({ type: 'toggleHasWonderFilter' }),
   toggleIsSettledFilter: () => dispatch({ type: 'toggleIsSettledFilter' }),
   toggleIsRaidableFilter: () => dispatch({ type: 'toggleIsRaidableFilter' }),
