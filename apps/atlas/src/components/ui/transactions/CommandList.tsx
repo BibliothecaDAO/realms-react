@@ -1,20 +1,22 @@
 import { Button, ResourceIcon } from '@bibliotheca-dao/ui-lib/base';
 import DragIcon from '@bibliotheca-dao/ui-lib/icons/drag.svg';
+import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import Link from 'next/link';
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
-import { deadline } from '@/components/bank/BankGetters';
+import { calculateLords, deadline } from '@/components/bank/BankGetters';
 import { RateChange, getTxCosts } from '@/components/bank/MarketGetters';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
 import { useBuyResources } from '@/hooks/useSwapResources';
@@ -175,8 +177,14 @@ export const CommandList: React.FC<Prop> = (props) => {
   const [waitingForBatchAdding, setWaitingForBatchAdding] = useState(false);
 
   const [resourceCostsById, setResourceCostsById] = useState<
-    Record<string, { resourceName: string; amount: number }>
+    Record<
+      string,
+      { resourceName: string; amount: number; reconcilePriceInLords: number }
+    >
   >({});
+
+  const { exchangeInfo: rates } = useMarketRate();
+  const { slippage } = useBankContext();
 
   useEffect(() => {
     // Note: All metadata.costs are assumed to follow the ItemCost interface
@@ -191,10 +199,25 @@ export const CommandList: React.FC<Prop> = (props) => {
 
     allResourceCosts.forEach((c) => {
       const amount = (costsByResourceId[c.resourceId]?.amount ?? 0) + c.amount;
+      const checkoutBalance =
+        balance.find((a) => a.resourceId === parseInt(c.resourceId))
+          ?.checkoutAmount || 0;
+      const reconcileAmount =
+        (amount * 1.2 - +formatEther(BigNumber.from(checkoutBalance))) * 1.05; // 1.05 is batchAddResources modifier
+      const lordsPrice = calculateLords(
+        rates?.find((r) => r.tokenId === c.resourceId)?.buyAmount as string,
+        reconcileAmount
+      );
       costsByResourceId[c.resourceId] = {
         ...costsByResourceId[c.resourceId],
         resourceName: c.resourceName,
         amount,
+        reconcilePriceInLords: checkUserHasCheckoutResources({
+          cost: amount,
+          id: c.resourceId,
+        })
+          ? 0
+          : lordsPrice + lordsPrice * slippage,
       };
 
       if (
@@ -209,6 +232,15 @@ export const CommandList: React.FC<Prop> = (props) => {
 
     setResourceCostsById(costsByResourceId);
   }, [txQueue]);
+
+  const totalReconcilePriceInLords = useMemo(() => {
+    return Object.values(resourceCostsById)
+      .reduce(
+        (acc, { reconcilePriceInLords }) => acc + reconcilePriceInLords,
+        0
+      )
+      .toFixed(2);
+  }, [resourceCostsById]);
 
   const reorderCards = useCallback((dragIndex: number, hoverIndex: number) => {
     txQueue.reorderQueue(dragIndex, hoverIndex);
@@ -348,7 +380,13 @@ export const CommandList: React.FC<Prop> = (props) => {
               className="ml-auto"
               disabled={!hasDeficit}
             >
-              reconcile deficits
+              <div className="flex flex-col justify-center item-center">
+                <div>reconcile deficits </div>
+                <div className="flex justify-center">
+                  <LordsIcon className="w-3 mr-1 fill-white" />{' '}
+                  {totalReconcilePriceInLords}
+                </div>
+              </div>
             </Button>
           </div>
         </div>
