@@ -20,6 +20,7 @@ import {
   getAttackingArmyImage,
   getDefendingArmyImage,
   getHappinessImage,
+  getMilitaryImage,
   getMilitaryBuildingsBuilt,
   getStoreHouseSize,
 } from '@/components/realms/RealmsGetters';
@@ -128,6 +129,7 @@ export const RealmModal = (props: Prop) => {
           </span>
         ),
         component: <MilitaryBuildings buildings={buildings} realm={realm} />,
+        imgSrc: getMilitaryImage(buildings),
       },
       {
         hotkey: HotKeys.DefendingArmy,

@@ -21,6 +21,7 @@ import {
   RealmHappinessImages,
   SECONDS_PER_KM,
   STORE_HOUSE_SIZE,
+  RealmMilitaryImages,
 } from '@/constants/globals';
 import {
   findResourceById,
@@ -498,7 +499,15 @@ export const getAttackingArmyImage = (realm) => {
 // TODO
 // export const getRealmFoodResourcesImage = ({ realm, food }) => {};
 // export const getRealmLoreImage = ({ realm, food }) => {};
-// export const getRealmMilitaryImage = ({ realm, food }) => {};
+export const getMilitaryImage = (buildings) => {
+  const buildingIds = getMilitaryBuildingsBuilt(buildings);
+  console.log(buildingIds);
+  if (buildingIds && buildingIds?.length >= 1) {
+    return RealmMilitaryImages.Active;
+  } else {
+    return RealmMilitaryImages.Decayed;
+  }
+};
 
 export const getBuildingPopulation = (realm: RealmFragmentFragment) => {
   let buildingPop = 0;
