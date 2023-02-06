@@ -13,7 +13,10 @@ export function MyFood() {
             return (
               <div key={index}>
                 <h2>{realm.name}</h2>
-                <RealmsFood realm={realm} />
+                <RealmsFood
+                  realm={realm}
+                  totalRealmsCount={userRealms?.realms.length}
+                />
               </div>
             );
           })
