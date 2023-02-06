@@ -16,6 +16,8 @@ import {
   NO_FOOD_LOSS,
   NO_RELIC_LOSS,
   PILLAGE_AMOUNT,
+  RealmDefendingArmyImages,
+  RealmAttackingArmyImages,
   RealmHappinessImages,
   SECONDS_PER_KM,
   STORE_HOUSE_SIZE,
@@ -460,6 +462,43 @@ export const getHappinessImage = ({ realm, food }) => {
     return RealmHappinessImages.Unhappy;
   }
 };
+export const getDefendingArmyImage = (realm) => {
+  const defendingArmy = realm.ownArmies.find((a) => a.armyId === 0);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { getArmyStats } = useArmy();
+
+  if (defendingArmy) {
+    const { totalDefence } = getArmyStats(defendingArmy);
+    if (totalDefence >= 750) {
+      return RealmDefendingArmyImages.Strong;
+    } else if (totalDefence >= 250) {
+      return RealmDefendingArmyImages.Weak;
+    }
+  }
+  return RealmDefendingArmyImages.Deserted;
+};
+export const getAttackingArmyImage = (realm) => {
+  // TODO efficient get total of strongest army - army stats should prob be refactored into a getter instead of hook
+  const attackingArmy = realm.ownArmies.findLast((a) => a.armyId > 0);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { getArmyStats } = useArmy();
+  if (attackingArmy) {
+    const { cavalryAttack, archeryAttack, magicAttack, infantryAttack } =
+      getArmyStats(attackingArmy);
+    const totalAttack =
+      cavalryAttack + archeryAttack + magicAttack + infantryAttack;
+    if (totalAttack >= 750) {
+      return RealmAttackingArmyImages.Strong;
+    } else if (totalAttack >= 250) {
+      return RealmAttackingArmyImages.Weak;
+    }
+  }
+  return RealmAttackingArmyImages.Weak;
+};
+// TODO
+// export const getRealmFoodResourcesImage = ({ realm, food }) => {};
+// export const getRealmLoreImage = ({ realm, food }) => {};
+// export const getRealmMilitaryImage = ({ realm, food }) => {};
 
 export const getBuildingPopulation = (realm: RealmFragmentFragment) => {
   let buildingPop = 0;

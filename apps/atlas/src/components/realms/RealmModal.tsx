@@ -6,12 +6,19 @@ import Shield from '@bibliotheca-dao/ui-lib/icons/shield.svg';
 import Sickle from '@bibliotheca-dao/ui-lib/icons/sickle.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import clsx from 'clsx';
+import Image from 'next/image';
 import router from 'next/router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { AttackingArmy } from '@/components/realms//details/AttackingArmy';
+import { BuildingUtilisation } from '@/components/realms//details/BuildingUtilisation';
+import { DetailedOverview } from '@/components/realms//details/DetailedOverview';
+import { LaborTable } from '@/components/realms//details/LaborTable';
 import { RealmLore } from '@/components/realms/details';
 import { DefendingArmy } from '@/components/realms/details/DefendingArmy';
 import { MilitaryBuildings } from '@/components/realms/details/MilitaryBuildings';
 import {
+  getAttackingArmyImage,
+  getDefendingArmyImage,
   getHappinessImage,
   getMilitaryBuildingsBuilt,
   getStoreHouseSize,
@@ -28,10 +35,6 @@ import useKeyPress from '@/hooks/useKeyPress';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import { realmMilitaryEvents } from '@/types/index';
-import { AttackingArmy } from './details/AttackingArmy';
-import { BuildingUtilisation } from './details/BuildingUtilisation';
-import { DetailedOverview } from './details/DetailedOverview';
-import { LaborTable } from './details/LaborTable';
 
 type Prop = {
   realm: RealmFragmentFragment;
@@ -68,6 +71,12 @@ export const RealmModal = (props: Prop) => {
   const { subview, set } = useRealmDetailHotkeys(
     router.query['tab'] as Subview
   );
+  const [imgSrc, setImgSrc] = useState<string>(
+    getHappinessImage({
+      realm: props.realm,
+      food: props.availableFood,
+    })
+  );
   const realmDefendEventData = historyData?.getRealmHistory.filter(
     (event) => event.eventType == realmMilitaryEvents.realmCombatDefend
   );
@@ -76,6 +85,8 @@ export const RealmModal = (props: Prop) => {
   );
   const leftPressed = useKeyPress({ keycode: 'LEFT' });
   const rightPressed = useKeyPress({ keycode: 'RIGHT' });
+  const defendingArmyImage = getDefendingArmyImage(realm);
+  const attackingArmyImage = getAttackingArmyImage(realm);
 
   useEffect(() => {
     if (leftPressed) {
@@ -104,6 +115,10 @@ export const RealmModal = (props: Prop) => {
             defendHistory={realmDefendEventData}
           />
         ),
+        imgSrc: getHappinessImage({
+          realm: props.realm,
+          food: props.availableFood,
+        }),
       },
       {
         hotkey: HotKeys.MilitaryBuildings,
@@ -129,6 +144,7 @@ export const RealmModal = (props: Prop) => {
             defendHistory={realmDefendEventData}
           />
         ),
+        imgSrc: defendingArmyImage,
       },
       {
         hotkey: HotKeys.AttackingArmy,
@@ -145,6 +161,7 @@ export const RealmModal = (props: Prop) => {
             attackHistory={realmAttackEventData}
           />
         ),
+        imgSrc: attackingArmyImage,
       },
       {
         hotkey: HotKeys.FoodResources,
@@ -178,12 +195,22 @@ export const RealmModal = (props: Prop) => {
         ),
       },
     ],
-    [realm, buildings, availableFood, historyData]
+    [
+      realm,
+      buildings,
+      availableFood,
+      historyData,
+      attackingArmyImage,
+      defendingArmyImage,
+    ]
   );
 
   const pressedTab = (index) => {
     play();
     set(Object.keys(HotKeys)[index as number] as Subview);
+    if (tabs[index].imgSrc != undefined) {
+      setImgSrc(tabs[index].imgSrc as string);
+    }
   };
 
   const { buildingSpaceEnqueued, storehouseSpaceEnqueued } =
@@ -193,11 +220,10 @@ export const RealmModal = (props: Prop) => {
     <div className="flex flex-wrap">
       <div className="relative flex flex-wrap w-full min-h-max">
         <div className="w-1/3">
-          <img
-            src={getHappinessImage({
-              realm: props.realm,
-              food: props.availableFood,
-            })}
+          <Image
+            src={imgSrc}
+            width={1024}
+            height={1536}
             alt=""
             className="sticky top-0 object-cover w-full -translate-y-8 rounded-br-full"
           />
