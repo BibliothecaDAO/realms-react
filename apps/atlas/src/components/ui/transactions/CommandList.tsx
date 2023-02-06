@@ -4,25 +4,20 @@ import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
-import Link from 'next/link';
 import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import toast from 'react-hot-toast';
 import { twMerge } from 'tailwind-merge';
-import { calculateLords, deadline } from '@/components/bank/BankGetters';
-import { RateChange, getTxCosts } from '@/components/bank/MarketGetters';
+import { calculateLords } from '@/components/bank/BankGetters';
+import { getTxCosts } from '@/components/bank/MarketGetters';
 import type { ENQUEUED_STATUS } from '@/constants/index';
 import { useBankContext } from '@/context/BankContext';
 import { useCommandList } from '@/context/CommandListContext';
-import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
 import { useMarketRate } from '@/hooks/market/useMarketRate';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { getTxRenderConfig } from '@/hooks/settling/useTxMessage';
-import { useBuyResources } from '@/hooks/useSwapResources';
-import { useUi } from '@/hooks/useUi';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
-import type { ItemCost, CallAndMetadata } from '@/types/index';
+import type { CallAndMetadata } from '@/types/index';
 import { dndTypes } from '@/types/index';
 
 type Prop = {
