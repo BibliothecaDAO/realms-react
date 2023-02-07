@@ -55,7 +55,7 @@ const ResourceRow = (props: ResourceRowProps): ReactElement => {
     timerId = setTimeout(() => {
       props.onQtyChange(
         props.resource.resourceId,
-        parseInt(newValue as string)
+        parseFloat(newValue as string)
       ); /* updatePercentByValue(newValue); */
     }, 300);
     setTime(timerId);
