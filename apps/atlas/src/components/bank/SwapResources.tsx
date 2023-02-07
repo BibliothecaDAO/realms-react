@@ -26,7 +26,6 @@ import {
 } from '@/hooks/settling/useApprovals';
 import { useGameConstants } from '@/hooks/settling/useGameConstants';
 import { useBuyResources, useSellResources } from '@/hooks/useSwapResources';
-
 import {
   calculateLords,
   convertBalance,
@@ -474,7 +473,7 @@ export function SwapResources(): ReactElement {
             <div className="flex flex-col items-center ml-auto">
               <div className="flex whitespace-nowrap">
                 <span className="flex items-center mr-2 text-gray-600">
-                  {isBuy ? 'Total:' : 'To receive:'}
+                  {isBuy ? 'Total cost:' : 'To receive:'}
                 </span>
                 <div className="flex">
                   {' ~'}

@@ -217,7 +217,24 @@ export enum RealmHappinessImages {
   Average = '/realm/happiness/average.png',
   Unhappy = '/realm/happiness/unhappy.jpg',
 }
-
+export enum RealmDefendingArmyImages {
+  Strong = '/realm/defendingArmy/strong.png',
+  Weak = '/realm/defendingArmy/weak.png',
+  Deserted = '/realm/defendingArmy/deserted.png',
+}
+export enum RealmAttackingArmyImages {
+  Strong = '/realm/attackingArmies/bigArmy.png',
+  Weak = '/realm/attackingArmies/smallArmy.png',
+}
+export enum RealmMilitaryImages {
+  Active = '/realm/military/activeMilitaryInfrastructure.png',
+  Decayed = '/realm/military/decayedMilitaryInfrastructure.png',
+}
+export enum RealmResourcesFoodImages {
+  Productive = '/realm/resources/productive.png',
+  Unproductive = '/realm/resources/unproductive.png',
+  Idle = '/realm/resources/idle.png',
+}
 export const RelicImage = '/mj_relic.png';
 
 export enum CombatImages {
