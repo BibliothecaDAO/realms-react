@@ -7,6 +7,7 @@ import { findResourceById } from '@/constants/resources';
 import { useCommandList } from '@/context/CommandListContext';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
 import type { CallAndMetadata, RealmsTransactionRenderConfig } from '../types';
+import { useMarketRate } from './market/useMarketRate';
 import { ModuleAddr, useExchangeContract } from './settling/stark-contracts';
 import useTxCallback from './useTxCallback';
 
@@ -23,6 +24,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     tokenIds: number[];
     tokenAmounts: BigNumber[];
     deadline: number;
+    lordsCost: string;
   }) => ({
     contractAddress: ModuleAddr.Exchange,
     entrypoint: Entrypoints.buyTokens,
@@ -46,7 +48,6 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
     ],
     metadata: {
       ...args,
-      maxAmount: args.maxAmount,
       action: Entrypoints.buyTokens,
     },
   }),
@@ -185,7 +186,7 @@ export const renderTransaction: RealmsTransactionRenderConfig = {
     description: [
       `${isQueued ? 'Buy' : 'Buying'} ${
         metadata.tokenIds?.length ?? ''
-      } resources from the market.`,
+      } resources from the market for ~${metadata.lordsCost} $LORDS`,
       <div key="icons" className="flex flex-wrap mt-4">
         {metadata.tokenIds.map((tokenId, i) => (
           <CartResources
@@ -258,6 +259,8 @@ export const useBuyResources = () => {
   const { transactionHash, invoke, invokeError, loading } =
     useSwapResourcesTransaction(Entrypoints.buyTokens);
 
+  const { getTotalLordsCost } = useMarketRate();
+
   const txQueue = useCommandList();
 
   const buyTokens = (
@@ -279,6 +282,13 @@ export const useBuyResources = () => {
         tokenIds,
         tokenAmounts,
         deadline,
+        lordsCost: getTotalLordsCost({
+          costs: tokenIds.map((id, i) => ({
+            resourceId: id,
+            amount: +formatEther(tokenAmounts[i]),
+          })),
+          qty: 1,
+        }).toFixed(2),
       }),
       insertFirst
     );

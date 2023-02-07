@@ -179,7 +179,6 @@ export const CommandList: React.FC<Prop> = (props) => {
   >({});
 
   const { exchangeInfo: rates } = useMarketRate();
-  const { slippage } = useBankContext();
 
   useEffect(() => {
     // Note: All metadata.costs are assumed to follow the ItemCost interface
@@ -203,6 +202,7 @@ export const CommandList: React.FC<Prop> = (props) => {
         rates?.find((r) => r.tokenId === c.resourceId)?.buyAmount as string,
         reconcileAmount
       );
+
       costsByResourceId[c.resourceId] = {
         ...costsByResourceId[c.resourceId],
         resourceName: c.resourceName,
@@ -212,7 +212,7 @@ export const CommandList: React.FC<Prop> = (props) => {
           id: c.resourceId,
         })
           ? 0
-          : lordsPrice + lordsPrice * slippage,
+          : lordsPrice,
       };
 
       if (
@@ -378,7 +378,7 @@ export const CommandList: React.FC<Prop> = (props) => {
               <div className="flex flex-col justify-center item-center">
                 <div>reconcile deficits </div>
                 <div className="flex justify-center">
-                  <LordsIcon className="w-3 mr-1 fill-white" />{' '}
+                  <LordsIcon className="w-3 mr-1 fill-white" /> ~
                   {totalReconcilePriceInLords}
                 </div>
               </div>
