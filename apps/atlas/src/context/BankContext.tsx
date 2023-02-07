@@ -369,12 +369,12 @@ function useResources() {
   };
 
   const maxBuyAmount = useMemo(
-    () => parseEther(String(calculatedPriceInLords + calculatedSlippage)),
+    () => parseEther((calculatedPriceInLords + calculatedSlippage).toFixed(8)),
     [calculatedPriceInLords, calculatedSlippage]
   );
 
   const minSellAmount = useMemo(
-    () => parseEther(String(calculatedTotalInLords)),
+    () => parseEther(calculatedTotalInLords.toFixed(8)),
     [calculatedTotalInLords]
   );
 
