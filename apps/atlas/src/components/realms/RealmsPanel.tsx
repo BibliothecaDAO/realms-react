@@ -52,7 +52,11 @@ function useRealmsQueryVariables(
       } else if (selectedTabIndex === 2) {
         filter.realmId = { in: [...state.favouriteRealms] };
       }
-
+      if (state.relicFilter != null) {
+        filter.relic = {
+          is: { isAnnexed: { equals: state.relicFilter == 'annexed' } },
+        };
+      }
       if (state.hasWonderFilter) filter.wonder = { not: null };
       if (state.isSettledFilter) {
         filter.settledOwner = { not: null };
