@@ -155,6 +155,11 @@ export type BattalionStats = {
   value: Scalars['Int'];
 };
 
+export type BoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
 /** The Buildings Model */
 export type Building = {
   __typename?: 'Building';
@@ -686,6 +691,11 @@ export type Mutation = {
   reindexDesiege: Scalars['Boolean'];
 };
 
+export type NestedBoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
 export type NestedDateTimeFilter = {
   equals?: InputMaybe<Scalars['Timestamp']>;
   gt?: InputMaybe<Scalars['Timestamp']>;
@@ -887,6 +897,18 @@ export type Query = {
   armies: Array<Army>;
   battalionCosts: Array<BattalionCost>;
   battalionStats: Array<BattalionStats>;
+  economyExchangeLordsPurchasedTotal: Scalars['String'];
+  economyExchangeResourcePurchasedTotals: Array<ResourceAmount>;
+  economyLpResourceBurnedTotals: Array<ResourceAmount>;
+  economyLpResourceMintedTotals: Array<ResourceAmount>;
+  economyResourceBurnedTotals: Array<ResourceAmount>;
+  economyResourceBurnedTotalsByBattalionAll: Array<ResourceAmount>;
+  economyResourceBurnedTotalsByBattalionId: Array<ResourceAmountByBattalion>;
+  economyResourceBurnedTotalsByBuildingAll: Array<ResourceAmount>;
+  economyResourceBurnedTotalsByBuildingId: Array<ResourceAmountByBuilding>;
+  economyResourceBurnedTotalsByLaborAll: Array<ResourceAmount>;
+  economyResourceMintedTotals: Array<ResourceAmount>;
+  economySettledRealmsTotal: Scalars['Int'];
   exchangeRates: Array<ExchangeRate>;
   getBuildingCostById: BuildingCost;
   getBuildingCosts: Array<BuildingCost>;
@@ -908,13 +930,13 @@ export type Query = {
   getResources: Array<Resource>;
   getResourcesByAddress: Array<Resource>;
   getTroopStats: Array<TroopStats>;
-  getWallet: Wallet;
   groupByRealmHistory: Array<RealmHistoryGroupBy>;
   realm: Realm;
   realmCombatHistory: CombatResult;
   realmHistory: Array<RealmHistory>;
   realms: Array<Realm>;
   realmsCount: Scalars['Int'];
+  tokenBalances: Array<TokenBalance>;
   travels: Array<Travel>;
   troopStats: Array<TroopStats>;
   walletBalances: Array<WalletBalance>;
@@ -1001,10 +1023,6 @@ export type QueryGetResourcesByAddressArgs = {
   address: Scalars['String'];
 };
 
-export type QueryGetWalletArgs = {
-  address: Scalars['String'];
-};
-
 export type QueryGroupByRealmHistoryArgs = {
   by: Array<RealmHistoryScalarFieldEnum>;
   having?: InputMaybe<RealmHistoryScalarWhereWithAggregatesInput>;
@@ -1038,6 +1056,10 @@ export type QueryRealmsArgs = {
 
 export type QueryRealmsCountArgs = {
   filter?: InputMaybe<RealmWhereInput>;
+};
+
+export type QueryTokenBalancesArgs = {
+  address: Scalars['String'];
 };
 
 export type QueryTravelsArgs = {
@@ -1444,6 +1466,7 @@ export type RealmWhereInput = {
 export type Relic = {
   __typename?: 'Relic';
   heldByRealm?: Maybe<Scalars['Float']>;
+  isAnnexed: Scalars['Boolean'];
   originRealm: Realm;
   realmHolder: Realm;
   realmId?: Maybe<Scalars['Float']>;
@@ -1461,6 +1484,7 @@ export type RelicOrderByRelationAggregateInput = {
 
 export type RelicOrderByWithRelationInput = {
   heldByRealm?: InputMaybe<SortOrder>;
+  isAnnexed?: InputMaybe<SortOrder>;
   originRealm?: InputMaybe<RealmOrderByWithRelationInput>;
   realmHolder?: InputMaybe<RealmOrderByWithRelationInput>;
   realmId?: InputMaybe<SortOrder>;
@@ -1476,6 +1500,7 @@ export type RelicWhereInput = {
   NOT?: InputMaybe<Array<RelicWhereInput>>;
   OR?: InputMaybe<Array<RelicWhereInput>>;
   heldByRealm?: InputMaybe<IntFilter>;
+  isAnnexed?: InputMaybe<BoolFilter>;
   originRealm?: InputMaybe<RealmRelationFilter>;
   realmHolder?: InputMaybe<RealmRelationFilter>;
   realmId?: InputMaybe<IntFilter>;
@@ -1498,6 +1523,26 @@ export type Resource = {
 export type ResourceAmount = {
   __typename?: 'ResourceAmount';
   amount: Scalars['String'];
+  resourceId: Scalars['Int'];
+  resourceName: Scalars['String'];
+};
+
+/** The Token Amount Model */
+export type ResourceAmountByBattalion = {
+  __typename?: 'ResourceAmountByBattalion';
+  amount: Scalars['String'];
+  battalionId: Scalars['Int'];
+  battalionName: Scalars['String'];
+  resourceId: Scalars['Int'];
+  resourceName: Scalars['String'];
+};
+
+/** The Token Amount Model */
+export type ResourceAmountByBuilding = {
+  __typename?: 'ResourceAmountByBuilding';
+  amount: Scalars['String'];
+  buildingId: Scalars['Int'];
+  buildingName: Scalars['String'];
   resourceId: Scalars['Int'];
   resourceName: Scalars['String'];
 };
@@ -1599,6 +1644,14 @@ export type StringWithAggregatesFilter = {
   not?: InputMaybe<NestedStringWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
+};
+
+/** TokenBalance */
+export type TokenBalance = {
+  __typename?: 'TokenBalance';
+  address: Scalars['String'];
+  amount: Scalars['String'];
+  tokenId: Scalars['Int'];
 };
 
 export type Travel = {
@@ -2812,30 +2865,14 @@ export type GetTravelsQuery = {
   }>;
 };
 
-export type GetWalletQueryVariables = Exact<{
+export type GetTokenBalancesQueryVariables = Exact<{
   address: Scalars['String'];
 }>;
 
-export type GetWalletQuery = {
+export type GetTokenBalancesQuery = {
   __typename?: 'Query';
-  getWallet: {
-    __typename?: 'Wallet';
-    address: string;
-    realmsL1Held: number;
-    realmsL2Held: number;
-    realmsSettledHeld: number;
-    realmsBridgedHeld: number;
-  };
-};
-
-export type GetWalletBalancesQueryVariables = Exact<{
-  address: Scalars['String'];
-}>;
-
-export type GetWalletBalancesQuery = {
-  __typename?: 'Query';
-  walletBalances: Array<{
-    __typename?: 'WalletBalance';
+  tokenBalances: Array<{
+    __typename?: 'TokenBalance';
     tokenId: number;
     amount: string;
   }>;
@@ -4260,69 +4297,9 @@ export type GetTravelsQueryResult = Apollo.QueryResult<
   GetTravelsQuery,
   GetTravelsQueryVariables
 >;
-export const GetWalletDocument = gql`
-  query getWallet($address: String!) @api(name: starkIndexer) {
-    getWallet(address: $address) {
-      address
-      realmsL1Held
-      realmsL2Held
-      realmsSettledHeld
-      realmsBridgedHeld
-    }
-  }
-`;
-
-/**
- * __useGetWalletQuery__
- *
- * To run a query within a React component, call `useGetWalletQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetWalletQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetWalletQuery({
- *   variables: {
- *      address: // value for 'address'
- *   },
- * });
- */
-export function useGetWalletQuery(
-  baseOptions: Apollo.QueryHookOptions<GetWalletQuery, GetWalletQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetWalletQuery, GetWalletQueryVariables>(
-    GetWalletDocument,
-    options
-  );
-}
-export function useGetWalletLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetWalletQuery,
-    GetWalletQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetWalletQuery, GetWalletQueryVariables>(
-    GetWalletDocument,
-    options
-  );
-}
-export type GetWalletQueryHookResult = ReturnType<typeof useGetWalletQuery>;
-export type GetWalletLazyQueryHookResult = ReturnType<
-  typeof useGetWalletLazyQuery
->;
-export type GetWalletQueryResult = Apollo.QueryResult<
-  GetWalletQuery,
-  GetWalletQueryVariables
->;
-export const GetWalletBalancesDocument = gql`
-  query GetWalletBalances($address: String!) @api(name: starkIndexer) {
-    walletBalances(
-      where: { address: { equals: $address } }
-      orderBy: { tokenId: asc }
-    ) {
+export const GetTokenBalancesDocument = gql`
+  query GetTokenBalances($address: String!) @api(name: starkIndexer) {
+    tokenBalances(address: $address) {
       tokenId
       amount
     }
@@ -4330,52 +4307,52 @@ export const GetWalletBalancesDocument = gql`
 `;
 
 /**
- * __useGetWalletBalancesQuery__
+ * __useGetTokenBalancesQuery__
  *
- * To run a query within a React component, call `useGetWalletBalancesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetWalletBalancesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetTokenBalancesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTokenBalancesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetWalletBalancesQuery({
+ * const { data, loading, error } = useGetTokenBalancesQuery({
  *   variables: {
  *      address: // value for 'address'
  *   },
  * });
  */
-export function useGetWalletBalancesQuery(
+export function useGetTokenBalancesQuery(
   baseOptions: Apollo.QueryHookOptions<
-    GetWalletBalancesQuery,
-    GetWalletBalancesQueryVariables
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetWalletBalancesQuery,
-    GetWalletBalancesQueryVariables
-  >(GetWalletBalancesDocument, options);
+  return Apollo.useQuery<GetTokenBalancesQuery, GetTokenBalancesQueryVariables>(
+    GetTokenBalancesDocument,
+    options
+  );
 }
-export function useGetWalletBalancesLazyQuery(
+export function useGetTokenBalancesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetWalletBalancesQuery,
-    GetWalletBalancesQueryVariables
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetWalletBalancesQuery,
-    GetWalletBalancesQueryVariables
-  >(GetWalletBalancesDocument, options);
+    GetTokenBalancesQuery,
+    GetTokenBalancesQueryVariables
+  >(GetTokenBalancesDocument, options);
 }
-export type GetWalletBalancesQueryHookResult = ReturnType<
-  typeof useGetWalletBalancesQuery
+export type GetTokenBalancesQueryHookResult = ReturnType<
+  typeof useGetTokenBalancesQuery
 >;
-export type GetWalletBalancesLazyQueryHookResult = ReturnType<
-  typeof useGetWalletBalancesLazyQuery
+export type GetTokenBalancesLazyQueryHookResult = ReturnType<
+  typeof useGetTokenBalancesLazyQuery
 >;
-export type GetWalletBalancesQueryResult = Apollo.QueryResult<
-  GetWalletBalancesQuery,
-  GetWalletBalancesQueryVariables
+export type GetTokenBalancesQueryResult = Apollo.QueryResult<
+  GetTokenBalancesQuery,
+  GetTokenBalancesQueryVariables
 >;

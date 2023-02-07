@@ -17,7 +17,7 @@ import { resources } from '@/constants/resources';
 import {
   useGetGameConstantsQuery,
   useGetRealmsQuery,
-  useGetWalletBalancesQuery,
+  useGetTokenBalancesQuery,
 } from '@/generated/graphql';
 import type {
   GetRealmsQuery,
@@ -80,8 +80,8 @@ function useUserBalances() {
   const [lordsBalanceAfterCheckout, setLordsBalanceAfterCheckout] =
     useState('0');
 
-  const { data: walletBalancesData, refetch: updateBalance } =
-    useGetWalletBalancesQuery({
+  const { data: tokenBalancesData, refetch: updateBalance } =
+    useGetTokenBalancesQuery({
       variables: {
         address: address ? getAccountHex(address)?.toLowerCase() : '',
       },
@@ -125,13 +125,13 @@ function useUserBalances() {
   }, [address, userRealmsData]);
 
   useMemo(() => {
-    if (!walletBalancesData || !walletBalancesData.walletBalances) {
+    if (!tokenBalancesData || !tokenBalancesData.tokenBalances) {
       return;
     }
 
     setLordsBalance(
       BigNumber.from(
-        walletBalancesData.walletBalances.find(
+        tokenBalancesData.tokenBalances.find(
           (a) => a.tokenId === LORDS_TOKEN_TOKENID
         )?.amount ?? 0
       ).toString()
@@ -201,9 +201,8 @@ function useUserBalances() {
         const baseBn = BigNumber.from('1000000000000000000').mul(inCartCost);
 
         const walletBalance =
-          walletBalancesData.walletBalances.find(
-            (a) => a.tokenId === resourceId
-          )?.amount ?? 0;
+          tokenBalancesData.tokenBalances.find((a) => a.tokenId === resourceId)
+            ?.amount ?? 0;
 
         const checkoutBalance =
           BigNumber.from(walletBalance).add(inCartTradeChange);
@@ -220,8 +219,8 @@ function useUserBalances() {
         };
       })
     );
-  }, [walletBalancesData, txQueue]);
-
+  }, [tokenBalancesData, txQueue]);
+  console.log(tokenBalancesData);
   const getBalanceById = useCallback(
     (resourceId: number) => {
       return balance.find((resource) => resource.resourceId === resourceId);

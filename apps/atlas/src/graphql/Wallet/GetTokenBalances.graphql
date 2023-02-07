@@ -1,0 +1,6 @@
+query GetTokenBalances($address: String!) @api(name: starkIndexer) {
+  tokenBalances(address: $address) {
+    tokenId
+    amount
+  }
+}
