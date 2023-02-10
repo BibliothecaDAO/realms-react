@@ -1,4 +1,4 @@
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic';
 import * as THREE from 'three';
@@ -27,15 +27,16 @@ export const ThreeCanvas = () => {
       }}
       frameloop="demand"
       onCreated={({ gl }) => {
-        gl.setClearColor('#000000');
+        gl.setClearColor('black');
       }}
     >
       <OrbitControls makeDefault />
       <DynamicPlanet />
-      <RealmsGeo />
+      {/* <RealmsGeo /> */}
       <ThreeGeo />
 
       <ambientLight />
+      <Stars saturation={0} fade speed={1} />
     </Canvas>
   );
 };

@@ -190,6 +190,7 @@
     "slate-history": "0.86.0",
     "slate-react": "0.88.2",
     "starknet": "4.17.1",
+    "three-geojson": "1.0.0",
     "three-geojson-geometry": "1.1.8",
     "three-globe": "2.24.13",
     "use-sound": "^4.0.1",

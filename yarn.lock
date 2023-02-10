@@ -12593,6 +12593,7 @@ __metadata:
     symlink-dir: "npm:5.1.0"
     sync-directory: "npm:5.1.9"
     tailwindcss: "npm:3.2.4"
+    three-geojson: "npm:1.0.0"
     three-geojson-geometry: "npm:1.1.8"
     three-globe: "npm:2.24.13"
     typescript: "npm:4.9.5"
@@ -26324,6 +26325,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"poly2tri@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "poly2tri@npm:1.5.0"
+  checksum: 9361d84f54469d12421ca1b58d20e468b6c64798b187ba33004e4fef6e249e5ebb9eaf2181a812673d20595a73b4582ae2d5c53dc9cb0f853c6db224d42e6964
+  languageName: node
+  linkType: hard
+
 "popmotion@npm:11.0.3":
   version: 11.0.3
   resolution: "popmotion@npm:11.0.3"
@@ -31519,6 +31527,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"three-geojson@npm:1.0.0":
+  version: 1.0.0
+  resolution: "three-geojson@npm:1.0.0"
+  dependencies:
+    poly2tri: "npm:^1.5.0"
+    three: "npm:^0.134.0"
+  bin:
+    three-geojson-convert: dist/three-geojson-convert.js
+  checksum: a38a1e0231a0ad21e5452a7aebc554ffb701b4ae7e7ac508f4a188ff6297655478bb2f9a8d9ee84599740bbc946d76ce0cc149455b761eb1c1116e3b4a7e9cad
+  languageName: node
+  linkType: hard
+
 "three-globe@npm:2.24.13":
   version: 2.24.13
   resolution: "three-globe@npm:2.24.13"
@@ -31578,6 +31598,13 @@ __metadata:
   version: 0.149.0
   resolution: "three@npm:0.149.0"
   checksum: 8f5a294ac7717de401cf0cf9cfabb1552d5c20426af0a2dab54e5d1b9297bc7065479c05ba9b4d18b81a8fd831b456ec6a4f5ad0a7a8ce951e6230b8f39cb808
+  languageName: node
+  linkType: hard
+
+"three@npm:^0.134.0":
+  version: 0.134.0
+  resolution: "three@npm:0.134.0"
+  checksum: 5e5d8a60493851bcfe9116a724d3017b0666b683669223b4c1eb822739681cb4e89526ae3e78ccdee6eabc9d062b1c7cc818538efa21d792f374118dffc2d2e4
   languageName: node
   linkType: hard
 
