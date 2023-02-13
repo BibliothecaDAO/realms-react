@@ -44,9 +44,8 @@ export const soundSelector = {
 
 export const useUiSounds = (selector: string) => {
   const { effectsVolume } = useSoundContext();
-
   const [play, { stop }] = useSound(dir + selector, {
-    volume: effectsVolume,
+    volume: effectsVolume * 0.0025,
   });
 
   return {

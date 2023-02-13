@@ -38,17 +38,17 @@ export const SoundProvider = (props: SoundProviderProps) => {
     setSound(newValue);
   };
 
-  const [playBackground, { stop }] = useSoundLib('/music/realms_cimbalom.mp3', {
-    soundEnabled: isSoundActive,
-    volume: musicVolume * 0.03,
-    loop: true,
-  });
-  const onMusicVolumeChange = (value: number) => {
-    setMusicVolume(value);
+  const onMusicVolumeChange = (value: number[]) => {
+    setMusicVolume(value[0]);
   };
   const onEffectsVolumeChange = (value: number) => {
-    setEffectsVolume(value);
+    setEffectsVolume(value[0]);
   };
+  const [playBackground, { stop }] = useSoundLib('/music/realms_cimbalom.mp3', {
+    soundEnabled: isSoundActive,
+    volume: musicVolume * 0.003,
+    loop: true,
+  });
   const [playCombat, { stop: stopCombat }] = useSoundLib(
     '/music/scott-buckley-i-walk-with-ghosts.mp3',
     {
@@ -64,7 +64,7 @@ export const SoundProvider = (props: SoundProviderProps) => {
     } else {
       playBackground();
     }
-  }, [isSoundActive]);
+  }, [isSoundActive, playBackground, stop]);
 
   return (
     <SoundContext.Provider
