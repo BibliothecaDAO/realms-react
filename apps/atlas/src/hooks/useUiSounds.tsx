@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import useSound from 'use-sound';
+import { useSoundContext } from '@/context/soundProvider';
 
 const dir = '/music/ui/';
 
@@ -41,8 +43,10 @@ export const soundSelector = {
 };
 
 export const useUiSounds = (selector: string) => {
+  const { effectsVolume } = useSoundContext();
+
   const [play, { stop }] = useSound(dir + selector, {
-    volume: 0.25,
+    volume: effectsVolume,
   });
 
   return {
