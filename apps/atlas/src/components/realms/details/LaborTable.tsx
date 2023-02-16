@@ -471,7 +471,7 @@ export const LaborRealmRow = ({
         <div className="flex space-x-2 text-base">
           <span className="text-gray-600">Realm:</span>{' '}
           <OrderIcon
-            className="self-center mx-2"
+            className="self-center mr-1"
             size="xs"
             order={getRealmOrderById(realm?.realmId) || ''}
           />
