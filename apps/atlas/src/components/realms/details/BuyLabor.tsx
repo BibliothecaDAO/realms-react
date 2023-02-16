@@ -57,7 +57,7 @@ export const BuyLabor = ({
         resourceId: resource.resourceId,
         laborUnits: 12,
         qtyBuilt: input,
-        costs: costs,
+        costs: temporyCosts,
       });
     } else {
       realms.forEach((_realm) => {
@@ -118,24 +118,25 @@ export const BuyLabor = ({
           Build {realms ? `(${realms.length} Realms)` : ''}
         </Button>
       )}
-      {realm ||
-        (realms && !isFood && (
-          <InputNumber
-            value={input}
-            inputSize="md"
-            colorScheme="transparent"
-            className="w-12 text-xl border rounded bg-black/10 border-white/10"
-            min={1}
-            inputClass=""
-            max={10000000}
-            stringMode
-            onChange={(value) => {
-              if (value) {
-                setInput(value.toString());
-              }
-            }}
-          />
-        ))}
+      {realm || (realms && !isFood) ? (
+        <InputNumber
+          value={input}
+          inputSize="md"
+          colorScheme="transparent"
+          className="w-12 text-xl border rounded bg-black/10 border-white/10"
+          min={1}
+          inputClass=""
+          max={10000000}
+          stringMode
+          onChange={(value) => {
+            if (value) {
+              setInput(value.toString());
+            }
+          }}
+        />
+      ) : (
+        ''
+      )}
     </div>
     // </Tooltip>
   );

@@ -174,7 +174,13 @@ export const RealmModal = (props: Prop) => {
         ),
         component: (
           <>
-            <LaborTable realm={realm} />
+            {realm.resources?.map((resource) => (
+              <LaborTable
+                key={resource.resourceId}
+                resourceId={resource.resourceId}
+                realmsResources={[realm]}
+              />
+            ))}
           </>
         ),
       },

@@ -55,8 +55,8 @@ export const HarvestButton = ({ generation, realmId, resourceId }) => {
       }}
       disabled={generation == 0 || isNaN(generation) || enqueuedTx}
       variant="outline"
-      className="w-full text-lg"
-      size="md"
+      className="w-full "
+      size="xs"
     >
       {hasGenerated && convertToK(generation)} {hasGenerated ? '' : `nothing`}
     </Button>
