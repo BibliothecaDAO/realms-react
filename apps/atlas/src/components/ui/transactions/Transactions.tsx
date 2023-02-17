@@ -140,7 +140,7 @@ export const TxCartItem = (props: TxCartItem) => {
 const TX_HISTORY_STORAGE_KEY = 'txHistory';
 const CLEAR_STORAGE_FLAG_KEY = 'clearStorageFlag';
 
-const TX_HISTORY_LENGTH = 15;
+const TX_HISTORY_LENGTH = 10;
 
 export const TransactionCartTable = () => {
   const { hashes, transactions } = useTransactionManager<Metadata>();
@@ -156,12 +156,12 @@ export const TransactionCartTable = () => {
     }
     const storageTransactions = historyStorage.get();
     const lastTx = transactions.pop();
+    if (storageTransactions.length > TX_HISTORY_LENGTH) {
+      storageTransactions.shift();
+    }
     if (lastTx) {
       storageTransactions.push(lastTx);
       historyStorage.set(storageTransactions);
-    }
-    if (storageTransactions.length > TX_HISTORY_LENGTH) {
-      storageTransactions.shift();
     }
     setTxHistory(storageTransactions);
   }, [transactions]);
