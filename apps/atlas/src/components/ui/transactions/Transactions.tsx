@@ -138,7 +138,7 @@ export const TxCartItem = (props: TxCartItem) => {
 };
 
 const TX_HISTORY_STORAGE_KEY = 'txHistory';
-const CLEAR_STORAGE_FLAG_KEY = 'clearStorageFlag';
+const CLEAR_STORAGE_FLAG_KEY = 'clearStorageFlag_17022023';
 
 const TX_HISTORY_LENGTH = 10;
 
