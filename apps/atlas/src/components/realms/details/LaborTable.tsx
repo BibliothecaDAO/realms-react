@@ -247,7 +247,7 @@ export const LaborTable = (props: Prop) => {
                       )}
                     >
                       <HarvestButton
-                        realmId={realmsResources[0].realmId}
+                        realmIds={realmsResources.map((realm) => realm.realmId)}
                         resourceId={resourceId}
                         generation={
                           isFood
@@ -423,7 +423,7 @@ export const LaborRealmRow = ({
         />
         <span className={getHasGeneratedClass(laborBalance.hasGenerated)}>
           <HarvestButton
-            realmId={realm.realmId}
+            realmIds={[realm.realmId]}
             resourceId={resource.resourceId}
             generation={
               isFood
