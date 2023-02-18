@@ -138,7 +138,20 @@ function useResources() {
   const { play: playAddGold } = useUiSounds(soundSelector.addGold);
   const { play: playAddHartwood } = useUiSounds(soundSelector.addHartwood);
   const { play: playAddDiamonds } = useUiSounds(soundSelector.addDiamonds);
+  const { play: playAddSapphire } = useUiSounds(soundSelector.addSapphire);
+  const { play: playAddRuby } = useUiSounds(soundSelector.addRuby);
+  const { play: playAddDeepCrystal } = useUiSounds(
+    soundSelector.addDeepCrystal
+  );
+  const { play: playAddIgnium } = useUiSounds(soundSelector.addIgnium);
+  const { play: playAddEtherealSilica } = useUiSounds(
+    soundSelector.addEtherealSilica
+  );
+
   const { play: playAddTrueIce } = useUiSounds(soundSelector.addTrueIce);
+  const { play: playAddTwilightQuartz } = useUiSounds(
+    soundSelector.addTwilightQuartz
+  );
   const { play: playAddAlchemicalSilver } = useUiSounds(
     soundSelector.addAlchemicalSilver
   );
@@ -181,8 +194,26 @@ function useResources() {
       case ResourcesIds.Diamonds:
         playAddDiamonds();
         break;
+      case ResourcesIds.Sapphire:
+        playAddSapphire();
+        break;
+      case ResourcesIds.Ruby:
+        playAddRuby();
+        break;
+      case ResourcesIds.DeepCrystal:
+        playAddDeepCrystal();
+        break;
+      case ResourcesIds.Ignium:
+        playAddIgnium();
+        break;
+      case ResourcesIds.EtherealSilica:
+        playAddEtherealSilica();
+        break;
       case ResourcesIds.TrueIce:
         playAddTrueIce();
+        break;
+      case ResourcesIds.TwilightQuartz:
+        playAddTwilightQuartz();
         break;
       case ResourcesIds.AlchemicalSilver:
         playAddAlchemicalSilver();

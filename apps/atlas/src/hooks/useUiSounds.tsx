@@ -36,7 +36,13 @@ export const soundSelector = {
   addGold: 'resources/gold.mp3',
   addHartwood: 'resources/hartwood.mp3',
   addDiamonds: 'resources/diamonds.mp3',
+  addSapphire: 'resources/sapphire.mp3',
+  addRuby: 'resources/ruby.mp3',
+  addDeepCrystal: 'resources/deep_crystal.mp3',
+  addIgnium: 'resources/ignium.mp3',
+  addEtherealSilica: 'resources/ethereal_silica.mp3',
   addTrueIce: 'resources/true_ice.mp3',
+  addTwilightQuartz: 'resources/twilight_quartz.mp3',
   addAlchemicalSilver: 'resources/alchemical_silver.mp3',
 };
 
