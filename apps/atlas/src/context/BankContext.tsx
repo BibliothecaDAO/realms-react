@@ -155,6 +155,9 @@ function useResources() {
   const { play: playAddAlchemicalSilver } = useUiSounds(
     soundSelector.addAlchemicalSilver
   );
+  const { play: playAddAdamantine } = useUiSounds(soundSelector.addAdamantine);
+  const { play: playAddMithral } = useUiSounds(soundSelector.addMithral);
+  const { play: playAddDragonhide } = useUiSounds(soundSelector.addDragonhide);
   const { play: playAddWheat } = useUiSounds(soundSelector.addWheat);
   const { play: playAddFish } = useUiSounds(soundSelector.addFish);
 
@@ -217,6 +220,15 @@ function useResources() {
         break;
       case ResourcesIds.AlchemicalSilver:
         playAddAlchemicalSilver();
+        break;
+      case ResourcesIds.Adamantine:
+        playAddAdamantine();
+        break;
+      case ResourcesIds.Mithral:
+        playAddMithral();
+        break;
+      case ResourcesIds.Dragonhide:
+        playAddDragonhide();
         break;
       case ResourcesIds.Wheat:
         playAddWheat();

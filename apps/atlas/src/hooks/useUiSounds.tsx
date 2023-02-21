@@ -44,6 +44,9 @@ export const soundSelector = {
   addTrueIce: 'resources/true_ice.mp3',
   addTwilightQuartz: 'resources/twilight_quartz.mp3',
   addAlchemicalSilver: 'resources/alchemical_silver.mp3',
+  addAdamantine: 'resources/adamantine.mp3',
+  addMithral: 'resources/mithral.mp3',
+  addDragonhide: 'resources/dragonhide.mp3',
 };
 
 export const useUiSounds = (selector: string) => {
