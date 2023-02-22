@@ -20,12 +20,12 @@ export const MainHeader = () => {
     //   title: 'DAO',
     //   icon: <Discord className="self-center w-6 mr-3 fill-current" />,
     // },
-    {
-      title: 'Hack',
-      icon: '',
-      link: '/hack',
-      class: ' hidden sm:block',
-    },
+    // {
+    //   title: 'Hack',
+    //   icon: '',
+    //   link: '/hack',
+    //   class: ' hidden sm:block',
+    // },
     {
       title: 'Staking',
       icon: '',
