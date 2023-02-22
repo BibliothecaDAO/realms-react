@@ -15,22 +15,30 @@ const ocean = require('@/geodata/ocean.geojson');
 
 const tri = require('@/geodata/tri.json');
 
+const triCoastline = require('@/geodata/triCoastline.json');
+
 export default function Continents() {
   const radius = 200;
-  const thickness = 0.01;
+  const thickness = 0.002;
   const dimension = 3;
 
   const geo = Object.entries(tri).reduce((geoLayer, [name, tri]) => {
     const plane = new THREE.Mesh(
       geoPlaneGeometry(tri, radius, thickness, dimension),
-      new THREE.MeshToonMaterial({
+      new THREE.MeshLambertMaterial({
         color: 'white',
         transparent: false,
         opacity: 1,
         side: THREE.DoubleSide,
+        flatShading: true,
+        polygonOffset: true,
+        polygonOffsetFactor: 1, // positive value pushes polygon further away
+        polygonOffsetUnits: 1,
       })
     );
     plane.userData.type = 'plane';
+
+    const geo = new THREE.EdgesGeometry(plane.geometry);
 
     const contour = new THREE.LineSegments(
       geoContourGeomtry(tri, radius, thickness, dimension),
@@ -57,44 +65,11 @@ export default function Continents() {
   return (
     <mesh>
       <primitive object={geo} />
+      {/* <primitive object={coast} /> */}
       <shaderMaterial
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
       />
     </mesh>
-
-    // <mesh
-    //   // geometry={bufferGeometry}
-    //   receiveShadow
-    //   castShadow
-    //   // onPointerOver={onPointHoverHandler}
-    //   // onPointerOut={onPointOutHandler}
-    //   // onClick={(e) => console.log(e.stopPropagation())}
-    //   // material={pointsMaterial}
-    // >
-    //   <mesh
-    //     onClick={(e) => console.log(e)}
-    //     scale={1}
-    //     geometry={bufferGeometry}
-    //     material={pointsMaterial}
-    //   />
-    // </mesh>
-    // <Fragment>
-    //   {land ? (
-    //     <Fragment>
-    //       {land.features.map(({ geometry, properties }, index) => {
-    //         const g = new GeoJsonGeometry(geometry, 200);
-    //         return (
-    //           <mesh key={index} geometry={g}>
-    //             <meshToonMaterial
-    //               attach="material"
-    //               // color={properties.order_idx === 1 ? 'hotpink' : 'blue'}
-    //             />
-    //           </mesh>
-    //         );
-    //       })}
-    //     </Fragment>
-    //   ) : null}
-    // </Fragment>
   );
 }

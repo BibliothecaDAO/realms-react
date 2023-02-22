@@ -24,13 +24,13 @@ export default function Continents() {
 
   const bufferGeometry = new THREE.BufferGeometry();
 
-  const pointsMaterial = new THREE.PointsMaterial({ color: 'black' });
+  const pointsMaterial = new THREE.PointsMaterial({ color: 'white' });
 
   const vertices: any = [];
   const colors: any = [];
 
   realms.features.forEach(({ geometry, _properties }, index) => {
-    const g: any = new GeoJsonGeometry(geometry, 200);
+    const g: any = new GeoJsonGeometry(geometry, 201);
     const positions = g.attributes.position.array;
     for (let i = 0; i < positions.length; i += 3) {
       vertices.push(positions[i], positions[i + 1], positions[i + 2]);

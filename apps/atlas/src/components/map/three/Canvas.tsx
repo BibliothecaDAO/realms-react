@@ -32,11 +32,11 @@ export const ThreeCanvas = () => {
     >
       <OrbitControls makeDefault />
       <DynamicPlanet />
-      {/* <RealmsGeo /> */}
+      <RealmsGeo />
       <ThreeGeo />
 
       <ambientLight />
-      <Stars saturation={0} fade speed={1} />
+      {/* <Stars saturation={0} fade speed={1} /> */}
     </Canvas>
   );
 };

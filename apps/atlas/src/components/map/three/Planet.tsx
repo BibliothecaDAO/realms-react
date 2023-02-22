@@ -41,7 +41,7 @@ export default function Planet() {
           Notice how we can use *any* uniforms as prop here 👇
           You can tweak the colors by adding a colorA or colorB prop!
         */}
-        {/* <customLayer ref={materialRef} time={0.0} lacunarity={2.3} /> */}
+        <customLayer ref={materialRef} time={0.0} lacunarity={2.3} />
         {/* Second layer is a depth based gradient that we "add" on top of our custom layer */}
         <Depth colorA="blue" colorB="aqua" alpha={0.1} mode="add" />
         {/* Third Layer is a Fresnel shading effect that we add on */}
