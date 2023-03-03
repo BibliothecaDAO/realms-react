@@ -2,12 +2,11 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import { Button } from '@bibliotheca-dao/ui-lib/base';
 import React, { useEffect, useState } from 'react';
-import { FaqBlock } from '@/components/Faqs';
+
 import { MainLayout } from '@/components/layout/MainLayout';
 
-import { treasuryPage } from '@/data/Information';
-
 const DAOlordsBalance = 100000000;
+
 function Treasury() {
   const [nftList, setNftList] = useState([]);
   const [erc20Balance, setErc20Balance] = useState<any>(); // for table array of obj
