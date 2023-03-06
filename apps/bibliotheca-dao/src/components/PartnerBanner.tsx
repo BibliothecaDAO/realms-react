@@ -40,16 +40,19 @@ export const PartnerBanner = () => {
     },
   ];
   return (
-    <div className="relative z-20 flex flex-wrap justify-center w-full h-auto p-10 text-gray-900 shadow-inner sm:p-20 sm:space-x-10 bg-off-300/40 text-off-300">
-      <h4 className="absolute top-0 self-center -mt-4">We work with</h4>{' '}
-      {partners.map((a, index) => {
-        return (
-          <div key={index} className="self-center p-4 ">
-            {' '}
-            <a href={a.url}>{a.icon}</a>{' '}
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <h4 className="text-center -mt-4">We work with</h4>
+      <div className="relative z-20 flex flex-wrap justify-center w-full h-auto p-10 text-gray-900 shadow-inner sm:p-20 sm:space-x-10 bg-off-300/40 text-off-300">
+        {' '}
+        {partners.map((a, index) => {
+          return (
+            <div key={index} className="self-center p-4 ">
+              {' '}
+              <a href={a.url}>{a.icon}</a>{' '}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
