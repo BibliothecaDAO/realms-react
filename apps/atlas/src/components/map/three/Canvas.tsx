@@ -1,6 +1,7 @@
-import { OrbitControls, Stars } from '@react-three/drei';
+import { MapControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import * as THREE from 'three';
 
 const DynamicPlanet = dynamic(() => import('./Planet'), {
@@ -18,6 +19,7 @@ const RealmsGeo = dynamic(() => import('./Realms'), {
 export const ThreeCanvas = () => {
   return (
     <Canvas
+      orthographic
       gl={{ antialias: false, alpha: false }}
       camera={{
         fov: 45,
@@ -30,12 +32,12 @@ export const ThreeCanvas = () => {
         gl.setClearColor('black');
       }}
     >
-      <OrbitControls makeDefault />
-      <DynamicPlanet />
+      <MapControls />
+      {/* <DynamicPlanet /> */}
       <RealmsGeo />
-      <ThreeGeo />
+      {/* <ThreeGeo /> */}
 
-      <ambientLight />
+      {/* <ambientLight /> */}
       {/* <Stars saturation={0} fade speed={1} /> */}
     </Canvas>
   );

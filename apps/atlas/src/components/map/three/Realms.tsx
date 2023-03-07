@@ -5,6 +5,9 @@ import { LayerMaterial, Depth, Fresnel } from 'lamina';
 import { Fragment, useCallback, useState } from 'react';
 import * as THREE from 'three';
 import { GeoJsonGeometry } from 'three-geojson-geometry';
+// import { Layout } from './hex/Hex.js';
+import realms_resources from '../../../geodata/realms_resources.json';
+// import HexagonPillar from './hex/oito/geometry/HexagonPillar.js';
 
 const realms = require('@/geodata/realm_resources_geo.geojson');
 
@@ -22,48 +25,37 @@ export default function Continents() {
     set(false);
   }, []);
 
-  const bufferGeometry = new THREE.BufferGeometry();
+  // // loop to 10000
+  // // const coordinates = [];
+  // for (let x = 0; x < 1000; x++) {
+  //   for (let y = 0; y < 1000; y++) {
+  //     // coordinates.push([x, y]);
+  //     vertices.push(x, y, 0);
+  //   }
+  // }
 
-  const pointsMaterial = new THREE.PointsMaterial({ color: 'white' });
+  // // realms_resources.features.forEach((feature, index) => {
+  // //   // const g: any = new GeoJsonGeometry(geometry, 201);
+  // //   // const positions = g.attributes.position.array;
+  // //   // for (let i = 0; i < geometry.length; i += 3) {
+  // //   vertices.push(feature.xy[0], feature.xy[1], 0);
+  // //   // colors.push(0, 0, 0);
+  // //   // }
+  // // });
 
-  const vertices: any = [];
-  const colors: any = [];
-
-  realms.features.forEach(({ geometry, _properties }, index) => {
-    const g: any = new GeoJsonGeometry(geometry, 201);
-    const positions = g.attributes.position.array;
-    for (let i = 0; i < positions.length; i += 3) {
-      vertices.push(positions[i], positions[i + 1], positions[i + 2]);
-      colors.push(0, 0, 0);
-    }
-  });
-
-  bufferGeometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(vertices, 3)
-  );
-  bufferGeometry.setAttribute(
-    'color',
-    new THREE.Float32BufferAttribute(colors, 3)
-  );
+  // bufferGeometry.setAttribute(
+  //   'position',
+  //   new THREE.Float32BufferAttribute(vertices, 3)
+  // );
+  // bufferGeometry.setAttribute(
+  //   'color',
+  //   new THREE.Float32BufferAttribute(colors, 3)
+  // );
 
   return (
     <>
-      <mesh
-        // geometry={bufferGeometry}
-        receiveShadow
-        castShadow
-        // onPointerOver={onPointHoverHandler}
-        // onPointerOut={onPointOutHandler}
-        // onClick={(e) => console.log(e.stopPropagation())}
-        // material={pointsMaterial}
-      >
-        <points
-          onClick={(e) => console.log(e)}
-          scale={1}
-          geometry={bufferGeometry}
-          material={pointsMaterial}
-        />
+      <mesh position={[1, 2, 3]}>
+        {/* <mesh geometry={geo} material={mat}></mesh> */}
       </mesh>
     </>
   );
