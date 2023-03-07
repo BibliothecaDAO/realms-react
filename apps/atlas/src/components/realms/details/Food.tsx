@@ -132,7 +132,11 @@ export const RealmsFood = (props: Prop) => {
       <div className="flex justify-between w-full px-2 pb-2">
         <Button
           onClick={() => {
-            convert(realm?.realmId, input.wheatConversion, WHEAT_ID);
+            convert(
+              realm?.realmId,
+              parseInt(input.wheatConversion).toFixed(0),
+              WHEAT_ID
+            );
           }}
           size="md"
           variant="outline"
@@ -292,7 +296,11 @@ export const RealmsFood = (props: Prop) => {
       <div className="flex justify-between w-full px-2">
         <Button
           onClick={() => {
-            convert(realm?.realmId, input.fishConversion, FISH_ID);
+            convert(
+              realm?.realmId,
+              parseInt(input.fishConversion).toFixed(0),
+              FISH_ID
+            );
           }}
           size="md"
           variant="outline"

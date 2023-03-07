@@ -69,12 +69,12 @@ export const MainHeader = () => {
             }}
           </ConnectKitButton.Custom>
 
-          <Link
+          {/* <Link
             href="/articles"
             className="self-center hidden px-4 py-1 mr-auto transition-all duration-150 border rounded md:flex border-off-300/20 hover:bg-off-300 hover:text-gray-900"
           >
             Articles
-          </Link>
+          </Link> */}
           {headerElements.map((a, index) => {
             return (
               <a
