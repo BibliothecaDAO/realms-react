@@ -50,18 +50,12 @@ export function AccountOverview() {
       <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
         <div className="p-2 mb-8 ">
           <h2>Your Settled Realms</h2>
-          <div className="px-10 mt-4 text-xl italic">
-            "Would you like to inspect your lands?"
-          </div>
         </div>
         <MyRealms />
       </div>
       <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
         <div className="p-2 ">
           <h2>Vizir Reports</h2>
-          <div className="px-10 mt-4 text-xl italic ">
-            "Your Majesty, we have been busy since you have been away."
-          </div>
         </div>
 
         <div className="flex flex-wrap mb-3">

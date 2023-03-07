@@ -48,30 +48,40 @@ export const GetArmyStrength = (army: Army = defaultArmy) => {
 
 // pass any Statistic and give a context of that. Eg: Pass the Magic Defence and get a string of 'Strong' or 'Weak'
 export const armyStrength = (armyStrength: number) => {
-  if (armyStrength > 1000) {
-    return 'V.Strong';
-  } else if (armyStrength > 750) {
-    return 'Strong';
-  } else if (armyStrength > 250) {
-    return 'Moderate';
-  } else if (armyStrength > 100) {
-    return 'Weak';
-  } else {
-    return 'V.Weak';
+  const strengthLevels = [
+    { level: 'V.V.Strong', minStrength: 2000 },
+    { level: 'V.Strong', minStrength: 1500 },
+    { level: 'Strong', minStrength: 1000 },
+    { level: 'Moderately Strong', minStrength: 750 },
+    { level: 'Moderate', minStrength: 500 },
+    { level: 'Moderately Weak', minStrength: 250 },
+    { level: 'Weak', minStrength: 100 },
+    { level: 'V.Weak', minStrength: 0 },
+  ];
+
+  for (const strength of strengthLevels) {
+    if (armyStrength > strength.minStrength) {
+      return strength.level;
+    }
   }
 };
 
 export const armyStrengthColors = (armyStrength: number) => {
-  if (armyStrength > 1000) {
-    return 'text-green-500';
-  } else if (armyStrength > 750) {
-    return 'text-green-400';
-  } else if (armyStrength > 250) {
-    return 'text-yellow-400';
-  } else if (armyStrength > 100) {
-    return 'text-yellow-500';
-  } else {
-    return 'text-red-500';
+  const strengthLevels = [
+    { level: 'V.V.Strong', minStrength: 2000, color: 'text-green-600' },
+    { level: 'V.Strong', minStrength: 1500, color: 'text-green-500' },
+    { level: 'Strong', minStrength: 1000, color: 'text-green-400' },
+    { level: 'Moderately Strong', minStrength: 750, color: 'text-yellow-500' },
+    { level: 'Moderate', minStrength: 500, color: 'text-yellow-400' },
+    { level: 'Moderately Weak', minStrength: 250, color: 'text-orange-500' },
+    { level: 'Weak', minStrength: 100, color: 'text-red-500' },
+    { level: 'V.Weak', minStrength: 0, color: 'text-red-600' },
+  ];
+
+  for (const strength of strengthLevels) {
+    if (armyStrength > strength.minStrength) {
+      return strength.color;
+    }
   }
 };
 
