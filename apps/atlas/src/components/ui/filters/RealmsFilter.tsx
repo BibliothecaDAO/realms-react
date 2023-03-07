@@ -24,6 +24,10 @@ export function RealmsFilter(props: RealmsFilterProps) {
           Raidable
         </Button>
       </div>
+      <RelicFilter
+        relic={state.relicFilter}
+        onChange={actions.updateRelicFilter}
+      />
       <div>
         <Button
           variant={state.isSettledFilter ? 'primary' : 'outline'}
@@ -58,10 +62,6 @@ export function RealmsFilter(props: RealmsFilterProps) {
       <TraitsFilter
         traits={state.traitsFilter}
         onChange={actions.updateTraitsFilter}
-      />
-      <RelicFilter
-        relic={state.relicFilter}
-        onChange={actions.updateRelicFilter}
       />
 
       <div className="md:ml-1">

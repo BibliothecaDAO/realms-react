@@ -36,10 +36,10 @@ export function RelicFilter(props: RelicFilterProps) {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel
-          className="absolute z-10 mt-2 border-4  rounded md:right-0 border-white/20"
+          className="absolute mt-2 border-4 rounded border-white/20"
           static
         >
-          <div className="flex flex-col px-8 py-4 font-medium bg-gray-1000 rounded-sm shadow-sm w-60">
+          <div className="flex flex-col px-8 py-4 font-medium rounded-sm shadow-sm bg-gray-1000 w-60">
             <h4 className="text-center">Relic</h4>
             <Switch
               checked={props.relic == 'self sovereign'}
@@ -48,13 +48,13 @@ export function RelicFilter(props: RelicFilterProps) {
                 props.relic == 'self sovereign' ? 'bg-green-800' : 'bg-red-700'
               }`}
             ></Switch>
-            <div className="flex mx-auto w-full justify-between mb-4 text-sm tracking-widest">
+            <div className="flex justify-between w-full mx-auto mb-4 text-sm tracking-widest">
               <div
                 className={`${
                   props.relic == 'self sovereign' && 'text-green-800'
                 }`}
               >
-                Self Sovereign
+                Sovereign
               </div>
               <div className={`${props.relic == 'annexed' && 'text-red-700'}`}>
                 Annexed

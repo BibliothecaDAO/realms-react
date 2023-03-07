@@ -18,12 +18,12 @@ export const Switch = ({
       className={
         `${
           checked ? 'bg-green-600/40' : 'bg-blue-600/40'
-        } h-6 text-xs rounded shadow-inner transition-all duration-300 justify-items-start` +
+        } h-6 text-xs rounded shadow-inner transition-all duration-300 justify-items-start px-1` +
         className
       }
     >
       {children ? (
-        <div className="w-full flex relative">{children}</div>
+        <div className="relative flex w-full">{children}</div>
       ) : (
         <span
           className={`${
