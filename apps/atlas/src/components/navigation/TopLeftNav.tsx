@@ -61,7 +61,10 @@ export const TopLeftNav = () => {
     );
 
     return (
-      <div key={resource.id} className="flex flex-wrap items-center text-sm">
+      <div
+        key={resource.id}
+        className="flex flex-wrap items-center w-full text-sm"
+      >
         <div className="mr-2">
           <ResourceIcon size="xs" resource={resource.trait} />
         </div>
@@ -103,10 +106,10 @@ export const TopLeftNav = () => {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <div className="right-0 p-2 -ml-8 rounded bg-yellow-scroll z-100">
+                  <div className="right-0 p-2 -ml-32 rounded bg-yellow-scroll z-100">
                     <div className="p-4 text-white rounded-xl bg-gradient-to-r from-gray-900 to-gray-1000">
                       <div className="text-center">Available Resources</div>
-                      <div className="grid grid-cols-2 gap-2 mt-4 whitespace-nowrap w-80">
+                      <div className="grid grid-cols-3 gap-3 mt-4 whitespace-nowrap w-[500px]">
                         {resourcesList}
                       </div>
                     </div>
