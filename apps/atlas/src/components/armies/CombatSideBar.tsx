@@ -25,6 +25,7 @@ import type { Army, GetRealmQuery } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
 import useCombat from '@/hooks/settling/useCombat';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import AtlasSidebar from '../map/AtlasSideBar';
 import { hasArrived } from './ArmyGetters';
 import { ArmyDisplayContainer } from './combat/ArmyDisplayContainer';
 import { ImageSlideLoader } from './combat/ImageSlideLoader';
@@ -96,6 +97,7 @@ export const CombatSideBar: React.FC<Prop> = ({
     useCombat();
 
   const [txSubmitted, setTxSubmitted] = useState(false);
+  const [hideCombat, setHideCombat] = useState(false);
   const { toggleSound, isSoundActive } = useSoundContext();
 
   const videoRef = useRef<any>();
@@ -135,6 +137,7 @@ export const CombatSideBar: React.FC<Prop> = ({
       setFinalDefendingArmy(defendingEndArmy);
       setFinalAttackingArmy(attackingEndArmy);
       setTxSubmitted(false);
+      setHideCombat(false);
       if (localStorage.getItem('RESTORE_SOUND_FLAG')) {
         toggleSound();
         localStorage.removeItem('RESTORE_SOUND_FLAG');
@@ -163,163 +166,174 @@ export const CombatSideBar: React.FC<Prop> = ({
   ];
 
   return (
-    <div className="z-50 flex-1 h-full overflow-auto bg-cover bg-realmCombatBackground">
-      <div className="flex justify-center w-full pt-3">
-        <Button variant="primary" onClick={() => onClose()}>
-          Return to Atlas
-        </Button>
-      </div>
-
-      {/* loader */}
-      {txSubmitted && (
-        // <ImageSlideLoader strings={combatStrings} images={combatImages} />
-        <div className="absolute top-0 flex flex-wrap justify-center w-full h-full overflow-y-hidden z-100 bg-gray-1000">
-          <video
-            className="object-cover w-full"
-            width="300"
-            height="200"
-            autoPlay
-            loop
-            ref={videoRef}
-          >
-            <source src="/videos/combat.webm" type="video/webm" />
-          </video>
+    <AtlasSidebar containerClassName={`w-full z-40`} isOpen={!hideCombat}>
+      <div
+        className={`z-50 flex-1 h-full overflow-auto bg-cover bg-realmCombatBackground `}
+      >
+        <div className="flex justify-center w-full pt-3">
+          <Button variant="primary" onClick={() => onClose()}>
+            Return to Atlas
+          </Button>
         </div>
-      )}
 
-      <div className="p-16">
-        {/* results */}
-        {finalAttackingArmy && finalDefendingArmy && (
-          <div className="w-2/3 mx-auto my-4">
-            <RaidResultTable
-              startingAttackingArmy={selectedArmy}
-              endingAttackingArmy={finalAttackingArmy}
-              startingDefendingArmy={defendingRealmArmy}
-              endingDefendingArmy={finalDefendingArmy}
-              resources={resources}
-              relic={relic}
-              success={success}
-            />
+        {/* loader */}
+        {txSubmitted && !hideCombat && (
+          // <ImageSlideLoader strings={combatStrings} images={combatImages} />
+          <div className="absolute top-0 flex flex-wrap justify-center w-full h-full overflow-y-hidden z-100 bg-gray-1000">
+            <video
+              className="object-cover w-full"
+              width="300"
+              height="200"
+              autoPlay
+              loop
+              ref={videoRef}
+            >
+              <source src="/videos/combat.webm" type="video/webm" />
+            </video>
+            <Button
+              onClick={() => setHideCombat(true)}
+              className="absolute -translate-x-1/2 bottom-12 left-1/2"
+            >
+              Hide
+            </Button>
           </div>
         )}
-        {!txSubmitted && !combatData?.transaction_hash && (
-          <div className="grid w-full md:grid-cols-3 ">
-            <div>
-              {!raidButtonEnabled && selectedArmy && (
-                <div className="p-8 mb-4 text-xl text-white bg-red-900 rounded-3xl">
-                  {isSameOrder && (
-                    <div>
-                      Ser, {getRealmNameById(selectedArmy.realmId)} is of the
-                      same order as {getRealmNameById(defendingRealm?.realmId)}.
-                      You cannot attack!
-                    </div>
-                  )}
-                </div>
-              )}
 
-              <ArmyDisplayContainer
-                order={selectedArmy?.orderType}
-                realmId={selectedArmy?.realmId}
-                army={finalAttackingArmy ? finalAttackingArmy : selectedArmy}
-                owner={address}
-              />
-              <ArmySelect
-                selectedArmy={selectedArmy || defaultArmy}
-                armys={attackingRealmsAtLocation}
-                defendingRealmId={defendingRealm?.realmId || 0}
-                setSelectedArmy={setSelectedArmy}
+        <div className="p-16">
+          {/* results */}
+          {finalAttackingArmy && finalDefendingArmy && (
+            <div className="w-2/3 mx-auto my-4">
+              <RaidResultTable
+                startingAttackingArmy={selectedArmy}
+                endingAttackingArmy={finalAttackingArmy}
+                startingDefendingArmy={defendingRealmArmy}
+                endingDefendingArmy={finalDefendingArmy}
+                resources={resources}
+                relic={relic}
+                success={success}
               />
             </div>
-            <div className="self-start w-full lg:px-24 ">
-              <div className="p-2 text-center rounded bg-yellow-scroll">
-                <div className="py-3 mb-2 bg-gray-900 rounded-xl">
-                  <h1>Raid</h1>
-                </div>
-                <div className="rounded-xl bg-gray-1000">
-                  {hasOwnRelic(defendingRealm) && (
-                    <div>
-                      <img src={RelicImage} alt="" className="rounded" />
-
-                      <h4 className="p-3 my-3">'The Relic is Vulnerable!'</h4>
-                      <div className="px-4">
-                        <Checkbox
-                          onChange={() => setTakeRelic(!takeRelic)}
-                          checked={takeRelic}
-                          label="Take Relic"
-                        />
-                        <span className="mt-2 italic">
-                          If you take a Relic - you will have a target on your
-                          back!
-                        </span>
+          )}
+          {!txSubmitted && !combatData?.transaction_hash && (
+            <div className="grid w-full md:grid-cols-3 ">
+              <div>
+                {!raidButtonEnabled && selectedArmy && (
+                  <div className="p-8 mb-4 text-xl text-white bg-red-900 rounded-3xl">
+                    {isSameOrder && (
+                      <div>
+                        Ser, {getRealmNameById(selectedArmy.realmId)} is of the
+                        same order as{' '}
+                        {getRealmNameById(defendingRealm?.realmId)}. You cannot
+                        attack!
                       </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap justify-center">
-                    {filterFoodResources(defendingRealm?.resources).map(
-                      (resource, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col justify-center p-2 mt-4"
-                        >
-                          <span className="self-center text-4xl">
-                            {' '}
-                            {getVaultRaidableLaborUnits(
-                              resource.labor?.vaultBalance
-                            ).toFixed(0)}
-                          </span>
-                          <div>
-                            <ResourceIcon
-                              resource={
-                                findResourceById(
-                                  resource.resourceId
-                                )?.trait.replace(' ', '') || ''
-                              }
-                              size="sm"
-                            />
-                          </div>
-
-                          <span className="self-center mt-1">
-                            {findResourceById(resource.resourceId)?.trait}
-                          </span>
-                        </div>
-                      )
                     )}
                   </div>
-                </div>
-              </div>
-              <Button
-                onClick={() => {
-                  initiateCombat({
-                    attackingArmyId: selectedArmy?.armyId,
-                    attackingRealmId: selectedArmy?.realmId,
-                    defendingRealmId: defendingRealm?.realmId,
-                    take_relic: takeRelic ? 1 : 0,
-                  });
-                }}
-                loading={combatLoading}
-                loadingText={'Raiding'}
-                disabled={!raidButtonEnabled}
-                variant="primary"
-                size="lg"
-                className="w-full mt-6 text-3xl border-4 border-yellow-600 "
-              >
-                Plunder!
-              </Button>
-            </div>
+                )}
 
-            <ArmyDisplayContainer
-              order={defendingRealm?.orderType}
-              realmId={defendingRealm?.realmId}
-              army={
-                finalDefendingArmy ? finalDefendingArmy : defendingRealmArmy
-              }
-              owner={defendingRealm?.ownerL2}
-            />
-          </div>
-        )}
+                <ArmyDisplayContainer
+                  order={selectedArmy?.orderType}
+                  realmId={selectedArmy?.realmId}
+                  army={finalAttackingArmy ? finalAttackingArmy : selectedArmy}
+                  owner={address}
+                />
+                <ArmySelect
+                  selectedArmy={selectedArmy || defaultArmy}
+                  armys={attackingRealmsAtLocation}
+                  defendingRealmId={defendingRealm?.realmId || 0}
+                  setSelectedArmy={setSelectedArmy}
+                />
+              </div>
+              <div className="self-start w-full lg:px-24 ">
+                <div className="p-2 text-center rounded bg-yellow-scroll">
+                  <div className="py-3 mb-2 bg-gray-900 rounded-xl">
+                    <h1>Raid</h1>
+                  </div>
+                  <div className="rounded-xl bg-gray-1000">
+                    {hasOwnRelic(defendingRealm) && (
+                      <div>
+                        <img src={RelicImage} alt="" className="rounded" />
+
+                        <h4 className="p-3 my-3">'The Relic is Vulnerable!'</h4>
+                        <div className="px-4">
+                          <Checkbox
+                            onChange={() => setTakeRelic(!takeRelic)}
+                            checked={takeRelic}
+                            label="Take Relic"
+                          />
+                          <span className="mt-2 italic">
+                            If you take a Relic - you will have a target on your
+                            back!
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap justify-center">
+                      {filterFoodResources(defendingRealm?.resources).map(
+                        (resource, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-col justify-center p-2 mt-4"
+                          >
+                            <span className="self-center text-4xl">
+                              {' '}
+                              {getVaultRaidableLaborUnits(
+                                resource.labor?.vaultBalance
+                              ).toFixed(0)}
+                            </span>
+                            <div>
+                              <ResourceIcon
+                                resource={
+                                  findResourceById(
+                                    resource.resourceId
+                                  )?.trait.replace(' ', '') || ''
+                                }
+                                size="sm"
+                              />
+                            </div>
+
+                            <span className="self-center mt-1">
+                              {findResourceById(resource.resourceId)?.trait}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => {
+                    initiateCombat({
+                      attackingArmyId: selectedArmy?.armyId,
+                      attackingRealmId: selectedArmy?.realmId,
+                      defendingRealmId: defendingRealm?.realmId,
+                      take_relic: takeRelic ? 1 : 0,
+                    });
+                  }}
+                  loading={combatLoading}
+                  loadingText={'Raiding'}
+                  disabled={!raidButtonEnabled}
+                  variant="primary"
+                  size="lg"
+                  className="w-full mt-6 text-3xl border-4 border-yellow-600 "
+                >
+                  Plunder!
+                </Button>
+              </div>
+
+              <ArmyDisplayContainer
+                order={defendingRealm?.orderType}
+                realmId={defendingRealm?.realmId}
+                army={
+                  finalDefendingArmy ? finalDefendingArmy : defendingRealmArmy
+                }
+                owner={defendingRealm?.ownerL2}
+              />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </AtlasSidebar>
   );
 };
 
