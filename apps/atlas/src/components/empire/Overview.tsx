@@ -46,14 +46,14 @@ export function AccountOverview() {
   }, [accountData]);
 
   return (
-    <div className="grid grid-cols-12 gap-3 md:gap-4 md:grid-cols-12">
-      <div className={`col-start-1 col-end-13 md:col-start-1 md:col-end-7 `}>
+    <div className="grid grid-cols-12 gap-3 lg:gap-4 lg:grid-cols-12">
+      <div className={`col-start-1 col-end-13 lg:col-start-1 lg:col-end-7 `}>
         <div className="p-2 mb-8 ">
           <h2>Your Settled Realms</h2>
         </div>
         <MyRealms />
       </div>
-      <div className={`col-start-1 col-end-13 md:col-start-7 md:col-end-13 `}>
+      <div className={`col-start-1 col-end-13 lg:col-start-7 lg:col-end-13 `}>
         <div className="p-2 ">
           <h2>Vizir Reports</h2>
         </div>

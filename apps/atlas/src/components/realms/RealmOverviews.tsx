@@ -11,7 +11,7 @@ export function RealmOverviews(props: RealmOverviewsProps) {
   const filteredRealms = props.realms;
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:gap-6 md:grid-cols-2 lg:grid-cols-1 ">
+    <div className="grid grid-cols-1 gap-2 lg:gap-6 ">
       {props.realms &&
         filteredRealms.map((realm: RealmFragmentFragment, index) => (
           <RealmCard loading={false} key={realm.realmId} realm={realm} />
