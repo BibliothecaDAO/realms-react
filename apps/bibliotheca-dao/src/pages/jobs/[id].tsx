@@ -1,10 +1,4 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import { ButtonOrLink } from '@bibliotheca-dao/ui-lib/base/button';
-import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
-import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
-import { useStarknet } from '@starknet-react/core';
-import type { NextPage } from 'next';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -15,7 +9,7 @@ const Jobs = () => {
   const { id } = router.query;
   const [content, setContent] = useState<string[]>([]);
   useEffect(() => {
-    Promise.all([fetch(`/${id}.md`)])
+    Promise.all([fetch(`content/articles/test.md`)])
       .then((results) => Promise.all(results.map((result) => result.text())))
       .then((text) => setContent(text));
   }, []);
@@ -32,7 +26,7 @@ const Jobs = () => {
               aria-hidden="true"
               onClick={() => router.push(`/`)}
               size="lg"
-              variant="primary"
+              variant="dao"
             >
               Back
             </Button>

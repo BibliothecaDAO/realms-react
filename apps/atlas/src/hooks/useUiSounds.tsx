@@ -36,8 +36,17 @@ export const soundSelector = {
   addGold: 'resources/gold.mp3',
   addHartwood: 'resources/hartwood.mp3',
   addDiamonds: 'resources/diamonds.mp3',
+  addSapphire: 'resources/sapphire.mp3',
+  addRuby: 'resources/ruby.mp3',
+  addDeepCrystal: 'resources/deep_crystal.mp3',
+  addIgnium: 'resources/ignium.mp3',
+  addEtherealSilica: 'resources/ethereal_silica.mp3',
   addTrueIce: 'resources/true_ice.mp3',
+  addTwilightQuartz: 'resources/twilight_quartz.mp3',
   addAlchemicalSilver: 'resources/alchemical_silver.mp3',
+  addAdamantine: 'resources/adamantine.mp3',
+  addMithral: 'resources/mithral.mp3',
+  addDragonhide: 'resources/dragonhide.mp3',
 };
 
 export const useUiSounds = (selector: string) => {

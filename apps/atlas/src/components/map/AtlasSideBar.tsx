@@ -72,9 +72,9 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
       </div>
       {props.onClose && (
         <>
-          <CardCornerTopLeft className="absolute w-16 top-2 left-2 fill-yellow-scroll -mt-0.5 -ml-0.5" />
+          <CardCornerTopLeft className="absolute w-20 top-2 left-2 fill-yellow-scroll -mt-0.5 -ml-0.5" />
           <CardCloseIcon
-            className="absolute w-10 top-2 left-2 fill-frame-secondary -mt-0.5 -ml-0.5 cursor-pointer"
+            className="absolute w-12 top-2 left-2 fill-frame-secondary -mt-0.5 -ml-0.5 cursor-pointer"
             onClick={props.onClose}
           />
         </>

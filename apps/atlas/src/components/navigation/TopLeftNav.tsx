@@ -10,13 +10,22 @@ import { formatEther } from '@ethersproject/units';
 import { Transition } from '@headlessui/react';
 import { useAccount } from '@starknet-react/core';
 
+import { BigNumber } from 'ethers';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import { number } from 'starknet';
+import {
+  vaultValueAtMarketprice,
+  calculateLords,
+  getResourceCostInLords,
+} from '@/components/bank/BankGetters';
 import { resources } from '@/constants/resources';
 import { framePrimary, frameSecondary } from '@/constants/ui';
 import { useUIContext } from '@/context/UIContext';
 import { useUserBalancesContext } from '@/context/UserBalancesContext';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
+import { convertToK } from '../realms/RealmsGetters';
 
 export const TopLeftNav = () => {
   const { lordsBalance } = useUserBalancesContext();
@@ -34,9 +43,22 @@ export const TopLeftNav = () => {
   }
 
   const { getBalanceById } = useUserBalancesContext();
+  const {
+    getTotalLordsCost,
+    getLordsCostForResourceAmount,
+    getCurrentMarketById,
+  } = useMarketRate();
 
   const resourcesList = resources?.map((resource) => {
+    const currentMarketPriceForResource = getCurrentMarketById({
+      resourceId: resource.id,
+    });
     const balance = getBalanceById(resource.id);
+
+    const marketPrice = getResourceCostInLords(
+      balance?.amount || '0',
+      currentMarketPriceForResource?.sellAmount || '0'
+    );
 
     return (
       <div key={resource.id} className="flex flex-wrap items-center text-sm">
@@ -50,16 +72,20 @@ export const TopLeftNav = () => {
             className={
               'block w-full tracking-widest uppercase ' +
               ((balance?.amount || 0) > 0
-                ? 'text-green-600 shadow-green-100 drop-shadow-lg font-semibold'
+                ? 'text-green-700 shadow-green-100 drop-shadow-lg font-semibold'
                 : 'text-red-200')
             }
           >
-            {(+formatEther(balance?.amount || 0)).toLocaleString()}
+            {convertToK(+formatEther(balance?.amount || 0))} <br />
           </div>
+          <span className="text-gray-600">
+            {(+formatEther(marketPrice || 0)).toLocaleString()}
+          </span>
         </div>
       </div>
     );
   });
+
   return (
     <div className="absolute z-50 ">
       <div className="relative">

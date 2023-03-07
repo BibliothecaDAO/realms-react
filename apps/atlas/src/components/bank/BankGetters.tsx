@@ -61,3 +61,9 @@ export const vaultValueAtMarketprice = ({ currentPrice, units }) => {
 
   return +formatEther(c.toString()).toLocaleString();
 };
+
+export const getResourceCostInLords = (amount: string, price: string) => {
+  return BigNumber.from(amount || 0)
+    .mul(BigNumber.from(price || 0))
+    .div(BigNumber.from((1 * 10 ** 18).toString()));
+};

@@ -1,4 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
+import { RelicFilter } from '@/components/ui/filters//RelicFilter';
 import { BaseFilter } from '@/components/ui/filters/BaseFilter';
 import { OrdersFilter } from '@/components/ui/filters/OrdersFilter';
 import { RealmsRarityFilter } from '@/components/ui/filters/RealmsRarityFilter';
@@ -57,6 +58,10 @@ export function RealmsFilter(props: RealmsFilterProps) {
       <TraitsFilter
         traits={state.traitsFilter}
         onChange={actions.updateTraitsFilter}
+      />
+      <RelicFilter
+        relic={state.relicFilter}
+        onChange={actions.updateRelicFilter}
       />
 
       <div className="md:ml-1">

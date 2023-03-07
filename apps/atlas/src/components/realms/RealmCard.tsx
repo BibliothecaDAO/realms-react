@@ -1,9 +1,10 @@
 import { OrderIcon, Button, Card, ResourceIcon } from '@bibliotheca-dao/ui-lib';
 import { Tooltip } from '@bibliotheca-dao/ui-lib/base/utility';
+import LordsIcon from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Relic from '@bibliotheca-dao/ui-lib/icons/relic.svg';
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useMemo, useState } from 'react';
 import { useAccount as useL1Account } from 'wagmi';
 import { CombatSideBar } from '@/components/armies/CombatSideBar';
 import AtlasSidebar from '@/components/map/AtlasSideBar';
@@ -22,12 +23,12 @@ import {
   filterFoodResources,
   checkIsRaidable,
 } from '@/components/realms/RealmsGetters';
-import SidebarHeader from '@/components/ui/sidebar/SidebarHeader';
 import { findResourceById } from '@/constants/resources';
 import { sidebarClassNames } from '@/constants/ui';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useRealmContext } from '@/context/RealmContext';
 import type { Realm } from '@/generated/graphql';
+import { useMarketRate } from '@/hooks/market/useMarketRate';
 import useBuildings from '@/hooks/settling/useBuildings';
 import useFood from '@/hooks/settling/useFood';
 import { usePendingRealmTx } from '@/hooks/settling/usePendingRealmTx';
@@ -57,9 +58,10 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const { address: l1Address } = useL1Account();
     const { address } = useAccount();
     const { buildings, buildingUtilisation } = useBuildings(realm as Realm);
-    const { foodDetails, availableFood } = useFood(realm as Realm);
+    const { availableFood } = useFood(realm as Realm);
     const { userData } = useUsersRealms();
     const { starknetId } = useStarkNetId(RealmOwner(realm) || '');
+    const { getTotalLordsCost } = useMarketRate();
 
     const {
       mapContext: { navigateToAsset },
@@ -70,6 +72,26 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
     const userArmiesAtLocation = userData.attackingArmies?.filter(
       (army) => army.destinationRealmId == realm.realmId
     );
+
+    const vaultValueInLords = getTotalLordsCost({
+      costs: filterFoodResources(realm.resources).map((resource) => ({
+        resourceId: resource.resourceId,
+        amount: getVaultRaidableLaborUnits(
+          resource.labor?.vaultBalance
+        ).toFixed(0),
+      })),
+      qty: 1,
+    }).toFixed(0);
+
+    // filterFoodResources(realm.resources).reduce(
+    //   (acc, resource) => {
+    //     const resourceAmount = getVaultRaidableLaborUnits(
+    //       resource.labor?.vaultBalance
+    //     ).toFixed(0);
+    //     return acc + getTotalP;
+    //   },
+    //   0
+    // );
 
     return (
       <Card ref={ref}>
@@ -100,8 +122,8 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
         {/* Body */}
 
         <div className="flex justify-between w-full mt-1">
-          <div>
-            <div className="flex w-full my-3 space-x-2">
+          <div className="flex flex-col flex-1">
+            <div className="flex items-center w-full my-3 space-x-2">
               {filterFoodResources(realm.resources).map((resource, index) => (
                 <div
                   key={index}
@@ -125,6 +147,20 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                   </span>
                 </div>
               ))}
+              <Tooltip
+                placement="top"
+                className="z-20 flex self-center"
+                tooltipText={
+                  <div className="p-2 text-sm rounded bg-gray-1000 whitespace-nowrap">
+                    Approximate $LORDS value of raidable resources
+                  </div>
+                }
+              >
+                <div className="flex !ml-4">
+                  ~<LordsIcon className="w-3 mr-1 fill-white" />
+                  {vaultValueInLords}
+                </div>
+              </Tooltip>
             </div>
             <div className="flex flex-wrap w-full space-x-1">
               {IsSettled(realm) && (

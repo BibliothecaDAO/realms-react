@@ -91,6 +91,11 @@ function useRealmsQueryVariables(
           lte: state.rarityFilter.score.max,
         };
       }
+      if (state.relicFilter != null) {
+        filter.relic = {
+          is: { isAnnexed: { equals: state.relicFilter == 'annexed' } },
+        };
+      }
 
       const traitsFilters = Object.keys(state.traitsFilter)
         // Filter 0 entries
@@ -130,6 +135,7 @@ function useRealmsQueryVariables(
     state.rarityFilter.score.min,
     state.rarityFilter.score.max,
     state.traitsFilter,
+    state.relicFilter,
     state.selectedOrders,
     state.favouriteRealms,
     limit,

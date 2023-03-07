@@ -12,8 +12,11 @@ export function MyFood() {
         ? userRealms?.realms.map((realm, index) => {
             return (
               <div key={index}>
-                <h2>{realm.name}</h2>
-                <RealmsFood realm={realm} />
+                <h2 className="mb-2">{realm.name}</h2>
+                <RealmsFood
+                  realm={realm}
+                  totalRealmsCount={userRealms?.realms.length}
+                />
               </div>
             );
           })

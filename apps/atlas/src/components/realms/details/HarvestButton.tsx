@@ -5,30 +5,42 @@ import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import useLabor, { Entrypoints } from '@/hooks/settling/useLabor';
 import { convertToK, getIsFood } from '../RealmsGetters';
 
-export const HarvestButton = ({ generation, realmId, resourceId }) => {
+export const HarvestButton = ({
+  generation,
+  realmIds,
+  resourceId,
+}: {
+  generation: number;
+  realmIds: Array<number>;
+  resourceId: number;
+}) => {
   const txQueue = useCommandList();
 
   const [enqueuedTx, setEnqueuedTx] = useState(false);
 
   useEffect(() => {
     if (getIsFood(resourceId)) {
-      setEnqueuedTx(
-        !!txQueue.transactions.find(
-          (t: any) =>
-            t.contractAddress == ModuleAddr.Labor &&
-            t.entrypoint == Entrypoints.harvest_food &&
-            t.metadata['realmId'] == realmId &&
-            t.metadata['resourceId'] == resourceId
+      realmIds.forEach((realmId) =>
+        setEnqueuedTx(
+          !!txQueue.transactions.find(
+            (t: any) =>
+              t.contractAddress == ModuleAddr.Labor &&
+              t.entrypoint == Entrypoints.harvest_food &&
+              t.metadata['realmId'] == realmId &&
+              t.metadata['resourceId'] == resourceId
+          )
         )
       );
     } else {
-      setEnqueuedTx(
-        !!txQueue.transactions.find(
-          (t: any) =>
-            t.contractAddress == ModuleAddr.Labor &&
-            t.entrypoint == Entrypoints.harvest_labor &&
-            t.metadata['realmId'] == realmId &&
-            t.metadata['resourceId'] == resourceId
+      realmIds.forEach((realmId) =>
+        setEnqueuedTx(
+          !!txQueue.transactions.find(
+            (t: any) =>
+              t.contractAddress == ModuleAddr.Labor &&
+              t.entrypoint == Entrypoints.harvest_labor &&
+              t.metadata['realmId'] == realmId &&
+              t.metadata['resourceId'] == resourceId
+          )
         )
       );
     }
@@ -42,21 +54,25 @@ export const HarvestButton = ({ generation, realmId, resourceId }) => {
     <Button
       onClick={() => {
         if (getIsFood(resourceId)) {
-          harvest_food({
-            realmId: realmId,
-            resourceId: resourceId,
-          });
+          realmIds.forEach((realmId) =>
+            harvest_food({
+              realmId: realmId,
+              resourceId: resourceId,
+            })
+          );
         } else {
-          harvest({
-            realmId: realmId,
-            resourceId: resourceId,
-          });
+          realmIds.forEach((realmId) =>
+            harvest({
+              realmId: realmId,
+              resourceId: resourceId,
+            })
+          );
         }
       }}
       disabled={generation == 0 || isNaN(generation) || enqueuedTx}
       variant="outline"
-      className="w-full text-lg"
-      size="md"
+      className="w-full "
+      size="xs"
     >
       {hasGenerated && convertToK(generation)} {hasGenerated ? '' : `nothing`}
     </Button>

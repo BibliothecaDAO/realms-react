@@ -342,44 +342,48 @@ export const ArmyBuilder = (props: Props) => {
             <p className="mt-4 mb-4 text-xl">Total Cost in Resources</p>
             <div className="flex flex-wrap">
               {totalCost?.length &&
-                totalCost.map((b, i) => {
-                  if (b.amount != 0) {
-                    return (
-                      <CostBlock
-                        key={i}
-                        resourceName={b.resourceName}
-                        amount={b.amount}
-                        id={b.resourceId}
-                        qty={1}
-                      />
-                    );
-                  }
-                })}
-              {totalCost?.length && (
-                <Button
-                  onClick={() => {
-                    batchAddResources(
-                      totalCost
-                        .filter((r) => r.amount > 0)
-                        .map((r) => ({
-                          resourceId: r.resourceId,
-                          resourceName: r.resourceName,
-                          amount: r.amount,
-                        }))
-                    );
-                    toast(
-                      <span>
-                        Missing resources added to the cart
-                        <Button onClick={toggleTrade}>Open Now</Button>
-                      </span>
-                    );
-                  }}
-                  size="xs"
-                  className="ml-2"
-                  variant="outline"
-                >
-                  Buy Resources
-                </Button>
+              totalCost.some((cost) => cost.amount > 0) ? (
+                <>
+                  {totalCost.map((b, i) => {
+                    if (b.amount != 0) {
+                      return (
+                        <CostBlock
+                          key={i}
+                          resourceName={b.resourceName}
+                          amount={b.amount}
+                          id={b.resourceId}
+                          qty={1}
+                        />
+                      );
+                    }
+                  })}
+                  <Button
+                    onClick={() => {
+                      batchAddResources(
+                        totalCost
+                          .filter((r) => r.amount > 0)
+                          .map((r) => ({
+                            resourceId: r.resourceId,
+                            resourceName: r.resourceName,
+                            amount: r.amount,
+                          }))
+                      );
+                      toast(
+                        <span>
+                          Missing resources added to the cart
+                          <Button onClick={toggleTrade}>Open Now</Button>
+                        </span>
+                      );
+                    }}
+                    size="xs"
+                    className="ml-2"
+                    variant="outline"
+                  >
+                    Buy Resources
+                  </Button>
+                </>
+              ) : (
+                '-'
               )}
             </div>
           </div>
