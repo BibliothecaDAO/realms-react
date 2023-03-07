@@ -196,7 +196,7 @@ export function EmpirePanel() {
               onChange={(index) => pressedTab(index as number)}
               variant="primary"
             >
-              <div className="sticky top-0 z-20 p-4 overflow-x-auto text-sm bg-gradient-to-r from-gray-900 to-gray-1000">
+              <div className="sticky top-0 p-4 overflow-x-auto text-sm z-100 bg-gradient-to-r from-gray-900 to-gray-1000">
                 <Tabs.List className="py-0">
                   {tabs.map((tab, index) => (
                     <Tabs.Tab noText={!breakpoints.lg} key={index}>

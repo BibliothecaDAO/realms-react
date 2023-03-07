@@ -349,7 +349,7 @@ export const LaborRealmRow = ({
 
   return (
     <div className="flex flex-wrap items-center w-full p-2 mb-4 bg-gray-900 rounded hover:bg-gray-1000">
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full lg:justify-start lg:w-auto">
         <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
           <div className="flex space-x-2 text-base">
             <span className="text-gray-600">Realm:</span>{' '}
