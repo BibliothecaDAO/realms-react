@@ -5,13 +5,12 @@ import VolumeOff from '@bibliotheca-dao/ui-lib/icons/volume-mute-solid.svg';
 import VolumeOn from '@bibliotheca-dao/ui-lib/icons/volume-up-solid.svg';
 import { framePrimary, frameSecondary } from '@/constants/ui';
 import { useSoundContext } from '@/context/soundProvider';
-
 import { useUIContext } from '../../context/UIContext';
 import NetworkConnectButton from '../ui/NetworkConnectButton';
 
 export const BottomLeftNav = () => {
   const { toggleSound, isSoundActive } = useSoundContext();
-
+  const { toggleAccountSettings } = useUIContext();
   const { toggleVizir } = useUIContext();
 
   return (
