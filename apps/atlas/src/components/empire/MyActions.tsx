@@ -33,7 +33,7 @@ export function MyActions(props: Prop) {
   };
 
   return (
-    <div className="grid grid-cols-12 gap-3 p-3 md:gap-4 md:grid-cols-12 sm:px-6">
+    <div className="grid grid-cols-12 gap-3 p-1 md:gap-4 md:grid-cols-12 lg:px-6">
       <div className="col-start-1 col-end-13">
         <h3 className="mb-2">Resources production</h3>
         {availableResourcesSet &&
