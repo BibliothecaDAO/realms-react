@@ -10,14 +10,12 @@ export const SplashScreen = ({ children }) => {
   return (
     <>
       {showSplash && (
-        <div className="absolute left-0 flex flex-1 items-center justify-center w-full h-screen bg-cover z-100 bg-gray-1000 bg-realmBackground vignette-inset">
+        <div className="absolute left-0 z-20 flex items-center justify-center flex-1 w-full h-screen bg-cover bg-gray-1000 bg-realmBackground vignette-inset">
           {/* <div
-            className="absolute top-0 flex flex-1 bottom-0 rounded transition duration-500 ease-in-out bg-yellow-scroll 
-          shadow-md shadow-black right-0 top-0 left-0 bottom-0 my-20 md:w-1/2 lg:w-1/3 mx-auto left-0 overflow-hidden opacity-100 translate-x-0 w-full"
+            className="absolute top-0 bottom-0 left-0 right-0 flex flex-1 w-full mx-auto my-20 overflow-hidden transition duration-500 ease-in-out translate-x-0 rounded shadow-md opacity-100 bg-yellow-scroll shadow-black md:w-1/2 lg:w-1/3"
           >
             <div
-              className="fixed flex flex-1 rounded-xl flex bg-gradient-to-r from-gray-900 to-gray-1000 
-            overflow-hidden flex-col p-10 text-center top-2 left-2 bottom-2 right-2"
+              className="fixed flex flex-col flex-1 p-10 overflow-hidden text-center rounded-xl bg-gradient-to-r from-gray-900 to-gray-1000 top-2 left-2 bottom-2 right-2"
             >
               (her)
             </div>

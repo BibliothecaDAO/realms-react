@@ -55,11 +55,11 @@ export const AccountSettingsModal = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, 'z-100 mx-auto left-0')}
+      containerClassName={twMerge(sidebarClassNames, 'z-30 mx-auto left-0')}
       onClose={onClose}
     >
       {isOpen && (
-        <div className="flex-col text-center w-full overflow-y-scroll">
+        <div className="flex-col w-full overflow-y-scroll text-center">
           <img
             alt="Ouroboros Eternum Logo"
             src="/eternum-logo_animated.png"
@@ -106,28 +106,28 @@ export const Wallet = () => {
     <>
       {address && status === 'connected' ? (
         <div>
-          <div className="flex">
-            <h2 className="text-left pb-4">Your Realms</h2>
-            <h3 className="ml-8 text-gray-600 leading-10">
+          {/* <div className="flex">
+            <h2 className="pb-4 text-left">Your Realms</h2>
+            <h3 className="ml-8 leading-10 text-gray-600">
               {shortenAddress(address)}
             </h3>
-          </div>
-          <div className="grid grid-cols-6 gap-2">
+          </div> */}
+          {/* <div className="grid grid-cols-6 gap-2">
             {userRealms &&
               userRealms.realms.map((realm) => {
                 return (
                   <div
-                    className="border-2 h-24 border-yellow-800/40"
+                    className="h-24 border-2 border-yellow-800/40"
                     key={realm.realmId}
                   >
                     {realm.name}
                   </div>
                 );
               })}
-          </div>
+          </div> */}
           <div className="flex w-full gap-4 mt-8">
             <Button
-              className="md:w-1/2 mx-auto"
+              className="mx-auto md:w-1/2"
               variant="primary"
               onClick={() => {
                 toggleSplash();
@@ -164,7 +164,7 @@ export const Settings = () => {
   };
   return (
     <div>
-      <div className="px-4 flex flex-col gap-8 w-full">
+      <div className="flex flex-col w-full gap-8 px-4">
         <div>
           <h4 className="text-left">Screen</h4>
           <hr className="mb-4" />
