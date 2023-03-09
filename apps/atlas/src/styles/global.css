@@ -128,6 +128,7 @@ html {
 
 .paper {
   mask-image: url('../../public/textures/grit.png');
+  mask-size: 70%;
   mask-mode: alpha, match-source;
 }
 
@@ -193,6 +194,14 @@ div#deckgl-wrapper {
   background-color: #c49c5c;
 }
 
+.fill-yellow-secondary {
+  fill: #c49c5c;
+}
+
 .color-yellow-secondary {
   color: #c49c5c;
+}
+
+.primary-button-color {
+  color: #2c221b;
 }

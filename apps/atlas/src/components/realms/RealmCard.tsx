@@ -169,7 +169,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     <>
                       <Button
                         onClick={() => setDetails(!isDetails)}
-                        variant="outline"
+                        variant="primary"
                         size="xs"
                       >
                         construct
