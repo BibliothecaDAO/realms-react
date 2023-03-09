@@ -98,9 +98,11 @@ export const LaborTable = (props: Prop) => {
         (resource) => resource.resourceId === resourceId
       );
 
+      console.log(resource?.labor?.lastUpdate || 0, resourceId);
+
       const generation = getLaborGenerated({
-        last_harvest: resource?.labor?.lastUpdate,
-        labor_balance: resource?.labor?.balance,
+        last_harvest: resource?.labor?.lastUpdate || 0,
+        labor_balance: resource?.labor?.balance || 0,
       });
 
       const isGenerating = generation[1] > 0;
@@ -119,13 +121,16 @@ export const LaborTable = (props: Prop) => {
             productionAmount || 0,
         isGenerating,
         hasGenerated,
-        qtyBuilt: resource?.labor?.qtyBuilt || 0,
+        qtyBuilt: isGenerating ? resource?.labor?.qtyBuilt : 0,
+        resourceId: resourceId,
         maxBuildings:
           resource?.resourceId == ResourcesIds.Fish
             ? getTrait(realm, 'Harbor')
             : getTrait(realm, 'River'),
       };
     });
+
+    console.log(labors);
 
     return {
       labors,
@@ -142,6 +147,8 @@ export const LaborTable = (props: Prop) => {
       maxBuildings: labors.reduce((a, b) => a + b.maxBuildings, 0),
     };
   }, [realmsResources]);
+
+  console.log(generatedLabors, resourceId);
 
   return (
     <div className="flex flex-col mb-4 border-4 rounded-xl border-white/10 hover:bg-gray-1000 group">
@@ -208,8 +215,10 @@ export const LaborTable = (props: Prop) => {
                       <>
                         {' '}
                         <div className="flex justify-between px-2 pt-1">
-                          {generatedLabors.qtyBuilt} /{' '}
-                          {generatedLabors.maxBuildings}{' '}
+                          {generatedLabors.isGenerating
+                            ? generatedLabors.qtyBuilt
+                            : 0}{' '}
+                          {} / {generatedLabors.maxBuildings}{' '}
                           {resourceId == ResourcesIds.Fish
                             ? 'Fishing Villages'
                             : 'Farms'}{' '}
@@ -253,7 +262,9 @@ export const LaborTable = (props: Prop) => {
                           isFood
                             ? generatedLabors.generated *
                               productionAmount *
-                              (generatedLabors.labors[0].qtyBuilt || 1)
+                              (generatedLabors.labors.find(
+                                (a) => a.resourceId == resourceId
+                              )?.qtyBuilt || 1)
                             : generatedLabors.generated * productionAmount
                         }
                       />
@@ -357,7 +368,8 @@ export const LaborRealmRow = ({
           {isFood ? (
             <>
               <div className="flex justify-between px-2 pt-1">
-                {laborBalance.qtyBuilt} / {laborBalance.maxBuildings}{' '}
+                {laborBalance.isGenerating ? laborBalance.qtyBuilt : 0} /{' '}
+                {laborBalance.maxBuildings}{' '}
                 {resource.resourceId == ResourcesIds.Fish
                   ? 'Fishing Villages'
                   : 'Farms'}{' '}
