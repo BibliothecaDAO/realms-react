@@ -247,7 +247,12 @@ export const LaborTable = (props: Prop) => {
                       )}
                     >
                       <HarvestButton
-                        realmIds={realmsResources.map((realm) => realm.realmId)}
+                        realmIds={realmsResources
+                          .map((realm) => realm.realmId)
+                          .filter(
+                            (realmId, i) =>
+                              generatedLabors.labors[i].hasGenerated
+                          )}
                         resourceId={resourceId}
                         generation={
                           isFood

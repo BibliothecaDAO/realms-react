@@ -112,7 +112,7 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply rounded cursor-move hover:bg-cta-100 bg-cta-100;
+  @apply rounded cursor-move bg-yellow-secondary;
 }
 
 @font-face {
