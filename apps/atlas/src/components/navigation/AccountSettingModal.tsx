@@ -63,7 +63,7 @@ export const AccountSettingsModal = ({
           <img
             alt="Ouroboros Eternum Logo"
             src="/eternum-logo_animated.png"
-            className="w-20 mx-auto"
+            className="w-20 mx-auto mt-4"
             style={{
               filter:
                 'invert(90%) sepia(17%) saturate(688%) hue-rotate(331deg) brightness(109%) contrast(99%)',
