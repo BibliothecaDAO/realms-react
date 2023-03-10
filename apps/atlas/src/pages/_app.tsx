@@ -110,7 +110,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Toaster
         gutter={12}
         toastOptions={{
-          className: '',
+          className: '!bg-transparent',
           style: {
             padding: '0px',
           },
