@@ -80,7 +80,9 @@ export const MainHeader = () => {
               <a
                 key={index}
                 href={a.link}
+                target="_blank"
                 className={` hidden lg:flex self-center px-4 py-1 transition-all duration-150 border rounded border-off-300/20 hover:bg-off-300 hover:text-gray-900 h-full `}
+                rel="noreferrer"
               >
                 {a.icon} <span className="hidden sm:block">{a.title}</span>
               </a>

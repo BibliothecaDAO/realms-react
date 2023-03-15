@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { MainLayout } from '@/components/layout/MainLayout';
 
-const DAOlordsBalance = 100000000;
+const DAOlordsBalance = 87500000;
 
 function Treasury() {
   const [nftList, setNftList] = useState([]);
@@ -81,7 +81,9 @@ function Treasury() {
             <tbody>
               <tr className="border border-gray-300/40 ">
                 <td className="p-2">Lords</td>
-                <td className="p-2 text-right">{DAOlordsBalance}</td>
+                <td className="p-2 text-right">
+                  {DAOlordsBalance.toLocaleString()}
+                </td>
                 <td className="p-2 text-right">
                   {lords && formatCurrency(DAOlordsBalance * lords.price.rate)}
                 </td>
