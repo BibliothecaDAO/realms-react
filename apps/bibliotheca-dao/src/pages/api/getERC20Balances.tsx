@@ -22,7 +22,6 @@ export default async function handler(req: NextRequest) {
     const response = await fetch(url, {
       method: 'GET',
     });
-    console.log(response);
     return new Response(response.body, {
       status: response.status,
     });
