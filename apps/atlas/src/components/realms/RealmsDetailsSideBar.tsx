@@ -1,4 +1,5 @@
 import { twMerge } from 'tailwind-merge';
+import { sidebarClassNames } from '@/constants/ui';
 import type { RealmFragmentFragment } from '@/generated/graphql';
 import type { BuildingDetail, BuildingFootprint } from '@/types/index';
 import AtlasSideBar from '../map/AtlasSideBar';
@@ -19,7 +20,8 @@ export const RealmsDetailSideBar = (props: RealmSideBarProps) => {
     <AtlasSideBar
       isOpen={props.isOpen}
       containerClassName={twMerge(
-        'left-0 right-0 ml-24 mr-12 my-24 z-30 w-fit-content'
+        sidebarClassNames,
+        'left-0 right-0 lg:ml-24 lg:mr-12 lg:my-24 '
       )}
       onClose={props.onClose}
     >

@@ -55,7 +55,10 @@ export const AccountSettingsModal = ({
   return (
     <AtlasSideBar
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, 'z-30 mx-auto left-0')}
+      containerClassName={twMerge(
+        sidebarClassNames,
+        'z-30 lg:mx-auto lg:left-0 lg:!right-0 lg:!left-0'
+      )}
       onClose={onClose}
     >
       {isOpen && (

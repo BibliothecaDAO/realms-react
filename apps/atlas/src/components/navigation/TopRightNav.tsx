@@ -16,7 +16,7 @@ export const TopRightNav = () => {
   const { toggleTransactionCart } = useUIContext();
 
   return (
-    <div className="absolute top-0 right-0 z-50">
+    <div className="absolute top-0 right-0 z-20">
       <div className="relative">
         {address && <TransactionNavItem onClick={toggleTransactionCart} />}
         <div

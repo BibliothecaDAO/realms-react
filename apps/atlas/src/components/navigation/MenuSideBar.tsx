@@ -58,6 +58,7 @@ export const MenuSideBar = () => {
         page: '',
         icon: <Globe className={`${iconClasses('')}`} />,
         text: 'atlas',
+        className: 'hidden lg:block',
         action: () => {
           resetViewState();
         },
@@ -130,25 +131,26 @@ export const MenuSideBar = () => {
   }, [query]);
   const { closeAll, assetSidebar, toggleAsset } = useUIContext();
   return (
-    <div className="absolute z-[45]">
+    <div className="absolute z-20">
       <div>
         <button
-          className="absolute z-50 p-4 transition-all rounded sm:hidden top-2 left-2 "
+          className="absolute z-30 p-4 transition-all rounded sm:hidden top-2 left-2 "
           onClick={() => setShowMenu(!showMenu)}
         >
           {showMenu ? <Close /> : <Menu />}
         </button>
       </div>
       <div
-        className={`sm:relative px-2 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
+        className={`sm:relative w-12 pl-3 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="rounded-full sm:py-8 mix-blend-exclusion">
+        <div className="rounded-full mb-[30px] lg:mb-0 lg:py-8 mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {
                 closeAll();
                 menu.action && menu.action();
               }}
+              className={menu.className || ''}
               href={getPageHref(menu.page)}
               key={menu.page}
               shallow={true}

@@ -90,9 +90,9 @@ export const TopLeftNav = () => {
   });
 
   return (
-    <div className="absolute z-50 ">
+    <div className="absolute z-30 ">
       <div className="relative">
-        <div className="absolute z-50 w-48 h-8 top-1 lg:w-96 lg:h-10 md:pl-16 lg:pl-24 md:text-xs lg:text-lg shadow-red-900 text-gray-1000">
+        <div className="absolute z-20 w-48 h-8 top-2 lg:w-96 lg:h-10 md:pl-24 lg:pl-24 text-md lg:text-lg shadow-red-900 text-gray-1000">
           {address && (
             <Tooltip
               placement="right"
@@ -118,7 +118,7 @@ export const TopLeftNav = () => {
               }
             >
               <Button
-                className="flex px-2 py-1 "
+                className="flex items-center px-2 py-1"
                 onClick={onLordsNavClick}
                 variant="unstyled"
                 onMouseEnter={() => setIsBalanceHovered(true)}
@@ -139,14 +139,14 @@ export const TopLeftNav = () => {
           className={`absolute pointer-events-none w-72 fill-${framePrimary} `}
         />
 
-        <div className="absolute z-50 left-2 top-2 jr-empire paper">
+        <div className="absolute z-10 left-2 top-2 jr-empire paper">
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
-            className="rounded-full group md:w-12 md:h-12 lg:w-16 lg:h-16"
+            className="w-16 h-16 rounded-full group"
           >
-            <div className="absolute top-0 left-0 md:top-[4.70rem] md:left-[4.70rem] lg:top-[0.7rem] lg:left-[0.7rem] z-50 rounded-full p-1">
-              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-secondary md:h-6 md:w-6 lg:w-9 lg:h-9 group-hover:fill-frame-secondary" />
+            <div className="absolute top-[0.7rem] left-[0.7rem] z-20 rounded-full p-1">
+              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-secondary w-9 h-9 group-hover:fill-frame-secondary" />
             </div>
           </Button>
         </div>

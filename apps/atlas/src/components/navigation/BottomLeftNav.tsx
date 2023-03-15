@@ -14,7 +14,7 @@ export const BottomLeftNav = () => {
   const { toggleVizir } = useUIContext();
 
   return (
-    <div className="absolute bottom-0 z-50">
+    <div className="absolute bottom-0 z-20">
       <div className="absolute  bottom-[5.8rem] left-6 ">
         <IconButton
           aria-label="Bank"
@@ -44,7 +44,7 @@ export const BottomLeftNav = () => {
             />
           </button>
         </div>
-        <div className="pl-48 lg:pl-[5rem] relative z-10">
+        <div className="pl-24 lg:pl-[5rem] relative z-10">
           <NetworkConnectButton />
         </div>
         <BottomLeftFrame
