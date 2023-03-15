@@ -18,11 +18,11 @@ export const VARIANTS = {
   },
   primary: {
     tab: {
-      base: 'relative flex w-full items-center color-yellow-secondary justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 uppercase  hover:text-yellow-100',
+      base: 'min-w-[130px] relative flex w-full items-center color-yellow-secondary justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 uppercase  hover:text-yellow-100',
       active: 'color-yellow-secondry',
       inactive: 'bg-transparent text-gray-200',
     },
-    tabList: 'flex py-2',
+    tabList: 'flex py-2 overflow-x-auto',
   },
   small: {
     tab: {
