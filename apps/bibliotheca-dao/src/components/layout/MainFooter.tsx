@@ -17,11 +17,6 @@ export const MainFooter = () => {
         <h4 className="mb-6">Links</h4>
         <ul>
           <li className={footerLinkStyles}>
-            <Link className={footerHREFStyles} href={'/hack'}>
-              Hackathon
-            </Link>
-          </li>
-          <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].website}>
               The Atlas
             </a>
@@ -40,6 +35,11 @@ export const MainFooter = () => {
             <a className={footerHREFStyles} href={links[0].scroll}>
               Master Scroll (litepaper)
             </a>
+          </li>
+          <li className={footerLinkStyles}>
+            <Link className={footerHREFStyles} href={'/claim'}>
+              Claim
+            </Link>
           </li>
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].staking}>
