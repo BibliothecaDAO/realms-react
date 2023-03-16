@@ -28,6 +28,10 @@ const Tower = dynamic(() => import('./gltf/Medieval_castle_with_village'), {
   ssr: false,
 });
 
+const Bastion = dynamic(() => import('./gltf/Bastion_exportTest2'), {
+  ssr: false,
+});
+
 export const ThreeCanvas = () => {
   // const { nodes, materials } = useGLTF('./gltf/starter-scene.glb');
   return (
@@ -48,7 +52,7 @@ export const ThreeCanvas = () => {
     >
       <Suspense fallback={null}>
         <Stage shadows="accumulative">
-          <Tower />
+          <Bastion />
         </Stage>
       </Suspense>
       {/* <ambientLight /> */}
