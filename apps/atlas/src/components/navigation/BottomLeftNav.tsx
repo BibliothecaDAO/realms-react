@@ -14,7 +14,7 @@ export const BottomLeftNav = () => {
   const { toggleVizir } = useUIContext();
 
   return (
-    <div className="absolute bottom-0 z-20">
+    <div className="absolute bottom-0 z-30">
       <div className="absolute  bottom-[5.8rem] left-6 ">
         <IconButton
           aria-label="Bank"
