@@ -48,7 +48,7 @@ export function AccountOverview() {
   return (
     <div className="grid grid-cols-12 gap-3 lg:gap-4 lg:grid-cols-12">
       <div className={`col-start-1 col-end-13 lg:col-start-1 lg:col-end-7 `}>
-        <div className="p-2 mb-8 ">
+        <div className="p-2 mb-4 lg:mb-8 ">
           <h2>Your Settled Realms</h2>
         </div>
         <MyRealms />
