@@ -12,13 +12,13 @@ import Lords from '@bibliotheca-dao/ui-lib/icons/lords-icon.svg';
 import Menu from '@bibliotheca-dao/ui-lib/icons/menu.svg';
 import Sword from '@bibliotheca-dao/ui-lib/icons/sword.svg';
 import { animated, useSpring } from '@react-spring/web';
+import clsx from 'clsx';
 import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState, useMemo } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useUIContext } from '@/context/UIContext';
-
 import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const MenuSideBar = () => {
@@ -47,7 +47,7 @@ export const MenuSideBar = () => {
     ' border-transparent w-6 h-6 lg:w-[2.6rem] lg:h-12 align-self-center mt-1 shadow-2xl rounded-full  transition-all duration-450 transform background-animate  paper';
 
   const iconClasses = (page) => {
-    return `lg:w-5 mx-auto w-3  hover:fill-white transition-all duration-450  ${
+    return `lg:w-5 mx-auto w-4 hover:fill-white transition-all duration-450  ${
       isPage(page) ? ' fill-frame-secondary' : 'fill-frame-secondary'
     }`;
   };
@@ -141,9 +141,9 @@ export const MenuSideBar = () => {
         </button>
       </div>
       <div
-        className={`sm:relative w-12 pl-3 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
+        className={`sm:relative w-8 pl-2 lg:w-12 lg:pl-3 bottom-0 sm:left-0 sm:top-0 z-40 flex flex-col overflow-auto h-screen  justify-center mx-1 `}
       >
-        <div className="rounded-full mb-[30px] lg:mb-0 lg:py-8 mix-blend-exclusion">
+        <div className="rounded-full mb-[20px] lg:mb-[30px] lg:mb-0 lg:py-8 mix-blend-exclusion">
           {menus.map((menu) => (
             <Link
               onClick={() => {

@@ -127,7 +127,7 @@ export function MapModule() {
 
   return (
     <>
-      <div className="absolute top-0 z-20 right-16">
+      <div className="absolute top-0 z-20 lg:right-16 right-8">
         <SearchFilter
           placeholder="Realm Id"
           onSubmit={(value) => {
@@ -182,7 +182,7 @@ export function MapModule() {
       </DeckGL>
       <Chat
         // onClick={toggleChatSidebar}
-        className="absolute inline-block w-5 h-5 p-0 cursor-pointer top-[88px] left-[28px] fill-frame-secondary z-30 hover:fill-frame-primary"
+        className="absolute inline-block w-3 h-3 left-[1.3rem] top-16 lg:w-5 lg:h-5 p-0 cursor-pointer lg:top-[88px] lg:left-[28px] fill-frame-secondary z-30 hover:fill-frame-primary"
       />
     </>
   );

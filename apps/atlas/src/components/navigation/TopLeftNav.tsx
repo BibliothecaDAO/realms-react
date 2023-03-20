@@ -92,7 +92,7 @@ export const TopLeftNav = () => {
   return (
     <div className="absolute z-30 ">
       <div className="relative">
-        <div className="absolute z-20 w-48 h-8 top-2 lg:w-96 lg:h-10 md:pl-24 lg:pl-24 text-md lg:text-lg shadow-red-900 text-gray-1000">
+        <div className="absolute z-20 w-48 h-8 pl-16 text-sm top-0.5 lg:top-[3px] lg:w-96 lg:h-10 lg:pl-24 lg:text-lg shadow-red-900 text-gray-1000">
           {address && (
             <Tooltip
               placement="right"
@@ -124,7 +124,7 @@ export const TopLeftNav = () => {
                 onMouseEnter={() => setIsBalanceHovered(true)}
                 onMouseLeave={() => setIsBalanceHovered(false)}
               >
-                <Lords className="self-center md:w-4 lg:w-6 fill-frame-secondary" />{' '}
+                <Lords className="self-center md:w-4 lg:w-5 fill-frame-secondary" />{' '}
                 <span className="self-center md:pl-2 lg:pl-2 text-frame-secondary ">
                   {(+formatEther(lordsBalance)).toLocaleString()}
                 </span>
@@ -133,20 +133,20 @@ export const TopLeftNav = () => {
           )}
         </div>
         <TopLeftFrameGold
-          className={`absolute w-[14rem] pointer-events-none fill-frame-secondary stroke-frame-secondary`}
+          className={`absolute w-[10rem] lg:w-[14rem] pointer-events-none fill-frame-secondary stroke-frame-secondary`}
         />
         <TopLeftFrame
-          className={`absolute pointer-events-none w-72 fill-${framePrimary} `}
+          className={`absolute w-[13rem] pointer-events-none lg:w-72 fill-${framePrimary} `}
         />
 
-        <div className="absolute z-10 left-2 top-2 jr-empire paper">
+        <div className="absolute z-20 left-2 top-2 jr-empire paper">
           <Button
             onClick={toggleEmpire}
             variant="unstyled"
-            className="w-16 h-16 rounded-full group"
+            className="w-10 h-10 rounded-full lg:w-16 lg:h-16 group"
           >
-            <div className="absolute top-[0.7rem] left-[0.7rem] z-20 rounded-full p-1">
-              <EternumIcon className="transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-secondary w-9 h-9 group-hover:fill-frame-secondary" />
+            <div className="absolute top-[0.33rem] left-[0.33rem] lg:top-[0.7rem] lg:left-[0.7rem] z-20 rounded-full p-1">
+              <EternumIcon className="w-6 h-6 transition-all duration-300 shadow-inner drop-shadow-lg fill-frame-secondary lg:w-9 lg:h-9 group-hover:fill-frame-secondary" />
             </div>
           </Button>
         </div>
