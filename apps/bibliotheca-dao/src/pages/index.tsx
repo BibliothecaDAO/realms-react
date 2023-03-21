@@ -1,23 +1,15 @@
 import { Button } from '@bibliotheca-dao/ui-lib';
-import Ethereum from '@bibliotheca-dao/ui-lib/icons/eth.svg';
 import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
-import type { NextPage } from 'next';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Typist from 'react-typist-component';
 import { DaoProjects } from '@/components/DaoProjects';
 import { FaqBlock } from '@/components/Faqs';
-
-import { JobCard } from '@/components/JobCard';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { PartnerBanner } from '@/components/PartnerBanner';
 
 import { homePage } from '@/data/Information';
 
 function Home() {
-  const jobs = [
-    { location: 'Realms', title: 'Creative Director', skills: ['creative'] },
-  ];
   const [key, setKey] = useState(1);
   return (
     <MainLayout>

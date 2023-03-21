@@ -105,7 +105,7 @@ export const ArmyCard: React.FC<Prop> = (props) => {
                 <h3>
                   {getRealmNameById(army.realmId)} | {army.realmId}
                 </h3>
-                {!hasArrived(army) && (
+                {!hasArrived(army) && army?.destinationArrivalTime && (
                   <div className="flex text-sm font-semibold rounded ">
                     <CountdownTimer date={army?.destinationArrivalTime} /> ETA
                     arrival

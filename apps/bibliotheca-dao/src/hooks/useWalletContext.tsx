@@ -168,7 +168,6 @@ function useWallet() {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setLordsPrice(data.price?.rate.toFixed(2));
       });
   }

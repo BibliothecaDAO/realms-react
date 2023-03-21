@@ -13,35 +13,35 @@ import UserClaim from '@/data/claim.json';
 import useDebounce from '@/hooks/useDebounce';
 import CumulativePaymentTree from '@/util/cumulative-payment-tree';
 
-const paymentList = [
-  {
-    payee: '',
-    amount: Web3Utils.toBN('600000000000000000000000'),
-  },
-  {
-    payee: '',
-    amount: Web3Utils.toBN('600000000000000000000000'),
-  },
-];
 const contractAddress =
   process.env.NEXT_PUBLIC_POOL_ADDRESS ||
   '0x55A69A21C44B1922D3F96B961AE567C789c4399e';
 
 export const AccountClaim = () => {
   const [claiming, setClaiming] = useState(false);
-  const [formattedClaim, setFormattedClaim] = useState([
+  /* const [formattedClaim, setFormattedClaim] = useState([
     { payee: '', amount: toBN(0) },
-  ]);
+  ]); */
   const week = 10;
   const [claimAmount, setClaimAmount] = useState('0');
   const debouncedClaimAmount = useDebounce(claimAmount, 1000);
+  const [totalClaimable, setTotalClaimable] = useState(0);
   const [currentClaimable, setCurrentClaimable] = useState(0);
   const { address, connector, isConnected } = useAccount();
   const [hexProof, setHexProof] = useState<string>();
   const [withdrawnAmount, setWithdrawnAmount] = useState('0');
 
-  const totalClaimable =
-    UserClaim.find((a) => a.payee === address?.toLowerCase())?.amount || 0;
+  // setFormattedClaim(formatClaim);
+  const paymentTree = useMemo(() => {
+    const formatClaim = UserClaim.map((a: any) => {
+      const toEth = Web3Utils.toWei(a.amount.toString()).toString();
+      return {
+        payee: a.payee,
+        amount: Web3Utils.toBN(toEth),
+      };
+    });
+    return new CumulativePaymentTree(formatClaim);
+  }, []);
 
   const { refetch } = useContractRead({
     address: contractAddress as `0x${string}`,
@@ -49,6 +49,7 @@ export const AccountClaim = () => {
     functionName: 'withdrawals',
     args: address && [address],
     onSuccess(data) {
+      console.log(data);
       setWithdrawnAmount(ethers.utils.formatEther(data));
       const claimable =
         totalClaimable - parseFloat(ethers.utils.formatEther(data || 0));
@@ -59,17 +60,11 @@ export const AccountClaim = () => {
   });
 
   useEffect(() => {
-    const formatClaim = UserClaim.map((a: any) => {
-      const toEth = Web3Utils.toWei(a.amount.toString()).toString();
-      return {
-        payee: a.payee,
-        amount: Web3Utils.toBN(toEth),
-      };
-    });
-    setFormattedClaim(formatClaim);
-    const paymentTree = new CumulativePaymentTree(formatClaim);
+    setTotalClaimable(
+      UserClaim.find((a) => a.payee === address?.toLowerCase())?.amount ?? 0
+    );
     setHexProof(paymentTree.hexProofForPayee(address?.toLowerCase(), week));
-  }, [address, totalClaimable]);
+  }, [address]);
 
   /* const paymentPool = new ethers.Contract(
       contractAddress,
@@ -112,11 +107,13 @@ export const AccountClaim = () => {
 
         <div className="mb-4 md:w-1/2">
           <h4>Amount Claimed</h4>
-          <h2>{parseFloat(withdrawnAmount).toLocaleString()} </h2>
+          <h2>
+            {withdrawnAmount && parseFloat(withdrawnAmount).toLocaleString()}{' '}
+          </h2>
         </div>
         <div className="mb-4 md:w-1/2">
           <h4>Claimable Amount</h4>
-          <h2>{currentClaimable.toLocaleString()} </h2>
+          <h2>{currentClaimable && currentClaimable.toLocaleString()} </h2>
         </div>
       </div>
       <p>

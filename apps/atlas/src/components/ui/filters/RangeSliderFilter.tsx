@@ -15,7 +15,7 @@ export const RangeSliderFilter = React.forwardRef<any, RangeSliderFilterProps>(
   (props, forwardedRef) => {
     const value = props.values || props.defaultValues;
 
-    const valueDisplay = `${value[0]}-${value[1]}`;
+    const valueDisplay = value[1] ? `${value[0]}-${value[1]}` : value[0];
 
     return (
       <div className={props.className || 'mb-3'}>

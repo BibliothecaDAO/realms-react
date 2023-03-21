@@ -88,16 +88,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <UserBalancesProvider>
                     <BankProvider>
                       <SoundProvider>
-                        {/* <SplashScreen> */}
                         <AtlasProvider>
                           <UIProvider>
+                            {/* <SplashScreen> */}
                             <DndProvider backend={HTML5Backend}>
                               <Component {...pageProps} />
                               <Modals />
                             </DndProvider>
+                            {/* </SplashScreen> */}
                           </UIProvider>
                         </AtlasProvider>
-                        {/* </SplashScreen> */}
                       </SoundProvider>
                     </BankProvider>
                   </UserBalancesProvider>
@@ -110,7 +110,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Toaster
         gutter={12}
         toastOptions={{
-          className: '',
+          className: '!bg-transparent',
           style: {
             padding: '0px',
           },

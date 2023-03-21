@@ -3,11 +3,11 @@ import Close from '@bibliotheca-dao/ui-lib/icons/close.svg';
 import { animated } from '@react-spring/web';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { RealmModal } from '@/components/realms/RealmModal';
 import { useModalContext } from '@/context/ModalContext';
 import type { TModal } from '@/hooks/useModal';
 import { soundSelector, useUiSounds } from '@/hooks/useUiSounds';
 import { LoreEntityModal } from '../lore/LoreEntityModal';
-import { RealmModal } from '../realms/RealmModal';
 
 const getModalComponent = (currentModal: TModal) => {
   const props: any = currentModal?.props;

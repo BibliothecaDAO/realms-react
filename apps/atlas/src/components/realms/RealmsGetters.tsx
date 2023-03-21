@@ -446,9 +446,15 @@ export const getHappinessIcon = ({ realm, food }) => {
   const happiness = getHappiness({ realm, food });
 
   if (happiness >= BASE_HAPPINESS) {
-    return '😀';
+    return '😁'; // Very happy
+  } else if (happiness >= BASE_HAPPINESS - 5) {
+    return '😃'; // Happy
+  } else if (happiness >= BASE_HAPPINESS - 10) {
+    return '🙂'; // Neutral
+  } else if (happiness >= BASE_HAPPINESS - 13) {
+    return '😕'; // Unhappy
   } else {
-    return '😢';
+    return '😞'; // Very unhappy
   }
 };
 

@@ -1,57 +1,31 @@
-import { Button } from '@bibliotheca-dao/ui-lib';
-import Ouroboros from '@bibliotheca-dao/ui-lib/icons/ouroboros.svg';
-import { useAccount } from '@starknet-react/core';
-import { useState } from 'react';
-import { useSoundContext } from '@/context/soundProvider';
-import useScreenOrientation from '@/hooks/useScreenOrientation';
-import NetworkConnectButton from '../ui/NetworkConnectButton';
+import { useEffect } from 'react';
+
+import { AccountSettingsModal } from '@/components/navigation/AccountSettingModal';
+import { useUIContext } from '@/context/UIContext';
 
 export const SplashScreen = ({ children }) => {
-  const { toggleFullScreen, orientation } = useScreenOrientation();
-  const [loading, setLoading] = useState(true);
-  const { address, status, connector } = useAccount();
-
-  const { toggleSound } = useSoundContext();
+  const { showSplash, accountSettingsModal, toggleAccountSettings } =
+    useUIContext();
 
   return (
     <>
-      {loading && (
-        <div className="absolute left-0 flex items-center justify-center w-full h-screen bg-cover z-100 bg-gray-1000 bg-realmBackground vignette-inset">
-          <div className="relative flex flex-col w-full px-10 text-center lg:w-1/3">
-            <Ouroboros className="self-center w-full h-32 ml-2 mr-4 fill-frame-primary " />
-            <h1 className="mb-8">Eternum</h1>
-            {address && status === 'connected' ? (
-              <div className="flex w-full gap-4">
-                <Button
-                  className="sm:w-1/2"
-                  variant="primary"
-                  onClick={() => {
-                    setLoading(false);
-                    toggleSound();
-                  }}
-                >
-                  Launch
-                </Button>
-                <Button
-                  className="sm:w-1/2"
-                  variant="primary"
-                  onClick={() => {
-                    toggleFullScreen();
-                    setLoading(false);
-                    toggleSound();
-                  }}
-                >
-                  Launch Fullscreen
-                </Button>
-              </div>
-            ) : (
-              <div className="rounded bg-gray-1000">
-                <NetworkConnectButton />
-              </div>
-            )}
-          </div>
+      {showSplash && (
+        <div className="absolute left-0 z-20 flex items-center justify-center flex-1 w-full h-screen bg-cover bg-gray-1000 bg-realmBackground vignette-inset">
+          {/* <div
+            className="absolute top-0 bottom-0 left-0 right-0 flex flex-1 w-full mx-auto my-20 overflow-hidden transition duration-500 ease-in-out translate-x-0 rounded shadow-md opacity-100 bg-yellow-scroll shadow-black md:w-1/2 lg:w-1/3"
+          >
+            <div
+              className="fixed flex flex-col flex-1 p-10 overflow-hidden text-center rounded-xl bg-gradient-to-r from-gray-900 to-gray-1000 top-2 left-2 bottom-2 right-2"
+            >
+              (her)
+            </div>
+          </div> */}
         </div>
       )}
+      <AccountSettingsModal
+        isOpen={accountSettingsModal}
+        onClose={toggleAccountSettings}
+      />
       {children}
     </>
   );

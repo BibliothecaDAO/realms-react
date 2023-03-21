@@ -169,7 +169,7 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
                     <>
                       <Button
                         onClick={() => setDetails(!isDetails)}
-                        variant="outline"
+                        variant="primary"
                         size="xs"
                       >
                         construct
@@ -336,14 +336,12 @@ export const RealmCard = forwardRef<any, RealmsCardProps>(
           </div>
         </div>
 
-        <AtlasSidebar containerClassName="w-full z-40" isOpen={isRaiding}>
-          {isRaiding && (
-            <CombatSideBar
-              onClose={() => setIsRaiding(false)}
-              defendingRealm={realm}
-            />
-          )}
-        </AtlasSidebar>
+        {isRaiding && (
+          <CombatSideBar
+            onClose={() => setIsRaiding(false)}
+            defendingRealm={realm}
+          />
+        )}
 
         <AtlasSidebar
           containerClassName={sidebarClassNames.replace('z-30', 'z-100')}

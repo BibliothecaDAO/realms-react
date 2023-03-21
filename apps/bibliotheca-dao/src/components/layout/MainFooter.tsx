@@ -9,18 +9,13 @@ const footerHREFStyles = 'hover:border-b-4 border-gray-900/10';
 
 export const MainFooter = () => {
   return (
-    <div className="relative z-20 grid w-full grid-cols-1 gap-2 p-10 mx-auto text-off-300 sm:grid-cols-2 lg:grid-cols-4 sm:p-10 bg-off-300/40">
+    <div className="relative z-20 grid w-full grid-cols-1 gap-2 p-10 mx-auto text-off-300 sm:grid-cols-2 lg:grid-cols-4 sm:p-10 bg-off-800/40">
       <div className="">
         <BibliothecaBook className="self-center h-24 fill-current sm:h-36" />
       </div>
       <div className="my-10 tracking-widest uppercase">
         <h4 className="mb-6">Links</h4>
         <ul>
-          <li className={footerLinkStyles}>
-            <Link className={footerHREFStyles} href={'/hack'}>
-              Hackathon
-            </Link>
-          </li>
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].website}>
               The Atlas
@@ -40,6 +35,11 @@ export const MainFooter = () => {
             <a className={footerHREFStyles} href={links[0].scroll}>
               Master Scroll (litepaper)
             </a>
+          </li>
+          <li className={footerLinkStyles}>
+            <Link className={footerHREFStyles} href={'/claim'}>
+              Claim
+            </Link>
           </li>
           <li className={footerLinkStyles}>
             <a className={footerHREFStyles} href={links[0].staking}>

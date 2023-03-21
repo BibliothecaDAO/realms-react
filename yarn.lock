@@ -11509,10 +11509,12 @@ __metadata:
     ethers: "npm:5.7.2"
     gl-matrix: "npm:^3.4.3"
     graphql: "npm:^16.6.0"
+    gray-matter: "npm:4.0.3"
     heroicons: "npm:^2.0.14"
     jest: "npm:29.4.1"
     jest-css-modules-transform: "npm:4.4.2"
     lodash: "npm:4.17.21"
+    markdown-to-jsx: "npm:7.1.9"
     next: "npm:13.1.6"
     next-auth: "npm:^4.19.0"
     next-seo: "npm:5.15.0"
@@ -19648,6 +19650,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gray-matter@npm:4.0.3":
+  version: 4.0.3
+  resolution: "gray-matter@npm:4.0.3"
+  dependencies:
+    js-yaml: "npm:^3.13.1"
+    kind-of: "npm:^6.0.2"
+    section-matter: "npm:^1.0.0"
+    strip-bom-string: "npm:^1.0.0"
+  checksum: a1554a503d24b5a846a7da2ff855d7515b7d2fe25e4eb6973b88c92f5f973a04774c302e2320b57e291f682af1eaa547d871cc1f1134520fa91a2d9e17a6bfe1
+  languageName: node
+  linkType: hard
+
 "grid-index@npm:^1.1.0":
   version: 1.1.0
   resolution: "grid-index@npm:1.1.0"
@@ -23367,6 +23381,15 @@ __metadata:
   version: 1.0.4
   resolution: "markdown-escapes@npm:1.0.4"
   checksum: c17e144fe369cc42b9efadd25daca1f08b93a7903870c8af465914d58fcce37890cf30ba5c44b5689572886ae920f97d5ea7e35784dad53f230ab64c11d4f2b7
+  languageName: node
+  linkType: hard
+
+"markdown-to-jsx@npm:7.1.9":
+  version: 7.1.9
+  resolution: "markdown-to-jsx@npm:7.1.9"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: b93c3eb5f0fc6399892316b460705481c2e438e115ca3f8b3e017231b5f3af7caea231c8bfaf9860e75de1c62e3fd25b6a935c2bbd15370bf6fb6b2010406f1d
   languageName: node
   linkType: hard
 
@@ -29439,6 +29462,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"section-matter@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "section-matter@npm:1.0.0"
+  dependencies:
+    extend-shallow: "npm:^2.0.1"
+    kind-of: "npm:^6.0.0"
+  checksum: f01cd260a8602110ee5149e4f0a2f02b5d333c710e7b65b86987b67c43a5b4c30ef7e37f21a6a56671c82a135de2306a29e6e3cc19861463fea50234af3ab830
+  languageName: node
+  linkType: hard
+
 "semver@npm:2 || 3 || 4 || 5, semver@npm:^5.4.1, semver@npm:^5.5.0, semver@npm:^5.6.0":
   version: 5.7.1
   resolution: "semver@npm:5.7.1"
@@ -30636,6 +30669,13 @@ __metadata:
   dependencies:
     ansi-regex: "npm:^6.0.1"
   checksum: 552123468abae97929da64559af9c13f4518f8ea199038089bf5e49d7860d708e5e29b2e6401fcbab6f99f2c42f865c15a1976bcf51c5165f82152c7ce9a1043
+  languageName: node
+  linkType: hard
+
+"strip-bom-string@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "strip-bom-string@npm:1.0.0"
+  checksum: 244fa2f92dfd1c7798c07acbdd80c85bd1a1c422d96fadc41bdf87e57e7259520475b51e3630437170e440a15d91b4a4c2da7f0857448cabcf1923e876324926
   languageName: node
   linkType: hard
 

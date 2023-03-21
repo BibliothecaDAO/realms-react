@@ -11,6 +11,7 @@ import { GASideBar } from '../ga/GASideBar';
 import { LeaderboardSideBar } from '../leaderboard/LeadeboardSideBar';
 import { LootSideBar } from '../loot/LootSideBar';
 import { LoreSideBar } from '../lore/LoreSideBar';
+import { AccountSettingsModal } from '../navigation/AccountSettingModal';
 import { RealmSideBar } from '../realms/RealmsSideBar';
 // import { ChatSideBar } from '../ui/Chat';
 import { VizirSideBar } from '../ui/vizir/VizirSideBar';
@@ -44,6 +45,8 @@ export function AtlasSidebars() {
     toggleLeaderboard,
     toggleVizir,
     vizirSidebar,
+    toggleAccountSettings,
+    accountSettingsModal,
   } = useUIContext();
 
   function onLordsNavClick() {
@@ -106,6 +109,7 @@ export function AtlasSidebars() {
         isOpen={settleRealmsSidebar}
         onClose={toggleSettleRealms}
       />
+
       <VizirSideBar isOpen={vizirSidebar} onClose={toggleVizir} />
     </>
   );

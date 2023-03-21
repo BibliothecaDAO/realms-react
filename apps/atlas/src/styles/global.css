@@ -112,7 +112,7 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply rounded cursor-move hover:bg-cta-100 bg-cta-100;
+  @apply rounded cursor-move bg-yellow-secondary;
 }
 
 @font-face {
@@ -128,6 +128,7 @@ html {
 
 .paper {
   mask-image: url('../../public/textures/grit.png');
+  mask-size: 70%;
   mask-mode: alpha, match-source;
 }
 
@@ -193,6 +194,14 @@ div#deckgl-wrapper {
   background-color: #c49c5c;
 }
 
+.fill-yellow-secondary {
+  fill: #c49c5c;
+}
+
 .color-yellow-secondary {
   color: #c49c5c;
+}
+
+.primary-button-color {
+  color: #2c221b;
 }

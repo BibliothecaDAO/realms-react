@@ -13,12 +13,15 @@ export type UIContextType = {
   toggleTransactionCart: () => void;
   toggleChatSidebar: () => void;
   toggleSettleRealms: () => void;
+  toggleAccountSettings: () => void;
   toggleResourcesList: () => void;
   toggleLeaderboard: () => void;
   toggleVizir: () => void;
   toggleLore: () => void;
+  toggleSplash: () => void;
   closeAll: () => void;
   empireSidebar: boolean;
+  accountSettingsModal: boolean;
   tradeSidebar: boolean;
   transactionCart: boolean;
   chatSidebar: boolean;
@@ -28,13 +31,15 @@ export type UIContextType = {
   leaderboardSidebar: boolean;
   onboarding: boolean;
   vizirSidebar: boolean;
+  showSplash: boolean;
 };
 
 export function useUi() {
   const { mapContext } = useAtlasContext();
   const selectedAsset = mapContext.selectedAsset;
   const router = useRouter();
-
+  const [accountSettingsModal, setAccountSettingsModal] =
+    useState<boolean>(true);
   const [assetSidebar, setAssetSidebar] = useState<AssetType | null>(null);
   const [empireSidebar, setEmpireSidebar] = useState<boolean>(false);
   const [tradeSidebar, setTradeSidebar] = useState<boolean>(false);
@@ -45,6 +50,7 @@ export function useUi() {
   const [loreSidebar, setLoreSidebar] = useState(false);
   const [leaderboardSidebar, setLeaderboardSidebar] = useState(false);
   const [vizirSidebar, setVizirSidebar] = useState(false);
+  const [showSplash, setShowPlash] = useState(true);
 
   const [onboarding, setOnboarding] = useState<boolean>(false);
 
@@ -56,6 +62,12 @@ export function useUi() {
     }
   }, [router.isReady, selectedAsset]);
 
+  const toggleAccountSettings = () => {
+    router.push('/', undefined, { shallow: true });
+    closeAll();
+    setAccountSettingsModal(!accountSettingsModal);
+  };
+
   const toggleAsset = (type: AssetType) => {
     closeAll();
     if (type == assetSidebar) {
@@ -63,6 +75,11 @@ export function useUi() {
       return;
     }
     setAssetSidebar(type);
+  };
+
+  const toggleSplash = () => {
+    setShowPlash(!showSplash);
+    setAccountSettingsModal(false);
   };
 
   const closeAsset = () => {
@@ -109,6 +126,7 @@ export function useUi() {
   };
 
   const closeAll = () => {
+    setAccountSettingsModal(false);
     setEmpireSidebar(false);
     setTradeSidebar(false);
     setTransactionCart(false);
@@ -122,6 +140,8 @@ export function useUi() {
   };
 
   return {
+    toggleAccountSettings,
+    accountSettingsModal,
     toggleAsset,
     closeAsset,
     assetSidebar,
@@ -142,6 +162,8 @@ export function useUi() {
     toggleLeaderboard,
     loreSidebar,
     toggleLore,
+    toggleSplash,
+    showSplash,
     onboarding,
     closeAll,
     vizirSidebar,
