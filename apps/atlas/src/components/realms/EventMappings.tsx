@@ -1,3 +1,4 @@
+// TODOBASTIONS: create events related to bastions
 import { Button } from '@bibliotheca-dao/ui-lib';
 
 import {

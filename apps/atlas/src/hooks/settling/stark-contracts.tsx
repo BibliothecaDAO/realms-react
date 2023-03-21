@@ -12,6 +12,7 @@ import {
 } from 'starknet';
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
+import Bastions from '@/abi/settling/Bastions.json';
 import Combat from '@/abi/settling/Combat.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Food from '@/abi/settling/Food.json';
@@ -43,6 +44,9 @@ export const ModuleAddr = {
   ResourcesToken:
     '0x07080e87497f82ac814c6eaf91d66ac93672927a8c019014f05eb6d688ebd0fc',
   Building:
+    '0x01c7a86cea8febe69d688dd5ffa361e7924f851db730f4256ed67fd805ea8aa7',
+  // TODOBASTIONS: put the real contract
+  Bastions:
     '0x01c7a86cea8febe69d688dd5ffa361e7924f851db730f4256ed67fd805ea8aa7',
   Combat: '0x039f40b33de4d22b2c140fccbcf2092ccc24ebdb7ed985716b93f763ae5607e8',
   Wonder: '0x0096cae38dd01a1e381c9e57db09669298fa079cfdb45e1a429c4020a6515549',
@@ -215,6 +219,17 @@ export function useCombatContract() {
 }
 
 /**
+ * Load the Realms Bastions contract.
+ * @returns The `Bastions` contract or undefined.
+ */
+export function useBastionsContract() {
+  return useContract({
+    abi: Bastions as Abi,
+    address: ModuleAddr.Bastions,
+  });
+}
+
+/**
  * Load the Realms Resources ERC1155 contract.
  * @returns The `Resources` contract or undefined.
  */
@@ -260,6 +275,10 @@ export function useExchangeContract() {
 const provider = new RpcProvider({
   nodeUrl: `https://starknet-goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
 });
+
+export async function getBlockNumber() {
+  return provider.getBlockNumber();
+}
 
 export function useJsonRpc() {
   const FoodContract = new Contract(Food as Abi, ModuleAddr.Food, provider);

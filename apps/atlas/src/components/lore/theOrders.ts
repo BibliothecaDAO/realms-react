@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-interface Orders {
+export interface Orders {
   name: string;
   colour: string;
   id: number;

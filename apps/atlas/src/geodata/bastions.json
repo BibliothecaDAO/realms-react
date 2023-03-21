@@ -1,0 +1,7 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      { "xy": [-30, 20.68], "id": 1, "bonus_type": ["lords"] },
+      { "xy": [-33, 30.78], "id": 2, "bonus_type": ["lords"] }
+    ]
+}
