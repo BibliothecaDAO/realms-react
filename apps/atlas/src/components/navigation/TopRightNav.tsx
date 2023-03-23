@@ -16,20 +16,20 @@ export const TopRightNav = () => {
   const { toggleTransactionCart } = useUIContext();
 
   return (
-    <div className="absolute top-0 right-0 z-50">
+    <div className="absolute top-0 right-0 z-20">
       <div className="relative">
         {address && <TransactionNavItem onClick={toggleTransactionCart} />}
         <div
-          className={`absolute top-0 right-0 w-[calc(100vw-28rem)] h-[2.8px]  bg-${framePrimary} mr-72 pointer-events-none`}
+          className={`absolute top-0 right-0 w-[calc(100vw-20rem)] lg:w-[calc(100vw-28rem)] h-[2px] lg:h-[2.8px]  bg-${framePrimary} mr-52 lg:mr-72 pointer-events-none`}
         />
         <div
-          className={`absolute top-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-${framePrimary} mr-72 pointer-events-none`}
+          className={`absolute top-[3px] right-0 w-[calc(100vw-26rem)] lg:w-[calc(100vw-36rem)] h-[1.1px] lg:h-[2.2px] bg-${framePrimary} mr-52 lg:mr-72 pointer-events-none`}
         />
         <TopRightFrame
-          className={`absolute top-0 right-0 pointer-events-none w-72 fill-${framePrimary}`}
+          className={`absolute top-0 right-0 pointer-events-none w-52 lg:w-72 fill-${framePrimary}`}
         />
         <TopRightFrameGold
-          className={`absolute top-0 right-0 pointer-events-none w-[17rem] fill-${framePrimary}`}
+          className={`absolute top-0 right-0 pointer-events-none w-[12.2rem] lg:w-[17rem] fill-${framePrimary}`}
         />
       </div>
     </div>

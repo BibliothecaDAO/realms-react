@@ -22,15 +22,15 @@ export function SearchFilter(props: SearchFilterProps) {
   }
 
   return (
-    <div className="flex items-center justify-center w-48 gap-1 p-1 rounded-xl ">
+    <div className="flex items-center justify-center w-40 gap-1 p-1 lg:w-48 rounded-xl ">
       <button
-        className="flex items-center justify-center p-2 transition-all duration-300 cursor-pointer rounded-xl h-9 hover:bg-gray-300/20"
+        className="flex items-center justify-center h-6 p-2 transition-all duration-300 cursor-pointer rounded-xl lg:h-9 hover:bg-gray-300/20"
         onClick={doSubmit}
       >
-        <Search className={'w-5 fill-frame-secondary'} />
+        <Search className={'lg:w-5 w-4 fill-frame-secondary'} />
       </button>
       <input
-        className="w-full px-3 py-1 text-sm font-bold leading-tight tracking-widest transition-all duration-300 bg-transparent rounded-lg shadow-md appearance-none h-9 focus:outline-none hover:bg-gray-300/10 placeholder:text-frame-primary"
+        className="w-full h-6 px-3 py-1 text-sm font-bold leading-tight tracking-widest transition-all duration-300 bg-transparent rounded-lg shadow-md appearance-none lg:h-9 focus:outline-none hover:bg-gray-300/10 placeholder:text-frame-primary"
         type="text"
         value={value}
         onChange={(e) => {

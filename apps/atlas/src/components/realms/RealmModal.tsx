@@ -227,7 +227,7 @@ export const RealmModal = (props: Prop) => {
   return (
     <div className="flex flex-wrap">
       <div className="relative flex flex-wrap w-full min-h-max">
-        <div className="w-1/3">
+        <div className="w-1/5 lg:w-1/3">
           <Image
             src={imgSrc}
             width={1024}
@@ -236,7 +236,7 @@ export const RealmModal = (props: Prop) => {
             className="sticky top-0 object-cover w-full -translate-y-8 rounded-br-full"
           />
         </div>
-        <div className="w-2/3 h-full px-10 mx-auto overflow-y-scroll rounded-2xl">
+        <div className="w-4/5 h-full px-4 mx-auto overflow-y-scroll lg:w-2/3 lg:px-10 rounded-2xl">
           <div className="relative w-full text-center rounded">
             <div className="flex justify-center w-full py-3 text-center ">
               <div className="self-center">

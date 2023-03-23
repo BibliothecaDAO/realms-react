@@ -131,9 +131,13 @@ export const RaidSuccess = () => {
             Header: 'Realm',
             id: 1,
             accessor: 'realm',
-            size: 50,
           },
-          { Header: 'Succesful Raids', id: 2, accessor: 'successfulRaid' },
+          {
+            Header: 'Succesful Raids',
+            id: 2,
+            accessor: 'successfulRaid',
+            size: 150,
+          },
           { Header: 'Current Owner', id: 3, accessor: 'owner' },
           { Header: 'Action', id: 4, accessor: 'action', size: 50 },
         ]

@@ -17,11 +17,13 @@ import {
   useDumbGameApprovals,
 } from '@/hooks/settling/useApprovals';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
 import { MyActions } from './MyActions';
 import { MyFood } from './MyFood';
 
 export function EmpirePanel() {
+  const breakpoints: any = useBreakpoint();
   const [selectedTab, setSelectedTab] = useState(0);
   const { play } = useUiSounds(soundSelector.pageTurn);
   const { address } = useAccount();
@@ -34,8 +36,8 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex">
-            <Crown className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
-            <div className="hidden md:block">Empire</div>
+            <Crown className="self-center w-6 h-6 fill-current lg:mr-2" />
+            <div className="hidden lg:block"> Empire</div>
           </div>
         ),
         component: <AccountOverview />,
@@ -43,8 +45,8 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex whitespace-nowrap">
-            <Sword className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
-            <div className="hidden md:block">Quick Actions</div>
+            <Sword className="self-center w-6 h-6 fill-current lg:mr-2" />
+            <div className="hidden lg:block"> Quick Actions</div>
           </div>
         ),
         component: <MyActions onSettleRealms={toggleSettleRealms} />,
@@ -52,8 +54,8 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex whitespace-nowrap">
-            <Sickle className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-            <div className="hidden md:block">Food</div>
+            <Sickle className="self-center w-6 h-6 fill-current lg:mr-4" />
+            <div className="hidden lg:block"> Food</div>
           </div>
         ),
         component: <MyFood />,
@@ -61,8 +63,8 @@ export function EmpirePanel() {
       {
         label: (
           <div className="flex whitespace-nowrap">
-            <Helm className="self-center w-6 h-6 fill-current md:mr-2" />{' '}
-            <div className="hidden md:block">My Armies</div>
+            <Helm className="self-center w-6 h-6 fill-current lg:mr-2" />
+            <div className="hidden lg:block"> My Armies</div>
           </div>
         ),
         component: <MyArmies />,
@@ -194,10 +196,12 @@ export function EmpirePanel() {
               onChange={(index) => pressedTab(index as number)}
               variant="primary"
             >
-              <div className="sticky top-0 z-20 p-4 overflow-x-auto text-sm bg-gradient-to-r from-gray-900 to-gray-1000">
+              <div className="sticky top-0 p-4 overflow-x-auto text-sm z-100 bg-gradient-to-r from-gray-900 to-gray-1000">
                 <Tabs.List className="py-0">
                   {tabs.map((tab, index) => (
-                    <Tabs.Tab key={index}>{tab.label}</Tabs.Tab>
+                    <Tabs.Tab noText={!breakpoints.lg} key={index}>
+                      {tab.label}
+                    </Tabs.Tab>
                   ))}
                 </Tabs.List>
               </div>

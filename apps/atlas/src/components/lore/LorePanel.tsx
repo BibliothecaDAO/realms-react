@@ -103,7 +103,7 @@ export const LorePanel = () => {
     !loading && (data?.getLoreEntities?.length ?? 0) === 0;
 
   return (
-    <div className="relative flex flex-col flex-1 p-10">
+    <div className="relative flex flex-col flex-1 p-4 lg:p-10">
       <div className="flex justify-between">
         <div className="flex flex-col items-center justify-center w-full">
           <h1>Bibliopedia</h1>
@@ -156,7 +156,7 @@ export const LorePanel = () => {
         {state.selectedTab === 2 && <LoreCreateEntityForm />}
 
         {state.selectedTab !== 2 && (
-          <div className="grid gap-8 px-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid gap-6 lg:gap-8 sm:grid-cols-2 md:grid-cols-3">
             <LoreEntitiesOverview entities={data?.getLoreEntities ?? []} />
           </div>
         )}

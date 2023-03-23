@@ -148,7 +148,7 @@ export const LaborTable = (props: Prop) => {
       <Disclosure>
         {({ open }) => (
           <>
-            <div className="flex items-center">
+            <div className="flex flex-col flex-wrap items-center lg:flex-row">
               <div className="relative h-32 mr-4">
                 <img
                   className="relative z-10 object-cover h-full rounded-xl"
@@ -157,116 +157,121 @@ export const LaborTable = (props: Prop) => {
                 />
                 <div className="absolute top-0 right-0 z-10 w-16 h-full bg-gradient-to-r from-transparent to-gray-900 group-hover:to-gray-1000"></div>
               </div>
-              <div className="flex flex-col mr-4">
-                <div className="flex items-center">
-                  <ResourceIcon size="xs" resource={resource?.trait || ''} />
-                  <div className="ml-2 text-xl truncate">{resource?.trait}</div>
-                </div>
+              <div className="flex items-center justify-between mt-4 lg:mt-0">
+                <div className="flex flex-col mr-4">
+                  <div className="flex items-center">
+                    <ResourceIcon size="xs" resource={resource?.trait || ''} />
+                    <div className="ml-2 text-xl truncate">
+                      {resource?.trait}
+                    </div>
+                  </div>
 
-                <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
-                  <div className="flex justify-between space-x-2 text-base">
-                    <span className="text-gray-600">Margin:</span>{' '}
-                    <span>{(laborProfitMargin * 100).toFixed(1)}%</span>
-                  </div>
-                  <hr className="my-1 opacity-20" />
-                  <div className="flex">
-                    <LordsIcon className="w-3 fill-white" />
-                    <div className="mx-2 text-base">
-                      {(+formatEther(
-                        currentMarketPriceForResource?.amount || '0'
-                      )).toFixed(2)}{' '}
+                  <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
+                    <div className="flex justify-between space-x-2 text-base">
+                      <span className="text-gray-600">Margin:</span>{' '}
+                      <span>{(laborProfitMargin * 100).toFixed(1)}%</span>
                     </div>
-                    <div className="self-center ml-auto">
-                      <RateChange
-                        change={
-                          currentMarketPriceForResource?.percentChange24Hr
-                        }
-                      />
+                    <hr className="my-1 opacity-20" />
+                    <div className="flex">
+                      <LordsIcon className="w-3 fill-white" />
+                      <div className="mx-2 text-base">
+                        {(+formatEther(
+                          currentMarketPriceForResource?.amount || '0'
+                        )).toFixed(2)}{' '}
+                      </div>
+                      <div className="self-center ml-auto">
+                        <RateChange
+                          change={
+                            currentMarketPriceForResource?.percentChange24Hr
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col mr-4">
-                <div className="text-xl truncate">
-                  {realmsResources.length > 1
-                    ? `Available on ${realmsResources.length} Realms`
-                    : ' '}
-                  &nbsp;
-                </div>
-                <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
-                  <div className="flex justify-between space-x-2 text-base">
-                    <span className="text-gray-600">Current balance:</span>
-                    {convertToK(
-                      +formatEther(
-                        getBalanceById(resource?.id as number)?.amount || '0'
-                      ).toString()
-                    )}
+                <div className="flex flex-col mr-4">
+                  <div className="text-xl truncate">
+                    {realmsResources.length > 1
+                      ? `Available on ${realmsResources.length} Realms`
+                      : ' '}
+                    &nbsp;
                   </div>
-                  <hr className="my-1 opacity-20" />
-                  <div className="flex space-x-2 text-base">
-                    {isFood ? (
-                      <>
-                        {' '}
-                        <div className="flex justify-between px-2 pt-1">
-                          {generatedLabors.qtyBuilt} /{' '}
-                          {generatedLabors.maxBuildings}{' '}
-                          {resourceId == ResourcesIds.Fish
-                            ? 'Fishing Villages'
-                            : 'Farms'}{' '}
-                          Producing
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-gray-600">Vault:</span>{' '}
-                        <span>{generatedLabors.vault.toFixed()}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col mr-4">
-                <span className="text-xl truncate">&nbsp;</span>
-                <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
-                  <div className="flex space-x-2 text-base">
-                    <span className="text-gray-600">Status:</span>{' '}
-                    <div className="flex self-center mr-3 text-gray-600 capitalize ">
-                      {generatedLabors.isGenerating ? 'producing' : 'idle'}{' '}
-                      <Pulse
-                        active={generatedLabors.isGenerating}
-                        pulse={generatedLabors.isGenerating}
-                      />
-                    </div>
-                  </div>
-                  <hr className="my-1 opacity-20" />
-                  <div className="flex justify-between space-x-2 text-base">
-                    <span className="text-gray-600">Harvest:</span>
-                    <span
-                      className={getHasGeneratedClass(
-                        generatedLabors.hasGenerated
+                  <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
+                    <div className="flex justify-between space-x-2 text-base">
+                      <span className="text-gray-600">Current balance:</span>
+                      {convertToK(
+                        +formatEther(
+                          getBalanceById(resource?.id as number)?.amount || '0'
+                        ).toString()
                       )}
-                    >
-                      <HarvestButton
-                        realmIds={realmsResources
-                          .map((realm) => realm.realmId)
-                          .filter(
-                            (realmId, i) =>
-                              generatedLabors.labors[i].hasGenerated
-                          )}
-                        resourceId={resourceId}
-                        generation={
-                          isFood
-                            ? generatedLabors.generated *
-                              productionAmount *
-                              (generatedLabors.labors[0].qtyBuilt || 1)
-                            : generatedLabors.generated * productionAmount
-                        }
-                      />
-                    </span>
+                    </div>
+                    <hr className="my-1 opacity-20" />
+                    <div className="flex space-x-2 text-base">
+                      {isFood ? (
+                        <>
+                          {' '}
+                          <div className="flex justify-between px-2 pt-1">
+                            {generatedLabors.qtyBuilt} /{' '}
+                            {generatedLabors.maxBuildings}{' '}
+                            {resourceId == ResourcesIds.Fish
+                              ? 'Fishing Villages'
+                              : 'Farms'}{' '}
+                            Producing
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-gray-600">Vault:</span>{' '}
+                          <span>{generatedLabors.vault.toFixed()}</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col mr-4">
+                  <span className="text-xl truncate">&nbsp;</span>
+                  <div className="p-2 mt-2 border rounded border-black/10 bg-gray-1000">
+                    <div className="flex space-x-2 text-base">
+                      <span className="text-gray-600">Status:</span>{' '}
+                      <div className="flex self-center mr-3 text-gray-600 capitalize ">
+                        {generatedLabors.isGenerating ? 'producing' : 'idle'}{' '}
+                        <Pulse
+                          active={generatedLabors.isGenerating}
+                          pulse={generatedLabors.isGenerating}
+                        />
+                      </div>
+                    </div>
+                    <hr className="my-1 opacity-20" />
+                    <div className="flex justify-between space-x-2 text-base">
+                      <span className="text-gray-600">Harvest:</span>
+                      <span
+                        className={getHasGeneratedClass(
+                          generatedLabors.hasGenerated
+                        )}
+                      >
+                        <HarvestButton
+                          realmIds={realmsResources
+                            .map((realm) => realm.realmId)
+                            .filter(
+                              (realmId, i) =>
+                                generatedLabors.labors[i].hasGenerated
+                            )}
+                          resourceId={resourceId}
+                          generation={
+                            isFood
+                              ? generatedLabors.generated *
+                                productionAmount *
+                                (generatedLabors.labors[0].qtyBuilt || 1)
+                              : generatedLabors.generated * productionAmount
+                          }
+                        />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col ml-auto mr-2">
+
+              <div className="flex flex-col mt-4 mr-2 lg:mt-0 lg:ml-auto">
                 <BuyLabor
                   realms={realmsResources}
                   resource={{ ...resource, resourceId }}
@@ -343,83 +348,86 @@ export const LaborRealmRow = ({
   const remaining = getUnproducedLabor(laborBalance?.balance);
 
   return (
-    <div className="flex items-center w-full p-2 mb-4 bg-gray-900 rounded hover:bg-gray-1000">
-      <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
-        <div className="flex space-x-2 text-base">
-          <span className="text-gray-600">Realm:</span>{' '}
-          <OrderIcon
-            className="self-center mr-1"
-            size="xs"
-            order={getRealmOrderById(realm?.realmId) || ''}
-          />
-          <span className="truncate">
-            {' '}
-            {(realm?.name && realm?.name + ' #' + realm?.realmId) || '0'}
-          </span>
-        </div>
-        <hr className="my-1 opacity-20" />
-        <div className="flex justify-between space-x-2 text-base">
-          {isFood ? (
-            <>
-              <div className="flex justify-between px-2 pt-1">
-                {laborBalance.qtyBuilt} / {laborBalance.maxBuildings}{' '}
-                {resource.resourceId == ResourcesIds.Fish
-                  ? 'Fishing Villages'
-                  : 'Farms'}{' '}
-                Producing
-              </div>
-            </>
-          ) : (
-            <>
-              <span className="text-gray-600">Vault:</span>
-              <span>{laborBalance.vault.toFixed()}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
-        <div className="flex space-x-2 text-base">
-          <span className="text-gray-600">Status:</span>{' '}
-          <div className="flex self-center mr-3 text-gray-600 capitalize ">
-            {laborBalance.isGenerating ? 'producing' : 'idle'}{' '}
-            <Pulse
-              active={laborBalance.isGenerating}
-              pulse={laborBalance.isGenerating}
+    <div className="flex flex-wrap items-center w-full p-2 mb-4 bg-gray-900 rounded hover:bg-gray-1000">
+      <div className="flex justify-between w-full lg:justify-start lg:w-auto">
+        <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
+          <div className="flex space-x-2 text-base">
+            <span className="text-gray-600">Realm:</span>{' '}
+            <OrderIcon
+              className="self-center mr-1"
+              size="xs"
+              order={getRealmOrderById(realm?.realmId) || ''}
             />
+            <span className="truncate">
+              {' '}
+              {(realm?.name && realm?.name + ' #' + realm?.realmId) || '0'}
+            </span>
+          </div>
+          <hr className="my-1 opacity-20" />
+          <div className="flex justify-between space-x-2 text-base">
+            {isFood ? (
+              <>
+                <div className="flex justify-between px-2 pt-1">
+                  {laborBalance.qtyBuilt} / {laborBalance.maxBuildings}{' '}
+                  {resource.resourceId == ResourcesIds.Fish
+                    ? 'Fishing Villages'
+                    : 'Farms'}{' '}
+                  Producing
+                </div>
+              </>
+            ) : (
+              <>
+                <span className="text-gray-600">Vault:</span>
+                <span>{laborBalance.vault.toFixed()}</span>
+              </>
+            )}
           </div>
         </div>
-        <hr className="my-1 opacity-20" />
-        <div className="flex justify-between space-x-2 text-base">
-          <span className="text-gray-600">Produced:</span>
-          <span>
-            {isFood
-              ? laborBalance.generated *
-                productionAmount *
-                (laborBalance.qtyBuilt || 1)
-              : laborBalance.generated * productionAmount}
-          </span>
+        <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
+          <div className="flex space-x-2 text-base">
+            <span className="text-gray-600">Status:</span>{' '}
+            <div className="flex self-center mr-3 text-gray-600 capitalize ">
+              {laborBalance.isGenerating ? 'producing' : 'idle'}{' '}
+              <Pulse
+                active={laborBalance.isGenerating}
+                pulse={laborBalance.isGenerating}
+              />
+            </div>
+          </div>
+          <hr className="my-1 opacity-20" />
+          <div className="flex justify-between space-x-2 text-base">
+            <span className="text-gray-600">Produced:</span>
+            <span>
+              {isFood
+                ? laborBalance.generated *
+                  productionAmount *
+                  (laborBalance.qtyBuilt || 1)
+                : laborBalance.generated * productionAmount}
+            </span>
+          </div>
+        </div>
+        <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
+          <LaborRow
+            title={'Production'}
+            pulse={laborBalance.isGenerating > 0}
+            value={<span>{(laborBalance.generating * 100).toFixed(2)}%</span>}
+            tooltipText={<span>% completion of production</span>}
+          />
+          <hr className="my-1 opacity-20" />
+          <LaborRow
+            title={'Queue'}
+            pulse={remaining > 0}
+            value={remaining}
+            tooltipText={
+              <span>
+                You will continue to produce for {remaining} more cycles.
+              </span>
+            }
+          />
         </div>
       </div>
-      <div className="p-2 mr-2 border rounded border-black/10 bg-gray-1000">
-        <LaborRow
-          title={'Production'}
-          pulse={laborBalance.isGenerating > 0}
-          value={<span>{(laborBalance.generating * 100).toFixed(2)}%</span>}
-          tooltipText={<span>% completion of production</span>}
-        />
-        <hr className="my-1 opacity-20" />
-        <LaborRow
-          title={'Queue'}
-          pulse={remaining > 0}
-          value={remaining}
-          tooltipText={
-            <span>
-              You will continue to produce for {remaining} more cycles.
-            </span>
-          }
-        />
-      </div>
-      <div className="flex flex-col ml-auto space-y-2">
+
+      <div className="flex flex-col mx-auto mt-4 ml-auto space-y-2 lg:mt-0 lg:mr-2">
         <BuyLabor
           realm={realm}
           costs={costs}

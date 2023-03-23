@@ -15,7 +15,7 @@ export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
     <AtlasSideBar
       isOpen={isOpen}
       position="left"
-      containerClassName="right-0 top-0 left-0 bottom-0 my-20 ml-20 mr-8 !p-0"
+      containerClassName="z-50 right-0 top-0 left-0 bottom-0 m-8 lg:my-20 lg:ml-20 !p-0"
       overflowHidden={true}
       onClose={onClose}
     >

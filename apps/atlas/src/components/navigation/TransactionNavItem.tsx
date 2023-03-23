@@ -91,10 +91,10 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
   return (
     <Button
       variant="unstyled"
-      className={` md:w-32 md:h-32 lg:w-48 lg:h-48 md:-ml-16 md:-mt-16 lg:-ml-20 lg:-mt-[117px] top-0  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex z-100`}
+      className={`lg:w-8 lg:h-8 lg:top-3 lg:right-3 w-5 h-5 top-2 right-2  ${TxStyle1()} absolute flex flex-col sm:flex-row sm:inline-flex z-100`}
       onClick={onButtonClick}
     >
-      <div className="absolute md:top-[4.75rem] md:right-[3.2rem] lg:top-32 lg:right-32 flex pointer-events-none">
+      <div className="absolute top-0 flex pointer-events-none right-1">
         {txQueue.transactions.length > 0 ? (
           <div className="absolute top-0 left-0 z-10 flex items-center justify-center h-6 px-2 leading-6 text-white -translate-x-1/2 -translate-y-1/2 bg-red-800 rounded-full">
             {txQueue.transactions.length}
@@ -103,7 +103,7 @@ const TransactionNavItem = ({ onClick }: { onClick: () => void }) => {
           ''
         )}
         <BiblioIcon
-          className={`inline-block w-6 lg:w-7 hover:fill-yellow-500 ${TxStyle1()}`}
+          className={`inline-block w-5 lg:w-7 hover:fill-yellow-500 ${TxStyle1()}`}
         />
       </div>
     </Button>

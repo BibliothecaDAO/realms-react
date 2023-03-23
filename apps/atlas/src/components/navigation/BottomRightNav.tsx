@@ -8,25 +8,25 @@ export const BottomRightNav = () => {
     <div className="absolute bottom-0 right-0 z-50">
       <div className="relative">
         <BottomRightFrame
-          className={`absolute bottom-0 right-0 pointer-events-none w-72 fill-${framePrimary}`}
+          className={`absolute bottom-0 right-0 pointer-events-none w-52 lg:w-72 fill-${framePrimary}`}
         />
         {/* {address && <TransactionNavItem onClick={toggleTransactionCart} />} */}
       </div>
 
       <div
-        className={`absolute bottom-1 w-[calc(100vw-28rem)] h-[2.7px] bg-${framePrimary} pointer-events-none`}
+        className={`absolute bottom-1 w-[calc(100vw-20rem)] lg:w-[calc(100vw-28rem)] h-[2.7px] bg-${framePrimary} pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-1 right-0 w-[calc(100vw-36rem)] h-[2.2px] bg-${framePrimary} mr-72 pointer-events-none`}
+        className={`absolute bottom-1 right-0 w-[calc(100vw-26rem)] lg:w-[calc(100vw-36rem)] h-[1.1px] lg:h-[2.2px] bg-${framePrimary} mr-52 lg:mr-72 pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-0 right-0 w-[calc(100vw-28rem)] h-[2px] bg-${framePrimary} mr-64 pointer-events-none`}
+        className={`absolute bottom-0 right-0 w-[calc(100vw-20rem)] lg:w-[calc(100vw-28rem)] h-[2px] bg-${framePrimary} mr-52 lg:mr-64 pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-0 right-0 w-[6px] h-[calc(100vh-28rem)] bg-${framePrimary} mb-64 pointer-events-none`}
+        className={`absolute bottom-0 right-0 w-[5px] lg:w-[6px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-20 lg:mb-64 pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-5 right-2 w-[2px] h-[calc(100vh-28rem)] bg-${framePrimary}  mb-64 pointer-events-none`}
+        className={`absolute bottom-5 right-[6px] lg:right-2 w-[1.5px] lg:w-[2px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-20 lg:mb-64 pointer-events-none`}
       ></div>
     </div>
   );
