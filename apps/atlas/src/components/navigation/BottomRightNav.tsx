@@ -23,10 +23,10 @@ export const BottomRightNav = () => {
         className={`absolute bottom-0 right-0 w-[calc(100vw-20rem)] lg:w-[calc(100vw-28rem)] h-[2px] bg-${framePrimary} mr-52 lg:mr-64 pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-0 right-0 w-[3px] lg:w-[6px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-64 pointer-events-none`}
+        className={`absolute bottom-0 right-0 w-[5px] lg:w-[6px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-20 lg:mb-64 pointer-events-none`}
       ></div>
       <div
-        className={`absolute bottom-5 right-2 w-[1px] lg:w-[2px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-64 pointer-events-none`}
+        className={`absolute bottom-5 right-[6px] lg:right-2 w-[1.5px] lg:w-[2px] h-[calc(100vw-20rem)] lg:h-[calc(100vh-28rem)] bg-${framePrimary} mb-20 lg:mb-64 pointer-events-none`}
       ></div>
     </div>
   );

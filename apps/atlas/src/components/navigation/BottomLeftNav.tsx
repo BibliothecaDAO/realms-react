@@ -56,13 +56,13 @@ export const BottomLeftNav = () => {
         />
 
         <div
-          className={`absolute bottom-0 left-0 w-[4px] lg:w-[8.8px] h-[calc(100vh-30rem)]  bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-0 w-[6.5px] lg:w-[8.8px] h-[calc(100vh-20rem)] lg:h-[calc(100vh-30rem)]  bg-${framePrimary} mb-40 lg:mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-3 w-[1px] lg:w-[2px] h-[calc(100vh-32rem)] bg-${framePrimary} mb-72 pointer-events-none`}
+          className={`absolute bottom-0 left-2 lg:left-3 w-[1.5px] lg:w-[2px] h-[calc(100vh-20rem)] lg:h-[calc(100vh-32rem)] bg-${framePrimary} mb-40 lg:mb-72 pointer-events-none`}
         />
         <div
-          className={`absolute bottom-0 left-[53px] w-[2.1px] h-[calc(100vh-30rem)] bg-${framePrimary} mb-72 pointer-events-none `}
+          className={`absolute bottom-0 left-[38.5px] lg:left-[53px] w-[1.5px] lg:w-[2.1px] h-[calc(100vh-20rem)] lg:h-[calc(100vh-30rem)] bg-${framePrimary} mb-40 lg:mb-72 pointer-events-none `}
         />
       </div>
     </div>
