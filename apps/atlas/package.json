@@ -191,9 +191,7 @@
     "slate-react": "0.88.2",
     "starknet": "4.17.1",
     "use-sound": "^4.0.1",
-    "wagmi": "0.11.2",
-    "web3-mq": "1.2.56",
-    "web3-mq-react": "1.1.18"
+    "wagmi": "0.11.2"
   },
   "resolutions": {
     "bn.js": "^5.2.1"

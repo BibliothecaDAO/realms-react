@@ -154,7 +154,7 @@ const ChatSideBarPanel = ({
   });
 
   return (
-    <div className="flex flex-col h-full p-6">
+    <div className="flex flex-col w-full h-full p-6">
       <div className="flex items-center justify-between text-xl font-bold">
         <h5>
           {/* <Annotation className="inline-block w-4 h-4 mr-1" /> */}

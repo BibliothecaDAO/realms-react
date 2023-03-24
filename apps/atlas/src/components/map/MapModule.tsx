@@ -181,7 +181,7 @@ export function MapModule() {
         />
       </DeckGL>
       <Chat
-        // onClick={toggleChatSidebar}
+        onClick={toggleChatSidebar}
         className="absolute inline-block w-3 h-3 left-[1.3rem] top-16 lg:w-5 lg:h-5 p-0 cursor-pointer lg:top-[88px] lg:left-[28px] fill-frame-secondary z-30 hover:fill-frame-primary"
       />
     </>
