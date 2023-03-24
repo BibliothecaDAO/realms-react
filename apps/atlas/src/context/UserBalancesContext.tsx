@@ -220,7 +220,6 @@ function useUserBalances() {
       })
     );
   }, [tokenBalancesData, txQueue]);
-  console.log(tokenBalancesData);
   const getBalanceById = useCallback(
     (resourceId: number) => {
       return balance.find((resource) => resource.resourceId === resourceId);
