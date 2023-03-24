@@ -126,6 +126,7 @@
     "vitest": "0.28.3"
   },
   "dependencies": {
+    "@ably-labs/react-hooks": "2.0.11",
     "@apollo/client": "3.7.5",
     "@bibliotheca-dao/postcss-100vh-fix": "^1.0.3",
     "@bibliotheca-dao/ui-lib": "workspace:^",
@@ -160,6 +161,7 @@
     "@visx/text": "2.17.0",
     "@visx/tooltip": "2.17.0",
     "@visx/xychart": "2.18.0",
+    "ably": "1.2.35",
     "arweave": "1.12.4",
     "axios": "^1.2.6",
     "connectkit": "1.1.3",
