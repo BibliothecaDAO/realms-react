@@ -5,6 +5,13 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import withPWA from 'next-pwa';
+
+
+
+const enhancedWithPWA = withPWA({
+  dest: 'public'
+});
 
 const packageJson = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url)).toString('utf-8')
@@ -71,7 +78,7 @@ if (disableSourceMaps) {
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = {
+const nextConfig = enhancedWithPWA({
   reactStrictMode: false,
   productionBrowserSourceMaps: !disableSourceMaps,
   optimizeFonts: true,
@@ -201,7 +208,7 @@ const nextConfig = {
     APP_VERSION: packageJson.version ?? 'not-in-package.json',
     BUILD_TIME: new Date().toISOString(),
   },
-};
+});
 
 let config = nextConfig;
 
