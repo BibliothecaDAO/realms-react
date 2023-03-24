@@ -148,7 +148,7 @@ export const MilitaryBuildings = (props: Prop) => {
                           })
                         }
                         size="md"
-                        variant="outline"
+                        variant="primary"
                         className="ml-auto"
                       >
                         construct

@@ -139,7 +139,7 @@ export const RealmsFood = (props: Prop) => {
             );
           }}
           size="md"
-          variant="outline"
+          variant={availableFood && availableFood > 0 ? 'outline' : 'primary'}
         >
           Store
         </Button>

@@ -13,12 +13,14 @@ export const BuyLabor = ({
   realm,
   resource,
   realms,
+  isGenerating,
 }: {
   costs: any;
   isFood: boolean;
   realm?: any;
   resource: any;
   realms?: RealmFragmentFragment[];
+  isGenerating?: boolean;
 }) => {
   const { create, harvest, create_food, harvest_food } = useLabor();
 
@@ -110,11 +112,19 @@ export const BuyLabor = ({
     // >
     <div className="flex">
       {!isFood ? (
-        <Button onClick={buyTools} variant="outline" size="xs">
+        <Button
+          onClick={buyTools}
+          variant={isGenerating ? 'outline' : 'primary'}
+          size="xs"
+        >
           Buy Tools {realms ? `(${realms.length} Realms)` : ''}
         </Button>
       ) : (
-        <Button onClick={buyFood} variant="outline" size="xs">
+        <Button
+          onClick={buyFood}
+          variant={isGenerating ? 'outline' : 'primary'}
+          size="xs"
+        >
           Build {realms ? `(${realms.length} Realms)` : ''}
         </Button>
       )}

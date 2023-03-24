@@ -77,7 +77,7 @@ export const AttackingArmy = (props: Props) => {
             <div>
               <Button
                 onClick={() => setNewArmyId(onlyAttackingArmies.length + 1)}
-                variant="outline"
+                variant="primary"
               >
                 Summon new Army ID {onlyAttackingArmies.length + 1}
               </Button>

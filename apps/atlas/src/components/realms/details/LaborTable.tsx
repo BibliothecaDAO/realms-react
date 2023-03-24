@@ -277,6 +277,7 @@ export const LaborTable = (props: Prop) => {
                   resource={{ ...resource, resourceId }}
                   costs={costs}
                   isFood={isFood}
+                  isGenerating={generatedLabors.isGenerating}
                 />
                 <Disclosure.Button as={Fragment}>
                   <Button variant="outline" size="xs" className="mt-2">
@@ -433,6 +434,7 @@ export const LaborRealmRow = ({
           costs={costs}
           isFood={isFood}
           resource={resource}
+          isGenerating={laborBalance.isGenerating}
         />
         <span className={getHasGeneratedClass(laborBalance.hasGenerated)}>
           <HarvestButton

@@ -138,7 +138,7 @@ export function DetailedOverview(
                 <div className="mt-4">
                   <Button
                     href={'/?asset=realm' + getHolderOfRelic(realm)}
-                    variant="outline"
+                    variant="primary"
                     size="lg"
                   >
                     Get Relic Back{' '}

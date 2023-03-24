@@ -313,7 +313,11 @@ export const CommandList: React.FC<Prop> = (props) => {
               disabled={txQueue.transactions.length == 0 || hasDeficit}
               className="flex-1"
               size="md"
-              variant="primary"
+              variant={
+                txQueue.transactions.length == 0 || hasDeficit
+                  ? 'outline'
+                  : 'primary'
+              }
               onClick={() => {
                 signDecree();
               }}
@@ -371,7 +375,7 @@ export const CommandList: React.FC<Prop> = (props) => {
             <Button
               onClick={reconcileDeficits}
               size="xs"
-              variant="outline"
+              variant={hasDeficit ? 'primary' : 'outline'}
               className="ml-auto"
               disabled={!hasDeficit}
             >
