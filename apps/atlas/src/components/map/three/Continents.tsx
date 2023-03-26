@@ -20,7 +20,7 @@ const triCoastline = require('@/geodata/triCoastline.json');
 export default function Continents() {
   const radius = 200;
   const thickness = 0.002;
-  const dimension = 3;
+  const dimension = 2;
 
   const geo = Object.entries(tri).reduce((geoLayer, [name, tri]) => {
     const plane = new THREE.Mesh(
