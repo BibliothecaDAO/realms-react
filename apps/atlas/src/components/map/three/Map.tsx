@@ -48,13 +48,24 @@ export const MapCanvas = () => {
             // WIP: panning boundaries
             if (!a?.target?.target || !camera?.current?.position) return;
             const targetVector = a?.target?.target;
-            const minPan = new THREE.Vector3(-50, -50, 1);
-            const maxPan = new THREE.Vector3(50, 50, 1);
+            const distance = camera.current.position.distanceTo(targetVector);
+            console.log('distance', distance);
+            const minPan = new THREE.Vector3(
+              -50 * (200 / distance),
+              -50 * (200 / distance),
+              1
+            );
+            const maxPan = new THREE.Vector3(
+              50 * (200 / distance),
+              50 * (200 / distance),
+              1
+            );
             const _v = new THREE.Vector3();
             _v.copy(targetVector);
             targetVector.clamp(minPan, maxPan);
             _v.sub(targetVector);
             camera.current.position.sub(_v);
+            camera.current.rotation.set(0, 0, 0);
           }}
         />
       </Canvas>
