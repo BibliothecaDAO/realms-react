@@ -1,6 +1,6 @@
 import { Button, CardBody } from '@bibliotheca-dao/ui-lib';
 import { useAccount } from '@starknet-react/core';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   generateRealmEvent,
   Event as EventType,

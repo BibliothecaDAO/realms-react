@@ -5,19 +5,13 @@ import {
   CardTitle,
   InputNumber,
 } from '@bibliotheca-dao/ui-lib';
-
 import { animated, useSpring } from '@react-spring/web';
-import { useAccount } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
-import { generateRealmEvent } from '@/components/realms/EventMappings';
-import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { BASE_RESOURCES_PER_DAY } from '@/constants/globals';
-import { ENQUEUED_STATUS } from '@/constants/index';
+
 import type { Tx } from '@/context/CommandListContext';
 import { useCommandList } from '@/context/CommandListContext';
 import { useUIContext } from '@/context/UIContext';
-import { useUserBalancesContext } from '@/context/UserBalancesContext';
-import { useGetAccountQuery, useGetRealmsQuery } from '@/generated/graphql';
+
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import {
   getApproveAllGameContracts,
@@ -25,15 +19,13 @@ import {
 } from '@/hooks/settling/useApprovals';
 import useSettling, { Entrypoints } from '@/hooks/settling/useSettling';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import { useUiSounds, soundSelector } from '@/hooks/useUiSounds';
+
 type Prop = {
   onSettleRealms?: () => void;
 };
 
 export function MintRealms(props: Prop) {
-  const { claimAll, userData, burnAll } = useUsersRealms();
   const { mintRealms } = useSettling();
-  const { balance } = useUserBalancesContext();
 
   const [quantity, setQuantity] = useState(0);
 

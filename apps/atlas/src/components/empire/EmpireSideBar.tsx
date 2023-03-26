@@ -25,11 +25,6 @@ export const EmpireSideBar = ({ isOpen, onClose }: EmpireSideBarProps) => {
 };
 
 export const EmpireQuickView = ({ onClose }: { onClose?: () => void }) => {
-  /* const { loading, data } = useQuery<LootData>(getLootQuery, {
-    variables: { id: lootId ?? '' },
-    skip: !lootId,
-  }); */
-
   return (
     <>
       <BaseSideBarPanel position="left" className="bg-cover !flex-row !pt-0">

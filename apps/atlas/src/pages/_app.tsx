@@ -19,6 +19,7 @@ import { ModalProvider } from '@/context/ModalContext';
 import { SoundProvider } from '@/context/soundProvider';
 import { UIProvider } from '@/context/UIContext';
 import { UserBalancesProvider } from '@/context/UserBalancesContext';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { BreakpointProvider } from '@/hooks/useBreakPoint';
 import '../styles/global.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -65,15 +66,35 @@ const queries = {
 function MyApp({ Component, pageProps }: AppProps) {
   const connectors = useMemo(
     () => [
-      new InjectedConnector({ options: { id: 'argentX' } }),
-      new InjectedConnector({ options: { id: 'braavos' } }),
-      new InjectedConnector({ options: { id: 'guildly' } }),
-      // new CartridgeConnector([
-      //   {
-      //     target: ModuleAddr.Labor,
-      //     method: 'harvest',
-      //   },
-      // ]),
+      // new InjectedConnector({ options: { id: 'argentX' } }),
+      // new InjectedConnector({ options: { id: 'braavos' } }),
+      // new InjectedConnector({ options: { id: 'guildly' } }),
+      new CartridgeConnector([
+        {
+          target: ModuleAddr.ResourcesToken,
+          method: 'setApprovalForAll',
+        },
+        {
+          target: ModuleAddr.Lords,
+          method: 'approve',
+        },
+        {
+          target: ModuleAddr.ResourcesToken,
+          method: 'setApprovalForAll',
+        },
+        {
+          target: ModuleAddr.Realms,
+          method: 'setApprovalForAll',
+        },
+        {
+          target: ModuleAddr.Realms,
+          method: 'mint',
+        },
+        {
+          target: ModuleAddr.Settling,
+          method: 'settle',
+        },
+      ]),
     ],
     []
   );

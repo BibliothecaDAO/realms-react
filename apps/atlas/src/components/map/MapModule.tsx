@@ -49,7 +49,7 @@ export function MapModule() {
 
   const selectedId = selectedAsset?.id ?? '0';
 
-  const { tripsLayer } = useTravelTripsLayer();
+  // const { tripsLayer } = useTravelTripsLayer();
 
   const { layers: iconLayers } = useLayers({ selectedId });
 
@@ -145,7 +145,7 @@ export function MapModule() {
         viewState={viewState}
         controller={true}
         onViewStateChange={(e) => setViewState(e.viewState)}
-        layers={[...layers, tripsLayer, ...iconLayers]}
+        layers={[...layers, ...iconLayers]}
       >
         {!isMapLoaded ? (
           <div

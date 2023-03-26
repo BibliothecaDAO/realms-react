@@ -94,8 +94,7 @@ export const SettleRealmsSideBarPanel = ({
 
   const starknetWallet = address ? BigNumber.from(address).toHexString() : '';
 
-  const { settleRealm, unsettleRealm, isRealmsApproved, approveRealms } =
-    useSettling();
+  const { settleRealm, unsettleRealm, isRealmsApproved } = useSettling();
 
   const [settleSelections, setSettleSelections] = useState<number[]>([]);
   const [unSettleSelections, setUnSettleSelections] = useState<number[]>([]);
@@ -121,7 +120,7 @@ export const SettleRealmsSideBarPanel = ({
 
   const { data, loading } = useGetRealmsQuery({
     variables,
-    pollInterval: 10000,
+    pollInterval: 5000,
   });
 
   const tabs = useMemo(
@@ -199,16 +198,6 @@ export const SettleRealmsSideBarPanel = ({
               </Tabs.Panels>
             </Tabs>
             <div className="w-full">
-              {/* Remove when needed  */}
-              {/* {isRealmsApproved != 'approved' && (
-            <Button
-              className="w-full"
-              variant="primary"
-              onClick={() => approveRealms()}
-            >
-              Approve Realms for Settling
-            </Button>
-          )} */}
               {isRealmsApproved == 'approved' ? (
                 <Button
                   className="w-full"

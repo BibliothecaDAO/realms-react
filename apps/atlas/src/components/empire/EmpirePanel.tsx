@@ -69,33 +69,6 @@ export function EmpirePanel() {
         ),
         component: <MyArmies />,
       },
-      // {
-      //   label: (
-      //     <div className="flex whitespace-nowrap">
-      //       <Danger className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-      //       <div className="hidden md:block">My Crypts</div>
-      //     </div>
-      //   ),
-      //   component: <MyCrypts />,
-      // },
-      // {
-      //   label: (
-      //     <div className="flex whitespace-nowrap">
-      //       <Bag className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-      //       <div className="hidden md:block">My Loot</div>
-      //     </div>
-      //   ),
-      //   component: <MyLoot />,
-      // },
-      // {
-      //   label: (
-      //     <div className="flex whitespace-nowrap">
-      //       <Sword className="self-center w-6 h-6 fill-current md:mr-4" />{' '}
-      //       <div className="hidden md:block">My GA's</div>
-      //     </div>
-      //   ),
-      //   component: <MyGA />,
-      // },
     ],
     [selectedTab]
   );
@@ -138,21 +111,6 @@ export function EmpirePanel() {
         enabled:
           unsettledRealms?.length && unsettledRealms?.length > 0 ? true : false,
       },
-      // {
-      //   name: 'Harvest Resources',
-      //   icon: <Castle className="self-center w-4 h-4 mr-1 fill-white" />,
-      //   details: <span className="flex"></span>,
-      //   action: () => claimAll(),
-      //   enabled: userData.resourcesClaimable,
-      // },
-      // {
-      //   name: 'Harvest Farms',
-      //   icon: <Sword className="self-center w-4 h-4 mr-1" />,
-      //   details: <span className="flex"></span>,
-      //   action: () => {
-      //     claimAll();
-      //   },
-      // },
     ];
     return allActions.filter((a) => a.enabled);
   }, [userRealms, isGameApproved, unsettledRealms]);
@@ -170,22 +128,17 @@ export function EmpirePanel() {
             <div className="flex w-full gap-2 p-4 mb-4 rounded-2xl">
               {quickActions.map((action) => {
                 return (
-                  <>
-                    {
-                      <Button
-                        key={action.name}
-                        className={`flex-col items-start rounded-xl whitespace-nowrap`}
-                        variant="outline"
-                        onClick={() => action.action()}
-                      >
-                        {/* {userData?.resourcesClaimable} */}
-                        <span className="flex">
-                          {action.icon} {action.name}
-                        </span>
-                        {action.details}
-                      </Button>
-                    }
-                  </>
+                  <Button
+                    key={action.name}
+                    className={`flex-col items-start rounded-xl whitespace-nowrap`}
+                    variant="outline"
+                    onClick={() => action.action()}
+                  >
+                    <span className="flex">
+                      {action.icon} {action.name}
+                    </span>
+                    {action.details}
+                  </Button>
                 );
               })}
             </div>

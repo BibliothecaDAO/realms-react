@@ -84,11 +84,11 @@ export function AtlasSidebars() {
         onClose={toggleChatSidebar}
         channelName={'desiege-chat'}
       /> */}
-      <Web3MQChatSideBar
+      {/* <Web3MQChatSideBar
         isOpen={chatSidebar}
         onClose={toggleChatSidebar}
         channelName="web3mq-chat"
-      />
+      /> */}
       <TransactionCartSideBar
         isOpen={transactionCart}
         onClose={toggleTransactionCart}

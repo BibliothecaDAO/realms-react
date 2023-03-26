@@ -13,7 +13,7 @@ export default async function handler(
   // TODO: .env
   try {
     const response = await fetch(
-      'https://bot-production-da53.up.railway.app/docs/question',
+      'https://squire-25q7c.ondigitalocean.app/chat',
       {
         method: 'POST',
         headers: {

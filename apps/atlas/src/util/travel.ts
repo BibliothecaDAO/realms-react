@@ -54,7 +54,7 @@ export function intermediatePointTo(
 }
 
 export function getDeckGLTripLayerPath(
-  origin: Point,
+  origin: Point = { latitude: 0, longitude: 0 },
   destination: Point,
   startTime: number,
   endTime: number,
