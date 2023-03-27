@@ -97,7 +97,7 @@ export const MilitaryBuildings = (props: Prop) => {
                     <Image
                       height={200}
                       width={200}
-                      className="rounded"
+                      className="rounded w-36 lg:w-48"
                       src={a.img}
                       alt=""
                     />
@@ -111,7 +111,7 @@ export const MilitaryBuildings = (props: Prop) => {
                             key={i}
                             height={200}
                             width={125}
-                            className="self-center object-fill rounded shadow-inner"
+                            className="self-center object-fill w-24 rounded shadow-inner lg:w-32"
                             src={getUnitImage(c.id)}
                             alt=""
                           />

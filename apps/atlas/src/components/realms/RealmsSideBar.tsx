@@ -29,7 +29,7 @@ export const RealmSideBar = ({
       resourcesListSidebar ||
       loreSidebar ||
       leaderboardSidebar
-      ? 'mr-12 my-24'
+      ? 'lg:mr-12 lg:my-24'
       : '';
   }, [empireSidebar, resourcesListSidebar]);
 

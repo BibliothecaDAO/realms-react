@@ -50,14 +50,14 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
           ? 'bg-transparent'
           : 'bg-yellow-scroll shadow-md shadow-black p-2',
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
-        props.position == 'left' ? 'left-0' : 'right-0',
+        props.position == 'left' ? 'lg:!left-0' : 'lg:!right-0',
         props.overflowHidden ? 'overflow-hidden' : 'overflow-y-auto',
         props.isOpen ? 'opacity-100' : 'opacity-0',
         props.isOpen
           ? 'translate-x-0'
           : props.position == 'left'
-          ? '-translate-x-full'
-          : 'translate-x-full'
+          ? '-translate-x-[110%]'
+          : 'translate-x-[110%]'
       )}
     >
       <div

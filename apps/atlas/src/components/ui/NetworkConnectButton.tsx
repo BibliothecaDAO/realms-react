@@ -43,7 +43,7 @@ const NetworkConnectButton = () => {
         <Popover className="relative">
           <Popover.Button
             className={
-              'px-4 py-1 text-frame-secondary lg:py-2 hover:bg-white/30 transition-all duration-200 rounded-md'
+              'px-2 lg:px-4 text-frame-secondary py-1 lg:py-2 hover:bg-white/30 transition-all duration-200 rounded-md'
             }
             as="div"
           >
@@ -172,7 +172,7 @@ const NetworkConnectButton = () => {
       ) : (
         <Button
           variant="unstyled"
-          className="px-4 py-1 text-frame-secondary lg:py-2 hover:bg-white/30 transition-all duration-200 rounded-md"
+          className="px-2 py-1 transition-all duration-200 rounded-md lg:px-4 lg:py-2 text-frame-secondary hover:bg-white/30"
           onClick={toggleAccountSettings}
         >
           {' '}

@@ -18,7 +18,7 @@ export const ResourcesListSideBar = ({
     <AtlasSideBar
       position="right"
       isOpen={isOpen}
-      containerClassName={twMerge(sidebarClassNames, 'ml-20 z-40').replace(
+      containerClassName={twMerge(sidebarClassNames, 'lg:ml-20 z-40').replace(
         'lg:w-5/12',
         'lg:w-1/2'
       )}

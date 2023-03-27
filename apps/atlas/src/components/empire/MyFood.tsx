@@ -7,7 +7,7 @@ export function MyFood() {
   const { userRealms } = useUserBalancesContext();
 
   return (
-    <div className="grid grid-cols-2 gap-3 p-3 md:gap-6 md:grid-cols-2 sm:px-6">
+    <div className="grid grid-cols-1 gap-3 p-3 lg:gap-6 lg:grid-cols-2 lg:px-6">
       {userRealms
         ? userRealms?.realms.map((realm, index) => {
             return (

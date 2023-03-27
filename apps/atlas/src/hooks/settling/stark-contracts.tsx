@@ -40,7 +40,7 @@ export const ModuleAddr = {
   Settling:
     '0x05db01dca6c5986b10b079b39b44ac312eb213d8081a29d83556cf93f98a0872',
   Exchange:
-    '0x042bf805eb946855cc55b1321a86cd4ece9904b2d15f50c47439af3166c7c5e2',
+    '0x04c906be925dac8f1accbbd074adf9f7d23cfe208ca326bc9c05cf4a664bfee2',
   ResourcesToken:
     '0x0004d3180171dc5dd583762aaad99e50c17e27bf73a3e949a89a0db5bb628e40',
   Building:

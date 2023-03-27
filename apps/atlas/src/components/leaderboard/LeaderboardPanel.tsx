@@ -73,8 +73,8 @@ export function LeaderboardPanel(): ReactElement {
     {
       name: 'relicsHeld',
       columns: [
-        { Header: 'Realm', id: 1, accessor: 'realm', size: 50 },
-        { Header: 'Relics Held', id: 6, accessor: 'relics' },
+        { Header: 'Realm', id: 1, accessor: 'realm' },
+        { Header: 'Relics Held', id: 6, accessor: 'relics', size: 150 },
         { Header: 'Current Owner', id: 5, accessor: 'owner' },
         { Header: 'Action', id: 7, accessor: 'action', size: 50 },
       ],
@@ -121,7 +121,7 @@ export function LeaderboardPanel(): ReactElement {
 
   return (
     <div className="relative flex flex-col flex-1">
-      <div className="p-4 md:p-10">
+      <div className="p-4 lg:p-10">
         <div className="w-full pb-10">
           <h1 className="w-full text-center">The Lords Leaderboard</h1>
         </div>

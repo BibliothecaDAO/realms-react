@@ -439,7 +439,7 @@ export function SwapResources(): ReactElement {
           );
         })}
       </div>
-      <div className="sticky bottom-0 flex justify-end px-6 pt-4 pb-5 -mx-6 rounded-md backdrop-blur-xl">
+      <div className="sticky bottom-0 flex justify-end px-2 pt-2 pb-3 -mx-6 text-sm rounded-md lg:px-6 lg:pt-4 lgpb-5 backdrop-blur-xl">
         <div className="flex flex-col justify-end w-full">
           <div className="relative flex w-full">
             <Button
@@ -461,7 +461,7 @@ export function SwapResources(): ReactElement {
               clear
             </Button>
           </div>
-          <div className="flex items-center py-4 rounded ">
+          <div className="flex items-center py-1 rounded lg:py-4 ">
             <div className="flex">
               <span className="flex self-center mr-2 text-gray-600">
                 Balance:
