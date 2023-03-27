@@ -16,6 +16,14 @@ export const VARIANTS = {
     },
     tabList: 'flex space-x-3 sm:space-x-4  p-2 shadow-inner ',
   },
+  'custom-colors': {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded uppercase ',
+      active: '',
+      inactive: 'bg-transparent',
+    },
+    tabList: 'flex py-2',
+  },
   primary: {
     tab: {
       base: 'relative flex w-full items-center color-yellow-secondary justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 uppercase  hover:text-yellow-100',

@@ -550,3 +550,7 @@ export const orderDetails = [
     },
   },
 ];
+
+export const normalizeOrderName = (orderName: string) => {
+  return orderName.replace('the ', '');
+};

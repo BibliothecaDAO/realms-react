@@ -1,4 +1,5 @@
 // import { solid, regular } from '@fortawesome/fontawesome-svg-core/import.macro'; // <-- import styles to be used
+import { OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { BiCrown } from 'react-icons/bi';
@@ -15,10 +16,9 @@ import {
 import { RiFlag2Line } from 'react-icons/ri';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import type { BastionArmy } from 'mockup/bastionsData';
-import { theOrders } from '../lore/theOrders';
+import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { ArmyActions } from './ArmyActions';
 import { isUserArmy } from './BastionGetters';
-import { BastionOrderIcon } from './BastionOrderIcon';
 
 interface BastionArmyCardProps {
   army: BastionArmy;
@@ -98,15 +98,7 @@ export const BastionArmyCard = ({
     const order = army.orderId
       ? theOrders[army.orderId - 1].name.toLowerCase()
       : undefined;
-    if (order === 'the fox') {
-      setOrderName('fox');
-    } else {
-      if (order === 'the twins') {
-        setOrderName('twins');
-      } else {
-        setOrderName(order);
-      }
-    }
+    order && setOrderName(normalizeOrderName(order));
   }, [army]);
 
   return (
@@ -257,10 +249,7 @@ const NonAttackModeLogo = (props) => {
       className={`grid-item col-span-1 row-span-2 flex flex-col justify-center items-center text-order-secondary-v2-${props.orderName}`}
     >
       {props.orderName && (
-        <BastionOrderIcon
-          order={props.orderName}
-          className={'h-7'}
-        ></BastionOrderIcon>
+        <OrderIcon order={props.orderName} size={'sm'}></OrderIcon>
       )}
     </div>
   );
@@ -275,10 +264,7 @@ const AttackModeLogo = (props) => {
         className={`flex h-full flex-col justify-center items-center text-order-secondary-v2-${props.orderName}`}
       >
         {props.orderName && (
-          <BastionOrderIcon
-            order={props.orderName}
-            className={'h-7'}
-          ></BastionOrderIcon>
+          <OrderIcon order={props.orderName} size={'sm'}></OrderIcon>
         )}
       </div>
       <div

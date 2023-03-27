@@ -1,3 +1,4 @@
+import { OrderIcon } from '@bibliotheca-dao/ui-lib/base';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { MdOutlineCastle } from 'react-icons/md';
@@ -5,10 +6,8 @@ import { RiFlag2Line } from 'react-icons/ri';
 import { TbTower } from 'react-icons/tb';
 import { locationNames } from '@/constants/bastion';
 import { useBastionContext } from '@/context/BastionContext';
-import type { Bastion } from 'mockup/bastionsData';
-import { theOrders } from '../lore/theOrders';
+import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { BastionArmies } from './BastionArmies';
-import { BastionOrderIcon } from './BastionOrderIcon';
 
 interface LocationIconsProps {
   locationId: number;
@@ -44,16 +43,10 @@ export const BastionInfo: React.FC = () => {
     if (bastion && selectedLocation.locationId) {
       const defendingOrderId =
         bastion.locations[selectedLocation.locationId].defendingOrderId;
-      const orderName = defendingOrderId
+      const order = defendingOrderId
         ? theOrders[defendingOrderId - 1].name.toLowerCase()
         : undefined;
-      setOrderName(
-        orderName === 'the fox'
-          ? 'fox'
-          : orderName === 'the twins'
-          ? 'twins'
-          : orderName
-      );
+      order && setOrderName(normalizeOrderName(order));
     } else {
       setOrderName(undefined);
     }
@@ -98,10 +91,7 @@ export const BastionInfo: React.FC = () => {
                 <div className="flex w-1/2 flex-row items-center justify-start">
                   <div className="px-1">
                     {orderName && (
-                      <BastionOrderIcon
-                        order={orderName}
-                        className={'h-7'}
-                      ></BastionOrderIcon>
+                      <OrderIcon order={orderName} size={'sm'}></OrderIcon>
                     )}
                   </div>
                   <div className="whitespace-nowrap ">

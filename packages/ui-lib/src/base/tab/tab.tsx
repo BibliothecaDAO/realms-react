@@ -13,6 +13,7 @@ export const Tab = ({ className, children, noText, ...props }: TabProps) => {
   const { variant } = useContext(TabContext)!;
 
   const isPrimary = variant === 'primary';
+  const isCustomColors = variant === 'custom-colors';
 
   return (
     <HeadlessTab
@@ -60,7 +61,37 @@ export const Tab = ({ className, children, noText, ...props }: TabProps) => {
                 )}
               </>
             )}
-            {!isPrimary && <>{children}</>}
+            {isCustomColors && (
+               <>
+               {props.selected ? (
+                 <>
+                   <ActiveTabLeft className="absolute top-0 left-0 h-full fill-current" />
+                   <ActiveTabRight className="absolute -top-[1px] right-0 h-full fill-current" />
+
+                   {!noText && (
+                     <>
+                       <div className="absolute top-[4.5px] right-0 w-1/2 h-[1px] bg-current -translate-x-1/2" />
+                       <div className="absolute top-[3px] right-0  w-1/2 h-[1px] bg-current -translate-x-1/2" />
+                     </>
+                   )}
+                   <div
+                     className="absolute bottom-[8px] right-0 w-1/2 h-[1px] bg-current"
+                     style={{ transform: 'translateX(-44%)' }}
+                   />
+                   <div className="flex items-center justify-center ml-2">
+                     {children}
+                   </div>
+                 </>
+               ) : (
+                 <>
+                   <div className="absolute bottom-[9px] right-0 w-full h-[1px] bg-current" />
+                   <div className="absolute bottom-[7px] right-0 w-full h-[1px] bg-current" />
+                   {children}
+                 </>
+               )}
+             </>
+            )}
+            {!isPrimary && !isCustomColors && <>{children}</>}
           </>
         );
       }}

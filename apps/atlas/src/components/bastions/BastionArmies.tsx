@@ -16,7 +16,6 @@ import {
   getLocationArmies,
   isUserArmy,
 } from './BastionGetters';
-import { Tabs as BastionTabs } from './BastionTabs';
 
 const TABS = [
   { key: 'positioned', name: 'Positioned' },
@@ -145,20 +144,20 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
         </div>
       )}
       {!attackMode && (
-        <BastionTabs
+        <Tabs
           selectedIndex={selectedTabIndex}
           onChange={onTabChange as any}
-          variant="primary"
+          variant="custom-colors"
           className={`fill-${
             orderName ? `order-secondary-v2-${orderName}` : '#333333'
           } text-${orderName ? `order-secondary-v2-${orderName}` : '#333333'}`}
         >
-          <BastionTabs.List className="mt-2">
+          <Tabs.List className="mt-2">
             {TABS.map((tab) => (
-              <BastionTabs.Tab key={tab.key}>{tab.name}</BastionTabs.Tab>
+              <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
             ))}
-          </BastionTabs.List>
-        </BastionTabs>
+          </Tabs.List>
+        </Tabs>
       )}
       {attackMode && attackingArmy && (
         <BastionArmyCard

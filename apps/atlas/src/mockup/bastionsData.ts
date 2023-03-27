@@ -246,13 +246,13 @@ const locations: Location[] = [
 
 const bastions: Bastion[] = [
   {
-    bastionId: 1,
+    bastionId: 3506800,
     longitude: -30,
     latitude: 20.68,
     locations: locations,
   },
   {
-    bastionId: 2,
+    bastionId: 3711000,
     longitude: -33,
     latitude: 30.78,
     locations: locations,
