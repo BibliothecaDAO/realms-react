@@ -4,7 +4,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { locationNames, moveOptions } from '@/constants/bastion';
 import { useBastionContext } from '@/context/BastionContext';
 import type { Bastion } from 'mockup/bastionsData';
-import { getMoveTimes } from './BastionGetters';
+import { getBastionLocation, getMoveTimes } from './BastionGetters';
 
 export const DropDownMove = (props) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
@@ -46,7 +46,8 @@ export const DropDownMove = (props) => {
         return `${locationNames[selectedOption].defense}`;
       } else {
         const role =
-          bastion.locations[selectedOption].defendingOrderId === armyOrder
+          getBastionLocation(bastion, selectedOption).defendingOrderId ===
+          armyOrder
             ? 'defense'
             : 'attack';
 

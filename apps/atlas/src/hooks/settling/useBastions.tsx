@@ -102,7 +102,9 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       ...uint256ToRawCalldata(uint256.bnToUint256(args.travellerId)),
       args.armyId,
       Assets.bastions,
-      ...uint256ToRawCalldata(uint256.bnToUint256(args.destinationId)),
+      // ...uint256ToRawCalldata(uint256.bnToUint256(args.destinationId)),
+      // TODOBASTIONS: remove that
+      ...uint256ToRawCalldata(uint256.bnToUint256(3711000)),
       0, // nested destination is always 0 for now.
     ],
     metadata: {

@@ -8,6 +8,7 @@ import { locationNames } from '@/constants/bastion';
 import { useBastionContext } from '@/context/BastionContext';
 import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { BastionArmies } from './BastionArmies';
+import { getBastionLocation } from './BastionGetters';
 
 interface LocationIconsProps {
   locationId: number;
@@ -41,12 +42,14 @@ export const BastionInfo: React.FC = () => {
 
   useEffect(() => {
     if (bastion && selectedLocation.locationId) {
-      const defendingOrderId =
-        bastion.locations[selectedLocation.locationId].defendingOrderId;
+      const defendingOrderId = getBastionLocation(
+        bastion,
+        selectedLocation.locationId
+      ).defendingOrderId;
       const order = defendingOrderId
         ? theOrders[defendingOrderId - 1].name.toLowerCase()
         : undefined;
-      order && setOrderName(normalizeOrderName(order));
+      order ? setOrderName(normalizeOrderName(order)) : setOrderName(undefined);
     } else {
       setOrderName(undefined);
     }

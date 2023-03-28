@@ -90,7 +90,7 @@ type Location = {
 };
 
 export type Bastion = {
-  bastionId: Scalars['Int'];
+  bastionId: Scalars['String'];
   longitude: Scalars['Float'];
   latitude: Scalars['Float'];
   locations: Location[];
