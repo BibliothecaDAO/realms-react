@@ -235,3 +235,45 @@ export const getBastionTravelTime = ({ travellerId, bastion }) => {
 
   return { distance: d, time: parseInt(d) * SECONDS_PER_KM };
 };
+
+export function filterArmiesThatCannotTravel(
+  userRealms: GetRealmsQuery,
+  bastion: Bastion
+): GetRealmsQuery {
+  const newRealms: typeof userRealms = {
+    __typename: 'Query',
+    total: userRealms.total,
+    realms: userRealms.realms.map((realm) => ({
+      ...realm,
+      ownArmies: realm.ownArmies.filter((army) => {
+        const inBastion = bastion.locations.some((loc) => {
+          const matchingArmy = loc.armies.find(
+            (a) =>
+              (a.armyId === army.armyId && a.realmId === army.realmId) ||
+              army.armyId === 0
+          );
+          return matchingArmy !== undefined;
+        });
+        return !inBastion;
+      }),
+    })),
+  };
+  return newRealms;
+}
+
+export function addTravelTime(userRealms: GetRealmsQuery, bastion: Bastion) {
+  return userRealms.realms.flatMap((realm) => {
+    return realm.ownArmies.map((army) => {
+      const travelTime = getBastionTravelTime({
+        travellerId: realm.realmId,
+        bastion: bastion,
+      });
+      return {
+        realmName: realm ? (realm.name as string) : '',
+        realmId: realm.realmId,
+        armyId: army.armyId,
+        ...travelTime,
+      };
+    });
+  });
+}

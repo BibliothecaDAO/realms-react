@@ -79,6 +79,7 @@ const createArmy = (
 export type BastionArmy = Army & {
   arrivalBlock: Scalars['Int'];
   pastLocation: Scalars['Int'];
+  orderId: Scalars['Int'];
 };
 
 type Location = {
@@ -109,6 +110,7 @@ const locations: Location[] = [
       createArmy(262, 80, 1, 1, 2),
       createArmy(2, 1, 1, 1, 2),
       createArmy(2, 2, 1, 1, 2),
+      createArmy(3, 1, 1, 1, 2),
       createArmy(2, 3, BIG_BLOCK_NUMBER, 1, 2),
       createArmy(2, 4, BIG_BLOCK_NUMBER, 1, 2),
     ],

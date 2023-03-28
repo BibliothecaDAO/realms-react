@@ -6,7 +6,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { useBastionContext } from '@/context/BastionContext';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { BastionArmy } from 'mockup/bastionsData';
-import { getBastionTravelTime } from './BastionGetters';
+import { addTravelTime, filterArmiesThatCannotTravel } from './BastionGetters';
 import { DropDownMove } from './DropDownMove';
 
 type ArmyActionsProps = {
@@ -155,20 +155,11 @@ export const TravelToBastionButton = () => {
 
   useEffect(() => {
     if (userRealms && bastion) {
-      const newTravelArmies = userRealms.realms.flatMap((realm) => {
-        return realm.ownArmies.map((army) => {
-          const travelTime = getBastionTravelTime({
-            travellerId: realm.realmId,
-            bastion: bastion,
-          });
-          return {
-            realmName: realm ? (realm.name as string) : '',
-            realmId: realm.realmId,
-            armyId: army.armyId,
-            ...travelTime,
-          };
-        });
-      });
+      const armiesThatCanTravel = filterArmiesThatCannotTravel(
+        userRealms,
+        bastion
+      );
+      const newTravelArmies = addTravelTime(armiesThatCanTravel, bastion);
       setTravelArmies(newTravelArmies);
     }
   }, [userRealms, bastion]);
