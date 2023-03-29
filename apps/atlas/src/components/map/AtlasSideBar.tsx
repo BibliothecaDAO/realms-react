@@ -52,7 +52,7 @@ const AtlasSidebar: React.FC<Prop> = (props: Prop) => {
         props.containerClassName ? props.containerClassName : 'w-full md:w-1/2',
         props.position == 'left' ? 'lg:!left-0' : 'lg:!right-0',
         props.overflowHidden ? 'overflow-hidden' : 'overflow-y-auto',
-        props.isOpen ? 'opacity-100' : 'opacity-0',
+        props.isOpen ? 'opacity-100' : 'opacity-0 z-0',
         props.isOpen
           ? 'translate-x-0'
           : props.position == 'left'
