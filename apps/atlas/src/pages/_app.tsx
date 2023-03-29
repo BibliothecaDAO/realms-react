@@ -90,12 +90,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                       <SoundProvider>
                         <AtlasProvider>
                           <UIProvider>
-                            {/* <SplashScreen> */}
-                            <DndProvider backend={HTML5Backend}>
-                              <Component {...pageProps} />
-                              <Modals />
-                            </DndProvider>
-                            {/* </SplashScreen> */}
+                            <SplashScreen>
+                              <DndProvider backend={HTML5Backend}>
+                                <Component {...pageProps} />
+                                <Modals />
+                              </DndProvider>
+                            </SplashScreen>
                           </UIProvider>
                         </AtlasProvider>
                       </SoundProvider>
