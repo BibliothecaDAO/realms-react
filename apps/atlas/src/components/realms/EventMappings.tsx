@@ -1,10 +1,18 @@
 // TODOBASTIONS: create events related to bastions
 import { Button } from '@bibliotheca-dao/ui-lib';
-
+import {
+  GiCrossedSwords,
+  GiTowerFall,
+  GiWalkingBoot,
+  GiBoatHorizon,
+} from 'react-icons/gi';
 import {
   getRealmNameById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
+import { locationNames } from '@/constants/bastion';
+import type { GetRealmHistoryQuery, RealmHistory } from '@/generated/graphql';
+import type { BastionHistory } from 'mockup/bastionsData';
 import { ArmyBattalions } from '../armies/card/ArmyBattalions';
 
 export enum Event {
@@ -20,6 +28,13 @@ export enum Event {
   armyBuild = 'army_built',
 }
 
+export enum BastionEvent {
+  bastionArmyTravel = 'bastion_army_travel',
+  bastionMove = 'bastion_move',
+  bastionCombat = 'bastion_combat',
+  bastionTakeLocation = 'bastion_take_location',
+}
+
 export const EventImages = {
   [Event.realmCombatAttack]: '/vizirs/mj_military_vizir.png',
   [Event.realmCombatDefend]: '/vizirs/mj_military_vizir.png',
@@ -31,6 +46,11 @@ export const EventImages = {
   [Event.foodHarvest]: '/realm-buildings/mj_farm.png',
   [Event.foodCreated]: '/realm-buildings/mj_farm.png',
   [Event.armyBuild]: '/vizirs/mj_military_vizir.png',
+  // TODOBASTIONS: find right images
+  [BastionEvent.bastionArmyTravel]: '/vizirs/mj_travel.png',
+  [BastionEvent.bastionCombat]: '/vizirs/mj_military_vizir.png',
+  [BastionEvent.bastionMove]: '/vizirs/mj_travel.png',
+  [BastionEvent.bastionTakeLocation]: '/vizirs/mj_builder.png',
 };
 
 export const EventLabels = {
@@ -44,6 +64,10 @@ export const EventLabels = {
   [Event.foodHarvest]: 'Food Harvest',
   [Event.foodCreated]: 'Food Created',
   [Event.armyBuild]: 'Army Built',
+  [BastionEvent.bastionArmyTravel]: 'Army Travel',
+  [BastionEvent.bastionCombat]: 'Army Attack',
+  [BastionEvent.bastionMove]: 'Army Move',
+  [BastionEvent.bastionTakeLocation]: 'Take Location',
 };
 
 const successClass = '';
@@ -61,6 +85,78 @@ export const VisitButton = (id: any) => {
   );
 };
 
+// TODOBASTIONS finish events + mockup data
+export function generateBastionEvent(event: BastionHistory) {
+  switch (event.eventType) {
+    case BastionEvent.bastionCombat:
+      return {
+        event: (
+          <div>
+            <span>
+              {`${getRealmNameById(event.realmId)} ${
+                event.data?.success ? 'won' : 'lost'
+              } against ${getRealmNameById(event.data?.defendRealmId)} on ${
+                locationNames[event.data?.locationId].defense
+              }!`}
+            </span>
+          </div>
+        ),
+        txHash: event.transactionHash,
+        image: EventImages[event.eventType],
+        icon: <GiCrossedSwords fontSize={30}></GiCrossedSwords>,
+      };
+    case BastionEvent.bastionTakeLocation:
+      return {
+        event: (
+          <div>
+            <span>
+              {`Location ${
+                locationNames[event.data?.locationId].defense
+              } was taken by ${getRealmNameById(event.realmId)} from Order ${
+                event.data?.order
+              }`}
+            </span>
+          </div>
+        ),
+        txHash: event.transactionHash,
+        image: EventImages[event.eventType],
+        icon: <GiTowerFall fontSize={30}></GiTowerFall>,
+      };
+
+    case BastionEvent.bastionMove:
+      return {
+        event: (
+          <div>
+            <span>
+              {`Army ${event.data?.armyId} of Realm ${event.realmId} 
+              has moved from Location ${event.data?.pastLocation}
+              to ${event.data?.nextLocation}`}
+            </span>
+          </div>
+        ),
+        txHash: event.transactionHash,
+        image: EventImages[event.eventType],
+        icon: <GiWalkingBoot fontSize={30}></GiWalkingBoot>,
+      };
+
+    case BastionEvent.bastionArmyTravel:
+      return {
+        event: (
+          <div>
+            <span>
+              {event.data?.arrival
+                ? `Realm ${event.realmId} has sent ArmyId ${event.data?.armyId} to the bastion and will arrive at block ${event.data?.arrivalBlock} blocks
+              `
+                : `Realm ${event.realmId} has sent ArmyId ${event.data?.armyId} outside of the bastion`}
+            </span>
+          </div>
+        ),
+        txHash: event.transactionHash,
+        image: EventImages[event.eventType],
+        icon: <GiBoatHorizon fontSize={30}></GiBoatHorizon>,
+      };
+  }
+}
 export function generateRealmEvent(event, user?: boolean) {
   switch (event.eventType) {
     case Event.realmCombatAttack:

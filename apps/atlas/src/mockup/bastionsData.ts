@@ -1,7 +1,102 @@
-import type { Scalars } from '@/generated/graphql';
+import type { GetRealmHistoryQuery, Scalars } from '@/generated/graphql';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const BIG_BLOCK_NUMBER = 10 * 10 ** 10;
+
+export function useGetBastionHistoryQuery(bastionId: number) {
+  return {
+    data: bastionEvents,
+    loading: false,
+    startPolling: (time: number) => time,
+    stopPolling: () => {
+      console.log('stop polling');
+    },
+  };
+}
+
+export type BastionHistory = {
+  __typename?: 'BastionHistory';
+  id: number;
+  eventId?: string | null;
+  eventType?: string | null;
+  realmId: number;
+  realmOwner?: string | null;
+  data?: any | null;
+  timestamp?: any | null;
+  transactionHash?: string | null;
+};
+
+export type GetBastionHistoryQuery = {
+  __typename?: 'Query';
+  getBastionHistory: Array<{
+    __typename?: 'BastionHistory';
+    id: number;
+    eventId?: string | null;
+    eventType?: string | null;
+    realmId: number;
+    realmOwner?: string | null;
+    data?: any | null;
+    timestamp?: any | null;
+    transactionHash?: string | null;
+  }>;
+};
+
+const bastionEvents: GetBastionHistoryQuery = {
+  __typename: 'Query',
+  getBastionHistory: [
+    Array(5).fill({
+      id: 1,
+      eventId: '03oije',
+      eventType: 'bastion_combat',
+      realmId: 1,
+      realmOwner: '0x...3994',
+      data: {
+        success: true,
+        defendRealmId: 2,
+        locationId: 1,
+      },
+    }),
+    Array(5).fill({
+      id: 1,
+      eventId: '03oije',
+      eventType: 'bastion_take_location',
+      realmId: 1,
+      realmOwner: '0x...3994',
+      data: {
+        armyId: 1,
+        order: 2,
+        locationId: 1,
+      },
+    }),
+    Array(5).fill({
+      id: 1,
+      eventId: '03oije',
+      eventType: 'bastion_move',
+      realmId: 1,
+      realmOwner: '0x...3994',
+      data: {
+        armyId: 1,
+        pastLocation: 1,
+        nextLocation: 2,
+      },
+    }),
+    Array(5).fill({
+      id: 1,
+      eventId: '03oije',
+      eventType: 'bastion_army_travel',
+      realmId: 1,
+      realmOwner: '0x...3994',
+      data: {
+        armyId: 1,
+        // arrival or departure from the bastion
+        arrival: true,
+        arrivalBlock: 789990,
+      },
+    }),
+  ]
+    .flat()
+    .sort(() => 0.5 - Math.random()),
+};
 
 export function useGetBastionsQuery(bastionId: number) {
   return {
@@ -90,7 +185,7 @@ type Location = {
 };
 
 export type Bastion = {
-  bastionId: Scalars['String'];
+  bastionId: Scalars['Float'];
   longitude: Scalars['Float'];
   latitude: Scalars['Float'];
   locations: Location[];

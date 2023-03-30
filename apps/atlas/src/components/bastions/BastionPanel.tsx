@@ -7,6 +7,7 @@ import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
 import { BasePanel } from '../ui/panel/BasePanel';
 import { TravelToBastionButton } from './ArmyActions';
 import { BastionInfo } from './BastionInfo';
+import { BastionOverview } from './BastionOverview';
 
 export const BastionPanel = () => {
   const {
@@ -40,8 +41,9 @@ export const BastionPanel = () => {
     return (
       <BasePanel open={true} style="lg:w-12/12">
         <BastionThreejs />
-        <BastionInfo></BastionInfo>
-        <TravelToBastionButton></TravelToBastionButton>
+        <BastionInfo />
+        <TravelToBastionButton />
+        <BastionOverview />
       </BasePanel>
     );
   }
