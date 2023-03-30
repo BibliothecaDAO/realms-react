@@ -4,6 +4,9 @@ import { GiCrossedSwords } from 'react-icons/gi';
 import { RiFlag2Line } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import { useBastionContext } from '@/context/BastionContext';
+import { useCommandList } from '@/context/CommandListContext';
+import { ModuleAddr } from '@/hooks/settling/stark-contracts';
+import { Entrypoints } from '@/hooks/settling/useBastions';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { BastionArmy } from 'mockup/bastionsData';
 import {
@@ -27,6 +30,25 @@ export const ArmyActions = ({
   const [showMove, setShowMove] = useState<boolean>(false);
   const [showTakeLocation, setShowTakeLocation] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState();
+  const [enqueuedTx, setEnqueuedTx] = useState(false);
+
+  const txQueue = useCommandList();
+
+  useEffect(() => {
+    console.log({ txQueue });
+    setEnqueuedTx(
+      !!txQueue.transactions.find(
+        (t: any) =>
+          t.contractAddress == ModuleAddr.Bastions &&
+          t.entrypoint == Entrypoints.bastionMove &&
+          t.metadata['realm_id'] == army.realmId &&
+          t.metadata['army_id'] == army.armyId
+      )
+    );
+    if (txQueue) {
+      setShowMove(false);
+    }
+  }, [txQueue, army]);
 
   const {
     bastionContext: { selectedLocation, bastion, bastionTakeLocation },
@@ -82,6 +104,7 @@ export const ArmyActions = ({
               className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               style={{ width: '100%' }}
               onClick={() => onAttackModeClick(army)}
+              disabled={enqueuedTx}
             >
               <div className="flex items-center text-white">
                 <GiCrossedSwords fontSize={'25px'}> </GiCrossedSwords>
@@ -94,6 +117,7 @@ export const ArmyActions = ({
               className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               style={{ width: '100%' }}
               onClick={() => takeLocationClick()}
+              disabled={enqueuedTx}
             >
               <div className="flex items-center text-white">
                 <GiCrossedSwords fontSize={'25px'}> </GiCrossedSwords>
@@ -115,6 +139,7 @@ export const ArmyActions = ({
               className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               style={{ width: '100%' }}
               onClick={() => openMove()}
+              disabled={enqueuedTx}
             >
               <div className="flex items-center text-white">
                 <RiFlag2Line fontSize={'25px'}> </RiFlag2Line>
@@ -129,6 +154,7 @@ export const ArmyActions = ({
               className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               style={{ width: '100%' }}
               onClick={() => onMoveClick(army, selectedOption)}
+              disabled={enqueuedTx}
             >
               <div className="flex items-center text-white">
                 <RiFlag2Line fontSize={'25px'}> </RiFlag2Line>
