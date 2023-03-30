@@ -15,6 +15,8 @@ import {
 } from 'react-icons/gi';
 import { RiFlag2Line } from 'react-icons/ri';
 import type { GetRealmsQuery } from '@/generated/graphql';
+import { useGetRealmQuery } from '@/generated/graphql';
+import { shortenAddress } from '@/util/formatters';
 import type { BastionArmy } from 'mockup/bastionsData';
 import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { ArmyActions } from './ArmyActions';
@@ -93,6 +95,7 @@ export const BastionArmyCard = ({
   ];
 
   const [orderName, setOrderName] = useState<string>();
+  const [isHovering, setIsHovering] = useState<boolean>();
 
   useEffect(() => {
     const order = army.orderId
@@ -103,9 +106,12 @@ export const BastionArmyCard = ({
 
   return (
     <div
-      className={`flex flex-col rounded-xl border-2 p-1 m-1 border-order-secondary-v2-${orderName} bg-order-primary-v2-${orderName}`}
+      className={`flex flex-col rounded-xl border-2 p-1 m-1 border-order-secondary-v2-${orderName} bg-order-primary-v2-${orderName} `}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <div className="flex flex-col justify-evenly ">
+        <ArmyInfo army={army} isHovering={isHovering}></ArmyInfo>
         <div
           className="grid grid-cols-5 flex items-center "
           style={{
@@ -284,6 +290,43 @@ const AttackModeLogo = (props) => {
             ></GiBroadsword>
           </button>
         }
+      </div>
+    </div>
+  );
+};
+
+type ArmyInfoProps = {
+  army: BastionArmy;
+  isHovering: boolean;
+};
+
+const ArmyInfo = ({ army, isHovering }: ArmyInfoProps) => {
+  const { data, loading } = useGetRealmQuery({
+    variables: { id: army.realmId },
+  });
+
+  // usestate
+
+  return (
+    <div
+      className={`${
+        isHovering ? 'h-3' : 'h-0'
+      } transition-all duration-500 px-1`}
+    >
+      <div
+        className={`${
+          isHovering ? 'opacity-1' : 'opacity-0'
+        } transition-all duration-500`}
+      >
+        <div className="flex justify-between text-white">
+          <div className="flex justify-between w-1/3">
+            <div> {`Realm Id: ${army.realmId}`} </div>
+            <div> {`Army Id: ${army.armyId}`} </div>
+          </div>
+          {!loading && data?.realm.ownerL2 && (
+            <div> {`Owner: ${shortenAddress(data?.realm.ownerL2)}`} </div>
+          )}
+        </div>
       </div>
     </div>
   );
