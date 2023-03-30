@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+// import { useGetBastionsQuery } from 'mockup/bastionsData';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useBastionContext } from '@/context/BastionContext';
-// import { useGetBastionsQuery } from 'mockup/bastionsData';
 import { useGetBastionQuery } from '@/generated/graphql';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
 import { BasePanel } from '../ui/panel/BasePanel';
@@ -19,6 +19,13 @@ export const BastionPanel = () => {
 
   // mockup data
   const { data, loading, startPolling, stopPolling } = useGetBastionQuery();
+
+  useEffect(() => {
+    if (loading) stopPolling();
+    else startPolling(5000);
+
+    return stopPolling;
+  }, [loading, data]);
 
   useEffect(() => {
     if (!loading && data) {
