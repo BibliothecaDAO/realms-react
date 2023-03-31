@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useBastionContext } from '@/context/BastionContext';
 import { useGetBastionQuery } from '@/generated/graphql';
+// import { useGetBastionQuery } from 'mockup/bastionsData';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
 import { BasePanel } from '../ui/panel/BasePanel';
 import { TravelToBastionButton } from './ArmyActions';

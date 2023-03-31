@@ -41,6 +41,14 @@ export const VARIANTS = {
     },
     tabList: 'flex p-1 space-x-2 border rounded-lg border-yellow-800/40',
   },
+  'small-neutral': {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-2 py-2 tracking-widest hover:border-gray-500 transition-all duration-450 rounded focus-visible:ring-gray-500 hover:bg-gray-300 hover:text-gray-800 hover:bg-gray-500 shadow-lg border-b-2 border-l  text-gray-800 border-transparent paper',
+      active: 'bg-gray-300 text-gray-800 border-gray-500',
+      inactive: 'bg-transparent text-gray-500',
+    },
+    tabList: 'flex p-1 space-x-2 border rounded-lg border-gray-600/40',
+  },
 };
 
 export interface TabsProps {

@@ -35,7 +35,6 @@ export const ArmyActions = ({
   const txQueue = useCommandList();
 
   useEffect(() => {
-    console.log({ txQueue });
     setEnqueuedTx(
       !!txQueue.transactions.find(
         (t: any) =>
@@ -91,36 +90,35 @@ export const ArmyActions = ({
           {!showMove && <div className="grid-item col-span-1"> </div>}
           {showMove && (
             <RxCross1
-              fontSize={30}
-              className="cursor-pointer"
+              className="bastion-icon cursor-pointer"
               color="#333333"
               onClick={() => closeMove()}
             ></RxCross1>
           )}
         </div>
-        <div className="grid-item flex justify-center px-1 col-span-1 grid-row-1">
+        <div className="grid-item flex justify-center pr-0.5 col-span-1 grid-row-1">
           {!showMove && !showTakeLocation && (
             <Button
-              className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
-              style={{ width: '100%' }}
+              className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => onAttackModeClick(army)}
               disabled={enqueuedTx}
+              fullWidth={true}
             >
               <div className="flex items-center text-white">
-                <GiCrossedSwords fontSize={'25px'}> </GiCrossedSwords>
+                <GiCrossedSwords className={'bastion-icon'}> </GiCrossedSwords>
                 <div className=""> Attack </div>
               </div>
             </Button>
           )}
           {!showMove && showTakeLocation && (
             <Button
-              className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
-              style={{ width: '100%' }}
+              className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => takeLocationClick()}
               disabled={enqueuedTx}
+              fullWidth={true}
             >
               <div className="flex items-center text-white">
-                <GiCrossedSwords fontSize={'25px'}> </GiCrossedSwords>
+                <GiCrossedSwords className="bastion-icon"> </GiCrossedSwords>
                 <div className=""> Take Location </div>
               </div>
             </Button>
@@ -134,30 +132,30 @@ export const ArmyActions = ({
           )}
         </div>
         {!showMove && (
-          <div className="grid-item flex justify-center px-1 col-span-1 grid-row-1">
+          <div className="grid-item flex justify-center pl-0.5 col-span-1 grid-row-1">
             <Button
-              className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
-              style={{ width: '100%' }}
+              className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => openMove()}
               disabled={enqueuedTx}
+              fullWidth={true}
             >
               <div className="flex items-center text-white">
-                <RiFlag2Line fontSize={'25px'}> </RiFlag2Line>
+                <RiFlag2Line className="bastin-icon"> </RiFlag2Line>
                 <div className="">Move Army</div>
               </div>
             </Button>
           </div>
         )}
         {showMove && (
-          <div className="grid-item flex justify-center px-1 col-span-1 grid-row-1">
+          <div className="grid-item flex justify-center pl-0.5 col-span-1 grid-row-1">
             <Button
-              className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
-              style={{ width: '100%' }}
+              className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => onMoveClick(army, selectedOption)}
               disabled={enqueuedTx}
+              fullWidth={true}
             >
               <div className="flex items-center text-white">
-                <RiFlag2Line fontSize={'25px'}> </RiFlag2Line>
+                <RiFlag2Line className="bastion-icon"> </RiFlag2Line>
                 <div className="">Start Moving</div>
               </div>
             </Button>
@@ -187,7 +185,6 @@ export const TravelToBastionButton = () => {
 
   useEffect(() => {
     if (userRealms && bastion) {
-      console.log({ userRealms });
       const armiesThatCanTravel = filterArmiesThatCannotTravel(
         userRealms,
         bastion
@@ -215,10 +212,7 @@ export const TravelToBastionButton = () => {
       <div className="fixed bottom-10 w-1/3 max-w-2xl">
         <div className="w-[95%] flex flex-col">
           {showDropDown && (
-            <div
-              className="w-full bg-gray-100 overflow-y-auto text-[#333333] rounded-md shadow-lg"
-              style={{ maxHeight: '20vh' }}
-            >
+            <div className="w-full bg-gray-100 overflow-y-auto text-[#333333] rounded-md shadow-lg">
               {userRealms &&
                 travelArmies &&
                 travelArmies.map((army, index) => {

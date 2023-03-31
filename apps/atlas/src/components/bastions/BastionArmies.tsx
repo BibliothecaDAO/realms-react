@@ -131,28 +131,26 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
   }, [selectedLocation]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full overflow-y-auto">
       {attackMode && attackingArmy && (
         <div className="p-1 flex items-center">
           <RxCross1
-            fontSize={25}
-            className="cursor-pointer"
+            className="bastion-icon cursor-pointer"
             color="#333333"
             onClick={() => cancelAttackMode()}
           ></RxCross1>
-          {`Choose opponent for ArmyID ${attackingArmy.armyId} of RealmID ${attackingArmy.realmId}`}
+          <div className="lg:text-[12px]">
+            {`Choose opponent for ArmyID ${attackingArmy.armyId} of RealmID ${attackingArmy.realmId}`}{' '}
+          </div>
         </div>
       )}
       {!attackMode && (
         <Tabs
           selectedIndex={selectedTabIndex}
           onChange={onTabChange as any}
-          variant="custom-colors"
-          className={`fill-${
-            orderName ? `order-secondary-v2-${orderName}` : '#333333'
-          } text-${orderName ? `order-secondary-v2-${orderName}` : '#333333'}`}
+          variant="small-neutral"
         >
-          <Tabs.List className="mt-2">
+          <Tabs.List>
             {TABS.map((tab) => (
               <Tabs.Tab key={tab.key}>{tab.name}</Tabs.Tab>
             ))}
@@ -163,9 +161,10 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
         <BastionArmyCard
           army={attackingArmy}
           attackMode={false}
+          armyInfoAnimation={false}
         ></BastionArmyCard>
       )}
-      <div className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
+      <div className="h-full overflow-y-auto">
         {blockNumber &&
           userRealms &&
           displayedArmies
@@ -181,6 +180,7 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
                   userRealms={userRealms}
                   arrived={army.arrivalBlock <= blockNumber}
                   attackMode={attackMode}
+                  armyInfoAnimation={true}
                   blockNumber={blockNumber}
                   onAttackModeClick={onAttackModeClick}
                   onAttackClick={onAttackClick}

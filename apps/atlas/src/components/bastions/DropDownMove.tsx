@@ -1,5 +1,5 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { BiCurrentLocation } from 'react-icons/bi';
 import { locationNames, moveOptions } from '@/constants/bastion';
 import { useBastionContext } from '@/context/BastionContext';
@@ -20,6 +20,25 @@ export const DropDownMove = (props) => {
         : {},
     [selectedLocation.locationId, bastion, props.army]
   );
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      // Check if the click occurred outside of the div
+      if (divRef.current && !divRef.current.contains(event.target as Node)) {
+        setShowDropDown(false);
+      }
+    };
+
+    // Add event listener to detect clicks outside of the div
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    // Remove event listener when component is unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
 
   const handleOptionSelect = (optionValue: number) => {
     props.setSelectedOption(optionValue);
@@ -57,22 +76,24 @@ export const DropDownMove = (props) => {
   };
 
   return (
-    <div className="relative inline-block w-full">
+    <div ref={divRef} className="relative inline-block w-full">
       <Button
-        className="w-full text-[#333333] bg-white border-gray-300 rounded-l shadow-sm hover:bg-gray-50 active:outline-none focus:outline-none"
+        className="hover:-translate-y-0 transition-none p-0.5 w-full text-[#333333] bg-white border-gray-300 rounded-l shadow-sm hover:bg-gray-50 active:outline-none focus:outline-none"
         onClick={() => handleClick()}
+        fullWidth={true}
       >
         {bastion &&
           displayLabel(props.army.orderId, bastion, props.selectedOption)}
       </Button>
       {showDropDown && (
-        <div className="absolute z-10 w-full bg-gray-100 rounded-l shadow-lg">
+        <div className="absolute z-20 w-full bg-gray-100 rounded-l shadow-lg">
           {Object.keys(movingTimes).map((option) => {
             if (parseInt(option) !== props.selectedOption) {
               return (
                 <Button
                   key={option}
-                  className="w-full text-gray-700 hover:bg-gray-100 hover:text-[#333333] active:outline-none focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                  className="p-0.5 text-gray-700 hover:bg-gray-100 hover:text-[#333333] active:outline-none focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                  fullWidth={true}
                   onClick={() => {
                     handleOptionSelect(parseInt(option));
                   }}

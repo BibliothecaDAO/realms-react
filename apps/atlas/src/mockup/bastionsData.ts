@@ -1,11 +1,11 @@
 import type { Scalars } from '@/generated/graphql';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const BIG_BLOCK_NUMBER = 10 * 10 ** 10;
+const BIG_BLOCK_NUMBER = 790000;
 
-export function useGetBastionsQuery(bastionId: number) {
+export function useGetBastionQuery() {
   return {
-    data: bastions.find((a) => a.bastionId == bastionId),
+    data: { bastions: bastions },
     loading: false,
     startPolling: (time: number) => time,
     stopPolling: () => {
@@ -248,15 +248,15 @@ const locations: Location[] = [
 
 const bastions: Bastion[] = [
   {
-    bastionId: 3506800,
-    longitude: -30,
-    latitude: 20.68,
+    bastionId: '3711000',
+    longitude: -33,
+    latitude: 30.78,
     locations: locations,
   },
   {
-    bastionId: 3711000,
-    longitude: -33,
-    latitude: 30.78,
+    bastionId: '3506800',
+    longitude: -30,
+    latitude: 20.68,
     locations: locations,
   },
 ];
