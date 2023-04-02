@@ -61,7 +61,7 @@ export const BastionInfo: React.FC = () => {
 
   return (
     // to put it on the middle right
-    <div className="fixed flex w-[20%] max-w-md mt-10 right-3  bottom-0 top-0 items-center">
+    <div className="fixed flex w-[25%] max-w-md mt-10 right-3  bottom-0 top-0 items-center">
       <div className="flex h-[90%] w-full">
         <div
           className={`w-full rounded-xl ${

@@ -47,11 +47,11 @@ export const BastionArmyCard = ({
 }: BastionArmyCardProps) => {
   const data = [
     {
-      armyType: 'Arcanist',
-      shortArmyType: 'Arcanist',
-      health: army.arcanistHealth,
-      quantity: army.arcanistQty,
-      icon: <GiSpellBook />,
+      armyType: 'Apprentice',
+      shortArmyType: 'Apprentice',
+      health: army.mageHealth,
+      quantity: army.mageQty,
+      icon: <GiCrystalWand />,
     },
     {
       armyType: 'Archer',
@@ -61,46 +61,49 @@ export const BastionArmyCard = ({
       icon: <GiBowArrow />,
     },
     {
-      armyType: 'H.Cavalry',
-      shortArmyType: 'H.Caval.',
-      health: army.heavyCavalryHealth,
-      quantity: army.heavyCavalryQty,
-      icon: <GiCavalry />,
-    },
-    {
-      armyType: 'H.Infantry',
-      shortArmyType: 'H.Inf.',
-      health: army.heavyInfantryHealth,
-      quantity: army.heavyInfantryQty,
-      icon: <GiBroadsword />,
-    },
-    {
-      armyType: 'L.Cavalry',
-      shortArmyType: 'L.Caval.',
-      health: army.lightCavalryHealth,
-      quantity: army.lightCavalryQty,
-      icon: <GiHorseHead />,
-    },
-    {
-      armyType: 'L.Infantry',
-      shortArmyType: 'L.Inf.',
+      armyType: 'Soldier',
+      shortArmyType: 'Soldier',
       health: army.lightInfantryHealth,
       quantity: army.lightInfantryQty,
       icon: <GiBroadDagger />,
     },
     {
-      armyType: 'Longbow',
-      shortArmyType: 'Longb.',
+      armyType: 'Cavalry',
+      shortArmyType: 'Cavalry',
+      health: army.lightCavalryHealth,
+      quantity: army.lightCavalryQty,
+      icon: <GiHorseHead />,
+    },
+    {
+      armyType: 'Arcanist',
+      shortArmyType: 'Arcanist',
+      health: army.arcanistHealth,
+      quantity: army.arcanistQty,
+      icon: <GiSpellBook />,
+    },
+
+    {
+      armyType: 'Hunter',
+      shortArmyType: 'Hunter',
       health: army.longbowHealth,
       quantity: army.longbowQty,
       icon: <GiPocketBow />,
     },
+
     {
-      armyType: 'Mage',
-      shortArmyType: 'Mage',
-      health: army.mageHealth,
-      quantity: army.mageQty,
-      icon: <GiCrystalWand />,
+      armyType: 'Paladin',
+      shortArmyType: 'Paladin',
+      health: army.heavyInfantryHealth,
+      quantity: army.heavyInfantryQty,
+      icon: <GiBroadsword />,
+    },
+
+    {
+      armyType: 'Knight',
+      shortArmyType: 'Knight',
+      health: army.heavyCavalryHealth,
+      quantity: army.heavyCavalryQty,
+      icon: <GiCavalry />,
     },
   ];
 
@@ -114,11 +117,9 @@ export const BastionArmyCard = ({
     order && setOrderName(normalizeOrderName(order));
   }, [army]);
 
-  console.log(window.innerWidth);
-
   return (
     <div
-      className={`flex 2xl:text-[14px] text-[10px] my-0.5 pr-0.5 flex-col rounded-xl border-2 border-order-secondary-v2-${orderName} bg-order-primary-v2-${orderName} `}
+      className={`flex text-[14px] my-0.5 pr-0.5 flex-col rounded-xl border-2 border-order-secondary-v2-${orderName} bg-order-primary-v2-${orderName} `}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -153,12 +154,9 @@ export const BastionArmyCard = ({
           {data.map((item, index) => {
             const light = index % 2;
             return (
-              <div
-                key={index}
-                className="grid-item flex xl:h-8 2xl:h-10 w-full py-1 "
-              >
+              <div key={index} className="grid-item flex h-11 w-full py-1 ">
                 <div
-                  className={`grid grid-rows-2 w-[97%] rounded-md overflow-hidden border-2 border-[#333333]`}
+                  className={`grid grid-rows-3 w-[97%] rounded-md overflow-hidden border-2 border-[#333333]`}
                   style={{
                     backgroundColor: `${light ? 'white' : '#333333'}`,
                     color: `${light ? '#333333' : 'white'}`,
@@ -167,25 +165,33 @@ export const BastionArmyCard = ({
                   <div className="grid-item col-span-3 row-span-1 ">
                     <HealthBar value={item.health} max={100}></HealthBar>
                   </div>
-                  <div className="grid-item flex items-center col-span-1 row-span-1 pb-1">
-                    <div className="xl:text-[12px] 2xl:text-[15px] w-4">
+                  <div className="grid-item flex items-center justify-center col-span-1 row-span-2 pb-1">
+                    <div className="xl:text-[15px] 2xl:text-[15px] w-4">
                       {item.quantity}
                     </div>
                   </div>
-                  <div className="grid-item flex items-center col-span-2 row-span-1 overflow-hidden">
-                    {/* <div className="w-full hidden 2xl:inline">{item.armyType}</div>
-                    <div className="w-full 2xl:hidden">{item.shortArmyType}</div> */}
-                    <div className="w-[95%] truncate overflow-hidden">
+                  <div className="grid-item h-full flex col-span-1 row-span-2 overflow-hidden">
+                    {/* <div className="w-full hidden 2xl:inline">
+                      {item.armyType}
+                    </div> */}
+                    {/* <div
+                      className={`flex justify-center w-full 2xl:hidden text-[18px] pr-2 h-full text-${
+                        light ? '[#333333]' : 'white'
+                      } text-2xl`}
+                    >
+                      {item.icon}
+                    </div> */}
+                    <div className="truncate overflow-hidden ">
                       {item.armyType}
                     </div>
+                    {/* <div
+                      className={`flex justify-center text-[18px] pr-2 h-full text-${
+                        light ? '[#333333]' : 'white'
+                      } text-2xl`}
+                    >
+                      {item.icon}
+                    </div> */}
                   </div>
-                </div>
-                <div className="hidden lg:flex items-center  ">
-                  {/* <div
-                    className={`icon pr-2 text-order-secondary-v2-${orderName} text-2xl`}
-                  >
-                    {item.icon}
-                  </div> */}
                 </div>
               </div>
             );
@@ -279,10 +285,10 @@ const HealthBar = ({ value, max }) => {
 const NonAttackModeLogo = (props) => {
   return (
     <div
-      className={`grid-item col-span-1 row-span-2 flex flex-col justify-center items-center text-order-secondary-v2-${props.orderName}`}
+      className={`grid-item w-7 col-span-1 row-span-2 flex flex-col justify-center items-center text-order-secondary-v2-${props.orderName}`}
     >
       {props.orderName && (
-        <OrderIcon order={props.orderName} size={'xs'}></OrderIcon>
+        <OrderIcon order={props.orderName} size={'sm'}></OrderIcon>
       )}
     </div>
   );
@@ -291,13 +297,13 @@ const NonAttackModeLogo = (props) => {
 const AttackModeLogo = (props) => {
   return (
     <div
-      className={`h-full mr-0.5 w-full grid-item col-span-1 row-span-2 flex flex-col items-center text-order-secondary-v2-${props.orderName}`}
+      className={`h-full w-7 mr-0.5 w-full grid-item col-span-1 row-span-2 flex flex-col items-center text-order-secondary-v2-${props.orderName}`}
     >
       <div
         className={`h-1/2 flex flex-col justify-center items-center text-order-secondary-v2-${props.orderName}`}
       >
         {props.orderName && (
-          <OrderIcon order={props.orderName} size={'xs'}></OrderIcon>
+          <OrderIcon order={props.orderName} size={'sm'}></OrderIcon>
         )}
       </div>
       <div
@@ -312,7 +318,7 @@ const AttackModeLogo = (props) => {
           >
             <GiBroadsword
               color={'#333333'}
-              className="bastion-icon m-0.5"
+              className="h-7 w-4 m-0.5"
             ></GiBroadsword>
           </button>
         }

@@ -70,7 +70,11 @@ export const DropDownMove = (props) => {
             ? 'defense'
             : 'attack';
 
-        return `${locationNames[selectedOption][role]} (${movingTimes[selectedOption]} blocks)`;
+        if (window.innerWidth >= 1536) {
+          return `${locationNames[selectedOption][role]} (${movingTimes[selectedOption]} blocks)`;
+        } else {
+          return `${locationNames[selectedOption][role]} (${movingTimes[selectedOption]})`;
+        }
       }
     }
   };
@@ -100,6 +104,10 @@ export const DropDownMove = (props) => {
                 >
                   {bastion &&
                     displayLabel(props.army.orderId, bastion, parseInt(option))}
+                  {/* <div className="bg-[#333333] text-white opacity-70 rounded absolute top-4 right-5">
+                    {' '}
+                    {'hello'}{' '}
+                  </div> */}
                 </Button>
               );
             }
