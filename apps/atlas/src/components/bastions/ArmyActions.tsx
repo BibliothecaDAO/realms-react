@@ -11,6 +11,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { BastionArmy } from 'mockup/bastionsData';
 import {
   addTravelTime,
+  computeShowTakeLocation,
   filterArmiesThatCannotTravel,
   getBastionLocation,
 } from './BastionGetters';
@@ -72,11 +73,9 @@ export const ArmyActions = ({
 
   useEffect(() => {
     if (bastion && selectedLocation) {
-      const defendingOrder = getBastionLocation(
-        bastion,
-        selectedLocation.locationId
-      ).defendingOrderId;
-      setShowTakeLocation(defendingOrder === 0);
+      setShowTakeLocation(
+        computeShowTakeLocation(bastion, selectedLocation.locationId)
+      );
     }
   }, [bastion, selectedLocation]);
 

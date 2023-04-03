@@ -99,6 +99,22 @@ export const isUserArmy = (
   return false;
 };
 
+export const computeShowTakeLocation = (
+  bastion: Bastion,
+  locationId: number
+) => {
+  const location = getBastionLocation(bastion, locationId);
+  const defendingOrder = location.defendingOrderId;
+  if (
+    location.armies.filter((army) => army.orderId === defendingOrder).length ===
+    0
+  ) {
+    return true;
+  } else {
+    return defendingOrder === 0;
+  }
+};
+
 export const getMoveTimes = (
   currentLocation: number,
   army: BastionArmy,
