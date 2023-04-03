@@ -176,7 +176,11 @@ const locations: Location[] = [
     locationId: 3,
     defendingOrderId: 1,
     takenBlock: 1,
-    armies: [createArmy(1, 3, 1, 1, 1), createArmy(2, 3, 1, 1, 2)],
+    armies: [
+      createArmy(1, 3, 1, 1, 1),
+      createArmy(2, 3, 1, 1, 2),
+      createArmy(262, 3, 1, 1, 2),
+    ],
   },
   {
     locationId: 4,

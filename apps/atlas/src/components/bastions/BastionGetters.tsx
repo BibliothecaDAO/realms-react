@@ -1,3 +1,4 @@
+import { MovingTimes } from '@/constants/bastion';
 import { SECONDS_PER_KM } from '@/constants/globals';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import type { Bastion, BastionArmy } from 'mockup/bastionsData';
@@ -119,19 +120,19 @@ export const getMoveTimes = (
     getBastionLocation(bastion, 4).defendingOrderId === armyOrder;
 
   if (currentLocation === 0) {
-    movingTimes[1] = 25;
-    movingTimes[2] = 25;
-    movingTimes[3] = 25;
-    movingTimes[4] = 25;
+    movingTimes[1] = MovingTimes.DistanceStagingAreaTower;
+    movingTimes[2] = MovingTimes.DistanceStagingAreaTower;
+    movingTimes[3] = MovingTimes.DistanceStagingAreaTower;
+    movingTimes[4] = MovingTimes.DistanceStagingAreaTower;
     if (hasCentralSquare && hasAllTowers) {
-      movingTimes[5] = 35;
+      movingTimes[5] = MovingTimes.DistanceStagingAreaCentralSquare;
     }
     // leave bastion
     movingTimes[6] = 999;
   }
 
   if (currentLocation === 1 || currentLocation === 3) {
-    movingTimes[0] = 25;
+    movingTimes[0] = MovingTimes.DistanceStagingAreaTower;
     movingTimes[2] = movingTimeToAdjacentTower(
       isDefendingCurrentLocation,
       2,
@@ -154,7 +155,7 @@ export const getMoveTimes = (
   }
 
   if (currentLocation === 2 || currentLocation === 4) {
-    movingTimes[0] = 25;
+    movingTimes[0] = MovingTimes.DistanceStagingAreaTower;
     movingTimes[3] = movingTimeToAdjacentTower(
       isDefendingCurrentLocation,
       3,
@@ -177,15 +178,23 @@ export const getMoveTimes = (
   }
 
   if (currentLocation === 5) {
-    movingTimes[0] = 35;
+    movingTimes[0] = MovingTimes.DistanceStagingAreaCentralSquare;
     movingTimes[1] =
-      getBastionLocation(bastion, 1).defendingOrderId === armyOrder ? 10 : 25;
+      getBastionLocation(bastion, 1).defendingOrderId === armyOrder
+        ? MovingTimes.DistanceTowerCentralSquare
+        : MovingTimes.DistanceTowerInnerGate;
     movingTimes[2] =
-      getBastionLocation(bastion, 2).defendingOrderId === armyOrder ? 10 : 25;
+      getBastionLocation(bastion, 2).defendingOrderId === armyOrder
+        ? MovingTimes.DistanceTowerCentralSquare
+        : MovingTimes.DistanceTowerInnerGate;
     movingTimes[3] =
-      getBastionLocation(bastion, 3).defendingOrderId === armyOrder ? 10 : 25;
+      getBastionLocation(bastion, 3).defendingOrderId === armyOrder
+        ? MovingTimes.DistanceTowerCentralSquare
+        : MovingTimes.DistanceTowerInnerGate;
     movingTimes[4] =
-      getBastionLocation(bastion, 4).defendingOrderId === armyOrder ? 10 : 25;
+      getBastionLocation(bastion, 4).defendingOrderId === armyOrder
+        ? MovingTimes.DistanceTowerCentralSquare
+        : MovingTimes.DistanceTowerInnerGate;
   }
   return movingTimes;
 };
@@ -200,12 +209,12 @@ const movingTimeToAdjacentTower = (
     if (
       getBastionLocation(bastion, adjacentTower).defendingOrderId === armyOrder
     ) {
-      return 10;
+      return MovingTimes.DistanceTowerTower;
     } else {
-      return 25;
+      return MovingTimes.DistanceGateTower;
     }
   } else {
-    return 25;
+    return MovingTimes.DistanceGateGate;
   }
 };
 
@@ -218,25 +227,37 @@ const movingTimeFromTowerGateToCentralSquare = (
     getBastionLocation(bastion, 5).defendingOrderId === armyOrder &&
     getBastionLocation(bastion, currentLocation).defendingOrderId === armyOrder
   ) {
-    return 10;
+    return MovingTimes.DistanceTowerCentralSquare;
   } else {
     if (currentLocation === 1 || currentLocation === 3) {
       if (
         getBastionLocation(bastion, 4).defendingOrderId === armyOrder ||
         getBastionLocation(bastion, 2).defendingOrderId === armyOrder
       ) {
-        return 25 + 10;
+        return (
+          MovingTimes.DistanceGateTower + MovingTimes.DistanceTowerCentralSquare
+        );
       } else {
-        return 25 + 25 + 10;
+        return (
+          MovingTimes.DistanceGateGate +
+          MovingTimes.DistanceGateTower +
+          MovingTimes.DistanceTowerCentralSquare
+        );
       }
     } else {
       if (
         getBastionLocation(bastion, 3).defendingOrderId === armyOrder ||
         getBastionLocation(bastion, 1).defendingOrderId === armyOrder
       ) {
-        return 25 + 10;
+        return (
+          MovingTimes.DistanceGateTower + MovingTimes.DistanceTowerCentralSquare
+        );
       } else {
-        return 25 + 25 + 10;
+        return (
+          MovingTimes.DistanceGateGate +
+          MovingTimes.DistanceGateTower +
+          MovingTimes.DistanceTowerCentralSquare
+        );
       }
     }
   }

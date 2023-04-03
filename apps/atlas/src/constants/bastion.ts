@@ -19,3 +19,22 @@ export const locationNames: {
 };
 
 export const gridDimension = 4;
+
+export const MovingTimes = {
+  // DistanceStagingAreaCentralSquare: 35,
+  // DistanceTowerCentralSquare: 10,
+  // DistanceGateGate: 25,
+  // DistanceGateTower: 25,
+  // DistanceTowerTower: 10,
+  // DistanceStagingAreaTower: 25,
+  // DistanceTowerInnerGate: 25,
+  // DistanceInnerGateTowerGate: 25,
+  DistanceStagingAreaCentralSquare: 1,
+  DistanceTowerCentralSquare: 1,
+  DistanceGateGate: 1,
+  DistanceGateTower: 1,
+  DistanceTowerTower: 1,
+  DistanceStagingAreaTower: 1,
+  DistanceTowerInnerGate: 1,
+  DistanceInnerGateTowerGate: 1,
+};
