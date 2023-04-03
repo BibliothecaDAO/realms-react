@@ -11,6 +11,7 @@ import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import type { BastionArmy } from 'mockup/bastionsData';
 import {
   addTravelTime,
+  computeShowTakeLocation,
   filterArmiesThatCannotTravel,
   getBastionLocation,
 } from './BastionGetters';
@@ -72,28 +73,28 @@ export const ArmyActions = ({
 
   useEffect(() => {
     if (bastion && selectedLocation) {
-      const defendingOrder = getBastionLocation(
-        bastion,
-        selectedLocation.locationId
-      ).defendingOrderId;
-      setShowTakeLocation(defendingOrder === 0);
+      setShowTakeLocation(
+        computeShowTakeLocation(bastion, selectedLocation.locationId)
+      );
     }
   }, [bastion, selectedLocation]);
 
   return (
-    <div className="grid-item col-span-5">
+    <div className="grid-item col-span-5 2xl:text-[16px] text-[14px]">
       <div
         className="grid justify-between grid-cols-3 grid-row-1"
         style={{ gridTemplateColumns: '1fr 8fr 8fr' }}
       >
         <div className="flex justify-center items-center">
-          {!showMove && <div className="grid-item col-span-1"> </div>}
+          {!showMove && <div className="grid-item col-span-1 w-7"> </div>}
           {showMove && (
-            <RxCross1
-              className="bastion-icon cursor-pointer"
-              color="#333333"
-              onClick={() => closeMove()}
-            ></RxCross1>
+            <div className="flex justify-center items-center w-7">
+              <RxCross1
+                className="bastion-icon cursor-pointer"
+                color="#333333"
+                onClick={() => closeMove()}
+              ></RxCross1>
+            </div>
           )}
         </div>
         <div className="grid-item flex justify-center pr-0.5 col-span-1 grid-row-1">

@@ -207,5 +207,5 @@ div#deckgl-wrapper {
 }
 
 .bastion-icon {
-  @apply xl:text-[15px] 2xl:text-[18px];
+  @apply xl:text-[18px] 2xl:text-[18px];
 }
