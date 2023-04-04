@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import React, { useRef } from 'react';
 import type * as THREE from 'three';
 import type { GLTF } from 'three-stdlib';
-import { useBastionContext } from '@/context/BastionContext';
+import { useBastionSettersContext } from '@/context/BastionContext';
 import { ClickableMesh, cloneMaterialWithBlueTint } from './ClickableMesh';
 
 type GLTFResult = GLTF & {
@@ -128,9 +128,7 @@ export function BastionModel(props: JSX.IntrinsicElements['group']) {
     'models/bastion_exportTest8.glb'
   ) as GLTFResult;
 
-  const {
-    bastionContext: { setSelectedLocation },
-  } = useBastionContext();
+  const { setSelectedLocation } = useBastionSettersContext();
 
   const glowGoldMaterial = cloneMaterialWithBlueTint(materials.Gold);
   const glowDefendableMaterial = cloneMaterialWithBlueTint(
@@ -225,7 +223,7 @@ export function BastionModel(props: JSX.IntrinsicElements['group']) {
           />
         </ClickableMesh>
       </group>
-      <group onClick={() => handleClick({ id: 5, defender: true })}>
+      <group onClick={() => handleClick({ id: 5, defender: false })}>
         <ClickableMesh>
           <mesh
             position={[-1, 15.06, -0.61]}

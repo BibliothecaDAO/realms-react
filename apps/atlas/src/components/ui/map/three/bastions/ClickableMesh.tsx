@@ -81,14 +81,10 @@ export const cloneMaterialWithBlueTint = (material: MeshStandardMaterial) => {
 
 export const ClickableMesh = ({ children }) => {
   const [hoveredLocation, setHoveredLocation] = useState<boolean>(false);
-  // TODO: understand why onPointerLeave and onPointerEnter dont work anymore when click
   return (
     <group
       onPointerEnter={() => setHoveredLocation(true)}
       onPointerLeave={() => {
-        setHoveredLocation(false);
-      }}
-      onClick={() => {
         setHoveredLocation(false);
       }}
     >

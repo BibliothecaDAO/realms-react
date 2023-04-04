@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 // import { useGetBastionsQuery } from 'mockup/bastionsData';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useBastionContext } from '@/context/BastionContext';
+import { useBastionSettersContext } from '@/context/BastionContext';
 import { useGetBastionQuery } from '@/generated/graphql';
 // import { useGetBastionQuery } from 'mockup/bastionsData';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
@@ -14,9 +14,7 @@ export const BastionPanel = () => {
     mapContext: { selectedAsset },
   } = useAtlasContext();
 
-  const {
-    bastionContext: { setBastion },
-  } = useBastionContext();
+  const { setBastion } = useBastionSettersContext();
 
   // mockup data
   const { data, loading, startPolling, stopPolling } = useGetBastionQuery();

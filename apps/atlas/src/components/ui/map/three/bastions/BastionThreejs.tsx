@@ -2,14 +2,12 @@
 /* eslint-disable react/no-unknown-property */
 import { OrbitControls, Stage, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useBastionContext } from '@/context/BastionContext';
+import { useBastionStateContext } from '@/context/BastionContext';
 import { KnightSoldiers } from './BastionArmies';
 import { BastionModel } from './BastionModel';
 
 export const BastionThreejs = () => {
-  const {
-    bastionContext: { bastion },
-  } = useBastionContext();
+  const { bastion } = useBastionStateContext();
 
   if (bastion) {
     return (
@@ -52,7 +50,5 @@ export const BastionThreejs = () => {
         />
       </Canvas>
     );
-  } else {
-    return <div> no bastion</div>;
   }
 };
