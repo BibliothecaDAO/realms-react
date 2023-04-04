@@ -50,5 +50,7 @@ export const BastionThreejs = () => {
         />
       </Canvas>
     );
+  } else {
+    return <div></div>;
   }
 };

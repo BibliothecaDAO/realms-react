@@ -34,14 +34,14 @@ export const BastionPanel = () => {
   }, [data, loading]);
 
   if (loading && !data) {
-    return <div>{<div> No bastion with that id</div>}</div>;
+    return <div></div>;
   } else {
     return (
-      <BasePanel open={true} style="lg:w-12/12">
+      <div className="absolute top-0 bottom-0 rigth-0 left-0 w-full h-full">
         <BastionThreejs />
         <BastionInfo></BastionInfo>
         <TravelToBastionButton></TravelToBastionButton>
-      </BasePanel>
+      </div>
     );
   }
 };
