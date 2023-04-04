@@ -1,0 +1,46 @@
+query getBastion @api(name: starkIndexer) {
+  bastions {
+    bastionId
+    latitude
+    longitude
+    locations {
+      locationId
+      defendingOrderId
+      takenBlock
+      armies {
+        armyId
+        realmId
+        xp
+        destinationRealmId
+        destinationArrivalTime
+        # // ArmyData
+        armyPacked
+        lastAttacked
+        xp
+        level
+        callSign
+
+        # Battallion stats
+        lightCavalryQty
+        lightCavalryHealth
+        heavyCavalryQty
+        heavyCavalryHealth
+        archerQty
+        archerHealth
+        longbowQty
+        longbowHealth
+        mageQty
+        mageHealth
+        arcanistQty
+        arcanistHealth
+        lightInfantryQty
+        lightInfantryHealth
+        heavyInfantryQty
+        heavyInfantryHealth
+        orderId
+        pastLocation: bastionPastLocation
+        arrivalBlock: bastionArrivalBlock
+      }
+    }
+  }
+}

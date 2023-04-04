@@ -2,22 +2,24 @@ import clsx from 'clsx';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import Anger from '../../icons/orders/anger.svg';
-import Brilliance from '../../icons/orders/brilliance.svg';
-import Detection from '../../icons/orders/detection.svg';
-import Enlightenment from '../../icons/orders/enlightenment.svg';
-import Fox from '../../icons/orders/fox.svg';
-import Fury from '../../icons/orders/fury.svg';
-import Giants from '../../icons/orders/giants.svg';
-import Perfection from '../../icons/orders/perfection.svg';
-import Power from '../../icons/orders/power.svg';
-import Protection from '../../icons/orders/protection.svg';
-import Rage from '../../icons/orders/rage.svg';
-import Reflection from '../../icons/orders/reflection.svg';
-import Skill from '../../icons/orders/skill.svg';
-import Titans from '../../icons/orders/titans.svg';
-import Twins from '../../icons/orders/twins.svg';
-import Vitriol from '../../icons/orders/vitriol.svg';
+import {
+  Anger,
+  Brilliance,
+  Detection,
+  Enlightenment,
+  Fox,
+  Fury,
+  Giants,
+  Perfection,
+  Power,
+  Protection,
+  Rage,
+  Reflection,
+  Skill,
+  Titans,
+  Twins,
+  Vitriol,
+} from '../../icons/orders';
 
 export type Props = {
   order: string;
@@ -28,19 +30,19 @@ export type Props = {
 };
 
 const Components: { [key: string]: ReactElement } = Object.freeze({
-  power: <Power className="stroke-8 stroke-order-power" />,
+  power: <Power/>,
   anger: <Anger />,
   brilliance: <Brilliance />,
   detection: <Detection />,
   enlightenment: <Enlightenment />,
-  'the fox': <Fox className="stroke-8 stroke-order-fox" />,
+  fox: <Fox/>,
   fury: <Fury />,
   giants: <Giants />,
-  perfection: <Perfection className=" fill-order-perfection" />,
+  perfection: <Perfection/>,
   reflection: <Reflection />,
   skill: <Skill />,
   titans: <Titans />,
-  'the twins': <Twins />,
+  twins: <Twins />,
   vitriol: <Vitriol />,
   rage: <Rage />,
   protection: <Protection />,

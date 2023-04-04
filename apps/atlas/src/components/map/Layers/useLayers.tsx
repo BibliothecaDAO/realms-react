@@ -1,6 +1,7 @@
 import { IconLayer } from '@deck.gl/layers';
 import { useMemo } from 'react';
 import { useAtlasContext } from '@/context/AtlasContext';
+import bastions from '@/geodata/bastions.json';
 import realms from '@/geodata/realms_resources.json';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { ItemViewLevel } from '../MapModule';
@@ -8,6 +9,13 @@ import { ItemViewLevel } from '../MapModule';
 export const useLayers = ({ selectedId }) => {
   const { mapContext } = useAtlasContext();
   const { userRealms, userData } = useUsersRealms();
+
+  const bastionsFormatted = bastions?.features.map((a) => {
+    return {
+      coordinates: [a.xy[0], a.xy[1]],
+      id: a.id,
+    };
+  });
 
   const userArmiesFormatted = userData?.attackingArmies
     ?.filter((a) => a.armyId !== 0 || a.destinationRealmId !== 0)
@@ -34,6 +42,25 @@ export const useLayers = ({ selectedId }) => {
   );
 
   const layers = useMemo(() => {
+    const bastions = new IconLayer({
+      id: 'bastion',
+      data: bastionsFormatted,
+      getIcon: (d: any) => ({
+        url: 'https://cdn-icons-png.flaticon.com/512/2828/2828009.png',
+        width: 128,
+        height: 128,
+        anchorY: 100,
+      }),
+      sizeUnits: 'pixels',
+      pickable: true,
+      visible: true,
+      sizeScale: 50,
+      sizeMinPixels: 6,
+      getPosition: (d: any) => d.coordinates,
+      onClick: (info: any) => {
+        mapContext.navigateToAsset(info.object.id, 'bastion');
+      },
+    });
     const armies = new IconLayer({
       id: 'army',
       data: userArmiesFormatted,
@@ -98,7 +125,7 @@ export const useLayers = ({ selectedId }) => {
       },
     });
 
-    return [armies, ownRealms, sRealms];
+    return [bastions, armies, ownRealms, sRealms];
   }, [userArmiesFormatted, selectedId, mapContext]);
 
   return { layers };

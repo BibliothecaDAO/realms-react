@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-interface Orders {
+export interface Orders {
   name: string;
   colour: string;
   id: number;
@@ -550,3 +550,7 @@ export const orderDetails = [
     },
   },
 ];
+
+export const normalizeOrderName = (orderName: string) => {
+  return orderName.replace('the ', '');
+};

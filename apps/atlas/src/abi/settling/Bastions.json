@@ -1,0 +1,339 @@
+[
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Point",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "low",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "high",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Uint256",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "data": [
+            {
+                "name": "implementation",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "Upgraded",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "previousAdmin",
+                "type": "felt"
+            },
+            {
+                "name": "newAdmin",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "AdminChanged",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "previous_location",
+                "type": "felt"
+            },
+            {
+                "name": "next_location",
+                "type": "felt"
+            },
+            {
+                "name": "realm_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "army_id",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "BastionArmyMoved",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "location",
+                "type": "felt"
+            },
+            {
+                "name": "order",
+                "type": "felt"
+            },
+            {
+                "name": "cooldown_end",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "BastionLocationTaken",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "address_of_controller",
+                "type": "felt"
+            },
+            {
+                "name": "proxy_admin",
+                "type": "felt"
+            }
+        ],
+        "name": "initializer",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "new_implementation",
+                "type": "felt"
+            }
+        ],
+        "name": "upgrade",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "points_len",
+                "type": "felt"
+            },
+            {
+                "name": "points",
+                "type": "Point*"
+            },
+            {
+                "name": "bonus_types_len",
+                "type": "felt"
+            },
+            {
+                "name": "bonus_types",
+                "type": "felt*"
+            },
+            {
+                "name": "grid_dimension",
+                "type": "felt"
+            }
+        ],
+        "name": "spawn_bastions",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "location",
+                "type": "felt"
+            },
+            {
+                "name": "realm_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "army_id",
+                "type": "felt"
+            }
+        ],
+        "name": "bastion_take_location",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "attacking_realm_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "attacking_army_id",
+                "type": "felt"
+            },
+            {
+                "name": "defending_realm_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "defending_army_id",
+                "type": "felt"
+            }
+        ],
+        "name": "bastion_attack",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "next_location",
+                "type": "felt"
+            },
+            {
+                "name": "realm_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "army_id",
+                "type": "felt"
+            }
+        ],
+        "name": "bastion_move",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "bastion_cooldown_",
+                "type": "felt"
+            },
+            {
+                "name": "location",
+                "type": "felt"
+            }
+        ],
+        "name": "set_bastion_location_cooldown",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "bonus_type",
+                "type": "felt"
+            }
+        ],
+        "name": "set_bastion_bonus_type",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "move_type",
+                "type": "felt"
+            },
+            {
+                "name": "block_time",
+                "type": "felt"
+            }
+        ],
+        "name": "set_bastion_moving_times",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "location",
+                "type": "felt"
+            }
+        ],
+        "name": "get_bastion_location_defending_order",
+        "outputs": [
+            {
+                "name": "defending_order",
+                "type": "felt"
+            }
+        ],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            },
+            {
+                "name": "location",
+                "type": "felt"
+            }
+        ],
+        "name": "get_bastion_location_cooldown_end",
+        "outputs": [
+            {
+                "name": "cooldown_end",
+                "type": "felt"
+            }
+        ],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "point",
+                "type": "Point"
+            }
+        ],
+        "name": "get_bastion_bonus_type",
+        "outputs": [
+            {
+                "name": "bonus_type",
+                "type": "felt"
+            }
+        ],
+        "type": "function"
+    }
+]

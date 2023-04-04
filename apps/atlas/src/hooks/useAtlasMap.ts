@@ -1,12 +1,13 @@
 import { FlyToInterpolator } from '@deck.gl/core';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import bastions from '@/geodata/bastions.json';
 import crypts from '@/geodata/crypts.json';
 import ga_bags from '@/geodata/ga.json';
 import loot_bags from '@/geodata/loot.json';
 import realms from '@/geodata/realms.json';
 import { soundSelector, useUiSounds } from './useUiSounds';
-export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga';
+export type AssetType = 'realm' | 'crypt' | 'loot' | 'ga' | 'bastion';
 
 export type AssetFilter = {
   value: AssetType;
@@ -27,6 +28,9 @@ type Asset = {
 function getCoordinates(assetId: string, assetType: AssetType) {
   let asset;
   switch (assetType) {
+    case 'bastion':
+      asset = bastions.features.filter((a: any) => a.id == parseInt(assetId));
+      break;
     case 'realm':
       asset = realms.features.filter((a: any) => a.id === parseInt(assetId));
       break;
@@ -92,7 +96,9 @@ export function useAtlasMap(): AtlasMap {
     if (!router.isReady) return;
 
     // match asset
-    const match = ((asset as string) ?? '').match(/(realm|crypt|loot|ga)(\d+)/);
+    const match = ((asset as string) ?? '').match(
+      /(bastion|realm|crypt|loot|ga)(\d+)/
+    );
     if (match) {
       setSelectedAsset({
         id: match[2],
@@ -132,8 +138,15 @@ export function useAtlasMap(): AtlasMap {
     if (!assetId) {
       return;
     }
-    fly();
-    router.push(`/?asset=${assetType}${assetId}`, undefined, { shallow: true });
+    if (assetType === 'bastion') {
+      router.push(`/bastion?asset=${assetType}${assetId}`, undefined, {
+        shallow: true,
+      });
+    } else {
+      router.push(`/?asset=${assetType}${assetId}`, undefined, {
+        shallow: true,
+      });
+    }
   }
 
   const resetViewState = () => {

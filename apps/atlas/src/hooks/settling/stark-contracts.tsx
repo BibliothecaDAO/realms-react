@@ -12,6 +12,7 @@ import {
 } from 'starknet';
 import Nexus from '@/abi/nexus/SingleSidedStaking.json';
 import Splitter from '@/abi/nexus/Splitter.json';
+import Bastions from '@/abi/settling/Bastions.json';
 import Combat from '@/abi/settling/Combat.json';
 import Exchange from '@/abi/settling/Exchange_ERC20_1155.json';
 import Food from '@/abi/settling/Food.json';
@@ -32,7 +33,7 @@ import Travel from '@/abi/settling/Travel.json';
 export const ModuleAddr = {
   Lords: '0x0012c7b2514421e3c7c215287b7338fd6c59ae64d7b0be64a7887b9641f78c8f',
   ResourceGame:
-    '0x0004d3180171dc5dd583762aaad99e50c17e27bf73a3e949a89a0db5bb628e40',
+    '0x054d2bdfd40648d6ee9b069a3cfeda69c76758f0f9f403bc8ce721ea2f0656df',
   Realms: '0x0797b22f293f1392eb03105f9d24df29212627c29abaaa3dc90856f02f437238',
   StakedRealms:
     '0x051aa62ad1adbfb44eddcd5901379cd383cbcbaa4fc403634603c4badf1105e1',
@@ -44,6 +45,8 @@ export const ModuleAddr = {
     '0x0004d3180171dc5dd583762aaad99e50c17e27bf73a3e949a89a0db5bb628e40',
   Building:
     '0x02061529fcb9e9a1b2aa59b3b1f55f6e13b26643df76a865f00ad029e2c8afdf',
+  Bastions:
+    '0x01c21c4d9e15918f9585ccf02640ad2a86c0bc60c64771f6afb727c553ab417b',
   Combat: '0x07692e8a91e525e31b3fc8a7fc23bb0523a7dd401a72163ec5de8d5457b51d77',
   Wonder: '0x0096cae38dd01a1e381c9e57db09669298fa079cfdb45e1a429c4020a6515549',
   Nexus: '0x0259f9adda2c8a7e651d03472cb603ef2c69ae9a64fd3a553415d082ddbb3061',
@@ -215,6 +218,17 @@ export function useCombatContract() {
 }
 
 /**
+ * Load the Realms Bastions contract.
+ * @returns The `Bastions` contract or undefined.
+ */
+export function useBastionsContract() {
+  return useContract({
+    abi: Bastions as Abi,
+    address: ModuleAddr.Bastions,
+  });
+}
+
+/**
  * Load the Realms Resources ERC1155 contract.
  * @returns The `Resources` contract or undefined.
  */
@@ -260,6 +274,10 @@ export function useExchangeContract() {
 const provider = new RpcProvider({
   nodeUrl: `https://starknet-goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
 });
+
+export async function getBlockNumber() {
+  return provider.getBlockNumber();
+}
 
 export function useJsonRpc() {
   const FoodContract = new Contract(Food as Abi, ModuleAddr.Food, provider);

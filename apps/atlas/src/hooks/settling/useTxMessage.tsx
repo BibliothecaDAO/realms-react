@@ -2,6 +2,7 @@ import { ENQUEUED_STATUS } from '@/constants/index';
 import type { RealmsTransaction, RealmsTransactionRender } from '@/types/index';
 import { renderTransaction as renderAmmTxs } from '../useSwapResources';
 import { renderTransaction as renderApprovals } from './useApprovals';
+import { renderTransaction as renderBastionTxs } from './useBastions';
 import { renderTransaction as renderBuildingTxs } from './useBuildings';
 import { renderTransaction as renderCombatTxs } from './useCombat';
 import { renderTransaction as renderFoodTxs } from './useFood';
@@ -27,6 +28,7 @@ export function getTxRenderConfig(
     ...renderGoblinTxs,
     ...renderApprovals,
     ...renderLaborTxs,
+    ...renderBastionTxs,
   };
 
   const metadata = tx.metadata;

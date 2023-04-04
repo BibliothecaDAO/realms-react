@@ -16,6 +16,14 @@ export const VARIANTS = {
     },
     tabList: 'flex space-x-3 sm:space-x-4  p-2 shadow-inner ',
   },
+  'custom-colors': {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded uppercase ',
+      active: '',
+      inactive: 'bg-transparent',
+    },
+    tabList: 'flex py-2',
+  },
   primary: {
     tab: {
       base: 'min-w-[130px] relative flex w-full items-center color-yellow-secondary justify-center px-4 pb-1 h-12 tracking-widest hover:border-cta-100 hover:shadow-md transition-all duration-350 rounded focus-visible:ring-yellow-700 uppercase  hover:text-yellow-100',
@@ -32,6 +40,14 @@ export const VARIANTS = {
       inactive: 'bg-transparent text-gray-200',
     },
     tabList: 'flex p-1 space-x-2 border rounded-lg border-yellow-800/40',
+  },
+  'small-neutral': {
+    tab: {
+      base: 'relative flex w-full items-center justify-center px-2 py-2 tracking-widest hover:border-gray-500 transition-all duration-450 rounded focus-visible:ring-gray-500 hover:bg-gray-300 hover:text-gray-800 hover:bg-gray-500 shadow-lg border-b-2 border-l  text-gray-800 border-transparent paper',
+      active: 'bg-gray-300 text-gray-800 border-gray-500',
+      inactive: 'bg-transparent text-gray-500',
+    },
+    tabList: 'flex p-1 space-x-2 border rounded-lg border-gray-600/40',
   },
 };
 
