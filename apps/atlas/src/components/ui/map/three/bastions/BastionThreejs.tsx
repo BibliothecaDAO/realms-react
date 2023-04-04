@@ -45,8 +45,8 @@ export const BastionThreejs = () => {
           <KnightSoldiers></KnightSoldiers>
         </Stage>
         <OrbitControls
-          minDistance={200}
-          maxDistance={300}
+          minDistance={300}
+          maxDistance={600}
           minPolarAngle={0}
           maxPolarAngle={1}
         />
