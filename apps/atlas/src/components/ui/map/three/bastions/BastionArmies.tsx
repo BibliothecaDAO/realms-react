@@ -1,7 +1,10 @@
 import { useGLTF } from '@react-three/drei';
 import { useMemo } from 'react';
 import seedrandom from 'seedrandom';
+import { Mesh, MeshBasicMaterial } from 'three';
+import { getOrderForColor } from '@/components/bastions/BastionGetters';
 import { useBastionContext } from '@/context/BastionContext';
+import { theme } from '../../../../../../tailwind.config.js';
 
 // @dev coordinates of defender and attacker are list of positions
 // @dev when choosing a location for the soldier, first the position is chosen at random in the list of position.
@@ -50,7 +53,7 @@ const armiesAreas = {
     defender: {
       positions: defenderCoordinates[1],
       rotation: [0, 0, 0],
-      maxDistance: 5,
+      maxDistance: 4,
       minDistance: 0,
     },
   },
@@ -64,7 +67,7 @@ const armiesAreas = {
     defender: {
       positions: defenderCoordinates[2],
       rotation: [0, -Math.PI / 2, 0],
-      maxDistance: 5,
+      maxDistance: 4,
       minDistance: 0,
     },
   },
@@ -78,7 +81,7 @@ const armiesAreas = {
     defender: {
       positions: defenderCoordinates[3],
       rotation: [0, Math.PI, 0],
-      maxDistance: 5,
+      maxDistance: 4,
       minDistance: 0,
     },
   },
@@ -92,7 +95,7 @@ const armiesAreas = {
     defender: {
       positions: defenderCoordinates[4],
       rotation: [0, Math.PI / 2, 0],
-      maxDistance: 5,
+      maxDistance: 4,
       minDistance: 0,
     },
   },
@@ -115,7 +118,18 @@ const armiesAreas = {
 export function KnightSoldier(props) {
   const { scene } = useGLTF('models/unit.glb');
   const copiedScene = useMemo(() => scene.clone(), [scene]);
-  // TODOBASTIONS: need to cast shadow on the bastion
+  // TODOBASTIONS: how to differentiate units between orders
+  // const orderName = getOrderForColor(props.army.orderId);
+  // const material = new MeshBasicMaterial({
+  //   color: theme.extend.colors.order[orderName],
+  // });
+
+  // // loop through all the meshes in the scene and apply the new material
+  // copiedScene.traverse((child) => {
+  //   if (child instanceof Mesh) {
+  //     child.material = material;
+  //   }
+  // });
   return <primitive object={copiedScene} {...props} />;
 }
 
@@ -133,7 +147,8 @@ export const KnightSoldiers = () => {
             army.orderId == location.defendingOrderId ? 'defender' : 'attacker';
           armies.push(
             <KnightSoldier
-              scale={1}
+              army={army}
+              scale={3}
               rotation={armiesAreas[location.locationId][role].rotation}
               key={
                 army.realmId.toString() +

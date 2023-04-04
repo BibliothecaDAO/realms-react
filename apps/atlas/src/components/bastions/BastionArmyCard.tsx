@@ -20,7 +20,7 @@ import { shortenAddress } from '@/util/formatters';
 import type { BastionArmy } from 'mockup/bastionsData';
 import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { ArmyActions } from './ArmyActions';
-import { isUserArmy } from './BastionGetters';
+import { getOrderForColor, isUserArmy } from './BastionGetters';
 
 interface BastionArmyCardProps {
   army: BastionArmy;
@@ -111,10 +111,9 @@ export const BastionArmyCard = ({
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
   useEffect(() => {
-    const order = army.orderId
-      ? theOrders[army.orderId - 1].name.toLowerCase()
-      : undefined;
-    order && setOrderName(normalizeOrderName(order));
+    if (army.orderId) {
+      setOrderName(getOrderForColor(army.orderId));
+    }
   }, [army]);
 
   return (

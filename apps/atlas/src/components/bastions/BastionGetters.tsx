@@ -2,6 +2,7 @@ import { MovingTimes } from '@/constants/bastion';
 import { SECONDS_PER_KM } from '@/constants/globals';
 import type { GetRealmsQuery } from '@/generated/graphql';
 import type { Bastion, BastionArmy } from 'mockup/bastionsData';
+import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { getCoordinates } from '../realms/RealmsGetters';
 
 export const getBastionLocation = (bastion: Bastion, locationId: number) => {
@@ -343,3 +344,10 @@ export function addTravelTime(userRealms: GetRealmsQuery, bastion: Bastion) {
     });
   });
 }
+
+export const getOrderForColor = (orderId: number) => {
+  const order = orderId ? theOrders[orderId - 1].name.toLowerCase() : undefined;
+  if (order) {
+    return normalizeOrderName(order);
+  }
+};
