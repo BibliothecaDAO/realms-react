@@ -14,7 +14,7 @@ export default (req: any, res: any) => {
   // Let's say your json is in /public/assets/my-json.json
 
   //   console.log(req);
-  const folder = 'src/content/';
+  const folder = 'public/';
   const file = `${folder}${req.query.slug}.md`;
   const content = fs.readFileSync(file, 'utf8');
 

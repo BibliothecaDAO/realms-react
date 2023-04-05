@@ -2,7 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 
 export default (req: any, res: any) => {
-  const folder = 'src/content/';
+  const folder = 'public/';
   const files = fs.readdirSync(folder);
   const markdownPosts = files.filter((file) => file.endsWith('.md'));
 
@@ -20,8 +20,6 @@ export default (req: any, res: any) => {
       author: matterResult.data.author,
     };
   });
-
-  // const json = fs.readFileSync(filePath);
 
   res.statusCode = 200;
   res.json(posts);

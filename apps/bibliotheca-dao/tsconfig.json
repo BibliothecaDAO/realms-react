@@ -28,7 +28,12 @@
       "@bibliotheca-dao/ui-lib": ["../../../packages/ui-lib/src/index"],
       "@bibliotheca-dao/core-lib/*": ["../../../packages/core-lib/src/*"],
       "@bibliotheca-dao/core-lib": ["../../../packages/core-lib/src/index"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["**/node_modules", "**/.*/", ".next"],
   "include": [
@@ -37,6 +42,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "**/*.json"
+    "**/*.json",
+    ".next/types/**/*.ts"
   ]
 }
