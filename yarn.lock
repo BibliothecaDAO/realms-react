@@ -29739,13 +29739,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"seedrandom@npm:3.0.5":
-  version: 3.0.5
-  resolution: "seedrandom@npm:3.0.5"
-  checksum: c04d9a1c1c28bc1d5737f5fb02291ad56c34d57599034ce4a0e65578a84c3128d81d20d70729e0e32ef57e3c6b914b3751cbba95e9dddbd0212a405b2f921119
-  languageName: node
-  linkType: hard
-
 "section-matter@npm:^1.0.0":
   version: 1.0.0
   resolution: "section-matter@npm:1.0.0"
@@ -29753,6 +29746,13 @@ __metadata:
     extend-shallow: "npm:^2.0.1"
     kind-of: "npm:^6.0.0"
   checksum: f01cd260a8602110ee5149e4f0a2f02b5d333c710e7b65b86987b67c43a5b4c30ef7e37f21a6a56671c82a135de2306a29e6e3cc19861463fea50234af3ab830
+  languageName: node
+  linkType: hard
+
+"seedrandom@npm:3.0.5":
+  version: 3.0.5
+  resolution: "seedrandom@npm:3.0.5"
+  checksum: c04d9a1c1c28bc1d5737f5fb02291ad56c34d57599034ce4a0e65578a84c3128d81d20d70729e0e32ef57e3c6b914b3751cbba95e9dddbd0212a405b2f921119
   languageName: node
   linkType: hard
 
