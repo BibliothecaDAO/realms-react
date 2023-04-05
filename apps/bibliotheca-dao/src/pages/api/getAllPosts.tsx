@@ -2,7 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 
 export default (req: any, res: any) => {
-  const folder = 'public/';
+  const folder = '/';
   const files = fs.readdirSync(folder);
   const markdownPosts = files.filter((file) => file.endsWith('.md'));
 
