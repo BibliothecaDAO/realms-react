@@ -5,10 +5,10 @@ import { RiFlag2Line } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import { useBastionContext } from '@/context/BastionContext';
 import { useCommandList } from '@/context/CommandListContext';
+import type { Army } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { Entrypoints } from '@/hooks/settling/useBastions';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import type { BastionArmy } from 'mockup/bastionsData';
 import {
   addTravelTime,
   computeShowTakeLocation,
@@ -18,9 +18,9 @@ import {
 import { DropDownMove } from './DropDownMove';
 
 type ArmyActionsProps = {
-  army: BastionArmy;
-  onAttackModeClick: (army: BastionArmy) => void;
-  onMoveClick: (army: BastionArmy, selectedOption: number | undefined) => void;
+  army: Army;
+  onAttackModeClick: (army: Army) => void;
+  onMoveClick: (army: Army, selectedOption: number | undefined) => void;
 };
 
 export const ArmyActions = ({

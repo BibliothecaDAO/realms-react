@@ -1,7 +1,6 @@
 import { MovingTimes } from '@/constants/bastion';
 import { SECONDS_PER_KM } from '@/constants/globals';
-import type { GetRealmsQuery } from '@/generated/graphql';
-import type { Bastion, BastionArmy } from 'mockup/bastionsData';
+import type { Army, Bastion, GetRealmsQuery } from '@/generated/graphql';
 import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { getCoordinates } from '../realms/RealmsGetters';
 
@@ -35,13 +34,13 @@ export const getLocationArmies = (
         return location.armies.filter(
           (army) =>
             army.orderId === location.defendingOrderId &&
-            army.arrivalBlock <= blockNumber
+            army.bastionArrivalBlock <= blockNumber
         );
       } else {
         return location.armies.filter(
           (army) =>
             army.orderId !== location.defendingOrderId &&
-            army.arrivalBlock <= blockNumber
+            army.bastionArrivalBlock <= blockNumber
         );
       }
     } else {
@@ -49,13 +48,13 @@ export const getLocationArmies = (
         return location.armies.filter(
           (army) =>
             army.orderId === location.defendingOrderId &&
-            army.arrivalBlock > blockNumber
+            army.bastionArrivalBlock > blockNumber
         );
       } else {
         return location.armies.filter(
           (army) =>
             army.orderId !== location.defendingOrderId &&
-            army.arrivalBlock > blockNumber
+            army.bastionArrivalBlock > blockNumber
         );
       }
     }
@@ -82,16 +81,13 @@ export const getAttackableArmies = (
       // if you are attacker, show all the enemy order armies
       army.orderId !== attackingArmyOrder &&
       // needs to arrive to be attackable
-      army.arrivalBlock <= blockNumber
+      army.bastionArrivalBlock <= blockNumber
   );
   console.log(test);
   return test;
 };
 
-export const isUserArmy = (
-  userRealms: GetRealmsQuery,
-  army: BastionArmy
-): boolean => {
+export const isUserArmy = (userRealms: GetRealmsQuery, army: Army): boolean => {
   if (!userRealms) return false;
   for (const realm of userRealms.realms) {
     if (realm.realmId === army.realmId) {
@@ -119,7 +115,7 @@ export const computeShowTakeLocation = (
 
 export const getMoveTimes = (
   currentLocation: number,
-  army: BastionArmy,
+  army: Army,
   bastion: Bastion
 ): { [location: number]: number } => {
   // eslint-disable-next-line sonarjs/no-unused-collection

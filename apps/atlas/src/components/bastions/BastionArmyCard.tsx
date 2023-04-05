@@ -14,24 +14,22 @@ import {
   GiCrystalWand,
 } from 'react-icons/gi';
 import { RiFlag2Line } from 'react-icons/ri';
-import type { GetRealmsQuery } from '@/generated/graphql';
+import type { Army, GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { shortenAddress } from '@/util/formatters';
-import type { BastionArmy } from 'mockup/bastionsData';
-import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { ArmyActions } from './ArmyActions';
 import { getOrderForColor, isUserArmy } from './BastionGetters';
 
 interface BastionArmyCardProps {
-  army: BastionArmy;
+  army: Army;
   userRealms?: GetRealmsQuery;
   arrived?: boolean;
   attackMode: boolean;
   armyInfoAnimation: boolean;
   blockNumber?: number;
-  onAttackModeClick?: (army: BastionArmy) => void;
-  onAttackClick?: (defendingArmy: BastionArmy) => void;
-  onMoveClick?: (army: BastionArmy, nextLocation: number) => void;
+  onAttackModeClick?: (army: Army) => void;
+  onAttackClick?: (defendingArmy: Army) => void;
+  onMoveClick?: (army: Army, nextLocation: number) => void;
 }
 
 export const BastionArmyCard = ({
@@ -223,7 +221,7 @@ export const BastionArmyCard = ({
 
 interface IncomingArmyDataProps {
   userRealms: GetRealmsQuery;
-  army: BastionArmy;
+  army: Army;
   orderName: string;
   blockNumber: number;
 }
@@ -234,7 +232,7 @@ const IncomingArmyData: FC<IncomingArmyDataProps> = ({
   blockNumber,
   orderName,
 }) => {
-  const blockInterval = army.arrivalBlock - blockNumber;
+  const blockInterval = army.bastionArrivalBlock - blockNumber;
 
   return (
     <div
@@ -328,7 +326,7 @@ const AttackModeLogo = (props) => {
 
 type ArmyInfoProps = {
   orderName: string;
-  army: BastionArmy;
+  army: Army;
   isHovering: boolean;
   animation: boolean;
 };

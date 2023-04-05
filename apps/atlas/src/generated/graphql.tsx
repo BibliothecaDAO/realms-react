@@ -124,7 +124,7 @@ export type ArmyWhereInput = {
   armyPacked?: InputMaybe<IntFilter>;
   bastionArrivalBlock?: InputMaybe<IntFilter>;
   bastionCurrentLocation?: InputMaybe<IntFilter>;
-  bastionId?: InputMaybe<StringNullableFilter>;
+  bastionId?: InputMaybe<IntFilter>;
   bastionPastLocation?: InputMaybe<IntFilter>;
   callSign?: InputMaybe<IntFilter>;
   destinationArrivalTime?: InputMaybe<DateTimeNullableFilter>;
@@ -151,7 +151,7 @@ export type ArmyWhereInput = {
 
 export type Bastion = {
   __typename?: 'Bastion';
-  bastionId: Scalars['String'];
+  bastionId: Scalars['Int'];
   latitude: Scalars['Float'];
   locations: Array<BastionLocation>;
   longitude: Scalars['Float'];
@@ -160,14 +160,14 @@ export type Bastion = {
 export type BastionLocation = {
   __typename?: 'BastionLocation';
   armies: Array<Army>;
-  bastionId: Scalars['String'];
+  bastionId: Scalars['Int'];
   defendingOrderId: Scalars['Int'];
   locationId: Scalars['Int'];
   takenBlock: Scalars['Int'];
 };
 
 export type BastionLocationBastionIdLocationIdCompoundUniqueInput = {
-  bastionId: Scalars['String'];
+  bastionId: Scalars['Int'];
   locationId: Scalars['Int'];
 };
 
@@ -189,7 +189,7 @@ export type BastionLocationWhereInput = {
   AND?: InputMaybe<Array<BastionLocationWhereInput>>;
   NOT?: InputMaybe<Array<BastionLocationWhereInput>>;
   OR?: InputMaybe<Array<BastionLocationWhereInput>>;
-  bastionId?: InputMaybe<StringFilter>;
+  bastionId?: InputMaybe<IntFilter>;
   defendingOrderId?: InputMaybe<IntFilter>;
   locationId?: InputMaybe<IntFilter>;
   takenBlock?: InputMaybe<IntFilter>;
@@ -960,6 +960,7 @@ export type Query = {
   __typename?: 'Query';
   aggregateRealmHistory: AggregateRealmHistory;
   armies: Array<Army>;
+  bastion: Bastion;
   bastionLocations: Array<BastionLocation>;
   bastions: Array<Bastion>;
   battalionCosts: Array<BattalionCost>;
@@ -1022,6 +1023,10 @@ export type QueryArmiesArgs = {
   skip?: InputMaybe<Scalars['Float']>;
   take?: InputMaybe<Scalars['Float']>;
   where?: InputMaybe<ArmyWhereInput>;
+};
+
+export type QueryBastionArgs = {
+  id: Scalars['Float'];
 };
 
 export type QueryBastionLocationsArgs = {
@@ -1955,18 +1960,21 @@ export type WalletWhereInput = {
   realmsSettled?: InputMaybe<RealmListRelationFilter>;
 };
 
-export type GetBastionQueryVariables = Exact<{ [key: string]: never }>;
+export type GetBastionQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
 
 export type GetBastionQuery = {
   __typename?: 'Query';
-  bastions: Array<{
+  bastion: {
     __typename?: 'Bastion';
-    bastionId: string;
+    bastionId: number;
     latitude: number;
     longitude: number;
     locations: Array<{
       __typename?: 'BastionLocation';
       locationId: number;
+      bastionId: number;
       defendingOrderId: number;
       takenBlock: number;
       armies: Array<{
@@ -1997,11 +2005,12 @@ export type GetBastionQuery = {
         heavyInfantryQty: number;
         heavyInfantryHealth: number;
         orderId: number;
-        pastLocation: number;
-        arrivalBlock: number;
+        bastionArrivalBlock: number;
+        bastionCurrentLocation: number;
+        bastionId?: string | null;
       }>;
     }>;
-  }>;
+  };
 };
 
 export type DesiegeFragmentFragment = {
@@ -3185,13 +3194,14 @@ export const ResourceFragmentFragmentDoc = gql`
   }
 `;
 export const GetBastionDocument = gql`
-  query getBastion @api(name: starkIndexer) {
-    bastions {
+  query getBastion($id: Float!) @api(name: starkIndexer) {
+    bastion(id: $id) {
       bastionId
       latitude
       longitude
       locations {
         locationId
+        bastionId
         defendingOrderId
         takenBlock
         armies {
@@ -3222,8 +3232,9 @@ export const GetBastionDocument = gql`
           heavyInfantryQty
           heavyInfantryHealth
           orderId
-          pastLocation: bastionPastLocation
-          arrivalBlock: bastionArrivalBlock
+          bastionArrivalBlock
+          bastionCurrentLocation
+          bastionId
         }
       }
     }
@@ -3242,11 +3253,12 @@ export const GetBastionDocument = gql`
  * @example
  * const { data, loading, error } = useGetBastionQuery({
  *   variables: {
+ *      id: // value for 'id'
  *   },
  * });
  */
 export function useGetBastionQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetBastionQuery,
     GetBastionQueryVariables
   >

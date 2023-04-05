@@ -6,13 +6,13 @@ import {
   createContext,
   useContext,
 } from 'react';
+import type { Bastion } from '@/generated/graphql';
 import type { Bastions, Location } from '@/hooks/settling/useBastions';
 import { useBastions } from '@/hooks/settling/useBastions';
 import type { Travel } from '@/hooks/settling/useTravel';
 import useTravel from '@/hooks/settling/useTravel';
 import type { AtlasMap } from '@/hooks/useAtlasMap';
 import { useAtlasMap } from '@/hooks/useAtlasMap';
-import type { Bastion } from 'mockup/bastionsData';
 
 interface BastionContext {
   bastionContext: Bastions;

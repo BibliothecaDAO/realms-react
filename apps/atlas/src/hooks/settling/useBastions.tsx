@@ -4,12 +4,13 @@ import type { Dispatch, SetStateAction } from 'react';
 import type { InvokeFunctionResponse } from 'starknet';
 import { number, uint256 } from 'starknet';
 import { useCommandList } from '@/context/CommandListContext';
+import type { Bastion } from '@/generated/graphql';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import type { Bastion } from 'mockup/bastionsData';
+// import type { Bastion } from 'mockup/bastionsData';
 import { soundSelector, useUiSounds } from '../useUiSounds';
 import { ModuleAddr, useBastionsContract } from './stark-contracts';
 

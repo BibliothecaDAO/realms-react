@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 // import { useGetBastionsQuery } from 'mockup/bastionsData';
 import { useAtlasContext } from '@/context/AtlasContext';
 import { useBastionSettersContext } from '@/context/BastionContext';
+import type { Bastion } from '@/generated/graphql';
 import { useGetBastionQuery } from '@/generated/graphql';
 // import { useGetBastionQuery } from 'mockup/bastionsData';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
-import { BasePanel } from '../ui/panel/BasePanel';
 import { TravelToBastionButton } from './ArmyActions';
 import { BastionInfo } from './BastionInfo';
 
@@ -17,7 +17,9 @@ export const BastionPanel = () => {
   const { setBastion } = useBastionSettersContext();
 
   // mockup data
-  const { data, loading, startPolling, stopPolling } = useGetBastionQuery();
+  const { data, loading, startPolling, stopPolling } = useGetBastionQuery({
+    variables: { id: parseInt(selectedAsset?.id || '0') },
+  });
 
   useEffect(() => {
     if (loading) stopPolling();
@@ -29,11 +31,11 @@ export const BastionPanel = () => {
   useEffect(() => {
     if (!loading && data) {
       // TODOBASTIONS: don't take the first one
-      setBastion(data.bastions[0]);
+      setBastion(data.bastion as Bastion);
     }
   }, [data, loading]);
 
-  if (loading && !data) {
+  if ((loading && !data) || !selectedAsset) {
     return <div></div>;
   } else {
     return (
