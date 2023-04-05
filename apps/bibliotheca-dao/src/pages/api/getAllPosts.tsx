@@ -1,18 +1,7 @@
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
 
-// export function getPostContent(slug: string) {
-//   const folder = 'src/content/';
-//   const file = `${folder}${slug}.md`;
-//   const content = fs.readFileSync(file, 'utf8');
-//   const matterResult = matter(content);
-//   return matterResult;
-// }
-
 export default (req: any, res: any) => {
-  // Let's say your json is in /public/assets/my-json.json
-
   const folder = 'src/content/';
   const files = fs.readdirSync(folder);
   const markdownPosts = files.filter((file) => file.endsWith('.md'));
