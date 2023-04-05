@@ -27,7 +27,7 @@ const PostPage = () => {
   return (
     <MainLayout>
       <div className="max-w-2xl px-6 mx-auto my-20 md:my-40">
-        <h1 className="mb-8">Building next-gen distributed experiences</h1>
+        <h3 className="mb-8">Building Autonmous Worlds</h3>
         <div className="flex flex-col w-full space-y-3">
           {post?.map((a, index) => {
             return <PostPreview key={index} {...a} />;

@@ -21,8 +21,8 @@ const PostPage = () => {
 
   return (
     <MainLayout>
-      <div className="py-10 mt-20 text-center md:mt-40">
-        {post && <h1 className="py-8 bg-yellow-900/20">{post.data.title}</h1>}
+      <div className="py-10 text-center sm:mt-6">
+        {post && <h1 className="py-8 sm:py-20">{post.data.title}</h1>}
         {post && <p className="mt-2">{post.data.date}</p>}
         {post && <p className="mt-2">{post.data.author}</p>}
 
@@ -44,7 +44,7 @@ const PostPage = () => {
         )}
       </div>
 
-      <article className="container px-6 pb-6 mx-auto text-xl prose bg-gray-900 border border-dashed border-white/30">
+      <article className="container px-6 pb-6 mx-auto prose bg-gray-900 border border-dashed border-white/5">
         {post && <Markdown>{post.content}</Markdown>}
       </article>
       <div className="container p-3 mx-auto w-72">

@@ -7,7 +7,7 @@ import { AsciiEffect } from 'three-stdlib';
 export default function Tourus() {
   function AsciiRenderer({
     renderIndex = 1,
-    characters = '.:;}@ ',
+    characters = 'LOOT ',
     ...options
   }) {
     // Reactive state

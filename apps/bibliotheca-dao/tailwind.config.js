@@ -35,9 +35,11 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            '--tw-prose-body': theme('colors.gray[400]'),
+            '--tw-prose-body': theme('colors.gray[200]'),
             '--tw-prose-headings': theme('colors.gray[300]'),
             '--tw-prose-bold': theme('colors.gray[200]'),
+            '--tw-prose-links': theme('colors.gray[200]'),
+            '--tw-prose-quotes': theme('colors.gray[200]'),
           },
         },
       }),
