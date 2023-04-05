@@ -17,7 +17,7 @@ const PostPage = () => {
       setPost(matter(data));
     };
     getPost();
-  });
+  }, [slug]);
 
   return (
     <MainLayout>

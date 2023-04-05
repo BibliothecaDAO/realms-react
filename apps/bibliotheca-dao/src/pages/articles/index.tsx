@@ -22,7 +22,7 @@ const PostPage = () => {
       setPosts(data);
     };
     getAllPosts();
-  });
+  }, [post]);
 
   return (
     <MainLayout>
