@@ -31,7 +31,6 @@ export const BastionPanel = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      // TODOBASTIONS: don't take the first one
       setBastion(data.bastion as Bastion);
     }
   }, [data, loading]);

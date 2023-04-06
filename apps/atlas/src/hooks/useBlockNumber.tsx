@@ -14,13 +14,15 @@ export const useBlockNumber = () => {
         setData(response);
       } catch (err) {
         setError(err);
-        setLoading(false);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    // fetch every 10 seconds
+    const intervalId = setInterval(fetchData, 10000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return { data, error, loading };

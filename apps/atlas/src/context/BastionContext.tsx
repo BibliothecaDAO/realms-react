@@ -9,10 +9,11 @@ import {
 import type { Bastion } from '@/generated/graphql';
 import type { Bastions, Location } from '@/hooks/settling/useBastions';
 import { useBastions } from '@/hooks/settling/useBastions';
-import type { Travel } from '@/hooks/settling/useTravel';
-import useTravel from '@/hooks/settling/useTravel';
-import type { AtlasMap } from '@/hooks/useAtlasMap';
-import { useAtlasMap } from '@/hooks/useAtlasMap';
+
+// @dev Am using 3 different context in order to avoid rerenders
+// 1 context for all setters (setBastion, setSelectedLocation)
+// 1 context for the bastion state
+// 1 context for the rest
 
 interface BastionContext {
   bastionContext: Bastions;

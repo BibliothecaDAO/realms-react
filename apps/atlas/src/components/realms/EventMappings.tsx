@@ -1,4 +1,3 @@
-// TODOBASTIONS: create events related to bastions
 import { Button } from '@bibliotheca-dao/ui-lib';
 import {
   GiCrossedSwords,
@@ -88,7 +87,6 @@ export const VisitButton = (id: any) => {
   );
 };
 
-// TODOBASTIONS finish events + mockup data
 export function generateBastionEvent(event: RealmHistory) {
   switch (event.eventType) {
     case BastionEvent.bastionCombat:
@@ -108,8 +106,7 @@ export function generateBastionEvent(event: RealmHistory) {
                 event.data?.locationId && event.data?.locationId !== 0
                   ? `on ${locationNames[event.data?.locationId]?.defense}`
                   : ''
-              }
-              !`}
+              }`}
             </span>
           </div>
         ),
@@ -118,6 +115,9 @@ export function generateBastionEvent(event: RealmHistory) {
         icon: <GiCrossedSwords fontSize={30}></GiCrossedSwords>,
       };
     case BastionEvent.bastionTakeLocation:
+      // eslint-disable-next-line no-case-declarations
+      const previousDefendingOrderId = event.data?.previousDefendingOrderId;
+      console.log(previousDefendingOrderId);
       return {
         event: (
           <div>
@@ -126,8 +126,14 @@ export function generateBastionEvent(event: RealmHistory) {
                 event.data?.defendingOrderId !== 0
                   ? `was taken by Order of ${
                       theOrders[event.data?.defendingOrderId - 1].name
-                    }!`
-                  : `is free to be taken!`
+                    } ${
+                      previousDefendingOrderId && previousDefendingOrderId !== 0
+                        ? `from Order of ${
+                            theOrders[previousDefendingOrderId - 1].name
+                          }`
+                        : ''
+                    }`
+                  : `is free to be taken`
               }`}
             </span>
           </div>
@@ -146,7 +152,7 @@ export function generateBastionEvent(event: RealmHistory) {
               has moved from ${
                 locationNames[event.data?.bastionPastLocation].defense
               }
-              to ${locationNames[event.data?.bastionCurrentLocation].defense}!`}
+              to ${locationNames[event.data?.bastionCurrentLocation].defense}`}
             </span>
           </div>
         ),
@@ -169,12 +175,12 @@ export function generateBastionEvent(event: RealmHistory) {
                     event.data?.originArmyId
                   } to the bastion and ${
                     hoursDiff < 0
-                      ? `will arrive in ${Math.abs(hoursDiff)} hours!`
-                      : `has arrived ${Math.abs(hoursDiff)} hours ago!`
+                      ? `will arrive in ${Math.abs(hoursDiff)} hours`
+                      : `has arrived ${Math.abs(hoursDiff)} hours ago`
                   }`
                 : `Realm ${getRealmNameById(event.realmId)} has sent ArmyId ${
                     event.data?.originArmyId
-                  } outside of the bastion!`}
+                  } outside of the bastion`}
             </span>
           </div>
         ),
@@ -194,7 +200,7 @@ export function generateRealmEvent(event, user?: boolean) {
               {event.data?.success
                 ? `Raid successful on ${getRealmNameById(
                     event.data?.defendRealmId
-                  )}!`
+                  )}`
                 : `Raid failed on ${getRealmNameById(
                     event.data?.defendRealmId
                   )}`}

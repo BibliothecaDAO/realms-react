@@ -1,25 +1,8 @@
-import { Button, CardBody } from '@bibliotheca-dao/ui-lib';
 import { useEffect, useMemo, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
-import type { BastionEvent as EventType } from '@/components/realms/EventMappings';
-import {
-  generateBastionEvent,
-  generateRealmEvent,
-  BastionEvent,
-  EventLabels,
-} from '@/components/realms/EventMappings';
-import { HistoryCard } from '@/components/realms/HistoryCard';
-import { getAccountHex } from '@/components/realms/RealmsGetters';
-import { sidebarClassNames } from '@/constants/ui';
+import { generateBastionEvent } from '@/components/realms/EventMappings';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useBastionContext } from '@/context/BastionContext';
-import { useUIContext } from '@/context/UIContext';
 import type { RealmHistoryWhereInput } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
-import { useUi } from '@/hooks/useUi';
-import { useGetBastionHistoryQuery } from 'mockup/bastionsData';
-import AtlasSidebar from '../map/AtlasSideBar';
-import { BaseSideBarPanel } from '../ui/sidebar/BaseSideBarPanel';
 import { BastionCard } from './BastionCard';
 
 export function BastionOverview() {
@@ -30,8 +13,8 @@ export function BastionOverview() {
   } = useAtlasContext();
 
   const filter: RealmHistoryWhereInput = {
-    bastionId: { equals: 3711000 },
-    eventType: { equals: 'army_travel' },
+    bastionId: { equals: parseInt(selectedAsset.id) },
+    eventType: { not: { equals: 'realm_combat_defend' } },
   };
 
   const {
@@ -42,7 +25,7 @@ export function BastionOverview() {
   } = useGetRealmHistoryQuery({
     variables: {
       filter,
-      take: 10,
+      take: 20,
     },
   });
 
@@ -51,7 +34,7 @@ export function BastionOverview() {
     else startPolling(5000);
 
     return stopPolling;
-  }, [loading, data]);
+  }, [loading, bastionEvents, startPolling, stopPolling]);
 
   const events = (bastionEvents?.getRealmHistory ?? []).map((bastionEvent) => {
     return {
@@ -69,20 +52,21 @@ export function BastionOverview() {
 
   return (
     <div
-      id="aymeric"
       className={
-        'flex h-full right-0 top-0 left-20 bottom-0 fixed z-20 lg:max-w-[15%] items-center'
+        'fixed flex w-[20%] max-w-xs mt-10 left-[60px] top-0 bottom-5 items-center'
       }
     >
-      <div className="h-2/3 flex flex-col  overflow-hidden bg-black bg-opacity-50 rounded-xl">
-        <div className="mb-1 text-sm px-3 py-1">
-          Last Update: {new Date(lastUpdate).toLocaleTimeString('en-US')}
+      {!loading && bastionEvents && selectedAsset && (
+        <div className="flex max-h-[90%] h-full w-full flex-col overflow-y-scroll bg-black bg-opacity-50 rounded-xl">
+          <div className="mb-1 text-sm px-3 py-1">
+            Last Update: {new Date(lastUpdate).toLocaleTimeString('en-US')}
+          </div>
+          {events &&
+            events.map((event, index) => (
+              <BastionCard event={event} key={index}></BastionCard>
+            ))}
         </div>
-        {events &&
-          events.map((event, index) => (
-            <BastionCard event={event} key={index}></BastionCard>
-          ))}
-      </div>
+      )}
     </div>
   );
 }

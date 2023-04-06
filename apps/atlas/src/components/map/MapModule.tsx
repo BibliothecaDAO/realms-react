@@ -49,8 +49,7 @@ export function MapModule() {
 
   const selectedId = selectedAsset?.id ?? '0';
 
-  // TODOBASTIONS: uncomment that
-  // const { tripsLayer } = useTravelTripsLayer();
+  const { tripsLayer } = useTravelTripsLayer();
 
   const { layers: iconLayers } = useLayers({ selectedId });
 
@@ -146,9 +145,7 @@ export function MapModule() {
         viewState={viewState}
         controller={true}
         onViewStateChange={(e) => setViewState(e.viewState)}
-        // TODOBASTIONS: uncomment that
-        // layers={[...layers, tripsLayer, ...iconLayers]}
-        layers={[...layers, ...iconLayers]}
+        layers={[...layers, tripsLayer, ...iconLayers]}
       >
         {!isMapLoaded ? (
           <div
