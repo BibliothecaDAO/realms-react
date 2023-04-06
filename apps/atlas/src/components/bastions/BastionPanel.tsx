@@ -8,6 +8,7 @@ import { useGetBastionQuery } from '@/generated/graphql';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
 import { TravelToBastionButton } from './ArmyActions';
 import { BastionInfo } from './BastionInfo';
+import { BastionOverview } from './BastionOverview';
 
 export const BastionPanel = () => {
   const {
@@ -41,8 +42,9 @@ export const BastionPanel = () => {
     return (
       <div className="absolute top-0 bottom-0 rigth-0 left-0 w-full h-full">
         <BastionThreejs />
-        <BastionInfo></BastionInfo>
-        <TravelToBastionButton></TravelToBastionButton>
+        <BastionInfo />
+        <TravelToBastionButton />
+        <BastionOverview />
       </div>
     );
   }

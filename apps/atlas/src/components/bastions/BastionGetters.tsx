@@ -347,3 +347,9 @@ export const getOrderForColor = (orderId: number) => {
     return normalizeOrderName(order);
   }
 };
+export function getTimeDifferenceInHours(timestamp: number): number {
+  const currentTime = new Date().getTime();
+  const timestampTime = new Date(timestamp).getTime();
+  const differenceInMilliseconds = currentTime - timestampTime;
+  return Math.round(differenceInMilliseconds / (1000 * 60 * 60));
+}

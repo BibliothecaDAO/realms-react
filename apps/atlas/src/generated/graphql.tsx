@@ -1202,6 +1202,7 @@ export type Realm = {
 /** The Realm History Model */
 export type RealmHistory = {
   __typename?: 'RealmHistory';
+  bastionId: Scalars['Int'];
   data?: Maybe<Scalars['JSON']>;
   eventId?: Maybe<Scalars['String']>;
   eventType?: Maybe<Scalars['String']>;
@@ -1217,11 +1218,13 @@ export type RealmHistory = {
 
 export type RealmHistoryAvgAggregate = {
   __typename?: 'RealmHistoryAvgAggregate';
+  bastionId?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
   realmId?: Maybe<Scalars['Float']>;
 };
 
 export type RealmHistoryAvgOrderByAggregateInput = {
+  bastionId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   realmId?: InputMaybe<SortOrder>;
 };
@@ -1229,6 +1232,7 @@ export type RealmHistoryAvgOrderByAggregateInput = {
 export type RealmHistoryCountAggregate = {
   __typename?: 'RealmHistoryCountAggregate';
   _all: Scalars['Int'];
+  bastionId: Scalars['Int'];
   data: Scalars['Int'];
   eventId: Scalars['Int'];
   eventType: Scalars['Int'];
@@ -1242,6 +1246,7 @@ export type RealmHistoryCountAggregate = {
 };
 
 export type RealmHistoryCountOrderByAggregateInput = {
+  bastionId?: InputMaybe<SortOrder>;
   data?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   eventType?: InputMaybe<SortOrder>;
@@ -1266,6 +1271,7 @@ export type RealmHistoryGroupBy = {
   _max?: Maybe<RealmHistoryMaxAggregate>;
   _min?: Maybe<RealmHistoryMinAggregate>;
   _sum?: Maybe<RealmHistorySumAggregate>;
+  bastionId: Scalars['Int'];
   data: Scalars['JSON'];
   eventId: Scalars['String'];
   eventType: Scalars['String'];
@@ -1280,6 +1286,7 @@ export type RealmHistoryGroupBy = {
 
 export type RealmHistoryMaxAggregate = {
   __typename?: 'RealmHistoryMaxAggregate';
+  bastionId?: Maybe<Scalars['Int']>;
   eventId?: Maybe<Scalars['String']>;
   eventType?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1292,6 +1299,7 @@ export type RealmHistoryMaxAggregate = {
 };
 
 export type RealmHistoryMaxOrderByAggregateInput = {
+  bastionId?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   eventType?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -1305,6 +1313,7 @@ export type RealmHistoryMaxOrderByAggregateInput = {
 
 export type RealmHistoryMinAggregate = {
   __typename?: 'RealmHistoryMinAggregate';
+  bastionId?: Maybe<Scalars['Int']>;
   eventId?: Maybe<Scalars['String']>;
   eventType?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1317,6 +1326,7 @@ export type RealmHistoryMinAggregate = {
 };
 
 export type RealmHistoryMinOrderByAggregateInput = {
+  bastionId?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   eventType?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -1334,6 +1344,7 @@ export type RealmHistoryOrderByWithAggregationInput = {
   _max?: InputMaybe<RealmHistoryMaxOrderByAggregateInput>;
   _min?: InputMaybe<RealmHistoryMinOrderByAggregateInput>;
   _sum?: InputMaybe<RealmHistorySumOrderByAggregateInput>;
+  bastionId?: InputMaybe<SortOrder>;
   data?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   eventType?: InputMaybe<SortOrder>;
@@ -1347,6 +1358,7 @@ export type RealmHistoryOrderByWithAggregationInput = {
 };
 
 export type RealmHistoryOrderByWithRelationInput = {
+  bastionId?: InputMaybe<SortOrder>;
   data?: InputMaybe<SortOrder>;
   eventId?: InputMaybe<SortOrder>;
   eventType?: InputMaybe<SortOrder>;
@@ -1360,6 +1372,7 @@ export type RealmHistoryOrderByWithRelationInput = {
 };
 
 export enum RealmHistoryScalarFieldEnum {
+  BastionId = 'bastionId',
   Data = 'data',
   EventId = 'eventId',
   EventType = 'eventType',
@@ -1376,6 +1389,7 @@ export type RealmHistoryScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<RealmHistoryScalarWhereWithAggregatesInput>>;
+  bastionId?: InputMaybe<IntWithAggregatesFilter>;
   data?: InputMaybe<JsonWithAggregatesFilter>;
   eventId?: InputMaybe<StringWithAggregatesFilter>;
   eventType?: InputMaybe<StringWithAggregatesFilter>;
@@ -1390,11 +1404,13 @@ export type RealmHistoryScalarWhereWithAggregatesInput = {
 
 export type RealmHistorySumAggregate = {
   __typename?: 'RealmHistorySumAggregate';
+  bastionId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   realmId?: Maybe<Scalars['Int']>;
 };
 
 export type RealmHistorySumOrderByAggregateInput = {
+  bastionId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   realmId?: InputMaybe<SortOrder>;
 };
@@ -1403,6 +1419,7 @@ export type RealmHistoryWhereInput = {
   AND?: InputMaybe<Array<RealmHistoryWhereInput>>;
   NOT?: InputMaybe<Array<RealmHistoryWhereInput>>;
   OR?: InputMaybe<Array<RealmHistoryWhereInput>>;
+  bastionId?: InputMaybe<IntFilter>;
   data?: InputMaybe<JsonFilter>;
   eventId?: InputMaybe<StringFilter>;
   eventType?: InputMaybe<StringFilter>;
@@ -2395,6 +2412,7 @@ export type GetRealmHistoryQuery = {
   getRealmHistory: Array<{
     __typename?: 'RealmHistory';
     id: number;
+    bastionId: number;
     eventId?: string | null;
     eventType?: string | null;
     realmId: number;
@@ -4008,6 +4026,7 @@ export const GetRealmHistoryDocument = gql`
   ) @api(name: starkIndexer) {
     getRealmHistory(filter: $filter, take: $take, skip: $skip) {
       id
+      bastionId
       eventId
       eventType
       realmId
