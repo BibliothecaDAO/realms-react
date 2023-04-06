@@ -306,3 +306,10 @@ export function addTravelTime(userRealms: GetRealmsQuery, bastion: Bastion) {
     });
   });
 }
+
+export function getTimeDifferenceInHours(timestamp: number): number {
+  const currentTime = new Date().getTime();
+  const timestampTime = new Date(timestamp).getTime();
+  const differenceInMilliseconds = currentTime - timestampTime;
+  return Math.round(differenceInMilliseconds / (1000 * 60 * 60));
+}

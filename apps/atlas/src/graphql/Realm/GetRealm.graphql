@@ -42,6 +42,7 @@ query getRealmHistory(
 ) @api(name: starkIndexer) {
   getRealmHistory(filter: $filter, take: $take, skip: $skip) {
     id
+    bastionId
     eventId
     eventType
     realmId

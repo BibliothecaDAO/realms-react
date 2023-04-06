@@ -8,12 +8,15 @@ import {
 } from 'react-icons/gi';
 import {
   getRealmNameById,
+  getRealmOrderById,
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
 import { locationNames } from '@/constants/bastion';
 import type { GetRealmHistoryQuery, RealmHistory } from '@/generated/graphql';
 import type { BastionHistory } from 'mockup/bastionsData';
 import { ArmyBattalions } from '../armies/card/ArmyBattalions';
+import { getTimeDifferenceInHours } from '../bastions/BastionGetters';
+import { theOrders } from '../lore/theOrders';
 
 export enum Event {
   realmCombatAttack = 'realm_combat_attack',
@@ -29,9 +32,9 @@ export enum Event {
 }
 
 export enum BastionEvent {
-  bastionArmyTravel = 'bastion_army_travel',
-  bastionMove = 'bastion_move',
-  bastionCombat = 'bastion_combat',
+  bastionArmyTravel = 'army_travel',
+  bastionMove = 'bastion_army_move',
+  bastionCombat = 'realm_combat_attack',
   bastionTakeLocation = 'bastion_take_location',
 }
 
@@ -86,18 +89,27 @@ export const VisitButton = (id: any) => {
 };
 
 // TODOBASTIONS finish events + mockup data
-export function generateBastionEvent(event: BastionHistory) {
+export function generateBastionEvent(event: RealmHistory) {
   switch (event.eventType) {
     case BastionEvent.bastionCombat:
       return {
         event: (
           <div>
             <span>
-              {`${getRealmNameById(event.realmId)} ${
+              {`${getRealmNameById(
+                event.realmId
+              )} from Order of ${getRealmOrderById(event.realmId)} ${
                 event.data?.success ? 'won' : 'lost'
-              } against ${getRealmNameById(event.data?.defendRealmId)} on ${
-                locationNames[event.data?.locationId].defense
-              }!`}
+              } against ${getRealmNameById(
+                event.data?.defendRealmId
+              )} from Order of ${getRealmOrderById(
+                event.data?.defendRealmId
+              )} ${
+                event.data?.locationId && event.data?.locationId !== 0
+                  ? `on ${locationNames[event.data?.locationId]?.defense}`
+                  : ''
+              }
+              !`}
             </span>
           </div>
         ),
@@ -110,10 +122,12 @@ export function generateBastionEvent(event: BastionHistory) {
         event: (
           <div>
             <span>
-              {`Location ${
-                locationNames[event.data?.locationId].defense
-              } was taken by ${getRealmNameById(event.realmId)} from Order ${
-                event.data?.order
+              {`Location ${locationNames[event.data?.locationId].defense}  ${
+                event.data?.defendingOrderId !== 0
+                  ? `was taken by Order of ${
+                      theOrders[event.data?.defendingOrderId - 1].name
+                    }!`
+                  : `is free to be taken!`
               }`}
             </span>
           </div>
@@ -129,8 +143,10 @@ export function generateBastionEvent(event: BastionHistory) {
           <div>
             <span>
               {`Army ${event.data?.armyId} of Realm ${event.realmId} 
-              has moved from Location ${event.data?.pastLocation}
-              to ${event.data?.nextLocation}`}
+              has moved from ${
+                locationNames[event.data?.bastionPastLocation].defense
+              }
+              to ${locationNames[event.data?.bastionCurrentLocation].defense}!`}
             </span>
           </div>
         ),
@@ -140,14 +156,25 @@ export function generateBastionEvent(event: BastionHistory) {
       };
 
     case BastionEvent.bastionArmyTravel:
+      // eslint-disable-next-line no-case-declarations
+      const hoursDiff = getTimeDifferenceInHours(
+        event.data?.destinationArrivalTime
+      );
       return {
         event: (
           <div>
             <span>
-              {event.data?.arrival
-                ? `Realm ${event.realmId} has sent ArmyId ${event.data?.armyId} to the bastion and will arrive at block ${event.data?.arrivalBlock} blocks
-              `
-                : `Realm ${event.realmId} has sent ArmyId ${event.data?.armyId} outside of the bastion`}
+              {event.data?.destinationRealmId === event.bastionId
+                ? `Realm ${getRealmNameById(event.realmId)} has sent ArmyId ${
+                    event.data?.originArmyId
+                  } to the bastion and ${
+                    hoursDiff < 0
+                      ? `will arrive in ${Math.abs(hoursDiff)} hours!`
+                      : `has arrived ${Math.abs(hoursDiff)} hours ago!`
+                  }`
+                : `Realm ${getRealmNameById(event.realmId)} has sent ArmyId ${
+                    event.data?.originArmyId
+                  } outside of the bastion!`}
             </span>
           </div>
         ),

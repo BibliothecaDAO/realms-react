@@ -11,8 +11,10 @@ import {
 import { HistoryCard } from '@/components/realms/HistoryCard';
 import { getAccountHex } from '@/components/realms/RealmsGetters';
 import { sidebarClassNames } from '@/constants/ui';
+import { useAtlasContext } from '@/context/AtlasContext';
 import { useBastionContext } from '@/context/BastionContext';
 import { useUIContext } from '@/context/UIContext';
+import type { RealmHistoryWhereInput } from '@/generated/graphql';
 import { useGetRealmHistoryQuery } from '@/generated/graphql';
 import { useUi } from '@/hooks/useUi';
 import { useGetBastionHistoryQuery } from 'mockup/bastionsData';
@@ -24,29 +26,41 @@ export function BastionOverview() {
   const [lastUpdate, setLastUpdate] = useState<number>(0);
 
   const {
-    bastionContext: { bastion },
-  } = useBastionContext();
+    mapContext: { selectedAsset },
+  } = useAtlasContext();
+
+  const filter: RealmHistoryWhereInput = {
+    bastionId: { equals: 3711000 },
+    eventType: { equals: 'army_travel' },
+  };
 
   const {
     data: bastionEvents,
     stopPolling,
     startPolling,
     loading,
-  } = useGetBastionHistoryQuery(bastion ? bastion.bastionId : 0);
+  } = useGetRealmHistoryQuery({
+    variables: {
+      filter,
+      take: 10,
+    },
+  });
 
-  const events = (bastionEvents?.getBastionHistory ?? []).map(
-    (bastionEvent) => {
-      return {
-        ...generateBastionEvent(bastionEvent),
-        timestamp: bastionEvent.timestamp,
-        eventId: bastionEvent.eventId,
-        realmId: bastionEvent.realmId,
-      };
-    }
-  );
+  useEffect(() => {
+    if (loading) stopPolling();
+    else startPolling(5000);
 
-  console.log('aymeric');
-  console.log(events);
+    return stopPolling;
+  }, [loading, data]);
+
+  const events = (bastionEvents?.getRealmHistory ?? []).map((bastionEvent) => {
+    return {
+      ...generateBastionEvent(bastionEvent),
+      timestamp: bastionEvent.timestamp,
+      eventId: bastionEvent.eventId,
+      realmId: bastionEvent.realmId,
+    };
+  });
 
   useMemo(() => {
     const now = new Date().getTime();
