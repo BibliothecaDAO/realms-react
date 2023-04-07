@@ -1,8 +1,4 @@
 import { Button } from '@bibliotheca-dao/ui-lib/base';
-import matter from 'gray-matter';
-import Markdown from 'markdown-to-jsx';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { getAllArticleIds, getArticleData } from '@/hooks/articles';
 

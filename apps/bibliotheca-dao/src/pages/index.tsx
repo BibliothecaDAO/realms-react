@@ -3,14 +3,23 @@ import StarkNet from '@bibliotheca-dao/ui-lib/icons/starknet-logo.svg';
 import Image from 'next/image';
 import { useState } from 'react';
 import Typist from 'react-typist-component';
-import { DaoProjects } from '@/components/DaoProjects';
+import { ArticlePreview } from '@/components/articles/ArticlePreview';
 import { FaqBlock } from '@/components/Faqs';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { PartnerBanner } from '@/components/PartnerBanner';
-
 import { homePage } from '@/data/Information';
+import { getSortedArticlesData } from '@/hooks/articles';
 
-function Home() {
+export async function getStaticProps() {
+  const allArticlesData = getSortedArticlesData();
+  return {
+    props: {
+      allArticlesData,
+    },
+  };
+}
+
+function Home({ allArticlesData }: any) {
   const [key, setKey] = useState(1);
   return (
     <MainLayout>
@@ -47,30 +56,41 @@ function Home() {
 
       <FaqBlock heading="Bibliotheca DAO" faqs={homePage} />
       <PartnerBanner />
-
-      <div className="container relative z-20 flex py-10 mx-auto my-40 text-center ">
-        <div className="self-center px-10 mx-auto sm:w-1/2">
-          <div className="flex justify-center mb-5">
-            <StarkNet className="w-8 mr-4" />
-            <h5 className="self-center tracking-widest uppercase font-body">
-              a StarkNet autonomous world
-            </h5>
-          </div>
-
-          <h1 className="mb-10">Master Scroll</h1>
-          <p className="sm:text-2xl">Our litepaper</p>
-          <div className="mt-4">
-            <Button
-              href="https://scroll.bibliothecadao.xyz/"
-              size="sm"
-              variant="dao"
-            >
-              read the scroll
-            </Button>
+      <div className="w-full bg-white/10">
+        <div className="max-w-2xl px-6 py-20 mx-auto">
+          <h3 className="mb-8">Articles</h3>
+          <div className="flex flex-col w-full space-y-3">
+            {allArticlesData?.map((a: any, index: any) => {
+              return <ArticlePreview key={index} {...a} />;
+            })}
           </div>
         </div>
       </div>
-      <div className="container relative z-20 flex flex-wrap px-10 py-10 mx-auto my-40 border-t ">
+
+      <div className="relative z-20 flex py-10 text-center bg-white/20">
+        <div className="container mx-auto ">
+          <div className="self-center px-10 mx-auto sm:w-1/2">
+            {/* <div className="flex justify-center mb-5">
+              <StarkNet className="w-8 mr-4" />
+              <h5 className="self-center tracking-widest uppercase font-body">
+                a StarkNet autonomous world
+              </h5>
+            </div> */}
+
+            <h4 className="mb-10">📜 Master Scroll (litepaper)</h4>
+            <div className="mt-4">
+              <Button
+                href="https://scroll.bibliothecadao.xyz/"
+                size="sm"
+                variant="dao"
+              >
+                read the Master Scroll
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container relative z-20 flex flex-wrap px-10 py-10 mx-auto my-40">
         <div className="self-center p-4 sm:w-1/2">
           <div className="flex mb-5">
             <h5 className="self-center tracking-widest uppercase font-body">
@@ -106,13 +126,12 @@ function Home() {
           <Image
             src={`https://openseauserdata.com/files/769284da4198c2651e371ecec7b8bf73.svg`}
             alt="map"
-            className="w-full p-2 mt-4 rounded bg-black/10"
+            className="w-full p-2 mt-4 rounded-3xl bg-black/10"
             width={1000}
             height={1000}
           />
         </div>
       </div>
-      <DaoProjects />
     </MainLayout>
   );
 }

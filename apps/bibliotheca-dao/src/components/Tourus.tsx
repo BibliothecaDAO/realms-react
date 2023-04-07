@@ -19,7 +19,7 @@ export default function Tourus() {
       effect.domElement.style.position = 'absolute';
       effect.domElement.style.top = '0px';
       effect.domElement.style.left = '0px';
-      effect.domElement.style.color = '#424242';
+      effect.domElement.style.color = '#333333';
       effect.domElement.style.backgroundColor = '#1b1b1d';
       effect.domElement.style.pointerEvents = 'none';
       return effect;

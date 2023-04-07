@@ -41,8 +41,8 @@ export const PartnerBanner = () => {
   ];
   return (
     <>
-      <h4 className="text-center -mt-4">We work with</h4>
-      <div className="relative z-20 flex flex-wrap justify-center w-full h-auto p-10 text-gray-900 shadow-inner sm:p-20 sm:space-x-10 bg-off-300/40 text-off-300">
+      <h4 className="-mt-4 text-center">We work with</h4>
+      <div className="relative z-20 flex flex-wrap justify-center w-full h-auto p-10 text-gray-900 shadow-inner sm:p-20 sm:space-x-10 bg-off-300/30">
         {' '}
         {partners.map((a, index) => {
           return (
