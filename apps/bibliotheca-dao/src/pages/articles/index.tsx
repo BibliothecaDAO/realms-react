@@ -1,35 +1,33 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { getSortedArticlesData } from '@/hooks/articles';
 
 export interface PostMetadata {
   title: string;
   date: string;
   subtitle: string;
-  slug: string;
   image: string;
   tags: string[];
   author: string;
+  id: string;
 }
 
-const PostPage = () => {
-  const [post, setPosts] = useState<any[]>();
+export async function getStaticProps() {
+  const allArticlesData = getSortedArticlesData();
+  return {
+    props: {
+      allArticlesData,
+    },
+  };
+}
 
-  useEffect(() => {
-    const getAllPosts = async () => {
-      const response = await fetch('/api/getAllPosts');
-      const data = await response.json();
-      setPosts(data);
-    };
-    getAllPosts();
-  }, [post]);
-
+const PostPage = ({ allArticlesData }: any) => {
   return (
     <MainLayout>
       <div className="max-w-2xl px-6 mx-auto my-20 md:my-40">
         <h3 className="mb-8">Building Autonmous Worlds</h3>
         <div className="flex flex-col w-full space-y-3">
-          {post?.map((a, index) => {
+          {allArticlesData?.map((a: any, index: any) => {
             return <PostPreview key={index} {...a} />;
           })}
         </div>
@@ -43,14 +41,9 @@ export default PostPage;
 const PostPreview = (props: PostMetadata) => {
   return (
     <Link
-      href={`/articles/${props.slug}`}
+      href={`/articles/${props.id}`}
       className="flex capitalize transition-all duration-300 border border-dashed rounded border-white/20 hover:bg-gray-900 hover:border-solid "
     >
-      {/* <img
-        className="object-fill w-32 h-32 rounded-l"
-        src={props.image}
-        alt=""
-      /> */}
       <div className="p-4 align-center">
         <p className="text-sm text-gray-500">{props.date}</p>
 

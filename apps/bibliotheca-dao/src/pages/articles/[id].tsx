@@ -4,32 +4,37 @@ import Markdown from 'markdown-to-jsx';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { getAllArticleIds, getArticleData } from '@/hooks/articles';
 
-const PostPage = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [post, setPost] = useState<any>();
+export async function getStaticPaths() {
+  const paths = getAllArticleIds();
+  return {
+    paths,
+    fallback: false,
+  };
+}
 
-  useEffect(() => {
-    const getPost = async () => {
-      const response = await fetch(`/api/getPosts?slug=${slug}`);
-      const data = await response.json();
-      setPost(matter(data));
-    };
-    getPost();
-  }, [slug]);
+export async function getStaticProps({ params }: any) {
+  const post = await getArticleData(params.id);
+  return {
+    props: {
+      post,
+    },
+  };
+}
 
+const PostPage = ({ post }: any) => {
   return (
     <MainLayout>
       <div className="py-10 text-center sm:mt-6">
-        {post && <h1 className="py-8 sm:py-20">{post.data.title}</h1>}
-        {post && <p className="mt-2">{post.data.date}</p>}
-        {post && <p className="mt-2">{post.data.author}</p>}
+        {post && <h1 className="py-8 sm:py-20">{post.title}</h1>}
+        {post && <p className="mt-2">{post.date}</p>}
+        {post && <p className="mt-2">{post.author}</p>}
 
-        {post && post.data.tags && (
+        {post && post.tags && (
           <div className="container mx-auto">
             <div className="flex justify-center mt-3 space-x-2">
-              {post.data.tags.map((tag: any, index: any) => {
+              {post.tags.map((tag: any, index: any) => {
                 return (
                   <span
                     key={index}
@@ -45,7 +50,7 @@ const PostPage = () => {
       </div>
 
       <article className="container px-6 pb-6 mx-auto prose bg-gray-900 border border-dashed border-white/5">
-        {post && <Markdown>{post.content}</Markdown>}
+        <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
       </article>
       <div className="container p-3 mx-auto w-72">
         <Button href="/articles" variant="dao">
