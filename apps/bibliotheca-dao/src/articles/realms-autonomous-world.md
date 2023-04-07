@@ -34,7 +34,7 @@ Autonomous worlds bear a remarkable resemblance to blockchains in their nature. 
 
 This is just our interpretation and the heuristics we are following, but it is by no means cannonical.
 
-The open nature of an AW fosters the development of intriguing economic models, such as the ["Play to Die"](https://loaf.coffee/posts/economic-hyperstructures) concept, which allows developers to compete at the application layer within the, within the world akin to an app store.
+The open nature of an AW fosters the development of intriguing economic models, such as the ["Play to Die"](https://loaf.coffee/posts/economic-hyperstructures) concept, which allows developers to compete at the application layer within the world akin to an app store.
 
 Autonomous worlds ought to be credibly neutral and not subject to central control by any group or individual. Be cautious of those who exploit the AW name for a quick profit in the future. Eternum's launch is not the end game for Realms or Loot; rather, it marks the beginning of a continuous evolution. It is our hope that in 10 years, Eternum will bear little resemblance to the game as it exists today, having grown and transformed over time.
 
