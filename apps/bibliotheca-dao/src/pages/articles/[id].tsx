@@ -45,7 +45,7 @@ const PostPage = ({ post }: any) => {
         )}
       </div>
 
-      <article className="container px-6 pb-6 mx-auto prose bg-gray-900 border border-dashed border-white/5">
+      <article className="container px-6 pb-6 mx-auto prose prose-lg bg-gray-900 border border-dashed border-white/5">
         <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
       </article>
       <div className="container p-3 mx-auto w-72">
