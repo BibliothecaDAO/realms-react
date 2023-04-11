@@ -756,7 +756,7 @@ export function BastionModel(props: JSX.IntrinsicElements['group']) {
           material={materials.Path}
         />
       </group>
-      <group onClick={() => handleClick({ id: 0, defender: true })}>
+      <group onClick={() => handleClick({ id: 0, defender: false })}>
         <mesh
           geometry={nodes.water.geometry}
           material={materials.Gold}

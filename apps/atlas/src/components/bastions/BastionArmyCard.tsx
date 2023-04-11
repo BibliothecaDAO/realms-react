@@ -18,7 +18,11 @@ import type { Army, GetRealmsQuery } from '@/generated/graphql';
 import { useGetRealmQuery } from '@/generated/graphql';
 import { shortenAddress } from '@/util/formatters';
 import { ArmyActions } from './ArmyActions';
-import { getOrderForColor, isUserArmy } from './BastionGetters';
+import {
+  getOrderForColor,
+  isUserArmy,
+  getTimeDifferenceInSeconds,
+} from './BastionGetters';
 
 interface BastionArmyCardProps {
   army: Army;
@@ -232,7 +236,15 @@ const IncomingArmyData: FC<IncomingArmyDataProps> = ({
   blockNumber,
   orderName,
 }) => {
-  const blockInterval = army.bastionArrivalBlock - blockNumber;
+  // If coming from travel, then it's a unix timestamp, if coming from bastion move, it's block number
+  const isIncomingTravelArmy = army.bastionArrivalBlock === 0;
+  let timeToArrival: number;
+  if (isIncomingTravelArmy) {
+    timeToArrival =
+      -1 * getTimeDifferenceInSeconds(army.destinationArrivalTime);
+  } else {
+    timeToArrival = army.bastionArrivalBlock - blockNumber;
+  }
 
   return (
     <div
@@ -246,7 +258,17 @@ const IncomingArmyData: FC<IncomingArmyDataProps> = ({
       )}
       <div className="px-2 flex ">
         <RiFlag2Line className="bastion-icon"> </RiFlag2Line>
-        <div className="p-0.5"> {`Arriving in  ${blockInterval} blocks`} </div>
+        <div className="p-0.5">
+          {`Arriving in ${
+            isIncomingTravelArmy
+              ? `${
+                  timeToArrival > 3600
+                    ? `${Math.round(timeToArrival / 60 / 60)} hours`
+                    : `${Math.round(timeToArrival / 60)} minutes`
+                }`
+              : `${timeToArrival} blocks`
+          }`}
+        </div>
       </div>
     </div>
   );
@@ -345,7 +367,7 @@ const ArmyInfo = ({
 
   return (
     <div
-      className={`${isHovering || !animation ? 'h-3' : 'h-0'} ${
+      className={`${isHovering || !animation ? 'h-4' : 'h-0'} ${
         animation ? 'transition-all duration-450' : ''
       } px-1 w-full`}
     >
@@ -355,7 +377,7 @@ const ArmyInfo = ({
         }`}
       >
         <div
-          className={`flex justify-between w-full text-order-secondary-v2-${orderName}`}
+          className={`flex justify-between items-center h-full w-full text-order-secondary-v2-${orderName}`}
         >
           <div className="flex justify-between">
             <div className="px-1"> {`Realm Id: ${army.realmId}`} </div>

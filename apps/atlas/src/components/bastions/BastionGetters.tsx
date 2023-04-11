@@ -1,6 +1,7 @@
 import { MovingTimes } from '@/constants/bastion';
 import { SECONDS_PER_KM } from '@/constants/globals';
 import type { Army, Bastion, GetRealmsQuery } from '@/generated/graphql';
+import bastions from '@/geodata/bastions.json';
 import { normalizeOrderName, theOrders } from '../lore/theOrders';
 import { getCoordinates } from '../realms/RealmsGetters';
 
@@ -20,6 +21,17 @@ export const getBastionLocation = (bastion: Bastion, locationId: number) => {
   }
 };
 
+export const hasArmyArrived = (army: Army, blockNumber: number) => {
+  // if 0 then army comes from travel
+  if (army.bastionArrivalBlock === 0 && army.destinationArrivalTime) {
+    return getTimeDifferenceInSeconds(army.destinationArrivalTime) > 0
+      ? true
+      : false;
+  } else {
+    return army.bastionArrivalBlock <= blockNumber ? true : false;
+  }
+};
+
 export const getLocationArmies = (
   bastion: Bastion,
   locationId: number,
@@ -34,13 +46,13 @@ export const getLocationArmies = (
         return location.armies.filter(
           (army) =>
             army.orderId === location.defendingOrderId &&
-            army.bastionArrivalBlock <= blockNumber
+            hasArmyArrived(army, blockNumber)
         );
       } else {
         return location.armies.filter(
           (army) =>
             army.orderId !== location.defendingOrderId &&
-            army.bastionArrivalBlock <= blockNumber
+            hasArmyArrived(army, blockNumber)
         );
       }
     } else {
@@ -48,13 +60,13 @@ export const getLocationArmies = (
         return location.armies.filter(
           (army) =>
             army.orderId === location.defendingOrderId &&
-            army.bastionArrivalBlock > blockNumber
+            !hasArmyArrived(army, blockNumber)
         );
       } else {
         return location.armies.filter(
           (army) =>
             army.orderId !== location.defendingOrderId &&
-            army.bastionArrivalBlock > blockNumber
+            !hasArmyArrived(army, blockNumber)
         );
       }
     }
@@ -70,21 +82,14 @@ export const getAttackableArmies = (
   blockNumber: number
 ) => {
   const location = getBastionLocation(bastion, locationId);
-  if (locationId === 3) {
-    console.log(attackingArmyOrder);
-    console.log(blockNumber);
-    console.log(location);
-  }
   // if you are attacker, show the armies that are not your order
-  const test = location.armies.filter(
+  return location.armies.filter(
     (army) =>
       // if you are attacker, show all the enemy order armies
       army.orderId !== attackingArmyOrder &&
       // needs to arrive to be attackable
       army.bastionArrivalBlock <= blockNumber
   );
-  console.log(test);
-  return test;
 };
 
 export const isUserArmy = (userRealms: GetRealmsQuery, army: Army): boolean => {
@@ -276,6 +281,15 @@ const movingTimeFromTowerGateToCentralSquare = (
   }
 };
 
+const getBastionCoordinates = (bastionId: number) => {
+  const bastion = bastions.features.find((bastion) => bastion.id === bastionId);
+  if (bastion) {
+    return { xy: bastion.xy };
+  } else {
+    return { xy: [0, 0] };
+  }
+};
+
 export const getBastionTravelTime = ({ travellerId, bastion }) => {
   const distance = (x1, y1, x2, y2) => {
     const a = x1 - x2;
@@ -285,7 +299,7 @@ export const getBastionTravelTime = ({ travellerId, bastion }) => {
   };
 
   const travellerCoordinates = getCoordinates(travellerId);
-  const destinationCoordinates = { xy: [bastion.longitude, bastion.latitude] };
+  const destinationCoordinates = getBastionCoordinates(bastion.bastionId);
 
   const d = distance(
     travellerCoordinates?.xy[0],
@@ -324,20 +338,27 @@ export function filterArmiesThatCannotTravel(
   return newRealms;
 }
 
+function onlyNonBastionArmies(army: Army) {
+  // only want undefined and 0
+  return army.bastionId == '0';
+}
+
 export function addTravelTime(userRealms: GetRealmsQuery, bastion: Bastion) {
   return userRealms.realms.flatMap((realm) => {
-    return realm.ownArmies.map((army) => {
-      const travelTime = getBastionTravelTime({
-        travellerId: realm.realmId,
-        bastion: bastion,
+    return realm.ownArmies
+      .filter((army) => onlyNonBastionArmies(army))
+      .map((army) => {
+        const travelTime = getBastionTravelTime({
+          travellerId: realm.realmId,
+          bastion: bastion,
+        });
+        return {
+          realmName: realm ? (realm.name as string) : '',
+          realmId: realm.realmId,
+          armyId: army.armyId,
+          ...travelTime,
+        };
       });
-      return {
-        realmName: realm ? (realm.name as string) : '',
-        realmId: realm.realmId,
-        armyId: army.armyId,
-        ...travelTime,
-      };
-    });
   });
 }
 
@@ -347,9 +368,30 @@ export const getOrderForColor = (orderId: number) => {
     return normalizeOrderName(order);
   }
 };
-export function getTimeDifferenceInHours(timestamp: number): number {
+export function getTimeDifferenceInSeconds(timestamp: number): number {
   const currentTime = new Date().getTime();
   const timestampTime = new Date(timestamp).getTime();
   const differenceInMilliseconds = currentTime - timestampTime;
-  return Math.round(differenceInMilliseconds / (1000 * 60 * 60));
+  return Math.round(differenceInMilliseconds / 1000);
 }
+
+export const getEmptyBastion = (bastionId: number): Bastion | undefined => {
+  const bastion = bastions.features.find((bastion) => bastion.id === bastionId);
+
+  if (bastion) {
+    return {
+      bastionId,
+      latitude: bastion?.xy[1],
+      longitude: bastion?.xy[0],
+      locations: [],
+    };
+  }
+};
+
+export const hasRealms = (userRealms: GetRealmsQuery | undefined) => {
+  if (!userRealms) {
+    return false;
+  } else {
+    return userRealms.realms.length > 0 ? true : false;
+  }
+};

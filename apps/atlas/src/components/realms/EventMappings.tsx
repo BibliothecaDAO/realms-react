@@ -11,10 +11,13 @@ import {
   resourcePillaged,
 } from '@/components/realms/RealmsGetters';
 import { locationNames } from '@/constants/bastion';
-import type { GetRealmHistoryQuery, RealmHistory } from '@/generated/graphql';
-import type { BastionHistory } from 'mockup/bastionsData';
+import type {
+  BastionHistory,
+  GetRealmHistoryQuery,
+  RealmHistory,
+} from '@/generated/graphql';
 import { ArmyBattalions } from '../armies/card/ArmyBattalions';
-import { getTimeDifferenceInHours } from '../bastions/BastionGetters';
+import { getTimeDifferenceInSeconds } from '../bastions/BastionGetters';
 import { theOrders } from '../lore/theOrders';
 
 export enum Event {
@@ -117,7 +120,6 @@ export function generateBastionEvent(event: RealmHistory) {
     case BastionEvent.bastionTakeLocation:
       // eslint-disable-next-line no-case-declarations
       const previousDefendingOrderId = event.data?.previousDefendingOrderId;
-      console.log(previousDefendingOrderId);
       return {
         event: (
           <div>
@@ -163,14 +165,14 @@ export function generateBastionEvent(event: RealmHistory) {
 
     case BastionEvent.bastionArmyTravel:
       // eslint-disable-next-line no-case-declarations
-      const hoursDiff = getTimeDifferenceInHours(
-        event.data?.destinationArrivalTime
+      const hoursDiff = Math.round(
+        getTimeDifferenceInSeconds(event.data?.destinationArrivalTime) / 60 / 60
       );
       return {
         event: (
           <div>
             <span>
-              {event.data?.destinationRealmId === event.bastionId
+              {event.data?.destinationContractId === 17
                 ? `Realm ${getRealmNameById(event.realmId)} has sent ArmyId ${
                     event.data?.originArmyId
                   } to the bastion and ${
@@ -187,6 +189,12 @@ export function generateBastionEvent(event: RealmHistory) {
         txHash: event.transactionHash,
         image: EventImages[event.eventType],
         icon: <GiBoatHorizon fontSize={30}></GiBoatHorizon>,
+      };
+    default:
+      return {
+        event: '',
+        class: '',
+        action: '',
       };
   }
 }

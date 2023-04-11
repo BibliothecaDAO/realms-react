@@ -37,7 +37,13 @@ export function useTravelTripsLayer() {
   const travelData = useMemo(() => {
     return travels?.payload
       ? travels?.payload
-          .filter((travel) => travel.endTime > travel.startTime)
+          .filter(
+            (travel) =>
+              travel.endTime > travel.startTime &&
+              // TODO: fix null realm when bastions but need to find better way
+              travel.originRealm &&
+              travel.destinationRealm
+          )
           .map((travel) =>
             getDeckGLTripLayerPath(
               travel.locationRealm as Point,

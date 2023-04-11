@@ -2,6 +2,7 @@ fragment RealmArmiesFragment on Realm {
   ownArmies {
     armyId
     realmId
+    bastionId
     xp
     destinationRealmId
     destinationArrivalTime

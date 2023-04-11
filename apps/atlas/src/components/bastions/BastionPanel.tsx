@@ -6,7 +6,8 @@ import type { Bastion } from '@/generated/graphql';
 import { useGetBastionQuery } from '@/generated/graphql';
 // import { useGetBastionQuery } from 'mockup/bastionsData';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
-import { TravelToBastionButton } from './ArmyActions';
+import { TravelToBastion } from './ArmyActions';
+import { getEmptyBastion } from './BastionGetters';
 import { BastionInfo } from './BastionInfo';
 import { BastionOverview } from './BastionOverview';
 
@@ -30,10 +31,17 @@ export const BastionPanel = () => {
   }, [loading, data]);
 
   useEffect(() => {
-    if (!loading && data) {
+    if (!loading && data?.bastion) {
       setBastion(data.bastion as Bastion);
+    } else {
+      if (selectedAsset?.id) {
+        const emptyBastion = getEmptyBastion(parseInt(selectedAsset.id));
+        if (emptyBastion) {
+          setBastion(emptyBastion);
+        }
+      }
     }
-  }, [data, loading]);
+  }, [data, loading, selectedAsset]);
 
   if ((loading && !data) || !selectedAsset) {
     return <div></div>;
@@ -42,7 +50,7 @@ export const BastionPanel = () => {
       <div className="absolute top-0 bottom-0 rigth-0 left-0 w-full h-full">
         <BastionThreejs />
         <BastionInfo />
-        <TravelToBastionButton />
+        <TravelToBastion />
         <BastionOverview />
       </div>
     );

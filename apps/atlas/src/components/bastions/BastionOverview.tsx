@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { generateBastionEvent } from '@/components/realms/EventMappings';
 import { useAtlasContext } from '@/context/AtlasContext';
-import type { RealmHistoryWhereInput } from '@/generated/graphql';
-import { useGetRealmHistoryQuery } from '@/generated/graphql';
+import type { BastionHistoryWhereInput } from '@/generated/graphql';
+import { useGetBastionHistoryQuery } from '@/generated/graphql';
 import { BastionCard } from './BastionCard';
 
 export function BastionOverview() {
@@ -12,9 +12,9 @@ export function BastionOverview() {
     mapContext: { selectedAsset },
   } = useAtlasContext();
 
-  const filter: RealmHistoryWhereInput = {
+  const filter: BastionHistoryWhereInput = {
     bastionId: { equals: parseInt(selectedAsset.id) },
-    eventType: { not: { equals: 'realm_combat_defend' } },
+    realmHistoryEventType: { not: { equals: 'realm_combat_defend' } },
   };
 
   const {
@@ -22,7 +22,7 @@ export function BastionOverview() {
     stopPolling,
     startPolling,
     loading,
-  } = useGetRealmHistoryQuery({
+  } = useGetBastionHistoryQuery({
     variables: {
       filter,
       take: 20,
@@ -36,14 +36,16 @@ export function BastionOverview() {
     return stopPolling;
   }, [loading, bastionEvents, startPolling, stopPolling]);
 
-  const events = (bastionEvents?.getRealmHistory ?? []).map((bastionEvent) => {
-    return {
-      ...generateBastionEvent(bastionEvent),
-      timestamp: bastionEvent.timestamp,
-      eventId: bastionEvent.eventId,
-      realmId: bastionEvent.realmId,
-    };
-  });
+  const events = (bastionEvents?.getBastionHistory ?? [])
+    .map((bastionEvent) => {
+      return {
+        ...generateBastionEvent(bastionEvent.realmHistory),
+        timestamp: bastionEvent.realmHistory.timestamp,
+        eventId: bastionEvent.realmHistory.eventId,
+        realmId: bastionEvent.realmHistory.realmId,
+      };
+    })
+    .filter((row) => row.event !== '');
 
   useMemo(() => {
     const now = new Date().getTime();

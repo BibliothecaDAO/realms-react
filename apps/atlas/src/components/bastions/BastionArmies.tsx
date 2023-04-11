@@ -14,6 +14,7 @@ import { BastionCombatSideBar } from './BastionCombatSideBar';
 import {
   getAttackableArmies,
   getLocationArmies,
+  hasArmyArrived,
   isUserArmy,
 } from './BastionGetters';
 
@@ -58,8 +59,8 @@ export const BastionArmies: FC<BastionArmiesProps> = ({ showMyArmies }) => {
     }
   };
 
-  const onMoveClick = (army: Army, nextLocation: number) => {
-    if (bastion && nextLocation) {
+  const onMoveClick = (army: Army, nextLocation: number | undefined) => {
+    if (bastion && !(nextLocation == undefined)) {
       if (nextLocation === 6) {
         travel(army.armyId, army.realmId, army.realmId);
       } else {
@@ -175,7 +176,7 @@ export const BastionArmies: FC<BastionArmiesProps> = ({ showMyArmies }) => {
                   key={index}
                   army={army}
                   userRealms={userRealms}
-                  arrived={army.bastionArrivalBlock <= blockNumber}
+                  arrived={hasArmyArrived(army, blockNumber)}
                   attackMode={attackMode}
                   armyInfoAnimation={true}
                   blockNumber={blockNumber}

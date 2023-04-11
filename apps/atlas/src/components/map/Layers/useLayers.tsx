@@ -18,7 +18,11 @@ export const useLayers = ({ selectedId }) => {
   });
 
   const userArmiesFormatted = userData?.attackingArmies
-    ?.filter((a) => a.armyId !== 0 || a.destinationRealmId !== 0)
+    ?.filter(
+      (a) =>
+        // TODO: filter out  bastion armies for now
+        a.armyId !== 0 && a.destinationRealmId !== 0 && a.bastionId === '0'
+    )
     ?.map((a) => {
       return {
         coordinates: realms.features.find((b) => b.id === a.destinationRealmId)

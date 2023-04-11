@@ -48,3 +48,25 @@ query getBastion($id: Float!) @api(name: starkIndexer) {
     }
   }
 }
+
+query getBastionHistory(
+  $filter: BastionHistoryWhereInput
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  getBastionHistory(filter: $filter, take: $take, skip: $skip) {
+    bastionId
+    realmHistoryEventId
+    realmHistoryEventType
+    realmHistory {
+      id
+      eventId
+      eventType
+      realmId
+      realmOwner
+      data
+      timestamp
+      transactionHash
+    }
+  }
+}
