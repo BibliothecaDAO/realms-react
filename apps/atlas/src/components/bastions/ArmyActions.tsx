@@ -5,22 +5,22 @@ import { RiFlag2Line } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import { useBastionContext } from '@/context/BastionContext';
 import { useCommandList } from '@/context/CommandListContext';
+import type { Army, GetRealmsQuery } from '@/generated/graphql';
 import { ModuleAddr } from '@/hooks/settling/stark-contracts';
 import { Entrypoints } from '@/hooks/settling/useBastions';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
-import type { BastionArmy } from 'mockup/bastionsData';
 import {
   addTravelTime,
   computeShowTakeLocation,
   filterArmiesThatCannotTravel,
-  getBastionLocation,
+  hasRealms,
 } from './BastionGetters';
 import { DropDownMove } from './DropDownMove';
 
 type ArmyActionsProps = {
-  army: BastionArmy;
-  onAttackModeClick: (army: BastionArmy) => void;
-  onMoveClick: (army: BastionArmy, selectedOption: number | undefined) => void;
+  army: Army;
+  onAttackModeClick: (army: Army) => void;
+  onMoveClick: (army: Army, selectedOption: number | undefined) => void;
 };
 
 export const ArmyActions = ({
@@ -30,6 +30,7 @@ export const ArmyActions = ({
 }: ArmyActionsProps) => {
   const [showMove, setShowMove] = useState<boolean>(false);
   const [showTakeLocation, setShowTakeLocation] = useState<boolean>(false);
+  const [isStagingArea, setIsStagingArea] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState();
   const [enqueuedTx, setEnqueuedTx] = useState(false);
 
@@ -72,6 +73,7 @@ export const ArmyActions = ({
   };
 
   useEffect(() => {
+    setIsStagingArea(selectedLocation.locationId === 0);
     if (bastion && selectedLocation) {
       setShowTakeLocation(
         computeShowTakeLocation(bastion, selectedLocation.locationId)
@@ -98,7 +100,7 @@ export const ArmyActions = ({
           )}
         </div>
         <div className="grid-item flex justify-center pr-0.5 col-span-1 grid-row-1">
-          {!showMove && !showTakeLocation && (
+          {!showMove && !showTakeLocation && !isStagingArea && (
             <Button
               className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => onAttackModeClick(army)}
@@ -106,12 +108,12 @@ export const ArmyActions = ({
               fullWidth={true}
             >
               <div className="flex items-center text-white">
-                <GiCrossedSwords className={'bastion-icon'}> </GiCrossedSwords>
+                <GiCrossedSwords className={'bastion-icon'}></GiCrossedSwords>
                 <div className=""> Attack </div>
               </div>
             </Button>
           )}
-          {!showMove && showTakeLocation && (
+          {!showMove && showTakeLocation && !isStagingArea && (
             <Button
               className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
               onClick={() => takeLocationClick()}
@@ -151,7 +153,9 @@ export const ArmyActions = ({
           <div className="grid-item flex justify-center pl-0.5 col-span-1 grid-row-1">
             <Button
               className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
-              onClick={() => onMoveClick(army, selectedOption)}
+              onClick={() => {
+                onMoveClick(army, selectedOption);
+              }}
               disabled={enqueuedTx}
               fullWidth={true}
             >
@@ -167,7 +171,7 @@ export const ArmyActions = ({
   );
 };
 
-export const TravelToBastionButton = () => {
+export const TravelToBastion = () => {
   const {
     bastionContext: { bastion, travelToBastion },
   } = useBastionContext();
@@ -190,21 +194,10 @@ export const TravelToBastionButton = () => {
         userRealms,
         bastion
       );
-      console.log(armiesThatCanTravel);
       const newTravelArmies = addTravelTime(armiesThatCanTravel, bastion);
       setTravelArmies(newTravelArmies);
     }
   }, [userRealms, bastion]);
-
-  const handleTraveltoBastion = (armyId: number, realmId: number) => {
-    if (bastion) {
-      travelToBastion({
-        armyId: armyId,
-        travellerId: realmId,
-        destinationId: bastion?.bastionId,
-      });
-    }
-  };
 
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
@@ -216,32 +209,19 @@ export const TravelToBastionButton = () => {
             <div className="w-full bg-gray-100 overflow-y-auto text-[#333333] rounded-md shadow-lg">
               {userRealms &&
                 travelArmies &&
-                travelArmies.map((army, index) => {
-                  return (
-                    <div className="flex justify-between p-1" key={index}>
-                      <div className="flex">
-                        <div className="flex px-1 items-center justify-center">{`${
-                          army.realmName
-                        } - Army ${army.armyId} - ${
-                          army.distance
-                        } km - ${Math.round(army.time / 60)} h`}</div>
-                      </div>
-                      <Button
-                        variant="primary"
-                        className=""
-                        onClick={() => {
-                          handleTraveltoBastion(army.armyId, army.realmId);
-                        }}
-                      >
-                        Travel to Bastion
-                      </Button>
-                    </div>
-                  );
-                })}
+                travelArmies.map((army, index) => (
+                  <TravelToBastionButton
+                    key={index}
+                    bastion={bastion}
+                    army={army}
+                    travelToBastion={travelToBastion}
+                  />
+                ))}
             </div>
           )}
           <Button
             className="rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
+            disabled={!hasRealms(userRealms)}
             onClick={() =>
               showDropDown ? setShowDropDown(false) : setShowDropDown(true)
             }
@@ -252,6 +232,56 @@ export const TravelToBastionButton = () => {
             </div>
           </Button>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const TravelToBastionButton = ({ bastion, army, travelToBastion }) => {
+  const [enqueuedTx, setEnqueuedTx] = useState(false);
+
+  const txQueue = useCommandList();
+
+  useEffect(() => {
+    setEnqueuedTx(
+      !!txQueue.transactions.find(
+        (t: any) =>
+          t.contractAddress == ModuleAddr.Travel &&
+          t.entrypoint == Entrypoints.travel &&
+          t.metadata['travellerId'] == army.realmId &&
+          t.metadata['armyId'] == army.armyId
+      )
+    );
+  }, [txQueue, army]);
+
+  const handleTravelToBastion = (armyId: number, realmId: number) => {
+    if (bastion) {
+      travelToBastion({
+        armyId: armyId,
+        travellerId: realmId,
+        destinationId: bastion?.bastionId,
+      });
+    }
+  };
+  return (
+    <div className="flex justify-between p-1">
+      <div className="flex w-2/3 ">
+        <div className="flex px-1 items-center justify-center">{`${
+          army.realmName
+        } - Army ${army.armyId} - ${Math.round(army.time / 60 / 60)} hrs`}</div>
+      </div>
+      <div className="w-1/3">
+        <Button
+          className="p-0.5 rounded-l bg-[#333333] focus:bg-[#333333] active:bg-[#333333] hover:bg-[#333333]"
+          fullWidth={true}
+          disabled={enqueuedTx}
+          color="white"
+          onClick={() => {
+            handleTravelToBastion(army.armyId, army.realmId);
+          }}
+        >
+          <div className="text-white">Travel to Bastion</div>
+        </Button>
       </div>
     </div>
   );

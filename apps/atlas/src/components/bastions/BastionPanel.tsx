@@ -1,25 +1,27 @@
 import { useEffect } from 'react';
 // import { useGetBastionsQuery } from 'mockup/bastionsData';
 import { useAtlasContext } from '@/context/AtlasContext';
-import { useBastionContext } from '@/context/BastionContext';
+import { useBastionSettersContext } from '@/context/BastionContext';
+import type { Bastion } from '@/generated/graphql';
 import { useGetBastionQuery } from '@/generated/graphql';
 // import { useGetBastionQuery } from 'mockup/bastionsData';
 import { BastionThreejs } from '../ui/map/three/bastions/BastionThreejs';
-import { BasePanel } from '../ui/panel/BasePanel';
-import { TravelToBastionButton } from './ArmyActions';
+import { TravelToBastion } from './ArmyActions';
+import { getEmptyBastion } from './BastionGetters';
 import { BastionInfo } from './BastionInfo';
+import { BastionOverview } from './BastionOverview';
 
 export const BastionPanel = () => {
   const {
     mapContext: { selectedAsset },
   } = useAtlasContext();
 
-  const {
-    bastionContext: { setBastion },
-  } = useBastionContext();
+  const { setBastion } = useBastionSettersContext();
 
   // mockup data
-  const { data, loading, startPolling, stopPolling } = useGetBastionQuery();
+  const { data, loading, startPolling, stopPolling } = useGetBastionQuery({
+    variables: { id: parseInt(selectedAsset?.id || '0') },
+  });
 
   useEffect(() => {
     if (loading) stopPolling();
@@ -29,21 +31,28 @@ export const BastionPanel = () => {
   }, [loading, data]);
 
   useEffect(() => {
-    if (!loading && data) {
-      // TODOBASTIONS: don't take the first one
-      setBastion(data.bastions[0]);
+    if (!loading && data?.bastion) {
+      setBastion(data.bastion as Bastion);
+    } else {
+      if (selectedAsset?.id) {
+        const emptyBastion = getEmptyBastion(parseInt(selectedAsset.id));
+        if (emptyBastion) {
+          setBastion(emptyBastion);
+        }
+      }
     }
-  }, [data, loading]);
+  }, [data, loading, selectedAsset]);
 
-  if (loading && !data) {
-    return <div>{<div> No bastion with that id</div>}</div>;
+  if ((loading && !data) || !selectedAsset) {
+    return <div></div>;
   } else {
     return (
-      <BasePanel open={true} style="lg:w-12/12">
+      <div className="absolute top-0 bottom-0 rigth-0 left-0 w-full h-full">
         <BastionThreejs />
-        <BastionInfo></BastionInfo>
-        <TravelToBastionButton></TravelToBastionButton>
-      </BasePanel>
+        <BastionInfo />
+        <TravelToBastion />
+        <BastionOverview />
+      </div>
     );
   }
 };

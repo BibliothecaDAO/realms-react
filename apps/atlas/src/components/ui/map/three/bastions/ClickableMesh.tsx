@@ -87,15 +87,12 @@ export const ClickableMesh = ({ children }) => {
       onPointerLeave={() => {
         setHoveredLocation(false);
       }}
-      onClick={() => {
-        setHoveredLocation(false);
-      }}
     >
       {Children.map(children, (child) => {
         return cloneElement(child, {
           material: hoveredLocation
             ? child.props.glowMaterial
-            : child.props.baseMaterial,
+            : child.props.material,
         });
       })}
     </group>

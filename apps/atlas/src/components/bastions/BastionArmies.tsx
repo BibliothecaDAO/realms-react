@@ -4,16 +4,17 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { RxCross1 } from 'react-icons/rx';
 import { useBastionContext } from '@/context/BastionContext';
+import type { Army } from '@/generated/graphql';
 import useTravel from '@/hooks/settling/useTravel';
 import useUsersRealms from '@/hooks/settling/useUsersRealms';
 import { useBlockNumber } from '@/hooks/useBlockNumber';
-import type { BastionArmy, Bastion } from 'mockup/bastionsData';
 import AtlasSidebar from '../map/AtlasSideBar';
 import { BastionArmyCard } from './BastionArmyCard';
 import { BastionCombatSideBar } from './BastionCombatSideBar';
 import {
   getAttackableArmies,
   getLocationArmies,
+  hasArmyArrived,
   isUserArmy,
 } from './BastionGetters';
 
@@ -27,10 +28,7 @@ interface BastionArmiesProps {
   orderName: string | undefined;
 }
 
-export const BastionArmies: FC<BastionArmiesProps> = ({
-  showMyArmies,
-  orderName,
-}) => {
+export const BastionArmies: FC<BastionArmiesProps> = ({ showMyArmies }) => {
   const {
     bastionContext: { bastion, selectedLocation, bastionMove },
   } = useBastionContext();
@@ -41,11 +39,11 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
 
   const { data: blockNumber } = useBlockNumber();
 
-  const [attackingArmy, setAttackingArmy] = useState<BastionArmy>();
-  const [defendingArmy, setDefendingArmy] = useState<BastionArmy>();
+  const [attackingArmy, setAttackingArmy] = useState<Army>();
+  const [defendingArmy, setDefendingArmy] = useState<Army>();
   const [attackMode, setAttackMode] = useState<boolean>(false);
   const [showAttackScreen, setShowAttackScreen] = useState<boolean>(false);
-  const [displayedArmies, setDisplayedArmies] = useState<BastionArmy[]>([]);
+  const [displayedArmies, setDisplayedArmies] = useState<Army[]>([]);
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
   const onTabChange = (index: number) => {
@@ -54,15 +52,15 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
     }
   };
 
-  const onAttackClick = (defendingArmy: BastionArmy) => {
+  const onAttackClick = (defendingArmy: Army) => {
     if (attackingArmy && bastion) {
       setShowAttackScreen(true);
       setDefendingArmy(defendingArmy);
     }
   };
 
-  const onMoveClick = (army: BastionArmy, nextLocation: number) => {
-    if (bastion && nextLocation) {
+  const onMoveClick = (army: Army, nextLocation: number | undefined) => {
+    if (bastion && !(nextLocation == undefined)) {
       if (nextLocation === 6) {
         travel(army.armyId, army.realmId, army.realmId);
       } else {
@@ -79,7 +77,7 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
     }
   };
 
-  const onAttackModeClick = (army: BastionArmy) => {
+  const onAttackModeClick = (army: Army) => {
     setAttackingArmy(army);
     setAttackMode(true);
   };
@@ -178,7 +176,7 @@ export const BastionArmies: FC<BastionArmiesProps> = ({
                   key={index}
                   army={army}
                   userRealms={userRealms}
-                  arrived={army.arrivalBlock <= blockNumber}
+                  arrived={hasArmyArrived(army, blockNumber)}
                   attackMode={attackMode}
                   armyInfoAnimation={true}
                   blockNumber={blockNumber}

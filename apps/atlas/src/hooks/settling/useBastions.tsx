@@ -4,12 +4,13 @@ import type { Dispatch, SetStateAction } from 'react';
 import type { InvokeFunctionResponse } from 'starknet';
 import { number, uint256 } from 'starknet';
 import { useCommandList } from '@/context/CommandListContext';
+import type { Bastion } from '@/generated/graphql';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,
 } from '@/types/index';
 import { uint256ToRawCalldata } from '@/util/rawCalldata';
-import type { Bastion } from 'mockup/bastionsData';
+// import type { Bastion } from 'mockup/bastionsData';
 import { soundSelector, useUiSounds } from '../useUiSounds';
 import { ModuleAddr, useBastionsContract } from './stark-contracts';
 
@@ -103,8 +104,7 @@ export const createCall: Record<string, (args: any) => CallAndMetadata> = {
       args.armyId,
       Assets.bastions,
       // ...uint256ToRawCalldata(uint256.bnToUint256(args.destinationId)),
-      // TODOBASTIONS: remove that
-      ...uint256ToRawCalldata(uint256.bnToUint256(3711000)),
+      ...uint256ToRawCalldata(uint256.bnToUint256(args.destinationId)),
       0, // nested destination is always 0 for now.
     ],
     metadata: {

@@ -122,12 +122,10 @@ export const BastionInfo: React.FC = () => {
                 </div>
               </div>
             </div>
-            {bastion && (
-              <BastionArmies
-                orderName={orderName}
-                showMyArmies={showMyArmies}
-              ></BastionArmies>
-            )}
+            <BastionArmies
+              orderName={orderName}
+              showMyArmies={showMyArmies}
+            ></BastionArmies>
           </div>
         </div>
       </div>

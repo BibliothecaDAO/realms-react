@@ -1,10 +1,11 @@
-query getBastion @api(name: starkIndexer) {
-  bastions {
+query getBastion($id: Float!) @api(name: starkIndexer) {
+  bastion(id: $id) {
     bastionId
     latitude
     longitude
     locations {
       locationId
+      bastionId
       defendingOrderId
       takenBlock
       armies {
@@ -38,9 +39,34 @@ query getBastion @api(name: starkIndexer) {
         heavyInfantryQty
         heavyInfantryHealth
         orderId
-        pastLocation: bastionPastLocation
-        arrivalBlock: bastionArrivalBlock
+
+        # bastion
+        bastionArrivalBlock
+        bastionCurrentLocation
+        bastionId
       }
+    }
+  }
+}
+
+query getBastionHistory(
+  $filter: BastionHistoryWhereInput
+  $take: Float
+  $skip: Float
+) @api(name: starkIndexer) {
+  getBastionHistory(filter: $filter, take: $take, skip: $skip) {
+    bastionId
+    realmHistoryEventId
+    realmHistoryEventType
+    realmHistory {
+      id
+      eventId
+      eventType
+      realmId
+      realmOwner
+      data
+      timestamp
+      transactionHash
     }
   }
 }

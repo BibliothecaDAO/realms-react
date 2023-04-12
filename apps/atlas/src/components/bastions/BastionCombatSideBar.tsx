@@ -15,7 +15,6 @@ import { useBastionContext } from '@/context/BastionContext';
 import { useSoundContext } from '@/context/soundProvider';
 import type { Army } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
-import type { BastionArmy } from 'mockup/bastionsData';
 import { hasArrived } from '../armies/ArmyGetters';
 import { ArmyDisplayContainer } from '../armies/combat/ArmyDisplayContainer';
 import { RaidResultTable } from '../armies/RaidResultsTable';
@@ -23,8 +22,8 @@ import { useCombatResult } from '../armies/useCombatResult';
 import { theOrders } from '../lore/theOrders';
 
 type Prop = {
-  defendingArmy: BastionArmy;
-  attackingArmy: BastionArmy;
+  defendingArmy: Army;
+  attackingArmy: Army;
   onClose: () => void;
 };
 
