@@ -137,13 +137,25 @@ export const getMoveTimes = (
     getBastionLocation(bastion, 3).defendingOrderId === armyOrder &&
     getBastionLocation(bastion, 4).defendingOrderId === armyOrder;
 
+  const hasAtLeastOneTower =
+    getBastionLocation(bastion, 1).defendingOrderId === armyOrder ||
+    getBastionLocation(bastion, 2).defendingOrderId === armyOrder ||
+    getBastionLocation(bastion, 3).defendingOrderId === armyOrder ||
+    getBastionLocation(bastion, 4).defendingOrderId === armyOrder;
+
   if (currentLocation === 0) {
     movingTimes[1] = MovingTimes.DistanceStagingAreaTower;
     movingTimes[2] = MovingTimes.DistanceStagingAreaTower;
     movingTimes[3] = MovingTimes.DistanceStagingAreaTower;
     movingTimes[4] = MovingTimes.DistanceStagingAreaTower;
-    if (hasCentralSquare && hasAllTowers) {
-      movingTimes[5] = MovingTimes.DistanceStagingAreaCentralSquare;
+    if (hasCentralSquare) {
+      if (hasAtLeastOneTower) {
+        movingTimes[5] = MovingTimes.DistanceStagingAreaCentralSquare;
+      }
+    } else {
+      if (hasAllTowers) {
+        movingTimes[5] = MovingTimes.DistanceStagingAreaCentralSquare;
+      }
     }
     // leave bastion
     movingTimes[6] = 999;
@@ -164,11 +176,19 @@ export const getMoveTimes = (
       bastion
     );
     if (hasCentralSquare) {
-      movingTimes[5] = movingTimeFromTowerGateToCentralSquare(
-        currentLocation,
-        armyOrder,
-        bastion
-      );
+      if (isDefendingCurrentLocation) {
+        movingTimes[5] = MovingTimes.DistanceTowerCentralSquare;
+      } else {
+        movingTimes[5] = movingTimeFromTowerGateToCentralSquare(
+          currentLocation,
+          armyOrder,
+          bastion
+        );
+      }
+    } else {
+      if (hasAllTowers) {
+        movingTimes[5] = MovingTimes.DistanceTowerInnerGate;
+      }
     }
   }
 
@@ -187,11 +207,19 @@ export const getMoveTimes = (
       bastion
     );
     if (hasCentralSquare) {
-      movingTimes[5] = movingTimeFromTowerGateToCentralSquare(
-        currentLocation,
-        armyOrder,
-        bastion
-      );
+      if (isDefendingCurrentLocation) {
+        movingTimes[5] = MovingTimes.DistanceTowerCentralSquare;
+      } else {
+        movingTimes[5] = movingTimeFromTowerGateToCentralSquare(
+          currentLocation,
+          armyOrder,
+          bastion
+        );
+      }
+    } else {
+      if (hasAllTowers) {
+        movingTimes[5] = MovingTimes.DistanceTowerInnerGate;
+      }
     }
   }
 
