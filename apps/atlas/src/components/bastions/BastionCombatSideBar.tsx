@@ -1,11 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import {
-  Button,
-  Checkbox,
-  CountdownTimer,
-  ResourceIcon,
-  Select,
-} from '@bibliotheca-dao/ui-lib';
+import { Button, CountdownTimer, Select } from '@bibliotheca-dao/ui-lib';
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useAccount } from '@starknet-react/core';
@@ -13,8 +7,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getRealmNameById } from '@/components/realms/RealmsGetters';
 import { useBastionContext } from '@/context/BastionContext';
 import { useSoundContext } from '@/context/soundProvider';
-import type { Army } from '@/generated/graphql';
+import type { Bastion, Army } from '@/generated/graphql';
 import type { ArmyAndOrder } from '@/hooks/settling/useArmy';
+import type { AttackArgs } from '@/hooks/settling/useBastions';
 import { hasArrived } from '../armies/ArmyGetters';
 import { ArmyDisplayContainer } from '../armies/combat/ArmyDisplayContainer';
 import { RaidResultTable } from '../armies/RaidResultsTable';
@@ -42,6 +37,7 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
       bastionAttack,
       bastionAttackData,
       bastionAttackLoading,
+      attackArgs,
     },
   } = useBastionContext();
 
@@ -58,6 +54,40 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
 
   const videoRef = useRef<any>();
 
+  const isSubmittedAttackTx = (
+    attackArgs: AttackArgs,
+    attackingArmy: Army,
+    defendingArmy: Army
+  ) => {
+    if (
+      attackingArmy.realmId === attackArgs.attacking_realm_id &&
+      attackingArmy.armyId === attackArgs.attacking_army_id &&
+      defendingArmy.realmId === attackArgs.defending_realm_id &&
+      defendingArmy.armyId === attackArgs.defending_army_id
+    ) {
+      return true;
+    }
+  };
+
+  const onResetClick = () => {
+    setFinalDefendingArmy(undefined);
+    setFinalAttackingArmy(undefined);
+    setTxSubmitted(false);
+  };
+
+  const onAttackClick = (bastion: Bastion) => {
+    bastionAttack({
+      coordinates: {
+        longitude: bastion.longitude,
+        latitude: bastion.latitude,
+      },
+      attacking_realm_id: attackingArmy.realmId,
+      attacking_army_id: attackingArmy.armyId,
+      defending_realm_id: defendingArmy.realmId,
+      defending_army_id: defendingArmy.armyId,
+    });
+  };
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.volume = 0.2;
@@ -65,8 +95,12 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
   }, [videoRef]);
 
   useEffect(() => {
-    if (bastionAttackData) {
-      setTxSubmitted(true);
+    if (bastionAttackData && attackArgs) {
+      if (isSubmittedAttackTx(attackArgs, attackingArmy, defendingArmy)) {
+        setTxSubmitted(true);
+      } else {
+        setTxSubmitted(false);
+      }
       if (isSoundActive) {
         localStorage.setItem('RESTORE_SOUND_FLAG', 'true');
         toggleSound();
@@ -103,7 +137,7 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
   return (
     <div className="z-50 flex-1 h-full overflow-auto bg-cover bg-realmCombatBackground">
       <div className="flex justify-center w-full pt-3">
-        <Button variant="primary" onClick={() => onClose()}>
+        <Button variant="primary" onClick={onClose}>
           Return to Bastion
         </Button>
       </div>
@@ -124,7 +158,7 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
         </div>
       )}
 
-      <div className="p-16">
+      <div className="py-4 px-16">
         {/* results */}
         {finalAttackingArmy && finalDefendingArmy && (
           <div className="w-2/3 mx-auto my-4">
@@ -137,9 +171,14 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
               relic={relic}
               success={success}
             />
+            <div className="flex w-full items-center justify-center my-8">
+              <Button variant="primary" onClick={onResetClick}>
+                Attack Again
+              </Button>
+            </div>
           </div>
         )}
-        {!txSubmitted && !bastionAttackData?.transaction_hash && (
+        {!txSubmitted && !finalAttackingArmy && !finalDefendingArmy && (
           <div className="grid w-full md:grid-cols-3 ">
             <div>
               {!raidButtonEnabled && attackingArmy && (
@@ -165,16 +204,7 @@ export const BastionCombatSideBar: React.FC<Prop> = ({
               {bastion && (
                 <Button
                   onClick={() => {
-                    bastionAttack({
-                      coordinates: {
-                        longitude: bastion.longitude,
-                        latitude: bastion.latitude,
-                      },
-                      attacking_realm_id: attackingArmy.realmId,
-                      attacking_army_id: attackingArmy.armyId,
-                      defending_realm_id: defendingArmy.realmId,
-                      defending_army_id: defendingArmy.armyId,
-                    });
+                    onAttackClick(bastion);
                   }}
                   loading={bastionAttackLoading}
                   loadingText={'Attacking'}

@@ -1,10 +1,11 @@
+import type { InvokeArgs } from '@starknet-react/core';
 import { useStarknetExecute, useStarknetInvoke } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { InvokeFunctionResponse } from 'starknet';
 import { number, uint256 } from 'starknet';
 import { useCommandList } from '@/context/CommandListContext';
-import type { Bastion } from '@/generated/graphql';
+import type { Army, Bastion } from '@/generated/graphql';
 import type {
   CallAndMetadata,
   RealmsTransactionRenderConfig,
@@ -25,6 +26,14 @@ export const Entrypoints = {
   bastionTakeLocation: 'bastion_take_location',
   bastionMove: 'bastion_move',
   travel: 'travel',
+};
+
+export type AttackArgs = {
+  coordinates: { longitude: number; latitude: number };
+  attacking_realm_id: number;
+  attacking_army_id: number;
+  defending_realm_id: number;
+  defending_army_id: number;
 };
 
 // transactions
@@ -162,6 +171,7 @@ export type Bastions = {
   bastionAttackData: InvokeFunctionResponse | undefined;
   bastionAttackLoading: boolean;
   bastionAttackError: unknown;
+  attackArgs: AttackArgs | undefined;
 };
 
 export type Location = {
@@ -176,6 +186,8 @@ export const useBastions = (): Bastions => {
   );
   const { play: playBastionMove } = useUiSounds(soundSelector.summonTroops);
   const { play: playFly } = useUiSounds(soundSelector.fly);
+
+  const [attackArgs, setAttackArgs] = useState<AttackArgs>();
 
   const { contract } = useBastionsContract();
 
@@ -220,6 +232,7 @@ export const useBastions = (): Bastions => {
           ...args,
         },
       });
+      setAttackArgs(args);
     },
     bastionMove: (args: {
       coordinates: { longitude: number; latitude: number };
@@ -254,5 +267,6 @@ export const useBastions = (): Bastions => {
     bastionAttackData,
     bastionAttackLoading,
     bastionAttackError,
+    attackArgs,
   };
 };
